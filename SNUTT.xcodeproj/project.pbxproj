@@ -7,12 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E16643511B4623BB00387EF8 /* TimeTableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643501B4623BB00387EF8 /* TimeTableLayout.swift */; };
+		E16643531B462BDA00387EF8 /* CourseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643521B462BDA00387EF8 /* CourseDataSource.swift */; };
+		E16643551B4630B500387EF8 /* ColumnHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643541B4630B500387EF8 /* ColumnHeaderCollectionViewCell.swift */; };
+		E16643571B46623900387EF8 /* SlotCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643561B46623900387EF8 /* SlotCellCollectionViewCell.swift */; };
+		E16643591B46624500387EF8 /* CourseCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643581B46624500387EF8 /* CourseCellCollectionViewCell.swift */; };
+		E166435B1B46734C00387EF8 /* LectureDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E166435A1B46734C00387EF8 /* LectureDetailTableViewController.swift */; };
 		E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */; };
 		E19A3A9D1B453770007FCAD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3A9C1B453770007FCAD7 /* ViewController.swift */; };
 		E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E19A3A9E1B453770007FCAD7 /* Main.storyboard */; };
 		E19A3AA21B453770007FCAD7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E19A3AA11B453770007FCAD7 /* Images.xcassets */; };
 		E19A3AA51B453770007FCAD7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E19A3AA31B453770007FCAD7 /* LaunchScreen.xib */; };
 		E19A3AB11B453770007FCAD7 /* SNUTTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3AB01B453770007FCAD7 /* SNUTTTests.swift */; };
+		E19A3ABD1B4538F0007FCAD7 /* TimeTableCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3ABC1B4538F0007FCAD7 /* TimeTableCollectionViewController.swift */; };
+		E19A3ABF1B453926007FCAD7 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3ABE1B453926007FCAD7 /* Lecture.swift */; };
+		E19E231F1B468B700010DFB1 /* LectureSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E231E1B468B700010DFB1 /* LectureSearchTableViewController.swift */; };
+		E19E23211B4691D90010DFB1 /* LectureSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E23201B4691D90010DFB1 /* LectureSearchTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +36,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E16643501B4623BB00387EF8 /* TimeTableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableLayout.swift; sourceTree = "<group>"; };
+		E16643521B462BDA00387EF8 /* CourseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDataSource.swift; sourceTree = "<group>"; };
+		E16643541B4630B500387EF8 /* ColumnHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColumnHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		E16643561B46623900387EF8 /* SlotCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlotCellCollectionViewCell.swift; sourceTree = "<group>"; };
+		E16643581B46624500387EF8 /* CourseCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCellCollectionViewCell.swift; sourceTree = "<group>"; };
+		E166435A1B46734C00387EF8 /* LectureDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureDetailTableViewController.swift; sourceTree = "<group>"; };
 		E19A3A951B453770007FCAD7 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19A3A991B453770007FCAD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +52,10 @@
 		E19A3AAA1B453770007FCAD7 /* SNUTTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNUTTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19A3AAF1B453770007FCAD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E19A3AB01B453770007FCAD7 /* SNUTTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTTests.swift; sourceTree = "<group>"; };
+		E19A3ABC1B4538F0007FCAD7 /* TimeTableCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeTableCollectionViewController.swift; path = ../TimeTableCollectionViewController.swift; sourceTree = "<group>"; };
+		E19A3ABE1B453926007FCAD7 /* Lecture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lecture.swift; path = ../Lecture.swift; sourceTree = "<group>"; };
+		E19E231E1B468B700010DFB1 /* LectureSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureSearchTableViewController.swift; sourceTree = "<group>"; };
+		E19E23201B4691D90010DFB1 /* LectureSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureSearchTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +97,22 @@
 		E19A3A971B453770007FCAD7 /* SNUTT */ = {
 			isa = PBXGroup;
 			children = (
+				E19A3ABE1B453926007FCAD7 /* Lecture.swift */,
+				E19A3ABC1B4538F0007FCAD7 /* TimeTableCollectionViewController.swift */,
+				E166435A1B46734C00387EF8 /* LectureDetailTableViewController.swift */,
 				E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */,
 				E19A3A9C1B453770007FCAD7 /* ViewController.swift */,
 				E19A3A9E1B453770007FCAD7 /* Main.storyboard */,
+				E19E23201B4691D90010DFB1 /* LectureSearchTableViewCell.swift */,
+				E19E231E1B468B700010DFB1 /* LectureSearchTableViewController.swift */,
+				E16643581B46624500387EF8 /* CourseCellCollectionViewCell.swift */,
+				E16643561B46623900387EF8 /* SlotCellCollectionViewCell.swift */,
 				E19A3AA11B453770007FCAD7 /* Images.xcassets */,
 				E19A3AA31B453770007FCAD7 /* LaunchScreen.xib */,
 				E19A3A981B453770007FCAD7 /* Supporting Files */,
+				E16643501B4623BB00387EF8 /* TimeTableLayout.swift */,
+				E16643521B462BDA00387EF8 /* CourseDataSource.swift */,
+				E16643541B4630B500387EF8 /* ColumnHeaderCollectionViewCell.swift */,
 			);
 			path = SNUTT;
 			sourceTree = "<group>";
@@ -212,8 +242,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E19E23211B4691D90010DFB1 /* LectureSearchTableViewCell.swift in Sources */,
+				E16643571B46623900387EF8 /* SlotCellCollectionViewCell.swift in Sources */,
+				E19E231F1B468B700010DFB1 /* LectureSearchTableViewController.swift in Sources */,
+				E19A3ABF1B453926007FCAD7 /* Lecture.swift in Sources */,
+				E16643551B4630B500387EF8 /* ColumnHeaderCollectionViewCell.swift in Sources */,
+				E16643531B462BDA00387EF8 /* CourseDataSource.swift in Sources */,
+				E16643591B46624500387EF8 /* CourseCellCollectionViewCell.swift in Sources */,
+				E19A3ABD1B4538F0007FCAD7 /* TimeTableCollectionViewController.swift in Sources */,
+				E16643511B4623BB00387EF8 /* TimeTableLayout.swift in Sources */,
 				E19A3A9D1B453770007FCAD7 /* ViewController.swift in Sources */,
 				E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */,
+				E166435B1B46734C00387EF8 /* LectureDetailTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +451,7 @@
 				E19A3AB61B453770007FCAD7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E19A3AB71B453770007FCAD7 /* Build configuration list for PBXNativeTarget "SNUTTTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +460,7 @@
 				E19A3AB91B453770007FCAD7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
