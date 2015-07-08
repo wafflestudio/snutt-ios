@@ -8,21 +8,40 @@
 
 import UIKit
 
-class LectureSearchTableViewCell: UITableViewCell {
+class LectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
 
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var divisionLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var placeLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var label1: UILabel!
+    @IBOutlet weak var label2: UILabel!
+    @IBOutlet weak var label3: UILabel!
+    @IBOutlet weak var button: UIButton!
+    
+    
     var lecture : STLecture? {
-        get {
-            return lecture
+        didSet {
+            titleLabel.text = "\(lecture!.name) (\(lecture!.professor)/\(lecture!.credit)학점)"
+            label1.text = lecture?.classification
+            label2.text = lecture?.department
+            var timeString : String = ""
+            for it in lecture!.classList {
+                timeString = timeString + it.startTime.toShortString()
+            }
+            label3.text = timeString
         }
-        set(newLecture) {
-            lecture = newLecture
-            nameLabel.text = lecture!.name
-            divisionLabel.text = lecture!.professor
+    }
+    @IBAction func buttonClicked(sender: AnyObject) {
+        
+        var alertView = UIAlertView(title: "SNUTT", message: "", delegate: nil, cancelButtonTitle: "OK")
+        switch TimeTableCollectionViewController.datasource.addLecture(lecture!) {
+        case .ErrorTime:
+            alertView.message = "Time is Overlapping"
+        case .ErrorSameLecture:
+            alertView.message = "This Lecture is already added"
+        case .Success:
+            alertView.message = "Lecture is added to the timetable"
         }
+        alertView.show()
+        
     }
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,7 +49,6 @@ class LectureSearchTableViewCell: UITableViewCell {
     }
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
 

@@ -10,7 +10,7 @@ import UIKit
 
 class TimeTableLayout: UICollectionViewLayout {
     var HeightForHeader : CGFloat = 20.0
-    var HeightPerHour : CGFloat = 40
+    var HeightPerHour : CGFloat = 34
     
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
         var ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)

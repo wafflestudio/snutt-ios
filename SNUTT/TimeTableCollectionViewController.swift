@@ -10,19 +10,20 @@ import UIKit
 
 let reuseIdentifier = "Cell"
 
-class TimeTableCollectionViewController: UICollectionViewController {
+class TimeTableCollectionViewController: UICollectionViewController, UIAlertViewDelegate {
     
-    var datasource = CourseDataSource()
-    
+    static var datasource = CourseDataSource()
+        override func viewWillAppear(animated: Bool) {
+        self.collectionView?.reloadData()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.dataSource = datasource
-        
+        self.collectionView!.dataSource = TimeTableCollectionViewController.datasource
+        TimeTableCollectionViewController.datasource.collectionView = self.collectionView
         // Do any additional setup after loading the view.
     }
 
@@ -30,7 +31,7 @@ class TimeTableCollectionViewController: UICollectionViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     /*
     // MARK: - Navigation
 
@@ -85,6 +86,7 @@ class TimeTableCollectionViewController: UICollectionViewController {
     
     }
     */
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let viewer = segue.destinationViewController as? LectureDetailTableViewController {

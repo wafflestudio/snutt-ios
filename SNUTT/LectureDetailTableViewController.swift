@@ -16,7 +16,6 @@ class LectureDetailTableViewController: UITableViewController {
     @IBOutlet weak var professorLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -24,6 +23,7 @@ class LectureDetailTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         lectureNameLabel.text = lecture?.name
         professorLabel.text = lecture?.professor
+        
     }
 
     override func didReceiveMemoryWarning() {

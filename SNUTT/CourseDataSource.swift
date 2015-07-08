@@ -14,11 +14,8 @@ class CourseDataSource: NSObject, UICollectionViewDataSource {
     
     var CourseList : [STLecture] = []
     var SingleClassList : [STSingleClass] = []
-    
+    var collectionView : UICollectionView? = nil
     override init() {
-        var lecture = STLecture(name: "컴퓨터 개론 및 실습", professor: "문병로", classList: [STSingleClass(startTime: STTime(day: STTime.STDay.MON, period: 3), duration: 2, place: "003-104")])
-        CourseList.append(lecture)
-        SingleClassList.append(lecture.classList[0])
         RowList.append("")
         for i in 0..<(STTime.periodNum) {
             var startTime = STTime(day: STTime.STDay.MON, period: i*2)
@@ -26,7 +23,44 @@ class CourseDataSource: NSObject, UICollectionViewDataSource {
             RowList.append("\(startTime.periodToString()) ~ \(endTime.periodToString())")
         }
     }
-    
+    enum AddLectureState {
+        case Success, ErrorTime, ErrorSameLecture
+    }
+    func addLecture(lecture : STLecture) -> AddLectureState {
+        for it in CourseList {
+            if it.isEquals(lecture){
+                return AddLectureState.ErrorSameLecture
+            }
+        }
+        for it in SingleClassList {
+            for jt in lecture.classList {
+                if it.isOverlappingWith(jt) {
+                    return AddLectureState.ErrorTime
+                }
+            }
+        }
+        CourseList.append(lecture)
+        for it in lecture.classList {
+            SingleClassList.append(it)
+        }
+        collectionView?.reloadData()
+        return AddLectureState.Success
+    }
+    func deleteLecture(lecture : STLecture) {
+        for (var i=0; i<SingleClassList.count; i++) {
+            if SingleClassList[i].lecture === lecture {
+                SingleClassList.removeAtIndex(i)
+                i--
+            }
+        }
+        for (var i=0; i<CourseList.count; i++) {
+            if CourseList[i] === lecture {
+                CourseList.removeAtIndex(i)
+                break
+            }
+        }
+        collectionView?.reloadData()
+    }
     @objc func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
