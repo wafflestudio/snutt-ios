@@ -17,7 +17,7 @@ class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UI
     var SearchingString : String = ""
     var pageNum : Int = 0
     var loadMoreView = LoadMoreTableFooterView()
-    
+    var shouldShowResult = true
     func reloadData() {
         tableView.reloadData()
         if pageNum == -1 {
@@ -40,7 +40,12 @@ class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UI
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    var isGettingLecture = false
     func getLectureList(searchString : String) {
+        if isGettingLecture {
+            return
+        }
+        isGettingLecture = true
         FilteredList = []
         var queryText = searchString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         var url : String  = "http://snutt.kr/api/search_query?year=2015&semester=2&filter=&type=course_title&query_text=\(queryText)&page=1&per_page=30"
@@ -52,8 +57,17 @@ class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UI
         }
         SearchingString = searchString
         pageNum = 1
+        if searchResult.count != 30 {
+            pageNum = -1
+        }
+        isGettingLecture = false
+        tableView.setContentOffset(CGPoint(x:0.0,y:0.0), animated: false)
     }
     func getMoreLectureList() {
+        if isGettingLecture {
+            return
+        }
+        isGettingLecture = true
         if pageNum == -1 {
             return
         }
@@ -69,6 +83,7 @@ class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UI
         if searchResult.count != 30 {
             pageNum = -1
         }
+        isGettingLecture = false
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -80,7 +95,10 @@ class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UI
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 1
+        if shouldShowResult {
+            return 1
+        }
+        return 0
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -88,7 +106,6 @@ class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UI
         // Return the number of rows in the section.
         return FilteredList.count
     }
-    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var tmpCell = tableView.dequeueReusableCellWithIdentifier("LectureSearchCell", forIndexPath: indexPath) as? UITableViewCell
@@ -102,17 +119,28 @@ class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UI
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        tableView.hidden = true
+        searchBar.showsCancelButton = true
     }
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        tableView.hidden = false
     }
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
         getLectureList(searchBar.text)
+        tableView.hidden = false
         reloadData()
     }
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        getLectureList("")
-        reloadData()
+        self.searchBar.resignFirstResponder()
+        if searchBar.text == "" {
+            getLectureList("")
+            reloadData()
+        } else {
+            searchBar.text = SearchingString
+        }
+        tableView.hidden = false
     }
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
     }
