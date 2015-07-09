@@ -81,6 +81,7 @@ class CourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
             colorIndex--
         }
         singleClass!.lecture!.colorIndex = colorIndex
+        TimeTableCollectionViewController.datasource.SaveData()
         TimeTableCollectionViewController.datasource.collectionView?.reloadData()
     }
     func swipeToRight(gesture : UISwipeGestureRecognizer) {
@@ -91,6 +92,7 @@ class CourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
             colorIndex++
         }
         singleClass!.lecture!.colorIndex = colorIndex
+        TimeTableCollectionViewController.datasource.SaveData()
         TimeTableCollectionViewController.datasource.collectionView?.reloadData()
     }
     func setSingleClass(tmp : STSingleClass) {

@@ -70,7 +70,7 @@ class STSingleClass {
     }
 }
 
-class STLecture {
+class STLecture : NSObject , NSCoding{
     var name : String
     var professor : String
     var credit : Int
@@ -80,7 +80,47 @@ class STLecture {
     var course_number : String
     var lecture_number : String
     var colorIndex : Int
+    var jsonData : NSDictionary
+    required init(coder aDecoder: NSCoder) {
+        let data = aDecoder.decodeObjectForKey("jsonData") as! NSDictionary
+        jsonData = data
+        var timeData = data["class_time"] as! String
+        var timeArr = split(timeData){$0 == "/"}
+        var locationData = data["location"] as! String
+        var locationArr = split(locationData){$0 == "/"}
+        if locationArr.count == 0{
+            locationArr = ["","","","",""]
+        }
+        for i in 0..<timeArr.count {
+            var time = timeArr[i]
+            var t = split(time) {
+                (params) -> Bool in
+                var ret = (params == ")")
+                ret = ret || (params == "(") || (params == "-")
+                return ret
+            }
+            classList.append(STSingleClass(startTime : STTime(day : t[0], period : (t[1] as NSString).doubleValue), duration : (Int)((t[2] as NSString).doubleValue * 2.0), place : locationArr[i]))
+        }
+        name = data["course_title"] as! String
+        professor = data["instructor"] as! String
+        credit = (data["credit"] as! NSString).integerValue
+        classification = data["classification"] as! String
+        department = data["department"] as! String
+        course_number = data["course_number"] as! String
+        lecture_number = data["lecture_number"] as! String
+        let color = aDecoder.decodeObjectForKey("colorIndex") as! Int
+        colorIndex = color
+        super.init()
+        for it in classList {
+            it.lecture = self
+        }
+    }
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(jsonData, forKey: "jsonData")
+        aCoder.encodeObject(colorIndex, forKey: "colorIndex")
+    }
     init(json data : NSDictionary) {
+        jsonData = data
         var timeData = data["class_time"] as! String
         var timeArr = split(timeData){$0 == "/"}
         var locationData = data["location"] as! String
@@ -106,7 +146,7 @@ class STLecture {
         course_number = data["course_number"] as! String
         lecture_number = data["lecture_number"] as! String
         colorIndex = Int(arc4random_uniform(UInt32(CourseCellCollectionViewCell.backgroundColorList.count)))
-
+        super.init()
         for it in classList {
             it.lecture = self
         }

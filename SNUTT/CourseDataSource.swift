@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CourseDataSource: NSObject, UICollectionViewDataSource {
+class CourseDataSource: NSObject, UICollectionViewDataSource{
     var ColumnList = ["","월", "화", "수", "목", "금", "토"]
     var RowList : [String] = []
     
@@ -16,12 +16,31 @@ class CourseDataSource: NSObject, UICollectionViewDataSource {
     var SingleClassList : [STSingleClass] = []
     var collectionView : UICollectionView? = nil
     override init() {
+        
         RowList.append("")
         for i in 0..<(STTime.periodNum) {
             var startTime = STTime(day: STTime.STDay.MON, period: i*2)
             var endTime = STTime(day: STTime.STDay.MON, period: i*2+1)
             RowList.append("\(startTime.periodToString()) ~ \(endTime.periodToString())")
         }
+        super.init()
+        self.loadData()
+    }
+    func loadData(){
+        let ud = NSUserDefaults.standardUserDefaults()
+        if let data = ud.objectForKey("courseList") as? NSData {
+            let unarc = NSKeyedUnarchiver(forReadingWithData: data )
+            CourseList = unarc.decodeObjectForKey("root") as![STLecture]
+            for it in CourseList {
+                for jt in it.classList {
+                    SingleClassList.append(jt)
+                }
+            }
+        }
+    }
+    func SaveData() {
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setObject(NSKeyedArchiver.archivedDataWithRootObject(CourseList), forKey: "courseList")
     }
     enum AddLectureState {
         case Success, ErrorTime, ErrorSameLecture
@@ -44,6 +63,7 @@ class CourseDataSource: NSObject, UICollectionViewDataSource {
             SingleClassList.append(it)
         }
         collectionView?.reloadData()
+        SaveData()
         return AddLectureState.Success
     }
     func deleteLecture(lecture : STLecture) {
@@ -59,6 +79,7 @@ class CourseDataSource: NSObject, UICollectionViewDataSource {
                 break
             }
         }
+        SaveData()
         collectionView?.reloadData()
     }
     @objc func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

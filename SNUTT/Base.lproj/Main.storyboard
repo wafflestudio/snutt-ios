@@ -9,7 +9,7 @@
         <scene sceneID="pHc-Gt-tWR">
             <objects>
                 <tabBarController id="l7g-9O-bfT" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="CbT-T2-q8E">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -104,7 +104,6 @@
                                 <size key="customSize" width="75" height="119"/>
                                 <connections>
                                     <outlet property="courseText" destination="ykq-v1-sk7" id="lly-cQ-rEm"/>
-                                    <segue destination="sek-gO-kxt" kind="show" id="I89-so-4Wt"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -244,7 +243,7 @@
             <objects>
                 <tableViewController id="sek-gO-kxt" customClass="LectureDetailTableViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Zd7-NY-TuW">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
