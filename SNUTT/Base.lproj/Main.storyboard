@@ -9,8 +9,8 @@
         <scene sceneID="pHc-Gt-tWR">
             <objects>
                 <tabBarController id="l7g-9O-bfT" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="CbT-T2-q8E">
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="CbT-T2-q8E">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -29,7 +29,7 @@
             <objects>
                 <collectionViewController id="Icv-Xm-I3U" customClass="TimeTableCollectionViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Jao-OD-M66">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewLayout key="collectionViewLayout" id="7qR-xv-imX" customClass="TimeTableLayout" customModule="SNUTT" customModuleProvider="target"/>
@@ -43,14 +43,14 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="e4b-7h-XC8">
                                             <rect key="frame" x="8" y="8" width="76" height="34"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <color key="backgroundColor" red="0.55904066750000003" green="0.60744869479999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="e4b-7h-XC8" secondAttribute="centerX" id="17A-zF-H7J"/>
                                     <constraint firstItem="e4b-7h-XC8" firstAttribute="leading" secondItem="dXc-Ax-lny" secondAttribute="leading" constant="4" id="17G-Zx-wHX"/>
@@ -81,17 +81,17 @@
                                     <rect key="frame" x="0.0" y="0.0" width="75" height="119"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="3" translatesAutoresizingMaskIntoConstraints="NO" id="ykq-v1-sk7">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="ykq-v1-sk7">
                                             <rect key="frame" x="0.0" y="0.0" width="75" height="119"/>
                                             <gestureRecognizers/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <color key="textColor" red="0.16862745098039217" green="0.52941176470588236" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <color key="backgroundColor" red="0.68780644559826554" green="1" blue="0.8314533584047713" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.71372549019607845" green="0.97647058823529409" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="ykq-v1-sk7" secondAttribute="bottom" constant="2" id="40M-Yh-wnc"/>
@@ -103,7 +103,7 @@
                                 </constraints>
                                 <size key="customSize" width="75" height="119"/>
                                 <connections>
-                                    <outlet property="courseText" destination="ykq-v1-sk7" id="QCd-X4-pPF"/>
+                                    <outlet property="courseText" destination="ykq-v1-sk7" id="lly-cQ-rEm"/>
                                     <segue destination="sek-gO-kxt" kind="show" id="I89-so-4Wt"/>
                                 </connections>
                             </collectionViewCell>
@@ -128,7 +128,7 @@
                         <viewControllerLayoutGuide type="bottom" id="kbG-Pe-fQU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Kj5-zA-s3U">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Lj-z7-tFw">
@@ -244,7 +244,7 @@
             <objects>
                 <tableViewController id="sek-gO-kxt" customClass="LectureDetailTableViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Zd7-NY-TuW">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
@@ -333,7 +333,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EvE-NX-428" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="featured" id="jfH-wd-GaS"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="YZr-TV-yDy">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="YZr-TV-yDy">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

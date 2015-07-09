@@ -92,6 +92,7 @@ class CourseDataSource: NSObject, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as!CourseCellCollectionViewCell
             var course = SingleClassList[indexPath.row]
             cell.setSingleClass(course)
+            cell.setColor()
             return cell
         }
     }

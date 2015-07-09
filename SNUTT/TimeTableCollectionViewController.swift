@@ -13,7 +13,7 @@ let reuseIdentifier = "Cell"
 class TimeTableCollectionViewController: UICollectionViewController, UIAlertViewDelegate {
     
     static var datasource = CourseDataSource()
-        override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         self.collectionView?.reloadData()
     }
     override func viewDidLoad() {

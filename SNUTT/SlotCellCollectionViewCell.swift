@@ -11,7 +11,29 @@ import UIKit
 class SlotCellCollectionViewCell: UICollectionViewCell {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        layer.borderWidth = 0.3
-        layer.borderColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [0.7,0.7,0.7,1.0])
+    }
+    override func drawRect(rect: CGRect) {
+        
+        super.drawRect(rect)
+        var context = UIGraphicsGetCurrentContext()
+        
+        CGContextSetStrokeColorWithColor(context, CGColorCreate(CGColorSpaceCreateDeviceRGB(), [0.6,0.6,0.6,1.0]))
+        CGContextSetLineDash(context, 0, [2,2], 2)
+        CGContextSetLineWidth(context, 0.4)
+        CGContextMoveToPoint(context, 0.0, (rect.height-1.0)/2.0)
+        CGContextAddLineToPoint(context, (rect.width-1.0), (rect.height-1.0)/2.0)
+        CGContextStrokePath(context)
+        
+        CGContextSetLineDash(context, 0, [1], 0)
+        CGContextSetLineWidth(context, 0.3)
+        CGContextMoveToPoint(context, 0.0, rect.height-1.0)
+        CGContextAddLineToPoint(context, rect.width-1.0, rect.height-1.0)
+        CGContextStrokePath(context)
+        
+        CGContextMoveToPoint(context, rect.width-1.0, 0)
+        CGContextAddLineToPoint(context, rect.width-1.0, rect.height-1.0)
+        CGContextStrokePath(context)
+        
+        
     }
 }

@@ -11,4 +11,8 @@ import UIKit
 class ColumnHeaderCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var contentLabel: UILabel!
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
 }

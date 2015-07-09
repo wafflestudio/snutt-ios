@@ -11,8 +11,12 @@ import UIKit
 class TimeTableLayout: UICollectionViewLayout {
     var HeightForHeader : CGFloat = 20.0
     var HeightPerHour : CGFloat = 34
-    
+    var ratioForHeader : CGFloat = 2.0/3.0
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
+        
+        HeightPerHour = collectionView!.frame.size.height / (CGFloat(STTime.periodNum) + ratioForHeader)
+        HeightForHeader = ratioForHeader * HeightPerHour
+        
         var ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         var source = collectionView?.dataSource as! CourseDataSource
         var type = source.getCellType(indexPath)
@@ -47,13 +51,17 @@ class TimeTableLayout: UICollectionViewLayout {
             } else {
                 locY = HeightForHeader + HeightPerHour * CGFloat(indexRow - 1)
             }
+            if type == CourseDataSource.cellType.Slot {
+                width = width + 1.0
+                height = height + 1.0
+            }
             ret.frame = CGRect(x: locX, y: locY, width: width, height: height)
         }
         return ret
     }
     override func collectionViewContentSize() -> CGSize {
         var contentWidth = self.collectionView!.bounds.size.width
-        var contentHeight: CGFloat = CGFloat(HeightForHeader + (HeightPerHour * CGFloat(STTime.periodNum)))
+        var contentHeight: CGFloat = self.collectionView!.bounds.size.height
         return CGSize(width: contentWidth, height: contentHeight)
     }
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {

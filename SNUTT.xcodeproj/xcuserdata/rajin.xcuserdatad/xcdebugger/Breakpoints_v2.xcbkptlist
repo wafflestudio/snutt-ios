@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SNUTT/TimeTableLayout.swift"
-            timestampString = "457596319.959681"
+            timestampString = "458099919.946872"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "layoutAttributesForItemAtIndexPath(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -378,7 +378,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SNUTT/CourseDataSource.swift"
-            timestampString = "457945010.790618"
+            timestampString = "458106522.268783"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "94"
@@ -426,11 +426,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SNUTT/TimeTableLayout.swift"
-            timestampString = "457865334.945606"
+            timestampString = "458102244.272182"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "layoutAttributesForElementsInRect(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -442,28 +442,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SNUTT/TimeTableLayout.swift"
-            timestampString = "457865354.256361"
+            timestampString = "458099919.946872"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
             landmarkName = "layoutAttributesForItemAtIndexPath(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SNUTT/CourseDataSource.swift"
-            timestampString = "457945010.790618"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "addLecture(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -570,11 +554,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SNUTT/CourseCellCollectionViewCell.swift"
-            timestampString = "457929487.431529"
+            timestampString = "458106522.268783"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "init(coder:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -586,11 +570,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SNUTT/CourseCellCollectionViewCell.swift"
-            timestampString = "457932554.935027"
+            timestampString = "458106522.268783"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "longClick(_:)"
             landmarkType = "5">
          </BreakpointContent>

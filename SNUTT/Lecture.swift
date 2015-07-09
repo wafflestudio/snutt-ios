@@ -79,6 +79,7 @@ class STLecture {
     var classList :[STSingleClass] = []
     var course_number : String
     var lecture_number : String
+    var colorIndex : Int
     init(json data : NSDictionary) {
         var timeData = data["class_time"] as! String
         var timeArr = split(timeData){$0 == "/"}
@@ -104,6 +105,8 @@ class STLecture {
         department = data["department"] as! String
         course_number = data["course_number"] as! String
         lecture_number = data["lecture_number"] as! String
+        colorIndex = Int(arc4random_uniform(UInt32(CourseCellCollectionViewCell.backgroundColorList.count)))
+
         for it in classList {
             it.lecture = self
         }
