@@ -34,8 +34,17 @@ class LectureDetailTableViewController: UITableViewController {
         timeCell.contentTextField.text = singleClass?.timeString
         timeCell.contentTextField.enabled = false
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: Selector("resignFirstResponder"))
+        self.tableView.addGestureRecognizer(tapGesture)
     }
 
+    override func resignFirstResponder() -> Bool {
+        nameCell.contentTextField.resignFirstResponder()
+        professorCell.contentTextField.resignFirstResponder()
+        locationCell.contentTextField.resignFirstResponder()
+        return super.resignFirstResponder()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
