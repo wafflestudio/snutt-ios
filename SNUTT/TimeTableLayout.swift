@@ -27,7 +27,7 @@ class TimeTableLayout: UICollectionViewLayout {
             var width = self.collectionView!.bounds.size.width / CGFloat(source.ColumnList.count)
             var height = HeightPerHour * CGFloat(singleClass.duration) / 2.0
             var locX = CGFloat(indexColumn+1) * width
-            var locY = HeightForHeader + HeightPerHour * indexRow
+            var locY = HeightForHeader + HeightPerHour * (indexRow-1.0)
             ret.frame = CGRect(x: locX, y: locY, width: width, height: height)
         } else {
             var indexRow = indexPath.row / source.ColumnList.count
