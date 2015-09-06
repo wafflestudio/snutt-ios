@@ -42,7 +42,11 @@ class CourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
     
     @IBOutlet weak var courseText: UILabel!
-    var singleClass : STSingleClass?
+    var singleClass : STSingleClass? {
+        didSet {
+            courseText.text = "\(singleClass!.lecture!.name)\n\(singleClass!.place)"
+        }
+    }
     
    
     
@@ -94,9 +98,5 @@ class CourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         singleClass!.lecture!.colorIndex = colorIndex
         TimeTableCollectionViewController.datasource.SaveData()
         TimeTableCollectionViewController.datasource.collectionView?.reloadData()
-    }
-    func setSingleClass(tmp : STSingleClass) {
-        singleClass = tmp
-        courseText.text = "\(tmp.lecture!.name)\n\(tmp.place)"
     }
 }

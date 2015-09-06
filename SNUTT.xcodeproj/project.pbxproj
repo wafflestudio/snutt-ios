@@ -25,6 +25,7 @@
 		E19A3AB11B453770007FCAD7 /* SNUTTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3AB01B453770007FCAD7 /* SNUTTTests.swift */; };
 		E19E231F1B468B700010DFB1 /* LectureSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E231E1B468B700010DFB1 /* LectureSearchTableViewController.swift */; };
 		E19E23211B4691D90010DFB1 /* LectureSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E23201B4691D90010DFB1 /* LectureSearchTableViewCell.swift */; };
+		E1B607ED1B99A5FF001DDD94 /* LectureDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B607EC1B99A5FF001DDD94 /* LectureDetailTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		E19A3AB01B453770007FCAD7 /* SNUTTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTTests.swift; sourceTree = "<group>"; };
 		E19E231E1B468B700010DFB1 /* LectureSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureSearchTableViewController.swift; sourceTree = "<group>"; };
 		E19E23201B4691D90010DFB1 /* LectureSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureSearchTableViewCell.swift; sourceTree = "<group>"; };
+		E1B607EC1B99A5FF001DDD94 /* LectureDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E76BCDB7320C5B43D709D301 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,6 +136,7 @@
 				E16643521B462BDA00387EF8 /* CourseDataSource.swift */,
 				E16643541B4630B500387EF8 /* ColumnHeaderCollectionViewCell.swift */,
 				E10852CA1B4CCF85006FD8B3 /* SNUTT-Bridging-Header.h */,
+				E1B607EC1B99A5FF001DDD94 /* LectureDetailTableViewCell.swift */,
 			);
 			path = SNUTT;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				E10852C91B4CCD16006FD8B3 /* TimeTableCollectionViewController.swift in Sources */,
 				E16643551B4630B500387EF8 /* ColumnHeaderCollectionViewCell.swift in Sources */,
 				E16643531B462BDA00387EF8 /* CourseDataSource.swift in Sources */,
+				E1B607ED1B99A5FF001DDD94 /* LectureDetailTableViewCell.swift in Sources */,
 				E16643591B46624500387EF8 /* CourseCellCollectionViewCell.swift in Sources */,
 				E16643511B4623BB00387EF8 /* TimeTableLayout.swift in Sources */,
 				E19A3A9D1B453770007FCAD7 /* ViewController.swift in Sources */,

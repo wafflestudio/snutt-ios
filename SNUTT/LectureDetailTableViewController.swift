@@ -10,10 +10,13 @@ import UIKit
 
 class LectureDetailTableViewController: UITableViewController {
     
-    var lecture : STLecture?
+    @IBOutlet weak var nameCell: LectureDetailTableViewCell!
+    @IBOutlet weak var professorCell: LectureDetailTableViewCell!
+    @IBOutlet weak var locationCell: LectureDetailTableViewCell!
+    @IBOutlet weak var timeCell: LectureDetailTableViewCell!
     
-    @IBOutlet weak var lectureNameLabel: UILabel!
-    @IBOutlet weak var professorLabel: UILabel!
+    var singleClass : STSingleClass?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Uncomment the following line to preserve selection between presentations
@@ -21,8 +24,15 @@ class LectureDetailTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        lectureNameLabel.text = lecture?.name
-        professorLabel.text = lecture?.professor
+        let saveBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("saveDetail"))
+        self.navigationItem.rightBarButtonItem = saveBarButtonItem
+        
+        nameCell.contentTextField.text = singleClass?.lecture?.name
+        professorCell.contentTextField.text = singleClass!.lecture?.professor
+        
+        locationCell.contentTextField.text = singleClass?.place
+        timeCell.contentTextField.text = singleClass?.timeString
+        timeCell.contentTextField.enabled = false
         
     }
 
@@ -32,17 +42,17 @@ class LectureDetailTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
-        return cell
+    
+    func saveDetail() {
+        singleClass?.lecture?.name = nameCell.contentTextField.text
+        singleClass!.lecture?.professor = professorCell.contentTextField.text
+        
+        singleClass?.place = locationCell.contentTextField.text
+        TimeTableCollectionViewController.datasource.SaveData()
+        TimeTableCollectionViewController.datasource.collectionView?.reloadData()
+        self.navigationController?.popViewControllerAnimated(true)
     }
-    */
-
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

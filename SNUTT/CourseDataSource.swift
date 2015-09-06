@@ -31,6 +31,7 @@ class CourseDataSource: NSObject, UICollectionViewDataSource{
         if let data = ud.objectForKey("courseList") as? NSData {
             let unarc = NSKeyedUnarchiver(forReadingWithData: data )
             CourseList = unarc.decodeObjectForKey("root") as![STLecture]
+            SingleClassList.removeAll(keepCapacity: true)
             for it in CourseList {
                 for jt in it.classList {
                     SingleClassList.append(jt)
@@ -112,7 +113,7 @@ class CourseDataSource: NSObject, UICollectionViewDataSource{
         case .Course:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as!CourseCellCollectionViewCell
             var course = SingleClassList[indexPath.row]
-            cell.setSingleClass(course)
+            cell.singleClass = course
             cell.setColor()
             return cell
         }

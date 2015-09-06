@@ -32,6 +32,14 @@ class TimeTableCollectionViewController: UICollectionViewController, UIAlertView
         // Dispose of any resources that can be recreated.
     }
     
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 1 {
+            let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LectureDetailTableViewController") as! LectureDetailTableViewController
+            detailViewController.singleClass = TimeTableCollectionViewController.datasource.SingleClassList[indexPath.row]
+            self.showViewController(detailViewController, sender: nil)
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -90,7 +98,7 @@ class TimeTableCollectionViewController: UICollectionViewController, UIAlertView
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let viewer = segue.destinationViewController as? LectureDetailTableViewController {
-            viewer.lecture = (sender as! CourseCellCollectionViewCell).singleClass!.lecture
+            //viewer.lecture = (sender as! CourseCellCollectionViewCell).singleClass!.lecture
         }
     }
 
