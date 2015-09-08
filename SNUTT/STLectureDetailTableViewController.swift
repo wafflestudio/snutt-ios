@@ -1,5 +1,5 @@
 //
-//  LectureDetailTableViewController.swift
+//  STLectureDetailTableViewController.swift
 //  SNUTT
 //
 //  Created by 김진형 on 2015. 7. 3..
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class LectureDetailTableViewController: UITableViewController {
+class STLectureDetailTableViewController: UITableViewController {
     
-    @IBOutlet weak var nameCell: LectureDetailTableViewCell!
-    @IBOutlet weak var professorCell: LectureDetailTableViewCell!
-    @IBOutlet weak var locationCell: LectureDetailTableViewCell!
-    @IBOutlet weak var timeCell: LectureDetailTableViewCell!
+    @IBOutlet weak var nameCell: STLectureDetailTableViewCell!
+    @IBOutlet weak var professorCell: STLectureDetailTableViewCell!
+    @IBOutlet weak var locationCell: STLectureDetailTableViewCell!
+    @IBOutlet weak var timeCell: STLectureDetailTableViewCell!
     
     var singleClass : STSingleClass?
     
@@ -57,8 +57,8 @@ class LectureDetailTableViewController: UITableViewController {
         singleClass!.lecture?.professor = professorCell.contentTextField.text
         
         singleClass?.place = locationCell.contentTextField.text
-        TimeTableCollectionViewController.datasource.SaveData()
-        TimeTableCollectionViewController.datasource.collectionView?.reloadData()
+        STCourseBooksManager.sharedInstance.saveData()
+        //STTimeTableCollectionViewController.datasource.collectionView?.reloadData()
         self.navigationController?.popViewControllerAnimated(true)
     }
     

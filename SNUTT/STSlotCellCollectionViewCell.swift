@@ -1,5 +1,5 @@
 //
-//  SlotCellCollectionViewCell.swift
+//  STSlotCellCollectionViewCell.swift
 //  SNUTT
 //
 //  Created by 김진형 on 2015. 7. 3..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SlotCellCollectionViewCell: UICollectionViewCell {
+class STSlotCellCollectionViewCell: UICollectionViewCell {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

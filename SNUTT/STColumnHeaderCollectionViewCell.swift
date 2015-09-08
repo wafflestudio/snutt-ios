@@ -1,5 +1,5 @@
 //
-//  ColumnHeaderCollectionViewCell.swift
+//  STColumnHeaderCollectionViewCell.swift
 //  SNUTT
 //
 //  Created by 김진형 on 2015. 7. 3..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ColumnHeaderCollectionViewCell: UICollectionViewCell {
+class STColumnHeaderCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var contentLabel: UILabel!
     required init(coder aDecoder: NSCoder) {

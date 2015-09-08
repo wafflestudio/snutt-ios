@@ -1,5 +1,5 @@
 //
-//  CourseCellCollectionViewCell.swift
+//  STCourseCellCollectionViewCell.swift
 //  SNUTT
 //
 //  Created by 김진형 on 2015. 7. 3..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-func colorHex (hex:String) -> UIColor {
+func STColorFromHex (hex:String) -> UIColor {
     var cString:String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).uppercaseString
     
     if (cString.hasPrefix("#")) {
@@ -32,12 +32,12 @@ func colorHex (hex:String) -> UIColor {
     return UIColor(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: CGFloat(1))
 }
 
-class CourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
+class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
     static var backgroundColorList : [UIColor] =
-    [colorHex("#B6F9B2"), colorHex("#BFF7F8"), colorHex("#94E6FE"), colorHex("#F6B5F5"), colorHex("#FFF49A"), colorHex("#FFB2BC")]
+    [STColorFromHex("#B6F9B2"), STColorFromHex("#BFF7F8"), STColorFromHex("#94E6FE"), STColorFromHex("#F6B5F5"), STColorFromHex("#FFF49A"), STColorFromHex("#FFB2BC")]
     static var labelColorList : [UIColor] =
-    [colorHex("#2B8728"), colorHex("#45B2B8"), colorHex("#1579C2"), colorHex("#A337A1"), colorHex("#B8991B"), colorHex("#BA313B")]
+    [STColorFromHex("#2B8728"), STColorFromHex("#45B2B8"), STColorFromHex("#1579C2"), STColorFromHex("#A337A1"), STColorFromHex("#B8991B"), STColorFromHex("#BA313B")]
     
     
     
@@ -45,6 +45,7 @@ class CourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     var singleClass : STSingleClass? {
         didSet {
             courseText.text = "\(singleClass!.lecture!.name)\n\(singleClass!.place)"
+            setColor()
         }
     }
     
@@ -63,12 +64,12 @@ class CourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         self.addGestureRecognizer(swipeRightGesture)
     }
     func setColor() {
-        self.backgroundColor = CourseCellCollectionViewCell.backgroundColorList[singleClass!.lecture!.colorIndex]
-        courseText.textColor = CourseCellCollectionViewCell.labelColorList[singleClass!.lecture!.colorIndex]
+        self.backgroundColor = STCourseCellCollectionViewCell.backgroundColorList[singleClass!.lecture!.colorIndex]
+        courseText.textColor = STCourseCellCollectionViewCell.labelColorList[singleClass!.lecture!.colorIndex]
     }
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if(buttonIndex == 1) {
-            TimeTableCollectionViewController.datasource.deleteLecture(singleClass!.lecture!)
+            STCourseBooksManager.sharedInstance.currentCourseBook?.deleteLecture(singleClass!.lecture!)
         }
     }
     func longClick(gesture : UILongPressGestureRecognizer) {
@@ -80,23 +81,23 @@ class CourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     func swipeToLeft(gesture : UISwipeGestureRecognizer) {
         var colorIndex = singleClass!.lecture!.colorIndex
         if colorIndex == 0 {
-            colorIndex = CourseCellCollectionViewCell.backgroundColorList.count-1
+            colorIndex = STCourseCellCollectionViewCell.backgroundColorList.count-1
         } else {
             colorIndex--
         }
         singleClass!.lecture!.colorIndex = colorIndex
-        TimeTableCollectionViewController.datasource.SaveData()
-        TimeTableCollectionViewController.datasource.collectionView?.reloadData()
+        STCourseBooksManager.sharedInstance.saveData()
+        STCourseBooksManager.sharedInstance.reloadTimeTable()
     }
     func swipeToRight(gesture : UISwipeGestureRecognizer) {
         var colorIndex = singleClass!.lecture!.colorIndex
-        if colorIndex == CourseCellCollectionViewCell.backgroundColorList.count-1 {
+        if colorIndex == STCourseCellCollectionViewCell.backgroundColorList.count-1 {
             colorIndex = 0
         } else {
             colorIndex++
         }
         singleClass!.lecture!.colorIndex = colorIndex
-        TimeTableCollectionViewController.datasource.SaveData()
-        TimeTableCollectionViewController.datasource.collectionView?.reloadData()
+        STCourseBooksManager.sharedInstance.saveData()
+        STCourseBooksManager.sharedInstance.reloadTimeTable()
     }
 }

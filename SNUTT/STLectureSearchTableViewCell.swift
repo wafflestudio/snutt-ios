@@ -1,5 +1,5 @@
 //
-//  LectureSearchTableViewCell.swift
+//  STLectureSearchTableViewCell.swift
 //  SNUTT
 //
 //  Created by 김진형 on 2015. 7. 3..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
+class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var label1: UILabel!
@@ -32,7 +32,7 @@ class LectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBAction func buttonClicked(sender: AnyObject) {
         
         var alertView = UIAlertView(title: "SNUTT", message: "", delegate: nil, cancelButtonTitle: "OK")
-        switch TimeTableCollectionViewController.datasource.addLecture(lecture!) {
+        switch STCourseBooksManager.sharedInstance.currentCourseBook!.addLecture(lecture!) {
         case .ErrorTime:
             alertView.message = "Time is Overlapping"
         case .ErrorSameLecture:

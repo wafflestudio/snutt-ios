@@ -1,5 +1,5 @@
 //
-//  LectureDetailTableViewCell.swift
+//  STLectureDetailTableViewCell.swift
 //  SNUTT
 //
 //  Created by Rajin on 2015. 9. 4..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LectureDetailTableViewCell: UITableViewCell {
+class STLectureDetailTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var contentTextField: UITextField!
@@ -22,5 +22,4 @@ class LectureDetailTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

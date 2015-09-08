@@ -1,5 +1,5 @@
 //
-//  LectureSearchTableViewController.swift
+//  STLectureSearchTableViewController.swift
 //  SNUTT
 //
 //  Created by 김진형 on 2015. 7. 3..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, LoadMoreTableFooterDelegate{
+class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, LoadMoreTableFooterDelegate{
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -73,7 +73,8 @@ class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UI
         }
         pageNum++
         var queryText = SearchingString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        var url : String  = "http://snutt.kr/api/search_query?year=2015&semester=2&filter=&type=course_title&query_text=\(queryText)&page=\(pageNum)&per_page=30"
+        var currentCourseBook = STCourseBooksManager.sharedInstance.currentCourseBook!
+        var url : String  = "http://snutt.kr/api/search_query?year=\(currentCourseBook.year)&semester=\(currentCourseBook.semester)&filter=&type=course_title&query_text=\(queryText)&page=\(pageNum)&per_page=30"
         var jsonData = NSData(contentsOfURL: NSURL(string: url)!)
         var jsonDictionary = NSJSONSerialization.JSONObjectWithData(jsonData!, options: nil, error: nil) as! NSDictionary
         var searchResult = jsonDictionary["lectures"] as! [NSDictionary]
@@ -112,7 +113,7 @@ class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UI
         if (tmpCell == nil) {
             tmpCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "LectureSearchCell")
         }
-        let cell = tmpCell as! LectureSearchTableViewCell
+        let cell = tmpCell as! STLectureSearchTableViewCell
         cell.lecture = FilteredList[indexPath.row]
         cell.button.hidden = true
         return cell
@@ -147,7 +148,7 @@ class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UI
     
     
     @IBAction func buttonAction(sender: AnyObject) {
-        let cell = tableView.cellForRowAtIndexPath(tableView.indexPathForSelectedRow()!) as! LectureSearchTableViewCell
+        let cell = tableView.cellForRowAtIndexPath(tableView.indexPathForSelectedRow()!) as! STLectureSearchTableViewCell
         /*
         var frame = cell.frame
         var center = cell.center
@@ -172,13 +173,13 @@ class LectureSearchTableViewController: UIViewController,UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! LectureSearchTableViewCell
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! STLectureSearchTableViewCell
         cell.button.hidden = false
         //TimeTableCollectionViewController.datasource.addLecture(FilteredList[indexPath.row])
         
     }
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! LectureSearchTableViewCell
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! STLectureSearchTableViewCell
         cell.button.hidden = true
     }
     
