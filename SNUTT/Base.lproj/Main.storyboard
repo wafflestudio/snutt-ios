@@ -17,7 +17,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="EvE-NX-428" kind="relationship" relationship="viewControllers" id="R05-hm-JrA"/>
-                        <segue destination="xj7-5c-aFi" kind="relationship" relationship="viewControllers" id="dye-Q2-5Cb"/>
+                        <segue destination="aj0-Z9-skP" kind="relationship" relationship="viewControllers" id="dye-Q2-5Cb"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r7e-ga-D09" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -118,7 +118,7 @@
             </objects>
             <point key="canvasLocation" x="2292" y="-325"/>
         </scene>
-        <!--Lecture Search Table View Controller-->
+        <!--강의 검색-->
         <scene sceneID="Klp-AW-Ool">
             <objects>
                 <viewController id="xj7-5c-aFi" customClass="STLectureSearchTableViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
@@ -127,18 +127,18 @@
                         <viewControllerLayoutGuide type="bottom" id="kbG-Pe-fQU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Kj5-zA-s3U">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="9Lj-z7-tFw">
-                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="xj7-5c-aFi" id="ulF-h1-QV8"/>
                                 </connections>
                             </searchBar>
                             <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XID-hC-pe0">
-                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <rect key="frame" x="0.0" y="44" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -222,13 +222,13 @@
                             <constraint firstAttribute="trailing" secondItem="XID-hC-pe0" secondAttribute="trailing" id="2BJ-os-K17"/>
                             <constraint firstItem="XID-hC-pe0" firstAttribute="leading" secondItem="Kj5-zA-s3U" secondAttribute="leading" id="Jns-L3-YT6"/>
                             <constraint firstItem="XID-hC-pe0" firstAttribute="top" secondItem="9Lj-z7-tFw" secondAttribute="bottom" id="NGa-Kg-73X"/>
-                            <constraint firstItem="kbG-Pe-fQU" firstAttribute="top" secondItem="XID-hC-pe0" secondAttribute="bottom" id="gm7-Ap-qRH"/>
+                            <constraint firstItem="kbG-Pe-fQU" firstAttribute="top" secondItem="XID-hC-pe0" secondAttribute="bottom" constant="-44" id="gm7-Ap-qRH"/>
                             <constraint firstAttribute="trailing" secondItem="9Lj-z7-tFw" secondAttribute="trailing" id="q1U-Dn-wat"/>
                             <constraint firstItem="9Lj-z7-tFw" firstAttribute="leading" secondItem="Kj5-zA-s3U" secondAttribute="leading" id="qC4-Ql-07o"/>
                             <constraint firstItem="9Lj-z7-tFw" firstAttribute="top" secondItem="Pe0-MI-3Cc" secondAttribute="bottom" id="shv-eJ-dqI"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="search" id="fYX-OP-AfH"/>
+                    <navigationItem key="navigationItem" title="강의 검색" id="knp-xl-D3z"/>
                     <connections>
                         <outlet property="searchBar" destination="9Lj-z7-tFw" id="0CL-01-A3j"/>
                         <outlet property="tableView" destination="XID-hC-pe0" id="12T-ix-6PG"/>
@@ -236,7 +236,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JNM-LH-OnT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1480" y="-1007"/>
+            <point key="canvasLocation" x="2292" y="-1007"/>
         </scene>
         <!--Lecture Detail Table View Controller-->
         <scene sceneID="XbK-r8-m6E">
@@ -439,6 +439,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="je3-o8-UsJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1480" y="-325"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="4Qm-4D-iNk">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aj0-Z9-skP" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="search" id="fYX-OP-AfH"/>
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="jK4-QT-rjO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="xj7-5c-aFi" kind="relationship" relationship="rootViewController" id="aGi-Q0-TfA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eSg-Ib-QA3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1480" y="-1007"/>
         </scene>
     </scenes>
 </document>
