@@ -21,7 +21,7 @@ class STCourseBook: NSObject, NSCoding{
         super.init()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         lectureList = aDecoder.decodeObjectForKey("lectureList") as! [STLecture]
         singleClassList.removeAll(keepCapacity: true)
         for it in lectureList {

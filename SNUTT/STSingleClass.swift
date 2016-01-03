@@ -15,7 +15,7 @@ class STSingleClass : NSObject, NSCoding{
     weak var lecture : STLecture?
     var timeString : String? {
         get {
-            var finishTime = STTime(day: startTime.day, period: startTime.period + duration*2)
+            let finishTime = STTime(day: startTime.day, period: startTime.period + duration*2)
             return "\(startTime.toString())~\(finishTime.periodToString())"
         }
     }
@@ -25,7 +25,7 @@ class STSingleClass : NSObject, NSCoding{
         place = tPlace
         super.init()
     }
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         startTime = aDecoder.decodeObjectForKey("startTime") as! STTime
         duration = aDecoder.decodeObjectForKey("duration") as! Int
         place = aDecoder.decodeObjectForKey("place") as! String

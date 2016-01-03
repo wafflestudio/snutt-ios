@@ -9,13 +9,13 @@
 import UIKit
 
 class STSlotCellCollectionViewCell: UICollectionViewCell {
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     override func drawRect(rect: CGRect) {
         
         super.drawRect(rect)
-        var context = UIGraphicsGetCurrentContext()
+        let context = UIGraphicsGetCurrentContext()
         
         CGContextSetStrokeColorWithColor(context, CGColorCreate(CGColorSpaceCreateDeviceRGB(), [0.6,0.6,0.6,1.0]))
         CGContextSetLineDash(context, 0, [2,2], 2)

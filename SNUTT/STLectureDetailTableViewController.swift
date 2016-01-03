@@ -53,10 +53,10 @@ class STLectureDetailTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     func saveDetail() {
-        singleClass?.lecture?.name = nameCell.contentTextField.text
-        singleClass!.lecture?.professor = professorCell.contentTextField.text
+        singleClass?.lecture?.name = nameCell.contentTextField.text!
+        singleClass!.lecture?.professor = professorCell.contentTextField.text!
         
-        singleClass?.place = locationCell.contentTextField.text
+        singleClass?.place = locationCell.contentTextField.text!
         STCourseBooksManager.sharedInstance.saveData()
         //STTimeTableCollectionViewController.datasource.collectionView?.reloadData()
         self.navigationController?.popViewControllerAnimated(true)

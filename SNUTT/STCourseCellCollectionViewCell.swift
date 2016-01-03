@@ -15,7 +15,7 @@ func STColorFromHex (hex:String) -> UIColor {
         cString = (cString as NSString).substringFromIndex(1)
     }
     
-    if (count(cString) != 6) {
+    if (cString.characters.count != 6) {
         return UIColor.grayColor()
     }
     
@@ -51,7 +51,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
    
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         layer.cornerRadius = 6
         let longPress = UILongPressGestureRecognizer(target: self, action: Selector("longClick:"))
@@ -74,7 +74,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     }
     func longClick(gesture : UILongPressGestureRecognizer) {
         if gesture.state == UIGestureRecognizerState.Began {
-            var alertView = UIAlertView(title: "SNUTT", message: "Do you want to Delete \(singleClass!.lecture!.name)?", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
+            let alertView = UIAlertView(title: "SNUTT", message: "Do you want to Delete \(singleClass!.lecture!.name)?", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
             alertView.show()
         }
     }

@@ -266,6 +266,8 @@
 		E19A3A8D1B453770007FCAD7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0720;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = WaffleStudio;
 				TargetAttributes = {

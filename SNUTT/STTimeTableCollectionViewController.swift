@@ -22,8 +22,8 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
         
         rowList.append("")
         for i in 0..<(STTime.periodNum) {
-            var startTime = STTime(day: STTime.STDay.MON, period: i*2)
-            var endTime = STTime(day: STTime.STDay.MON, period: i*2+1)
+            let startTime = STTime(day: STTime.STDay.MON, period: i*2)
+            let endTime = STTime(day: STTime.STDay.MON, period: i*2+1)
             rowList.append("\(startTime.periodToString()) ~ \(endTime.periodToString())")
         }
 
@@ -118,7 +118,7 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
             cell.contentLabel.text = rowList[indexPath.row / columnList.count]
             return cell
         case .Slot:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SlotCell", forIndexPath: indexPath) as! UICollectionViewCell;
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SlotCell", forIndexPath: indexPath) ;
             return cell
         case .Course:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as!STCourseCellCollectionViewCell

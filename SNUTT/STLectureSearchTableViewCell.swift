@@ -31,7 +31,7 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     }
     @IBAction func buttonClicked(sender: AnyObject) {
         
-        var alertView = UIAlertView(title: "SNUTT", message: "", delegate: nil, cancelButtonTitle: "OK")
+        let alertView = UIAlertView(title: "SNUTT", message: "", delegate: nil, cancelButtonTitle: "OK")
         switch STCourseBooksManager.sharedInstance.currentCourseBook!.addLecture(lecture!) {
         case .ErrorTime:
             alertView.message = "Time is Overlapping"

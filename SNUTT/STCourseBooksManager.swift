@@ -65,12 +65,12 @@ class STCourseBooksManager : NSObject {
             var insertCourseBookList : [STCourseBook] = []
             for i in 0..<courseBookInfoList.count {
                 let info = courseBookInfoList[i]
-                var year = (info["year"] as! String).toInt()!
+                var year = Int((info["year"] as! String))
                 var semester = info["semester"] as! String
                 if self.courseBookList.last != nil && self.courseBookList.last!.year == year && self.courseBookList.last!.semester == semester{
                     break
                 }
-                insertCourseBookList.append(STCourseBook(year: year, semester: semester))
+                insertCourseBookList.append(STCourseBook(year: year!, semester: semester))
             }
             
             //put course book in reverse order

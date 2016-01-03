@@ -19,21 +19,21 @@ class STTimeTableLayout: UICollectionViewLayout {
         HeightPerHour = collectionView!.frame.size.height / (CGFloat(STTime.periodNum) + ratioForHeader)
         HeightForHeader = ratioForHeader * HeightPerHour
         
-        var ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-        var courseBook = STCourseBooksManager.sharedInstance.currentCourseBook
-        var type = timeTableController!.getCellType(indexPath)
+        let ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+        let courseBook = STCourseBooksManager.sharedInstance.currentCourseBook
+        let type = timeTableController!.getCellType(indexPath)
         if type == STTimeTableCollectionViewController.cellType.Course {
-            var singleClass = courseBook!.singleClassList[indexPath.row]
-            var indexRow = CGFloat(singleClass.startTime.period) / 2.0
-            var indexColumn = singleClass.startTime.day.rawValue
-            var width = self.collectionView!.bounds.size.width / CGFloat(timeTableController!.columnList.count)
-            var height = HeightPerHour * CGFloat(singleClass.duration) / 2.0
-            var locX = CGFloat(indexColumn+1) * width
-            var locY = HeightForHeader + HeightPerHour * (indexRow-1.0)
+            let singleClass = courseBook!.singleClassList[indexPath.row]
+            let indexRow = CGFloat(singleClass.startTime.period) / 2.0
+            let indexColumn = singleClass.startTime.day.rawValue
+            let width = self.collectionView!.bounds.size.width / CGFloat(timeTableController!.columnList.count)
+            let height = HeightPerHour * CGFloat(singleClass.duration) / 2.0
+            let locX = CGFloat(indexColumn+1) * width
+            let locY = HeightForHeader + HeightPerHour * (indexRow-1.0)
             ret.frame = CGRect(x: locX, y: locY, width: width, height: height)
         } else {
-            var indexRow = indexPath.row / timeTableController!.columnList.count
-            var indexColumn = indexPath.row % timeTableController!.columnList.count
+            let indexRow = indexPath.row / timeTableController!.columnList.count
+            let indexColumn = indexPath.row % timeTableController!.columnList.count
             var width = self.collectionView!.bounds.size.width / CGFloat(timeTableController!.columnList.count)
             var height : CGFloat = 0.0
             switch type {
@@ -46,7 +46,7 @@ class STTimeTableLayout: UICollectionViewLayout {
             default:
                 height = 0.0
             }
-            var locX = CGFloat(indexColumn) * width
+            let locX = CGFloat(indexColumn) * width
             var locY : CGFloat = 0.0
             if indexRow == 0 {
                 locY = 0
@@ -62,15 +62,15 @@ class STTimeTableLayout: UICollectionViewLayout {
         return ret
     }
     override func collectionViewContentSize() -> CGSize {
-        var contentWidth = self.collectionView!.bounds.size.width
-        var contentHeight: CGFloat = self.collectionView!.bounds.size.height
+        let contentWidth = self.collectionView!.bounds.size.width
+        let contentHeight: CGFloat = self.collectionView!.bounds.size.height
         return CGSize(width: contentWidth, height: contentHeight)
     }
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
-        var ret : [AnyObject]? = []
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        var ret : [UICollectionViewLayoutAttributes]? = []
         for i in 0..<(timeTableController!.numberOfSectionsInCollectionView(collectionView!)) {
             for j in 0..<(timeTableController!.collectionView(collectionView!, numberOfItemsInSection: i)) {
-                var indexPath = NSIndexPath(forRow: j, inSection: i)
+                let indexPath = NSIndexPath(forRow: j, inSection: i)
                 ret?.append(self.layoutAttributesForItemAtIndexPath(indexPath))
             }
         }

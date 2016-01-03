@@ -47,11 +47,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         }
         isGettingLecture = true
         FilteredList = []
-        var queryText = searchString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        var url : String  = "http://snutt.kr/api/search_query?year=2015&semester=2&filter=&type=course_title&query_text=\(queryText)&page=1&per_page=30"
-        var jsonData = NSData(contentsOfURL: NSURL(string: url)!)
-        var jsonDictionary = NSJSONSerialization.JSONObjectWithData(jsonData!, options: nil, error: nil) as! NSDictionary
-        var searchResult = jsonDictionary["lectures"] as! [NSDictionary]
+        let queryText = searchString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        let url : String  = "http://snutt.kr/api/search_query?year=2015&semester=2&filter=&type=course_title&query_text=\(queryText)&page=1&per_page=30"
+        let jsonData = NSData(contentsOfURL: NSURL(string: url)!)
+        let jsonDictionary = (try! NSJSONSerialization.JSONObjectWithData(jsonData!, options: [])) as! NSDictionary
+        let searchResult = jsonDictionary["lectures"] as! [NSDictionary]
         for it in searchResult {
             FilteredList.append(STLecture(json: it))
         }
@@ -72,12 +72,12 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
             return
         }
         pageNum++
-        var queryText = SearchingString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        var currentCourseBook = STCourseBooksManager.sharedInstance.currentCourseBook!
-        var url : String  = "http://snutt.kr/api/search_query?year=\(currentCourseBook.year)&semester=\(currentCourseBook.semester)&filter=&type=course_title&query_text=\(queryText)&page=\(pageNum)&per_page=30"
-        var jsonData = NSData(contentsOfURL: NSURL(string: url)!)
-        var jsonDictionary = NSJSONSerialization.JSONObjectWithData(jsonData!, options: nil, error: nil) as! NSDictionary
-        var searchResult = jsonDictionary["lectures"] as! [NSDictionary]
+        let queryText = SearchingString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        let currentCourseBook = STCourseBooksManager.sharedInstance.currentCourseBook!
+        let url : String  = "http://snutt.kr/api/search_query?year=\(currentCourseBook.year)&semester=\(currentCourseBook.semester)&filter=&type=course_title&query_text=\(queryText)&page=\(pageNum)&per_page=30"
+        let jsonData = NSData(contentsOfURL: NSURL(string: url)!)
+        let jsonDictionary = (try! NSJSONSerialization.JSONObjectWithData(jsonData!, options: [])) as! NSDictionary
+        let searchResult = jsonDictionary["lectures"] as! [NSDictionary]
         for it in searchResult {
             FilteredList.append(STLecture(json: it))
         }
@@ -129,7 +129,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
-        getLectureList(searchBar.text)
+        getLectureList(searchBar.text!)
         tableView.hidden = false
         reloadData()
     }
@@ -148,7 +148,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     
     @IBAction func buttonAction(sender: AnyObject) {
-        let cell = tableView.cellForRowAtIndexPath(tableView.indexPathForSelectedRow()!) as! STLectureSearchTableViewCell
+        let cell = tableView.cellForRowAtIndexPath(tableView.indexPathForSelectedRow!) as! STLectureSearchTableViewCell
         /*
         var frame = cell.frame
         var center = cell.center
@@ -167,7 +167,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         })
         */
         cell.button.hidden = true
-        tableView.deselectRowAtIndexPath(tableView.indexPathForSelectedRow()!, animated: true)
+        tableView.deselectRowAtIndexPath(tableView.indexPathForSelectedRow!, animated: true)
         
 
     }

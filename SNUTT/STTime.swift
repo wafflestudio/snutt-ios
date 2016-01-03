@@ -25,7 +25,7 @@ class STTime : NSObject, NSCoding{
         day = STTime.stringToDay[tDay]!
         period = (Int)(tPeriod * 2)
     }
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         day = STDay(rawValue: aDecoder.decodeObjectForKey("day") as! Int)!
         period = aDecoder.decodeObjectForKey("period") as! Int
     }
@@ -41,8 +41,8 @@ class STTime : NSObject, NSCoding{
         }
     }
     func toString() -> String {
-        var dayString = STTime.dayToString[day.rawValue]
-        var periodString = periodToString()
+        let dayString = STTime.dayToString[day.rawValue]
+        let periodString = periodToString()
         return "\(dayString) \(periodString)"
     }
     func toShortString() -> String {

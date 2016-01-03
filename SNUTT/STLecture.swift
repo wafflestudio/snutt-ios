@@ -18,7 +18,7 @@ class STLecture : NSObject , NSCoding{
     var course_number : String
     var lecture_number : String
     var colorIndex : Int
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         name = aDecoder.decodeObjectForKey("name") as! String
         professor = aDecoder.decodeObjectForKey("professor") as! String
         credit = aDecoder.decodeObjectForKey("credit") as! Int
@@ -46,21 +46,21 @@ class STLecture : NSObject , NSCoding{
 
     }
     init(json data : NSDictionary) {
-        var timeData = data["class_time"] as! String
-        var timeArr = split(timeData){$0 == "/"}
-        var locationData = data["location"] as! String
-        var locationArr = split(locationData){$0 == "/"}
+        let timeData = data["class_time"] as! String
+        var timeArr = timeData.characters.split{$0 == "/"}.map { String($0) }
+        let locationData = data["location"] as! String
+        var locationArr = locationData.characters.split{$0 == "/"}.map { String($0) }
         if locationArr.count == 0{
             locationArr = ["","","","",""]
         }
         for i in 0..<timeArr.count {
-            var time = timeArr[i]
-            var t = split(time) {
+            let time = timeArr[i]
+            var t = time.characters.split {
                 (params) -> Bool in
                 var ret = (params == ")")
                 ret = ret || (params == "(") || (params == "-")
                 return ret
-            }
+            }.map { String($0) }
             classList.append(STSingleClass(startTime : STTime(day : t[0], period : (t[1] as NSString).doubleValue), duration : (Int)((t[2] as NSString).doubleValue * 2.0), place : locationArr[i]))
         }
         name = data["course_title"] as! String
