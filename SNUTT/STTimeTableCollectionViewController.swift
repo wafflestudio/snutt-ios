@@ -15,10 +15,13 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
     var columnList = ["","월", "화", "수", "목", "금", "토"]
     var rowList : [String] = []
     
+    var timetable : STTimetable? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        STCourseBooksManager.sharedInstance.timeTableController = self
+        self.collectionView?.registerNib(UINib(nibName: "STCourseCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CourseCell")
+        self.collectionView?.registerNib(UINib(nibName: "STColumnHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ColumnHeaderCell")
+        self.collectionView?.registerNib(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
         
         rowList.append("")
         for i in 0..<(STTime.periodNum) {
@@ -26,7 +29,9 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
             let endTime = STTime(day: STTime.STDay.MON, period: i*2+1)
             rowList.append("\(startTime.periodToString()) ~ \(endTime.periodToString())")
         }
-
+        timetable = STTimetable(year: 2016, semester: "1");
+        let viewLayout = STTimeTableLayout(aTimetable: timetable!)
+        self.collectionView?.collectionViewLayout = viewLayout
         (self.collectionView?.collectionViewLayout as! STTimeTableLayout).timeTableController = self
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -68,14 +73,6 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
         self.collectionView?.reloadData()
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 1 {
-            let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LectureDetailTableViewController") as! STLectureDetailTableViewController
-            detailViewController.singleClass = STCourseBooksManager.sharedInstance.currentCourseBook?.singleClassList[indexPath.row]
-            self.showViewController(detailViewController, sender: nil)
-        }
-    }
-    
     /*
     // MARK: - Navigation
 
@@ -93,10 +90,10 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
         case 0:
             return columnList.count * rowList.count
         case 1:
-            if STCourseBooksManager.sharedInstance.currentCourseBook == nil {
+            if timetable == nil {
                 return 0
             }
-            return STCourseBooksManager.sharedInstance.currentCourseBook!.singleClassList.count
+            return timetable!.singleClassList.count
         default:
             return 0
         }
@@ -122,7 +119,7 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
             return cell
         case .Course:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as!STCourseCellCollectionViewCell
-            cell.singleClass = STCourseBooksManager.sharedInstance.currentCourseBook?.singleClassList[indexPath.row]
+            cell.singleClass = timetable!.singleClassList[indexPath.row]
             return cell
         }
     }

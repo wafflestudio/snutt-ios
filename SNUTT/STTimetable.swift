@@ -1,23 +1,26 @@
 //
-//  STCourseBook.swift
+//  STTimetable.swift
 //  SNUTT
 //
-//  Created by Rajin on 2015. 9. 6..
-//  Copyright (c) 2015년 WaffleStudio. All rights reserved.
+//  Created by Rajin on 2016. 1. 6..
+//  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
 import Foundation
 
-class STCourseBook: NSObject, NSCoding{
+class STTimetable : NSObject, NSCoding {
     
     var lectureList : [STLecture] = []
     var singleClassList : [STSingleClass] = []
-    var year : Int = 0
-    var semester : String = ""
+    var year : Int
+    var semester : String
+    var title : String
+    weak var timeTableController : STTimeTableCollectionViewController? = nil
     
     init(year aYear: Int, semester aSemester: String) {
         self.year = aYear
         self.semester = aSemester
+        self.title = ""
         super.init()
     }
     
@@ -31,13 +34,14 @@ class STCourseBook: NSObject, NSCoding{
         }
         year = aDecoder.decodeObjectForKey("year") as! Int
         semester = aDecoder.decodeObjectForKey("semester") as! String
+        title = aDecoder.decodeObjectForKey("title") as! String
         super.init()
     }
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(lectureList, forKey: "lectureList")
         aCoder.encodeObject(year, forKey: "year")
         aCoder.encodeObject(semester, forKey: "semester")
-        
+        aCoder.encodeObject(title, forKey: "title")
     }
     
     enum AddLectureState {
@@ -60,8 +64,7 @@ class STCourseBook: NSObject, NSCoding{
         for it in lecture.classList {
             singleClassList.append(it)
         }
-        STCourseBooksManager.sharedInstance.saveData()
-        //collectionView?.reloadData()
+        timeTableController?.reloadTimeTable();
         return AddLectureState.Success
     }
     func deleteLecture(lecture : STLecture) {
@@ -77,7 +80,6 @@ class STCourseBook: NSObject, NSCoding{
                 break
             }
         }
-        STCourseBooksManager.sharedInstance.saveData()
-        //collectionView?.reloadData()
+        timeTableController?.reloadTimeTable();
     }
 }

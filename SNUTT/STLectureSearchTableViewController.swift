@@ -64,6 +64,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         tableView.setContentOffset(CGPoint(x:0.0,y:0.0), animated: false)
     }
     func getMoreLectureList() {
+        /* //FIXME : DEBUG
         if isGettingLecture {
             return
         }
@@ -85,6 +86,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
             pageNum = -1
         }
         isGettingLecture = false
+        */
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -109,10 +111,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var tmpCell = tableView.dequeueReusableCellWithIdentifier("LectureSearchCell", forIndexPath: indexPath) as? UITableViewCell
-        if (tmpCell == nil) {
-            tmpCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "LectureSearchCell")
-        }
+        let tmpCell = tableView.dequeueReusableCellWithIdentifier("LectureSearchCell", forIndexPath: indexPath) as UITableViewCell
         let cell = tmpCell as! STLectureSearchTableViewCell
         cell.lecture = FilteredList[indexPath.row]
         cell.button.hidden = true

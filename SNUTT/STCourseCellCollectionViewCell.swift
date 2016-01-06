@@ -68,36 +68,16 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         courseText.textColor = STCourseCellCollectionViewCell.labelColorList[singleClass!.lecture!.colorIndex]
     }
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        /* //DEBUG
         if(buttonIndex == 1) {
             STCourseBooksManager.sharedInstance.currentCourseBook?.deleteLecture(singleClass!.lecture!)
         }
+        */
     }
     func longClick(gesture : UILongPressGestureRecognizer) {
         if gesture.state == UIGestureRecognizerState.Began {
             let alertView = UIAlertView(title: "SNUTT", message: "Do you want to Delete \(singleClass!.lecture!.name)?", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
             alertView.show()
         }
-    }
-    func swipeToLeft(gesture : UISwipeGestureRecognizer) {
-        var colorIndex = singleClass!.lecture!.colorIndex
-        if colorIndex == 0 {
-            colorIndex = STCourseCellCollectionViewCell.backgroundColorList.count-1
-        } else {
-            colorIndex--
-        }
-        singleClass!.lecture!.colorIndex = colorIndex
-        STCourseBooksManager.sharedInstance.saveData()
-        STCourseBooksManager.sharedInstance.reloadTimeTable()
-    }
-    func swipeToRight(gesture : UISwipeGestureRecognizer) {
-        var colorIndex = singleClass!.lecture!.colorIndex
-        if colorIndex == STCourseCellCollectionViewCell.backgroundColorList.count-1 {
-            colorIndex = 0
-        } else {
-            colorIndex++
-        }
-        singleClass!.lecture!.colorIndex = colorIndex
-        STCourseBooksManager.sharedInstance.saveData()
-        STCourseBooksManager.sharedInstance.reloadTimeTable()
     }
 }

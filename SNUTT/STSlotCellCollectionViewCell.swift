@@ -12,6 +12,19 @@ class STSlotCellCollectionViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    var headerNum = 0
+    var columnNum = 0
+    func drawLine(context : CGContext, st_x : CGFloat, st_y : CGFloat, en_x : CGFloat, en_y : CGFloat) {
+        
+    }
+    func drawDashedLine(context : CGContext, st_x : CGFloat, st_y : CGFloat, en_x : CGFloat, en_y : CGFloat) {
+        
+    }
+    
+    func drawSolidLine(context : CGContext, st_x : CGFloat, st_y : CGFloat, en_x : CGFloat, en_y : CGFloat) {
+        
+    }
+
     override func drawRect(rect: CGRect) {
         
         super.drawRect(rect)

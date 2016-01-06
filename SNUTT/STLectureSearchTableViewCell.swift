@@ -29,10 +29,11 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
             label3.text = timeString
         }
     }
+    
     @IBAction func buttonClicked(sender: AnyObject) {
         
         let alertView = UIAlertView(title: "SNUTT", message: "", delegate: nil, cancelButtonTitle: "OK")
-        switch STCourseBooksManager.sharedInstance.currentCourseBook!.addLecture(lecture!) {
+        switch STTimetableManager.sharedInstance.currentTimetable!.addLecture(lecture!) {
         case .ErrorTime:
             alertView.message = "Time is Overlapping"
         case .ErrorSameLecture:
@@ -43,6 +44,7 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         alertView.show()
         
     }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

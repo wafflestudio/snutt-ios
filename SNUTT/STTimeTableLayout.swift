@@ -13,17 +13,27 @@ class STTimeTableLayout: UICollectionViewLayout {
     var HeightPerHour : CGFloat = 34
     var ratioForHeader : CGFloat = 2.0/3.0
     var timeTableController : STTimeTableCollectionViewController? = nil
+    var timetable : STTimetable?
     
-    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
+    init (aTimetable :STTimetable) {
+        self.timetable = aTimetable
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    
+    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes {
         
         HeightPerHour = collectionView!.frame.size.height / (CGFloat(STTime.periodNum) + ratioForHeader)
         HeightForHeader = ratioForHeader * HeightPerHour
         
         let ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-        let courseBook = STCourseBooksManager.sharedInstance.currentCourseBook
         let type = timeTableController!.getCellType(indexPath)
         if type == STTimeTableCollectionViewController.cellType.Course {
-            let singleClass = courseBook!.singleClassList[indexPath.row]
+            let singleClass = timetable!.singleClassList[indexPath.row]
             let indexRow = CGFloat(singleClass.startTime.period) / 2.0
             let indexColumn = singleClass.startTime.day.rawValue
             let width = self.collectionView!.bounds.size.width / CGFloat(timeTableController!.columnList.count)
