@@ -1,5 +1,5 @@
 //
-//  STTimeTableLayout.swift
+//  STTimetableLayout.swift
 //  SNUTT
 //
 //  Created by 김진형 on 2015. 7. 3..
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class STTimeTableLayout: UICollectionViewLayout {
+class STTimetableLayout: UICollectionViewLayout {
     var HeightForHeader : CGFloat = 20.0
     var HeightPerHour : CGFloat = 34
     var ratioForHeader : CGFloat = 2.0/3.0
-    var timeTableController : STTimeTableCollectionViewController? = nil
+    var timeTableController : STTimetableCollectionViewController? = nil
     var timetable : STTimetable?
     
     init (aTimetable :STTimetable?) {
@@ -32,7 +32,7 @@ class STTimeTableLayout: UICollectionViewLayout {
         
         let ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         let type = timeTableController!.getCellType(indexPath)
-        if type == STTimeTableCollectionViewController.cellType.Course {
+        if type == STTimetableCollectionViewController.cellType.Course {
             let singleClass = timetable!.singleClassList[indexPath.row]
             let indexRow = CGFloat(singleClass.startTime.period) / 2.0
             let indexColumn = singleClass.startTime.day.rawValue
@@ -63,7 +63,7 @@ class STTimeTableLayout: UICollectionViewLayout {
             } else {
                 locY = HeightForHeader + HeightPerHour * CGFloat(indexRow - 1)
             }
-            if type == STTimeTableCollectionViewController.cellType.Slot {
+            if type == STTimetableCollectionViewController.cellType.Slot {
                 width = width + 1.0
                 height = height + 1.0
             }

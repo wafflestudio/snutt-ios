@@ -15,7 +15,7 @@ class STTimetable : NSObject, NSCoding {
     var year : Int
     var semester : String
     var title : String
-    weak var timeTableController : STTimeTableCollectionViewController? = nil
+    weak var timeTableController : STTimetableCollectionViewController? = nil
     
     init(year aYear: Int, semester aSemester: String) {
         self.year = aYear
@@ -64,7 +64,7 @@ class STTimetable : NSObject, NSCoding {
         for it in lecture.classList {
             singleClassList.append(it)
         }
-        timeTableController?.reloadTimeTable();
+        timeTableController?.reloadTimetable();
         return AddLectureState.Success
     }
     func deleteLecture(lecture : STLecture) {
@@ -80,6 +80,6 @@ class STTimetable : NSObject, NSCoding {
                 break
             }
         }
-        timeTableController?.reloadTimeTable();
+        timeTableController?.reloadTimetable();
     }
 }

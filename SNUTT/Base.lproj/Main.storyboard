@@ -28,7 +28,7 @@
         <!--시간표-->
         <scene sceneID="b3C-sd-em3">
             <objects>
-                <collectionViewController storyboardIdentifier="STTimeTableCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Icv-Xm-I3U" customClass="STTimeTableCollectionViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="STTimetableCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Icv-Xm-I3U" customClass="STTimetableCollectionViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Jao-OD-M66">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

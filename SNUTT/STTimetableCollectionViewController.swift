@@ -1,5 +1,5 @@
 //
-//  STTimeTableCollectionViewController.swift
+//  STTimetableCollectionViewController.swift
 //  SNUTT
 //
 //  Created by 김진형 on 2015. 7. 2..
@@ -10,7 +10,7 @@ import UIKit
 
 let reuseIdentifier = "Cell"
 
-class STTimeTableCollectionViewController: UICollectionViewController, UIAlertViewDelegate {
+class STTimetableCollectionViewController: UICollectionViewController, UIAlertViewDelegate {
     
     var columnList = ["","월", "화", "수", "목", "금", "토"]
     var rowList : [String] = []
@@ -29,15 +29,15 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
             let endTime = STTime(day: STTime.STDay.MON, period: i*2+1)
             rowList.append("\(startTime.periodToString()) ~ \(endTime.periodToString())")
         }
-        let viewLayout = STTimeTableLayout(aTimetable: timetable)
+        let viewLayout = STTimetableLayout(aTimetable: timetable)
         self.collectionView?.collectionViewLayout = viewLayout
-        (self.collectionView?.collectionViewLayout as! STTimeTableLayout).timeTableController = self
+        (self.collectionView?.collectionViewLayout as! STTimetableLayout).timeTableController = self
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        //self.collectionView!.dataSource = TimeTableCollectionViewController.datasource
-        //TimeTableCollectionViewController.datasource.collectionView = self.collectionView
+        //self.collectionView!.dataSource = TimetableCollectionViewController.datasource
+        //TimetableCollectionViewController.datasource.collectionView = self.collectionView
         // Do any additional setup after loading the view.
     }
     
@@ -47,7 +47,7 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
     }
     
     override func viewWillAppear(animated: Bool) {
-        (self.collectionView?.collectionViewLayout as! STTimeTableLayout).timetable = self.timetable
+        (self.collectionView?.collectionViewLayout as! STTimetableLayout).timetable = self.timetable
         self.collectionView?.reloadData()
     }
     
@@ -69,7 +69,7 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
         }
     }
     
-    func reloadTimeTable() {
+    func reloadTimetable() {
         self.collectionView?.reloadData()
     }
     

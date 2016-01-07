@@ -175,7 +175,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! STLectureSearchTableViewCell
         cell.button.hidden = false
-        //TimeTableCollectionViewController.datasource.addLecture(FilteredList[indexPath.row])
+        //TimetableCollectionViewController.datasource.addLecture(FilteredList[indexPath.row])
         
     }
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {

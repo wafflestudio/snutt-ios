@@ -1,5 +1,5 @@
 //
-//  STTimeTableTabViewController.swift
+//  STTimetableTabViewController.swift
 //  SNUTT
 //
 //  Created by Rajin on 2016. 1. 7..
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class STTimeTableTabViewController: UIViewController {
+class STTimetableTabViewController: UIViewController {
     
-    var timetableViewController : STTimeTableCollectionViewController?
+    var timetableViewController : STTimetableCollectionViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +28,8 @@ class STTimeTableTabViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "STTimeTableCollectionViewController") {
-            timetableViewController = segue.destinationViewController as! STTimeTableCollectionViewController
+        if(segue.identifier == "STTimetableCollectionViewController") {
+            timetableViewController = segue.destinationViewController as! STTimetableCollectionViewController
             timetableViewController?.timetable = STTimetable(year: 2016, semester: "1")
         }
         // Get the new view controller using segue.destinationViewController.
