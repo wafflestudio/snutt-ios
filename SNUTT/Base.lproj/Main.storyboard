@@ -51,10 +51,10 @@
                         <viewControllerLayoutGuide type="bottom" id="v3n-Fg-s3R"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WHc-t1-m6d">
-                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7aK-bv-6nd">
+                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7aK-bv-6nd">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <connections>
                                     <segue destination="Icv-Xm-I3U" kind="embed" id="2Tf-3y-KXA"/>
@@ -69,11 +69,48 @@
                             <constraint firstItem="v3n-Fg-s3R" firstAttribute="top" secondItem="7aK-bv-6nd" secondAttribute="bottom" id="zW3-Z7-8uY"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="i2B-jy-PUt"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="i2B-jy-PUt">
+                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="diC-Ny-PMc">
+                            <connections>
+                                <segue destination="eOk-et-eG5" kind="show" id="Uhg-sr-SqZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9sT-yZ-cLs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2283" y="-325"/>
+        </scene>
+        <!--Timetable List Controller-->
+        <scene sceneID="aXk-hY-FVg">
+            <objects>
+                <tableViewController id="eOk-et-eG5" customClass="STTimetableListController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="an3-Px-V2s">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="STTimetableListCell" id="f4M-oI-mTR">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f4M-oI-mTR" id="svq-jW-s3z">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="eOk-et-eG5" id="SD9-M7-an3"/>
+                            <outlet property="delegate" destination="eOk-et-eG5" id="FaV-M7-uPO"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bd8-mC-dG9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2283" y="402"/>
         </scene>
         <!--강의 검색-->
         <scene sceneID="Klp-AW-Ool">

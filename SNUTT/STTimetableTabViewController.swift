@@ -14,7 +14,7 @@ class STTimetableTabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        STTimetableManager.sharedInstance.currentTimetable = STTimetable(year: 2016, semester: "1", title: "testing")
+        STTimetableManager.sharedInstance.currentTimetable = STTimetable(year: 2016, semester: 0, title: "testing")
         self.navigationController!.title = STTimetableManager.sharedInstance.currentTimetable?.title
         // Do any additional setup after loading the view.
     }

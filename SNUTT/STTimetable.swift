@@ -13,11 +13,17 @@ class STTimetable : NSObject, NSCoding {
     var lectureList : [STLecture] = []
     var singleClassList : [STSingleClass] = []
     var year : Int
-    var semester : String
+    var semester : Int
     var title : String
     weak var timeTableController : STTimetableCollectionViewController? = nil
     
-    init(year aYear: Int, semester aSemester: String, title aTitle: String) {
+    static let semesterToString = ["1", "S", "2", "W"]
+    
+    func quarterToString() -> String {
+        return "\(year)" + "-" + STTimetable.semesterToString[semester]
+    }
+    
+    init(year aYear: Int, semester aSemester: Int, title aTitle: String) {
         self.year = aYear
         self.semester = aSemester
         self.title = aTitle
@@ -33,7 +39,7 @@ class STTimetable : NSObject, NSCoding {
             }
         }
         year = aDecoder.decodeObjectForKey("year") as! Int
-        semester = aDecoder.decodeObjectForKey("semester") as! String
+        semester = aDecoder.decodeObjectForKey("semester") as! Int
         title = aDecoder.decodeObjectForKey("title") as! String
         super.init()
     }
