@@ -1,5 +1,6 @@
 platform :ios, '8.4'
+use_frameworks!
 
 pod 'EGOTableViewPullRefreshAndLoadMore'
-pod 'AFNetworking', '~> 2.0'
+pod 'Alamofire', '~> 3.0'
 

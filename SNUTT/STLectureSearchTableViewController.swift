@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EGOTableViewPullRefreshAndLoadMore
 
 class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, LoadMoreTableFooterDelegate{
     
