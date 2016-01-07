@@ -29,8 +29,7 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
             let endTime = STTime(day: STTime.STDay.MON, period: i*2+1)
             rowList.append("\(startTime.periodToString()) ~ \(endTime.periodToString())")
         }
-        timetable = STTimetable(year: 2016, semester: "1");
-        let viewLayout = STTimeTableLayout(aTimetable: timetable!)
+        let viewLayout = STTimeTableLayout(aTimetable: timetable)
         self.collectionView?.collectionViewLayout = viewLayout
         (self.collectionView?.collectionViewLayout as! STTimeTableLayout).timeTableController = self
         // Uncomment the following line to preserve selection between presentations
@@ -41,13 +40,14 @@ class STTimeTableCollectionViewController: UICollectionViewController, UIAlertVi
         //TimeTableCollectionViewController.datasource.collectionView = self.collectionView
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     override func viewWillAppear(animated: Bool) {
+        (self.collectionView?.collectionViewLayout as! STTimeTableLayout).timetable = self.timetable
         self.collectionView?.reloadData()
     }
     

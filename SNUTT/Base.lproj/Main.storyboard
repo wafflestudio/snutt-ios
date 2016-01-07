@@ -28,9 +28,9 @@
         <!--시간표-->
         <scene sceneID="b3C-sd-em3">
             <objects>
-                <collectionViewController id="Icv-Xm-I3U" customClass="STTimeTableCollectionViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="STTimeTableCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Icv-Xm-I3U" customClass="STTimeTableCollectionViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Jao-OD-M66">
-                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewLayout key="collectionViewLayout" id="7qR-xv-imX"/>
@@ -40,7 +40,40 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T0I-w2-zHy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2292" y="-325"/>
+            <point key="canvasLocation" x="3017" y="-325"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ojV-tR-uzz">
+            <objects>
+                <viewController id="Ybg-bY-Wbe" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WJb-LM-l6g"/>
+                        <viewControllerLayoutGuide type="bottom" id="v3n-Fg-s3R"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WHc-t1-m6d">
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7aK-bv-6nd">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                                <connections>
+                                    <segue destination="Icv-Xm-I3U" kind="embed" id="2Tf-3y-KXA"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7aK-bv-6nd" firstAttribute="top" secondItem="WJb-LM-l6g" secondAttribute="bottom" id="9mN-rl-XQh"/>
+                            <constraint firstItem="7aK-bv-6nd" firstAttribute="leading" secondItem="WHc-t1-m6d" secondAttribute="leading" id="G35-Uy-A0A"/>
+                            <constraint firstAttribute="trailing" secondItem="7aK-bv-6nd" secondAttribute="trailing" id="ZDF-5g-cWi"/>
+                            <constraint firstItem="v3n-Fg-s3R" firstAttribute="top" secondItem="7aK-bv-6nd" secondAttribute="bottom" id="zW3-Z7-8uY"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="i2B-jy-PUt"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9sT-yZ-cLs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2283" y="-325"/>
         </scene>
         <!--강의 검색-->
         <scene sceneID="Klp-AW-Ool">
@@ -352,7 +385,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ptx-yK-Dpn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3041" y="-325"/>
+            <point key="canvasLocation" x="3017" y="-1007"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="H7b-NV-DAo">
@@ -367,7 +400,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Icv-Xm-I3U" kind="relationship" relationship="rootViewController" id="wAb-EW-5qD"/>
+                        <segue destination="Ybg-bY-Wbe" kind="relationship" relationship="rootViewController" id="qfN-fd-4lF"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="je3-o8-UsJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -15,7 +15,7 @@ class STTimeTableLayout: UICollectionViewLayout {
     var timeTableController : STTimeTableCollectionViewController? = nil
     var timetable : STTimetable?
     
-    init (aTimetable :STTimetable) {
+    init (aTimetable :STTimetable?) {
         self.timetable = aTimetable
         super.init()
     }
