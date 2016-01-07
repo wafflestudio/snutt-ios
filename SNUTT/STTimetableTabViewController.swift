@@ -14,7 +14,8 @@ class STTimetableTabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        STTimetableManager.sharedInstance.currentTimetable = STTimetable(year: 2016, semester: "1", title: "testing")
+        self.navigationController!.title = STTimetableManager.sharedInstance.currentTimetable?.title
         // Do any additional setup after loading the view.
     }
 
@@ -29,8 +30,8 @@ class STTimetableTabViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "STTimetableCollectionViewController") {
-            timetableViewController = segue.destinationViewController as! STTimetableCollectionViewController
-            timetableViewController?.timetable = STTimetable(year: 2016, semester: "1")
+            timetableViewController = (segue.destinationViewController as! STTimetableCollectionViewController)
+            timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
         }
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

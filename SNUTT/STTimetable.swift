@@ -17,10 +17,10 @@ class STTimetable : NSObject, NSCoding {
     var title : String
     weak var timeTableController : STTimetableCollectionViewController? = nil
     
-    init(year aYear: Int, semester aSemester: String) {
+    init(year aYear: Int, semester aSemester: String, title aTitle: String) {
         self.year = aYear
         self.semester = aSemester
-        self.title = ""
+        self.title = aTitle
         super.init()
     }
     
