@@ -42,10 +42,10 @@
             </objects>
             <point key="canvasLocation" x="3017" y="-325"/>
         </scene>
-        <!--View Controller-->
+        <!--Timetable Tab View Controller-->
         <scene sceneID="ojV-tR-uzz">
             <objects>
-                <viewController id="Ybg-bY-Wbe" sceneMemberID="viewController">
+                <viewController id="Ybg-bY-Wbe" customClass="STTimetableTabViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WJb-LM-l6g"/>
                         <viewControllerLayoutGuide type="bottom" id="v3n-Fg-s3R"/>
