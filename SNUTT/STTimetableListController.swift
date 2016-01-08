@@ -9,41 +9,20 @@
 import UIKit
 
 class STTimetableListController: UITableViewController {
-
-    var timetableList : [STTimetable] = []
-    var indexList : [Int] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
-        timetableList = [STTimetable(year: 2016, semester: 0,title: "time1"),
-            STTimetable(year: 2015, semester: 1,title: "time2"),
-            STTimetable(year: 2015, semester: 3,title: "time3")]
-        
-        timetableList.sortInPlace({a, b in
-            if a.year == b.year {
-                return a.semester > b.semester
-            }
-            return a.year > b.year
-        })
-        indexList = []
-        for i in 0..<timetableList.count {
-            if(i == 0 || timetableList[i].title != timetableList[i-1].title) {
-                indexList.append(i)
-            }
-        }
-        indexList.append(timetableList.count)
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("addButtonClicked:"))
-        
-    }
-
-    @IBAction func addButtonClicked() {
-        NSLog("NONO")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        STTimetableManager.sharedInstance.reloadTimetableList()
+        self.tableView.reloadData()
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -52,24 +31,25 @@ class STTimetableListController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return indexList.count-1
+        return STTimetableManager.sharedInstance.indexList.count-1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return indexList[section+1]-indexList[section]
+        return STTimetableManager.sharedInstance.indexList[section+1]-STTimetableManager.sharedInstance.indexList[section]
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("STTimetableListCell", forIndexPath: indexPath)
         
-        cell.textLabel!.text = timetableList[indexList[indexPath.section]+indexPath.row].title
+        cell.textLabel!.text = STTimetableManager.sharedInstance.timetableList[
+            STTimetableManager.sharedInstance.indexList[indexPath.section]+indexPath.row].title
 
         return cell
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return timetableList[indexList[section]].quarterToString()
+        return STTimetableManager.sharedInstance.timetableList[STTimetableManager.sharedInstance.indexList[section]].quarterToString()
     }
     
     /*

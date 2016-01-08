@@ -12,6 +12,9 @@
 		E10852C91B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C71B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift */; };
 		E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109CC781C3E8C050050399A /* STTimetableListController.swift */; };
 		E14188D61C3E195000D4E712 /* STTimetableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */; };
+		E14DF2141C3F71A70076FDDE /* STTimetableAddController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DF2131C3F71A70076FDDE /* STTimetableAddController.swift */; };
+		E14DF2161C3F8F920076FDDE /* STCourseBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DF2151C3F8F920076FDDE /* STCourseBook.swift */; };
+		E14DF2181C3F914E0076FDDE /* STCourseBookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DF2171C3F914E0076FDDE /* STCourseBookList.swift */; };
 		E16643511B4623BB00387EF8 /* STTimetableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643501B4623BB00387EF8 /* STTimetableLayout.swift */; };
 		E16643551B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643541B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift */; };
 		E16643571B46623900387EF8 /* STSlotCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643561B46623900387EF8 /* STSlotCellCollectionViewCell.swift */; };
@@ -53,6 +56,9 @@
 		E10852CA1B4CCF85006FD8B3 /* SNUTT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SNUTT-Bridging-Header.h"; sourceTree = "<group>"; };
 		E109CC781C3E8C050050399A /* STTimetableListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableListController.swift; sourceTree = "<group>"; };
 		E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableTabViewController.swift; sourceTree = "<group>"; };
+		E14DF2131C3F71A70076FDDE /* STTimetableAddController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableAddController.swift; sourceTree = "<group>"; };
+		E14DF2151C3F8F920076FDDE /* STCourseBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STCourseBook.swift; sourceTree = "<group>"; };
+		E14DF2171C3F914E0076FDDE /* STCourseBookList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STCourseBookList.swift; sourceTree = "<group>"; };
 		E16643501B4623BB00387EF8 /* STTimetableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableLayout.swift; sourceTree = "<group>"; };
 		E16643541B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColumnHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		E16643561B46623900387EF8 /* STSlotCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSlotCellCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -140,6 +146,8 @@
 				E10852CA1B4CCF85006FD8B3 /* SNUTT-Bridging-Header.h */,
 				E1C28B211B9D5F4200B8C493 /* STAPI.swift */,
 				E1F58AA51C3CF0E600F6A0FC /* STTimetableManager.swift */,
+				E14DF2151C3F8F920076FDDE /* STCourseBook.swift */,
+				E14DF2171C3F914E0076FDDE /* STCourseBookList.swift */,
 			);
 			path = SNUTT;
 			sourceTree = "<group>";
@@ -190,6 +198,7 @@
 				E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */,
 				E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */,
 				E109CC781C3E8C050050399A /* STTimetableListController.swift */,
+				E14DF2131C3F71A70076FDDE /* STTimetableAddController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -395,6 +404,7 @@
 				E19E23211B4691D90010DFB1 /* STLectureSearchTableViewCell.swift in Sources */,
 				E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */,
 				E16643571B46623900387EF8 /* STSlotCellCollectionViewCell.swift in Sources */,
+				E14DF2161C3F8F920076FDDE /* STCourseBook.swift in Sources */,
 				E19E231F1B468B700010DFB1 /* STLectureSearchTableViewController.swift in Sources */,
 				E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */,
 				E1F58AA41C3CED3600F6A0FC /* STTimetable.swift in Sources */,
@@ -404,7 +414,9 @@
 				E1C28B221B9D5F4200B8C493 /* STAPI.swift in Sources */,
 				E1B607ED1B99A5FF001DDD94 /* STLectureDetailTableViewCell.swift in Sources */,
 				E16643591B46624500387EF8 /* STCourseCellCollectionViewCell.swift in Sources */,
+				E14DF2181C3F914E0076FDDE /* STCourseBookList.swift in Sources */,
 				E16643511B4623BB00387EF8 /* STTimetableLayout.swift in Sources */,
+				E14DF2141C3F71A70076FDDE /* STTimetableAddController.swift in Sources */,
 				E1C28B181B9C4B3600B8C493 /* STTime.swift in Sources */,
 				E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */,
 				E166435B1B46734C00387EF8 /* STLectureDetailTableViewController.swift in Sources */,

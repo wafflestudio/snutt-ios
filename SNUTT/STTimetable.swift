@@ -18,6 +18,7 @@ class STTimetable : NSObject, NSCoding {
     weak var timeTableController : STTimetableCollectionViewController? = nil
     
     static let semesterToString = ["1", "S", "2", "W"]
+    static let semesterToLongString = ["1", "여름", "2", "겨울"]
     
     func quarterToString() -> String {
         return "\(year)" + "-" + STTimetable.semesterToString[semester]
