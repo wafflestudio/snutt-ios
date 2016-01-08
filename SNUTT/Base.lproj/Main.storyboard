@@ -28,7 +28,7 @@
         <!--시간표-->
         <scene sceneID="b3C-sd-em3">
             <objects>
-                <collectionViewController storyboardIdentifier="STTimetableCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Icv-Xm-I3U" customClass="STTimetableCollectionViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="Icv-Xm-I3U" customClass="STTimetableCollectionViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Jao-OD-M66">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -57,7 +57,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7aK-bv-6nd">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <connections>
-                                    <segue destination="Icv-Xm-I3U" kind="embed" id="2Tf-3y-KXA"/>
+                                    <segue destination="Icv-Xm-I3U" kind="embed" identifier="STTimetableCollectionViewController" id="2Tf-3y-KXA"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -488,7 +488,6 @@
         <!--Navigation Controller-->
         <scene sceneID="H7b-NV-DAo">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="je3-o8-UsJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EvE-NX-428" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="featured" id="jfH-wd-GaS"/>
                     <toolbarItems/>
@@ -501,6 +500,7 @@
                         <segue destination="Ybg-bY-Wbe" kind="relationship" relationship="rootViewController" id="qfN-fd-4lF"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="je3-o8-UsJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1480" y="-325"/>
         </scene>
@@ -527,7 +527,6 @@
         <!--Navigation Controller-->
         <scene sceneID="9Ez-N0-kK2">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="EqT-5b-E50" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qUh-B3-8yj" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9rD-e2-jc3">
@@ -539,6 +538,7 @@
                         <segue destination="Zmb-4X-uRi" kind="relationship" relationship="rootViewController" id="Yl3-IF-Nk7"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EqT-5b-E50" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3017" y="402"/>
         </scene>

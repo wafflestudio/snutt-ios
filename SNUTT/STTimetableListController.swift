@@ -52,6 +52,15 @@ class STTimetableListController: UITableViewController {
         return STTimetableManager.sharedInstance.timetableList[STTimetableManager.sharedInstance.indexList[section]].quarterToString()
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let index = STTimetableManager.sharedInstance.indexList[indexPath.section]+indexPath.row
+        STTimetableManager.sharedInstance.currentTimetable = STTimetableManager.sharedInstance.timetableList[index]
+        //Do some networking
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        self.navigationController?.popViewControllerAnimated(true)
+        
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -87,14 +96,13 @@ class STTimetableListController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
     }
-    */
+    
 
 }
