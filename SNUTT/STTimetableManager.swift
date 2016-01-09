@@ -26,13 +26,13 @@ class STTimetableManager : NSObject {
         self.loadData()
     }
     
-    var currentTimetable : STTimetable? = nil
+    var currentTimetable : STTimetable?
     var timetableList : [STTimetable] = [STTimetable(year: 2016, semester: 0,title: "time1"),
         STTimetable(year: 2015, semester: 1,title: "time2"),
         STTimetable(year: 2015, semester: 3,title: "time3")]
     var indexList : [Int] = []
     func loadData() {
-        
+        currentTimetable = STTimetable(year: 2016, semester: 0, title: "TEST")
     }
     
     func saveData() {

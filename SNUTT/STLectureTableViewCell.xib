@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="STLectureTableViewCell" customModule="SNUTT" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="445" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="학년" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Adz-98-DIV">
+                    <rect key="frame" x="163" y="36" width="23" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="학점" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Baf-xg-yRt">
+                    <rect key="frame" x="132" y="36" width="23" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="학과" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GZe-rq-swa">
+                    <rect key="frame" x="101" y="36" width="23" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="구분" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rF9-pL-6eR">
+                    <rect key="frame" x="70" y="36" width="23" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gis-H9-hnf">
+                    <rect key="frame" x="39" y="36" width="23" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="교수" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ret-Ru-hvh">
+                    <rect key="frame" x="8" y="36" width="23" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AtQ-FO-5s1">
+                    <rect key="frame" x="8" y="8" width="23" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="장소" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7w-98-RQI">
+                    <rect key="frame" x="194" y="36" width="23" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="gis-H9-hnf" firstAttribute="leading" secondItem="ret-Ru-hvh" secondAttribute="trailing" constant="8" id="8Wv-Jm-NB9"/>
+                <constraint firstItem="Adz-98-DIV" firstAttribute="leading" secondItem="Baf-xg-yRt" secondAttribute="trailing" constant="8" id="9qT-Vd-I5S"/>
+                <constraint firstItem="G7w-98-RQI" firstAttribute="leading" secondItem="Adz-98-DIV" secondAttribute="trailing" constant="8" id="A4H-GO-9Y5"/>
+                <constraint firstItem="ret-Ru-hvh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="HqS-5s-CVl"/>
+                <constraint firstAttribute="bottomMargin" secondItem="ret-Ru-hvh" secondAttribute="bottom" id="JlC-xq-chU"/>
+                <constraint firstItem="rF9-pL-6eR" firstAttribute="leading" secondItem="gis-H9-hnf" secondAttribute="trailing" constant="8" id="KHS-Vl-yQq"/>
+                <constraint firstItem="gis-H9-hnf" firstAttribute="baseline" secondItem="ret-Ru-hvh" secondAttribute="baseline" id="hBR-gd-cvk"/>
+                <constraint firstItem="AtQ-FO-5s1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="hIN-i0-4Dx"/>
+                <constraint firstItem="Baf-xg-yRt" firstAttribute="baseline" secondItem="ret-Ru-hvh" secondAttribute="baseline" id="hZB-GU-cla"/>
+                <constraint firstItem="G7w-98-RQI" firstAttribute="baseline" secondItem="ret-Ru-hvh" secondAttribute="baseline" id="hqX-Ok-i9j"/>
+                <constraint firstItem="Baf-xg-yRt" firstAttribute="leading" secondItem="GZe-rq-swa" secondAttribute="trailing" constant="8" id="k57-G7-vH0"/>
+                <constraint firstItem="rF9-pL-6eR" firstAttribute="baseline" secondItem="ret-Ru-hvh" secondAttribute="baseline" id="lG5-rh-eQU"/>
+                <constraint firstItem="AtQ-FO-5s1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="qlT-7c-u4n"/>
+                <constraint firstItem="Adz-98-DIV" firstAttribute="baseline" secondItem="ret-Ru-hvh" secondAttribute="baseline" id="tIN-Qw-tLC"/>
+                <constraint firstItem="GZe-rq-swa" firstAttribute="leading" secondItem="rF9-pL-6eR" secondAttribute="trailing" constant="8" id="tIS-9W-Rhd"/>
+                <constraint firstItem="GZe-rq-swa" firstAttribute="baseline" secondItem="ret-Ru-hvh" secondAttribute="baseline" id="u4T-ah-uix"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="academicYearLabel" destination="Adz-98-DIV" id="c5C-yM-3gc"/>
+                <outlet property="classificationLabel" destination="rF9-pL-6eR" id="f0s-4S-t5d"/>
+                <outlet property="creditLabel" destination="Baf-xg-yRt" id="zaR-Kp-S4h"/>
+                <outlet property="departmentLabel" destination="GZe-rq-swa" id="cDT-Uo-aTT"/>
+                <outlet property="locationLabel" destination="G7w-98-RQI" id="vmY-fJ-NJn"/>
+                <outlet property="professorLabel" destination="ret-Ru-hvh" id="8we-1J-fao"/>
+                <outlet property="timeLabel" destination="gis-H9-hnf" id="ylx-5i-S2b"/>
+                <outlet property="titleLabel" destination="AtQ-FO-5s1" id="XRr-oe-5xn"/>
+            </connections>
+            <point key="canvasLocation" x="167.5" y="91"/>
+        </view>
+    </objects>
+</document>

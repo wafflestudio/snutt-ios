@@ -19,6 +19,7 @@
                     <connections>
                         <segue destination="EvE-NX-428" kind="relationship" relationship="viewControllers" id="R05-hm-JrA"/>
                         <segue destination="aj0-Z9-skP" kind="relationship" relationship="viewControllers" id="dye-Q2-5Cb"/>
+                        <segue destination="gvk-iW-Bq2" kind="relationship" relationship="viewControllers" id="fjZ-7I-R6Z"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r7e-ga-D09" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -504,6 +505,35 @@
             </objects>
             <point key="canvasLocation" x="1480" y="-325"/>
         </scene>
+        <!--내 강의-->
+        <scene sceneID="56J-Pj-zxQ">
+            <objects>
+                <tableViewController id="kjU-KQ-Hco" customClass="STMyLectureListController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" id="gPa-E7-HNW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="aJZ-nK-pgv">
+                                <rect key="frame" x="0.0" y="92" width="600" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aJZ-nK-pgv" id="z9z-M8-Oam">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="kjU-KQ-Hco" id="BMe-W4-uLR"/>
+                            <outlet property="delegate" destination="kjU-KQ-Hco" id="TJl-IP-q4p"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="내 강의" id="L5P-v6-ZDY"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sRa-BA-nas" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2292" y="-1683"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="4Qm-4D-iNk">
             <objects>
@@ -541,6 +571,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EqT-5b-E50" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3017" y="402"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="FzM-h5-l2i">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gvk-iW-Bq2" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="Mld-VP-Qe7"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Kkh-6L-tg4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kjU-KQ-Hco" kind="relationship" relationship="rootViewController" id="JWj-22-1Zp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DFJ-wP-Yj8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1480" y="-1683"/>
         </scene>
     </scenes>
 </document>

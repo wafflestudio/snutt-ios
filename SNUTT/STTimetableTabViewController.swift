@@ -14,12 +14,14 @@ class STTimetableTabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        STTimetableManager.sharedInstance.currentTimetable = STTimetable(year: 2016, semester: 0, title: "testing")
-        self.navigationController!.title = STTimetableManager.sharedInstance.currentTimetable?.title
+        self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable!.title
+        NSLog((STTimetableManager.sharedInstance.currentTimetable?.title)!)
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable!.title
+        
         timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableViewController?.collectionView?.reloadData()
     }
