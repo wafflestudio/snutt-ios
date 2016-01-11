@@ -8,14 +8,17 @@
 
 import Foundation
 
+enum STAddLectureState {
+    case Success, ErrorTime, ErrorSameLecture
+}
+
 class STTimetable : NSObject, NSCoding {
     
-    var lectureList : [STLecture] = []
-    var singleClassList : [STSingleClass] = []
-    var year : Int
-    var semester : Int
-    var title : String
-    weak var timeTableController : STTimetableCollectionViewController? = nil
+    private(set) var lectureList : [STLecture] = []
+    private(set) var singleClassList : [STSingleClass] = []
+    private(set) var year : Int
+    private(set) var semester : Int
+    private(set) var title : String
     
     static let semesterToString = ["1", "S", "2", "W"]
     static let semesterToLongString = ["1", "여름", "2", "겨울"]
@@ -51,19 +54,16 @@ class STTimetable : NSObject, NSCoding {
         aCoder.encodeObject(title, forKey: "title")
     }
     
-    enum AddLectureState {
-        case Success, ErrorTime, ErrorSameLecture
-    }
-    func addLecture(lecture : STLecture) -> AddLectureState {
+    func addLecture(lecture : STLecture) -> STAddLectureState {
         for it in lectureList {
             if it.isEquals(lecture){
-                return AddLectureState.ErrorSameLecture
+                return STAddLectureState.ErrorSameLecture
             }
         }
         for it in singleClassList {
             for jt in lecture.classList {
                 if it.isOverlappingWith(jt) {
-                    return AddLectureState.ErrorTime
+                    return STAddLectureState.ErrorTime
                 }
             }
         }
@@ -71,8 +71,7 @@ class STTimetable : NSObject, NSCoding {
         for it in lecture.classList {
             singleClassList.append(it)
         }
-        timeTableController?.reloadTimetable();
-        return AddLectureState.Success
+        return STAddLectureState.Success
     }
     func deleteLecture(lecture : STLecture) {
         for (var i=0; i<singleClassList.count; i++) {
@@ -87,6 +86,5 @@ class STTimetable : NSObject, NSCoding {
                 break
             }
         }
-        timeTableController?.reloadTimetable();
     }
 }

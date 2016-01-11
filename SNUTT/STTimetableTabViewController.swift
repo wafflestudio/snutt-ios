@@ -15,15 +15,13 @@ class STTimetableTabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable!.title
-        NSLog((STTimetableManager.sharedInstance.currentTimetable?.title)!)
-        // Do any additional setup after loading the view.
+        
+        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableSwitched, object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable!.title
-        
-        timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
-        timetableViewController?.collectionView?.reloadData()
+    deinit {
+        STEventCenter.sharedInstance.removeObserver(self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -31,6 +29,11 @@ class STTimetableTabViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func reloadData() {
+        self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable!.title
+        timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
+        timetableViewController?.collectionView?.reloadData()
+    }
 
     // MARK: - Navigation
 

@@ -14,6 +14,9 @@ class STMyLectureListController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.registerNib(UINib(nibName: "STLectureTableViewCell", bundle: nil), forCellReuseIdentifier: "LectureCell")
+        
+        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData:", event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData:", event: STEvent.CurrentTimetableSwitched, object: nil)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -21,15 +24,18 @@ class STMyLectureListController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.tableView.reloadData()
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
+    func reloadData(notification : NSNotification) {
+        if(notification.object === self) {
+            return //This is because of delete animation.
+        }
+        self.tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -57,7 +63,7 @@ class STMyLectureListController: UITableViewController {
 
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            STTimetableManager.sharedInstance.currentTimetable?.deleteLecture((STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row])!)
+            STTimetableManager.sharedInstance.deleteLecture((STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row])!, object: self)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

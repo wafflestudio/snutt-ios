@@ -46,11 +46,6 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
-        (self.collectionView?.collectionViewLayout as! STTimetableLayout).timetable = self.timetable
-        self.collectionView?.reloadData()
-    }
-    
     enum cellType{
         case HeaderColumn, HeaderRow, Slot, Course
     }

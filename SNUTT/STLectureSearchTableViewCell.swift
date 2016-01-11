@@ -33,7 +33,7 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBAction func buttonClicked(sender: AnyObject) {
         
         let alertView = UIAlertView(title: "SNUTT", message: "", delegate: nil, cancelButtonTitle: "OK")
-        switch STTimetableManager.sharedInstance.currentTimetable!.addLecture(lecture!) {
+        switch STTimetableManager.sharedInstance.addLecture(lecture!, object: self) {
         case .ErrorTime:
             alertView.message = "Time is Overlapping"
         case .ErrorSameLecture:

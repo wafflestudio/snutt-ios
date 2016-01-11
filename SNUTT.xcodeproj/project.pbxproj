@@ -34,6 +34,7 @@
 		E1C28B151B9C4B0B00B8C493 /* STSingleClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B141B9C4B0B00B8C493 /* STSingleClass.swift */; };
 		E1C28B181B9C4B3600B8C493 /* STTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B171B9C4B3600B8C493 /* STTime.swift */; };
 		E1C28B221B9D5F4200B8C493 /* STAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B211B9D5F4200B8C493 /* STAPI.swift */; };
+		E1E99A6B1C423CDB004A426A /* STEventCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E99A6A1C423CDB004A426A /* STEventCenter.swift */; };
 		E1F58AA41C3CED3600F6A0FC /* STTimetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F58AA31C3CED3600F6A0FC /* STTimetable.swift */; };
 		E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F58AA51C3CF0E600F6A0FC /* STTimetableManager.swift */; };
 		E1F58AA81C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F58AA71C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib */; };
@@ -85,6 +86,7 @@
 		E1C28B141B9C4B0B00B8C493 /* STSingleClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleClass.swift; sourceTree = "<group>"; };
 		E1C28B171B9C4B3600B8C493 /* STTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTime.swift; sourceTree = "<group>"; };
 		E1C28B211B9D5F4200B8C493 /* STAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAPI.swift; sourceTree = "<group>"; };
+		E1E99A6A1C423CDB004A426A /* STEventCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STEventCenter.swift; sourceTree = "<group>"; };
 		E1F58AA31C3CED3600F6A0FC /* STTimetable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetable.swift; sourceTree = "<group>"; };
 		E1F58AA51C3CF0E600F6A0FC /* STTimetableManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableManager.swift; sourceTree = "<group>"; };
 		E1F58AA71C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCourseCellCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				E1F58AA51C3CF0E600F6A0FC /* STTimetableManager.swift */,
 				E14DF2151C3F8F920076FDDE /* STCourseBook.swift */,
 				E14DF2171C3F914E0076FDDE /* STCourseBookList.swift */,
+				E1E99A6A1C423CDB004A426A /* STEventCenter.swift */,
 			);
 			path = SNUTT;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1E99A6B1C423CDB004A426A /* STEventCenter.swift in Sources */,
 				E14188D61C3E195000D4E712 /* STTimetableTabViewController.swift in Sources */,
 				E19E23211B4691D90010DFB1 /* STLectureSearchTableViewCell.swift in Sources */,
 				E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */,

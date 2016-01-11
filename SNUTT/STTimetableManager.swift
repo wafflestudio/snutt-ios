@@ -26,7 +26,11 @@ class STTimetableManager : NSObject {
         self.loadData()
     }
     
-    var currentTimetable : STTimetable?
+    var currentTimetable : STTimetable? {
+        didSet {
+            STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableSwitched, object: self)
+        }
+    }
     var timetableList : [STTimetable] = [STTimetable(year: 2016, semester: 0,title: "time1"),
         STTimetable(year: 2015, semester: 1,title: "time2"),
         STTimetable(year: 2015, semester: 3,title: "time3")]
@@ -37,6 +41,16 @@ class STTimetableManager : NSObject {
     
     func saveData() {
         
+    }
+    
+    func addLecture(lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
+        let ret = currentTimetable?.addLecture(lecture)
+        STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
+        return ret!
+    }
+    func deleteLecture(lecture : STLecture, object : AnyObject? ) {
+        currentTimetable?.deleteLecture(lecture)
+        STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
     }
     
     func reloadTimetableList() {
