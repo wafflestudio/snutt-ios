@@ -3,4 +3,5 @@ use_frameworks!
 
 pod 'EGOTableViewPullRefreshAndLoadMore'
 pod 'Alamofire', '~> 3.0'
-
+pod 'Fabric'
+pod 'Crashlytics'
