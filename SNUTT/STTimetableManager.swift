@@ -31,10 +31,6 @@ class STTimetableManager : NSObject {
             STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableSwitched, object: self)
         }
     }
-    var timetableList : [STTimetable] = [STTimetable(year: 2016, semester: 0,title: "time1"),
-        STTimetable(year: 2015, semester: 1,title: "time2"),
-        STTimetable(year: 2015, semester: 3,title: "time3")]
-    var indexList : [Int] = []
     func loadData() {
         currentTimetable = STTimetable(year: 2016, semester: 0, title: "TEST")
     }
@@ -52,22 +48,4 @@ class STTimetableManager : NSObject {
         currentTimetable?.deleteLecture(lecture)
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
     }
-    
-    func reloadTimetableList() {
-        timetableList.sortInPlace({a, b in
-            if a.year == b.year {
-                return a.semester > b.semester
-            }
-            return a.year > b.year
-        })
-        indexList = []
-        for i in 0..<timetableList.count {
-            if(i == 0 || timetableList[i].title != timetableList[i-1].title) {
-                indexList.append(i)
-            }
-        }
-        indexList.append(timetableList.count)
-    }
-
-    
 }

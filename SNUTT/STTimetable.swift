@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 enum STAddLectureState {
     case Success, ErrorTime, ErrorSameLecture
@@ -19,6 +20,7 @@ class STTimetable : NSObject, NSCoding {
     private(set) var year : Int
     private(set) var semester : Int
     private(set) var title : String
+    private(set) var id : String?
     
     static let semesterToString = ["1", "S", "2", "W"]
     static let semesterToLongString = ["1", "여름", "2", "겨울"]
@@ -32,6 +34,18 @@ class STTimetable : NSObject, NSCoding {
         self.semester = aSemester
         self.title = aTitle
         super.init()
+    }
+    
+    init(json : JSON) {
+        self.year = json["year"].intValue
+        self.semester = json["semester"].intValue
+        self.title = json["title"].stringValue
+        self.id = json["_id"].string
+        super.init()
+        let lectures = json["lectures"].arrayValue
+        lectures.forEach {data in
+            self.addLecture(STLecture(json: data))
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

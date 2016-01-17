@@ -111,7 +111,7 @@
                     <navigationItem key="navigationItem" title="Timetable List" id="NNx-Kp-xon">
                         <barButtonItem key="rightBarButtonItem" title="Item" id="owU-8a-BWv">
                             <connections>
-                                <segue destination="qUh-B3-8yj" kind="showDetail" id="3Kb-DM-qhS"/>
+                                <segue destination="qUh-B3-8yj" kind="showDetail" identifier="STTimetableAddController" id="3Kb-DM-qhS"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -299,7 +299,7 @@
         <!--Lecture Detail Table View Controller-->
         <scene sceneID="XbK-r8-m6E">
             <objects>
-                <tableViewController storyboardIdentifier="LectureDetailTableViewController" id="sek-gO-kxt" customClass="STLectureDetailTableViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="LectureDetailTableViewController" hidesBottomBarWhenPushed="YES" id="sek-gO-kxt" customClass="STLectureDetailTableViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Zd7-NY-TuW">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -557,6 +557,7 @@
         <!--Navigation Controller-->
         <scene sceneID="9Ez-N0-kK2">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EqT-5b-E50" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qUh-B3-8yj" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9rD-e2-jc3">
@@ -568,7 +569,6 @@
                         <segue destination="Zmb-4X-uRi" kind="relationship" relationship="rootViewController" id="Yl3-IF-Nk7"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="EqT-5b-E50" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3017" y="402"/>
         </scene>

@@ -13,6 +13,8 @@ class STTimetableAddController: UIViewController, UIPickerViewDataSource, UIPick
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var semesterPicker: UIPickerView!
     
+    weak var timetableListController : STTimetableListController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -33,11 +35,12 @@ class STTimetableAddController: UIViewController, UIPickerViewDataSource, UIPick
     @IBAction func saveButtonClicked(sender: UIBarButtonItem) {
         let index = semesterPicker.selectedRowInComponent(0)
         let selectedCourseBook = STCourseBookList.sharedInstance.courseBookList![index]
-        if ((titleTextField.text) == nil || titleTextField.text == "") {
+        let title = titleTextField.text
+        if (title == nil || title == "") {
             return //TODO: Alert the user for the missing title
         }
-        STTimetableManager.sharedInstance.timetableList.append(STTimetable(year: selectedCourseBook.year, semester: selectedCourseBook.semester, title: titleTextField.text!))
         self.view.endEditing(true)
+        timetableListController.addTimetable(title!, courseBook: selectedCourseBook)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

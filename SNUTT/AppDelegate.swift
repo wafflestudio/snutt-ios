@@ -9,7 +9,8 @@
 import UIKit
 import Fabric
 import Crashlytics
-
+import Alamofire
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         Fabric.with([Crashlytics.self])
+        
+        //TEST CODE FOR AUTH TOKEN
+        Alamofire.request(STAuthRouter.LocalLogin("snutt", "abcd")).responseJSON { response in
+            switch response.result {
+            case .Success(let value):
+                let json = JSON(value)
+                STConfig.sharedInstance.token = json["token"].stringValue
+                print(STConfig.sharedInstance.token)
+            case .Failure:
+                break
+            }
+        }
+
         return true
     }
 

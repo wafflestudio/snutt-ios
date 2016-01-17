@@ -4,17 +4,20 @@ PODS:
     - Fabric (~> 1.6.0)
   - EGOTableViewPullRefreshAndLoadMore (1.0.4)
   - Fabric (1.6.2)
+  - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
   - Alamofire (~> 3.0)
   - Crashlytics
   - EGOTableViewPullRefreshAndLoadMore
   - Fabric
+  - SwiftyJSON (~> 2.3)
 
 SPEC CHECKSUMS:
   Alamofire: fbc829692f351fa1d8a31dd75fd7f7f56fea31fb
   Crashlytics: fabfd45d0e8b8dc936c682b97e302b9a49a1c827
   EGOTableViewPullRefreshAndLoadMore: 118a0824590db042d42e08fcc442b93cebf15e73
   Fabric: e8296d4a1abb3c5eed770cc86b311c862f51d340
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
 COCOAPODS: 0.38.2

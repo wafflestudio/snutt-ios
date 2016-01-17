@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class STLecture : NSObject , NSCoding{
     var name : String
@@ -60,7 +61,7 @@ class STLecture : NSObject , NSCoding{
                 var ret = (params == ")")
                 ret = ret || (params == "(") || (params == "-")
                 return ret
-            }.map { String($0) }
+                }.map { String($0) }
             classList.append(STSingleClass(startTime : STTime(day : t[0], period : (t[1] as NSString).doubleValue), duration : (Int)((t[2] as NSString).doubleValue * 2.0), place : locationArr[i]))
         }
         name = data["course_title"] as! String
@@ -70,6 +71,39 @@ class STLecture : NSObject , NSCoding{
         department = data["department"] as! String
         course_number = data["course_number"] as! String
         lecture_number = data["lecture_number"] as! String
+        colorIndex = Int(arc4random_uniform(UInt32(STCourseCellCollectionViewCell.backgroundColorList.count)))
+        super.init()
+        for it in classList {
+            it.lecture = self
+        }
+    }
+
+    
+    init(json data : JSON) {
+        let timeData = data["class_time"].stringValue
+        var timeArr = timeData.characters.split{$0 == "/"}.map { String($0) }
+        let locationData = data["location"].stringValue
+        var locationArr = locationData.characters.split{$0 == "/"}.map { String($0) }
+        if locationArr.count == 0{
+            locationArr = ["","","","",""]
+        }
+        for i in 0..<timeArr.count {
+            let time = timeArr[i]
+            var t = time.characters.split {
+                (params) -> Bool in
+                var ret = (params == ")")
+                ret = ret || (params == "(") || (params == "-")
+                return ret
+            }.map { String($0) }
+            classList.append(STSingleClass(startTime : STTime(day : t[0], period : (t[1] as NSString).doubleValue), duration : (Int)((t[2] as NSString).doubleValue * 2.0), place : locationArr[i]))
+        }
+        name = data["course_title"].stringValue
+        professor = data["instructor"].stringValue
+        credit = data["credit"].intValue
+        classification = data["classification"].stringValue
+        department = data["department"].stringValue
+        course_number = data["course_number"].stringValue
+        lecture_number = data["lecture_number"].stringValue
         colorIndex = Int(arc4random_uniform(UInt32(STCourseCellCollectionViewCell.backgroundColorList.count)))
         super.init()
         for it in classList {
