@@ -29,6 +29,12 @@ class STTimetable : NSObject, NSCoding {
         return "\(year)" + "-" + STTimetable.semesterToString[semester]
     }
     
+    var isLoaded : Bool {
+        get {
+            return !(id==nil)
+        }
+    }
+    
     init(year aYear: Int, semester aSemester: Int, title aTitle: String) {
         self.year = aYear
         self.semester = aSemester

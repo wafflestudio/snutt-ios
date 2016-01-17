@@ -78,13 +78,18 @@ class STTimetableListController: UITableViewController {
             }
             return a.year > b.year
         })
+        
         indexList = []
         for i in 0..<timetableList.count {
-            if(i == 0 || timetableList[i].title != timetableList[i-1].title) {
+            if(i == 0 || timetableList[i].semester != timetableList[i-1].semester || timetableList[i].year != timetableList[i-1].year) {
                 indexList.append(i)
             }
         }
         indexList.append(timetableList.count)
+    }
+    
+    func indexPathToIndex (indexPath : NSIndexPath ) -> Int {
+        return indexList[indexPath.section]+indexPath.row
     }
     
     // MARK: - Table view data source
@@ -120,25 +125,44 @@ class STTimetableListController: UITableViewController {
         
     }
     
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+        let index = indexPathToIndex(indexPath)
+        if timetableList[index].isLoaded {
+            return true
+        } else {
+            return false
+        }
     }
-    */
-
-    /*
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            let index = indexPathToIndex(indexPath)
+            let timetable = timetableList[index]
+            if timetable.id == nil {
+                return
+            }
+            Alamofire.request(STTimetableRouter.DeleteTimetable(timetable.id!)).responseSwiftyJSON { response in
+                switch response.result {
+                case .Success:
+                    self.timetableList.removeAtIndex(index)
+                    let isSectionDeleted = self.indexList[indexPath.section+1] - self.indexList[indexPath.section] == 1
+                    self.sortTimetableList()
+                    if isSectionDeleted {
+                        self.tableView.deleteSections(NSIndexSet(index: indexPath.section), withRowAnimation: .Fade)
+                    } else {
+                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                    }
+                case .Failure:
+                    break
+                }
+            }
+            
+        }
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
