@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import SwiftyJSON
 
 class STTimetableListController: UITableViewController {
     
@@ -17,10 +16,10 @@ class STTimetableListController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Alamofire.request(STTimetableRouter.GetTimetableList).responseJSON { response in
+        Alamofire.request(STTimetableRouter.GetTimetableList).responseSwiftyJSON { response in
             switch response.result {
-            case .Success(let value):
-                let timetables = JSON(value).arrayValue
+            case .Success(let json):
+                let timetables = json.arrayValue
                 self.timetableList = timetables.map { json in
                     return STTimetable(json: json)
                 }
@@ -50,11 +49,10 @@ class STTimetableListController: UITableViewController {
         let newTimetable = STTimetable(year: courseBook.year, semester: courseBook.semester, title: title)
         timetableList.append(newTimetable)
         reloadList()
-        Alamofire.request(STTimetableRouter.CreateTimetable(title: title, courseBook: courseBook)).responseJSON { response in
+        Alamofire.request(STTimetableRouter.CreateTimetable(title: title, courseBook: courseBook)).responseSwiftyJSON { response in
             let index = self.timetableList.indexOf(newTimetable)
             switch response.result {
-            case .Success(let value):
-                let json = JSON(value)
+            case .Success(let json):
                 if json["success"].boolValue {
                     self.timetableList[index!] = STTimetable(json: json["timetable"])
                     self.tableView.reloadData()
