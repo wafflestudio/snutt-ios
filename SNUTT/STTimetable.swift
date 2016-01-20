@@ -16,11 +16,11 @@ enum STAddLectureState {
 class STTimetable : NSObject, NSCoding {
     
     private(set) var lectureList : [STLecture] = []
-    private(set) var singleClassList : [STSingleClass] = []
     private(set) var year : Int
     private(set) var semester : Int
     private(set) var title : String
-    private(set) var id : String?
+    private(set) var id : String? 
+    var temporaryLecture : STLecture? = nil
     
     static let semesterToString = ["1", "S", "2", "W"]
     static let semesterToLongString = ["1", "여름", "2", "겨울"]
@@ -56,12 +56,6 @@ class STTimetable : NSObject, NSCoding {
     
     required init?(coder aDecoder: NSCoder) {
         lectureList = aDecoder.decodeObjectForKey("lectureList") as! [STLecture]
-        singleClassList.removeAll(keepCapacity: true)
-        for it in lectureList {
-            for jt in it.classList {
-                singleClassList.append(jt)
-            }
-        }
         year = aDecoder.decodeObjectForKey("year") as! Int
         semester = aDecoder.decodeObjectForKey("semester") as! Int
         title = aDecoder.decodeObjectForKey("title") as! String
@@ -80,26 +74,10 @@ class STTimetable : NSObject, NSCoding {
                 return STAddLectureState.ErrorSameLecture
             }
         }
-        for it in singleClassList {
-            for jt in lecture.classList {
-                if it.isOverlappingWith(jt) {
-                    return STAddLectureState.ErrorTime
-                }
-            }
-        }
         lectureList.append(lecture)
-        for it in lecture.classList {
-            singleClassList.append(it)
-        }
         return STAddLectureState.Success
     }
     func deleteLecture(lecture : STLecture) {
-        for (var i=0; i<singleClassList.count; i++) {
-            if singleClassList[i].lecture === lecture {
-                singleClassList.removeAtIndex(i)
-                i--
-            }
-        }
         for (var i=0; i<lectureList.count; i++) {
             if lectureList[i] === lecture {
                 lectureList.removeAtIndex(i)

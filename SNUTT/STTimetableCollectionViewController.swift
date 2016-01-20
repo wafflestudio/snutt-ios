@@ -12,10 +12,14 @@ let reuseIdentifier = "Cell"
 
 class STTimetableCollectionViewController: UICollectionViewController, UIAlertViewDelegate {
     
-    var columnList = ["","월", "화", "수", "목", "금", "토"]
+    var columnList = ["월", "화", "수", "목", "금", "토"]
     var rowList : [String] = []
-    
+    var showTemporary : Bool = false
     var timetable : STTimetable? = nil
+    
+    
+    let LectureSectionOffset = 3
+    let RatioForHeader : CGFloat = 1.33
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,15 +27,13 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         self.collectionView?.registerNib(UINib(nibName: "STColumnHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ColumnHeaderCell")
         self.collectionView?.registerNib(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
         
-        rowList.append("")
         for i in 0..<(STTime.periodNum) {
-            let startTime = STTime(day: STTime.STDay.MON, period: i*2)
-            let endTime = STTime(day: STTime.STDay.MON, period: i*2+1)
-            rowList.append("\(startTime.periodToString()) ~ \(endTime.periodToString())")
+            let time = STTime(day: STTime.STDay.MON, period: i*2)
+            rowList.append("\(time.periodToString())")
         }
         let viewLayout = STTimetableLayout(aTimetable: timetable)
         self.collectionView?.collectionViewLayout = viewLayout
-        (self.collectionView?.collectionViewLayout as! STTimetableLayout).timeTableController = self
+        (self.collectionView?.collectionViewLayout as! STTimetableLayout).timetableController = self
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -46,22 +48,28 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         // Dispose of any resources that can be recreated.
     }
     
-    enum cellType{
-        case HeaderColumn, HeaderRow, Slot, Course
+    func getCellType(indexPath : NSIndexPath) -> STTimetableCellType {
+        switch indexPath.section {
+        case 0:
+            return .Slot
+        case 1:
+            return .HeaderColumn
+        case 2:
+            return .HeaderRow
+        case (timetable?.lectureList.count)! + LectureSectionOffset:
+            return .TemporaryCourse
+        default:
+            return .Course
+        }
     }
     
-    func getCellType(indexPath : NSIndexPath) -> cellType {
-        if indexPath.section == 1 {
-            return cellType.Course
-        } else {
-            if indexPath.row < columnList.count {
-                return cellType.HeaderColumn
-            } else if indexPath.row % columnList.count == 0 {
-                return cellType.HeaderRow
-            } else {
-                return cellType.Slot
-            }
+    func getSingleClass(indexPath : NSIndexPath) -> STSingleClass {
+        let lectureIndex = indexPath.section - LectureSectionOffset
+        let classIndex = indexPath.row
+        if lectureIndex == timetable!.lectureList.count {
+            return timetable!.temporaryLecture!.classList[classIndex]
         }
+        return timetable!.lectureList[lectureIndex].classList[classIndex]
     }
     
     func reloadTimetable() {
@@ -83,19 +91,29 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return columnList.count * rowList.count
+            return 1
         case 1:
-            if timetable == nil {
+            return columnList.count
+        case 2:
+            return rowList.count
+        default:
+            let index = section - LectureSectionOffset
+            if index < timetable!.lectureList.count {
+                return timetable!.lectureList[index].classList.count
+            } else if index == timetable!.lectureList.count {
+                return (timetable!.temporaryLecture?.classList.count)! //TEST
+            } else {
                 return 0
             }
-            return timetable!.singleClassList.count
-        default:
-            return 0
         }
     }
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 2
+        if showTemporary {
+            return LectureSectionOffset + timetable!.lectureList.count + 1
+        } else {
+            return LectureSectionOffset + timetable!.lectureList.count
+        }
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -107,14 +125,21 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
             return cell
         case .HeaderRow:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ColumnHeaderCell", forIndexPath: indexPath) as! STColumnHeaderCollectionViewCell
-            cell.contentLabel.text = rowList[indexPath.row / columnList.count]
+            cell.contentLabel.text = rowList[indexPath.row]
             return cell
         case .Slot:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SlotCell", forIndexPath: indexPath) ;
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SlotCell", forIndexPath: indexPath) as! STSlotCellCollectionViewCell
+            cell.columnNum = columnList.count + 1
+            cell.rowNum = STTime.periodNum
+            cell.ratioForHeader = RatioForHeader
             return cell
         case .Course:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as!STCourseCellCollectionViewCell
-            cell.singleClass = timetable!.singleClassList[indexPath.row]
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as! STCourseCellCollectionViewCell
+            cell.singleClass = getSingleClass(indexPath)
+            return cell
+        case .TemporaryCourse:
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as! STCourseCellCollectionViewCell
+            cell.singleClass = getSingleClass(indexPath)
             return cell
         }
     }

@@ -14,7 +14,7 @@ class STTime : NSObject, NSCoding{
     }
     var day : STDay
     var period : Int
-    static var periodNum : Int = 13
+    static var periodNum : Int = 28
     static var dayToString = ["월", "화", "수", "목", "금", "토"]
     static var stringToDay = ["월" : STDay.MON, "화" : STDay.TUE, "수" : STDay.WED, "목" : STDay.THU, "금" : STDay.FRI, "토" : STDay.SAT]
     init(day tDay:STDay, period tPeriod:Int) {
@@ -35,9 +35,9 @@ class STTime : NSObject, NSCoding{
     }
     func periodToString() -> String {
         if period % 2 == 0 {
-            return "\(period/2+9):00"
+            return "\(period/2+8):00"
         } else {
-            return "\(period/2+9):30"
+            return "\(period/2+8):30"
         }
     }
     func toString() -> String {

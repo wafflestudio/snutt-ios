@@ -9,10 +9,15 @@
 import UIKit
 
 class STTimetableLayout: UICollectionViewLayout {
-    var HeightForHeader : CGFloat = 20.0
-    var HeightPerHour : CGFloat = 34
-    var ratioForHeader : CGFloat = 2.0/3.0
-    var timeTableController : STTimetableCollectionViewController? = nil
+    var ContentWidth : CGFloat = 0.0
+    var ContentHeight : CGFloat = 0.0
+    
+    var HeightForHeader : CGFloat = 0.0
+    var HeightPerRow : CGFloat = 0.0
+    var WidthForHeader : CGFloat = 0.0
+    var WidthPerColumn : CGFloat = 0.0
+    
+    var timetableController : STTimetableCollectionViewController? = nil
     var timetable : STTimetable?
     
     init (aTimetable :STTimetable?) {
@@ -27,59 +32,56 @@ class STTimetableLayout: UICollectionViewLayout {
     
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes {
         
-        HeightPerHour = collectionView!.frame.size.height / (CGFloat(STTime.periodNum) + ratioForHeader)
-        HeightForHeader = ratioForHeader * HeightPerHour
-        
         let ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-        let type = timeTableController!.getCellType(indexPath)
-        if type == STTimetableCollectionViewController.cellType.Course {
-            let singleClass = timetable!.singleClassList[indexPath.row]
-            let indexRow = CGFloat(singleClass.startTime.period) / 2.0
+        let type = timetableController!.getCellType(indexPath)
+        
+        var width : CGFloat
+        var height : CGFloat
+        var locX : CGFloat
+        var locY : CGFloat
+        
+        switch type {
+        case .Course, .TemporaryCourse:
+            let singleClass = timetableController!.getSingleClass(indexPath)
+            let indexRow = CGFloat(singleClass.startTime.period)
             let indexColumn = singleClass.startTime.day.rawValue
-            let width = self.collectionView!.bounds.size.width / CGFloat(timeTableController!.columnList.count)
-            let height = HeightPerHour * CGFloat(singleClass.duration) / 2.0
-            let locX = CGFloat(indexColumn+1) * width
-            let locY = HeightForHeader + HeightPerHour * (indexRow-1.0)
-            ret.frame = CGRect(x: locX, y: locY, width: width, height: height)
-        } else {
-            let indexRow = indexPath.row / timeTableController!.columnList.count
-            let indexColumn = indexPath.row % timeTableController!.columnList.count
-            var width = self.collectionView!.bounds.size.width / CGFloat(timeTableController!.columnList.count)
-            var height : CGFloat = 0.0
-            switch type {
-            case .HeaderColumn:
-                height = HeightForHeader
-            case .HeaderRow:
-                height = HeightPerHour
-            case .Slot:
-                height = HeightPerHour
-            default:
-                height = 0.0
-            }
-            let locX = CGFloat(indexColumn) * width
-            var locY : CGFloat = 0.0
-            if indexRow == 0 {
-                locY = 0
-            } else {
-                locY = HeightForHeader + HeightPerHour * CGFloat(indexRow - 1)
-            }
-            if type == STTimetableCollectionViewController.cellType.Slot {
-                width = width + 1.0
-                height = height + 1.0
-            }
-            ret.frame = CGRect(x: locX, y: locY, width: width, height: height)
+            width = WidthPerColumn
+            height = HeightPerRow * CGFloat(singleClass.duration)
+            locX = CGFloat(indexColumn+1) * width
+            locY = HeightForHeader + HeightPerRow * indexRow
+        case .HeaderColumn:
+            width = WidthPerColumn
+            height = HeightForHeader
+            locX = CGFloat(indexPath.row + 1) * WidthPerColumn
+            locY = CGFloat(0)
+        case .HeaderRow:
+            width = WidthPerColumn
+            height = HeightPerRow
+            locX = CGFloat(0)
+            locY = HeightForHeader + CGFloat(indexPath.row) * HeightPerRow * 2
+        case .Slot:
+            width = ContentWidth
+            height = ContentHeight
+            locX = CGFloat(0)
+            locY = CGFloat(0)
         }
+        ret.frame = CGRect(x: locX, y: locY, width: width, height: height)
         return ret
     }
     override func collectionViewContentSize() -> CGSize {
-        let contentWidth = self.collectionView!.bounds.size.width
-        let contentHeight: CGFloat = self.collectionView!.bounds.size.height
-        return CGSize(width: contentWidth, height: contentHeight)
+        ContentWidth = self.collectionView!.bounds.size.width
+        ContentHeight = self.collectionView!.bounds.size.height
+        
+        WidthPerColumn = ContentWidth / CGFloat(timetableController!.columnList.count + 1)
+        HeightPerRow = ContentHeight / (CGFloat(STTime.periodNum) + timetableController!.RatioForHeader)
+        HeightForHeader = timetableController!.RatioForHeader * HeightPerRow
+        
+        return CGSize(width: ContentWidth, height: ContentHeight)
     }
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var ret : [UICollectionViewLayoutAttributes]? = []
-        for i in 0..<(timeTableController!.numberOfSectionsInCollectionView(collectionView!)) {
-            for j in 0..<(timeTableController!.collectionView(collectionView!, numberOfItemsInSection: i)) {
+        for i in 0..<(timetableController!.numberOfSectionsInCollectionView(collectionView!)) {
+            for j in 0..<(timetableController!.collectionView(collectionView!, numberOfItemsInSection: i)) {
                 let indexPath = NSIndexPath(forRow: j, inSection: i)
                 ret?.append(self.layoutAttributesForItemAtIndexPath(indexPath))
             }
