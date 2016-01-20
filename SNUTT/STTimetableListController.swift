@@ -108,7 +108,8 @@ class STTimetableListController: UITableViewController {
         
         cell.textLabel!.text = timetableList[
             indexList[indexPath.section]+indexPath.row].title
-
+        
+        //configure the cell for loading timetable
         return cell
     }
     
@@ -118,11 +119,18 @@ class STTimetableListController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let index = indexList[indexPath.section]+indexPath.row
-        STTimetableManager.sharedInstance.currentTimetable = timetableList[index]
-        //Do some networking
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        self.navigationController?.popViewControllerAnimated(true)
-        
+        Alamofire.request(STTimetableRouter.GetTimetable(timetableList[index].id!)).responseSwiftyJSON { response in
+            switch response.result {
+            case .Success(let json):
+                let timetable = STTimetable(json: json)
+                STTimetableManager.sharedInstance.currentTimetable = timetable
+                tableView.deselectRowAtIndexPath(indexPath, animated: false)
+                self.navigationController?.popViewControllerAnimated(true)
+            case .Failure:
+                // TODO: alertView about failure
+                break
+            }
+        }
     }
     
     
