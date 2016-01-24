@@ -22,8 +22,8 @@ class STTimetable : NSObject, NSCoding {
     private(set) var id : String? 
     var temporaryLecture : STLecture? = nil
     
-    static let semesterToString = ["1", "S", "2", "W"]
-    static let semesterToLongString = ["1", "여름", "2", "겨울"]
+    static let semesterToString = ["", "1", "S", "2", "W"]
+    static let semesterToLongString = ["", "1", "여름", "2", "겨울"]
     
     func quarterToString() -> String {
         return "\(year)" + "-" + STTimetable.semesterToString[semester]

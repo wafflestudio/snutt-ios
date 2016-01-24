@@ -32,7 +32,7 @@ class STTimetableManager : NSObject {
         }
     }
     func loadData() {
-        currentTimetable = STTimetable(year: 2016, semester: 0, title: "TEST")
+        currentTimetable = STTimetable(year: 2016, semester: 1, title: "TEST")
     }
     
     func saveData() {

@@ -29,13 +29,13 @@ class STCourseBookList {
     func loadCourseBooks () {
         //TODO : Add networking
         courseBookList = [
-            STCourseBook(year: 2016, semester: 0),
+            STCourseBook(year: 2016, semester: 1),
+            STCourseBook(year: 2015, semester: 4),
             STCourseBook(year: 2015, semester: 3),
             STCourseBook(year: 2015, semester: 2),
             STCourseBook(year: 2015, semester: 1),
-            STCourseBook(year: 2015, semester: 0),
-            STCourseBook(year: 2014, semester: 3),
-            STCourseBook(year: 2014, semester: 2)
+            STCourseBook(year: 2014, semester: 4),
+            STCourseBook(year: 2014, semester: 3)
         ]
     }
     
