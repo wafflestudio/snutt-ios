@@ -8,36 +8,26 @@
 
 import Foundation
 
-class STTime : NSObject, NSCoding{
+class STTime {
     enum STDay : Int{
         case MON=0, TUE, WED, THU, FRI, SAT
     }
     var day : STDay
-    var period : Int
-    static var periodNum : Int = 28
+    var period : Double
+    static var periodNum : Int = 14
     static var dayToString = ["월", "화", "수", "목", "금", "토"]
     static var stringToDay = ["월" : STDay.MON, "화" : STDay.TUE, "수" : STDay.WED, "목" : STDay.THU, "금" : STDay.FRI, "토" : STDay.SAT]
-    init(day tDay:STDay, period tPeriod:Int) {
-        day = tDay
+    
+    init(day tDay: Int, period tPeriod: Double) {
+        day = STDay(rawValue: tDay)!
         period = tPeriod
     }
-    init(day tDay:String, period tPeriod: Double) {
-        day = STTime.stringToDay[tDay]!
-        period = (Int)(tPeriod * 2)
-    }
-    required init?(coder aDecoder: NSCoder) {
-        day = STDay(rawValue: aDecoder.decodeObjectForKey("day") as! Int)!
-        period = aDecoder.decodeObjectForKey("period") as! Int
-    }
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(day.rawValue, forKey: "day")
-        aCoder.encodeObject(period, forKey: "period")
-    }
+    
     func periodToString() -> String {
-        if period % 2 == 0 {
-            return "\(period/2+8):00"
+        if Int(period * 2.0) % 2 == 0 {
+            return "\(Int(period)+8):00"
         } else {
-            return "\(period/2+8):30"
+            return "\(Int(period)+8):30"
         }
     }
     func toString() -> String {
@@ -46,6 +36,6 @@ class STTime : NSObject, NSCoding{
         return "\(dayString) \(periodString)"
     }
     func toShortString() -> String {
-        return "\(STTime.dayToString[day.rawValue])\(Double(period)/2.0)"
+        return "\(STTime.dayToString[day.rawValue])\(period)"
     }
 }

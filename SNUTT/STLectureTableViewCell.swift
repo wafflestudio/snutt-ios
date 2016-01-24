@@ -17,13 +17,13 @@ class STLectureTableViewCell: UITableViewCell {
     @IBOutlet weak var departmentLabel: UILabel!
     @IBOutlet weak var classificationLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var professorLabel: UILabel!
+    @IBOutlet weak var instructorLabel: UILabel!
     
     var lecture : STLecture? {
         didSet {
-            titleLabel.text = lecture?.name
+            titleLabel.text = lecture?.title
             creditLabel.text = "\(lecture?.credit)학점"
-            professorLabel.text = lecture?.professor
+            instructorLabel.text = lecture?.instructor
             classificationLabel.text = lecture?.classification
         }
     }

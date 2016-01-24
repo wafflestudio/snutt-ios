@@ -19,7 +19,7 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     var lecture : STLecture? {
         didSet {
-            titleLabel.text = "\(lecture!.name) (\(lecture!.professor)/\(lecture!.credit)학점)"
+            titleLabel.text = "\(lecture!.title) (\(lecture!.instructor)/\(lecture!.credit)학점)"
             label1.text = lecture?.classification
             label2.text = lecture?.department
             var timeString : String = ""

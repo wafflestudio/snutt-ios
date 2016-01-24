@@ -27,8 +27,8 @@ class STLectureDetailTableViewController: UITableViewController {
         let saveBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("saveDetail"))
         self.navigationItem.rightBarButtonItem = saveBarButtonItem
         
-        nameCell.contentTextField.text = singleClass?.lecture?.name
-        professorCell.contentTextField.text = singleClass!.lecture?.professor
+        nameCell.contentTextField.text = singleClass?.lecture?.title
+        professorCell.contentTextField.text = singleClass!.lecture?.instructor
         
         locationCell.contentTextField.text = singleClass?.place
         timeCell.contentTextField.text = singleClass?.timeString

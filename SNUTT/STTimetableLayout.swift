@@ -58,7 +58,7 @@ class STTimetableLayout: UICollectionViewLayout {
             width = WidthPerColumn
             height = HeightPerRow
             locX = CGFloat(0)
-            locY = HeightForHeader + CGFloat(indexPath.row) * HeightPerRow * 2
+            locY = HeightForHeader + CGFloat(indexPath.row) * HeightPerRow
         case .Slot:
             width = ContentWidth
             height = ContentHeight

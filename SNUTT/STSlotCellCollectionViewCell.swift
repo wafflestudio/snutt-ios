@@ -50,8 +50,8 @@ class STSlotCellCollectionViewCell: UICollectionViewCell {
             drawSolidLine(st_x: x, st_y: 0, en_x: x, en_y: contentHeight)
         }
         
-        for i in 0..<rowNum {
-            let y = heightForHeader + heightPerRow * CGFloat(i)
+        for i in 0..<(rowNum*2) {
+            let y = heightForHeader + heightPerRow * CGFloat(i) / 2.0
             if i % 2 == 0 {
                 drawSolidLine(st_x: 0, st_y: y, en_x: contentWidth, en_y: y)
             } else {

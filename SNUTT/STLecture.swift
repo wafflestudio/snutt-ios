@@ -9,109 +9,50 @@
 import Foundation
 import SwiftyJSON
 
-class STLecture : NSObject , NSCoding{
-    var name : String
-    var professor : String
-    var credit : Int
+class STLecture {
+    var year : Int
+    var semester : Int
     var classification : String
     var department : String
+    var academicYear : String
+    var courseNumber : String
+    var lectureNumber : String
+    var title : String
+    var credit : Int
+    var instructor : String
+    var quota : Int
+    var remark : String
+    var category : String
+    var id : String
     var classList :[STSingleClass] = []
-    var course_number : String
-    var lecture_number : String
     var colorIndex : Int
-    required init?(coder aDecoder: NSCoder) {
-        name = aDecoder.decodeObjectForKey("name") as! String
-        professor = aDecoder.decodeObjectForKey("professor") as! String
-        credit = aDecoder.decodeObjectForKey("credit") as! Int
-        classification = aDecoder.decodeObjectForKey("classification") as! String
-        department = aDecoder.decodeObjectForKey("department") as! String
-        classList = aDecoder.decodeObjectForKey("classList") as! [STSingleClass]
-        course_number = aDecoder.decodeObjectForKey("course_number") as! String
-        lecture_number = aDecoder.decodeObjectForKey("lecture_number") as! String
-        colorIndex = aDecoder.decodeObjectForKey("colorIndex") as! Int
-        super.init()
-        for singleClass in classList {
-            singleClass.lecture = self
-        }
-    }
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(name, forKey: "name")
-        aCoder.encodeObject(professor, forKey: "professor")
-        aCoder.encodeObject(credit, forKey: "credit")
-        aCoder.encodeObject(classification, forKey: "classification")
-        aCoder.encodeObject(department, forKey: "department")
-        aCoder.encodeObject(classList, forKey: "classList")
-        aCoder.encodeObject(course_number, forKey: "course_number")
-        aCoder.encodeObject(lecture_number, forKey: "lecture_number")
-        aCoder.encodeObject(colorIndex, forKey: "colorIndex")
-
-    }
-    init(json data : NSDictionary) {
-        let timeData = data["class_time"] as! String
-        var timeArr = timeData.characters.split{$0 == "/"}.map { String($0) }
-        let locationData = data["location"] as! String
-        var locationArr = locationData.characters.split{$0 == "/"}.map { String($0) }
-        if locationArr.count == 0{
-            locationArr = ["","","","",""]
-        }
-        for i in 0..<timeArr.count {
-            let time = timeArr[i]
-            var t = time.characters.split {
-                (params) -> Bool in
-                var ret = (params == ")")
-                ret = ret || (params == "(") || (params == "-")
-                return ret
-                }.map { String($0) }
-            classList.append(STSingleClass(startTime : STTime(day : t[0], period : (t[1] as NSString).doubleValue), duration : (Int)((t[2] as NSString).doubleValue * 2.0), place : locationArr[i]))
-        }
-        name = data["course_title"] as! String
-        professor = data["instructor"] as! String
-        credit = (data["credit"] as! NSString).integerValue
-        classification = data["classification"] as! String
-        department = data["department"] as! String
-        course_number = data["course_number"] as! String
-        lecture_number = data["lecture_number"] as! String
-        colorIndex = Int(arc4random_uniform(UInt32(STCourseCellCollectionViewCell.backgroundColorList.count)))
-        super.init()
-        for it in classList {
-            it.lecture = self
-        }
-    }
-
     
     init(json data : JSON) {
-        let timeData = data["class_time"].stringValue
-        var timeArr = timeData.characters.split{$0 == "/"}.map { String($0) }
-        let locationData = data["location"].stringValue
-        var locationArr = locationData.characters.split{$0 == "/"}.map { String($0) }
-        if locationArr.count == 0{
-            locationArr = ["","","","",""]
-        }
-        for i in 0..<timeArr.count {
-            let time = timeArr[i]
-            var t = time.characters.split {
-                (params) -> Bool in
-                var ret = (params == ")")
-                ret = ret || (params == "(") || (params == "-")
-                return ret
-            }.map { String($0) }
-            classList.append(STSingleClass(startTime : STTime(day : t[0], period : (t[1] as NSString).doubleValue), duration : (Int)((t[2] as NSString).doubleValue * 2.0), place : locationArr[i]))
-        }
-        name = data["course_title"].stringValue
-        professor = data["instructor"].stringValue
-        credit = data["credit"].intValue
+        year = data["year"].intValue
+        semester = data["semester"].intValue
         classification = data["classification"].stringValue
         department = data["department"].stringValue
-        course_number = data["course_number"].stringValue
-        lecture_number = data["lecture_number"].stringValue
-        colorIndex = Int(arc4random_uniform(UInt32(STCourseCellCollectionViewCell.backgroundColorList.count)))
-        super.init()
-        for it in classList {
-            it.lecture = self
+        academicYear = data["academic_year"].stringValue
+        courseNumber = data["course_number"].stringValue
+        lectureNumber = data["lecture_number"].stringValue
+        title = data["course_title"].stringValue
+        credit = data["credit"].intValue
+        instructor = data["instructor"].stringValue
+        quota = data["quota"].intValue
+        remark = data["remark"].stringValue
+        category = data["category"].stringValue
+        id = data["_id"].stringValue
+        colorIndex = data["color_index"].intValue
+        let ListData = data["class_time_json"].arrayValue
+        for it in ListData {
+            let startTime = STTime(day: it["day"].intValue, period: it["start"].doubleValue)
+            let singleClass = STSingleClass(startTime: startTime, duration: it["len"].doubleValue, place: it["place"].stringValue)
+            singleClass.lecture = self
+            classList.append(singleClass)
         }
     }
     
     func isEquals(right : STLecture) -> Bool {
-        return (course_number == right.course_number && lecture_number == right.lecture_number)
+        return (courseNumber == right.courseNumber && lectureNumber == right.lectureNumber)
     }
 }

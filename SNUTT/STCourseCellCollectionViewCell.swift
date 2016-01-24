@@ -44,7 +44,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     @IBOutlet weak var courseText: UILabel!
     var singleClass : STSingleClass? {
         didSet {
-            courseText.text = "\(singleClass!.lecture!.name)\n\(singleClass!.place)"
+            courseText.text = "\(singleClass!.lecture!.title)\n\(singleClass!.place)"
             setColor()
         }
     }
@@ -76,7 +76,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     }
     func longClick(gesture : UILongPressGestureRecognizer) {
         if gesture.state == UIGestureRecognizerState.Began {
-            let alertView = UIAlertView(title: "SNUTT", message: "Do you want to Delete \(singleClass!.lecture!.name)?", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
+            let alertView = UIAlertView(title: "SNUTT", message: "Do you want to Delete \(singleClass!.lecture!.title)?", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
             alertView.show()
         }
     }

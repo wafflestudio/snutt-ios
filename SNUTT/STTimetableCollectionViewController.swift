@@ -19,7 +19,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
     
     
     let LectureSectionOffset = 3
-    let RatioForHeader : CGFloat = 1.33
+    let RatioForHeader : CGFloat = 0.67
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         self.collectionView?.registerNib(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
         
         for i in 0..<(STTime.periodNum) {
-            let time = STTime(day: STTime.STDay.MON, period: i*2)
+            let time = STTime(day: 0, period: Double(i))
             rowList.append("\(time.periodToString())")
         }
         let viewLayout = STTimetableLayout(aTimetable: timetable)
