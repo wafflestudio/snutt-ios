@@ -35,9 +35,9 @@ func STColorFromHex (hex:String) -> UIColor {
 class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
     static var backgroundColorList : [UIColor] =
-    [STColorFromHex("#B6F9B2"), STColorFromHex("#BFF7F8"), STColorFromHex("#94E6FE"), STColorFromHex("#F6B5F5"), STColorFromHex("#FFF49A"), STColorFromHex("#FFB2BC")]
+    [STColorFromHex("#E0E0E0"), STColorFromHex("#B6F9B2"), STColorFromHex("#BFF7F8"), STColorFromHex("#94E6FE"), STColorFromHex("#F6B5F5"), STColorFromHex("#FFF49A"), STColorFromHex("#FFB2BC")]
     static var labelColorList : [UIColor] =
-    [STColorFromHex("#2B8728"), STColorFromHex("#45B2B8"), STColorFromHex("#1579C2"), STColorFromHex("#A337A1"), STColorFromHex("#B8991B"), STColorFromHex("#BA313B")]
+    [STColorFromHex("#333333"), STColorFromHex("#2B8728"), STColorFromHex("#45B2B8"), STColorFromHex("#1579C2"), STColorFromHex("#A337A1"), STColorFromHex("#B8991B"), STColorFromHex("#BA313B")]
     
     
     

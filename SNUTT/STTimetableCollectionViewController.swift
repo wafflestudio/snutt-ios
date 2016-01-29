@@ -100,8 +100,8 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
             let index = section - LectureSectionOffset
             if index < timetable!.lectureList.count {
                 return timetable!.lectureList[index].classList.count
-            } else if index == timetable!.lectureList.count {
-                return (timetable!.temporaryLecture?.classList.count)! //TEST
+            } else if index == timetable!.lectureList.count && timetable!.temporaryLecture != nil {
+                return timetable!.temporaryLecture!.classList.count
             } else {
                 return 0
             }

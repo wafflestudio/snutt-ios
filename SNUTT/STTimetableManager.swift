@@ -40,12 +40,17 @@ class STTimetableManager : NSObject {
     }
     
     func addLecture(lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
+        lecture.colorIndex = 1
         let ret = currentTimetable?.addLecture(lecture)
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
         return ret!
     }
     func deleteLecture(lecture : STLecture, object : AnyObject? ) {
         currentTimetable?.deleteLecture(lecture)
+        STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
+    }
+    func setTemporaryLecture(lecture :STLecture?, object : AnyObject? ) {
+        currentTimetable?.temporaryLecture = lecture
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
     }
 }

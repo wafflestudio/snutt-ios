@@ -87,8 +87,8 @@
                 <outlet property="classificationLabel" destination="rF9-pL-6eR" id="f0s-4S-t5d"/>
                 <outlet property="creditLabel" destination="Baf-xg-yRt" id="zaR-Kp-S4h"/>
                 <outlet property="departmentLabel" destination="GZe-rq-swa" id="cDT-Uo-aTT"/>
+                <outlet property="instructorLabel" destination="ret-Ru-hvh" id="X8p-wv-ord"/>
                 <outlet property="locationLabel" destination="G7w-98-RQI" id="vmY-fJ-NJn"/>
-                <outlet property="professorLabel" destination="ret-Ru-hvh" id="8we-1J-fao"/>
                 <outlet property="timeLabel" destination="gis-H9-hnf" id="ylx-5i-S2b"/>
                 <outlet property="titleLabel" destination="AtQ-FO-5s1" id="XRr-oe-5xn"/>
             </connections>

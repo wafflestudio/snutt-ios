@@ -186,6 +186,12 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plr-x9-uzV">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                                <connections>
+                                    <segue destination="Icv-Xm-I3U" kind="embed" identifier="STSearchTimetableView" id="oEZ-xd-CA2"/>
+                                </connections>
+                            </containerView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="9Lj-z7-tFw">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -195,8 +201,9 @@
                             </searchBar>
                             <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XID-hC-pe0">
                                 <rect key="frame" x="0.0" y="44" width="600" height="487"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LectureSearchCell" rowHeight="65" id="WRc-g0-1Dc" customClass="STLectureSearchTableViewCell" customModule="SNUTT" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="600" height="65"/>
@@ -258,7 +265,7 @@
                                                 <constraint firstItem="B9X-08-Zwh" firstAttribute="leading" secondItem="6pk-J5-7ov" secondAttribute="leadingMargin" id="wd3-c1-iNZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outlet property="button" destination="4Lu-n6-m3b" id="CEO-Rm-hwN"/>
@@ -275,11 +282,14 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="plr-x9-uzV" firstAttribute="leading" secondItem="Kj5-zA-s3U" secondAttribute="leading" id="1V1-JV-uGd"/>
                             <constraint firstAttribute="trailing" secondItem="XID-hC-pe0" secondAttribute="trailing" id="2BJ-os-K17"/>
                             <constraint firstItem="XID-hC-pe0" firstAttribute="leading" secondItem="Kj5-zA-s3U" secondAttribute="leading" id="Jns-L3-YT6"/>
+                            <constraint firstItem="kbG-Pe-fQU" firstAttribute="top" secondItem="plr-x9-uzV" secondAttribute="bottom" id="LQd-m3-wZa"/>
                             <constraint firstItem="XID-hC-pe0" firstAttribute="top" secondItem="9Lj-z7-tFw" secondAttribute="bottom" id="NGa-Kg-73X"/>
+                            <constraint firstItem="plr-x9-uzV" firstAttribute="top" secondItem="Pe0-MI-3Cc" secondAttribute="bottom" id="VWu-Kl-1aa"/>
+                            <constraint firstAttribute="trailing" secondItem="plr-x9-uzV" secondAttribute="trailing" id="a5X-fQ-wIi"/>
                             <constraint firstItem="kbG-Pe-fQU" firstAttribute="top" secondItem="XID-hC-pe0" secondAttribute="bottom" constant="-44" id="gm7-Ap-qRH"/>
                             <constraint firstAttribute="trailing" secondItem="9Lj-z7-tFw" secondAttribute="trailing" id="q1U-Dn-wat"/>
                             <constraint firstItem="9Lj-z7-tFw" firstAttribute="leading" secondItem="Kj5-zA-s3U" secondAttribute="leading" id="qC4-Ql-07o"/>
@@ -557,7 +567,6 @@
         <!--Navigation Controller-->
         <scene sceneID="9Ez-N0-kK2">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="EqT-5b-E50" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qUh-B3-8yj" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9rD-e2-jc3">
@@ -569,6 +578,7 @@
                         <segue destination="Zmb-4X-uRi" kind="relationship" relationship="rootViewController" id="Yl3-IF-Nk7"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EqT-5b-E50" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3017" y="402"/>
         </scene>
@@ -591,5 +601,21 @@
             </objects>
             <point key="canvasLocation" x="1480" y="-1683"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="CoV-cI-j8k">
+            <objects>
+                <viewController id="NZT-u9-oJU" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="096-55-NSR">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UdP-8q-hVV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="oEZ-xd-CA2"/>
+    </inferredMetricsTieBreakers>
 </document>

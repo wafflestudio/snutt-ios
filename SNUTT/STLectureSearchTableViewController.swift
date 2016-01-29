@@ -7,62 +7,59 @@
 //
 
 import UIKit
-import EGOTableViewPullRefreshAndLoadMore
+import Alamofire
 
-class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, LoadMoreTableFooterDelegate{
+class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
+    var timetableViewController : STTimetableCollectionViewController!
+    
     var FilteredList : [STLecture] = []
-    var SearchingString : String = ""
     var pageNum : Int = 0
-    var loadMoreView = LoadMoreTableFooterView()
-    var shouldShowResult = true
+    
+    
+    enum SearchState {
+        case Empty
+        case Loading(Request)
+        case Loaded(String)
+    }
+    var state : SearchState = SearchState.Empty
+    
     func reloadData() {
         tableView.reloadData()
-        if pageNum == -1 {
-            loadMoreView.hidden = true
-        } else {
-            loadMoreView.hidden = false
-        }
-        loadMoreView.frame = CGRect(x: 0.0, y: tableView.contentSize.height, width: tableView.frame.size.width, height: tableView.bounds.size.height)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getLectureList("")
-        reloadData()
-        loadMoreView.delegate = self
-        tableView.addSubview(loadMoreView)
+        
+        STEventCenter.sharedInstance.addObserver(self, selector: "timetableSwitched", event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: "reloadTimetable", event: STEvent.CurrentTimetableChanged, object: nil)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-    var isGettingLecture = false
+    
     func getLectureList(searchString : String) {
-        if isGettingLecture {
-            return
+        let request = Alamofire.request(STSearchRouter.Search(query: searchString))
+        state = .Loading(request)
+        request.responseSwiftyJSON { response in
+            self.state = .Loaded(searchString)
+            switch response.result {
+            case .Success(let json):
+                self.FilteredList = json.arrayValue.map { data in
+                    return STLecture(json: data)
+                }
+                self.reloadData()
+            case .Failure(let error):
+                //TODO : Alertview for failure
+                print(error)
+            }
         }
-        isGettingLecture = true
-        FilteredList = []
-        let queryText = searchString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        let url : String  = "http://snutt.kr/api/search_query?year=2015&semester=2&filter=&type=course_title&query_text=\(queryText)&page=1&per_page=30"
-        let jsonData = NSData(contentsOfURL: NSURL(string: url)!)
-        let jsonDictionary = (try! NSJSONSerialization.JSONObjectWithData(jsonData!, options: [])) as! NSDictionary
-        let searchResult = jsonDictionary["lectures"] as! [NSDictionary]
-        for it in searchResult {
-            FilteredList.append(STLecture(json: it))
-        }
-        SearchingString = searchString
-        pageNum = 1
-        if searchResult.count != 30 {
-            pageNum = -1
-        }
-        isGettingLecture = false
-        tableView.setContentOffset(CGPoint(x:0.0,y:0.0), animated: false)
     }
     func getMoreLectureList() {
         /* //FIXME : DEBUG
@@ -89,6 +86,17 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         isGettingLecture = false
         */
     }
+    
+    func timetableSwitched() {
+        state = .Empty
+        searchBar.text = ""
+        FilteredList = []
+    }
+    
+    func reloadTimetable() {
+        self.timetableViewController.reloadTimetable()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -99,10 +107,12 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        if shouldShowResult {
+        switch state {
+        case .Loaded:
             return 1
+        case .Loading, .Empty:
+            return 0
         }
-        return 0
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -129,21 +139,28 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
+        switch state {
+        case .Loading(let request):
+            request.cancel()
+        default:
+            break
+        }
         getLectureList(searchBar.text!)
         tableView.hidden = false
         reloadData()
     }
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
-        if searchBar.text == "" {
-            getLectureList("")
-            reloadData()
-        } else {
-            searchBar.text = SearchingString
+        switch state {
+        case .Empty, .Loading:
+            break
+        case .Loaded(let queryString):
+            searchBar.text = queryString
         }
         tableView.hidden = false
     }
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
     }
     
     
@@ -175,43 +192,16 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! STLectureSearchTableViewCell
         cell.button.hidden = false
+        STTimetableManager.sharedInstance.setTemporaryLecture(FilteredList[indexPath.row], object: self)
         //TimetableCollectionViewController.datasource.addLecture(FilteredList[indexPath.row])
         
     }
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! STLectureSearchTableViewCell
         cell.button.hidden = true
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if pageNum != -1 {
-            loadMoreView.loadMoreScrollViewDidScroll(scrollView)
+        if STTimetableManager.sharedInstance.currentTimetable?.temporaryLecture === FilteredList[indexPath.row] {
+            STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
         }
-        
-    }
-    
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if pageNum != -1 {
-            loadMoreView.loadMoreScrollViewDidEndDragging(scrollView)
-        }
-    }
-    
-    // MARK: LoadMoreTableFooterDelegate
-    var isLoading = false
-    func loadMoreTableFooterDidTriggerLoadMore(view: LoadMoreTableFooterView!) {
-        isLoading = true
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND,0)) {
-            self.getMoreLectureList()
-            dispatch_sync(dispatch_get_main_queue()) {
-                self.isLoading = false
-                self.reloadData()
-                self.loadMoreView.loadMoreScrollViewDataSourceDidFinishedLoading(self.tableView)
-            }
-        }
-    }
-    
-    func loadMoreTableFooterDataSourceIsLoading(view: LoadMoreTableFooterView!) -> Bool {
-        return isLoading
     }
     
     /*
@@ -249,15 +239,17 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-        NSLog("Log")
+        if(segue.identifier == "STSearchTimetableView") {
+            timetableViewController = (segue.destinationViewController as! STTimetableCollectionViewController)
+            timetableViewController.timetable = STTimetableManager.sharedInstance.currentTimetable
+            timetableViewController.showTemporary = true
+        }
     }
-    */
+    
 
 }
