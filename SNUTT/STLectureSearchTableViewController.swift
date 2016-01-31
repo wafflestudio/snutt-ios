@@ -11,14 +11,15 @@ import Alamofire
 
 class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar : STSearchBar!
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var tagTableView: STTagListView!
     var timetableViewController : STTimetableCollectionViewController!
     
     var FilteredList : [STLecture] = []
     var pageNum : Int = 0
-    
     
     enum SearchState {
         case Empty
@@ -36,6 +37,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         
         STEventCenter.sharedInstance.addObserver(self, selector: "timetableSwitched", event: STEvent.CurrentTimetableSwitched, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadTimetable", event: STEvent.CurrentTimetableChanged, object: nil)
+        
+        searchBar.tagTableView = tagTableView
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -89,7 +92,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func timetableSwitched() {
         state = .Empty
-        searchBar.text = ""
+        //searchBar.text = ""
         FilteredList = []
     }
     
@@ -159,6 +162,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         }
         tableView.hidden = false
     }
+    
+    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        return true
+    }
+    
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         
     }
