@@ -19,6 +19,14 @@ class STSearchBar: UIView, UITextFieldDelegate {
         textField.addTarget(self, action: "textFieldDidEdit", forControlEvents: .EditingChanged)
     }
     
+    func addTag(tag : String) {
+        let range = self.getSelectedWordRange()
+        var str = textField.text!
+        let wordRange = str.startIndex.advancedBy(range.location+1)..<str.startIndex.advancedBy(range.location+range.length)
+        str.replaceRange(wordRange, with: tag)
+        textField.text = str
+    }
+    
     func textFieldDidEdit() {
         let wordRange = self.getSelectedWordRange()
         if wordRange.length == 0 {
@@ -56,13 +64,15 @@ class STSearchBar: UIView, UITextFieldDelegate {
         
     }
     
+    
+    //SlackTs
     func getSelectedWordRange() -> NSRange {
         let text = NSString(string: textField.text!)
         let range = self.getSelectedRange()
         let location = range.location
         
         // Aborts in case minimum requieres are not fufilled
-        if text.length == 0 || location < 0 || (range.location+range.length) > text.length {
+        if range.length != 0 || text.length == 0 || location < 0 || (range.location+range.length) > text.length {
             return NSMakeRange(0, 0)
         }
         

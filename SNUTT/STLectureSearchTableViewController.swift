@@ -39,7 +39,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadTimetable", event: STEvent.CurrentTimetableChanged, object: nil)
         
         searchBar.tagTableView = tagTableView
-        
+        tagTableView.searchBar = searchBar
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

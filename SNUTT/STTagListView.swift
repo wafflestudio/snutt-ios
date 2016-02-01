@@ -18,6 +18,8 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     }
     */
     
+    weak var searchBar : STSearchBar!
+    
     var tagList = ["컴공", "컴공학부", "화생공", "화생공공공공"]
     
     var filteredList : [String] = []
@@ -57,6 +59,11 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("STTagTableViewCell", forIndexPath: indexPath)
         cell.textLabel!.text = filteredList[indexPath.row]
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let tag = filteredList[indexPath.row]
+        searchBar.addTag(tag)
     }
 
 }
