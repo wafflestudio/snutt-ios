@@ -31,7 +31,7 @@
             <objects>
                 <collectionViewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="Icv-Xm-I3U" customClass="STTimetableCollectionViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Jao-OD-M66">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="443"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewLayout key="collectionViewLayout" id="7qR-xv-imX"/>
@@ -187,7 +187,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plr-x9-uzV">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                                <rect key="frame" x="0.0" y="44" width="600" height="443"/>
                                 <connections>
                                     <segue destination="Icv-Xm-I3U" kind="embed" identifier="STSearchTimetableView" id="oEZ-xd-CA2"/>
                                 </connections>
@@ -199,21 +199,39 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AHQ-r0-gbo" customClass="STSearchBar" customModule="SNUTT" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Niu-Kt-abf">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Niu-Kt-abf">
                                         <rect key="frame" x="8" y="8" width="584" height="28"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Eo-TI-P4p">
+                                        <rect key="frame" x="602" y="8" width="46" height="28"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelButtonClicked:" destination="AHQ-r0-gbo" eventType="touchUpInside" id="8SX-cG-EEw"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="3Eo-TI-P4p" firstAttribute="trailing" secondItem="AHQ-r0-gbo" secondAttribute="trailingMargin" priority="250" id="1xA-1Y-FH3"/>
                                     <constraint firstItem="Niu-Kt-abf" firstAttribute="leading" secondItem="AHQ-r0-gbo" secondAttribute="leadingMargin" id="2bF-CM-V4S"/>
+                                    <constraint firstItem="3Eo-TI-P4p" firstAttribute="leading" secondItem="Niu-Kt-abf" secondAttribute="trailing" constant="10" id="Dbo-k2-9G9"/>
                                     <constraint firstAttribute="height" constant="44" id="FdH-Xp-1Uh"/>
                                     <constraint firstItem="Niu-Kt-abf" firstAttribute="top" secondItem="AHQ-r0-gbo" secondAttribute="topMargin" id="PPV-b9-XXR"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="Niu-Kt-abf" secondAttribute="bottom" id="PfD-sp-gwO"/>
-                                    <constraint firstItem="Niu-Kt-abf" firstAttribute="trailing" secondItem="AHQ-r0-gbo" secondAttribute="trailingMargin" id="zwd-yZ-GS2"/>
+                                    <constraint firstItem="3Eo-TI-P4p" firstAttribute="trailing" secondItem="AHQ-r0-gbo" secondAttribute="trailingMargin" id="YFv-xX-h7Y"/>
+                                    <constraint firstItem="3Eo-TI-P4p" firstAttribute="top" secondItem="AHQ-r0-gbo" secondAttribute="topMargin" id="jBM-vg-BK6"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="3Eo-TI-P4p" secondAttribute="bottom" id="wbQ-gL-K4o"/>
+                                    <constraint firstItem="Niu-Kt-abf" firstAttribute="trailing" secondItem="AHQ-r0-gbo" secondAttribute="trailingMargin" priority="750" id="zwd-yZ-GS2"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="YFv-xX-h7Y"/>
+                                    </mask>
+                                </variation>
                                 <connections>
+                                    <outlet property="cancelButtonConstraint" destination="1xA-1Y-FH3" id="GQ7-i9-glM"/>
                                     <outlet property="textField" destination="Niu-Kt-abf" id="C9H-RI-i6Z"/>
                                 </connections>
                             </view>
@@ -299,9 +317,12 @@
                                     <outlet property="delegate" destination="xj7-5c-aFi" id="JJu-tn-c0m"/>
                                 </connections>
                             </tableView>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="18" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="38X-iM-cc3" customClass="STTagListView" customModule="SNUTT" customModuleProvider="target">
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="18" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="38X-iM-cc3" customClass="STTagListView" customModule="SNUTT" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="600" height="264"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="264" id="iRd-7O-hpc"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="STTagTableViewCell" id="niZ-nY-gOR">
                                         <rect key="frame" x="0.0" y="28" width="600" height="18"/>
@@ -314,6 +335,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="plr-x9-uzV" firstAttribute="leading" secondItem="Kj5-zA-s3U" secondAttribute="leading" id="1V1-JV-uGd"/>
                             <constraint firstAttribute="trailing" secondItem="XID-hC-pe0" secondAttribute="trailing" id="2BJ-os-K17"/>
@@ -324,6 +346,7 @@
                             <constraint firstItem="kbG-Pe-fQU" firstAttribute="top" secondItem="plr-x9-uzV" secondAttribute="bottom" id="LQd-m3-wZa"/>
                             <constraint firstItem="plr-x9-uzV" firstAttribute="top" secondItem="Pe0-MI-3Cc" secondAttribute="bottom" id="VWu-Kl-1aa"/>
                             <constraint firstItem="AHQ-r0-gbo" firstAttribute="top" secondItem="Pe0-MI-3Cc" secondAttribute="bottom" id="VoD-MG-Cp8"/>
+                            <constraint firstItem="plr-x9-uzV" firstAttribute="top" secondItem="AHQ-r0-gbo" secondAttribute="bottom" id="W80-9a-pgR"/>
                             <constraint firstAttribute="trailing" secondItem="plr-x9-uzV" secondAttribute="trailing" id="a5X-fQ-wIi"/>
                             <constraint firstAttribute="trailing" secondItem="Wf4-PD-nbb" secondAttribute="trailing" id="blD-51-3af"/>
                             <constraint firstItem="38X-iM-cc3" firstAttribute="top" secondItem="AHQ-r0-gbo" secondAttribute="bottom" id="eUB-7k-7YB"/>
@@ -334,8 +357,15 @@
                             <constraint firstItem="AHQ-r0-gbo" firstAttribute="leading" secondItem="Kj5-zA-s3U" secondAttribute="leading" id="wwu-E7-nfJ"/>
                             <constraint firstAttribute="trailing" secondItem="AHQ-r0-gbo" secondAttribute="trailing" id="yV0-yD-vIR"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="VWu-Kl-1aa"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="강의 검색" id="knp-xl-D3z"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="searchBar" destination="AHQ-r0-gbo" id="tFc-4U-Ku5"/>
                         <outlet property="tableView" destination="XID-hC-pe0" id="12T-ix-6PG"/>

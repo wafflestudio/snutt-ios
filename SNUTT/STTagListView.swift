@@ -20,7 +20,7 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     weak var searchBar : STSearchBar!
     
-    var tagList = ["컴공", "컴공학부", "화생공", "화생공공공공"]
+    var tagList = ["컴공", "컴강", "컴곱", "캄가", "컫당", "갉", "갈"]
     
     var filteredList : [String] = []
     
@@ -32,12 +32,12 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func showTagsFor(query : String) {
-        print(query)
-        filteredList = tagList.filter{ str in
-            let prefix = str.commonPrefixWithString(query, options: .LiteralSearch)
-            print(str + " : " + prefix)
-            print(String(prefix.characters.count) + " : " + String(query.characters.count))
-            return prefix.characters.count == query.characters.count
+        if query == "" {
+            filteredList = tagList
+        } else {
+            filteredList = tagList.filter{ str in
+                return str.hasPrefix(query)
+            }
         }
         self.hidden = false
         self.reloadData()

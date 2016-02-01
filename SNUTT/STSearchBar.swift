@@ -11,8 +11,9 @@ import UIKit
 class STSearchBar: UIView, UITextFieldDelegate {
     
     @IBOutlet weak var textField : UITextField!
+    @IBOutlet weak var cancelButtonConstraint: NSLayoutConstraint!
     weak var tagTableView : STTagListView!
-    
+    weak var searchController : STLectureSearchTableViewController!
     override func awakeFromNib() {
         super.awakeFromNib()
         textField.delegate = self
@@ -24,7 +25,23 @@ class STSearchBar: UIView, UITextFieldDelegate {
         var str = textField.text!
         let wordRange = str.startIndex.advancedBy(range.location+1)..<str.startIndex.advancedBy(range.location+range.length)
         str.replaceRange(wordRange, with: tag)
-        textField.text = str
+        textField.text = str + " "
+        tagTableView.hidden = true
+    }
+    
+    func showCancelButton() {
+        cancelButtonConstraint.priority = UILayoutPriorityDefaultHigh
+        self.layoutIfNeeded()
+    }
+    
+    func hideCancelButton() {
+        cancelButtonConstraint.priority = UILayoutPriorityDefaultLow
+        self.layoutIfNeeded()
+    }
+    
+    @IBAction func cancelButtonClicked(sender: AnyObject) {
+        searchController.searchBarCancelButtonClicked()
+        self.textField.resignFirstResponder()
     }
     
     func textFieldDidEdit() {
@@ -37,14 +54,28 @@ class STSearchBar: UIView, UITextFieldDelegate {
         if word.substringToIndex(word.startIndex.advancedBy(1)) == "#" {
             let query = word.substringFromIndex(word.startIndex.advancedBy(1))
             tagTableView.showTagsFor(query)
+            tagTableView.hidden = false
         } else {
             tagTableView.hidden = true
         }
     }
     
+    func textFieldDidBeginEditing(textField: UITextField) {
+        self.showCancelButton()
+    }
+    
     func textFieldDidEndEditing(textField: UITextField) {
         tagTableView.hidden = true
+        self.hideCancelButton()
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.textField.resignFirstResponder()
+        searchController.searchBarSearchButtonClicked(self.textField.text!)
+        return true
+    }
+    
+    
     
     func getSelectedRange() -> NSRange {
         let beginning = textField.beginningOfDocument

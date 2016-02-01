@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var searchBar : STSearchBar!
     
@@ -39,12 +39,26 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadTimetable", event: STEvent.CurrentTimetableChanged, object: nil)
         
         searchBar.tagTableView = tagTableView
+        searchBar.searchController = self
+        
         tagTableView.searchBar = searchBar
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.reloadTimetable()
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        super.viewWillDisappear(animated)
     }
     
     func getLectureList(searchString : String) {
@@ -132,45 +146,26 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         return cell
     }
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        tableView.hidden = true
-        searchBar.showsCancelButton = true
-    }
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        searchBar.showsCancelButton = false
-        tableView.hidden = false
-    }
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        self.searchBar.resignFirstResponder()
+    func searchBarSearchButtonClicked(query : String) {
         switch state {
         case .Loading(let request):
             request.cancel()
         default:
             break
         }
-        getLectureList(searchBar.text!)
+        getLectureList(query)
         tableView.hidden = false
         reloadData()
     }
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.searchBar.resignFirstResponder()
+    func searchBarCancelButtonClicked() {
         switch state {
         case .Empty, .Loading:
             break
         case .Loaded(let queryString):
-            searchBar.text = queryString
+            searchBar.textField.text = queryString
         }
         tableView.hidden = false
     }
-    
-    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        return true
-    }
-    
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        
-    }
-    
     
     @IBAction func buttonAction(sender: AnyObject) {
         let cell = tableView.cellForRowAtIndexPath(tableView.indexPathForSelectedRow!) as! STLectureSearchTableViewCell
