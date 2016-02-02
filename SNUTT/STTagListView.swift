@@ -19,8 +19,9 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     */
     
     weak var searchBar : STSearchBar!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
-    var tagList = ["컴공", "컴강", "컴곱", "캄가", "컫당", "갉", "갈"]
+    var tagList = ["컴공", "컴강", "컴곱", "캄가", "컫당", "갉", "갈", "마", "마", "마", "마","마","마"]
     
     var filteredList : [String] = []
     
@@ -29,6 +30,11 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
         self.delegate = self
         self.dataSource = self
         
+    }
+    
+    func adjustHeight () {
+        print(self.contentSize.height)
+        heightConstraint.constant = self.contentSize.height + 10
     }
     
     func showTagsFor(query : String) {
@@ -41,6 +47,7 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
         }
         self.hidden = false
         self.reloadData()
+        adjustHeight()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
