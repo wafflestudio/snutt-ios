@@ -61,6 +61,9 @@ class STSearchBar: UIView, UITextFieldDelegate {
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
         if isEditingTag {
+            if range.location == 0 && !(textField.text == "#" && string == ""){
+                return false
+            }
             if string.containsString("#") {
                 let replacement = string.stringByReplacingOccurrencesOfString("#", withString: "")
                 textField.text!.replaceRange(STUtil.getRangeFromNSRange(textField.text!, range: range), with: replacement)
@@ -105,6 +108,9 @@ class STSearchBar: UIView, UITextFieldDelegate {
     
     func textFieldDidBeginEditing(textField: UITextField) {
         self.showCancelButton()
+        searchController.state = .Empty
+        searchController.FilteredList = []
+        searchController.reloadData()
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
