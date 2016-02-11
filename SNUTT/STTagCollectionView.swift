@@ -10,13 +10,21 @@ import UIKit
 
 class STTagCollectionView: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    var tagList : [String] = [""]
+    var tagList : [String] = []
     weak var searchController : STLectureSearchTableViewController!
-    
+    var sizingCell : STTagCollectionViewCell!
     override func awakeFromNib() {
         super.awakeFromNib()
         self.delegate = self
         self.dataSource = self
+        let nib = UINib(nibName: "STTagCollectionViewCell", bundle: nil)
+        self.registerNib(nib, forCellWithReuseIdentifier: "STTagCollectionViewCell")
+        sizingCell = nib.instantiateWithOwner(self, options: nil)[0] as! STTagCollectionViewCell
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        sizingCell.searchTag = tagList[indexPath.row]
+        return sizingCell.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize, withHorizontalFittingPriority: Float(self.frame.width), verticalFittingPriority: 27)
     }
     
     func hide() {
@@ -60,6 +68,7 @@ class STTagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
         cell.layer.cornerRadius = cell.frame.height / 2.0
         cell.searchTag = tagList[indexPath.row]
         cell.collectionView = self
+        cell.contentView.addSubview(cell.containerView)
         return cell
     }
 

@@ -10,6 +10,7 @@ import UIKit
 
 class STTagCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var tagLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     weak var collectionView : STTagCollectionView!
