@@ -15,13 +15,27 @@ class STSearchBar: UIView, UITextFieldDelegate {
     weak var searchController : STLectureSearchTableViewController!
     var queryString : String = ""
     
-    private var isEditingTag : Bool = false
+    private var isEditingTag : Bool = false {
+        didSet {
+            // TODO: Check whether return key is changed in real iphone
+            if isEditingTag {
+                hideCancelButton()
+                textField.returnKeyType = .Done
+                textField.reloadInputViews()
+            } else {
+                showCancelButton()
+                textField.returnKeyType = .Search
+                textField.reloadInputViews()
+            }
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         textField.delegate = self
         textField.addTarget(self, action: "textFieldDidEdit", forControlEvents: .EditingChanged)
-        textField.keyboardType = .Twitter
+        textField.keyboardType = .Default
+        textField.returnKeyType = .Search
     }
     
     func disableEditingTag() {
@@ -31,12 +45,12 @@ class STSearchBar: UIView, UITextFieldDelegate {
     }
     
     func showCancelButton() {
-        cancelButtonConstraint.priority = UILayoutPriorityDefaultHigh
+        self.cancelButtonConstraint.priority = UILayoutPriorityDefaultHigh
         self.layoutIfNeeded()
     }
     
     func hideCancelButton() {
-        cancelButtonConstraint.priority = UILayoutPriorityDefaultLow
+        self.cancelButtonConstraint.priority = UILayoutPriorityDefaultLow
         self.layoutIfNeeded()
     }
     
