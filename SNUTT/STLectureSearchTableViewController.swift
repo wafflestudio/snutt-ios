@@ -9,16 +9,21 @@
 import UIKit
 import Alamofire
 
-class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var searchBar : STSearchBar!
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var tagCollectionView: STTagCollectionView!
+    @IBOutlet weak var tagTableView: STTagListView!
+    
+    @IBOutlet weak var tagCollectionViewConstraint: NSLayoutConstraint!
     
     var timetableViewController : STTimetableCollectionViewController!
     
     var FilteredList : [STLecture] = []
     var pageNum : Int = 0
-    
     
     enum SearchState {
         case Empty
@@ -37,11 +42,27 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         STEventCenter.sharedInstance.addObserver(self, selector: "timetableSwitched", event: STEvent.CurrentTimetableSwitched, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadTimetable", event: STEvent.CurrentTimetableChanged, object: nil)
         
+        searchBar.searchController = self
+        tagTableView.searchController = self
+        tagCollectionView.searchController = self
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.reloadTimetable()
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        super.viewWillDisappear(animated)
     }
     
     func getLectureList(searchString : String) {
@@ -89,7 +110,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func timetableSwitched() {
         state = .Empty
-        searchBar.text = ""
+        //searchBar.text = ""
         FilteredList = []
     }
     
@@ -129,40 +150,31 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         return cell
     }
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        tableView.hidden = true
-        searchBar.showsCancelButton = true
-    }
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        searchBar.showsCancelButton = false
-        tableView.hidden = false
-    }
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        self.searchBar.resignFirstResponder()
+    func searchBarSearchButtonClicked(query : String) {
         switch state {
         case .Loading(let request):
             request.cancel()
         default:
             break
         }
-        getLectureList(searchBar.text!)
-        tableView.hidden = false
+        getLectureList(query)
         reloadData()
     }
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.searchBar.resignFirstResponder()
+    func searchBarCancelButtonClicked() {
         switch state {
-        case .Empty, .Loading:
+        case .Loading(let request):
+            request.cancel()
+        default:
             break
-        case .Loaded(let queryString):
-            searchBar.text = queryString
         }
-        tableView.hidden = false
-    }
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        state = .Empty
+        FilteredList = []
+        searchBar.textField.text = ""
+        tagCollectionView.tagList = []
+        reloadData()
+        tagCollectionView.reloadData()
         
     }
-    
     
     @IBAction func buttonAction(sender: AnyObject) {
         let cell = tableView.cellForRowAtIndexPath(tableView.indexPathForSelectedRow!) as! STLectureSearchTableViewCell
@@ -202,6 +214,24 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         if STTimetableManager.sharedInstance.currentTimetable?.temporaryLecture === FilteredList[indexPath.row] {
             STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
         }
+    }
+    
+    func addTag(tag: String) {
+        searchBar.disableEditingTag()
+        tagCollectionView.tagList.append(tag)
+        let indexPath = NSIndexPath(forRow: tagCollectionView.tagList.count - 1, inSection: 0)
+        tagCollectionView.insertItemsAtIndexPaths([indexPath])
+        tagCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
+        tagCollectionView.setHidden()
+        tagTableView.hide()
+    }
+    
+    func showTagRecommendation(query: String) {
+        tagTableView.showTagsFor(query)
+    }
+    
+    func hideTagRecommendation() {
+        tagTableView.hide()
     }
     
     /*
