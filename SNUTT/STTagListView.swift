@@ -18,7 +18,7 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     }
     */
     
-    weak var searchBar : STSearchBar!
+    weak var searchController : STLectureSearchTableViewController!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     var tagList = ["컴공", "컴강", "컴곱", "캄가", "컫당", "갉", "갈", "마", "마", "마", "마","마","마"]
@@ -50,6 +50,14 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
         adjustHeight()
     }
     
+    func hide() {
+        self.hidden = true
+    }
+    
+    func show() {
+        self.hidden = false
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
@@ -64,13 +72,14 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("STTagTableViewCell", forIndexPath: indexPath)
-        cell.textLabel!.text = filteredList[indexPath.row]
+        cell.textLabel!.text = "#" + filteredList[indexPath.row]
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let tag = filteredList[indexPath.row]
-        searchBar.addTag(tag)
+        searchController.addTag(tag)
     }
 
 }

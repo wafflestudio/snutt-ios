@@ -15,7 +15,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var tagCollectionView: STTagCollectionView!
     @IBOutlet weak var tagTableView: STTagListView!
+    
+    @IBOutlet weak var tagCollectionViewConstraint: NSLayoutConstraint!
+    
     var timetableViewController : STTimetableCollectionViewController!
     
     var FilteredList : [STLecture] = []
@@ -38,10 +42,10 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         STEventCenter.sharedInstance.addObserver(self, selector: "timetableSwitched", event: STEvent.CurrentTimetableSwitched, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadTimetable", event: STEvent.CurrentTimetableChanged, object: nil)
         
-        searchBar.tagTableView = tagTableView
         searchBar.searchController = self
+        tagTableView.searchController = self
+        tagCollectionView.searchController = self
         
-        tagTableView.searchBar = searchBar
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -154,7 +158,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
             break
         }
         getLectureList(query)
-        tableView.hidden = false
         reloadData()
     }
     func searchBarCancelButtonClicked() {
@@ -164,7 +167,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         case .Loaded(let queryString):
             searchBar.textField.text = queryString
         }
-        tableView.hidden = false
     }
     
     @IBAction func buttonAction(sender: AnyObject) {
@@ -205,6 +207,22 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         if STTimetableManager.sharedInstance.currentTimetable?.temporaryLecture === FilteredList[indexPath.row] {
             STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
         }
+    }
+    
+    func addTag(tag: String) {
+        searchBar.disableEditingTag()
+        tagCollectionView.tagList.append(tag)
+        tagCollectionView.insertItemsAtIndexPaths([NSIndexPath(forRow: tagCollectionView.tagList.count - 1, inSection: 0)])
+        tagCollectionView.setHidden()
+        tagTableView.hide()
+    }
+    
+    func showTagRecommendation(query: String) {
+        tagTableView.showTagsFor(query)
+    }
+    
+    func hideTagRecommendation() {
+        tagTableView.hide()
     }
     
     /*

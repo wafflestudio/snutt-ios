@@ -38,6 +38,10 @@
 		E19A3AB11B453770007FCAD7 /* SNUTTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3AB01B453770007FCAD7 /* SNUTTTests.swift */; };
 		E19E231F1B468B700010DFB1 /* STLectureSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E231E1B468B700010DFB1 /* STLectureSearchTableViewController.swift */; };
 		E19E23211B4691D90010DFB1 /* STLectureSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E23201B4691D90010DFB1 /* STLectureSearchTableViewCell.swift */; };
+		E1B381A71C6C4AA0007E1A15 /* STTagCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B381A61C6C4AA0007E1A15 /* STTagCollectionView.swift */; };
+		E1B381A91C6C52D9007E1A15 /* STUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B381A81C6C52D9007E1A15 /* STUtil.swift */; };
+		E1B381AB1C6C61E2007E1A15 /* STTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B381AA1C6C61E2007E1A15 /* STTagCollectionViewCell.swift */; };
+		E1B381AD1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1B381AC1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib */; };
 		E1B607ED1B99A5FF001DDD94 /* STLectureDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B607EC1B99A5FF001DDD94 /* STLectureDetailTableViewCell.swift */; };
 		E1C28B151B9C4B0B00B8C493 /* STSingleClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B141B9C4B0B00B8C493 /* STSingleClass.swift */; };
 		E1C28B181B9C4B3600B8C493 /* STTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B171B9C4B3600B8C493 /* STTime.swift */; };
@@ -97,6 +101,10 @@
 		E19A3AB01B453770007FCAD7 /* SNUTTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTTests.swift; sourceTree = "<group>"; };
 		E19E231E1B468B700010DFB1 /* STLectureSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureSearchTableViewController.swift; sourceTree = "<group>"; };
 		E19E23201B4691D90010DFB1 /* STLectureSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureSearchTableViewCell.swift; sourceTree = "<group>"; };
+		E1B381A61C6C4AA0007E1A15 /* STTagCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagCollectionView.swift; sourceTree = "<group>"; };
+		E1B381A81C6C52D9007E1A15 /* STUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STUtil.swift; sourceTree = "<group>"; };
+		E1B381AA1C6C61E2007E1A15 /* STTagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagCollectionViewCell.swift; sourceTree = "<group>"; };
+		E1B381AC1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STTagCollectionViewCell.xib; sourceTree = "<group>"; };
 		E1B607EC1B99A5FF001DDD94 /* STLectureDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E1C28B141B9C4B0B00B8C493 /* STSingleClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleClass.swift; sourceTree = "<group>"; };
 		E1C28B171B9C4B3600B8C493 /* STTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTime.swift; sourceTree = "<group>"; };
@@ -145,6 +153,7 @@
 				E14DF2171C3F914E0076FDDE /* STCourseBookList.swift */,
 				E1E99A6A1C423CDB004A426A /* STEventCenter.swift */,
 				E14991FC1C46241700DC6756 /* STConfig.swift */,
+				E1B381A81C6C52D9007E1A15 /* STUtil.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -272,6 +281,9 @@
 				E19E23201B4691D90010DFB1 /* STLectureSearchTableViewCell.swift */,
 				E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */,
 				E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */,
+				E1B381A61C6C4AA0007E1A15 /* STTagCollectionView.swift */,
+				E1B381AA1C6C61E2007E1A15 /* STTagCollectionViewCell.swift */,
+				E1B381AC1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib */,
 			);
 			name = LectureSearch;
 			sourceTree = "<group>";
@@ -385,6 +397,7 @@
 				E19A3AA51B453770007FCAD7 /* LaunchScreen.xib in Resources */,
 				E19A3AA21B453770007FCAD7 /* Images.xcassets in Resources */,
 				E1F58AAC1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib in Resources */,
+				E1B381AD1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib in Resources */,
 				E1F58AAA1C3CFC1C00F6A0FC /* STColumnHeaderCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,6 +486,7 @@
 				E14DF2161C3F8F920076FDDE /* STCourseBook.swift in Sources */,
 				E19E231F1B468B700010DFB1 /* STLectureSearchTableViewController.swift in Sources */,
 				E14991FD1C46241700DC6756 /* STConfig.swift in Sources */,
+				E1B381A91C6C52D9007E1A15 /* STUtil.swift in Sources */,
 				E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */,
 				E14992011C463AC600DC6756 /* STTimetableRouter.swift in Sources */,
 				E1F58AA41C3CED3600F6A0FC /* STTimetable.swift in Sources */,
@@ -492,9 +506,11 @@
 				E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */,
 				E166435B1B46734C00387EF8 /* STLectureDetailTableViewController.swift in Sources */,
 				E137998A1C3FBEC70043A5EE /* STMyLectureListController.swift in Sources */,
+				E1B381AB1C6C61E2007E1A15 /* STTagCollectionViewCell.swift in Sources */,
 				E14992091C4B828500DC6756 /* STSwiftyJSONRequest.swift in Sources */,
 				E149920F1C549D7900DC6756 /* STSearchRouter.swift in Sources */,
 				E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */,
+				E1B381A71C6C4AA0007E1A15 /* STTagCollectionView.swift in Sources */,
 				E1C28B151B9C4B0B00B8C493 /* STSingleClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
