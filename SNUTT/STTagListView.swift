@@ -21,7 +21,7 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     weak var searchController : STLectureSearchTableViewController!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
-    var tagList = ["컴퓨터공학부", "1학점", "화학생명공학부", "김명길교수", "테스트트트트트트트트트트트트트트트틑트트트"]
+    var tagList = ["컴퓨터공학부", "1학점", "화학생명공학부", "김명길교수", "테스트트트트트트트트트트트트트트트트트트트트트트틑트트트트트트트트트트트트트트트트트트트트트트트트트트트트"]
     
     var filteredList : [String] = []
     
@@ -76,10 +76,14 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func addTagAtIndex(index: Int) {
+        let tag = filteredList[index]
+        searchController.addTag(tag)
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let tag = filteredList[indexPath.row]
-        searchController.addTag(tag)
+        addTagAtIndex(indexPath.row)
     }
 
 }

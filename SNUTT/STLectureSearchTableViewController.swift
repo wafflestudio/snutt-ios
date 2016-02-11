@@ -162,11 +162,18 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     func searchBarCancelButtonClicked() {
         switch state {
-        case .Empty, .Loading:
+        case .Loading(let request):
+            request.cancel()
+        default:
             break
-        case .Loaded(let queryString):
-            searchBar.textField.text = queryString
         }
+        state = .Empty
+        FilteredList = []
+        searchBar.textField.text = ""
+        tagCollectionView.tagList = []
+        reloadData()
+        tagCollectionView.reloadData()
+        
     }
     
     @IBAction func buttonAction(sender: AnyObject) {

@@ -112,9 +112,17 @@ class STSearchBar: UIView, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.textField.resignFirstResponder()
-        searchController.searchBarSearchButtonClicked(self.textField.text!)
-        return true
+        if isEditingTag {
+            if searchController.tagTableView.filteredList.count != 0 {
+                searchController.tagTableView.addTagAtIndex(0)
+            }
+            return false
+        } else {
+            self.textField.resignFirstResponder()
+            searchController.searchBarSearchButtonClicked(self.textField.text!)
+            return true
+        }
+        
     }
     
 }
