@@ -212,7 +212,9 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func addTag(tag: String) {
         searchBar.disableEditingTag()
         tagCollectionView.tagList.append(tag)
-        tagCollectionView.insertItemsAtIndexPaths([NSIndexPath(forRow: tagCollectionView.tagList.count - 1, inSection: 0)])
+        let indexPath = NSIndexPath(forRow: tagCollectionView.tagList.count - 1, inSection: 0)
+        tagCollectionView.insertItemsAtIndexPaths([indexPath])
+        tagCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
         tagCollectionView.setHidden()
         tagTableView.hide()
     }
