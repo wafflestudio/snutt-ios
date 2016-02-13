@@ -169,7 +169,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         }
         state = .Empty
         FilteredList = []
-        searchBar.textField.text = ""
+        searchBar.text = ""
         tagCollectionView.tagList = []
         reloadData()
         tagCollectionView.reloadData()

@@ -28,7 +28,7 @@ class STTagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
     }
     
     func hide() {
-        searchController.tagCollectionViewConstraint.priority = 800
+        searchController.tagCollectionViewConstraint.priority = 700
         UIView.animateWithDuration(0.2, animations:{
             self.layoutIfNeeded()
             self.searchController.tagTableView.layoutIfNeeded()
@@ -36,7 +36,7 @@ class STTagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
     }
     
     func show() {
-        searchController.tagCollectionViewConstraint.priority = 700
+        searchController.tagCollectionViewConstraint.priority = 800
         UIView.animateWithDuration(0.2, animations: {
             self.layoutIfNeeded()
         })

@@ -25,6 +25,6 @@ class STTagCollectionViewCell: UICollectionViewCell {
         collectionView.tagList.removeAtIndex(indexPath.row)
         collectionView.deleteItemsAtIndexPaths([indexPath])
         collectionView.setHidden()
-        collectionView.searchController.searchBar.textField.becomeFirstResponder()
+        collectionView.searchController.searchBar.becomeFirstResponder()
     }
 }
