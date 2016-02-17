@@ -17,13 +17,13 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         didSet {
             // TODO: Check whether return key is changed in real iphone
             if isEditingTag {
-                showsCancelButton = false
                 self.returnKeyType = .Done
                 self.reloadInputViews()
+                self.setImage(UIImage(named: "sharp.png"), forSearchBarIcon: .Search, state: .Normal)
             } else {
-                showsCancelButton = true
                 self.returnKeyType = .Search
                 self.reloadInputViews()
+                self.setImage(nil, forSearchBarIcon: .Search, state: .Normal)
             }
         }
     }
@@ -43,18 +43,23 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchController.searchBarCancelButtonClicked()
-        searchBar.resignFirstResponder()
+        if isEditingTag {
+            isEditingTag = false
+            self.text = queryString
+            queryString = ""
+            searchController.hideTagRecommendation()
+        } else {
+            searchController.searchBarCancelButtonClicked()
+            searchBar.resignFirstResponder()
+        }
     }
     
     func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if isEditingTag {
-            if range.location == 0 && !(self.text == "#" && text == ""){
-                return false
-            }
             if text.containsString("#") {
                 let replacement = text.stringByReplacingOccurrencesOfString("#", withString: "")
                 self.text!.replaceRange(STUtil.getRangeFromNSRange(self.text!, range: range), with: replacement)
+                self.searchBar(self, textDidChange: self.text!)
                 return false
             }
             return true
@@ -62,7 +67,8 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
             if text == "#" {
                 queryString = self.text!
                 queryString.replaceRange(STUtil.getRangeFromNSRange(queryString, range: range), with: "")
-                self.text = "#"
+                self.text = "";
+                isEditingTag = true
                 self.searchBar(self, textDidChange: self.text!)
                 return false
             } else if text.containsString("#") {
@@ -79,17 +85,9 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
     
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
-            isEditingTag = false
-            self.text = queryString
-            queryString = ""
-            searchController.hideTagRecommendation()
-        } else if searchText.hasPrefix("#") {
-            isEditingTag = true
-        }
         
         if isEditingTag {
-            let query = searchText.substringFromIndex(searchText.startIndex.advancedBy(1))
+            let query = searchText
             searchController.showTagRecommendation(query)
         }
         
