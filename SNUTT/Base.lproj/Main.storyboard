@@ -196,8 +196,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XID-hC-pe0">
-                                <rect key="frame" x="0.0" y="44" width="600" height="487"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XID-hC-pe0">
+                                <rect key="frame" x="0.0" y="44" width="600" height="507"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -326,7 +326,7 @@
                             <constraint firstItem="plr-x9-uzV" firstAttribute="top" secondItem="Zht-ES-N3O" secondAttribute="bottom" id="f6q-xI-GAe"/>
                             <constraint firstAttribute="trailing" secondItem="Q60-nN-90y" secondAttribute="trailing" id="fUL-CW-4bc"/>
                             <constraint firstItem="Zht-ES-N3O" firstAttribute="leading" secondItem="Kj5-zA-s3U" secondAttribute="leading" id="g4E-kb-kHy"/>
-                            <constraint firstItem="kbG-Pe-fQU" firstAttribute="top" secondItem="XID-hC-pe0" secondAttribute="bottom" constant="-44" id="gm7-Ap-qRH"/>
+                            <constraint firstItem="kbG-Pe-fQU" firstAttribute="top" secondItem="XID-hC-pe0" secondAttribute="bottom" id="gm7-Ap-qRH"/>
                             <constraint firstItem="38X-iM-cc3" firstAttribute="top" secondItem="Q60-nN-90y" secondAttribute="bottom" id="l9H-nj-Dp5"/>
                             <constraint firstItem="kbG-Pe-fQU" firstAttribute="top" secondItem="Wf4-PD-nbb" secondAttribute="bottom" id="nqm-uy-d9z"/>
                             <constraint firstItem="Wf4-PD-nbb" firstAttribute="leading" secondItem="Kj5-zA-s3U" secondAttribute="leading" id="nsO-3D-POd"/>
