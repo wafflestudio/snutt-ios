@@ -31,6 +31,7 @@ class STTagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
         searchController.tagCollectionViewConstraint.priority = 700
         UIView.animateWithDuration(0.2, animations:{
             self.layoutIfNeeded()
+            self.searchController.tagTableView.contentInset.top = 5
             self.searchController.tagTableView.layoutIfNeeded()
         })
     }
@@ -39,6 +40,7 @@ class STTagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
         searchController.tagCollectionViewConstraint.priority = 800
         UIView.animateWithDuration(0.2, animations: {
             self.layoutIfNeeded()
+            self.searchController.tagTableView.contentInset.top = -2
         })
     }
     

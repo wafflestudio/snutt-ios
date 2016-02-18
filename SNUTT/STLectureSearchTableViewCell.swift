@@ -11,47 +11,63 @@ import UIKit
 class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var label1: UILabel!
-    @IBOutlet weak var label2: UILabel!
-    @IBOutlet weak var label3: UILabel!
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var tagLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var placeLabel: UILabel!
+    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var containerView: UIView!
     
+    weak var tableView : UITableView!
     
-    var lecture : STLecture? {
+    var lecture : STLecture! {
         didSet {
-            titleLabel.text = "\(lecture!.title) (\(lecture!.instructor)/\(lecture!.credit)학점)"
-            label1.text = lecture?.classification
-            label2.text = lecture?.department
-            var timeString : String = ""
-            for it in lecture!.classList {
-                timeString = timeString + it.startTime.toShortString()
+            titleLabel.text = lecture.title
+            descriptionLabel.text = "(\(lecture.instructor) / \(lecture.credit)학점)"
+            var tagText = ""
+            if lecture.category != "" {
+                tagText = tagText + lecture.category + ", "
             }
-            label3.text = timeString
+            if lecture.department != "" {
+                tagText = tagText + lecture.department + ", "
+            }
+            if lecture.academicYear != "" {
+                tagText = tagText + lecture.academicYear + ", "
+            }
+            tagLabel.text = tagText
+            //TODO: timeLabel.text = lecture.??
+            //placeLabel.text =
         }
     }
     
-    @IBAction func buttonClicked(sender: AnyObject) {
-        
-        let alertView = UIAlertView(title: "SNUTT", message: "", delegate: nil, cancelButtonTitle: "OK")
-        switch STTimetableManager.sharedInstance.addLecture(lecture!, object: self) {
-        case .ErrorTime:
-            alertView.message = "Time is Overlapping"
-        case .ErrorSameLecture:
-            alertView.message = "This Lecture is already added"
-        case .Success:
-            alertView.message = "Lecture is added to the timetable"
-        }
-        alertView.show()
-        
+    @IBAction func addButtonClicked(sender: AnyObject) {
+        tableView.deselectRowAtIndexPath(tableView.indexPathForCell(self)!, animated: true)
+        STTimetableManager.sharedInstance.addLecture(lecture, object: self)
     }
-
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.backgroundColor = UIColor.clearColor()
+        self.selectionStyle = .None
         // Initialization code
     }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        if selected {
+            self.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
+            addButton.hidden = false
+        } else {
+            self.backgroundColor = UIColor.clearColor()
+            addButton.hidden = true
+        }
+        
         // Configure the view for the selected state
     }
+
 
 }

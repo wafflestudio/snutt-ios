@@ -34,6 +34,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func reloadData() {
         tableView.reloadData()
+        STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
     }
     
     override func viewDidLoad() {
@@ -46,7 +47,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         tagTableView.searchController = self
         tagCollectionView.searchController = self
         
-        
+        tableView.registerNib(UINib(nibName: "STLectureSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "STLectureSearchTableViewCell")
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -143,10 +144,12 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let tmpCell = tableView.dequeueReusableCellWithIdentifier("LectureSearchCell", forIndexPath: indexPath) as UITableViewCell
-        let cell = tmpCell as! STLectureSearchTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("STLectureSearchTableViewCell", forIndexPath: indexPath) as! STLectureSearchTableViewCell
+        cell.addSubview(cell.addButton)
         cell.lecture = FilteredList[indexPath.row]
-        cell.button.hidden = true
+        cell.tableView = tableView
+        cell.titleLabel.sizeToFit()
+        //cell.button.hidden = true
         return cell
     }
     
@@ -176,41 +179,12 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         
     }
     
-    @IBAction func buttonAction(sender: AnyObject) {
-        let cell = tableView.cellForRowAtIndexPath(tableView.indexPathForSelectedRow!) as! STLectureSearchTableViewCell
-        /*
-        var frame = cell.frame
-        var center = cell.center
-        UIView.animateWithDuration(0.5,
-            delay: 0.0,
-            options : nil,
-            animations: {
-                cell.center = CGPoint(x: 0, y: self.tableView.frame.size.height)
-                cell.transform = CGAffineTransformMakeScale(0.1, 0.1)
-            },
-            completion: { finished in
-                cell.center = center
-                UIView.animateWithDuration(0.5) {
-                    cell.transform = CGAffineTransformMakeScale(1.0, 1.0)
-                }
-        })
-        */
-        cell.button.hidden = true
-        tableView.deselectRowAtIndexPath(tableView.indexPathForSelectedRow!, animated: true)
-        
-
-    }
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! STLectureSearchTableViewCell
-        cell.button.hidden = false
         STTimetableManager.sharedInstance.setTemporaryLecture(FilteredList[indexPath.row], object: self)
         //TimetableCollectionViewController.datasource.addLecture(FilteredList[indexPath.row])
         
     }
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! STLectureSearchTableViewCell
-        cell.button.hidden = true
         if STTimetableManager.sharedInstance.currentTimetable?.temporaryLecture === FilteredList[indexPath.row] {
             STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
         }
@@ -219,9 +193,15 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func addTag(tag: String) {
         searchBar.disableEditingTag()
         tagCollectionView.tagList.append(tag)
-        let indexPath = NSIndexPath(forRow: tagCollectionView.tagList.count - 1, inSection: 0)
-        tagCollectionView.insertItemsAtIndexPaths([indexPath])
-        tagCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
+        if tagCollectionView.tagList.count == 1 {
+            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+            tagCollectionView.reloadData()
+            tagCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: false)
+        } else {
+            let indexPath = NSIndexPath(forRow: tagCollectionView.tagList.count - 1, inSection: 0)
+            tagCollectionView.insertItemsAtIndexPaths([indexPath])
+            tagCollectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
+        }
         tagCollectionView.setHidden()
         tagTableView.hide()
     }

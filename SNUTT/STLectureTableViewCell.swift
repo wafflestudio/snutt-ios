@@ -11,20 +11,28 @@ import UIKit
 class STLectureTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var academicYearLabel: UILabel!
-    @IBOutlet weak var creditLabel: UILabel!
-    @IBOutlet weak var departmentLabel: UILabel!
-    @IBOutlet weak var classificationLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var tagLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var instructorLabel: UILabel!
+    @IBOutlet weak var placeLabel: UILabel!
     
-    var lecture : STLecture? {
+    var lecture : STLecture! {
         didSet {
-            titleLabel.text = lecture?.title
-            creditLabel.text = "\(lecture?.credit)학점"
-            instructorLabel.text = lecture?.instructor
-            classificationLabel.text = lecture?.classification
+            titleLabel.text = lecture.title
+            descriptionLabel.text = "(\(lecture.instructor) / \(lecture.credit)학점)"
+            var tagText = ""
+            if lecture.category != "" {
+                tagText = tagText + lecture.category + ", "
+            }
+            if lecture.department != "" {
+                tagText = tagText + lecture.department + ", "
+            }
+            if lecture.academicYear != "" {
+                tagText = tagText + lecture.academicYear + ", "
+            }
+            tagLabel.text = tagText
+            //TODO: timeLabel.text = lecture.??
+            //placeLabel.text =
         }
     }
     

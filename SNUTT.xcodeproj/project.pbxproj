@@ -47,6 +47,12 @@
 		E1C28B181B9C4B3600B8C493 /* STTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B171B9C4B3600B8C493 /* STTime.swift */; };
 		E1E99A6B1C423CDB004A426A /* STEventCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E99A6A1C423CDB004A426A /* STEventCenter.swift */; };
 		E1F0CA191C6F2C1900A4F4ED /* sharp.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA181C6F2C1900A4F4ED /* sharp.png */; };
+		E1F0CA1D1C7482D300A4F4ED /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA1C1C7482D300A4F4ED /* delete.png */; };
+		E1F0CA1F1C748B6000A4F4ED /* STTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */; };
+		E1F0CA231C75949500A4F4ED /* label.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA201C75949500A4F4ED /* label.png */; };
+		E1F0CA241C75949500A4F4ED /* place.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA211C75949500A4F4ED /* place.png */; };
+		E1F0CA251C75949500A4F4ED /* time.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA221C75949500A4F4ED /* time.png */; };
+		E1F0CA271C75B01900A4F4ED /* STLectureSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA261C75B01900A4F4ED /* STLectureSearchTableViewCell.xib */; };
 		E1F58AA41C3CED3600F6A0FC /* STTimetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F58AA31C3CED3600F6A0FC /* STTimetable.swift */; };
 		E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F58AA51C3CF0E600F6A0FC /* STTimetableManager.swift */; };
 		E1F58AA81C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F58AA71C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib */; };
@@ -111,6 +117,12 @@
 		E1C28B171B9C4B3600B8C493 /* STTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTime.swift; sourceTree = "<group>"; };
 		E1E99A6A1C423CDB004A426A /* STEventCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STEventCenter.swift; sourceTree = "<group>"; };
 		E1F0CA181C6F2C1900A4F4ED /* sharp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sharp.png; path = images/sharp.png; sourceTree = "<group>"; };
+		E1F0CA1C1C7482D300A4F4ED /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = images/delete.png; sourceTree = "<group>"; };
+		E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagTableViewCell.swift; sourceTree = "<group>"; };
+		E1F0CA201C75949500A4F4ED /* label.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = label.png; path = images/label.png; sourceTree = "<group>"; };
+		E1F0CA211C75949500A4F4ED /* place.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = place.png; path = images/place.png; sourceTree = "<group>"; };
+		E1F0CA221C75949500A4F4ED /* time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = time.png; path = images/time.png; sourceTree = "<group>"; };
+		E1F0CA261C75B01900A4F4ED /* STLectureSearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STLectureSearchTableViewCell.xib; sourceTree = "<group>"; };
 		E1F58AA31C3CED3600F6A0FC /* STTimetable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetable.swift; sourceTree = "<group>"; };
 		E1F58AA51C3CF0E600F6A0FC /* STTimetableManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableManager.swift; sourceTree = "<group>"; };
 		E1F58AA71C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCourseCellCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -280,6 +292,7 @@
 		E1C28B1B1B9C4BB900B8C493 /* LectureSearch */ = {
 			isa = PBXGroup;
 			children = (
+				E1F0CA261C75B01900A4F4ED /* STLectureSearchTableViewCell.xib */,
 				E19E231E1B468B700010DFB1 /* STLectureSearchTableViewController.swift */,
 				E19E23201B4691D90010DFB1 /* STLectureSearchTableViewCell.swift */,
 				E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */,
@@ -287,6 +300,7 @@
 				E1B381A61C6C4AA0007E1A15 /* STTagCollectionView.swift */,
 				E1B381AA1C6C61E2007E1A15 /* STTagCollectionViewCell.swift */,
 				E1B381AC1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib */,
+				E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */,
 			);
 			name = LectureSearch;
 			sourceTree = "<group>";
@@ -311,6 +325,10 @@
 		E1F0CA1B1C7475B200A4F4ED /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E1F0CA201C75949500A4F4ED /* label.png */,
+				E1F0CA211C75949500A4F4ED /* place.png */,
+				E1F0CA221C75949500A4F4ED /* time.png */,
+				E1F0CA1C1C7482D300A4F4ED /* delete.png */,
 				E1F0CA181C6F2C1900A4F4ED /* sharp.png */,
 			);
 			name = Images;
@@ -415,9 +433,14 @@
 				E14DF21E1C3FB7820076FDDE /* STLectureTableViewCell.xib in Resources */,
 				E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */,
 				E19A3AA51B453770007FCAD7 /* LaunchScreen.xib in Resources */,
+				E1F0CA251C75949500A4F4ED /* time.png in Resources */,
+				E1F0CA271C75B01900A4F4ED /* STLectureSearchTableViewCell.xib in Resources */,
+				E1F0CA241C75949500A4F4ED /* place.png in Resources */,
+				E1F0CA231C75949500A4F4ED /* label.png in Resources */,
 				E19A3AA21B453770007FCAD7 /* Images.xcassets in Resources */,
 				E1F58AAC1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib in Resources */,
 				E1B381AD1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib in Resources */,
+				E1F0CA1D1C7482D300A4F4ED /* delete.png in Resources */,
 				E1F58AAA1C3CFC1C00F6A0FC /* STColumnHeaderCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,6 +555,7 @@
 				E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */,
 				E1B381A71C6C4AA0007E1A15 /* STTagCollectionView.swift in Sources */,
 				E1C28B151B9C4B0B00B8C493 /* STSingleClass.swift in Sources */,
+				E1F0CA1F1C748B6000A4F4ED /* STTagTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

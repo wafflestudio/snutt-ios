@@ -29,7 +29,7 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
         super.awakeFromNib()
         self.delegate = self
         self.dataSource = self
-        
+        self.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
     }
     
     func adjustHeight () {
@@ -71,8 +71,8 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("STTagTableViewCell", forIndexPath: indexPath)
-        cell.textLabel!.text = "#" + filteredList[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("STTagTableViewCell", forIndexPath: indexPath) as! STTagTableViewCell
+        cell.tagLabel.text = "# " + filteredList[indexPath.row]
         return cell
     }
     
