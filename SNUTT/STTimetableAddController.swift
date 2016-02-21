@@ -55,7 +55,7 @@ class STTimetableAddController: UIViewController, UIPickerViewDataSource, UIPick
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return STCourseBookList.sharedInstance.courseBookList![row].quarter
+        return STCourseBookList.sharedInstance.courseBookList![row].quarter.longString()
     }
     
     /*

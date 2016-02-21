@@ -1,4 +1,5 @@
 PODS:
+  - ActionSheetPicker-3.0 (2.0.5)
   - Alamofire (3.1.4)
   - B68UIFloatLabelTextField (0.1.2)
   - ChameleonFramework/Default (2.1.0)
@@ -11,6 +12,7 @@ PODS:
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
+  - ActionSheetPicker-3.0
   - Alamofire (~> 3.0)
   - B68UIFloatLabelTextField (from `https://github.com/Rajin9601/B68FloatingLabelTextField.git`,
     branch `Swift_2.0`)
@@ -31,6 +33,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Rajin9601/B68FloatingLabelTextField.git
 
 SPEC CHECKSUMS:
+  ActionSheetPicker-3.0: 8312778b6815578e6a86d630fbcf31dc94c534e7
   Alamofire: fbc829692f351fa1d8a31dd75fd7f7f56fea31fb
   B68UIFloatLabelTextField: 337894ff837df84e19636c99f3f5f88c4fad60d7
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64

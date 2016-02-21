@@ -32,21 +32,21 @@ class STTimetableManager : NSObject {
         }
     }
     func loadData() {
-        currentTimetable = STTimetable(year: 2016, semester: 1, title: "TEST")
+        currentTimetable = STTimetable(year: 2016, semester: .First, title: "TEST")
     }
     
     func saveData() {
         
     }
     
-    func addLecture(lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
+    func addLecture(var lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
         lecture.colorIndex = 1
         let ret = currentTimetable?.addLecture(lecture)
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
         return ret!
     }
-    func deleteLecture(lecture : STLecture, object : AnyObject? ) {
-        currentTimetable?.deleteLecture(lecture)
+    func deleteLectureAtIndex(index: Int, object : AnyObject? ) {
+        currentTimetable?.deleteLectureAtIndex(index)
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
     }
     func setTemporaryLecture(lecture :STLecture?, object : AnyObject? ) {

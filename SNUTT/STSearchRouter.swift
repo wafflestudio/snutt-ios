@@ -42,9 +42,9 @@ enum STSearchRouter : URLRequestConvertible {
         
         switch self {
         case .Search(let title):
-            let year = STTimetableManager.sharedInstance.currentTimetable!.year
-            let semester = STTimetableManager.sharedInstance.currentTimetable!.semester
-            let parameters : [String : AnyObject] = ["title" : title, "year" : year, "semester" : semester]
+            let year = STTimetableManager.sharedInstance.currentTimetable!.quarter.year
+            let semester = STTimetableManager.sharedInstance.currentTimetable!.quarter.semester
+            let parameters : [String : AnyObject] = ["title" : title, "year" : year, "semester" : semester.rawValue]
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
         }
     }

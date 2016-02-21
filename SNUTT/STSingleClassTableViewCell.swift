@@ -8,21 +8,37 @@
 
 import UIKit
 import B68UIFloatLabelTextField
-class STSingleClassTableViewCell: UITableViewCell {
+
+class STSingleClassTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var timeTextField: B68UIFloatLabelTextField!
     @IBOutlet weak var placeTextField: B68UIFloatLabelTextField!
     
     var singleClass : STSingleClass! {
         didSet {
-            timeTextField.text = singleClass.startTime.toShortString()
+            timeTextField.text = singleClass.time.shortString()
             placeTextField.text = singleClass.place
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.addSubview(timeTextField)
+        self.addSubview(placeTextField)
+        
+        timeTextField.delegate = self
+        placeTextField.delegate = self
         // Initialization code
+    }
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if textField == timeTextField {
+            //TODO: Show timePicker
+            return false
+        } else if textField == placeTextField {
+            return true
+        }
+        return false
     }
     
     internal static func loadWithOwner(owner : AnyObject!) -> STSingleClassTableViewCell {

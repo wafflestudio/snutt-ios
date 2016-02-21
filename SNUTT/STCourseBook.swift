@@ -8,25 +8,22 @@
 
 import Foundation
 
-class STCourseBook {
-    var year : Int
-    var semester : Int
+struct STCourseBook {
+    var quarter : STQuarter
     var update_date : String
     var start_date : String
     var end_date : String
     
-    var quarter : String {
-        get {
-            return "\(year)년 " + STTimetable.semesterToLongString[semester] + "학기"
-        }
-    }
-    
-    init (year aYear : Int, semester aSemester : Int) {
-        self.year = aYear
-        self.semester = aSemester
+    init (year aYear : Int, semester aSemester : STSemester) {
+        self.quarter = STQuarter(year: aYear, semester: aSemester)
         self.update_date = ""
         self.start_date = ""
         self.end_date = ""
     }
-    
+}
+
+extension STCourseBook : Equatable {}
+
+func ==(lhs: STCourseBook, rhs: STCourseBook) -> Bool {
+    return lhs.quarter == rhs.quarter
 }

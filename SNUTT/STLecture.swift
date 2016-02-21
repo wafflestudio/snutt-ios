@@ -9,9 +9,8 @@
 import Foundation
 import SwiftyJSON
 
-class STLecture {
-    var year : Int
-    var semester : Int
+struct STLecture {
+    var quarter: STQuarter
     var classification : String
     var department : String
     var academicYear : String
@@ -28,8 +27,9 @@ class STLecture {
     var colorIndex : Int
     
     init(json data : JSON) {
-        year = data["year"].intValue
-        semester = data["semester"].intValue
+        let year = data["year"].intValue
+        let semester = STSemester(rawValue: data["semester"].intValue)!
+        quarter = STQuarter(year: year, semester: semester)
         classification = data["classification"].stringValue
         department = data["department"].stringValue
         academicYear = data["academic_year"].stringValue
@@ -45,14 +45,19 @@ class STLecture {
         colorIndex = data["color_index"].intValue
         let ListData = data["class_time_json"].arrayValue
         for it in ListData {
-            let startTime = STTime(day: it["day"].intValue, period: it["start"].doubleValue)
-            let singleClass = STSingleClass(startTime: startTime, duration: it["len"].doubleValue, place: it["place"].stringValue)
-            singleClass.lecture = self
+            let time = STTime(day: it["day"].intValue, startPeriod: it["start"].doubleValue, duration: it["len"].doubleValue)
+            let singleClass = STSingleClass(time: time, place: it["place"].stringValue)
             classList.append(singleClass)
         }
     }
     
-    func isEquals(right : STLecture) -> Bool {
+    func isSameLecture(right : STLecture) -> Bool {
         return (courseNumber == right.courseNumber && lectureNumber == right.lectureNumber)
     }
+}
+
+extension STLecture : Equatable {}
+
+func ==(lhs: STLecture, rhs: STLecture) -> Bool {
+    return lhs.isSameLecture(rhs)
 }

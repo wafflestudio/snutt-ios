@@ -8,34 +8,50 @@
 
 import Foundation
 
-class STTime {
-    enum STDay : Int{
-        case MON=0, TUE, WED, THU, FRI, SAT
-    }
+struct STTime {
     var day : STDay
-    var period : Double
-    static var periodNum : Int = 14
-    static var dayToString = ["월", "화", "수", "목", "금", "토"]
-    static var stringToDay = ["월" : STDay.MON, "화" : STDay.TUE, "수" : STDay.WED, "목" : STDay.THU, "금" : STDay.FRI, "토" : STDay.SAT]
-    
-    init(day tDay: Int, period tPeriod: Double) {
-        day = STDay(rawValue: tDay)!
-        period = tPeriod
+    var startPeriod : Double
+    var duration : Double
+    var endPeriod : Double {
+        return startPeriod + duration
     }
     
-    func periodToString() -> String {
-        if Int(period * 2.0) % 2 == 0 {
-            return "\(Int(period)+8):00"
+    static var periodNum : Int = 14
+    
+    init(day: Int, startPeriod: Double, duration: Double) {
+        self.day = STDay(rawValue: day)!
+        self.startPeriod = startPeriod
+        self.duration = duration
+    }
+    
+    func longString() -> String {
+        return day.longString() + " " + startPeriod.periodString() + "~" + endPeriod.periodString()
+    }
+    
+    func shortString() -> String {
+        return day.shortString() + " " + startPeriod.periodString() + "~" + endPeriod.periodString()
+    }
+    
+    func isOverlappingWith(tmp : STTime) -> Bool {
+        if day != tmp.day {
+            return false
+        }
+        if tmp.startPeriod < startPeriod {
+            if (tmp.startPeriod + tmp.duration > startPeriod) {
+                return true
+            }
+            return false
         } else {
-            return "\(Int(period)+8):30"
+            if (startPeriod + duration > tmp.startPeriod) {
+                return true
+            }
+            return false
         }
     }
-    func toString() -> String {
-        let dayString = STTime.dayToString[day.rawValue]
-        let periodString = periodToString()
-        return "\(dayString) \(periodString)"
-    }
-    func toShortString() -> String {
-        return "\(STTime.dayToString[day.rawValue])\(period)"
-    }
+}
+
+extension STTime : Equatable {}
+
+func ==(lhs: STTime, rhs: STTime) -> Bool {
+    return lhs.day == rhs.day && lhs.startPeriod == rhs.startPeriod && lhs.duration == rhs.duration
 }

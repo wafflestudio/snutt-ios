@@ -28,8 +28,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         self.collectionView?.registerNib(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
         
         for i in 0..<(STTime.periodNum) {
-            let time = STTime(day: 0, period: Double(i))
-            rowList.append("\(time.periodToString())")
+            rowList.append(Double(i).periodString())
         }
         let viewLayout = STTimetableLayout(aTimetable: timetable)
         self.collectionView?.collectionViewLayout = viewLayout
@@ -70,6 +69,14 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
             return timetable!.temporaryLecture!.classList[classIndex]
         }
         return timetable!.lectureList[lectureIndex].classList[classIndex]
+    }
+    
+    func getLecture(indexPath: NSIndexPath) -> STLecture {
+        let lectureIndex = indexPath.section - LectureSectionOffset
+        if lectureIndex == timetable!.lectureList.count {
+            return timetable!.temporaryLecture!
+        }
+        return timetable!.lectureList[lectureIndex]
     }
     
     func reloadTimetable() {
@@ -136,10 +143,12 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         case .Course:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as! STCourseCellCollectionViewCell
             cell.singleClass = getSingleClass(indexPath)
+            cell.lecture = getLecture(indexPath)
             return cell
         case .TemporaryCourse:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as! STCourseCellCollectionViewCell
             cell.singleClass = getSingleClass(indexPath)
+            cell.lecture = getLecture(indexPath)
             return cell
         }
     }

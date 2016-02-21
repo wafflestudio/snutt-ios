@@ -63,7 +63,7 @@ class STMyLectureListController: UITableViewController {
 
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            STTimetableManager.sharedInstance.deleteLecture((STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row])!, object: self)
+            STTimetableManager.sharedInstance.deleteLectureAtIndex(indexPath.row, object: self)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -71,8 +71,7 @@ class STMyLectureListController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.performSegueWithIdentifier("STLectureDetailSegue", sender: STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row])
+        self.performSegueWithIdentifier("STLectureDetailSegue", sender: self)
     }
     
     /*
@@ -96,7 +95,9 @@ class STMyLectureListController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "STLectureDetailSegue" {
             let destinationController = segue.destinationViewController as! STLectureDetailTableViewController
-            destinationController.lecture = sender as! STLecture
+            let indexPath = tableView.indexPathForSelectedRow!
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            destinationController.lecture = STTimetableManager.sharedInstance.currentTimetable!.lectureList[indexPath.row]
         }
     }
     

@@ -42,9 +42,15 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
     
     @IBOutlet weak var courseText: UILabel!
-    var singleClass : STSingleClass? {
+    var singleClass : STSingleClass! {
         didSet {
-            courseText.text = "\(singleClass!.lecture!.title)\n\(singleClass!.place)"
+            setText()
+        }
+    }
+    
+    var lecture : STLecture! {
+        didSet {
+            setText()
             setColor()
         }
     }
@@ -63,9 +69,25 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         swipeRightGesture.direction = UISwipeGestureRecognizerDirection.Right
         self.addGestureRecognizer(swipeRightGesture)
     }
+    
+    func setText() {
+        var text = ""
+        if let lecture = self.lecture {
+            text = lecture.title
+        }
+        if let singleClass = self.singleClass {
+            if text == "" {
+                text = singleClass.place
+            } else {
+                text = text + "\n" + singleClass.place
+            }
+        }
+        courseText.text = text
+    }
+    
     func setColor() {
-        self.backgroundColor = STCourseCellCollectionViewCell.backgroundColorList[singleClass!.lecture!.colorIndex]
-        courseText.textColor = STCourseCellCollectionViewCell.labelColorList[singleClass!.lecture!.colorIndex]
+        self.backgroundColor = STCourseCellCollectionViewCell.backgroundColorList[lecture.colorIndex]
+        courseText.textColor = STCourseCellCollectionViewCell.labelColorList[lecture.colorIndex]
     }
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         /* //DEBUG
@@ -76,7 +98,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     }
     func longClick(gesture : UILongPressGestureRecognizer) {
         if gesture.state == UIGestureRecognizerState.Began {
-            let alertView = UIAlertView(title: "SNUTT", message: "Do you want to Delete \(singleClass!.lecture!.title)?", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
+            let alertView = UIAlertView(title: "SNUTT", message: "Do you want to Delete \(lecture!.title)?", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
             alertView.show()
         }
     }

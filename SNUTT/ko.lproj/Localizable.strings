@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  SNUTT
+
+  Created by Rajin on 2016. 2. 21..
+  Copyright © 2016년 WaffleStudio. All rights reserved.
+*/
+"first_semester" = "1학기";
+"second_semester" = "2학기";
+"summer_semester" = "여름학기";
+"winter_semester" = "겨울학기";
+"monday" = "월요일";
+"tuesday" = "화요일";
+"wednesday" = "수요일";
+"thursday" = "목요일";
+"friday" = "금요일";
+"saturday" = "토요일";
+"monday_short" = "월";
+"tuesday_short" = "화";
+"wednesday_short" = "수";
+"thursday_short" = "목";
+"friday_short" = "금";
+"saturday_short" = "토";

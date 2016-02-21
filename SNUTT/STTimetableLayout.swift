@@ -43,10 +43,10 @@ class STTimetableLayout: UICollectionViewLayout {
         switch type {
         case .Course, .TemporaryCourse:
             let singleClass = timetableController!.getSingleClass(indexPath)
-            let indexRow = CGFloat(singleClass.startTime.period)
-            let indexColumn = singleClass.startTime.day.rawValue
+            let indexRow = CGFloat(singleClass.time.startPeriod)
+            let indexColumn = singleClass.time.day.rawValue
             width = WidthPerColumn
-            height = HeightPerRow * CGFloat(singleClass.duration)
+            height = HeightPerRow * CGFloat(singleClass.time.duration)
             locX = CGFloat(indexColumn+1) * width
             locY = HeightForHeader + HeightPerRow * indexRow
         case .HeaderColumn:

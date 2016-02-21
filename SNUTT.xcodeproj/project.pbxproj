@@ -50,6 +50,12 @@
 		E1C48B901C78736C00BC469E /* STColorPickTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48B8F1C78736C00BC469E /* STColorPickTableViewCell.swift */; };
 		E1C48B921C7879E600BC469E /* STSingleClassTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C48B911C7879E600BC469E /* STSingleClassTableViewCell.xib */; };
 		E1C48B941C787A3C00BC469E /* STSingleClassTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48B931C787A3C00BC469E /* STSingleClassTableViewCell.swift */; };
+		E1C48B971C79BA4100BC469E /* STTimeActionSheetPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48B961C79BA4100BC469E /* STTimeActionSheetPicker.swift */; };
+		E1C48B991C79BDD300BC469E /* STSemester.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48B981C79BDD300BC469E /* STSemester.swift */; };
+		E1C48BA21C79C0E300BC469E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1C48BA41C79C0E300BC469E /* Localizable.strings */; };
+		E1C48BB01C79C45500BC469E /* STQuarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48BAF1C79C45500BC469E /* STQuarter.swift */; };
+		E1C48BB21C79C8E200BC469E /* STDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48BB11C79C8E200BC469E /* STDay.swift */; };
+		E1C48BB41C79CAE800BC469E /* STPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48BB31C79CAE800BC469E /* STPeriod.swift */; };
 		E1E99A6B1C423CDB004A426A /* STEventCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E99A6A1C423CDB004A426A /* STEventCenter.swift */; };
 		E1F0CA191C6F2C1900A4F4ED /* sharp.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA181C6F2C1900A4F4ED /* sharp.png */; };
 		E1F0CA1D1C7482D300A4F4ED /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA1C1C7482D300A4F4ED /* delete.png */; };
@@ -129,6 +135,15 @@
 		E1C48B8F1C78736C00BC469E /* STColorPickTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorPickTableViewCell.swift; sourceTree = "<group>"; };
 		E1C48B911C7879E600BC469E /* STSingleClassTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSingleClassTableViewCell.xib; sourceTree = "<group>"; };
 		E1C48B931C787A3C00BC469E /* STSingleClassTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleClassTableViewCell.swift; sourceTree = "<group>"; };
+		E1C48B961C79BA4100BC469E /* STTimeActionSheetPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimeActionSheetPicker.swift; sourceTree = "<group>"; };
+		E1C48B981C79BDD300BC469E /* STSemester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSemester.swift; sourceTree = "<group>"; };
+		E1C48BA31C79C0E300BC469E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E1C48BAC1C79C17300BC469E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		E1C48BAD1C79C17300BC469E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		E1C48BAE1C79C17300BC469E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E1C48BAF1C79C45500BC469E /* STQuarter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STQuarter.swift; sourceTree = "<group>"; };
+		E1C48BB11C79C8E200BC469E /* STDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDay.swift; sourceTree = "<group>"; };
+		E1C48BB31C79CAE800BC469E /* STPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STPeriod.swift; sourceTree = "<group>"; };
 		E1E99A6A1C423CDB004A426A /* STEventCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STEventCenter.swift; sourceTree = "<group>"; };
 		E1F0CA181C6F2C1900A4F4ED /* sharp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sharp.png; path = images/sharp.png; sourceTree = "<group>"; };
 		E1F0CA1C1C7482D300A4F4ED /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = images/delete.png; sourceTree = "<group>"; };
@@ -180,6 +195,7 @@
 		E14992021C46414800DC6756 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				E1C48B951C79BA2000BC469E /* ActionSheetPicker */,
 				E14992031C46418800DC6756 /* Networking */,
 				E1F58AA51C3CF0E600F6A0FC /* STTimetableManager.swift */,
 				E14DF2171C3F914E0076FDDE /* STCourseBookList.swift */,
@@ -240,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				E19A3A991B453770007FCAD7 /* Info.plist */,
+				E1C48BA41C79C0E300BC469E /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -269,6 +286,10 @@
 				E1C28B141B9C4B0B00B8C493 /* STSingleClass.swift */,
 				E14DF2151C3F8F920076FDDE /* STCourseBook.swift */,
 				E1C28B171B9C4B3600B8C493 /* STTime.swift */,
+				E1C48B981C79BDD300BC469E /* STSemester.swift */,
+				E1C48BAF1C79C45500BC469E /* STQuarter.swift */,
+				E1C48BB11C79C8E200BC469E /* STDay.swift */,
+				E1C48BB31C79CAE800BC469E /* STPeriod.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -339,6 +360,14 @@
 				E1C48B931C787A3C00BC469E /* STSingleClassTableViewCell.swift */,
 			);
 			name = LectureDetail;
+			sourceTree = "<group>";
+		};
+		E1C48B951C79BA2000BC469E /* ActionSheetPicker */ = {
+			isa = PBXGroup;
+			children = (
+				E1C48B961C79BA4100BC469E /* STTimeActionSheetPicker.swift */,
+			);
+			name = ActionSheetPicker;
 			sourceTree = "<group>";
 		};
 		E1F0CA1A1C7475A600A4F4ED /* Asset */ = {
@@ -436,8 +465,8 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				ko,
 			);
 			mainGroup = E19A3A8C1B453770007FCAD7;
 			productRefGroup = E19A3A961B453770007FCAD7 /* Products */;
@@ -460,6 +489,7 @@
 				E14DF21E1C3FB7820076FDDE /* STLectureTableViewCell.xib in Resources */,
 				E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */,
 				E19A3AA51B453770007FCAD7 /* LaunchScreen.xib in Resources */,
+				E1C48BA21C79C0E300BC469E /* Localizable.strings in Resources */,
 				E1F0CA371C785C1200A4F4ED /* STSingleLabeledTableViewCell.xib in Resources */,
 				E1F0CA251C75949500A4F4ED /* time.png in Resources */,
 				E1C48B8C1C78616C00BC469E /* STDoubleLabeledTableViewCell.xib in Resources */,
@@ -564,12 +594,15 @@
 				E1B381A91C6C52D9007E1A15 /* STUtil.swift in Sources */,
 				E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */,
 				E1F0CA331C78398E00A4F4ED /* STSingleLabeledTableViewCell.swift in Sources */,
+				E1C48B971C79BA4100BC469E /* STTimeActionSheetPicker.swift in Sources */,
+				E1C48B991C79BDD300BC469E /* STSemester.swift in Sources */,
 				E14992011C463AC600DC6756 /* STTimetableRouter.swift in Sources */,
 				E1F0CA351C78399D00A4F4ED /* STDoubleLabeledTableViewCell.swift in Sources */,
 				E1F58AA41C3CED3600F6A0FC /* STTimetable.swift in Sources */,
 				E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */,
 				E149920D1C4F6D1F00DC6756 /* STTimetableCellType.swift in Sources */,
 				E10852C91B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift in Sources */,
+				E1C48BB01C79C45500BC469E /* STQuarter.swift in Sources */,
 				E16643551B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift in Sources */,
 				E1C48B941C787A3C00BC469E /* STSingleClassTableViewCell.swift in Sources */,
 				E14DF2201C3FBB0E0076FDDE /* STLectureTableViewCell.swift in Sources */,
@@ -577,6 +610,7 @@
 				E18F2E501C5E6FBC00114ADF /* STTagListView.swift in Sources */,
 				E16643591B46624500387EF8 /* STCourseCellCollectionViewCell.swift in Sources */,
 				E14DF2181C3F914E0076FDDE /* STCourseBookList.swift in Sources */,
+				E1C48BB41C79CAE800BC469E /* STPeriod.swift in Sources */,
 				E16643511B4623BB00387EF8 /* STTimetableLayout.swift in Sources */,
 				E14DF2141C3F71A70076FDDE /* STTimetableAddController.swift in Sources */,
 				E1C28B181B9C4B3600B8C493 /* STTime.swift in Sources */,
@@ -588,6 +622,7 @@
 				E1C48B901C78736C00BC469E /* STColorPickTableViewCell.swift in Sources */,
 				E1F0CA311C78397B00A4F4ED /* STLeftAlignedTableViewCell.swift in Sources */,
 				E149920F1C549D7900DC6756 /* STSearchRouter.swift in Sources */,
+				E1C48BB21C79C8E200BC469E /* STDay.swift in Sources */,
 				E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */,
 				E1B381A71C6C4AA0007E1A15 /* STTagCollectionView.swift in Sources */,
 				E1C28B151B9C4B0B00B8C493 /* STSingleClass.swift in Sources */,
@@ -618,6 +653,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				E19A3A9F1B453770007FCAD7 /* Base */,
+				E1C48BAC1C79C17300BC469E /* ko */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -626,8 +662,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				E19A3AA41B453770007FCAD7 /* Base */,
+				E1C48BAD1C79C17300BC469E /* ko */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		E1C48BA41C79C0E300BC469E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E1C48BA31C79C0E300BC469E /* Base */,
+				E1C48BAE1C79C17300BC469E /* ko */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -66,7 +66,7 @@ enum STTimetableRouter : URLRequestConvertible {
         case .GetTimetable:
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: nil).0
         case .CreateTimetable(let title, let courseBook):
-            let parameters : [String : AnyObject] = ["title" : title, "year" : courseBook.year, "semester" : courseBook.semester]
+            let parameters : [String : AnyObject] = ["title" : title, "year" : courseBook.quarter.year, "semester" : courseBook.quarter.semester.rawValue]
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
         case .UpdateTimetable(_, let title):
             let parameters : [String : AnyObject] = ["title" : title]

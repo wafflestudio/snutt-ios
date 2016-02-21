@@ -1,0 +1,39 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "3vF-UI-AyR"; */
+"3vF-UI-AyR.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "8ao-R3-t5H"; */
+"8ao-R3-t5H.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "내 강의"; ObjectID = "L5P-v6-ZDY"; */
+"L5P-v6-ZDY.title" = "내 강의";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "Mld-VP-Qe7"; */
+"Mld-VP-Qe7.title" = "Item";
+
+/* Class = "UINavigationItem"; title = "Timetable List"; ObjectID = "NNx-Kp-xon"; */
+"NNx-Kp-xon.title" = "Timetable List";
+
+/* Class = "UISearchBar"; Zht-ES-N3O.scopeButtonTitles[0] = "Title"; ObjectID = "Zht-ES-N3O"; */
+"Zht-ES-N3O.scopeButtonTitles[0]" = "Title";
+
+/* Class = "UISearchBar"; Zht-ES-N3O.scopeButtonTitles[1] = "Title"; ObjectID = "Zht-ES-N3O"; */
+"Zht-ES-N3O.scopeButtonTitles[1]" = "Title";
+
+/* Class = "UINavigationItem"; title = "New Timetable"; ObjectID = "h7C-Uw-GGo"; */
+"h7C-Uw-GGo.title" = "New Timetable";
+
+/* Class = "UINavigationItem"; title = "강의 검색"; ObjectID = "knp-xl-D3z"; */
+"knp-xl-D3z.title" = "강의 검색";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "owU-8a-BWv"; */
+"owU-8a-BWv.title" = "Item";
+
+/* Class = "UITextField"; placeholder = "시간표 이름"; ObjectID = "vhv-Xg-cXK"; */
+"vhv-Xg-cXK.placeholder" = "시간표 이름";
+
+/* Class = "UINavigationItem"; title = "시간표"; ObjectID = "xBm-zL-973"; */
+"xBm-zL-973.title" = "시간표";
+
+/* Class = "UIButton"; normalTitle = "X"; ObjectID = "yar-nK-UuP"; */
+"yar-nK-UuP.normalTitle" = "X";

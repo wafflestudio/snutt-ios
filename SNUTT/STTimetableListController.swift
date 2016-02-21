@@ -46,7 +46,7 @@ class STTimetableListController: UITableViewController {
     }
     
     func addTimetable(title : String, courseBook : STCourseBook) {
-        let newTimetable = STTimetable(year: courseBook.year, semester: courseBook.semester, title: title)
+        let newTimetable = STTimetable(courseBook: courseBook, title: title)
         timetableList.append(newTimetable)
         reloadList()
         Alamofire.request(STTimetableRouter.CreateTimetable(title: title, courseBook: courseBook)).responseSwiftyJSON { response in
@@ -73,15 +73,12 @@ class STTimetableListController: UITableViewController {
     
     func sortTimetableList() {
         timetableList.sortInPlace({a, b in
-            if a.year == b.year {
-                return a.semester > b.semester
-            }
-            return a.year > b.year
+            return a.quarter > b.quarter
         })
         
         indexList = []
         for i in 0..<timetableList.count {
-            if(i == 0 || timetableList[i].semester != timetableList[i-1].semester || timetableList[i].year != timetableList[i-1].year) {
+            if(i == 0 || timetableList[i].quarter != timetableList[i-1].quarter) {
                 indexList.append(i)
             }
         }
@@ -114,7 +111,7 @@ class STTimetableListController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return timetableList[indexList[section]].quarterToString()
+        return timetableList[indexList[section]].quarter.shortString()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
