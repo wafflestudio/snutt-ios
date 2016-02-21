@@ -1,5 +1,9 @@
 PODS:
   - Alamofire (3.1.4)
+  - B68UIFloatLabelTextField (0.1.2)
+  - ChameleonFramework/Default (2.1.0)
+  - ChameleonFramework/Swift (2.1.0):
+    - ChameleonFramework/Default
   - Crashlytics (3.5.0):
     - Fabric (~> 1.6.0)
   - EGOTableViewPullRefreshAndLoadMore (1.0.4)
@@ -8,13 +12,28 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 3.0)
+  - B68UIFloatLabelTextField (from `https://github.com/Rajin9601/B68FloatingLabelTextField.git`,
+    branch `Swift_2.0`)
+  - ChameleonFramework/Swift
   - Crashlytics
   - EGOTableViewPullRefreshAndLoadMore
   - Fabric
   - SwiftyJSON (~> 2.3)
 
+EXTERNAL SOURCES:
+  B68UIFloatLabelTextField:
+    :branch: Swift_2.0
+    :git: https://github.com/Rajin9601/B68FloatingLabelTextField.git
+
+CHECKOUT OPTIONS:
+  B68UIFloatLabelTextField:
+    :commit: 200ab45ee180de600ec444aca6de6ee1bd354bad
+    :git: https://github.com/Rajin9601/B68FloatingLabelTextField.git
+
 SPEC CHECKSUMS:
   Alamofire: fbc829692f351fa1d8a31dd75fd7f7f56fea31fb
+  B68UIFloatLabelTextField: 337894ff837df84e19636c99f3f5f88c4fad60d7
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Crashlytics: fabfd45d0e8b8dc936c682b97e302b9a49a1c827
   EGOTableViewPullRefreshAndLoadMore: 118a0824590db042d42e08fcc442b93cebf15e73
   Fabric: e8296d4a1abb3c5eed770cc86b311c862f51d340

@@ -70,6 +70,11 @@ class STMyLectureListController: UITableViewController {
         }    
     }
 
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.performSegueWithIdentifier("STLectureDetailSegue", sender: STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row])
+    }
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
@@ -85,14 +90,15 @@ class STMyLectureListController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "STLectureDetailSegue" {
+            let destinationController = segue.destinationViewController as! STLectureDetailTableViewController
+            destinationController.lecture = sender as! STLecture
+        }
     }
-    */
+    
 
 }
