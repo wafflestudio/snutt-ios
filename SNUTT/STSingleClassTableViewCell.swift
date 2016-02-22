@@ -45,6 +45,12 @@ class STSingleClassTableViewCell: UITableViewCell, UITextFieldDelegate {
         return false
     }
     
+    func textFieldDidEndEditing(textField: UITextField) {
+        if textField == placeTextField {
+            singleClass.place = placeTextField.text!
+        }
+    }
+    
     internal static func loadWithOwner(owner : AnyObject!) -> STSingleClassTableViewCell {
         return NSBundle.mainBundle().loadNibNamed("STSingleClassTableViewCell", owner: owner, options: nil)[0] as! STSingleClassTableViewCell
     }

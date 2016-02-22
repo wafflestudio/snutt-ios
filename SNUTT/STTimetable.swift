@@ -61,6 +61,9 @@ class STTimetable {
     func deleteLectureAtIndex(index: Int) {
         lectureList.removeAtIndex(index)
     }
+    func updateLectureAtIndex(index: Int, lecture :STLecture) {
+        lectureList[index] = lecture
+    }
 }
 
 extension STTimetable : Equatable {}

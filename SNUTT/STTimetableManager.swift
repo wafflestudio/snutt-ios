@@ -45,6 +45,15 @@ class STTimetableManager : NSObject {
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
         return ret!
     }
+    
+    func updateLecture(lecture : STLecture) {
+        let index = currentTimetable!.lectureList.indexOf({ lec in
+            return lec.id == lecture.id
+        })!
+        currentTimetable!.updateLectureAtIndex(index, lecture: lecture)
+        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+    }
+    
     func deleteLectureAtIndex(index: Int, object : AnyObject? ) {
         currentTimetable?.deleteLectureAtIndex(index)
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)

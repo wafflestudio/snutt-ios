@@ -76,7 +76,6 @@ class STLectureDetailTableViewController: UITableViewController {
         
         cellArray = [firstSection,secondSection]
         
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -87,6 +86,13 @@ class STLectureDetailTableViewController: UITableViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard"))
         self.tableView.addGestureRecognizer(tapGesture)
+    }
+    
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        if parent == nil {
+            let editedLecture = getLecture()
+            STTimetableManager.sharedInstance.updateLecture(editedLecture)
+        }
     }
     
     func dismissKeyboard() {
@@ -100,8 +106,22 @@ class STLectureDetailTableViewController: UITableViewController {
 
     // MARK: - Table view data source
     
-    func saveDetail() {
-        
+    func getLecture() -> STLecture {
+        var ret = self.lecture
+        ret.title = titleCell.textField.text!
+        ret.instructor = instructorCell.textField.text!
+        //TODO: color
+        ret.department = departmentCell.valueTextField.text!
+        ret.academicYear = academicYearAndCreditCell.firstTextField.text!
+        //ret.credit = academicYearAndCreditCell.secondTextField.text!
+        ret.classification = classificationAndCategoryCell.firstTextField.text!
+        ret.category = classificationAndCategoryCell.secondTextField.text!
+        ret.courseNumber = courseNumAndLectureNumCell.firstTextField.text!
+        ret.lectureNumber = courseNumAndLectureNumCell.secondTextField.text!
+        ret.classList = singleClassCellList.map({ singleClassCell in
+            return singleClassCell.singleClass
+        })
+        return ret
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

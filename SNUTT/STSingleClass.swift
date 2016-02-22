@@ -18,3 +18,9 @@ struct STSingleClass {
     }
     
 }
+
+extension STSingleClass : Equatable {}
+
+func ==(lhs: STSingleClass, rhs: STSingleClass) -> Bool {
+    return lhs.time == rhs.time && lhs.place == rhs.place
+}

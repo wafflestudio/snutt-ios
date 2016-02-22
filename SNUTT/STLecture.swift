@@ -59,5 +59,18 @@ struct STLecture {
 extension STLecture : Equatable {}
 
 func ==(lhs: STLecture, rhs: STLecture) -> Bool {
-    return lhs.isSameLecture(rhs)
+    return lhs.quarter == rhs.quarter
+        && lhs.classification == rhs.classification
+        && lhs.department == rhs.department
+        && lhs.academicYear == rhs.academicYear
+        && lhs.courseNumber == rhs.courseNumber
+        && lhs.lectureNumber == rhs.lectureNumber
+        && lhs.title == rhs.title
+        && lhs.credit == rhs.credit
+        && lhs.instructor == rhs.instructor
+        && lhs.quota == rhs.quota
+        && lhs.remark == rhs.remark
+        && lhs.category == rhs.category
+        && lhs.id == rhs.id
+        && lhs.classList == rhs.classList
 }
