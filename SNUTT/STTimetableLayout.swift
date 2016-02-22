@@ -73,7 +73,7 @@ class STTimetableLayout: UICollectionViewLayout {
         ContentHeight = self.collectionView!.bounds.size.height
         
         WidthPerColumn = ContentWidth / CGFloat(timetableController!.columnList.count + 1)
-        HeightPerRow = ContentHeight / (CGFloat(STTime.periodNum) + timetableController!.RatioForHeader)
+        HeightPerRow = ContentHeight / (CGFloat(STPeriod.periodNum) + timetableController!.RatioForHeader)
         HeightForHeader = timetableController!.RatioForHeader * HeightPerRow
         
         return CGSize(width: ContentWidth, height: ContentHeight)

@@ -11,6 +11,8 @@ import Foundation
 enum STDay : Int{
     case MON=0, TUE, WED, THU, FRI, SAT
     
+    static let allValues = [MON, TUE, WED, THU, FRI, SAT]
+    
     func shortString() -> String {
         switch self {
         case MON: return NSLocalizedString("monday_short", comment: "")

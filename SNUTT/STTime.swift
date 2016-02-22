@@ -16,8 +16,6 @@ struct STTime {
         return startPeriod + duration
     }
     
-    static var periodNum : Int = 14
-    
     init(day: Int, startPeriod: Double, duration: Double) {
         self.day = STDay(rawValue: day)!
         self.startPeriod = startPeriod

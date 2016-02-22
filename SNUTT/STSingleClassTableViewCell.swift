@@ -33,7 +33,11 @@ class STSingleClassTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         if textField == timeTextField {
-            //TODO: Show timePicker
+            STTimeActionSheetPicker.showWithTime(singleClass.time,
+                doneBlock: { time in
+                    self.singleClass.time = time
+                    self.timeTextField.text = self.singleClass.time.shortString()
+                }, cancelBlock: nil, origin: textField)
             return false
         } else if textField == placeTextField {
             return true

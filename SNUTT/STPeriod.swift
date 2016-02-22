@@ -17,3 +17,15 @@ extension Double {
         }
     }
 }
+
+class STPeriod {
+    static let periodNum : Int = 14
+    static var allValues : [Double] {
+        var arr : [Double] = []
+        for i in 0..<STPeriod.periodNum {
+            arr.append(Double(i))
+            arr.append(Double(i)+0.5)
+        }
+        return arr
+    }
+}

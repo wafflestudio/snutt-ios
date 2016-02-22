@@ -27,7 +27,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         self.collectionView?.registerNib(UINib(nibName: "STColumnHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ColumnHeaderCell")
         self.collectionView?.registerNib(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
         
-        for i in 0..<(STTime.periodNum) {
+        for i in 0..<(STPeriod.periodNum) {
             rowList.append(Double(i).periodString())
         }
         let viewLayout = STTimetableLayout(aTimetable: timetable)
@@ -137,7 +137,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         case .Slot:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SlotCell", forIndexPath: indexPath) as! STSlotCellCollectionViewCell
             cell.columnNum = columnList.count + 1
-            cell.rowNum = STTime.periodNum
+            cell.rowNum = STPeriod.periodNum
             cell.ratioForHeader = RatioForHeader
             return cell
         case .Course:

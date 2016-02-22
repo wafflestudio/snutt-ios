@@ -10,6 +10,9 @@ import Foundation
 
 enum STSemester : Int {
     case First = 1, Summer, Second, Winter
+    
+    static let allValues = [First, Summer, Second, Winter]
+    
     func shortString() -> String {
         switch self {
         case First: return "1"
