@@ -22,3 +22,14 @@
 "friday_short" = "FRI";
 "saturday_short" = "SAT";
 "time_picker_title" = "Time";
+
+"lecture_title" = "Lecture Name";
+"instructor" = "Professor";
+"color" = "Color";
+"department" = "Department";
+"academic_year" = "Academic Year";
+"credit" = "Credit";
+"classification" = "Classification";
+"category" = "Category";
+"course_number" = "Course Number";
+"lecture_number" = "Lecture Number";

@@ -15,3 +15,9 @@ class STUtil {
         return Range(start: startIndex, end: endIndex)
     }
 }
+
+extension String {
+    func localizedString() -> String {
+        return NSLocalizedString(self, comment: "")
+    }
+}

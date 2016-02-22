@@ -11,20 +11,24 @@ import SwiftyJSON
 
 struct STLecture {
     var quarter: STQuarter
-    var classification : String
-    var department : String
-    var academicYear : String
-    var courseNumber : String
-    var lectureNumber : String
-    var title : String
-    var credit : Int
-    var instructor : String
-    var quota : Int
-    var remark : String
-    var category : String
-    var id : String
+    var classification : String = ""
+    var department : String = ""
+    var academicYear : String = ""
+    var courseNumber : String = ""
+    var lectureNumber : String = ""
+    var title : String = ""
+    var credit : Int = 0
+    var instructor : String = ""
+    var quota : Int = 0
+    var remark : String = ""
+    var category : String = ""
+    var id : String = ""
     var classList :[STSingleClass] = []
-    var colorIndex : Int
+    var colorIndex : Int = 0
+    
+    init(quarter: STQuarter) {
+        self.quarter = quarter
+    }
     
     init(json data : JSON) {
         let year = data["year"].intValue
