@@ -14,6 +14,11 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     var lecture : STLecture!
     
     override func viewDidLoad() {
+        if lecture.lectureNumber == "" && lecture.courseNumber == "" {
+            self.custom = true
+        } else {
+            self.custom = false
+        }
         super.viewDidLoad()
         setInitialLecture(lecture)
         // Uncomment the following line to preserve selection between presentations

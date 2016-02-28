@@ -16,6 +16,7 @@ class STSingleLectureTableViewController: UITableViewController {
     var titleCell : STLeftAlignedTableViewCell!
     var instructorCell : STLeftAlignedTableViewCell!
     var colorCell : STColorPickTableViewCell!
+    var creditCell : STLeftAlignedTableViewCell!
     
     var departmentCell : STSingleLabeledTableViewCell!
     var academicYearAndCreditCell : STDoubleLabeledTableViewCell!
@@ -23,6 +24,8 @@ class STSingleLectureTableViewController: UITableViewController {
     var courseNumAndLectureNumCell : STDoubleLabeledTableViewCell!
     
     var singleClassCellList : [STSingleClassTableViewCell!] = []
+    
+    var custom : Bool = false 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,18 +47,25 @@ class STSingleLectureTableViewController: UITableViewController {
         titleCell = STLeftAlignedTableViewCell.loadWithOwner(self)
         instructorCell = STLeftAlignedTableViewCell.loadWithOwner(self)
         colorCell = STColorPickTableViewCell.loadWithOwner(self)
-        
+        creditCell = STLeftAlignedTableViewCell.loadWithOwner(self)
+
         departmentCell = STSingleLabeledTableViewCell.loadWithOwner(self)
         academicYearAndCreditCell = STDoubleLabeledTableViewCell.loadWithOwner(self)
         classificationAndCategoryCell = STDoubleLabeledTableViewCell.loadWithOwner(self)
         courseNumAndLectureNumCell = STDoubleLabeledTableViewCell.loadWithOwner(self)
         
-        let firstSection : [UITableViewCell!] = [titleCell, instructorCell, colorCell]
-        
-        let frontPadding = UITableViewCell.init(style: .Default, reuseIdentifier: nil)
-        let backPadding = UITableViewCell.init(style: .Default, reuseIdentifier: nil)
-        
-        let secondSection : [UITableViewCell!] = [frontPadding, departmentCell, academicYearAndCreditCell, classificationAndCategoryCell, courseNumAndLectureNumCell, backPadding]
+        var firstSection : [UITableViewCell!]!
+        var secondSection : [UITableViewCell!]!
+        if custom {
+            firstSection = [titleCell, instructorCell, colorCell, creditCell]
+            secondSection = []
+        } else {
+            let frontPadding = UITableViewCell.init(style: .Default, reuseIdentifier: nil)
+            let backPadding = UITableViewCell.init(style: .Default, reuseIdentifier: nil)
+            
+            firstSection = [titleCell, instructorCell, colorCell]
+            secondSection = [frontPadding, departmentCell, academicYearAndCreditCell, classificationAndCategoryCell, courseNumAndLectureNumCell, backPadding]
+        }
         
         cellArray = [firstSection,secondSection]
         
@@ -65,6 +75,7 @@ class STSingleLectureTableViewController: UITableViewController {
         titleCell.titleLabel.text = "lecture_title".localizedString()
         instructorCell.titleLabel.text = "instructor".localizedString()
         colorCell.titleLabel.text = "color".localizedString()
+        creditCell.titleLabel.text = "credit".localizedString()
         
         departmentCell.valueTextField.placeholder = "department".localizedString()
         academicYearAndCreditCell.firstTextField.placeholder = "academic_year".localizedString()
@@ -73,6 +84,15 @@ class STSingleLectureTableViewController: UITableViewController {
         classificationAndCategoryCell.secondTextField.placeholder = "category".localizedString()
         courseNumAndLectureNumCell.firstTextField.placeholder = "course_number".localizedString()
         courseNumAndLectureNumCell.secondTextField.placeholder = "lecture_number".localizedString()
+    }
+    
+    func addSingleClass() -> STSingleClassTableViewCell {
+        let cell = STSingleClassTableViewCell.loadWithOwner(self)
+        singleClassCellList.append(cell)
+        if !custom {
+            cell.timeTextField.enabled = false
+        }
+        return cell
     }
     
     func setInitialLecture(lecture: STLecture) {
@@ -84,22 +104,15 @@ class STSingleLectureTableViewController: UITableViewController {
         departmentCell.valueTextField.text = lecture.department
         academicYearAndCreditCell.firstTextField.text = lecture.academicYear
         academicYearAndCreditCell.secondTextField.text = String(lecture.credit) + "학점"
+        creditCell.textField.text = String(lecture.credit) + "학점"
         classificationAndCategoryCell.firstTextField.text = lecture.classification
         classificationAndCategoryCell.secondTextField.text = lecture.category
         courseNumAndLectureNumCell.firstTextField.text = lecture.courseNumber
         courseNumAndLectureNumCell.secondTextField.text = lecture.lectureNumber
         
         for singleClass in lecture.classList {
-            let cell = STSingleClassTableViewCell.loadWithOwner(self)
+            let cell = self.addSingleClass()
             cell.singleClass = singleClass
-            singleClassCellList.append(cell)
-        }
-    }
-    
-    override func willMoveToParentViewController(parent: UIViewController?) {
-        if parent == nil {
-            let editedLecture = getLecture()
-            STTimetableManager.sharedInstance.updateLecture(editedLecture)
         }
     }
     
@@ -119,13 +132,7 @@ class STSingleLectureTableViewController: UITableViewController {
         ret.title = titleCell.textField.text!
         ret.instructor = instructorCell.textField.text!
         //TODO: color
-        ret.department = departmentCell.valueTextField.text!
-        ret.academicYear = academicYearAndCreditCell.firstTextField.text!
         //ret.credit = academicYearAndCreditCell.secondTextField.text!
-        ret.classification = classificationAndCategoryCell.firstTextField.text!
-        ret.category = classificationAndCategoryCell.secondTextField.text!
-        ret.courseNumber = courseNumAndLectureNumCell.firstTextField.text!
-        ret.lectureNumber = courseNumAndLectureNumCell.secondTextField.text!
         ret.classList = singleClassCellList.map({ singleClassCell in
             return singleClassCell.singleClass
         })

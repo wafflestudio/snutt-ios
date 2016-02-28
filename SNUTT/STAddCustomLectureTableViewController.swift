@@ -11,6 +11,7 @@ import UIKit
 class STAddCustomLectureTableViewController: STSingleLectureTableViewController {
 
     override func viewDidLoad() {
+        self.custom = true
         super.viewDidLoad()
         
         // Uncomment the following line to preserve selection between presentations
