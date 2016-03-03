@@ -20,6 +20,7 @@ class STLeftAlignedTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addSubview(textField)
+        self.selectionStyle = .None
         // Initialization code
     }
 

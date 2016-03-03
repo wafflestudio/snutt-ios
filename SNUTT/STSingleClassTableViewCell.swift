@@ -28,6 +28,7 @@ class STSingleClassTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         timeTextField.delegate = self
         placeTextField.delegate = self
+        self.selectionStyle = .None
         // Initialization code
     }
     

@@ -13,6 +13,7 @@
 		E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109CC781C3E8C050050399A /* STTimetableListController.swift */; };
 		E10CBEDF1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10CBEDE1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift */; };
 		E10CBEE11C7B71E400E8FE26 /* STAddCustomLectureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10CBEE01C7B71E400E8FE26 /* STAddCustomLectureTableViewController.swift */; };
+		E110CFCE1C87FED300ED0590 /* STCustomColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFCD1C87FED300ED0590 /* STCustomColorPickerViewController.swift */; };
 		E137998A1C3FBEC70043A5EE /* STMyLectureListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */; };
 		E14188D61C3E195000D4E712 /* STTimetableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */; };
 		E14991FD1C46241700DC6756 /* STConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14991FC1C46241700DC6756 /* STConfig.swift */; };
@@ -58,6 +59,10 @@
 		E1C48BB01C79C45500BC469E /* STQuarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48BAF1C79C45500BC469E /* STQuarter.swift */; };
 		E1C48BB21C79C8E200BC469E /* STDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48BB11C79C8E200BC469E /* STDay.swift */; };
 		E1C48BB41C79CAE800BC469E /* STPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48BB31C79CAE800BC469E /* STPeriod.swift */; };
+		E1D0FB651C86CDCE00ACDC2F /* STColorPickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0FB641C86CDCE00ACDC2F /* STColorPickerTableViewController.swift */; };
+		E1D0FB671C86CDE300ACDC2F /* STColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0FB661C86CDE300ACDC2F /* STColorTableViewCell.swift */; };
+		E1D0FB691C86D32B00ACDC2F /* STSingleColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0FB681C86D32B00ACDC2F /* STSingleColorTableViewCell.swift */; };
+		E1D0FB6B1C86D47900ACDC2F /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0FB6A1C86D47900ACDC2F /* STColor.swift */; };
 		E1E99A6B1C423CDB004A426A /* STEventCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E99A6A1C423CDB004A426A /* STEventCenter.swift */; };
 		E1F0CA191C6F2C1900A4F4ED /* sharp.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA181C6F2C1900A4F4ED /* sharp.png */; };
 		E1F0CA1D1C7482D300A4F4ED /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA1C1C7482D300A4F4ED /* delete.png */; };
@@ -96,6 +101,7 @@
 		E109CC781C3E8C050050399A /* STTimetableListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableListController.swift; sourceTree = "<group>"; };
 		E10CBEDE1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleLectureTableViewController.swift; sourceTree = "<group>"; };
 		E10CBEE01C7B71E400E8FE26 /* STAddCustomLectureTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAddCustomLectureTableViewController.swift; sourceTree = "<group>"; };
+		E110CFCD1C87FED300ED0590 /* STCustomColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STCustomColorPickerViewController.swift; sourceTree = "<group>"; };
 		E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMyLectureListController.swift; sourceTree = "<group>"; };
 		E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableTabViewController.swift; sourceTree = "<group>"; };
 		E14991FC1C46241700DC6756 /* STConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STConfig.swift; sourceTree = "<group>"; };
@@ -148,6 +154,10 @@
 		E1C48BAF1C79C45500BC469E /* STQuarter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STQuarter.swift; sourceTree = "<group>"; };
 		E1C48BB11C79C8E200BC469E /* STDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDay.swift; sourceTree = "<group>"; };
 		E1C48BB31C79CAE800BC469E /* STPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STPeriod.swift; sourceTree = "<group>"; };
+		E1D0FB641C86CDCE00ACDC2F /* STColorPickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorPickerTableViewController.swift; sourceTree = "<group>"; };
+		E1D0FB661C86CDE300ACDC2F /* STColorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorTableViewCell.swift; sourceTree = "<group>"; };
+		E1D0FB681C86D32B00ACDC2F /* STSingleColorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleColorTableViewCell.swift; sourceTree = "<group>"; };
+		E1D0FB6A1C86D47900ACDC2F /* STColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColor.swift; sourceTree = "<group>"; };
 		E1E99A6A1C423CDB004A426A /* STEventCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STEventCenter.swift; sourceTree = "<group>"; };
 		E1F0CA181C6F2C1900A4F4ED /* sharp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sharp.png; path = images/sharp.png; sourceTree = "<group>"; };
 		E1F0CA1C1C7482D300A4F4ED /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = images/delete.png; sourceTree = "<group>"; };
@@ -294,6 +304,7 @@
 				E1C48BAF1C79C45500BC469E /* STQuarter.swift */,
 				E1C48BB11C79C8E200BC469E /* STDay.swift */,
 				E1C48BB31C79CAE800BC469E /* STPeriod.swift */,
+				E1D0FB6A1C86D47900ACDC2F /* STColor.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -351,6 +362,7 @@
 		E1C28B1C1B9C4C3500B8C493 /* LectureDetail */ = {
 			isa = PBXGroup;
 			children = (
+				E1D0FB631C86CDAC00ACDC2F /* ColorPicker */,
 				E166435A1B46734C00387EF8 /* STLectureDetailTableViewController.swift */,
 				E1F0CA361C785C1200A4F4ED /* STSingleLabeledTableViewCell.xib */,
 				E1F0CA321C78398E00A4F4ED /* STSingleLabeledTableViewCell.swift */,
@@ -374,6 +386,17 @@
 				E1C48B961C79BA4100BC469E /* STTimeActionSheetPicker.swift */,
 			);
 			name = ActionSheetPicker;
+			sourceTree = "<group>";
+		};
+		E1D0FB631C86CDAC00ACDC2F /* ColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				E1D0FB641C86CDCE00ACDC2F /* STColorPickerTableViewController.swift */,
+				E1D0FB661C86CDE300ACDC2F /* STColorTableViewCell.swift */,
+				E1D0FB681C86D32B00ACDC2F /* STSingleColorTableViewCell.swift */,
+				E110CFCD1C87FED300ED0590 /* STCustomColorPickerViewController.swift */,
+			);
+			name = ColorPicker;
 			sourceTree = "<group>";
 		};
 		E1F0CA1A1C7475A600A4F4ED /* Asset */ = {
@@ -589,12 +612,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1D0FB691C86D32B00ACDC2F /* STSingleColorTableViewCell.swift in Sources */,
 				E1E99A6B1C423CDB004A426A /* STEventCenter.swift in Sources */,
 				E14188D61C3E195000D4E712 /* STTimetableTabViewController.swift in Sources */,
 				E19E23211B4691D90010DFB1 /* STLectureSearchTableViewCell.swift in Sources */,
+				E1D0FB6B1C86D47900ACDC2F /* STColor.swift in Sources */,
 				E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */,
 				E16643571B46623900387EF8 /* STSlotCellCollectionViewCell.swift in Sources */,
+				E1D0FB651C86CDCE00ACDC2F /* STColorPickerTableViewController.swift in Sources */,
 				E14DF2161C3F8F920076FDDE /* STCourseBook.swift in Sources */,
+				E110CFCE1C87FED300ED0590 /* STCustomColorPickerViewController.swift in Sources */,
 				E19E231F1B468B700010DFB1 /* STLectureSearchTableViewController.swift in Sources */,
 				E14991FD1C46241700DC6756 /* STConfig.swift in Sources */,
 				E10CBEE11C7B71E400E8FE26 /* STAddCustomLectureTableViewController.swift in Sources */,
@@ -634,6 +661,7 @@
 				E10CBEDF1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift in Sources */,
 				E1B381A71C6C4AA0007E1A15 /* STTagCollectionView.swift in Sources */,
 				E1C28B151B9C4B0B00B8C493 /* STSingleClass.swift in Sources */,
+				E1D0FB671C86CDE300ACDC2F /* STColorTableViewCell.swift in Sources */,
 				E1F0CA1F1C748B6000A4F4ED /* STTagTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

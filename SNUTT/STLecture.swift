@@ -24,7 +24,7 @@ struct STLecture {
     var category : String = ""
     var id : String = ""
     var classList :[STSingleClass] = []
-    var colorIndex : Int = 0
+    var color : STColor = STColor()
     
     init(quarter: STQuarter) {
         self.quarter = quarter
@@ -46,7 +46,7 @@ struct STLecture {
         remark = data["remark"].stringValue
         category = data["category"].stringValue
         id = data["_id"].stringValue
-        colorIndex = data["color_index"].intValue
+        //TODO: Color
         let ListData = data["class_time_json"].arrayValue
         for it in ListData {
             let time = STTime(day: it["day"].intValue, startPeriod: it["start"].doubleValue, duration: it["len"].doubleValue)

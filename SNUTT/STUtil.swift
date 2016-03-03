@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class STUtil {
     static func getRangeFromNSRange(string : String, range : NSRange) -> Range<String.Index>{
@@ -20,4 +21,15 @@ extension String {
     func localizedString() -> String {
         return NSLocalizedString(self, comment: "")
     }
+}
+
+extension UIView {
+    
+    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.CGPath
+        self.layer.mask = mask
+    }
+    
 }

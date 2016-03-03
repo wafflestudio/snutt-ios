@@ -22,6 +22,7 @@ class STDoubleLabeledTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.addSubview(firstTextField)
         self.addSubview(secondTextField)
+        self.selectionStyle = .None
         // Initialization code
     }
 

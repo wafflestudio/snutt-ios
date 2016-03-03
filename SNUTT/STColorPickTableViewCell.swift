@@ -11,22 +11,25 @@ import ChameleonFramework
 
 class STColorPickTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var colorView: UIButton!
+    
+    @IBOutlet weak var bgColorView: UIView!
+    @IBOutlet weak var fgColorView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    var lightColor : UIColor! {
+    var color : STColor! {
         didSet {
-            colorView.backgroundColor = lightColor
+            bgColorView.backgroundColor = color.bgColor
+            fgColorView.backgroundColor = color.fgColor
         }
     }
-    var darkColor : UIColor! {
-        didSet {
-            colorView.layer.borderColor = darkColor.CGColor
-            colorView.layer.borderWidth = 5.0
-        }
-    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.accessoryType = .DisclosureIndicator
+        self.selectionStyle = .Gray
+        self.addSubview(bgColorView)
+        self.addSubview(fgColorView)
+        color = STColor.colorList[0]
         // Initialization code
     }
     

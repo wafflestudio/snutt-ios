@@ -20,6 +20,7 @@ class STSingleLabeledTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addSubview(valueTextField)
+        self.selectionStyle = .None
         // Initialization code
     }
 

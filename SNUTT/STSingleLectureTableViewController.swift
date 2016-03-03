@@ -24,7 +24,6 @@ class STSingleLectureTableViewController: UITableViewController {
     var courseNumAndLectureNumCell : STDoubleLabeledTableViewCell!
     
     var singleClassCellList : [STSingleClassTableViewCell!] = []
-    
     var custom : Bool = false 
     
     override func viewDidLoad() {
@@ -40,6 +39,7 @@ class STSingleLectureTableViewController: UITableViewController {
         
         
         let tapGesture = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard"))
+        tapGesture.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tapGesture)
     }
     
@@ -98,8 +98,7 @@ class STSingleLectureTableViewController: UITableViewController {
     func setInitialLecture(lecture: STLecture) {
         titleCell.textField.text = lecture.title
         instructorCell.textField.text = lecture.instructor
-        colorCell.lightColor = FlatBlue()
-        colorCell.darkColor = FlatBlueDark()
+        colorCell.color = lecture.color
         
         departmentCell.valueTextField.text = lecture.department
         academicYearAndCreditCell.firstTextField.text = lecture.academicYear
@@ -131,7 +130,7 @@ class STSingleLectureTableViewController: UITableViewController {
         var ret = STLecture(quarter: STTimetableManager.sharedInstance.currentTimetable!.quarter)
         ret.title = titleCell.textField.text!
         ret.instructor = instructorCell.textField.text!
-        //TODO: color
+        ret.color = colorCell.color
         //ret.credit = academicYearAndCreditCell.secondTextField.text!
         ret.classList = singleClassCellList.map({ singleClassCell in
             return singleClassCell.singleClass
@@ -202,6 +201,22 @@ class STSingleLectureTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if tableView.cellForRowAtIndexPath(indexPath) == colorCell {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            //TODO : Trigger segue for color picker
+            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("STColorPickerTableViewController") as! STColorPickerTableViewController
+            viewController.color = colorCell.color
+            viewController.doneBlock = { color in
+                self.colorCell.color = color
+                self.tableView.reloadData()
+            }
+            self.navigationController?.pushViewController(viewController, animated: true)
+        } else {
+            tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        }
+        
+    }
     
     /*
     // Override to support rearranging the table view.

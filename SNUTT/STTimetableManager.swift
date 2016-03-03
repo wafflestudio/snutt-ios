@@ -40,7 +40,7 @@ class STTimetableManager : NSObject {
     }
     
     func addLecture(var lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
-        lecture.colorIndex = 1
+        lecture.color = STColor.colorList[0]
         let ret = currentTimetable?.addLecture(lecture)
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
         return ret!

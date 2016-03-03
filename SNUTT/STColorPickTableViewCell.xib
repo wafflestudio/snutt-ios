@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -18,29 +19,51 @@
                     <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Us2-Ib-vDn">
-                    <rect key="frame" x="94" y="10" width="41" height="17"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I5r-B4-aim">
+                    <rect key="frame" x="94" y="7" width="22" height="22"/>
+                    <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="41" id="NG7-l1-Ub6"/>
+                        <constraint firstAttribute="width" secondItem="I5r-B4-aim" secondAttribute="height" multiplier="1:1" id="NDZ-Xa-1v8"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="3"/>
-                </button>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZL-01-9iv">
+                    <rect key="frame" x="116" y="7" width="22" height="22"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="eZL-01-9iv" secondAttribute="height" multiplier="1:1" id="cG7-gb-GiZ"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Us2-Ib-vDn" firstAttribute="leading" secondItem="FNf-h9-ocN" secondAttribute="trailing" constant="8" id="B9B-We-Bg3"/>
+                <constraint firstItem="I5r-B4-aim" firstAttribute="height" secondItem="FNf-h9-ocN" secondAttribute="height" id="4HD-cL-FuL"/>
+                <constraint firstItem="I5r-B4-aim" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7" id="5on-xe-8FX"/>
+                <constraint firstItem="eZL-01-9iv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="8u0-Eo-tDj"/>
                 <constraint firstItem="FNf-h9-ocN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Bc4-5l-hVt"/>
-                <constraint firstAttribute="trailing" secondItem="Us2-Ib-vDn" secondAttribute="leading" multiplier="3" id="RXZ-uA-oNO"/>
-                <constraint firstItem="Us2-Ib-vDn" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Tg3-eg-23g"/>
+                <constraint firstItem="eZL-01-9iv" firstAttribute="height" secondItem="I5r-B4-aim" secondAttribute="height" id="G0P-LV-J7Y"/>
+                <constraint firstAttribute="bottom" secondItem="I5r-B4-aim" secondAttribute="bottom" id="Hqm-Ej-6Po"/>
+                <constraint firstItem="I5r-B4-aim" firstAttribute="trailing" secondItem="eZL-01-9iv" secondAttribute="leading" id="YWF-ad-JzM"/>
+                <constraint firstItem="I5r-B4-aim" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="aRm-c3-O8w"/>
                 <constraint firstItem="FNf-h9-ocN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="d0z-Hj-HaG"/>
-                <constraint firstItem="FNf-h9-ocN" firstAttribute="height" secondItem="Us2-Ib-vDn" secondAttribute="height" id="fJg-xr-DPj"/>
+                <constraint firstItem="I5r-B4-aim" firstAttribute="leading" secondItem="FNf-h9-ocN" secondAttribute="trailing" constant="8" id="fCl-0c-Pve"/>
+                <constraint firstAttribute="trailing" secondItem="I5r-B4-aim" secondAttribute="leading" multiplier="3" id="hvR-nf-8Lc"/>
+                <constraint firstAttribute="bottom" secondItem="I5r-B4-aim" secondAttribute="bottom" constant="7" id="i3B-aH-cda"/>
+                <constraint firstItem="I5r-B4-aim" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="oJ8-yd-gog"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="4HD-cL-FuL"/>
+                    <exclude reference="Hqm-Ej-6Po"/>
+                    <exclude reference="oJ8-yd-gog"/>
+                </mask>
+            </variation>
             <connections>
-                <outlet property="colorView" destination="Us2-Ib-vDn" id="k3w-Wz-Hm4"/>
+                <outlet property="bgColorView" destination="I5r-B4-aim" id="3uY-5j-dBt"/>
+                <outlet property="fgColorView" destination="eZL-01-9iv" id="2oK-zD-gSa"/>
                 <outlet property="titleLabel" destination="FNf-h9-ocN" id="HNn-Dv-pkB"/>
             </connections>
             <point key="canvasLocation" x="325" y="341"/>
