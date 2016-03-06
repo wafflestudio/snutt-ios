@@ -10,7 +10,7 @@ import UIKit
 
 class STTagCollectionView: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    var tagList : [String] = []
+    var tagList : [STTag] = []
     weak var searchController : STLectureSearchTableViewController!
     var sizingCell : STTagCollectionViewCell!
     override func awakeFromNib() {

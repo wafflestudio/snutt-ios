@@ -190,7 +190,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         }
     }
     
-    func addTag(tag: String) {
+    func addTag(tag: STTag) {
         searchBar.disableEditingTag()
         tagCollectionView.tagList.append(tag)
         if tagCollectionView.tagList.count == 1 {

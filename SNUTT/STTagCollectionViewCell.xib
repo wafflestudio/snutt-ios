@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -17,7 +17,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="100" height="27"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="컴퓨터공학부" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6W-60-AIi">
-                            <rect key="frame" x="8" y="8" width="63" height="11"/>
+                            <rect key="frame" x="8" y="0.0" width="63" height="27"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
@@ -37,12 +37,12 @@
                     <color key="backgroundColor" red="0.2627450980392157" green="0.54509803921568623" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="27" id="0YJ-ln-J7u"/>
-                        <constraint firstAttribute="bottomMargin" secondItem="h6W-60-AIi" secondAttribute="bottom" id="0YR-fC-tap"/>
+                        <constraint firstAttribute="bottom" secondItem="h6W-60-AIi" secondAttribute="bottom" id="0YR-fC-tap"/>
                         <constraint firstItem="3l7-mE-WLA" firstAttribute="top" secondItem="anP-qD-Bs9" secondAttribute="topMargin" id="Jkj-w1-q48"/>
                         <constraint firstAttribute="bottomMargin" secondItem="3l7-mE-WLA" secondAttribute="bottom" id="Qa0-Fg-Kgs"/>
                         <constraint firstAttribute="trailingMargin" secondItem="3l7-mE-WLA" secondAttribute="trailing" id="UQK-yM-1zs"/>
                         <constraint firstItem="3l7-mE-WLA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="h6W-60-AIi" secondAttribute="trailing" constant="3" id="pgl-wA-tJg"/>
-                        <constraint firstItem="h6W-60-AIi" firstAttribute="top" secondItem="anP-qD-Bs9" secondAttribute="topMargin" id="vQf-3H-mWh"/>
+                        <constraint firstItem="h6W-60-AIi" firstAttribute="top" secondItem="anP-qD-Bs9" secondAttribute="top" id="vQf-3H-mWh"/>
                         <constraint firstItem="h6W-60-AIi" firstAttribute="leading" secondItem="anP-qD-Bs9" secondAttribute="leadingMargin" id="vo4-yj-zxC"/>
                     </constraints>
                 </view>

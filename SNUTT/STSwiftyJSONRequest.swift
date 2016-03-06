@@ -48,3 +48,15 @@ extension Request {
         )
     }
 }
+
+/*
+
+extension JSON {
+    public var date : NSDate? {
+        let dateFor: NSDateFormatter = NSDateFormatter()
+        dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss:SSS"
+        
+        return dateFor.dateFromString(self.stringValue)
+    }
+}
+*/

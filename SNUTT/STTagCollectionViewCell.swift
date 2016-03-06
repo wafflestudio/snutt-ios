@@ -14,9 +14,9 @@ class STTagCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var tagLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     weak var collectionView : STTagCollectionView!
-    var searchTag : String! {
+    var searchTag : STTag! {
         didSet {
-            tagLabel.text = searchTag
+            tagLabel.text = searchTag.text
         }
     }
     

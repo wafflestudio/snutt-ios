@@ -19,6 +19,10 @@
 		E110CFD51C883FC000ED0590 /* STNotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFD41C883FC000ED0590 /* STNotificationTableViewCell.swift */; };
 		E110CFD71C88424000ED0590 /* STNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFD61C88424000ED0590 /* STNotification.swift */; };
 		E110CFD91C886D9800ED0590 /* STNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFD81C886D9800ED0590 /* STNotificationManager.swift */; };
+		E110CFDB1C888F5700ED0590 /* STTagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFDA1C888F5700ED0590 /* STTagManager.swift */; };
+		E110CFDD1C888FC300ED0590 /* STTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFDC1C888FC300ED0590 /* STTag.swift */; };
+		E110CFDF1C88916400ED0590 /* STTagRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFDE1C88916400ED0590 /* STTagRouter.swift */; };
+		E110CFE11C8C017E00ED0590 /* STTagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFE01C8C017E00ED0590 /* STTagList.swift */; };
 		E137998A1C3FBEC70043A5EE /* STMyLectureListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */; };
 		E14188D61C3E195000D4E712 /* STTimetableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */; };
 		E14991FD1C46241700DC6756 /* STConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14991FC1C46241700DC6756 /* STConfig.swift */; };
@@ -39,6 +43,7 @@
 		E166435B1B46734C00387EF8 /* STLectureDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E166435A1B46734C00387EF8 /* STLectureDetailTableViewController.swift */; };
 		E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */; };
 		E18F2E501C5E6FBC00114ADF /* STTagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */; };
+		E196F25A1C8C1D95000B01FC /* PropertyListReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E196F2591C8C1D95000B01FC /* PropertyListReadable.swift */; };
 		E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */; };
 		E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E19A3A9E1B453770007FCAD7 /* Main.storyboard */; };
 		E19A3AA21B453770007FCAD7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E19A3AA11B453770007FCAD7 /* Images.xcassets */; };
@@ -112,6 +117,10 @@
 		E110CFD41C883FC000ED0590 /* STNotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STNotificationTableViewCell.swift; sourceTree = "<group>"; };
 		E110CFD61C88424000ED0590 /* STNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STNotification.swift; sourceTree = "<group>"; };
 		E110CFD81C886D9800ED0590 /* STNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STNotificationManager.swift; sourceTree = "<group>"; };
+		E110CFDA1C888F5700ED0590 /* STTagManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagManager.swift; sourceTree = "<group>"; };
+		E110CFDC1C888FC300ED0590 /* STTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTag.swift; sourceTree = "<group>"; };
+		E110CFDE1C88916400ED0590 /* STTagRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagRouter.swift; sourceTree = "<group>"; };
+		E110CFE01C8C017E00ED0590 /* STTagList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagList.swift; sourceTree = "<group>"; };
 		E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMyLectureListController.swift; sourceTree = "<group>"; };
 		E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableTabViewController.swift; sourceTree = "<group>"; };
 		E14991FC1C46241700DC6756 /* STConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STConfig.swift; sourceTree = "<group>"; };
@@ -132,6 +141,7 @@
 		E166435A1B46734C00387EF8 /* STLectureDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureDetailTableViewController.swift; sourceTree = "<group>"; };
 		E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchBar.swift; sourceTree = "<group>"; };
 		E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagListView.swift; sourceTree = "<group>"; };
+		E196F2591C8C1D95000B01FC /* PropertyListReadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListReadable.swift; sourceTree = "<group>"; };
 		E19A3A951B453770007FCAD7 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19A3A991B453770007FCAD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -237,6 +247,8 @@
 				E14991FC1C46241700DC6756 /* STConfig.swift */,
 				E1B381A81C6C52D9007E1A15 /* STUtil.swift */,
 				E110CFD81C886D9800ED0590 /* STNotificationManager.swift */,
+				E110CFDA1C888F5700ED0590 /* STTagManager.swift */,
+				E196F2591C8C1D95000B01FC /* PropertyListReadable.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -248,6 +260,7 @@
 				E14992001C463AC600DC6756 /* STTimetableRouter.swift */,
 				E14992081C4B828500DC6756 /* STSwiftyJSONRequest.swift */,
 				E149920E1C549D7900DC6756 /* STSearchRouter.swift */,
+				E110CFDE1C88916400ED0590 /* STTagRouter.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -327,6 +340,8 @@
 				E1C48BB31C79CAE800BC469E /* STPeriod.swift */,
 				E1D0FB6A1C86D47900ACDC2F /* STColor.swift */,
 				E110CFD61C88424000ED0590 /* STNotification.swift */,
+				E110CFDC1C888FC300ED0590 /* STTag.swift */,
+				E110CFE01C8C017E00ED0590 /* STTagList.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -639,6 +654,7 @@
 				E1D0FB691C86D32B00ACDC2F /* STSingleColorTableViewCell.swift in Sources */,
 				E1E99A6B1C423CDB004A426A /* STEventCenter.swift in Sources */,
 				E14188D61C3E195000D4E712 /* STTimetableTabViewController.swift in Sources */,
+				E110CFDB1C888F5700ED0590 /* STTagManager.swift in Sources */,
 				E19E23211B4691D90010DFB1 /* STLectureSearchTableViewCell.swift in Sources */,
 				E1D0FB6B1C86D47900ACDC2F /* STColor.swift in Sources */,
 				E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */,
@@ -665,19 +681,23 @@
 				E1C48B941C787A3C00BC469E /* STSingleClassTableViewCell.swift in Sources */,
 				E14DF2201C3FBB0E0076FDDE /* STLectureTableViewCell.swift in Sources */,
 				E110CFD51C883FC000ED0590 /* STNotificationTableViewCell.swift in Sources */,
+				E110CFDF1C88916400ED0590 /* STTagRouter.swift in Sources */,
 				E14991FF1C46387600DC6756 /* STAuthRouter.swift in Sources */,
 				E18F2E501C5E6FBC00114ADF /* STTagListView.swift in Sources */,
+				E110CFDD1C888FC300ED0590 /* STTag.swift in Sources */,
 				E16643591B46624500387EF8 /* STCourseCellCollectionViewCell.swift in Sources */,
 				E14DF2181C3F914E0076FDDE /* STCourseBookList.swift in Sources */,
 				E1C48BB41C79CAE800BC469E /* STPeriod.swift in Sources */,
 				E16643511B4623BB00387EF8 /* STTimetableLayout.swift in Sources */,
 				E14DF2141C3F71A70076FDDE /* STTimetableAddController.swift in Sources */,
+				E110CFE11C8C017E00ED0590 /* STTagList.swift in Sources */,
 				E1C28B181B9C4B3600B8C493 /* STTime.swift in Sources */,
 				E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */,
 				E166435B1B46734C00387EF8 /* STLectureDetailTableViewController.swift in Sources */,
 				E137998A1C3FBEC70043A5EE /* STMyLectureListController.swift in Sources */,
 				E110CFD11C883DC900ED0590 /* STNotificationTableViewController.swift in Sources */,
 				E110CFD71C88424000ED0590 /* STNotification.swift in Sources */,
+				E196F25A1C8C1D95000B01FC /* PropertyListReadable.swift in Sources */,
 				E1B381AB1C6C61E2007E1A15 /* STTagCollectionViewCell.swift in Sources */,
 				E14992091C4B828500DC6756 /* STSwiftyJSONRequest.swift in Sources */,
 				E1C48B901C78736C00BC469E /* STColorPickTableViewCell.swift in Sources */,

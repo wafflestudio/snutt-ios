@@ -21,9 +21,7 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     weak var searchController : STLectureSearchTableViewController!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
-    var tagList = ["컴퓨터공학부", "1학점", "화학생명공학부", "김명길교수", "테스트트트트트트트트트트트트트트트트트트트트트트틑트트트트트트트트트트트트트트트트트트트트트트트트트트트트"]
-    
-    var filteredList : [String] = []
+    var filteredList : [STTag] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,10 +37,10 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func showTagsFor(query : String) {
         if query == "" {
-            filteredList = tagList
+            filteredList = STTagManager.sharedInstance.tagList.tagList
         } else {
-            filteredList = tagList.filter{ str in
-                return str.hasPrefix(query)
+            filteredList = STTagManager.sharedInstance.tagList.tagList.filter{ tag in
+                return tag.text.hasPrefix(query)
             }
         }
         self.hidden = false
@@ -72,7 +70,7 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("STTagTableViewCell", forIndexPath: indexPath) as! STTagTableViewCell
-        cell.tagLabel.text = "# " + filteredList[indexPath.row]
+        cell.tagLabel.text = "# " + filteredList[indexPath.row].text
         return cell
     }
     

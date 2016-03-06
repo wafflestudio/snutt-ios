@@ -224,8 +224,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="25"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ao-R3-t5H">
-                                                    <rect key="frame" x="8" y="8" width="584" height="9"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ao-R3-t5H">
+                                                    <rect key="frame" x="8" y="0.0" width="359" height="25"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -233,8 +233,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="8ao-R3-t5H" firstAttribute="leading" secondItem="qEr-pp-hHA" secondAttribute="leadingMargin" id="GE1-xw-gIm"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="8ao-R3-t5H" secondAttribute="bottom" id="Tc8-Rw-L1y"/>
-                                                <constraint firstItem="8ao-R3-t5H" firstAttribute="top" secondItem="qEr-pp-hHA" secondAttribute="topMargin" id="gdc-fn-px8"/>
+                                                <constraint firstAttribute="bottom" secondItem="8ao-R3-t5H" secondAttribute="bottom" id="Tc8-Rw-L1y"/>
+                                                <constraint firstItem="8ao-R3-t5H" firstAttribute="top" secondItem="qEr-pp-hHA" secondAttribute="top" id="gdc-fn-px8"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="8ao-R3-t5H" secondAttribute="trailing" id="j3u-Xb-rCn"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -772,23 +772,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DFJ-wP-Yj8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1480" y="-1683"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="CoV-cI-j8k">
-            <objects>
-                <viewController id="NZT-u9-oJU" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jd1-Ie-GBZ"/>
-                        <viewControllerLayoutGuide type="bottom" id="6a4-uy-yZ3"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="096-55-NSR">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UdP-8q-hVV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yKO-CV-rmO">
