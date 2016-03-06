@@ -32,12 +32,20 @@ class STTagManager {
     
     func loadData() {
         //TODO : load from local data else create fake taglist
-        tagList = STTagList(quarter: STTimetableManager.sharedInstance.currentTimetable!.quarter, tagList: [], updatedTime: "")
+        let quarter = STTimetableManager.sharedInstance.currentTimetable!.quarter
+        let tagList = NSKeyedUnarchiver.unarchiveObjectWithFile(getDocumentsDirectory().stringByAppendingPathComponent("tagList\(quarter.shortString()).archive")) as? STTagList
+        if tagList != nil {
+            self.tagList = tagList
+        } else {
+            self.tagList = STTagList(quarter: quarter, tagList: [], updatedTime: "")
+        }
         self.updateTagList()
     }
     
-    func saveData() {
+    func saveData(quarter: STQuarter) {
         //TODO : save to local data
+        NSKeyedArchiver.archiveRootObject(self.tagList, toFile: getDocumentsDirectory().stringByAppendingPathComponent("tagList\(quarter.shortString()).archive"))
+        
         
     }
     
@@ -64,9 +72,10 @@ class STTagManager {
                 tags = tags + json["instructor"].arrayValue.map({ body in
                     return STTag(type: .Classification, text: body.stringValue)
                 })
-                
-                self.tagList = STTagList(quarter: quarter, tagList: tags, updatedTime: updatedTime)
-                self.saveData()
+                if self.tagList.quarter == quarter {
+                    self.tagList = STTagList(quarter: quarter, tagList: tags, updatedTime: updatedTime)
+                    self.saveData(quarter)
+                }
             case .Failure(let error):
                 //TODO : Alertview for failure
                 print(error)

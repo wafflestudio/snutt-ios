@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct STTagList {
+class STTagList : NSObject, NSCoding {
     var quarter : STQuarter
     var tagList : [STTag]
     var updatedTime: String
@@ -18,4 +18,18 @@ struct STTagList {
         self.updatedTime = updatedTime
     }
     
+    func encodeWithCoder(coder: NSCoder) {
+        coder.encodeObject(quarter.dictionaryValue(), forKey: "quarter")
+        coder.encodeObject(tagList.dictionaryValue(), forKey: "tagList")
+        coder.encodeObject(updatedTime, forKey: "updatedTime")
+    }
+    
+    required convenience init?(coder decoder: NSCoder) {
+        guard let quarter = STQuarter(dictionary: decoder.decodeObjectForKey("quarter") as? NSDictionary),
+        let tagList = [STTag](dictionary: decoder.decodeObjectForKey("tagList") as? [NSDictionary]),
+            let updatedTime = decoder.decodeObjectForKey("updatedTime") as? String else {
+            return nil
+        }
+        self.init(quarter: quarter, tagList: tagList, updatedTime: updatedTime)
+    }
 }

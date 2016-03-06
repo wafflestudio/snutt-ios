@@ -16,11 +16,29 @@ enum STTagType : String {
     case Instructor = "instructor"
 }
 
-struct STTag {
+struct STTag : DictionaryRepresentable {
     var type : STTagType
     var text : String
     init(type: STTagType, text: String) {
         self.type = type
         self.text = text
     }
+    
+    //MARK: DictionaryRepresentable
+    
+    func dictionaryValue() -> NSDictionary {
+        let representation : [String: AnyObject] = ["type": type.rawValue, "text": text]
+        return representation
+    }
+    init?(dictionary: NSDictionary?) {
+        guard let values = dictionary else {return nil}
+        if let  type = STTagType(raw: values["type"] as? String),
+                text = values["text"] as? String {
+                    self.type = type
+                    self.text = text
+        } else {
+            return nil
+        }
+    }
+    
 }
