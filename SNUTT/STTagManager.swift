@@ -30,7 +30,7 @@ class STTagManager {
     
     var tagList : STTagList!
     
-    func loadData() {
+    dynamic func loadData() {
         //TODO : load from local data else create fake taglist
         let quarter = STTimetableManager.sharedInstance.currentTimetable!.quarter
         let tagList = NSKeyedUnarchiver.unarchiveObjectWithFile(getDocumentsDirectory().stringByAppendingPathComponent("tagList\(quarter.shortString()).archive")) as? STTagList
@@ -61,16 +61,16 @@ class STTagManager {
                     return STTag(type: .Classification, text: body.stringValue)
                 })
                 tags = tags + json["department"].arrayValue.map({ body in
-                    return STTag(type: .Classification, text: body.stringValue)
+                    return STTag(type: .Department, text: body.stringValue)
                 })
                 tags = tags + json["academic_year"].arrayValue.map({ body in
-                    return STTag(type: .Classification, text: body.stringValue)
+                    return STTag(type: .AcademicYear, text: body.stringValue)
                 })
                 tags = tags + json["credit"].arrayValue.map({ body in
-                    return STTag(type: .Classification, text: body.stringValue)
+                    return STTag(type: .Credit, text: body.stringValue)
                 })
                 tags = tags + json["instructor"].arrayValue.map({ body in
-                    return STTag(type: .Classification, text: body.stringValue)
+                    return STTag(type: .Instructor, text: body.stringValue)
                 })
                 if self.tagList.quarter == quarter {
                     self.tagList = STTagList(quarter: quarter, tagList: tags, updatedTime: updatedTime)
@@ -87,10 +87,9 @@ class STTagManager {
     
     func updateTagList() {
         let request = Alamofire.request(STTagRouter.UpdateTime(quarter: tagList.quarter))
-        request.responseSwiftyJSON { response in
+        request.responseString { response in
             switch response.result {
-            case .Success(let json):
-                let updatedTime = json.stringValue
+            case .Success(let updatedTime):
                 if self.tagList.updatedTime != updatedTime {
                     self.getTagListWithQuarter(self.tagList.quarter, updatedTime: updatedTime)
                 }

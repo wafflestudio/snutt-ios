@@ -23,11 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self])
         
         //TEST CODE FOR AUTH TOKEN
-        Alamofire.request(STAuthRouter.LocalLogin("snutt", "abcd")).responseJSON { response in
+        Alamofire.request(STAuthRouter.LocalLogin("snutt", "abcd")).responseSwiftyJSON { response in
             switch response.result {
-            case .Success(let value):
-                let json = JSON(value)
-                STConfig.sharedInstance.token = json["token"].stringValue
+            case .Success(let json):
+                STConfig.sharedInstance.token = json.stringValue
                 print(STConfig.sharedInstance.token)
             case .Failure:
                 break

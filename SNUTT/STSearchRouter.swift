@@ -13,7 +13,7 @@ enum STSearchRouter : URLRequestConvertible {
     
     static let baseURLString = STConfig.sharedInstance.baseURL+"/search_query"
     
-    case Search(query : String)
+    case Search(query : String, tagList: [STTag])
     
     var method: Alamofire.Method {
         switch self {
@@ -41,10 +41,39 @@ enum STSearchRouter : URLRequestConvertible {
         }
         
         switch self {
-        case .Search(let title):
+        case let .Search(query, tagList):
             let year = STTimetableManager.sharedInstance.currentTimetable!.quarter.year
             let semester = STTimetableManager.sharedInstance.currentTimetable!.quarter.semester
-            let parameters : [String : AnyObject] = ["title" : title, "year" : year, "semester" : semester.rawValue]
+            var credit : [Int] = []
+            var professor : [String] = []
+            var department : [String] = []
+            var academicYear : [String] = []
+            var classification : [String] = []
+            for tag in tagList {
+                switch tag.type {
+                case .Credit:
+                    credit.append(Int(tag.text.stringByTrimmingCharactersInSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet))!)
+                case .Department:
+                    department.append(tag.text)
+                case .Instructor:
+                    professor.append(tag.text)
+                case .AcademicYear:
+                    academicYear.append(tag.text)
+                case .Classification:
+                    classification.append(tag.text)
+                }
+            }
+            
+            let parameters : [String : AnyObject] = [
+                "title" : query,
+                "year" : year,
+                "semester" : semester.rawValue,
+                "credit" : credit /*,
+                "professor" : professor,
+                "department" : department,
+                "academic_year" : academicYear,
+                "classification" : classification*/
+            ]
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
         }
     }

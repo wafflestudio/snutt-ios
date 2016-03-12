@@ -57,7 +57,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        self.reloadTimetable()
         super.viewWillAppear(animated)
     }
     
@@ -67,7 +66,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     func getLectureList(searchString : String) {
-        let request = Alamofire.request(STSearchRouter.Search(query: searchString))
+        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagCollectionView.tagList))
         state = .Loading(request)
         request.responseSwiftyJSON { response in
             self.state = .Loaded(searchString)
@@ -111,8 +110,16 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func timetableSwitched() {
         state = .Empty
-        //searchBar.text = ""
+        searchBar.text = ""
         FilteredList = []
+        self.timetableViewController.timetable = STTimetableManager.sharedInstance.currentTimetable
+        tagTableView.filteredList = []
+        tagCollectionView.tagList = []
+        
+        self.reloadTimetable()
+        self.reloadData()
+        tagTableView.hide()
+        tagCollectionView.reloadData()
     }
     
     func reloadTimetable() {

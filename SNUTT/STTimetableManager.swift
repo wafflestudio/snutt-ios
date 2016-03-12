@@ -43,6 +43,13 @@ class STTimetableManager : NSObject {
     func addLecture(var lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
         lecture.color = STColor.colorList[0]
         let ret = currentTimetable?.addLecture(lecture)
+        STNetworking.addLecture(currentTimetable!, lecture: lecture, done: { id in
+            self.currentTimetable?.addIdForLecture(lecture, id: id)
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+            }, failure: {
+            self.currentTimetable?.deleteLecture(lecture)
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+        })
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
         return ret!
     }
@@ -52,11 +59,17 @@ class STTimetableManager : NSObject {
             return lec.id == lecture.id
         })!
         currentTimetable!.updateLectureAtIndex(index, lecture: lecture)
+        STNetworking.updateLecture(currentTimetable!, lecture: lecture, done: {
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+            
+            }, failure: {})
         STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
     }
     
     func deleteLectureAtIndex(index: Int, object : AnyObject? ) {
+        let lecture = currentTimetable!.lectureList[index]
         currentTimetable?.deleteLectureAtIndex(index)
+        STNetworking.deleteLecture(currentTimetable!, lecture: lecture, done: {}, failure: {})
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
     }
     func setTemporaryLecture(lecture :STLecture?, object : AnyObject? ) {

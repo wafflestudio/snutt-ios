@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 struct STSingleClass {
     var time : STTime
@@ -15,6 +16,16 @@ struct STSingleClass {
     init(time : STTime, place: String) {
         self.time = time
         self.place = place
+    }
+    
+    func toDictionary() -> [String: AnyObject] {
+        let dict : [String: AnyObject] = [
+            "day" : time.day.rawValue,
+            "start" : time.startPeriod,
+            "len" : time.duration,
+            "place" : place
+        ]
+        return dict
     }
     
 }

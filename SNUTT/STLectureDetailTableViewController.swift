@@ -32,9 +32,13 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     
     override func willMoveToParentViewController(parent: UIViewController?) {
         if parent == nil {
-            var editedLecture = getLecture()
-            editedLecture.id = lecture.id
-            STTimetableManager.sharedInstance.updateLecture(editedLecture)
+            let editedLecture = getLecture()
+            var resultLecture = lecture
+            resultLecture.title = editedLecture.title
+            resultLecture.instructor = editedLecture.instructor
+            resultLecture.color = editedLecture.color
+            resultLecture.classList = editedLecture.classList
+            STTimetableManager.sharedInstance.updateLecture(resultLecture)
         }
     }
 

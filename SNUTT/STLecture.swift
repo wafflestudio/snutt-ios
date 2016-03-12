@@ -46,13 +46,45 @@ struct STLecture {
         remark = data["remark"].stringValue
         category = data["category"].stringValue
         id = data["_id"].stringValue
-        //TODO: Color
-        let ListData = data["class_time_json"].arrayValue
-        for it in ListData {
+        let colorJson = data["color"]
+        if let fgHex = colorJson["fg"].string, bgHex = colorJson["bg"].string {
+            color = STColor(fgHex: fgHex, bgHex: bgHex)
+        }
+        let listData = data["class_time_json"].arrayValue
+        for it in listData {
             let time = STTime(day: it["day"].intValue, startPeriod: it["start"].doubleValue, duration: it["len"].doubleValue)
             let singleClass = STSingleClass(time: time, place: it["place"].stringValue)
             classList.append(singleClass)
         }
+    }
+    
+    func toDictionary() -> [String : AnyObject] {
+        
+        let classTimeJSON = classList.map{ singleClass in
+            return singleClass.toDictionary()
+        }
+        
+        let dict : [String: AnyObject] = [
+            "year" : quarter.year,
+            "semester" : quarter.semester.rawValue,
+            "classification" : classification,
+            "department" : department,
+            "academic_year" : academicYear,
+            "course_number" : courseNumber,
+            "lecture_number" : lectureNumber,
+            "course_title" : title,
+            "credit" : credit,
+            "instructor" : instructor,
+            "quota" : quota,
+            "remark" : remark,
+            "category" : category,
+            "id" : id,
+            "class_time_json" : classTimeJSON,
+            "color" : [ "fg" : color.fgColor.hexValue(), "bg": color.bgColor.hexValue()]
+            ]
+        
+            
+        return dict
     }
     
     func isSameLecture(right : STLecture) -> Bool {

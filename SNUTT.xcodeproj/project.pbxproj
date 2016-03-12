@@ -89,6 +89,8 @@
 		E1F58AA81C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F58AA71C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib */; };
 		E1F58AAA1C3CFC1C00F6A0FC /* STColumnHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F58AA91C3CFC1C00F6A0FC /* STColumnHeaderCollectionViewCell.xib */; };
 		E1F58AAC1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F58AAB1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib */; };
+		E1F632921C8D0C040030BE7D /* STLectureRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F632911C8D0C030030BE7D /* STLectureRouter.swift */; };
+		E1F632941C8D21C20030BE7D /* STNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F632931C8D21C20030BE7D /* STNetworking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -193,6 +195,8 @@
 		E1F58AA71C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCourseCellCollectionViewCell.xib; sourceTree = "<group>"; };
 		E1F58AA91C3CFC1C00F6A0FC /* STColumnHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STColumnHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		E1F58AAB1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSlotCellCollectionViewCell.xib; sourceTree = "<group>"; };
+		E1F632911C8D0C030030BE7D /* STLectureRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureRouter.swift; sourceTree = "<group>"; };
+		E1F632931C8D21C20030BE7D /* STNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STNetworking.swift; sourceTree = "<group>"; };
 		E76BCDB7320C5B43D709D301 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -258,6 +262,8 @@
 				E14992081C4B828500DC6756 /* STSwiftyJSONRequest.swift */,
 				E149920E1C549D7900DC6756 /* STSearchRouter.swift */,
 				E110CFDE1C88916400ED0590 /* STTagRouter.swift */,
+				E1F632911C8D0C030030BE7D /* STLectureRouter.swift */,
+				E1F632931C8D21C20030BE7D /* STNetworking.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -649,6 +655,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1D0FB691C86D32B00ACDC2F /* STSingleColorTableViewCell.swift in Sources */,
+				E1F632941C8D21C20030BE7D /* STNetworking.swift in Sources */,
 				E1E99A6B1C423CDB004A426A /* STEventCenter.swift in Sources */,
 				E14188D61C3E195000D4E712 /* STTimetableTabViewController.swift in Sources */,
 				E110CFDB1C888F5700ED0590 /* STTagManager.swift in Sources */,
@@ -692,6 +699,7 @@
 				E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */,
 				E166435B1B46734C00387EF8 /* STLectureDetailTableViewController.swift in Sources */,
 				E137998A1C3FBEC70043A5EE /* STMyLectureListController.swift in Sources */,
+				E1F632921C8D0C040030BE7D /* STLectureRouter.swift in Sources */,
 				E110CFD11C883DC900ED0590 /* STNotificationTableViewController.swift in Sources */,
 				E110CFD71C88424000ED0590 /* STNotification.swift in Sources */,
 				E1B381AB1C6C61E2007E1A15 /* STTagCollectionViewCell.swift in Sources */,

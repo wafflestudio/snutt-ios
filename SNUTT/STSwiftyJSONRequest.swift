@@ -47,6 +47,17 @@ extension Request {
             completionHandler: completionHandler
         )
     }
+    
+    public func responseWithDone(done: ((JSON) -> ())?, failure: ((NSError) -> ())? ) {
+        self.responseSwiftyJSON { response in
+            switch response.result {
+            case .Success(let json):
+                done?(json)
+            case .Failure(let error):
+                failure?(error)
+            }
+        }
+    }
 }
 
 /*

@@ -15,10 +15,10 @@ enum STAddLectureState {
 
 class STTimetable {
     
-    private(set) var lectureList : [STLecture] = []
-    private(set) var quarter : STQuarter
-    private(set) var title : String
-    private(set) var id : String? 
+    var lectureList : [STLecture] = []
+    var quarter : STQuarter
+    var title : String
+    var id : String?
     var temporaryLecture : STLecture? = nil
     
     var isLoaded : Bool {
@@ -43,7 +43,7 @@ class STTimetable {
         self.quarter = STQuarter(year: year, semester: semester)
         self.title = json["title"].stringValue
         self.id = json["_id"].string
-        let lectures = json["lectures"].arrayValue
+        let lectures = json["lecture_list"].arrayValue
         lectures.forEach {data in
             self.addLecture(STLecture(json: data))
         }
@@ -58,8 +58,23 @@ class STTimetable {
         lectureList.append(lecture)
         return STAddLectureState.Success
     }
+    
+    func addIdForLecture(lecture: STLecture, id : String) {
+        for (index, element) in lectureList.enumerate() {
+            if element == lecture {
+                lectureList[index].id = id
+                break
+            }
+        }
+    }
+    
     func deleteLectureAtIndex(index: Int) {
         lectureList.removeAtIndex(index)
+    }
+    func deleteLecture(lecture: STLecture) {
+        if let index = lectureList.indexOf(lecture) {
+            lectureList.removeAtIndex(index)
+        }
     }
     func updateLectureAtIndex(index: Int, lecture :STLecture) {
         lectureList[index] = lecture
