@@ -32,6 +32,22 @@ extension UIView {
         self.layer.mask = mask
     }
     
+    func roundCorner(radius: CGFloat) {
+        self.layer.cornerRadius = radius
+        self.layer.masksToBounds = true
+    }
+    
+    func setBottomBorder(color: UIColor, width: Double)
+    {
+        let border = CALayer()
+        let width = CGFloat(width)
+        border.borderColor = color.CGColor
+        border.frame = CGRect(x: 0, y: self.frame.size.height - width,   width:  self.frame.size.width, height: self.frame.size.height)
+        
+        border.borderWidth = width
+        self.layer.addSublayer(border)
+        self.layer.masksToBounds = true
+    }
 }
 
 // Protocol for nscoding with struct in swift, source : http://redqueencoder.com/property-lists-and-user-defaults-in-swift/

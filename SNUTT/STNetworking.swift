@@ -12,6 +12,18 @@ import SwiftyJSON
 
 class STNetworking {
     
+    //MARK: AuthRouter
+    
+    static func loginLocal(id: String, password: String, done: (String)->(), failure: ()->()) {
+        let request = Alamofire.request(STAuthRouter.LocalLogin(id, password))
+        request.responseWithDone({json in
+            let token = json.stringValue
+            done(token)
+            }, failure: { _ in
+            failure()
+        })
+    }
+    
     //MARK: LectureRouter
     static func addLecture(timetable: STTimetable, lecture: STLecture, done: (String)->(), failure: ()->()) {
         let request = Alamofire.request(STLectureRouter.AddLecture(timetableId: timetable.id!, lecture: lecture))

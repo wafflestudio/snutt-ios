@@ -33,6 +33,7 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         self.delegate = self
         self.keyboardType = .Default
         self.returnKeyType = .Search
+        self.enablesReturnKeyAutomatically = false
     }
     
     func disableEditingTag() {

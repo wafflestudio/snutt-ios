@@ -21,6 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         Fabric.with([Crashlytics.self])
+        if STConfig.sharedInstance.token != nil {
+            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+        } else {
+            self.window?.rootViewController = UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+        }
+        
+        /*
         
         //TEST CODE FOR AUTH TOKEN
         Alamofire.request(STAuthRouter.LocalLogin("snutt", "abcd")).responseSwiftyJSON { response in
@@ -32,7 +39,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 break
             }
         }
-
+        */
+        
+        
+        
         return true
     }
 
