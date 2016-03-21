@@ -244,11 +244,15 @@
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.23137254901960785" green="0.3411764705882353" blue="0.61568627450980395" alpha="1" colorSpace="calibratedRGB"/>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="4Wm-tp-xbJ"/>
                                                     <constraint firstItem="OR2-mS-rhB" firstAttribute="centerX" secondItem="Ut0-EH-fCh" secondAttribute="centerX" id="OXI-mn-KtG"/>
                                                     <constraint firstItem="OR2-mS-rhB" firstAttribute="centerY" secondItem="Ut0-EH-fCh" secondAttribute="centerY" id="u50-wV-08a"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="NEX-bD-4Wm" appends="YES" id="2I0-tE-cD0"/>
+                                                </connections>
                                             </view>
                                         </subviews>
                                         <constraints>
@@ -323,6 +327,11 @@
                 <tapGestureRecognizer id="T4u-ah-4EV">
                     <connections>
                         <action selector="backgroundTapped:" destination="9wp-2A-yXc" id="Cdu-Nq-yqz"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="NEX-bD-4Wm">
+                    <connections>
+                        <action selector="fbButonClicked" destination="9wp-2A-yXc" id="ylk-fa-OTx"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

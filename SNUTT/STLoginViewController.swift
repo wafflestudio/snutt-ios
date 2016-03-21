@@ -8,6 +8,7 @@
 
 import UIKit
 import ChameleonFramework
+import FBSDKLoginKit
 
 class STLoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -136,6 +137,25 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
             self.loginContainerView.layoutIfNeeded()
             }, completion: nil)
         isLoginTab = false
+    }
+    
+    @IBAction func fbButonClicked() {
+        if isLoginTab {
+            if FBSDKAccessToken.currentAccessToken() == nil {
+                let fbLoginManager = FBSDKLoginManager()
+                fbLoginManager.logInWithReadPermissions(["public_profile"], fromViewController: self, handler:{result, error in
+                    if error != nil {
+                        
+                    } else if result.isCancelled {
+                        
+                    } else {
+                        print(result.token.tokenString)
+                    }
+                })
+            } else {
+                print(FBSDKAccessToken.currentAccessToken().tokenString)
+            }
+        }
     }
     
     @IBAction func submitButtonClicked() {

@@ -10,3 +10,6 @@ pod 'B68UIFloatLabelTextField', :git => 'https://github.com/Rajin9601/B68Floatin
 pod 'ChameleonFramework/Swift'
 pod 'ActionSheetPicker-3.0'
 pod 'Color-Picker-for-iOS', '~> 2.0'
+pod 'FBSDKCoreKit' 
+pod 'FBSDKLoginKit'
+pod 'FBSDKShareKit'
