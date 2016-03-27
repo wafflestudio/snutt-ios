@@ -41,6 +41,11 @@
 		E16643571B46623900387EF8 /* STSlotCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643561B46623900387EF8 /* STSlotCellCollectionViewCell.swift */; };
 		E16643591B46624500387EF8 /* STCourseCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643581B46624500387EF8 /* STCourseCellCollectionViewCell.swift */; };
 		E166435B1B46734C00387EF8 /* STLectureDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E166435A1B46734C00387EF8 /* STLectureDetailTableViewController.swift */; };
+		E16A88511C9F97EB003D94AB /* STLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A88501C9F97EB003D94AB /* STLicenseViewController.swift */; };
+		E16A88531C9FB98F003D94AB /* STSupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A88521C9FB98F003D94AB /* STSupportViewController.swift */; };
+		E16A88551C9FC460003D94AB /* STDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A88541C9FC460003D94AB /* STDeveloperViewController.swift */; };
+		E16A88571C9FC4AD003D94AB /* STSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A88561C9FC4AD003D94AB /* STSettingViewController.swift */; };
+		E16A88591C9FC59F003D94AB /* STTermAndConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A88581C9FC59F003D94AB /* STTermAndConditionViewController.swift */; };
 		E1773CAE1C953E8B00AF36AF /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1773CAD1C953E8B00AF36AF /* Login.storyboard */; };
 		E1773CB01C959B5300AF36AF /* FB_logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = E1773CAF1C959B5300AF36AF /* FB_logo_white.png */; };
 		E1773CB21C95A09500AF36AF /* login_winter.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E1773CB11C95A09500AF36AF /* login_winter.jpg */; };
@@ -145,6 +150,11 @@
 		E16643561B46623900387EF8 /* STSlotCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSlotCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		E16643581B46624500387EF8 /* STCourseCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STCourseCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		E166435A1B46734C00387EF8 /* STLectureDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureDetailTableViewController.swift; sourceTree = "<group>"; };
+		E16A88501C9F97EB003D94AB /* STLicenseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLicenseViewController.swift; sourceTree = "<group>"; };
+		E16A88521C9FB98F003D94AB /* STSupportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSupportViewController.swift; sourceTree = "<group>"; };
+		E16A88541C9FC460003D94AB /* STDeveloperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDeveloperViewController.swift; sourceTree = "<group>"; };
+		E16A88561C9FC4AD003D94AB /* STSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSettingViewController.swift; sourceTree = "<group>"; };
+		E16A88581C9FC59F003D94AB /* STTermAndConditionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTermAndConditionViewController.swift; sourceTree = "<group>"; };
 		E1773CAD1C953E8B00AF36AF /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		E1773CAF1C959B5300AF36AF /* FB_logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FB_logo_white.png; path = images/FB_logo_white.png; sourceTree = "<group>"; };
 		E1773CB11C95A09500AF36AF /* login_winter.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = login_winter.jpg; path = images/login_winter.jpg; sourceTree = "<group>"; };
@@ -278,6 +288,18 @@
 			name = Networking;
 			sourceTree = "<group>";
 		};
+		E16A88451C9F782F003D94AB /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				E16A88501C9F97EB003D94AB /* STLicenseViewController.swift */,
+				E16A88521C9FB98F003D94AB /* STSupportViewController.swift */,
+				E16A88541C9FC460003D94AB /* STDeveloperViewController.swift */,
+				E16A88561C9FC4AD003D94AB /* STSettingViewController.swift */,
+				E16A88581C9FC59F003D94AB /* STTermAndConditionViewController.swift */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
 		E1773CAC1C953E6D00AF36AF /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,6 +394,7 @@
 		E1C28B191B9C4B7B00B8C493 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E16A88451C9F782F003D94AB /* Setting */,
 				E1773CAC1C953E6D00AF36AF /* Login */,
 				E110CFCF1C883DB300ED0590 /* Notification */,
 				E1C28B1A1B9C4B9E00B8C493 /* Timetable */,
@@ -501,7 +524,9 @@
 				7464DDE47975BF8692439A58 /* Check Pods Manifest.lock */,
 				E19A3A911B453770007FCAD7 /* Sources */,
 				E19A3A921B453770007FCAD7 /* Frameworks */,
+				E16A884E1C9F8D74003D94AB /* Carte Pre */,
 				E19A3A931B453770007FCAD7 /* Resources */,
+				E16A884F1C9F8D7C003D94AB /* Carte Post */,
 				377E95008A8FBD583B13DB27 /* Copy Pods Resources */,
 				BFCAF25E5BA02298B0E7DF5B /* Embed Pods Frameworks */,
 				E14991F91C45F0E000DC6756 /* Run Script */,
@@ -673,6 +698,34 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 912a8af108739f04584a158ec817fb8e5723181d 48c06a22b17baf01f882498c99315bf378f3bbdb78ec1fc0bdbb0972a3d01d58";
 		};
+		E16A884E1C9F8D74003D94AB /* Carte Pre */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Carte Pre";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby ${SRCROOT}/Pods/Carte/Carte/carte.rb pre";
+		};
+		E16A884F1C9F8D7C003D94AB /* Carte Post */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Carte Post";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby ${SRCROOT}/Pods/Carte/Carte/carte.rb post";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -689,6 +742,7 @@
 				E1D0FB6B1C86D47900ACDC2F /* STColor.swift in Sources */,
 				E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */,
 				E16643571B46623900387EF8 /* STSlotCellCollectionViewCell.swift in Sources */,
+				E16A88591C9FC59F003D94AB /* STTermAndConditionViewController.swift in Sources */,
 				E1D0FB651C86CDCE00ACDC2F /* STColorPickerTableViewController.swift in Sources */,
 				E14DF2161C3F8F920076FDDE /* STCourseBook.swift in Sources */,
 				E110CFCE1C87FED300ED0590 /* STCustomColorPickerViewController.swift in Sources */,
@@ -698,6 +752,7 @@
 				E1B381A91C6C52D9007E1A15 /* STUtil.swift in Sources */,
 				E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */,
 				E1F0CA331C78398E00A4F4ED /* STSingleLabeledTableViewCell.swift in Sources */,
+				E16A88551C9FC460003D94AB /* STDeveloperViewController.swift in Sources */,
 				E1C48B971C79BA4100BC469E /* STTimeActionSheetPicker.swift in Sources */,
 				E1C48B991C79BDD300BC469E /* STSemester.swift in Sources */,
 				E14992011C463AC600DC6756 /* STTimetableRouter.swift in Sources */,
@@ -710,9 +765,12 @@
 				E16643551B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift in Sources */,
 				E1C48B941C787A3C00BC469E /* STSingleClassTableViewCell.swift in Sources */,
 				E14DF2201C3FBB0E0076FDDE /* STLectureTableViewCell.swift in Sources */,
+				E16A88531C9FB98F003D94AB /* STSupportViewController.swift in Sources */,
+				E16A88571C9FC4AD003D94AB /* STSettingViewController.swift in Sources */,
 				E110CFD51C883FC000ED0590 /* STNotificationTableViewCell.swift in Sources */,
 				E1773CB41C95B05800AF36AF /* STLoginViewController.swift in Sources */,
 				E110CFDF1C88916400ED0590 /* STTagRouter.swift in Sources */,
+				E16A88511C9F97EB003D94AB /* STLicenseViewController.swift in Sources */,
 				E14991FF1C46387600DC6756 /* STAuthRouter.swift in Sources */,
 				E18F2E501C5E6FBC00114ADF /* STTagListView.swift in Sources */,
 				E110CFDD1C888FC300ED0590 /* STTag.swift in Sources */,

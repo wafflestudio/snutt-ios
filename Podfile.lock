@@ -8,6 +8,7 @@ PODS:
   - Bolts/AppLinks (1.6.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.6.0)
+  - Carte (0.2.3)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
@@ -29,6 +30,7 @@ DEPENDENCIES:
   - Alamofire (~> 3.0)
   - B68UIFloatLabelTextField (from `https://github.com/Rajin9601/B68FloatingLabelTextField.git`,
     branch `Swift_2.0`)
+  - Carte
   - ChameleonFramework/Swift
   - Color-Picker-for-iOS (~> 2.0)
   - Crashlytics
@@ -54,6 +56,7 @@ SPEC CHECKSUMS:
   Alamofire: fbc829692f351fa1d8a31dd75fd7f7f56fea31fb
   B68UIFloatLabelTextField: 337894ff837df84e19636c99f3f5f88c4fad60d7
   Bolts: f52a250053bb517ca874523c3913776359ab3def
+  Carte: b7cdc00b51023629b0e3d3cb9b8c5c5738a6e09e
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Color-Picker-for-iOS: 4980589b3e3cfe7198f227dd50be9adb02d8bc0b
   Crashlytics: fabfd45d0e8b8dc936c682b97e302b9a49a1c827
