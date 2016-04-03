@@ -60,6 +60,9 @@ class STTagManager {
                 var tags = json["classification"].arrayValue.map({ body in
                     return STTag(type: .Classification, text: body.stringValue)
                 })
+                tags = tags + json["category"].arrayValue.map({ body in
+                    return STTag(type: .Category, text: body.stringValue)
+                })
                 tags = tags + json["department"].arrayValue.map({ body in
                     return STTag(type: .Department, text: body.stringValue)
                 })

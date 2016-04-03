@@ -14,6 +14,7 @@ enum STTagType : String {
     case AcademicYear = "academic_year"
     case Credit = "credit"
     case Instructor = "instructor"
+    case Category = "category"
 }
 
 struct STTag : DictionaryRepresentable {

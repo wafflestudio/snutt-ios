@@ -45,10 +45,11 @@ enum STSearchRouter : URLRequestConvertible {
             let year = STTimetableManager.sharedInstance.currentTimetable!.quarter.year
             let semester = STTimetableManager.sharedInstance.currentTimetable!.quarter.semester
             var credit : [Int] = []
-            var professor : [String] = []
+            var instructor : [String] = []
             var department : [String] = []
             var academicYear : [String] = []
             var classification : [String] = []
+            var category : [String] = []
             for tag in tagList {
                 switch tag.type {
                 case .Credit:
@@ -56,11 +57,13 @@ enum STSearchRouter : URLRequestConvertible {
                 case .Department:
                     department.append(tag.text)
                 case .Instructor:
-                    professor.append(tag.text)
+                    instructor.append(tag.text)
                 case .AcademicYear:
                     academicYear.append(tag.text)
                 case .Classification:
                     classification.append(tag.text)
+                case .Category:
+                    category.append(tag.text)
                 }
             }
             
@@ -68,12 +71,14 @@ enum STSearchRouter : URLRequestConvertible {
                 "title" : query,
                 "year" : year,
                 "semester" : semester.rawValue,
-                "credit" : credit /*,
-                "professor" : professor,
+                "credit" : credit,
+                "instructor" : instructor,
                 "department" : department,
                 "academic_year" : academicYear,
-                "classification" : classification*/
+                "classification" : classification,
+                "category" : category
             ]
+            print(credit)
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
         }
     }
