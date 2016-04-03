@@ -101,7 +101,7 @@ class STColorPickerTableViewController: UITableViewController {
                 selectedColorIndex = indexPath.row
                 
                 if wasSelectedColorIndex == customColorIndex {
-                    self.tableView.deleteSections(NSIndexSet(index: 1), withRowAnimation: .Bottom)
+                    self.tableView.deleteSections(NSIndexSet(index: 1), withRowAnimation: .Top)
                 }
                 if selectedColorIndex != customColorIndex {
                     color = STColor.colorList[indexPath.row]
