@@ -48,6 +48,13 @@ extension UIView {
         self.layer.addSublayer(border)
         self.layer.masksToBounds = true
     }
+    
+    func mask(rect : CGRect) {
+        let maskLayer = CAShapeLayer()
+        let path = CGPathCreateWithRect(rect, nil)
+        maskLayer.path = path
+        self.layer.mask = maskLayer
+    }
 }
 
 // Protocol for nscoding with struct in swift, source : http://redqueencoder.com/property-lists-and-user-defaults-in-swift/

@@ -32,7 +32,7 @@ class STTimetableTabViewController: UIViewController {
     func reloadData() {
         self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable!.title
         timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
-        timetableViewController?.collectionView?.reloadData()
+        timetableViewController?.reloadTimetable()
     }
 
     // MARK: - Navigation
@@ -42,6 +42,7 @@ class STTimetableTabViewController: UIViewController {
         if(segue.identifier == "STTimetableCollectionViewController") {
             timetableViewController = (segue.destinationViewController as! STTimetableCollectionViewController)
             timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
+            timetableViewController?.shouldAutofit = true
         }
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

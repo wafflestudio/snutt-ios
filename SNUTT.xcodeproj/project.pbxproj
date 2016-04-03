@@ -60,6 +60,8 @@
 		E19A3AB11B453770007FCAD7 /* SNUTTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3AB01B453770007FCAD7 /* SNUTTTests.swift */; };
 		E19E231F1B468B700010DFB1 /* STLectureSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E231E1B468B700010DFB1 /* STLectureSearchTableViewController.swift */; };
 		E19E23211B4691D90010DFB1 /* STLectureSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E23201B4691D90010DFB1 /* STLectureSearchTableViewCell.swift */; };
+		E1A99D891CABE47000953A4B /* STRowHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A99D881CABE47000953A4B /* STRowHeaderCollectionViewCell.xib */; };
+		E1A99D8B1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A99D8A1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift */; };
 		E1B381A71C6C4AA0007E1A15 /* STTagCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B381A61C6C4AA0007E1A15 /* STTagCollectionView.swift */; };
 		E1B381A91C6C52D9007E1A15 /* STUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B381A81C6C52D9007E1A15 /* STUtil.swift */; };
 		E1B381AB1C6C61E2007E1A15 /* STTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B381AA1C6C61E2007E1A15 /* STTagCollectionViewCell.swift */; };
@@ -173,6 +175,8 @@
 		E19A3AB01B453770007FCAD7 /* SNUTTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTTests.swift; sourceTree = "<group>"; };
 		E19E231E1B468B700010DFB1 /* STLectureSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureSearchTableViewController.swift; sourceTree = "<group>"; };
 		E19E23201B4691D90010DFB1 /* STLectureSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureSearchTableViewCell.swift; sourceTree = "<group>"; };
+		E1A99D881CABE47000953A4B /* STRowHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STRowHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
+		E1A99D8A1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRowHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1B381A61C6C4AA0007E1A15 /* STTagCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagCollectionView.swift; sourceTree = "<group>"; };
 		E1B381A81C6C52D9007E1A15 /* STUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STUtil.swift; sourceTree = "<group>"; };
 		E1B381AA1C6C61E2007E1A15 /* STTagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -424,6 +428,8 @@
 				E1F58AA91C3CFC1C00F6A0FC /* STColumnHeaderCollectionViewCell.xib */,
 				E1F58AAB1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib */,
 				E149920C1C4F6D1F00DC6756 /* STTimetableCellType.swift */,
+				E1A99D881CABE47000953A4B /* STRowHeaderCollectionViewCell.xib */,
+				E1A99D8A1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift */,
 			);
 			name = Timetable;
 			sourceTree = "<group>";
@@ -613,6 +619,7 @@
 				E1F0CA371C785C1200A4F4ED /* STSingleLabeledTableViewCell.xib in Resources */,
 				E1F0CA251C75949500A4F4ED /* time.png in Resources */,
 				E1C48B8C1C78616C00BC469E /* STDoubleLabeledTableViewCell.xib in Resources */,
+				E1A99D891CABE47000953A4B /* STRowHeaderCollectionViewCell.xib in Resources */,
 				E1773CAE1C953E8B00AF36AF /* Login.storyboard in Resources */,
 				E1F0CA271C75B01900A4F4ED /* STLectureSearchTableViewCell.xib in Resources */,
 				E1C48B8A1C785F0B00BC469E /* STLeftAlignedTableViewCell.xib in Resources */,
@@ -786,6 +793,7 @@
 				E166435B1B46734C00387EF8 /* STLectureDetailTableViewController.swift in Sources */,
 				E137998A1C3FBEC70043A5EE /* STMyLectureListController.swift in Sources */,
 				E1F632921C8D0C040030BE7D /* STLectureRouter.swift in Sources */,
+				E1A99D8B1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift in Sources */,
 				E110CFD11C883DC900ED0590 /* STNotificationTableViewController.swift in Sources */,
 				E110CFD71C88424000ED0590 /* STNotification.swift in Sources */,
 				E1B381AB1C6C61E2007E1A15 /* STTagCollectionViewCell.swift in Sources */,

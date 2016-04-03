@@ -17,23 +17,21 @@ class STTimetableLayout: UICollectionViewLayout {
     var WidthForHeader : CGFloat = 0.0
     var WidthPerColumn : CGFloat = 0.0
     
-    var timetableController : STTimetableCollectionViewController? = nil
-    var timetable : STTimetable?
+    var controller : STTimetableCollectionViewController!
     
-    init (aTimetable :STTimetable?) {
-        self.timetable = aTimetable
+    
+    override init() {
         super.init()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
     
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes {
         
         let ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-        let type = timetableController!.getCellType(indexPath)
+        let type = controller!.getCellType(indexPath)
         
         var width : CGFloat
         var height : CGFloat
@@ -42,23 +40,26 @@ class STTimetableLayout: UICollectionViewLayout {
         
         switch type {
         case .Course, .TemporaryCourse:
-            let singleClass = timetableController!.getSingleClass(indexPath)
-            let indexRow = CGFloat(singleClass.time.startPeriod)
-            let indexColumn = singleClass.time.day.rawValue
+            let singleClass = controller.getSingleClass(indexPath)
+            let rowIndex = CGFloat(controller.getRowFromPeriod(singleClass.time.startPeriod))
+            let columnIndex = controller.dayToColumn[singleClass.time.day.rawValue]
+            
             width = WidthPerColumn
             height = HeightPerRow * CGFloat(singleClass.time.duration)
-            locX = CGFloat(indexColumn+1) * width
-            locY = HeightForHeader + HeightPerRow * indexRow
+            locX = CGFloat(columnIndex+1) * WidthPerColumn
+            locY = HeightForHeader + HeightPerRow * rowIndex
         case .HeaderColumn:
             width = WidthPerColumn
             height = HeightForHeader
-            locX = CGFloat(indexPath.row + 1) * WidthPerColumn
+            let columnIndex = controller.dayToColumn[indexPath.row]
+            locX = CGFloat(columnIndex + 1) * WidthPerColumn
             locY = CGFloat(0)
         case .HeaderRow:
             width = WidthPerColumn
             height = HeightPerRow
             locX = CGFloat(0)
-            locY = HeightForHeader + CGFloat(indexPath.row) * HeightPerRow
+            let rowIndex = CGFloat(controller.getRowFromPeriod(Double(indexPath.row)))
+            locY = HeightForHeader + rowIndex * HeightPerRow
         case .Slot:
             width = ContentWidth
             height = ContentHeight
@@ -69,23 +70,39 @@ class STTimetableLayout: UICollectionViewLayout {
         return ret
     }
     override func collectionViewContentSize() -> CGSize {
+        updateContentSize()
+        return CGSize(width: ContentWidth, height: ContentHeight)
+    }
+    
+    func updateContentSize() {
         ContentWidth = self.collectionView!.bounds.size.width
         ContentHeight = self.collectionView!.bounds.size.height
         
-        WidthPerColumn = ContentWidth / CGFloat(timetableController!.columnList.count + 1)
-        HeightPerRow = ContentHeight / (CGFloat(STPeriod.periodNum) + timetableController!.RatioForHeader)
-        HeightForHeader = timetableController!.RatioForHeader * HeightPerRow
-        
-        return CGSize(width: ContentWidth, height: ContentHeight)
+        WidthPerColumn = ContentWidth / CGFloat(controller.columnNum + 1)
+        HeightPerRow = ContentHeight / (CGFloat(controller.rowNum) + controller!.RatioForHeader)
+        HeightForHeader = controller!.RatioForHeader * HeightPerRow
     }
+    
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        var ret : [UICollectionViewLayoutAttributes]? = []
-        for i in 0..<(timetableController!.numberOfSectionsInCollectionView(collectionView!)) {
-            for j in 0..<(timetableController!.collectionView(collectionView!, numberOfItemsInSection: i)) {
+        var ret : [UICollectionViewLayoutAttributes] = []
+        for i in 0..<(controller!.numberOfSectionsInCollectionView(collectionView!)) {
+            for j in 0..<(controller!.collectionView(collectionView!, numberOfItemsInSection: i)) {
                 let indexPath = NSIndexPath(forRow: j, inSection: i)
-                ret?.append(self.layoutAttributesForItemAtIndexPath(indexPath))
+                ret.append(self.layoutAttributesForItemAtIndexPath(indexPath))
             }
         }
-        return ret
+        return ret.map({ attribute in
+            let type = self.controller.getCellType(attribute.indexPath);
+            switch (type) {
+            case .Slot: attribute.zIndex = -1
+            case .Course: attribute.zIndex = 0
+            case .TemporaryCourse: attribute.zIndex = 1
+            case .HeaderRow, .HeaderColumn: attribute.zIndex = 2
+            }
+            return attribute
+        })
+        /*
+        
+        */
     }
 }

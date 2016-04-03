@@ -29,7 +29,8 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        layer.cornerRadius = 6
+        //layer.cornerRadius = 6
+        
         let longPress = UILongPressGestureRecognizer(target: self, action: Selector("longClick:"))
         self.addGestureRecognizer(longPress)
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: Selector("swipeToLeft:"))
@@ -53,6 +54,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
             }
         }
         courseText.text = text
+        courseText.baselineAdjustment = .AlignCenters
     }
     
     func setColor() {

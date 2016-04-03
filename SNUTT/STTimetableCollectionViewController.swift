@@ -13,10 +13,39 @@ let reuseIdentifier = "Cell"
 class STTimetableCollectionViewController: UICollectionViewController, UIAlertViewDelegate {
     
     var columnList = ["월", "화", "수", "목", "금", "토"]
-    var rowList : [String] = []
+    var columnHidden = [false, false, false, false, false, false] {
+        didSet {
+            columnNum = columnHidden.filter({ hidden in return !hidden}).count
+            var cnt = 0
+            for (index, element) in columnHidden.enumerate() {
+                if element {
+                    dayToColumn[index] = -1
+                    continue
+                }
+                dayToColumn[index] = cnt
+                cnt += 1
+            }
+        }
+    }
+    var shouldAutofit : Bool = false
+    
+    private(set) var dayToColumn : [Int] = [0,1,2,3,4,5]
+    private(set) var columnNum : Int = 6
+    
+    var rowStart : Int = 0
+    var rowEnd : Int = STPeriod.periodNum - 1
+    var rowNum : Int {
+        get {
+            return rowEnd - rowStart + 1
+        }
+    }
+    func getRowFromPeriod(period : Double) -> Double {
+        return period - Double(rowStart)
+    }
+    
     var showTemporary : Bool = false
     var timetable : STTimetable? = nil
-    
+    var layout : STTimetableLayout! = nil
     
     let LectureSectionOffset = 3
     let RatioForHeader : CGFloat = 0.67
@@ -25,14 +54,16 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         super.viewDidLoad()
         self.collectionView?.registerNib(UINib(nibName: "STCourseCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CourseCell")
         self.collectionView?.registerNib(UINib(nibName: "STColumnHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ColumnHeaderCell")
+        self.collectionView?.registerNib(UINib(nibName: "STRowHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RowHeaderCell")
         self.collectionView?.registerNib(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
         
-        for i in 0..<(STPeriod.periodNum) {
-            rowList.append(Double(i).periodString())
+        layout = STTimetableLayout()
+        self.collectionView?.collectionViewLayout = layout
+        (self.collectionView?.collectionViewLayout as! STTimetableLayout).controller = self
+        if (shouldAutofit) {
+            autofit()
         }
-        let viewLayout = STTimetableLayout(aTimetable: timetable)
-        self.collectionView?.collectionViewLayout = viewLayout
-        (self.collectionView?.collectionViewLayout as! STTimetableLayout).timetableController = self
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -40,6 +71,31 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         //self.collectionView!.dataSource = TimetableCollectionViewController.datasource
         //TimetableCollectionViewController.datasource.collectionView = self.collectionView
         // Do any additional setup after loading the view.
+    }
+    
+    func autofit() {
+        if timetable?.lectureList.count != 0 {
+            columnHidden = [false,false,false,false,false,true]
+            rowStart = 1
+            rowEnd = 10
+            
+            for lecture in timetable!.lectureList {
+                for singleClass in lecture.classList {
+                    let startPeriod = Int(singleClass.time.startPeriod)
+                    let endPeriod = Int(singleClass.time.endPeriod + 0.5)
+                    rowStart = min(rowStart, startPeriod)
+                    rowEnd = max(rowEnd, endPeriod)
+                    let day = singleClass.time.day.rawValue
+                    columnHidden[day] = false
+                }
+            }
+            
+        } else {
+            columnHidden = [false,false,false,false,false,true]
+            rowStart = 1
+            rowEnd = 12
+        }
+        layout?.updateContentSize()
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,6 +136,11 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
     }
     
     func reloadTimetable() {
+        
+        if shouldAutofit {
+            autofit()
+        }
+        
         self.collectionView?.reloadData()
     }
     
@@ -102,7 +163,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         case 1:
             return columnList.count
         case 2:
-            return rowList.count
+            return STPeriod.periodNum
         default:
             let index = section - LectureSectionOffset
             if index < timetable!.lectureList.count {
@@ -128,27 +189,56 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         switch getCellType(indexPath) {
         case .HeaderColumn:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ColumnHeaderCell", forIndexPath: indexPath) as! STColumnHeaderCollectionViewCell
+            cell.hidden = false
             cell.contentLabel.text = columnList[indexPath.row]
+            if dayToColumn[indexPath.row] == -1 {
+                cell.hidden = true
+            }
             return cell
         case .HeaderRow:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ColumnHeaderCell", forIndexPath: indexPath) as! STColumnHeaderCollectionViewCell
-            cell.contentLabel.text = rowList[indexPath.row]
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("RowHeaderCell", forIndexPath: indexPath) as! STRowHeaderCollectionViewCell
+            cell.hidden = false
+            cell.titleLabel.text = String(indexPath.row);
+            cell.timeLabel.text = String(indexPath.row + 8)
+            if !(rowStart <= indexPath.row && indexPath.row <= rowEnd) {
+                cell.hidden = true
+            }
             return cell
         case .Slot:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SlotCell", forIndexPath: indexPath) as! STSlotCellCollectionViewCell
-            cell.columnNum = columnList.count + 1
-            cell.rowNum = STPeriod.periodNum
+            cell.columnNum = columnNum + 1
+            cell.rowNum = rowNum
             cell.ratioForHeader = RatioForHeader
+            cell.setNeedsDisplay()
             return cell
         case .Course:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as! STCourseCellCollectionViewCell
+            cell.hidden = false
+            cell.layer.mask=nil
             cell.singleClass = getSingleClass(indexPath)
             cell.lecture = getLecture(indexPath)
+            if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
+                cell.hidden = true
+            }
+            
+            let heightPerRow = collectionView.frame.height / (CGFloat(rowNum) + RatioForHeader)
+            if Double(rowStart) > cell.singleClass.time.startPeriod {
+                cell.mask(CGRect(x: 0, y: heightPerRow * CGFloat(Double(rowStart) - cell.singleClass.time.startPeriod), width: cell.frame.width, height:cell.frame.height))
+            }
             return cell
         case .TemporaryCourse:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as! STCourseCellCollectionViewCell
+            cell.hidden = false
+            cell.layer.mask = nil
             cell.singleClass = getSingleClass(indexPath)
             cell.lecture = getLecture(indexPath)
+            if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
+                cell.hidden = true
+            }
+            let heightPerRow = collectionView.frame.height / (CGFloat(rowNum) + RatioForHeader)
+            if Double(rowStart) > cell.singleClass.time.startPeriod {
+                cell.mask(CGRect(x: 0, y: heightPerRow * CGFloat(Double(rowStart) - cell.singleClass.time.startPeriod), width: cell.frame.width, height:cell.frame.height))
+            }
             return cell
         }
     }
