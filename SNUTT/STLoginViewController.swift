@@ -165,7 +165,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
                 //TODO: AlertView
             }
             STNetworking.loginLocal(id, password: password, done: { token in
-                STConfig.sharedInstance.token = token
+                STDefaults[.token] = token
                 let appDelegate = UIApplication.sharedApplication().delegate!
                 let window = appDelegate.window!
                 let mainController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()

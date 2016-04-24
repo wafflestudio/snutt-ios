@@ -55,7 +55,7 @@ enum STLectureRouter : URLRequestConvertible {
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
         
-        if let token = STConfig.sharedInstance.token {
+        if let token = STDefaults[.token] {
             mutableURLRequest.setValue(token, forHTTPHeaderField: "x-access-token")
         }
         

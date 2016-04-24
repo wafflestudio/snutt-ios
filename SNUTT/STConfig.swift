@@ -24,30 +24,8 @@ class STConfig {
     }
     private init() {
         baseURL = "http://walnut.wafflestudio.com:3000/api"
-        loadData()
     }
     
-    var token : String? {
-        didSet {
-            saveData()
-        }
-    }
     let baseURL : String
     
-    func saveData() {
-        if let token = self.token {
-            NSUserDefaults.standardUserDefaults().setObject(token, forKey: "token")
-        } else {
-            NSUserDefaults.standardUserDefaults().removeObjectForKey("token")
-        }
-        
-    }
-    
-    func loadData() {
-        if let token = NSUserDefaults.standardUserDefaults().objectForKey("token") as? String {
-            self.token = token
-        } else {
-            self.token = nil
-        }
-    }
 }

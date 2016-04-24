@@ -24,6 +24,7 @@ PODS:
   - FBSDKShareKit (4.10.1):
     - FBSDKCoreKit
   - SwiftyJSON (2.3.2)
+  - SwiftyUserDefaults (2.2.0)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
@@ -40,6 +41,7 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - FBSDKShareKit
   - SwiftyJSON (~> 2.3)
+  - SwiftyUserDefaults
 
 EXTERNAL SOURCES:
   B68UIFloatLabelTextField:
@@ -66,5 +68,6 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: 699ff169080e3072de4b9b0faca90bf23dc36deb
   FBSDKShareKit: 2fd887cce0056bdda91f99b2021d724a4fed8e88
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  SwiftyUserDefaults: e7c8197a9d4068702e7f2406a968cae413b8de27
 
 COCOAPODS: 0.38.2

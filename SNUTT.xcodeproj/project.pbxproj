@@ -88,6 +88,7 @@
 		E1D0FB691C86D32B00ACDC2F /* STSingleColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0FB681C86D32B00ACDC2F /* STSingleColorTableViewCell.swift */; };
 		E1D0FB6B1C86D47900ACDC2F /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0FB6A1C86D47900ACDC2F /* STColor.swift */; };
 		E1E99A6B1C423CDB004A426A /* STEventCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E99A6A1C423CDB004A426A /* STEventCenter.swift */; };
+		E1EE1B311CCCDE20003DF250 /* STDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EE1B301CCCDE20003DF250 /* STDefaults.swift */; };
 		E1F0CA191C6F2C1900A4F4ED /* sharp.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA181C6F2C1900A4F4ED /* sharp.png */; };
 		E1F0CA1D1C7482D300A4F4ED /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA1C1C7482D300A4F4ED /* delete.png */; };
 		E1F0CA1F1C748B6000A4F4ED /* STTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */; };
@@ -209,6 +210,7 @@
 		E1D0FB681C86D32B00ACDC2F /* STSingleColorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleColorTableViewCell.swift; sourceTree = "<group>"; };
 		E1D0FB6A1C86D47900ACDC2F /* STColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColor.swift; sourceTree = "<group>"; };
 		E1E99A6A1C423CDB004A426A /* STEventCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STEventCenter.swift; sourceTree = "<group>"; };
+		E1EE1B301CCCDE20003DF250 /* STDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDefaults.swift; sourceTree = "<group>"; };
 		E1F0CA181C6F2C1900A4F4ED /* sharp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sharp.png; path = images/sharp.png; sourceTree = "<group>"; };
 		E1F0CA1C1C7482D300A4F4ED /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = images/delete.png; sourceTree = "<group>"; };
 		E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagTableViewCell.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				E1B381A81C6C52D9007E1A15 /* STUtil.swift */,
 				E110CFD81C886D9800ED0590 /* STNotificationManager.swift */,
 				E110CFDA1C888F5700ED0590 /* STTagManager.swift */,
+				E1EE1B301CCCDE20003DF250 /* STDefaults.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 				E1D0FB6B1C86D47900ACDC2F /* STColor.swift in Sources */,
 				E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */,
 				E16643571B46623900387EF8 /* STSlotCellCollectionViewCell.swift in Sources */,
+				E1EE1B311CCCDE20003DF250 /* STDefaults.swift in Sources */,
 				E16A88591C9FC59F003D94AB /* STTermAndConditionViewController.swift in Sources */,
 				E1A99D931CB112EE00953A4B /* STRedButtonTableViewCell.swift in Sources */,
 				E1D0FB651C86CDCE00ACDC2F /* STColorPickerTableViewController.swift in Sources */,

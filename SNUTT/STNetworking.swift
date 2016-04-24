@@ -110,7 +110,10 @@ class STNetworking {
             switch response.result {
             case .Success(let json):
                 let version = json["results"].array?.first?["version"].string
-                done(version ?? "")
+                if version == nil {
+                    fallthrough
+                }
+                done(version!)
             case .Failure:
                 break
             }

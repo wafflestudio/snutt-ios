@@ -15,6 +15,7 @@ class STSettingViewController: UITableViewController {
         super.viewDidLoad()
         versionCell.detailTextLabel!.text = "최신 버전 사용중"
         STNetworking.checkLatestAppVersion { version in
+            STDefaults[.appVersion] = version
             let currentVersion = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
             if (currentVersion < version) {
                 self.versionCell.detailTextLabel!.text = "업데이트 가능"
