@@ -102,4 +102,19 @@ class STNetworking {
         }
     }
     
+    static func checkLatestAppVersion(done:(String)->()) -> Void {
+        
+        let requestURL = "http://itunes.apple.com/kr/lookup?bundleId=" + NSBundle.mainBundle().bundleIdentifier!
+        
+        Alamofire.request(.GET, requestURL).responseSwiftyJSON { response in
+            switch response.result {
+            case .Success(let json):
+                let version = json["results"].array?.first?["version"].string
+                done(version ?? "")
+            case .Failure:
+                break
+            }
+        }
+    }
+    
 }

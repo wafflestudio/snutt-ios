@@ -13,7 +13,15 @@ class STSettingViewController: UITableViewController {
     @IBOutlet weak var versionCell: UITableViewCell!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        versionCell.detailTextLabel!.text = "최신 버전 사용중"
+        STNetworking.checkLatestAppVersion { version in
+            let currentVersion = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
+            if (currentVersion < version) {
+                self.versionCell.detailTextLabel!.text = "업데이트 가능"
+            } else {
+                self.versionCell.detailTextLabel!.text = "최신 버전 사용중"
+            }
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
