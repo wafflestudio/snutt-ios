@@ -9,7 +9,7 @@
 import UIKit
 import ChameleonFramework
 
-class STColorPickTableViewCell: UITableViewCell {
+class STColorPickTableViewCell: STLectureDetailTableViewCell {
 
     
     @IBOutlet weak var bgColorView: UIView!
@@ -25,16 +25,12 @@ class STColorPickTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.accessoryType = .DisclosureIndicator
-        self.selectionStyle = .Gray
+        self.accessoryType = .None
+        self.selectionStyle = .None
         self.addSubview(bgColorView)
         self.addSubview(fgColorView)
         color = STColor.colorList[0]
         // Initialization code
-    }
-    
-    internal static func loadWithOwner(owner : AnyObject!) -> STColorPickTableViewCell {
-        return NSBundle.mainBundle().loadNibNamed("STColorPickTableViewCell", owner: owner, options: nil)[0] as! STColorPickTableViewCell
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -42,5 +38,12 @@ class STColorPickTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
+    override func setEditable (editable: Bool) {
+        if editable {
+            self.accessoryType = .DisclosureIndicator
+        } else {
+            self.accessoryType = .None
+        }
+    }
 }

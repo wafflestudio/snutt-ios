@@ -11,108 +11,105 @@ import ChameleonFramework
 
 class STSingleLectureTableViewController: UITableViewController {
 
-    var cellArray : [[UITableViewCell!]] = []
+    var custom : Bool = false
+    var currentLecture : STLecture = STLecture(quarter: STTimetableManager.sharedInstance.currentTimetable!.quarter)
     
-    var titleCell : STLeftAlignedTableViewCell!
-    var instructorCell : STLeftAlignedTableViewCell!
-    var colorCell : STColorPickTableViewCell!
-    var creditCell : STLeftAlignedTableViewCell!
+    enum CellViewType {
+        case LeftAligned(title : String)
+        case ColorPick
+        case SingleLabeled(title : String)
+        case DoubleLabeled(firstTitle: String, secondTitle: String)
+        case Padding
+        case SingleClass
+        
+        var identifier : String {
+            switch self {
+            case .LeftAligned: return "LeftAlignedCell"
+            case .ColorPick: return "ColorPickCell"
+            case .SingleLabeled: return "SingleLabeledCell"
+            case .DoubleLabeled: return "DoubleLabeledCell"
+            case .Padding: return "PaddingCell"
+            case .SingleClass: return "SingleClassCell"
+            }
+        }
+    }
     
-    var departmentCell : STSingleLabeledTableViewCell!
-    var academicYearAndCreditCell : STDoubleLabeledTableViewCell!
-    var classificationAndCategoryCell : STDoubleLabeledTableViewCell!
-    var courseNumAndLectureNumCell : STDoubleLabeledTableViewCell!
+    enum CellType {
+        case Title
+        case Instructor
+        case Color
+        case Credit
+        case Department
+        case AcademicYearAndCredit
+        case ClassificationAndCategory
+        case CourseNumAndLectureNum
+        case SingleClass
+        case Padding
+        
+        var cellViewType : CellViewType {
+            switch self {
+            case Title: return .LeftAligned(title: "lecture_title".localizedString())
+            case Instructor: return .LeftAligned(title: "instructor".localizedString())
+            case Color: return .ColorPick
+            case Credit: return .LeftAligned(title: "credit".localizedString())
+            case Department: return .SingleLabeled(title: "department".localizedString())
+            case .AcademicYearAndCredit:
+                return .DoubleLabeled(firstTitle: "academic_year".localizedString(), secondTitle: "credit".localizedString())
+            case .ClassificationAndCategory:
+                return .DoubleLabeled(firstTitle: "classification".localizedString(), secondTitle: "category".localizedString())
+            case .CourseNumAndLectureNum:
+                return .DoubleLabeled(firstTitle: "course_number".localizedString(), secondTitle: "lecture_number".localizedString())
+            case .SingleClass:
+                return .SingleClass
+            case .Padding:
+                return .Padding
+            }
+        }
+    }
     
-    var singleClassCellList : [STSingleClassTableViewCell!] = []
-    var custom : Bool = false 
+    func cellTypeAtIndexPath(indexPath : NSIndexPath) -> CellType {
+        switch (indexPath.section, indexPath.row) {
+        case (0,0): return .Title
+        case (0,1): return .Instructor
+        case (0,2): return .Color
+        case (0,3): return .Credit
+            
+        case (1,0): return .Padding
+        case (1,1): return .Department
+        case (1,2): return .AcademicYearAndCredit
+        case (1,3): return .ClassificationAndCategory
+        case (1,4): return .CourseNumAndLectureNum
+        case (1,5): return .Padding
+            
+        case (2,_): return .SingleClass
+        default: return .Padding // Never Reach
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.loadCells()
-        self.setCellTitles()
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        tableView.registerNib(UINib(nibName: "STSingleLabeledTableViewCell", bundle: NSBundle.mainBundle()),
+                              forCellReuseIdentifier: CellViewType.SingleLabeled(title: "").identifier)
+        tableView.registerNib(UINib(nibName: "STLeftAlignedTableViewCell", bundle: NSBundle.mainBundle()),
+                              forCellReuseIdentifier: CellViewType.LeftAligned(title: "").identifier)
+        tableView.registerNib(UINib(nibName: "STColorPickTableViewCell", bundle: NSBundle.mainBundle()),
+                              forCellReuseIdentifier: CellViewType.ColorPick.identifier)
+        tableView.registerNib(UINib(nibName: "STDoubleLabeledTableViewCell", bundle: NSBundle.mainBundle()),
+                              forCellReuseIdentifier: CellViewType.DoubleLabeled(firstTitle: "",secondTitle: "").identifier)
+        tableView.registerNib(UINib(nibName: "STSingleClassTableViewCell", bundle: NSBundle.mainBundle()),
+                              forCellReuseIdentifier: CellViewType.SingleClass.identifier)
+        tableView.registerClass(STPaddingTableViewCell.self, forCellReuseIdentifier: CellViewType.Padding.identifier)
         
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard"))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(STSingleLectureTableViewController.dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tapGesture)
-    }
-    
-    func loadCells() {
-        titleCell = STLeftAlignedTableViewCell.loadWithOwner(self)
-        instructorCell = STLeftAlignedTableViewCell.loadWithOwner(self)
-        colorCell = STColorPickTableViewCell.loadWithOwner(self)
-        creditCell = STLeftAlignedTableViewCell.loadWithOwner(self)
-
-        departmentCell = STSingleLabeledTableViewCell.loadWithOwner(self)
-        academicYearAndCreditCell = STDoubleLabeledTableViewCell.loadWithOwner(self)
-        classificationAndCategoryCell = STDoubleLabeledTableViewCell.loadWithOwner(self)
-        courseNumAndLectureNumCell = STDoubleLabeledTableViewCell.loadWithOwner(self)
-        
-        var firstSection : [UITableViewCell!]!
-        var secondSection : [UITableViewCell!]!
-        if custom {
-            firstSection = [titleCell, instructorCell, colorCell, creditCell]
-            secondSection = []
-        } else {
-            let frontPadding = UITableViewCell.init(style: .Default, reuseIdentifier: nil)
-            let backPadding = UITableViewCell.init(style: .Default, reuseIdentifier: nil)
-            
-            firstSection = [titleCell, instructorCell, colorCell]
-            secondSection = [frontPadding, departmentCell, academicYearAndCreditCell, classificationAndCategoryCell, courseNumAndLectureNumCell, backPadding]
-        }
-        
-        cellArray = [firstSection,secondSection]
-        
-    }
-    
-    func setCellTitles() {
-        titleCell.titleLabel.text = "lecture_title".localizedString()
-        instructorCell.titleLabel.text = "instructor".localizedString()
-        colorCell.titleLabel.text = "color".localizedString()
-        creditCell.titleLabel.text = "credit".localizedString()
-        
-        departmentCell.valueTextField.placeholder = "department".localizedString()
-        academicYearAndCreditCell.firstTextField.placeholder = "academic_year".localizedString()
-        academicYearAndCreditCell.secondTextField.placeholder = "credit".localizedString()
-        classificationAndCategoryCell.firstTextField.placeholder = "classification".localizedString()
-        classificationAndCategoryCell.secondTextField.placeholder = "category".localizedString()
-        courseNumAndLectureNumCell.firstTextField.placeholder = "course_number".localizedString()
-        courseNumAndLectureNumCell.secondTextField.placeholder = "lecture_number".localizedString()
-    }
-    
-    func addSingleClass() -> STSingleClassTableViewCell {
-        let cell = STSingleClassTableViewCell.loadWithOwner(self)
-        singleClassCellList.append(cell)
-        if !custom {
-            cell.timeTextField.enabled = false
-        }
-        return cell
-    }
-    
-    func setInitialLecture(lecture: STLecture) {
-        titleCell.textField.text = lecture.title
-        instructorCell.textField.text = lecture.instructor
-        colorCell.color = lecture.color
-        
-        departmentCell.valueTextField.text = lecture.department
-        academicYearAndCreditCell.firstTextField.text = lecture.academicYear
-        academicYearAndCreditCell.secondTextField.text = String(lecture.credit) + "학점"
-        creditCell.textField.text = String(lecture.credit) + "학점"
-        classificationAndCategoryCell.firstTextField.text = lecture.classification
-        classificationAndCategoryCell.secondTextField.text = lecture.category
-        courseNumAndLectureNumCell.firstTextField.text = lecture.courseNumber
-        courseNumAndLectureNumCell.secondTextField.text = lecture.lectureNumber
-        
-        for singleClass in lecture.classList {
-            let cell = self.addSingleClass()
-            cell.singleClass = singleClass
-        }
     }
     
     func dismissKeyboard() {
@@ -126,28 +123,26 @@ class STSingleLectureTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    func getLecture() -> STLecture {
-        var ret = STLecture(quarter: STTimetableManager.sharedInstance.currentTimetable!.quarter)
-        ret.title = titleCell.textField.text!
-        ret.instructor = instructorCell.textField.text!
-        ret.color = colorCell.color
-        //ret.credit = academicYearAndCreditCell.secondTextField.text!
-        ret.classList = singleClassCellList.map({ singleClassCell in
-            return singleClassCell.singleClass
-        })
-        return ret
-    }
-    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section < cellArray.count {
-            return cellArray[section].count
+        if custom {
+            switch section {
+            case 0: return 4
+            case 1: return 0
+            case 2: return currentLecture.classList.count
+            default: return 0 // Never Reached
+            }
+        } else {
+            switch section {
+            case 0: return 3
+            case 1: return 6
+            case 2: return currentLecture.classList.count
+            default: return 0
+            }
         }
-        return singleClassCellList.count
-        
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -155,67 +150,90 @@ class STSingleLectureTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section < cellArray.count {
-            let cell = cellArray[indexPath.section][indexPath.row]
+        
+        let type = cellTypeAtIndexPath(indexPath)
+        let cellViewType = type.cellViewType
+        let tmpCell = tableView.dequeueReusableCellWithIdentifier(cellViewType.identifier, forIndexPath: indexPath)
+        var doneBlock : ((String)->())?
+        var value1 : String = ""
+        var value2 : String = ""
+        switch type {
+        case .AcademicYearAndCredit:
+            value1 = currentLecture.academicYear
+            value2 = String(currentLecture.credit)
+        case .ClassificationAndCategory:
+            value1 = currentLecture.classification
+            value2 = currentLecture.category
+        case .Color: break
+        case .CourseNumAndLectureNum:
+            value1 = currentLecture.courseNumber
+            value2 = currentLecture.lectureNumber
+        case .Credit:
+            value1 = String(currentLecture.credit)
+            doneBlock = { value in self.currentLecture.credit = Int(value) ?? 0}
+        case .Department:
+            value1 = currentLecture.department
+        case .Instructor:
+            value1 = currentLecture.instructor
+            doneBlock = { value in self.currentLecture.instructor = value }
+        case .Padding: break
+        case .SingleClass:
+            doneBlock = { value in self.currentLecture.classList[indexPath.row].place = value }
+        case .Title:
+            value1 = currentLecture.title
+            doneBlock = { value in self.currentLecture.title = value }
+        }
+        
+        switch cellViewType {
+        case .ColorPick:
+            let cell =  tmpCell as! STColorPickTableViewCell
+            cell.color = currentLecture.color
             return cell
-        } else {
-            return singleClassCellList[indexPath.row]
+        case .Padding:
+            return tmpCell
+        case .SingleClass:
+            let cell = tmpCell as! STSingleClassTableViewCell
+            cell.singleClass = currentLecture.classList[indexPath.row]
+            cell.placeDoneBlock = doneBlock
+            return cell
+        case let .LeftAligned(title):
+            let cell = tmpCell as! STLeftAlignedTableViewCell
+            cell.titleLabel.text = title
+            cell.textField.text = value1
+            cell.doneBlock = doneBlock
+            return cell
+        case let .SingleLabeled(title):
+            let cell = tmpCell as! STSingleLabeledTableViewCell
+            cell.valueTextField.placeholder = title
+            cell.valueTextField.text = value1
+            return cell
+        case let .DoubleLabeled(firstTitle, secondTitle):
+            let cell = tmpCell as! STDoubleLabeledTableViewCell
+            cell.firstTextField.placeholder = firstTitle
+            cell.secondTextField.placeholder = secondTitle
+            cell.firstTextField.text = value1
+            cell.secondTextField.text = value2
+            return cell
         }
     }
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0:
-            return 36
-        case 1:
-            if indexPath.row == 0 || indexPath.row == cellArray[1].count-1 {
-                return 5
-            }
-            return 42
-        case 2:
-            return 42
-        default:
-            //NEVER REACH THIS CODE
-            return 36
+        switch cellTypeAtIndexPath(indexPath).cellViewType {
+        case .LeftAligned: return 36
+        case .ColorPick: return 36
+        case .DoubleLabeled, .SingleLabeled: return 42
+        case .Padding: return 5
+        case .SingleClass: return 42
         }
     }
     
-    
-    
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if indexPath.section == 2 {
-            return true
+    func triggerColorPicker() {
+        let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("STColorPickerTableViewController") as! STColorPickerTableViewController
+        viewController.color = currentLecture.color
+        viewController.doneBlock = { color in
+            self.currentLecture.color = color
+            self.tableView.reloadData()
         }
-        return false
-    }
-    
-    
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            if indexPath.section == 2 {
-                singleClassCellList.removeAtIndex(indexPath.row)
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            }
-            
-        }
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if tableView.cellForRowAtIndexPath(indexPath) == colorCell {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            //TODO : Trigger segue for color picker
-            let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("STColorPickerTableViewController") as! STColorPickerTableViewController
-            viewController.color = colorCell.color
-            viewController.doneBlock = { color in
-                self.colorCell.color = color
-                self.tableView.reloadData()
-            }
-            self.navigationController?.pushViewController(viewController, animated: true)
-        } else {
-            tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        }
-        
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     /*

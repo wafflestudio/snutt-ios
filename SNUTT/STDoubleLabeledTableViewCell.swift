@@ -9,14 +9,10 @@
 import UIKit
 import B68UIFloatLabelTextField
 
-class STDoubleLabeledTableViewCell: UITableViewCell {
+class STDoubleLabeledTableViewCell: STLectureDetailTableViewCell {
 
     @IBOutlet weak var firstTextField: B68UIFloatLabelTextField!
     @IBOutlet weak var secondTextField: B68UIFloatLabelTextField!
-    
-    internal static func loadWithOwner(owner : AnyObject!) -> STDoubleLabeledTableViewCell {
-        return NSBundle.mainBundle().loadNibNamed("STDoubleLabeledTableViewCell", owner: owner, options: nil)[0] as! STDoubleLabeledTableViewCell
-    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,6 +26,16 @@ class STDoubleLabeledTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func setEditable(editable : Bool) {
+        if editable {
+            self.firstTextField.textColor = UIColor(white: 0.67, alpha: 1.0)
+            self.secondTextField.textColor = UIColor(white: 0.67, alpha: 1.0)
+        } else {
+            self.firstTextField.textColor = UIColor(white: 0.0, alpha: 1.0)
+            self.secondTextField.textColor = UIColor(white: 0.0, alpha: 1.0)
+        }
     }
 
 }

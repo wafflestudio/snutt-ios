@@ -9,13 +9,9 @@
 import UIKit
 import B68UIFloatLabelTextField
 
-class STSingleLabeledTableViewCell: UITableViewCell {
+class STSingleLabeledTableViewCell: STLectureDetailTableViewCell {
 
     @IBOutlet weak var valueTextField: B68UIFloatLabelTextField!
-    
-    internal static func loadWithOwner(owner : AnyObject!) -> STSingleLabeledTableViewCell {
-        return NSBundle.mainBundle().loadNibNamed("STSingleLabeledTableViewCell", owner: owner, options: nil)[0] as! STSingleLabeledTableViewCell
-    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,6 +24,14 @@ class STSingleLabeledTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func setEditable (editable: Bool) {
+        if editable {
+            self.valueTextField.textColor = UIColor(white: 0.67, alpha: 1.0)
+        } else {
+            self.valueTextField.textColor = UIColor(white: 0.0, alpha: 1.0)
+        }
     }
 
 }

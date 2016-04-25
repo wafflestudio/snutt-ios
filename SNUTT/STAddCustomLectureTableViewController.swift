@@ -12,6 +12,7 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
 
     override func viewDidLoad() {
         self.custom = true
+        currentLecture.color = STColor.colorList[0]
         super.viewDidLoad()
         
         // Uncomment the following line to preserve selection between presentations
@@ -26,13 +27,36 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         // Dispose of any resources that can be recreated.
     }
     
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAtIndexPath: indexPath) as! STLectureDetailTableViewCell
+        cell.setEditable(true)
+        let leftAlignedCell = cell as? STLeftAlignedTableViewCell
+        switch cellTypeAtIndexPath(indexPath) {
+        case .Instructor:
+            leftAlignedCell?.textField.placeholder = "예) 홍길동"
+        case .Title:
+            leftAlignedCell?.textField.placeholder = "예) 기초 영어"
+        default: break //TODO: Credit selector
+        }
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if case .Color = cellTypeAtIndexPath(indexPath){
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            triggerColorPicker()
+        } else {
+            tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        }
+    }
+    
     @IBAction func cancelButtonClicked(sender: UIBarButtonItem) {
         self.view.endEditing(true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func saveButtonClicked(sender: UIBarButtonItem) {
-        STTimetableManager.sharedInstance.addLecture(getLecture(), object: self)
+        STTimetableManager.sharedInstance.addLecture(currentLecture, object: self)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 

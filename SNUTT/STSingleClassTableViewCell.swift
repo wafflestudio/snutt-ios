@@ -9,7 +9,7 @@
 import UIKit
 import B68UIFloatLabelTextField
 
-class STSingleClassTableViewCell: UITableViewCell, UITextFieldDelegate {
+class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var timeTextField: B68UIFloatLabelTextField!
     @IBOutlet weak var placeTextField: B68UIFloatLabelTextField!
@@ -20,7 +20,7 @@ class STSingleClassTableViewCell: UITableViewCell, UITextFieldDelegate {
             placeTextField.text = singleClass.place
         }
     }
-    
+    var placeDoneBlock : ((String)->())?
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addSubview(timeTextField)
@@ -43,23 +43,28 @@ class STSingleClassTableViewCell: UITableViewCell, UITextFieldDelegate {
         } else if textField == placeTextField {
             return true
         }
-        return false
+        return false // Never Reachable
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
         if textField == placeTextField {
-            singleClass.place = placeTextField.text!
+            placeDoneBlock?(textField.text!)
         }
     }
     
-    internal static func loadWithOwner(owner : AnyObject!) -> STSingleClassTableViewCell {
-        return NSBundle.mainBundle().loadNibNamed("STSingleClassTableViewCell", owner: owner, options: nil)[0] as! STSingleClassTableViewCell
-    }
-
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func setEditable(editable: Bool) {
+        self.placeTextField.enabled = editable
+        if editable {
+            self.timeTextField.textColor = UIColor(white: 0.67, alpha: 1.0)
+        } else {
+            self.timeTextField.textColor = UIColor(white: 0.0, alpha: 1.0)
+        }
     }
 
 }

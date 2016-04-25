@@ -62,8 +62,8 @@
                 </mask>
             </variation>
             <connections>
-                <outlet property="bgColorView" destination="I5r-B4-aim" id="3uY-5j-dBt"/>
-                <outlet property="fgColorView" destination="eZL-01-9iv" id="2oK-zD-gSa"/>
+                <outlet property="bgColorView" destination="eZL-01-9iv" id="JMp-bk-pnP"/>
+                <outlet property="fgColorView" destination="I5r-B4-aim" id="VMy-XM-DaW"/>
                 <outlet property="titleLabel" destination="FNf-h9-ocN" id="HNn-Dv-pkB"/>
             </connections>
             <point key="canvasLocation" x="325" y="341"/>
