@@ -10,7 +10,6 @@ import Foundation
 import SwiftyJSON
 
 struct STLecture {
-    var quarter: STQuarter
     var classification : String = ""
     var department : String = ""
     var academicYear : String = ""
@@ -26,14 +25,10 @@ struct STLecture {
     var classList :[STSingleClass] = []
     var color : STColor = STColor()
     
-    init(quarter: STQuarter) {
-        self.quarter = quarter
+    init() {
     }
     
     init(json data : JSON) {
-        let year = data["year"].intValue
-        let semester = STSemester(rawValue: data["semester"].intValue)!
-        quarter = STQuarter(year: year, semester: semester)
         classification = data["classification"].stringValue
         department = data["department"].stringValue
         academicYear = data["academic_year"].stringValue
@@ -65,8 +60,6 @@ struct STLecture {
         }
         
         let dict : [String: AnyObject] = [
-            "year" : quarter.year,
-            "semester" : quarter.semester.rawValue,
             "classification" : classification,
             "department" : department,
             "academic_year" : academicYear,
@@ -95,8 +88,7 @@ struct STLecture {
 extension STLecture : Equatable {}
 
 func ==(lhs: STLecture, rhs: STLecture) -> Bool {
-    return lhs.quarter == rhs.quarter
-        && lhs.classification == rhs.classification
+    return lhs.classification == rhs.classification
         && lhs.department == rhs.department
         && lhs.academicYear == rhs.academicYear
         && lhs.courseNumber == rhs.courseNumber
