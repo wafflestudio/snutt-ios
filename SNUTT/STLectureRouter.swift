@@ -43,8 +43,8 @@ enum STLectureRouter : URLRequestConvertible {
             return "/\(timetableId)/lecture"
         case .DeleteLecture(let timetableId, _ ):
             return "/\(timetableId)/lecture"
-        case .UpdateLecture(let timetableId, _ ):
-            return "/\(timetableId)/lecture"
+        case .UpdateLecture(let timetableId, let lecture ):
+            return "/\(timetableId)/lecture/\(lecture.id)"
         }
     }
     
@@ -63,13 +63,15 @@ enum STLectureRouter : URLRequestConvertible {
         case .AddLecture( _, let lecture):
             var dict = lecture.toDictionary()
             dict.removeValueForKey("id")
-            let parameters : [String: AnyObject] = ["lecture" : dict]
+            let parameters : [String: AnyObject] = dict
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
         case .DeleteLecture( _, let lecture):
             let parameters : [String: AnyObject] = ["lecture_id": lecture.id]
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
         case .UpdateLecture(let _, let lecture):
-            let parameters : [String: AnyObject] = ["lecture" : lecture.toDictionary()]
+            var dict = lecture.toDictionary()
+            dict.removeValueForKey("id")
+            let parameters : [String: AnyObject] = dict
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
         }
     }
