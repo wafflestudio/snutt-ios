@@ -12,7 +12,7 @@ import ChameleonFramework
 class STSingleLectureTableViewController: UITableViewController {
 
     var custom : Bool = false
-    var currentLecture : STLecture = STLecture(quarter: STTimetableManager.sharedInstance.currentTimetable!.quarter)
+    var currentLecture : STLecture = STLecture()
     
     enum CellViewType {
         case LeftAligned(title : String)
@@ -21,6 +21,7 @@ class STSingleLectureTableViewController: UITableViewController {
         case DoubleLabeled(firstTitle: String, secondTitle: String)
         case Padding
         case SingleClass
+        case Button(title: String, color : UIColor)
         
         var identifier : String {
             switch self {
@@ -30,6 +31,7 @@ class STSingleLectureTableViewController: UITableViewController {
             case .DoubleLabeled: return "DoubleLabeledCell"
             case .Padding: return "PaddingCell"
             case .SingleClass: return "SingleClassCell"
+            case .Button: return "ButtonCell"
             }
         }
     }
@@ -45,6 +47,9 @@ class STSingleLectureTableViewController: UITableViewController {
         case CourseNumAndLectureNum
         case SingleClass
         case Padding
+        case AddButton(section : Int)
+        case ResetButton
+        case SyllabusButton
         
         var cellViewType : CellViewType {
             switch self {
@@ -63,6 +68,12 @@ class STSingleLectureTableViewController: UITableViewController {
                 return .SingleClass
             case .Padding:
                 return .Padding
+            case .AddButton:
+                return .Button(title: "Add", color: UIColor.blueColor())
+            case .ResetButton:
+                return .Button(title: "Reset", color: UIColor.redColor())
+            case .SyllabusButton:
+                return .Button(title: "Syllabus", color: UIColor.blueColor())
             }
         }
     }
@@ -105,6 +116,8 @@ class STSingleLectureTableViewController: UITableViewController {
                               forCellReuseIdentifier: CellViewType.DoubleLabeled(firstTitle: "",secondTitle: "").identifier)
         tableView.registerNib(UINib(nibName: "STSingleClassTableViewCell", bundle: NSBundle.mainBundle()),
                               forCellReuseIdentifier: CellViewType.SingleClass.identifier)
+        tableView.registerNib(UINib(nibName: "STSingleLectureButtonCell", bundle: NSBundle.mainBundle()),
+                              forCellReuseIdentifier: CellViewType.Button(title: "", color: UIColor.blackColor()).identifier)
         tableView.registerClass(STPaddingTableViewCell.self, forCellReuseIdentifier: CellViewType.Padding.identifier)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(STSingleLectureTableViewController.dismissKeyboard))
@@ -155,6 +168,8 @@ class STSingleLectureTableViewController: UITableViewController {
         let cellViewType = type.cellViewType
         let tmpCell = tableView.dequeueReusableCellWithIdentifier(cellViewType.identifier, forIndexPath: indexPath)
         var doneBlock : ((String)->())?
+        var timeDoneBlock : ((STTime)->())?
+        var actionBlock : (()->())?
         var value1 : String = ""
         var value2 : String = ""
         switch type {
@@ -179,9 +194,23 @@ class STSingleLectureTableViewController: UITableViewController {
         case .Padding: break
         case .SingleClass:
             doneBlock = { value in self.currentLecture.classList[indexPath.row].place = value }
+            timeDoneBlock = { value in self.currentLecture.classList[indexPath.row].time = value }
         case .Title:
             value1 = currentLecture.title
             doneBlock = { value in self.currentLecture.title = value }
+        case let .AddButton(section):
+            actionBlock = { ()->() in
+                self.currentLecture.classList.append(STSingleClass(time: STTime(day: 0, startPeriod: 0.0, duration: 1.0), place: ""))
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.currentLecture.classList.count-1, inSection: section)], withRowAnimation: .Automatic);
+            }
+        case .SyllabusButton:
+            actionBlock = { ()->() in
+                //TODO: show syllabus
+            }
+        case .ResetButton:
+            actionBlock = { ()->() in
+                //TODO: show alert view and reset the values
+            }
         }
         
         switch cellViewType {
@@ -195,6 +224,8 @@ class STSingleLectureTableViewController: UITableViewController {
             let cell = tmpCell as! STSingleClassTableViewCell
             cell.singleClass = currentLecture.classList[indexPath.row]
             cell.placeDoneBlock = doneBlock
+            cell.timeDoneBlock = timeDoneBlock
+            cell.custom = custom
             return cell
         case let .LeftAligned(title):
             let cell = tmpCell as! STLeftAlignedTableViewCell
@@ -214,6 +245,13 @@ class STSingleLectureTableViewController: UITableViewController {
             cell.firstTextField.text = value1
             cell.secondTextField.text = value2
             return cell
+        case let .Button(title, color):
+            let cell = tmpCell as! STSingleLectureButtonCell
+            cell.buttonAction = actionBlock
+            cell.button.tintColor = color
+            cell.button.setTitle(title, forState: .Normal)
+            cell.button.titleLabel?.text = title
+            return cell
         }
     }
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -223,6 +261,7 @@ class STSingleLectureTableViewController: UITableViewController {
         case .DoubleLabeled, .SingleLabeled: return 42
         case .Padding: return 5
         case .SingleClass: return 42
+        case .Button: return 36
         }
     }
     

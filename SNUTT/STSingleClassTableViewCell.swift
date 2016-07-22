@@ -21,6 +21,8 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
         }
     }
     var placeDoneBlock : ((String)->())?
+    var timeDoneBlock : ((STTime)->())?
+    var custom : Bool = false
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addSubview(timeTextField)
@@ -38,6 +40,7 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
                 doneBlock: { time in
                     self.singleClass.time = time
                     self.timeTextField.text = self.singleClass.time.shortString()
+                    self.timeDoneBlock?(time)
                 }, cancelBlock: nil, origin: textField)
             return false
         } else if textField == placeTextField {
@@ -60,7 +63,8 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
     
     override func setEditable(editable: Bool) {
         self.placeTextField.enabled = editable
-        if editable {
+        self.timeTextField.enabled = custom && editable
+        if editable && !custom {
             self.timeTextField.textColor = UIColor(white: 0.67, alpha: 1.0)
         } else {
             self.timeTextField.textColor = UIColor(white: 0.0, alpha: 1.0)

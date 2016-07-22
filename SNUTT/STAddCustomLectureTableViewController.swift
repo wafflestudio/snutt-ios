@@ -27,6 +27,32 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         // Dispose of any resources that can be recreated.
     }
     
+    override func cellTypeAtIndexPath(indexPath : NSIndexPath) -> CellType {
+        switch (indexPath.section, indexPath.row) {
+        case (0,0): return .Title
+        case (0,1): return .Instructor
+        case (0,2): return .Color
+        case (0,3): return .Credit
+            
+        case (1, currentLecture.classList.count): return .AddButton(section: 1)
+        case (1, _): return .SingleClass
+
+        default: return .Padding // Never Reach
+        }
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0: return 4
+        case 1: return currentLecture.classList.count + 1
+        default: return 0 // Never Reached
+        }
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAtIndexPath: indexPath) as! STLectureDetailTableViewCell
         cell.setEditable(true)
@@ -45,8 +71,9 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         if case .Color = cellTypeAtIndexPath(indexPath){
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             triggerColorPicker()
-        } else {
-            tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        } else if case .AddButton = cellTypeAtIndexPath(indexPath) {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            (self.tableView.cellForRowAtIndexPath(indexPath) as! STSingleLectureButtonCell).buttonAction?()
         }
     }
     
@@ -59,7 +86,23 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         STTimetableManager.sharedInstance.addLecture(currentLecture, object: self)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if indexPath.section == 1 {
+            if indexPath.row < currentLecture.classList.count {
+                return true
+            }
+        }
+        return false
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            currentLecture.classList.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
