@@ -116,7 +116,7 @@ class STTimetableListController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let index = indexList[indexPath.section]+indexPath.row
-        Alamofire.request(STTimetableRouter.GetTimetable(timetableList[index].id!)).responseSwiftyJSON { response in
+        Alamofire.request(STTimetableRouter.GetTimetable(id: timetableList[index].id!)).responseSwiftyJSON { response in
             switch response.result {
             case .Success(let json):
                 let timetable = STTimetable(json: json)
@@ -149,7 +149,7 @@ class STTimetableListController: UITableViewController {
             if timetable.id == nil {
                 return
             }
-            Alamofire.request(STTimetableRouter.DeleteTimetable(timetable.id!)).responseSwiftyJSON { response in
+            Alamofire.request(STTimetableRouter.DeleteTimetable(id: timetable.id!)).responseSwiftyJSON { response in
                 switch response.result {
                 case .Success:
                     self.timetableList.removeAtIndex(index)

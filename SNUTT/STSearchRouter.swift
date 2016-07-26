@@ -9,9 +9,10 @@
 import Foundation
 import Alamofire
 
-enum STSearchRouter : URLRequestConvertible {
+enum STSearchRouter : STRouter {
     
     static let baseURLString = STConfig.sharedInstance.baseURL+"/search_query"
+    static let shouldAddToken: Bool = true
     
     case Search(query : String, tagList: [STTag])
     
@@ -29,17 +30,7 @@ enum STSearchRouter : URLRequestConvertible {
         }
     }
     
-    // MARK: URLRequestConvertible
-    
-    var URLRequest: NSMutableURLRequest {
-        let URL = NSURL(string: STSearchRouter.baseURLString)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-        mutableURLRequest.HTTPMethod = method.rawValue
-        
-        if let token = STDefaults[.token] {
-            mutableURLRequest.setValue(token, forHTTPHeaderField: "x-access-token")
-        }
-        
+    var parameters: [String : AnyObject]? {
         switch self {
         case let .Search(query, tagList):
             let year = STTimetableManager.sharedInstance.currentTimetable!.quarter.year
@@ -78,8 +69,8 @@ enum STSearchRouter : URLRequestConvertible {
                 "classification" : classification,
                 "category" : category
             ]
-            print(credit)
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+            
+            return parameters
         }
     }
     

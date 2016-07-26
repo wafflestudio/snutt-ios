@@ -15,28 +15,42 @@ class STNetworking {
     //MARK: AuthRouter
     
     static func loginLocal(id: String, password: String, done: (String)->(), failure: ()->()) {
-        let request = Alamofire.request(STAuthRouter.LocalLogin(id, password))
-        request.responseWithDone({json in
+        let request = Alamofire.request(STAuthRouter.LocalLogin(id: id, password: password))
+        
+        request.responseString(completionHandler: { res in
+            if res.result.isFailure || res.result.value == nil {
+                failure()
+            } else {
+                done(res.result.value!)
+            }
+            
+        })
+ 
+        /*
+        request.responseWithDone({ statusCode, json in
             let token = json.stringValue
             done(token)
-            }, failure: { _ in
+            }, failure: { err in
+                print(err)
             failure()
         })
+ */
     }
     
     //MARK: LectureRouter
+    
     static func addLecture(timetable: STTimetable, lecture: STLecture, done: (String)->(), failure: ()->()) {
         let request = Alamofire.request(STLectureRouter.AddLecture(timetableId: timetable.id!, lecture: lecture))
-        request.responseWithDone({ json in
+        request.responseWithDone({ statusCode, json in
             done(json.stringValue)
             }, failure: { _ in
             failure()
         })
     }
     
-    static func updateLecture(timetable: STTimetable, lecture: STLecture, done: ()->(), failure: ()->()) {
-        let request = Alamofire.request(STLectureRouter.UpdateLecture(timetableId: timetable.id!, lecture: lecture))
-        request.responseWithDone({ json in
+    static func updateLecture(timetable: STTimetable, oldLecture: STLecture, newLecture: STLecture, done: ()->(), failure: ()->()) {
+        let request = Alamofire.request(STLectureRouter.UpdateLecture(timetableId: timetable.id!, oldLecture: oldLecture, newLecture : newLecture))
+        request.responseWithDone({ statusCode, json in
             if json["success"].boolValue {
                 done()
             } else {
@@ -49,7 +63,7 @@ class STNetworking {
     
     static func deleteLecture(timetable: STTimetable, lecture: STLecture, done: ()->(), failure: ()->()) {
         let request = Alamofire.request(STLectureRouter.DeleteLecture(timetableId: timetable.id!, lecture: lecture))
-        request.responseWithDone({ json in
+        request.responseWithDone({ statusCode, json in
             if json["success"].boolValue {
                 done()
             } else {
@@ -101,6 +115,8 @@ class STNetworking {
             }
         }
     }
+    
+    //MARK: AppVersion
     
     static func checkLatestAppVersion(done:(String)->()) -> Void {
         

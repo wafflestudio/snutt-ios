@@ -48,11 +48,11 @@ extension Request {
         )
     }
     
-    public func responseWithDone(done: ((JSON) -> ())?, failure: ((NSError) -> ())? ) {
+    public func responseWithDone(done: ((Int, JSON) -> ())?, failure: ((NSError) -> ())? ) {
         self.responseSwiftyJSON { response in
             switch response.result {
             case .Success(let json):
-                done?(json)
+                done?(response.response?.statusCode ?? 200 ,json)
             case .Failure(let error):
                 failure?(error)
             }

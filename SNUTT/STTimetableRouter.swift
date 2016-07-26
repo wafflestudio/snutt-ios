@@ -9,15 +9,16 @@
 import Foundation
 import Alamofire
 
-enum STTimetableRouter : URLRequestConvertible {
+enum STTimetableRouter : STRouter {
     
-    static let baseURLString = STConfig.sharedInstance.baseURL+"/tables"
+    static let baseURLString : String = STConfig.sharedInstance.baseURL+"/tables"
+    static let shouldAddToken: Bool = true
     
     case GetTimetableList
-    case GetTimetable(String)
+    case GetTimetable(id: String)
     case CreateTimetable(title : String, courseBook : STCourseBook)
-    case UpdateTimetable(String, String)
-    case DeleteTimetable(String)
+    case UpdateTimetable(id: String,title: String)
+    case DeleteTimetable(id: String)
     
     var method: Alamofire.Method {
         switch self {
@@ -49,30 +50,18 @@ enum STTimetableRouter : URLRequestConvertible {
         }
     }
     
-    // MARK: URLRequestConvertible
-    
-    var URLRequest: NSMutableURLRequest {
-        let URL = NSURL(string: STTimetableRouter.baseURLString)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-        mutableURLRequest.HTTPMethod = method.rawValue
-        
-        if let token = STDefaults[.token] {
-            mutableURLRequest.setValue(token, forHTTPHeaderField: "x-access-token")
-        }
-        
+    var parameters: [String : AnyObject]? {
         switch self {
         case .GetTimetableList:
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: nil).0
+            return nil
         case .GetTimetable:
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: nil).0
+            return nil
         case .CreateTimetable(let title, let courseBook):
-            let parameters : [String : AnyObject] = ["title" : title, "year" : courseBook.quarter.year, "semester" : courseBook.quarter.semester.rawValue]
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+            return ["title" : title, "year" : courseBook.quarter.year, "semester" : courseBook.quarter.semester.rawValue]
         case .UpdateTimetable(_, let title):
-            let parameters : [String : AnyObject] = ["title" : title]
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+            return ["title" : title]
         case .DeleteTimetable:
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: nil).0
+            return nil
         }
     }
     

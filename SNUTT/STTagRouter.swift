@@ -9,9 +9,10 @@
 import Foundation
 import Alamofire
 
-enum STTagRouter : URLRequestConvertible {
+enum STTagRouter : STRouter {
     
     static let baseURLString = STConfig.sharedInstance.baseURL+"/tags"
+    static let shouldAddToken: Bool = true
     
     case UpdateTime(quarter : STQuarter)
     case Get(quarter : STQuarter)
@@ -34,14 +35,8 @@ enum STTagRouter : URLRequestConvertible {
         }
     }
     
-    // MARK: URLRequestConvertible
-    
-    var URLRequest: NSMutableURLRequest {
-        let URL = NSURL(string: STTagRouter.baseURLString)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-        mutableURLRequest.HTTPMethod = method.rawValue
-        
-        return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: nil).0
+    var parameters: [String : AnyObject]? {
+        return nil
     }
     
 }

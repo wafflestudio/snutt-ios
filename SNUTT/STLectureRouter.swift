@@ -17,14 +17,16 @@ import Foundation
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
-enum STLectureRouter : URLRequestConvertible {
+enum STLectureRouter : STRouter {
     
     static let baseURLString = STConfig.sharedInstance.baseURL+"/tables"
+    static let shouldAddToken: Bool = true
     
     case AddLecture(timetableId: String, lecture: STLecture)
     case DeleteLecture(timetableId: String, lecture: STLecture)
-    case UpdateLecture(timetableId: String, lecture: STLecture)
+    case UpdateLecture(timetableId: String, oldLecture: STLecture, newLecture: STLecture)
     
     var method: Alamofire.Method {
         switch self {
@@ -43,36 +45,31 @@ enum STLectureRouter : URLRequestConvertible {
             return "/\(timetableId)/lecture"
         case .DeleteLecture(let timetableId, _ ):
             return "/\(timetableId)/lecture"
-        case .UpdateLecture(let timetableId, let lecture ):
-            return "/\(timetableId)/lecture/\(lecture.id)"
+        case let .UpdateLecture(timetableId, curLecture, _):
+            return "/\(timetableId)/lecture/\(curLecture.id)"
         }
     }
     
-    // MARK: URLRequestConvertible
-    
-    var URLRequest: NSMutableURLRequest {
-        let URL = NSURL(string: STLectureRouter.baseURLString)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-        mutableURLRequest.HTTPMethod = method.rawValue
-        
-        if let token = STDefaults[.token] {
-            mutableURLRequest.setValue(token, forHTTPHeaderField: "x-access-token")
-        }
-        
+    var parameters: [String : AnyObject]? {
         switch self {
         case .AddLecture( _, let lecture):
             var dict = lecture.toDictionary()
             dict.removeValueForKey("id")
-            let parameters : [String: AnyObject] = dict
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+            return dict
         case .DeleteLecture( _, let lecture):
-            let parameters : [String: AnyObject] = ["lecture_id": lecture.id]
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
-        case .UpdateLecture(let _, let lecture):
-            var dict = lecture.toDictionary()
-            dict.removeValueForKey("id")
-            let parameters : [String: AnyObject] = dict
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+            return ["lecture_id": lecture.id]
+        case let .UpdateLecture(_, oldLecture, newLecture):
+            var dict : [String : AnyObject] = [:]
+            let oldDict = oldLecture.toDictionary()
+            let newDict = newLecture.toDictionary()
+            
+            for (key, oldVal) in oldDict {
+                let newVal = newDict[key]
+                if newVal != nil && JSON(oldVal) != JSON(newVal!) {
+                    dict[key] = newVal
+                }
+            }
+            return dict
         }
     }
     

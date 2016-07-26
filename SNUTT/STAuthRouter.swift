@@ -9,15 +9,21 @@
 import Foundation
 import Alamofire
 
-enum STAuthRouter : URLRequestConvertible {
+enum STAuthRouter : STRouter {
     
-    static let baseURLString = STConfig.sharedInstance.baseURL+"/auth"
+    static let baseURLString : String = STConfig.sharedInstance.baseURL+"/auth"
+    static let shouldAddToken: Bool = false
     
-    case LocalLogin(String, String)
+    case LocalLogin(id: String, password: String)
+    case LocalRegister(id: String, password: String)
+    
+    //MARK: STRouter
     
     var method: Alamofire.Method {
         switch self {
         case .LocalLogin:
+            return .POST
+        case .LocalRegister:
             return .POST
         }
     }
@@ -26,20 +32,17 @@ enum STAuthRouter : URLRequestConvertible {
         switch self {
         case .LocalLogin:
             return "/login_local"
+        case .LocalRegister:
+            return "/register_local"
         }
     }
     
-    // MARK: URLRequestConvertible
-    
-    var URLRequest: NSMutableURLRequest {
-        let URL = NSURL(string: STAuthRouter.baseURLString)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-        mutableURLRequest.HTTPMethod = method.rawValue
-        
+    var parameters: [String : AnyObject]? {
         switch self {
         case .LocalLogin(let id, let password):
-            let parameters = ["id" : id, "password" : password]
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+            return ["id" : id, "password" : password]
+        case let .LocalRegister(id, password):
+            return ["id" : id, "password" : password]
         }
     }
     

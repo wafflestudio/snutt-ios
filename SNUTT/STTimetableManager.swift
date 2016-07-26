@@ -54,12 +54,12 @@ class STTimetableManager : NSObject {
         return ret!
     }
     
-    func updateLecture(lecture : STLecture) {
+    func updateLecture(oldLecture : STLecture, newLecture : STLecture) {
         let index = currentTimetable!.lectureList.indexOf({ lec in
-            return lec.id == lecture.id
+            return lec.id == newLecture.id
         })!
-        currentTimetable!.updateLectureAtIndex(index, lecture: lecture)
-        STNetworking.updateLecture(currentTimetable!, lecture: lecture, done: {
+        currentTimetable!.updateLectureAtIndex(index, lecture: newLecture)
+        STNetworking.updateLecture(currentTimetable!, oldLecture: oldLecture, newLecture: newLecture, done: {
             STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
             
             }, failure: {})
