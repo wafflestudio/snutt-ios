@@ -25,12 +25,12 @@ PODS:
     - FBSDKCoreKit
   - SwiftyJSON (2.3.2)
   - SwiftyUserDefaults (2.2.0)
+  - TTRangeSlider (1.0.4)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
   - Alamofire (~> 3.0)
-  - B68UIFloatLabelTextField (from `https://github.com/Rajin9601/B68FloatingLabelTextField.git`,
-    branch `Swift_2.0`)
+  - B68UIFloatLabelTextField (from `https://github.com/Rajin9601/B68FloatingLabelTextField.git`, branch `Swift_2.0`)
   - Carte
   - ChameleonFramework/Swift
   - Color-Picker-for-iOS (~> 2.0)
@@ -41,17 +41,23 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - FBSDKShareKit
   - SwiftyJSON (~> 2.3)
-  - SwiftyUserDefaults
+  - SwiftyUserDefaults (from `https://github.com/Rajin9601/SwiftyUserDefaults.git`)
+  - TTRangeSlider
 
 EXTERNAL SOURCES:
   B68UIFloatLabelTextField:
     :branch: Swift_2.0
     :git: https://github.com/Rajin9601/B68FloatingLabelTextField.git
+  SwiftyUserDefaults:
+    :git: https://github.com/Rajin9601/SwiftyUserDefaults.git
 
 CHECKOUT OPTIONS:
   B68UIFloatLabelTextField:
     :commit: 200ab45ee180de600ec444aca6de6ee1bd354bad
     :git: https://github.com/Rajin9601/B68FloatingLabelTextField.git
+  SwiftyUserDefaults:
+    :commit: b3bf8d1098aa37ba5f0a88f1fccaf97fd46602cc
+    :git: https://github.com/Rajin9601/SwiftyUserDefaults.git
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 8312778b6815578e6a86d630fbcf31dc94c534e7
@@ -69,5 +75,8 @@ SPEC CHECKSUMS:
   FBSDKShareKit: 2fd887cce0056bdda91f99b2021d724a4fed8e88
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   SwiftyUserDefaults: e7c8197a9d4068702e7f2406a968cae413b8de27
+  TTRangeSlider: 7c04d9cf84cd5fba96e86b3ded8e5e0b534758b0
 
-COCOAPODS: 0.38.2
+PODFILE CHECKSUM: 5dad6a84a6a4e3bcbb0b1e4c6b73d450019421f9
+
+COCOAPODS: 1.0.1
