@@ -11,6 +11,7 @@ import Foundation
 enum STEvent : String {
     case CurrentTimetableSwitched = "CurrentTimetableSwitched"
     case CurrentTimetableChanged = "CurrentTimetableChanged"
+    case SettingChanged = "SettingChanged"
 }
 
 class STEventCenter : NSNotificationCenter {

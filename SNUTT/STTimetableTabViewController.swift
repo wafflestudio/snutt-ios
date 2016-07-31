@@ -18,6 +18,7 @@ class STTimetableTabViewController: UIViewController {
         
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableChanged, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: "settingChanged", event: STEvent.SettingChanged, object: nil)
     }
     
     deinit {
@@ -34,7 +35,27 @@ class STTimetableTabViewController: UIViewController {
         timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableViewController?.reloadTimetable()
     }
-
+    
+    func settingChanged() {
+        if STDefaults[.autoFit] {
+            timetableViewController?.shouldAutofit = true
+        } else {
+            timetableViewController?.shouldAutofit = false
+            let dayRange = STDefaults[.dayRange]
+            var columnHidden : [Bool] = []
+            for i in 0..<6 {
+                if dayRange[0] <= i && i <= dayRange[1] {
+                    columnHidden.append(false)
+                } else {
+                    columnHidden.append(true)
+                }
+            }
+            timetableViewController?.columnHidden = columnHidden
+            timetableViewController?.rowStart = Int(STDefaults[.timeRange][0])
+            timetableViewController?.rowEnd = Int(STDefaults[.timeRange][1])
+        }
+        timetableViewController?.reloadTimetable()
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -42,7 +63,7 @@ class STTimetableTabViewController: UIViewController {
         if(segue.identifier == "STTimetableCollectionViewController") {
             timetableViewController = (segue.destinationViewController as! STTimetableCollectionViewController)
             timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
-            timetableViewController?.shouldAutofit = true
+            settingChanged()
         }
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

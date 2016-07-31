@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		24B8DA41CD69C3276404FFC9 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A23D953E6E8C81FC5C2181B0 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1631446E472512479C1BD808 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736548D365BF8D4D41EF1881 /* Pods_SNUTT.framework */; };
 		E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C61B4CCD16006FD8B3 /* STLecture.swift */; };
 		E10852C91B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C71B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift */; };
 		E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109CC781C3E8C050050399A /* STTimetableListController.swift */; };
@@ -71,6 +71,7 @@
 		E1B381A91C6C52D9007E1A15 /* STUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B381A81C6C52D9007E1A15 /* STUtil.swift */; };
 		E1B381AB1C6C61E2007E1A15 /* STTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B381AA1C6C61E2007E1A15 /* STTagCollectionViewCell.swift */; };
 		E1B381AD1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1B381AC1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib */; };
+		E1BB29CD1D4896D300150DD4 /* STTimetableSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BB29CC1D4896D300150DD4 /* STTimetableSettingViewController.swift */; };
 		E1C28B151B9C4B0B00B8C493 /* STSingleClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B141B9C4B0B00B8C493 /* STSingleClass.swift */; };
 		E1C28B181B9C4B3600B8C493 /* STTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B171B9C4B3600B8C493 /* STTime.swift */; };
 		E1C48B8A1C785F0B00BC469E /* STLeftAlignedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C48B891C785F0B00BC469E /* STLeftAlignedTableViewCell.xib */; };
@@ -125,7 +126,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7DCA290158F36359CA1A8F81 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		6A48F3E50D8BD4041AD725F7 /* Pods-SNUTT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.release.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT.release.xcconfig"; sourceTree = "<group>"; };
+		736548D365BF8D4D41EF1881 /* Pods_SNUTT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E10852C61B4CCD16006FD8B3 /* STLecture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLecture.swift; sourceTree = "<group>"; };
 		E10852C71B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableCollectionViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 		E1B381A81C6C52D9007E1A15 /* STUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STUtil.swift; sourceTree = "<group>"; };
 		E1B381AA1C6C61E2007E1A15 /* STTagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1B381AC1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STTagCollectionViewCell.xib; sourceTree = "<group>"; };
+		E1BB29CC1D4896D300150DD4 /* STTimetableSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableSettingViewController.swift; sourceTree = "<group>"; };
 		E1C28B141B9C4B0B00B8C493 /* STSingleClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleClass.swift; sourceTree = "<group>"; };
 		E1C28B171B9C4B3600B8C493 /* STTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTime.swift; sourceTree = "<group>"; };
 		E1C48B891C785F0B00BC469E /* STLeftAlignedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STLeftAlignedTableViewCell.xib; sourceTree = "<group>"; };
@@ -239,7 +242,7 @@
 		E1F58AAB1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSlotCellCollectionViewCell.xib; sourceTree = "<group>"; };
 		E1F632911C8D0C030030BE7D /* STLectureRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureRouter.swift; sourceTree = "<group>"; };
 		E1F632931C8D21C20030BE7D /* STNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STNetworking.swift; sourceTree = "<group>"; };
-		E76BCDB7320C5B43D709D301 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		EC67A2D0072E64D419116691 /* Pods-SNUTT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,7 +250,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24B8DA41CD69C3276404FFC9 /* Pods.framework in Frameworks */,
+				1631446E472512479C1BD808 /* Pods_SNUTT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,11 +264,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		ABCCCA7EFB90657CBC93B867 /* Pods */ = {
+		9DFA6A01F66A7BEA2E1102F4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7DCA290158F36359CA1A8F81 /* Pods.debug.xcconfig */,
-				E76BCDB7320C5B43D709D301 /* Pods.release.xcconfig */,
+				EC67A2D0072E64D419116691 /* Pods-SNUTT.debug.xcconfig */,
+				6A48F3E50D8BD4041AD725F7 /* Pods-SNUTT.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				E16A88581C9FC59F003D94AB /* STTermAndConditionViewController.swift */,
 				E1A99D8C1CB0FD2C00953A4B /* STAccountSettingViewController.swift */,
 				E1A99D921CB112EE00953A4B /* STRedButtonTableViewCell.swift */,
+				E1BB29CC1D4896D300150DD4 /* STTimetableSettingViewController.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -342,8 +346,8 @@
 				E19A3A971B453770007FCAD7 /* SNUTT */,
 				E19A3AAD1B453770007FCAD7 /* SNUTTTests */,
 				E19A3A961B453770007FCAD7 /* Products */,
-				ABCCCA7EFB90657CBC93B867 /* Pods */,
 				F3F7582CA3722E59E3E117F1 /* Frameworks */,
+				9DFA6A01F66A7BEA2E1102F4 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -543,6 +547,7 @@
 			isa = PBXGroup;
 			children = (
 				A23D953E6E8C81FC5C2181B0 /* Pods.framework */,
+				736548D365BF8D4D41EF1881 /* Pods_SNUTT.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -554,15 +559,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E19A3AB41B453770007FCAD7 /* Build configuration list for PBXNativeTarget "SNUTT" */;
 			buildPhases = (
-				7464DDE47975BF8692439A58 /* Check Pods Manifest.lock */,
+				2CE23887BA346237D7CA4434 /* [CP] Check Pods Manifest.lock */,
 				E19A3A911B453770007FCAD7 /* Sources */,
 				E19A3A921B453770007FCAD7 /* Frameworks */,
 				E16A884E1C9F8D74003D94AB /* Carte Pre */,
 				E19A3A931B453770007FCAD7 /* Resources */,
 				E16A884F1C9F8D7C003D94AB /* Carte Post */,
-				377E95008A8FBD583B13DB27 /* Copy Pods Resources */,
-				BFCAF25E5BA02298B0E7DF5B /* Embed Pods Frameworks */,
 				E14991F91C45F0E000DC6756 /* Run Script */,
+				5DF3E55534CBCE108DC5CF5E /* [CP] Embed Pods Frameworks */,
+				AE703475AD04158506090D3E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -674,29 +679,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		377E95008A8FBD583B13DB27 /* Copy Pods Resources */ = {
+		2CE23887BA346237D7CA4434 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7464DDE47975BF8692439A58 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -704,19 +694,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		BFCAF25E5BA02298B0E7DF5B /* Embed Pods Frameworks */ = {
+		5DF3E55534CBCE108DC5CF5E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AE703475AD04158506090D3E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E14991F91C45F0E000DC6756 /* Run Script */ = {
@@ -778,6 +783,7 @@
 				E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */,
 				E1CAAA391CF07F1000D16183 /* STSingleLectureButtonCell.swift in Sources */,
 				E16643571B46623900387EF8 /* STSlotCellCollectionViewCell.swift in Sources */,
+				E1BB29CD1D4896D300150DD4 /* STTimetableSettingViewController.swift in Sources */,
 				E1EE1B311CCCDE20003DF250 /* STDefaults.swift in Sources */,
 				E16A88591C9FC59F003D94AB /* STTermAndConditionViewController.swift in Sources */,
 				E1A99D931CB112EE00953A4B /* STRedButtonTableViewCell.swift in Sources */,
@@ -984,7 +990,7 @@
 		};
 		E19A3AB51B453770007FCAD7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DCA290158F36359CA1A8F81 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = EC67A2D0072E64D419116691 /* Pods-SNUTT.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -998,7 +1004,7 @@
 		};
 		E19A3AB61B453770007FCAD7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E76BCDB7320C5B43D709D301 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 6A48F3E50D8BD4041AD725F7 /* Pods-SNUTT.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

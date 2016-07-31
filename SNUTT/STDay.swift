@@ -37,3 +37,14 @@ enum STDay : Int{
 }
 
 extension STDay: Comparable {}
+
+class STDayFormatter : NSNumberFormatter {
+    override func stringFromNumber(number: NSNumber) -> String? {
+        let val = number.integerValue
+        if 0 <= val && val <= 5 {
+            return STDay(rawValue: val)!.shortString()
+        } else {
+            return ""
+        }
+    }
+}

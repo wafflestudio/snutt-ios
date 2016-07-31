@@ -29,3 +29,14 @@ class STPeriod {
         return arr
     }
 }
+
+class STPeriodFormatter : NSNumberFormatter {
+    override func stringFromNumber(number: NSNumber) -> String? {
+        let val = number.doubleValue
+        if Int(val * 2.0) % 2 == 0 {
+            return "\(Int(val))"
+        } else {
+            return "\(Int(val)).5"
+        }
+    }
+}

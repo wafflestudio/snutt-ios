@@ -139,6 +139,8 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         
         if shouldAutofit {
             autofit()
+        } else {
+            layout?.updateContentSize()
         }
         
         self.collectionView?.reloadData()

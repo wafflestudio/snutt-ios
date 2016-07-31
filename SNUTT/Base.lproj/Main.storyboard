@@ -839,7 +839,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="QsL-eu-0Yg" kind="show" id="ogU-9A-6oy"/>
+                                            <segue destination="QsL-eu-0Yg" kind="push" id="ogU-9A-6oy"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="S3q-0p-uGx" style="IBUITableViewCellStyleDefault" id="9Vq-VG-II0">
@@ -859,7 +859,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="nWg-ap-09p" kind="show" id="dIU-uj-qf2"/>
+                                            <segue destination="956-jF-sYJ" kind="push" id="9pd-T8-uDE"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -1080,7 +1080,7 @@
         <!--계정 관리-->
         <scene sceneID="aFu-tK-ZkE">
             <objects>
-                <tableViewController id="QsL-eu-0Yg" customClass="STAccountSettingViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController hidesBottomBarWhenPushed="YES" id="QsL-eu-0Yg" customClass="STAccountSettingViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="WcZ-Dd-cki">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1165,6 +1165,160 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="azm-B5-2LS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2564.5" y="-4357.5"/>
+        </scene>
+        <!--시간표 설정-->
+        <scene sceneID="HH0-Fx-v4L">
+            <objects>
+                <tableViewController hidesBottomBarWhenPushed="YES" id="956-jF-sYJ" customClass="STTimetableSettingViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="y4y-de-Q0E">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="zIy-U8-e4u">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="bep-wO-YYX">
+                                        <rect key="frame" x="0.0" y="99" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bep-wO-YYX" id="942-0P-Iua">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hea-yg-Zk8">
+                                                    <rect key="frame" x="306" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="autoFitValueChanged:" destination="956-jF-sYJ" eventType="valueChanged" id="gim-ua-ufM"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Automatic Fitting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPT-4g-QJk">
+                                                    <rect key="frame" x="8" y="11" width="139" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Hea-yg-Zk8" firstAttribute="centerY" secondItem="942-0P-Iua" secondAttribute="centerY" id="bpN-zX-17c"/>
+                                                <constraint firstAttribute="trailing" secondItem="Hea-yg-Zk8" secondAttribute="trailing" constant="20" id="tRS-O8-1V8"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="7uT-FJ-1XD">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="90" id="o94-t9-UGF">
+                                        <rect key="frame" x="0.0" y="179" width="375" height="90"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="o94-t9-UGF" id="Brb-en-oeX">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="요일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GNu-vY-Efb">
+                                                    <rect key="frame" x="8" y="8" width="30" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QYR-iI-6jT" customClass="TTRangeSlider">
+                                                    <rect key="frame" x="20" y="37" width="335" height="52"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="minValue">
+                                                            <real key="value" value="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="maxValue">
+                                                            <real key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="selectedMinimum">
+                                                            <real key="value" value="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="selectedMaximum">
+                                                            <real key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="enableStep" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="step">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="QYR-iI-6jT" secondAttribute="bottom" id="Dgc-H0-H6j"/>
+                                                <constraint firstItem="GNu-vY-Efb" firstAttribute="leading" secondItem="Brb-en-oeX" secondAttribute="leadingMargin" id="HLR-D1-zRo"/>
+                                                <constraint firstItem="QYR-iI-6jT" firstAttribute="leading" secondItem="Brb-en-oeX" secondAttribute="leading" constant="20" id="Jb8-DK-rQ9"/>
+                                                <constraint firstItem="GNu-vY-Efb" firstAttribute="top" secondItem="Brb-en-oeX" secondAttribute="topMargin" id="M4x-x2-ArM"/>
+                                                <constraint firstItem="QYR-iI-6jT" firstAttribute="top" secondItem="GNu-vY-Efb" secondAttribute="bottom" constant="8" id="bTp-ZK-QRm"/>
+                                                <constraint firstAttribute="trailing" secondItem="QYR-iI-6jT" secondAttribute="trailing" constant="20" id="ofA-l2-fPW"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="90" id="LM5-F6-RSx">
+                                        <rect key="frame" x="0.0" y="269" width="375" height="90"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LM5-F6-RSx" id="r3P-1k-874">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="시간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faT-Uv-JDa">
+                                                    <rect key="frame" x="8" y="8" width="30" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vxa-Jk-VSs" customClass="TTRangeSlider">
+                                                    <rect key="frame" x="20" y="37" width="335" height="52"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="minValue">
+                                                            <real key="value" value="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="maxValue">
+                                                            <real key="value" value="13"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="selectedMinimum">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="selectedMaximum">
+                                                            <real key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="enableStep" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="step">
+                                                            <real key="value" value="0.5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="vxa-Jk-VSs" firstAttribute="top" secondItem="faT-Uv-JDa" secondAttribute="bottom" constant="8" id="1Ec-7P-qqZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="vxa-Jk-VSs" secondAttribute="trailing" constant="20" id="7Oh-bZ-0kC"/>
+                                                <constraint firstAttribute="bottom" secondItem="vxa-Jk-VSs" secondAttribute="bottom" id="8nz-yO-VSv"/>
+                                                <constraint firstItem="vxa-Jk-VSs" firstAttribute="leading" secondItem="r3P-1k-874" secondAttribute="leading" constant="20" id="TLW-yE-wU2"/>
+                                                <constraint firstItem="faT-Uv-JDa" firstAttribute="top" secondItem="r3P-1k-874" secondAttribute="topMargin" id="kdJ-KM-Bwb"/>
+                                                <constraint firstItem="faT-Uv-JDa" firstAttribute="leading" secondItem="r3P-1k-874" secondAttribute="leadingMargin" id="rBS-Qj-dhB"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="956-jF-sYJ" id="S6D-Yv-3Dg"/>
+                            <outlet property="delegate" destination="956-jF-sYJ" id="6Zj-7U-zN0"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="시간표 설정" id="aGC-89-vCr"/>
+                    <connections>
+                        <outlet property="daySlider" destination="QYR-iI-6jT" id="kxT-Mu-hZh"/>
+                        <outlet property="dayText" destination="GNu-vY-Efb" id="doG-pz-OXW"/>
+                        <outlet property="timeSlider" destination="vxa-Jk-VSs" id="Omg-QJ-Rt4"/>
+                        <outlet property="timeText" destination="faT-Uv-JDa" id="FaX-Rv-LOe"/>
+                        <outlet property="trimmingSwitch" destination="Hea-yg-Zk8" id="PfQ-hB-r6E"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ngi-cx-Zr8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3047.5" y="-4357.5"/>
         </scene>
         <!--개발자 정보-->
         <scene sceneID="fc2-4G-2DB">
@@ -1278,25 +1432,6 @@ SNUTT를 사용하면서 불편한 사항을 알려주세요!</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oPZ-z3-uC8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3047.5" y="-3599.5"/>
-        </scene>
-        <!--시간표 설정-->
-        <scene sceneID="pV2-su-Vlv">
-            <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="nWg-ap-09p" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="gT3-nY-3Ts"/>
-                        <viewControllerLayoutGuide type="bottom" id="7td-Pf-pS1"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="P2c-1s-G2j">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="시간표 설정" id="b6S-A7-jJG"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iFV-ga-6Vh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3047.5" y="-4357.5"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
