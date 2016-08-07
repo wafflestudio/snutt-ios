@@ -7,15 +7,6 @@
 //
 
 import Foundation
-//
-//  STSearchRouter.swift
-//  SNUTT
-//
-//  Created by Rajin on 2016. 1. 24..
-//  Copyright © 2016년 WaffleStudio. All rights reserved.
-//
-
-import Foundation
 import Alamofire
 import SwiftyJSON
 
