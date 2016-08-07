@@ -17,24 +17,11 @@ class STNetworking {
     static func loginLocal(id: String, password: String, done: (String)->(), failure: ()->()) {
         let request = Alamofire.request(STAuthRouter.LocalLogin(id: id, password: password))
         
-        request.responseString(completionHandler: { res in
-            if res.result.isFailure || res.result.value == nil {
-                failure()
-            } else {
-                done(res.result.value!)
-            }
-            
-        })
- 
-        /*
         request.responseWithDone({ statusCode, json in
-            let token = json.stringValue
-            done(token)
-            }, failure: { err in
-                print(err)
+            done(json["token"].stringValue)
+        }, failure: { err in
             failure()
         })
- */
     }
     
     //MARK: LectureRouter

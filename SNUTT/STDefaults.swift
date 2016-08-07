@@ -15,6 +15,7 @@ extension DefaultsKeys {
     static let autoFit = SwiftyUserDefaults.DefaultsKey<Bool>("autoFit", true)
     static let dayRange = DefaultsKey<[Int]>("dayRange", [0,4])
     static let timeRange = DefaultsKey<[Double]>("timeRange", [0.0, 14.0]) //FIXME: default value
+    static let apiKey = DefaultsKey<String>("apiKey")
 }
 
 public let STDefaults = Defaults

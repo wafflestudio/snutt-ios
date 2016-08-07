@@ -9,9 +9,9 @@
 import UIKit
 import Fabric
 import Crashlytics
-import Alamofire
 import SwiftyJSON
 import FBSDKCoreKit
+import Firebase
 
 
 @UIApplicationMain
@@ -24,30 +24,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Fabric.with([Crashlytics.self])
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        FIRApp.configure()
         
-        
-        
+        // open main or login depending on the token
         if STDefaults[.token] != nil {
             self.window?.rootViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
         } else {
             self.window?.rootViewController = UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
         }
         
-        /*
-        
-        //TEST CODE FOR AUTH TOKEN
-        Alamofire.request(STAuthRouter.LocalLogin("snutt", "abcd")).responseSwiftyJSON { response in
-            switch response.result {
-            case .Success(let json):
-                STConfig.sharedInstance.token = json.stringValue
-                print(STConfig.sharedInstance.token)
-            case .Failure:
-                break
-            }
+        // set the api key base on config.plist
+        if STDefaults[.apiKey] == "" {
+            let path = NSBundle.mainBundle().pathForResource("config", ofType: "plist")!
+            let dict = NSDictionary(contentsOfFile: path)!
+            
+            STDefaults[.apiKey] = dict.objectForKey("API_KEY") as! String
         }
-        */
-        
-        
         
         return true
     }

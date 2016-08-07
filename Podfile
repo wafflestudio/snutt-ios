@@ -17,4 +17,5 @@ target 'SNUTT' do
   pod 'Carte'
   pod 'SwiftyUserDefaults', :git => 'https://github.com/Rajin9601/SwiftyUserDefaults.git'
   pod 'TTRangeSlider'
+  pod 'Firebase'
 end

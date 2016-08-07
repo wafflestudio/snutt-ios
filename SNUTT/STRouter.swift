@@ -25,8 +25,8 @@ extension STRouter {
         let URL = NSURL(string: Self.baseURLString)!
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
-        //TODO: Fix hard-coded apikey
-        let apikey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdHJpbmciOiJpb3MiLCJrZXlfdmVyc2lvbiI6IjAiLCJpYXQiOjE0NjkxNTc3MDh9.l9xgwS3LI706THVTwldotBDTT8Iripl-q0pUO-KIBjk"
+        
+        let apikey = STDefaults[.apiKey]
         mutableURLRequest.setValue(apikey, forHTTPHeaderField: "x-access-apikey")
         return mutableURLRequest
     }

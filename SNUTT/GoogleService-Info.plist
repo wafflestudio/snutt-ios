@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>472833977397-rqpv7hu2skfmh93u591h67qnbe8dp5ug.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.472833977397-rqpv7hu2skfmh93u591h67qnbe8dp5ug</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAaDVANpLghLYHW9xPPDEOKDX-7isi_6pw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>472833977397</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.wafflestudio.snutt</string>
+	<key>PROJECT_ID</key>
+	<string>snutt-1470373443173</string>
+	<key>STORAGE_BUCKET</key>
+	<string>snutt-1470373443173.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:472833977397:ios:55474c57ce8d073b</string>
+	<key>DATABASE_URL</key>
+	<string>https://snutt-1470373443173.firebaseio.com</string>
+</dict>
+</plist>
