@@ -15,7 +15,7 @@ class STNotificationTableViewCell: UITableViewCell {
     
     var notification : STNotification? {
         didSet {
-            descriptionLabel.text = notification?.body
+            descriptionLabel.text = notification?.message
         }
     }
     

@@ -103,6 +103,35 @@ class STNetworking {
         }
     }
     
+    //MARK: NotificationRouter
+    
+    static func getNotificationList(limit: Int, offset: Int, explicit: Bool, done: ([STNotification])->(), failure: ()->()) {
+        let request = Alamofire.request(STNotificationRouter.NotificationList(limit: limit, offset: offset, explicit: explicit))
+        request.responseSwiftyJSON { response in
+            switch response.result {
+            case .Success(let json):
+                let notiList = json.arrayValue.map { it in
+                    return STNotiUtil.parse(it)
+                }
+                done(notiList)
+            case .Failure:
+                failure()
+            }
+        }
+    }
+    
+    static func getNotificationCount(done: (Int)->(), failure: ()->()) {
+        let request = Alamofire.request(STNotificationRouter.NotificationCount)
+        request.responseSwiftyJSON { response in
+            switch response.result {
+            case .Success(let json):
+                done(json.intValue)
+            case .Failure:
+                failure()
+            }
+        }
+    }
+    
     //MARK: AppVersion
     
     static func checkLatestAppVersion(done:(String)->()) -> Void {
