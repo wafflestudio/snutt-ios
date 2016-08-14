@@ -118,6 +118,10 @@ class STTimetableManager : NSObject {
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
     }
     func setTemporaryLecture(lecture :STLecture?, object : AnyObject? ) {
+        //TODO: STEvent.tempLectureChanged for animation
+        if currentTimetable?.temporaryLecture == lecture {
+            return
+        }
         currentTimetable?.temporaryLecture = lecture
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
     }
