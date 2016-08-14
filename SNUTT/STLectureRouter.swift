@@ -34,8 +34,8 @@ enum STLectureRouter : STRouter {
         switch self {
         case .AddLecture(let timetableId, _ ):
             return "/\(timetableId)/lecture"
-        case .DeleteLecture(let timetableId, _ ):
-            return "/\(timetableId)/lecture"
+        case .DeleteLecture(let timetableId, let lecture ):
+            return "/\(timetableId)/lecture/\(lecture.id)"
         case let .UpdateLecture(timetableId, curLecture, _):
             return "/\(timetableId)/lecture/\(curLecture.id)"
         }
@@ -47,8 +47,8 @@ enum STLectureRouter : STRouter {
             var dict = lecture.toDictionary()
             dict.removeValueForKey("id")
             return dict
-        case .DeleteLecture( _, let lecture):
-            return ["lecture_id": lecture.id]
+        case .DeleteLecture:
+            return nil
         case let .UpdateLecture(_, oldLecture, newLecture):
             var dict : [String : AnyObject] = [:]
             let oldDict = oldLecture.toDictionary()
