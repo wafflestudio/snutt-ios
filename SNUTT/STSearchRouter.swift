@@ -33,8 +33,9 @@ enum STSearchRouter : STRouter {
     var parameters: [String : AnyObject]? {
         switch self {
         case let .Search(query, tagList):
-            let year = STTimetableManager.sharedInstance.currentTimetable!.quarter.year
-            let semester = STTimetableManager.sharedInstance.currentTimetable!.quarter.semester
+            // FIXME: is there better way?
+            let year = STTimetableManager.sharedInstance.currentTimetable?.quarter.year ?? 0
+            let semester = STTimetableManager.sharedInstance.currentTimetable?.quarter.semester ?? STSemester.First
             var credit : [Int] = []
             var instructor : [String] = []
             var department : [String] = []

@@ -14,7 +14,7 @@ class STTimetableTabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable!.title
+        self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
         
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableChanged, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableSwitched, object: nil)
@@ -31,7 +31,7 @@ class STTimetableTabViewController: UIViewController {
     }
     
     func reloadData() {
-        self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable!.title
+        self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
         timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableViewController?.reloadTimetable()
     }

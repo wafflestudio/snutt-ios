@@ -74,7 +74,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
     }
     
     func autofit() {
-        if timetable?.lectureList.count != 0 {
+        if timetable != nil && timetable?.lectureList.count != 0 {
             columnHidden = [false,false,false,false,false,true]
             rowStart = 1
             rowEnd = 10
@@ -168,7 +168,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
             return STPeriod.periodNum
         default:
             let index = section - LectureSectionOffset
-            if index < timetable!.lectureList.count {
+            if index < timetable!.lectureList.count{
                 return timetable!.lectureList[index].classList.count
             } else if index == timetable!.lectureList.count && timetable!.temporaryLecture != nil {
                 return timetable!.temporaryLecture!.classList.count
@@ -179,7 +179,9 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
     }
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        if showTemporary {
+        if timetable == nil {
+            return LectureSectionOffset
+        } else if showTemporary {
             return LectureSectionOffset + timetable!.lectureList.count + 1
         } else {
             return LectureSectionOffset + timetable!.lectureList.count

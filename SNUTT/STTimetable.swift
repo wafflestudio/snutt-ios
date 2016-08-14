@@ -18,7 +18,7 @@ class STTimetable {
     var lectureList : [STLecture] = []
     var quarter : STQuarter
     var title : String
-    var id : String?
+    var id : String? = ""
     var temporaryLecture : STLecture? = nil
     
     var isLoaded : Bool {
@@ -47,6 +47,18 @@ class STTimetable {
         lectures.forEach {data in
             self.addLecture(STLecture(json: data))
         }
+    }
+    
+    func toDictionary() -> [String: AnyObject] {
+        return [
+            "year" : quarter.year,
+            "semester" : quarter.semester.rawValue,
+            "title" : title,
+            "_id" : id!,
+            "lecture_list" : lectureList.map({ lecture in
+                return lecture.toDictionary()
+            })
+        ]
     }
     
     func addLecture(lecture : STLecture) -> STAddLectureState {

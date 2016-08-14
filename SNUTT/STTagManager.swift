@@ -32,7 +32,9 @@ class STTagManager {
     
     dynamic func loadData() {
         //TODO : load from local data else create fake taglist
-        let quarter = STTimetableManager.sharedInstance.currentTimetable!.quarter
+        guard let quarter = STTimetableManager.sharedInstance.currentTimetable?.quarter else {
+            return
+        }
         let tagList = NSKeyedUnarchiver.unarchiveObjectWithFile(getDocumentsDirectory().stringByAppendingPathComponent("tagList\(quarter.shortString()).archive")) as? STTagList
         if tagList != nil {
             self.tagList = tagList

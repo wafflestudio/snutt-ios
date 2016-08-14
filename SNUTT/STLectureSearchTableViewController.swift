@@ -192,7 +192,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         
     }
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        if STTimetableManager.sharedInstance.currentTimetable!.temporaryLecture == FilteredList[indexPath.row] {
+        if STTimetableManager.sharedInstance.currentTimetable?.temporaryLecture == FilteredList[indexPath.row] {
             STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
         }
     }

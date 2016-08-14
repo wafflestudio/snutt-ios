@@ -43,7 +43,7 @@ class STMyLectureListController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return STTimetableManager.sharedInstance.currentTimetable!.lectureList.count
+        return STTimetableManager.sharedInstance.currentTimetable?.lectureList.count ?? 0
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -97,7 +97,7 @@ class STMyLectureListController: UITableViewController {
             let destinationController = segue.destinationViewController as! STLectureDetailTableViewController
             let indexPath = tableView.indexPathForSelectedRow!
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            destinationController.lecture = STTimetableManager.sharedInstance.currentTimetable!.lectureList[indexPath.row]
+            destinationController.lecture = STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row]
         }
     }
     
