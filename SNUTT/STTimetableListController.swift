@@ -16,19 +16,15 @@ class STTimetableListController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Alamofire.request(STTimetableRouter.GetTimetableList).responseSwiftyJSON { response in
-            switch response.result {
-            case .Success(let json):
-                let timetables = json.arrayValue
-                self.timetableList = timetables.map { json in
-                    return STTimetable(json: json)
-                }
-                self.reloadList()
-            case .Failure:
-                // TODO: alertView about failure
-                self.dismissViewControllerAnimated(true, completion: nil)
+        Alamofire.request(STTimetableRouter.GetTimetableList).responseWithDone({ statusCode, json in
+            let timetables = json.arrayValue
+            self.timetableList = timetables.map { json in
+                return STTimetable(json: json)
             }
-        }
+            self.reloadList()
+        }, failure: { _ in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        })
         
         
         // Uncomment the following line to preserve selection between presentations
@@ -49,21 +45,18 @@ class STTimetableListController: UITableViewController {
         let newTimetable = STTimetable(courseBook: courseBook, title: title)
         timetableList.append(newTimetable)
         reloadList()
-        Alamofire.request(STTimetableRouter.CreateTimetable(title: title, courseBook: courseBook)).responseSwiftyJSON { response in
-            let index = self.timetableList.indexOf(newTimetable)
-            switch response.result {
-            case .Success(let json):
+        Alamofire.request(STTimetableRouter.CreateTimetable(title: title, courseBook: courseBook)).responseWithDone({ statusCode, json in
+                let index = self.timetableList.indexOf(newTimetable)
                 if json["success"].boolValue {
                     self.timetableList[index!] = STTimetable(json: json["timetable"])
                     self.tableView.reloadData()
                 } else {
                     self.timetableList.removeAtIndex(index!)
                 }
-            case .Failure:
+            }, failure: { _ in
+                let index = self.timetableList.indexOf(newTimetable)
                 self.timetableList.removeAtIndex(index!)
-                //TODO : alertView about failure
-            }
-        }
+        })
     }
     
     func reloadList() {
@@ -116,18 +109,14 @@ class STTimetableListController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let index = indexList[indexPath.section]+indexPath.row
-        Alamofire.request(STTimetableRouter.GetTimetable(id: timetableList[index].id!)).responseSwiftyJSON { response in
-            switch response.result {
-            case .Success(let json):
-                let timetable = STTimetable(json: json)
-                STTimetableManager.sharedInstance.currentTimetable = timetable
-                tableView.deselectRowAtIndexPath(indexPath, animated: false)
-                self.navigationController?.popViewControllerAnimated(true)
-            case .Failure:
-                // TODO: alertView about failure
-                break
-            }
-        }
+        
+        STNetworking.getTimetable(timetableList[index].id!, done: { timetable in
+            STTimetableManager.sharedInstance.currentTimetable = timetable
+            tableView.deselectRowAtIndexPath(indexPath, animated: false)
+            self.navigationController?.popViewControllerAnimated(true)
+            }, failure: { _ in
+            // TODO: alert for failure
+        })
     }
     
     
@@ -149,21 +138,18 @@ class STTimetableListController: UITableViewController {
             if timetable.id == nil {
                 return
             }
-            Alamofire.request(STTimetableRouter.DeleteTimetable(id: timetable.id!)).responseSwiftyJSON { response in
-                switch response.result {
-                case .Success:
-                    self.timetableList.removeAtIndex(index)
-                    let isSectionDeleted = self.indexList[indexPath.section+1] - self.indexList[indexPath.section] == 1
-                    self.sortTimetableList()
-                    if isSectionDeleted {
-                        self.tableView.deleteSections(NSIndexSet(index: indexPath.section), withRowAnimation: .Fade)
-                    } else {
-                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-                    }
-                case .Failure:
-                    break
+            STNetworking.deleteTimetable(timetable.id!, done: {
+                self.timetableList.removeAtIndex(index)
+                let isSectionDeleted = self.indexList[indexPath.section+1] - self.indexList[indexPath.section] == 1
+                self.sortTimetableList()
+                if isSectionDeleted {
+                    self.tableView.deleteSections(NSIndexSet(index: indexPath.section), withRowAnimation: .Fade)
+                } else {
+                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                 }
-            }
+            }, failure: { _ in
+                
+            })
             
         }
     }

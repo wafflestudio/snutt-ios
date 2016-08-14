@@ -66,21 +66,20 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     func getLectureList(searchString : String) {
+        // This is for saving the request
         let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagCollectionView.tagList))
         state = .Loading(request)
-        request.responseSwiftyJSON { response in
+        request.responseWithDone({ statusCode, json in
             self.state = .Loaded(searchString)
-            switch response.result {
-            case .Success(let json):
-                self.FilteredList = json.arrayValue.map { data in
-                    return STLecture(json: data)
-                }
-                self.reloadData()
-            case .Failure(let error):
-                //TODO : Alertview for failure
-                print(error)
+            self.FilteredList = json.arrayValue.map { data in
+                return STLecture(json: data)
             }
-        }
+            self.reloadData()
+        }, failure: { _ in
+            self.state = .Empty
+            self.FilteredList = []
+            self.reloadData()
+        })
     }
     func getMoreLectureList() {
         /* //FIXME : DEBUG

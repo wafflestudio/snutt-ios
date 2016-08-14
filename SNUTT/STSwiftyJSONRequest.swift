@@ -48,12 +48,15 @@ extension Request {
         )
     }
     
-    public func responseWithDone(done: ((Int, JSON) -> ())?, failure: ((NSError) -> ())? ) {
+    public func responseWithDone(done: ((Int, JSON) -> ())?, failure: ((NSError) -> ())?, networkAlert: Bool = true ) {
         self.responseSwiftyJSON { response in
             switch response.result {
             case .Success(let json):
                 done?(response.response?.statusCode ?? 200 ,json)
             case .Failure(let error):
+                if networkAlert {
+                    STNetworking.showNetworkError()
+                }
                 failure?(error)
             }
         }
