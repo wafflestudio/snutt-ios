@@ -159,21 +159,72 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func submitButtonClicked() {
+        guard let id = idTextField.text, password = passwordTextField.text else {
+            //TODO: AlertView
+            return
+        }
+        
         if isLoginTab {
-            guard let id = idTextField.text, password = passwordTextField.text else {
-                return
-                //TODO: AlertView
-            }
             STNetworking.loginLocal(id, password: password, done: { token in
                 STDefaults[.token] = token
-                let appDelegate = UIApplication.sharedApplication().delegate!
-                let window = appDelegate.window!
-                let mainController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
-                window!.rootViewController = mainController
+                self.openMainController()
                 }, failure: { _ in
                 //TODO: AlertView
             })
+        } else {
+            if passwordCheckTextField.text != password {
+                //TODO: AlertView
+                return
+            } else if !checkId(id) {
+                //TODO: AlertView
+                return
+            } else if !checkPassword(password) {
+                //TODO: AlertView
+                return
+            }
+            STNetworking.registerLocal(id, password: password, done: { _ in
+                STNetworking.loginLocal(id, password: password, done: { token in
+                    STDefaults[.token] = token
+                    self.openMainController()
+                }, failure: { _ in
+                    //TODO: This should not happen but for server bug
+                    // AlertView
+                })
+            }, failure: { _ in
+                //TODO: AlertView
+            })
         }
+    }
+    
+    func checkId(id: String) -> Bool {
+        if let _ = id.rangeOfString("^[a-z0-9]{4,32}$", options: [.RegularExpressionSearch, .CaseInsensitiveSearch]) {
+            return true
+        }
+        return false
+    }
+    
+    func checkPassword(password: String) -> Bool {
+        if let _ = password.rangeOfString("^(?=.*\\d)(?=.*[a-z])\\S{6,20}$", options: [.RegularExpressionSearch, .CaseInsensitiveSearch]) {
+            return true
+        }
+        return false
+    }
+    
+    func openMainController() {
+        //TODO: get the timetable
+        let openController : () -> () = { _ in
+            let appDelegate = UIApplication.sharedApplication().delegate!
+            let window = appDelegate.window!!
+            let mainController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+            window.rootViewController = mainController
+        }
+        
+        STNetworking.getRecentTimetable({ timetable in
+            STTimetableManager.sharedInstance.currentTimetable = timetable
+            openController()
+        }, failure: {
+            openController()
+        })
     }
     
     func keyboardWillShow(notification: NSNotification) {

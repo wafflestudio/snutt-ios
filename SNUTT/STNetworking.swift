@@ -24,6 +24,20 @@ class STNetworking {
         })
     }
     
+    static func registerLocal(id: String, password: String, done: ()->(), failure: ()->()) {
+        let request = Alamofire.request(STAuthRouter.LocalRegister(id: id, password: password))
+        
+        request.responseWithDone({ statusCode, json in
+            if (statusCode == 200) {
+                done()
+            } else {
+                failure()
+            }
+        }, failure: { err in
+            failure()
+        })
+    }
+    
     //MARK: TimetableRouter
     
     static func deleteTimetable(id: String, done: ()->(), failure: ()->()) {
@@ -45,6 +59,19 @@ class STNetworking {
         }, failure: { _ in
             failure()
         })
+    }
+    
+    static func getRecentTimetable(done: (STTimetable?)->(), failure: ()->()) {
+        Alamofire.request(STTimetableRouter.GetRecentTimetable())
+            .responseWithDone({ statusCode, json in
+                if statusCode == 404 {
+                    done(nil)
+                } else {
+                    done(STTimetable(json: json))
+                }
+            }, failure: { _ in
+                failure()
+            })
     }
     
     //MARK: LectureRouter

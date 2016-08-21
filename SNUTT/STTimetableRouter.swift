@@ -19,6 +19,7 @@ enum STTimetableRouter : STRouter {
     case CreateTimetable(title : String, courseBook : STCourseBook)
     case UpdateTimetable(id: String,title: String)
     case DeleteTimetable(id: String)
+    case GetRecentTimetable()
     
     var method: Alamofire.Method {
         switch self {
@@ -32,6 +33,8 @@ enum STTimetableRouter : STRouter {
             return .PUT
         case .DeleteTimetable:
             return .DELETE
+        case .GetRecentTimetable:
+            return .GET
         }
     }
     
@@ -47,6 +50,8 @@ enum STTimetableRouter : STRouter {
             return "\(id)"
         case .DeleteTimetable(let id):
             return "\(id)"
+        case .GetRecentTimetable:
+            return "recent"
         }
     }
     
@@ -61,6 +66,8 @@ enum STTimetableRouter : STRouter {
         case .UpdateTimetable(_, let title):
             return ["title" : title]
         case .DeleteTimetable:
+            return nil
+        case .GetRecentTimetable:
             return nil
         }
     }

@@ -59,6 +59,7 @@ extension Request {
                         let errCode = json["errcode"].intValue
                         if errCode == 1 {
                             // Token is wrong. => login page
+                            STDefaults[.token] = nil
                             UIApplication.sharedApplication().delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
                             return
                         } else if errCode == 0 {
