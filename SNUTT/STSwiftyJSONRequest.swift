@@ -52,6 +52,29 @@ extension Request {
         self.responseSwiftyJSON { response in
             switch response.result {
             case .Success(let json):
+                if let statusCode = response.response?.statusCode {
+                    // FIXME: statusCodes
+                    
+                    if 400 <= statusCode && statusCode <= 403 {
+                        let errCode = json["errcode"].intValue
+                        if errCode == 1 {
+                            // Token is wrong. => login page
+                            UIApplication.sharedApplication().delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+                            return
+                        } else if errCode == 0 {
+                            // apiKey is wrong
+                            // TODO: What if api key is wrong even though it should not happen.
+                            // TODO: call failure
+                            return
+                        } else {
+                            // something is wrong to the server
+                            // TODO: alertview for server error
+                            // TODO: call failure
+                            return
+                        }
+
+                    }
+                }
                 done?(response.response?.statusCode ?? 200 ,json)
             case .Failure(let error):
                 if networkAlert {

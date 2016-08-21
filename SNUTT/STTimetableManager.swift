@@ -26,6 +26,13 @@ class STTimetableManager : NSObject {
     private override init() {
         super.init()
         self.loadData()
+        if let timetableId = currentTimetable?.id {
+            STNetworking.getTimetable(timetableId, done: { timetable in
+                //FIXME: current logic = if it is 404, just set it to nil
+                self.currentTimetable = timetable
+            }, failure: { _ in
+            })
+        }
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableManager.saveData), event: STEvent.CurrentTimetableChanged, object: nil)
     }
     

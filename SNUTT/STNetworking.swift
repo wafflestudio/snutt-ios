@@ -34,8 +34,12 @@ class STNetworking {
         })
     }
     
-    static func getTimetable(id: String, done: (STTimetable)->(), failure: ()->()) {
+    static func getTimetable(id: String, done: (STTimetable?)->(), failure: ()->()) {
         Alamofire.request(STTimetableRouter.GetTimetable(id: id)).responseWithDone({ statusCode, json in
+            if statusCode == 404 {
+                done(nil)
+                return
+            }
             let timetable = STTimetable(json: json)
             done(timetable)
         }, failure: { _ in

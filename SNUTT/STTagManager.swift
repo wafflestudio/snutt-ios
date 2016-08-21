@@ -45,7 +45,6 @@ class STTagManager {
     }
     
     func saveData(quarter: STQuarter) {
-        //TODO : save to local data
         NSKeyedArchiver.archiveRootObject(self.tagList, toFile: getDocumentsDirectory().stringByAppendingPathComponent("tagList\(quarter.shortString()).archive"))
     }
     
