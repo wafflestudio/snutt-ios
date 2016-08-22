@@ -160,7 +160,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func submitButtonClicked() {
         guard let id = idTextField.text, password = passwordTextField.text else {
-            //TODO: AlertView
+            STAlertView.showAlert(title: "로그인/회원가입 실패", message: "아이디와 비밀번호를 입력해주세요.")
             return
         }
         
@@ -169,17 +169,29 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
                 STDefaults[.token] = token
                 self.openMainController()
                 }, failure: { _ in
-                //TODO: AlertView
+                STAlertView.showAlert(title: "로그인 실패", message: "아이디나 비밀번호가 올바르지 않습니다.")
             })
         } else {
             if passwordCheckTextField.text != password {
-                //TODO: AlertView
+                STAlertView.showAlert(title: "회원가입 실패", message: "비밀번호 확인란과 비밀번호가 다릅니다.")
                 return
             } else if !checkId(id) {
-                //TODO: AlertView
+                var message : String = ""
+                if (id.characters.count > 32 || id.characters.count < 4) {
+                    message = "아이디는 4자 이상, 32자 이하여야합니다."
+                } else {
+                    message = "아이디는 영문자와 숫자로만 이루어져 있어야 합니다."
+                }
+                STAlertView.showAlert(title: "회원가입 실패", message: message)
                 return
             } else if !checkPassword(password) {
-                //TODO: AlertView
+                var message : String = ""
+                if (password.characters.count > 20  || password.characters.count < 6) {
+                    message = "비밀번호는 6자 이상, 20자 이하여야 합니다."
+                } else {
+                    message = "비밀번호는 최소 숫자 1개와 영문자 1개를 포함해야 합니다."
+                }
+                STAlertView.showAlert(title: "회원가입 실패", message: message)
                 return
             }
             STNetworking.registerLocal(id, password: password, done: { _ in
@@ -187,11 +199,11 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
                     STDefaults[.token] = token
                     self.openMainController()
                 }, failure: { _ in
-                    //TODO: This should not happen but for server bug
-                    // AlertView
+                    STAlertView.showAlert(title: "회원가입 실패", message: "회원가입은 성공하였으나, 로그인에 실패하였습니다. 로그인을 재시도 해주세요.")
                 })
             }, failure: { _ in
-                //TODO: AlertView
+                // TODO: 에러 메세지 출력해주기.
+                STAlertView.showAlert(title: "회원가입 실패", message: "회원가입에 실패하였습니다.")
             })
         }
     }

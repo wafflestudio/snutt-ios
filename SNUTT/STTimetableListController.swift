@@ -111,11 +111,14 @@ class STTimetableListController: UITableViewController {
         let index = indexList[indexPath.section]+indexPath.row
         
         STNetworking.getTimetable(timetableList[index].id!, done: { timetable in
+            if (timetable == nil) {
+                STAlertView.showAlert(title: "시간표 로딩 실패", message: "선택한 시간표가 서버에 존재하지 않습니다.")
+            }
             STTimetableManager.sharedInstance.currentTimetable = timetable
             tableView.deselectRowAtIndexPath(indexPath, animated: false)
             self.navigationController?.popViewControllerAnimated(true)
             }, failure: { _ in
-            // TODO: alert for failure
+                
         })
     }
     

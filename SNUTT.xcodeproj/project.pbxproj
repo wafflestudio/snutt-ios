@@ -55,6 +55,7 @@
 		E17825C91D560A10009ACEC3 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E17825C81D560A10009ACEC3 /* config.plist */; };
 		E17825CB1D572FB0009ACEC3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E17825CA1D572FAF009ACEC3 /* GoogleService-Info.plist */; };
 		E17825CD1D577CD8009ACEC3 /* STNotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17825CC1D577CD8009ACEC3 /* STNotificationRouter.swift */; };
+		E184359D1D69A2C200BE5D58 /* STAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E184359C1D69A2C200BE5D58 /* STAlertView.swift */; };
 		E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */; };
 		E18F2E501C5E6FBC00114ADF /* STTagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */; };
 		E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */; };
@@ -179,6 +180,7 @@
 		E17825C81D560A10009ACEC3 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		E17825CA1D572FAF009ACEC3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E17825CC1D577CD8009ACEC3 /* STNotificationRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STNotificationRouter.swift; sourceTree = "<group>"; };
+		E184359C1D69A2C200BE5D58 /* STAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAlertView.swift; sourceTree = "<group>"; };
 		E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchBar.swift; sourceTree = "<group>"; };
 		E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagListView.swift; sourceTree = "<group>"; };
 		E19A3A951B453770007FCAD7 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -299,6 +301,7 @@
 				E1B381A81C6C52D9007E1A15 /* STUtil.swift */,
 				E110CFDA1C888F5700ED0590 /* STTagManager.swift */,
 				E1EE1B301CCCDE20003DF250 /* STDefaults.swift */,
+				E184359C1D69A2C200BE5D58 /* STAlertView.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -814,6 +817,7 @@
 				E1F0CA351C78399D00A4F4ED /* STDoubleLabeledTableViewCell.swift in Sources */,
 				E1F58AA41C3CED3600F6A0FC /* STTimetable.swift in Sources */,
 				E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */,
+				E184359D1D69A2C200BE5D58 /* STAlertView.swift in Sources */,
 				E149920D1C4F6D1F00DC6756 /* STTimetableCellType.swift in Sources */,
 				E10852C91B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift in Sources */,
 				E1C48BB01C79C45500BC469E /* STQuarter.swift in Sources */,

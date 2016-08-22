@@ -92,7 +92,7 @@ class STNotificationTableViewController: UITableViewController {
             }
             self.tableView.reloadData()
         }, failure: {
-            //TODO: alertview
+            // There is no error other than networking error
             self.loading = false
         })
     }
@@ -119,7 +119,7 @@ class STNotificationTableViewController: UITableViewController {
             self.tableView.reloadData()
             self.refreshControl?.endRefreshing()
             }, failure: {
-                //TODO: alertview
+                // There is no error other than networking error
                 self.loading = false
         })
     }

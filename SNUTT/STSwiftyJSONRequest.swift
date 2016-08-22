@@ -53,8 +53,6 @@ extension Request {
             switch response.result {
             case .Success(let json):
                 if let statusCode = response.response?.statusCode {
-                    // FIXME: statusCodes
-                    
                     if 400 <= statusCode && statusCode <= 403 {
                         let errCode = json["errcode"].intValue
                         if errCode == 1 {
