@@ -27,7 +27,7 @@ class STCourseBookList {
     var courseBookList : [STCourseBook]?
     
     func loadCourseBooks () {
-        //TODO : Add networking
+        
         courseBookList = [
             STCourseBook(year: 2016, semester: .First),
             STCourseBook(year: 2015, semester: .Winter),

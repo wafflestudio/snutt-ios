@@ -54,11 +54,13 @@ extension Request {
             case .Success(let json):
                 if let statusCode = response.response?.statusCode {
                     if 400 <= statusCode && statusCode <= 403 {
-                        let errCode = json["errcode"].intValue
-                        if errCode == 1 {
+                        guard let errCode = json["errcode"].int else {
+                            done?(response.response?.statusCode ?? 200 ,json)
+                            return
+                        }
+                        if errCode == 1 || errCode == 2 {
                             // Token is wrong. => login page
-                            STDefaults[.token] = nil
-                            UIApplication.sharedApplication().delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+                            STUser.logOut()
                             return
                         } else if errCode == 0 {
                             // apiKey is wrong
