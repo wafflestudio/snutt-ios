@@ -18,7 +18,11 @@ class STNetworking {
         let request = Alamofire.request(STAuthRouter.LocalLogin(id: id, password: password))
         
         request.responseWithDone({ statusCode, json in
-            done(json["token"].stringValue)
+            if statusCode == 200 {
+                done(json["token"].stringValue)
+            } else {
+                failure()
+            }
         }, failure: { err in
             failure()
         })
@@ -30,6 +34,19 @@ class STNetworking {
         request.responseWithDone({ statusCode, json in
             if (statusCode == 200) {
                 done()
+            } else {
+                failure()
+            }
+        }, failure: { err in
+            failure()
+        })
+    }
+    
+    static func registerFB(name: String, token: String, done: (String)->(), failure: ()->()) {
+        let request = Alamofire.request(STAuthRouter.FBRegister(name: name, token: token))
+        request.responseWithDone({ statusCode, json in
+            if (statusCode == 200) {
+                done(json["token"].stringValue)
             } else {
                 failure()
             }

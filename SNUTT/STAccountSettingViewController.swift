@@ -70,13 +70,13 @@ class STAccountSettingViewController: UITableViewController {
     func getCellType(indexPath: NSIndexPath) -> CellType {
         switch (indexPath.section, indexPath.row) {
         case (0,0):
-            return .RightDetail(title: "아이디", detail: STUser.currentUser.localId ?? "Empty")
+            return .RightDetail(title: "아이디", detail: STUser.currentUser?.localId ?? "Empty")
         case (0,1):
-            return .Button(title: STUser.currentUser.localId != nil ? "비밀번호 변경" : "회원가입")
+            return .Button(title: STUser.currentUser?.localId != nil ? "비밀번호 변경" : "아이디 비번으로 회원가입")
         case (1,0):
-            return .RightDetail(title: "페이스북 아이디", detail: STUser.currentUser.fbId ?? "Empty")
+            return .RightDetail(title: "페이스북 아이디", detail: STUser.currentUser?.fbId ?? "Empty")
         case (1,1):
-            let title = STUser.currentUser.fbId != nil ? "페이스북 연동 해제" : "페이스북 연동"
+            let title = STUser.currentUser?.fbId != nil ? "페이스북 연동 해제" : "페이스북 연동"
             return .Button(title: title)
         case (2,0):
             return .RedButton(title: "회원탈퇴")

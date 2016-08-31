@@ -34,7 +34,18 @@ class STSettingViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if (indexPath.section, indexPath.row) == (4,0) {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            let logout = UIAlertAction(title: "로그아웃", style: .Destructive, handler: { _ in
+                STUser.logOut()
+            })
+            let cancel = UIAlertAction(title: "취소", style: .Cancel, handler: nil)
+            STAlertView.showAlert(title: "로그아웃", message: "로그아웃 하시겠습니까?", actions: [cancel, logout])
 
+        }
+    }
     /*
     // MARK: - Navigation
 

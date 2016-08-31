@@ -7,29 +7,37 @@
 //
 
 import Foundation
+import UIKit
 
 class STUser {
     var localId : String?
     var fbId : String?
     
-    static var currentUser = STUser(localId: nil, fbId: nil);
+    static var currentUser: STUser? = STUser(localId: nil, fbId: nil);
     
     static func saveData() {
-        if currentUser.fbId != nil {
-            NSUserDefaults.standardUserDefaults().setObject(currentUser.fbId, forKey: "UserFBId")
+        if currentUser?.fbId != nil {
+            NSUserDefaults.standardUserDefaults().setObject(currentUser?.fbId, forKey: "UserFBId")
         }
-        if currentUser.localId != nil {
-            NSUserDefaults.standardUserDefaults().setObject(currentUser.localId, forKey: "UserLocalId")
+        if currentUser?.localId != nil {
+            NSUserDefaults.standardUserDefaults().setObject(currentUser?.localId, forKey: "UserLocalId")
         }
     }
     
     static func loadData() {
         if let fbId = NSUserDefaults.standardUserDefaults().objectForKey("UserFBId") as? String {
-            currentUser.fbId = fbId
+            currentUser?.fbId = fbId
         }
         if let localId = NSUserDefaults.standardUserDefaults().objectForKey("UserLocalId") as? String {
-            currentUser.localId = localId
+            currentUser?.localId = localId
         }
+    }
+    
+    static func logOut() {
+        STUser.currentUser = nil
+        STDefaults[.token] = nil
+        UIApplication.sharedApplication().delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+        
     }
     
     init(localId : String?, fbId : String?) {
