@@ -140,21 +140,35 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func fbButonClicked() {
-        if isLoginTab {
-            if FBSDKAccessToken.currentAccessToken() == nil {
-                let fbLoginManager = FBSDKLoginManager()
-                fbLoginManager.logInWithReadPermissions(["public_profile"], fromViewController: self, handler:{result, error in
-                    if error != nil {
-                        
-                    } else if result.isCancelled {
-                        
-                    } else {
-                        print(result.token.tokenString)
-                    }
-                })
-            } else {
-                print(FBSDKAccessToken.currentAccessToken().tokenString)
-            }
+        
+        let done : (String) -> () = { token in
+            STDefaults[.token] = token
+            self.openMainController()
+        }
+        
+        let registerFB : (String, String) -> () = { id, token in
+            STNetworking.registerFB(id, token: token, done: done, failure: { _ in
+                
+            })
+        }
+        
+        if let accessToken = FBSDKAccessToken.currentAccessToken() {
+            let id = accessToken.userID
+            let token = accessToken.tokenString
+            registerFB(id, token)
+        } else {
+            let fbLoginManager = FBSDKLoginManager()
+            fbLoginManager.logInWithReadPermissions(["public_profile"], fromViewController: self, handler:{result, error in
+                if error != nil {
+                    STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
+                } else if result.isCancelled {
+                    STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
+                } else {
+                    let id = result.token.userID
+                    let token = result.token.tokenString
+                    registerFB(id, token)
+                }
+            })
         }
     }
     

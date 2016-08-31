@@ -16,6 +16,7 @@ enum STAuthRouter : STRouter {
     
     case LocalLogin(id: String, password: String)
     case LocalRegister(id: String, password: String)
+    case FBRegister(name: String, token: String)
     
     //MARK: STRouter
     
@@ -24,6 +25,8 @@ enum STAuthRouter : STRouter {
         case .LocalLogin:
             return .POST
         case .LocalRegister:
+            return .POST
+        case .FBRegister:
             return .POST
         }
     }
@@ -34,6 +37,8 @@ enum STAuthRouter : STRouter {
             return "/login_local"
         case .LocalRegister:
             return "/register_local"
+        case .FBRegister:
+            return "/login_fb"
         }
     }
     
@@ -43,6 +48,8 @@ enum STAuthRouter : STRouter {
             return ["id" : id, "password" : password]
         case let .LocalRegister(id, password):
             return ["id" : id, "password" : password]
+        case let .FBRegister(name, token):
+            return ["fb_name" : name, "fb_token" : token]
         }
     }
     
