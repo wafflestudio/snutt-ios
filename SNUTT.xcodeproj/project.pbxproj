@@ -98,6 +98,7 @@
 		E1E99A6B1C423CDB004A426A /* STEventCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E99A6A1C423CDB004A426A /* STEventCenter.swift */; };
 		E1EE1B311CCCDE20003DF250 /* STDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EE1B301CCCDE20003DF250 /* STDefaults.swift */; };
 		E1EE1B331CCDAAB6003DF250 /* STPaddingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EE1B321CCDAAB6003DF250 /* STPaddingTableViewCell.swift */; };
+		E1EF8B301D6D640100791778 /* STUserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF8B2F1D6D640100791778 /* STUserRouter.swift */; };
 		E1F0CA191C6F2C1900A4F4ED /* sharp.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA181C6F2C1900A4F4ED /* sharp.png */; };
 		E1F0CA1D1C7482D300A4F4ED /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA1C1C7482D300A4F4ED /* delete.png */; };
 		E1F0CA1F1C748B6000A4F4ED /* STTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */; };
@@ -230,6 +231,7 @@
 		E1E99A6A1C423CDB004A426A /* STEventCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STEventCenter.swift; sourceTree = "<group>"; };
 		E1EE1B301CCCDE20003DF250 /* STDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDefaults.swift; sourceTree = "<group>"; };
 		E1EE1B321CCDAAB6003DF250 /* STPaddingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STPaddingTableViewCell.swift; sourceTree = "<group>"; };
+		E1EF8B2F1D6D640100791778 /* STUserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STUserRouter.swift; sourceTree = "<group>"; };
 		E1F0CA181C6F2C1900A4F4ED /* sharp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sharp.png; path = images/sharp.png; sourceTree = "<group>"; };
 		E1F0CA1C1C7482D300A4F4ED /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = images/delete.png; sourceTree = "<group>"; };
 		E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagTableViewCell.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				E1F632931C8D21C20030BE7D /* STNetworking.swift */,
 				E133794E1D41E26C00AD10F4 /* STRouter.swift */,
 				E17825CC1D577CD8009ACEC3 /* STNotificationRouter.swift */,
+				E1EF8B2F1D6D640100791778 /* STUserRouter.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -805,6 +808,7 @@
 				E110CFCE1C87FED300ED0590 /* STCustomColorPickerViewController.swift in Sources */,
 				E19E231F1B468B700010DFB1 /* STLectureSearchTableViewController.swift in Sources */,
 				E14991FD1C46241700DC6756 /* STConfig.swift in Sources */,
+				E1EF8B301D6D640100791778 /* STUserRouter.swift in Sources */,
 				E10CBEE11C7B71E400E8FE26 /* STAddCustomLectureTableViewController.swift in Sources */,
 				E1B381A91C6C52D9007E1A15 /* STUtil.swift in Sources */,
 				E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */,
