@@ -17,9 +17,14 @@ class STTimetableAddController: UIViewController, UIPickerViewDataSource, UIPick
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(self.reloadCourseBook), event: STEvent.CourseBookUpdated, object: nil)
         // Do any additional setup after loading the view.
         semesterPicker.delegate = self
         semesterPicker.dataSource = self
+    }
+    
+    func reloadCourseBook() {
+        semesterPicker.reloadAllComponents()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,7 +39,7 @@ class STTimetableAddController: UIViewController, UIPickerViewDataSource, UIPick
 
     @IBAction func saveButtonClicked(sender: UIBarButtonItem) {
         let index = semesterPicker.selectedRowInComponent(0)
-        let selectedCourseBook = STCourseBookList.sharedInstance.courseBookList![index]
+        let selectedCourseBook = STCourseBookList.sharedInstance.courseBookList[index]
         let title = titleTextField.text
         if (title == nil || title == "") {
             return //TODO: Alert the user for the missing title
@@ -51,11 +56,11 @@ class STTimetableAddController: UIViewController, UIPickerViewDataSource, UIPick
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return STCourseBookList.sharedInstance.courseBookList!.count
+        return STCourseBookList.sharedInstance.courseBookList.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return STCourseBookList.sharedInstance.courseBookList![row].quarter.longString()
+        return STCourseBookList.sharedInstance.courseBookList[row].quarter.longString()
     }
     
     /*

@@ -7,19 +7,31 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-struct STCourseBook {
+struct STCourseBook : DictionaryRepresentable{
     var quarter : STQuarter
-    var update_date : String
-    var start_date : String
-    var end_date : String
     
     init (year aYear : Int, semester aSemester : STSemester) {
         self.quarter = STQuarter(year: aYear, semester: aSemester)
-        self.update_date = ""
-        self.start_date = ""
-        self.end_date = ""
     }
+    
+    init (json: JSON) {
+        let year = json["year"].intValue
+        let semester = STSemester(rawValue: json["semester"].intValue)!
+        self.init(year: year, semester: semester)
+    }
+    
+    //MARK: DictionaryRepresentable
+    
+    func dictionaryValue() -> NSDictionary {
+        return self.quarter.dictionaryValue()
+    }
+    init?(dictionary: NSDictionary?) {
+        guard let quarter = STQuarter(dictionary: dictionary) else { return nil }
+        self.quarter = quarter
+    }
+
 }
 
 extension STCourseBook : Equatable {}

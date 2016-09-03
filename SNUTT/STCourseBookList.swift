@@ -22,21 +22,36 @@ class STCourseBookList {
     }
     private init() {
         self.loadCourseBooks()
+        self.getCourseBooks()
     }
     
-    var courseBookList : [STCourseBook]?
+    var courseBookList : [STCourseBook] = []
     
     func loadCourseBooks () {
         
-        courseBookList = [
-            STCourseBook(year: 2016, semester: .First),
-            STCourseBook(year: 2015, semester: .Winter),
-            STCourseBook(year: 2015, semester: .Second),
-            STCourseBook(year: 2015, semester: .Summer),
-            STCourseBook(year: 2015, semester: .First),
-            STCourseBook(year: 2014, semester: .Winter),
-            STCourseBook(year: 2014, semester: .Second)
-        ]
+        guard let courseBookList = NSKeyedUnarchiver.unarchiveObjectWithFile(getDocumentsDirectory().stringByAppendingPathComponent("courseBookList.archive")) as? [NSDictionary] else {
+            self.courseBookList = []
+            return
+        }
+        self.courseBookList = courseBookList.map({ dict in
+            return STCourseBook(dictionary: dict)!
+        })
+    }
+    
+    func saveCourseBooks () {
+        NSKeyedArchiver.archiveRootObject(courseBookList.map({ book in
+            return book.dictionaryValue()
+        }), toFile: getDocumentsDirectory().stringByAppendingPathComponent("courseBookList.archive"))
+    }
+    
+    func getCourseBooks () {
+        STNetworking.getCourseBookList({ list in
+            self.courseBookList = list
+            STEventCenter.sharedInstance.postNotification(event: .CourseBookUpdated, object: nil)
+            self.saveCourseBooks()
+            }, failure: { _ in
+                return
+        })
     }
     
 }

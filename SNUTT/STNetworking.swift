@@ -187,6 +187,20 @@ class STNetworking {
         })
     }
     
+    //MARK: CourseBookRouter
+    
+    static func getCourseBookList(done: ([STCourseBook])->(), failure: ()->()) {
+        let request = Alamofire.request(STCourseBookRouter.Get)
+        request.responseWithDone({ statusCode, json in
+            let list = json.arrayValue.map({ json in
+                return STCourseBook(json: json)
+            })
+            done(list)
+            }, failure: { _ in
+                failure()
+        })
+    }
+    
     static func showNetworkError() {
         let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.Default, handler: nil))

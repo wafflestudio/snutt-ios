@@ -12,6 +12,8 @@ enum STEvent : String {
     case CurrentTimetableSwitched = "CurrentTimetableSwitched"
     case CurrentTimetableChanged = "CurrentTimetableChanged"
     case SettingChanged = "SettingChanged"
+    case CourseBookUpdated = "CourseBookUpdated"
+    case TagListUpdated = "TagListUpdated"
 }
 
 class STEventCenter : NSNotificationCenter {
