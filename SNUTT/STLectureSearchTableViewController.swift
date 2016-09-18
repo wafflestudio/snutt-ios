@@ -24,6 +24,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     var FilteredList : [STLecture] = []
     var pageNum : Int = 0
+    var perPage : Int = 20
+    var isLast : Bool = false
     
     enum SearchState {
         case Empty
@@ -67,13 +69,18 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func getLectureList(searchString : String) {
         // This is for saving the request
-        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagCollectionView.tagList))
+        isLast = false
+        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagCollectionView.tagList, offset: 0, limit: perPage))
         state = .Loading(request)
         request.responseWithDone({ statusCode, json in
             self.state = .Loaded(searchString)
             self.FilteredList = json.arrayValue.map { data in
                 return STLecture(json: data)
             }
+            if json.arrayValue.count < self.perPage {
+                self.isLast = true
+            }
+            self.pageNum = 1
             self.reloadData()
         }, failure: { _ in
             self.state = .Empty
@@ -81,30 +88,38 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
             self.reloadData()
         })
     }
-    func getMoreLectureList() {
-        /* //FIXME : DEBUG
-        if isGettingLecture {
+    
+    func getMoreLectureList(searchString: String) {
+        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagCollectionView.tagList, offset: perPage * pageNum, limit: perPage))
+        state = .Loading(request)
+        request.responseWithDone({ statusCode, json in
+            self.state = .Loaded(searchString)
+            self.FilteredList = self.FilteredList + json.arrayValue.map { data in
+                return STLecture(json: data)
+            }
+            if json.arrayValue.count < self.perPage {
+                self.isLast = true
+            }
+            self.pageNum = self.pageNum + 1
+            self.reloadData()
+            }, failure: { _ in
+                self.state = .Empty
+                self.FilteredList = []
+                self.reloadData()
+        })
+
+    }
+    
+    let heightForFetch = CGFloat(50.0)
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentSize.height == 0 {
             return
+        } else if scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height - heightForFetch && !isLast{
+            if case SearchState.Loaded(let searchString) = state {
+                getMoreLectureList(searchString)
+            }
         }
-        isGettingLecture = true
-        if pageNum == -1 {
-            return
-        }
-        pageNum++
-        let queryText = SearchingString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        let currentCourseBook = STCourseBooksManager.sharedInstance.currentCourseBook!
-        let url : String  = "http://snutt.kr/api/search_query?year=\(currentCourseBook.year)&semester=\(currentCourseBook.semester)&filter=&type=course_title&query_text=\(queryText)&page=\(pageNum)&per_page=30"
-        let jsonData = NSData(contentsOfURL: NSURL(string: url)!)
-        let jsonDictionary = (try! NSJSONSerialization.JSONObjectWithData(jsonData!, options: [])) as! NSDictionary
-        let searchResult = jsonDictionary["lectures"] as! [NSDictionary]
-        for it in searchResult {
-            FilteredList.append(STLecture(json: it))
-        }
-        if searchResult.count != 30 {
-            pageNum = -1
-        }
-        isGettingLecture = false
-        */
     }
     
     func timetableSwitched() {

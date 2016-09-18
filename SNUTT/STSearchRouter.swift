@@ -14,7 +14,7 @@ enum STSearchRouter : STRouter {
     static let baseURLString = STConfig.sharedInstance.baseURL+"/search_query"
     static let shouldAddToken: Bool = true
     
-    case Search(query : String, tagList: [STTag])
+    case Search(query : String, tagList: [STTag], offset: Int, limit: Int)
     
     var method: Alamofire.Method {
         switch self {
@@ -32,7 +32,7 @@ enum STSearchRouter : STRouter {
     
     var parameters: [String : AnyObject]? {
         switch self {
-        case let .Search(query, tagList):
+        case let .Search(query, tagList, offset, limit):
             // FIXME: is there better way?
             let year = STTimetableManager.sharedInstance.currentTimetable?.quarter.year ?? 0
             let semester = STTimetableManager.sharedInstance.currentTimetable?.quarter.semester ?? STSemester.First
@@ -68,7 +68,9 @@ enum STSearchRouter : STRouter {
                 "department" : department,
                 "academic_year" : academicYear,
                 "classification" : classification,
-                "category" : category
+                "category" : category,
+                "offset": offset,
+                "limit" : limit
             ]
             
             return parameters
