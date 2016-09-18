@@ -18,25 +18,25 @@ class STSlotCellCollectionViewCell: UICollectionViewCell {
     var context = UIGraphicsGetCurrentContext()
     
     func drawSolidLine(st_x st_x : CGFloat, st_y : CGFloat, en_x : CGFloat, en_y : CGFloat) {
-        CGContextSetLineDash(context, 0, [1], 0)
-        CGContextSetLineWidth(context, 0.2)
-        CGContextMoveToPoint(context, st_x, st_y)
-        CGContextAddLineToPoint(context, en_x, en_y)
-        CGContextStrokePath(context)
+        CGContextSetLineDash(context!, 0, [1], 0)
+        CGContextSetLineWidth(context!, 0.2)
+        CGContextMoveToPoint(context!, st_x, st_y)
+        CGContextAddLineToPoint(context!, en_x, en_y)
+        CGContextStrokePath(context!)
     }
     
     func drawDashedLine(st_x st_x : CGFloat, st_y : CGFloat, en_x : CGFloat, en_y : CGFloat) {
-        CGContextSetLineDash(context, 0, [2,2], 2)
-        CGContextSetLineWidth(context, 0.4)
-        CGContextMoveToPoint(context, st_x, st_y)
-        CGContextAddLineToPoint(context, en_x, en_y)
-        CGContextStrokePath(context)
+        CGContextSetLineDash(context!, 0, [2,2], 2)
+        CGContextSetLineWidth(context!, 0.4)
+        CGContextMoveToPoint(context!, st_x, st_y)
+        CGContextAddLineToPoint(context!, en_x, en_y)
+        CGContextStrokePath(context!)
     }
     
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
         context = UIGraphicsGetCurrentContext()
-        CGContextSetStrokeColorWithColor(context, CGColorCreate(CGColorSpaceCreateDeviceRGB(), [0.4,0.4,0.4,1.0]))
+        CGContextSetStrokeColorWithColor(context!, CGColorCreate(CGColorSpaceCreateDeviceRGB(), [0.4,0.4,0.4,1.0])!)
         
         let contentWidth = rect.width
         let contentHeight = rect.height

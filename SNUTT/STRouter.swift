@@ -23,7 +23,7 @@ extension STRouter {
     
     var defaultURLRequest: NSMutableURLRequest {
         let URL = NSURL(string: Self.baseURLString)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
+        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path)!)
         mutableURLRequest.HTTPMethod = method.rawValue
         
         let apikey = STDefaults[.apiKey]
