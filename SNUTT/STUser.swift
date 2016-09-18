@@ -13,14 +13,14 @@ import SwiftyJSON
 
 class STUser {
     var localId : String?
-    var fbId : String?
+    var fbName : String?
     var email : String?
     
-    static var currentUser: STUser? = STUser(localId: nil, fbId: nil);
+    static var currentUser: STUser? = nil
     
     static func saveData() {
-        if currentUser?.fbId != nil {
-            NSUserDefaults.standardUserDefaults().setObject(currentUser?.fbId, forKey: "UserFBId")
+        if currentUser?.fbName != nil {
+            NSUserDefaults.standardUserDefaults().setObject(currentUser?.fbName, forKey: "UserFBName")
         }
         if currentUser?.localId != nil {
             NSUserDefaults.standardUserDefaults().setObject(currentUser?.localId, forKey: "UserLocalId")
@@ -28,8 +28,8 @@ class STUser {
     }
     
     static func loadData() {
-        if let fbId = NSUserDefaults.standardUserDefaults().objectForKey("UserFBId") as? String {
-            currentUser?.fbId = fbId
+        if let fbName = NSUserDefaults.standardUserDefaults().objectForKey("UserFBName") as? String {
+            currentUser?.fbName = fbName
         }
         if let localId = NSUserDefaults.standardUserDefaults().objectForKey("UserLocalId") as? String {
             currentUser?.localId = localId
@@ -58,18 +58,18 @@ class STUser {
     
     init(json: JSON) {
         self.localId = json["local_id"].string
-        self.fbId = json["fb_id"].string
+        self.fbName = json["fb_name"].string
         self.email = json["email"].string
         
     }
     
-    init(localId : String?, fbId : String?) {
+    init(localId : String?, fbName : String?) {
         self.localId = localId
-        self.fbId = fbId
+        self.fbName = fbName
     }
     
     func isLogined() -> Bool {
-        return localId != nil || fbId != nil
+        return localId != nil || fbName != nil
     }
     
 }

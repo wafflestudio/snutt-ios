@@ -23,7 +23,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb903270546385203</string>
+				<string>fb1635364463444351</string>
 			</array>
 		</dict>
 	</array>
@@ -44,9 +44,9 @@
 		</array>
 	</dict>
 	<key>FacebookAppID</key>
-	<string>903270546385203</string>
+	<string>1635364463444351</string>
 	<key>FacebookDisplayName</key>
-	<string>http://snutt.kr</string>
+	<string>snutt</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

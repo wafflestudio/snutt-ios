@@ -33,13 +33,13 @@ class STAccountSettingViewController: UITableViewController {
         var cellType : CellType {
             switch (self) {
             case ShowId:
-                return CellType.RightDetail(title: "이메일", detail: STUser.currentUser?.email ?? "")
+                return CellType.RightDetail(title: "아이디", detail: STUser.currentUser?.localId ?? "(없음)")
             case ChangePassword:
                 return CellType.Button(title: "비밀번호 변경")
             case AttachLocalId:
                 return .Button(title: "아이디 비번 추가")
             case ShowFBId:
-                return .RightDetail(title: "페이스북 아이디", detail: STUser.currentUser?.fbId ?? "")
+                return .RightDetail(title: "페이스북 이름", detail: STUser.currentUser?.fbName ?? "(없음)")
             case DetachFB:
                 return .Button(title: "페이스북 연동 취소")
             case AttachFB:
@@ -88,11 +88,11 @@ class STAccountSettingViewController: UITableViewController {
         if (STUser.currentUser?.localId == nil) {
             cellList.append([Cell.AttachLocalId])
         } else {
-            cellList.append([Cell.ShowEmail, Cell.ChangePassword])
+            cellList.append([Cell.ShowId, Cell.ChangePassword])
         }
         
         fbSection = cellList.count
-        if (STUser.currentUser?.fbId == nil) {
+        if (STUser.currentUser?.fbName == nil) {
             cellList.append([Cell.AttachFB])
         } else {
             cellList.append([Cell.ShowFBId, Cell.DetachFB])
@@ -151,7 +151,7 @@ class STAccountSettingViewController: UITableViewController {
         case .AttachFB:
             let registerFB : (String, String) -> () = { id, token in
                 STNetworking.attachFB(fb_id: id, fb_token: token, done: {
-                    STUser.currentUser?.fbId = id
+                    STUser.getUser()
                     self.refreshCellList()
                     self.tableView.reloadSections(NSIndexSet(index: self.fbSection), withRowAnimation: .Automatic)
                     }, failure: { _ in
@@ -227,14 +227,14 @@ class STAccountSettingViewController: UITableViewController {
                     if (newPass != newPass2) {
                         STAlertView.showAlert(title: "비밀번호 변경", message: "비밀번호와 비밀번호 확인란이 다릅니다.")
                         return
-                    } else if (STUtil.validatePassword(newPass)) {
+                    } else if (!STUtil.validatePassword(newPass)) {
                         var message : String = ""
                         if (newPass.characters.count > 20  || newPass.characters.count < 6) {
                             message = "비밀번호는 6자 이상, 20자 이하여야 합니다."
                         } else {
                             message = "비밀번호는 최소 숫자 1개와 영문자 1개를 포함해야 합니다."
                         }
-                        STAlertView.showAlert(title: "회원가입 실패", message: message)
+                        STAlertView.showAlert(title: "비밀번호 변경", message: message)
                         return
                     }
                     
@@ -249,13 +249,13 @@ class STAccountSettingViewController: UITableViewController {
             })
             return
         case .DetachFB:
-            if STUser.currentUser?.localId != nil {
+            if STUser.currentUser?.localId == nil {
                 STAlertView.showAlert(title: "페이스북 연동 끊기", message: "현재 로그인 수단이 페이스북 밖에 없기 때문에, 페이스북 연동을 끊을 수 없습니다.")
                 return
             }
             let detachAction = UIAlertAction(title: "페이스북 연동 끊기", style: .Destructive, handler: { _ in
                 STNetworking.detachFB({ _ in
-                    STUser.currentUser?.fbId = nil
+                    STUser.currentUser?.fbName = nil
                     self.refreshCellList()
                     self.tableView.reloadSections(NSIndexSet(index: self.fbSection), withRowAnimation: .Automatic)
                     }, failure: { _ in

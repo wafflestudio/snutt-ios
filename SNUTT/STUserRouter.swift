@@ -16,7 +16,7 @@ enum STUserRouter : STRouter {
     
     case GetUser
     case EditUser(email: String)
-    case ChangePassword(password: String)
+    case ChangePassword(oldPassword: String, newPassword: String)
     case AddLocalId(id: String, password: String)
     case AddFB(id: String, token: String)
     case DetachFB
@@ -29,7 +29,7 @@ enum STUserRouter : STRouter {
         case .GetUser:
             return .GET
         case .EditUser:
-            return .POST
+            return .PUT
         case .ChangePassword:
             return .PUT
         case .AddLocalId:
@@ -69,8 +69,8 @@ enum STUserRouter : STRouter {
             return nil
         case let .EditUser(email):
             return ["email" : email]
-        case let .ChangePassword(password):
-            return ["password" : password]
+        case let .ChangePassword(oldPassword, newPassword):
+            return ["old_password" : oldPassword, "new_password": newPassword]
         case let .AddLocalId(id, password):
             return ["id": id, "password" : password]
         case let .AddFB(id, token):

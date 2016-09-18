@@ -42,8 +42,8 @@ class STNetworking {
         })
     }
     
-    static func registerFB(name: String, token: String, done: (String)->(), failure: ()->()) {
-        let request = Alamofire.request(STAuthRouter.FBRegister(name: name, token: token))
+    static func registerFB(id: String, token: String, done: (String)->(), failure: ()->()) {
+        let request = Alamofire.request(STAuthRouter.FBRegister(id: id, token: token))
         request.responseWithDone({ statusCode, json in
             if (statusCode == 200) {
                 done(json["token"].stringValue)
@@ -216,7 +216,9 @@ class STNetworking {
     static func attachFB(fb_id fb_id: String, fb_token: String, done:()->(), failure: ()->()) {
         let request = Alamofire.request(STUserRouter.AddFB(id: fb_id, token: fb_token))
         request.responseWithDone({ _, json in
-            STDefaults[.token] = json["token"].stringValue
+            if let token = json["token"].string {
+                STDefaults[.token] = token
+            }
             done()
             }, failure: { _ in
                 failure()
@@ -242,9 +244,11 @@ class STNetworking {
     }
     
     static func changePassword(curPassword: String, newPassword: String, done: () -> (), failure: (String?)->()) {
-        let request = Alamofire.request(STUserRouter.ChangePassword(password: newPassword))
+        let request = Alamofire.request(STUserRouter.ChangePassword(oldPassword: curPassword, newPassword: newPassword))
         request.responseWithDone({ statusCode, json in
-            STDefaults[.token] = json["token"].stringValue
+            if let token = json["token"].string {
+                STDefaults[.token] = token
+            }
             done()
             }, failure: { _ in
                 failure(nil)
