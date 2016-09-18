@@ -37,4 +37,9 @@ class STAlertView {
         }
         STAlertView.showAlert(alert)
     }
+    static func showAlert(title title: String, message: String, configAlert: (UIAlertController) -> ()) {
+        let alert = STAlertView.createAlert(title: title, message: message)
+        configAlert(alert)
+        STAlertView.showAlert(alert)
+    }
 }

@@ -8,10 +8,13 @@
 
 import Foundation
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class STUser {
     var localId : String?
     var fbId : String?
+    var email : String?
     
     static var currentUser: STUser? = STUser(localId: nil, fbId: nil);
     
@@ -33,10 +36,30 @@ class STUser {
         }
     }
     
+    static func getUser() {
+        let request = Alamofire.request(STUserRouter.GetUser);
+        request.responseWithDone({ statusCode, json in
+            STUser.currentUser = STUser(json: json)
+            STEventCenter.sharedInstance.postNotification(event: STEvent.UserUpdated, object: nil);
+            }, failure: { err in
+                //FIXME : What to do?
+        })
+    }
+    
     static func logOut() {
+        loadLoginPage()
+    }
+    
+    static func loadLoginPage() {
         STUser.currentUser = nil
         STDefaults[.token] = nil
         UIApplication.sharedApplication().delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+    }
+    
+    init(json: JSON) {
+        self.localId = json["local_id"].string
+        self.fbId = json["fb_id"].string
+        self.email = json["email"].string
         
     }
     

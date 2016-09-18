@@ -189,7 +189,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
             if passwordCheckTextField.text != password {
                 STAlertView.showAlert(title: "회원가입 실패", message: "비밀번호 확인란과 비밀번호가 다릅니다.")
                 return
-            } else if !checkId(id) {
+            } else if !STUtil.validateId(id) {
                 var message : String = ""
                 if (id.characters.count > 32 || id.characters.count < 4) {
                     message = "아이디는 4자 이상, 32자 이하여야합니다."
@@ -198,7 +198,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
                 }
                 STAlertView.showAlert(title: "회원가입 실패", message: message)
                 return
-            } else if !checkPassword(password) {
+            } else if !STUtil.validatePassword(password) {
                 var message : String = ""
                 if (password.characters.count > 20  || password.characters.count < 6) {
                     message = "비밀번호는 6자 이상, 20자 이하여야 합니다."
@@ -222,22 +222,10 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func checkId(id: String) -> Bool {
-        if let _ = id.rangeOfString("^[a-z0-9]{4,32}$", options: [.RegularExpressionSearch, .CaseInsensitiveSearch]) {
-            return true
-        }
-        return false
-    }
     
-    func checkPassword(password: String) -> Bool {
-        if let _ = password.rangeOfString("^(?=.*\\d)(?=.*[a-z])\\S{6,20}$", options: [.RegularExpressionSearch, .CaseInsensitiveSearch]) {
-            return true
-        }
-        return false
-    }
     
     func openMainController() {
-        //TODO: get the timetable
+        
         let openController : () -> () = { _ in
             let appDelegate = UIApplication.sharedApplication().delegate!
             let window = appDelegate.window!!

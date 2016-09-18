@@ -15,6 +15,26 @@ class STUtil {
         let endIndex = startIndex.advancedBy(range.length)
         return Range(start: startIndex, end: endIndex)
     }
+    
+    static func validateEmail(candidate: String) -> Bool {
+        // from http://emailregex.com
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluateWithObject(candidate)
+    }
+    
+    static func validatePassword(password: String) -> Bool {
+        if let _ = password.rangeOfString("^(?=.*\\d)(?=.*[a-z])\\S{6,20}$", options: [.RegularExpressionSearch, .CaseInsensitiveSearch]) {
+            return true
+        }
+        return false
+    }
+    
+    static func validateId(id: String) -> Bool {
+        if let _ = id.rangeOfString("^[a-z0-9]{4,32}$", options: [.RegularExpressionSearch, .CaseInsensitiveSearch]) {
+            return true
+        }
+        return false
+    }
 }
 
 extension String {

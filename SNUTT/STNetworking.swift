@@ -201,6 +201,56 @@ class STNetworking {
         })
     }
     
+    //MARK: UserRouter
+    
+    static func detachFB(done:()->(), failure: ()->()) {
+        let request = Alamofire.request(STUserRouter.DetachFB)
+        request.responseWithDone({ _, json in
+            STDefaults[.token] = json["token"].stringValue
+            done()
+            }, failure: { _ in
+                failure()
+        })
+    }
+    
+    static func attachFB(fb_id fb_id: String, fb_token: String, done:()->(), failure: ()->()) {
+        let request = Alamofire.request(STUserRouter.AddFB(id: fb_id, token: fb_token))
+        request.responseWithDone({ _, json in
+            STDefaults[.token] = json["token"].stringValue
+            done()
+            }, failure: { _ in
+                failure()
+        })
+    }
+    
+    static func unregister(failure: ()->()) {
+        let request = Alamofire.request(STUserRouter.DeleteUser)
+        request.responseWithDone({ _, json in
+            STUser.loadLoginPage()
+            }, failure: { _ in
+                failure()
+        })
+    }
+    
+    static func editUser(email: String, done: ()->(), failure: ()->()) {
+        let request = Alamofire.request(STUserRouter.EditUser(email: email))
+        request.responseWithDone({ _, _ in
+            done()
+            }, failure: { _ in
+                failure()
+        })
+    }
+    
+    static func changePassword(curPassword: String, newPassword: String, done: () -> (), failure: (String?)->()) {
+        let request = Alamofire.request(STUserRouter.ChangePassword(password: newPassword))
+        request.responseWithDone({ statusCode, json in
+            STDefaults[.token] = json["token"].stringValue
+            done()
+            }, failure: { _ in
+                failure(nil)
+        })
+    }
+    
     static func showNetworkError() {
         let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.Default, handler: nil))
