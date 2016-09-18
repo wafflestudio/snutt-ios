@@ -12,6 +12,7 @@ import Crashlytics
 import SwiftyJSON
 import FBSDKCoreKit
 import Firebase
+import Alamofire
 
 
 @UIApplicationMain
@@ -39,6 +40,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let dict = NSDictionary(contentsOfFile: path)!
             
             STDefaults[.apiKey] = dict.objectForKey("API_KEY") as! String
+        }
+        if STDefaults[.token] != nil {
+            STNetworking.getNotificationCount({ cnt in
+                STMainTabBarController.controller?.setNotiBadge(cnt)
+                
+                }, failure: { _ in
+                    return
+            })
         }
         
         return true

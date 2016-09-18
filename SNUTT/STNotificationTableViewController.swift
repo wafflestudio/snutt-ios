@@ -101,9 +101,11 @@ class STNotificationTableViewController: UITableViewController {
         loading = true
         pageCnt = 0
         isLast = false
+        STMainTabBarController.controller?.setNotiBadge(0)
         STNetworking.getNotificationList(numPerPage, offset: numPerPage * pageCnt, explicit: true, done: { list in
             self.loading = false
             self.notiList = list
+            STMainTabBarController.controller?.setNotiBadge(0)
             if list.count < self.numPerPage {
                 self.isLast = true
             }

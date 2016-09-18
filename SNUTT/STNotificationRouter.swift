@@ -32,7 +32,7 @@ enum STNotificationRouter : STRouter {
         case .NotificationList:
             return ""
         case .NotificationCount:
-            return ""
+            return "/count"
         }
     }
     

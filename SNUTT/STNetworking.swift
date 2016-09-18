@@ -181,7 +181,7 @@ class STNetworking {
     static func getNotificationCount(done: (Int)->(), failure: ()->()) {
         let request = Alamofire.request(STNotificationRouter.NotificationCount)
         request.responseWithDone({ statusCode, json in
-            done(json.intValue)
+            done(json["count"].intValue)
         }, failure: { _ in
             failure()
         })
