@@ -27,6 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         FIRApp.configure()
         
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(self.tokenRefreshNotification),
+                                                         name: kFIRInstanceIDTokenRefreshNotification,
+                                                         object: nil)
+        
         // open main or login depending on the token
         if STDefaults[.token] != nil {
             self.window?.rootViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
@@ -51,6 +56,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return true
+    }
+    
+    func tokenRefreshNotification(notification: NSNotification) {
+        let refreshedToken = FIRInstanceID.instanceID().token()!
+        if (STDefaults[.token] != nil && !STDefaults[.isFCMRegistered]) {
+            STNetworking.addDevice(refreshedToken)
+        }
+        print("InstanceID token: \(refreshedToken)")
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject],
+                     fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
+        
+        //TODO: Fix the gcm.badge.message
+        STMainTabBarController.controller?.setNotiBadge(userInfo["gcm.badge.message"] as! Int)
+        
+        // Print message ID.
+        print("Message ID: \(userInfo["gcm.message_id"]!)")
+        
+        // Print full message.
+        print("%@", userInfo)
     }
 
     func applicationWillResignActive(application: UIApplication) {

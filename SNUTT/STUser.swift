@@ -47,12 +47,14 @@ class STUser {
     }
     
     static func logOut() {
+        //TODO : Delete Device ID
         loadLoginPage()
     }
     
     static func loadLoginPage() {
         STUser.currentUser = nil
         STDefaults[.token] = nil
+        STDefaults[.isFCMRegistered] = false;
         UIApplication.sharedApplication().delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
     }
     

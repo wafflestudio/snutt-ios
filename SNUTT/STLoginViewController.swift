@@ -9,6 +9,7 @@
 import UIKit
 import ChameleonFramework
 import FBSDKLoginKit
+import Firebase
 
 class STLoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -227,6 +228,9 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     func openMainController() {
         
         let openController : () -> () = { _ in
+            if let deviceId = FIRInstanceID.instanceID().token() {
+                STNetworking.addDevice(deviceId)
+            }
             let appDelegate = UIApplication.sharedApplication().delegate!
             let window = appDelegate.window!!
             let mainController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()

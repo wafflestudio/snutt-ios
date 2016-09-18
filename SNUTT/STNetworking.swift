@@ -255,6 +255,15 @@ class STNetworking {
         })
     }
     
+    static func addDevice(deviceId : String) {
+        let request = Alamofire.request(STUserRouter.AddDevice(id: deviceId))
+        request.responseWithDone({ statusCode, json in
+            STDefaults[.isFCMRegistered] = true
+            }, failure: nil
+        )
+
+    }
+    
     static func showNetworkError() {
         let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.Default, handler: nil))
