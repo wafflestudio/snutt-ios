@@ -12,8 +12,8 @@ let reuseIdentifier = "Cell"
 
 class STTimetableCollectionViewController: UICollectionViewController, UIAlertViewDelegate {
     
-    var columnList = ["월", "화", "수", "목", "금", "토"]
-    var columnHidden = [false, false, false, false, false, false] {
+    var columnList = ["월", "화", "수", "목", "금", "토", "일"]
+    var columnHidden = [false, false, false, false, false, false, false] {
         didSet {
             columnNum = columnHidden.filter({ hidden in return !hidden}).count
             var cnt = 0
@@ -29,8 +29,8 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
     }
     var shouldAutofit : Bool = false
     
-    private(set) var dayToColumn : [Int] = [0,1,2,3,4,5]
-    private(set) var columnNum : Int = 6
+    private(set) var dayToColumn : [Int] = [0,1,2,3,4,5,6]
+    private(set) var columnNum : Int = 7
     
     var rowStart : Int = 0
     var rowEnd : Int = STPeriod.periodNum - 1
@@ -75,7 +75,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
     
     func autofit() {
         if timetable != nil && timetable?.lectureList.count != 0 {
-            columnHidden = [false,false,false,false,false,true]
+            columnHidden = [false,false,false,false,false,true,true]
             rowStart = 1
             rowEnd = 10
             
@@ -91,7 +91,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
             }
             
         } else {
-            columnHidden = [false,false,false,false,false,true]
+            columnHidden = [false,false,false,false,false,true,true]
             rowStart = 1
             rowEnd = 12
         }

@@ -9,9 +9,9 @@
 import Foundation
 
 enum STDay : Int{
-    case MON=0, TUE, WED, THU, FRI, SAT
+    case MON=0, TUE, WED, THU, FRI, SAT, SUN
     
-    static let allValues = [MON, TUE, WED, THU, FRI, SAT]
+    static let allValues = [MON, TUE, WED, THU, FRI, SAT, SUN]
     
     func shortString() -> String {
         switch self {
@@ -21,6 +21,7 @@ enum STDay : Int{
         case THU: return NSLocalizedString("thursday_short", comment: "")
         case FRI: return NSLocalizedString("friday_short", comment: "")
         case SAT: return NSLocalizedString("saturday_short", comment: "")
+        case SUN: return NSLocalizedString("sunday_short", comment: "")
         }
     }
     
@@ -32,6 +33,7 @@ enum STDay : Int{
         case THU: return NSLocalizedString("thursday", comment: "")
         case FRI: return NSLocalizedString("friday", comment: "")
         case SAT: return NSLocalizedString("saturday", comment: "")
+        case SUN: return NSLocalizedString("sunday", comment: "")
         }
     }
 }

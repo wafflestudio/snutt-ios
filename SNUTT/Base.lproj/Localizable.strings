@@ -15,12 +15,14 @@
 "thursday" = "Thursday";
 "friday" = "Friday";
 "saturday" = "Saturday";
+"sunday" = "Sunday";
 "monday_short" = "MON";
 "tuesday_short" = "TUE";
 "wednesday_short" = "WED";
 "thursday_short" = "THU";
 "friday_short" = "FRI";
 "saturday_short" = "SAT";
+"sunday_short" = "SUN";
 "time_picker_title" = "Time";
 
 "lecture_title" = "Lecture Name";
