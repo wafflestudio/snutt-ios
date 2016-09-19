@@ -174,20 +174,20 @@ class STSingleLectureTableViewController: UITableViewController {
         var value2 : String = ""
         switch type {
         case .AcademicYearAndCredit:
-            value1 = currentLecture.academicYear
+            value1 = currentLecture.academicYear ??  ""
             value2 = String(currentLecture.credit)
         case .ClassificationAndCategory:
-            value1 = currentLecture.classification
-            value2 = currentLecture.category
+            value1 = currentLecture.classification ?? ""
+            value2 = currentLecture.category ?? ""
         case .Color: break
         case .CourseNumAndLectureNum:
-            value1 = currentLecture.courseNumber
-            value2 = currentLecture.lectureNumber
+            value1 = currentLecture.courseNumber ?? ""
+            value2 = currentLecture.lectureNumber ?? ""
         case .Credit:
             value1 = String(currentLecture.credit)
             doneBlock = { value in self.currentLecture.credit = Int(value) ?? 0}
         case .Department:
-            value1 = currentLecture.department
+            value1 = currentLecture.department ?? ""
         case .Instructor:
             value1 = currentLecture.instructor
             doneBlock = { value in self.currentLecture.instructor = value }

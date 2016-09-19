@@ -19,7 +19,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     var cancelBarButton : UIBarButtonItem!
     
     override func viewDidLoad() {
-        if lecture.lectureNumber == "" && lecture.courseNumber == "" {
+        if lecture.lectureNumber == nil && lecture.courseNumber == nil {
             self.custom = true
         } else {
             self.custom = false

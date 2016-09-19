@@ -93,10 +93,10 @@ class STNetworking {
     
     //MARK: LectureRouter
     
-    static func addLecture(timetable: STTimetable, lecture: STLecture, done: (String)->(), failure: ()->()) {
+    static func addLecture(timetable: STTimetable, lecture: STLecture, done: (STTimetable)->(), failure: ()->()) {
         let request = Alamofire.request(STLectureRouter.AddLecture(timetableId: timetable.id!, lecture: lecture))
         request.responseWithDone({ statusCode, json in
-            done(json.stringValue)
+            done(STTimetable(json: json))
             }, failure: { _ in
             failure()
         })

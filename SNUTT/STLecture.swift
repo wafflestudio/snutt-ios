@@ -10,18 +10,18 @@ import Foundation
 import SwiftyJSON
 
 struct STLecture {
-    var classification : String = ""
-    var department : String = ""
-    var academicYear : String = ""
-    var courseNumber : String = ""
-    var lectureNumber : String = ""
+    var classification : String?
+    var department : String?
+    var academicYear : String?
+    var courseNumber : String?
+    var lectureNumber : String?
     var title : String = ""
     var credit : Int = 0
     var instructor : String = ""
-    var quota : Int = 0
-    var remark : String = ""
-    var category : String = ""
-    var id : String = ""
+    var quota : Int?
+    var remark : String?
+    var category : String?
+    var id : String?
     var classList :[STSingleClass] = []
     var color : STColor = STColor()
     
@@ -29,18 +29,18 @@ struct STLecture {
     }
     
     init(json data : JSON) {
-        classification = data["classification"].stringValue
-        department = data["department"].stringValue
-        academicYear = data["academic_year"].stringValue
-        courseNumber = data["course_number"].stringValue
-        lectureNumber = data["lecture_number"].stringValue
+        classification = data["classification"].string
+        department = data["department"].string
+        academicYear = data["academic_year"].string
+        courseNumber = data["course_number"].string
+        lectureNumber = data["lecture_number"].string
         title = data["course_title"].stringValue
         credit = data["credit"].intValue
         instructor = data["instructor"].stringValue
-        quota = data["quota"].intValue
-        remark = data["remark"].stringValue
-        category = data["category"].stringValue
-        id = data["_id"].stringValue
+        quota = data["quota"].int
+        remark = data["remark"].string
+        category = data["category"].string
+        id = data["_id"].string
         let colorJson = data["color"]
         if let fgHex = colorJson["fg"].string, bgHex = colorJson["bg"].string {
             color = STColor(fgHex: fgHex, bgHex: bgHex)
@@ -59,7 +59,7 @@ struct STLecture {
             return singleClass.toDictionary()
         }
         
-        let dict : [String: AnyObject] = [
+        var dict : [String: AnyObject?] = [
             "classification" : classification,
             "department" : department,
             "academic_year" : academicYear,
@@ -76,13 +76,19 @@ struct STLecture {
             "color" : [ "fg" : color.fgColor.hexValue(), "bg": color.bgColor.hexValue()]
             ]
         
-            
-        return dict
+        for (key, value) in dict {
+            if (value == nil) {
+                dict.removeValueForKey(key)
+            }
+        }
+        
+        return dict as! [String: AnyObject]
     }
     
     func isSameLecture(right : STLecture) -> Bool {
         return (courseNumber == right.courseNumber && lectureNumber == right.lectureNumber)
     }
+    
 }
 
 extension STLecture : Equatable {}

@@ -86,10 +86,9 @@ class STTimetableManager : NSObject {
             // FIXME:
             return STAddLectureState.Success
         }
-        lecture.color = STColor.colorList[0]
         let ret = currentTimetable?.addLecture(lecture)
-        STNetworking.addLecture(currentTimetable!, lecture: lecture, done: { id in
-            self.currentTimetable?.addIdForLecture(lecture, id: id)
+        STNetworking.addLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
+            self.currentTimetable?.lectureList = newTimetable.lectureList
             STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
             }, failure: {
             self.currentTimetable?.deleteLecture(lecture)

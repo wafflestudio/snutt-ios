@@ -83,6 +83,7 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
     }
     
     @IBAction func saveButtonClicked(sender: UIBarButtonItem) {
+        self.view.endEditing(true)
         STTimetableManager.sharedInstance.addLecture(currentLecture, object: self)
         self.dismissViewControllerAnimated(true, completion: nil)
     }

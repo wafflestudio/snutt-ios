@@ -35,9 +35,9 @@ enum STLectureRouter : STRouter {
         case .AddLecture(let timetableId, _ ):
             return "/\(timetableId)/lecture"
         case .DeleteLecture(let timetableId, let lecture ):
-            return "/\(timetableId)/lecture/\(lecture.id)"
+            return "/\(timetableId)/lecture/\(lecture.id ?? "")"
         case let .UpdateLecture(timetableId, curLecture, _):
-            return "/\(timetableId)/lecture/\(curLecture.id)"
+            return "/\(timetableId)/lecture/\(curLecture.id ?? "")"
         }
     }
     
