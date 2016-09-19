@@ -43,6 +43,9 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         if case .Color = cellTypeAtIndexPath(indexPath) {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             triggerColorPicker()
+        } else if case .AddButton = cellTypeAtIndexPath(indexPath) {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            (self.tableView.cellForRowAtIndexPath(indexPath) as! STSingleLectureButtonCell).buttonAction?()
         } else {
             tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
