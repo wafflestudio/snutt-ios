@@ -84,8 +84,10 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
     
     @IBAction func saveButtonClicked(sender: UIBarButtonItem) {
         self.view.endEditing(true)
-        STTimetableManager.sharedInstance.addLecture(currentLecture, object: self)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        let ret = STTimetableManager.sharedInstance.addLecture(currentLecture, object: self)
+        if case STAddLectureState.Success = ret {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

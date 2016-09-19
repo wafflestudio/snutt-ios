@@ -86,16 +86,24 @@ class STTimetableManager : NSObject {
             // FIXME:
             return STAddLectureState.Success
         }
-        let ret = currentTimetable?.addLecture(lecture)
-        STNetworking.addLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
-            self.currentTimetable?.lectureList = newTimetable.lectureList
-            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-            }, failure: {
-            self.currentTimetable?.deleteLecture(lecture)
-            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-        })
-        STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
-        return ret!
+        let ret = currentTimetable!.addLecture(lecture)
+        if case STAddLectureState.Success = ret {
+            STNetworking.addLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
+                self.currentTimetable?.lectureList = newTimetable.lectureList
+                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+                }, failure: {
+                // TODO: show alertview for error
+                self.currentTimetable?.deleteLecture(lecture)
+                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+            })
+            STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
+        } else if case STAddLectureState.ErrorTime = ret {
+            STAlertView.showAlert(title: "강의 추가 실패", message: "겹치는 시간대가 있습니다.")
+        } else if case STAddLectureState.ErrorSameLecture = ret {
+            STAlertView.showAlert(title: "강의 추가 실패", message: "같은 강좌가 이미 존재합니다.")
+        }
+        
+        return ret
     }
     
     func updateLecture(oldLecture : STLecture, newLecture : STLecture) {
