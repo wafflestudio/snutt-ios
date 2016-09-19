@@ -31,7 +31,6 @@ class STTagManager {
     var tagList : STTagList!
     
     dynamic func loadData() {
-        //TODO : load from local data else create fake taglist
         guard let quarter = STTimetableManager.sharedInstance.currentTimetable?.quarter else {
             return
         }

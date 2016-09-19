@@ -217,7 +217,6 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
                     STAlertView.showAlert(title: "회원가입 실패", message: "회원가입은 성공하였으나, 로그인에 실패하였습니다. 로그인을 재시도 해주세요.")
                 })
             }, failure: { _ in
-                // TODO: 에러 메세지 출력해주기.
                 STAlertView.showAlert(title: "회원가입 실패", message: "회원가입에 실패하였습니다.")
             })
         }
