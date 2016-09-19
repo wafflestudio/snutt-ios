@@ -20,19 +20,9 @@ class STLectureTableViewCell: UITableViewCell {
         didSet {
             titleLabel.text = lecture.title
             descriptionLabel.text = "(\(lecture.instructor) / \(lecture.credit)학점)"
-            var tagText = ""
-            if lecture.category != "" {
-                tagText = tagText + lecture.category + ", "
-            }
-            if lecture.department != "" {
-                tagText = tagText + lecture.department + ", "
-            }
-            if lecture.academicYear != "" {
-                tagText = tagText + lecture.academicYear + ", "
-            }
-            tagLabel.text = tagText
-            //TODO: timeLabel.text = lecture.??
-            //placeLabel.text =
+            tagLabel.text = lecture.tagDescription
+            timeLabel.text = lecture.timeDescription
+            placeLabel.text = lecture.placeDescription
         }
     }
     

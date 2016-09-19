@@ -24,6 +24,51 @@ struct STLecture {
     var id : String?
     var classList :[STSingleClass] = []
     var color : STColor = STColor()
+
+    var timeDescription : String {
+        var ret: String = ""
+        for it in classList {
+            ret = ret + "/" + it.time.startString()
+        }
+        if ret != "" {
+            ret = ret.substringFromIndex(ret.startIndex.advancedBy(1))
+        } else {
+            ret = "(없음)"
+        }
+        return ret
+    }
+    
+    var placeDescription : String {
+        var ret: String = ""
+        for it in classList {
+            ret = ret + "/" + it.place
+        }
+        if ret != "" {
+            ret = ret.substringFromIndex(ret.startIndex.advancedBy(1))
+        } else {
+            ret = "(없음)"
+        }
+        return ret
+    }
+    
+    var tagDescription : String {
+        var ret: String = ""
+        if category != nil && category != ""{
+            ret = ret + ", " + category!
+        }
+        if department != nil && department != "" {
+            ret = ret + ", " + department!
+        }
+        if academicYear != nil && academicYear != "" {
+            ret = ret + ", " + academicYear!
+        }
+        if ret != "" {
+            ret = ret.substringFromIndex(ret.startIndex.advancedBy(2))
+        } else {
+            ret = "(없음)"
+        }
+        return ret
+    }
     
     init() {
     }

@@ -30,6 +30,10 @@ struct STTime {
         return day.shortString() + " " + startPeriod.periodString() + "~" + endPeriod.periodString()
     }
     
+    func startString() -> String {
+        return day.shortString() + String.init(format: "%g", startPeriod)
+    }
+    
     func isOverlappingWith(tmp : STTime) -> Bool {
         if day != tmp.day {
             return false
