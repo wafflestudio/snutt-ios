@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,27 +15,21 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anP-qD-Bs9">
-                    <rect key="frame" x="0.0" y="0.0" width="100" height="27"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="컴퓨터공학부" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6W-60-AIi">
-                            <rect key="frame" x="8" y="0.0" width="63" height="27"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3l7-mE-WLA">
-                            <rect key="frame" x="81" y="8" width="11" height="11"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="3l7-mE-WLA" secondAttribute="height" multiplier="1:1" id="YkE-HK-qwb"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="1" minY="1" maxX="1" maxY="1"/>
                             <state key="normal" image="delete.png"/>
-                            <connections>
-                                <action selector="deleteButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="pX2-aw-Kjz"/>
-                            </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.2627450980392157" green="0.54509803921568623" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.2627450980392157" green="0.54509803921568623" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="27" id="0YJ-ln-J7u"/>
                         <constraint firstAttribute="bottom" secondItem="h6W-60-AIi" secondAttribute="bottom" id="0YR-fC-tap"/>
@@ -47,7 +42,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.94901960780000005" green="0.97647058819999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.94901960780000005" green="0.97647058819999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="anP-qD-Bs9" secondAttribute="trailing" id="KB8-bY-NQz"/>
                 <constraint firstItem="anP-qD-Bs9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="T1u-Ce-ycz"/>
@@ -58,7 +53,6 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="containerView" destination="anP-qD-Bs9" id="N1A-Yw-Kq0"/>
-                <outlet property="deleteButton" destination="3l7-mE-WLA" id="DRu-2p-pJj"/>
                 <outlet property="tagLabel" destination="h6W-60-AIi" id="XbJ-31-QUe"/>
             </connections>
             <point key="canvasLocation" x="26" y="19.5"/>

@@ -137,16 +137,16 @@ class STNetworking {
                 return STTag(type: .Classification, text: body.stringValue)
             })
             tags = tags + json["department"].arrayValue.map({ body in
-                return STTag(type: .Classification, text: body.stringValue)
+                return STTag(type: .Department, text: body.stringValue)
             })
             tags = tags + json["academic_year"].arrayValue.map({ body in
-                return STTag(type: .Classification, text: body.stringValue)
+                return STTag(type: .AcademicYear, text: body.stringValue)
             })
             tags = tags + json["credit"].arrayValue.map({ body in
-                return STTag(type: .Classification, text: body.stringValue)
+                return STTag(type: .Credit, text: body.stringValue)
             })
             tags = tags + json["instructor"].arrayValue.map({ body in
-                return STTag(type: .Classification, text: body.stringValue)
+                return STTag(type: .Instructor, text: body.stringValue)
             })
             done(tags)
         }, failure: { _ in
