@@ -25,20 +25,16 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         }
     }
     
-   
+    var controller : UIViewController!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         //layer.cornerRadius = 6
         
-        let longPress = UILongPressGestureRecognizer(target: self, action: Selector("longClick:"))
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longClick))
         self.addGestureRecognizer(longPress)
-        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: Selector("swipeToLeft:"))
-        swipeLeftGesture.direction = UISwipeGestureRecognizerDirection.Left
-        self.addGestureRecognizer(swipeLeftGesture)
-        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: Selector("swipeToRight:"))
-        swipeRightGesture.direction = UISwipeGestureRecognizerDirection.Right
-        self.addGestureRecognizer(swipeRightGesture)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.tap))
+        self.addGestureRecognizer(tap)
     }
     
     func setText() {
@@ -72,6 +68,13 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         if gesture.state == UIGestureRecognizerState.Began {
             let alertView = UIAlertView(title: "SNUTT", message: "Do you want to Delete \(lecture!.title)?", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
             alertView.show()
+        }
+    }
+    func tap(gesture: UITapGestureRecognizer) {
+        if gesture.state == UIGestureRecognizerState.Recognized {
+            let detailController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("LectureDetailTableViewController") as! STLectureDetailTableViewController
+            detailController.lecture = self.lecture
+            self.controller.navigationController?.pushViewController(detailController, animated: true)
         }
     }
 }

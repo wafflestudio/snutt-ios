@@ -221,6 +221,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
             cell.layer.mask=nil
             cell.singleClass = getSingleClass(indexPath)
             cell.lecture = getLecture(indexPath)
+            cell.controller = self
             if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
                 cell.hidden = true
             }
