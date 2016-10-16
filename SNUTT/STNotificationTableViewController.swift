@@ -8,8 +8,9 @@
 
 import UIKit
 import Alamofire
+import DZNEmptyDataSet
 
-class STNotificationTableViewController: UITableViewController {
+class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
     let heightForFetch : CGFloat = CGFloat(50.0)
     
     var sizingCell : STNotificationTableViewCell!
@@ -23,6 +24,10 @@ class STNotificationTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.emptyDataSetSource = self;
+        self.tableView.emptyDataSetDelegate = self;
+        
         let nib = UINib(nibName: "STNotificationTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "STNotificationTableViewCell")
         sizingCell = nib.instantiateWithOwner(self, options: nil)[0] as! STNotificationTableViewCell
@@ -126,7 +131,33 @@ class STNotificationTableViewController: UITableViewController {
         })
     }
     
+    //MARK: DNZEmptyDataSet
     
+    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+        // TODO: change the image
+        return UIImage(named: "tabbaritem_notification")
+    }
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "알림이 없습니다."
+        let attributes: [String : AnyObject] = [
+            NSFontAttributeName : UIFont.boldSystemFontOfSize(18.0)
+        ]
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "넣은 강좌의 수강편람이 바뀌거나, 새로운 수강편람이 뜨면 알림을 줍니다."
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineBreakMode = .ByWordWrapping
+        paragraph.alignment = .Center
+        let attributes: [String : AnyObject] = [
+            NSFontAttributeName : UIFont.systemFontOfSize(14.0),
+            NSForegroundColorAttributeName : UIColor.lightGrayColor(),
+            NSParagraphStyleAttributeName : paragraph
+        ]
+        return NSAttributedString(string: text, attributes: attributes)
+    }
     
     /*
     // Override to support conditional editing of the table view.
