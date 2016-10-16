@@ -71,6 +71,7 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         if editingStyle == .Delete {
             STTimetableManager.sharedInstance.deleteLectureAtIndex(indexPath.row, object: self)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            self.tableView.reloadEmptyDataSet()
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
