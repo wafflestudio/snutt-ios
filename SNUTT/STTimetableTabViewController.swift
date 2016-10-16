@@ -32,6 +32,7 @@ class STTimetableTabViewController: UIViewController {
         timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
         
         lectureListController = STMyLectureListController()
+        lectureListController.view.frame = containerView.frame
         settingChanged()
         
         self.addChildViewController(timetableViewController)
