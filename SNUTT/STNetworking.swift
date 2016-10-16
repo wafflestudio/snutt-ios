@@ -57,6 +57,30 @@ class STNetworking {
     
     //MARK: TimetableRouter
     
+    static func getTimetableList(done: ([STTimetable])->(), failure: ()->()) {
+        Alamofire.request(STTimetableRouter.GetTimetableList).responseWithDone({ statusCode, json in
+            let timetables = json.arrayValue
+            let timetableList = timetables.map { json in
+                return STTimetable(json: json)
+            }
+            done(timetableList)
+            }, failure: { _ in
+                failure()
+        })
+    }
+    
+    static func createTimetable(title: String, courseBook: STCourseBook, done: ([STTimetable])->(), failure: ()->()) {
+        Alamofire.request(STTimetableRouter.CreateTimetable(title: title, courseBook: courseBook)).responseWithDone({ statusCode, json in
+            let timetables = json.arrayValue
+            let timetableList = timetables.map { json in
+                return STTimetable(json: json)
+            }
+            done(timetableList)
+            }, failure: { _ in
+                failure()
+        })
+    }
+    
     static func deleteTimetable(id: String, done: ()->(), failure: ()->()) {
         Alamofire.request(STTimetableRouter.DeleteTimetable(id: id)).responseWithDone({ statusCode, json in
             done()

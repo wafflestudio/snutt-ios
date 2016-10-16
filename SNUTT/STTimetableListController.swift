@@ -16,20 +16,12 @@ class STTimetableListController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Alamofire.request(STTimetableRouter.GetTimetableList).responseWithDone({ statusCode, json in
-            let timetables = json.arrayValue
-            self.timetableList = timetables.map { json in
-                return STTimetable(json: json)
-            }
-            self.reloadList()
-        }, failure: { _ in
-            self.dismissViewControllerAnimated(true, completion: nil)
+        STNetworking.getTimetableList({ list in
+                self.timetableList = list
+                self.reloadList()
+            }, failure: {
+                self.dismissViewControllerAnimated(true, completion: nil)
         })
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -45,14 +37,9 @@ class STTimetableListController: UITableViewController {
         let newTimetable = STTimetable(courseBook: courseBook, title: title)
         timetableList.append(newTimetable)
         reloadList()
-        Alamofire.request(STTimetableRouter.CreateTimetable(title: title, courseBook: courseBook)).responseWithDone({ statusCode, json in
-                let index = self.timetableList.indexOf(newTimetable)
-                if json["success"].boolValue {
-                    self.timetableList[index!] = STTimetable(json: json["timetable"])
-                    self.tableView.reloadData()
-                } else {
-                    self.timetableList.removeAtIndex(index!)
-                }
+        STNetworking.createTimetable(title, courseBook: courseBook, done: { list in
+            self.timetableList = list
+            self.reloadList()
             }, failure: { _ in
                 let index = self.timetableList.indexOf(newTimetable)
                 self.timetableList.removeAtIndex(index!)
@@ -109,7 +96,9 @@ class STTimetableListController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let index = indexList[indexPath.section]+indexPath.row
-        
+        if timetableList[index].id == nil {
+            return
+        }
         STNetworking.getTimetable(timetableList[index].id!, done: { timetable in
             if (timetable == nil) {
                 STAlertView.showAlert(title: "시간표 로딩 실패", message: "선택한 시간표가 서버에 존재하지 않습니다.")
