@@ -15,7 +15,6 @@ class STMainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         STMainTabBarController.controller = self
-        self.tabBar.tintColor = UIColor.blackColor()
         for item in self.tabBar.items! {
             item.image = item.image!.imageWithRenderingMode(.AlwaysOriginal)
         }

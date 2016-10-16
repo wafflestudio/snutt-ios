@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         FIRApp.configure()
         
+        setColors()
+        
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector: #selector(self.tokenRefreshNotification),
                                                          name: kFIRInstanceIDTokenRefreshNotification,
@@ -64,6 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             STNetworking.addDevice(refreshedToken)
         }
         print("InstanceID token: \(refreshedToken)")
+    }
+    
+    func setColors() {
+        UINavigationBar.appearance().tintColor = UIColor.blackColor()
+        UITabBar.appearance().tintColor = UIColor.blackColor()
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject],
