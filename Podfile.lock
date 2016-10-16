@@ -15,6 +15,7 @@ PODS:
   - Color-Picker-for-iOS (2.0.2)
   - Crashlytics (3.5.0):
     - Fabric (~> 1.6.0)
+  - DZNEmptyDataSet (1.8.1)
   - EGOTableViewPullRefreshAndLoadMore (1.0.4)
   - Fabric (1.6.2)
   - FBSDKCoreKit (4.10.1):
@@ -63,6 +64,7 @@ DEPENDENCIES:
   - ChameleonFramework/Swift
   - Color-Picker-for-iOS (~> 2.0)
   - Crashlytics
+  - DZNEmptyDataSet
   - EGOTableViewPullRefreshAndLoadMore
   - Fabric
   - FBSDKCoreKit
@@ -98,6 +100,7 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Color-Picker-for-iOS: 4980589b3e3cfe7198f227dd50be9adb02d8bc0b
   Crashlytics: fabfd45d0e8b8dc936c682b97e302b9a49a1c827
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EGOTableViewPullRefreshAndLoadMore: 118a0824590db042d42e08fcc442b93cebf15e73
   Fabric: e8296d4a1abb3c5eed770cc86b311c862f51d340
   FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
@@ -115,6 +118,6 @@ SPEC CHECKSUMS:
   SwiftyUserDefaults: e7c8197a9d4068702e7f2406a968cae413b8de27
   TTRangeSlider: 7c04d9cf84cd5fba96e86b3ded8e5e0b534758b0
 
-PODFILE CHECKSUM: 0cb4c33c6cbef055ca25baa455863f055ae1711e
+PODFILE CHECKSUM: 0fe7b5c6d8d66c7e2f9cbd0f6bd426b640682b02
 
 COCOAPODS: 1.0.1

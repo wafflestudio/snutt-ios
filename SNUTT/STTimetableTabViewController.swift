@@ -31,7 +31,7 @@ class STTimetableTabViewController: UIViewController {
         timetableViewController = STTimetableCollectionViewController(collectionViewLayout: STTimetableLayout())
         timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
         
-        lectureListController = STMyLectureListController()
+        lectureListController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("MyLectureListController") as! STMyLectureListController
         lectureListController.view.frame = containerView.frame
         settingChanged()
         

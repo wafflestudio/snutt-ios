@@ -19,6 +19,7 @@ target 'SNUTT' do
   pod 'TTRangeSlider'
   pod 'Firebase'
   pod 'Firebase/Messaging'
+  pod 'DZNEmptyDataSet'
 end
 
 post_install do |installer|
