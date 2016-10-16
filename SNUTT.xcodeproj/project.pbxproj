@@ -229,9 +229,6 @@
 		E1C48B961C79BA4100BC469E /* STTimeActionSheetPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimeActionSheetPicker.swift; sourceTree = "<group>"; };
 		E1C48B981C79BDD300BC469E /* STSemester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSemester.swift; sourceTree = "<group>"; };
 		E1C48BA31C79C0E300BC469E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E1C48BAC1C79C17300BC469E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
-		E1C48BAD1C79C17300BC469E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		E1C48BAE1C79C17300BC469E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E1C48BAF1C79C45500BC469E /* STQuarter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STQuarter.swift; sourceTree = "<group>"; };
 		E1C48BB11C79C8E200BC469E /* STDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDay.swift; sourceTree = "<group>"; };
 		E1C48BB31C79CAE800BC469E /* STPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STPeriod.swift; sourceTree = "<group>"; };
@@ -658,7 +655,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
-				ko,
 			);
 			mainGroup = E19A3A8C1B453770007FCAD7;
 			productRefGroup = E19A3A961B453770007FCAD7 /* Products */;
@@ -922,7 +918,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				E19A3A9F1B453770007FCAD7 /* Base */,
-				E1C48BAC1C79C17300BC469E /* ko */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -931,7 +926,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				E19A3AA41B453770007FCAD7 /* Base */,
-				E1C48BAD1C79C17300BC469E /* ko */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -940,7 +934,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				E1C48BA31C79C0E300BC469E /* Base */,
-				E1C48BAE1C79C17300BC469E /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
