@@ -1,39 +1,75 @@
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "3vF-UI-AyR"; */
-"3vF-UI-AyR.text" = "Label";
+/* Class = "UINavigationItem"; title = "Account Setting"; ObjectID = "6fM-9p-ghj"; */
+"6fM-9p-ghj.title" = "계정 관리";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "8ao-R3-t5H"; */
-"8ao-R3-t5H.text" = "Label";
+/* Class = "UINavigationItem"; title = "Notification"; ObjectID = "77i-qK-66J"; */
+"77i-qK-66J.title" = "알림";
 
-/* Class = "UINavigationItem"; title = "내 강의"; ObjectID = "L5P-v6-ZDY"; */
-"L5P-v6-ZDY.title" = "내 강의";
+/* Class = "UINavigationItem"; title = "Licence information"; ObjectID = "D4y-aE-xID"; */
+"D4y-aE-xID.title" = "라이센스 정보";
 
-/* Class = "UITabBarItem"; title = "Item"; ObjectID = "Mld-VP-Qe7"; */
-"Mld-VP-Qe7.title" = "Item";
+/* Class = "UINavigationItem"; title = "Service Policy"; ObjectID = "EAb-Ly-udS"; */
+"EAb-Ly-udS.title" = "약관 보기";
+
+/* Class = "UILabel"; text = "Log out"; ObjectID = "FeH-j3-Bzr"; */
+"FeH-j3-Bzr.text" = "로그아웃";
+
+/* Class = "UILabel"; text = "Day"; ObjectID = "GNu-vY-Efb"; */
+"GNu-vY-Efb.text" = "요일";
+
+/* Class = "UITextView"; text = "Bug Report\n\nTell us any inconvenience about SNUTT."; ObjectID = "GnI-JC-PIw"; */
+"GnI-JC-PIw.text" = "문의하기\n\nSNUTT를 사용하면서 불편한 사항을 알려주세요!";
+
+/* Class = "UINavigationItem"; title = "Setting"; ObjectID = "ICd-gw-jGF"; */
+"ICd-gw-jGF.title" = "설정";
+
+/* Class = "UILabel"; text = "License Information"; ObjectID = "ITb-5p-gCq"; */
+"ITb-5p-gCq.text" = "라이센스 정보";
 
 /* Class = "UINavigationItem"; title = "Timetable List"; ObjectID = "NNx-Kp-xon"; */
-"NNx-Kp-xon.title" = "Timetable List";
+"NNx-Kp-xon.title" = "시간표 목록";
 
-/* Class = "UISearchBar"; Zht-ES-N3O.scopeButtonTitles[0] = "Title"; ObjectID = "Zht-ES-N3O"; */
-"Zht-ES-N3O.scopeButtonTitles[0]" = "Title";
+/* Class = "UILabel"; text = "Timetable Setting"; ObjectID = "S3q-0p-uGx"; */
+"S3q-0p-uGx.text" = "시간표 설정";
 
-/* Class = "UISearchBar"; Zht-ES-N3O.scopeButtonTitles[1] = "Title"; ObjectID = "Zht-ES-N3O"; */
-"Zht-ES-N3O.scopeButtonTitles[1]" = "Title";
+/* Class = "UITextField"; placeholder = "Title"; ObjectID = "Sv5-7I-edr"; */
+"Sv5-7I-edr.placeholder" = "제목";
+
+/* Class = "UINavigationItem"; title = "Developers"; ObjectID = "UrN-lh-QEC"; */
+"UrN-lh-QEC.title" = "개발자 정보";
+
+/* Class = "UINavigationItem"; title = "Timetable Setting"; ObjectID = "aGC-89-vCr"; */
+"aGC-89-vCr.title" = "시간표 설정";
+
+/* Class = "UILabel"; text = "Bug Report"; ObjectID = "aHt-j6-zHV"; */
+"aHt-j6-zHV.text" = "개발자 괴롭히기";
+
+/* Class = "UILabel"; text = "Automatic Fitting"; ObjectID = "aPT-4g-QJk"; */
+"aPT-4g-QJk.text" = "자동 맞춤";
+
+/* Class = "UILabel"; text = "Time"; ObjectID = "faT-Uv-JDa"; */
+"faT-Uv-JDa.text" = "시간";
 
 /* Class = "UINavigationItem"; title = "New Timetable"; ObjectID = "h7C-Uw-GGo"; */
-"h7C-Uw-GGo.title" = "New Timetable";
+"h7C-Uw-GGo.title" = "새로운 시간표";
 
-/* Class = "UINavigationItem"; title = "강의 검색"; ObjectID = "knp-xl-D3z"; */
-"knp-xl-D3z.title" = "강의 검색";
+/* Class = "UILabel"; text = "Account Setting"; ObjectID = "jwY-Fs-ppQ"; */
+"jwY-Fs-ppQ.text" = "계정 관리";
 
-/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "owU-8a-BWv"; */
-"owU-8a-BWv.title" = "Item";
+/* Class = "UILabel"; text = "Developers"; ObjectID = "lb8-qw-Lkd"; */
+"lb8-qw-Lkd.text" = "개발자 정보";
 
-/* Class = "UITextField"; placeholder = "시간표 이름"; ObjectID = "vhv-Xg-cXK"; */
+/* Class = "UINavigationItem"; title = "Bug Report"; ObjectID = "n0X-AK-wCa"; */
+"n0X-AK-wCa.title" = "개발자 괴롭히기";
+
+/* Class = "UILabel"; text = "Service Policy"; ObjectID = "nXq-fv-9sO"; */
+"nXq-fv-9sO.text" = "약관 보기";
+
+/* Class = "UILabel"; text = "Version"; ObjectID = "uMQ-T4-1nc"; */
+"uMQ-T4-1nc.text" = "버전 정보";
+
+/* Class = "UITextField"; placeholder = "Timetable Name"; ObjectID = "vhv-Xg-cXK"; */
 "vhv-Xg-cXK.placeholder" = "시간표 이름";
-
-/* Class = "UINavigationItem"; title = "시간표"; ObjectID = "xBm-zL-973"; */
-"xBm-zL-973.title" = "시간표";
 
 /* Class = "UIButton"; normalTitle = "X"; ObjectID = "yar-nK-UuP"; */
 "yar-nK-UuP.normalTitle" = "X";
