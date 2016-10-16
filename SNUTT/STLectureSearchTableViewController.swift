@@ -8,8 +8,9 @@
 
 import UIKit
 import Alamofire
+import DZNEmptyDataSet
 
-class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
+class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     @IBOutlet weak var searchBar : STSearchBar!
     
@@ -29,8 +30,9 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     enum SearchState {
         case Empty
+        case EditingQuery(String?, [STTag], [STLecture])
         case Loading(Request)
-        case Loaded(String)
+        case Loaded(String, [STTag])
     }
     var state : SearchState = SearchState.Empty
     
@@ -45,9 +47,16 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         STEventCenter.sharedInstance.addObserver(self, selector: "timetableSwitched", event: STEvent.CurrentTimetableSwitched, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadTimetable", event: STEvent.CurrentTimetableChanged, object: nil)
         
+        tableView.emptyDataSetSource = self;
+        tableView.emptyDataSetDelegate = self;
+        
         searchBar.searchController = self
         tagTableView.searchController = self
         tagCollectionView.searchController = self
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        self.tableView.addGestureRecognizer(tapGesture)
         
         tableView.registerNib(UINib(nibName: "STLectureSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "STLectureSearchTableViewCell")
         // Uncomment the following line to preserve selection between presentations
@@ -70,13 +79,14 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func getLectureList(searchString : String) {
         // This is for saving the request
         isLast = false
-        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagCollectionView.tagList, offset: 0, limit: perPage))
+        let tagList = tagCollectionView.tagList
+        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagList, offset: 0, limit: perPage))
         state = .Loading(request)
         request.responseWithDone({ statusCode, json in
-            self.state = .Loaded(searchString)
             self.FilteredList = json.arrayValue.map { data in
                 return STLecture(json: data)
             }
+            self.state = .Loaded(searchString, tagList)
             if json.arrayValue.count < self.perPage {
                 self.isLast = true
             }
@@ -90,10 +100,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     func getMoreLectureList(searchString: String) {
-        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagCollectionView.tagList, offset: perPage * pageNum, limit: perPage))
+        let tagList = tagCollectionView.tagList
+        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagList, offset: perPage * pageNum, limit: perPage))
         state = .Loading(request)
         request.responseWithDone({ statusCode, json in
-            self.state = .Loaded(searchString)
+            self.state = .Loaded(searchString, tagList)
             self.FilteredList = self.FilteredList + json.arrayValue.map { data in
                 return STLecture(json: data)
             }
@@ -116,7 +127,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         if scrollView.contentSize.height == 0 {
             return
         } else if scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height - heightForFetch && !isLast{
-            if case SearchState.Loaded(let searchString) = state {
+            if case SearchState.Loaded(let searchString, let _) = state {
                 getMoreLectureList(searchString)
             }
         }
@@ -153,7 +164,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         switch state {
         case .Loaded:
             return 1
-        case .Loading, .Empty:
+        case .Loading, .Empty, .EditingQuery:
             return 0
         }
     }
@@ -186,18 +197,28 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     func searchBarCancelButtonClicked() {
         switch state {
+        case .EditingQuery(let query, let tagList, let lectureList):
+            if query == nil {
+                state = .Empty
+                FilteredList = []
+                searchBar.text = ""
+                tagCollectionView.tagList = []
+            } else {
+                state = .Loaded(query!, tagList)
+                FilteredList = lectureList
+                searchBar.text = query!
+                tagCollectionView.tagList = tagList
+            }
         case .Loading(let request):
             request.cancel()
-        default:
-            break
+            state = .Empty
+            FilteredList = []
+            searchBar.text = ""
+            tagCollectionView.tagList = []
+        default: break
         }
-        state = .Empty
-        FilteredList = []
-        searchBar.text = ""
-        tagCollectionView.tagList = []
         reloadData()
         tagCollectionView.reloadData()
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -233,6 +254,86 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func hideTagRecommendation() {
         tagTableView.hide()
+    }
+    
+    //MARK: DNZEmptyDataSet
+    
+    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+        // TODO: change the images
+        switch(state) {
+        case .Empty:
+            return UIImage(named: "tag_white")
+        case .Loaded:
+            return UIImage(named: "tabbaritem_timetable")
+        default:
+            return nil
+        }
+    }
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        var text : String = ""
+        switch(state) {
+        case .Empty:
+            text = "강좌명 외의 내용으로 검색하려면 태그 검색을 이용하세요."
+        case .Loaded:
+            text = "검색 내용에 해당되는 강좌가 없습니다."
+        default:
+            text = ""
+        }
+        let attributes: [String : AnyObject] = [
+            NSFontAttributeName : UIFont.boldSystemFontOfSize(18.0),
+            NSForegroundColorAttributeName : UIColor(white: 1.0, alpha: 0.65)
+        ]
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        var text : String = ""
+        switch(state) {
+        case .Empty:
+            text = "같은 분야의 태그를 넣으면 그 중 하나가 있으면, 다른 분야의 태그끼리는 모두 있는 강좌를 검색합니다.\n예) #3학점, #4학점 : 3 또는 4학점\n#컴퓨터공학부, #전필 : 컴퓨터공학부 과목들 중 전필 강좌"
+        case .Loaded:
+            text = ""
+        default:
+            text = ""
+        }
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineBreakMode = .ByWordWrapping
+        paragraph.alignment = .Center
+        let attributes: [String : AnyObject] = [
+            NSFontAttributeName : UIFont.systemFontOfSize(14.0),
+            NSForegroundColorAttributeName : UIColor(white: 1.0, alpha: 0.5),
+            NSParagraphStyleAttributeName : paragraph
+        ]
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+    func buttonTitleForEmptyDataSet(scrollView: UIScrollView!, forState _: UIControlState) -> NSAttributedString! {
+        var text : String = ""
+        switch(state) {
+        case .Empty:
+            text = "태그 추가하기"
+        case .Loaded:
+            text = ""
+        default:
+            text = ""
+        }
+        let attributes: [String : AnyObject] = [
+            NSFontAttributeName : UIFont.boldSystemFontOfSize(17.0),
+            NSForegroundColorAttributeName : UIColor.whiteColor()
+        ]
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+    func emptyDataSetDidTapButton(scrollView: UIScrollView!) {
+        self.searchBar.enableEditingTag()
+        self.searchBar.becomeFirstResponder()
+    }
+    
+    func dismissKeyboard() {
+        if case .EditingQuery = state {
+            self.searchBar.searchBarCancelButtonClicked(self.searchBar)
+        }
     }
     
     /*

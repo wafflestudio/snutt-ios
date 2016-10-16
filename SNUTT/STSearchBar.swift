@@ -43,6 +43,14 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         
     }
     
+    func enableEditingTag() {
+        queryString = self.text!
+        self.text = "";
+        isEditingTag = true
+        self.searchBar(self, textDidChange: self.text!)
+
+    }
+    
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         if isEditingTag {
             isEditingTag = false
@@ -87,6 +95,12 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         
+        if !searchBar.isFirstResponder() {
+            // this is only for the case of clicking clear button while not in focus
+            searchController.state = .Empty
+            return
+        }
+        
         if isEditingTag {
             let query = searchText
             searchController.showTagRecommendation(query)
@@ -96,13 +110,20 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         self.showsCancelButton = true
-        searchController.state = .Empty
-        searchController.FilteredList = []
+        if case .Loaded(let query, let tagList) = searchController.state {
+            searchController.state = .EditingQuery(query, tagList, searchController.FilteredList)
+        } else {
+             if case .Loading(let request) = searchController.state {
+                request.cancel()
+            }
+            searchController.state = .EditingQuery(nil, [], [])
+        }
         searchController.reloadData()
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         self.showsCancelButton = false
+        searchController.reloadData()
     }
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if isEditingTag {
