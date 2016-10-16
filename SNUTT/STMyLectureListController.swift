@@ -14,6 +14,8 @@ class STMyLectureListController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.registerNib(UINib(nibName: "STLectureTableViewCell", bundle: nil), forCellReuseIdentifier: "LectureCell")
+        self.tableView.separatorStyle = .None
+        self.tableView.rowHeight = 74.0
         
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData:", event: STEvent.CurrentTimetableChanged, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData:", event: STEvent.CurrentTimetableSwitched, object: nil)
@@ -71,7 +73,10 @@ class STMyLectureListController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("STLectureDetailSegue", sender: self)
+        let detailController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("LectureDetailTableViewController") as! STLectureDetailTableViewController
+        detailController.lecture = STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row]
+        self.navigationController?.pushViewController(detailController, animated: true)
+
     }
     
     /*
@@ -88,18 +93,5 @@ class STMyLectureListController: UITableViewController {
         return true
     }
     */
-
-    
-    // MARK: - Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "STLectureDetailSegue" {
-            let destinationController = segue.destinationViewController as! STLectureDetailTableViewController
-            let indexPath = tableView.indexPathForSelectedRow!
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            destinationController.lecture = STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row]
-        }
-    }
-    
 
 }

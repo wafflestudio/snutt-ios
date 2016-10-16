@@ -10,11 +10,34 @@ import UIKit
 
 class STTimetableTabViewController: UIViewController {
     
-    var timetableViewController : STTimetableCollectionViewController?
+    var timetableViewController : STTimetableCollectionViewController!
+    var lectureListController : STMyLectureListController!
     
+    enum State {
+    case Timetable
+    case LectureList
+    }
+    
+    var state : State = .Timetable
+    var isInAnimation : Bool = false
+    
+    @IBOutlet weak var containerView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
+        self.navigationItem.leftBarButtonItem!.target = self
+        self.navigationItem.leftBarButtonItem!.action = #selector(self.switchView)
+        
+        timetableViewController = STTimetableCollectionViewController(collectionViewLayout: STTimetableLayout())
+        timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
+        
+        lectureListController = STMyLectureListController()
+        settingChanged()
+        
+        self.addChildViewController(timetableViewController)
+        timetableViewController.view.frame = containerView.frame
+        containerView.addSubview(timetableViewController.view)
+        timetableViewController.didMoveToParentViewController(self)
         
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableChanged, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableSwitched, object: nil)
@@ -56,18 +79,43 @@ class STTimetableTabViewController: UIViewController {
         }
         timetableViewController?.reloadTimetable()
     }
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "STTimetableCollectionViewController") {
-            timetableViewController = (segue.destinationViewController as! STTimetableCollectionViewController)
-            timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
-            settingChanged()
-        }
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
     
+    func switchView() {
+        if (isInAnimation) {
+            return
+        }
+        isInAnimation = true
+        var oldVc, newVc : UIViewController!
+        switch state {
+        case .Timetable:
+            oldVc = timetableViewController
+            newVc = lectureListController
+        case .LectureList:
+            oldVc = lectureListController
+            newVc = timetableViewController
+        }
+        oldVc.willMoveToParentViewController(nil)
+        self.addChildViewController(newVc)
+        
+        UIView.animateWithDuration(1.0, animations: {
+            switch self.state {
+            case .LectureList:
+                self.navigationItem.leftBarButtonItem!.image = UIImage(named:"navigationbaritem_list")
+            case .Timetable:
+                self.navigationItem.leftBarButtonItem!.image = UIImage(named:"navigationbaritem_timetable")
+            }
+        })
+        
+        self.transitionFromViewController(oldVc, toViewController: newVc, duration: 1.0, options: .TransitionFlipFromRight, animations: {
+                self.containerView.addSubview(newVc.view)
+                newVc.view.frame = self.containerView.frame
+                oldVc.view.removeFromSuperview()
+            }, completion: { finished in
+                self.state = (self.state == .Timetable) ? .LectureList : .Timetable
+                oldVc.removeFromParentViewController()
+                newVc.didMoveToParentViewController(self)
+                self.isInAnimation = false
+        })
+    }
 
 }
