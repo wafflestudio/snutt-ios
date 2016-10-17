@@ -90,6 +90,13 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         }
     }
     
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 3 && !custom && !editable {
+            return CGFloat.min
+        }
+        return super.tableView(tableView, heightForFooterInSection: section)
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if custom {
             switch section {
