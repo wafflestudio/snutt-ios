@@ -291,7 +291,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         var text : String = ""
         switch(state) {
         case .Empty:
-            text = "같은 분야의 태그를 넣으면 그 중 하나가 있으면, 다른 분야의 태그끼리는 모두 있는 강좌를 검색합니다.\n예) #3학점, #4학점 : 3 또는 4학점\n#컴퓨터공학부, #전필 : 컴퓨터공학부 과목들 중 전필 강좌"
+            text = "같은 분야의 태그를 넣으면 그 중 하나가 있으면, 다른 분야의 태그끼리는 모두 있는 강좌를 검색합니다.\n예) #3학점, #4학점 : 3 또는 4학점\n#컴퓨터공학부, #전필 : 컴퓨터공학부 과목들 중 전필 강좌".breakOnlyAtNewLineAndSpace
         case .Loaded:
             text = ""
         default:

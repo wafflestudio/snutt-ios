@@ -49,7 +49,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
                 text = text + "\n" + singleClass.place
             }
         }
-        courseText.text = text
+        courseText.text = text.breakOnlyAtNewLineAndSpace
         courseText.baselineAdjustment = .AlignCenters
     }
     

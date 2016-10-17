@@ -41,6 +41,35 @@ extension String {
     func localizedString() -> String {
         return NSLocalizedString(self, comment: "")
     }
+    var breakOnlyAtNewLineAndSpace : String {
+        let sc : Character = "\u{FEFF}"
+        var tmp : [Character] = []
+        var words : [String] = []
+        for (index, ch) in self.characters.enumerate() {
+            if ch == "\n" || ch == " " {
+                words.append(String(tmp))
+                words.append(String(ch))
+                tmp = []
+            } else {
+                tmp.append(ch)
+            }
+        }
+        if tmp.count != 0 {
+            words.append(String(tmp))
+        }
+        
+        let ret = words.map({ (word: String) -> (String) in
+            var tmp : [Character] = []
+            for (index, ch) in word.characters.enumerate() {
+                tmp.append(ch)
+                tmp.append(sc)
+            }
+            tmp.popLast()
+            return String(tmp)
+        })
+        
+        return ret.joinWithSeparator("")
+    }
 }
 
 extension UIView {
