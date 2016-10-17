@@ -18,6 +18,7 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         self.tableView.emptyDataSetDelegate = self;
         
         self.tableView.registerNib(UINib(nibName: "STLectureTableViewCell", bundle: nil), forCellReuseIdentifier: "LectureCell")
+        self.tableView.registerNib(UINib(nibName: "STAddLectureButtonCell", bundle: nil), forCellReuseIdentifier: "AddButtonCell")
         self.tableView.separatorStyle = .None
         self.tableView.rowHeight = 74.0
         
@@ -49,21 +50,31 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return STTimetableManager.sharedInstance.currentTimetable?.lectureList.count ?? 0
+        
+        if let cnt = STTimetableManager.sharedInstance.currentTimetable?.lectureList.count {
+            return cnt == 0 ? 0 : cnt + 1
+        }
+        return 0
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("LectureCell", forIndexPath: indexPath) as! STLectureTableViewCell
-        
-        cell.lecture = STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row]
-        
-        return cell
+        if indexPath.row == STTimetableManager.sharedInstance.currentTimetable?.lectureList.count {
+            let cell = tableView.dequeueReusableCellWithIdentifier("AddButtonCell", forIndexPath: indexPath) as! STAddLectureButtonCell
+            cell.titleLabel.text = "직접 강좌 추가하기"
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("LectureCell", forIndexPath: indexPath) as! STLectureTableViewCell
+            cell.lecture = STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row]
+            return cell
+        }
     }
     
 
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
+        if indexPath.row == STTimetableManager.sharedInstance.currentTimetable?.lectureList.count {
+            return false
+        }
         return true
     }
 
@@ -78,10 +89,20 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let detailController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("LectureDetailTableViewController") as! STLectureDetailTableViewController
-        detailController.lecture = STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row]
-        self.navigationController?.pushViewController(detailController, animated: true)
-
+        if indexPath.row == STTimetableManager.sharedInstance.currentTimetable?.lectureList.count {
+            self.performSegueWithIdentifier("AddCustomLecture", sender: self)
+        } else {
+            let detailController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("LectureDetailTableViewController") as! STLectureDetailTableViewController
+            detailController.lecture = STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row]
+            self.navigationController?.pushViewController(detailController, animated: true)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row == STTimetableManager.sharedInstance.currentTimetable?.lectureList.count {
+            return 40.0
+        }
+        return 74.0
     }
     
     //MARK: DNZEmptyDataSet

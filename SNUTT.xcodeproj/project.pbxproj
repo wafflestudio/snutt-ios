@@ -122,6 +122,8 @@
 		E1F58AAC1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F58AAB1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib */; };
 		E1F632921C8D0C040030BE7D /* STLectureRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F632911C8D0C030030BE7D /* STLectureRouter.swift */; };
 		E1F632941C8D21C20030BE7D /* STNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F632931C8D21C20030BE7D /* STNetworking.swift */; };
+		E1F946231DB449E300CC8AF6 /* STAddLectureButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F946221DB449E300CC8AF6 /* STAddLectureButtonCell.xib */; };
+		E1F946251DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F946241DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,6 +262,8 @@
 		E1F58AAB1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSlotCellCollectionViewCell.xib; sourceTree = "<group>"; };
 		E1F632911C8D0C030030BE7D /* STLectureRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureRouter.swift; sourceTree = "<group>"; };
 		E1F632931C8D21C20030BE7D /* STNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STNetworking.swift; sourceTree = "<group>"; };
+		E1F946221DB449E300CC8AF6 /* STAddLectureButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STAddLectureButtonCell.xib; sourceTree = "<group>"; };
+		E1F946241DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAddLectureButtonCell.swift; sourceTree = "<group>"; };
 		EC67A2D0072E64D419116691 /* Pods-SNUTT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -461,6 +465,7 @@
 		E1C28B191B9C4B7B00B8C493 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E1F946211DB449A200CC8AF6 /* MyLectureList */,
 				E16A88451C9F782F003D94AB /* Setting */,
 				E1773CAC1C953E6D00AF36AF /* Login */,
 				E110CFCF1C883DB300ED0590 /* Notification */,
@@ -472,9 +477,6 @@
 				E14DF2131C3F71A70076FDDE /* STTimetableAddController.swift */,
 				E19A3A9E1B453770007FCAD7 /* Main.storyboard */,
 				E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */,
-				E14DF21D1C3FB7810076FDDE /* STLectureTableViewCell.xib */,
-				E14DF21F1C3FBB0E0076FDDE /* STLectureTableViewCell.swift */,
-				E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */,
 				E1799E871D8E28D20014794F /* STMainTabBarController.swift */,
 			);
 			name = Controller;
@@ -576,6 +578,18 @@
 				E1F0CA181C6F2C1900A4F4ED /* sharp.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		E1F946211DB449A200CC8AF6 /* MyLectureList */ = {
+			isa = PBXGroup;
+			children = (
+				E14DF21D1C3FB7810076FDDE /* STLectureTableViewCell.xib */,
+				E14DF21F1C3FBB0E0076FDDE /* STLectureTableViewCell.swift */,
+				E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */,
+				E1F946221DB449E300CC8AF6 /* STAddLectureButtonCell.xib */,
+				E1F946241DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift */,
+			);
+			name = MyLectureList;
 			sourceTree = "<group>";
 		};
 		F3F7582CA3722E59E3E117F1 /* Frameworks */ = {
@@ -687,6 +701,7 @@
 				E1743CA01D9E6A0B009F8993 /* map_white.png in Resources */,
 				E1743C9E1D9E6A0B009F8993 /* clock_white.png in Resources */,
 				E1C48BA21C79C0E300BC469E /* Localizable.strings in Resources */,
+				E1F946231DB449E300CC8AF6 /* STAddLectureButtonCell.xib in Resources */,
 				E1743C9F1D9E6A0B009F8993 /* map_black.png in Resources */,
 				E1F0CA371C785C1200A4F4ED /* STSingleLabeledTableViewCell.xib in Resources */,
 				E1C48B8C1C78616C00BC469E /* STDoubleLabeledTableViewCell.xib in Resources */,
@@ -882,6 +897,7 @@
 				E1A99D8B1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift in Sources */,
 				E110CFD11C883DC900ED0590 /* STNotificationTableViewController.swift in Sources */,
 				E110CFD71C88424000ED0590 /* STNotification.swift in Sources */,
+				E1F946251DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift in Sources */,
 				E1B381AB1C6C61E2007E1A15 /* STTagCollectionViewCell.swift in Sources */,
 				E14992091C4B828500DC6756 /* STSwiftyJSONRequest.swift in Sources */,
 				E1C48B901C78736C00BC469E /* STColorPickTableViewCell.swift in Sources */,
