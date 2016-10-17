@@ -36,16 +36,12 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if !editable {
-            tableView.deselectRowAtIndexPath(indexPath, animated: false)
-            return
-        }
-        if case .Color = cellTypeAtIndexPath(indexPath) {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            triggerColorPicker()
-        } else if case .AddButton = cellTypeAtIndexPath(indexPath) {
+        if case .Button = cellTypeAtIndexPath(indexPath).cellViewType {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             (self.tableView.cellForRowAtIndexPath(indexPath) as! STSingleLectureButtonCell).buttonAction?()
+        } else if case .Color = cellTypeAtIndexPath(indexPath) {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            triggerColorPicker()
         } else {
             tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
@@ -73,18 +69,25 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         case (2, _): return .SingleClass
             
         case (3, 0):
-            if editable {
+            if custom {
+                return .DeleteButton
+            } else if editable {
                 return .ResetButton
             } else {
                 return .SyllabusButton
             }
-            
+        case (4, 0):
+            return .DeleteButton
         default: return .Padding // Never Reach
         }
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return custom ? 3 : 4
+        if custom {
+            return editable ? 3 : 4
+        } else {
+            return editable ? 4 : 5
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -93,6 +96,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
             case 0: return 4
             case 1: return 0
             case 2: return currentLecture.classList.count + ( editable ? 1 : 0)
+            case 3: return editable ? 0 : 1
             default: return 0 // Never Reached
             }
         } else {
@@ -101,6 +105,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
             case 1: return 6
             case 2: return currentLecture.classList.count
             case 3: return 1
+            case 4: return 1
             default: return 0
             }
         }

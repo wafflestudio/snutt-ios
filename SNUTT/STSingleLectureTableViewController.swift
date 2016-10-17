@@ -50,6 +50,7 @@ class STSingleLectureTableViewController: UITableViewController {
         case AddButton(section : Int)
         case ResetButton
         case SyllabusButton
+        case DeleteButton
         
         var cellViewType : CellViewType {
             switch self {
@@ -69,11 +70,13 @@ class STSingleLectureTableViewController: UITableViewController {
             case .Padding:
                 return .Padding
             case .AddButton:
-                return .Button(title: "Add", color: UIColor.blueColor())
+                return .Button(title: "Add", color: UIColor.blackColor())
             case .ResetButton:
                 return .Button(title: "Reset", color: UIColor.redColor())
             case .SyllabusButton:
-                return .Button(title: "Syllabus", color: UIColor.blueColor())
+                return .Button(title: "Syllabus", color: UIColor.blackColor())
+            case .DeleteButton:
+                return .Button(title: "Delete", color: UIColor.redColor())
             }
         }
     }
@@ -210,6 +213,19 @@ class STSingleLectureTableViewController: UITableViewController {
         case .ResetButton:
             actionBlock = { ()->() in
                 //TODO: show alert view and reset the values
+            }
+        case .DeleteButton:
+            actionBlock = { ()->() in
+                let actions = [
+                    UIAlertAction(title: "삭제", style: .Destructive, handler: { _ in
+                        if let index = STTimetableManager.sharedInstance.currentTimetable?.lectureList.indexOf(self.currentLecture) {
+                            STTimetableManager.sharedInstance.deleteLectureAtIndex(index, object: nil)
+                        }
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }),
+                    UIAlertAction(title: "취소", style: .Cancel, handler: nil)
+                ]
+                STAlertView.showAlert(title: "강좌 삭제", message: "강좌를 삭제하시겠습니까?", actions: actions)
             }
         }
         
