@@ -146,6 +146,10 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         self.collectionView?.reloadData()
     }
     
+    func reloadTempLecture() {
+        collectionView?.reloadSections(NSIndexSet(index: (timetable?.lectureList.count)! + LectureSectionOffset))
+    }
+    
     /*
     // MARK: - Navigation
 

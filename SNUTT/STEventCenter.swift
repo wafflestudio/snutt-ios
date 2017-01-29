@@ -11,6 +11,7 @@ import Foundation
 enum STEvent : String {
     case CurrentTimetableSwitched = "CurrentTimetableSwitched"
     case CurrentTimetableChanged = "CurrentTimetableChanged"
+    case CurrentTemporaryLectureChanged = "CurrentTemporaryLectureChanged"
     case SettingChanged = "SettingChanged"
     case CourseBookUpdated = "CourseBookUpdated"
     case TagListUpdated = "TagListUpdated"

@@ -1,37 +1,45 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="STLeftAlignedTableViewCell" customModule="SNUTT" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="378" height="52"/>
+            <rect key="frame" x="0.0" y="0.0" width="378" height="36"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="rli-k3-PjP">
-                    <rect key="frame" x="16" y="16" width="102" height="20"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="rli-k3-PjP">
+                    <rect key="frame" x="16" y="8" width="102" height="20"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="noA-kL-f7G">
-                    <rect key="frame" x="126" y="18" width="236" height="17"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="한글" borderStyle="line" adjustsFontSizeToFit="NO" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="noA-kL-f7G">
+                    <rect key="frame" x="126" y="0.0" width="236" height="36"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="noA-kL-f7G" firstAttribute="leading" secondItem="rli-k3-PjP" secondAttribute="trailing" constant="8" id="8KB-8R-Tos"/>
                 <constraint firstAttribute="trailing" secondItem="noA-kL-f7G" secondAttribute="trailing" constant="16" id="BWO-of-7gj"/>
                 <constraint firstItem="noA-kL-f7G" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="EtN-CV-lTi"/>
+                <constraint firstItem="noA-kL-f7G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Xlk-43-YZW"/>
                 <constraint firstItem="rli-k3-PjP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="c9n-8j-aKV"/>
+                <constraint firstAttribute="bottom" secondItem="rli-k3-PjP" secondAttribute="bottom" constant="8" id="d4a-t3-x78"/>
+                <constraint firstAttribute="bottom" secondItem="noA-kL-f7G" secondAttribute="bottom" id="jcT-Iw-mQF"/>
                 <constraint firstAttribute="trailing" secondItem="noA-kL-f7G" secondAttribute="leading" multiplier="3" id="kFL-Kp-VoZ"/>
                 <constraint firstItem="rli-k3-PjP" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="s7q-cA-VRM"/>
+                <constraint firstItem="rli-k3-PjP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="yeD-b1-6S1"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>

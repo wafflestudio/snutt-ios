@@ -20,6 +20,9 @@ class STLeftAlignedTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
         self.addSubview(textField)
         self.selectionStyle = .None
         textField.delegate = self
+        // http://stackoverflow.com/questions/39556087/uitextfield-chinese-character-moves-down-when-editing-in-ios-10
+        // Some stupid bug
+        textField.borderStyle = .None
         // Initialization code
     }
     

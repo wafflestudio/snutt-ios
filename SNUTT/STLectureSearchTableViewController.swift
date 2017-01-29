@@ -46,6 +46,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         
         STEventCenter.sharedInstance.addObserver(self, selector: "timetableSwitched", event: STEvent.CurrentTimetableSwitched, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadTimetable", event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: "reloadTempLecture", event: STEvent.CurrentTemporaryLectureChanged, object: nil)
         
         tableView.emptyDataSetSource = self;
         tableView.emptyDataSetDelegate = self;
@@ -149,6 +150,10 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func reloadTimetable() {
         self.timetableViewController.reloadTimetable()
+    }
+    
+    func reloadTempLecture() {
+        self.timetableViewController.reloadTempLecture()
     }
     
     override func didReceiveMemoryWarning() {
