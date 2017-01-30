@@ -48,7 +48,7 @@ extension Request {
         )
     }
     
-    public func responseWithDone(done: ((Int, JSON) -> ())?, failure: ((NSError) -> ())?, networkAlert: Bool = true ) {
+    public func responseWithDone(done: ((Int, JSON) -> ())?, failure: ((STErrorCode) -> ())?, networkAlert: Bool = true ) {
         self.responseSwiftyJSON { response in
             switch response.result {
             case .Success(let json):
@@ -56,26 +56,22 @@ extension Request {
                 print(json)
                 if let statusCode = response.response?.statusCode {
                     if 400 <= statusCode && statusCode <= 403 {
-                        guard let errCode = json["errcode"].int else {
+                        guard let errCodeRaw = json["errcode"].int else {
                             done?(response.response?.statusCode ?? 200 ,json)
                             return
                         }
-                        if errCode == 1 || errCode == 2 {
-                            // Token is wrong. => login page
-                            STUser.logOut()
-                            return
-                        } else if errCode == 0 {
-                            // apiKey is wrong
-                            // TODO: What if api key is wrong even though it should not happen.
-                            // TODO: call failure
-                            return
-                        } else {
-                            // something is wrong to the server
-                            // TODO: alertview for server error
-                            // TODO: call failure
+                        guard let errCode = STErrorCode(rawValue: errCodeRaw) else {
+                            failure?(STErrorCode.SERVER_FAULT)
                             return
                         }
-
+                        switch (errCode) {
+                        case STErrorCode.NO_USER_TOKEN, STErrorCode.WRONG_USER_TOKEN:
+                            STUser.logOut()
+                        default:
+                            STAlertView.showAlert(title: errCode.errorTitle, message: errCode.errorMessage)
+                        }
+                        failure?(errCode)
+                        return
                     }
                 }
                 done?(response.response?.statusCode ?? 200 ,json)
@@ -83,7 +79,7 @@ extension Request {
                 if networkAlert {
                     STNetworking.showNetworkError()
                 }
-                failure?(error)
+                failure?(STErrorCode.NO_NETWORK)
             }
         }
     }

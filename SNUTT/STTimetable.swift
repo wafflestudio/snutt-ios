@@ -66,6 +66,13 @@ class STTimetable {
             if it.isSameLecture(lecture){
                 return STAddLectureState.ErrorSameLecture
             }
+            for class1 in it.classList {
+                for class2 in lecture.classList {
+                    if class1.time.isOverlappingWith(class2.time) {
+                        return STAddLectureState.ErrorTime
+                    }
+                }
+            }
         }
         lectureList.append(lecture)
         return STAddLectureState.Success
