@@ -257,7 +257,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         UIView.setAnimationBeginsFromCurrentState(true)
         
         keyboardLayoutConstraint.constant = height
-        self.loginContainerView.layoutIfNeeded()
+        self.loginContainerView.superview!.layoutIfNeeded()
         
         UIView.commitAnimations()
     }
@@ -274,7 +274,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         UIView.setAnimationBeginsFromCurrentState(true)
         
         keyboardLayoutConstraint.constant = 0
-        self.loginContainerView.layoutIfNeeded()
+        self.loginContainerView.superview!.layoutIfNeeded()
         
         UIView.commitAnimations()
         
@@ -287,14 +287,11 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func animateBgScrollView() {
-        
         UIView.animateWithDuration(80.0, delay: 0.0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: {
             self.bgLeftLayoutConstraint.priority = 250
             self.bgRightLayoutConstraint.priority = 750
-            self.bgImageView.layoutIfNeeded()
+            self.bgImageView.superview!.layoutIfNeeded()
             }, completion: nil)
-        
-        
     }
     
     // MARK: TextFieldDelegate
