@@ -43,7 +43,6 @@ class STTagCollectionViewCell: UICollectionViewCell {
     
     func getColorFromTag(tag: STTag) -> UIColor {
         switch tag.type {
-        //TODO: set the right Color
         case .AcademicYear: return UIColor.flatNavyBlueColor()
         case .Category: return UIColor.flatCoffeeColorDark()
         case .Classification: return UIColor.flatForestGreenColorDark()

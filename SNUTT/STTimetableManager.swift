@@ -92,7 +92,6 @@ class STTimetableManager : NSObject {
                 self.currentTimetable?.lectureList = newTimetable.lectureList
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
                 }, failure: {
-                // TODO: show alertview for error
                 self.currentTimetable?.deleteLecture(lecture)
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
             })
@@ -132,11 +131,10 @@ class STTimetableManager : NSObject {
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
     }
     func setTemporaryLecture(lecture :STLecture?, object : AnyObject? ) {
-        //TODO: STEvent.tempLectureChanged for animation
         if currentTimetable?.temporaryLecture == lecture {
             return
         }
         currentTimetable?.temporaryLecture = lecture
-        STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
+        STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTemporaryLectureChanged, object: object)
     }
 }

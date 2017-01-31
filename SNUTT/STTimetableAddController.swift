@@ -42,7 +42,8 @@ class STTimetableAddController: UIViewController, UIPickerViewDataSource, UIPick
         let selectedCourseBook = STCourseBookList.sharedInstance.courseBookList[index]
         let title = titleTextField.text
         if (title == nil || title == "") {
-            return //TODO: Alert the user for the missing title
+            STAlertView.showAlert(title: "시간표 추가 실패", message: "시간표 이름을 적어주세요.")
+            return
         }
         self.view.endEditing(true)
         timetableListController.addTimetable(title!, courseBook: selectedCourseBook)

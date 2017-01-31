@@ -55,7 +55,7 @@ extension Request {
                 //TODO: erase print
                 print(json)
                 if let statusCode = response.response?.statusCode {
-                    if 400 <= statusCode && statusCode <= 403 {
+                    if statusCode != 200 {
                         guard let errCodeRaw = json["errcode"].int else {
                             done?(response.response?.statusCode ?? 200 ,json)
                             return
