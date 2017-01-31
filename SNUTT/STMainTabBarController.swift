@@ -31,7 +31,7 @@ class STMainTabBarController: UITabBarController {
     }
     
     func setNotiBadge(count: Int) {
-        let notiBarItem = self.tabBar.items![3]
+        let notiBarItem = self.tabBar.items![2]
         //TODO: noti bar item badge
         if (count > 0) {
             notiBarItem.badgeValue = "" // FIXME: show badge by icon img

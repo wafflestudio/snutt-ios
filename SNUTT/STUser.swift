@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Alamofire
 import SwiftyJSON
+import Firebase
 
 class STUser {
     var localId : String?
@@ -47,7 +48,8 @@ class STUser {
     }
     
     static func logOut() {
-        //TODO : Delete Device ID
+        //FIXME: Logic needed for deleteDevice
+        STNetworking.deleteDevice(FIRInstanceID.instanceID().token()!)
         loadLoginPage()
     }
     
@@ -56,6 +58,13 @@ class STUser {
         STDefaults[.token] = nil
         STDefaults[.isFCMRegistered] = false;
         UIApplication.sharedApplication().delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+    }
+    
+    static func updateDeviceIdIfNeeded() {
+        let refreshedToken = FIRInstanceID.instanceID().token()!
+        if (STDefaults[.token] != nil && !STDefaults[.isFCMRegistered]) {
+            STNetworking.addDevice(refreshedToken)
+        }
     }
     
     init(json: JSON) {

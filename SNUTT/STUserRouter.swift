@@ -22,6 +22,7 @@ enum STUserRouter : STRouter {
     case DetachFB
     case GetFB
     case AddDevice(id: String)
+    case DeleteDevice(id: String)
     case DeleteUser
     
     var method: Alamofire.Method {
@@ -42,6 +43,8 @@ enum STUserRouter : STRouter {
             return .GET
         case .AddDevice:
             return .POST
+        case .DeleteDevice:
+            return .DELETE
         case .DeleteUser:
             return .DELETE
         }
@@ -55,7 +58,7 @@ enum STUserRouter : STRouter {
             return "/password"
         case .AddFB, .DetachFB, .GetFB:
             return "/facebook"
-        case .AddDevice:
+        case .AddDevice, .DeleteDevice:
             return "/device"
         case .DeleteUser:
             return "/account"
@@ -80,6 +83,8 @@ enum STUserRouter : STRouter {
         case .GetFB:
             return nil
         case let .AddDevice(id):
+            return ["registration_id": id]
+        case let .DeleteDevice(id):
             return ["registration_id": id]
         case .DeleteUser:
             return nil

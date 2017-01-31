@@ -284,8 +284,17 @@ class STNetworking {
         request.responseWithDone({ statusCode, json in
             STDefaults[.isFCMRegistered] = true
             }, failure: nil
+            , networkAlert: false
         )
-
+    }
+    
+    static func deleteDevice(deviceId : String) {
+        let request = Alamofire.request(STUserRouter.DeleteDevice(id: deviceId))
+        request.responseWithDone({ statusCode, json in
+            }, failure: { _ in
+                //TODO: Error Handling with deleteDevice
+            }, networkAlert: false
+        )
     }
     
     static func showNetworkError() {

@@ -170,6 +170,7 @@
 		E14992081C4B828500DC6756 /* STSwiftyJSONRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSwiftyJSONRequest.swift; sourceTree = "<group>"; };
 		E149920C1C4F6D1F00DC6756 /* STTimetableCellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableCellType.swift; sourceTree = "<group>"; };
 		E149920E1C549D7900DC6756 /* STSearchRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchRouter.swift; sourceTree = "<group>"; };
+		E14A7F5D1E406CAA003B3EA9 /* SNUTT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTT.entitlements; sourceTree = "<group>"; };
 		E14DF2131C3F71A70076FDDE /* STTimetableAddController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableAddController.swift; sourceTree = "<group>"; };
 		E14DF2151C3F8F920076FDDE /* STCourseBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STCourseBook.swift; sourceTree = "<group>"; };
 		E14DF2171C3F914E0076FDDE /* STCourseBookList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STCourseBookList.swift; sourceTree = "<group>"; };
@@ -404,6 +405,7 @@
 		E19A3A971B453770007FCAD7 /* SNUTT */ = {
 			isa = PBXGroup;
 			children = (
+				E14A7F5D1E406CAA003B3EA9 /* SNUTT.entitlements */,
 				E1F0CA1A1C7475A600A4F4ED /* Asset */,
 				E1C28B191B9C4B7B00B8C493 /* Controller */,
 				E1C28B161B9C4B2500B8C493 /* Model */,
@@ -662,6 +664,14 @@
 					E19A3A941B453770007FCAD7 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 6CP294YE57;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					E19A3AA91B453770007FCAD7 = {
 						CreatedOnToolsVersion = 6.4;
@@ -1059,6 +1069,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6CP294YE57;
@@ -1078,6 +1089,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6CP294YE57;

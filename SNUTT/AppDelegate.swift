@@ -29,11 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setColors()
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(self.tokenRefreshNotification),
-                                                         name: kFIRInstanceIDTokenRefreshNotification,
-                                                         object: nil)
-        
         // open main or login depending on the token
         if STDefaults[.token] != nil {
             self.window?.rootViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
@@ -57,20 +52,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
-        return true
-    }
-    
-    func tokenRefreshNotification(notification: NSNotification) {
-        let refreshedToken = FIRInstanceID.instanceID().token()!
-        if (STDefaults[.token] != nil && !STDefaults[.isFCMRegistered]) {
-            STNetworking.addDevice(refreshedToken)
+        
+        let settings: UIUserNotificationSettings =
+            UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(self.tokenRefreshNotification),
+                                                         name: kFIRInstanceIDTokenRefreshNotification,
+                                                         object: nil)
+        
+        if (FIRInstanceID.instanceID().token() != nil) {
+            STUser.updateDeviceIdIfNeeded()
+            connectToFcm()
         }
-        print("InstanceID token: \(refreshedToken)")
+        
+        return true
     }
     
     func setColors() {
         UINavigationBar.appearance().tintColor = UIColor.blackColor()
         UITabBar.appearance().tintColor = UIColor.blackColor()
+    }
+    
+    func tokenRefreshNotification(notification: NSNotification) {
+        STUser.updateDeviceIdIfNeeded()
+        connectToFcm()
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        
+        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Sandbox)
+        //FIXME: Production Firebase
+        //FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Prod)
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject],
@@ -79,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // this callback will not be fired till the user taps on the notification launching the application.
         
         //TODO: Fix the gcm.badge.message
-        STMainTabBarController.controller?.setNotiBadge(userInfo["gcm.badge.message"] as! Int)
+        STMainTabBarController.controller?.setNotiBadge((userInfo["gcm.badge.message"] as? Int) ?? 1)
         
         // Print message ID.
         print("Message ID: \(userInfo["gcm.message_id"]!)")
@@ -92,10 +107,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
-
+    func connectToFcm() {
+        FIRMessaging.messaging().connectWithCompletion { (error) in
+            if (error != nil) {
+                print("Unable to connect with FCM. \(error)")
+            } else {
+                print("Connected to FCM.")
+            }
+        }
+    }
     func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        FIRMessaging.messaging().disconnect()
+        print("Disconnected from FCM.")
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
