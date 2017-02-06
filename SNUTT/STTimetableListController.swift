@@ -82,16 +82,19 @@ class STTimetableListController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("STTimetableListCell", forIndexPath: indexPath)
-        
-        cell.textLabel!.text = timetableList[
-            indexList[indexPath.section]+indexPath.row].title
-        
+        let timetable = timetableList[indexList[indexPath.section]+indexPath.row]
+        cell.textLabel!.text = timetable.title
+        if STTimetableManager.sharedInstance.currentTimetable?.id == timetable.id {
+            cell.accessoryType = .Checkmark
+        } else {
+            cell.accessoryType = .None
+        }
         //configure the cell for loading timetable
         return cell
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return timetableList[indexList[section]].quarter.shortString()
+        return timetableList[indexList[section]].quarter.longString()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -116,6 +119,9 @@ class STTimetableListController: UITableViewController {
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         let index = indexPathToIndex(indexPath)
         if timetableList[index].isLoaded {
+            if STTimetableManager.sharedInstance.currentTimetable?.id == timetableList[index].id  {
+                return false
+            }
             return true
         } else {
             return false
