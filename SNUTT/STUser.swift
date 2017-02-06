@@ -61,7 +61,9 @@ class STUser {
     }
     
     static func updateDeviceIdIfNeeded() {
-        let refreshedToken = FIRInstanceID.instanceID().token()!
+        guard let refreshedToken = FIRInstanceID.instanceID().token() else {
+            return
+        }
         if (STDefaults[.token] != nil && !STDefaults[.isFCMRegistered]) {
             STNetworking.addDevice(refreshedToken)
         }
