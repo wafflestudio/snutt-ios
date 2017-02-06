@@ -35,13 +35,16 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
         heightConstraint.constant = self.contentSize.height + 10
     }
     
-    func showTagsFor(query : String) {
+    func showTagsFor(query : String, type: STTagType?) {
         if query == "" {
             filteredList = STTagManager.sharedInstance.tagList.tagList
         } else {
             filteredList = STTagManager.sharedInstance.tagList.tagList.filter{ tag in
                 return tag.text.hasPrefix(query)
             }
+        }
+        if let tagType = type {
+            filteredList = filteredList.filter{ tag in tag.type == tagType }
         }
         self.hidden = false
         self.reloadData()
@@ -70,7 +73,14 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("STTagTableViewCell", forIndexPath: indexPath) as! STTagTableViewCell
-        cell.tagLabel.text = "# " + filteredList[indexPath.row].text
+        let whiteAttribute = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let colorAttribute = [NSForegroundColorAttributeName: filteredList[indexPath.row].type.tagLightColor.lightenByPercentage(0.3)]
+        let text = NSMutableAttributedString()
+        let sharpText = NSAttributedString(string: "# ", attributes: colorAttribute)
+        let tagText = NSAttributedString(string: filteredList[indexPath.row].text, attributes: whiteAttribute)
+        text.appendAttributedString(sharpText)
+        text.appendAttributedString(tagText)
+        cell.tagLabel.attributedText = text
         return cell
     }
     

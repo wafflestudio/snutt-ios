@@ -13,17 +13,19 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
     weak var searchController : STLectureSearchTableViewController!
     var queryString : String = ""
     
-    private var isEditingTag : Bool = false {
+    var isEditingTag : Bool = false {
         didSet {
             // TODO: Check whether return key is changed in real iphone
             if isEditingTag {
                 self.returnKeyType = .Done
                 self.reloadInputViews()
-                self.setImage(UIImage(named: "sharp.png"), forSearchBarIcon: .Search, state: .Normal)
+                self.setImage(UIImage(named: "icon_tag_gray"), forSearchBarIcon: .Search, state: .Normal)
+                searchController.searchToolbarView.setEditingTag(true)
             } else {
                 self.returnKeyType = .Search
                 self.reloadInputViews()
                 self.setImage(nil, forSearchBarIcon: .Search, state: .Normal)
+                searchController.searchToolbarView.setEditingTag(false)
             }
         }
     }
@@ -34,21 +36,25 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         self.keyboardType = .Default
         self.returnKeyType = .Search
         self.enablesReturnKeyAutomatically = false
+        self.tintColor = UIColor.blackColor()
     }
     
     func disableEditingTag() {
-        isEditingTag = false
-        self.text = queryString
-        queryString = ""
-        
+        if (isEditingTag) {
+            isEditingTag = false
+            self.text = queryString
+            queryString = ""
+            searchController.hideTagRecommendation()
+        }
     }
     
     func enableEditingTag() {
-        queryString = self.text!
-        self.text = "";
-        isEditingTag = true
-        self.searchBar(self, textDidChange: self.text!)
-
+        if (!isEditingTag) {
+            queryString = self.text!
+            self.text = "";
+            isEditingTag = true
+            self.searchBar(self, textDidChange: self.text!)
+        }
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -102,8 +108,7 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         }
         
         if isEditingTag {
-            let query = searchText
-            searchController.showTagRecommendation(query)
+            searchController.showTagRecommendation()
         }
         
     }

@@ -100,6 +100,9 @@
 		E1C48BB41C79CAE800BC469E /* STPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48BB31C79CAE800BC469E /* STPeriod.swift */; };
 		E1CAAA351CF07E7E00D16183 /* STSingleLectureButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1CAAA341CF07E7E00D16183 /* STSingleLectureButtonCell.xib */; };
 		E1CAAA391CF07F1000D16183 /* STSingleLectureButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CAAA381CF07F1000D16183 /* STSingleLectureButtonCell.swift */; };
+		E1CD92651E45CF8C00AF5FE4 /* STLectureSearchToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD92641E45CF8C00AF5FE4 /* STLectureSearchToolbarView.swift */; };
+		E1CD92671E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1CD92661E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib */; };
+		E1CD926A1E46EAE100AF5FE4 /* STTagFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD92691E46EAE100AF5FE4 /* STTagFilterCollectionViewCell.swift */; };
 		E1D0FB651C86CDCE00ACDC2F /* STColorPickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0FB641C86CDCE00ACDC2F /* STColorPickerTableViewController.swift */; };
 		E1D0FB671C86CDE300ACDC2F /* STColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0FB661C86CDE300ACDC2F /* STColorTableViewCell.swift */; };
 		E1D0FB691C86D32B00ACDC2F /* STSingleColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0FB681C86D32B00ACDC2F /* STSingleColorTableViewCell.swift */; };
@@ -108,7 +111,6 @@
 		E1EE1B311CCCDE20003DF250 /* STDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EE1B301CCCDE20003DF250 /* STDefaults.swift */; };
 		E1EE1B331CCDAAB6003DF250 /* STPaddingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EE1B321CCDAAB6003DF250 /* STPaddingTableViewCell.swift */; };
 		E1EF8B301D6D640100791778 /* STUserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF8B2F1D6D640100791778 /* STUserRouter.swift */; };
-		E1F0CA191C6F2C1900A4F4ED /* sharp.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA181C6F2C1900A4F4ED /* sharp.png */; };
 		E1F0CA1D1C7482D300A4F4ED /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA1C1C7482D300A4F4ED /* delete.png */; };
 		E1F0CA1F1C748B6000A4F4ED /* STTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */; };
 		E1F0CA271C75B01900A4F4ED /* STLectureSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA261C75B01900A4F4ED /* STLectureSearchTableViewCell.xib */; };
@@ -242,6 +244,9 @@
 		E1C48BB31C79CAE800BC469E /* STPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STPeriod.swift; sourceTree = "<group>"; };
 		E1CAAA341CF07E7E00D16183 /* STSingleLectureButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSingleLectureButtonCell.xib; sourceTree = "<group>"; };
 		E1CAAA381CF07F1000D16183 /* STSingleLectureButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleLectureButtonCell.swift; sourceTree = "<group>"; };
+		E1CD92641E45CF8C00AF5FE4 /* STLectureSearchToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureSearchToolbarView.swift; sourceTree = "<group>"; };
+		E1CD92661E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STTagFilterCollectionViewCell.xib; sourceTree = "<group>"; };
+		E1CD92691E46EAE100AF5FE4 /* STTagFilterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1D0FB641C86CDCE00ACDC2F /* STColorPickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorPickerTableViewController.swift; sourceTree = "<group>"; };
 		E1D0FB661C86CDE300ACDC2F /* STColorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorTableViewCell.swift; sourceTree = "<group>"; };
 		E1D0FB681C86D32B00ACDC2F /* STSingleColorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleColorTableViewCell.swift; sourceTree = "<group>"; };
@@ -250,7 +255,6 @@
 		E1EE1B301CCCDE20003DF250 /* STDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDefaults.swift; sourceTree = "<group>"; };
 		E1EE1B321CCDAAB6003DF250 /* STPaddingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STPaddingTableViewCell.swift; sourceTree = "<group>"; };
 		E1EF8B2F1D6D640100791778 /* STUserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STUserRouter.swift; sourceTree = "<group>"; };
-		E1F0CA181C6F2C1900A4F4ED /* sharp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sharp.png; path = images/sharp.png; sourceTree = "<group>"; };
 		E1F0CA1C1C7482D300A4F4ED /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = images/delete.png; sourceTree = "<group>"; };
 		E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagTableViewCell.swift; sourceTree = "<group>"; };
 		E1F0CA261C75B01900A4F4ED /* STLectureSearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STLectureSearchTableViewCell.xib; sourceTree = "<group>"; };
@@ -508,6 +512,7 @@
 		E1C28B1B1B9C4BB900B8C493 /* LectureSearch */ = {
 			isa = PBXGroup;
 			children = (
+				E1CD92681E46EAB300AF5FE4 /* SearchToolbar */,
 				E1F0CA261C75B01900A4F4ED /* STLectureSearchTableViewCell.xib */,
 				E19E231E1B468B700010DFB1 /* STLectureSearchTableViewController.swift */,
 				E19E23201B4691D90010DFB1 /* STLectureSearchTableViewCell.swift */,
@@ -554,6 +559,16 @@
 			name = ActionSheetPicker;
 			sourceTree = "<group>";
 		};
+		E1CD92681E46EAB300AF5FE4 /* SearchToolbar */ = {
+			isa = PBXGroup;
+			children = (
+				E1CD92641E45CF8C00AF5FE4 /* STLectureSearchToolbarView.swift */,
+				E1CD92661E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib */,
+				E1CD92691E46EAE100AF5FE4 /* STTagFilterCollectionViewCell.swift */,
+			);
+			name = SearchToolbar;
+			sourceTree = "<group>";
+		};
 		E1D0FB631C86CDAC00ACDC2F /* ColorPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -580,7 +595,6 @@
 				E1773CB11C95A09500AF36AF /* login_winter.jpg */,
 				E1773CAF1C959B5300AF36AF /* FB_logo_white.png */,
 				E1F0CA1C1C7482D300A4F4ED /* delete.png */,
-				E1F0CA181C6F2C1900A4F4ED /* sharp.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -706,10 +720,10 @@
 				E1743C9D1D9E6A0B009F8993 /* clock_black.png in Resources */,
 				E110CFD31C883F3800ED0590 /* STNotificationTableViewCell.xib in Resources */,
 				E1F58AA81C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib in Resources */,
-				E1F0CA191C6F2C1900A4F4ED /* sharp.png in Resources */,
 				E1773CB01C959B5300AF36AF /* FB_logo_white.png in Resources */,
 				E14DF21E1C3FB7820076FDDE /* STLectureTableViewCell.xib in Resources */,
 				E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */,
+				E1CD92671E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib in Resources */,
 				E19A3AA51B453770007FCAD7 /* LaunchScreen.xib in Resources */,
 				E1743CA01D9E6A0B009F8993 /* map_white.png in Resources */,
 				E1743C9E1D9E6A0B009F8993 /* clock_white.png in Resources */,
@@ -871,6 +885,7 @@
 				E1F0CA331C78398E00A4F4ED /* STSingleLabeledTableViewCell.swift in Sources */,
 				E16A88551C9FC460003D94AB /* STDeveloperViewController.swift in Sources */,
 				E1799E881D8E28D20014794F /* STMainTabBarController.swift in Sources */,
+				E1CD92651E45CF8C00AF5FE4 /* STLectureSearchToolbarView.swift in Sources */,
 				E1C48B971C79BA4100BC469E /* STTimeActionSheetPicker.swift in Sources */,
 				E1C48B991C79BDD300BC469E /* STSemester.swift in Sources */,
 				E1EE1B331CCDAAB6003DF250 /* STPaddingTableViewCell.swift in Sources */,
@@ -885,6 +900,7 @@
 				E16643551B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift in Sources */,
 				E1C48B941C787A3C00BC469E /* STSingleClassTableViewCell.swift in Sources */,
 				E14DF2201C3FBB0E0076FDDE /* STLectureTableViewCell.swift in Sources */,
+				E1CD926A1E46EAE100AF5FE4 /* STTagFilterCollectionViewCell.swift in Sources */,
 				E16A88531C9FB98F003D94AB /* STSupportViewController.swift in Sources */,
 				E16A88571C9FC4AD003D94AB /* STSettingViewController.swift in Sources */,
 				E110CFD51C883FC000ED0590 /* STNotificationTableViewCell.swift in Sources */,
@@ -1014,7 +1030,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = SNUTT;
@@ -1054,7 +1070,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = SNUTT;
 				SDKROOT = iphoneos;

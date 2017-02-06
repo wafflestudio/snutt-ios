@@ -98,6 +98,16 @@ class STTimetable {
     func updateLectureAtIndex(index: Int, lecture :STLecture) {
         lectureList[index] = lecture
     }
+    
+    func timetableTimeMask() -> [Int] {
+        return lectureList.reduce([0,0,0,0,0,0,0], combine: { mask, lecture in
+            return zip(mask, lecture.timeMask).map { t1, t2 in t1 | t2 }
+        })
+    }
+    
+    func timetableReverseTimeMask() -> [Int] {
+        return timetableTimeMask().map {t1 in 0x3FFFFFFF ^ t1 }
+    }
 }
 
 extension STTimetable : Equatable {}

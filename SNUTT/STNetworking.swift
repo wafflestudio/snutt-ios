@@ -172,6 +172,9 @@ class STNetworking {
             tags = tags + json["instructor"].arrayValue.map({ body in
                 return STTag(type: .Instructor, text: body.stringValue)
             })
+            tags = tags + json["category"].arrayValue.map({ body in
+                return STTag(type: .Category, text: body.stringValue)
+            })
             done(tags)
         }, failure: { _ in
             failure()

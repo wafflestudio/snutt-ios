@@ -16,7 +16,7 @@ class STTagCollectionViewCell: UICollectionViewCell {
     var searchTag : STTag! {
         didSet {
             tagLabel.text = searchTag.text
-            containerView.backgroundColor = getColorFromTag(searchTag)
+            containerView.backgroundColor = searchTag.type.tagColor
         }
     }
     
@@ -41,14 +41,4 @@ class STTagCollectionViewCell: UICollectionViewCell {
         collectionView.searchController.searchBar.becomeFirstResponder()
     }
     
-    func getColorFromTag(tag: STTag) -> UIColor {
-        switch tag.type {
-        case .AcademicYear: return UIColor.flatNavyBlueColor()
-        case .Category: return UIColor.flatCoffeeColorDark()
-        case .Classification: return UIColor.flatForestGreenColorDark()
-        case .Credit: return UIColor.flatTealColor()
-        case .Department: return UIColor.flatOrangeColorDark()
-        case .Instructor: return UIColor.flatPurpleColorDark()
-        }
-    }
 }

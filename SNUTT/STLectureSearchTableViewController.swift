@@ -21,6 +21,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     @IBOutlet weak var tagCollectionViewConstraint: NSLayoutConstraint!
     
+    @IBOutlet var searchToolbarView: STLectureSearchToolbarView!
     var timetableViewController : STTimetableCollectionViewController!
     
     var FilteredList : [STLecture] = []
@@ -60,6 +61,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         self.tableView.addGestureRecognizer(tapGesture)
         
         tableView.registerNib(UINib(nibName: "STLectureSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "STLectureSearchTableViewCell")
+        
+        //Tag Button to KeyboardToolbar
+        
+        searchBar.inputAccessoryView = searchToolbarView
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -81,7 +87,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         // This is for saving the request
         isLast = false
         let tagList = tagCollectionView.tagList
-        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagList, offset: 0, limit: perPage))
+        let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
+        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagList, mask: mask, offset: 0, limit: perPage))
         state = .Loading(request)
         request.responseWithDone({ statusCode, json in
             self.FilteredList = json.arrayValue.map { data in
@@ -102,7 +109,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func getMoreLectureList(searchString: String) {
         let tagList = tagCollectionView.tagList
-        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagList, offset: perPage * pageNum, limit: perPage))
+        let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
+        let request = Alamofire.request(STSearchRouter.Search(query: searchString, tagList: tagList, mask: mask, offset: perPage * pageNum, limit: perPage))
         state = .Loading(request)
         request.responseWithDone({ statusCode, json in
             self.state = .Loaded(searchString, tagList)
@@ -141,6 +149,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         self.timetableViewController.timetable = STTimetableManager.sharedInstance.currentTimetable
         tagTableView.filteredList = []
         tagCollectionView.tagList = []
+        searchToolbarView.currentTagType = nil
+        searchToolbarView.isEmptyTime = false
         
         self.reloadTimetable()
         self.reloadData()
@@ -253,8 +263,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         tagTableView.hide()
     }
     
-    func showTagRecommendation(query: String) {
-        tagTableView.showTagsFor(query)
+    func showTagRecommendation() {
+        tagTableView.showTagsFor(searchBar.text!, type: searchToolbarView.currentTagType)
     }
     
     func hideTagRecommendation() {

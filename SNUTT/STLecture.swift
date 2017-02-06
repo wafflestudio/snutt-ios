@@ -24,6 +24,7 @@ struct STLecture {
     var id : String?
     var classList :[STSingleClass] = []
     var color : STColor = STColor()
+    var timeMask: [Int] = []
 
     var timeDescription : String {
         var ret: String = ""
@@ -85,6 +86,7 @@ struct STLecture {
         quota = data["quota"].int
         remark = data["remark"].string
         category = data["category"].string
+        timeMask = data["class_time_mask"].arrayValue.map{mask in mask.intValue}
         id = data["_id"].string
         let colorJson = data["color"]
         if let fgHex = colorJson["fg"].string, bgHex = colorJson["bg"].string {

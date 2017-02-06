@@ -15,6 +15,39 @@ enum STTagType : String {
     case Credit = "credit"
     case Instructor = "instructor"
     case Category = "category"
+    
+    var tagColor: UIColor {
+        switch self {
+        case .AcademicYear: return UIColor.flatSkyBlueColorDark()
+        case .Category: return UIColor.flatYellowColorDark()
+        case .Classification: return UIColor.flatGreenColorDark()
+        case .Credit: return UIColor.flatCoffeeColorDark()
+        case .Department: return UIColor.flatOrangeColorDark()
+        case .Instructor: return UIColor.flatWatermelonColorDark()
+        }
+    }
+    
+    var tagLightColor: UIColor {
+        switch self {
+        case .AcademicYear: return UIColor.flatSkyBlueColor()
+        case .Category: return UIColor.flatYellowColor()
+        case .Classification: return UIColor.flatGreenColor()
+        case .Credit: return UIColor.flatCoffeeColor()
+        case .Department: return UIColor.flatOrangeColor()
+        case .Instructor: return UIColor.flatWatermelonColor()
+        }
+    }
+    
+    var typeStr: String {
+        switch self {
+        case .AcademicYear: return "학년"
+        case .Category: return "교양분류"
+        case .Classification: return "분류"
+        case .Credit: return "학점"
+        case .Department: return "학과"
+        case .Instructor: return "교수"
+        }
+    }
 }
 
 struct STTag : DictionaryRepresentable {
@@ -33,7 +66,7 @@ struct STTag : DictionaryRepresentable {
     }
     init?(dictionary: NSDictionary?) {
         guard let values = dictionary else {return nil}
-        if let  type = STTagType(raw: values["type"] as? String),
+        if let type = STTagType(raw: values["type"] as? String),
                 text = values["text"] as? String {
                     self.type = type
                     self.text = text
