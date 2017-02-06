@@ -21,7 +21,12 @@ class STAlertView {
     }
     
     static private func showAlert(alert: UIAlertController) {
-        UIApplication.sharedApplication().keyWindow!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+        if var topController = UIApplication.sharedApplication().keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            topController.presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
     static func showAlert(title title: String, message: String) {
