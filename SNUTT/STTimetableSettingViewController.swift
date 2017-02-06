@@ -38,23 +38,31 @@ class STTimetableSettingViewController: UITableViewController {
     }
     
     func setUI() {
+        let sliders : [TTRangeSlider!] = [daySlider, timeSlider]
+        var textColor : UIColor! = nil
+        var tintColor : UIColor! = nil
+        var handleColor : UIColor! = nil
         if STDefaults[.autoFit] {
             trimmingSwitch.on = true
-            daySlider.enabled = false
-            timeSlider.enabled = false
-            dayText.textColor = UIColor.grayColor()
-            timeText.textColor = UIColor.grayColor()
-            daySlider.tintColor = UIColor.grayColor()
-            timeSlider.tintColor = UIColor.grayColor()
+            textColor = UIColor.grayColor()
+            tintColor = UIColor.lightGrayColor()
+            handleColor = UIColor.lightGrayColor()
         } else {
             trimmingSwitch.on = false
-            daySlider.enabled = true
-            timeSlider.enabled = true
-            dayText.textColor = UIColor.blackColor()
-            timeText.textColor = UIColor.blackColor()
-            daySlider.tintColor = UIColor.blueColor()
-            timeSlider.tintColor = UIColor.blueColor()
+            textColor = UIColor.blackColor()
+            tintColor = UIColor.lightGrayColor()
+            handleColor = UIColor.blackColor()
         }
+        for slider in sliders {
+            slider.enabled = !STDefaults[.autoFit]
+            slider.tintColor = tintColor
+            slider.handleColor = handleColor
+            slider.minLabelColour = handleColor
+            slider.maxLabelColour = handleColor
+            slider.tintColorBetweenHandles = handleColor
+        }
+        dayText.textColor = textColor
+        timeText.textColor = textColor
     }
     
     func saveSetting() {

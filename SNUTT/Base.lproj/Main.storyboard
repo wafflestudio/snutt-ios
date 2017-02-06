@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -1276,7 +1275,7 @@
         <scene sceneID="HH0-Fx-v4L">
             <objects>
                 <tableViewController hidesBottomBarWhenPushed="YES" id="956-jF-sYJ" customClass="STTimetableSettingViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="y4y-de-Q0E">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="y4y-de-Q0E">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1292,6 +1291,7 @@
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hea-yg-Zk8">
                                                     <rect key="frame" x="306" y="7" width="51" height="31"/>
+                                                    <color key="onTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
                                                         <action selector="autoFitValueChanged:" destination="956-jF-sYJ" eventType="valueChanged" id="gim-ua-ufM"/>
                                                     </connections>
@@ -1314,11 +1314,11 @@
                             </tableViewSection>
                             <tableViewSection id="7uT-FJ-1XD">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="90" id="o94-t9-UGF">
-                                        <rect key="frame" x="0.0" y="115" width="375" height="90"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="98" id="o94-t9-UGF">
+                                        <rect key="frame" x="0.0" y="115" width="375" height="98"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="o94-t9-UGF" id="Brb-en-oeX">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="97"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GNu-vY-Efb">
@@ -1354,14 +1354,14 @@
                                                 <constraint firstAttribute="bottom" secondItem="QYR-iI-6jT" secondAttribute="bottom" id="Dgc-H0-H6j"/>
                                                 <constraint firstItem="GNu-vY-Efb" firstAttribute="leading" secondItem="Brb-en-oeX" secondAttribute="leadingMargin" id="HLR-D1-zRo"/>
                                                 <constraint firstItem="QYR-iI-6jT" firstAttribute="leading" secondItem="Brb-en-oeX" secondAttribute="leading" constant="20" id="Jb8-DK-rQ9"/>
-                                                <constraint firstItem="GNu-vY-Efb" firstAttribute="top" secondItem="Brb-en-oeX" secondAttribute="topMargin" id="M4x-x2-ArM"/>
+                                                <constraint firstItem="GNu-vY-Efb" firstAttribute="top" secondItem="Brb-en-oeX" secondAttribute="topMargin" constant="8" id="M4x-x2-ArM"/>
                                                 <constraint firstItem="QYR-iI-6jT" firstAttribute="top" secondItem="GNu-vY-Efb" secondAttribute="bottom" constant="8" id="bTp-ZK-QRm"/>
                                                 <constraint firstAttribute="trailing" secondItem="QYR-iI-6jT" secondAttribute="trailing" constant="20" id="ofA-l2-fPW"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="90" id="LM5-F6-RSx">
-                                        <rect key="frame" x="0.0" y="205" width="375" height="90"/>
+                                        <rect key="frame" x="0.0" y="213" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LM5-F6-RSx" id="r3P-1k-874">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
