@@ -133,7 +133,7 @@ struct STLecture {
     }
     
     func isSameLecture(right : STLecture) -> Bool {
-        return (courseNumber == right.courseNumber && lectureNumber == right.lectureNumber)
+        return (courseNumber == right.courseNumber && lectureNumber == right.lectureNumber) && courseNumber != nil && lectureNumber != nil
     }
     
 }
