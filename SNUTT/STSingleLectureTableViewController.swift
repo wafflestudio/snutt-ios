@@ -248,7 +248,7 @@ class STSingleLectureTableViewController: UITableViewController {
             cell.singleClass = currentLecture.classList[indexPath.row]
             cell.placeDoneBlock = doneBlock
             cell.timeDoneBlock = timeDoneBlock
-            cell.custom = custom
+            cell.custom = true // Single Class Editable in non-custom
             return cell
         case let .LeftAligned(title):
             let cell = tmpCell as! STLeftAlignedTableViewCell

@@ -62,10 +62,8 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         case (1, 5): return .Padding
         
         case (2, currentLecture.classList.count):
-            if editable {
-                return .AddButton(section: 2)
-            }
-            return .Padding
+            return .AddButton(section: 2)
+            
         case (2, _): return .SingleClass
             
         case (3, 0):
@@ -110,7 +108,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
             switch section {
             case 0: return 3
             case 1: return 6
-            case 2: return currentLecture.classList.count
+            case 2: return currentLecture.classList.count + (editable ? 1 : 0)
             case 3: return 1
             case 4: return 1
             default: return 0
@@ -127,7 +125,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         if indexPath.section == 2 {
             if indexPath.row < currentLecture.classList.count {
-                return custom
+                return true
             }
         }
         return false
