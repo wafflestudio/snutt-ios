@@ -306,6 +306,17 @@ class STNetworking {
         )
     }
     
+    static func addLocalID(id: String, password: String, done: ()->()) {
+        let request = Alamofire.request(STUserRouter.AddLocalId(id: id, password: password))
+        request.responseWithDone({statusCode, json in
+            if let token = json["token"].string {
+                STDefaults[.token] = token
+            }
+            STUser.getUser()
+            done()
+        }, failure: nil)
+    }
+    
     static func showNetworkError() {
         let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.Default, handler: nil))

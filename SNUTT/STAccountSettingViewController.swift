@@ -179,7 +179,7 @@ class STAccountSettingViewController: UITableViewController {
             }
             return
         case .AttachLocalId:
-            //TODO: attach local ID
+            performSegueWithIdentifier("AddLocalID", sender: nil)
             return
         case .ChangeEmail:
             STAlertView.showAlert(title: "이메일 변경", message: "새로운 이메일 주소를 입력해주세요", configAlert: { alert in
