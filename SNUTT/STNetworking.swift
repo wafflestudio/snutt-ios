@@ -117,8 +117,8 @@ class STNetworking {
     
     //MARK: LectureRouter
     
-    static func addLecture(timetable: STTimetable, lecture: STLecture, done: (STTimetable)->(), failure: ()->()) {
-        let request = Alamofire.request(STLectureRouter.AddLecture(timetableId: timetable.id!, lecture: lecture))
+    static func addCustomLecture(timetable: STTimetable, lecture: STLecture, done: (STTimetable)->(), failure: ()->()) {
+        let request = Alamofire.request(STLectureRouter.AddCustomLecture(timetableId: timetable.id!, lecture: lecture))
         request.responseWithDone({ statusCode, json in
             done(STTimetable(json: json))
             }, failure: { _ in
@@ -126,17 +126,23 @@ class STNetworking {
         })
     }
     
-    static func updateLecture(timetable: STTimetable, oldLecture: STLecture, newLecture: STLecture, done: ()->(), failure: ()->()) {
-        let request = Alamofire.request(STLectureRouter.UpdateLecture(timetableId: timetable.id!, oldLecture: oldLecture, newLecture : newLecture))
+    static func addLecture(timetable: STTimetable, lectureId: String, done: (STTimetable)->(), failure: ()->()) {
+        let request = Alamofire.request(STLectureRouter.AddLecture(timetableId: timetable.id!, lectureId: lectureId))
         request.responseWithDone({ statusCode, json in
-            if json["success"].boolValue {
-                done()
-            } else {
-                failure()
-            }
+            done(STTimetable(json: json))
             }, failure: { _ in
                 failure()
         })
+    }
+    
+    static func updateLecture(timetable: STTimetable, oldLecture: STLecture, newLecture: STLecture, done: (STTimetable)->(), failure: ()->()) {
+        let request = Alamofire.request(STLectureRouter.UpdateLecture(timetableId: timetable.id!, oldLecture: oldLecture, newLecture : newLecture))
+        request.responseWithDone({ statusCode, json in
+            done(STTimetable(json: json))
+            }, failure: { _ in
+                failure()
+            }, networkAlert: true, alertTitle: "강좌 수정 실패"
+        )
     }
     
     static func deleteLecture(timetable: STTimetable, lecture: STLecture, done: ()->(), failure: ()->()) {

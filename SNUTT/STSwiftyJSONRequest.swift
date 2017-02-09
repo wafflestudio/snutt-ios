@@ -48,7 +48,7 @@ extension Request {
         )
     }
     
-    public func responseWithDone(done: ((Int, JSON) -> ())?, failure: ((STErrorCode) -> ())?, networkAlert: Bool = true ) {
+    public func responseWithDone(done: ((Int, JSON) -> ())?, failure: ((STErrorCode) -> ())?, networkAlert: Bool = true, alertTitle: String? = nil ) {
         self.responseSwiftyJSON { response in
             switch response.result {
             case .Success(let json):
@@ -68,7 +68,11 @@ extension Request {
                         case STErrorCode.NO_USER_TOKEN, STErrorCode.WRONG_USER_TOKEN:
                             STUser.logOut()
                         default:
-                            STAlertView.showAlert(title: errCode.errorTitle, message: errCode.errorMessage)
+                            if let alertTitle = alertTitle {
+                                STAlertView.showAlert(title: alertTitle, message: errCode.errorMessage)
+                            } else {
+                                STAlertView.showAlert(title: errCode.errorTitle, message: errCode.errorMessage)
+                            }
                         }
                         failure?(errCode)
                         return

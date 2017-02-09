@@ -15,12 +15,15 @@ enum STLectureRouter : STRouter {
     static let baseURLString = STConfig.sharedInstance.baseURL+"/tables"
     static let shouldAddToken: Bool = true
     
-    case AddLecture(timetableId: String, lecture: STLecture)
+    case AddCustomLecture(timetableId: String, lecture: STLecture)
+    case AddLecture(timetableId: String, lectureId: String)
     case DeleteLecture(timetableId: String, lecture: STLecture)
     case UpdateLecture(timetableId: String, oldLecture: STLecture, newLecture: STLecture)
     
     var method: Alamofire.Method {
         switch self {
+        case .AddCustomLecture:
+            return .POST
         case .AddLecture:
             return .POST
         case .DeleteLecture:
@@ -32,8 +35,10 @@ enum STLectureRouter : STRouter {
     
     var path: String {
         switch self {
-        case .AddLecture(let timetableId, _ ):
+        case .AddCustomLecture(let timetableId, _ ):
             return "/\(timetableId)/lecture"
+        case .AddLecture(let timetableId, let lectureId ):
+            return "/\(timetableId)/lecture/\(lectureId)"
         case .DeleteLecture(let timetableId, let lecture ):
             return "/\(timetableId)/lecture/\(lecture.id ?? "")"
         case let .UpdateLecture(timetableId, curLecture, _):
@@ -43,10 +48,12 @@ enum STLectureRouter : STRouter {
     
     var parameters: [String : AnyObject]? {
         switch self {
-        case .AddLecture( _, let lecture):
+        case .AddCustomLecture( _, let lecture):
             var dict = lecture.toDictionary()
             dict.removeValueForKey("id")
             return dict
+        case .AddLecture:
+            return nil
         case .DeleteLecture:
             return nil
         case let .UpdateLecture(_, oldLecture, newLecture):

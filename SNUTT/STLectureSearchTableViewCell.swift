@@ -33,7 +33,6 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBAction func addButtonClicked(sender: AnyObject) {
         STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
         tableView.deselectRowAtIndexPath(tableView.indexPathForCell(self)!, animated: true)
-        lecture.color = STColor.colorList[0]
         STTimetableManager.sharedInstance.addLecture(lecture, object: self)
     }
     

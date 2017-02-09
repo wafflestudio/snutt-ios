@@ -21,6 +21,7 @@ public enum STErrorCode : Int {
     case ATTEMPT_TO_MODIFY_IDENTITIY = 0x1006;
     case NO_TIMETABLE_TITLE = 0x1007;
     case NO_REGISTRATION_ID = 0x1008;
+    case INVALID_TIMEMASK = 0x1009;
     
     /* 403 - Authorization-related */
     case WRONG_API_KEY = 0x2000;
@@ -45,11 +46,14 @@ public enum STErrorCode : Int {
     case FB_ID_WITH_SOMEONE_ELSE = 0x3009;
     case WRONG_SEMESTER = 0x300A;
     case NOT_CUSTOM_LECTURE = 0x300B;
+    case LECTURE_TIME_OVERLAP = 0x300C;
+    case IS_CUSTOM_LECTURE = 0x300D;
     
     /* 404 - Not found */
     case TAG_NOT_FOUND = 0x4000;
     case TIMETABLE_NOT_FOUND = 0x4001;
     case LECTURE_NOT_FOUND = 0x4002;
+    case REF_LECTURE_NOT_FOUND = 0x4003;
     
     var errorTitle : String {
         switch self {
@@ -64,7 +68,8 @@ public enum STErrorCode : Int {
              .NO_LECTURE_ID,
              .ATTEMPT_TO_MODIFY_IDENTITIY,
              .NO_TIMETABLE_TITLE,
-             .NO_REGISTRATION_ID:
+             .NO_REGISTRATION_ID,
+             .INVALID_TIMEMASK:
             return "요청 실패"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,
@@ -88,11 +93,14 @@ public enum STErrorCode : Int {
              .NOT_FB_ACCOUNT,
              .FB_ID_WITH_SOMEONE_ELSE,
              .WRONG_SEMESTER,
-             .NOT_CUSTOM_LECTURE:
+             .NOT_CUSTOM_LECTURE,
+             .LECTURE_TIME_OVERLAP,
+             .IS_CUSTOM_LECTURE:
             return "잘못된 요청"
         case .TAG_NOT_FOUND,
              .TIMETABLE_NOT_FOUND,
-             .LECTURE_NOT_FOUND:
+             .LECTURE_NOT_FOUND,
+             .REF_LECTURE_NOT_FOUND:
             return "찾지 못함"
         }
     }
@@ -121,6 +129,8 @@ public enum STErrorCode : Int {
             return "시간표 이름이 주어지지 않았습니다."
         case .NO_REGISTRATION_ID:
             return "알림을 주기 위한 절차가 문제가 생겼습니다."
+        case .INVALID_TIMEMASK:
+            return "잘못된 비트마스크 형식입니다."
         case .WRONG_API_KEY:
             return "잘못된 API Key 입니다."
         case .WRONG_USER_TOKEN:
@@ -164,7 +174,13 @@ public enum STErrorCode : Int {
         case .WRONG_SEMESTER:
             return "올바르지 않은 학기입니다."
         case .NOT_CUSTOM_LECTURE:
-            return "직접만든 강좌가 아닙니다."
+            return "직접 만든 강좌가 아닙니다."
+        case .LECTURE_TIME_OVERLAP:
+            return "시간표의 시간과 겹칩니다."
+        case .IS_CUSTOM_LECTURE:
+            return "직접 만든 강좌입니다."
+        case .REF_LECTURE_NOT_FOUND:
+            return "수강편람에서 찾을 수 없는 강좌입니다."
         }
     }
 }

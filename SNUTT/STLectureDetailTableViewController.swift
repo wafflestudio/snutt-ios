@@ -155,7 +155,12 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         self.navigationItem.setLeftBarButtonItem(nil, animated: true)
         let oldLecture = lecture
         lecture = currentLecture
-        STTimetableManager.sharedInstance.updateLecture(oldLecture, newLecture: currentLecture)
+        STTimetableManager.sharedInstance.updateLecture(oldLecture, newLecture: currentLecture, failure: {
+            self.lecture = oldLecture
+            self.currentLecture = oldLecture
+            self.view.layer.removeAllAnimations()
+            self.reloadDataWithAnimation()
+        })
     }
     
     func cancelBarButtonClicked() {
