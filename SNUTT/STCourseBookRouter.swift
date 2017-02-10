@@ -16,11 +16,12 @@ enum STCourseBookRouter : STRouter {
     
     case Get
     case Recent
+    case Syllabus(quarter: STQuarter, lecture: STLecture)
     
     
     var method: Alamofire.Method {
         switch self {
-        case .Get:
+        case .Get, .Syllabus:
             return .GET
         case .Recent:
             return .GET
@@ -33,6 +34,8 @@ enum STCourseBookRouter : STRouter {
             return "/"
         case .Recent:
             return "recent"
+        case .Syllabus:
+            return "official"
         }
     }
     
@@ -42,6 +45,16 @@ enum STCourseBookRouter : STRouter {
             return nil
         case .Recent:
             return nil
+        case let .Syllabus(quarter, lecture):
+            if lecture.courseNumber == nil || lecture.lectureNumber == nil {
+                return nil
+            }
+            return [
+                "year":quarter.year,
+                "semester":quarter.semester.rawValue,
+                "course_number":lecture.courseNumber!,
+                "lecture_number":lecture.lectureNumber!
+            ]
         }
     }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import ChameleonFramework
+import SafariServices
 
 class STSingleLectureTableViewController: UITableViewController {
 
@@ -215,7 +216,33 @@ class STSingleLectureTableViewController: UITableViewController {
             }
         case .SyllabusButton:
             actionBlock = { ()->() in
-                //TODO: show syllabus
+                let quarter = STTimetableManager.sharedInstance.currentTimetable!.quarter
+                let lecture = self.currentLecture
+                STNetworking.getSyllabus(quarter, lecture: lecture, done: { url in
+                        self.showWebView(url)
+                    }, failure: {
+                        let year = quarter.year
+                        let course_number = lecture.courseNumber!
+                        let lecture_number = lecture.lectureNumber!
+                        let semester = STTimetableManager.sharedInstance.currentTimetable!.quarter.semester;
+                        var openShtmFg = "", openDetaShtmFg = ""
+                        switch semester {
+                        case .First:
+                            openShtmFg = "U000200001";
+                            openDetaShtmFg = "U000300001";
+                        case .Second:
+                            openShtmFg = "U000200002";
+                            openDetaShtmFg = "U000300001";
+                        case .Summer:
+                            openShtmFg = "U000200001";
+                            openDetaShtmFg = "U000300002";
+                        case .Winter:
+                            openShtmFg = "U000200002";
+                            openDetaShtmFg = "U000300002";
+                        }
+                        let url = "http://sugang.snu.ac.kr/sugang/cc/cc103.action?openSchyy=\(year)&openShtmFg=\(openShtmFg)&openDetaShtmFg=\(openDetaShtmFg)&sbjtCd=\(course_number)&ltNo=\(lecture_number)&sbjtSubhCd=000";
+                        self.showWebView(url)
+                })
             }
         case .ResetButton:
             actionBlock = { ()->() in
@@ -296,6 +323,15 @@ class STSingleLectureTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
         self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func showWebView(url: String) {
+        if #available(iOS 9.0, *) {
+            let svc = SFSafariViewController(URL: NSURL(string: url)!)
+            self.presentViewController(svc, animated: true, completion: nil)
+        } else {
+            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        }
     }
     
     /*

@@ -141,7 +141,7 @@ class STNetworking {
             done(STTimetable(json: json))
             }, failure: { _ in
                 failure()
-            }, networkAlert: true, alertTitle: "강좌 수정 실패"
+            }, showNetworkAlert: true, alertTitle: "강좌 수정 실패"
         )
     }
     
@@ -234,6 +234,17 @@ class STNetworking {
         })
     }
     
+    static func getSyllabus(quarter: STQuarter, lecture: STLecture, done:(String)->(), failure: (()->())?) {
+        let request = Alamofire.request(STCourseBookRouter.Syllabus(quarter: quarter, lecture: lecture))
+        request.responseWithDone({ statusCode, json in
+            let url = json["url"].stringValue
+            done(url)
+            }, failure: { _ in
+                failure?()
+        }, showNetworkAlert: false, showAlert: false)
+
+    }
+    
     //MARK: UserRouter
     
     static func detachFB(done:()->(), failure: ()->()) {
@@ -293,7 +304,7 @@ class STNetworking {
         request.responseWithDone({ statusCode, json in
             STDefaults[.isFCMRegistered] = true
             }, failure: nil
-            , networkAlert: false
+            , showNetworkAlert: false
         )
     }
     
@@ -302,7 +313,7 @@ class STNetworking {
         request.responseWithDone({ statusCode, json in
             }, failure: { _ in
                 //TODO: Error Handling with deleteDevice
-            }, networkAlert: false
+            }, showNetworkAlert: false
         )
     }
     
