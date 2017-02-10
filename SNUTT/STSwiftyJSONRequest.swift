@@ -81,11 +81,20 @@ extension Request {
                     }
                 }
                 done?(response.response?.statusCode ?? 200 ,json)
-            case .Failure:
-                if showNetworkAlert {
-                    STNetworking.showNetworkError()
+            case .Failure(let error):
+                if error.code == Error.Code.JSONSerializationFailed.rawValue {
+                    let errorCode = STErrorCode.SERVER_FAULT
+                    if showNetworkAlert {
+                        STAlertView.showAlert(title: errorCode.errorTitle, message: errorCode.errorMessage)
+                    }
+                    failure?(errorCode)
+                } else {
+                    if showNetworkAlert {
+                        
+                        STNetworking.showNetworkError()
+                    }
+                    failure?(STErrorCode.NO_NETWORK)
                 }
-                failure?(STErrorCode.NO_NETWORK)
             }
         }
     }
