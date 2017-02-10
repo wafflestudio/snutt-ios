@@ -20,11 +20,25 @@ class STTimetableTabViewController: UIViewController {
     
     var state : State = .Timetable
     var isInAnimation : Bool = false
-    
+
     @IBOutlet weak var containerView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
+        
+        // Add tap recognizer to title in NavigationBar
+        let titleView = UILabel()
+        titleView.text = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
+        titleView.font = UIFont(name: "HelveticaNeue-Medium", size: 17)
+        let width = titleView.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
+        titleView.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 500))
+        titleView.textAlignment = .Center
+        self.navigationItem.titleView = titleView
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: "titleWasTapped")
+        titleView.userInteractionEnabled = true
+        titleView.addGestureRecognizer(recognizer)
+        
         self.navigationItem.leftBarButtonItem!.target = self
         self.navigationItem.leftBarButtonItem!.action = #selector(self.switchView)
         
@@ -55,7 +69,10 @@ class STTimetableTabViewController: UIViewController {
     }
     
     func reloadData() {
-        self.navigationItem.title = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
+        let titleView = (self.navigationItem.titleView as! UILabel)
+        titleView.text = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
+        titleView.sizeToFit();
+        
         timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableViewController?.reloadTimetable()
     }
@@ -118,5 +135,28 @@ class STTimetableTabViewController: UIViewController {
                 self.isInAnimation = false
         })
     }
-
+    
+    func titleWasTapped() {
+        guard let currentTimetable = STTimetableManager.sharedInstance.currentTimetable else {
+            return
+        }
+        guard let timetableId = currentTimetable.id else {
+            return
+        }
+        
+        STAlertView.showAlert(title: "시간표 이름 변경", message: "새로운 시간표 이름을 입력해주세요", configAlert: { alert in
+            alert.addTextFieldWithConfigurationHandler({ textfield in
+                textfield.placeholder = "새로운 시간표 이름"
+            })
+            alert.addAction(UIAlertAction(title: "취소", style: .Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "이름 변경", style: .Default, handler: { _ in
+                if let timetableName = alert.textFields?.first?.text {
+                    STNetworking.updateTimetable(timetableId, title: timetableName, done: {
+                        STTimetableManager.sharedInstance.currentTimetable?.title = timetableName
+                        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+                    })
+                }
+            }))
+        })
+    }
 }
