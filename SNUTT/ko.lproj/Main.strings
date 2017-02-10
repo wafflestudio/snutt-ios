@@ -33,7 +33,7 @@
 "S3q-0p-uGx.text" = "시간표 설정";
 
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "Sv5-7I-edr"; */
-"Sv5-7I-edr.placeholder" = "제목";
+"Sv5-7I-edr.placeholder" = "이메일(옵션)";
 
 /* Class = "UINavigationItem"; title = "Developers"; ObjectID = "UrN-lh-QEC"; */
 "UrN-lh-QEC.title" = "개발자 정보";

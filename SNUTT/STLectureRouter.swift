@@ -19,6 +19,7 @@ enum STLectureRouter : STRouter {
     case AddLecture(timetableId: String, lectureId: String)
     case DeleteLecture(timetableId: String, lecture: STLecture)
     case UpdateLecture(timetableId: String, oldLecture: STLecture, newLecture: STLecture)
+    case ResetLecture(timetableId: String, lectureId: String)
     
     var method: Alamofire.Method {
         switch self {
@@ -28,7 +29,7 @@ enum STLectureRouter : STRouter {
             return .POST
         case .DeleteLecture:
             return .DELETE
-        case .UpdateLecture:
+        case .UpdateLecture, .ResetLecture:
             return .PUT
         }
     }
@@ -43,6 +44,8 @@ enum STLectureRouter : STRouter {
             return "/\(timetableId)/lecture/\(lecture.id ?? "")"
         case let .UpdateLecture(timetableId, curLecture, _):
             return "/\(timetableId)/lecture/\(curLecture.id ?? "")"
+        case let .ResetLecture(timetableId, lectureId):
+            return "/\(timetableId)/lecture/\(lectureId)/reset"
         }
     }
     
@@ -68,6 +71,8 @@ enum STLectureRouter : STRouter {
                 }
             }
             return dict
+        case .ResetLecture:
+            return nil
         }
     }
     

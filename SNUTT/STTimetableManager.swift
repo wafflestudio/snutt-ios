@@ -158,6 +158,25 @@ class STTimetableManager : NSObject {
         STNetworking.deleteLecture(currentTimetable!, lecture: lecture, done: {}, failure: {})
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
     }
+    
+    
+    //FIXME: Refactoring Needed
+    func resetLecture(lecture: STLecture, done: ()->()) {
+        if currentTimetable == nil {
+            return
+        }
+        let index = currentTimetable!.lectureList.indexOf({ lec in
+            return lec.id == lecture.id
+        })!
+        
+        STNetworking.resetLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
+            self.currentTimetable?.lectureList = newTimetable.lectureList
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+            done()
+        }, failure: nil)
+        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+    }
+    
     func setTemporaryLecture(lecture :STLecture?, object : AnyObject? ) {
         if currentTimetable?.temporaryLecture == lecture {
             return

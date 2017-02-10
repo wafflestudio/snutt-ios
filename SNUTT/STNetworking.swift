@@ -158,6 +158,15 @@ class STNetworking {
         })
     }
     
+    static func resetLecture(timetable: STTimetable, lecture: STLecture, done: (STTimetable)->(), failure: (()->())?) {
+        let request = Alamofire.request(STLectureRouter.ResetLecture(timetableId: timetable.id!, lectureId: lecture.id!))
+        request.responseWithDone({ statusCode, json in
+                done(STTimetable(json: json))
+            }, failure: { _ in
+                failure?()
+        })
+    }
+    
     //MARK: TagRouter
     
     static func getTagListForQuarter(quarter: STQuarter, done: ([STTag])->(), failure: ()->()) {
@@ -332,6 +341,15 @@ class STNetworking {
         let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.Default, handler: nil))
         UIApplication.sharedApplication().keyWindow!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: STEtcRouter
+    
+    static func sendFeedback(email: String?, message: String, done: (()->())?) {
+        let request = Alamofire.request(STEtcRouter.Feedback(email: email, message: message))
+        request.responseWithDone({ _ in
+                done?()
+            }, failure: nil)
     }
     
     //MARK: AppVersion

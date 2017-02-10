@@ -26,6 +26,7 @@
 		E133794F1D41E26C00AD10F4 /* STRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133794E1D41E26C00AD10F4 /* STRouter.swift */; };
 		E137998A1C3FBEC70043A5EE /* STMyLectureListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */; };
 		E139B26C1E4C349400E2ADF5 /* STAddLocalIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E139B26B1E4C349400E2ADF5 /* STAddLocalIDViewController.swift */; };
+		E13CBA8C1E4D492E006B2364 /* STEtcRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13CBA8B1E4D492E006B2364 /* STEtcRouter.swift */; };
 		E14188D61C3E195000D4E712 /* STTimetableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */; };
 		E1420B951D769D0400D1B6F7 /* STCourseBookRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1420B941D769D0400D1B6F7 /* STCourseBookRouter.swift */; };
 		E14991FD1C46241700DC6756 /* STConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14991FC1C46241700DC6756 /* STConfig.swift */; };
@@ -166,6 +167,7 @@
 		E133794E1D41E26C00AD10F4 /* STRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRouter.swift; sourceTree = "<group>"; };
 		E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMyLectureListController.swift; sourceTree = "<group>"; };
 		E139B26B1E4C349400E2ADF5 /* STAddLocalIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAddLocalIDViewController.swift; sourceTree = "<group>"; };
+		E13CBA8B1E4D492E006B2364 /* STEtcRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STEtcRouter.swift; sourceTree = "<group>"; };
 		E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableTabViewController.swift; sourceTree = "<group>"; };
 		E1420B941D769D0400D1B6F7 /* STCourseBookRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STCourseBookRouter.swift; sourceTree = "<group>"; };
 		E14991FC1C46241700DC6756 /* STConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STConfig.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				E1EF8B2F1D6D640100791778 /* STUserRouter.swift */,
 				E1420B941D769D0400D1B6F7 /* STCourseBookRouter.swift */,
 				E168FA2F1E3F037B004F933A /* STErrorCode.swift */,
+				E13CBA8B1E4D492E006B2364 /* STEtcRouter.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -899,6 +902,7 @@
 				E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */,
 				E184359D1D69A2C200BE5D58 /* STAlertView.swift in Sources */,
 				E149920D1C4F6D1F00DC6756 /* STTimetableCellType.swift in Sources */,
+				E13CBA8C1E4D492E006B2364 /* STEtcRouter.swift in Sources */,
 				E10852C91B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift in Sources */,
 				E1C48BB01C79C45500BC469E /* STQuarter.swift in Sources */,
 				E16643551B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift in Sources */,

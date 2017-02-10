@@ -11,7 +11,7 @@ import B68UIFloatLabelTextField
 
 class STSupportViewController: UIViewController {
 
-    @IBOutlet weak var titleTextField: B68UIFloatLabelTextField!
+    @IBOutlet weak var emailTextField: B68UIFloatLabelTextField!
     @IBOutlet weak var contentTextView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,9 @@ class STSupportViewController: UIViewController {
     
 
     @IBAction func sendButtonClicked(sender: AnyObject) {
-        //TODO: send the report and get out
+        STNetworking.sendFeedback(emailTextField.text, message: contentTextView.text, done: {
+            self.navigationController?.popViewControllerAnimated(true)
+        })
     }
     /*
     // MARK: - Navigation

@@ -246,7 +246,20 @@ class STSingleLectureTableViewController: UITableViewController {
             }
         case .ResetButton:
             actionBlock = { ()->() in
-                //TODO: show alert view and reset the values
+                let actions = [
+                    UIAlertAction(title: "초기화", style: .Destructive, handler: { _ in
+                        STTimetableManager.sharedInstance.resetLecture(self.currentLecture) {
+                            let lectureList = STTimetableManager.sharedInstance.currentTimetable!.lectureList
+                            if let index = lectureList.indexOf({ lecture in lecture.id == self.currentLecture.id}) {
+                                self.currentLecture = lectureList[index]
+                                UIView.transitionWithView(tableView, duration:0.35, options:.TransitionCrossDissolve,
+                                    animations: { self.tableView.reloadData() }, completion: nil);
+                            }
+                        }
+                    }),
+                    UIAlertAction(title: "취소", style: .Cancel, handler: nil)
+                ]
+                STAlertView.showAlert(title: "강좌 초기화", message: "강좌를 원래 상태로 초기화하시겠습니까?", actions: actions)
             }
         case .DeleteButton:
             actionBlock = { ()->() in
