@@ -145,3 +145,35 @@ func getDocumentsDirectory() -> NSString {
     return documentsDirectory
 }
 
+extension NSDate {
+    func yearsFrom(date: NSDate) -> Int {
+        return NSCalendar.currentCalendar().components(.Year, fromDate: date, toDate: self, options: []).year
+    }
+    func monthsFrom(date: NSDate) -> Int {
+        return NSCalendar.currentCalendar().components(.Month, fromDate: date, toDate: self, options: []).month
+    }
+    func weeksFrom(date: NSDate) -> Int {
+        return NSCalendar.currentCalendar().components(.WeekOfYear, fromDate: date, toDate: self, options: []).weekOfYear
+    }
+    func daysFrom(date: NSDate) -> Int {
+        return NSCalendar.currentCalendar().components(.Day, fromDate: date, toDate: self, options: []).day
+    }
+    func hoursFrom(date: NSDate) -> Int {
+        return NSCalendar.currentCalendar().components(.Hour, fromDate: date, toDate: self, options: []).hour
+    }
+    func minutesFrom(date: NSDate) -> Int{
+        return NSCalendar.currentCalendar().components(.Minute, fromDate: date, toDate: self, options: []).minute
+    }
+    func secondsFrom(date: NSDate) -> Int{
+        return NSCalendar.currentCalendar().components(.Second, fromDate: date, toDate: self, options: []).second
+    }
+    func offsetFrom(date: NSDate) -> String {
+        if yearsFrom(date)   > 0 { return "\(yearsFrom(date))년전"   }
+        if monthsFrom(date)  > 0 { return "\(monthsFrom(date))달전"  }
+        if daysFrom(date)    > 0 { return "\(daysFrom(date))일전"    }
+        if hoursFrom(date)   > 0 { return "\(hoursFrom(date))시간전"   }
+        if minutesFrom(date) > 0 { return "\(minutesFrom(date))분전" }
+        if secondsFrom(date) > 0 { return "\(secondsFrom(date))초전" }
+        return ""
+    }
+}

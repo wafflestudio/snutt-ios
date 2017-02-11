@@ -31,6 +31,16 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         let nib = UINib(nibName: "STNotificationTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "STNotificationTableViewCell")
         sizingCell = nib.instantiateWithOwner(self, options: nil)[0] as! STNotificationTableViewCell
+        sizingCell.contentView.addConstraint(
+            NSLayoutConstraint(item: sizingCell.contentView,
+                attribute: NSLayoutAttribute.Width,
+                relatedBy: NSLayoutRelation.Equal,
+                toItem: nil,
+                attribute: NSLayoutAttribute.NotAnAttribute,
+                multiplier: 1,
+                constant: self.tableView.frame.width
+            )
+        )
         
         refreshList()
         
@@ -80,7 +90,8 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         sizingCell.notification = notiList[indexPath.row]
-        return sizingCell.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        let size = sizingCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize, withHorizontalFittingPriority: Float(self.view.frame.width), verticalFittingPriority: 27)
+        return size.height
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {

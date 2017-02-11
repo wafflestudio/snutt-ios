@@ -13,9 +13,15 @@ class STNotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    var notification : STNotification? {
+    var notification : STNotification! {
         didSet {
-            descriptionLabel.text = notification?.message
+            
+            let grayAttribute = [NSForegroundColorAttributeName: UIColor.grayColor()]
+            let timeText = NSAttributedString(string: notification.createdFrom, attributes: grayAttribute)
+            var message = NSMutableAttributedString(string: notification.message+" ")
+            message.appendAttributedString(timeText)
+            descriptionLabel.attributedText = message
+            iconImageView.image = UIImage(named: notification.imageName)
         }
     }
     
