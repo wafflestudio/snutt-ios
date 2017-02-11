@@ -17,6 +17,7 @@ extension DefaultsKeys {
     static let timeRange = DefaultsKey<[Double]>("timeRange", [0.0, 14.0]) //FIXME: default value
     static let apiKey = DefaultsKey<String>("apiKey")
     static let isFCMRegistered = DefaultsKey<Bool>("isFCMRegistered", false)
+    static let shouldShowBadge = DefaultsKey<Bool>("shouldShowBadge", false)
 }
 
 public let STDefaults = Defaults

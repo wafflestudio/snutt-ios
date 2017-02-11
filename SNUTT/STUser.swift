@@ -56,7 +56,8 @@ class STUser {
     static func loadLoginPage() {
         STUser.currentUser = nil
         STDefaults[.token] = nil
-        STDefaults[.isFCMRegistered] = false;
+        STDefaults[.isFCMRegistered] = false
+        STDefaults[.shouldShowBadge] = false
         UIApplication.sharedApplication().delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
     }
     

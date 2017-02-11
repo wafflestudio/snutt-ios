@@ -45,6 +45,14 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        if !loading && STDefaults[.shouldShowBadge] {
+            self.refreshControl?.beginRefreshing()
+            self.refreshList()
+            self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height), animated: true)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -106,11 +114,11 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         loading = true
         pageCnt = 0
         isLast = false
-        STMainTabBarController.controller?.setNotiBadge(0)
+        STMainTabBarController.controller?.setNotiBadge(false)
         STNetworking.getNotificationList(numPerPage, offset: numPerPage * pageCnt, explicit: true, done: { list in
             self.loading = false
             self.notiList = list
-            STMainTabBarController.controller?.setNotiBadge(0)
+            STMainTabBarController.controller?.setNotiBadge(false)
             if list.count < self.numPerPage {
                 self.isLast = true
             }

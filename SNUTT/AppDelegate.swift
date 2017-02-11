@@ -44,8 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             STDefaults[.apiKey] = dict.objectForKey("API_KEY") as! String
         }
         if STDefaults[.token] != nil {
+            STMainTabBarController.controller?.setNotiBadge(STDefaults[.shouldShowBadge])
             STNetworking.getNotificationCount({ cnt in
-                STMainTabBarController.controller?.setNotiBadge(cnt)
+                STMainTabBarController.controller?.setNotiBadge(cnt != 0)
                 
                 }, failure: { _ in
                     return
@@ -93,8 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If you are receiving a notification message while your app is in the background,
         // this callback will not be fired till the user taps on the notification launching the application.
         
-        //TODO: Fix the gcm.badge.message
-        STMainTabBarController.controller?.setNotiBadge((userInfo["gcm.badge.message"] as? Int) ?? 1)
+        STMainTabBarController.controller?.setNotiBadge(true)
         
         // Print message ID.
         print("Message ID: \(userInfo["gcm.message_id"]!)")

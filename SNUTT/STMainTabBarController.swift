@@ -18,6 +18,7 @@ class STMainTabBarController: UITabBarController {
         for item in self.tabBar.items! {
             item.image = item.image!.imageWithRenderingMode(.AlwaysOriginal)
         }
+        setNotiBadge(STDefaults[.shouldShowBadge])
         // Do any additional setup after loading the view.
     }
     
@@ -30,16 +31,16 @@ class STMainTabBarController: UITabBarController {
         
     }
     
-    func setNotiBadge(count: Int) {
+    func setNotiBadge(shouldShowBadge: Bool) {
         let notiBarItem = self.tabBar.items![2]
-        //TODO: noti bar item badge
-        if (count > 0) {
-            notiBarItem.badgeValue = "" // FIXME: show badge by icon img
-            UIApplication.sharedApplication().applicationIconBadgeNumber = count
+        if (shouldShowBadge) {
+            notiBarItem.image = UIImage(named: "tabbaritem_noti_dot")!.imageWithRenderingMode(.AlwaysOriginal)
+            notiBarItem.selectedImage = UIImage(named: "tabbaritem_noti_bold_dot")!.imageWithRenderingMode(.AlwaysOriginal)
         } else {
-            notiBarItem.badgeValue = nil // FIMXE: show badge by icon img
-            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            notiBarItem.image = UIImage(named: "tabbaritem_noti")!.imageWithRenderingMode(.AlwaysOriginal)
+            notiBarItem.selectedImage = UIImage(named: "tabbaritem_noti_bold")!.imageWithRenderingMode(.AlwaysOriginal)
         }
+        STDefaults[.shouldShowBadge] = shouldShowBadge
     }
     
     /*
