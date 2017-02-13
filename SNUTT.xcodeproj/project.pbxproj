@@ -60,7 +60,6 @@
 		E1743CA21D9E6A0B009F8993 /* tag_white.png in Resources */ = {isa = PBXBuildFile; fileRef = E1743C9C1D9E6A0B009F8993 /* tag_white.png */; };
 		E1773CAE1C953E8B00AF36AF /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1773CAD1C953E8B00AF36AF /* Login.storyboard */; };
 		E1773CB01C959B5300AF36AF /* FB_logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = E1773CAF1C959B5300AF36AF /* FB_logo_white.png */; };
-		E1773CB21C95A09500AF36AF /* login_winter.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E1773CB11C95A09500AF36AF /* login_winter.jpg */; };
 		E1773CB41C95B05800AF36AF /* STLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1773CB31C95B05800AF36AF /* STLoginViewController.swift */; };
 		E1773CB61C95B94C00AF36AF /* STLoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1773CB51C95B94B00AF36AF /* STLoginTextField.swift */; };
 		E17825C91D560A10009ACEC3 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E17825C81D560A10009ACEC3 /* config.plist */; };
@@ -70,6 +69,7 @@
 		E184359D1D69A2C200BE5D58 /* STAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E184359C1D69A2C200BE5D58 /* STAlertView.swift */; };
 		E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */; };
 		E18F2E501C5E6FBC00114ADF /* STTagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */; };
+		E195B4C91E51DB330090FA31 /* login_winter.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E195B4C81E51DB330090FA31 /* login_winter.jpg */; };
 		E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */; };
 		E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E19A3A9E1B453770007FCAD7 /* Main.storyboard */; };
 		E19A3AA21B453770007FCAD7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E19A3AA11B453770007FCAD7 /* Images.xcassets */; };
@@ -202,7 +202,6 @@
 		E1743C9C1D9E6A0B009F8993 /* tag_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tag_white.png; sourceTree = "<group>"; };
 		E1773CAD1C953E8B00AF36AF /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		E1773CAF1C959B5300AF36AF /* FB_logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FB_logo_white.png; path = images/FB_logo_white.png; sourceTree = "<group>"; };
-		E1773CB11C95A09500AF36AF /* login_winter.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = login_winter.jpg; path = images/login_winter.jpg; sourceTree = "<group>"; };
 		E1773CB31C95B05800AF36AF /* STLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLoginViewController.swift; sourceTree = "<group>"; };
 		E1773CB51C95B94B00AF36AF /* STLoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLoginTextField.swift; sourceTree = "<group>"; };
 		E17825C81D560A10009ACEC3 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
@@ -212,6 +211,7 @@
 		E184359C1D69A2C200BE5D58 /* STAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAlertView.swift; sourceTree = "<group>"; };
 		E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchBar.swift; sourceTree = "<group>"; };
 		E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagListView.swift; sourceTree = "<group>"; };
+		E195B4C81E51DB330090FA31 /* login_winter.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login_winter.jpg; sourceTree = "<group>"; };
 		E19A3A951B453770007FCAD7 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19A3A991B453770007FCAD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -600,8 +600,8 @@
 			isa = PBXGroup;
 			children = (
 				E1743C7E1D9E3955009F8993 /* Icon */,
-				E1773CB11C95A09500AF36AF /* login_winter.jpg */,
 				E1773CAF1C959B5300AF36AF /* FB_logo_white.png */,
+				E195B4C81E51DB330090FA31 /* login_winter.jpg */,
 				E1F0CA1C1C7482D300A4F4ED /* delete.png */,
 			);
 			name = Images;
@@ -731,6 +731,7 @@
 				E1773CB01C959B5300AF36AF /* FB_logo_white.png in Resources */,
 				E14DF21E1C3FB7820076FDDE /* STLectureTableViewCell.xib in Resources */,
 				E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */,
+				E195B4C91E51DB330090FA31 /* login_winter.jpg in Resources */,
 				E1CD92671E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib in Resources */,
 				E19A3AA51B453770007FCAD7 /* LaunchScreen.xib in Resources */,
 				E1743CA01D9E6A0B009F8993 /* map_white.png in Resources */,
@@ -748,7 +749,6 @@
 				E1F0CA271C75B01900A4F4ED /* STLectureSearchTableViewCell.xib in Resources */,
 				E1C48B8A1C785F0B00BC469E /* STLeftAlignedTableViewCell.xib in Resources */,
 				E1743CA11D9E6A0B009F8993 /* tag_black.png in Resources */,
-				E1773CB21C95A09500AF36AF /* login_winter.jpg in Resources */,
 				E1C48B921C7879E600BC469E /* STSingleClassTableViewCell.xib in Resources */,
 				E19A3AA21B453770007FCAD7 /* Images.xcassets in Resources */,
 				E1C48B8E1C78736000BC469E /* STColorPickTableViewCell.xib in Resources */,

@@ -7,6 +7,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -26,7 +27,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_winter.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="yn1-Iq-U5d">
-                                        <rect key="frame" x="0.0" y="0.0" width="999.5" height="667"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="667"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="yn1-Iq-U5d" secondAttribute="height" multiplier="2048:1367" id="BzN-3e-pSI"/>
                                         </constraints>
@@ -276,10 +277,10 @@
                                                         </connections>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rV6-9Z-MDz">
-                                                        <rect key="frame" x="0.0" y="288" width="335" height="30.5"/>
+                                                        <rect key="frame" x="0.0" y="288" width="335" height="31"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="회원가입 또는 로그인을 누르시면 일반 이용 약관에 동의하시게 됩니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6R-0Q-ybl">
-                                                                <rect key="frame" x="0.0" y="8" width="335" height="14.5"/>
+                                                                <rect key="frame" x="0.0" y="8" width="335" height="15"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <color key="textColor" white="1" alpha="0.71647581335616439" colorSpace="calibratedWhite"/>
                                                                 <nil key="highlightedColor"/>
@@ -335,17 +336,25 @@
                                     <constraint firstItem="x9O-xy-Tu7" firstAttribute="top" secondItem="bQK-KS-01O" secondAttribute="top" id="xYR-eY-SB0"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사진 by 이동우" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xw-yz-XdK">
+                                <rect key="frame" x="292" y="645.5" width="67" height="13.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" white="1" alpha="0.50393300513698636" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4hW-L4-rNM" firstAttribute="leading" secondItem="e4F-vR-NCO" secondAttribute="leading" id="1n6-Js-rpr"/>
                             <constraint firstItem="yz2-Xj-qWs" firstAttribute="top" secondItem="XIe-cm-gpf" secondAttribute="bottom" constant="-20" id="36t-ce-d2l"/>
                             <constraint firstItem="bQK-KS-01O" firstAttribute="leading" secondItem="e4F-vR-NCO" secondAttribute="leading" id="5mN-ee-gYv"/>
+                            <constraint firstItem="vYs-Cb-QQQ" firstAttribute="top" secondItem="9xw-yz-XdK" secondAttribute="bottom" constant="8" id="7fm-4R-k62"/>
                             <constraint firstAttribute="trailing" secondItem="bQK-KS-01O" secondAttribute="trailing" id="Gb1-SK-Ehl"/>
                             <constraint firstAttribute="trailing" secondItem="4hW-L4-rNM" secondAttribute="trailing" id="I3m-Fc-kTr"/>
                             <constraint firstItem="4hW-L4-rNM" firstAttribute="top" secondItem="e4F-vR-NCO" secondAttribute="top" id="M0I-8M-Dbs"/>
                             <constraint firstItem="bQK-KS-01O" firstAttribute="top" secondItem="XIe-cm-gpf" secondAttribute="bottom" id="XaA-ER-Hsc"/>
                             <constraint firstItem="yz2-Xj-qWs" firstAttribute="leading" secondItem="e4F-vR-NCO" secondAttribute="leading" id="Zzy-QG-Hcj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9xw-yz-XdK" secondAttribute="trailing" id="aD6-49-bQb"/>
                             <constraint firstAttribute="trailing" secondItem="yz2-Xj-qWs" secondAttribute="trailing" id="m7B-Ah-3GM"/>
                             <constraint firstItem="vYs-Cb-QQQ" firstAttribute="top" secondItem="bQK-KS-01O" secondAttribute="bottom" id="p5t-BD-Fmg"/>
                             <constraint firstItem="vYs-Cb-QQQ" firstAttribute="top" secondItem="4hW-L4-rNM" secondAttribute="bottom" id="rgD-aX-Xw2"/>
@@ -398,6 +407,6 @@
     </scenes>
     <resources>
         <image name="FB_logo_white.png" width="512" height="512"/>
-        <image name="login_winter.jpg" width="800" height="533"/>
+        <image name="login_winter.jpg" width="2048" height="1367"/>
     </resources>
 </document>

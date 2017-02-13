@@ -71,7 +71,7 @@ class STColorPickerTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier("STColorTableViewCell", forIndexPath: indexPath) as! STColorTableViewCell
             if indexPath.row == STColor.colorList.count {
                 cell.color = STColor()
-                cell.colorLabel.text = "Custom" //FIXME
+                cell.colorLabel.text = "직접 지정하기"
             } else {
                 cell.color = STColor.colorList[indexPath.row]
                 cell.colorLabel.text = STColor.colorNameList[indexPath.row]
@@ -81,10 +81,10 @@ class STColorPickerTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier("STSingleColorTableViewCell", forIndexPath: indexPath) as! STSingleColorTableViewCell
             cell.accessoryType = .DisclosureIndicator
             if indexPath.row == 0 {
-                cell.label.text = "Background Color" //FIXME
+                cell.label.text = "배경색"
                 cell.colorView.backgroundColor = color.bgColor
             } else {
-                cell.label.text = "Foreground Color" //FIXME
+                cell.label.text = "글씨색"
                 cell.colorView.backgroundColor = color.fgColor
             }
             return cell

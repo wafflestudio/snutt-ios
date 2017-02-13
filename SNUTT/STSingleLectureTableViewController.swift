@@ -71,13 +71,13 @@ class STSingleLectureTableViewController: UITableViewController {
             case .Padding:
                 return .Padding
             case .AddButton:
-                return .Button(title: "Add", color: UIColor.blackColor())
+                return .Button(title: "시간 추가", color: UIColor.blackColor())
             case .ResetButton:
-                return .Button(title: "Reset", color: UIColor.redColor())
+                return .Button(title: "초기화", color: UIColor.redColor())
             case .SyllabusButton:
-                return .Button(title: "Syllabus", color: UIColor.blackColor())
+                return .Button(title: "강의계획서", color: UIColor.blackColor())
             case .DeleteButton:
-                return .Button(title: "Delete", color: UIColor.redColor())
+                return .Button(title: "삭제", color: UIColor.redColor())
             }
         }
     }
