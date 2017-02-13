@@ -40,6 +40,7 @@
 		E14DF2181C3F914E0076FDDE /* STCourseBookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DF2171C3F914E0076FDDE /* STCourseBookList.swift */; };
 		E14DF21E1C3FB7820076FDDE /* STLectureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E14DF21D1C3FB7810076FDDE /* STLectureTableViewCell.xib */; };
 		E14DF2201C3FBB0E0076FDDE /* STLectureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DF21F1C3FBB0E0076FDDE /* STLectureTableViewCell.swift */; };
+		E1526E971E51742600A58F40 /* STPrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1526E961E51742600A58F40 /* STPrivacyPolicyViewController.swift */; };
 		E16643511B4623BB00387EF8 /* STTimetableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643501B4623BB00387EF8 /* STTimetableLayout.swift */; };
 		E16643551B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643541B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift */; };
 		E16643571B46623900387EF8 /* STSlotCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643561B46623900387EF8 /* STSlotCellCollectionViewCell.swift */; };
@@ -161,7 +162,6 @@
 		E110CFDE1C88916400ED0590 /* STTagRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagRouter.swift; sourceTree = "<group>"; };
 		E110CFE01C8C017E00ED0590 /* STTagList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagList.swift; sourceTree = "<group>"; };
 		E11902E81CCE44E7002436B9 /* STLectureDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureDetailTableViewCell.swift; sourceTree = "<group>"; };
-		E11D7BEC1DB39A8C005BA5D5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		E11D7BED1DB39A8C005BA5D5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		E11D7BF11DB39AB5005BA5D5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E133794E1D41E26C00AD10F4 /* STRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRouter.swift; sourceTree = "<group>"; };
@@ -182,6 +182,7 @@
 		E14DF2171C3F914E0076FDDE /* STCourseBookList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STCourseBookList.swift; sourceTree = "<group>"; };
 		E14DF21D1C3FB7810076FDDE /* STLectureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STLectureTableViewCell.xib; sourceTree = "<group>"; };
 		E14DF21F1C3FBB0E0076FDDE /* STLectureTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureTableViewCell.swift; sourceTree = "<group>"; };
+		E1526E961E51742600A58F40 /* STPrivacyPolicyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STPrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		E16643501B4623BB00387EF8 /* STTimetableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableLayout.swift; sourceTree = "<group>"; };
 		E16643541B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColumnHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		E16643561B46623900387EF8 /* STSlotCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSlotCellCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -365,6 +366,7 @@
 				E1A99D921CB112EE00953A4B /* STRedButtonTableViewCell.swift */,
 				E1BB29CC1D4896D300150DD4 /* STTimetableSettingViewController.swift */,
 				E139B26B1E4C349400E2ADF5 /* STAddLocalIDViewController.swift */,
+				E1526E961E51742600A58F40 /* STPrivacyPolicyViewController.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -904,6 +906,7 @@
 				E149920D1C4F6D1F00DC6756 /* STTimetableCellType.swift in Sources */,
 				E13CBA8C1E4D492E006B2364 /* STEtcRouter.swift in Sources */,
 				E10852C91B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift in Sources */,
+				E1526E971E51742600A58F40 /* STPrivacyPolicyViewController.swift in Sources */,
 				E1C48BB01C79C45500BC469E /* STQuarter.swift in Sources */,
 				E16643551B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift in Sources */,
 				E1C48B941C787A3C00BC469E /* STSingleClassTableViewCell.swift in Sources */,
@@ -976,7 +979,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				E19A3A9F1B453770007FCAD7 /* Base */,
-				E11D7BEC1DB39A8C005BA5D5 /* ko */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

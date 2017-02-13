@@ -10,6 +10,7 @@ import UIKit
 import ChameleonFramework
 import FBSDKLoginKit
 import Firebase
+import SafariServices
 
 class STLoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -34,6 +35,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var fbButton: UIView!
     @IBOutlet weak var fbLabel: UILabel!
     @IBOutlet weak var bgImageView: UIImageView!
+    @IBOutlet weak var termsLabel: UILabel!
     
     @IBOutlet weak var bgRightLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var bgLeftLayoutConstraint: NSLayoutConstraint!
@@ -222,6 +224,11 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func termLabelClicked() {
+        let url = STConfig.sharedInstance.baseURL + "/terms_of_service"
+        let svc = SFSafariViewController(URL: NSURL(string: url)!)
+        self.presentViewController(svc, animated: true, completion: nil)
+    }
     
     
     func openMainController() {

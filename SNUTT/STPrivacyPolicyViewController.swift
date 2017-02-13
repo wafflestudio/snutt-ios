@@ -1,19 +1,19 @@
 //
-//  STTermAndConditionViewController.swift
+//  STPrivacyPolicyViewController.swift
 //  SNUTT
 //
-//  Created by Rajin on 2016. 3. 21..
-//  Copyright © 2016년 WaffleStudio. All rights reserved.
+//  Created by Rajin on 2017. 2. 13..
+//  Copyright © 2017년 WaffleStudio. All rights reserved.
 //
 
 import UIKit
 
-class STTermAndConditionViewController: UIViewController {
+class STPrivacyPolicyViewController: UIViewController {
 
     @IBOutlet weak var webView: UIWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: STConfig.sharedInstance.baseURL + "/terms_of_service")!))
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: STConfig.sharedInstance.baseURL + "/privacy_policy")!))
         // Do any additional setup after loading the view.
     }
 
@@ -27,7 +27,7 @@ class STTermAndConditionViewController: UIViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }

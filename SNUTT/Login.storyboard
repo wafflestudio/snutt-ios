@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -26,8 +25,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yz2-Xj-qWs" userLabel="BgContainerView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_winter.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="yn1-Iq-U5d">
-                                        <rect key="frame" x="0.0" y="0.0" width="800" height="667"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_winter.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="yn1-Iq-U5d">
+                                        <rect key="frame" x="0.0" y="0.0" width="999.5" height="667"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="yn1-Iq-U5d" secondAttribute="height" multiplier="2048:1367" id="BzN-3e-pSI"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -49,7 +51,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x9O-xy-Tu7">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ogl-aY-e3W">
+                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ogl-aY-e3W">
                                                 <rect key="frame" x="20" y="180" width="335" height="288"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rHG-uz-6Ik">
@@ -273,19 +275,42 @@
                                                             <outletCollection property="gestureRecognizers" destination="NEX-bD-4Wm" appends="YES" id="2I0-tE-cD0"/>
                                                         </connections>
                                                     </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rV6-9Z-MDz">
+                                                        <rect key="frame" x="0.0" y="288" width="335" height="30.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="회원가입 또는 로그인을 누르시면 일반 이용 약관에 동의하시게 됩니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6R-0Q-ybl">
+                                                                <rect key="frame" x="0.0" y="8" width="335" height="14.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" white="1" alpha="0.71647581335616439" colorSpace="calibratedWhite"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="W6R-0Q-ybl" secondAttribute="bottom" constant="8" id="9F9-7O-S9f"/>
+                                                            <constraint firstAttribute="trailing" secondItem="W6R-0Q-ybl" secondAttribute="trailing" id="Akc-oq-6qO"/>
+                                                            <constraint firstItem="W6R-0Q-ybl" firstAttribute="leading" secondItem="rV6-9Z-MDz" secondAttribute="leading" id="KzH-ci-fbU"/>
+                                                            <constraint firstItem="W6R-0Q-ybl" firstAttribute="top" secondItem="rV6-9Z-MDz" secondAttribute="top" constant="8" id="rho-hG-t70"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <outletCollection property="gestureRecognizers" destination="V4e-eO-MO3" appends="YES" id="heH-2X-w2Z"/>
+                                                        </connections>
+                                                    </view>
                                                 </subviews>
                                                 <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="rV6-9Z-MDz" secondAttribute="bottom" id="5nP-Pk-DDx"/>
                                                     <constraint firstItem="unC-Pi-EDH" firstAttribute="top" secondItem="TQm-61-xD7" secondAttribute="bottom" id="DTa-8R-w5C"/>
-                                                    <constraint firstAttribute="bottom" secondItem="Ut0-EH-fCh" secondAttribute="bottom" id="EEC-j4-Yzu"/>
                                                     <constraint firstAttribute="trailing" secondItem="unC-Pi-EDH" secondAttribute="trailing" id="HC2-dI-jHH"/>
+                                                    <constraint firstAttribute="trailing" secondItem="rV6-9Z-MDz" secondAttribute="trailing" id="NUX-DE-Bkt"/>
                                                     <constraint firstItem="rHG-uz-6Ik" firstAttribute="top" secondItem="Ogl-aY-e3W" secondAttribute="top" id="OfY-Iz-3Kb"/>
                                                     <constraint firstAttribute="trailing" secondItem="TQm-61-xD7" secondAttribute="trailing" constant="40" id="PnP-6Y-t3e"/>
                                                     <constraint firstAttribute="trailing" secondItem="rHG-uz-6Ik" secondAttribute="trailing" id="UAG-oO-DEK"/>
                                                     <constraint firstAttribute="trailing" secondItem="Ut0-EH-fCh" secondAttribute="trailing" constant="40" id="Ues-8X-fZg"/>
+                                                    <constraint firstItem="rV6-9Z-MDz" firstAttribute="leading" secondItem="Ogl-aY-e3W" secondAttribute="leading" id="Y9H-ZN-wx0"/>
                                                     <constraint firstItem="rHG-uz-6Ik" firstAttribute="leading" secondItem="Ogl-aY-e3W" secondAttribute="leading" id="bA2-gg-WQb"/>
                                                     <constraint firstItem="unC-Pi-EDH" firstAttribute="leading" secondItem="Ogl-aY-e3W" secondAttribute="leading" id="jFR-0q-Jgw"/>
                                                     <constraint firstItem="Ut0-EH-fCh" firstAttribute="top" secondItem="unC-Pi-EDH" secondAttribute="bottom" id="pH8-1e-t1E"/>
                                                     <constraint firstItem="TQm-61-xD7" firstAttribute="top" secondItem="rHG-uz-6Ik" secondAttribute="bottom" id="s0H-bI-PnO"/>
+                                                    <constraint firstItem="Ut0-EH-fCh" firstAttribute="bottom" secondItem="rV6-9Z-MDz" secondAttribute="top" id="sDU-5g-IpW"/>
                                                     <constraint firstItem="Ut0-EH-fCh" firstAttribute="centerX" secondItem="Ogl-aY-e3W" secondAttribute="centerX" id="twH-rx-XTs"/>
                                                     <constraint firstItem="TQm-61-xD7" firstAttribute="leading" secondItem="Ogl-aY-e3W" secondAttribute="leading" constant="40" id="vZH-mf-XoS"/>
                                                     <constraint firstItem="Ut0-EH-fCh" firstAttribute="leading" secondItem="Ogl-aY-e3W" secondAttribute="leading" constant="40" id="yCG-rP-sT6"/>
@@ -348,6 +373,7 @@
                         <outlet property="registerTabLayoutConstraint0" destination="6MZ-If-FM1" id="CVV-ku-iTe"/>
                         <outlet property="registerTabLayoutConstraint1" destination="J2q-Ni-fil" id="cGY-f7-2pf"/>
                         <outlet property="submitButton" destination="BmK-6k-dAl" id="E19-l7-jSL"/>
+                        <outlet property="termsLabel" destination="W6R-0Q-ybl" id="zSS-bF-TfG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pQE-Cd-zfm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -361,8 +387,13 @@
                         <action selector="fbButonClicked" destination="9wp-2A-yXc" id="ylk-fa-OTx"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer id="V4e-eO-MO3">
+                    <connections>
+                        <action selector="termLabelClicked" destination="9wp-2A-yXc" id="C91-yE-sFW"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="141.5" y="108.5"/>
+            <point key="canvasLocation" x="140" y="108.39580209895054"/>
         </scene>
     </scenes>
     <resources>
