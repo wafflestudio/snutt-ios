@@ -368,7 +368,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kQS-bv-SQP">
-                            <rect key="frame" x="0.0" y="8" width="28.5" height="19"/>
+                            <rect key="frame" x="8" y="8" width="28.5" height="19"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Wl-7U-2Mn">
                                     <rect key="frame" x="0.0" y="0.0" width="28.5" height="19"/>
@@ -386,10 +386,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jl7-ZX-uKg">
-                            <rect key="frame" x="36.5" y="8" width="338.5" height="19"/>
+                            <rect key="frame" x="44.5" y="8" width="330.5" height="19"/>
                             <subviews>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="i5B-6f-Log">
-                                    <rect key="frame" x="0.0" y="0.0" width="338.5" height="19"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="330.5" height="19"/>
                                     <color key="backgroundColor" red="0.95878874339999998" green="0.95878874339999998" blue="0.95878874339999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="10" id="vDV-3f-lWl">
                                         <size key="itemSize" width="50" height="50"/>
@@ -436,9 +436,9 @@
                     </subviews>
                     <color key="backgroundColor" red="0.95878874336388897" green="0.95878874336388897" blue="0.95878874336388897" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="trailingMargin" secondItem="B91-b3-3Ej" secondAttribute="trailing" id="90z-BP-5QX"/>
+                        <constraint firstAttribute="trailing" secondItem="B91-b3-3Ej" secondAttribute="trailing" constant="8" id="90z-BP-5QX"/>
                         <constraint firstItem="Jl7-ZX-uKg" firstAttribute="leading" secondItem="kQS-bv-SQP" secondAttribute="trailing" constant="8" id="Hsd-wg-ZQR"/>
-                        <constraint firstItem="kQS-bv-SQP" firstAttribute="leading" secondItem="lit-u8-EW1" secondAttribute="leading" id="Idx-5O-lCY"/>
+                        <constraint firstItem="kQS-bv-SQP" firstAttribute="leading" secondItem="lit-u8-EW1" secondAttribute="leading" constant="8" id="Idx-5O-lCY"/>
                         <constraint firstAttribute="trailing" secondItem="Jl7-ZX-uKg" secondAttribute="trailing" id="abo-S8-8LW"/>
                         <constraint firstItem="B91-b3-3Ej" firstAttribute="top" secondItem="lit-u8-EW1" secondAttribute="topMargin" id="crj-VW-IqN"/>
                         <constraint firstItem="Jl7-ZX-uKg" firstAttribute="top" secondItem="lit-u8-EW1" secondAttribute="topMargin" id="eKT-IR-sEJ"/>
