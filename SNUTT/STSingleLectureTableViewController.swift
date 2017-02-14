@@ -288,6 +288,11 @@ class STSingleLectureTableViewController: UITableViewController {
             cell.titleLabel.text = title
             cell.textField.text = value1
             cell.doneBlock = doneBlock
+            if case .Credit = type {
+                cell.textField.keyboardType = .NumberPad
+            } else {
+                cell.textField.keyboardType = .Default
+            }
             return cell
         case let .SingleLabeled(title):
             let cell = tmpCell as! STSingleLabeledTableViewCell
