@@ -18,7 +18,6 @@ class STTimeActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
     var doneBlock : ((STTime) -> Void)?
     var cancelBlock : (() -> Void)?
     var initialTime : STTime
-    var selectedIndex = [0,0,0]
     
     init(initialTime : STTime, doneBlock: ((STTime) -> Void)?, cancelBlock: (() -> Void)?) {
         self.doneBlock = doneBlock
@@ -42,6 +41,8 @@ class STTimeActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
     }
     
     func actionSheetPicker(actionSheetPicker: AbstractActionSheetPicker!, configurePickerView pickerView: UIPickerView!) {
+        actionSheetPicker.toolbar.tintColor = UIColor.blackColor()
+        
         let dayIndex = dayRow.indexOf(initialTime.day)!
         let startPeriodIndex = startPeriodRow.indexOf(initialTime.startPeriod)!
         setEndPeriodRowWithStartPeriod(initialTime.startPeriod)
@@ -49,7 +50,6 @@ class STTimeActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
         pickerView.selectRow(dayIndex, inComponent: 0, animated: false)
         pickerView.selectRow(startPeriodIndex, inComponent: 1, animated: false)
         pickerView.selectRow(endPeriodIndex, inComponent: 2, animated: false)
-        selectedIndex = [dayIndex, startPeriodIndex, endPeriodIndex]
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -66,34 +66,37 @@ class STTimeActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedIndex[component] = row
         if component == 1 {
+            let pastEndPeriod = endPeriodRow[pickerView.selectedRowInComponent(2)]
             self.setEndPeriodRowWithStartPeriod(STPeriod.allValues[row])
             pickerView.reloadComponent(2)
-            selectedIndex[2] = 0
-            pickerView.selectRow(0, inComponent: 2, animated: true)
+            if endPeriodRow.last! <= pastEndPeriod {
+                pickerView.selectRow(endPeriodRow.count, inComponent: 2, animated: false)
+            } else if endPeriodRow.first! >= pastEndPeriod {
+                pickerView.selectRow(0, inComponent: 2, animated: false)
+            } else {
+                let index = endPeriodRow.indexOf(pastEndPeriod)!
+                pickerView.selectRow(index, inComponent: 2, animated: false)
+            }
         }
     }
     
     func actionSheetPickerDidSucceed(actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {
-        if let doneBlock = self.doneBlock {
-            let day = dayRow[selectedIndex[0]]
-            let startPeriod = startPeriodRow[selectedIndex[1]]
-            let endPeriod = endPeriodRow[selectedIndex[2]]
-            let selectedTime = STTime(day: day.rawValue, startPeriod: startPeriod, duration: endPeriod - startPeriod)
-            doneBlock(selectedTime)
-        }
+        let pickerView = actionSheetPicker.pickerView as! UIPickerView
+        let day = dayRow[pickerView.selectedRowInComponent(0)]
+        let startPeriod = startPeriodRow[pickerView.selectedRowInComponent(1)]
+        let endPeriod = endPeriodRow[pickerView.selectedRowInComponent(2)]
+        let selectedTime = STTime(day: day.rawValue, startPeriod: startPeriod, duration: endPeriod - startPeriod)
+        doneBlock?(selectedTime)
     }
     
     func actionSheetPickerDidCancel(actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {
-        if let cancelBlock = self.cancelBlock {
-            cancelBlock()
-        }
+        cancelBlock?()
     }
     
     internal static func showWithTime(time: STTime, doneBlock: ((STTime) -> Void)?, cancelBlock: (() -> Void)?, origin : AnyObject! ) {
         let timePickerDelegate = STTimeActionSheetPicker(initialTime: time, doneBlock: doneBlock, cancelBlock: cancelBlock)
-        let title = NSLocalizedString("time_picker_title", comment: "")
+        let title = "시간"
         ActionSheetCustomPicker.showPickerWithTitle(title, delegate: timePickerDelegate, showCancelButton: true, origin: origin)
     }
     
