@@ -248,14 +248,7 @@ class STSingleLectureTableViewController: UITableViewController {
             actionBlock = { ()->() in
                 let actions = [
                     UIAlertAction(title: "초기화", style: .Destructive, handler: { _ in
-                        STTimetableManager.sharedInstance.resetLecture(self.currentLecture) {
-                            let lectureList = STTimetableManager.sharedInstance.currentTimetable!.lectureList
-                            if let index = lectureList.indexOf({ lecture in lecture.id == self.currentLecture.id}) {
-                                self.currentLecture = lectureList[index]
-                                UIView.transitionWithView(tableView, duration:0.35, options:.TransitionCrossDissolve,
-                                    animations: { self.tableView.reloadData() }, completion: nil);
-                            }
-                        }
+                        self.resetButtonClicked()
                     }),
                     UIAlertAction(title: "취소", style: .Cancel, handler: nil)
                 ]
@@ -345,6 +338,10 @@ class STSingleLectureTableViewController: UITableViewController {
         } else {
             UIApplication.sharedApplication().openURL(NSURL(string: url)!)
         }
+    }
+    
+    func resetButtonClicked() {
+        return
     }
     
     /*

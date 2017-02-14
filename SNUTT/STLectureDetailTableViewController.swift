@@ -174,6 +174,23 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         UIView.transitionWithView(tableView, duration:0.35, options:.TransitionCrossDissolve,
                                   animations: { self.tableView.reloadData() }, completion: nil);
     }
+    
+    override func resetButtonClicked() {
+        STTimetableManager.sharedInstance.resetLecture(self.currentLecture) {
+            let lectureList = STTimetableManager.sharedInstance.currentTimetable!.lectureList
+            if let index = lectureList.indexOf({ lecture in lecture.id == self.currentLecture.id}) {
+                self.currentLecture = lectureList[index]
+                self.lecture = lectureList[index]
+                self.navigationItem.setRightBarButtonItem(self.editBarButton, animated: true)
+                self.navigationItem.setLeftBarButtonItem(nil, animated: true)
+                UIView.transitionWithView(self.tableView, duration:0.35, options:.TransitionCrossDissolve,
+                                          animations: {
+                                            self.editable = false
+                                            self.tableView.reloadData()
+                    }, completion: nil);
+            }
+        }
+    }
     // MARK: - Table view data source
     
 
