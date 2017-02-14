@@ -25,7 +25,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         }
     }
     
-    var controller : STTimetableCollectionViewController!
+    var controller: STTimetableCollectionViewController!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -74,24 +74,28 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
                 return
             }
             let num = collectionView.numberOfItemsInSection(indexPath.section)
-            let cellList = (0..<num).map { i in collectionView.cellForItemAtIndexPath(NSIndexPath(forRow: i, inSection: indexPath.section)) as! STCourseCellCollectionViewCell}
+            let cellList : [STCourseCellCollectionViewCell?] = (0..<num).map { i in
+                let tmpIndexPath = NSIndexPath(forRow: i, inSection: indexPath.section)
+                return collectionView.cellForItemAtIndexPath(tmpIndexPath) as? STCourseCellCollectionViewCell
+            }
             STColorActionSheetPicker.showWithColor(lecture.color, doneBlock: { selectedColor in
                 var newLecture = self.lecture
                 newLecture.color = selectedColor
                 var oldLecture = self.lecture
                 oldLecture.color = oldColor
-                STTimetableManager.sharedInstance.updateLecture(oldLecture, newLecture: newLecture, failure: {
+                STTimetableManager.sharedInstance.updateLecture(
+                    oldLecture, newLecture: newLecture, failure: {
                     cellList.forEach { cell in
-                        cell.lecture.color = oldColor
+                        cell?.lecture.color = oldColor
                     }
                 })
                 }, cancelBlock: {
                     cellList.forEach { cell in
-                        cell.lecture.color = oldColor
+                        cell?.lecture.color = oldColor
                     }
                 }, selectedBlock: { color in
                     cellList.forEach { cell in
-                        cell.lecture.color = color
+                        cell?.lecture.color = color
                     }
                 }, origin: self)
         }
