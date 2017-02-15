@@ -82,7 +82,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
             for lecture in timetable!.lectureList {
                 for singleClass in lecture.classList {
                     let startPeriod = Int(singleClass.time.startPeriod)
-                    let endPeriod = Int(singleClass.time.endPeriod + 0.5)
+                    let endPeriod = Int(singleClass.time.endPeriod - 0.5)
                     rowStart = min(rowStart, startPeriod)
                     rowEnd = max(rowEnd, endPeriod)
                     let day = singleClass.time.day.rawValue

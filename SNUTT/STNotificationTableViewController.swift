@@ -17,7 +17,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     
     var notiList : [STNotification] = []
     var pageCnt : Int = 0
-    var numPerPage : Int = 10
+    var numPerPage : Int = 15
     
     var loading : Bool = false
     var isLast : Bool = false
