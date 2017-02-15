@@ -97,10 +97,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         STMainTabBarController.controller?.setNotiBadge(true)
         
         // Print message ID.
+        #if DEBUG
         print("Message ID: \(userInfo["gcm.message_id"]!)")
-        
-        // Print full message.
         print("%@", userInfo)
+        #endif
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -109,11 +109,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     func connectToFcm() {
         FIRMessaging.messaging().connectWithCompletion { (error) in
+            #if DEBUG
             if (error != nil) {
                 print("Unable to connect with FCM. \(error)")
             } else {
                 print("Connected to FCM.")
             }
+            #endif
         }
     }
     func applicationDidEnterBackground(application: UIApplication) {

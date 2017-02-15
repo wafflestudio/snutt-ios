@@ -72,7 +72,7 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
             leftAlignedCell?.textField.placeholder = "예) 홍길동"
         case .Title:
             leftAlignedCell?.textField.placeholder = "예) 기초 영어"
-        default: break //TODO: Credit selector
+        default: break
         }
         return cell
     }

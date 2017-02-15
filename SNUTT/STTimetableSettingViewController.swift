@@ -30,7 +30,7 @@ class STTimetableSettingViewController: UITableViewController {
         timeSlider.step = 1.0
         
         daySlider.numberFormatterOverride = STDayFormatter()
-        //FIXME: minDistance default Value
+        
         daySlider.minDistance = 2.0
         timeSlider.minDistance = 7.0
         

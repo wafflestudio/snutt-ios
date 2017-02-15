@@ -274,12 +274,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     //MARK: DNZEmptyDataSet
     
     func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
-        // TODO: change the images
         switch(state) {
         case .Empty:
-            return UIImage(named: "tag_white")
+            return UIImage(named: "tag_gray")
         case .Loaded:
-            return UIImage(named: "tabbaritem_timetable")
+            return UIImage(named: "tabbaritem_search")
         default:
             return nil
         }

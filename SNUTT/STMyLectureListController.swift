@@ -108,7 +108,6 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     //MARK: DNZEmptyDataSet
     
     func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
-        // TODO: change the image
         return UIImage(named: "tabbaritem_timetable")
     }
     

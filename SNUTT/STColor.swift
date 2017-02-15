@@ -18,7 +18,7 @@ struct STColor {
         STColor(fgHex: "#B8991B", bgHex: "#FFF49A"),
         STColor(fgHex: "#BA313B", bgHex: "#FFB2BC") ]
     
-    static let colorNameList = ["초록색", "하늘색", "파랑색", "보라색", "노랑색", "빨강색"] //FIXME
+    static let colorNameList = ["초록색", "하늘색", "파랑색", "보라색", "노랑색", "빨강색"] 
     
     var fgColor : UIColor
     var bgColor : UIColor

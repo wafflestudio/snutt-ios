@@ -14,7 +14,7 @@ extension DefaultsKeys {
     static let appVersion = DefaultsKey<String>("appVersion")
     static let autoFit = DefaultsKey<Bool>("autoFit", true)
     static let dayRange = DefaultsKey<[Int]>("dayRange", [0,4])
-    static let timeRange = DefaultsKey<[Double]>("timeRange", [0.0, 14.0]) //FIXME: default value
+    static let timeRange = DefaultsKey<[Double]>("timeRange", [0.0, 14.0])
     static let apiKey = DefaultsKey<String>("apiKey")
     static let isFCMRegistered = DefaultsKey<Bool>("isFCMRegistered", false)
     static let shouldShowBadge = DefaultsKey<Bool>("shouldShowBadge", false)

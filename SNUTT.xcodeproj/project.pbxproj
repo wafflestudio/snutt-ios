@@ -52,12 +52,6 @@
 		E16A88551C9FC460003D94AB /* STDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A88541C9FC460003D94AB /* STDeveloperViewController.swift */; };
 		E16A88571C9FC4AD003D94AB /* STSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A88561C9FC4AD003D94AB /* STSettingViewController.swift */; };
 		E16A88591C9FC59F003D94AB /* STTermAndConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A88581C9FC59F003D94AB /* STTermAndConditionViewController.swift */; };
-		E1743C9D1D9E6A0B009F8993 /* clock_black.png in Resources */ = {isa = PBXBuildFile; fileRef = E1743C971D9E6A0B009F8993 /* clock_black.png */; };
-		E1743C9E1D9E6A0B009F8993 /* clock_white.png in Resources */ = {isa = PBXBuildFile; fileRef = E1743C981D9E6A0B009F8993 /* clock_white.png */; };
-		E1743C9F1D9E6A0B009F8993 /* map_black.png in Resources */ = {isa = PBXBuildFile; fileRef = E1743C991D9E6A0B009F8993 /* map_black.png */; };
-		E1743CA01D9E6A0B009F8993 /* map_white.png in Resources */ = {isa = PBXBuildFile; fileRef = E1743C9A1D9E6A0B009F8993 /* map_white.png */; };
-		E1743CA11D9E6A0B009F8993 /* tag_black.png in Resources */ = {isa = PBXBuildFile; fileRef = E1743C9B1D9E6A0B009F8993 /* tag_black.png */; };
-		E1743CA21D9E6A0B009F8993 /* tag_white.png in Resources */ = {isa = PBXBuildFile; fileRef = E1743C9C1D9E6A0B009F8993 /* tag_white.png */; };
 		E1773CAE1C953E8B00AF36AF /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1773CAD1C953E8B00AF36AF /* Login.storyboard */; };
 		E1773CB01C959B5300AF36AF /* FB_logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = E1773CAF1C959B5300AF36AF /* FB_logo_white.png */; };
 		E1773CB41C95B05800AF36AF /* STLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1773CB31C95B05800AF36AF /* STLoginViewController.swift */; };
@@ -195,12 +189,6 @@
 		E16A88541C9FC460003D94AB /* STDeveloperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDeveloperViewController.swift; sourceTree = "<group>"; };
 		E16A88561C9FC4AD003D94AB /* STSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSettingViewController.swift; sourceTree = "<group>"; };
 		E16A88581C9FC59F003D94AB /* STTermAndConditionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTermAndConditionViewController.swift; sourceTree = "<group>"; };
-		E1743C971D9E6A0B009F8993 /* clock_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock_black.png; sourceTree = "<group>"; };
-		E1743C981D9E6A0B009F8993 /* clock_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock_white.png; sourceTree = "<group>"; };
-		E1743C991D9E6A0B009F8993 /* map_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_black.png; sourceTree = "<group>"; };
-		E1743C9A1D9E6A0B009F8993 /* map_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_white.png; sourceTree = "<group>"; };
-		E1743C9B1D9E6A0B009F8993 /* tag_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tag_black.png; sourceTree = "<group>"; };
-		E1743C9C1D9E6A0B009F8993 /* tag_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tag_white.png; sourceTree = "<group>"; };
 		E1773CAD1C953E8B00AF36AF /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		E1773CAF1C959B5300AF36AF /* FB_logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FB_logo_white.png; path = images/FB_logo_white.png; sourceTree = "<group>"; };
 		E1773CB31C95B05800AF36AF /* STLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLoginViewController.swift; sourceTree = "<group>"; };
@@ -371,19 +359,6 @@
 				E1526E961E51742600A58F40 /* STPrivacyPolicyViewController.swift */,
 			);
 			name = Setting;
-			sourceTree = "<group>";
-		};
-		E1743C7E1D9E3955009F8993 /* Icon */ = {
-			isa = PBXGroup;
-			children = (
-				E1743C971D9E6A0B009F8993 /* clock_black.png */,
-				E1743C981D9E6A0B009F8993 /* clock_white.png */,
-				E1743C991D9E6A0B009F8993 /* map_black.png */,
-				E1743C9A1D9E6A0B009F8993 /* map_white.png */,
-				E1743C9B1D9E6A0B009F8993 /* tag_black.png */,
-				E1743C9C1D9E6A0B009F8993 /* tag_white.png */,
-			);
-			path = Icon;
 			sourceTree = "<group>";
 		};
 		E1773CAC1C953E6D00AF36AF /* Login */ = {
@@ -602,7 +577,6 @@
 		E1F0CA1B1C7475B200A4F4ED /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				E1743C7E1D9E3955009F8993 /* Icon */,
 				E1773CAF1C959B5300AF36AF /* FB_logo_white.png */,
 				E195B4C81E51DB330090FA31 /* login_winter.jpg */,
 				E1F0CA1C1C7482D300A4F4ED /* delete.png */,
@@ -728,7 +702,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1743C9D1D9E6A0B009F8993 /* clock_black.png in Resources */,
 				E110CFD31C883F3800ED0590 /* STNotificationTableViewCell.xib in Resources */,
 				E1F58AA81C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib in Resources */,
 				E1773CB01C959B5300AF36AF /* FB_logo_white.png in Resources */,
@@ -737,21 +710,16 @@
 				E195B4C91E51DB330090FA31 /* login_winter.jpg in Resources */,
 				E1CD92671E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib in Resources */,
 				E19A3AA51B453770007FCAD7 /* LaunchScreen.xib in Resources */,
-				E1743CA01D9E6A0B009F8993 /* map_white.png in Resources */,
-				E1743C9E1D9E6A0B009F8993 /* clock_white.png in Resources */,
 				E1C48BA21C79C0E300BC469E /* Localizable.strings in Resources */,
 				E1F946231DB449E300CC8AF6 /* STAddLectureButtonCell.xib in Resources */,
-				E1743C9F1D9E6A0B009F8993 /* map_black.png in Resources */,
 				E1F0CA371C785C1200A4F4ED /* STSingleLabeledTableViewCell.xib in Resources */,
 				E1C48B8C1C78616C00BC469E /* STDoubleLabeledTableViewCell.xib in Resources */,
 				E1A99D891CABE47000953A4B /* STRowHeaderCollectionViewCell.xib in Resources */,
-				E1743CA21D9E6A0B009F8993 /* tag_white.png in Resources */,
 				E1CAAA351CF07E7E00D16183 /* STSingleLectureButtonCell.xib in Resources */,
 				E17825CB1D572FB0009ACEC3 /* GoogleService-Info.plist in Resources */,
 				E1773CAE1C953E8B00AF36AF /* Login.storyboard in Resources */,
 				E1F0CA271C75B01900A4F4ED /* STLectureSearchTableViewCell.xib in Resources */,
 				E1C48B8A1C785F0B00BC469E /* STLeftAlignedTableViewCell.xib in Resources */,
-				E1743CA11D9E6A0B009F8993 /* tag_black.png in Resources */,
 				E1C48B921C7879E600BC469E /* STSingleClassTableViewCell.xib in Resources */,
 				E19A3AA21B453770007FCAD7 /* Images.xcassets in Resources */,
 				E1C48B8E1C78736000BC469E /* STColorPickTableViewCell.xib in Resources */,
@@ -1047,6 +1015,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = SNUTT;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1105,6 +1074,7 @@
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SNUTT/SNUTT-Bridging-Header.h";

@@ -51,7 +51,6 @@ class STTagManager {
     
     
     func getTagListWithQuarter(quarter: STQuarter, updatedTime : String) {
-        //FIXME: something is wrong
         STNetworking.getTagListForQuarter(quarter, done: { list in
             if self.tagList.quarter == quarter {
                 self.tagList = STTagList(quarter: quarter, tagList: list, updatedTime: updatedTime)
@@ -72,8 +71,8 @@ class STTagManager {
                 if self.tagList.updatedTime != updatedTime {
                     self.getTagListWithQuarter(self.tagList.quarter, updatedTime: updatedTime)
                 }
-            case .Failure(let error):
-                print(error)
+            case .Failure:
+                break
             }
         }
     }

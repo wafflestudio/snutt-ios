@@ -153,8 +153,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     //MARK: DNZEmptyDataSet
     
     func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
-        // TODO: change the image
-        return UIImage(named: "tabbaritem_notification")
+        return UIImage(named: "tabbaritem_noti")
     }
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {

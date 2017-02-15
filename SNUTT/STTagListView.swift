@@ -31,7 +31,6 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func adjustHeight () {
-        print(self.contentSize.height)
         heightConstraint.constant = self.contentSize.height + 10
     }
     

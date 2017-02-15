@@ -41,8 +41,9 @@ extension STRouter {
     
     var URLRequest: NSMutableURLRequest {
         let mutableURLRequest = Self.shouldAddToken ? self.tokenedURLRequest : self.defaultURLRequest
-        //FIXME: print only for debug
+        #if DEBUG
         print(Self.baseURLString + path)
+        #endif
         switch self.method {
         case .GET:
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: self.parameters).0

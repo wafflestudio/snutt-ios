@@ -28,9 +28,9 @@ class STTimetableManager : NSObject {
         self.loadData()
         if let timetableId = currentTimetable?.id {
             STNetworking.getTimetable(timetableId, done: { timetable in
-                //FIXME: current logic = if it is 404, just set it to nil
                 self.currentTimetable = timetable
             }, failure: { _ in
+                self.currentTimetable = nil
             })
         }
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableManager.saveData), event: STEvent.CurrentTimetableChanged, object: nil)
@@ -49,8 +49,6 @@ class STTimetableManager : NSObject {
     
     func getDataPath() -> String {
         let directorys : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory,NSSearchPathDomainMask.AllDomainsMask, true)
-        
-        print("value of directorys is \(directorys)")
         
         let directories:[String] = directorys;
         let pathToFile = directories[0]; //documents directory
@@ -78,7 +76,6 @@ class STTimetableManager : NSObject {
         let path = getDataPath()
         let dict = currentTimetable!.toDictionary() as NSDictionary
         let tmp = dict.writeToFile(path, atomically: true)
-        print("writing : \(tmp)")
     }
     
     func addCustomLecture(var lecture : STLecture, object : AnyObject? ) -> STAddLectureState {

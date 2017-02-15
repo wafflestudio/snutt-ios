@@ -52,8 +52,9 @@ extension Request {
         self.responseSwiftyJSON { response in
             switch response.result {
             case .Success(let json):
-                //TODO: erase print
-                print(json)
+                #if DEBUG
+                    print(json)
+                #endif
                 if let statusCode = response.response?.statusCode {
                     if statusCode != 200 {
                         guard let errCodeRaw = json["errcode"].int else {

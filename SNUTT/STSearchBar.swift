@@ -15,7 +15,6 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
     
     var isEditingTag : Bool = false {
         didSet {
-            // TODO: Check whether return key is changed in real iphone
             if isEditingTag {
                 self.returnKeyType = .Done
                 self.reloadInputViews()
