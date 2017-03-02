@@ -23,9 +23,8 @@ class STConfig {
         }
     }
     private init() {
-        baseURL = "http://walnut.wafflestudio.com:3000/api"
     }
     
-    let baseURL : String
+    var baseURL : String! = nil
     
 }

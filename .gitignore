@@ -29,3 +29,5 @@ Pods/
 # SNUTT-iOS
 
 SNUTT/config.plist
+SNUTT/GoogleService-Info-Dev.plist
+SNUTT/GoogleService-Info-Production.plist

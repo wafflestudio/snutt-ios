@@ -76,7 +76,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
     func autofit() {
         if timetable != nil && timetable?.lectureList.count != 0 {
             columnHidden = [false,false,false,false,false,true,true]
-            rowStart = 1
+            rowStart = 2
             rowEnd = 10
             
             for lecture in timetable!.lectureList {

@@ -22,11 +22,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        Fabric.with([Crashlytics.self])
+
+        #if DEBUG
+        #else
+            Fabric.with([Crashlytics.self])
+        #endif
+
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        FIRApp.configure()
-        
+
+        let path = NSBundle.mainBundle().pathForResource("config", ofType: "plist")!
+        let configAllDict = NSDictionary(contentsOfFile: path)!
+
+        #if DEBUG
+            let infoName = "GoogleService-Info-Dev"
+            let configKey = "debug"
+        #elseif PRODUCTION
+            let infoName = "GoogleService-Info-Production"
+            let configKey = "production"
+        #else
+            let infoName = "GoogleService-Info-Dev"
+            let configKey = "staging"
+        #endif
+
+        let configDict = configAllDict.objectForKey(configKey) as! NSDictionary
+        let filePath = NSBundle.mainBundle().pathForResource(infoName, ofType: "plist")
+        let options = FIROptions(contentsOfFile: filePath)
+        FIRApp.configureWithOptions(options)
+
+        STConfig.sharedInstance.baseURL = configDict.objectForKey("api_server_url") as! String
+
         setColors()
         
         // open main or login depending on the token
@@ -37,12 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // set the api key base on config.plist
-        if STDefaults[.apiKey] == "" {
-            let path = NSBundle.mainBundle().pathForResource("config", ofType: "plist")!
-            let dict = NSDictionary(contentsOfFile: path)!
-            
-            STDefaults[.apiKey] = dict.objectForKey("API_KEY") as! String
-        }
+        STDefaults[.apiKey] = configDict.objectForKey("api_key") as! String
         if STDefaults[.token] != nil {
             STMainTabBarController.controller?.setNotiBadge(STDefaults[.shouldShowBadge])
             STNetworking.getNotificationCount({ cnt in

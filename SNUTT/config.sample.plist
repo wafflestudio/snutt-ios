@@ -2,7 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>API_KEY</key>
-	<string>API_KEY_HERE</string>
+	<key>staging</key>
+	<dict>
+		<key>api_server_url</key>
+		<string>URL_HERE</string>
+		<key>api_key</key>
+		<string>API_KEY_HERE</string>
+	</dict>
+	<key>debug</key>
+	<dict>
+		<key>api_server_url</key>
+		<string>URL_HERE</string>
+		<key>api_key</key>
+		<string>API_KEY_HERE</string>
+	</dict>
+	<key>production</key>
+	<dict>
+		<key>api_server_url</key>
+		<string>URL_HERE</string>
+		<key>api_key</key>
+		<string>API_KEY_HERE</string>
+	</dict>
 </dict>
 </plist>
