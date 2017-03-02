@@ -186,7 +186,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
                 STDefaults[.token] = token
                 self.openMainController()
                 }, failure: { _ in
-                STAlertView.showAlert(title: "로그인 실패", message: "아이디나 비밀번호가 올바르지 않습니다.")
+                //STAlertView.showAlert(title: "로그인 실패", message: "아이디나 비밀번호가 올바르지 않습니다.")
             })
         } else {
             if passwordCheckTextField.text != password {
@@ -219,7 +219,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
                     STAlertView.showAlert(title: "회원가입 실패", message: "회원가입은 성공하였으나, 로그인에 실패하였습니다. 로그인을 재시도 해주세요.")
                 })
             }, failure: { _ in
-                STAlertView.showAlert(title: "회원가입 실패", message: "회원가입에 실패하였습니다.")
+                //STAlertView.showAlert(title: "회원가입 실패", message: "회원가입에 실패하였습니다.")
             })
         }
     }
