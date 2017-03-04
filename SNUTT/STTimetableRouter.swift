@@ -43,15 +43,15 @@ enum STTimetableRouter : STRouter {
         case .GetTimetableList:
             return ""
         case .GetTimetable(let id):
-            return "\(id)"
+            return "/\(id)"
         case .CreateTimetable:
             return ""
         case .UpdateTimetable(let id, _):
-            return "\(id)"
+            return "/\(id)"
         case .DeleteTimetable(let id):
-            return "\(id)"
+            return "/\(id)"
         case .GetRecentTimetable:
-            return "recent"
+            return "/recent"
         }
     }
     

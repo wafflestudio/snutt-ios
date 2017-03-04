@@ -33,9 +33,9 @@ enum STCourseBookRouter : STRouter {
         case .Get:
             return "/"
         case .Recent:
-            return "recent"
+            return "/recent"
         case .Syllabus:
-            return "official"
+            return "/official"
         }
     }
     
