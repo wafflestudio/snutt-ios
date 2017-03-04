@@ -49,8 +49,13 @@ class STUser {
     
     static func logOut() {
         //FIXME: Logic needed for deleteDevice
-        STNetworking.deleteDevice(FIRInstanceID.instanceID().token()!)
-        loadLoginPage()
+        if let token = FIRInstanceID.instanceID().token() {
+            STNetworking.deleteDevice(token, done: {
+                loadLoginPage()
+            })
+        } else {
+            loadLoginPage()
+        }
     }
     
     static func loadLoginPage() {

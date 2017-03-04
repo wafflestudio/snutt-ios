@@ -325,12 +325,13 @@ class STNetworking {
         )
     }
     
-    static func deleteDevice(deviceId : String) {
+    static func deleteDevice(deviceId : String, done: ()->()) {
         let request = Alamofire.request(STUserRouter.DeleteDevice(id: deviceId))
         request.responseWithDone({ statusCode, json in
+            done()
             }, failure: { _ in
                 //TODO: Error Handling with deleteDevice
-            }, showNetworkAlert: false
+            }, showNetworkAlert: true
         )
     }
     

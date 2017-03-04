@@ -67,7 +67,7 @@ extension Request {
                         }
                         switch (errCode) {
                         case STErrorCode.NO_USER_TOKEN, STErrorCode.WRONG_USER_TOKEN:
-                            STUser.logOut()
+                            STUser.loadLoginPage()
                         default:
                             if showAlert {
                                 if let alertTitle = alertTitle {
