@@ -29,7 +29,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        //layer.cornerRadius = 6
+        layer.cornerRadius = 6
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longClick))
         self.addGestureRecognizer(longPress)

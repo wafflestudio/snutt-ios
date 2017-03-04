@@ -49,6 +49,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
     
     let LectureSectionOffset = 3
     let RatioForHeader : CGFloat = 0.67
+    let WidthForHeader : CGFloat = 25.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +59,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         self.collectionView?.registerNib(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
         
         layout = STTimetableLayout()
+        layout.WidthForHeader = WidthForHeader
         self.collectionView?.collectionViewLayout = layout
         (self.collectionView?.collectionViewLayout as! STTimetableLayout).controller = self
         if (shouldAutofit) {
@@ -206,7 +208,8 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         case .HeaderRow:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("RowHeaderCell", forIndexPath: indexPath) as! STRowHeaderCollectionViewCell
             cell.hidden = false
-            cell.titleLabel.text = String(indexPath.row);
+            cell.titleLabel.hidden = true
+            //cell.titleLabel.text = String(indexPath.row);
             cell.timeLabel.text = String(indexPath.row + 8)
             if !(rowStart <= indexPath.row && indexPath.row <= rowEnd) {
                 cell.hidden = true
@@ -214,9 +217,10 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
             return cell
         case .Slot:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SlotCell", forIndexPath: indexPath) as! STSlotCellCollectionViewCell
-            cell.columnNum = columnNum + 1
+            cell.columnNum = columnNum
             cell.rowNum = rowNum
             cell.ratioForHeader = RatioForHeader
+            cell.widthForHeader = WidthForHeader
             cell.setNeedsDisplay()
             return cell
         case .Course:

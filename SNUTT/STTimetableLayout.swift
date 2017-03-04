@@ -45,17 +45,17 @@ class STTimetableLayout: UICollectionViewLayout {
             let columnIndex = controller.dayToColumn[singleClass.time.day.rawValue]
             
             width = WidthPerColumn
-            height = HeightPerRow * CGFloat(singleClass.time.duration)
-            locX = CGFloat(columnIndex+1) * WidthPerColumn
-            locY = HeightForHeader + HeightPerRow * rowIndex
+            height = HeightPerRow * CGFloat(singleClass.time.duration) + 0.4
+            locX = CGFloat(columnIndex) * WidthPerColumn + WidthForHeader
+            locY = HeightForHeader + HeightPerRow * rowIndex - 0.2
         case .HeaderColumn:
             width = WidthPerColumn
             height = HeightForHeader
             let columnIndex = controller.dayToColumn[indexPath.row]
-            locX = CGFloat(columnIndex + 1) * WidthPerColumn
+            locX = CGFloat(columnIndex) * WidthPerColumn + WidthForHeader
             locY = CGFloat(0)
         case .HeaderRow:
-            width = WidthPerColumn
+            width = WidthForHeader
             height = HeightPerRow
             locX = CGFloat(0)
             let rowIndex = CGFloat(controller.getRowFromPeriod(Double(indexPath.row)))
@@ -77,8 +77,8 @@ class STTimetableLayout: UICollectionViewLayout {
     func updateContentSize() {
         ContentWidth = self.collectionView!.bounds.size.width
         ContentHeight = self.collectionView!.bounds.size.height
-        
-        WidthPerColumn = ContentWidth / CGFloat(controller.columnNum + 1)
+
+        WidthPerColumn = (ContentWidth - WidthForHeader) / CGFloat(controller.columnNum)
         HeightPerRow = ContentHeight / (CGFloat(controller.rowNum) + controller!.RatioForHeader)
         HeightForHeader = controller!.RatioForHeader * HeightPerRow
     }
