@@ -13,8 +13,7 @@ class STDeveloperViewController: UIViewController{
     @IBOutlet weak var webView: UIWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        //FIXME: url fix
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: "http://www.snutt.kr/member")!))
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: STConfig.sharedInstance.baseURL + "/member")!))
         // Do any additional setup after loading the view.
     }
 
