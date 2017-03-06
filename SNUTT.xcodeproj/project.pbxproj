@@ -159,8 +159,6 @@
 		E110CFDE1C88916400ED0590 /* STTagRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagRouter.swift; sourceTree = "<group>"; };
 		E110CFE01C8C017E00ED0590 /* STTagList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagList.swift; sourceTree = "<group>"; };
 		E11902E81CCE44E7002436B9 /* STLectureDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureDetailTableViewCell.swift; sourceTree = "<group>"; };
-		E11D7BED1DB39A8C005BA5D5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		E11D7BF11DB39AB5005BA5D5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E133794E1D41E26C00AD10F4 /* STRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRouter.swift; sourceTree = "<group>"; };
 		E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMyLectureListController.swift; sourceTree = "<group>"; };
 		E139B26B1E4C349400E2ADF5 /* STAddLocalIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAddLocalIDViewController.swift; sourceTree = "<group>"; };
@@ -689,7 +687,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
-				ko,
 			);
 			mainGroup = E19A3A8C1B453770007FCAD7;
 			productRefGroup = E19A3A961B453770007FCAD7 /* Products */;
@@ -965,7 +962,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				E19A3AA41B453770007FCAD7 /* Base */,
-				E11D7BED1DB39A8C005BA5D5 /* ko */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -974,7 +970,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				E1C48BA31C79C0E300BC469E /* Base */,
-				E11D7BF11DB39AB5005BA5D5 /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
