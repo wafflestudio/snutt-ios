@@ -40,8 +40,12 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             (self.tableView.cellForRowAtIndexPath(indexPath) as! STSingleLectureButtonCell).buttonAction?()
         } else if case .Color = cellTypeAtIndexPath(indexPath) {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            triggerColorPicker()
+            if editable {
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                triggerColorPicker()
+            } else {
+                tableView.deselectRowAtIndexPath(indexPath, animated: false)
+            }
         } else {
             tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
