@@ -177,7 +177,7 @@ class STNetworking {
     
     //MARK: TagRouter
     
-    static func getTagListForQuarter(quarter: STQuarter, done: ([STTag])->(), failure: ()->()) {
+    static func getTagListForQuarter(quarter: STQuarter, done: (STTagList)->(), failure: ()->()) {
         let request = Alamofire.request(STTagRouter.Get(quarter: quarter))
         request.responseWithDone ({ statusCode, json in
             var tags = json["classification"].arrayValue.map({ body in
@@ -198,19 +198,20 @@ class STNetworking {
             tags = tags + json["category"].arrayValue.map({ body in
                 return STTag(type: .Category, text: body.stringValue)
             })
-            done(tags)
+            let updatedTime = json["updated_at"].int64Value
+            done(STTagList(quarter: quarter, tagList: tags, updatedTime: updatedTime))
         }, failure: { _ in
             failure()
         })
     }
     
-    static func getTagUpdateTimeForQuarter(quarter: STQuarter, done: (String)->(), failure: ()->()) {
+    static func getTagUpdateTimeForQuarter(quarter: STQuarter, done: (Int64)->(), failure: (()->())?) {
         let request = Alamofire.request(STTagRouter.UpdateTime(quarter: quarter))
         request.responseWithDone({ statusCode, json in
-            let updatedTime = json.stringValue
+            let updatedTime = json["updated_at"].int64Value
             done(updatedTime)
         }, failure: { _ in
-            failure()
+            failure?()
         })
     }
     

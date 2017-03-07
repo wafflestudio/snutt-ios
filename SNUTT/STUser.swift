@@ -38,6 +38,7 @@ class STUser {
     }
     
     static func getUser() {
+        // TODO: request to the networking
         let request = Alamofire.request(STUserRouter.GetUser);
         request.responseWithDone({ statusCode, json in
             STUser.currentUser = STUser(json: json)

@@ -83,6 +83,9 @@ extension Request {
                 }
                 done?(response.response?.statusCode ?? 200 ,json)
             case .Failure(let error):
+                #if DEBUG
+                    print("Error on Networking")
+                #endif
                 if error.code == Error.Code.JSONSerializationFailed.rawValue {
                     let errorCode = STErrorCode.SERVER_FAULT
                     if showNetworkAlert {

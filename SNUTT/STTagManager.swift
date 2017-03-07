@@ -38,7 +38,7 @@ class STTagManager {
         if tagList != nil {
             self.tagList = tagList
         } else {
-            self.tagList = STTagList(quarter: quarter, tagList: [], updatedTime: "")
+            self.tagList = STTagList(quarter: quarter, tagList: [], updatedTime: 0)
         }
         self.updateTagList()
     }
@@ -50,31 +50,26 @@ class STTagManager {
     
     
     
-    func getTagListWithQuarter(quarter: STQuarter, updatedTime : String) {
-        STNetworking.getTagListForQuarter(quarter, done: { list in
+    func getTagListWithQuarter(quarter: STQuarter, updatedTime : Int64) {
+        STNetworking.getTagListForQuarter(quarter, done: { tagList in
             if self.tagList.quarter == quarter {
-                self.tagList = STTagList(quarter: quarter, tagList: list, updatedTime: updatedTime)
+                self.tagList = tagList
                 self.saveData(quarter)
             }
         }, failure: { _ in
-            self.tagList = STTagList(quarter: quarter, tagList: [], updatedTime: updatedTime)
+            self.tagList = STTagList(quarter: quarter, tagList: [], updatedTime: 0)
         })
     }
 
 
     
     func updateTagList() {
-        let request = Alamofire.request(STTagRouter.UpdateTime(quarter: tagList.quarter))
-        request.responseString { response in
-            switch response.result {
-            case .Success(let updatedTime):
-                if self.tagList.updatedTime != updatedTime {
+        STNetworking.getTagUpdateTimeForQuarter(tagList.quarter, done: { updatedTime in
+            if self.tagList.updatedTime != updatedTime {
                     self.getTagListWithQuarter(self.tagList.quarter, updatedTime: updatedTime)
-                }
-            case .Failure:
-                break
             }
-        }
+            }, failure: nil
+        )
     }
 
 }
