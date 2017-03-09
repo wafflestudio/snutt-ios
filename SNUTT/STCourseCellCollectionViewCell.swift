@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ChameleonFramework
 
 class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
@@ -25,7 +24,8 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         }
     }
     
-    var controller: STTimetableCollectionViewController!
+    var longClicked: ((STCourseCellCollectionViewCell)->())?
+    var tapped: ((STCourseCellCollectionViewCell)->())?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -66,45 +66,12 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     }
     func longClick(gesture : UILongPressGestureRecognizer) {
         if gesture.state == UIGestureRecognizerState.Began {
-            let oldColor = self.lecture.color
-            guard let collectionView = controller.collectionView else {
-                return
-            }
-            guard let indexPath = controller.collectionView?.indexPathForCell(self) else {
-                return
-            }
-            let num = collectionView.numberOfItemsInSection(indexPath.section)
-            let cellList : [STCourseCellCollectionViewCell?] = (0..<num).map { i in
-                let tmpIndexPath = NSIndexPath(forRow: i, inSection: indexPath.section)
-                return collectionView.cellForItemAtIndexPath(tmpIndexPath) as? STCourseCellCollectionViewCell
-            }
-            STColorActionSheetPicker.showWithColor(lecture.color, doneBlock: { selectedColor in
-                var newLecture = self.lecture
-                newLecture.color = selectedColor
-                var oldLecture = self.lecture
-                oldLecture.color = oldColor
-                STTimetableManager.sharedInstance.updateLecture(
-                    oldLecture, newLecture: newLecture, failure: {
-                    cellList.forEach { cell in
-                        cell?.lecture.color = oldColor
-                    }
-                })
-                }, cancelBlock: {
-                    cellList.forEach { cell in
-                        cell?.lecture.color = oldColor
-                    }
-                }, selectedBlock: { color in
-                    cellList.forEach { cell in
-                        cell?.lecture.color = color
-                    }
-                }, origin: self)
+            longClicked?(self)
         }
     }
     func tap(gesture: UITapGestureRecognizer) {
         if gesture.state == UIGestureRecognizerState.Recognized {
-            let detailController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("LectureDetailTableViewController") as! STLectureDetailTableViewController
-            detailController.lecture = self.lecture
-            self.controller.navigationController?.pushViewController(detailController, animated: true)
+            tapped?(self)
         }
     }
 }

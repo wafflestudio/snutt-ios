@@ -16,8 +16,8 @@ class STTimetableLayout: UICollectionViewLayout {
     var HeightPerRow : CGFloat = 0.0
     var WidthForHeader : CGFloat = 0.0
     var WidthPerColumn : CGFloat = 0.0
-    
-    var controller : STTimetableCollectionViewController!
+
+    var timetableView : STTimetableCollectionView!
     
     
     override init() {
@@ -31,7 +31,7 @@ class STTimetableLayout: UICollectionViewLayout {
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes {
         
         let ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-        let type = controller!.getCellType(indexPath)
+        let type = timetableView!.getCellType(indexPath)
         
         var width : CGFloat
         var height : CGFloat
@@ -40,9 +40,9 @@ class STTimetableLayout: UICollectionViewLayout {
         
         switch type {
         case .Course, .TemporaryCourse:
-            let singleClass = controller.getSingleClass(indexPath)
-            let rowIndex = CGFloat(controller.getRowFromPeriod(singleClass.time.startPeriod))
-            let columnIndex = controller.dayToColumn[singleClass.time.day.rawValue]
+            let singleClass = timetableView.getSingleClass(indexPath)
+            let rowIndex = CGFloat(timetableView.getRowFromPeriod(singleClass.time.startPeriod))
+            let columnIndex = timetableView.dayToColumn[singleClass.time.day.rawValue]
             
             width = WidthPerColumn
             height = HeightPerRow * CGFloat(singleClass.time.duration) + 0.4
@@ -51,14 +51,14 @@ class STTimetableLayout: UICollectionViewLayout {
         case .HeaderColumn:
             width = WidthPerColumn
             height = HeightForHeader
-            let columnIndex = controller.dayToColumn[indexPath.row]
+            let columnIndex = timetableView.dayToColumn[indexPath.row]
             locX = CGFloat(columnIndex) * WidthPerColumn + WidthForHeader
             locY = CGFloat(0)
         case .HeaderRow:
             width = WidthForHeader
             height = HeightPerRow
             locX = CGFloat(0)
-            let rowIndex = CGFloat(controller.getRowFromPeriod(Double(indexPath.row)))
+            let rowIndex = CGFloat(timetableView.getRowFromPeriod(Double(indexPath.row)))
             locY = HeightForHeader + rowIndex * HeightPerRow
         case .Slot:
             width = ContentWidth
@@ -78,21 +78,21 @@ class STTimetableLayout: UICollectionViewLayout {
         ContentWidth = self.collectionView!.bounds.size.width
         ContentHeight = self.collectionView!.bounds.size.height
 
-        WidthPerColumn = (ContentWidth - WidthForHeader) / CGFloat(controller.columnNum)
-        HeightPerRow = ContentHeight / (CGFloat(controller.rowNum) + controller!.RatioForHeader)
-        HeightForHeader = controller!.RatioForHeader * HeightPerRow
+        WidthPerColumn = (ContentWidth - WidthForHeader) / CGFloat(timetableView.columnNum)
+        HeightPerRow = ContentHeight / (CGFloat(timetableView.rowNum) + timetableView!.RatioForHeader)
+        HeightForHeader = timetableView!.RatioForHeader * HeightPerRow
     }
     
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var ret : [UICollectionViewLayoutAttributes] = []
-        for i in 0..<(controller!.numberOfSectionsInCollectionView(collectionView!)) {
-            for j in 0..<(controller!.collectionView(collectionView!, numberOfItemsInSection: i)) {
+        for i in 0..<(timetableView!.numberOfSectionsInCollectionView(collectionView!)) {
+            for j in 0..<(timetableView!.collectionView(collectionView!, numberOfItemsInSection: i)) {
                 let indexPath = NSIndexPath(forRow: j, inSection: i)
                 ret.append(self.layoutAttributesForItemAtIndexPath(indexPath))
             }
         }
         return ret.map({ attribute in
-            let type = self.controller.getCellType(attribute.indexPath);
+            let type = self.timetableView.getCellType(attribute.indexPath);
             switch (type) {
             case .Slot: attribute.zIndex = -1
             case .Course: attribute.zIndex = 0

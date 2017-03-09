@@ -46,36 +46,18 @@ class STTimetableManager : NSObject {
             saveData()
         }
     }
-    
-    func getDataPath() -> String {
-        let directorys : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory,NSSearchPathDomainMask.AllDomainsMask, true)
-        
-        let directories:[String] = directorys;
-        let pathToFile = directories[0]; //documents directory
-        
-        let plistfile = "currentTimetable.plist"
-        let plistpath = NSString(string: pathToFile).stringByAppendingPathComponent(plistfile)
-        
-        return plistpath
-    }
-    
+
     func loadData() {
-        let fileManager = NSFileManager.defaultManager()
-        let path = getDataPath()
-        if fileManager.fileExistsAtPath(path) {
-            let dict = NSDictionary(contentsOfFile: path)!
+        if let dict = STDefaults[.currentTimetable] {
             let timetable = STTimetable(json: JSON(dict))
             currentTimetable = timetable
         }
     }
     
     func saveData() {
-        if currentTimetable == nil {
-            return
-        }
-        let path = getDataPath()
-        let dict = currentTimetable!.toDictionary() as NSDictionary
-        let tmp = dict.writeToFile(path, atomically: true)
+        let dict = currentTimetable?.toDictionary()
+        STDefaults[.currentTimetable] = dict as? NSDictionary
+        STDefaults.synchronize()
     }
     
     func addCustomLecture(var lecture : STLecture, object : AnyObject? ) -> STAddLectureState {

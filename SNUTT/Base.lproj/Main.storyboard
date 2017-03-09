@@ -31,22 +31,6 @@
             </objects>
             <point key="canvasLocation" x="363.5" y="-610.5"/>
         </scene>
-        <!--Timetable Collection View Controller-->
-        <scene sceneID="b3C-sd-em3">
-            <objects>
-                <collectionViewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="Icv-Xm-I3U" customClass="STTimetableCollectionViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Jao-OD-M66">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="443"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <collectionViewLayout key="collectionViewLayout" id="7qR-xv-imX"/>
-                        <cells/>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="T0I-w2-zHy" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3181" y="-594"/>
-        </scene>
         <!--Timetable Tab View Controller-->
         <scene sceneID="ojV-tR-uzz">
             <objects>
@@ -61,7 +45,19 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPH-UC-il9">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zsa-uu-87y" customClass="STTimetableCollectionView" customModule="SNUTT" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="zsa-uu-87y" firstAttribute="top" secondItem="gPH-UC-il9" secondAttribute="top" id="UMo-FT-J4u"/>
+                                    <constraint firstItem="zsa-uu-87y" firstAttribute="leading" secondItem="gPH-UC-il9" secondAttribute="leading" id="edZ-8t-B5H"/>
+                                    <constraint firstAttribute="bottom" secondItem="zsa-uu-87y" secondAttribute="bottom" id="fzZ-YE-VnX"/>
+                                    <constraint firstAttribute="trailing" secondItem="zsa-uu-87y" secondAttribute="trailing" id="jud-Tw-pxf"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -87,6 +83,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="containerView" destination="gPH-UC-il9" id="87M-tR-494"/>
+                        <outlet property="timetableView" destination="zsa-uu-87y" id="V8P-f4-YaD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9sT-yZ-cLs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -197,11 +194,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="plr-x9-uzV">
+                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="plr-x9-uzV" customClass="STTimetableCollectionView" customModule="SNUTT" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="375" height="443"/>
-                                <connections>
-                                    <segue destination="Icv-Xm-I3U" kind="embed" identifier="STSearchTimetableView" id="oEZ-xd-CA2"/>
-                                </connections>
                             </containerView>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wf4-PD-nbb">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="487"/>
@@ -360,6 +354,7 @@
                         <outlet property="tagCollectionView" destination="Q60-nN-90y" id="0Te-ao-e4N"/>
                         <outlet property="tagCollectionViewConstraint" destination="AF1-z4-6ly" id="v9k-nJ-dGQ"/>
                         <outlet property="tagTableView" destination="38X-iM-cc3" id="uO8-mB-h5J"/>
+                        <outlet property="timetableView" destination="plr-x9-uzV" id="Tag-9B-QDn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JNM-LH-OnT" userLabel="First Responder" sceneMemberID="firstResponder"/>

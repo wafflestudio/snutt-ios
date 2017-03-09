@@ -120,7 +120,7 @@ struct STLecture {
             "category" : category,
             "id" : id,
             "class_time_json" : classTimeJSON,
-            "color" : [ "fg" : color.fgColor.hexValue(), "bg": color.bgColor.hexValue()]
+            "color" : [ "fg" : color.fgColor.toHexString(), "bg": color.bgColor.toHexString()]
             ]
         
         for (key, value) in dict {

@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1631446E472512479C1BD808 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736548D365BF8D4D41EF1881 /* Pods_SNUTT.framework */; };
+		4BBA38FE9BD88EC2B95A5504 /* Pods_SNUTT_Today.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055D8A5252D54AED8FAA67A1 /* Pods_SNUTT_Today.framework */; };
 		E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C61B4CCD16006FD8B3 /* STLecture.swift */; };
-		E10852C91B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C71B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift */; };
+		E10852C91B4CCD16006FD8B3 /* STTimetableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */; };
 		E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109CC781C3E8C050050399A /* STTimetableListController.swift */; };
 		E10CBEDF1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10CBEDE1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift */; };
 		E10CBEE11C7B71E400E8FE26 /* STAddCustomLectureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10CBEE01C7B71E400E8FE26 /* STAddCustomLectureTableViewController.swift */; };
@@ -83,6 +84,33 @@
 		E1BB29CD1D4896D300150DD4 /* STTimetableSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BB29CC1D4896D300150DD4 /* STTimetableSettingViewController.swift */; };
 		E1BC7E4A1E54A04500AF3506 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1BC7E491E54A04500AF3506 /* GoogleService-Info-Dev.plist */; };
 		E1BC7E4C1E54B7EB00AF3506 /* GoogleService-Info-Production.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1BC7E4B1E54B7EB00AF3506 /* GoogleService-Info-Production.plist */; };
+		E1BEF0791E702E9A00BBFDB1 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1BEF0781E702E9A00BBFDB1 /* NotificationCenter.framework */; };
+		E1BEF07C1E702E9A00BBFDB1 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BEF07B1E702E9A00BBFDB1 /* TodayViewController.swift */; };
+		E1BEF07F1E702E9A00BBFDB1 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1BEF07D1E702E9A00BBFDB1 /* MainInterface.storyboard */; };
+		E1BEF0831E702E9A00BBFDB1 /* SNUTT Today.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E1BEF0771E702E9A00BBFDB1 /* SNUTT Today.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E1BEF0891E702F2300BBFDB1 /* STTimetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F58AA31C3CED3600F6A0FC /* STTimetable.swift */; };
+		E1BEF08A1E702F3900BBFDB1 /* STLecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C61B4CCD16006FD8B3 /* STLecture.swift */; };
+		E1BEF08B1E702F3900BBFDB1 /* STSingleClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B141B9C4B0B00B8C493 /* STSingleClass.swift */; };
+		E1BEF08C1E702F3900BBFDB1 /* STTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B171B9C4B3600B8C493 /* STTime.swift */; };
+		E1BEF08D1E702F3900BBFDB1 /* STSemester.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48B981C79BDD300BC469E /* STSemester.swift */; };
+		E1BEF08E1E702F3900BBFDB1 /* STQuarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48BAF1C79C45500BC469E /* STQuarter.swift */; };
+		E1BEF08F1E702F3900BBFDB1 /* STDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48BB11C79C8E200BC469E /* STDay.swift */; };
+		E1BEF0901E702F3900BBFDB1 /* STPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C48BB31C79CAE800BC469E /* STPeriod.swift */; };
+		E1BEF0911E702F3900BBFDB1 /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0FB6A1C86D47900ACDC2F /* STColor.swift */; };
+		E1BEF0931E70380300BBFDB1 /* STUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B381A81C6C52D9007E1A15 /* STUtil.swift */; };
+		E1BEF0941E70381400BBFDB1 /* STCourseBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DF2151C3F8F920076FDDE /* STCourseBook.swift */; };
+		E1BEF0961E703EE000BBFDB1 /* STTimetableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */; };
+		E1BEF0971E703EE000BBFDB1 /* STTimetableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643501B4623BB00387EF8 /* STTimetableLayout.swift */; };
+		E1BEF0981E703EE000BBFDB1 /* STCourseCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643581B46624500387EF8 /* STCourseCellCollectionViewCell.swift */; };
+		E1BEF0991E703EE000BBFDB1 /* STSlotCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643561B46623900387EF8 /* STSlotCellCollectionViewCell.swift */; };
+		E1BEF09A1E703EE000BBFDB1 /* STColumnHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16643541B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift */; };
+		E1BEF09B1E703EE000BBFDB1 /* STCourseCellCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F58AA71C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib */; };
+		E1BEF09C1E703EE000BBFDB1 /* STColumnHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F58AA91C3CFC1C00F6A0FC /* STColumnHeaderCollectionViewCell.xib */; };
+		E1BEF09D1E703EE000BBFDB1 /* STSlotCellCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F58AAB1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib */; };
+		E1BEF09E1E703EE000BBFDB1 /* STTimetableCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E149920C1C4F6D1F00DC6756 /* STTimetableCellType.swift */; };
+		E1BEF09F1E703EE000BBFDB1 /* STRowHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A99D881CABE47000953A4B /* STRowHeaderCollectionViewCell.xib */; };
+		E1BEF0A01E703EE000BBFDB1 /* STRowHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A99D8A1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift */; };
+		E1BEF0A11E7042CC00BBFDB1 /* STDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EE1B301CCCDE20003DF250 /* STDefaults.swift */; };
 		E1C28B151B9C4B0B00B8C493 /* STSingleClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B141B9C4B0B00B8C493 /* STSingleClass.swift */; };
 		E1C28B181B9C4B3600B8C493 /* STTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C28B171B9C4B3600B8C493 /* STTime.swift */; };
 		E1C48B8A1C785F0B00BC469E /* STLeftAlignedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C48B891C785F0B00BC469E /* STLeftAlignedTableViewCell.xib */; };
@@ -136,15 +164,40 @@
 			remoteGlobalIDString = E19A3A941B453770007FCAD7;
 			remoteInfo = SNUTT;
 		};
+		E1BEF0811E702E9A00BBFDB1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E19A3A8D1B453770007FCAD7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E1BEF0761E702E9A00BBFDB1;
+			remoteInfo = "SNUTT Today";
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E1BEF0881E702E9A00BBFDB1 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E1BEF0831E702E9A00BBFDB1 /* SNUTT Today.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		055D8A5252D54AED8FAA67A1 /* Pods_SNUTT_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37A93C6F95D45D19C5E9F19A /* Pods-SNUTT.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.production.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT.production.xcconfig"; sourceTree = "<group>"; };
+		5B3CFB5C77928A059DB2CFA6 /* Pods-SNUTT Today.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.production.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.production.xcconfig"; sourceTree = "<group>"; };
+		6365ECB7CCF2B23FCF489CBE /* Pods-SNUTT Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.debug.xcconfig"; sourceTree = "<group>"; };
 		6A48F3E50D8BD4041AD725F7 /* Pods-SNUTT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.release.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT.release.xcconfig"; sourceTree = "<group>"; };
 		736548D365BF8D4D41EF1881 /* Pods_SNUTT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		77FBD91482809C5F65991C05 /* Pods-SNUTT Today.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.release.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.release.xcconfig"; sourceTree = "<group>"; };
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E10852C61B4CCD16006FD8B3 /* STLecture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLecture.swift; sourceTree = "<group>"; };
-		E10852C71B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableCollectionViewController.swift; sourceTree = "<group>"; };
+		E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableCollectionView.swift; sourceTree = "<group>"; };
 		E10852CA1B4CCF85006FD8B3 /* SNUTT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SNUTT-Bridging-Header.h"; sourceTree = "<group>"; };
 		E109CC781C3E8C050050399A /* STTimetableListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableListController.swift; sourceTree = "<group>"; };
 		E10CBEDE1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleLectureTableViewController.swift; sourceTree = "<group>"; };
@@ -224,6 +277,12 @@
 		E1BB29CC1D4896D300150DD4 /* STTimetableSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableSettingViewController.swift; sourceTree = "<group>"; };
 		E1BC7E491E54A04500AF3506 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		E1BC7E4B1E54B7EB00AF3506 /* GoogleService-Info-Production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Production.plist"; sourceTree = "<group>"; };
+		E1BEF0771E702E9A00BBFDB1 /* SNUTT Today.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "SNUTT Today.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1BEF0781E702E9A00BBFDB1 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		E1BEF07B1E702E9A00BBFDB1 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		E1BEF07E1E702E9A00BBFDB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		E1BEF0801E702E9A00BBFDB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1BEF0951E703ACA00BBFDB1 /* SNUTT Today.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SNUTT Today.entitlements"; sourceTree = "<group>"; };
 		E1C28B141B9C4B0B00B8C493 /* STSingleClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleClass.swift; sourceTree = "<group>"; };
 		E1C28B171B9C4B3600B8C493 /* STTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTime.swift; sourceTree = "<group>"; };
 		E1C48B891C785F0B00BC469E /* STLeftAlignedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STLeftAlignedTableViewCell.xib; sourceTree = "<group>"; };
@@ -286,6 +345,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1BEF0741E702E9A00BBFDB1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1BEF0791E702E9A00BBFDB1 /* NotificationCenter.framework in Frameworks */,
+				4BBA38FE9BD88EC2B95A5504 /* Pods_SNUTT_Today.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -295,6 +363,9 @@
 				EC67A2D0072E64D419116691 /* Pods-SNUTT.debug.xcconfig */,
 				6A48F3E50D8BD4041AD725F7 /* Pods-SNUTT.release.xcconfig */,
 				37A93C6F95D45D19C5E9F19A /* Pods-SNUTT.production.xcconfig */,
+				6365ECB7CCF2B23FCF489CBE /* Pods-SNUTT Today.debug.xcconfig */,
+				77FBD91482809C5F65991C05 /* Pods-SNUTT Today.release.xcconfig */,
+				5B3CFB5C77928A059DB2CFA6 /* Pods-SNUTT Today.production.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -378,6 +449,7 @@
 			children = (
 				E19A3A971B453770007FCAD7 /* SNUTT */,
 				E19A3AAD1B453770007FCAD7 /* SNUTTTests */,
+				E1BEF07A1E702E9A00BBFDB1 /* SNUTT Today */,
 				E19A3A961B453770007FCAD7 /* Products */,
 				F3F7582CA3722E59E3E117F1 /* Frameworks */,
 				9DFA6A01F66A7BEA2E1102F4 /* Pods */,
@@ -389,6 +461,7 @@
 			children = (
 				E19A3A951B453770007FCAD7 /* SNUTT.app */,
 				E19A3AAA1B453770007FCAD7 /* SNUTTTests.xctest */,
+				E1BEF0771E702E9A00BBFDB1 /* SNUTT Today.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -438,6 +511,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		E1BEF07A1E702E9A00BBFDB1 /* SNUTT Today */ = {
+			isa = PBXGroup;
+			children = (
+				E1BEF0951E703ACA00BBFDB1 /* SNUTT Today.entitlements */,
+				E1BEF07B1E702E9A00BBFDB1 /* TodayViewController.swift */,
+				E1BEF07D1E702E9A00BBFDB1 /* MainInterface.storyboard */,
+				E1BEF0801E702E9A00BBFDB1 /* Info.plist */,
+			);
+			path = "SNUTT Today";
+			sourceTree = "<group>";
+		};
 		E1C28B161B9C4B2500B8C493 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -482,7 +566,7 @@
 		E1C28B1A1B9C4B9E00B8C493 /* Timetable */ = {
 			isa = PBXGroup;
 			children = (
-				E10852C71B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift */,
+				E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */,
 				E16643501B4623BB00387EF8 /* STTimetableLayout.swift */,
 				E16643581B46624500387EF8 /* STCourseCellCollectionViewCell.swift */,
 				E16643561B46623900387EF8 /* STSlotCellCollectionViewCell.swift */,
@@ -604,6 +688,8 @@
 			children = (
 				A23D953E6E8C81FC5C2181B0 /* Pods.framework */,
 				736548D365BF8D4D41EF1881 /* Pods_SNUTT.framework */,
+				E1BEF0781E702E9A00BBFDB1 /* NotificationCenter.framework */,
+				055D8A5252D54AED8FAA67A1 /* Pods_SNUTT_Today.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -624,10 +710,12 @@
 				E14991F91C45F0E000DC6756 /* Run Script */,
 				5DF3E55534CBCE108DC5CF5E /* [CP] Embed Pods Frameworks */,
 				AE703475AD04158506090D3E /* [CP] Copy Pods Resources */,
+				E1BEF0881E702E9A00BBFDB1 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E1BEF0821E702E9A00BBFDB1 /* PBXTargetDependency */,
 			);
 			name = SNUTT;
 			productName = SNUTT;
@@ -652,6 +740,25 @@
 			productReference = E19A3AAA1B453770007FCAD7 /* SNUTTTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		E1BEF0761E702E9A00BBFDB1 /* SNUTT Today */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1BEF0871E702E9A00BBFDB1 /* Build configuration list for PBXNativeTarget "SNUTT Today" */;
+			buildPhases = (
+				6AEFD03C79D2B9865C30C7B2 /* [CP] Check Pods Manifest.lock */,
+				E1BEF0731E702E9A00BBFDB1 /* Sources */,
+				E1BEF0741E702E9A00BBFDB1 /* Frameworks */,
+				E1BEF0751E702E9A00BBFDB1 /* Resources */,
+				6E974AEBAF59D734C7FA9483 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SNUTT Today";
+			productName = "SNUTT Today";
+			productReference = E1BEF0771E702E9A00BBFDB1 /* SNUTT Today.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -659,7 +766,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0720;
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = WaffleStudio;
 				TargetAttributes = {
@@ -667,6 +774,9 @@
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 6CP294YE57;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
@@ -678,6 +788,16 @@
 					E19A3AA91B453770007FCAD7 = {
 						CreatedOnToolsVersion = 6.4;
 						TestTargetID = E19A3A941B453770007FCAD7;
+					};
+					E1BEF0761E702E9A00BBFDB1 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 6CP294YE57;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -695,6 +815,7 @@
 			targets = (
 				E19A3A941B453770007FCAD7 /* SNUTT */,
 				E19A3AA91B453770007FCAD7 /* SNUTTTests */,
+				E1BEF0761E702E9A00BBFDB1 /* SNUTT Today */,
 			);
 		};
 /* End PBXProject section */
@@ -741,6 +862,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1BEF0751E702E9A00BBFDB1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1BEF09B1E703EE000BBFDB1 /* STCourseCellCollectionViewCell.xib in Resources */,
+				E1BEF09F1E703EE000BBFDB1 /* STRowHeaderCollectionViewCell.xib in Resources */,
+				E1BEF07F1E702E9A00BBFDB1 /* MainInterface.storyboard in Resources */,
+				E1BEF09D1E703EE000BBFDB1 /* STSlotCellCollectionViewCell.xib in Resources */,
+				E1BEF09C1E703EE000BBFDB1 /* STColumnHeaderCollectionViewCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -772,6 +905,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6AEFD03C79D2B9865C30C7B2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6E974AEBAF59D734C7FA9483 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AE703475AD04158506090D3E /* [CP] Copy Pods Resources */ = {
@@ -880,7 +1043,7 @@
 				E184359D1D69A2C200BE5D58 /* STAlertView.swift in Sources */,
 				E149920D1C4F6D1F00DC6756 /* STTimetableCellType.swift in Sources */,
 				E13CBA8C1E4D492E006B2364 /* STEtcRouter.swift in Sources */,
-				E10852C91B4CCD16006FD8B3 /* STTimetableCollectionViewController.swift in Sources */,
+				E10852C91B4CCD16006FD8B3 /* STTimetableCollectionView.swift in Sources */,
 				E1526E971E51742600A58F40 /* STPrivacyPolicyViewController.swift in Sources */,
 				E1C48BB01C79C45500BC469E /* STQuarter.swift in Sources */,
 				E16643551B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift in Sources */,
@@ -939,6 +1102,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1BEF0731E702E9A00BBFDB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1BEF0981E703EE000BBFDB1 /* STCourseCellCollectionViewCell.swift in Sources */,
+				E1BEF0A01E703EE000BBFDB1 /* STRowHeaderCollectionViewCell.swift in Sources */,
+				E1BEF0991E703EE000BBFDB1 /* STSlotCellCollectionViewCell.swift in Sources */,
+				E1BEF0891E702F2300BBFDB1 /* STTimetable.swift in Sources */,
+				E1BEF08C1E702F3900BBFDB1 /* STTime.swift in Sources */,
+				E1BEF09A1E703EE000BBFDB1 /* STColumnHeaderCollectionViewCell.swift in Sources */,
+				E1BEF08B1E702F3900BBFDB1 /* STSingleClass.swift in Sources */,
+				E1BEF09E1E703EE000BBFDB1 /* STTimetableCellType.swift in Sources */,
+				E1BEF08F1E702F3900BBFDB1 /* STDay.swift in Sources */,
+				E1BEF0941E70381400BBFDB1 /* STCourseBook.swift in Sources */,
+				E1BEF0911E702F3900BBFDB1 /* STColor.swift in Sources */,
+				E1BEF08A1E702F3900BBFDB1 /* STLecture.swift in Sources */,
+				E1BEF08D1E702F3900BBFDB1 /* STSemester.swift in Sources */,
+				E1BEF0901E702F3900BBFDB1 /* STPeriod.swift in Sources */,
+				E1BEF0A11E7042CC00BBFDB1 /* STDefaults.swift in Sources */,
+				E1BEF0961E703EE000BBFDB1 /* STTimetableCollectionView.swift in Sources */,
+				E1BEF0971E703EE000BBFDB1 /* STTimetableLayout.swift in Sources */,
+				E1BEF0931E70380300BBFDB1 /* STUtil.swift in Sources */,
+				E1BEF08E1E702F3900BBFDB1 /* STQuarter.swift in Sources */,
+				E1BEF07C1E702E9A00BBFDB1 /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -946,6 +1136,11 @@
 			isa = PBXTargetDependency;
 			target = E19A3A941B453770007FCAD7 /* SNUTT */;
 			targetProxy = E19A3AAB1B453770007FCAD7 /* PBXContainerItemProxy */;
+		};
+		E1BEF0821E702E9A00BBFDB1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E1BEF0761E702E9A00BBFDB1 /* SNUTT Today */;
+			targetProxy = E1BEF0811E702E9A00BBFDB1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -964,6 +1159,14 @@
 				E19A3AA41B453770007FCAD7 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		E1BEF07D1E702E9A00BBFDB1 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E1BEF07E1E702E9A00BBFDB1 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		E1C48BA41C79C0E300BC469E /* Localizable.strings */ = {
@@ -1075,6 +1278,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC67A2D0072E64D419116691 /* Pods-SNUTT.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
@@ -1096,6 +1300,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6A48F3E50D8BD4041AD725F7 /* Pods-SNUTT.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
@@ -1195,6 +1400,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 37A93C6F95D45D19C5E9F19A /* Pods-SNUTT.production.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
@@ -1223,6 +1429,77 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SNUTT.app/SNUTT";
+			};
+			name = Production;
+		};
+		E1BEF0841E702E9A00BBFDB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6365ECB7CCF2B23FCF489CBE /* Pods-SNUTT Today.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CODE_SIGN_ENTITLEMENTS = "SNUTT Today/SNUTT Today.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6CP294YE57;
+				ENABLE_TESTABILITY = YES;
+				INFOPLIST_FILE = "SNUTT Today/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev.SNUTT-Today";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 2.3;
+			};
+			name = Debug;
+		};
+		E1BEF0851E702E9A00BBFDB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 77FBD91482809C5F65991C05 /* Pods-SNUTT Today.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CODE_SIGN_ENTITLEMENTS = "SNUTT Today/SNUTT Today.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6CP294YE57;
+				INFOPLIST_FILE = "SNUTT Today/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev.SNUTT-Today";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
+			};
+			name = Release;
+		};
+		E1BEF0861E702E9A00BBFDB1 /* Production */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B3CFB5C77928A059DB2CFA6 /* Pods-SNUTT Today.production.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CODE_SIGN_ENTITLEMENTS = "SNUTT Today/SNUTT Today.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6CP294YE57;
+				INFOPLIST_FILE = "SNUTT Today/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev.SNUTT-Today";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Production;
 		};
@@ -1255,6 +1532,16 @@
 				E19A3AB81B453770007FCAD7 /* Debug */,
 				E19A3AB91B453770007FCAD7 /* Release */,
 				E1BC7E481E549E4D00AF3506 /* Production */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1BEF0871E702E9A00BBFDB1 /* Build configuration list for PBXNativeTarget "SNUTT Today" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1BEF0841E702E9A00BBFDB1 /* Debug */,
+				E1BEF0851E702E9A00BBFDB1 /* Release */,
+				E1BEF0861E702E9A00BBFDB1 /* Production */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

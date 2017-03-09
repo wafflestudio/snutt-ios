@@ -22,8 +22,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     @IBOutlet weak var tagCollectionViewConstraint: NSLayoutConstraint!
     
     @IBOutlet var searchToolbarView: STLectureSearchToolbarView!
-    var timetableViewController : STTimetableCollectionViewController!
     
+    @IBOutlet weak var timetableView: STTimetableCollectionView!
     var FilteredList : [STLecture] = []
     var pageNum : Int = 0
     var perPage : Int = 20
@@ -65,7 +65,9 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         //Tag Button to KeyboardToolbar
         
         searchBar.inputAccessoryView = searchToolbarView
-        
+
+        timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
+        timetableView.showTemporary = true
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -146,7 +148,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         state = .Empty
         searchBar.text = ""
         FilteredList = []
-        self.timetableViewController.timetable = STTimetableManager.sharedInstance.currentTimetable
+        self.timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         tagTableView.filteredList = []
         tagCollectionView.tagList = []
         searchToolbarView.currentTagType = nil
@@ -159,11 +161,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     func reloadTimetable() {
-        self.timetableViewController.reloadTimetable()
+        self.timetableView.reloadTimetable()
     }
     
     func reloadTempLecture() {
-        self.timetableViewController.reloadTempLecture()
+        self.timetableView.reloadTempLecture()
     }
     
     override func didReceiveMemoryWarning() {
@@ -385,17 +387,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     */
 
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "STSearchTimetableView") {
-            timetableViewController = (segue.destinationViewController as! STTimetableCollectionViewController)
-            timetableViewController.timetable = STTimetableManager.sharedInstance.currentTimetable
-            timetableViewController.showTemporary = true
-        }
-    }
     
 
 }

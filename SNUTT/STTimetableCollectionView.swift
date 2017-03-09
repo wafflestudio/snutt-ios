@@ -10,7 +10,7 @@ import UIKit
 
 let reuseIdentifier = "Cell"
 
-class STTimetableCollectionViewController: UICollectionViewController, UIAlertViewDelegate {
+class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
     
     var columnList = ["월", "화", "수", "목", "금", "토", "일"]
     var columnHidden = [false, false, false, false, false, false, false] {
@@ -42,6 +42,9 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
     func getRowFromPeriod(period : Double) -> Double {
         return period - Double(rowStart)
     }
+
+    var cellLongClicked: ((STCourseCellCollectionViewCell)->())?
+    var cellTapped: ((STCourseCellCollectionViewCell)->())?
     
     var showTemporary : Bool = false
     var timetable : STTimetable? = nil
@@ -51,17 +54,18 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
     let RatioForHeader : CGFloat = 0.67
     let WidthForHeader : CGFloat = 25.0
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.collectionView?.registerNib(UINib(nibName: "STCourseCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CourseCell")
-        self.collectionView?.registerNib(UINib(nibName: "STColumnHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ColumnHeaderCell")
-        self.collectionView?.registerNib(UINib(nibName: "STRowHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RowHeaderCell")
-        self.collectionView?.registerNib(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.registerNib(UINib(nibName: "STCourseCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CourseCell")
+        self.registerNib(UINib(nibName: "STColumnHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ColumnHeaderCell")
+        self.registerNib(UINib(nibName: "STRowHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RowHeaderCell")
+        self.registerNib(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
         
         layout = STTimetableLayout()
         layout.WidthForHeader = WidthForHeader
-        self.collectionView?.collectionViewLayout = layout
-        (self.collectionView?.collectionViewLayout as! STTimetableLayout).controller = self
+        self.collectionViewLayout = layout
+        (self.collectionViewLayout as! STTimetableLayout).timetableView = self
+        self.dataSource = self
         if (shouldAutofit) {
             autofit()
         }
@@ -99,12 +103,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         }
         layout?.updateContentSize()
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     func getCellType(indexPath : NSIndexPath) -> STTimetableCellType {
         switch indexPath.section {
         case 0:
@@ -145,11 +144,11 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
             layout?.updateContentSize()
         }
         
-        self.collectionView?.reloadData()
+        self.reloadData()
     }
     
     func reloadTempLecture() {
-        collectionView?.reloadSections(NSIndexSet(index: (timetable?.lectureList.count)! + LectureSectionOffset))
+        reloadSections(NSIndexSet(index: (timetable?.lectureList.count)! + LectureSectionOffset))
     }
     
     /*
@@ -164,7 +163,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
 
     // MARK: UICollectionViewDataSource
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 1
@@ -184,7 +183,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         }
     }
     
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         if timetable == nil {
             return LectureSectionOffset
         } else if showTemporary {
@@ -194,7 +193,7 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
         }
     }
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         switch getCellType(indexPath) {
         case .HeaderColumn:
@@ -229,7 +228,8 @@ class STTimetableCollectionViewController: UICollectionViewController, UIAlertVi
             cell.layer.mask=nil
             cell.singleClass = getSingleClass(indexPath)
             cell.lecture = getLecture(indexPath)
-            cell.controller = self
+            cell.longClicked = cellLongClicked
+            cell.tapped = cellTapped
             if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
                 cell.hidden = true
             }

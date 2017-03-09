@@ -11,7 +11,7 @@ target 'SNUTT' do
   pod 'ChameleonFramework/Swift'
   pod 'ActionSheetPicker-3.0'
   pod 'Color-Picker-for-iOS', '~> 2.0'
-  pod 'FBSDKCoreKit' 
+  pod 'FBSDKCoreKit'
   pod 'FBSDKLoginKit'
   pod 'FBSDKShareKit'
   pod 'Carte'
@@ -20,6 +20,11 @@ target 'SNUTT' do
   pod 'Firebase'
   pod 'Firebase/Messaging'
   pod 'DZNEmptyDataSet'
+end
+
+target 'SNUTT Today' do
+  pod 'SwiftyJSON', '~> 2.3'
+  pod 'SwiftyUserDefaults', :git => 'https://github.com/Rajin9601/SwiftyUserDefaults.git'
 end
 
 post_install do |installer|

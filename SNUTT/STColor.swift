@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ChameleonFramework
+import UIKit
 
 struct STColor {
     static let colorList = [
@@ -27,20 +27,52 @@ struct STColor {
     var bgColor : UIColor
     
     init() {
-        fgColor = HexColor("#333333")
-        bgColor = HexColor("#E0E0E0")
+        fgColor = UIColor(hexString: "#333333")
+        bgColor = UIColor(hexString: "#E0E0E0")
     }
     
     init(fgHex : String, bgHex : String) {
-        fgColor = HexColor(fgHex)
-        bgColor = HexColor(bgHex)
+        fgColor = UIColor(hexString: fgHex)
+        bgColor = UIColor(hexString: bgHex)
     }
 }
 
 extension STColor : Equatable {}
 
 func == (lhs : STColor, rhs : STColor) -> Bool  {
-    return lhs.fgColor.hexValue() == rhs.fgColor.hexValue() &&
-        lhs.bgColor.hexValue() == rhs.bgColor.hexValue()
+    return lhs.fgColor.toHexString() == rhs.fgColor.toHexString() &&
+        lhs.bgColor.toHexString() == rhs.bgColor.toHexString()
 }
 
+extension UIColor {
+    convenience init(hexString: String) {
+        let hex = hexString.stringByTrimmingCharactersInSet(NSCharacterSet.alphanumericCharacterSet().invertedSet)
+        var int = UInt32()
+        NSScanner(string: hex).scanHexInt(&int)
+        let a, r, g, b: UInt32
+        switch hex.characters.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
+    }
+
+    func toHexString() -> String {
+        var r:CGFloat = 0
+        var g:CGFloat = 0
+        var b:CGFloat = 0
+        var a:CGFloat = 0
+
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+
+        let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
+
+        return String(format:"#%06x", rgb)
+    }
+}

@@ -10,7 +10,7 @@ import UIKit
 
 class STTimetableTabViewController: UIViewController {
     
-    var timetableViewController : STTimetableCollectionViewController!
+    @IBOutlet weak var timetableView: STTimetableCollectionView!
     var lectureListController : STMyLectureListController!
     
     enum State {
@@ -42,23 +42,23 @@ class STTimetableTabViewController: UIViewController {
         self.navigationItem.leftBarButtonItem!.target = self
         self.navigationItem.leftBarButtonItem!.action = #selector(self.switchView)
         
-        timetableViewController = STTimetableCollectionViewController(collectionViewLayout: STTimetableLayout())
-        timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
-        
         lectureListController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("MyLectureListController") as! STMyLectureListController
-        lectureListController.view.frame = containerView.frame
+        lectureListController.view.frame = self.containerView.frame
+        self.containerView.addSubview(lectureListController.view)
+        lectureListController.view.hidden = true
+
+        timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         settingChanged()
-        
-        self.addChildViewController(timetableViewController)
-        timetableViewController.view.frame = containerView.frame
-        containerView.addSubview(timetableViewController.view)
-        timetableViewController.didMoveToParentViewController(self)
+
+        timetableView.cellLongClicked = self.cellLongClicked
+        timetableView.cellTapped = self.cellTapped
         
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableChanged, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableSwitched, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "settingChanged", event: STEvent.SettingChanged, object: nil)
+
     }
-    
+
     deinit {
         STEventCenter.sharedInstance.removeObserver(self)
     }
@@ -73,15 +73,15 @@ class STTimetableTabViewController: UIViewController {
         titleView.text = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
         titleView.sizeToFit();
         
-        timetableViewController?.timetable = STTimetableManager.sharedInstance.currentTimetable
-        timetableViewController?.reloadTimetable()
+        timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
+        timetableView.reloadTimetable()
     }
     
     func settingChanged() {
         if STDefaults[.autoFit] {
-            timetableViewController?.shouldAutofit = true
+            timetableView.shouldAutofit = true
         } else {
-            timetableViewController?.shouldAutofit = false
+            timetableView.shouldAutofit = false
             let dayRange = STDefaults[.dayRange]
             var columnHidden : [Bool] = []
             for i in 0..<6 {
@@ -91,30 +91,29 @@ class STTimetableTabViewController: UIViewController {
                     columnHidden.append(true)
                 }
             }
-            timetableViewController?.columnHidden = columnHidden
-            timetableViewController?.rowStart = Int(STDefaults[.timeRange][0])
-            timetableViewController?.rowEnd = Int(STDefaults[.timeRange][1])
+            timetableView.columnHidden = columnHidden
+            timetableView.rowStart = Int(STDefaults[.timeRange][0])
+            timetableView.rowEnd = Int(STDefaults[.timeRange][1])
         }
-        timetableViewController?.reloadTimetable()
+        timetableView.reloadTimetable()
     }
     
     func switchView() {
+
         if (isInAnimation) {
             return
         }
         isInAnimation = true
-        var oldVc, newVc : UIViewController!
+        var oldView, newView : UIView!
         switch state {
         case .Timetable:
-            oldVc = timetableViewController
-            newVc = lectureListController
+            oldView = timetableView
+            newView = lectureListController.view
         case .LectureList:
-            oldVc = lectureListController
-            newVc = timetableViewController
+            oldView = lectureListController.view
+            newView = timetableView
         }
-        oldVc.willMoveToParentViewController(nil)
-        self.addChildViewController(newVc)
-        
+
         UIView.animateWithDuration(1.0, animations: {
             switch self.state {
             case .LectureList:
@@ -123,15 +122,12 @@ class STTimetableTabViewController: UIViewController {
                 self.navigationItem.leftBarButtonItem!.image = UIImage(named:"navigationbaritem_timetable")
             }
         })
-        
-        self.transitionFromViewController(oldVc, toViewController: newVc, duration: 1.0, options: .TransitionFlipFromRight, animations: {
-                self.containerView.addSubview(newVc.view)
-                newVc.view.frame = self.containerView.frame
-                oldVc.view.removeFromSuperview()
+
+        UIView.transitionWithView(containerView, duration: 1.0, options: .TransitionFlipFromRight, animations: {
+                oldView.hidden = true
+                newView.hidden = false
             }, completion: { finished in
                 self.state = (self.state == .Timetable) ? .LectureList : .Timetable
-                oldVc.removeFromParentViewController()
-                newVc.didMoveToParentViewController(self)
                 self.isInAnimation = false
         })
     }
@@ -158,5 +154,47 @@ class STTimetableTabViewController: UIViewController {
                 }
             }))
         })
+    }
+
+    func cellTapped(cell: STCourseCellCollectionViewCell) {
+        let detailController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("LectureDetailTableViewController") as! STLectureDetailTableViewController
+        detailController.lecture = cell.lecture
+        self.navigationController?.pushViewController(detailController, animated: true)
+
+    }
+
+    func cellLongClicked (cell : STCourseCellCollectionViewCell) {
+        let oldColor = cell.lecture.color
+        guard let collectionView = timetableView else {
+            return
+        }
+        guard let indexPath = timetableView.indexPathForCell(cell) else {
+            return
+        }
+        let num = collectionView.numberOfItemsInSection(indexPath.section)
+        let cellList : [STCourseCellCollectionViewCell?] = (0..<num).map { i in
+            let tmpIndexPath = NSIndexPath(forRow: i, inSection: indexPath.section)
+            return collectionView.cellForItemAtIndexPath(tmpIndexPath) as? STCourseCellCollectionViewCell
+        }
+        STColorActionSheetPicker.showWithColor(cell.lecture.color, doneBlock: { selectedColor in
+            var newLecture = cell.lecture
+            newLecture.color = selectedColor
+            var oldLecture = cell.lecture
+            oldLecture.color = oldColor
+            STTimetableManager.sharedInstance.updateLecture(
+                oldLecture, newLecture: newLecture, failure: {
+                    cellList.forEach { cell in
+                        cell?.lecture.color = oldColor
+                    }
+            })
+            }, cancelBlock: {
+                cellList.forEach { cell in
+                    cell?.lecture.color = oldColor
+                }
+            }, selectedBlock: { color in
+                cellList.forEach { cell in
+                    cell?.lecture.color = color
+                }
+            }, origin: self)
     }
 }
