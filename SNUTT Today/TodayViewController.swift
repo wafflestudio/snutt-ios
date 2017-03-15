@@ -17,14 +17,25 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     @IBOutlet weak var timetableView: STTimetableCollectionView!
     var maxHeight : CGFloat =  400.0
 
+    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
+
     let sharedDefaults = NSUserDefaults(suiteName: "group.wafflestudio.TodayExtensionSharingDefaults")
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.extensionContext?.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.Expanded
+        guard let extensionContext = self.extensionContext else {
+            return
+        }
+        descriptionLabel.text = "SNUTT 시간표를 보기 위해서는 위의 더보기를 눌러주세요."
+
         updateTimetable()
         updateSetting()
+
+        extensionContext.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.Expanded
+        let displayMode = extensionContext.widgetActiveDisplayMode
+        let maxSize = extensionContext.widgetMaximumSizeForDisplayMode(displayMode)
+        self.widgetActiveDisplayModeDidChange(displayMode, withMaximumSize: maxSize)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(userDefaultsDidChange), name: NSUserDefaultsDidChangeNotification, object: nil)
     }
@@ -74,12 +85,14 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             timetableView.frame.size = maxSize
             reloadData()
             timetableView.hidden = true
+            descriptionLabel.hidden = false
         }
         else {
             self.preferredContentSize = CGSize(width: 0, height: maxHeight)
             timetableView.frame.size = CGSize(width: 0, height: maxHeight)
             reloadData()
             timetableView.hidden = false
+            descriptionLabel.hidden = true
         }
     }
 
