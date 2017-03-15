@@ -66,9 +66,31 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         self.loginContainerView.layoutIfNeeded()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-        
+    }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         animateBgScrollView()
-        // Do any additional setup after loading the view.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
+    }
+
+    func applicationDidEnterBackground() {
+        self.bgImageView.superview?.layer.removeAllAnimations()
+    }
+
+    func applicationWillEnterForeground() {
+        animateBgScrollView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -294,9 +316,12 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func animateBgScrollView() {
+        //self.bgImageView.superview!.layoutIfNeeded()
+
         UIView.animateWithDuration(80.0, delay: 0.0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: {
-            self.bgLeftLayoutConstraint.priority = 250
-            self.bgRightLayoutConstraint.priority = 750
+            let priority = self.bgLeftLayoutConstraint.priority
+            self.bgLeftLayoutConstraint.priority = self.bgRightLayoutConstraint.priority
+            self.bgRightLayoutConstraint.priority = priority
             self.bgImageView.superview!.layoutIfNeeded()
             }, completion: nil)
     }
