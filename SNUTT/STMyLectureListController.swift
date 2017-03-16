@@ -10,7 +10,9 @@ import UIKit
 import DZNEmptyDataSet
 
 class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
-    
+
+    weak var timetableTabViewController : STTimetableTabViewController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -94,8 +96,9 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         } else {
             let detailController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("LectureDetailTableViewController") as! STLectureDetailTableViewController
             detailController.lecture = STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row]
-            self.navigationController?.pushViewController(detailController, animated: true)
+            timetableTabViewController?.navigationController?.pushViewController(detailController, animated: true)
         }
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

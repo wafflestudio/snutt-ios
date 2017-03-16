@@ -43,6 +43,7 @@ class STTimetableTabViewController: UIViewController {
         self.navigationItem.leftBarButtonItem!.action = #selector(self.switchView)
         
         lectureListController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("MyLectureListController") as! STMyLectureListController
+        lectureListController.timetableTabViewController = self
         lectureListController.view.frame = self.containerView.frame
         self.containerView.addSubview(lectureListController.view)
         lectureListController.view.hidden = true
