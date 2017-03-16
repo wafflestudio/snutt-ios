@@ -1450,7 +1450,7 @@
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = "SNUTT Today/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1473,7 +1473,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = "SNUTT Today/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1496,7 +1496,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = "SNUTT Today/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
