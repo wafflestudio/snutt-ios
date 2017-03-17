@@ -29,7 +29,7 @@ class STColorPickTableViewCell: STLectureDetailTableViewCell {
         self.selectionStyle = .None
         self.addSubview(bgColorView)
         self.addSubview(fgColorView)
-        color = STColor.colorList[0]
+        color = STColor()
         // Initialization code
     }
 

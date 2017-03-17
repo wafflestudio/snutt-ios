@@ -15,13 +15,15 @@ enum STEtcRouter : STRouter {
     static let shouldAddToken: Bool = false
     
     case Feedback(email: String?, message: String)
-    
+    case GetColor
     //MARK: STRouter
     
     var method: Alamofire.Method {
         switch self {
         case .Feedback:
             return .POST
+        case .GetColor:
+            return .GET
         }
     }
     
@@ -29,6 +31,8 @@ enum STEtcRouter : STRouter {
         switch self {
         case .Feedback:
             return "/feedback"
+        case .GetColor:
+            return "/colors"
         }
     }
     
@@ -40,6 +44,8 @@ enum STEtcRouter : STRouter {
                 ret["email"] = emailStr
             }
             return ret
+        case .GetColor:
+            return nil
         }
     }
     

@@ -356,7 +356,18 @@ class STNetworking {
                 done?()
             }, failure: nil)
     }
-    
+
+    static func getColors(done: (([STColor], [String])->())?, failure: (()->())?) {
+        let request = Alamofire.request(STEtcRouter.GetColor)
+        request.responseWithDone({ statusCode, json in
+            let colors = json["colors"].arrayValue.map { colorJson in STColor(json: colorJson) }
+            let names = json["names"].arrayValue.map { it in it.stringValue }
+            done?(colors, names)
+            }, failure: { _ in
+                failure?()
+        }, showNetworkAlert: false)
+    }
+
     //MARK: AppVersion
     
     static func checkLatestAppVersion(done:(String)->()) -> Void {

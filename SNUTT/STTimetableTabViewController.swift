@@ -53,7 +53,9 @@ class STTimetableTabViewController: UIViewController {
 
         timetableView.cellLongClicked = self.cellLongClicked
         timetableView.cellTapped = self.cellTapped
-        
+
+        let _ = STColorManager.sharedInstance
+
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableChanged, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableSwitched, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "settingChanged", event: STEvent.SettingChanged, object: nil)

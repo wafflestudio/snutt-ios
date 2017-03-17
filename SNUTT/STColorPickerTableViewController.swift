@@ -10,27 +10,21 @@ import UIKit
 import ChameleonFramework
 
 class STColorPickerTableViewController: UITableViewController {
-    let customColorIndex = STColor.colorList.count
+
+    var customColorIndex = 1
     var color : STColor!
-    var selectedColorIndex = STColor.colorList.count
+    var selectedColorIndex = 1
     var doneBlock : (STColor) -> () = { _ in }
+    var colorList : STColorList!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        for i in 0..<STColor.colorList.count {
-            if STColor.colorList[i] == self.color {
-                selectedColorIndex = i
-                break
-            }
-        }
-        
-        self.tableView.selectRowAtIndexPath(NSIndexPath(forRow: selectedColorIndex, inSection: 0), animated: false, scrollPosition: .None)
+        colorListUpdated()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(colorListUpdated), event: STEvent.ColorListUpdated, object: nil)
+    }
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    deinit {
+        STEventCenter.sharedInstance.removeObserver(self)
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
@@ -42,6 +36,21 @@ class STColorPickerTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    func colorListUpdated() {
+        colorList = STColorManager.sharedInstance.colorList
+        customColorIndex = colorList.colorList.count
+        selectedColorIndex = customColorIndex
+
+        for i in 0..<colorList.colorList.count {
+            if colorList.colorList[i] == self.color {
+                selectedColorIndex = i
+                break
+            }
+        }
+        tableView.reloadData()
+        self.tableView.selectRowAtIndexPath(NSIndexPath(forRow: selectedColorIndex, inSection: 0), animated: false, scrollPosition: .None)
     }
 
     // MARK: - Table view data source
@@ -57,7 +66,7 @@ class STColorPickerTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return STColor.colorList.count + 1
+            return colorList.colorList.count + 1
         case 1:
             return 2
         default:
@@ -69,12 +78,12 @@ class STColorPickerTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("STColorTableViewCell", forIndexPath: indexPath) as! STColorTableViewCell
-            if indexPath.row == STColor.colorList.count {
+            if indexPath.row == colorList.colorList.count {
                 cell.color = STColor()
                 cell.colorLabel.text = "직접 지정하기"
             } else {
-                cell.color = STColor.colorList[indexPath.row]
-                cell.colorLabel.text = STColor.colorNameList[indexPath.row]
+                cell.color = colorList.colorList[indexPath.row]
+                cell.colorLabel.text = colorList.nameList[indexPath.row]
             }
             return cell
         } else {
@@ -104,7 +113,7 @@ class STColorPickerTableViewController: UITableViewController {
                     self.tableView.deleteSections(NSIndexSet(index: 1), withRowAnimation: .Top)
                 }
                 if selectedColorIndex != customColorIndex {
-                    color = STColor.colorList[indexPath.row]
+                    color = colorList.colorList[indexPath.row]
                 } else {
                     color = STColor()
                     self.tableView.insertSections(NSIndexSet(index: 1), withRowAnimation: .Top)

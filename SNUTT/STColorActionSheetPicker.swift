@@ -16,19 +16,23 @@ class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
     var cancelBlock : (() -> Void)?
     var selectedBlock: ((STColor)->Void)?
     var initialColor : STColor
-    
+
+    var colorList = STColorManager.sharedInstance.colorList.colorList
+    var nameList = STColorManager.sharedInstance.colorList.nameList
+
     init(initialColor : STColor, doneBlock: ((STColor) -> Void)?, cancelBlock: (() -> Void)?, selectedBlock: ((STColor)->Void)?) {
         self.doneBlock = doneBlock
         self.cancelBlock = cancelBlock
         self.selectedBlock = selectedBlock
         self.initialColor = initialColor
+        super.init()
     }
-    
+
     func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         switch component {
         case 0:
-            let attribute = [NSForegroundColorAttributeName: STColor.colorList[row].fgColor.lightenByPercentage(0.4)]
-            return NSAttributedString(string: STColor.colorNameList[row], attributes: attribute)
+            let attribute = [NSForegroundColorAttributeName: colorList[row].fgColor.lightenByPercentage(0.4)]
+            return NSAttributedString(string: nameList[row], attributes: attribute)
         default: return nil
         }
     }
@@ -52,9 +56,9 @@ class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
         actionSheetPicker.toolbar.tintColor = UIColor.whiteColor()
         actionSheetPicker.toolbar.barTintColor = UIColor.whiteColor()
         
-        guard let index = STColor.colorList.indexOf(initialColor) else {
+        guard let index = colorList.indexOf(initialColor) else {
             pickerView.selectRow(0, inComponent: 0, animated: false)
-            selectedBlock?(STColor.colorList[0])
+            selectedBlock?(colorList[0])
             return
         }
         pickerView.selectRow(index, inComponent: 0, animated: false)
@@ -62,7 +66,7 @@ class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
 
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch component {
-        case 0: return STColor.colorNameList.count
+        case 0: return nameList.count
         default: return 0
         }
     }
@@ -72,13 +76,13 @@ class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
     }
 
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedBlock?(STColor.colorList[row])
+        selectedBlock?(colorList[row])
     }
 
     func actionSheetPickerDidSucceed(actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {
         let pickerView = actionSheetPicker.pickerView as! UIPickerView
         let index = pickerView.selectedRowInComponent(0)
-        doneBlock?(STColor.colorList[index])
+        doneBlock?(colorList[index])
     }
 
     func actionSheetPickerDidCancel(actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {

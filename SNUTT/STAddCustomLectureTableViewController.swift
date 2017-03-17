@@ -13,13 +13,13 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
     override func viewDidLoad() {
         self.custom = true
         if let timetable = STTimetableManager.sharedInstance.currentTimetable {
-            var colorList = STColor.colorList;
+            var colorList = STColorManager.sharedInstance.colorList.colorList
             for lecture in timetable.lectureList {
                 colorList = colorList.filter({$0 != lecture.color})
             }
-            currentLecture.color = colorList.first ?? STColor.colorList[0]
+            currentLecture.color = colorList.first ?? STColor()
         } else {
-            currentLecture.color = STColor.colorList[0]
+            currentLecture.color = STColor()
         }
         
         

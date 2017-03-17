@@ -19,10 +19,15 @@ extension DefaultsKeys {
     static let isFCMRegistered = DefaultsKey<Bool>("isFCMRegistered", false)
     static let shouldShowBadge = DefaultsKey<Bool>("shouldShowBadge", false)
     static let currentTimetable = DefaultsKey<NSDictionary?>("currentTimetable")
+    static let colorList = DefaultsKey<STColorList?>("colorList")
 }
 
 extension NSUserDefaults {
     subscript(key: DefaultsKey<NSDictionary?>) -> NSDictionary? {
+        get { return unarchive(key) }
+        set { archive(key, newValue) }
+    }
+    subscript(key: DefaultsKey<STColorList?>) -> STColorList? {
         get { return unarchive(key) }
         set { archive(key, newValue) }
     }
