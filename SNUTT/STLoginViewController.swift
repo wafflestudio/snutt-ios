@@ -233,13 +233,11 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
                 STAlertView.showAlert(title: "회원가입 실패", message: message)
                 return
             }
-            STNetworking.registerLocal(id, password: password, done: { _ in
-                STNetworking.loginLocal(id, password: password, done: { token in
-                    STDefaults[.token] = token
-                    self.openMainController()
-                }, failure: { _ in
-                    STAlertView.showAlert(title: "회원가입 실패", message: "회원가입은 성공하였으나, 로그인에 실패하였습니다. 로그인을 재시도 해주세요.")
-                })
+            let emailText = emailTextField.text
+            let email = emailText == "" ? nil : emailText
+            STNetworking.registerLocal(id, password: password, email: email, done: { token in
+                STDefaults[.token] = token
+                self.openMainController()
             }, failure: { _ in
                 //STAlertView.showAlert(title: "회원가입 실패", message: "회원가입에 실패하였습니다.")
             })

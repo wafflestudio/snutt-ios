@@ -28,15 +28,10 @@ class STNetworking {
         })
     }
     
-    static func registerLocal(id: String, password: String, done: ()->(), failure: ()->()) {
-        let request = Alamofire.request(STAuthRouter.LocalRegister(id: id, password: password))
-        
-        request.responseWithDone({ statusCode, json in
-            if (statusCode == 200) {
-                done()
-            } else {
-                failure()
-            }
+    static func registerLocal(id: String, password: String, email: String?, done: (String)->(), failure: ()->()) {
+        let request = Alamofire.request(STAuthRouter.LocalRegister(id: id, password: password, email: email))
+        request.responseWithDone({ _, json in
+            done(json["token"].stringValue)
         }, failure: { err in
             failure()
         })
