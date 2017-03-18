@@ -60,11 +60,13 @@ class STLectureSearchToolbarView: UIView, UICollectionViewDelegate, UICollection
         if editingTag {
             sharpButton.setImage(nil, forState: .Normal)
             sharpButton.setTitle("취소", forState: .Normal)
+            sharpButton.layoutIfNeeded()
             emptyTimeButton.superview?.hidden = true
             tagFilterCollectionView.superview?.hidden = false
         } else {
             sharpButton.setImage(UIImage(named: "icon_tag_black"), forState: .Normal)
             sharpButton.setTitle(nil, forState: .Normal)
+            sharpButton.layoutIfNeeded()
             emptyTimeButton.superview?.hidden = false
             tagFilterCollectionView.superview?.hidden = true
         }
