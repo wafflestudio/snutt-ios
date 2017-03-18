@@ -20,20 +20,24 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     weak var tableView : UITableView!
     
-    var lecture : STLecture! {
+    var lecture : STLecture? {
         didSet {
-            titleLabel.text = lecture.title
-            descriptionLabel.text = "(\(lecture.instructor) / \(lecture.credit)학점)"
-            tagLabel.text = lecture.tagDescription
-            timeLabel.text = lecture.timeDescription
-            placeLabel.text = lecture.placeDescription
+            titleLabel.text = lecture?.title
+            descriptionLabel.text = "(\(lecture!.instructor) / \(lecture!.credit)학점)"
+            if self.selected {
+                tagLabel.text = lecture!.remark == "" ? lecture!.tagDescription : lecture!.remark
+            } else {
+                tagLabel.text = lecture!.tagDescription
+            }
+            timeLabel.text = lecture!.timeDescription
+            placeLabel.text = lecture!.placeDescription
         }
     }
     
     @IBAction func addButtonClicked(sender: AnyObject) {
         STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
         tableView.deselectRowAtIndexPath(tableView.indexPathForCell(self)!, animated: true)
-        STTimetableManager.sharedInstance.addLecture(lecture, object: self)
+        STTimetableManager.sharedInstance.addLecture(lecture!, object: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,9 +56,11 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         if selected {
             self.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
             addButton.hidden = false
+            tagLabel.text = lecture!.remark == "" ? lecture!.tagDescription : lecture!.remark
         } else {
             self.backgroundColor = UIColor.clearColor()
             addButton.hidden = true
+            tagLabel.text = lecture?.tagDescription
         }
         
         // Configure the view for the selected state

@@ -22,6 +22,7 @@ class STSingleLectureTableViewController: UITableViewController {
         case DoubleLabeled(firstTitle: String, secondTitle: String)
         case Padding
         case SingleClass
+        case TextView(title: String)
         case Button(title: String, color : UIColor)
         
         var identifier : String {
@@ -32,6 +33,7 @@ class STSingleLectureTableViewController: UITableViewController {
             case .DoubleLabeled: return "DoubleLabeledCell"
             case .Padding: return "PaddingCell"
             case .SingleClass: return "SingleClassCell"
+            case .TextView: return "TextViewCell"
             case .Button: return "ButtonCell"
             }
         }
@@ -46,13 +48,14 @@ class STSingleLectureTableViewController: UITableViewController {
         case AcademicYearAndCredit
         case ClassificationAndCategory
         case CourseNumAndLectureNum
+        case Remark
         case SingleClass
         case Padding
         case AddButton(section : Int)
         case ResetButton
         case SyllabusButton
         case DeleteButton
-        
+
         var cellViewType : CellViewType {
             switch self {
             case Title: return .LeftAligned(title: "lecture_title".localizedString())
@@ -66,6 +69,8 @@ class STSingleLectureTableViewController: UITableViewController {
                 return .DoubleLabeled(firstTitle: "classification".localizedString(), secondTitle: "category".localizedString())
             case .CourseNumAndLectureNum:
                 return .DoubleLabeled(firstTitle: "course_number".localizedString(), secondTitle: "lecture_number".localizedString())
+            case .Remark:
+                return .TextView(title: "비고")
             case .SingleClass:
                 return .SingleClass
             case .Padding:
@@ -94,7 +99,8 @@ class STSingleLectureTableViewController: UITableViewController {
         case (1,2): return .AcademicYearAndCredit
         case (1,3): return .ClassificationAndCategory
         case (1,4): return .CourseNumAndLectureNum
-        case (1,5): return .Padding
+        case (1,5): return .Remark
+        case (1,6): return .Padding
             
         case (2,_): return .SingleClass
         default: return .Padding // Never Reach
@@ -122,8 +128,12 @@ class STSingleLectureTableViewController: UITableViewController {
                               forCellReuseIdentifier: CellViewType.SingleClass.identifier)
         tableView.registerNib(UINib(nibName: "STSingleLectureButtonCell", bundle: NSBundle.mainBundle()),
                               forCellReuseIdentifier: CellViewType.Button(title: "", color: UIColor.blackColor()).identifier)
+        tableView.registerNib(UINib(nibName: "STTextViewTableViewCell", bundle: NSBundle.mainBundle()),
+                              forCellReuseIdentifier: CellViewType.TextView(title: "").identifier)
         tableView.registerClass(STPaddingTableViewCell.self, forCellReuseIdentifier: CellViewType.Padding.identifier)
-        
+
+        textviewCell = UINib(nibName: "STTextViewTableViewCell", bundle: NSBundle.mainBundle()).instantiateWithOwner(self, options: nil)[0] as! STTextViewTableViewCell
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(STSingleLectureTableViewController.dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tapGesture)
@@ -155,7 +165,7 @@ class STSingleLectureTableViewController: UITableViewController {
         } else {
             switch section {
             case 0: return 3
-            case 1: return 6
+            case 1: return 7
             case 2: return currentLecture.classList.count
             default: return 0
             }
@@ -209,6 +219,9 @@ class STSingleLectureTableViewController: UITableViewController {
         case .Title:
             value1 = currentLecture.title
             doneBlock = { value in self.currentLecture.title = value }
+        case .Remark:
+            value1 = currentLecture.remark ?? ""
+            doneBlock = { value in self.currentLecture.remark = value }
         case let .AddButton(section):
             actionBlock = { ()->() in
                 self.currentLecture.classList.append(STSingleClass(time: STTime(day: 0, startPeriod: 0.0, duration: 1.0), place: ""))
@@ -306,6 +319,13 @@ class STSingleLectureTableViewController: UITableViewController {
             cell.firstTextField.text = value1
             cell.secondTextField.text = value2
             return cell
+        case let .TextView(title):
+            let cell = tmpCell as! STTextViewTableViewCell
+            cell.doneBlock = doneBlock
+            cell.textView.text = value1 == "" ? "(없음)" : value1
+            cell.titleLabel.text = title
+            cell.tableView = self.tableView
+            return cell
         case let .Button(title, color):
             let cell = tmpCell as! STSingleLectureButtonCell
             cell.buttonAction = actionBlock
@@ -315,14 +335,23 @@ class STSingleLectureTableViewController: UITableViewController {
             return cell
         }
     }
+
+    var textviewCell : STTextViewTableViewCell!
+
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        switch cellTypeAtIndexPath(indexPath).cellViewType {
+        let cellType = cellTypeAtIndexPath(indexPath)
+        if case CellType.Remark = cellType {
+            textviewCell.textView.text = currentLecture.remark == "" ? "(없음)" : currentLecture.remark
+            return textviewCell.textView.sizeThatFits(CGSize(width: textviewCell.textView.frame.width, height: 300)).height + 30
+        }
+        switch cellType.cellViewType {
         case .LeftAligned: return 36
         case .ColorPick: return 36
         case .DoubleLabeled, .SingleLabeled: return 42
         case .Padding: return 5
         case .SingleClass: return 42
         case .Button: return 36
+        case .TextView: return 75
         }
     }
     

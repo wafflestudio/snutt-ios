@@ -57,13 +57,27 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         case (0, 1): return .Instructor
         case (0, 2): return .Color
         case (0, 3): return .Credit
-            
-        case (1, 0): return .Padding
-        case (1, 1): return .Department
-        case (1, 2): return .AcademicYearAndCredit
-        case (1, 3): return .ClassificationAndCategory
-        case (1, 4): return .CourseNumAndLectureNum
-        case (1, 5): return .Padding
+
+        case (1, _):
+            if custom {
+                switch indexPath.row {
+                case 0: return .Padding
+                case 1: return .Remark
+                case 2: return .Padding
+                default: return .Padding
+                }
+            } else {
+                switch indexPath.row {
+                case 0: return .Padding
+                case 1: return .Department
+                case 2: return .AcademicYearAndCredit
+                case 3: return .ClassificationAndCategory
+                case 4: return .CourseNumAndLectureNum
+                case 5: return .Remark
+                case 6: return .Padding
+                default: return .Padding
+                }
+            }
         
         case (2, currentLecture.classList.count):
             return .AddButton(section: 2)
@@ -103,7 +117,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         if custom {
             switch section {
             case 0: return 4
-            case 1: return 0
+            case 1: return 3
             case 2: return currentLecture.classList.count + ( editable ? 1 : 0)
             case 3: return editable ? 0 : 1
             default: return 0 // Never Reached

@@ -43,22 +43,27 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         case (0,1): return .Instructor
         case (0,2): return .Color
         case (0,3): return .Credit
+
+        case (1,0): return .Padding
+        case (1,1): return .Remark
+        case (1,2): return .Padding
             
-        case (1, currentLecture.classList.count): return .AddButton(section: 1)
-        case (1, _): return .SingleClass
+        case (2, currentLecture.classList.count): return .AddButton(section: 1)
+        case (2, _): return .SingleClass
 
         default: return .Padding // Never Reach
         }
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 4
-        case 1: return currentLecture.classList.count + 1
+        case 1: return 3
+        case 2: return currentLecture.classList.count + 1
         default: return 0 // Never Reached
         }
     }
