@@ -1202,6 +1202,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_GROUP_ID = group.wafflestudio.TodayExtensionSharingDefaultsDev;
 				BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev";
 				BUNDLE_NAME = "SNUTT-Debug";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1253,6 +1254,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_GROUP_ID = group.wafflestudio.TodayExtensionSharingDefaultsDev;
 				BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev";
 				BUNDLE_NAME = "SNUTT-Staging";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1376,6 +1378,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_GROUP_ID = group.wafflestudio.TodayExtensionSharingDefaults;
 				BUNDLE_IDENTIFIER = com.wafflestudio.snutt;
 				BUNDLE_NAME = SNUTT;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1516,7 +1519,7 @@
 				INFOPLIST_FILE = "SNUTT Today/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev.SNUTT-Today";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

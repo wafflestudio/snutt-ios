@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import SwiftyUserDefaults
 
 extension DefaultsKeys {
@@ -33,4 +34,4 @@ extension NSUserDefaults {
     }
 }
 
-public let STDefaults = NSUserDefaults(suiteName: "group.wafflestudio.TodayExtensionSharingDefaults")!
+public let STDefaults = NSUserDefaults(suiteName: NSBundle.mainBundle().objectForInfoDictionaryKey("AppGroupID") as! String)!
