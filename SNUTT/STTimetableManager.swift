@@ -121,10 +121,10 @@ class STTimetableManager : NSObject {
             self.currentTimetable?.lectureList = newTimetable.lectureList
             STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
             }, failure: {
-                self.currentTimetable!.updateLectureAtIndex(index, lecture: oldLecture)
+                self.currentTimetable?.updateLectureAtIndex(index, lecture: oldLecture)
+                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
                 failure()
         })
-        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
     }
     
     func deleteLectureAtIndex(index: Int, object : AnyObject? ) {
@@ -133,9 +133,14 @@ class STTimetableManager : NSObject {
         }
         let lecture = currentTimetable!.lectureList[index]
         currentTimetable?.deleteLectureAtIndex(index)
-        // TODO: case when it fails
-        STNetworking.deleteLecture(currentTimetable!, lecture: lecture, done: {}, failure: {})
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
+        STNetworking.deleteLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
+            self.currentTimetable?.lectureList = newTimetable.lectureList
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+        }, failure: {
+            self.currentTimetable?.addLecture(lecture)
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+        })
     }
     
     

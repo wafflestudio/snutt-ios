@@ -18,11 +18,7 @@ class STNetworking {
         let request = Alamofire.request(STAuthRouter.LocalLogin(id: id, password: password))
         
         request.responseWithDone({ statusCode, json in
-            if statusCode == 200 {
-                done(json["token"].stringValue)
-            } else {
-                failure()
-            }
+            done(json["token"].stringValue)
         }, failure: { err in
             failure()
         })
@@ -40,11 +36,7 @@ class STNetworking {
     static func registerFB(id: String, token: String, done: (String)->(), failure: ()->()) {
         let request = Alamofire.request(STAuthRouter.FBRegister(id: id, token: token))
         request.responseWithDone({ statusCode, json in
-            if (statusCode == 200) {
-                done(json["token"].stringValue)
-            } else {
-                failure()
-            }
+            done(json["token"].stringValue)
         }, failure: { err in
             failure()
         })
@@ -94,10 +86,6 @@ class STNetworking {
     
     static func getTimetable(id: String, done: (STTimetable?)->(), failure: ()->()) {
         Alamofire.request(STTimetableRouter.GetTimetable(id: id)).responseWithDone({ statusCode, json in
-            if statusCode == 404 {
-                done(nil)
-                return
-            }
             let timetable = STTimetable(json: json)
             done(timetable)
         }, failure: { _ in
@@ -108,11 +96,7 @@ class STNetworking {
     static func getRecentTimetable(done: (STTimetable?)->(), failure: ()->()) {
         Alamofire.request(STTimetableRouter.GetRecentTimetable())
             .responseWithDone({ statusCode, json in
-                if statusCode == 404 {
-                    done(nil)
-                } else {
-                    done(STTimetable(json: json))
-                }
+                done(STTimetable(json: json))
             }, failure: { _ in
                 failure()
             })
@@ -148,14 +132,10 @@ class STNetworking {
         )
     }
     
-    static func deleteLecture(timetable: STTimetable, lecture: STLecture, done: ()->(), failure: ()->()) {
+    static func deleteLecture(timetable: STTimetable, lecture: STLecture, done: (STTimetable)->(), failure: ()->()) {
         let request = Alamofire.request(STLectureRouter.DeleteLecture(timetableId: timetable.id!, lecture: lecture))
         request.responseWithDone({ statusCode, json in
-            if json["success"].boolValue {
-                done()
-            } else {
-                failure()
-            }
+            done(STTimetable(json: json))
             }, failure: { _ in
                 failure()
         })
@@ -259,7 +239,16 @@ class STNetworking {
     }
     
     //MARK: UserRouter
-    
+
+    static func getUser(done:((STUser)->())?, failure: (()->())?) {
+        let request = Alamofire.request(STUserRouter.GetUser);
+        request.responseWithDone({ statusCode, json in
+            done?(STUser(json:json))
+            }, failure: { err in
+                failure?()
+        })
+    }
+
     static func detachFB(done:()->(), failure: ()->()) {
         let request = Alamofire.request(STUserRouter.DetachFB)
         request.responseWithDone({ _, json in
@@ -325,9 +314,7 @@ class STNetworking {
         let request = Alamofire.request(STUserRouter.DeleteDevice(id: deviceId))
         request.responseWithDone({ statusCode, json in
             done()
-            }, failure: { _ in
-                //TODO: Error Handling with deleteDevice
-            }, showNetworkAlert: true
+            }, failure: nil, showNetworkAlert: true
         )
     }
     
@@ -340,12 +327,6 @@ class STNetworking {
             STUser.getUser()
             done()
         }, failure: nil)
-    }
-    
-    static func showNetworkError() {
-        let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.Default, handler: nil))
-        UIApplication.sharedApplication().keyWindow!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
     }
     
     //MARK: STEtcRouter
@@ -387,5 +368,14 @@ class STNetworking {
             }
         }
     }
-    
+
+    //MARK: Others
+
+
+    static func showNetworkError() {
+        let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.Default, handler: nil))
+        UIApplication.sharedApplication().keyWindow!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+    }
+
 }

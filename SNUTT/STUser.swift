@@ -38,18 +38,13 @@ class STUser {
     }
     
     static func getUser() {
-        // TODO: request to the networking
-        let request = Alamofire.request(STUserRouter.GetUser);
-        request.responseWithDone({ statusCode, json in
-            STUser.currentUser = STUser(json: json)
-            STEventCenter.sharedInstance.postNotification(event: STEvent.UserUpdated, object: nil);
-            }, failure: { err in
-                //FIXME : What to do?
-        })
+        STNetworking.getUser({ user in
+            STUser.currentUser = user
+            STEventCenter.sharedInstance.postNotification(event: STEvent.UserUpdated, object: nil)
+            }, failure: nil)
     }
     
     static func logOut() {
-        //FIXME: Logic needed for deleteDevice
         if let token = FIRInstanceID.instanceID().token() {
             STNetworking.deleteDevice(token, done: {
                 loadLoginPage()
