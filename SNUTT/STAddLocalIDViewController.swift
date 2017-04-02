@@ -26,7 +26,7 @@ class STAddLocalIDViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func saveButtonClicked(sender: AnyObject) {
+    @IBAction func saveButtonClicked(_ sender: AnyObject) {
         let title = "아이디 추가 실패"
         var failure = false
         var message = ""
@@ -58,7 +58,7 @@ class STAddLocalIDViewController: UIViewController {
             STAlertView.showAlert(title: title, message: message)
         } else {
             STNetworking.addLocalID(id, password: password, done: {
-                self.navigationController?.popViewControllerAnimated(true)
+                self.navigationController?.popViewController(animated: true)
             })
         }
         

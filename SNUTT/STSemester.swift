@@ -9,24 +9,24 @@
 import Foundation
 
 enum STSemester : Int {
-    case First = 1, Summer, Second, Winter
+    case first = 1, summer, second, winter
     
-    static let allValues = [First, Summer, Second, Winter]
+    static let allValues = [first, summer, second, winter]
     
     func shortString() -> String {
         switch self {
-        case First: return "1"
-        case Second: return "2"
-        case Summer: return "S"
-        case Winter: return "W"
+        case .first: return "1"
+        case .second: return "2"
+        case .summer: return "S"
+        case .winter: return "W"
         }
     }
     func longString() -> String {
         switch self {
-        case First: return NSLocalizedString("first_semester", comment: "")
-        case Second: return NSLocalizedString("second_semester", comment: "")
-        case Summer: return NSLocalizedString("summer_semester", comment: "")
-        case Winter: return NSLocalizedString("winter_semester", comment: "")
+        case .first: return NSLocalizedString("first_semester", comment: "")
+        case .second: return NSLocalizedString("second_semester", comment: "")
+        case .summer: return NSLocalizedString("summer_semester", comment: "")
+        case .winter: return NSLocalizedString("winter_semester", comment: "")
         }
     }
 }

@@ -17,7 +17,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         didSet {
             columnNum = columnHidden.filter({ hidden in return !hidden}).count
             var cnt = 0
-            for (index, element) in columnHidden.enumerate() {
+            for (index, element) in columnHidden.enumerated() {
                 if element {
                     dayToColumn[index] = -1
                     continue
@@ -29,8 +29,8 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
     }
     var shouldAutofit : Bool = false
     
-    private(set) var dayToColumn : [Int] = [0,1,2,3,4,5,6]
-    private(set) var columnNum : Int = 7
+    fileprivate(set) var dayToColumn : [Int] = [0,1,2,3,4,5,6]
+    fileprivate(set) var columnNum : Int = 7
     
     var rowStart : Int = 0
     var rowEnd : Int = STPeriod.periodNum - 1
@@ -39,7 +39,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             return rowEnd - rowStart + 1
         }
     }
-    func getRowFromPeriod(period : Double) -> Double {
+    func getRowFromPeriod(_ period : Double) -> Double {
         return period - Double(rowStart)
     }
 
@@ -56,10 +56,10 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.registerNib(UINib(nibName: "STCourseCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CourseCell")
-        self.registerNib(UINib(nibName: "STColumnHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ColumnHeaderCell")
-        self.registerNib(UINib(nibName: "STRowHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RowHeaderCell")
-        self.registerNib(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
+        self.register(UINib(nibName: "STCourseCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CourseCell")
+        self.register(UINib(nibName: "STColumnHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ColumnHeaderCell")
+        self.register(UINib(nibName: "STRowHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RowHeaderCell")
+        self.register(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
         
         layout = STTimetableLayout()
         layout.WidthForHeader = WidthForHeader
@@ -104,22 +104,22 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         layout?.updateContentSize()
     }
 
-    func getCellType(indexPath : NSIndexPath) -> STTimetableCellType {
+    func getCellType(_ indexPath : IndexPath) -> STTimetableCellType {
         switch indexPath.section {
         case 0:
-            return .Slot
+            return .slot
         case 1:
-            return .HeaderColumn
+            return .headerColumn
         case 2:
-            return .HeaderRow
+            return .headerRow
         case (timetable?.lectureList.count)! + LectureSectionOffset:
-            return .TemporaryCourse
+            return .temporaryCourse
         default:
-            return .Course
+            return .course
         }
     }
     
-    func getSingleClass(indexPath : NSIndexPath) -> STSingleClass {
+    func getSingleClass(_ indexPath : IndexPath) -> STSingleClass {
         let lectureIndex = indexPath.section - LectureSectionOffset
         let classIndex = indexPath.row
         if lectureIndex == timetable!.lectureList.count {
@@ -128,7 +128,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         return timetable!.lectureList[lectureIndex].classList[classIndex]
     }
     
-    func getLecture(indexPath: NSIndexPath) -> STLecture {
+    func getLecture(_ indexPath: IndexPath) -> STLecture {
         let lectureIndex = indexPath.section - LectureSectionOffset
         if lectureIndex == timetable!.lectureList.count {
             return timetable!.temporaryLecture!
@@ -148,7 +148,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
     }
     
     func reloadTempLecture() {
-        reloadSections(NSIndexSet(index: (timetable?.lectureList.count)! + LectureSectionOffset))
+        reloadSections(IndexSet(integer: (timetable?.lectureList.count)! + LectureSectionOffset))
     }
     
     /*
@@ -163,7 +163,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
 
     // MARK: UICollectionViewDataSource
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 1
@@ -183,7 +183,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         }
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         if timetable == nil {
             return LectureSectionOffset
         } else if showTemporary {
@@ -193,45 +193,45 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         }
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         switch getCellType(indexPath) {
-        case .HeaderColumn:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ColumnHeaderCell", forIndexPath: indexPath) as! STColumnHeaderCollectionViewCell
-            cell.hidden = false
+        case .headerColumn:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ColumnHeaderCell", for: indexPath) as! STColumnHeaderCollectionViewCell
+            cell.isHidden = false
             cell.contentLabel.text = columnList[indexPath.row]
             if dayToColumn[indexPath.row] == -1 {
-                cell.hidden = true
+                cell.isHidden = true
             }
             return cell
-        case .HeaderRow:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("RowHeaderCell", forIndexPath: indexPath) as! STRowHeaderCollectionViewCell
-            cell.hidden = false
-            cell.titleLabel.hidden = true
+        case .headerRow:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RowHeaderCell", for: indexPath) as! STRowHeaderCollectionViewCell
+            cell.isHidden = false
+            cell.titleLabel.isHidden = true
             //cell.titleLabel.text = String(indexPath.row);
             cell.timeLabel.text = String(indexPath.row + 8)
             if !(rowStart <= indexPath.row && indexPath.row <= rowEnd) {
-                cell.hidden = true
+                cell.isHidden = true
             }
             return cell
-        case .Slot:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SlotCell", forIndexPath: indexPath) as! STSlotCellCollectionViewCell
+        case .slot:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SlotCell", for: indexPath) as! STSlotCellCollectionViewCell
             cell.columnNum = columnNum
             cell.rowNum = rowNum
             cell.ratioForHeader = RatioForHeader
             cell.widthForHeader = WidthForHeader
             cell.setNeedsDisplay()
             return cell
-        case .Course:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as! STCourseCellCollectionViewCell
-            cell.hidden = false
+        case .course:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CourseCell", for: indexPath) as! STCourseCellCollectionViewCell
+            cell.isHidden = false
             cell.layer.mask=nil
             cell.singleClass = getSingleClass(indexPath)
             cell.lecture = getLecture(indexPath)
             cell.longClicked = cellLongClicked
             cell.tapped = cellTapped
             if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
-                cell.hidden = true
+                cell.isHidden = true
             }
             
             let heightPerRow = collectionView.frame.height / (CGFloat(rowNum) + RatioForHeader)
@@ -239,14 +239,14 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
                 cell.mask(CGRect(x: 0, y: heightPerRow * CGFloat(Double(rowStart) - cell.singleClass.time.startPeriod), width: cell.frame.width, height:cell.frame.height))
             }
             return cell
-        case .TemporaryCourse:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CourseCell", forIndexPath: indexPath) as! STCourseCellCollectionViewCell
-            cell.hidden = false
+        case .temporaryCourse:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CourseCell", for: indexPath) as! STCourseCellCollectionViewCell
+            cell.isHidden = false
             cell.layer.mask = nil
             cell.singleClass = getSingleClass(indexPath)
             cell.lecture = getLecture(indexPath)
             if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
-                cell.hidden = true
+                cell.isHidden = true
             }
             let heightPerRow = collectionView.frame.height / (CGFloat(rowNum) + RatioForHeader)
             if Double(rowStart) > cell.singleClass.time.startPeriod {

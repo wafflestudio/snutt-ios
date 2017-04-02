@@ -14,28 +14,28 @@ enum STTagRouter : STRouter {
     static let baseURLString = STConfig.sharedInstance.baseURL+"/tags"
     static let shouldAddToken: Bool = true
     
-    case UpdateTime(quarter : STQuarter)
-    case Get(quarter : STQuarter)
+    case updateTime(quarter : STQuarter)
+    case get(quarter : STQuarter)
     
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         switch self {
-        case .UpdateTime:
-            return .GET
-        case .Get:
-            return .GET
+        case .updateTime:
+            return .get
+        case .get:
+            return .get
         }
     }
     
     var path: String {
         switch self {
-        case .UpdateTime(let quarter):
+        case .updateTime(let quarter):
             return "/\(quarter.year)/\(quarter.semester.rawValue)/update_time"
-        case .Get(let quarter):
+        case .get(let quarter):
             return "/\(quarter.year)/\(quarter.semester.rawValue)"
         }
     }
     
-    var parameters: [String : AnyObject]? {
+    var parameters: [String : Any]? {
         return nil
     }
     

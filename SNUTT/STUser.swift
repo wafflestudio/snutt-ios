@@ -21,18 +21,18 @@ class STUser {
     
     static func saveData() {
         if currentUser?.fbName != nil {
-            NSUserDefaults.standardUserDefaults().setObject(currentUser?.fbName, forKey: "UserFBName")
+            UserDefaults.standard.set(currentUser?.fbName, forKey: "UserFBName")
         }
         if currentUser?.localId != nil {
-            NSUserDefaults.standardUserDefaults().setObject(currentUser?.localId, forKey: "UserLocalId")
+            UserDefaults.standard.set(currentUser?.localId, forKey: "UserLocalId")
         }
     }
     
     static func loadData() {
-        if let fbName = NSUserDefaults.standardUserDefaults().objectForKey("UserFBName") as? String {
+        if let fbName = UserDefaults.standard.object(forKey: "UserFBName") as? String {
             currentUser?.fbName = fbName
         }
-        if let localId = NSUserDefaults.standardUserDefaults().objectForKey("UserLocalId") as? String {
+        if let localId = UserDefaults.standard.object(forKey: "UserLocalId") as? String {
             currentUser?.localId = localId
         }
     }
@@ -59,7 +59,7 @@ class STUser {
         STDefaults[.token] = nil
         STDefaults[.isFCMRegistered] = false
         STDefaults[.shouldShowBadge] = false
-        UIApplication.sharedApplication().delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+        UIApplication.shared.delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateInitialViewController()
     }
     
     static func updateDeviceIdIfNeeded() {

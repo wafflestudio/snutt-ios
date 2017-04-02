@@ -37,29 +37,29 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         // Dispose of any resources that can be recreated.
     }
     
-    override func cellTypeAtIndexPath(indexPath : NSIndexPath) -> CellType {
+    override func cellTypeAtIndexPath(_ indexPath : IndexPath) -> CellType {
         switch (indexPath.section, indexPath.row) {
-        case (0,0): return .Title
-        case (0,1): return .Instructor
-        case (0,2): return .Color
-        case (0,3): return .Credit
+        case (0,0): return .title
+        case (0,1): return .instructor
+        case (0,2): return .color
+        case (0,3): return .credit
 
-        case (1,0): return .Padding
-        case (1,1): return .Remark
-        case (1,2): return .Padding
+        case (1,0): return .padding
+        case (1,1): return .remark
+        case (1,2): return .padding
             
-        case (2, currentLecture.classList.count): return .AddButton(section: 1)
-        case (2, _): return .SingleClass
+        case (2, currentLecture.classList.count): return .addButton(section: 1)
+        case (2, _): return .singleClass
 
-        default: return .Padding // Never Reach
+        default: return .padding // Never Reach
         }
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 4
         case 1: return 3
@@ -68,44 +68,44 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, cellForRowAtIndexPath: indexPath) as! STLectureDetailTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath) as! STLectureDetailTableViewCell
         cell.setEditable(true)
         let leftAlignedCell = cell as? STLeftAlignedTableViewCell
         switch cellTypeAtIndexPath(indexPath) {
-        case .Instructor:
+        case .instructor:
             leftAlignedCell?.textField.placeholder = "예) 홍길동"
-        case .Title:
+        case .title:
             leftAlignedCell?.textField.placeholder = "예) 기초 영어"
         default: break
         }
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if case .Color = cellTypeAtIndexPath(indexPath){
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if case .color = cellTypeAtIndexPath(indexPath){
+            tableView.deselectRow(at: indexPath, animated: true)
             triggerColorPicker()
-        } else if case .AddButton = cellTypeAtIndexPath(indexPath) {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            (self.tableView.cellForRowAtIndexPath(indexPath) as! STSingleLectureButtonCell).buttonAction?()
+        } else if case .addButton = cellTypeAtIndexPath(indexPath) {
+            tableView.deselectRow(at: indexPath, animated: true)
+            (self.tableView.cellForRow(at: indexPath) as! STSingleLectureButtonCell).buttonAction?()
         }
     }
     
-    @IBAction func cancelButtonClicked(sender: UIBarButtonItem) {
+    @IBAction func cancelButtonClicked(_ sender: UIBarButtonItem) {
         self.view.endEditing(true)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func saveButtonClicked(sender: UIBarButtonItem) {
+    @IBAction func saveButtonClicked(_ sender: UIBarButtonItem) {
         self.view.endEditing(true)
         let ret = STTimetableManager.sharedInstance.addCustomLecture(currentLecture, object: self)
-        if case STAddLectureState.Success = ret {
-            self.dismissViewControllerAnimated(true, completion: nil)
+        if case STAddLectureState.success = ret {
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if indexPath.section == 1 {
             if indexPath.row < currentLecture.classList.count {
                 return true
@@ -114,10 +114,10 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         return false
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            currentLecture.classList.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            currentLecture.classList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
     

@@ -23,17 +23,17 @@ class STColorTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.selectionStyle = .None
+        self.selectionStyle = .none
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
         if selected {
-            self.accessoryType = .Checkmark
+            self.accessoryType = .checkmark
         } else {
-            self.accessoryType = .None
+            self.accessoryType = .none
         }
     }
 

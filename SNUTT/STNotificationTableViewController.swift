@@ -29,14 +29,14 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         self.tableView.emptyDataSetDelegate = self;
         
         let nib = UINib(nibName: "STNotificationTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "STNotificationTableViewCell")
-        sizingCell = nib.instantiateWithOwner(self, options: nil)[0] as! STNotificationTableViewCell
+        self.tableView.register(nib, forCellReuseIdentifier: "STNotificationTableViewCell")
+        sizingCell = nib.instantiate(withOwner: self, options: nil)[0] as! STNotificationTableViewCell
         sizingCell.contentView.addConstraint(
             NSLayoutConstraint(item: sizingCell.contentView,
-                attribute: NSLayoutAttribute.Width,
-                relatedBy: NSLayoutRelation.Equal,
+                attribute: NSLayoutAttribute.width,
+                relatedBy: NSLayoutRelation.equal,
                 toItem: nil,
-                attribute: NSLayoutAttribute.NotAnAttribute,
+                attribute: NSLayoutAttribute.notAnAttribute,
                 multiplier: 1,
                 constant: self.tableView.frame.width
             )
@@ -46,7 +46,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         
         self.refreshControl = UIRefreshControl()
         
-        self.refreshControl?.addTarget(self, action: #selector(self.refreshList), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(self.refreshList), for: UIControlEvents.valueChanged)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -55,7 +55,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if !loading && STDefaults[.shouldShowBadge] {
             self.refreshControl?.beginRefreshing()
             self.refreshList()
@@ -70,31 +70,31 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return notiList.count
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("STNotificationTableViewCell", forIndexPath: indexPath) as! STNotificationTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "STNotificationTableViewCell", for: indexPath) as! STNotificationTableViewCell
         let notification = notiList[indexPath.row]
         cell.notification = notification
 
         return cell
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         sizingCell.notification = notiList[indexPath.row]
-        let size = sizingCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize, withHorizontalFittingPriority: Float(self.view.frame.width), verticalFittingPriority: 27)
+        let size = sizingCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize, withHorizontalFittingPriority: Float(self.view.frame.width), verticalFittingPriority: 27)
         return size.height
     }
     
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentSize.height == 0 {
             return
         } else if scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height - heightForFetch {
@@ -135,11 +135,11 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
             }
             self.pageCnt += 1
             
-            let formatter = NSDateFormatter()
-            formatter.dateStyle = NSDateFormatterStyle.MediumStyle
-            formatter.timeStyle = NSDateFormatterStyle.MediumStyle
+            let formatter = DateFormatter()
+            formatter.dateStyle = DateFormatter.Style.medium
+            formatter.timeStyle = DateFormatter.Style.medium
             
-            let title = "Last update: \(formatter.stringFromDate(NSDate()))"
+            let title = "Last update: \(formatter.string(from: Date()))"
             self.refreshControl?.attributedTitle = NSAttributedString(string: title)
             
             self.tableView.reloadData()
@@ -152,26 +152,26 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     
     //MARK: DNZEmptyDataSet
     
-    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
         return UIImage(named: "tabbaritem_noti")
     }
     
-    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "알림이 없습니다."
         let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.boldSystemFontOfSize(18.0)
+            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0)
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }
     
-    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "넣은 강좌의 수강편람이 바뀌거나, 새로운 수강편람이 뜨면 알림을 줍니다."
         let paragraph = NSMutableParagraphStyle()
-        paragraph.lineBreakMode = .ByWordWrapping
-        paragraph.alignment = .Center
+        paragraph.lineBreakMode = .byWordWrapping
+        paragraph.alignment = .center
         let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.systemFontOfSize(14.0),
-            NSForegroundColorAttributeName : UIColor.lightGrayColor(),
+            NSFontAttributeName : UIFont.systemFont(ofSize: 14.0),
+            NSForegroundColorAttributeName : UIColor.lightGray,
             NSParagraphStyleAttributeName : paragraph
         ]
         return NSAttributedString(string: text, attributes: attributes)

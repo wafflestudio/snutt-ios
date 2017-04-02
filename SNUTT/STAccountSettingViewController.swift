@@ -14,42 +14,42 @@ class STAccountSettingViewController: UITableViewController {
     var isNetworking = true;
     
     enum CellType {
-        case RightDetail(title: String, detail: String)
-        case Button(title: String)
-        case RedButton(title: String)
+        case rightDetail(title: String, detail: String)
+        case button(title: String)
+        case redButton(title: String)
     }
     
     enum Cell {
-        case ShowId
-        case ChangePassword
-        case AttachLocalId
-        case ShowFBId
-        case DetachFB
-        case AttachFB
-        case ShowEmail
-        case ChangeEmail
-        case Unregister
+        case showId
+        case changePassword
+        case attachLocalId
+        case showFBId
+        case detachFB
+        case attachFB
+        case showEmail
+        case changeEmail
+        case unregister
         
         var cellType : CellType {
             switch (self) {
-            case ShowId:
-                return CellType.RightDetail(title: "아이디", detail: STUser.currentUser?.localId ?? "(없음)")
-            case ChangePassword:
-                return CellType.Button(title: "비밀번호 변경")
-            case AttachLocalId:
-                return .Button(title: "아이디 비번 추가")
-            case ShowFBId:
-                return .RightDetail(title: "페이스북 이름", detail: STUser.currentUser?.fbName ?? "(없음)")
-            case DetachFB:
-                return .Button(title: "페이스북 연동 취소")
-            case AttachFB:
-                return .Button(title: "페이스북 연동")
-            case ShowEmail:
-                return .RightDetail(title: "이메일", detail: STUser.currentUser?.email ?? "(없음)")
-            case ChangeEmail:
-                return .Button(title: "이메일 변경")
-            case Unregister:
-                return .RedButton(title: "회원탈퇴")
+            case .showId:
+                return CellType.rightDetail(title: "아이디", detail: STUser.currentUser?.localId ?? "(없음)")
+            case .changePassword:
+                return CellType.button(title: "비밀번호 변경")
+            case .attachLocalId:
+                return .button(title: "아이디 비번 추가")
+            case .showFBId:
+                return .rightDetail(title: "페이스북 이름", detail: STUser.currentUser?.fbName ?? "(없음)")
+            case .detachFB:
+                return .button(title: "페이스북 연동 취소")
+            case .attachFB:
+                return .button(title: "페이스북 연동")
+            case .showEmail:
+                return .rightDetail(title: "이메일", detail: STUser.currentUser?.email ?? "(없음)")
+            case .changeEmail:
+                return .button(title: "이메일 변경")
+            case .unregister:
+                return .redButton(title: "회원탈퇴")
             }
         }
     }
@@ -86,22 +86,22 @@ class STAccountSettingViewController: UITableViewController {
         cellList = []
         
         if (STUser.currentUser?.localId == nil) {
-            cellList.append([Cell.AttachLocalId])
+            cellList.append([Cell.attachLocalId])
         } else {
-            cellList.append([Cell.ShowId, Cell.ChangePassword])
+            cellList.append([Cell.showId, Cell.changePassword])
         }
         
         fbSection = cellList.count
         if (STUser.currentUser?.fbName == nil) {
-            cellList.append([Cell.AttachFB])
+            cellList.append([Cell.attachFB])
         } else {
-            cellList.append([Cell.ShowFBId, Cell.DetachFB])
+            cellList.append([Cell.showFBId, Cell.detachFB])
         }
         
         emailSection = cellList.count
-        cellList.append([Cell.ShowEmail, Cell.ChangeEmail])
+        cellList.append([Cell.showEmail, Cell.changeEmail])
         
-        cellList.append([Cell.Unregister])
+        cellList.append([Cell.unregister])
     }
     
 
@@ -112,88 +112,95 @@ class STAccountSettingViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return cellList.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellList[section].count
     }
     
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellType = cellList[indexPath.section][indexPath.row].cellType
         switch cellType {
-        case .RightDetail(let title, let detail):
-            let cell = tableView.dequeueReusableCellWithIdentifier("RightDetailCell", forIndexPath: indexPath)
+        case .rightDetail(let title, let detail):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RightDetailCell", for: indexPath)
             cell.textLabel?.text = title
             cell.detailTextLabel?.text = detail
             return cell
-        case .Button(let title):
-            let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell", forIndexPath: indexPath)
+        case .button(let title):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ButtonCell", for: indexPath)
             cell.textLabel?.text = title
-            cell.accessoryType = .DisclosureIndicator
+            cell.accessoryType = .disclosureIndicator
             return cell
-        case .RedButton(let title):
-            let cell = tableView.dequeueReusableCellWithIdentifier("RedButtonCell",forIndexPath: indexPath) as! STRedButtonTableViewCell
+        case .redButton(let title):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RedButtonCell",for: indexPath) as! STRedButtonTableViewCell
             cell.buttonLabel.text = title
             return cell
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         if isNetworking {
             return
         }
         let cell = cellList[indexPath.section][indexPath.row]
         switch (cell) {
-        case .AttachFB:
+        case .attachFB:
             let registerFB : (String, String) -> () = { id, token in
                 STNetworking.attachFB(fb_id: id, fb_token: token, done: {
                     STUser.getUser()
                     self.refreshCellList()
-                    self.tableView.reloadSections(NSIndexSet(index: self.fbSection), withRowAnimation: .Automatic)
+                    self.tableView.reloadSections(IndexSet(integer: self.fbSection), with: .automatic)
                     }, failure: { _ in
                         return
                 })
             }
             
-            if let accessToken = FBSDKAccessToken.currentAccessToken() {
-                let id = accessToken.userID
-                let token = accessToken.tokenString
+            if let accessToken = FBSDKAccessToken.current(),
+                let id = accessToken.userID,
+                let token = accessToken.tokenString {
                 registerFB(id, token)
             } else {
                 let fbLoginManager = FBSDKLoginManager()
-                fbLoginManager.logInWithReadPermissions(["public_profile"], fromViewController: self, handler:{result, error in
+                fbLoginManager.logIn(withReadPermissions: ["public_profile"], from: self, handler:{result, error in
                     if error != nil {
                         STAlertView.showAlert(title: "페북 연동 실패", message: "페이스북 연동에 실패했습니다.")
-                    } else if result.isCancelled {
+                        return
+                    }
+                    guard let result = result else {
                         STAlertView.showAlert(title: "페북 연동 실패", message: "페이스북 연동에 실패했습니다.")
-                    } else {
-                        let id = result.token.userID
-                        let token = result.token.tokenString
+                        return
+                    }
+                    if result.isCancelled {
+                        STAlertView.showAlert(title: "페북 연동 실패", message: "페이스북 연동에 실패했습니다.")
+                    } else if let id = result.token.userID,
+                        let token = result.token.tokenString {
                         registerFB(id, token)
+                    } else {
+                        STAlertView.showAlert(title: "페북 연동 실패", message: "페이스북 연동에 실패했습니다.")
                     }
                 })
             }
             return
-        case .AttachLocalId:
-            performSegueWithIdentifier("AddLocalID", sender: nil)
+        case .attachLocalId:
+            performSegue(withIdentifier: "AddLocalID", sender: nil)
             return
-        case .ChangeEmail:
+        case .changeEmail:
             STAlertView.showAlert(title: "이메일 변경", message: "새로운 이메일 주소를 입력해주세요", configAlert: { alert in
-                alert.addTextFieldWithConfigurationHandler({ textfield in
+                alert.addTextField(configurationHandler: { textfield in
                     textfield.placeholder = "새로운 이메일 주소"
-                    textfield.keyboardType = .EmailAddress
+                    textfield.keyboardType = .emailAddress
                 })
-                alert.addAction(UIAlertAction(title: "취소", style: .Cancel, handler: nil))
-                alert.addAction(UIAlertAction(title: "이메일 변경", style: .Default, handler: { _ in
+                alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "이메일 변경", style: .default, handler: { _ in
                     if let email = alert.textFields?.first?.text {
                         if (STUtil.validateEmail(email)) {
                             STNetworking.editUser(email, done: {
                                 STUser.currentUser?.email = email
-                                self.tableView.reloadSections(NSIndexSet(index: self.emailSection), withRowAnimation: .Automatic)
+                                self.tableView.reloadSections(IndexSet(integer: self.emailSection), with: .automatic)
                                 }
                                 , failure: {
                                     STAlertView.showAlert(title: "이메일 변경", message: "이메일 변경에 실패했습니다.")
@@ -205,22 +212,22 @@ class STAccountSettingViewController: UITableViewController {
                 }))
             })
             return
-        case .ChangePassword:
+        case .changePassword:
             STAlertView.showAlert(title: "비밀번호 변경", message: "새로운 비밀번호를 입력해주세요", configAlert: { alert in
-                alert.addTextFieldWithConfigurationHandler({ textfield in
+                alert.addTextField(configurationHandler: { textfield in
                     textfield.placeholder = "현재 비밀번호"
-                    textfield.secureTextEntry = true
+                    textfield.isSecureTextEntry = true
                 })
-                alert.addTextFieldWithConfigurationHandler({ textfield in
+                alert.addTextField(configurationHandler: { textfield in
                     textfield.placeholder = "새로운 비밀번호"
-                    textfield.secureTextEntry = true
+                    textfield.isSecureTextEntry = true
                 })
-                alert.addTextFieldWithConfigurationHandler({ textfield in
+                alert.addTextField(configurationHandler: { textfield in
                     textfield.placeholder = "새로운 비밀번호 확인"
-                    textfield.secureTextEntry = true
+                    textfield.isSecureTextEntry = true
                 })
-                alert.addAction(UIAlertAction(title: "취소", style: .Cancel, handler: nil))
-                alert.addAction(UIAlertAction(title: "비번 변경", style: .Default, handler: { _ in
+                alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "비번 변경", style: .default, handler: { _ in
                     let curPass = alert.textFields?[0].text ?? ""
                     let newPass = alert.textFields?[1].text ?? ""
                     let newPass2 = alert.textFields?[2].text ?? ""
@@ -248,30 +255,30 @@ class STAccountSettingViewController: UITableViewController {
                 }))
             })
             return
-        case .DetachFB:
+        case .detachFB:
             if STUser.currentUser?.localId == nil {
                 STAlertView.showAlert(title: "페이스북 연동 끊기", message: "현재 로그인 수단이 페이스북 밖에 없기 때문에, 페이스북 연동을 끊을 수 없습니다.")
                 return
             }
-            let detachAction = UIAlertAction(title: "페이스북 연동 끊기", style: .Destructive, handler: { _ in
+            let detachAction = UIAlertAction(title: "페이스북 연동 끊기", style: .destructive, handler: { _ in
                 STNetworking.detachFB({ _ in
                     STUser.currentUser?.fbName = nil
                     self.refreshCellList()
-                    self.tableView.reloadSections(NSIndexSet(index: self.fbSection), withRowAnimation: .Automatic)
+                    self.tableView.reloadSections(IndexSet(integer: self.fbSection), with: .automatic)
                     }, failure: { _ in
                         return
                 })
             })
-            let cancelAction = UIAlertAction(title: "취소", style: .Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             STAlertView.showAlert(title: "페이스북 연동 끊기", message: "페이스북 연동을 끊겠습니까?", actions: [cancelAction, detachAction])
             return
-        case .Unregister:
-            let unregisterAction = UIAlertAction(title: "회원탈퇴", style: .Destructive, handler: { _ in
+        case .unregister:
+            let unregisterAction = UIAlertAction(title: "회원탈퇴", style: .destructive, handler: { _ in
                 STNetworking.unregister({ _ in
                     return
                 })
             })
-            let cancelAction = UIAlertAction(title: "취소", style: .Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             STAlertView.showAlert(title: "회원탈퇴", message: "SNUTT 회원 탈퇴를 하겠습니까?", actions: [cancelAction, unregisterAction])
             return
         default:

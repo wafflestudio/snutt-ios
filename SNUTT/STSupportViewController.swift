@@ -25,9 +25,9 @@ class STSupportViewController: UIViewController {
     }
     
 
-    @IBAction func sendButtonClicked(sender: AnyObject) {
+    @IBAction func sendButtonClicked(_ sender: AnyObject) {
         STNetworking.sendFeedback(emailTextField.text, message: contentTextView.text, done: {
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         })
     }
     /*

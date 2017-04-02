@@ -13,7 +13,7 @@ class STDeveloperViewController: UIViewController{
     @IBOutlet weak var webView: UIWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: STConfig.sharedInstance.baseURL + "/member")!))
+        webView.loadRequest(URLRequest(url: URL(string: STConfig.sharedInstance.baseURL + "/member")!))
         // Do any additional setup after loading the view.
     }
 

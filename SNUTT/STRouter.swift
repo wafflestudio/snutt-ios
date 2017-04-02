@@ -13,18 +13,18 @@ protocol STRouter : URLRequestConvertible {
     
     static var baseURLString : String { get }
     static var shouldAddToken : Bool { get }
-    var method: Alamofire.Method { get }
+    var method: HTTPMethod { get }
     var path: String { get }
-    var parameters: [String: AnyObject]? { get }
+    var parameters: [String: Any]? { get }
     
 }
 
 extension STRouter {
     
     var defaultURLRequest: NSMutableURLRequest {
-        let URL = NSURL(string: Self.baseURLString)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path)!)
-        mutableURLRequest.HTTPMethod = method.rawValue
+        let URL = Foundation.URL(string: Self.baseURLString)!
+        let mutableURLRequest = NSMutableURLRequest(url: URL.appendingPathComponent(path))
+        mutableURLRequest.httpMethod = method.rawValue
         
         let apikey = STDefaults[.apiKey]
         mutableURLRequest.setValue(apikey, forHTTPHeaderField: "x-access-apikey")
@@ -39,16 +39,16 @@ extension STRouter {
         return mutableURLRequest
     }
     
-    var URLRequest: NSMutableURLRequest {
+    func asURLRequest() throws -> URLRequest {
         let mutableURLRequest = Self.shouldAddToken ? self.tokenedURLRequest : self.defaultURLRequest
         #if DEBUG
         print(Self.baseURLString + path)
         #endif
         switch self.method {
-        case .GET:
-            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: self.parameters).0
+        case .get:
+            return try Alamofire.URLEncoding.default.encode(mutableURLRequest as URLRequest, with: self.parameters)
         default:
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: self.parameters).0
+            return try Alamofire.JSONEncoding.default.encode(mutableURLRequest as URLRequest, with: self.parameters)
         }
     }
 }

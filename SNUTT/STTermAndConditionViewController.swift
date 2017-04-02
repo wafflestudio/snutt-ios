@@ -13,7 +13,7 @@ class STTermAndConditionViewController: UIViewController {
     @IBOutlet weak var webView: UIWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: STConfig.sharedInstance.baseURL + "/terms_of_service")!))
+        webView.loadRequest(URLRequest(url: URL(string: STConfig.sharedInstance.baseURL + "/terms_of_service")!))
         // Do any additional setup after loading the view.
     }
 

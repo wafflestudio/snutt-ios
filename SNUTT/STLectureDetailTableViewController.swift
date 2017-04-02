@@ -28,77 +28,77 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         
         self.currentLecture = lecture
         
-        editBarButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(STLectureDetailTableViewController.editBarButtonClicked))
-        saveBarButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: #selector(STLectureDetailTableViewController.saveBarButtonClicked))
-        cancelBarButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(STLectureDetailTableViewController.cancelBarButtonClicked))
+        editBarButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(STLectureDetailTableViewController.editBarButtonClicked))
+        saveBarButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(STLectureDetailTableViewController.saveBarButtonClicked))
+        cancelBarButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(STLectureDetailTableViewController.cancelBarButtonClicked))
         
         self.navigationItem.rightBarButtonItem = editBarButton
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if case .Button = cellTypeAtIndexPath(indexPath).cellViewType {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            (self.tableView.cellForRowAtIndexPath(indexPath) as! STSingleLectureButtonCell).buttonAction?()
-        } else if case .Color = cellTypeAtIndexPath(indexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if case .button = cellTypeAtIndexPath(indexPath).cellViewType {
+            tableView.deselectRow(at: indexPath, animated: true)
+            (self.tableView.cellForRow(at: indexPath) as! STSingleLectureButtonCell).buttonAction?()
+        } else if case .color = cellTypeAtIndexPath(indexPath) {
             if editable {
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                tableView.deselectRow(at: indexPath, animated: true)
                 triggerColorPicker()
             } else {
-                tableView.deselectRowAtIndexPath(indexPath, animated: false)
+                tableView.deselectRow(at: indexPath, animated: false)
             }
         } else {
-            tableView.deselectRowAtIndexPath(indexPath, animated: false)
+            tableView.deselectRow(at: indexPath, animated: false)
         }
     }
     
-    override func cellTypeAtIndexPath(indexPath : NSIndexPath) -> CellType {
+    override func cellTypeAtIndexPath(_ indexPath : IndexPath) -> CellType {
         switch (indexPath.section, indexPath.row) {
-        case (0, 0): return .Title
-        case (0, 1): return .Instructor
-        case (0, 2): return .Color
-        case (0, 3): return .Credit
+        case (0, 0): return .title
+        case (0, 1): return .instructor
+        case (0, 2): return .color
+        case (0, 3): return .credit
 
         case (1, _):
             if custom {
                 switch indexPath.row {
-                case 0: return .Padding
-                case 1: return .Remark
-                case 2: return .Padding
-                default: return .Padding
+                case 0: return .padding
+                case 1: return .remark
+                case 2: return .padding
+                default: return .padding
                 }
             } else {
                 switch indexPath.row {
-                case 0: return .Padding
-                case 1: return .Department
-                case 2: return .AcademicYearAndCredit
-                case 3: return .ClassificationAndCategory
-                case 4: return .CourseNumAndLectureNum
-                case 5: return .Remark
-                case 6: return .Padding
-                default: return .Padding
+                case 0: return .padding
+                case 1: return .department
+                case 2: return .academicYearAndCredit
+                case 3: return .classificationAndCategory
+                case 4: return .courseNumAndLectureNum
+                case 5: return .remark
+                case 6: return .padding
+                default: return .padding
                 }
             }
         
         case (2, currentLecture.classList.count):
-            return .AddButton(section: 2)
+            return .addButton(section: 2)
             
-        case (2, _): return .SingleClass
+        case (2, _): return .singleClass
             
         case (3, 0):
             if custom {
-                return .DeleteButton
+                return .deleteButton
             } else if editable {
-                return .ResetButton
+                return .resetButton
             } else {
-                return .SyllabusButton
+                return .syllabusButton
             }
         case (4, 0):
-            return .DeleteButton
-        default: return .Padding // Never Reach
+            return .deleteButton
+        default: return .padding // Never Reach
         }
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         if custom {
             return editable ? 3 : 4
         } else {
@@ -106,14 +106,14 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 3 && !custom && !editable {
-            return CGFloat.min
+            return CGFloat.leastNormalMagnitude
         }
         return super.tableView(tableView, heightForFooterInSection: section)
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if custom {
             switch section {
             case 0: return 4
@@ -134,13 +134,13 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, cellForRowAtIndexPath: indexPath) as! STLectureDetailTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath) as! STLectureDetailTableViewCell
         cell.setEditable(editable)
         return cell
     }
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if indexPath.section == 2 {
             if indexPath.row < currentLecture.classList.count {
                 return true
@@ -149,27 +149,27 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         return false
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            currentLecture.classList.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            currentLecture.classList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
     
     func editBarButtonClicked() {
         editable = true
         reloadDataWithAnimation()
-        self.navigationItem.setRightBarButtonItem(saveBarButton, animated: true)
-        self.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
+        self.navigationItem.setRightBarButton(saveBarButton, animated: true)
+        self.navigationItem.setLeftBarButton(cancelBarButton, animated: true)
     }
     
     func saveBarButtonClicked() {
         editable = false
         dismissKeyboard()
         reloadDataWithAnimation()
-        self.navigationItem.setRightBarButtonItem(editBarButton, animated: true)
-        self.navigationItem.setLeftBarButtonItem(nil, animated: true)
-        let oldLecture = lecture
+        self.navigationItem.setRightBarButton(editBarButton, animated: true)
+        self.navigationItem.setLeftBarButton(nil, animated: true)
+        let oldLecture = lecture!
         lecture = currentLecture
         STTimetableManager.sharedInstance.updateLecture(oldLecture, newLecture: currentLecture, failure: {
             self.lecture = oldLecture
@@ -184,24 +184,24 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         dismissKeyboard()
         currentLecture = lecture
         reloadDataWithAnimation()
-        self.navigationItem.setRightBarButtonItem(editBarButton, animated: true)
-        self.navigationItem.setLeftBarButtonItem(nil, animated: true)
+        self.navigationItem.setRightBarButton(editBarButton, animated: true)
+        self.navigationItem.setLeftBarButton(nil, animated: true)
     }
     
     func reloadDataWithAnimation() {
-        UIView.transitionWithView(tableView, duration:0.35, options:.TransitionCrossDissolve,
+        UIView.transition(with: tableView, duration:0.35, options:.transitionCrossDissolve,
                                   animations: { self.tableView.reloadData() }, completion: nil);
     }
     
     override func resetButtonClicked() {
         STTimetableManager.sharedInstance.resetLecture(self.currentLecture) {
             let lectureList = STTimetableManager.sharedInstance.currentTimetable!.lectureList
-            if let index = lectureList.indexOf({ lecture in lecture.id == self.currentLecture.id}) {
+            if let index = lectureList.index(where: { lecture in lecture.id == self.currentLecture.id}) {
                 self.currentLecture = lectureList[index]
                 self.lecture = lectureList[index]
-                self.navigationItem.setRightBarButtonItem(self.editBarButton, animated: true)
-                self.navigationItem.setLeftBarButtonItem(nil, animated: true)
-                UIView.transitionWithView(self.tableView, duration:0.35, options:.TransitionCrossDissolve,
+                self.navigationItem.setRightBarButton(self.editBarButton, animated: true)
+                self.navigationItem.setLeftBarButton(nil, animated: true)
+                UIView.transition(with: self.tableView, duration:0.35, options:.transitionCrossDissolve,
                                           animations: {
                                             self.editable = false
                                             self.tableView.reloadData()

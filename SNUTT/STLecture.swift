@@ -32,7 +32,7 @@ struct STLecture {
             ret = ret + "/" + it.time.startString()
         }
         if ret != "" {
-            ret = ret.substringFromIndex(ret.startIndex.advancedBy(1))
+            ret = ret.substring(from: ret.characters.index(ret.startIndex, offsetBy: 1))
         } else {
             ret = "(없음)"
         }
@@ -45,7 +45,7 @@ struct STLecture {
             ret = ret + "/" + it.place
         }
         if ret != "" {
-            ret = ret.substringFromIndex(ret.startIndex.advancedBy(1))
+            ret = ret.substring(from: ret.characters.index(ret.startIndex, offsetBy: 1))
         } else {
             ret = "(없음)"
         }
@@ -64,7 +64,7 @@ struct STLecture {
             ret = ret + ", " + academicYear!
         }
         if ret != "" {
-            ret = ret.substringFromIndex(ret.startIndex.advancedBy(2))
+            ret = ret.substring(from: ret.characters.index(ret.startIndex, offsetBy: 2))
         } else {
             ret = "(없음)"
         }
@@ -89,7 +89,7 @@ struct STLecture {
         timeMask = data["class_time_mask"].arrayValue.map{mask in mask.intValue}
         id = data["_id"].string
         let colorJson = data["color"]
-        if let fgHex = colorJson["fg"].string, bgHex = colorJson["bg"].string {
+        if let fgHex = colorJson["fg"].string, let bgHex = colorJson["bg"].string {
             color = STColor(fgHex: fgHex, bgHex: bgHex)
         }
         let listData = data["class_time_json"].arrayValue
@@ -100,13 +100,13 @@ struct STLecture {
         }
     }
     
-    func toDictionary() -> [String : AnyObject] {
+    func toDictionary() -> [String : Any] {
         
         let classTimeJSON = classList.map{ singleClass in
             return singleClass.toDictionary()
         }
         
-        var dict : [String: AnyObject?] = [
+        var dict : [String: Any?] = [
             "classification" : classification,
             "department" : department,
             "academic_year" : academicYear,
@@ -125,14 +125,14 @@ struct STLecture {
         
         for (key, value) in dict {
             if (value == nil) {
-                dict.removeValueForKey(key)
+                dict.removeValue(forKey: key)
             }
         }
         
         return dict as! [String: AnyObject]
     }
     
-    func isSameLecture(right : STLecture) -> Bool {
+    func isSameLecture(_ right : STLecture) -> Bool {
         return (courseNumber == right.courseNumber && lectureNumber == right.lectureNumber) && courseNumber != nil && lectureNumber != nil
     }
     

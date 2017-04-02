@@ -14,45 +14,45 @@ enum STAuthRouter : STRouter {
     static let baseURLString : String = STConfig.sharedInstance.baseURL+"/auth"
     static let shouldAddToken: Bool = false
     
-    case LocalLogin(id: String, password: String)
-    case LocalRegister(id: String, password: String, email: String?)
-    case FBRegister(id: String, token: String)
+    case localLogin(id: String, password: String)
+    case localRegister(id: String, password: String, email: String?)
+    case fbRegister(id: String, token: String)
     
     //MARK: STRouter
     
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         switch self {
-        case .LocalLogin:
-            return .POST
-        case .LocalRegister:
-            return .POST
-        case .FBRegister:
-            return .POST
+        case .localLogin:
+            return .post
+        case .localRegister:
+            return .post
+        case .fbRegister:
+            return .post
         }
     }
     
     var path: String {
         switch self {
-        case .LocalLogin:
+        case .localLogin:
             return "/login_local"
-        case .LocalRegister:
+        case .localRegister:
             return "/register_local"
-        case .FBRegister:
+        case .fbRegister:
             return "/login_fb"
         }
     }
     
-    var parameters: [String : AnyObject]? {
+    var parameters: [String : Any]? {
         switch self {
-        case .LocalLogin(let id, let password):
+        case .localLogin(let id, let password):
             return ["id" : id, "password" : password]
-        case let .LocalRegister(id, password, email):
+        case let .localRegister(id, password, email):
             var ret = ["id" : id, "password" : password]
             if let email = email {
                 ret["email"] = email
             }
             return ret
-        case let .FBRegister(id, token):
+        case let .fbRegister(id, token):
             return ["fb_id" : id, "fb_token" : token]
         }
     }

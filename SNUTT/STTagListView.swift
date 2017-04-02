@@ -34,7 +34,7 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
         heightConstraint.constant = self.contentSize.height + 10
     }
     
-    func showTagsFor(query : String, type: STTagType?) {
+    func showTagsFor(_ query : String, type: STTagType?) {
         if query == "" {
             filteredList = STTagManager.sharedInstance.tagList.tagList
         } else {
@@ -45,51 +45,51 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
         if let tagType = type {
             filteredList = filteredList.filter{ tag in tag.type == tagType }
         }
-        self.hidden = false
+        self.isHidden = false
         self.reloadData()
         adjustHeight()
     }
     
     func hide() {
-        self.hidden = true
+        self.isHidden = true
     }
     
     func show() {
-        self.hidden = false
+        self.isHidden = false
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return filteredList.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("STTagTableViewCell", forIndexPath: indexPath) as! STTagTableViewCell
-        let whiteAttribute = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        let colorAttribute = [NSForegroundColorAttributeName: filteredList[indexPath.row].type.tagLightColor.lightenByPercentage(0.3)]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "STTagTableViewCell", for: indexPath) as! STTagTableViewCell
+        let whiteAttribute = [NSForegroundColorAttributeName: UIColor.white]
+        let colorAttribute = [NSForegroundColorAttributeName: filteredList[indexPath.row].type.tagLightColor.lighten(byPercentage: 0.3)]
         let text = NSMutableAttributedString()
         let sharpText = NSAttributedString(string: "# ", attributes: colorAttribute)
         let tagText = NSAttributedString(string: filteredList[indexPath.row].text, attributes: whiteAttribute)
-        text.appendAttributedString(sharpText)
-        text.appendAttributedString(tagText)
+        text.append(sharpText)
+        text.append(tagText)
         cell.tagLabel.attributedText = text
         return cell
     }
     
-    func addTagAtIndex(index: Int) {
+    func addTagAtIndex(_ index: Int) {
         let tag = filteredList[index]
         searchController.addTag(tag)
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         addTagAtIndex(indexPath.row)
     }
 

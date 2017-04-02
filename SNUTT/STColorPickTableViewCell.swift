@@ -25,25 +25,25 @@ class STColorPickTableViewCell: STLectureDetailTableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.accessoryType = .None
-        self.selectionStyle = .None
+        self.accessoryType = .none
+        self.selectionStyle = .none
         self.addSubview(bgColorView)
         self.addSubview(fgColorView)
         color = STColor()
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    override func setEditable (editable: Bool) {
+    override func setEditable (_ editable: Bool) {
         if editable {
-            self.accessoryType = .DisclosureIndicator
+            self.accessoryType = .disclosureIndicator
         } else {
-            self.accessoryType = .None
+            self.accessoryType = .none
         }
     }
 }

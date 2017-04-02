@@ -20,11 +20,11 @@ class STTimetableListController: UITableViewController {
                 self.timetableList = list
                 self.reloadList()
             }, failure: {
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
         })
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         reloadList()
     }
 
@@ -33,7 +33,7 @@ class STTimetableListController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func addTimetable(title : String, courseBook : STCourseBook) {
+    func addTimetable(_ title : String, courseBook : STCourseBook) {
         let newTimetable = STTimetable(courseBook: courseBook, title: title)
         timetableList.append(newTimetable)
         reloadList()
@@ -41,8 +41,8 @@ class STTimetableListController: UITableViewController {
             self.timetableList = list
             self.reloadList()
             }, failure: { _ in
-                let index = self.timetableList.indexOf(newTimetable)
-                self.timetableList.removeAtIndex(index!)
+                let index = self.timetableList.index(of: newTimetable)
+                self.timetableList.remove(at: index!)
         })
     }
     
@@ -52,7 +52,7 @@ class STTimetableListController: UITableViewController {
     }
     
     func sortTimetableList() {
-        timetableList.sortInPlace({a, b in
+        timetableList.sort(by: {a, b in
             return a.quarter > b.quarter
         })
         
@@ -65,39 +65,39 @@ class STTimetableListController: UITableViewController {
         indexList.append(timetableList.count)
     }
     
-    func indexPathToIndex (indexPath : NSIndexPath ) -> Int {
+    func indexPathToIndex (_ indexPath : IndexPath ) -> Int {
         return indexList[indexPath.section]+indexPath.row
     }
     
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return indexList.count-1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return indexList[section+1]-indexList[section]
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("STTimetableListCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "STTimetableListCell", for: indexPath)
         let timetable = timetableList[indexList[indexPath.section]+indexPath.row]
         cell.textLabel!.text = timetable.title
         if STTimetableManager.sharedInstance.currentTimetable?.id == timetable.id {
-            cell.accessoryType = .Checkmark
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = .None
+            cell.accessoryType = .none
         }
         //configure the cell for loading timetable
         return cell
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return timetableList[indexList[section]].quarter.longString()
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = indexList[indexPath.section]+indexPath.row
         if timetableList[index].id == nil {
             return
@@ -107,8 +107,8 @@ class STTimetableListController: UITableViewController {
                 STAlertView.showAlert(title: "시간표 로딩 실패", message: "선택한 시간표가 서버에 존재하지 않습니다.")
             }
             STTimetableManager.sharedInstance.currentTimetable = timetable
-            tableView.deselectRowAtIndexPath(indexPath, animated: false)
-            self.navigationController?.popViewControllerAnimated(true)
+            tableView.deselectRow(at: indexPath, animated: false)
+            self.navigationController?.popViewController(animated: true)
             }, failure: { _ in
                 
         })
@@ -116,7 +116,7 @@ class STTimetableListController: UITableViewController {
     
     
     // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         let index = indexPathToIndex(indexPath)
         if timetableList[index].isLoaded {
             if STTimetableManager.sharedInstance.currentTimetable?.id == timetableList[index].id  {
@@ -129,21 +129,21 @@ class STTimetableListController: UITableViewController {
     }
     
     // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             let index = indexPathToIndex(indexPath)
             let timetable = timetableList[index]
             if timetable.id == nil {
                 return
             }
             STNetworking.deleteTimetable(timetable.id!, done: {
-                self.timetableList.removeAtIndex(index)
+                self.timetableList.remove(at: index)
                 let isSectionDeleted = self.indexList[indexPath.section+1] - self.indexList[indexPath.section] == 1
                 self.sortTimetableList()
                 if isSectionDeleted {
-                    self.tableView.deleteSections(NSIndexSet(index: indexPath.section), withRowAnimation: .Fade)
+                    self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
                 } else {
-                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
                 }
             }, failure: { _ in
                 
@@ -172,9 +172,9 @@ class STTimetableListController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "STTimetableAddController" {
-            ((segue.destinationViewController as! UINavigationController).topViewController as! STTimetableAddController).timetableListController = self
+            ((segue.destination as! UINavigationController).topViewController as! STTimetableAddController).timetableListController = self
         }
     }
     

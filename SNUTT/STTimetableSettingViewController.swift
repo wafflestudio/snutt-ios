@@ -38,35 +38,35 @@ class STTimetableSettingViewController: UITableViewController {
     }
     
     func setUI() {
-        let sliders : [TTRangeSlider!] = [daySlider, timeSlider]
+        let sliders : [TTRangeSlider?] = [daySlider, timeSlider]
         var textColor : UIColor! = nil
         var tintColor : UIColor! = nil
         var handleColor : UIColor! = nil
         if STDefaults[.autoFit] {
-            trimmingSwitch.on = true
-            textColor = UIColor.grayColor()
-            tintColor = UIColor.lightGrayColor()
-            handleColor = UIColor.lightGrayColor()
+            trimmingSwitch.isOn = true
+            textColor = UIColor.gray
+            tintColor = UIColor.lightGray
+            handleColor = UIColor.lightGray
         } else {
-            trimmingSwitch.on = false
-            textColor = UIColor.blackColor()
-            tintColor = UIColor.lightGrayColor()
-            handleColor = UIColor.blackColor()
+            trimmingSwitch.isOn = false
+            textColor = UIColor.black
+            tintColor = UIColor.lightGray
+            handleColor = UIColor.black
         }
         for slider in sliders {
-            slider.enabled = !STDefaults[.autoFit]
-            slider.tintColor = tintColor
-            slider.handleColor = handleColor
-            slider.minLabelColour = handleColor
-            slider.maxLabelColour = handleColor
-            slider.tintColorBetweenHandles = handleColor
+            slider?.isEnabled = !STDefaults[.autoFit]
+            slider?.tintColor = tintColor
+            slider?.handleColor = handleColor
+            slider?.minLabelColour = handleColor
+            slider?.maxLabelColour = handleColor
+            slider?.tintColorBetweenHandles = handleColor
         }
         dayText.textColor = textColor
         timeText.textColor = textColor
     }
     
     func saveSetting() {
-        STDefaults[.autoFit] = trimmingSwitch.on
+        STDefaults[.autoFit] = trimmingSwitch.isOn
         STDefaults[.timeRange] = [Double(timeSlider.selectedMinimum),
                                   Double(timeSlider.selectedMaximum)]
         STDefaults[.dayRange] = [Int(daySlider.selectedMinimum),
@@ -93,14 +93,14 @@ class STTimetableSettingViewController: UITableViewController {
     }
     */
     
-    override func willMoveToParentViewController(parent: UIViewController?) {
+    override func willMove(toParentViewController parent: UIViewController?) {
         if parent == nil { // check if it is popping from the navigation stack
             saveSetting()
             STEventCenter.sharedInstance.postNotification(event: .SettingChanged, object: self)
         }
     }
     
-    @IBAction func autoFitValueChanged(sender: AnyObject) {
+    @IBAction func autoFitValueChanged(_ sender: AnyObject) {
         saveSetting()
         setUI()
     }

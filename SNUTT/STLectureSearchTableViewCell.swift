@@ -24,7 +24,7 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         didSet {
             titleLabel.text = lecture?.title
             descriptionLabel.text = "(\(lecture!.instructor) / \(lecture!.credit)학점)"
-            if self.selected {
+            if self.isSelected {
                 tagLabel.text = lecture!.remark == "" ? lecture!.tagDescription : lecture!.remark
             } else {
                 tagLabel.text = lecture!.tagDescription
@@ -34,9 +34,9 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         }
     }
     
-    @IBAction func addButtonClicked(sender: AnyObject) {
+    @IBAction func addButtonClicked(_ sender: AnyObject) {
         STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
-        tableView.deselectRowAtIndexPath(tableView.indexPathForCell(self)!, animated: true)
+        tableView.deselectRow(at: tableView.indexPath(for: self)!, animated: true)
         STTimetableManager.sharedInstance.addLecture(lecture!, object: self)
     }
     
@@ -46,20 +46,20 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.backgroundColor = UIColor.clearColor()
-        self.selectionStyle = .None
+        self.backgroundColor = UIColor.clear
+        self.selectionStyle = .none
         // Initialization code
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         if selected {
             self.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
-            addButton.hidden = false
+            addButton.isHidden = false
             tagLabel.text = lecture!.remark == "" ? lecture!.tagDescription : lecture!.remark
         } else {
-            self.backgroundColor = UIColor.clearColor()
-            addButton.hidden = true
+            self.backgroundColor = UIColor.clear
+            addButton.isHidden = true
             tagLabel.text = lecture?.tagDescription
         }
         

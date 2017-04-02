@@ -14,38 +14,38 @@ enum STCourseBookRouter : STRouter {
     static let baseURLString: String = STConfig.sharedInstance.baseURL + "/course_books"
     static let shouldAddToken: Bool = true
     
-    case Get
-    case Recent
-    case Syllabus(quarter: STQuarter, lecture: STLecture)
+    case get
+    case recent
+    case syllabus(quarter: STQuarter, lecture: STLecture)
     
     
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         switch self {
-        case .Get, .Syllabus:
-            return .GET
-        case .Recent:
-            return .GET
+        case .get, .syllabus:
+            return .get
+        case .recent:
+            return .get
         }
     }
     
     var path: String {
         switch self {
-        case .Get:
+        case .get:
             return "/"
-        case .Recent:
+        case .recent:
             return "/recent"
-        case .Syllabus:
+        case .syllabus:
             return "/official"
         }
     }
     
-    var parameters: [String : AnyObject]? {
+    var parameters: [String : Any]? {
         switch self {
-        case .Get:
+        case .get:
             return nil
-        case .Recent:
+        case .recent:
             return nil
-        case let .Syllabus(quarter, lecture):
+        case let .syllabus(quarter, lecture):
             if lecture.courseNumber == nil || lecture.lectureNumber == nil {
                 return nil
             }

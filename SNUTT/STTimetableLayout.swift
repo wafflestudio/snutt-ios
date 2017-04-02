@@ -28,9 +28,9 @@ class STTimetableLayout: UICollectionViewLayout {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes {
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes {
         
-        let ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+        let ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
         let type = timetableView!.getCellType(indexPath)
         
         var width : CGFloat
@@ -39,7 +39,7 @@ class STTimetableLayout: UICollectionViewLayout {
         var locY : CGFloat
         
         switch type {
-        case .Course, .TemporaryCourse:
+        case .course, .temporaryCourse:
             let singleClass = timetableView.getSingleClass(indexPath)
             let rowIndex = CGFloat(timetableView.getRowFromPeriod(singleClass.time.startPeriod))
             let columnIndex = timetableView.dayToColumn[singleClass.time.day.rawValue]
@@ -48,19 +48,19 @@ class STTimetableLayout: UICollectionViewLayout {
             height = HeightPerRow * CGFloat(singleClass.time.duration) + 0.4
             locX = CGFloat(columnIndex) * WidthPerColumn + WidthForHeader
             locY = HeightForHeader + HeightPerRow * rowIndex - 0.2
-        case .HeaderColumn:
+        case .headerColumn:
             width = WidthPerColumn
             height = HeightForHeader
             let columnIndex = timetableView.dayToColumn[indexPath.row]
             locX = CGFloat(columnIndex) * WidthPerColumn + WidthForHeader
             locY = CGFloat(0)
-        case .HeaderRow:
+        case .headerRow:
             width = WidthForHeader
             height = HeightPerRow
             locX = CGFloat(0)
             let rowIndex = CGFloat(timetableView.getRowFromPeriod(Double(indexPath.row)))
             locY = HeightForHeader + rowIndex * HeightPerRow
-        case .Slot:
+        case .slot:
             width = ContentWidth
             height = ContentHeight
             locX = CGFloat(0)
@@ -69,7 +69,7 @@ class STTimetableLayout: UICollectionViewLayout {
         ret.frame = CGRect(x: locX, y: locY, width: width, height: height)
         return ret
     }
-    override func collectionViewContentSize() -> CGSize {
+    override var collectionViewContentSize : CGSize {
         updateContentSize()
         return CGSize(width: ContentWidth, height: ContentHeight)
     }
@@ -83,21 +83,21 @@ class STTimetableLayout: UICollectionViewLayout {
         HeightForHeader = timetableView!.RatioForHeader * HeightPerRow
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var ret : [UICollectionViewLayoutAttributes] = []
-        for i in 0..<(timetableView!.numberOfSectionsInCollectionView(collectionView!)) {
+        for i in 0..<(timetableView!.numberOfSections(in: collectionView!)) {
             for j in 0..<(timetableView!.collectionView(collectionView!, numberOfItemsInSection: i)) {
-                let indexPath = NSIndexPath(forRow: j, inSection: i)
-                ret.append(self.layoutAttributesForItemAtIndexPath(indexPath))
+                let indexPath = IndexPath(row: j, section: i)
+                ret.append(self.layoutAttributesForItem(at: indexPath))
             }
         }
         return ret.map({ attribute in
             let type = self.timetableView.getCellType(attribute.indexPath);
             switch (type) {
-            case .Slot: attribute.zIndex = -1
-            case .Course: attribute.zIndex = 0
-            case .TemporaryCourse: attribute.zIndex = 1
-            case .HeaderRow, .HeaderColumn: attribute.zIndex = 2
+            case .slot: attribute.zIndex = -1
+            case .course: attribute.zIndex = 0
+            case .temporaryCourse: attribute.zIndex = 1
+            case .headerRow, .headerColumn: attribute.zIndex = 2
             }
             return attribute
         })

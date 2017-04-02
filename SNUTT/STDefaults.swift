@@ -23,7 +23,7 @@ extension DefaultsKeys {
     static let colorList = DefaultsKey<STColorList?>("colorList")
 }
 
-extension NSUserDefaults {
+extension UserDefaults {
     subscript(key: DefaultsKey<NSDictionary?>) -> NSDictionary? {
         get { return unarchive(key) }
         set { archive(key, newValue) }
@@ -34,4 +34,4 @@ extension NSUserDefaults {
     }
 }
 
-public let STDefaults = NSUserDefaults(suiteName: NSBundle.mainBundle().objectForInfoDictionaryKey("AppGroupID") as! String)!
+public let STDefaults = UserDefaults(suiteName: Bundle.main.object(forInfoDictionaryKey: "AppGroupID") as! String)!

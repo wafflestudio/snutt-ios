@@ -9,5 +9,5 @@
 import Foundation
 
 enum STTimetableCellType {
-    case HeaderColumn, HeaderRow, Slot, Course, TemporaryCourse
+    case headerColumn, headerRow, slot, course, temporaryCourse
 }

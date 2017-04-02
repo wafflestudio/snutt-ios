@@ -14,37 +14,37 @@ enum STEtcRouter : STRouter {
     static let baseURLString : String = STConfig.sharedInstance.baseURL
     static let shouldAddToken: Bool = false
     
-    case Feedback(email: String?, message: String)
-    case GetColor
+    case feedback(email: String?, message: String)
+    case getColor
     //MARK: STRouter
     
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         switch self {
-        case .Feedback:
-            return .POST
-        case .GetColor:
-            return .GET
+        case .feedback:
+            return .post
+        case .getColor:
+            return .get
         }
     }
     
     var path: String {
         switch self {
-        case .Feedback:
+        case .feedback:
             return "/feedback"
-        case .GetColor:
+        case .getColor:
             return "/colors"
         }
     }
     
-    var parameters: [String : AnyObject]? {
+    var parameters: [String : Any]? {
         switch self {
-        case let .Feedback(email, message):
-            var ret: [String : AnyObject] = [ "message" : message ]
+        case let .feedback(email, message):
+            var ret: [String : Any] = [ "message" : message ]
             if let emailStr = email {
                 ret["email"] = emailStr
             }
             return ret
-        case .GetColor:
+        case .getColor:
             return nil
         }
     }

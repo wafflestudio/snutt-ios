@@ -19,11 +19,11 @@ enum STEvent : String {
     case ColorListUpdated = "ColorListUpdated"
 }
 
-class STEventCenter : NSNotificationCenter {
+class STEventCenter : NotificationCenter {
     
     // MARK: Singleton
     
-    private static var sharedEventCenter : STEventCenter? = nil
+    fileprivate static var sharedEventCenter : STEventCenter? = nil
     
     static var sharedInstance : STEventCenter {
         get {
@@ -33,16 +33,16 @@ class STEventCenter : NSNotificationCenter {
             return sharedEventCenter!
         }
     }
-    private override init() {
+    fileprivate override init() {
         super.init()
     }
     
-    func addObserver(observer: AnyObject, selector aSelector: Selector, event aEvent : STEvent, object anObject: AnyObject?) {
-        self.addObserver(observer, selector: aSelector, name: aEvent.rawValue, object: anObject)
+    func addObserver(_ observer: AnyObject, selector aSelector: Selector, event aEvent : STEvent, object anObject: AnyObject?) {
+        self.addObserver(observer, selector: aSelector, name: NSNotification.Name(rawValue: aEvent.rawValue), object: anObject)
     }
     
     func postNotification(event aEvent : STEvent, object anObject: AnyObject?) {
-        self.postNotificationName(aEvent.rawValue, object: anObject)
+        self.post(name: Notification.Name(rawValue: aEvent.rawValue), object: anObject)
     }
     
 }

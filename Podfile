@@ -3,12 +3,12 @@ use_frameworks!
 
 target 'SNUTT' do
   pod 'EGOTableViewPullRefreshAndLoadMore'
-  pod 'Alamofire', '~> 3.0'
+  pod 'Alamofire'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'SwiftyJSON', '~> 2.3'
-  pod 'B68UIFloatLabelTextField', :git => 'https://github.com/Rajin9601/B68FloatingLabelTextField.git', :branch => 'Swift_2.0'
-  pod 'ChameleonFramework/Swift'
+  pod 'SwiftyJSON'
+  pod 'B68UIFloatLabelTextField', :git => 'https://github.com/Rajin9601/B68FloatingLabelTextField.git', :branch => 'Swift_3.0'
+  pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
   pod 'ActionSheetPicker-3.0'
   pod 'Color-Picker-for-iOS', '~> 2.0'
   pod 'FBSDKCoreKit'
@@ -23,14 +23,14 @@ target 'SNUTT' do
 end
 
 target 'SNUTT Today' do
-  pod 'SwiftyJSON', '~> 2.3'
+  pod 'SwiftyJSON'
   pod 'SwiftyUserDefaults', :git => 'https://github.com/Rajin9601/SwiftyUserDefaults.git'
 end
 
 post_install do |installer|
-    installer.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-            config.build_settings['SWIFT_VERSION'] = '2.3'
-        end
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '3.0'
     end
+  end
 end

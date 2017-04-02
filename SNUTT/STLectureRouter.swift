@@ -15,52 +15,52 @@ enum STLectureRouter : STRouter {
     static let baseURLString = STConfig.sharedInstance.baseURL+"/tables"
     static let shouldAddToken: Bool = true
     
-    case AddCustomLecture(timetableId: String, lecture: STLecture)
-    case AddLecture(timetableId: String, lectureId: String)
-    case DeleteLecture(timetableId: String, lecture: STLecture)
-    case UpdateLecture(timetableId: String, oldLecture: STLecture, newLecture: STLecture)
-    case ResetLecture(timetableId: String, lectureId: String)
+    case addCustomLecture(timetableId: String, lecture: STLecture)
+    case addLecture(timetableId: String, lectureId: String)
+    case deleteLecture(timetableId: String, lecture: STLecture)
+    case updateLecture(timetableId: String, oldLecture: STLecture, newLecture: STLecture)
+    case resetLecture(timetableId: String, lectureId: String)
     
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         switch self {
-        case .AddCustomLecture:
-            return .POST
-        case .AddLecture:
-            return .POST
-        case .DeleteLecture:
-            return .DELETE
-        case .UpdateLecture, .ResetLecture:
-            return .PUT
+        case .addCustomLecture:
+            return .post
+        case .addLecture:
+            return .post
+        case .deleteLecture:
+            return .delete
+        case .updateLecture, .resetLecture:
+            return .put
         }
     }
     
     var path: String {
         switch self {
-        case .AddCustomLecture(let timetableId, _ ):
+        case .addCustomLecture(let timetableId, _ ):
             return "/\(timetableId)/lecture"
-        case .AddLecture(let timetableId, let lectureId ):
+        case .addLecture(let timetableId, let lectureId ):
             return "/\(timetableId)/lecture/\(lectureId)"
-        case .DeleteLecture(let timetableId, let lecture ):
+        case .deleteLecture(let timetableId, let lecture ):
             return "/\(timetableId)/lecture/\(lecture.id ?? "")"
-        case let .UpdateLecture(timetableId, curLecture, _):
+        case let .updateLecture(timetableId, curLecture, _):
             return "/\(timetableId)/lecture/\(curLecture.id ?? "")"
-        case let .ResetLecture(timetableId, lectureId):
+        case let .resetLecture(timetableId, lectureId):
             return "/\(timetableId)/lecture/\(lectureId)/reset"
         }
     }
     
-    var parameters: [String : AnyObject]? {
+    var parameters: [String : Any]? {
         switch self {
-        case .AddCustomLecture( _, let lecture):
+        case .addCustomLecture( _, let lecture):
             var dict = lecture.toDictionary()
-            dict.removeValueForKey("id")
+            dict.removeValue(forKey: "id")
             return dict
-        case .AddLecture:
+        case .addLecture:
             return nil
-        case .DeleteLecture:
+        case .deleteLecture:
             return nil
-        case let .UpdateLecture(_, oldLecture, newLecture):
-            var dict : [String : AnyObject] = [:]
+        case let .updateLecture(_, oldLecture, newLecture):
+            var dict : [String : Any] = [:]
             let oldDict = oldLecture.toDictionary()
             let newDict = newLecture.toDictionary()
             
@@ -71,7 +71,7 @@ enum STLectureRouter : STRouter {
                 }
             }
             return dict
-        case .ResetLecture:
+        case .resetLecture:
             return nil
         }
     }

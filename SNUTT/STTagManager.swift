@@ -13,7 +13,7 @@ class STTagManager {
     
     // MARK: Singleton
     
-    private static var sharedManager : STTagManager? = nil
+    fileprivate static var sharedManager : STTagManager? = nil
     static var sharedInstance : STTagManager{
         get {
             if sharedManager == nil {
@@ -23,7 +23,7 @@ class STTagManager {
         }
     }
     
-    private init() {
+    fileprivate init() {
         self.loadData()
         STEventCenter.sharedInstance.addObserver(self, selector: "loadData", event: STEvent.CurrentTimetableSwitched, object: nil)
     }
@@ -34,7 +34,7 @@ class STTagManager {
         guard let quarter = STTimetableManager.sharedInstance.currentTimetable?.quarter else {
             return
         }
-        let tagList = NSKeyedUnarchiver.unarchiveObjectWithFile(getDocumentsDirectory().stringByAppendingPathComponent("tagList\(quarter.shortString()).archive")) as? STTagList
+        let tagList = NSKeyedUnarchiver.unarchiveObject(withFile: getDocumentsDirectory().appendingPathComponent("tagList\(quarter.shortString()).archive")) as? STTagList
         if tagList != nil {
             self.tagList = tagList
         } else {
@@ -43,14 +43,14 @@ class STTagManager {
         self.updateTagList()
     }
     
-    func saveData(quarter: STQuarter) {
-        NSKeyedArchiver.archiveRootObject(self.tagList, toFile: getDocumentsDirectory().stringByAppendingPathComponent("tagList\(quarter.shortString()).archive"))
+    func saveData(_ quarter: STQuarter) {
+        NSKeyedArchiver.archiveRootObject(self.tagList, toFile: getDocumentsDirectory().appendingPathComponent("tagList\(quarter.shortString()).archive"))
     }
     
     
     
     
-    func getTagListWithQuarter(quarter: STQuarter, updatedTime : Int64) {
+    func getTagListWithQuarter(_ quarter: STQuarter, updatedTime : Int64) {
         STNetworking.getTagListForQuarter(quarter, done: { tagList in
             if self.tagList.quarter == quarter {
                 self.tagList = tagList

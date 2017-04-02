@@ -10,27 +10,27 @@ import Foundation
 import UIKit
 
 class STUtil {
-    static func getRangeFromNSRange(string : String, range : NSRange) -> Range<String.Index>{
-        let startIndex = string.startIndex.advancedBy(range.location)
-        let endIndex = startIndex.advancedBy(range.length)
-        return Range(start: startIndex, end: endIndex)
+    static func getRangeFromNSRange(_ string : String, range : NSRange) -> Range<String.Index>{
+        let startIndex = string.characters.index(string.startIndex, offsetBy: range.location)
+        let endIndex = string.characters.index(startIndex, offsetBy: range.length)
+        return (startIndex ..< endIndex)
     }
     
-    static func validateEmail(candidate: String) -> Bool {
+    static func validateEmail(_ candidate: String) -> Bool {
         // from http://emailregex.com
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
-        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluateWithObject(candidate)
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: candidate)
     }
     
-    static func validatePassword(password: String) -> Bool {
-        if let _ = password.rangeOfString("^(?=.*\\d)(?=.*[a-z])\\S{6,20}$", options: [.RegularExpressionSearch, .CaseInsensitiveSearch]) {
+    static func validatePassword(_ password: String) -> Bool {
+        if let _ = password.range(of: "^(?=.*\\d)(?=.*[a-z])\\S{6,20}$", options: [.regularExpression, .caseInsensitive]) {
             return true
         }
         return false
     }
     
-    static func validateId(id: String) -> Bool {
-        if let _ = id.rangeOfString("^[a-z0-9]{4,32}$", options: [.RegularExpressionSearch, .CaseInsensitiveSearch]) {
+    static func validateId(_ id: String) -> Bool {
+        if let _ = id.range(of: "^[a-z0-9]{4,32}$", options: [.regularExpression, .caseInsensitive]) {
             return true
         }
         return false
@@ -45,7 +45,7 @@ extension String {
         let sc : Character = "\u{FEFF}"
         var tmp : [Character] = []
         var words : [String] = []
-        for (index, ch) in self.characters.enumerate() {
+        for (index, ch) in self.characters.enumerated() {
             if ch == "\n" || ch == " " {
                 words.append(String(tmp))
                 words.append(String(ch))
@@ -60,7 +60,7 @@ extension String {
         
         let ret = words.map({ (word: String) -> (String) in
             var tmp : [Character] = []
-            for (index, ch) in word.characters.enumerate() {
+            for (index, ch) in word.characters.enumerated() {
                 tmp.append(ch)
                 tmp.append(sc)
             }
@@ -68,29 +68,29 @@ extension String {
             return String(tmp)
         })
         
-        return ret.joinWithSeparator("")
+        return ret.joined(separator: "")
     }
 }
 
 extension UIView {
     
-    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
+    func roundCorners(_ corners:UIRectCorner, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         let mask = CAShapeLayer()
-        mask.path = path.CGPath
+        mask.path = path.cgPath
         self.layer.mask = mask
     }
     
-    func roundCorner(radius: CGFloat) {
+    func roundCorner(_ radius: CGFloat) {
         self.layer.cornerRadius = radius
         self.layer.masksToBounds = true
     }
     
-    func setBottomBorder(color: UIColor, width: Double)
+    func setBottomBorder(_ color: UIColor, width: Double)
     {
         let border = CALayer()
         let width = CGFloat(width)
-        border.borderColor = color.CGColor
+        border.borderColor = color.cgColor
         border.frame = CGRect(x: 0, y: self.frame.size.height - width,   width:  self.frame.size.width, height: self.frame.size.height)
         
         border.borderWidth = width
@@ -98,9 +98,9 @@ extension UIView {
         self.layer.masksToBounds = true
     }
     
-    func mask(rect : CGRect) {
+    func mask(_ rect : CGRect) {
         let maskLayer = CAShapeLayer()
-        let path = CGPathCreateWithRect(rect, nil)
+        let path = CGPath(rect: rect, transform: nil)
         maskLayer.path = path
         self.layer.mask = maskLayer
     }
@@ -140,34 +140,34 @@ extension Array where Element : DictionaryRepresentable{
 }
 
 func getDocumentsDirectory() -> NSString {
-    let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+    let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let documentsDirectory = paths[0]
-    return documentsDirectory
+    return documentsDirectory as NSString
 }
 
-extension NSDate {
-    func yearsFrom(date: NSDate) -> Int {
-        return NSCalendar.currentCalendar().components(.Year, fromDate: date, toDate: self, options: []).year
+extension Date {
+    func yearsFrom(_ date: Date) -> Int {
+        return (Calendar.current as NSCalendar).components(.year, from: date, to: self, options: []).year!
     }
-    func monthsFrom(date: NSDate) -> Int {
-        return NSCalendar.currentCalendar().components(.Month, fromDate: date, toDate: self, options: []).month
+    func monthsFrom(_ date: Date) -> Int {
+        return (Calendar.current as NSCalendar).components(.month, from: date, to: self, options: []).month!
     }
-    func weeksFrom(date: NSDate) -> Int {
-        return NSCalendar.currentCalendar().components(.WeekOfYear, fromDate: date, toDate: self, options: []).weekOfYear
+    func weeksFrom(_ date: Date) -> Int {
+        return (Calendar.current as NSCalendar).components(.weekOfYear, from: date, to: self, options: []).weekOfYear!
     }
-    func daysFrom(date: NSDate) -> Int {
-        return NSCalendar.currentCalendar().components(.Day, fromDate: date, toDate: self, options: []).day
+    func daysFrom(_ date: Date) -> Int {
+        return (Calendar.current as NSCalendar).components(.day, from: date, to: self, options: []).day!
     }
-    func hoursFrom(date: NSDate) -> Int {
-        return NSCalendar.currentCalendar().components(.Hour, fromDate: date, toDate: self, options: []).hour
+    func hoursFrom(_ date: Date) -> Int {
+        return (Calendar.current as NSCalendar).components(.hour, from: date, to: self, options: []).hour!
     }
-    func minutesFrom(date: NSDate) -> Int{
-        return NSCalendar.currentCalendar().components(.Minute, fromDate: date, toDate: self, options: []).minute
+    func minutesFrom(_ date: Date) -> Int{
+        return (Calendar.current as NSCalendar).components(.minute, from: date, to: self, options: []).minute!
     }
-    func secondsFrom(date: NSDate) -> Int{
-        return NSCalendar.currentCalendar().components(.Second, fromDate: date, toDate: self, options: []).second
+    func secondsFrom(_ date: Date) -> Int{
+        return (Calendar.current as NSCalendar).components(.second, from: date, to: self, options: []).second!
     }
-    func offsetFrom(date: NSDate) -> String {
+    func offsetFrom(_ date: Date) -> String {
         if yearsFrom(date)   > 0 { return "\(yearsFrom(date))년전"   }
         if monthsFrom(date)  > 0 { return "\(monthsFrom(date))달전"  }
         if daysFrom(date)    > 0 { return "\(daysFrom(date))일전"    }

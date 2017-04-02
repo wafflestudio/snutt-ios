@@ -16,33 +16,33 @@ class STAlertView {
     // It would be good idea to make the alertview as stack internally and show them one by one,
     // or there can be other solutions.
     
-    static private func createAlert(title title: String, message: String) -> UIAlertController {
-        return UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+    static fileprivate func createAlert(title: String, message: String) -> UIAlertController {
+        return UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
     }
     
-    static private func showAlert(alert: UIAlertController) {
-        if var topController = UIApplication.sharedApplication().keyWindow?.rootViewController {
+    static fileprivate func showAlert(_ alert: UIAlertController) {
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
                 topController = presentedViewController
             }
-            topController.presentViewController(alert, animated: true, completion: nil)
+            topController.present(alert, animated: true, completion: nil)
         }
     }
     
-    static func showAlert(title title: String, message: String) {
+    static func showAlert(title: String, message: String) {
         let alert = STAlertView.createAlert(title: title, message: message)
-        alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.Default, handler: nil))
+        alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
         STAlertView.showAlert(alert)
     }
     
-    static func showAlert(title title: String, message: String, actions: [UIAlertAction]) {
+    static func showAlert(title: String, message: String, actions: [UIAlertAction]) {
         let alert = STAlertView.createAlert(title: title, message: message)
         for it in actions {
             alert.addAction(it)
         }
         STAlertView.showAlert(alert)
     }
-    static func showAlert(title title: String, message: String, configAlert: (UIAlertController) -> ()) {
+    static func showAlert(title: String, message: String, configAlert: (UIAlertController) -> ()) {
         let alert = STAlertView.createAlert(title: title, message: message)
         configAlert(alert)
         STAlertView.showAlert(alert)

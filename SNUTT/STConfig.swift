@@ -12,7 +12,7 @@ import Alamofire
 class STConfig {
     // MARK: Singleton
     
-    private static var sharedConfig : STConfig? = nil
+    fileprivate static var sharedConfig : STConfig? = nil
     
     static var sharedInstance : STConfig {
         get {
@@ -22,7 +22,7 @@ class STConfig {
             return sharedConfig!
         }
     }
-    private init() {
+    fileprivate init() {
     }
     
     var baseURL : String! = nil

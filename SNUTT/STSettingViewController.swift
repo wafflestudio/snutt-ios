@@ -16,7 +16,7 @@ class STSettingViewController: UITableViewController {
         versionCell.detailTextLabel!.text = "최신 버전 사용중"
         STNetworking.checkLatestAppVersion { version in
             STDefaults[.appVersion] = version
-            let currentVersion = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
+            let currentVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
             if (currentVersion < version) {
                 self.versionCell.detailTextLabel!.text = "업데이트 가능"
             } else {
@@ -35,13 +35,13 @@ class STSettingViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.section, indexPath.row) == (4,0) {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            let logout = UIAlertAction(title: "로그아웃", style: .Destructive, handler: { _ in
+            tableView.deselectRow(at: indexPath, animated: true)
+            let logout = UIAlertAction(title: "로그아웃", style: .destructive, handler: { _ in
                 STUser.logOut()
             })
-            let cancel = UIAlertAction(title: "취소", style: .Cancel, handler: nil)
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             STAlertView.showAlert(title: "로그아웃", message: "로그아웃 하시겠습니까?", actions: [cancel, logout])
 
         }

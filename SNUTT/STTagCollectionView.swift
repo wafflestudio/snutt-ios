@@ -18,18 +18,18 @@ class STTagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
         self.delegate = self
         self.dataSource = self
         let nib = UINib(nibName: "STTagCollectionViewCell", bundle: nil)
-        self.registerNib(nib, forCellWithReuseIdentifier: "STTagCollectionViewCell")
-        sizingCell = nib.instantiateWithOwner(self, options: nil)[0] as! STTagCollectionViewCell
+        self.register(nib, forCellWithReuseIdentifier: "STTagCollectionViewCell")
+        sizingCell = nib.instantiate(withOwner: self, options: nil)[0] as! STTagCollectionViewCell
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         sizingCell.searchTag = tagList[indexPath.row]
-        return sizingCell.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize, withHorizontalFittingPriority: Float(self.frame.width), verticalFittingPriority: 27)
+        return sizingCell.systemLayoutSizeFitting(UILayoutFittingCompressedSize, withHorizontalFittingPriority: Float(self.frame.width), verticalFittingPriority: 27)
     }
     
     func hide() {
         searchController.tagCollectionViewConstraint.priority = 700
-        UIView.animateWithDuration(0.2, animations:{
+        UIView.animate(withDuration: 0.2, animations:{
             self.layoutIfNeeded()
             self.searchController.tagTableView.contentInset.top = 5
             self.searchController.tagTableView.layoutIfNeeded()
@@ -38,7 +38,7 @@ class STTagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
     
     func show() {
         searchController.tagCollectionViewConstraint.priority = 800
-        UIView.animateWithDuration(0.2, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.layoutIfNeeded()
             self.searchController.tagTableView.contentInset.top = -2
         })
@@ -57,16 +57,16 @@ class STTagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
         super.reloadData()
     }
     
-    override func numberOfSections() -> Int {
+    override var numberOfSections : Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tagList.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("STTagCollectionViewCell", forIndexPath: indexPath) as! STTagCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "STTagCollectionViewCell", for: indexPath) as! STTagCollectionViewCell
         cell.layer.cornerRadius = cell.frame.height / 2.0
         cell.searchTag = tagList[indexPath.row]
         cell.collectionView = self

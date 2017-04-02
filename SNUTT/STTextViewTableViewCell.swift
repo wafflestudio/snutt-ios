@@ -18,23 +18,23 @@ class STTextViewTableViewCell: STLectureDetailTableViewCell, UITextViewDelegate 
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.selectionStyle = .None
+        self.selectionStyle = .none
         textView.delegate = self
-        textView.textContainerInset = UIEdgeInsetsZero
+        textView.textContainerInset = UIEdgeInsets.zero
     }
 
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         doneBlock?(textView.text)
     }
 
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         doneBlock?(textView.text)
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
     }
 
-    override func setEditable (editable: Bool) {
-        textView.editable = editable
+    override func setEditable (_ editable: Bool) {
+        textView.isEditable = editable
     }
 
 }

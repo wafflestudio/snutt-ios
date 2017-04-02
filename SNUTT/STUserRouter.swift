@@ -14,79 +14,79 @@ enum STUserRouter : STRouter {
     static let baseURLString: String = STConfig.sharedInstance.baseURL + "/user"
     static let shouldAddToken: Bool = true
     
-    case GetUser
-    case EditUser(email: String)
-    case ChangePassword(oldPassword: String, newPassword: String)
-    case AddLocalId(id: String, password: String)
-    case AddFB(id: String, token: String)
-    case DetachFB
-    case GetFB
-    case AddDevice(id: String)
-    case DeleteDevice(id: String)
-    case DeleteUser
+    case getUser
+    case editUser(email: String)
+    case changePassword(oldPassword: String, newPassword: String)
+    case addLocalId(id: String, password: String)
+    case addFB(id: String, token: String)
+    case detachFB
+    case getFB
+    case addDevice(id: String)
+    case deleteDevice(id: String)
+    case deleteUser
     
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         switch self {
-        case .GetUser:
-            return .GET
-        case .EditUser:
-            return .PUT
-        case .ChangePassword:
-            return .PUT
-        case .AddLocalId:
-            return .POST
-        case .AddFB:
-            return .POST
-        case .DetachFB:
-            return .DELETE
-        case .GetFB:
-            return .GET
-        case .AddDevice:
-            return .POST
-        case .DeleteDevice:
-            return .DELETE
-        case .DeleteUser:
-            return .DELETE
+        case .getUser:
+            return .get
+        case .editUser:
+            return .put
+        case .changePassword:
+            return .put
+        case .addLocalId:
+            return .post
+        case .addFB:
+            return .post
+        case .detachFB:
+            return .delete
+        case .getFB:
+            return .get
+        case .addDevice:
+            return .post
+        case .deleteDevice:
+            return .delete
+        case .deleteUser:
+            return .delete
         }
     }
     
     var path: String {
         switch self {
-        case .GetUser, .EditUser:
+        case .getUser, .editUser:
             return "/info"
-        case .ChangePassword, .AddLocalId:
+        case .changePassword, .addLocalId:
             return "/password"
-        case .AddFB, .DetachFB, .GetFB:
+        case .addFB, .detachFB, .getFB:
             return "/facebook"
-        case .AddDevice, .DeleteDevice:
+        case .addDevice, .deleteDevice:
             return "/device"
-        case .DeleteUser:
+        case .deleteUser:
             return "/account"
         }
     }
     
-    var parameters: [String : AnyObject]? {
+    var parameters: [String : Any]? {
         
         switch self {
-        case .GetUser:
+        case .getUser:
             return nil
-        case let .EditUser(email):
+        case let .editUser(email):
             return ["email" : email]
-        case let .ChangePassword(oldPassword, newPassword):
+        case let .changePassword(oldPassword, newPassword):
             return ["old_password" : oldPassword, "new_password": newPassword]
-        case let .AddLocalId(id, password):
+        case let .addLocalId(id, password):
             return ["id": id, "password" : password]
-        case let .AddFB(id, token):
+        case let .addFB(id, token):
             return ["fb_id": id, "fb_token": token]
-        case .DetachFB:
+        case .detachFB:
             return nil
-        case .GetFB:
+        case .getFB:
             return nil
-        case let .AddDevice(id):
+        case let .addDevice(id):
             return ["registration_id": id]
-        case let .DeleteDevice(id):
+        case let .deleteDevice(id):
             return ["registration_id": id]
-        case .DeleteUser:
+        case .deleteUser:
             return nil
         }
     }

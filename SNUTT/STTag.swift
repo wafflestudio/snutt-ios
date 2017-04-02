@@ -18,23 +18,23 @@ enum STTagType : String {
     
     var tagColor: UIColor {
         switch self {
-        case .AcademicYear: return UIColor.flatSkyBlueColorDark()
-        case .Category: return UIColor.flatYellowColorDark()
-        case .Classification: return UIColor.flatGreenColorDark()
-        case .Credit: return UIColor.flatCoffeeColorDark()
-        case .Department: return UIColor.flatOrangeColorDark()
-        case .Instructor: return UIColor.flatWatermelonColorDark()
+        case .AcademicYear: return UIColor.flatSkyBlueDark
+        case .Category: return UIColor.flatYellowDark
+        case .Classification: return UIColor.flatGreenDark
+        case .Credit: return UIColor.flatCoffeeDark
+        case .Department: return UIColor.flatOrangeDark
+        case .Instructor: return UIColor.flatWatermelonDark
         }
     }
     
     var tagLightColor: UIColor {
         switch self {
-        case .AcademicYear: return UIColor.flatSkyBlueColor()
-        case .Category: return UIColor.flatYellowColor()
-        case .Classification: return UIColor.flatGreenColor()
-        case .Credit: return UIColor.flatCoffeeColor()
-        case .Department: return UIColor.flatOrangeColor()
-        case .Instructor: return UIColor.flatWatermelonColor()
+        case .AcademicYear: return UIColor.flatSkyBlue
+        case .Category: return UIColor.flatYellow
+        case .Classification: return UIColor.flatGreen
+        case .Credit: return UIColor.flatCoffee
+        case .Department: return UIColor.flatOrange
+        case .Instructor: return UIColor.flatWatermelon
         }
     }
     
@@ -61,13 +61,13 @@ struct STTag : DictionaryRepresentable {
     //MARK: DictionaryRepresentable
     
     func dictionaryValue() -> NSDictionary {
-        let representation : [String: AnyObject] = ["type": type.rawValue, "text": text]
-        return representation
+        let representation : [String: Any] = ["type": type.rawValue, "text": text]
+        return representation as NSDictionary
     }
     init?(dictionary: NSDictionary?) {
         guard let values = dictionary else {return nil}
         if let type = STTagType(raw: values["type"] as? String),
-                text = values["text"] as? String {
+            let text = values["text"] as? String {
                     self.type = type
                     self.text = text
         } else {

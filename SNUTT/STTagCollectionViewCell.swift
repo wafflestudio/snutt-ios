@@ -27,16 +27,16 @@ class STTagCollectionViewCell: UICollectionViewCell {
         self.addGestureRecognizer(tap)
     }
     
-    func tap(gesture: UITapGestureRecognizer) {
-        if gesture.state == UIGestureRecognizerState.Ended {
+    func tap(_ gesture: UITapGestureRecognizer) {
+        if gesture.state == UIGestureRecognizerState.ended {
             deleteTag()
         }
     }
     
     func deleteTag() {
-        let indexPath = self.collectionView.indexPathForCell(self)!
-        collectionView.tagList.removeAtIndex(indexPath.row)
-        collectionView.deleteItemsAtIndexPaths([indexPath])
+        let indexPath = self.collectionView.indexPath(for: self)!
+        collectionView.tagList.remove(at: indexPath.row)
+        collectionView.deleteItems(at: [indexPath])
         collectionView.setHidden()
         collectionView.searchController.searchBar.becomeFirstResponder()
     }

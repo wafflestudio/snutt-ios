@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 
 enum STAddLectureState {
-    case Success, ErrorTime, ErrorSameLecture
+    case success, errorTime, errorSameLecture
 }
 
 class STTimetable {
@@ -49,7 +49,7 @@ class STTimetable {
         }
     }
     
-    func toDictionary() -> [String: AnyObject] {
+    func toDictionary() -> [String: Any] {
         return [
             "year" : quarter.year,
             "semester" : quarter.semester.rawValue,
@@ -61,25 +61,25 @@ class STTimetable {
         ]
     }
     
-    func addLecture(lecture : STLecture) -> STAddLectureState {
+    func addLecture(_ lecture : STLecture) -> STAddLectureState {
         for it in lectureList {
             if it.isSameLecture(lecture){
-                return STAddLectureState.ErrorSameLecture
+                return STAddLectureState.errorSameLecture
             }
             for class1 in it.classList {
                 for class2 in lecture.classList {
                     if class1.time.isOverlappingWith(class2.time) {
-                        return STAddLectureState.ErrorTime
+                        return STAddLectureState.errorTime
                     }
                 }
             }
         }
         lectureList.append(lecture)
-        return STAddLectureState.Success
+        return STAddLectureState.success
     }
     
-    func addIdForLecture(lecture: STLecture, id : String) {
-        for (index, element) in lectureList.enumerate() {
+    func addIdForLecture(_ lecture: STLecture, id : String) {
+        for (index, element) in lectureList.enumerated() {
             if element == lecture {
                 lectureList[index].id = id
                 break
@@ -87,20 +87,20 @@ class STTimetable {
         }
     }
     
-    func deleteLectureAtIndex(index: Int) {
-        lectureList.removeAtIndex(index)
+    func deleteLectureAtIndex(_ index: Int) {
+        lectureList.remove(at: index)
     }
-    func deleteLecture(lecture: STLecture) {
-        if let index = lectureList.indexOf(lecture) {
-            lectureList.removeAtIndex(index)
+    func deleteLecture(_ lecture: STLecture) {
+        if let index = lectureList.index(of: lecture) {
+            lectureList.remove(at: index)
         }
     }
-    func updateLectureAtIndex(index: Int, lecture :STLecture) {
+    func updateLectureAtIndex(_ index: Int, lecture :STLecture) {
         lectureList[index] = lecture
     }
     
     func timetableTimeMask() -> [Int] {
-        return lectureList.reduce([0,0,0,0,0,0,0], combine: { mask, lecture in
+        return lectureList.reduce([0,0,0,0,0,0,0], { mask, lecture in
             return zip(mask, lecture.timeMask).map { t1, t2 in t1 | t2 }
         })
     }

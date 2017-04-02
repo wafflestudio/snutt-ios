@@ -24,14 +24,14 @@ class STColorList : NSObject, NSCoding {
         }
     }
 
-    func encodeWithCoder(coder: NSCoder) {
-        coder.encodeObject(colorList.dictionaryValue(), forKey: "colorList")
-        coder.encodeObject(nameList, forKey: "nameList")
+    func encode(with coder: NSCoder) {
+        coder.encode(colorList.dictionaryValue(), forKey: "colorList")
+        coder.encode(nameList, forKey: "nameList")
     }
 
     required convenience init?(coder decoder: NSCoder) {
-        guard let colorList = [STColor](dictionary: decoder.decodeObjectForKey("colorList") as? [NSDictionary]),
-            let nameList = decoder.decodeObjectForKey("nameList") as? [String] else {
+        guard let colorList = [STColor](dictionary: decoder.decodeObject(forKey: "colorList") as? [NSDictionary]),
+            let nameList = decoder.decodeObject(forKey: "nameList") as? [String] else {
                 return nil
         }
         self.init(colorList: colorList, nameList: nameList)

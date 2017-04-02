@@ -27,7 +27,7 @@ class STColorPickerTableViewController: UITableViewController {
         STEventCenter.sharedInstance.removeObserver(self)
     }
     
-    override func willMoveToParentViewController(parent: UIViewController?) {
+    override func willMove(toParentViewController parent: UIViewController?) {
         if parent == nil {
             doneBlock(color)
         }
@@ -50,12 +50,12 @@ class STColorPickerTableViewController: UITableViewController {
             }
         }
         tableView.reloadData()
-        self.tableView.selectRowAtIndexPath(NSIndexPath(forRow: selectedColorIndex, inSection: 0), animated: false, scrollPosition: .None)
+        self.tableView.selectRow(at: IndexPath(row: selectedColorIndex, section: 0), animated: false, scrollPosition: .none)
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         if selectedColorIndex == customColorIndex {
             return 2
         } else {
@@ -63,7 +63,7 @@ class STColorPickerTableViewController: UITableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return colorList.colorList.count + 1
@@ -75,9 +75,9 @@ class STColorPickerTableViewController: UITableViewController {
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("STColorTableViewCell", forIndexPath: indexPath) as! STColorTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "STColorTableViewCell", for: indexPath) as! STColorTableViewCell
             if indexPath.row == colorList.colorList.count {
                 cell.color = STColor()
                 cell.colorLabel.text = "직접 지정하기"
@@ -87,8 +87,8 @@ class STColorPickerTableViewController: UITableViewController {
             }
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("STSingleColorTableViewCell", forIndexPath: indexPath) as! STSingleColorTableViewCell
-            cell.accessoryType = .DisclosureIndicator
+            let cell = tableView.dequeueReusableCell(withIdentifier: "STSingleColorTableViewCell", for: indexPath) as! STSingleColorTableViewCell
+            cell.accessoryType = .disclosureIndicator
             if indexPath.row == 0 {
                 cell.label.text = "배경색"
                 cell.colorView.backgroundColor = color.bgColor
@@ -100,39 +100,39 @@ class STColorPickerTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 0 {
             if indexPath.row != selectedColorIndex {
-                self.tableView.deselectRowAtIndexPath(NSIndexPath(forRow: selectedColorIndex, inSection: 0), animated: true)
+                self.tableView.deselectRow(at: IndexPath(row: selectedColorIndex, section: 0), animated: true)
                 
                 let wasSelectedColorIndex = selectedColorIndex
                 selectedColorIndex = indexPath.row
                 
                 if wasSelectedColorIndex == customColorIndex {
-                    self.tableView.deleteSections(NSIndexSet(index: 1), withRowAnimation: .Top)
+                    self.tableView.deleteSections(IndexSet(integer: 1), with: .top)
                 }
                 if selectedColorIndex != customColorIndex {
                     color = colorList.colorList[indexPath.row]
                 } else {
                     color = STColor()
-                    self.tableView.insertSections(NSIndexSet(index: 1), withRowAnimation: .Top)
+                    self.tableView.insertSections(IndexSet(integer: 1), with: .top)
                 }
             }
         } else if indexPath.section == 1 {
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            let pickerViewController = self.storyboard?.instantiateViewControllerWithIdentifier("STCustomColorPickerViewController") as! STCustomColorPickerViewController
+            self.tableView.deselectRow(at: indexPath, animated: true)
+            let pickerViewController = self.storyboard?.instantiateViewController(withIdentifier: "STCustomColorPickerViewController") as! STCustomColorPickerViewController
             if indexPath.row == 0 {
                 pickerViewController.color = self.color.bgColor
                 pickerViewController.doneBlock = { color in
                     self.color.bgColor = color
-                    self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
+                    self.tableView.reloadSections(IndexSet(integer: 1), with: .none)
                 }
             } else {
                 pickerViewController.color = self.color.fgColor
                 pickerViewController.doneBlock = { color in
                     self.color.fgColor = color
-                    self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
+                    self.tableView.reloadSections(IndexSet(integer: 1), with: .none)
                 }
             }
             
@@ -140,9 +140,9 @@ class STColorPickerTableViewController: UITableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: UITableViewScrollPosition.None)
+            self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
         }
     }
     /*

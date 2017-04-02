@@ -17,7 +17,7 @@ class STTagFilterCollectionViewCell: UICollectionViewCell {
             if isSelectedTag {
                 tagLabel.textColor = tagType.tagColor
             } else {
-                tagLabel.textColor = tagType.tagColor.colorWithAlphaComponent(0.5)
+                tagLabel.textColor = tagType.tagColor.withAlphaComponent(0.5)
             }
             tagLabel.text = tagType.typeStr
         }
@@ -27,7 +27,7 @@ class STTagFilterCollectionViewCell: UICollectionViewCell {
             if isSelectedTag {
                 tagLabel.textColor = tagType.tagColor
             } else {
-                tagLabel.textColor = tagType.tagColor.colorWithAlphaComponent(0.5)
+                tagLabel.textColor = tagType.tagColor.withAlphaComponent(0.5)
             }
         }
     }

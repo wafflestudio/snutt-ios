@@ -28,35 +28,35 @@ class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
         super.init()
     }
 
-    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         switch component {
         case 0:
-            let attribute = [NSForegroundColorAttributeName: colorList[row].fgColor.lightenByPercentage(0.4)]
+            let attribute = [NSForegroundColorAttributeName: colorList[row].fgColor.lighten(byPercentage: 0.4)]
             return NSAttributedString(string: nameList[row], attributes: attribute)
         default: return nil
         }
     }
 
-    func onePixelImageWithColor(color : UIColor) -> UIImage {
+    func onePixelImageWithColor(_ color : UIColor) -> UIImage {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGImageAlphaInfo.PremultipliedLast
-        let context = CGBitmapContextCreate(nil, 1, 1, 8, 0, colorSpace, bitmapInfo.rawValue)!
-        CGContextSetFillColorWithColor(context, color.CGColor)
-        CGContextFillRect(context, CGRect(x: 0, y: 0, width: 1, height: 1))
-        let image = UIImage(CGImage: CGBitmapContextCreateImage(context)!)
+        let bitmapInfo = CGImageAlphaInfo.premultipliedLast
+        let context = CGContext(data: nil, width: 1, height: 1, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        let image = UIImage(cgImage: context.makeImage()!)
         return image
     }
 
-    func actionSheetPicker(actionSheetPicker: AbstractActionSheetPicker!, configurePickerView pickerView: UIPickerView!) {
-        pickerView.tintColor = UIColor.whiteColor()
-        let bgImageColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+    func actionSheetPicker(_ actionSheetPicker: AbstractActionSheetPicker!, configurePickerView pickerView: UIPickerView!) {
+        pickerView.tintColor = UIColor.white
+        let bgImageColor = UIColor.black.withAlphaComponent(0.2)
         actionSheetPicker.toolbar.setBackgroundImage(onePixelImageWithColor(bgImageColor),
-                                                     forToolbarPosition: UIBarPosition.Bottom,
-                                                     barMetrics: UIBarMetrics.Default)
-        actionSheetPicker.toolbar.tintColor = UIColor.whiteColor()
-        actionSheetPicker.toolbar.barTintColor = UIColor.whiteColor()
+                                                     forToolbarPosition: UIBarPosition.bottom,
+                                                     barMetrics: UIBarMetrics.default)
+        actionSheetPicker.toolbar.tintColor = UIColor.white
+        actionSheetPicker.toolbar.barTintColor = UIColor.white
         
-        guard let index = colorList.indexOf(initialColor) else {
+        guard let index = colorList.index(of: initialColor) else {
             pickerView.selectRow(0, inComponent: 0, animated: false)
             selectedBlock?(colorList[0])
             return
@@ -64,42 +64,42 @@ class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
         pickerView.selectRow(index, inComponent: 0, animated: false)
     }
 
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch component {
         case 0: return nameList.count
         default: return 0
         }
     }
 
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedBlock?(colorList[row])
     }
 
-    func actionSheetPickerDidSucceed(actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {
+    func actionSheetPickerDidSucceed(_ actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {
         let pickerView = actionSheetPicker.pickerView as! UIPickerView
-        let index = pickerView.selectedRowInComponent(0)
+        let index = pickerView.selectedRow(inComponent: 0)
         doneBlock?(colorList[index])
     }
 
-    func actionSheetPickerDidCancel(actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {
+    func actionSheetPickerDidCancel(_ actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {
         cancelBlock?()
     }
 
-    internal static func showWithColor(color: STColor, doneBlock: ((STColor) -> Void)?, cancelBlock: (() -> Void)?, selectedBlock: ((STColor)->Void)?, origin : AnyObject! ) {
+    internal static func showWithColor(_ color: STColor, doneBlock: ((STColor) -> Void)?, cancelBlock: (() -> Void)?, selectedBlock: ((STColor)->Void)?, origin : AnyObject! ) {
         let colorPickerDelegate = STColorActionSheetPicker(initialColor: color, doneBlock: doneBlock, cancelBlock: cancelBlock, selectedBlock: selectedBlock)
         let actionSheetPicker = ActionSheetCustomPicker()
         
-        let overlayBlack = UIColor.blackColor().colorWithAlphaComponent(0.3)
+        let overlayBlack = UIColor.black.withAlphaComponent(0.3)
         actionSheetPicker.pickerBackgroundColor = overlayBlack
         actionSheetPicker.delegate = colorPickerDelegate
         actionSheetPicker.hideCancel = false
         
-        actionSheetPicker.tapDismissAction = TapAction.Cancel
+        actionSheetPicker.tapDismissAction = TapAction.cancel
         
-        actionSheetPicker.showActionSheetPicker()
+        actionSheetPicker.show()
     }
 }

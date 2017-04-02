@@ -49,7 +49,7 @@ public enum STErrorCode : Int {
     case LECTURE_TIME_OVERLAP = 0x300C;
     case IS_CUSTOM_LECTURE = 0x300D;
     
-    /* 404 - Not found */
+    /* 404 - NOT found */
     case TAG_NOT_FOUND = 0x4000;
     case TIMETABLE_NOT_FOUND = 0x4001;
     case LECTURE_NOT_FOUND = 0x4002;

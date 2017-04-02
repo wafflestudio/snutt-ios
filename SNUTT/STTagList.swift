@@ -18,18 +18,18 @@ class STTagList : NSObject, NSCoding {
         self.updatedTime = updatedTime
     }
     
-    func encodeWithCoder(coder: NSCoder) {
-        coder.encodeObject(quarter.dictionaryValue(), forKey: "quarter")
-        coder.encodeObject(tagList.dictionaryValue(), forKey: "tagList")
-        coder.encodeInt64(updatedTime, forKey: "updatedTime")
+    func encode(with coder: NSCoder) {
+        coder.encode(quarter.dictionaryValue(), forKey: "quarter")
+        coder.encode(tagList.dictionaryValue(), forKey: "tagList")
+        coder.encode(updatedTime, forKey: "updatedTime")
     }
     
     required convenience init?(coder decoder: NSCoder) {
-        guard let quarter = STQuarter(dictionary: decoder.decodeObjectForKey("quarter") as? NSDictionary),
-            let tagList = [STTag](dictionary: decoder.decodeObjectForKey("tagList") as? [NSDictionary]) else {
+        guard let quarter = STQuarter(dictionary: decoder.decodeObject(forKey: "quarter") as? NSDictionary),
+            let tagList = [STTag](dictionary: decoder.decodeObject(forKey: "tagList") as? [NSDictionary]) else {
             return nil
         }
-        let updatedTime = decoder.decodeInt64ForKey("updatedTime")
+        let updatedTime = decoder.decodeInt64(forKey: "updatedTime")
         self.init(quarter: quarter, tagList: tagList, updatedTime: updatedTime)
     }
 }

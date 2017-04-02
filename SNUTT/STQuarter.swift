@@ -26,13 +26,13 @@ struct STQuarter : DictionaryRepresentable {
     }
     
     func dictionaryValue() -> NSDictionary {
-        let representation : [String: AnyObject] = ["year": year, "semester": semester.rawValue]
-        return representation
+        let representation : [String: Any] = ["year": year, "semester": semester.rawValue]
+        return representation as NSDictionary
     }
     init?(dictionary: NSDictionary?) {
         guard let values = dictionary else {return nil}
         if let year = values["year"] as? Int,
-            semester = STSemester(raw: values["semester"] as? Int) {
+            let semester = STSemester(raw: values["semester"] as? Int) {
                 self.year = year
                 self.semester = semester
         } else {

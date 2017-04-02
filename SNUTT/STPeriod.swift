@@ -30,8 +30,8 @@ class STPeriod {
     }
 }
 
-class STPeriodFormatter : NSNumberFormatter {
-    override func stringFromNumber(number: NSNumber) -> String? {
+class STPeriodFormatter : NumberFormatter {
+    override func string(from number: NSNumber) -> String? {
         let val = number.doubleValue
         if Int(val * 2.0) % 2 == 0 {
             return "\(Int(val))"

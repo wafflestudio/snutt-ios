@@ -50,27 +50,27 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
             }
         }
         courseText.text = text.breakOnlyAtNewLineAndSpace
-        courseText.baselineAdjustment = .AlignCenters
+        courseText.baselineAdjustment = .alignCenters
     }
     
     func setColor() {
         self.backgroundColor = lecture.color.bgColor
         courseText.textColor = lecture.color.fgColor
     }
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         /* //DEBUG
         if(buttonIndex == 1) {
             STCourseBooksManager.sharedInstance.currentCourseBook?.deleteLecture(singleClass!.lecture!)
         }
         */
     }
-    func longClick(gesture : UILongPressGestureRecognizer) {
-        if gesture.state == UIGestureRecognizerState.Began {
+    func longClick(_ gesture : UILongPressGestureRecognizer) {
+        if gesture.state == UIGestureRecognizerState.began {
             longClicked?(self)
         }
     }
-    func tap(gesture: UITapGestureRecognizer) {
-        if gesture.state == UIGestureRecognizerState.Recognized {
+    func tap(_ gesture: UITapGestureRecognizer) {
+        if gesture.state == UIGestureRecognizerState.recognized {
             tapped?(self)
         }
     }

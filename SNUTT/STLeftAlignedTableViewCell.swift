@@ -18,20 +18,20 @@ class STLeftAlignedTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addSubview(textField)
-        self.selectionStyle = .None
+        self.selectionStyle = .none
         textField.delegate = self
         // http://stackoverflow.com/questions/39556087/uitextfield-chinese-character-moves-down-when-editing-in-ios-10
         // Some stupid bug
-        textField.borderStyle = .None
+        textField.borderStyle = .none
         // Initialization code
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         doneBlock?(textField.text!)
     }
     
-    override func setEditable (editable: Bool) {
-        textField.enabled = editable
+    override func setEditable (_ editable: Bool) {
+        textField.isEnabled = editable
     }
     
 

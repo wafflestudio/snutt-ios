@@ -30,11 +30,11 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
         
         timeTextField.delegate = self
         placeTextField.delegate = self
-        self.selectionStyle = .None
+        self.selectionStyle = .none
         // Initialization code
     }
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == timeTextField {
             STTimeActionSheetPicker.showWithTime(singleClass.time,
                 doneBlock: { time in
@@ -49,21 +49,21 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
         return false // Never Reachable
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == placeTextField {
             placeDoneBlock?(textField.text!)
         }
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    override func setEditable(editable: Bool) {
-        self.placeTextField.enabled = editable
-        self.timeTextField.enabled = custom && editable
+    override func setEditable(_ editable: Bool) {
+        self.placeTextField.isEnabled = editable
+        self.timeTextField.isEnabled = custom && editable
         if editable && !custom {
             self.timeTextField.textColor = UIColor(white: 0.67, alpha: 1.0)
         } else {

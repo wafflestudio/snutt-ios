@@ -11,7 +11,7 @@ import Foundation
 class STCourseBookList {
     // MARK: Singleton
     
-    private static var sharedManager : STCourseBookList? = nil
+    fileprivate static var sharedManager : STCourseBookList? = nil
     static var sharedInstance : STCourseBookList {
         get {
             if sharedManager == nil {
@@ -20,7 +20,7 @@ class STCourseBookList {
             return sharedManager!
         }
     }
-    private init() {
+    fileprivate init() {
         self.loadCourseBooks()
         self.getCourseBooks()
     }
@@ -29,7 +29,7 @@ class STCourseBookList {
     
     func loadCourseBooks () {
         
-        guard let courseBookList = NSKeyedUnarchiver.unarchiveObjectWithFile(getDocumentsDirectory().stringByAppendingPathComponent("courseBookList.archive")) as? [NSDictionary] else {
+        guard let courseBookList = NSKeyedUnarchiver.unarchiveObject(withFile: getDocumentsDirectory().appendingPathComponent("courseBookList.archive")) as? [NSDictionary] else {
             self.courseBookList = []
             return
         }
@@ -41,7 +41,7 @@ class STCourseBookList {
     func saveCourseBooks () {
         NSKeyedArchiver.archiveRootObject(courseBookList.map({ book in
             return book.dictionaryValue()
-        }), toFile: getDocumentsDirectory().stringByAppendingPathComponent("courseBookList.archive"))
+        }), toFile: getDocumentsDirectory().appendingPathComponent("courseBookList.archive"))
     }
     
     func getCourseBooks () {

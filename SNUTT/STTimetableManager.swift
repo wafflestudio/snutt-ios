@@ -13,7 +13,7 @@ class STTimetableManager : NSObject {
     
     // MARK: Singleton
     
-    private static var sharedManager : STTimetableManager? = nil
+    fileprivate static var sharedManager : STTimetableManager? = nil
     static var sharedInstance : STTimetableManager{
         get {
             if sharedManager == nil {
@@ -23,7 +23,7 @@ class STTimetableManager : NSObject {
             return sharedManager!
         }
     }
-    private override init() {
+    fileprivate override init() {
         super.init()
         self.loadData()
         if let timetableId = currentTimetable?.id {
@@ -60,12 +60,13 @@ class STTimetableManager : NSObject {
         STDefaults.synchronize()
     }
     
-    func addCustomLecture(var lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
+    func addCustomLecture(_ lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
+        var lecture = lecture
         if currentTimetable == nil {
-            return STAddLectureState.Success
+            return STAddLectureState.success
         }
         let ret = currentTimetable!.addLecture(lecture)
-        if case STAddLectureState.Success = ret {
+        if case STAddLectureState.success = ret {
             STNetworking.addCustomLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
                 self.currentTimetable?.lectureList = newTimetable.lectureList
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
@@ -74,21 +75,22 @@ class STTimetableManager : NSObject {
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
             })
             STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
-        } else if case STAddLectureState.ErrorTime = ret {
+        } else if case STAddLectureState.errorTime = ret {
             STAlertView.showAlert(title: "강의 추가 실패", message: "겹치는 시간대가 있습니다.")
-        } else if case STAddLectureState.ErrorSameLecture = ret {
+        } else if case STAddLectureState.errorSameLecture = ret {
             STAlertView.showAlert(title: "강의 추가 실패", message: "같은 강좌가 이미 존재합니다.")
         }
         
         return ret
     }
     
-    func addLecture(var lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
+    func addLecture(_ lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
+        var lecture = lecture
         if currentTimetable == nil {
-            return STAddLectureState.Success
+            return STAddLectureState.success
         }
         let ret = currentTimetable!.addLecture(lecture)
-        if case STAddLectureState.Success = ret {
+        if case STAddLectureState.success = ret {
             STNetworking.addLecture(currentTimetable!, lectureId: lecture.id!, done: { newTimetable in
                 self.currentTimetable?.lectureList = newTimetable.lectureList
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
@@ -97,20 +99,20 @@ class STTimetableManager : NSObject {
                     STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
             })
             STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
-        } else if case STAddLectureState.ErrorTime = ret {
+        } else if case STAddLectureState.errorTime = ret {
             STAlertView.showAlert(title: "강의 추가 실패", message: "겹치는 시간대가 있습니다.")
-        } else if case STAddLectureState.ErrorSameLecture = ret {
+        } else if case STAddLectureState.errorSameLecture = ret {
             STAlertView.showAlert(title: "강의 추가 실패", message: "같은 강좌가 이미 존재합니다.")
         }
         
         return ret
     }
     
-    func updateLecture(oldLecture : STLecture, newLecture : STLecture, failure: ()->()) {
+    func updateLecture(_ oldLecture : STLecture, newLecture : STLecture, failure: @escaping ()->()) {
         if currentTimetable == nil {
             return
         }
-        let index = currentTimetable!.lectureList.indexOf({ lec in
+        let index = currentTimetable!.lectureList.index(where: { lec in
             return lec.id == newLecture.id
         })!
         
@@ -127,7 +129,7 @@ class STTimetableManager : NSObject {
         })
     }
     
-    func deleteLectureAtIndex(index: Int, object : AnyObject? ) {
+    func deleteLectureAtIndex(_ index: Int, object : AnyObject? ) {
         if currentTimetable == nil {
             return
         }
@@ -145,11 +147,11 @@ class STTimetableManager : NSObject {
     
     
     //FIXME: Refactoring Needed
-    func resetLecture(lecture: STLecture, done: ()->()) {
+    func resetLecture(_ lecture: STLecture, done: @escaping ()->()) {
         if currentTimetable == nil {
             return
         }
-        let index = currentTimetable!.lectureList.indexOf({ lec in
+        let index = currentTimetable!.lectureList.index(where: { lec in
             return lec.id == lecture.id
         })!
         
@@ -161,7 +163,7 @@ class STTimetableManager : NSObject {
         STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
     }
     
-    func setTemporaryLecture(lecture :STLecture?, object : AnyObject? ) {
+    func setTemporaryLecture(_ lecture :STLecture?, object : AnyObject? ) {
         if currentTimetable?.temporaryLecture == lecture {
             return
         }

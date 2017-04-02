@@ -16,14 +16,14 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
     var isEditingTag : Bool = false {
         didSet {
             if isEditingTag {
-                self.returnKeyType = .Done
+                self.returnKeyType = .done
                 self.reloadInputViews()
-                self.setImage(UIImage(named: "icon_tag_gray"), forSearchBarIcon: .Search, state: .Normal)
+                self.setImage(UIImage(named: "icon_tag_gray"), for: .search, state: UIControlState())
                 searchController.searchToolbarView.setEditingTag(true)
             } else {
-                self.returnKeyType = .Search
+                self.returnKeyType = .search
                 self.reloadInputViews()
-                self.setImage(nil, forSearchBarIcon: .Search, state: .Normal)
+                self.setImage(nil, for: .search, state: UIControlState())
                 searchController.searchToolbarView.setEditingTag(false)
             }
         }
@@ -32,10 +32,10 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
     override func awakeFromNib() {
         super.awakeFromNib()
         self.delegate = self
-        self.keyboardType = .Default
-        self.returnKeyType = .Search
+        self.keyboardType = .default
+        self.returnKeyType = .search
         self.enablesReturnKeyAutomatically = false
-        self.tintColor = UIColor.blackColor()
+        self.tintColor = UIColor.black
     }
     
     func disableEditingTag() {
@@ -56,7 +56,7 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         }
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         if isEditingTag {
             isEditingTag = false
             self.text = queryString
@@ -68,11 +68,11 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         }
     }
     
-    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if isEditingTag {
-            if text.containsString("#") {
-                let replacement = text.stringByReplacingOccurrencesOfString("#", withString: "")
-                self.text!.replaceRange(STUtil.getRangeFromNSRange(self.text!, range: range), with: replacement)
+            if text.contains("#") {
+                let replacement = text.replacingOccurrences(of: "#", with: "")
+                self.text!.replaceSubrange(STUtil.getRangeFromNSRange(self.text!, range: range), with: replacement)
                 self.searchBar(self, textDidChange: self.text!)
                 return false
             }
@@ -80,14 +80,14 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         } else {
             if text == "#" {
                 queryString = self.text!
-                queryString.replaceRange(STUtil.getRangeFromNSRange(queryString, range: range), with: "")
+                queryString.replaceSubrange(STUtil.getRangeFromNSRange(queryString, range: range), with: "")
                 self.text = "";
                 isEditingTag = true
                 self.searchBar(self, textDidChange: self.text!)
                 return false
-            } else if text.containsString("#") {
-                let replacement = text.stringByReplacingOccurrencesOfString("#", withString: "")
-                self.text!.replaceRange(STUtil.getRangeFromNSRange(self.text!, range: range), with: replacement)
+            } else if text.contains("#") {
+                let replacement = text.replacingOccurrences(of: "#", with: "")
+                self.text!.replaceSubrange(STUtil.getRangeFromNSRange(self.text!, range: range), with: replacement)
                 self.searchBar(self, textDidChange: self.text!)
                 return false
             }
@@ -98,11 +98,11 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
     
     
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        if !searchBar.isFirstResponder() {
+        if !searchBar.isFirstResponder {
             // this is only for the case of clicking clear button while not in focus
-            searchController.state = .Empty
+            searchController.state = .empty
             return
         }
         
@@ -112,24 +112,24 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         
     }
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.showsCancelButton = true
-        if case .Loaded(let query, let tagList) = searchController.state {
-            searchController.state = .EditingQuery(query, tagList, searchController.FilteredList)
+        if case .loaded(let query, let tagList) = searchController.state {
+            searchController.state = .editingQuery(query, tagList, searchController.FilteredList)
         } else {
-             if case .Loading(let request) = searchController.state {
+             if case .loading(let request) = searchController.state {
                 request.cancel()
             }
-            searchController.state = .EditingQuery(nil, [], [])
+            searchController.state = .editingQuery(nil, [], [])
         }
         searchController.reloadData()
     }
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         self.showsCancelButton = false
         searchController.reloadData()
     }
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if isEditingTag {
             if searchController.tagTableView.filteredList.count != 0 {
                 searchController.tagTableView.addTagAtIndex(0)

@@ -20,7 +20,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
 
-    let sharedDefaults = NSUserDefaults(suiteName: "group.wafflestudio.TodayExtensionSharingDefaults")
+    let sharedDefaults = UserDefaults(suiteName: "group.wafflestudio.TodayExtensionSharingDefaults")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,15 +32,15 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         updateTimetable()
         updateSetting()
 
-        extensionContext.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.Expanded
+        extensionContext.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
         let displayMode = extensionContext.widgetActiveDisplayMode
-        let maxSize = extensionContext.widgetMaximumSizeForDisplayMode(displayMode)
+        let maxSize = extensionContext.widgetMaximumSize(for: displayMode)
         self.widgetActiveDisplayModeDidChange(displayMode, withMaximumSize: maxSize)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(userDefaultsDidChange), name: NSUserDefaultsDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(userDefaultsDidChange), name: UserDefaults.didChangeNotification, object: nil)
     }
 
-    func userDefaultsDidChange (notification: NSNotification) {
+    func userDefaultsDidChange (_ notification: Notification) {
         updateTimetable()
         updateSetting()
         reloadData()
@@ -79,31 +79,31 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
     }
 
-    func widgetActiveDisplayModeDidChange(activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize){
-        if (activeDisplayMode == NCWidgetDisplayMode.Compact) {
+    func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize){
+        if (activeDisplayMode == NCWidgetDisplayMode.compact) {
             self.preferredContentSize = maxSize
             timetableView.frame.size = maxSize
             reloadData()
-            timetableView.hidden = true
-            descriptionLabel.hidden = false
+            timetableView.isHidden = true
+            descriptionLabel.isHidden = false
         }
         else {
             self.preferredContentSize = CGSize(width: 0, height: maxHeight)
             timetableView.frame.size = CGSize(width: 0, height: maxHeight)
             reloadData()
-            timetableView.hidden = false
-            descriptionLabel.hidden = true
+            timetableView.isHidden = false
+            descriptionLabel.isHidden = true
         }
     }
 
-    func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)) {
-        dispatch_async(dispatch_get_main_queue(),{
+    func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
+        DispatchQueue.main.async(execute: {
             self.updateTimetable()
             self.updateSetting()
             self.reloadData()
         });
 
-        completionHandler(NCUpdateResult.NewData)
+        completionHandler(NCUpdateResult.newData)
     }
     
     override func didReceiveMemoryWarning() {

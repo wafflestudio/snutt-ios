@@ -32,13 +32,13 @@ class STTimetableAddController: UIViewController, UIPickerViewDataSource, UIPick
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func canceclButtonClicked(sender: UIBarButtonItem) {
+    @IBAction func canceclButtonClicked(_ sender: UIBarButtonItem) {
         self.view.endEditing(true)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func saveButtonClicked(sender: UIBarButtonItem) {
-        let index = semesterPicker.selectedRowInComponent(0)
+    @IBAction func saveButtonClicked(_ sender: UIBarButtonItem) {
+        let index = semesterPicker.selectedRow(inComponent: 0)
         let selectedCourseBook = STCourseBookList.sharedInstance.courseBookList[index]
         let title = titleTextField.text
         if (title == nil || title == "") {
@@ -47,20 +47,20 @@ class STTimetableAddController: UIViewController, UIPickerViewDataSource, UIPick
         }
         self.view.endEditing(true)
         timetableListController.addTimetable(title!, courseBook: selectedCourseBook)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - UIPickerViewDataSource
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return STCourseBookList.sharedInstance.courseBookList.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return STCourseBookList.sharedInstance.courseBookList[row].quarter.longString()
     }
     

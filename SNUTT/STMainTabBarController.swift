@@ -16,7 +16,7 @@ class STMainTabBarController: UITabBarController {
         super.viewDidLoad()
         STMainTabBarController.controller = self
         for item in self.tabBar.items! {
-            item.image = item.image!.imageWithRenderingMode(.AlwaysOriginal)
+            item.image = item.image!.withRenderingMode(.alwaysOriginal)
         }
         setNotiBadge(STDefaults[.shouldShowBadge])
         // Do any additional setup after loading the view.
@@ -27,18 +27,18 @@ class STMainTabBarController: UITabBarController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
     }
     
-    func setNotiBadge(shouldShowBadge: Bool) {
+    func setNotiBadge(_ shouldShowBadge: Bool) {
         let notiBarItem = self.tabBar.items![2]
         if (shouldShowBadge) {
-            notiBarItem.image = UIImage(named: "tabbaritem_noti_dot")!.imageWithRenderingMode(.AlwaysOriginal)
-            notiBarItem.selectedImage = UIImage(named: "tabbaritem_noti_bold_dot")!.imageWithRenderingMode(.AlwaysOriginal)
+            notiBarItem.image = UIImage(named: "tabbaritem_noti_dot")!.withRenderingMode(.alwaysOriginal)
+            notiBarItem.selectedImage = UIImage(named: "tabbaritem_noti_bold_dot")!.withRenderingMode(.alwaysOriginal)
         } else {
-            notiBarItem.image = UIImage(named: "tabbaritem_noti")!.imageWithRenderingMode(.AlwaysOriginal)
-            notiBarItem.selectedImage = UIImage(named: "tabbaritem_noti_bold")!.imageWithRenderingMode(.AlwaysOriginal)
+            notiBarItem.image = UIImage(named: "tabbaritem_noti")!.withRenderingMode(.alwaysOriginal)
+            notiBarItem.selectedImage = UIImage(named: "tabbaritem_noti_bold")!.withRenderingMode(.alwaysOriginal)
         }
         STDefaults[.shouldShowBadge] = shouldShowBadge
     }

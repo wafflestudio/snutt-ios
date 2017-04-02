@@ -25,78 +25,78 @@ class STLectureSearchToolbarView: UIView, UICollectionViewDelegate, UICollection
     var currentTagType: STTagType?
     
     override func awakeFromNib() {
-        emptyTimeButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
+        emptyTimeButton.setTitleColor(UIColor.gray, for: UIControlState())
         tagFilterCollectionView.delegate = self
         tagFilterCollectionView.dataSource = self
         let nib = UINib(nibName: "STTagFilterCollectionViewCell", bundle: nil)
-        tagFilterCollectionView.registerNib(nib, forCellWithReuseIdentifier: "STTagFilterCollectionViewCell")
-        sizingCell = nib.instantiateWithOwner(self, options: nil)[0] as! STTagFilterCollectionViewCell
+        tagFilterCollectionView.register(nib, forCellWithReuseIdentifier: "STTagFilterCollectionViewCell")
+        sizingCell = nib.instantiate(withOwner: self, options: nil)[0] as! STTagFilterCollectionViewCell
         tagTypeList = [.AcademicYear, .Category, .Classification, .Credit, .Department, .Instructor]
         
-        sharpButton.addTarget(self, action: #selector(sharpButtonClicked), forControlEvents: .PrimaryActionTriggered)
-        emptyTimeButton.addTarget(self, action: #selector(emptyTimeButtonClicked), forControlEvents: .PrimaryActionTriggered)
+        sharpButton.addTarget(self, action: #selector(sharpButtonClicked), for: .primaryActionTriggered)
+        emptyTimeButton.addTarget(self, action: #selector(emptyTimeButtonClicked), for: .primaryActionTriggered)
         
         setEditingTag(false)
         
     }
     
-    func sharpButtonClicked(sender: AnyObject) {
+    func sharpButtonClicked(_ sender: AnyObject) {
         if isEditingTag {
             searchTableViewController.searchBar.disableEditingTag()
         } else {
             searchTableViewController.searchBar.enableEditingTag()
         }
     }
-    func emptyTimeButtonClicked(sender: AnyObject) {
+    func emptyTimeButtonClicked(_ sender: AnyObject) {
         isEmptyTime = !isEmptyTime
         if isEmptyTime {
-            emptyTimeButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            emptyTimeButton.setTitleColor(UIColor.black, for: UIControlState())
         } else {
-            emptyTimeButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
+            emptyTimeButton.setTitleColor(UIColor.gray, for: UIControlState())
         }
     }
     
-    func setEditingTag(editingTag: Bool) {
+    func setEditingTag(_ editingTag: Bool) {
         if editingTag {
-            sharpButton.setImage(nil, forState: .Normal)
-            sharpButton.setTitle("취소", forState: .Normal)
+            sharpButton.setImage(nil, for: UIControlState())
+            sharpButton.setTitle("취소", for: UIControlState())
             sharpButton.layoutIfNeeded()
-            emptyTimeButton.superview?.hidden = true
-            tagFilterCollectionView.superview?.hidden = false
+            emptyTimeButton.superview?.isHidden = true
+            tagFilterCollectionView.superview?.isHidden = false
         } else {
-            sharpButton.setImage(UIImage(named: "icon_tag_black"), forState: .Normal)
-            sharpButton.setTitle(nil, forState: .Normal)
+            sharpButton.setImage(UIImage(named: "icon_tag_black"), for: UIControlState())
+            sharpButton.setTitle(nil, for: UIControlState())
             sharpButton.layoutIfNeeded()
-            emptyTimeButton.superview?.hidden = false
-            tagFilterCollectionView.superview?.hidden = true
+            emptyTimeButton.superview?.isHidden = false
+            tagFilterCollectionView.superview?.isHidden = true
         }
     }
     
     //MARK: UICollectionView
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         sizingCell.tagType = tagTypeList[indexPath.row]
-        return sizingCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize, withHorizontalFittingPriority: Float(self.frame.width), verticalFittingPriority: 27)
+        return sizingCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize, withHorizontalFittingPriority: Float(self.frame.width), verticalFittingPriority: 27)
     }
     
     func numberOfSections() -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tagTypeList.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("STTagFilterCollectionViewCell", forIndexPath: indexPath) as! STTagFilterCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "STTagFilterCollectionViewCell", for: indexPath) as! STTagFilterCollectionViewCell
         cell.tagType = tagTypeList[indexPath.row]
         cell.isSelectedTag = tagTypeList[indexPath.row] == currentTagType
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedTagType = tagTypeList[indexPath.row]
-        let curTagRow = currentTagType == nil ? nil : tagTypeList.indexOf(currentTagType!)
+        let curTagRow = currentTagType == nil ? nil : tagTypeList.index(of: currentTagType!)
         if selectedTagType == currentTagType {
             currentTagType = nil
         } else {
@@ -105,10 +105,10 @@ class STLectureSearchToolbarView: UIView, UICollectionViewDelegate, UICollection
         var reloadIndexPaths = [indexPath]
         if let row = curTagRow {
             if row != indexPath.row {
-                reloadIndexPaths.append(NSIndexPath(forRow: row, inSection: 0))
+                reloadIndexPaths.append(IndexPath(row: row, section: 0))
             }
         }
-        collectionView.reloadItemsAtIndexPaths(reloadIndexPaths)
+        collectionView.reloadItems(at: reloadIndexPaths)
         searchTableViewController.showTagRecommendation()
     }
 }

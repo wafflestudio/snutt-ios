@@ -11,14 +11,14 @@ import SwiftyJSON
 
 protocol STNotification {
     var message: String { get }
-    var createdTime: NSDate? { get }
+    var createdTime: Date? { get }
     var createdFrom: String { get }
     var type: Int { get }
     var imageName: String { get }
 }
 
 class STNotiUtil {
-    static func parse(json: JSON) -> STNotification {
+    static func parse(_ json: JSON) -> STNotification {
         switch json["type"].intValue {
         case 0:
             return STNormalNotification(json: json)
@@ -33,22 +33,22 @@ class STNotiUtil {
         }
     }
     
-    static private func getDateFormatter() -> NSDateFormatter {
-        let dateFormatter = NSDateFormatter()
+    static fileprivate func getDateFormatter() -> DateFormatter {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
         return dateFormatter
     }
     
     static let dateFormatter = STNotiUtil.getDateFormatter()
     
-    static public func parseDate(str: String) -> NSDate? {
-        return STNotiUtil.dateFormatter.dateFromString(str)
+    static open func parseDate(_ str: String) -> Date? {
+        return STNotiUtil.dateFormatter.date(from: str)
     }
 }
 
 struct STNormalNotification : STNotification {
     let message: String
-    let createdTime: NSDate?
+    let createdTime: Date?
     let createdFrom: String
     let type: Int = 0
     let imageName: String = "noti_info"
@@ -56,7 +56,7 @@ struct STNormalNotification : STNotification {
         message = json["message"].stringValue
         createdTime = STNotiUtil.parseDate(json["created_at"].stringValue)
         if (createdTime != nil) {
-            createdFrom = NSDate().offsetFrom(createdTime!)
+            createdFrom = Date().offsetFrom(createdTime!)
         } else {
             createdFrom = ""
         }
@@ -65,7 +65,7 @@ struct STNormalNotification : STNotification {
 
 struct STCourseBookNotification : STNotification {
     let message: String
-    let createdTime: NSDate?
+    let createdTime: Date?
     let createdFrom: String
     let type: Int = 1
     let imageName: String = "noti_calendar"
@@ -73,7 +73,7 @@ struct STCourseBookNotification : STNotification {
         message = json["message"].stringValue
         createdTime = STNotiUtil.parseDate(json["created_at"].stringValue)
         if (createdTime != nil) {
-            createdFrom = NSDate().offsetFrom(createdTime!)
+            createdFrom = Date().offsetFrom(createdTime!)
         } else {
             createdFrom = ""
         }
@@ -82,7 +82,7 @@ struct STCourseBookNotification : STNotification {
 
 struct STLectureUpdateNotification : STNotification {
     let message: String
-    let createdTime: NSDate?
+    let createdTime: Date?
     let createdFrom: String
     let type: Int = 2
     let imageName: String = "noti_refresh"
@@ -90,7 +90,7 @@ struct STLectureUpdateNotification : STNotification {
         message = json["message"].stringValue
         createdTime = STNotiUtil.parseDate(json["created_at"].stringValue)
         if (createdTime != nil) {
-            createdFrom = NSDate().offsetFrom(createdTime!)
+            createdFrom = Date().offsetFrom(createdTime!)
         } else {
             createdFrom = ""
         }
@@ -99,7 +99,7 @@ struct STLectureUpdateNotification : STNotification {
 
 struct STLectureRemoveNotification : STNotification {
     let message: String
-    let createdTime: NSDate?
+    let createdTime: Date?
     let createdFrom: String
     let type: Int = 3
     let imageName: String = "noti_trashcan"
@@ -107,7 +107,7 @@ struct STLectureRemoveNotification : STNotification {
         message = json["message"].stringValue
         createdTime = STNotiUtil.parseDate(json["created_at"].stringValue)
         if (createdTime != nil) {
-            createdFrom = NSDate().offsetFrom(createdTime!)
+            createdFrom = Date().offsetFrom(createdTime!)
         } else {
             createdFrom = ""
         }

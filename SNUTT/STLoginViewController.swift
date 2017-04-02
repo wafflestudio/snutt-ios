@@ -45,14 +45,14 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         //UI
-        let lineColor : UIColor = HexColor("#FFFFFF", 0.6)
+        let lineColor : UIColor = HexColor("#FFFFFF", 0.6)!
         
         submitButton.roundCorner(submitButton.frame.height / 2.0)
-        submitButton.layer.borderColor = lineColor.CGColor
+        submitButton.layer.borderColor = lineColor.cgColor
         submitButton.layer.borderWidth = 1.0
         
         fbButton.roundCorner(fbButton.frame.height / 2.0)
-        fbButton.layer.borderColor = lineColor.CGColor
+        fbButton.layer.borderColor = lineColor.cgColor
         fbButton.layer.borderWidth = 1.0
         
         //textField
@@ -64,25 +64,25 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         isLoginTab = true
         setViewsToLogin()
         self.loginContainerView.layoutIfNeeded()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "keyboardWillShow:", name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "keyboardWillHide:", name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         animateBgScrollView()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
 
     func applicationDidEnterBackground() {
@@ -98,58 +98,58 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    private let activeColor = UIColor.whiteColor()
-    private let inactiveColor = UIColor(white: 1.0, alpha: 0.6)
+    fileprivate let activeColor = UIColor.white
+    fileprivate let inactiveColor = UIColor(white: 1.0, alpha: 0.6)
     
     func setViewsToLogin() {
-        registerCategoryButton.setTitleColor(inactiveColor, forState: .Normal)
-        loginCategoryButton.setTitleColor(activeColor, forState: .Normal)
-        submitButton.setTitle("로그인", forState: UIControlState.Normal)
+        registerCategoryButton.setTitleColor(inactiveColor, for: UIControlState())
+        loginCategoryButton.setTitleColor(activeColor, for: UIControlState())
+        submitButton.setTitle("로그인", for: UIControlState())
         fbLabel.text = "페이스북으로 로그인"
         registerAddOnLayoutConstraint.priority = 900
         
-        idTextField.returnKeyType = .Next
-        passwordTextField.returnKeyType = .Go
+        idTextField.returnKeyType = .next
+        passwordTextField.returnKeyType = .go
         
-        if passwordTextField.isFirstResponder() {
+        if passwordTextField.isFirstResponder {
             passwordTextField.reloadInputViews()
         }
         
-        registerTabLayoutConstraint0.active = false
-        registerTabLayoutConstraint1.active = false
-        loginTabLayoutConstraint0.active = true
-        loginTabLayoutConstraint1.active = true
+        registerTabLayoutConstraint0.isActive = false
+        registerTabLayoutConstraint1.isActive = false
+        loginTabLayoutConstraint0.isActive = true
+        loginTabLayoutConstraint1.isActive = true
         
         passwordCheckTextField.resignFirstResponder()
         emailTextField.resignFirstResponder()
     }
     
     func setViewsToRegister() {
-        registerCategoryButton.setTitleColor(activeColor, forState: .Normal)
-        loginCategoryButton.setTitleColor(inactiveColor, forState: .Normal)
-        submitButton.setTitle("회원가입", forState: UIControlState.Normal)
+        registerCategoryButton.setTitleColor(activeColor, for: UIControlState())
+        loginCategoryButton.setTitleColor(inactiveColor, for: UIControlState())
+        submitButton.setTitle("회원가입", for: UIControlState())
         fbLabel.text = "페이스북으로 회원가입"
         registerAddOnLayoutConstraint.priority = 100
         
         
-        loginTabLayoutConstraint0.active = false
-        loginTabLayoutConstraint1.active = false
-        registerTabLayoutConstraint0.active = true
-        registerTabLayoutConstraint1.active = true
+        loginTabLayoutConstraint0.isActive = false
+        loginTabLayoutConstraint1.isActive = false
+        registerTabLayoutConstraint0.isActive = true
+        registerTabLayoutConstraint1.isActive = true
         
-        idTextField.returnKeyType = .Next
-        passwordTextField.returnKeyType = .Next
-        passwordCheckTextField.returnKeyType = .Next
-        emailTextField.returnKeyType = .Join
+        idTextField.returnKeyType = .next
+        passwordTextField.returnKeyType = .next
+        passwordCheckTextField.returnKeyType = .next
+        emailTextField.returnKeyType = .join
         
-        if passwordTextField.isFirstResponder() {
+        if passwordTextField.isFirstResponder {
             passwordTextField.reloadInputViews()
         }
     }
     
     
     @IBAction func loginCategoryButtonClicked() {
-        UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: UIViewAnimationOptions.AllowAnimatedContent, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: UIViewAnimationOptions.allowAnimatedContent, animations: {
             self.setViewsToLogin()
             self.loginContainerView.layoutIfNeeded()
             }, completion: nil)
@@ -157,7 +157,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func registerCategoryButtonClicked() {
-        UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: UIViewAnimationOptions.AllowAnimatedContent, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: UIViewAnimationOptions.allowAnimatedContent, animations: {
             self.setViewsToRegister()
             self.loginContainerView.layoutIfNeeded()
             }, completion: nil)
@@ -177,28 +177,38 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
             })
         }
         
-        if let accessToken = FBSDKAccessToken.currentAccessToken() {
-            let id = accessToken.userID
-            let token = accessToken.tokenString
-            registerFB(id, token)
+        if let accessToken = FBSDKAccessToken.current() {
+            if let id = accessToken.userID,
+                let token = accessToken.tokenString {
+                registerFB(id, token)
+            } else {
+                STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
+            }
         } else {
             let fbLoginManager = FBSDKLoginManager()
-            fbLoginManager.logInWithReadPermissions(["public_profile"], fromViewController: self, handler:{result, error in
+            fbLoginManager.logIn(withReadPermissions: ["public_profile"], from: self, handler:{result, error in
                 if error != nil {
                     STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
-                } else if result.isCancelled {
-                    STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
                 } else {
-                    let id = result.token.userID
-                    let token = result.token.tokenString
-                    registerFB(id, token)
+                    if let result = result {
+                        if result.isCancelled {
+                            STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
+                        } else {
+                            let id = result.token.userID!
+                            let token = result.token.tokenString!
+                            registerFB(id, token)
+                        }
+                    } else {
+                        STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
+                    }
+
                 }
             })
         }
     }
     
     @IBAction func submitButtonClicked() {
-        guard let id = idTextField.text, password = passwordTextField.text else {
+        guard let id = idTextField.text, let password = passwordTextField.text else {
             STAlertView.showAlert(title: "로그인/회원가입 실패", message: "아이디와 비밀번호를 입력해주세요.")
             return
         }
@@ -246,8 +256,8 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func termLabelClicked() {
         let url = STConfig.sharedInstance.baseURL + "/terms_of_service"
-        let svc = SFSafariViewController(URL: NSURL(string: url)!)
-        self.presentViewController(svc, animated: true, completion: nil)
+        let svc = SFSafariViewController(url: URL(string: url)!)
+        self.present(svc, animated: true, completion: nil)
     }
     
     
@@ -257,9 +267,9 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
             if let deviceId = FIRInstanceID.instanceID().token() {
                 STNetworking.addDevice(deviceId)
             }
-            let appDelegate = UIApplication.sharedApplication().delegate!
+            let appDelegate = UIApplication.shared.delegate!
             let window = appDelegate.window!!
-            let mainController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateInitialViewController()
+            let mainController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()
             window.rootViewController = mainController
         }
         
@@ -271,16 +281,19 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         })
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         UIView.beginAnimations(nil, context: nil)
         
-        let userInfo = notification.userInfo
-        let height = userInfo![UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.height
-        let duration = userInfo![UIKeyboardAnimationDurationUserInfoKey]!.doubleValue
-        let curve = userInfo![UIKeyboardAnimationCurveUserInfoKey]!.integerValue
+        guard let userInfo = notification.userInfo else {
+            return
+        }
+
+        let height = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue.height
+        let duration: TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        let animationCurve = UIViewAnimationCurve(rawValue: (userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).intValue)!
         
         UIView.setAnimationDuration(duration)
-        UIView.setAnimationCurve(UIViewAnimationCurve(rawValue: curve)!)
+        UIView.setAnimationCurve(animationCurve)
         UIView.setAnimationBeginsFromCurrentState(true)
         
         keyboardLayoutConstraint.constant = height
@@ -289,15 +302,18 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         UIView.commitAnimations()
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         UIView.beginAnimations(nil, context: nil)
         
-        let userInfo = notification.userInfo
-        let duration = userInfo![UIKeyboardAnimationDurationUserInfoKey]!.doubleValue
-        let curve = userInfo![UIKeyboardAnimationCurveUserInfoKey]!.integerValue
+        guard let userInfo = notification.userInfo else {
+            return
+        }
+
+        let duration: TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        let animationCurve = UIViewAnimationCurve(rawValue: (userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).intValue)!
         
         UIView.setAnimationDuration(duration)
-        UIView.setAnimationCurve(UIViewAnimationCurve(rawValue: curve)!)
+        UIView.setAnimationCurve(animationCurve)
         UIView.setAnimationBeginsFromCurrentState(true)
         
         keyboardLayoutConstraint.constant = 0
@@ -307,8 +323,8 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    @IBAction func backgroundTapped(sender: UITapGestureRecognizer) {
-        if sender.state == .Ended {
+    @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
             self.view.endEditing(true)
         }
     }
@@ -316,7 +332,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     func animateBgScrollView() {
         //self.bgImageView.superview!.layoutIfNeeded()
 
-        UIView.animateWithDuration(80.0, delay: 0.0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: {
+        UIView.animate(withDuration: 80.0, delay: 0.0, options: [.autoreverse, .repeat, .curveLinear], animations: {
             let priority = self.bgLeftLayoutConstraint.priority
             self.bgLeftLayoutConstraint.priority = self.bgRightLayoutConstraint.priority
             self.bgRightLayoutConstraint.priority = priority
@@ -326,7 +342,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: TextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case idTextField:
             passwordTextField.becomeFirstResponder()

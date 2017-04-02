@@ -13,7 +13,7 @@ class STPrivacyPolicyViewController: UIViewController {
     @IBOutlet weak var webView: UIWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: STConfig.sharedInstance.baseURL + "/privacy_policy")!))
+        webView.loadRequest(URLRequest(url: URL(string: STConfig.sharedInstance.baseURL + "/privacy_policy")!))
         // Do any additional setup after loading the view.
     }
 

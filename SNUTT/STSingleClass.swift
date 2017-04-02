@@ -18,8 +18,8 @@ struct STSingleClass {
         self.place = place
     }
     
-    func toDictionary() -> [String: AnyObject] {
-        let dict : [String: AnyObject] = [
+    func toDictionary() -> [String: Any] {
+        let dict : [String: Any] = [
             "day" : time.day.rawValue,
             "start" : time.startPeriod,
             "len" : time.duration,

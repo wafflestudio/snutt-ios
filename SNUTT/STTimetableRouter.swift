@@ -14,60 +14,60 @@ enum STTimetableRouter : STRouter {
     static let baseURLString : String = STConfig.sharedInstance.baseURL+"/tables"
     static let shouldAddToken: Bool = true
     
-    case GetTimetableList
-    case GetTimetable(id: String)
-    case CreateTimetable(title : String, courseBook : STCourseBook)
-    case UpdateTimetable(id: String,title: String)
-    case DeleteTimetable(id: String)
-    case GetRecentTimetable()
+    case getTimetableList
+    case getTimetable(id: String)
+    case createTimetable(title : String, courseBook : STCourseBook)
+    case updateTimetable(id: String,title: String)
+    case deleteTimetable(id: String)
+    case getRecentTimetable()
     
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         switch self {
-        case .GetTimetableList:
-            return .GET
-        case .GetTimetable:
-            return .GET
-        case .CreateTimetable:
-            return .POST
-        case .UpdateTimetable:
-            return .PUT
-        case .DeleteTimetable:
-            return .DELETE
-        case .GetRecentTimetable:
-            return .GET
+        case .getTimetableList:
+            return .get
+        case .getTimetable:
+            return .get
+        case .createTimetable:
+            return .post
+        case .updateTimetable:
+            return .put
+        case .deleteTimetable:
+            return .delete
+        case .getRecentTimetable:
+            return .get
         }
     }
     
     var path: String {
         switch self {
-        case .GetTimetableList:
+        case .getTimetableList:
             return ""
-        case .GetTimetable(let id):
+        case .getTimetable(let id):
             return "/\(id)"
-        case .CreateTimetable:
+        case .createTimetable:
             return ""
-        case .UpdateTimetable(let id, _):
+        case .updateTimetable(let id, _):
             return "/\(id)"
-        case .DeleteTimetable(let id):
+        case .deleteTimetable(let id):
             return "/\(id)"
-        case .GetRecentTimetable:
+        case .getRecentTimetable:
             return "/recent"
         }
     }
     
-    var parameters: [String : AnyObject]? {
+    var parameters: [String : Any]? {
         switch self {
-        case .GetTimetableList:
+        case .getTimetableList:
             return nil
-        case .GetTimetable:
+        case .getTimetable:
             return nil
-        case .CreateTimetable(let title, let courseBook):
+        case .createTimetable(let title, let courseBook):
             return ["title" : title, "year" : courseBook.quarter.year, "semester" : courseBook.quarter.semester.rawValue]
-        case .UpdateTimetable(_, let title):
+        case .updateTimetable(_, let title):
             return ["title" : title]
-        case .DeleteTimetable:
+        case .deleteTimetable:
             return nil
-        case .GetRecentTimetable:
+        case .getRecentTimetable:
             return nil
         }
     }

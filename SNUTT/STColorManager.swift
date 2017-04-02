@@ -12,7 +12,7 @@ class STColorManager {
 
     // MARK: Singleton
 
-    private static var sharedManager : STColorManager? = nil
+    fileprivate static var sharedManager : STColorManager? = nil
     static var sharedInstance : STColorManager{
         get {
             if sharedManager == nil {
@@ -22,7 +22,7 @@ class STColorManager {
         }
     }
 
-    private init() {
+    fileprivate init() {
         self.loadData()
         self.updateData()
     }

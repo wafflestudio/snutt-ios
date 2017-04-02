@@ -11,7 +11,7 @@ import ChameleonFramework
 
 class STLoginTextField: UITextField {
     
-    let lineColor : UIColor = HexColor("#FFFFFF", 0.6)
+    let lineColor : UIColor = HexColor("#FFFFFF", 0.6)!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -19,11 +19,11 @@ class STLoginTextField: UITextField {
         self.setBottomBorder(lineColor, width: 1.0)
     }
     
-    override func drawPlaceholderInRect(rect: CGRect) {
+    override func drawPlaceholder(in rect: CGRect) {
         let placeholderRect = CGRect(x: rect.origin.x, y: (rect.height - self.font!.pointSize)/2, width: rect.width, height: self.font!.pointSize)
         
         let attribute : [String : AnyObject] = [NSForegroundColorAttributeName : lineColor]
-        NSString(string: self.placeholder!).drawInRect(placeholderRect, withAttributes: attribute)
+        NSString(string: self.placeholder!).draw(in: placeholderRect, withAttributes: attribute)
     }
     
     /*

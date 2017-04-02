@@ -16,10 +16,10 @@ class STNotificationTableViewCell: UITableViewCell {
     var notification : STNotification! {
         didSet {
             
-            let grayAttribute = [NSForegroundColorAttributeName: UIColor.grayColor()]
+            let grayAttribute = [NSForegroundColorAttributeName: UIColor.gray]
             let timeText = NSAttributedString(string: notification.createdFrom, attributes: grayAttribute)
             var message = NSMutableAttributedString(string: notification.message+" ")
-            message.appendAttributedString(timeText)
+            message.append(timeText)
             descriptionLabel.attributedText = message
             iconImageView.image = UIImage(named: notification.imageName)
         }
@@ -27,11 +27,11 @@ class STNotificationTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        descriptionLabel.lineBreakMode = .ByWordWrapping
+        descriptionLabel.lineBreakMode = .byWordWrapping
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

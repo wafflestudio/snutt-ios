@@ -15,36 +15,36 @@ enum STNotificationRouter : STRouter {
     static let baseURLString = STConfig.sharedInstance.baseURL+"/notification"
     static let shouldAddToken: Bool = true
     
-    case NotificationList(limit: Int, offset: Int, explicit: Bool)
-    case NotificationCount
+    case notificationList(limit: Int, offset: Int, explicit: Bool)
+    case notificationCount
     
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         switch self {
-        case .NotificationList:
-            return .GET
-        case .NotificationCount:
-            return .GET
+        case .notificationList:
+            return .get
+        case .notificationCount:
+            return .get
         }
     }
     
     var path: String {
         switch self {
-        case .NotificationList:
+        case .notificationList:
             return ""
-        case .NotificationCount:
+        case .notificationCount:
             return "/count"
         }
     }
     
-    var parameters: [String : AnyObject]? {
+    var parameters: [String : Any]? {
         switch self {
-        case let .NotificationList(limit, offset, explicit):
-            var dict : [String : AnyObject] = ["limit" : limit, "offset" : offset]
+        case let .notificationList(limit, offset, explicit):
+            var dict : [String : Any] = ["limit" : limit, "offset" : offset]
             if explicit {
                 dict["explicit"] = true
             }
             return dict
-        case .NotificationCount:
+        case .notificationCount:
             return nil
         }
     }

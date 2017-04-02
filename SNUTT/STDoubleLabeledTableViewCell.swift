@@ -18,17 +18,17 @@ class STDoubleLabeledTableViewCell: STLectureDetailTableViewCell {
         super.awakeFromNib()
         self.addSubview(firstTextField)
         self.addSubview(secondTextField)
-        self.selectionStyle = .None
+        self.selectionStyle = .none
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    override func setEditable(editable : Bool) {
+    override func setEditable(_ editable : Bool) {
         if editable {
             self.firstTextField.textColor = UIColor(white: 0.67, alpha: 1.0)
             self.secondTextField.textColor = UIColor(white: 0.67, alpha: 1.0)
