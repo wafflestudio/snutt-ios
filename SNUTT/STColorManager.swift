@@ -6,8 +6,6 @@
 //  Copyright © 2017년 WaffleStudio. All rights reserved.
 //
 
-import Foundation
-
 class STColorManager {
 
     // MARK: Singleton
@@ -24,7 +22,10 @@ class STColorManager {
 
     fileprivate init() {
         self.loadData()
-        self.updateData()
+        #if TODAY_EXTENSION
+        #else
+            self.updateData()
+        #endif
     }
 
     var colorList: STColorList!
@@ -35,14 +36,6 @@ class STColorManager {
 
     func saveData() {
         STDefaults[.colorList] = colorList
-    }
-
-    func updateData() {
-        STNetworking.getColors({colorList, nameList in
-            self.colorList = STColorList(colorList: colorList, nameList: nameList)
-            self.saveData()
-            STEventCenter.sharedInstance.postNotification(event: STEvent.ColorListUpdated, object: nil)
-            }, failure: nil)
     }
     
 }

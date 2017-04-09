@@ -54,8 +54,9 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     }
     
     func setColor() {
-        self.backgroundColor = lecture.color.bgColor
-        courseText.textColor = lecture.color.fgColor
+        let color = lecture.getColor()
+        self.backgroundColor = color.bgColor
+        courseText.textColor = color.fgColor
     }
     func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         /* //DEBUG

@@ -168,6 +168,7 @@ class STTimetableTabViewController: UIViewController {
 
     func cellLongClicked (_ cell : STCourseCellCollectionViewCell) {
         let oldColor = cell.lecture.color
+        let oldColorIndex = cell.lecture.colorIndex;
         guard let collectionView = timetableView else {
             return
         }
@@ -179,24 +180,29 @@ class STTimetableTabViewController: UIViewController {
             let tmpIndexPath = IndexPath(row: i, section: indexPath.section)
             return collectionView.cellForItem(at: tmpIndexPath) as? STCourseCellCollectionViewCell
         }
-        STColorActionSheetPicker.showWithColor(cell.lecture.color, doneBlock: { selectedColor in
+        STColorActionSheetPicker.showWithColor(oldColorIndex, doneBlock: { selectedColorIndex in
             var newLecture = cell.lecture
-            newLecture?.color = selectedColor
+            newLecture?.colorIndex = selectedColorIndex
+            newLecture?.color = nil
             var oldLecture = cell.lecture
             oldLecture?.color = oldColor
+            oldLecture?.colorIndex = oldColorIndex
             STTimetableManager.sharedInstance.updateLecture(
                 oldLecture!, newLecture: newLecture!, failure: {
                     cellList.forEach { cell in
                         cell?.lecture.color = oldColor
+                        cell?.lecture.colorIndex = oldColorIndex
                     }
             })
             }, cancelBlock: {
                 cellList.forEach { cell in
                     cell?.lecture.color = oldColor
+                    cell?.lecture.colorIndex = oldColorIndex
                 }
-            }, selectedBlock: { color in
+            }, selectedBlock: { colorIndex in
                 cellList.forEach { cell in
-                    cell?.lecture.color = color
+                    cell?.lecture.color = nil
+                    cell?.lecture.colorIndex = colorIndex
                 }
             }, origin: self)
     }

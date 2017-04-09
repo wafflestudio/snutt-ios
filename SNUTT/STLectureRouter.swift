@@ -63,10 +63,15 @@ enum STLectureRouter : STRouter {
             var dict : [String : Any] = [:]
             let oldDict = oldLecture.toDictionary()
             let newDict = newLecture.toDictionary()
-            
             for (key, oldVal) in oldDict {
                 let newVal = newDict[key]
                 if newVal != nil && JSON(oldVal) != JSON(newVal!) {
+                    dict[key] = newVal
+                }
+            }
+            for (key, newVal) in newDict {
+                let oldVal = oldDict[key]
+                if oldVal != nil && JSON(oldVal!) != JSON(newVal) {
                     dict[key] = newVal
                 }
             }

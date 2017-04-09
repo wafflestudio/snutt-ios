@@ -23,6 +23,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     let sharedDefaults = UserDefaults(suiteName: "group.wafflestudio.TodayExtensionSharingDefaults")
 
     override func viewDidLoad() {
+        // For STColorList UserDefaults
+        NSKeyedArchiver.setClassName("STColorList", for: STColorList.self)
+        NSKeyedUnarchiver.setClass(STColorList.self, forClassName: "STColorList")
+
         super.viewDidLoad()
         guard let extensionContext = self.extensionContext else {
             return

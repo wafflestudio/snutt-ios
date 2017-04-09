@@ -63,6 +63,8 @@
 		E17825C91D560A10009ACEC3 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E17825C81D560A10009ACEC3 /* config.plist */; };
 		E17825CD1D577CD8009ACEC3 /* STNotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17825CC1D577CD8009ACEC3 /* STNotificationRouter.swift */; };
 		E1799E881D8E28D20014794F /* STMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1799E871D8E28D20014794F /* STMainTabBarController.swift */; };
+		E17D45F51E9A1AF800E6973B /* STColorManagerUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17D45F41E9A1AF800E6973B /* STColorManagerUpdate.swift */; };
+		E17D45F61E9A1D0B00E6973B /* STColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1130AD81E7C38DD00ADE84F /* STColorManager.swift */; };
 		E181131C1E52E60600ECA64E /* STColorActionSheetPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E181131B1E52E60600ECA64E /* STColorActionSheetPicker.swift */; };
 		E184359D1D69A2C200BE5D58 /* STAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E184359C1D69A2C200BE5D58 /* STAlertView.swift */; };
 		E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */; };
@@ -256,6 +258,7 @@
 		E17825C81D560A10009ACEC3 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		E17825CC1D577CD8009ACEC3 /* STNotificationRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STNotificationRouter.swift; sourceTree = "<group>"; };
 		E1799E871D8E28D20014794F /* STMainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMainTabBarController.swift; sourceTree = "<group>"; };
+		E17D45F41E9A1AF800E6973B /* STColorManagerUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorManagerUpdate.swift; sourceTree = "<group>"; };
 		E181131B1E52E60600ECA64E /* STColorActionSheetPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorActionSheetPicker.swift; sourceTree = "<group>"; };
 		E184359C1D69A2C200BE5D58 /* STAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAlertView.swift; sourceTree = "<group>"; };
 		E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchBar.swift; sourceTree = "<group>"; };
@@ -403,6 +406,7 @@
 				E1EE1B301CCCDE20003DF250 /* STDefaults.swift */,
 				E184359C1D69A2C200BE5D58 /* STAlertView.swift */,
 				E1130AD81E7C38DD00ADE84F /* STColorManager.swift */,
+				E17D45F41E9A1AF800E6973B /* STColorManagerUpdate.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -1101,6 +1105,7 @@
 				E14992091C4B828500DC6756 /* STSwiftyJSONRequest.swift in Sources */,
 				E1C48B901C78736C00BC469E /* STColorPickTableViewCell.swift in Sources */,
 				E1F0CA311C78397B00A4F4ED /* STLeftAlignedTableViewCell.swift in Sources */,
+				E17D45F51E9A1AF800E6973B /* STColorManagerUpdate.swift in Sources */,
 				E149920F1C549D7900DC6756 /* STSearchRouter.swift in Sources */,
 				E1C48BB21C79C8E200BC469E /* STDay.swift in Sources */,
 				E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */,
@@ -1132,6 +1137,7 @@
 				E1BEF0891E702F2300BBFDB1 /* STTimetable.swift in Sources */,
 				E1130ADA1E7C390700ADE84F /* STColorList.swift in Sources */,
 				E1BEF08C1E702F3900BBFDB1 /* STTime.swift in Sources */,
+				E17D45F61E9A1D0B00E6973B /* STColorManager.swift in Sources */,
 				E1BEF09A1E703EE000BBFDB1 /* STColumnHeaderCollectionViewCell.swift in Sources */,
 				E1BEF08B1E702F3900BBFDB1 /* STSingleClass.swift in Sources */,
 				E1BEF09E1E703EE000BBFDB1 /* STTimetableCellType.swift in Sources */,
@@ -1473,13 +1479,18 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				ENABLE_TESTABILITY = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"TODAY_EXTENSION=1",
+				);
 				INFOPLIST_FILE = "SNUTT Today/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TODAY_EXTENSION";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -1496,12 +1507,18 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6CP294YE57;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"TODAY_EXTENSION=1",
+				);
 				INFOPLIST_FILE = "SNUTT Today/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TODAY_EXTENSION;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1519,12 +1536,18 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6CP294YE57;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"TODAY_EXTENSION=1",
+				);
 				INFOPLIST_FILE = "SNUTT Today/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TODAY_EXTENSION;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 			};

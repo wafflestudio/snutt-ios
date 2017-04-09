@@ -87,6 +87,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             STUser.updateDeviceIdIfNeeded()
             connectToFcm()
         }
+
+        // For STColorList UserDefaults
+        NSKeyedArchiver.setClassName("STColorList", for: STColorList.self)
+        NSKeyedUnarchiver.setClass(STColorList.self, forClassName: "STColorList")
         
         return true
     }

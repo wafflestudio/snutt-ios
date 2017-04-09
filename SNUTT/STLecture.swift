@@ -23,8 +23,20 @@ struct STLecture {
     var category : String?
     var id : String?
     var classList :[STSingleClass] = []
-    var color : STColor = STColor()
+    var color : STColor? = nil
+    var colorIndex: Int = 0
     var timeMask: [Int] = []
+
+    func getColor() -> STColor {
+        let colorList = STColorManager.sharedInstance.colorList!
+        if colorIndex == 0 {
+            return color ?? STColor()
+        } else if (colorIndex <= colorList.colorList.count && colorIndex >= 1) {
+            return colorList.colorList[colorIndex - 1]
+        } else {
+            return STColor()
+        }
+    }
 
     var timeDescription : String {
         var ret: String = ""
@@ -89,9 +101,11 @@ struct STLecture {
         timeMask = data["class_time_mask"].arrayValue.map{mask in mask.intValue}
         id = data["_id"].string
         let colorJson = data["color"]
+        colorIndex = data["colorIndex"].intValue
         if let fgHex = colorJson["fg"].string, let bgHex = colorJson["bg"].string {
             color = STColor(fgHex: fgHex, bgHex: bgHex)
         }
+
         let listData = data["class_time_json"].arrayValue
         for it in listData {
             let time = STTime(day: it["day"].intValue, startPeriod: it["start"].doubleValue, duration: it["len"].doubleValue)
@@ -120,7 +134,8 @@ struct STLecture {
             "category" : category,
             "id" : id,
             "class_time_json" : classTimeJSON,
-            "color" : [ "fg" : color.fgColor.toHexString(), "bg": color.bgColor.toHexString()]
+            "color" : color?.dictionaryValue(),
+            "colorIndex" : colorIndex,
             ]
         
         for (key, value) in dict {

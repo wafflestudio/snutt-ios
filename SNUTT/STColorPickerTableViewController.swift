@@ -13,8 +13,9 @@ class STColorPickerTableViewController: UITableViewController {
 
     var customColorIndex = 1
     var color : STColor!
+    var colorIndex: Int = 1
     var selectedColorIndex = 1
-    var doneBlock : (STColor) -> () = { _ in }
+    var doneBlock : (Int, STColor?) -> () = { _ in }
     var colorList : STColorList!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,9 @@ class STColorPickerTableViewController: UITableViewController {
     
     override func willMove(toParentViewController parent: UIViewController?) {
         if parent == nil {
-            doneBlock(color)
+            let retColorIndex = selectedColorIndex == customColorIndex ? 0 : selectedColorIndex + 1
+            let retColor = selectedColorIndex == customColorIndex ? color : nil
+            doneBlock(retColorIndex, retColor)
         }
     }
     
@@ -41,13 +44,12 @@ class STColorPickerTableViewController: UITableViewController {
     func colorListUpdated() {
         colorList = STColorManager.sharedInstance.colorList
         customColorIndex = colorList.colorList.count
-        selectedColorIndex = customColorIndex
-
-        for i in 0..<colorList.colorList.count {
-            if colorList.colorList[i] == self.color {
-                selectedColorIndex = i
-                break
-            }
+        if colorIndex == 0 {
+            selectedColorIndex = customColorIndex
+        } else if colorIndex > colorList.colorList.count {
+            selectedColorIndex = customColorIndex
+        } else {
+            selectedColorIndex = colorIndex - 1
         }
         tableView.reloadData()
         self.tableView.selectRow(at: IndexPath(row: selectedColorIndex, section: 0), animated: false, scrollPosition: .none)
