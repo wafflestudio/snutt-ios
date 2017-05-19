@@ -64,12 +64,22 @@ class STOnBoardingViewController: UIViewController, UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageWidth = scrollView.frame.size.width
         let currentPage = pageControl.currentPage
-        var nowPage = Int(floor((scrollView.contentOffset.x - pageWidth / 3.0) / pageWidth)) + 1
-        nowPage = nowPage < 0 ? 0 : nowPage >= 3 ? 2 : nowPage
-        pageControl.currentPage = nowPage
-        if (currentPage != nowPage) {
-            titleImageView.image = titleImages[nowPage]
+        var nowPage = scrollView.contentOffset.x / pageWidth + 0.5
+        nowPage = nowPage < 0.0 ? 0.0 : nowPage > 2.5 ? 2.5 : nowPage
+
+        let nowPageIndex = Int(floor(nowPage))
+        let offsetFromPrev = nowPage - CGFloat(nowPageIndex)
+        let offsetFromNext = CGFloat(nowPageIndex) - nowPage + 1.0
+
+        pageControl.currentPage = nowPageIndex
+        if (currentPage != nowPageIndex) {
+            titleImageView.image = titleImages[nowPageIndex]
         }
+
+        let offset = min(offsetFromNext, offsetFromPrev)
+        let alpha = offset > 0.4 ? 1.0 : offset / 0.4
+
+        titleImageView.alpha = alpha
 
     }
     @IBAction func pageControlValueChanged(_ sender: Any) {

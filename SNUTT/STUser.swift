@@ -11,6 +11,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import Firebase
+import FBSDKLoginKit
 
 class STUser {
     var localId : String?
@@ -61,7 +62,68 @@ class STUser {
         STDefaults[.shouldShowBadge] = false
         UIApplication.shared.delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateInitialViewController()
     }
-    
+
+    static func loadMainPage() {
+        let openController : () -> () = { _ in
+            if let deviceId = FIRInstanceID.instanceID().token() {
+                STNetworking.addDevice(deviceId)
+            }
+            let appDelegate = UIApplication.shared.delegate!
+            let window = appDelegate.window!!
+            let mainController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()
+            window.rootViewController = mainController
+        }
+
+        STNetworking.getRecentTimetable({ timetable in
+            STTimetableManager.sharedInstance.currentTimetable = timetable
+            openController()
+        }, failure: {
+            openController()
+        })
+    }
+
+    static func tryFBLogin(controller: UIViewController) {
+        let done : (String) -> () = { token in
+            STDefaults[.token] = token
+            STUser.loadMainPage()
+        }
+
+        let registerFB : (String, String) -> () = { id, token in
+            STNetworking.registerFB(id, token: token, done: done, failure: { _ in
+
+            })
+        }
+
+        if let accessToken = FBSDKAccessToken.current() {
+            if let id = accessToken.userID,
+                let token = accessToken.tokenString {
+                registerFB(id, token)
+            } else {
+                STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
+            }
+        } else {
+            let fbLoginManager = FBSDKLoginManager()
+            fbLoginManager.logIn(withReadPermissions: ["public_profile"], from: controller, handler:{result, error in
+                if error != nil {
+                    STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
+                } else {
+                    if let result = result {
+                        if result.isCancelled {
+                            STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
+                        } else {
+                            let id = result.token.userID!
+                            let token = result.token.tokenString!
+                            registerFB(id, token)
+                        }
+                    } else {
+                        STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
+                    }
+
+                }
+            })
+        }
+    }
+
     static func updateDeviceIdIfNeeded() {
         guard let refreshedToken = FIRInstanceID.instanceID().token() else {
             return
