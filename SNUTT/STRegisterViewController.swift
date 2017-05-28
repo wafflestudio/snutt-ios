@@ -49,9 +49,33 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
 
         let policyTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.termLabelClicked))
         policyLabel.addGestureRecognizer(policyTapRecognizer)
+
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(self.keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        center.addObserver(self, selector: #selector(self.keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+
         // Do any additional setup after loading the view.
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
+    func keyboardWillShow(noti : NSNotification) {
+        UIView.animate(withDuration: 1.0, animations: { _ in
+            self.backBtnView.alpha = 0.0
+        })
+    }
+
+    func keyboardWillHide(noti: NSNotification) {
+        UIView.animate(withDuration: 1.0, animations: { _ in
+            self.backBtnView.alpha = 1.0
+        })
+    }
     // MARK: TextFieldDelegate
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
