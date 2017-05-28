@@ -153,10 +153,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pfr-K7-joH">
-                                <rect key="frame" x="51" y="77.5" width="273" height="511"/>
+                                <rect key="frame" x="35" y="26.5" width="305" height="613"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gce-ib-1G1" customClass="STViewButton" customModule="SNUTT" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="16"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이전" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HJN-oU-4DT">
+                                                <rect key="frame" x="16" y="-2" width="28" height="19.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btnLoginBack" translatesAutoresizingMaskIntoConstraints="NO" id="N9S-6s-VYu">
+                                                <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="16" id="544-vS-0Td"/>
+                                                    <constraint firstAttribute="width" constant="16" id="uSa-28-m5g"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="HJN-oU-4DT" firstAttribute="leading" secondItem="N9S-6s-VYu" secondAttribute="trailing" id="DZr-TK-AVe"/>
+                                            <constraint firstAttribute="trailing" secondItem="HJN-oU-4DT" secondAttribute="trailing" id="Hv8-hM-9pa"/>
+                                            <constraint firstItem="N9S-6s-VYu" firstAttribute="top" secondItem="gce-ib-1G1" secondAttribute="top" id="SRZ-5b-QgF"/>
+                                            <constraint firstItem="N9S-6s-VYu" firstAttribute="leading" secondItem="gce-ib-1G1" secondAttribute="leading" id="WWZ-ob-22Y"/>
+                                            <constraint firstItem="HJN-oU-4DT" firstAttribute="centerY" secondItem="gce-ib-1G1" secondAttribute="centerY" id="cQ9-uY-wbI"/>
+                                            <constraint firstAttribute="bottom" secondItem="N9S-6s-VYu" secondAttribute="bottom" id="ds4-RF-7df"/>
+                                        </constraints>
+                                    </view>
                                     <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" translatesAutoresizingMaskIntoConstraints="NO" id="xlf-Zx-gp0">
-                                        <rect key="frame" x="94" y="0.0" width="85" height="114"/>
+                                        <rect key="frame" x="110" y="54" width="85" height="114"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SNUTT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHD-WZ-Ipq">
                                                 <rect key="frame" x="5" y="68" width="75" height="30"/>
@@ -186,11 +213,11 @@
                                             <constraint firstItem="eHo-d9-anz" firstAttribute="top" secondItem="xlf-Zx-gp0" secondAttribute="top" id="rEI-tv-8VT"/>
                                         </constraints>
                                     </view>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="qDw-f7-jMR">
-                                        <rect key="frame" x="0.0" y="150" width="273" height="160"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="qDw-f7-jMR">
+                                        <rect key="frame" x="0.0" y="204" width="305" height="199"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="아이디" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mi1-06-VXy" customClass="STLoginTextField" customModule="SNUTT" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="273" height="25"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="305" height="25"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="25" id="c1B-YJ-LLb"/>
                                                 </constraints>
@@ -210,7 +237,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="비밀번호" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ybB-nv-m5b" customClass="STLoginTextField" customModule="SNUTT" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="45" width="273" height="25"/>
+                                                <rect key="frame" x="0.0" y="58" width="305" height="25"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="25" id="V4z-MB-Lrr"/>
                                                 </constraints>
@@ -230,7 +257,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="비밀번호 확인" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rdt-gi-xSB" customClass="STLoginTextField" customModule="SNUTT" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="90" width="273" height="25"/>
+                                                <rect key="frame" x="0.0" y="116" width="305" height="25"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="25" id="ojz-AD-hTJ"/>
                                                 </constraints>
@@ -250,7 +277,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이메일 입력" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nfg-at-oUd" customClass="STLoginTextField" customModule="SNUTT" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="135" width="273" height="25"/>
+                                                <rect key="frame" x="0.0" y="174" width="305" height="25"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="25" id="elo-dX-Uhv"/>
                                                 </constraints>
@@ -272,13 +299,13 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hhx-mC-GKq">
-                                        <rect key="frame" x="0.0" y="340" width="273" height="121"/>
+                                        <rect key="frame" x="0.0" y="442" width="305" height="121"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvf-H6-5j3" customClass="STViewButton" customModule="SNUTT" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="273" height="45"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="305" height="45"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="회원가입" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7PX-ls-gP2">
-                                                        <rect key="frame" x="107" y="12.5" width="59" height="20.5"/>
+                                                        <rect key="frame" x="123" y="12.5" width="59" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -303,17 +330,17 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uU1-E3-Lek">
-                                                <rect key="frame" x="0.0" y="45" width="273" height="31"/>
+                                                <rect key="frame" x="0.0" y="45" width="305" height="31"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ep1-Nj-W2G">
-                                                        <rect key="frame" x="0.0" y="15" width="273" height="1"/>
+                                                        <rect key="frame" x="0.0" y="15" width="305" height="1"/>
                                                         <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="xec-bG-zYp"/>
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ckt-SF-LhQ">
-                                                        <rect key="frame" x="124" y="7.5" width="25" height="17"/>
+                                                        <rect key="frame" x="140" y="7.5" width="25" height="17"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="25" id="FR6-2j-8QY"/>
@@ -334,10 +361,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lhM-1l-5Qi" customClass="STViewButton" customModule="SNUTT" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="76" width="273" height="45"/>
+                                                <rect key="frame" x="0.0" y="76" width="305" height="45"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4C6-5H-nGA">
-                                                        <rect key="frame" x="59.5" y="13" width="153.5" height="18"/>
+                                                        <rect key="frame" x="75.5" y="13" width="153.5" height="18"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="페이스북으로 로그인" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fZ-7j-MXE">
                                                                 <rect key="frame" x="16.5" y="-1" width="137" height="20.5"/>
@@ -398,10 +425,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jDX-KU-eSd">
-                                        <rect key="frame" x="0.0" y="486" width="273" height="25"/>
+                                        <rect key="frame" x="0.0" y="588" width="305" height="25"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="fci-gW-ea8">
-                                                <rect key="frame" x="11.5" y="6" width="251" height="13.5"/>
+                                                <rect key="frame" x="27.5" y="6" width="251" height="13.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="회원가입을 누르시면 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G89-gM-OVe">
                                                         <rect key="frame" x="0.0" y="0.0" width="92" height="13.5"/>
@@ -437,13 +464,15 @@
                                     <constraint firstItem="qDw-f7-jMR" firstAttribute="top" secondItem="xlf-Zx-gp0" secondAttribute="bottom" constant="36" id="6U5-Yj-X0Q"/>
                                     <constraint firstAttribute="bottom" secondItem="jDX-KU-eSd" secondAttribute="bottom" id="8cG-L2-OxU"/>
                                     <constraint firstItem="xlf-Zx-gp0" firstAttribute="centerX" secondItem="Pfr-K7-joH" secondAttribute="centerX" id="CWy-TX-08R"/>
-                                    <constraint firstItem="xlf-Zx-gp0" firstAttribute="top" secondItem="Pfr-K7-joH" secondAttribute="top" id="K09-2I-oN5"/>
-                                    <constraint firstItem="Hhx-mC-GKq" firstAttribute="top" secondItem="qDw-f7-jMR" secondAttribute="bottom" constant="30" id="L8T-gv-QBg"/>
+                                    <constraint firstItem="xlf-Zx-gp0" firstAttribute="top" secondItem="Pfr-K7-joH" secondAttribute="top" constant="54" id="K09-2I-oN5"/>
+                                    <constraint firstItem="Hhx-mC-GKq" firstAttribute="top" secondItem="qDw-f7-jMR" secondAttribute="bottom" constant="39" id="L8T-gv-QBg"/>
                                     <constraint firstAttribute="trailing" secondItem="jDX-KU-eSd" secondAttribute="trailing" id="Sav-kr-4AU"/>
                                     <constraint firstItem="qDw-f7-jMR" firstAttribute="leading" secondItem="Pfr-K7-joH" secondAttribute="leading" id="YqP-QM-lLn"/>
+                                    <constraint firstItem="gce-ib-1G1" firstAttribute="top" secondItem="Pfr-K7-joH" secondAttribute="top" id="ZCt-QV-sUn"/>
                                     <constraint firstItem="Hhx-mC-GKq" firstAttribute="leading" secondItem="Pfr-K7-joH" secondAttribute="leading" id="gXJ-Xr-s0e"/>
                                     <constraint firstAttribute="trailing" secondItem="qDw-f7-jMR" secondAttribute="trailing" id="hyD-Lu-eUH"/>
                                     <constraint firstItem="jDX-KU-eSd" firstAttribute="leading" secondItem="Pfr-K7-joH" secondAttribute="leading" id="jiy-v3-tkL"/>
+                                    <constraint firstItem="gce-ib-1G1" firstAttribute="leading" secondItem="Pfr-K7-joH" secondAttribute="leading" id="m8f-SZ-DXw"/>
                                     <constraint firstItem="jDX-KU-eSd" firstAttribute="top" secondItem="Hhx-mC-GKq" secondAttribute="bottom" constant="25" id="o2Q-um-0wd"/>
                                     <constraint firstAttribute="trailing" secondItem="Hhx-mC-GKq" secondAttribute="trailing" id="z9E-cG-Gfr"/>
                                 </constraints>
@@ -451,13 +480,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="Pfr-K7-joH" secondAttribute="trailing" constant="35" id="7qN-4s-qtB"/>
-                            <constraint firstItem="Pfr-K7-joH" firstAttribute="leading" secondItem="jnE-rN-Dds" secondAttribute="leadingMargin" constant="35" id="VSJ-Gb-dPU"/>
+                            <constraint firstAttribute="trailing" secondItem="Pfr-K7-joH" secondAttribute="trailing" constant="35" id="7qN-4s-qtB"/>
+                            <constraint firstItem="Pfr-K7-joH" firstAttribute="leading" secondItem="jnE-rN-Dds" secondAttribute="leading" constant="35" id="VSJ-Gb-dPU"/>
                             <constraint firstItem="Pfr-K7-joH" firstAttribute="centerY" secondItem="jnE-rN-Dds" secondAttribute="centerY" id="dpp-11-CKB"/>
                             <constraint firstItem="Pfr-K7-joH" firstAttribute="centerX" secondItem="jnE-rN-Dds" secondAttribute="centerX" id="qLc-2h-LE8"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backBtnView" destination="gce-ib-1G1" id="95S-2q-EIS"/>
                         <outlet property="emailTextField" destination="Nfg-at-oUd" id="33X-sc-jY5"/>
                         <outlet property="facebookButton" destination="lhM-1l-5Qi" id="nFU-9V-6L6"/>
                         <outlet property="idTextField" destination="mi1-06-VXy" id="3K3-iA-u8D"/>
@@ -734,6 +764,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="btnLoginBack" width="16" height="16"/>
         <image name="iconFacebook" width="9" height="18"/>
         <image name="logo" width="51" height="52"/>
     </resources>

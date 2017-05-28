@@ -12,6 +12,7 @@ import SafariServices
 
 class STRegisterViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var backBtnView: STViewButton!
     @IBOutlet weak var idTextField: STLoginTextField!
     @IBOutlet weak var passwordTextField: STLoginTextField!
     @IBOutlet weak var passwordCheckTextField: STLoginTextField!
@@ -42,6 +43,10 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
         facebookButton.buttonPressAction = { _ in
             self.fbButtonClicked()
         }
+        backBtnView.buttonPressAction = { _ in
+            self.dismiss(animated: true, completion: nil)
+        }
+
         let policyTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.termLabelClicked))
         policyLabel.addGestureRecognizer(policyTapRecognizer)
         // Do any additional setup after loading the view.
