@@ -29,27 +29,30 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        layer.cornerRadius = 6
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longClick))
         self.addGestureRecognizer(longPress)
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.tap))
         self.addGestureRecognizer(tap)
+
+        self.layer.borderWidth = 0.5
+        self.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.05).cgColor
     }
     
     func setText() {
-        var text = ""
+        var text = NSMutableAttributedString()
         if let lecture = self.lecture {
-            text = lecture.title
+            let font = UIFont.systemFont(ofSize: 10.0)
+            text.append(NSAttributedString(string: lecture.title.breakOnlyAtNewLineAndSpace, attributes: [NSFontAttributeName: font]))
         }
         if let singleClass = self.singleClass {
-            if text == "" {
-                text = singleClass.place
-            } else {
-                text = text + "\n" + singleClass.place
+            let font = UIFont.boldSystemFont(ofSize: 11.0)
+            if text.length != 0 {
+                text.append(NSAttributedString(string: "\n"))
             }
+            text.append(NSAttributedString(string: singleClass.place.breakOnlyAtNewLineAndSpace, attributes: [NSFontAttributeName: font]))
         }
-        courseText.text = text.breakOnlyAtNewLineAndSpace
+        courseText.attributedText = text
         courseText.baselineAdjustment = .alignCenters
     }
     
