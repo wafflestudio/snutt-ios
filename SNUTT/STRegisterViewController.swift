@@ -21,6 +21,11 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var registerButton: STViewButton!
     @IBOutlet weak var facebookButton: STViewButton!
 
+    @IBOutlet weak var layoutConstraint1: NSLayoutConstraint!
+    @IBOutlet weak var layoutConstraint2: NSLayoutConstraint!
+    @IBOutlet weak var layoutConstraint3: NSLayoutConstraint!
+
+
     @IBOutlet weak var policyLabel: UILabel!
 
     var textFields : [STLoginTextField] {
@@ -54,6 +59,11 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
         center.addObserver(self, selector: #selector(self.keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         center.addObserver(self, selector: #selector(self.keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
 
+        if (UIScreen.main.bounds.height > 700) {
+            layoutConstraint1.constant = 104
+            layoutConstraint2.constant = 71
+            layoutConstraint3.constant = 68
+        }
         // Do any additional setup after loading the view.
     }
 
@@ -87,6 +97,7 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
         if let index = textFieldList.index(of: loginTextField) {
             if index == textFieldList.count - 1 {
                 textField.resignFirstResponder()
+                registerButtonClicked()
                 return true
             }
             textFieldList[index + 1].becomeFirstResponder()
@@ -96,10 +107,12 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
     }
 
     func fbButtonClicked() {
+        self.view.endEditing(true)
         STUser.tryFBLogin(controller:self)
     }
 
     func registerButtonClicked() {
+        self.view.endEditing(true)
         guard let id = idTextField.text, let password = passwordTextField.text else {
             STAlertView.showAlert(title: "로그인/회원가입 실패", message: "아이디와 비밀번호를 입력해주세요.")
             return
@@ -138,6 +151,7 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
     }
 
     func termLabelClicked() {
+        self.view.endEditing(true)
         let url = STConfig.sharedInstance.baseURL + "/terms_of_service"
         let svc = SFSafariViewController(url: URL(string: url)!)
         self.present(svc, animated: true, completion: nil)
