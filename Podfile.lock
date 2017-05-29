@@ -52,6 +52,7 @@ PODS:
   - Protobuf (3.2.0)
   - SwiftyJSON (3.1.4)
   - SwiftyUserDefaults (3.0.1)
+  - TPKeyboardAvoiding (1.3.1)
   - TTRangeSlider (1.0.5)
 
 DEPENDENCIES:
@@ -72,6 +73,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - SwiftyJSON
   - SwiftyUserDefaults (from `https://github.com/Rajin9601/SwiftyUserDefaults.git`)
+  - TPKeyboardAvoiding
   - TTRangeSlider
 
 EXTERNAL SOURCES:
@@ -118,8 +120,9 @@ SPEC CHECKSUMS:
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SwiftyUserDefaults: 38267a30d58b7c8570995cd5defd354e43f056c6
+  TPKeyboardAvoiding: 0d6af20e95e2850f4c621841225b59ec7d8dd852
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: e8c5adfee26ab8f978d14ff64c842be11b432932
+PODFILE CHECKSUM: b172415a4bc40eed136bfb209c7fe2e86d0a8f9c
 
 COCOAPODS: 1.2.0

@@ -9,21 +9,54 @@
 import UIKit
 import ChameleonFramework
 
+@IBDesignable
 class STLoginTextField: UITextField {
-    
-    let lineColor : UIColor = HexColor("#FFFFFF", 0.6)!
-    
+
+    let lineView = UIView()
+
+    @IBInspectable var lineColor: UIColor = UIColor.black {
+        didSet {
+            setLineView()
+        }
+    }
+
+    @IBInspectable var lineWidth: CGFloat = 0 {
+        didSet {
+            setLineView()
+        }
+    }
+
+    @IBInspectable var lineBelow: CGFloat = 0 {
+        didSet {
+            setLineView()
+        }
+    }
+
+    func setLineView() {
+        lineView.center = CGPoint(x: frame.midX, y: frame.size.height + lineBelow)
+        lineView.frame.size = CGSize(width: frame.size.width, height: lineWidth)
+        lineView.backgroundColor = lineColor
+    }
+
+    func setup() {
+        addSubview(lineView)
+        setLineView()
+        clipsToBounds = false
+    }
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.textColor = UIColor(white: 1.0, alpha: 1.0)
-        self.setBottomBorder(lineColor, width: 1.0)
+        setup()
     }
-    
-    override func drawPlaceholder(in rect: CGRect) {
-        let placeholderRect = CGRect(x: rect.origin.x, y: (rect.height - self.font!.pointSize)/2, width: rect.width, height: self.font!.pointSize)
-        
-        let attribute : [String : AnyObject] = [NSForegroundColorAttributeName : lineColor]
-        NSString(string: self.placeholder!).draw(in: placeholderRect, withAttributes: attribute)
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setLineView()
     }
     
     /*

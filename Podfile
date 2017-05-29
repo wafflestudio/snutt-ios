@@ -20,6 +20,7 @@ target 'SNUTT' do
   pod 'Firebase'
   pod 'Firebase/Messaging'
   pod 'DZNEmptyDataSet'
+  pod 'TPKeyboardAvoiding'
 end
 
 target 'SNUTT Today' do
