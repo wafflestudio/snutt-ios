@@ -11,9 +11,12 @@ import UIKit
 class STLectureSearchToolbarView: UIView, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     @IBOutlet weak var searchTableViewController: STLectureSearchTableViewController!
-    @IBOutlet weak var sharpButton: UIButton!
+
+    @IBOutlet weak var sharpButtonLabel: UILabel!
+    @IBOutlet weak var sharpButton: STViewButton!
     
-    @IBOutlet weak var emptyTimeButton: UIButton!
+    @IBOutlet weak var emptyTimeLabel: UILabel!
+    @IBOutlet weak var emptyTimeButton: STViewButton!
     @IBOutlet weak var tagFilterCollectionView: UICollectionView!
     var isEditingTag: Bool {
         return searchTableViewController.searchBar.isEditingTag
@@ -25,50 +28,57 @@ class STLectureSearchToolbarView: UIView, UICollectionViewDelegate, UICollection
     var currentTagType: STTagType?
     
     override func awakeFromNib() {
-        emptyTimeButton.setTitleColor(UIColor.gray, for: UIControlState())
         tagFilterCollectionView.delegate = self
         tagFilterCollectionView.dataSource = self
         let nib = UINib(nibName: "STTagFilterCollectionViewCell", bundle: nil)
         tagFilterCollectionView.register(nib, forCellWithReuseIdentifier: "STTagFilterCollectionViewCell")
         sizingCell = nib.instantiate(withOwner: self, options: nil)[0] as! STTagFilterCollectionViewCell
         tagTypeList = [.AcademicYear, .Category, .Classification, .Credit, .Department, .Instructor]
-        
-        sharpButton.addTarget(self, action: #selector(sharpButtonClicked), for: .primaryActionTriggered)
-        emptyTimeButton.addTarget(self, action: #selector(emptyTimeButtonClicked), for: .primaryActionTriggered)
+        sharpButton.buttonPressAction = { _ in
+            self.sharpButtonClicked()
+        }
+        emptyTimeButton.buttonPressAction = { _ in
+            self.emptyTimeButtonClicked()
+        }
         
         setEditingTag(false)
+        setEmptyButton()
         
     }
     
-    func sharpButtonClicked(_ sender: AnyObject) {
+    func sharpButtonClicked() {
         if isEditingTag {
             searchTableViewController.searchBar.disableEditingTag()
         } else {
             searchTableViewController.searchBar.enableEditingTag()
         }
     }
-    func emptyTimeButtonClicked(_ sender: AnyObject) {
+    func emptyTimeButtonClicked() {
         isEmptyTime = !isEmptyTime
+        setEmptyButton()
+    }
+    func setEmptyButton() {
         if isEmptyTime {
-            emptyTimeButton.setTitleColor(UIColor.black, for: UIControlState())
+            emptyTimeLabel.textColor = UIColor.black
+            emptyTimeLabel.text = "ON"
         } else {
-            emptyTimeButton.setTitleColor(UIColor.gray, for: UIControlState())
+            emptyTimeLabel.textColor = UIColor(white: 0.7, alpha: 1.0)
+            emptyTimeLabel.text = "OFF"
         }
     }
     
     func setEditingTag(_ editingTag: Bool) {
+
         if editingTag {
-            sharpButton.setImage(nil, for: UIControlState())
-            sharpButton.setTitle("취소", for: UIControlState())
+            sharpButtonLabel.text = "취소"
             sharpButton.layoutIfNeeded()
-            emptyTimeButton.superview?.isHidden = true
-            tagFilterCollectionView.superview?.isHidden = false
+            emptyTimeButton.isHidden = true
+            tagFilterCollectionView.isHidden = false
         } else {
-            sharpButton.setImage(UIImage(named: "icon_tag_black"), for: UIControlState())
-            sharpButton.setTitle(nil, for: UIControlState())
+            sharpButtonLabel.text = "#태그"
             sharpButton.layoutIfNeeded()
-            emptyTimeButton.superview?.isHidden = false
-            tagFilterCollectionView.superview?.isHidden = true
+            emptyTimeButton.isHidden = false
+            tagFilterCollectionView.isHidden = true
         }
     }
     
@@ -76,7 +86,7 @@ class STLectureSearchToolbarView: UIView, UICollectionViewDelegate, UICollection
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         sizingCell.tagType = tagTypeList[indexPath.row]
-        return sizingCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize, withHorizontalFittingPriority: Float(self.frame.width), verticalFittingPriority: 27)
+        return sizingCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize, withHorizontalFittingPriority: Float(self.frame.width), verticalFittingPriority: 42)
     }
     
     func numberOfSections() -> Int {
@@ -111,4 +121,5 @@ class STLectureSearchToolbarView: UIView, UICollectionViewDelegate, UICollection
         collectionView.reloadItems(at: reloadIndexPaths)
         searchTableViewController.showTagRecommendation()
     }
+
 }

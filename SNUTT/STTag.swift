@@ -18,23 +18,23 @@ enum STTagType : String {
     
     var tagColor: UIColor {
         switch self {
-        case .AcademicYear: return UIColor.flatSkyBlueDark
-        case .Category: return UIColor.flatYellowDark
-        case .Classification: return UIColor.flatGreenDark
-        case .Credit: return UIColor.flatCoffeeDark
-        case .Department: return UIColor.flatOrangeDark
-        case .Instructor: return UIColor.flatWatermelonDark
+        case .AcademicYear: return UIColor(hexString: "#dc2f45")
+        case .Category: return UIColor(hexString: "#e5731c")
+        case .Classification: return UIColor(hexString: "#8bbb1a")
+        case .Credit: return UIColor(hexString: "#0cada6")
+        case .Department: return UIColor(hexString: "#0d82cd")
+        case .Instructor: return UIColor(hexString: "#9c45a0")
         }
     }
     
     var tagLightColor: UIColor {
         switch self {
-        case .AcademicYear: return UIColor.flatSkyBlue
-        case .Category: return UIColor.flatYellow
-        case .Classification: return UIColor.flatGreen
-        case .Credit: return UIColor.flatCoffee
-        case .Department: return UIColor.flatOrange
-        case .Instructor: return UIColor.flatWatermelon
+        case .AcademicYear: return UIColor(hexString: "#e54459")
+        case .Category: return UIColor(hexString: "#f58d3d")
+        case .Classification: return UIColor(hexString: "#a6d930")
+        case .Credit: return UIColor(hexString: "#1bd0c9")
+        case .Department: return UIColor(hexString: "#1d99e9")
+        case .Instructor: return UIColor(hexString: "#af56b3")
         }
     }
     
