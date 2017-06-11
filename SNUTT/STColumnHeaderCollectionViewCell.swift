@@ -14,5 +14,9 @@ class STColumnHeaderCollectionViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        self.layer.zPosition = CGFloat(layoutAttributes.zIndex)
+    }
 }

@@ -18,7 +18,7 @@ class STSlotCellCollectionViewCell: UICollectionViewCell {
     var ratioForHeader : CGFloat = 0.0
     var context = UIGraphicsGetCurrentContext()
     
-    func drawSolidLine(st_x : CGFloat, st_y : CGFloat, en_x : CGFloat, en_y : CGFloat, width: CGFloat = 0.2) {
+    func drawSolidLine(st_x : CGFloat, st_y : CGFloat, en_x : CGFloat, en_y : CGFloat, width: CGFloat = 1.0) {
         context!.setLineDash(phase: 0.0, lengths: [1.0])
         context!.setLineWidth(width)
         context!.move(to: CGPoint(x: st_x, y: st_y))
@@ -26,7 +26,7 @@ class STSlotCellCollectionViewCell: UICollectionViewCell {
         context!.strokePath()
     }
     
-    func drawDashedLine(st_x : CGFloat, st_y : CGFloat, en_x : CGFloat, en_y : CGFloat, width: CGFloat = 0.4) {
+    func drawDashedLine(st_x : CGFloat, st_y : CGFloat, en_x : CGFloat, en_y : CGFloat, width: CGFloat = 1.0) {
         context!.setLineDash(phase: 0.0, lengths: [2.0, 2.0])
         context!.setLineWidth(width)
         context!.move(to: CGPoint(x: st_x, y: st_y))
@@ -48,25 +48,30 @@ class STSlotCellCollectionViewCell: UICollectionViewCell {
 
         // horizontal line
 
-        let darkgrayColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0.55,0.55,0.55,1.0])!
-        let grayColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0.7,0.7,0.7,1.0])!
+        let darkgrayColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0.9215,0.9215,0.9215,1.0])!
+        let grayColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0.953,0.953,0.953,1.0])!
         for i in 0..<(rowNum*2) {
             let y = heightForHeader + heightPerRow * CGFloat(i) / 2.0
             if i % 2 == 0 {
                 context!.setStrokeColor(darkgrayColor)
-                drawSolidLine(st_x: widthForHeader / 2.0, st_y: y, en_x: contentWidth, en_y: y)
+                drawSolidLine(st_x: 0, st_y: y, en_x: contentWidth, en_y: y)
             } else {
                 context!.setStrokeColor(grayColor)
-                drawDashedLine(st_x: widthForHeader, st_y: y, en_x: contentWidth, en_y: y)
+                drawSolidLine(st_x: widthForHeader, st_y: y, en_x: contentWidth, en_y: y)
             }
         }
 
-        context!.setStrokeColor(CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0.55,0.55,0.55,1.0])!)
+        context!.setStrokeColor(grayColor);
 
         // vertical line
         for i in 0..<columnNum {
             let x = widthForHeader + widthPerColumn * CGFloat(i)
-            drawSolidLine(st_x: x, st_y: 0, en_x: x, en_y: contentHeight, width: 0.15)
+            drawSolidLine(st_x: x, st_y: 0, en_x: x, en_y: contentHeight, width: 1.0)
         }
+    }
+    
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        self.layer.zPosition = CGFloat(layoutAttributes.zIndex)
     }
 }

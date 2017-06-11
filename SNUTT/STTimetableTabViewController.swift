@@ -167,7 +167,6 @@ class STTimetableTabViewController: UIViewController {
     }
 
     func cellLongClicked (_ cell : STCourseCellCollectionViewCell) {
-        let oldColor = cell.lecture.color
         let oldColorIndex = cell.lecture.colorIndex;
         guard let collectionView = timetableView else {
             return
@@ -180,29 +179,25 @@ class STTimetableTabViewController: UIViewController {
             let tmpIndexPath = IndexPath(row: i, section: indexPath.section)
             return collectionView.cellForItem(at: tmpIndexPath) as? STCourseCellCollectionViewCell
         }
+        var oldLecture = cell.lecture!
         STColorActionSheetPicker.showWithColor(oldColorIndex, doneBlock: { selectedColorIndex in
             var newLecture = cell.lecture
             newLecture?.colorIndex = selectedColorIndex
             newLecture?.color = nil
-            var oldLecture = cell.lecture
-            oldLecture?.color = oldColor
-            oldLecture?.colorIndex = oldColorIndex
             STTimetableManager.sharedInstance.updateLecture(
-                oldLecture!, newLecture: newLecture!, failure: {
+                oldLecture, newLecture: newLecture!, failure: {
                     cellList.forEach { cell in
-                        cell?.lecture.color = oldColor
-                        cell?.lecture.colorIndex = oldColorIndex
+                        cell?.setColorByLecture(lecture: oldLecture)
                     }
             })
             }, cancelBlock: {
                 cellList.forEach { cell in
-                    cell?.lecture.color = oldColor
-                    cell?.lecture.colorIndex = oldColorIndex
+                    cell?.setColorByLecture(lecture: oldLecture)
                 }
             }, selectedBlock: { colorIndex in
                 cellList.forEach { cell in
-                    cell?.lecture.color = nil
-                    cell?.lecture.colorIndex = colorIndex
+                    let color = STColorManager.sharedInstance.colorList.colorList[colorIndex-1]
+                    cell?.setColor(color: color)
                 }
             }, origin: self)
     }

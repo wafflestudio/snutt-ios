@@ -68,11 +68,15 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
 
         timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableView.showTemporary = true
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        settingChanged()
+        STEventCenter.sharedInstance.addObserver(self, selector: "settingChanged", event: STEvent.SettingChanged, object: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    deinit {
+        STEventCenter.sharedInstance.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +87,27 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         super.viewWillDisappear(animated)
+    }
+
+    func settingChanged() {
+        if STDefaults[.autoFit] {
+            timetableView.shouldAutofit = true
+        } else {
+            timetableView.shouldAutofit = false
+            let dayRange = STDefaults[.dayRange]
+            var columnHidden : [Bool] = []
+            for i in 0..<6 {
+                if dayRange[0] <= i && i <= dayRange[1] {
+                    columnHidden.append(false)
+                } else {
+                    columnHidden.append(true)
+                }
+            }
+            timetableView.columnHidden = columnHidden
+            timetableView.rowStart = Int(STDefaults[.timeRange][0])
+            timetableView.rowEnd = Int(STDefaults[.timeRange][1])
+        }
+        timetableView.reloadTimetable()
     }
     
     func getLectureList(_ searchString : String) {
@@ -237,16 +262,23 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         reloadData()
         tagCollectionView.reloadData()
     }
+
+    var willSelectRow: Bool = false
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        willSelectRow = false
         STTimetableManager.sharedInstance.setTemporaryLecture(FilteredList[indexPath.row], object: self)
         //TimetableCollectionViewController.datasource.addLecture(FilteredList[indexPath.row])
         
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if STTimetableManager.sharedInstance.currentTimetable?.temporaryLecture == FilteredList[indexPath.row] {
+        if STTimetableManager.sharedInstance.currentTimetable?.temporaryLecture == FilteredList[indexPath.row] && !willSelectRow {
             STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
         }
+    }
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        willSelectRow = true
+        return indexPath
     }
     
     func addTag(_ tag: STTag) {

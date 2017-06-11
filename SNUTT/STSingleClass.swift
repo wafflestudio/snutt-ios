@@ -11,11 +11,17 @@ import SwiftyJSON
 
 struct STSingleClass {
     var time : STTime
-    var place : String
-    
+    var place : String {
+        didSet {
+            placeBreakLine = place.breakOnlyAtNewLineAndSpace
+        }
+    }
+    var placeBreakLine: String
+
     init(time : STTime, place: String) {
         self.time = time
         self.place = place
+        self.placeBreakLine = place.breakOnlyAtNewLineAndSpace
     }
     
     func toDictionary() -> [String: Any] {

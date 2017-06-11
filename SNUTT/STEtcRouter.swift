@@ -32,7 +32,7 @@ enum STEtcRouter : STRouter {
         case .feedback:
             return "/feedback"
         case .getColor:
-            return "/colors"
+            return "/colors/vivid_ios"
         }
     }
     

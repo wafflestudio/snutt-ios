@@ -44,31 +44,21 @@ extension String {
     var breakOnlyAtNewLineAndSpace : String {
         let sc : Character = "\u{FEFF}"
         var tmp : [Character] = []
-        var words : [String] = []
+        var flag = false
         for (index, ch) in self.characters.enumerated() {
             if ch == "\n" || ch == " " {
-                words.append(String(tmp))
-                words.append(String(ch))
-                tmp = []
+                flag = true
+                tmp.append(ch)
             } else {
+                if flag || index == 0 {
+                    flag = false
+                } else {
+                    tmp.append(sc)
+                }
                 tmp.append(ch)
             }
         }
-        if tmp.count != 0 {
-            words.append(String(tmp))
-        }
-        
-        let ret = words.map({ (word: String) -> (String) in
-            var tmp : [Character] = []
-            for (index, ch) in word.characters.enumerated() {
-                tmp.append(ch)
-                tmp.append(sc)
-            }
-            tmp.popLast()
-            return String(tmp)
-        })
-        
-        return ret.joined(separator: "")
+        return String(tmp)
     }
 }
 
@@ -145,6 +135,10 @@ func getDocumentsDirectory() -> NSString {
     return documentsDirectory as NSString
 }
 
+func isLargerThanSE() -> Bool {
+    return UIScreen.main.bounds.height > 700
+}
+
 extension Date {
     func yearsFrom(_ date: Date) -> Int {
         return (Calendar.current as NSCalendar).components(.year, from: date, to: self, options: []).year!
@@ -191,3 +185,4 @@ public extension UIImage {
         self.init(cgImage: cgImage)
     }
 }
+
