@@ -15,7 +15,7 @@ PODS:
   - Color-Picker-for-iOS (2.0.2)
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
-  - DZNEmptyDataSet (1.8.1)
+  - DZNEmptyDataSet (1.8)
   - EGOTableViewPullRefreshAndLoadMore (1.0.4)
   - Fabric (1.6.11)
   - FBSDKCoreKit (4.20.2):
@@ -63,7 +63,7 @@ DEPENDENCIES:
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - Color-Picker-for-iOS (~> 2.0)
   - Crashlytics
-  - DZNEmptyDataSet
+  - DZNEmptyDataSet (from `https://github.com/Rajin9601/DZNEmptyDataSet.git`, branch `fix-hitTest`)
   - EGOTableViewPullRefreshAndLoadMore
   - Fabric
   - FBSDKCoreKit
@@ -82,6 +82,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/Rajin9601/B68FloatingLabelTextField.git
   ChameleonFramework:
     :git: https://github.com/ViccAlexander/Chameleon.git
+  DZNEmptyDataSet:
+    :branch: fix-hitTest
+    :git: https://github.com/Rajin9601/DZNEmptyDataSet.git
   SwiftyUserDefaults:
     :git: https://github.com/Rajin9601/SwiftyUserDefaults.git
 
@@ -92,6 +95,9 @@ CHECKOUT OPTIONS:
   ChameleonFramework:
     :commit: acc480fbe023c6e5fe40f68593f4a70a8c4c7ad5
     :git: https://github.com/ViccAlexander/Chameleon.git
+  DZNEmptyDataSet:
+    :commit: db6e1747b383fbbaad429a40f5f5700dd86f8e4c
+    :git: https://github.com/Rajin9601/DZNEmptyDataSet.git
   SwiftyUserDefaults:
     :commit: 364c18e4b7bd82df9b60901b144e4f8aeac5a0e6
     :git: https://github.com/Rajin9601/SwiftyUserDefaults.git
@@ -105,7 +111,7 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Color-Picker-for-iOS: 4980589b3e3cfe7198f227dd50be9adb02d8bc0b
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
-  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  DZNEmptyDataSet: d2351b2e8daefa40433ef292e246e21f6be31a7b
   EGOTableViewPullRefreshAndLoadMore: 118a0824590db042d42e08fcc442b93cebf15e73
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FBSDKCoreKit: 82eac696eb6157da5f4266c3a241f00e9bd72471
@@ -123,6 +129,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 0d6af20e95e2850f4c621841225b59ec7d8dd852
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: b172415a4bc40eed136bfb209c7fe2e86d0a8f9c
+PODFILE CHECKSUM: b86b54930df9085642ee14a429497cd5566e04d7
 
 COCOAPODS: 1.2.0

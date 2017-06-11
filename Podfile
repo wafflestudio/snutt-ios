@@ -19,7 +19,7 @@ target 'SNUTT' do
   pod 'TTRangeSlider'
   pod 'Firebase'
   pod 'Firebase/Messaging'
-  pod 'DZNEmptyDataSet'
+  pod 'DZNEmptyDataSet', :git => 'https://github.com/Rajin9601/DZNEmptyDataSet.git', :branch => 'fix-hitTest'
   pod 'TPKeyboardAvoiding'
 end
 

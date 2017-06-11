@@ -102,7 +102,7 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         
         if !searchBar.isFirstResponder {
             // this is only for the case of clicking clear button while not in focus
-            searchController.state = .empty
+            // searchController.state = .empty
             return
         }
         
@@ -120,9 +120,10 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
              if case .loading(let request) = searchController.state {
                 request.cancel()
             }
-            searchController.state = .editingQuery(nil, [], [])
+            searchController.state = .editingQuery("", [], [])
         }
         searchController.reloadData()
+        searchController.tableView.reloadEmptyDataSet()
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {

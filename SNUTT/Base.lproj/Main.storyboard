@@ -251,12 +251,12 @@
                                 </connections>
                             </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Q60-nN-90y" customClass="STTagCollectionView" customModule="SNUTT" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="14" width="320" height="30"/>
+                                <rect key="frame" x="0.0" y="4" width="320" height="40"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="iyv-kn-r7O"/>
+                                    <constraint firstAttribute="height" constant="40" id="iyv-kn-r7O"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="10" id="niY-lO-OIj">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="8" minimumInteritemSpacing="10" id="niY-lO-OIj">
                                     <size key="itemSize" width="127" height="27"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -264,7 +264,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="STTagCollectionViewCell" id="ulk-mM-ipC" customClass="STTagCollectionViewCell" customModule="SNUTT" customModuleProvider="target">
-                                        <rect key="frame" x="17" y="1.5" width="127" height="27"/>
+                                        <rect key="frame" x="17" y="6.5" width="127" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="127" height="27"/>
@@ -407,7 +407,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jl7-ZX-uKg" userLabel="TagCollectionContainer">
                             <rect key="frame" x="62.5" y="0.0" width="257.5" height="42"/>
                             <subviews>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="i5B-6f-Log">
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="i5B-6f-Log">
                                     <rect key="frame" x="0.0" y="0.0" width="257.5" height="42"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="vDV-3f-lWl">
