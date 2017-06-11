@@ -33,7 +33,7 @@ class STLectureSearchToolbarView: UIView, UICollectionViewDelegate, UICollection
         let nib = UINib(nibName: "STTagFilterCollectionViewCell", bundle: nil)
         tagFilterCollectionView.register(nib, forCellWithReuseIdentifier: "STTagFilterCollectionViewCell")
         sizingCell = nib.instantiate(withOwner: self, options: nil)[0] as! STTagFilterCollectionViewCell
-        tagTypeList = [.AcademicYear, .Category, .Classification, .Credit, .Department, .Instructor]
+        tagTypeList = [.AcademicYear, .Classification, .Credit, .Department, .Instructor, .Category]
         sharpButton.buttonPressAction = { _ in
             self.sharpButtonClicked()
         }
