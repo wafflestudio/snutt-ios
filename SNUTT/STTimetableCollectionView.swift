@@ -157,11 +157,17 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         
         self.reloadData()
     }
+
+    private func reloadTempOnly() {
+        UIView.performWithoutAnimation {
+            reloadSections(IndexSet(integer: (timetable?.lectureList.count)! + LectureSectionOffset))
+        }
+    }
     
     func reloadTempLecture() {
         // Assumption: autofit didn't change
         if !shouldAutofit {
-            reloadSections(IndexSet(integer: (timetable?.lectureList.count)! + LectureSectionOffset))
+            reloadTempOnly()
         }
         let oldCL = columnList
         let oldCH = columnHidden
@@ -169,12 +175,35 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         let oldRS = rowStart
         autofit(includeTemp: true)
         if (columnList == oldCL && columnHidden == oldCH && rowEnd == oldRE && rowStart == oldRS) {
-            reloadSections(IndexSet(integer: (timetable?.lectureList.count)! + LectureSectionOffset))
+            reloadTempOnly()
         } else {
-            self.reloadData();
+            UIView.performWithoutAnimation {
+                self.performBatchUpdates({
+                    //self.reloadItems(at: self.getAllIndexesForLecture())
+                    self.reloadSections(IndexSet(integersIn: 0..<self.LectureSectionOffset))
+                    self.reloadSections(IndexSet(integer: (self.timetable?.lectureList.count)! + self.LectureSectionOffset))
+                }, completion: { _ in
+                })
+            }
+            self.layout.invalidateLayout()
         }
     }
-    
+
+    func getAllIndexesForLecture() -> [IndexPath] {
+        // Assumption: only used when there is temp
+        var indices = [IndexPath]()
+        let lectureCnt = (timetable?.lectureList.count)!
+        for s in LectureSectionOffset...LectureSectionOffset+lectureCnt-1 {
+            let rows = self.numberOfItems(inSection: s)
+            if rows > 0{
+                for r in 0...rows - 1{
+                    let index = IndexPath(row: r, section: s)
+                    indices.append(index)
+                }
+            }
+        }
+        return indices
+    }
     /*
     // MARK: - Navigation
 
@@ -250,8 +279,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CourseCell", for: indexPath) as! STCourseCellCollectionViewCell
             cell.isHidden = false
             cell.layer.mask=nil
-            cell.singleClass = getSingleClass(indexPath)
-            cell.lecture = getLecture(indexPath)
+            cell.setData(lecture: getLecture(indexPath), singleClass: getSingleClass(indexPath))
             cell.longClicked = cellLongClicked
             cell.tapped = cellTapped
             if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
@@ -267,8 +295,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CourseCell", for: indexPath) as! STCourseCellCollectionViewCell
             cell.isHidden = false
             cell.layer.mask = nil
-            cell.singleClass = getSingleClass(indexPath)
-            cell.lecture = getLecture(indexPath)
+            cell.setData(lecture: getLecture(indexPath), singleClass: getSingleClass(indexPath))
             if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
                 cell.isHidden = true
             }

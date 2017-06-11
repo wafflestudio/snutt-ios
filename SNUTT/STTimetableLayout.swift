@@ -48,23 +48,27 @@ class STTimetableLayout: UICollectionViewLayout {
             height = HeightPerRow * CGFloat(singleClass.time.duration) + 0.4
             locX = CGFloat(columnIndex) * WidthPerColumn + WidthForHeader
             locY = HeightForHeader + HeightPerRow * rowIndex - 0.2
+            ret.zIndex = 1
         case .headerColumn:
             width = WidthPerColumn
             height = HeightForHeader
             let columnIndex = timetableView.dayToColumn[indexPath.row]
             locX = CGFloat(columnIndex) * WidthPerColumn + WidthForHeader
             locY = CGFloat(0)
+            ret.zIndex = 0
         case .headerRow:
             width = WidthForHeader
             height = HeightPerRow
             locX = CGFloat(0)
             let rowIndex = CGFloat(timetableView.getRowFromPeriod(Double(indexPath.row)))
             locY = HeightForHeader + rowIndex * HeightPerRow
+            ret.zIndex = 2
         case .slot:
             width = ContentWidth
             height = ContentHeight
             locX = CGFloat(0)
             locY = CGFloat(0)
+            ret.zIndex = -1
         }
         ret.frame = CGRect(x: locX, y: locY, width: width, height: height)
         return ret
@@ -91,18 +95,8 @@ class STTimetableLayout: UICollectionViewLayout {
                 ret.append(self.layoutAttributesForItem(at: indexPath))
             }
         }
-        return ret.map({ attribute in
-            let type = self.timetableView.getCellType(attribute.indexPath);
-            switch (type) {
-            case .slot: attribute.zIndex = -1
-            case .course: attribute.zIndex = 0
-            case .temporaryCourse: attribute.zIndex = 1
-            case .headerRow, .headerColumn: attribute.zIndex = 2
-            }
-            return attribute
-        })
-        /*
-        
-        */
+        return ret
     }
+
+    
 }

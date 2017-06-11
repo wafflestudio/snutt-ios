@@ -69,4 +69,9 @@ class STSlotCellCollectionViewCell: UICollectionViewCell {
             drawSolidLine(st_x: x, st_y: 0, en_x: x, en_y: contentHeight, width: 1.0)
         }
     }
+    
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        self.layer.zPosition = CGFloat(layoutAttributes.zIndex)
+    }
 }

@@ -1,4 +1,4 @@
-//
+ //
 //  STCourseCellCollectionViewCell.swift
 //  SNUTT
 //
@@ -11,18 +11,10 @@ import UIKit
 class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
     @IBOutlet weak var courseText: UILabel!
-    var singleClass : STSingleClass! {
-        didSet {
-            setText()
-        }
-    }
-    
-    var lecture : STLecture! {
-        didSet {
-            setText()
-            setColor()
-        }
-    }
+    public private(set) var singleClass : STSingleClass!
+    public private(set) var lecture : STLecture!
+    private var oldLecture: STLecture? = nil
+    private var oldSingleClass: STSingleClass? = nil
     
     var longClicked: ((STCourseCellCollectionViewCell)->())?
     var tapped: ((STCourseCellCollectionViewCell)->())?
@@ -42,6 +34,28 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
 
         self.layer.borderWidth = 0.5
         self.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.05).cgColor
+    }
+
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        self.layer.zPosition = CGFloat(layoutAttributes.zIndex)
+    }
+
+    func setData(lecture: STLecture, singleClass: STSingleClass) {
+        if (oldLecture == lecture && oldSingleClass == singleClass) {
+            return
+        }
+        self.lecture = lecture
+        self.singleClass = singleClass
+        setText()
+        setColor()
+        oldLecture = lecture
+        oldSingleClass = singleClass
+    }
+
+    func setColorByLecture(lecture: STLecture) {
+        let color = lecture.getColor()
+        setColor(color: color)
     }
     
     func setText() {
@@ -78,9 +92,14 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
     func setColor() {
         let color = lecture.getColor()
+        setColor(color: color)
+    }
+
+    func setColor(color: STColor) {
         self.backgroundColor = color.bgColor
         courseText.textColor = color.fgColor
     }
+
     func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         /* //DEBUG
         if(buttonIndex == 1) {
@@ -97,5 +116,9 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         if gesture.state == UIGestureRecognizerState.recognized {
             tapped?(self)
         }
+    }
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        // no resizing
+        return layoutAttributes
     }
 }

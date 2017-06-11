@@ -58,7 +58,7 @@ class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
 
         if (initialColorIndex == 0) {
             pickerView.selectRow(0, inComponent: 0, animated: false)
-            selectedBlock?(0)
+            selectedBlock?(1)
         } else {
             pickerView.selectRow(initialColorIndex-1, inComponent: 0, animated: false)
         }
