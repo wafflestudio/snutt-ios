@@ -16,7 +16,7 @@ class STTagCollectionViewCell: UICollectionViewCell {
     var searchTag : STTag! {
         didSet {
             tagLabel.text = searchTag.text
-            containerView.backgroundColor = searchTag.type.tagColor
+            containerView.backgroundColor = searchTag.type.tagLightColor
         }
     }
     
