@@ -79,9 +79,9 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         // Do any additional setup after loading the view.
     }
     
-    func autofit() {
+    func autofit(includeTemp: Bool = false) {
         if timetable != nil && timetable?.lectureList.count != 0 {
-            columnHidden = [false,false,false,false,false,true,true]
+            var tmpColumnHidden = [false,false,false,false,false,true,true]
             rowStart = 2
             rowEnd = 10
             
@@ -92,9 +92,20 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
                     rowStart = min(rowStart, startPeriod)
                     rowEnd = max(rowEnd, endPeriod)
                     let day = singleClass.time.day.rawValue
-                    columnHidden[day] = false
+                    tmpColumnHidden[day] = false
                 }
             }
+            if (includeTemp && timetable!.temporaryLecture != nil) {
+                for singleClass in timetable!.temporaryLecture!.classList {
+                    let startPeriod = Int(singleClass.time.startPeriod)
+                    let endPeriod = Int(singleClass.time.endPeriod - 0.5)
+                    rowStart = min(rowStart, startPeriod)
+                    rowEnd = max(rowEnd, endPeriod)
+                    let day = singleClass.time.day.rawValue
+                    tmpColumnHidden[day] = false
+                }
+            }
+            columnHidden = tmpColumnHidden;
             
         } else {
             columnHidden = [false,false,false,false,false,true,true]
@@ -148,7 +159,20 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
     }
     
     func reloadTempLecture() {
-        reloadSections(IndexSet(integer: (timetable?.lectureList.count)! + LectureSectionOffset))
+        // Assumption: autofit didn't change
+        if !shouldAutofit {
+            reloadSections(IndexSet(integer: (timetable?.lectureList.count)! + LectureSectionOffset))
+        }
+        let oldCL = columnList
+        let oldCH = columnHidden
+        let oldRE = rowEnd
+        let oldRS = rowStart
+        autofit(includeTemp: true)
+        if (columnList == oldCL && columnHidden == oldCH && rowEnd == oldRE && rowStart == oldRS) {
+            reloadSections(IndexSet(integer: (timetable?.lectureList.count)! + LectureSectionOffset))
+        } else {
+            self.reloadData();
+        }
     }
     
     /*
