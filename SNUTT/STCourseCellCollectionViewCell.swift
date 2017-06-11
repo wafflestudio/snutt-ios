@@ -29,6 +29,11 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        var margin : CGFloat = 4.0;
+        if isLargerThanSE() {
+            margin = 5.0;
+        }
+        self.layoutMargins = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longClick))
         self.addGestureRecognizer(longPress)
@@ -43,14 +48,29 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         var text = NSMutableAttributedString()
         if let lecture = self.lecture {
             let font = UIFont.systemFont(ofSize: 10.0)
-            text.append(NSAttributedString(string: lecture.title.breakOnlyAtNewLineAndSpace, attributes: [NSFontAttributeName: font]))
+            text.append(NSAttributedString(string: lecture.titleBreakLine, attributes: [NSFontAttributeName: font]))
         }
         if let singleClass = self.singleClass {
-            let font = UIFont.boldSystemFont(ofSize: 11.0)
+            let placeText = singleClass.place
+            var size : CGFloat = 11.0
+            if isLargerThanSE() {
+                if placeText.characters.count >= 8 {
+                    size = 10.0
+                } else {
+                    size = 11.0
+                }
+            } else {
+                if placeText.characters.count >= 8 {
+                    size = 9.0
+                } else {
+                    size = 10.0
+                }
+            }
+            let font = UIFont.boldSystemFont(ofSize: size)
             if text.length != 0 {
                 text.append(NSAttributedString(string: "\n"))
             }
-            text.append(NSAttributedString(string: singleClass.place.breakOnlyAtNewLineAndSpace, attributes: [NSFontAttributeName: font]))
+            text.append(NSAttributedString(string: singleClass.placeBreakLine, attributes: [NSFontAttributeName: font]))
         }
         courseText.attributedText = text
         courseText.baselineAdjustment = .alignCenters

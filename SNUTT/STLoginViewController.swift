@@ -54,7 +54,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         center.addObserver(self, selector: #selector(self.keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         center.addObserver(self, selector: #selector(self.keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
         
-        if (UIScreen.main.bounds.height > 700) {
+        if isLargerThanSE() {
             layoutConstraint1.constant = 118
             layoutConstraint2.constant = 96.5
             layoutConstraint3.constant = 98

@@ -15,7 +15,11 @@ struct STLecture {
     var academicYear : String?
     var courseNumber : String?
     var lectureNumber : String?
-    var title : String = ""
+    var title : String = "" {
+        didSet {
+            titleBreakLine = title.breakOnlyAtNewLineAndSpace
+        }
+    }
     var credit : Int = 0
     var instructor : String = ""
     var quota : Int?
@@ -26,6 +30,7 @@ struct STLecture {
     var color : STColor? = nil
     var colorIndex: Int = 0
     var timeMask: [Int] = []
+    var titleBreakLine = ""
 
     func getColor() -> STColor {
         let colorList = STColorManager.sharedInstance.colorList!
@@ -93,6 +98,7 @@ struct STLecture {
         courseNumber = data["course_number"].string
         lectureNumber = data["lecture_number"].string
         title = data["course_title"].stringValue
+        titleBreakLine = title.breakOnlyAtNewLineAndSpace
         credit = data["credit"].intValue
         instructor = data["instructor"].stringValue
         quota = data["quota"].int
@@ -150,6 +156,8 @@ struct STLecture {
     func isSameLecture(_ right : STLecture) -> Bool {
         return (courseNumber == right.courseNumber && lectureNumber == right.lectureNumber) && courseNumber != nil && lectureNumber != nil
     }
+
+
     
 }
 

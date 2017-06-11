@@ -145,6 +145,10 @@ func getDocumentsDirectory() -> NSString {
     return documentsDirectory as NSString
 }
 
+func isLargerThanSE() -> Bool {
+    return UIScreen.main.bounds.height > 700
+}
+
 extension Date {
     func yearsFrom(_ date: Date) -> Int {
         return (Calendar.current as NSCalendar).components(.year, from: date, to: self, options: []).year!
@@ -191,3 +195,4 @@ public extension UIImage {
         self.init(cgImage: cgImage)
     }
 }
+
