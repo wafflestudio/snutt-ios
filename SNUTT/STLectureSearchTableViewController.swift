@@ -221,7 +221,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "STLectureSearchTableViewCell", for: indexPath) as! STLectureSearchTableViewCell
-        cell.addSubview(cell.addButton)
         cell.lecture = FilteredList[indexPath.row]
         cell.tableView = tableView
         cell.titleLabel.sizeToFit()

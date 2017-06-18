@@ -49,6 +49,7 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
+  - MarqueeLabel/Swift (3.0.1)
   - Protobuf (3.2.0)
   - SwiftyJSON (3.1.4)
   - SwiftyUserDefaults (3.0.1)
@@ -71,6 +72,7 @@ DEPENDENCIES:
   - FBSDKShareKit
   - Firebase
   - Firebase/Messaging
+  - MarqueeLabel/Swift
   - SwiftyJSON
   - SwiftyUserDefaults (from `https://github.com/Rajin9601/SwiftyUserDefaults.git`)
   - TPKeyboardAvoiding
@@ -123,12 +125,13 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
   FirebaseMessaging: df8267f378580a24174ce7861233aa11d5c90109
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  MarqueeLabel: 80ba85d2b76a9f5fa6c13de337db80bcd94feb1d
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SwiftyUserDefaults: 38267a30d58b7c8570995cd5defd354e43f056c6
   TPKeyboardAvoiding: 0d6af20e95e2850f4c621841225b59ec7d8dd852
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: b86b54930df9085642ee14a429497cd5566e04d7
+PODFILE CHECKSUM: 2409806f9e3511e24b33c57ae4d71b9d8f8c498b
 
 COCOAPODS: 1.2.0

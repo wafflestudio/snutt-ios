@@ -19,7 +19,7 @@ class STLectureTableViewCell: UITableViewCell {
     var lecture : STLecture! {
         didSet {
             titleLabel.text = lecture.title
-            descriptionLabel.text = "(\(lecture.instructor) / \(lecture.credit)학점)"
+            descriptionLabel.text = "\(lecture.instructor)/\(lecture.credit)학점"
             tagLabel.text = lecture.tagDescription
             timeLabel.text = lecture.timeDescription
             placeLabel.text = lecture.placeDescription

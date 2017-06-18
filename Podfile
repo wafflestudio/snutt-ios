@@ -21,6 +21,7 @@ target 'SNUTT' do
   pod 'Firebase/Messaging'
   pod 'DZNEmptyDataSet', :git => 'https://github.com/Rajin9601/DZNEmptyDataSet.git', :branch => 'fix-hitTest'
   pod 'TPKeyboardAvoiding'
+  pod 'MarqueeLabel/Swift'
 end
 
 target 'SNUTT Today' do

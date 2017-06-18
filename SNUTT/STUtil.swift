@@ -60,6 +60,18 @@ extension String {
         }
         return String(tmp)
     }
+    func trunc(length: Int, trailing: String? = "...") -> String {
+        if self.characters.count > length {
+            return self.substring(to: self.index(self.startIndex, offsetBy: length)) + (trailing ?? "")
+        } else {
+            return self
+        }
+    }
+
+    func isEnglish() -> Bool {
+        let characterSet = CharacterSet.alphanumerics.inverted
+        return (self.rangeOfCharacter(from: characterSet) != nil)
+    }
 }
 
 extension UIView {
