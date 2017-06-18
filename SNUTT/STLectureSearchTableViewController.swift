@@ -343,6 +343,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
             tagCollectionView.tagList = tagList
             reloadData()
             tagCollectionView.reloadData()
+            hideTagRecommendation()
         }
     }
     
