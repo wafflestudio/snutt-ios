@@ -105,7 +105,7 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         if indexPath.row == STTimetableManager.sharedInstance.currentTimetable?.lectureList.count {
             return 40.0
         }
-        return 123.0
+        return 106.0
     }
     
     //MARK: DNZEmptyDataSet
