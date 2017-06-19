@@ -70,10 +70,10 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="i2B-jy-PUt">
-                        <barButtonItem key="leftBarButtonItem" image="navigationbaritem_list" style="plain" id="gnE-zE-Exs">
+                        <barButtonItem key="leftBarButtonItem" image="topbarListview" style="plain" id="gnE-zE-Exs">
                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="navigationbaritem_calendar" id="diC-Ny-PMc">
+                        <barButtonItem key="rightBarButtonItem" image="topbarBox" id="diC-Ny-PMc">
                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="eOk-et-eG5" kind="push" id="Uhg-sr-SqZ"/>
@@ -1717,8 +1717,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="navigationbaritem_calendar" width="20" height="22"/>
-        <image name="navigationbaritem_list" width="22" height="20"/>
         <image name="tabbaritem_noti" width="26" height="26"/>
         <image name="tabbaritem_noti_bold" width="26" height="26"/>
         <image name="tabbaritem_search" width="20" height="20"/>
@@ -1727,5 +1725,7 @@
         <image name="tabbaritem_setting_bold" width="20" height="20"/>
         <image name="tabbaritem_timetable" width="20" height="20"/>
         <image name="tabbaritem_timetable_bold" width="20" height="20"/>
+        <image name="topbarBox" width="22" height="22"/>
+        <image name="topbarListview" width="22" height="22"/>
     </resources>
 </document>
