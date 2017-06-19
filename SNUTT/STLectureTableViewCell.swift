@@ -21,7 +21,7 @@ class STLectureTableViewCell: UITableViewCell {
         didSet {
             titleLabel.text = lecture.title
             profLabel.text = lecture.instructor
-            descriptionLabel.text = "\(lecture.credit)학점"
+            descriptionLabel.text = "/\(lecture.credit)학점"
             tagLabel.text = lecture.tagDescription
             timeLabel.text = lecture.timeDescription
             placeLabel.text = lecture.placeDescription
