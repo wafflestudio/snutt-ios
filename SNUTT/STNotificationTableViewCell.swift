@@ -21,7 +21,7 @@ class STNotificationTableViewCell: UITableViewCell {
             var message = NSMutableAttributedString(string: notification.message+" ")
             message.append(timeText)
             descriptionLabel.attributedText = message
-            iconImageView.image = UIImage(named: notification.imageName)
+            iconImageView.image = notification.image
         }
     }
     
