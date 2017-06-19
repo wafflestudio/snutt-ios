@@ -13,6 +13,7 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
 
     @IBOutlet weak var titleLabel: MarqueeLabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var profLabel: UILabel!
     @IBOutlet weak var tagLabel: MarqueeLabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var placeLabel: UILabel!
@@ -49,8 +50,11 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         guard let lecture = lecture else {
             return
         }
-        var instructorText = lecture.instructor
+        // TODO : Erase this code
+        // Left this code if there is specific length for titleLabel's min width
+        /*
         let isSE = !isLargerThanSE()
+        let instructorText = lecture.instructor
         var length = 0
         if self.isSelected {
             if instructorText.isEnglish() {
@@ -65,8 +69,9 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
                 length = isSE ? 7 : 9
             }
         }
-        instructorText = instructorText.trunc(length: length)
-        descriptionLabel.text = "\(instructorText)/\(lecture.credit)학점"
+        */
+        profLabel.text = lecture.instructor
+        descriptionLabel.text = "/\(lecture.credit)학점"
     }
 
     func setUp() {
