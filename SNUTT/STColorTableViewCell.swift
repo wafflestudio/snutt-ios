@@ -12,6 +12,7 @@ class STColorTableViewCell: UITableViewCell {
 
     @IBOutlet weak var fgColorView: UIView!
     @IBOutlet weak var bgColorView: UIView!
+    @IBOutlet weak var colorContainerView: UIView!
     @IBOutlet weak var colorLabel: UILabel!
     
     var color : STColor! {
@@ -24,7 +25,15 @@ class STColorTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
-        // Initialization code
+    }
+
+    func setBorder(_ isBorder : Bool) {
+        if isBorder {
+            colorContainerView.layer.borderWidth = 1.0
+            colorContainerView.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.15).cgColor
+        } else {
+            colorContainerView.layer.borderWidth = 0.0
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
