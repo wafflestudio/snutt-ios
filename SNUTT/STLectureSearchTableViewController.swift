@@ -312,7 +312,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         emptyView.searchController = self
 
         let infoViewNib = Bundle.main.loadNibNamed("STTagSearchInfoView", owner: nil, options: nil)
-        infoView = infoViewNib![0] as! STTagSearchInfoView
+        if isLargerThanSE() {
+            infoView = infoViewNib![0] as! STTagSearchInfoView
+        } else {
+            infoView = infoViewNib![1] as! STTagSearchInfoView
+        }
         infoView.searchController = self
     }
 
