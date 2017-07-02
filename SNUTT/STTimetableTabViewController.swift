@@ -120,9 +120,9 @@ class STTimetableTabViewController: UIViewController {
         UIView.animate(withDuration: 1.0, animations: {
             switch self.state {
             case .lectureList:
-                self.navigationItem.leftBarButtonItem!.image = UIImage(named:"navigationbaritem_list")
+                self.navigationItem.leftBarButtonItem!.image = #imageLiteral(resourceName: "topbarListview")
             case .timetable:
-                self.navigationItem.leftBarButtonItem!.image = UIImage(named:"navigationbaritem_timetable")
+                self.navigationItem.leftBarButtonItem!.image = #imageLiteral(resourceName: "group2Copy")
             }
         })
 

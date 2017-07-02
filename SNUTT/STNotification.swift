@@ -14,7 +14,7 @@ protocol STNotification {
     var createdTime: Date? { get }
     var createdFrom: String { get }
     var type: Int { get }
-    var imageName: String { get }
+    var image: UIImage { get }
 }
 
 class STNotiUtil {
@@ -51,7 +51,12 @@ struct STNormalNotification : STNotification {
     let createdTime: Date?
     let createdFrom: String
     let type: Int = 0
-    let imageName: String = "noti_info"
+    static let _image: UIImage = #imageLiteral(resourceName: "noticeWarning")
+    var image: UIImage {
+        get {
+            return STNormalNotification._image
+        }
+    }
     init(json : JSON) {
         message = json["message"].stringValue
         createdTime = STNotiUtil.parseDate(json["created_at"].stringValue)
@@ -68,7 +73,12 @@ struct STCourseBookNotification : STNotification {
     let createdTime: Date?
     let createdFrom: String
     let type: Int = 1
-    let imageName: String = "noti_calendar"
+    static let _image: UIImage = #imageLiteral(resourceName: "noticeTimetable")
+    var image: UIImage {
+        get {
+            return STCourseBookNotification._image
+        }
+    }
     init(json : JSON) {
         message = json["message"].stringValue
         createdTime = STNotiUtil.parseDate(json["created_at"].stringValue)
@@ -85,7 +95,12 @@ struct STLectureUpdateNotification : STNotification {
     let createdTime: Date?
     let createdFrom: String
     let type: Int = 2
-    let imageName: String = "noti_refresh"
+    static let _image: UIImage = #imageLiteral(resourceName: "noticeUpdate")
+    var image: UIImage {
+        get {
+            return STLectureUpdateNotification._image
+        }
+    }
     init(json : JSON) {
         message = json["message"].stringValue
         createdTime = STNotiUtil.parseDate(json["created_at"].stringValue)
@@ -102,7 +117,12 @@ struct STLectureRemoveNotification : STNotification {
     let createdTime: Date?
     let createdFrom: String
     let type: Int = 3
-    let imageName: String = "noti_trashcan"
+    static let _image: UIImage = #imageLiteral(resourceName: "noticeTrash")
+    var image: UIImage {
+        get {
+            return STLectureRemoveNotification._image
+        }
+    }
     init(json : JSON) {
         message = json["message"].stringValue
         createdTime = STNotiUtil.parseDate(json["created_at"].stringValue)

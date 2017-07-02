@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,32 +15,32 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HzU-SY-ews" id="fNb-iz-t2u">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="utG-TK-CyJ">
-                        <rect key="frame" x="16" y="16.5" width="25" height="25"/>
+                        <rect key="frame" x="20" y="19" width="20" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="25" id="Etp-pw-Tzy"/>
+                            <constraint firstAttribute="height" constant="20" id="Etp-pw-Tzy"/>
                             <constraint firstAttribute="width" secondItem="utG-TK-CyJ" secondAttribute="height" multiplier="1:1" id="Lgy-yD-zma"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lorem iasdfasdfasdfadsfasdfa sdf a sdf asd fasdfa sdf asdfasdfasd fasdf adsf dsa f adsfasdf adsf asd fads fda sf" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PBx-FD-g4z">
-                        <rect key="frame" x="57" y="8" width="302" height="43"/>
+                        <rect key="frame" x="60" y="9" width="299" height="41.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="utG-TK-CyJ" secondAttribute="bottom" id="0xM-pv-5tT"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="utG-TK-CyJ" secondAttribute="bottom" constant="13" id="0xM-pv-5tT"/>
                     <constraint firstAttribute="trailing" secondItem="PBx-FD-g4z" secondAttribute="trailing" constant="16" id="26k-RP-QfT"/>
-                    <constraint firstItem="PBx-FD-g4z" firstAttribute="top" secondItem="fNb-iz-t2u" secondAttribute="topMargin" id="9fg-8A-6pd"/>
-                    <constraint firstItem="utG-TK-CyJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fNb-iz-t2u" secondAttribute="topMargin" id="JxF-J4-HRl"/>
-                    <constraint firstItem="PBx-FD-g4z" firstAttribute="leading" secondItem="utG-TK-CyJ" secondAttribute="trailing" constant="16" id="K1Y-Hc-DB1"/>
+                    <constraint firstItem="PBx-FD-g4z" firstAttribute="top" secondItem="fNb-iz-t2u" secondAttribute="top" constant="9" id="9fg-8A-6pd"/>
+                    <constraint firstItem="utG-TK-CyJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fNb-iz-t2u" secondAttribute="top" constant="13" id="JxF-J4-HRl"/>
+                    <constraint firstItem="PBx-FD-g4z" firstAttribute="leading" secondItem="utG-TK-CyJ" secondAttribute="trailing" constant="20" id="K1Y-Hc-DB1"/>
                     <constraint firstItem="utG-TK-CyJ" firstAttribute="centerY" secondItem="fNb-iz-t2u" secondAttribute="centerY" id="jxZ-wr-Pii"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="PBx-FD-g4z" secondAttribute="bottom" id="mxl-YJ-7YB"/>
-                    <constraint firstItem="utG-TK-CyJ" firstAttribute="leading" secondItem="fNb-iz-t2u" secondAttribute="leading" constant="16" id="zRE-NY-o6W"/>
+                    <constraint firstAttribute="bottom" secondItem="PBx-FD-g4z" secondAttribute="bottom" constant="9" id="mxl-YJ-7YB"/>
+                    <constraint firstItem="utG-TK-CyJ" firstAttribute="leading" secondItem="fNb-iz-t2u" secondAttribute="leading" constant="20" id="zRE-NY-o6W"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
