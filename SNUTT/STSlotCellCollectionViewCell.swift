@@ -19,7 +19,7 @@ class STSlotCellCollectionViewCell: UICollectionViewCell {
     var context = UIGraphicsGetCurrentContext()
     
     func drawSolidLine(st_x : CGFloat, st_y : CGFloat, en_x : CGFloat, en_y : CGFloat, width: CGFloat = 1.0) {
-        context!.setLineDash(phase: 0.0, lengths: [1.0])
+        context!.setLineDash(phase: 0.0, lengths: [])
         context!.setLineWidth(width)
         context!.move(to: CGPoint(x: st_x, y: st_y))
         context!.addLine(to: CGPoint(x: en_x, y: en_y))
