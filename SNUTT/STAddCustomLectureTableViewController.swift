@@ -48,7 +48,7 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         case (1,1): return .remark
         case (1,2): return .padding
             
-        case (2, currentLecture.classList.count): return .addButton(section: 1)
+        case (2, currentLecture.classList.count): return .addButton(section: 2)
         case (2, _): return .singleClass
 
         default: return .padding // Never Reach
