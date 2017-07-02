@@ -31,6 +31,8 @@
 		E11E61031EED13890036F3F2 /* STSearchEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E61021EED13890036F3F2 /* STSearchEmptyView.swift */; };
 		E133794F1D41E26C00AD10F4 /* STRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133794E1D41E26C00AD10F4 /* STRouter.swift */; };
 		E137998A1C3FBEC70043A5EE /* STMyLectureListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */; };
+		E13984311EF690A2007DD319 /* STSingleColorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E13984301EF690A2007DD319 /* STSingleColorTableViewCell.xib */; };
+		E13984331EF69111007DD319 /* STColorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E13984321EF69111007DD319 /* STColorTableViewCell.xib */; };
 		E139B26C1E4C349400E2ADF5 /* STAddLocalIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E139B26B1E4C349400E2ADF5 /* STAddLocalIDViewController.swift */; };
 		E13CBA8C1E4D492E006B2364 /* STEtcRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13CBA8B1E4D492E006B2364 /* STEtcRouter.swift */; };
 		E14188D61C3E195000D4E712 /* STTimetableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */; };
@@ -232,6 +234,8 @@
 		E11E61021EED13890036F3F2 /* STSearchEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchEmptyView.swift; sourceTree = "<group>"; };
 		E133794E1D41E26C00AD10F4 /* STRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRouter.swift; sourceTree = "<group>"; };
 		E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMyLectureListController.swift; sourceTree = "<group>"; };
+		E13984301EF690A2007DD319 /* STSingleColorTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSingleColorTableViewCell.xib; sourceTree = "<group>"; };
+		E13984321EF69111007DD319 /* STColorTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STColorTableViewCell.xib; sourceTree = "<group>"; };
 		E139B26B1E4C349400E2ADF5 /* STAddLocalIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAddLocalIDViewController.swift; sourceTree = "<group>"; };
 		E13CBA8B1E4D492E006B2364 /* STEtcRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STEtcRouter.swift; sourceTree = "<group>"; };
 		E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableTabViewController.swift; sourceTree = "<group>"; };
@@ -687,6 +691,8 @@
 				E1D0FB661C86CDE300ACDC2F /* STColorTableViewCell.swift */,
 				E1D0FB681C86D32B00ACDC2F /* STSingleColorTableViewCell.swift */,
 				E110CFCD1C87FED300ED0590 /* STCustomColorPickerViewController.swift */,
+				E13984301EF690A2007DD319 /* STSingleColorTableViewCell.xib */,
+				E13984321EF69111007DD319 /* STColorTableViewCell.xib */,
 			);
 			name = ColorPicker;
 			sourceTree = "<group>";
@@ -877,12 +883,14 @@
 				E1C48BA21C79C0E300BC469E /* Localizable.strings in Resources */,
 				E1F946231DB449E300CC8AF6 /* STAddLectureButtonCell.xib in Resources */,
 				E1F0CA371C785C1200A4F4ED /* STSingleLabeledTableViewCell.xib in Resources */,
+				E13984311EF690A2007DD319 /* STSingleColorTableViewCell.xib in Resources */,
 				E1C48B8C1C78616C00BC469E /* STDoubleLabeledTableViewCell.xib in Resources */,
 				E11E61011EED0C390036F3F2 /* STSearchEmptyView.xib in Resources */,
 				E1A99D891CABE47000953A4B /* STRowHeaderCollectionViewCell.xib in Resources */,
 				E1BC7E4A1E54A04500AF3506 /* GoogleService-Info-Dev.plist in Resources */,
 				E1C828781E7D1C5700E63A9B /* STTextViewTableViewCell.xib in Resources */,
 				E1BC7E4C1E54B7EB00AF3506 /* GoogleService-Info-Production.plist in Resources */,
+				E13984331EF69111007DD319 /* STColorTableViewCell.xib in Resources */,
 				E1CAAA351CF07E7E00D16183 /* STSingleLectureButtonCell.xib in Resources */,
 				E1A664F61EED8F77003B2D43 /* STTagSearchInfoView.xib in Resources */,
 				E1773CAE1C953E8B00AF36AF /* Login.storyboard in Resources */,

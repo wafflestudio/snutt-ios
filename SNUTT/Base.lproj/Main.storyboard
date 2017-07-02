@@ -70,10 +70,10 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="i2B-jy-PUt">
-                        <barButtonItem key="leftBarButtonItem" image="navigationbaritem_list" style="plain" id="gnE-zE-Exs">
+                        <barButtonItem key="leftBarButtonItem" image="topbarListview" style="plain" id="gnE-zE-Exs">
                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="navigationbaritem_calendar" id="diC-Ny-PMc">
+                        <barButtonItem key="rightBarButtonItem" image="topbarBox" id="diC-Ny-PMc">
                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="eOk-et-eG5" kind="push" id="Uhg-sr-SqZ"/>
@@ -543,88 +543,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="qKD-DF-A3s">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="STColorTableViewCell" id="LPT-Ki-TEm" customClass="STColorTableViewCell" customModule="SNUTT" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LPT-Ki-TEm" id="bJS-CY-puA">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ph-AJ-VCN">
-                                            <rect key="frame" x="16" y="11" width="22" height="22"/>
-                                            <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="22" id="neI-eJ-iTD"/>
-                                                <constraint firstAttribute="width" secondItem="3Ph-AJ-VCN" secondAttribute="height" multiplier="1:1" id="yCY-0b-W7P"/>
-                                            </constraints>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D6Q-tb-Oir">
-                                            <rect key="frame" x="38" y="11" width="22" height="22"/>
-                                            <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="D6Q-tb-Oir" secondAttribute="height" multiplier="1:1" id="9Xw-4c-OyK"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdh-sD-An3">
-                                            <rect key="frame" x="80" y="12" width="40" height="20"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="3Ph-AJ-VCN" firstAttribute="leading" secondItem="bJS-CY-puA" secondAttribute="leading" constant="16" id="QN9-qy-XW6"/>
-                                        <constraint firstItem="3Ph-AJ-VCN" firstAttribute="centerY" secondItem="bJS-CY-puA" secondAttribute="centerY" id="euO-oI-Ja6"/>
-                                        <constraint firstItem="D6Q-tb-Oir" firstAttribute="leading" secondItem="3Ph-AJ-VCN" secondAttribute="trailing" id="evn-Yw-2Oc"/>
-                                        <constraint firstItem="3Ph-AJ-VCN" firstAttribute="height" secondItem="D6Q-tb-Oir" secondAttribute="height" id="fDz-Lf-Up9"/>
-                                        <constraint firstItem="gdh-sD-An3" firstAttribute="leading" secondItem="D6Q-tb-Oir" secondAttribute="trailing" constant="20" id="fHG-ln-laT"/>
-                                        <constraint firstItem="gdh-sD-An3" firstAttribute="centerY" secondItem="bJS-CY-puA" secondAttribute="centerY" id="g8U-Cm-K8I"/>
-                                        <constraint firstItem="D6Q-tb-Oir" firstAttribute="centerY" secondItem="bJS-CY-puA" secondAttribute="centerY" id="nCG-DF-COa"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="bgColorView" destination="3Ph-AJ-VCN" id="Nzw-kl-k2O"/>
-                                    <outlet property="colorLabel" destination="gdh-sD-An3" id="Fhl-lb-uFX"/>
-                                    <outlet property="fgColorView" destination="D6Q-tb-Oir" id="yun-8m-GH0"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="STSingleColorTableViewCell" id="DQb-xy-QTY" customClass="STSingleColorTableViewCell" customModule="SNUTT" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DQb-xy-QTY" id="fnQ-Ek-af2">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eP0-wr-avy">
-                                            <rect key="frame" x="257" y="11" width="22" height="22"/>
-                                            <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="eP0-wr-avy" secondAttribute="height" multiplier="1:1" id="FAs-W2-maB"/>
-                                                <constraint firstAttribute="height" constant="22" id="WXv-o3-RJq"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8m0-JH-oGp">
-                                            <rect key="frame" x="40" y="12" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="eP0-wr-avy" firstAttribute="trailing" secondItem="fnQ-Ek-af2" secondAttribute="trailingMargin" id="DpF-un-e7C"/>
-                                        <constraint firstItem="8m0-JH-oGp" firstAttribute="centerY" secondItem="fnQ-Ek-af2" secondAttribute="centerY" id="Fue-0r-7k0"/>
-                                        <constraint firstItem="8m0-JH-oGp" firstAttribute="leading" secondItem="fnQ-Ek-af2" secondAttribute="leading" constant="40" id="KTz-Cg-MfS"/>
-                                        <constraint firstItem="eP0-wr-avy" firstAttribute="centerY" secondItem="fnQ-Ek-af2" secondAttribute="centerY" id="oSt-56-3fB"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="colorView" destination="eP0-wr-avy" id="jUI-AO-nKn"/>
-                                    <outlet property="label" destination="8m0-JH-oGp" id="tzd-sv-pPM"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <connections>
                             <outlet property="dataSource" destination="VRm-MR-IJ4" id="NVZ-PA-p9w"/>
                             <outlet property="delegate" destination="VRm-MR-IJ4" id="Dlv-4Z-Ysf"/>
@@ -1717,8 +1636,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="navigationbaritem_calendar" width="20" height="22"/>
-        <image name="navigationbaritem_list" width="22" height="20"/>
         <image name="tabAlarmOff" width="22" height="22"/>
         <image name="tabAlarmOn" width="22" height="22"/>
         <image name="tabSearchOff" width="22" height="22"/>
@@ -1727,5 +1644,7 @@
         <image name="tabSettingOn" width="22" height="22"/>
         <image name="tabTimetableOff" width="22" height="22"/>
         <image name="tabTimetableOn" width="22" height="22"/>
+        <image name="topbarBox" width="22" height="22"/>
+        <image name="topbarListview" width="22" height="22"/>
     </resources>
 </document>

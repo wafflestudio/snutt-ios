@@ -19,6 +19,12 @@ class STColorPickerTableViewController: UITableViewController {
     var colorList : STColorList!
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tableView.register(UINib(nibName: "STColorTableViewCell", bundle: Bundle.main),
+                           forCellReuseIdentifier: "STColorTableViewCell")
+        tableView.register(UINib(nibName: "STSingleColorTableViewCell", bundle: Bundle.main),
+                           forCellReuseIdentifier: "STSingleColorTableViewCell")
+
         colorListUpdated()
 
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(colorListUpdated), event: STEvent.ColorListUpdated, object: nil)
@@ -83,9 +89,11 @@ class STColorPickerTableViewController: UITableViewController {
             if indexPath.row == colorList.colorList.count {
                 cell.color = STColor()
                 cell.colorLabel.text = "직접 지정하기"
+                cell.setBorder(false)
             } else {
                 cell.color = colorList.colorList[indexPath.row]
                 cell.colorLabel.text = colorList.nameList[indexPath.row]
+                cell.setBorder(true)
             }
             return cell
         } else {

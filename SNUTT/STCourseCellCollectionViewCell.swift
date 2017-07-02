@@ -81,10 +81,12 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
                 }
             }
             let font = UIFont.boldSystemFont(ofSize: size)
-            if text.length != 0 {
+            if text.length != 0 && singleClass.place != "" {
                 text.append(NSAttributedString(string: "\n"))
             }
-            text.append(NSAttributedString(string: singleClass.placeBreakLine, attributes: [NSFontAttributeName: font]))
+            if singleClass.place != "" {
+                text.append(NSAttributedString(string: singleClass.placeBreakLine, attributes: [NSFontAttributeName: font]))
+            }
         }
         courseText.attributedText = text
         courseText.baselineAdjustment = .alignCenters

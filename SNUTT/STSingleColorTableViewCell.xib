@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="STSingleColorTableViewCell" id="3CX-Hm-XUf" customClass="STSingleColorTableViewCell" customModule="SNUTT" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3CX-Hm-XUf" id="wwQ-l3-d2M">
+                <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AFY-jQ-VCm">
+                        <rect key="frame" x="257" y="11" width="22" height="22"/>
+                        <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="CXP-Jq-yQg"/>
+                            <constraint firstAttribute="width" secondItem="AFY-jQ-VCm" secondAttribute="height" multiplier="1:1" id="jhu-hF-omw"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lA7-YU-SgT">
+                        <rect key="frame" x="40" y="12" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="AFY-jQ-VCm" firstAttribute="trailing" secondItem="wwQ-l3-d2M" secondAttribute="trailingMargin" id="0ng-yE-lIx"/>
+                    <constraint firstItem="lA7-YU-SgT" firstAttribute="centerY" secondItem="wwQ-l3-d2M" secondAttribute="centerY" id="20c-BW-13P"/>
+                    <constraint firstItem="AFY-jQ-VCm" firstAttribute="centerY" secondItem="wwQ-l3-d2M" secondAttribute="centerY" id="ZjE-i3-DIV"/>
+                    <constraint firstItem="lA7-YU-SgT" firstAttribute="leading" secondItem="wwQ-l3-d2M" secondAttribute="leading" constant="40" id="dM2-PL-tFd"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="colorView" destination="AFY-jQ-VCm" id="3Wx-Oo-niy"/>
+                <outlet property="label" destination="lA7-YU-SgT" id="IMP-aH-F4I"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
