@@ -29,8 +29,12 @@ class STTimetableManager : NSObject {
         if let timetableId = currentTimetable?.id {
             STNetworking.getTimetable(timetableId, done: { timetable in
                 self.currentTimetable = timetable
-            }, failure: { _ in
-                self.currentTimetable = nil
+            }, failure: { errorCode in
+                if errorCode == STErrorCode.NO_NETWORK {
+                    return
+                } else {
+                    self.currentTimetable = nil
+                }
             })
         }
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableManager.saveData), event: STEvent.CurrentTimetableChanged, object: nil)

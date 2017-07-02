@@ -84,12 +84,12 @@ class STNetworking {
         })
     }
     
-    static func getTimetable(_ id: String, done: @escaping (STTimetable?)->(), failure: @escaping ()->()) {
+    static func getTimetable(_ id: String, done: @escaping (STTimetable?)->(), failure: @escaping (STErrorCode)->()) {
         Alamofire.request(STTimetableRouter.getTimetable(id: id)).responseWithDone({ statusCode, json in
             let timetable = STTimetable(json: json)
             done(timetable)
-        }, failure: { _ in
-            failure()
+        }, failure: { errorCode in
+            failure(errorCode)
         })
     }
     

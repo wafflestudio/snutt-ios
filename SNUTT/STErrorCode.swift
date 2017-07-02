@@ -22,6 +22,8 @@ public enum STErrorCode : Int {
     case NO_TIMETABLE_TITLE = 0x1007;
     case NO_REGISTRATION_ID = 0x1008;
     case INVALID_TIMEMASK = 0x1009;
+    case INVALID_COLOR = 0x100A;
+    case NO_LECTURE_TITLE = 0x100B;
     
     /* 403 - Authorization-related */
     case WRONG_API_KEY = 0x2000;
@@ -48,12 +50,15 @@ public enum STErrorCode : Int {
     case NOT_CUSTOM_LECTURE = 0x300B;
     case LECTURE_TIME_OVERLAP = 0x300C;
     case IS_CUSTOM_LECTURE = 0x300D;
+    case USER_HAS_NO_FCM_KEY = 0x300E;
     
     /* 404 - NOT found */
     case TAG_NOT_FOUND = 0x4000;
     case TIMETABLE_NOT_FOUND = 0x4001;
     case LECTURE_NOT_FOUND = 0x4002;
     case REF_LECTURE_NOT_FOUND = 0x4003;
+    case USER_NOT_FOUND = 0x4004;
+    case COLORLIST_NOT_FOUND = 0x4005;
     
     var errorTitle : String {
         switch self {
@@ -69,7 +74,9 @@ public enum STErrorCode : Int {
              .ATTEMPT_TO_MODIFY_IDENTITIY,
              .NO_TIMETABLE_TITLE,
              .NO_REGISTRATION_ID,
-             .INVALID_TIMEMASK:
+             .INVALID_TIMEMASK,
+             .INVALID_COLOR,
+             .NO_LECTURE_TITLE:
             return "요청 실패"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,
@@ -95,12 +102,15 @@ public enum STErrorCode : Int {
              .WRONG_SEMESTER,
              .NOT_CUSTOM_LECTURE,
              .LECTURE_TIME_OVERLAP,
-             .IS_CUSTOM_LECTURE:
+             .IS_CUSTOM_LECTURE,
+             .USER_HAS_NO_FCM_KEY:
             return "잘못된 요청"
         case .TAG_NOT_FOUND,
              .TIMETABLE_NOT_FOUND,
              .LECTURE_NOT_FOUND,
-             .REF_LECTURE_NOT_FOUND:
+             .REF_LECTURE_NOT_FOUND,
+             .USER_NOT_FOUND,
+             .COLORLIST_NOT_FOUND:
             return "찾지 못함"
         }
     }
@@ -128,9 +138,13 @@ public enum STErrorCode : Int {
         case .NO_TIMETABLE_TITLE:
             return "시간표 이름이 주어지지 않았습니다."
         case .NO_REGISTRATION_ID:
-            return "알림을 주기 위한 절차가 문제가 생겼습니다."
+            return "알림을 주기 위한 절차에 문제가 생겼습니다."
         case .INVALID_TIMEMASK:
             return "잘못된 비트마스크 형식입니다."
+        case .INVALID_COLOR:
+            return "올바른 색상 또는 색상 형식이 아닙니다."
+        case .NO_LECTURE_TITLE:
+            return "강좌에 이름을 넣어주세요."
         case .WRONG_API_KEY:
             return "잘못된 API Key 입니다."
         case .WRONG_USER_TOKEN:
@@ -165,6 +179,8 @@ public enum STErrorCode : Int {
             return "연동된 페이스북 계정이 없습니다."
         case .FB_ID_WITH_SOMEONE_ELSE:
             return "이미 다른 계정에 연동이 되어있습니다."
+        case .USER_HAS_NO_FCM_KEY:
+            return "유저에게 등록된 Firebase 키가 존재하지 않습니다."
         case .TAG_NOT_FOUND:
             return "없는 태그입니다."
         case .TIMETABLE_NOT_FOUND:
@@ -181,6 +197,10 @@ public enum STErrorCode : Int {
             return "직접 만든 강좌입니다."
         case .REF_LECTURE_NOT_FOUND:
             return "수강편람에서 찾을 수 없는 강좌입니다."
+        case .USER_NOT_FOUND:
+            return "유저를 찾을 수 없습니다."
+        case .COLORLIST_NOT_FOUND:
+            return "색상 목록을 찾을 수 없습니다."
         }
     }
 }
