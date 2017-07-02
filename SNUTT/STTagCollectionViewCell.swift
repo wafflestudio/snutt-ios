@@ -13,10 +13,12 @@ class STTagCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var tagLabel: UILabel!
     weak var collectionView : STTagCollectionView!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+
     var searchTag : STTag! {
         didSet {
             tagLabel.text = searchTag.text
-            containerView.backgroundColor = searchTag.type.tagColor
+            containerView.backgroundColor = searchTag.type.tagLightColor
         }
     }
     
@@ -25,6 +27,21 @@ class STTagCollectionViewCell: UICollectionViewCell {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.tap))
         self.addGestureRecognizer(tap)
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setSize()
+    }
+
+    func setSize() {
+        if isLargerThanSE() {
+            heightConstraint.constant = 30.0
+            tagLabel.font = UIFont.systemFont(ofSize: 15.0)
+        } else {
+            heightConstraint.constant = 28.0
+            tagLabel.font = UIFont.systemFont(ofSize: 14.0)
+        }
     }
     
     func tap(_ gesture: UITapGestureRecognizer) {

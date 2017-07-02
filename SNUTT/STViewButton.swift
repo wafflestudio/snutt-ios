@@ -22,6 +22,9 @@ class STViewButton: UIView {
         }
     }
 
+    @IBInspectable var pressedBgColor: UIColor?
+    var origBgColor: UIColor!
+
     var buttonPressAction: (()->())? = nil
 
     required init?(coder aDecoder: NSCoder) {
@@ -37,9 +40,26 @@ class STViewButton: UIView {
     func setup() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action:#selector(buttonPressed))
         self.addGestureRecognizer(tapRecognizer)
+        origBgColor = self.backgroundColor
     }
 
-    func buttonPressed() {
+    func buttonPressed(gesture: UITapGestureRecognizer) {
+
         buttonPressAction?()
+        self.backgroundColor = origBgColor
+    }
+
+    override func touchesBegan(_ presses: Set<UITouch>, with event: UIEvent?) {
+        if let bgColor = pressedBgColor {
+            self.backgroundColor = bgColor
+        }
+    }
+
+    override func touchesEnded(_ presses: Set<UITouch>, with event: UIEvent?) {
+        self.backgroundColor = origBgColor
+    }
+
+    override func touchesCancelled(_ presses: Set<UITouch>, with event: UIEvent?) {
+        self.backgroundColor = origBgColor
     }
 }

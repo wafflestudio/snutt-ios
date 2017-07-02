@@ -17,6 +17,7 @@ class STTagCollectionView: UICollectionView, UICollectionViewDataSource, UIColle
         super.awakeFromNib()
         self.delegate = self
         self.dataSource = self
+        (self.collectionViewLayout as! UICollectionViewFlowLayout).minimumInteritemSpacing = 10.0
         let nib = UINib(nibName: "STTagCollectionViewCell", bundle: nil)
         self.register(nib, forCellWithReuseIdentifier: "STTagCollectionViewCell")
         sizingCell = nib.instantiate(withOwner: self, options: nil)[0] as! STTagCollectionViewCell

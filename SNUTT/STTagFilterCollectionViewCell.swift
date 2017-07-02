@@ -14,20 +14,16 @@ class STTagFilterCollectionViewCell: UICollectionViewCell {
     
     var tagType : STTagType! {
         didSet {
-            if isSelectedTag {
-                tagLabel.textColor = tagType.tagColor
-            } else {
-                tagLabel.textColor = tagType.tagColor.withAlphaComponent(0.5)
-            }
+            tagLabel.textColor = tagType.tagColor
             tagLabel.text = tagType.typeStr
         }
     }
     var isSelectedTag : Bool = false {
         didSet {
             if isSelectedTag {
-                tagLabel.textColor = tagType.tagColor
+                self.backgroundColor = UIColor(white: 0.0, alpha: 0.05)
             } else {
-                tagLabel.textColor = tagType.tagColor.withAlphaComponent(0.5)
+                self.backgroundColor = UIColor.clear
             }
         }
     }

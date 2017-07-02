@@ -55,11 +55,13 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         searchBar.searchController = self
         tagTableView.searchController = self
         tagCollectionView.searchController = self
-        
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tapGesture)
-        
+
+        initEmptyDataSet()
+
         tableView.register(UINib(nibName: "STLectureSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "STLectureSearchTableViewCell")
         
         //Tag Button to KeyboardToolbar
@@ -219,7 +221,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "STLectureSearchTableViewCell", for: indexPath) as! STLectureSearchTableViewCell
-        cell.addSubview(cell.addButton)
         cell.lecture = FilteredList[indexPath.row]
         cell.tableView = tableView
         cell.titleLabel.sizeToFit()
@@ -240,17 +241,10 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func searchBarCancelButtonClicked() {
         switch state {
         case .editingQuery(let query, let tagList, let lectureList):
-            if query == nil {
-                state = .empty
-                FilteredList = []
-                searchBar.text = ""
-                tagCollectionView.tagList = []
-            } else {
-                state = .loaded(query!, tagList)
-                FilteredList = lectureList
-                searchBar.text = query!
-                tagCollectionView.tagList = tagList
-            }
+            state = .empty
+            FilteredList = []
+            searchBar.text = ""
+            tagCollectionView.tagList = []
         case .loading(let request):
             request.cancel()
             state = .empty
@@ -299,6 +293,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func showTagRecommendation() {
         tagTableView.showTagsFor(searchBar.text!, type: searchToolbarView.currentTagType)
+        tagTableView.setContentOffset(CGPoint(x: 0, y: -tagTableView.contentInset.top), animated: true)
     }
     
     func hideTagRecommendation() {
@@ -306,81 +301,49 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     //MARK: DNZEmptyDataSet
-    
-    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
-        switch(state) {
-        case .empty:
-            return UIImage(named: "tag_gray")
-        case .loaded:
-            return UIImage(named: "tabbaritem_search")
-        default:
-            return nil
+
+    var emptyView: STSearchEmptyView!;
+    var infoView: STTagSearchInfoView!;
+    var showInfo: Bool = false
+
+    func initEmptyDataSet() {
+        let emptyViewNib = Bundle.main.loadNibNamed("STSearchEmptyView", owner: nil, options: nil)
+        emptyView = emptyViewNib![0] as! STSearchEmptyView
+        emptyView.searchController = self
+
+        let infoViewNib = Bundle.main.loadNibNamed("STTagSearchInfoView", owner: nil, options: nil)
+        infoView = infoViewNib![0] as! STTagSearchInfoView
+        infoView.searchController = self
+    }
+
+    func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
+        if showInfo {
+            return infoView
+        } else {
+            return emptyView
         }
     }
-    
-    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        var text : String = ""
-        switch(state) {
-        case .empty:
-            text = "강좌명 외의 내용으로 검색하려면 태그 검색을 이용하세요."
-        case .loaded:
-            text = "검색 내용에 해당되는 강좌가 없습니다."
-        default:
-            text = ""
+    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView!) -> Bool {
+        if searchBar.isFirstResponder {
+            return false
+        } else if case .loading = state {
+            return false
         }
-        let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0),
-            NSForegroundColorAttributeName : UIColor(white: 1.0, alpha: 0.65)
-        ]
-        return NSAttributedString(string: text, attributes: attributes)
+        return true
     }
-    
-    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        var text : String = ""
-        switch(state) {
-        case .empty:
-            text = "같은 분야의 태그를 넣으면 그 중 하나가 있으면, 다른 분야의 태그끼리는 모두 있는 강좌를 검색합니다.\n예) #3학점, #4학점 : 3 또는 4학점\n#컴퓨터공학부, #전필 : 컴퓨터공학부 과목들 중 전필 강좌".breakOnlyAtNewLineAndSpace
-        case .loaded:
-            text = ""
-        default:
-            text = ""
-        }
-        let paragraph = NSMutableParagraphStyle()
-        paragraph.lineBreakMode = .byWordWrapping
-        paragraph.alignment = .center
-        let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.systemFont(ofSize: 14.0),
-            NSForegroundColorAttributeName : UIColor(white: 1.0, alpha: 0.5),
-            NSParagraphStyleAttributeName : paragraph
-        ]
-        return NSAttributedString(string: text, attributes: attributes)
-    }
-    
-    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for _: UIControlState) -> NSAttributedString! {
-        var text : String = ""
-        switch(state) {
-        case .empty:
-            text = "태그 추가하기"
-        case .loaded:
-            text = ""
-        default:
-            text = ""
-        }
-        let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 17.0),
-            NSForegroundColorAttributeName : UIColor.white
-        ]
-        return NSAttributedString(string: text, attributes: attributes)
-    }
-    
-    func emptyDataSetDidTapButton(_ scrollView: UIScrollView!) {
-        self.searchBar.enableEditingTag()
-        self.searchBar.becomeFirstResponder()
-    }
-    
+
+
     func dismissKeyboard() {
-        if case .editingQuery = state {
-            self.searchBar.searchBarCancelButtonClicked(self.searchBar)
+        if case let .editingQuery(query, tagList, lectureList) = state {
+            searchBar.resignFirstResponder()
+            searchBar.isEditingTag = false
+            state = .loaded(query!, tagList)
+            FilteredList = lectureList
+            searchBar.text = query!
+            tagCollectionView.tagList = tagList
+            reloadData()
+            tagCollectionView.reloadData()
+            hideTagRecommendation()
         }
     }
     

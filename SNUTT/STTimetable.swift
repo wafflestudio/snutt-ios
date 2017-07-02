@@ -77,6 +77,15 @@ class STTimetable {
         lectureList.append(lecture)
         return STAddLectureState.success
     }
+
+    func indexOf(lecture: STLecture) -> Int {
+        for (index, it) in lectureList.enumerated() {
+            if it.isSameLecture(lecture) {
+                return index;
+            }
+        }
+        return -1;
+    }
     
     func addIdForLecture(_ lecture: STLecture, id : String) {
         for (index, element) in lectureList.enumerated() {

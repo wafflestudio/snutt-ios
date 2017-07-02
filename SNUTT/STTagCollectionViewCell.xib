@@ -1,44 +1,45 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB" customClass="STTagCollectionViewCell" customModule="SNUTT" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="100" height="27"/>
+            <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anP-qD-Bs9">
+                    <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="컴퓨터공학부" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6W-60-AIi">
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <rect key="frame" x="14" y="0.0" width="60" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3l7-mE-WLA">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="delete.png" translatesAutoresizingMaskIntoConstraints="NO" id="L0x-Il-aag">
+                            <rect key="frame" x="80" y="10.5" width="9" height="9"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="3l7-mE-WLA" secondAttribute="height" multiplier="1:1" id="YkE-HK-qwb"/>
+                                <constraint firstAttribute="width" constant="9" id="4Ff-1C-Fcs"/>
+                                <constraint firstAttribute="height" constant="9" id="4oO-pC-Ifx"/>
                             </constraints>
-                            <inset key="imageEdgeInsets" minX="1" minY="1" maxX="1" maxY="1"/>
-                            <state key="normal" image="delete.png"/>
-                        </button>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" red="0.2627450980392157" green="0.54509803921568623" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="27" id="0YJ-ln-J7u"/>
+                        <constraint firstAttribute="height" constant="30" id="0YJ-ln-J7u"/>
                         <constraint firstAttribute="bottom" secondItem="h6W-60-AIi" secondAttribute="bottom" id="0YR-fC-tap"/>
-                        <constraint firstItem="3l7-mE-WLA" firstAttribute="top" secondItem="anP-qD-Bs9" secondAttribute="topMargin" id="Jkj-w1-q48"/>
-                        <constraint firstAttribute="bottomMargin" secondItem="3l7-mE-WLA" secondAttribute="bottom" id="Qa0-Fg-Kgs"/>
-                        <constraint firstAttribute="trailingMargin" secondItem="3l7-mE-WLA" secondAttribute="trailing" id="UQK-yM-1zs"/>
-                        <constraint firstItem="3l7-mE-WLA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="h6W-60-AIi" secondAttribute="trailing" constant="3" id="pgl-wA-tJg"/>
+                        <constraint firstItem="L0x-Il-aag" firstAttribute="centerY" secondItem="anP-qD-Bs9" secondAttribute="centerY" id="ZSh-sj-BKx"/>
+                        <constraint firstAttribute="trailing" secondItem="L0x-Il-aag" secondAttribute="trailing" constant="11" id="sAc-D9-VjU"/>
+                        <constraint firstItem="L0x-Il-aag" firstAttribute="leading" secondItem="h6W-60-AIi" secondAttribute="trailing" constant="6" id="tow-qS-jes"/>
                         <constraint firstItem="h6W-60-AIi" firstAttribute="top" secondItem="anP-qD-Bs9" secondAttribute="top" id="vQf-3H-mWh"/>
-                        <constraint firstItem="h6W-60-AIi" firstAttribute="leading" secondItem="anP-qD-Bs9" secondAttribute="leadingMargin" id="vo4-yj-zxC"/>
+                        <constraint firstItem="h6W-60-AIi" firstAttribute="leading" secondItem="anP-qD-Bs9" secondAttribute="leading" constant="14" id="vo4-yj-zxC"/>
                     </constraints>
                 </view>
             </subviews>
@@ -53,9 +54,10 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="containerView" destination="anP-qD-Bs9" id="N1A-Yw-Kq0"/>
+                <outlet property="heightConstraint" destination="0YJ-ln-J7u" id="p4H-ep-1hU"/>
                 <outlet property="tagLabel" destination="h6W-60-AIi" id="XbJ-31-QUe"/>
             </connections>
-            <point key="canvasLocation" x="26" y="19.5"/>
+            <point key="canvasLocation" x="26" y="21"/>
         </view>
     </objects>
     <resources>

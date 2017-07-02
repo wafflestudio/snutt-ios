@@ -48,7 +48,11 @@ class STTimetableLayout: UICollectionViewLayout {
             height = HeightPerRow * CGFloat(singleClass.time.duration) + 0.4
             locX = CGFloat(columnIndex) * WidthPerColumn + WidthForHeader
             locY = HeightForHeader + HeightPerRow * rowIndex - 0.2
-            ret.zIndex = 1
+            if case .temporaryCourse = type {
+                ret.zIndex = 2
+            } else {
+                ret.zIndex = 1
+            }
         case .headerColumn:
             width = WidthPerColumn
             height = HeightForHeader
@@ -62,7 +66,7 @@ class STTimetableLayout: UICollectionViewLayout {
             locX = CGFloat(0)
             let rowIndex = CGFloat(timetableView.getRowFromPeriod(Double(indexPath.row)))
             locY = HeightForHeader + rowIndex * HeightPerRow
-            ret.zIndex = 2
+            ret.zIndex = 3
         case .slot:
             width = ContentWidth
             height = ContentHeight
