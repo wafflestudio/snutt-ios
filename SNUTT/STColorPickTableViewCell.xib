@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,64 +12,67 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="STColorPickTableViewCell" customModule="SNUTT" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="282" height="36"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="색" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNf-h9-ocN">
-                    <rect key="frame" x="16" y="10" width="70" height="17"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I5r-B4-aim">
-                    <rect key="frame" x="94" y="7" width="22" height="22"/>
-                    <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="I5r-B4-aim" secondAttribute="height" multiplier="1:1" id="NDZ-Xa-1v8"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZL-01-9iv">
-                    <rect key="frame" x="116" y="7" width="22" height="22"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="eZL-01-9iv" secondAttribute="height" multiplier="1:1" id="cG7-gb-GiZ"/>
-                    </constraints>
-                </view>
-            </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="DW9-rT-jPn" customClass="STColorPickTableViewCell" customModule="SNUTT" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="36"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DW9-rT-jPn" id="c7c-aY-31r">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="36"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="색" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghf-xn-gQg">
+                        <rect key="frame" x="16" y="9.5" width="12.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m1m-YW-pud">
+                        <rect key="frame" x="125" y="7" width="43" height="21.5"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FAC-0W-YNN">
+                                <rect key="frame" x="0.0" y="0.0" width="21.5" height="21.5"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="FAC-0W-YNN" secondAttribute="height" multiplier="1:1" id="vCk-lZ-Bhh"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SUV-zf-vAf">
+                                <rect key="frame" x="21.5" y="0.0" width="21.5" height="21.5"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="SUV-zf-vAf" secondAttribute="height" multiplier="1:1" id="muI-25-SLO"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="SUV-zf-vAf" secondAttribute="trailing" id="GPu-g5-vla"/>
+                            <constraint firstItem="SUV-zf-vAf" firstAttribute="top" secondItem="m1m-YW-pud" secondAttribute="top" id="RU2-zh-XFS"/>
+                            <constraint firstAttribute="bottom" secondItem="SUV-zf-vAf" secondAttribute="bottom" id="ZnH-U2-IXg"/>
+                            <constraint firstAttribute="bottom" secondItem="FAC-0W-YNN" secondAttribute="bottom" id="eeL-MD-xVc"/>
+                            <constraint firstItem="FAC-0W-YNN" firstAttribute="top" secondItem="m1m-YW-pud" secondAttribute="top" id="k1T-xz-4Qn"/>
+                            <constraint firstItem="SUV-zf-vAf" firstAttribute="leading" secondItem="FAC-0W-YNN" secondAttribute="trailing" id="uiS-De-at8"/>
+                            <constraint firstItem="FAC-0W-YNN" firstAttribute="leading" secondItem="m1m-YW-pud" secondAttribute="leading" id="xbd-Ab-dL8"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ghf-xn-gQg" firstAttribute="leading" secondItem="c7c-aY-31r" secondAttribute="leading" constant="16" id="DE6-UA-8ZN"/>
+                    <constraint firstItem="m1m-YW-pud" firstAttribute="top" secondItem="c7c-aY-31r" secondAttribute="top" constant="7" id="J0u-Kn-Njx"/>
+                    <constraint firstItem="m1m-YW-pud" firstAttribute="centerY" secondItem="c7c-aY-31r" secondAttribute="centerY" id="JDp-mc-f3g"/>
+                    <constraint firstItem="ghf-xn-gQg" firstAttribute="centerY" secondItem="c7c-aY-31r" secondAttribute="centerY" id="W0g-Oo-zUz"/>
+                    <constraint firstAttribute="bottom" secondItem="m1m-YW-pud" secondAttribute="bottom" constant="7" id="fBg-YY-LV7"/>
+                </constraints>
+            </tableViewCellContentView>
             <constraints>
-                <constraint firstItem="I5r-B4-aim" firstAttribute="height" secondItem="FNf-h9-ocN" secondAttribute="height" id="4HD-cL-FuL"/>
-                <constraint firstItem="I5r-B4-aim" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7" id="5on-xe-8FX"/>
-                <constraint firstItem="eZL-01-9iv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="8u0-Eo-tDj"/>
-                <constraint firstItem="FNf-h9-ocN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Bc4-5l-hVt"/>
-                <constraint firstItem="eZL-01-9iv" firstAttribute="height" secondItem="I5r-B4-aim" secondAttribute="height" id="G0P-LV-J7Y"/>
-                <constraint firstAttribute="bottom" secondItem="I5r-B4-aim" secondAttribute="bottom" id="Hqm-Ej-6Po"/>
-                <constraint firstItem="I5r-B4-aim" firstAttribute="trailing" secondItem="eZL-01-9iv" secondAttribute="leading" id="YWF-ad-JzM"/>
-                <constraint firstItem="I5r-B4-aim" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="aRm-c3-O8w"/>
-                <constraint firstItem="FNf-h9-ocN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="d0z-Hj-HaG"/>
-                <constraint firstItem="I5r-B4-aim" firstAttribute="leading" secondItem="FNf-h9-ocN" secondAttribute="trailing" constant="8" id="fCl-0c-Pve"/>
-                <constraint firstAttribute="trailing" secondItem="I5r-B4-aim" secondAttribute="leading" multiplier="3" id="hvR-nf-8Lc"/>
-                <constraint firstAttribute="bottom" secondItem="I5r-B4-aim" secondAttribute="bottom" constant="7" id="i3B-aH-cda"/>
-                <constraint firstItem="I5r-B4-aim" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="oJ8-yd-gog"/>
+                <constraint firstAttribute="trailing" secondItem="m1m-YW-pud" secondAttribute="leading" multiplier="3" id="BHj-Jz-mjG"/>
             </constraints>
-            <nil key="simulatedStatusBarMetrics"/>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="4HD-cL-FuL"/>
-                    <exclude reference="Hqm-Ej-6Po"/>
-                    <exclude reference="oJ8-yd-gog"/>
-                </mask>
-            </variation>
             <connections>
-                <outlet property="bgColorView" destination="eZL-01-9iv" id="JMp-bk-pnP"/>
-                <outlet property="fgColorView" destination="I5r-B4-aim" id="VMy-XM-DaW"/>
-                <outlet property="titleLabel" destination="FNf-h9-ocN" id="HNn-Dv-pkB"/>
+                <outlet property="bgColorView" destination="SUV-zf-vAf" id="ONz-zx-93Y"/>
+                <outlet property="colorContainerView" destination="m1m-YW-pud" id="j76-BF-4GX"/>
+                <outlet property="fgColorView" destination="FAC-0W-YNN" id="2hB-9K-RNX"/>
+                <outlet property="titleLabel" destination="ghf-xn-gQg" id="Mli-fr-KLU"/>
             </connections>
-            <point key="canvasLocation" x="325" y="341"/>
-        </view>
+            <point key="canvasLocation" x="315" y="243"/>
+        </tableViewCell>
     </objects>
 </document>

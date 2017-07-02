@@ -14,12 +14,25 @@ class STColorPickTableViewCell: STLectureDetailTableViewCell {
     
     @IBOutlet weak var bgColorView: UIView!
     @IBOutlet weak var fgColorView: UIView!
+    @IBOutlet weak var colorContainerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
+
     
+
     var color : STColor! {
         didSet {
             bgColorView.backgroundColor = color.bgColor
             fgColorView.backgroundColor = color.fgColor
+            setBorder(true)
+        }
+    }
+
+    func setBorder(_ isBorder : Bool) {
+        if isBorder {
+            colorContainerView.layer.borderWidth = 1.0
+            colorContainerView.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.05).cgColor
+        } else {
+            colorContainerView.layer.borderWidth = 0.0
         }
     }
     
@@ -27,8 +40,6 @@ class STColorPickTableViewCell: STLectureDetailTableViewCell {
         super.awakeFromNib()
         self.accessoryType = .none
         self.selectionStyle = .none
-        self.addSubview(bgColorView)
-        self.addSubview(fgColorView)
         color = STColor()
         // Initialization code
     }
