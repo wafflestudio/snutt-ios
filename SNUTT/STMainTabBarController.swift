@@ -34,11 +34,11 @@ class STMainTabBarController: UITabBarController {
     func setNotiBadge(_ shouldShowBadge: Bool) {
         let notiBarItem = self.tabBar.items![2]
         if (shouldShowBadge) {
-            notiBarItem.image = UIImage(named: "tabbaritem_noti_dot")!.withRenderingMode(.alwaysOriginal)
-            notiBarItem.selectedImage = UIImage(named: "tabbaritem_noti_bold_dot")!.withRenderingMode(.alwaysOriginal)
+            notiBarItem.image = #imageLiteral(resourceName: "tabAlarmNotiOff").withRenderingMode(.alwaysOriginal)
+            notiBarItem.selectedImage = #imageLiteral(resourceName: "tabAlarmNotiOn").withRenderingMode(.alwaysOriginal)
         } else {
-            notiBarItem.image = UIImage(named: "tabbaritem_noti")!.withRenderingMode(.alwaysOriginal)
-            notiBarItem.selectedImage = UIImage(named: "tabbaritem_noti_bold")!.withRenderingMode(.alwaysOriginal)
+            notiBarItem.image = #imageLiteral(resourceName: "tabAlarmOff").withRenderingMode(.alwaysOriginal)
+            notiBarItem.selectedImage = #imageLiteral(resourceName: "tabAlarmOn").withRenderingMode(.alwaysOriginal)
         }
         STDefaults[.shouldShowBadge] = shouldShowBadge
     }
