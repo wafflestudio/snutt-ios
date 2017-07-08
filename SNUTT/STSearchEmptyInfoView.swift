@@ -1,5 +1,5 @@
 //
-//  STSearchEmptyView.swift
+//  STSearchEmptyInfoView.swift
 //  SNUTT
 //
 //  Created by Rajin on 2017. 6. 11..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class STSearchEmptyView: UIView {
+class STSearchEmptyInfoView: UIView {
 
     @IBOutlet weak var helpViewButton: STViewButton!
     weak var searchController: STLectureSearchTableViewController!

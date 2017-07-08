@@ -27,8 +27,8 @@
 		E1130AD91E7C38DD00ADE84F /* STColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1130AD81E7C38DD00ADE84F /* STColorManager.swift */; };
 		E1130ADA1E7C390700ADE84F /* STColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1130AD51E7C272A00ADE84F /* STColorList.swift */; };
 		E11902E91CCE44E7002436B9 /* STLectureDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11902E81CCE44E7002436B9 /* STLectureDetailTableViewCell.swift */; };
-		E11E61011EED0C390036F3F2 /* STSearchEmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E11E61001EED0C390036F3F2 /* STSearchEmptyView.xib */; };
-		E11E61031EED13890036F3F2 /* STSearchEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E61021EED13890036F3F2 /* STSearchEmptyView.swift */; };
+		E11E61011EED0C390036F3F2 /* STSearchEmptyInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E11E61001EED0C390036F3F2 /* STSearchEmptyInfoView.xib */; };
+		E11E61031EED13890036F3F2 /* STSearchEmptyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E61021EED13890036F3F2 /* STSearchEmptyInfoView.swift */; };
 		E133794F1D41E26C00AD10F4 /* STRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133794E1D41E26C00AD10F4 /* STRouter.swift */; };
 		E137998A1C3FBEC70043A5EE /* STMyLectureListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */; };
 		E13984311EF690A2007DD319 /* STSingleColorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E13984301EF690A2007DD319 /* STSingleColorTableViewCell.xib */; };
@@ -74,6 +74,7 @@
 		E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */; };
 		E18F2E501C5E6FBC00114ADF /* STTagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */; };
 		E195B4C91E51DB330090FA31 /* login_winter.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E195B4C81E51DB330090FA31 /* login_winter.jpg */; };
+		E1986A401F10C2D700337419 /* STSearchEmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1986A3F1F10C2D700337419 /* STSearchEmptyView.xib */; };
 		E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */; };
 		E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E19A3A9E1B453770007FCAD7 /* Main.storyboard */; };
 		E19A3AA21B453770007FCAD7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E19A3AA11B453770007FCAD7 /* Images.xcassets */; };
@@ -230,8 +231,8 @@
 		E1130AD51E7C272A00ADE84F /* STColorList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorList.swift; sourceTree = "<group>"; };
 		E1130AD81E7C38DD00ADE84F /* STColorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorManager.swift; sourceTree = "<group>"; };
 		E11902E81CCE44E7002436B9 /* STLectureDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureDetailTableViewCell.swift; sourceTree = "<group>"; };
-		E11E61001EED0C390036F3F2 /* STSearchEmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSearchEmptyView.xib; sourceTree = "<group>"; };
-		E11E61021EED13890036F3F2 /* STSearchEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchEmptyView.swift; sourceTree = "<group>"; };
+		E11E61001EED0C390036F3F2 /* STSearchEmptyInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSearchEmptyInfoView.xib; sourceTree = "<group>"; };
+		E11E61021EED13890036F3F2 /* STSearchEmptyInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchEmptyInfoView.swift; sourceTree = "<group>"; };
 		E133794E1D41E26C00AD10F4 /* STRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRouter.swift; sourceTree = "<group>"; };
 		E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMyLectureListController.swift; sourceTree = "<group>"; };
 		E13984301EF690A2007DD319 /* STSingleColorTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSingleColorTableViewCell.xib; sourceTree = "<group>"; };
@@ -277,6 +278,7 @@
 		E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchBar.swift; sourceTree = "<group>"; };
 		E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagListView.swift; sourceTree = "<group>"; };
 		E195B4C81E51DB330090FA31 /* login_winter.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login_winter.jpg; sourceTree = "<group>"; };
+		E1986A3F1F10C2D700337419 /* STSearchEmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSearchEmptyView.xib; sourceTree = "<group>"; };
 		E19A3A951B453770007FCAD7 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19A3A991B453770007FCAD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -630,10 +632,11 @@
 				E1B381AA1C6C61E2007E1A15 /* STTagCollectionViewCell.swift */,
 				E1B381AC1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib */,
 				E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */,
-				E11E61001EED0C390036F3F2 /* STSearchEmptyView.xib */,
-				E11E61021EED13890036F3F2 /* STSearchEmptyView.swift */,
+				E11E61001EED0C390036F3F2 /* STSearchEmptyInfoView.xib */,
+				E11E61021EED13890036F3F2 /* STSearchEmptyInfoView.swift */,
 				E1A664F51EED8F77003B2D43 /* STTagSearchInfoView.xib */,
 				E1A664F71EED8F8C003B2D43 /* STTagSearchInfoView.swift */,
+				E1986A3F1F10C2D700337419 /* STSearchEmptyView.xib */,
 			);
 			name = LectureSearch;
 			sourceTree = "<group>";
@@ -885,7 +888,7 @@
 				E1F0CA371C785C1200A4F4ED /* STSingleLabeledTableViewCell.xib in Resources */,
 				E13984311EF690A2007DD319 /* STSingleColorTableViewCell.xib in Resources */,
 				E1C48B8C1C78616C00BC469E /* STDoubleLabeledTableViewCell.xib in Resources */,
-				E11E61011EED0C390036F3F2 /* STSearchEmptyView.xib in Resources */,
+				E11E61011EED0C390036F3F2 /* STSearchEmptyInfoView.xib in Resources */,
 				E1A99D891CABE47000953A4B /* STRowHeaderCollectionViewCell.xib in Resources */,
 				E1BC7E4A1E54A04500AF3506 /* GoogleService-Info-Dev.plist in Resources */,
 				E1C828781E7D1C5700E63A9B /* STTextViewTableViewCell.xib in Resources */,
@@ -894,6 +897,7 @@
 				E1CAAA351CF07E7E00D16183 /* STSingleLectureButtonCell.xib in Resources */,
 				E1A664F61EED8F77003B2D43 /* STTagSearchInfoView.xib in Resources */,
 				E1773CAE1C953E8B00AF36AF /* Login.storyboard in Resources */,
+				E1986A401F10C2D700337419 /* STSearchEmptyView.xib in Resources */,
 				E1F0CA271C75B01900A4F4ED /* STLectureSearchTableViewCell.xib in Resources */,
 				E1C48B8A1C785F0B00BC469E /* STLeftAlignedTableViewCell.xib in Resources */,
 				E1C48B921C7879E600BC469E /* STSingleClassTableViewCell.xib in Resources */,
@@ -1133,7 +1137,7 @@
 				E1B34A4C1EB20DCA004C5E5E /* STViewButton.swift in Sources */,
 				E1A99D8B1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift in Sources */,
 				E110CFD11C883DC900ED0590 /* STNotificationTableViewController.swift in Sources */,
-				E11E61031EED13890036F3F2 /* STSearchEmptyView.swift in Sources */,
+				E11E61031EED13890036F3F2 /* STSearchEmptyInfoView.swift in Sources */,
 				E1130AD61E7C272A00ADE84F /* STColorList.swift in Sources */,
 				E110CFD71C88424000ED0590 /* STNotification.swift in Sources */,
 				E1F946251DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift in Sources */,

@@ -302,14 +302,18 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     //MARK: DNZEmptyDataSet
 
-    var emptyView: STSearchEmptyView!;
+    var emptyInfoView: STSearchEmptyInfoView!;
     var infoView: STTagSearchInfoView!;
+    var emptySearchView: UIView!;
     var showInfo: Bool = false
 
     func initEmptyDataSet() {
-        let emptyViewNib = Bundle.main.loadNibNamed("STSearchEmptyView", owner: nil, options: nil)
-        emptyView = emptyViewNib![0] as! STSearchEmptyView
-        emptyView.searchController = self
+        let emptyInfoViewNib = Bundle.main.loadNibNamed("STSearchEmptyInfoView", owner: nil, options: nil)
+        emptyInfoView = emptyInfoViewNib![0] as! STSearchEmptyInfoView
+        emptyInfoView.searchController = self
+
+        let emptySearchViewNib = Bundle.main.loadNibNamed("STSearchEmptyView", owner: nil, options: nil)
+        emptySearchView = emptySearchViewNib![0] as! UIView
 
         let infoViewNib = Bundle.main.loadNibNamed("STTagSearchInfoView", owner: nil, options: nil)
         if isLargerThanSE() {
@@ -321,10 +325,16 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
 
     func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
-        if showInfo {
-            return infoView
+        if case .loaded = state {
+            return emptySearchView
+        } else if case .empty = state {
+            if showInfo {
+                return infoView
+            } else {
+                return emptyInfoView
+            }
         } else {
-            return emptyView
+            return nil
         }
     }
     func emptyDataSetShouldDisplay(_ scrollView: UIScrollView!) -> Bool {
