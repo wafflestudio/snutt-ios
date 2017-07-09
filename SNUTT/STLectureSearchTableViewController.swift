@@ -223,8 +223,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         let cell = tableView.dequeueReusableCell(withIdentifier: "STLectureSearchTableViewCell", for: indexPath) as! STLectureSearchTableViewCell
         cell.lecture = FilteredList[indexPath.row]
         cell.tableView = tableView
-        cell.titleLabel.sizeToFit()
-        //cell.button.hidden = true
         return cell
     }
     
