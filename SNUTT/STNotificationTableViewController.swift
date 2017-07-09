@@ -12,9 +12,7 @@ import DZNEmptyDataSet
 
 class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
     let heightForFetch : CGFloat = CGFloat(50.0)
-    
-    var sizingCell : STNotificationTableViewCell!
-    
+
     var notiList : [STNotification] = []
     var pageCnt : Int = 0
     var numPerPage : Int = 15
@@ -24,23 +22,15 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 27
         
         self.tableView.emptyDataSetSource = self;
         self.tableView.emptyDataSetDelegate = self;
         
         let nib = UINib(nibName: "STNotificationTableViewCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "STNotificationTableViewCell")
-        sizingCell = nib.instantiate(withOwner: self, options: nil)[0] as! STNotificationTableViewCell
-        sizingCell.contentView.addConstraint(
-            NSLayoutConstraint(item: sizingCell.contentView,
-                attribute: NSLayoutAttribute.width,
-                relatedBy: NSLayoutRelation.equal,
-                toItem: nil,
-                attribute: NSLayoutAttribute.notAnAttribute,
-                multiplier: 1,
-                constant: self.tableView.frame.width
-            )
-        )
         
         refreshList()
         
@@ -86,12 +76,6 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         cell.notification = notification
 
         return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        sizingCell.notification = notiList[indexPath.row]
-        let size = sizingCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize, withHorizontalFittingPriority: Float(self.view.frame.width), verticalFittingPriority: 27)
-        return size.height
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
