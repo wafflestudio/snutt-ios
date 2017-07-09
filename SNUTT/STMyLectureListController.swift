@@ -111,7 +111,11 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     //MARK: DNZEmptyDataSet
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
-        return UIImage(named: "tabbaritem_timetable")
+        return #imageLiteral(resourceName: "tabTimetableOn")
+    }
+
+    func imageTintColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
+        return UIColor(white: 0.8, alpha: 1.0)
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
@@ -123,7 +127,7 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = "강좌를 찾아서 넣을수도 있지만, 직접 만들수도 있습니다."
+        let text = "강좌를 찾아서 넣을수도 있지만, 직접 만들수도 있습니다.".breakOnlyAtNewLineAndSpace
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineBreakMode = .byWordWrapping
         paragraph.alignment = .center
