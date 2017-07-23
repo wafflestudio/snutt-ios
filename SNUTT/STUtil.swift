@@ -35,6 +35,10 @@ class STUtil {
         }
         return false
     }
+
+    static func isEmptyOrNil(str : String?) -> Bool {
+        return str == nil || str == ""
+    }
 }
 
 extension String {
@@ -196,5 +200,23 @@ public extension UIImage {
         guard let cgImage = image?.cgImage else { return nil }
         self.init(cgImage: cgImage)
     }
+}
+
+extension UITextField {
+    // This is for korean in textfield with no textborder bug
+    // link : https://stackoverflow.com/questions/39556087/uitextfield-chinese-character-moves-down-when-editing-in-ios-10
+
+    @IBInspectable var hideBorder: Bool {
+        get {
+            return borderStyle == UITextBorderStyle.none
+        }
+        set {
+            if newValue {
+                borderStyle = UITextBorderStyle.line
+                borderStyle = UITextBorderStyle.none
+            }
+        }
+    }
+    
 }
 

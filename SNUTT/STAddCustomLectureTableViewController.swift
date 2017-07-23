@@ -11,19 +11,22 @@ import UIKit
 class STAddCustomLectureTableViewController: STSingleLectureTableViewController {
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+
         self.custom = true
+        currentLecture.color = nil
         if let timetable = STTimetableManager.sharedInstance.currentTimetable {
             var colorList = STColorManager.sharedInstance.colorList.colorList
+            var indexList = (0..<colorList.count).sorted()
             for lecture in timetable.lectureList {
-                colorList = colorList.filter({$0 != lecture.color})
+                indexList = indexList.filter({colorList[$0] != lecture.color})
             }
-            currentLecture.color = colorList.first ?? STColor()
+            currentLecture.colorIndex = (indexList.first ?? 0) + 1
         } else {
-            currentLecture.color = STColor()
+            currentLecture.colorIndex = 1
         }
-        
-        
-        super.viewDidLoad()
+
+        self.sectionForSingleClass = 2
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -39,16 +42,17 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
     
     override func cellTypeAtIndexPath(_ indexPath : IndexPath) -> CellType {
         switch (indexPath.section, indexPath.row) {
-        case (0,0): return .title
-        case (0,1): return .instructor
+        case (0,0): return .editLecture(attribute: .title)
+        case (0,1): return .editLecture(attribute: .instructor)
         case (0,2): return .color
-        case (0,3): return .credit
+        case (0,3): return .editLecture(attribute: .credit)
 
         case (1,0): return .padding
         case (1,1): return .remark
         case (1,2): return .padding
-            
-        case (2, currentLecture.classList.count): return .addButton(section: 2)
+
+        case (2, 0): return .singleClassTitle
+        case (2, currentLecture.classList.count + 1): return .addButton(section: 2)
         case (2, _): return .singleClass
 
         default: return .padding // Never Reach
@@ -63,7 +67,7 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         switch section {
         case 0: return 4
         case 1: return 3
-        case 2: return currentLecture.classList.count + 1
+        case 2: return currentLecture.classList.count + 2
         default: return 0 // Never Reached
         }
     }
@@ -71,12 +75,15 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath) as! STLectureDetailTableViewCell
         cell.setEditable(true)
-        let leftAlignedCell = cell as? STLeftAlignedTableViewCell
+        let leftAlignedCell = cell as? STLeftAlignedTextFieldCell
         switch cellTypeAtIndexPath(indexPath) {
-        case .instructor:
-            leftAlignedCell?.textField.placeholder = "예) 홍길동"
-        case .title:
-            leftAlignedCell?.textField.placeholder = "예) 기초 영어"
+        case let .editLecture(attribute):
+            if (attribute == .instructor) {
+                leftAlignedCell?.textField.placeholder = "예) 홍길동"
+            } else if (attribute == .title) {
+                leftAlignedCell?.textField.placeholder = "예) 기초 영어"
+            }
+            break
         default: break
         }
         return cell

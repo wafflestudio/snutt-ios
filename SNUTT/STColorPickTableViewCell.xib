@@ -6,7 +6,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,13 +19,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="색" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghf-xn-gQg">
-                        <rect key="frame" x="16" y="9.5" width="12.5" height="17"/>
+                        <rect key="frame" x="20" y="9.5" width="12.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="textColor" white="0.40000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m1m-YW-pud">
-                        <rect key="frame" x="125" y="7" width="43" height="21.5"/>
+                        <rect key="frame" x="96" y="7" width="43" height="21.5"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FAC-0W-YNN">
                                 <rect key="frame" x="0.0" y="0.0" width="21.5" height="21.5"/>
@@ -54,19 +53,27 @@
                             <constraint firstItem="FAC-0W-YNN" firstAttribute="leading" secondItem="m1m-YW-pud" secondAttribute="leading" id="xbd-Ab-dL8"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowRight" translatesAutoresizingMaskIntoConstraints="NO" id="mAb-te-aNF">
+                        <rect key="frame" x="339" y="8" width="16" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="9F0-sa-4m8"/>
+                            <constraint firstAttribute="width" constant="16" id="NM8-Eh-vV3"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="ghf-xn-gQg" firstAttribute="leading" secondItem="c7c-aY-31r" secondAttribute="leading" constant="16" id="DE6-UA-8ZN"/>
+                    <constraint firstItem="mAb-te-aNF" firstAttribute="centerY" secondItem="c7c-aY-31r" secondAttribute="centerY" id="AtN-kn-mJ2"/>
+                    <constraint firstItem="ghf-xn-gQg" firstAttribute="leading" secondItem="c7c-aY-31r" secondAttribute="leading" constant="20" id="DE6-UA-8ZN"/>
                     <constraint firstItem="m1m-YW-pud" firstAttribute="top" secondItem="c7c-aY-31r" secondAttribute="top" constant="7" id="J0u-Kn-Njx"/>
                     <constraint firstItem="m1m-YW-pud" firstAttribute="centerY" secondItem="c7c-aY-31r" secondAttribute="centerY" id="JDp-mc-f3g"/>
                     <constraint firstItem="ghf-xn-gQg" firstAttribute="centerY" secondItem="c7c-aY-31r" secondAttribute="centerY" id="W0g-Oo-zUz"/>
+                    <constraint firstItem="m1m-YW-pud" firstAttribute="leading" secondItem="c7c-aY-31r" secondAttribute="leading" constant="96" id="db2-ui-PDW"/>
                     <constraint firstAttribute="bottom" secondItem="m1m-YW-pud" secondAttribute="bottom" constant="7" id="fBg-YY-LV7"/>
+                    <constraint firstAttribute="trailing" secondItem="mAb-te-aNF" secondAttribute="trailing" constant="20" id="v9n-IH-Rzw"/>
                 </constraints>
             </tableViewCellContentView>
-            <constraints>
-                <constraint firstAttribute="trailing" secondItem="m1m-YW-pud" secondAttribute="leading" multiplier="3" id="BHj-Jz-mjG"/>
-            </constraints>
             <connections>
+                <outlet property="arrowImage" destination="mAb-te-aNF" id="uk6-9j-zr1"/>
                 <outlet property="bgColorView" destination="SUV-zf-vAf" id="ONz-zx-93Y"/>
                 <outlet property="colorContainerView" destination="m1m-YW-pud" id="j76-BF-4GX"/>
                 <outlet property="fgColorView" destination="FAC-0W-YNN" id="2hB-9K-RNX"/>
@@ -75,4 +82,7 @@
             <point key="canvasLocation" x="315" y="243"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="arrowRight" width="8" height="8"/>
+    </resources>
 </document>

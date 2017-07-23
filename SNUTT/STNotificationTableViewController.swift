@@ -137,7 +137,11 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     //MARK: DNZEmptyDataSet
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
-        return UIImage(named: "tabbaritem_noti")
+        return #imageLiteral(resourceName: "tabAlarmOn")
+    }
+
+    func imageTintColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
+        return UIColor(white: 0.8, alpha: 1.0)
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
@@ -149,7 +153,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = "넣은 강좌의 수강편람이 바뀌거나, 새로운 수강편람이 뜨면 알림을 줍니다."
+        let text = "넣은 강좌의 수강편람이 바뀌거나, 새로운 수강편람이 뜨면 알림을 줍니다.".breakOnlyAtNewLineAndSpace
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineBreakMode = .byWordWrapping
         paragraph.alignment = .center

@@ -11,8 +11,9 @@ import B68UIFloatLabelTextField
 
 class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDelegate {
 
-    @IBOutlet weak var timeTextField: B68UIFloatLabelTextField!
-    @IBOutlet weak var placeTextField: B68UIFloatLabelTextField!
+    @IBOutlet weak var timeTextField: UITextField!
+    @IBOutlet weak var placeTextField: UITextField!
+    @IBOutlet weak var deleteBtn: STViewButton!
     
     var singleClass : STSingleClass! {
         didSet {
@@ -22,14 +23,19 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
     }
     var placeDoneBlock : ((String)->())?
     var timeDoneBlock : ((STTime)->())?
+    var deleteLectureBlock: (()->())? {
+        didSet {
+            deleteBtn.buttonPressAction = deleteLectureBlock
+        }
+    }
     var custom : Bool = false
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.addSubview(timeTextField)
-        self.addSubview(placeTextField)
         
         timeTextField.delegate = self
         placeTextField.delegate = self
+        deleteBtn.buttonPressAction = deleteLectureBlock
+
         self.selectionStyle = .none
         // Initialization code
     }
@@ -64,6 +70,7 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
     override func setEditable(_ editable: Bool) {
         self.placeTextField.isEnabled = editable
         self.timeTextField.isEnabled = custom && editable
+        deleteBtn.isHidden = !(custom && editable)
         if editable && !custom {
             self.timeTextField.textColor = UIColor(white: 0.67, alpha: 1.0)
         } else {

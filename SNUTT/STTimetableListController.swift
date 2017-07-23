@@ -12,8 +12,8 @@ import Alamofire
 class STTimetableListController: UITableViewController {
     
     var timetableList : [STTimetable] = []
-    var indexList : [Int] = []
-    
+    var sectionedList : [[STTimetable]] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         STNetworking.getTimetableList({ list in
@@ -25,7 +25,14 @@ class STTimetableListController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(self.reloadList), event: STEvent.CourseBookUpdated, object: nil)
         reloadList()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        STEventCenter.sharedInstance.removeObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,42 +54,37 @@ class STTimetableListController: UITableViewController {
     }
     
     func reloadList() {
-        self.sortTimetableList()
+        self.updateSectionedList()
         self.tableView.reloadData()
     }
     
-    func sortTimetableList() {
-        timetableList.sort(by: {a, b in
-            return a.quarter > b.quarter
+    func updateSectionedList() {
+        let courseBookList = STCourseBookList.sharedInstance.courseBookList
+        sectionedList = courseBookList.map({ courseBook in
+            return timetableList.filter({ timetable in
+                timetable.quarter == courseBook.quarter
+            })
         })
-        
-        indexList = []
-        for i in 0..<timetableList.count {
-            if(i == 0 || timetableList[i].quarter != timetableList[i-1].quarter) {
-                indexList.append(i)
-            }
-        }
-        indexList.append(timetableList.count)
     }
-    
-    func indexPathToIndex (_ indexPath : IndexPath ) -> Int {
-        return indexList[indexPath.section]+indexPath.row
+
+    func getTimetable(from indexPath: IndexPath) -> STTimetable {
+        return sectionedList[indexPath.section][indexPath.row]
     }
-    
+
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return indexList.count-1
+        return sectionedList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return indexList[section+1]-indexList[section]
+        return sectionedList[section].count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "STTimetableListCell", for: indexPath)
-        let timetable = timetableList[indexList[indexPath.section]+indexPath.row]
+        let timetable = getTimetable(from: indexPath)
         cell.textLabel!.text = timetable.title
         if STTimetableManager.sharedInstance.currentTimetable?.id == timetable.id {
             cell.accessoryType = .checkmark
@@ -94,15 +96,14 @@ class STTimetableListController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return timetableList[indexList[section]].quarter.longString()
+        return STCourseBookList.sharedInstance.courseBookList[section].quarter.longString()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let index = indexList[indexPath.section]+indexPath.row
-        if timetableList[index].id == nil {
+        guard let id = getTimetable(from: indexPath).id else {
             return
         }
-        STNetworking.getTimetable(timetableList[index].id!, done: { timetable in
+        STNetworking.getTimetable(id, done: { timetable in
             if (timetable == nil) {
                 STAlertView.showAlert(title: "시간표 로딩 실패", message: "선택한 시간표가 서버에 존재하지 않습니다.")
             }
@@ -117,9 +118,9 @@ class STTimetableListController: UITableViewController {
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        let index = indexPathToIndex(indexPath)
-        if timetableList[index].isLoaded {
-            if STTimetableManager.sharedInstance.currentTimetable?.id == timetableList[index].id  {
+        let timetable = getTimetable(from: indexPath)
+        if timetable.isLoaded {
+            if STTimetableManager.sharedInstance.currentTimetable?.id == timetable.id  {
                 return false
             }
             return true
@@ -131,20 +132,17 @@ class STTimetableListController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let index = indexPathToIndex(indexPath)
-            let timetable = timetableList[index]
+            let timetable = getTimetable(from: indexPath)
             if timetable.id == nil {
                 return
             }
             STNetworking.deleteTimetable(timetable.id!, done: {
-                self.timetableList.remove(at: index)
-                let isSectionDeleted = self.indexList[indexPath.section+1] - self.indexList[indexPath.section] == 1
-                self.sortTimetableList()
-                if isSectionDeleted {
-                    self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
-                } else {
-                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                guard let index = self.timetableList.index(of: timetable) else {
+                    return
                 }
+                self.timetableList.remove(at: index)
+                self.updateSectionedList()
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
             }, failure: { _ in
                 
             })

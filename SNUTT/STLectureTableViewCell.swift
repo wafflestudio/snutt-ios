@@ -19,8 +19,8 @@ class STLectureTableViewCell: UITableViewCell {
     
     var lecture : STLecture! {
         didSet {
-            titleLabel.text = lecture.title
-            profLabel.text = lecture.instructor
+            titleLabel.text = lecture.title == "" ? "(강좌명 없음)" : lecture.title
+            profLabel.text = lecture.instructor == "" ? "(교수명 없음)" : lecture.instructor
             descriptionLabel.text = "/\(lecture.credit)학점"
             tagLabel.text = lecture.tagDescription
             timeLabel.text = lecture.timeDescription

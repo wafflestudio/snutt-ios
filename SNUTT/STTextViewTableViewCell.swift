@@ -21,6 +21,7 @@ class STTextViewTableViewCell: STLectureDetailTableViewCell, UITextViewDelegate 
         self.selectionStyle = .none
         textView.delegate = self
         textView.textContainerInset = UIEdgeInsets.zero
+        textView.textContainer.lineFragmentPadding = 0
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {

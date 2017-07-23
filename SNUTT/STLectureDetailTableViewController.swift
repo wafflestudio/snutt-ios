@@ -27,6 +27,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         super.viewDidLoad()
         
         self.currentLecture = lecture
+        self.sectionForSingleClass = 2
         
         editBarButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(STLectureDetailTableViewController.editBarButtonClicked))
         saveBarButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(STLectureDetailTableViewController.saveBarButtonClicked))
@@ -36,7 +37,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if case .button = cellTypeAtIndexPath(indexPath).cellViewType {
+        if case .button = cellTypeAtIndexPath(indexPath).simpleCellViewType {
             tableView.deselectRow(at: indexPath, animated: true)
             (self.tableView.cellForRow(at: indexPath) as! STSingleLectureButtonCell).buttonAction?()
         } else if case .color = cellTypeAtIndexPath(indexPath) {
@@ -53,10 +54,12 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     
     override func cellTypeAtIndexPath(_ indexPath : IndexPath) -> CellType {
         switch (indexPath.section, indexPath.row) {
-        case (0, 0): return .title
-        case (0, 1): return .instructor
-        case (0, 2): return .color
-        case (0, 3): return .credit
+        case (0, 0): return .padding
+        case (0, 1): return .editLecture(attribute: .title)
+        case (0, 2): return .editLecture(attribute: .instructor)
+        case (0, 3): return .color
+        case (0, 4): return custom ? .editLecture(attribute: .credit) : .padding
+        case (0, 5): return .padding
 
         case (1, _):
             if custom {
@@ -69,18 +72,23 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
             } else {
                 switch indexPath.row {
                 case 0: return .padding
-                case 1: return .department
-                case 2: return .academicYearAndCredit
-                case 3: return .classificationAndCategory
-                case 4: return .courseNumAndLectureNum
-                case 5: return .remark
-                case 6: return .padding
+                case 1: return .editLecture(attribute: .department)
+                case 2: return .editLecture(attribute: .academicYear)
+                case 3: return .editLecture(attribute: .credit)
+                case 4: return .editLecture(attribute: .classification)
+                case 5: return .editLecture(attribute: .category)
+                case 6: return .editLecture(attribute: .courseNum)
+                case 7: return .editLecture(attribute: .lectureNum)
+                case 8: return .remark
+                case 9: return .padding
                 default: return .padding
                 }
             }
-        
-        case (2, currentLecture.classList.count):
-            return .addButton(section: 2)
+        case (2, 0):
+            return .singleClassTitle
+
+        case (2, currentLecture.classList.count + 1):
+            return editable ? .addButton(section: 2) : .padding
             
         case (2, _): return .singleClass
             
@@ -116,17 +124,17 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if custom {
             switch section {
-            case 0: return 4
+            case 0: return 6
             case 1: return 3
-            case 2: return currentLecture.classList.count + ( editable ? 1 : 0)
+            case 2: return currentLecture.classList.count + 2
             case 3: return editable ? 0 : 1
             default: return 0 // Never Reached
             }
         } else {
             switch section {
-            case 0: return 3
-            case 1: return 6
-            case 2: return currentLecture.classList.count + (editable ? 1 : 0)
+            case 0: return 5
+            case 1: return 10
+            case 2: return currentLecture.classList.count + 2
             case 3: return 1
             case 4: return 1
             default: return 0
@@ -141,11 +149,6 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 2 {
-            if indexPath.row < currentLecture.classList.count {
-                return true
-            }
-        }
         return false
     }
     

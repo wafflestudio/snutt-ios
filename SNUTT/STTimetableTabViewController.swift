@@ -117,7 +117,7 @@ class STTimetableTabViewController: UIViewController {
             newView = timetableView
         }
 
-        UIView.animate(withDuration: 1.0, animations: {
+        UIView.animate(withDuration: 0.65, animations: {
             switch self.state {
             case .lectureList:
                 self.navigationItem.leftBarButtonItem!.image = #imageLiteral(resourceName: "topbarListview")
@@ -126,7 +126,7 @@ class STTimetableTabViewController: UIViewController {
             }
         })
 
-        UIView.transition(with: containerView, duration: 1.0, options: .transitionFlipFromRight, animations: {
+        UIView.transition(with: containerView, duration: 0.65, options: .transitionFlipFromRight, animations: {
                 oldView.isHidden = true
                 newView.isHidden = false
             }, completion: { finished in
