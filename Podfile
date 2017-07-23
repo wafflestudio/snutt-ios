@@ -22,6 +22,7 @@ target 'SNUTT' do
   pod 'DZNEmptyDataSet', :git => 'https://github.com/Rajin9601/DZNEmptyDataSet.git', :branch => 'fix-hitTest'
   pod 'TPKeyboardAvoiding'
   pod 'MarqueeLabel/Swift'
+  pod 'UITextView+Placeholder', '~> 1.2'
 end
 
 target 'SNUTT Today' do

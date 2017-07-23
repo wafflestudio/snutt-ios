@@ -55,6 +55,7 @@ PODS:
   - SwiftyUserDefaults (3.0.1)
   - TPKeyboardAvoiding (1.3.1)
   - TTRangeSlider (1.0.5)
+  - UITextView+Placeholder (1.2.0)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
@@ -77,6 +78,7 @@ DEPENDENCIES:
   - SwiftyUserDefaults (from `https://github.com/Rajin9601/SwiftyUserDefaults.git`)
   - TPKeyboardAvoiding
   - TTRangeSlider
+  - UITextView+Placeholder (~> 1.2)
 
 EXTERNAL SOURCES:
   B68UIFloatLabelTextField:
@@ -131,7 +133,8 @@ SPEC CHECKSUMS:
   SwiftyUserDefaults: 38267a30d58b7c8570995cd5defd354e43f056c6
   TPKeyboardAvoiding: 0d6af20e95e2850f4c621841225b59ec7d8dd852
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
+  UITextView+Placeholder: 77680995fcdd07c3f52ec92fe1150874a2ac89ff
 
-PODFILE CHECKSUM: 2409806f9e3511e24b33c57ae4d71b9d8f8c498b
+PODFILE CHECKSUM: ad63f910b007b47ac347c9c6979599f1e2a74d04
 
 COCOAPODS: 1.2.0

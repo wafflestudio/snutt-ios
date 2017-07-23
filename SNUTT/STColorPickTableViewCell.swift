@@ -17,6 +17,7 @@ class STColorPickTableViewCell: STLectureDetailTableViewCell {
     @IBOutlet weak var colorContainerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
 
+    @IBOutlet weak var arrowImage: UIImageView!
     
 
     var color : STColor! {
@@ -51,10 +52,6 @@ class STColorPickTableViewCell: STLectureDetailTableViewCell {
     }
     
     override func setEditable (_ editable: Bool) {
-        if editable {
-            self.accessoryType = .disclosureIndicator
-        } else {
-            self.accessoryType = .none
-        }
+        arrowImage.isHidden = !editable
     }
 }

@@ -5,7 +5,6 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1459,13 +1458,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="시간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faT-Uv-JDa">
-                                                    <rect key="frame" x="8" y="8" width="45" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faT-Uv-JDa">
+                                                    <rect key="frame" x="8" y="8" width="29.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vxa-Jk-VSs" customClass="TTRangeSlider">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vxa-Jk-VSs" customClass="TTRangeSlider">
                                                     <rect key="frame" x="20" y="37" width="280" height="52"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>
@@ -1636,14 +1635,14 @@
         </scene>
     </scenes>
     <resources>
-        <image name="tabAlarmOff" width="22" height="22"/>
-        <image name="tabAlarmOn" width="22" height="22"/>
-        <image name="tabSearchOff" width="22" height="22"/>
-        <image name="tabSearchOn" width="22" height="22"/>
-        <image name="tabSettingOff" width="22" height="22"/>
-        <image name="tabSettingOn" width="22" height="22"/>
-        <image name="tabTimetableOff" width="22" height="22"/>
-        <image name="tabTimetableOn" width="22" height="22"/>
+        <image name="tabAlarmOff" width="30" height="30"/>
+        <image name="tabAlarmOn" width="30" height="30"/>
+        <image name="tabSearchOff" width="30" height="30"/>
+        <image name="tabSearchOn" width="30" height="30"/>
+        <image name="tabSettingOff" width="30" height="30"/>
+        <image name="tabSettingOn" width="30" height="30"/>
+        <image name="tabTimetableOff" width="30" height="30"/>
+        <image name="tabTimetableOn" width="30" height="30"/>
         <image name="topbarBox" width="22" height="22"/>
         <image name="topbarListview" width="22" height="22"/>
     </resources>
