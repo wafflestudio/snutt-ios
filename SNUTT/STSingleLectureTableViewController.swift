@@ -46,7 +46,21 @@ class STSingleLectureTableViewController: UITableViewController {
 
     func doneBlockFor(attribute : LectureAttributes) -> (String)->() {
         return { (str: String) -> Void in
-            self.currentLecture.title = str
+            switch attribute {
+            case .title: self.currentLecture.title = str
+            case .instructor: self.currentLecture.instructor = str
+            case .credit:
+                self.currentLecture.credit = Int(str) ?? 0
+                if self.currentLecture.credit < 0 {
+                    self.currentLecture.credit = 0
+                }
+            case .department: self.currentLecture.department = str
+            case .academicYear: self.currentLecture.academicYear = str
+            case .classification: self.currentLecture.classification = str
+            case .category: self.currentLecture.category = str
+            case .courseNum: return
+            case .lectureNum: return
+            }
         }
     }
 
