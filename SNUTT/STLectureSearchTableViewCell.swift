@@ -33,7 +33,8 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
 
     var lecture : STLecture? {
         didSet {
-            titleLabel.text = lecture!.title == "" ? "(강좌명 없음)" : lecture!.title
+            titleLabel.text = lecture!.title == "" ? "강좌명" : lecture!.title
+            titleLabel.textColor = lecture!.title == "" ? UIColor(white: 1.0, alpha: 0.7) : UIColor(white: 1.0, alpha: 1.0)
             if self.isSelected {
                 tagLabel.text = lecture!.remark == "" ? lecture!.tagDescription : lecture!.remark
             } else {
@@ -70,8 +71,8 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
             }
         }
         */
-        profLabel.text = lecture.instructor == "" ? "(교수명 없음)" : lecture.instructor
-        descriptionLabel.text = "/\(lecture.credit)학점"
+        profLabel.text = lecture.instructor
+        descriptionLabel.text = (lecture.instructor == "" ? "" : "/") + "\(lecture.credit)학점"
     }
 
     func setUp() {
