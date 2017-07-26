@@ -50,7 +50,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nm5-OO-uHa" customClass="STViewButton" customModule="SNUTT" customModuleProvider="target">
                         <rect key="frame" x="331" y="14" width="32" height="32"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btnListDelete" translatesAutoresizingMaskIntoConstraints="NO" id="CkL-va-wRF">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btnTipClose" translatesAutoresizingMaskIntoConstraints="NO" id="CkL-va-wRF">
                                 <rect key="frame" x="8" y="8" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="16" id="BDe-RV-i07"/>
@@ -93,6 +93,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="btnListDelete" width="8" height="8"/>
+        <image name="btnTipClose" width="16" height="16"/>
     </resources>
 </document>

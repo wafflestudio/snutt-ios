@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="36"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DW9-rT-jPn" id="c7c-aY-31r">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="36"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="35.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="색" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghf-xn-gQg">
@@ -54,9 +54,9 @@
                         </constraints>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowRight" translatesAutoresizingMaskIntoConstraints="NO" id="mAb-te-aNF">
-                        <rect key="frame" x="339" y="8" width="16" height="20"/>
+                        <rect key="frame" x="339" y="10" width="16" height="16"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="9F0-sa-4m8"/>
+                            <constraint firstAttribute="height" constant="16" id="9F0-sa-4m8"/>
                             <constraint firstAttribute="width" constant="16" id="NM8-Eh-vV3"/>
                         </constraints>
                     </imageView>
@@ -83,6 +83,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="arrowRight" width="8" height="8"/>
+        <image name="arrowRight" width="16" height="16"/>
     </resources>
 </document>
