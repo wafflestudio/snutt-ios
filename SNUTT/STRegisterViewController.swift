@@ -26,7 +26,7 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var layoutConstraint3: NSLayoutConstraint!
 
 
-    @IBOutlet weak var policyLabel: UILabel!
+    @IBOutlet weak var termView: UIView!
 
     var textFields : [STLoginTextField] {
         get {
@@ -52,8 +52,8 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
             self.dismiss(animated: true, completion: nil)
         }
 
-        let policyTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.termLabelClicked))
-        policyLabel.addGestureRecognizer(policyTapRecognizer)
+        let termTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.termLabelClicked))
+        termView.addGestureRecognizer(termTapRecognizer)
 
         let center = NotificationCenter.default
         center.addObserver(self, selector: #selector(self.keyboardWillShow), name: .UIKeyboardWillShow, object: nil)

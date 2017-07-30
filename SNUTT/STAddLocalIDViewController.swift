@@ -8,25 +8,42 @@
 
 import UIKit
 import B68UIFloatLabelTextField
+import SafariServices
 
-class STAddLocalIDViewController: UIViewController {
+class STAddLocalIDViewController: UIViewController, UITextFieldDelegate {
 
-    @IBOutlet weak var idTextField: B68UIFloatLabelTextField!
-    @IBOutlet weak var passwordTextField: B68UIFloatLabelTextField!
-    @IBOutlet weak var passwordCheckTextField: B68UIFloatLabelTextField!
-    
+    @IBOutlet weak var idTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var passwordCheckTextField: UITextField!
+
+    var textFields : [UITextField] {
+        get {
+            return [idTextField, passwordTextField, passwordCheckTextField]
+        }
+    }
+
+    @IBOutlet weak var addButton: STViewButton!
+    @IBOutlet weak var termView: UIView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
+        //textField
+        let textFieldList = self.textFields
+        for textField in textFieldList {
+            textField.delegate = self
+        }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        addButton.buttonPressAction = { _ in
+            self.saveButtonClicked()
+        }
+
+        let termTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.termLabelClicked))
+        termView.addGestureRecognizer(termTapRecognizer)
     }
     
-    @IBAction func saveButtonClicked(_ sender: AnyObject) {
+    func saveButtonClicked() {
+        self.view.endEditing(true)
         let title = "아이디 추가 실패"
         var failure = false
         var message = ""
@@ -44,9 +61,8 @@ class STAddLocalIDViewController: UIViewController {
             } else {
                 message = "아이디는 영문자와 숫자로만 이루어져 있어야 합니다."
             }
-            return
+            failure = true
         } else if !STUtil.validatePassword(password) {
-            var message : String = ""
             if (password.characters.count > 20  || password.characters.count < 6) {
                 message = "비밀번호는 6자 이상, 20자 이하여야 합니다."
             } else {
@@ -54,6 +70,7 @@ class STAddLocalIDViewController: UIViewController {
             }
             failure = true
         }
+
         if failure {
             STAlertView.showAlert(title: title, message: message)
         } else {
@@ -61,8 +78,35 @@ class STAddLocalIDViewController: UIViewController {
                 self.navigationController?.popViewController(animated: true)
             })
         }
-        
     }
+
+    func termLabelClicked() {
+        self.view.endEditing(true)
+        let url = STConfig.sharedInstance.baseURL + "/terms_of_service"
+        let svc = SFSafariViewController(url: URL(string: url)!)
+        self.present(svc, animated: true, completion: nil)
+    }
+
+    // MARK: TextFieldDelegate
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let loginTextField = textField as? STLoginTextField else {
+            return false
+        }
+        let textFieldList = self.textFields
+
+        if let index = textFieldList.index(of: loginTextField) {
+            if index == textFieldList.count - 1 {
+                textField.resignFirstResponder()
+                saveButtonClicked()
+                return true
+            }
+            textFieldList[index + 1].becomeFirstResponder()
+            return false
+        }
+        return false
+    }
+
 
     /*
     // MARK: - Navigation

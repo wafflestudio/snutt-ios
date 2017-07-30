@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -250,7 +251,7 @@
                                 </connections>
                             </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Q60-nN-90y" customClass="STTagCollectionView" customModule="SNUTT" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="-7.5" width="320" height="51.5"/>
+                                <rect key="frame" x="0.0" y="-8" width="320" height="52"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="51.5" id="iyv-kn-r7O"/>
@@ -263,7 +264,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="STTagCollectionViewCell" id="ulk-mM-ipC" customClass="STTagCollectionViewCell" customModule="SNUTT" customModuleProvider="target">
-                                        <rect key="frame" x="17" y="13" width="127" height="27"/>
+                                        <rect key="frame" x="17" y="13.5" width="127" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="127" height="27"/>
@@ -1182,99 +1183,223 @@
             </objects>
             <point key="canvasLocation" x="1221" y="-3235"/>
         </scene>
-        <!--Add Local ID-->
+        <!--아이디 비번 추가-->
         <scene sceneID="UiB-1i-yUb">
             <objects>
-                <viewController id="bTN-Ea-VfW" customClass="STAddLocalIDViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="bTN-Ea-VfW" customClass="STAddLocalIDViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="03T-7O-dww"/>
                         <viewControllerLayoutGuide type="bottom" id="vQM-hq-74k"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Jft-a6-SiK">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JN5-e9-yY9">
-                                <rect key="frame" x="16" y="72" width="288" height="103"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Vr-53-PgM" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="아이디" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Saq-Vn-37X" customClass="B68UIFloatLabelTextField" customModule="B68UIFloatLabelTextField">
-                                        <rect key="frame" x="0.0" y="8" width="288" height="21"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="activeTextColorfloatingLabel">
-                                                <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="패스워드" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DtW-Dl-0In" customClass="B68UIFloatLabelTextField" customModule="B68UIFloatLabelTextField">
-                                        <rect key="frame" x="0.0" y="37" width="288" height="21"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="activeTextColorfloatingLabel">
-                                                <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="패스워드 확인" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qrk-ZQ-92V" customClass="B68UIFloatLabelTextField" customModule="B68UIFloatLabelTextField">
-                                        <rect key="frame" x="0.0" y="66" width="288" height="21"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="activeTextColorfloatingLabel">
-                                                <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QCN-5O-SeY" userLabel="Content View">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ZVE-aU-3Fn">
+                                                <rect key="frame" x="35" y="108.5" width="250" height="287"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="0zL-Su-m8V">
+                                                        <rect key="frame" x="0.0" y="0.0" width="250" height="141"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="아이디" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2tK-RB-nnP" customClass="STLoginTextField" customModule="SNUTT" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="250" height="25"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="25" id="Nmf-pz-tW3"/>
+                                                                </constraints>
+                                                                <nil key="textColor"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                        <color key="value" white="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                        <real key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="lineBelow">
+                                                                        <real key="value" value="8"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="비밀번호" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1D3-X7-gAb" customClass="STLoginTextField" customModule="SNUTT" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="58" width="250" height="25"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="25" id="9f3-Mm-gdg"/>
+                                                                </constraints>
+                                                                <nil key="textColor"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                        <color key="value" white="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                        <real key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="lineBelow">
+                                                                        <real key="value" value="8"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="비밀번호 확인" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cB2-Rc-KtD" customClass="STLoginTextField" customModule="SNUTT" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="116" width="250" height="25"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="25" id="WyR-Ji-uCc"/>
+                                                                </constraints>
+                                                                <nil key="textColor"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                        <color key="value" white="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                                                        <real key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="lineBelow">
+                                                                        <real key="value" value="8"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </textField>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PQ7-ok-Tbg" userLabel="Spacing">
+                                                        <rect key="frame" x="5" y="141" width="240" height="55.5"/>
+                                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eUJ-sA-gi6" customClass="STViewButton" customModule="SNUTT" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="196.5" width="250" height="45"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아이디 비번 추가" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vmf-Zi-cgi">
+                                                                <rect key="frame" x="69" y="12" width="112" height="20.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstItem="vmf-Zi-cgi" firstAttribute="centerX" secondItem="eUJ-sA-gi6" secondAttribute="centerX" id="h7m-ml-Lky"/>
+                                                            <constraint firstItem="vmf-Zi-cgi" firstAttribute="centerY" secondItem="eUJ-sA-gi6" secondAttribute="centerY" id="sfl-xf-64s"/>
+                                                            <constraint firstAttribute="height" constant="45" id="wpz-4V-H1B"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                <color key="value" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="1"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="0.0"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="pressedBgColor">
+                                                                <color key="value" white="0.75" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V4E-dH-X8g" userLabel="Spacing">
+                                                        <rect key="frame" x="5" y="241.5" width="240" height="20.5"/>
+                                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MJY-4F-PsB">
+                                                        <rect key="frame" x="0.0" y="262" width="250" height="25"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="yhq-6b-t7h">
+                                                                <rect key="frame" x="2.5" y="6" width="245" height="13.5"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="위 버튼을 누르시면 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I11-nX-63c">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="86" height="13.5"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                                        <color key="textColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="일반 이용 약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0Y-dB-7yX">
+                                                                        <rect key="frame" x="86" y="0.0" width="63.5" height="13.5"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                                        <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="에 동의하시게 됩니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pjF-0F-w1j">
+                                                                        <rect key="frame" x="149.5" y="0.0" width="95.5" height="13.5"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                                        <color key="textColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstItem="yhq-6b-t7h" firstAttribute="centerX" secondItem="MJY-4F-PsB" secondAttribute="centerX" id="2Il-tD-1LB"/>
+                                                            <constraint firstItem="yhq-6b-t7h" firstAttribute="centerY" secondItem="MJY-4F-PsB" secondAttribute="centerY" id="DeM-vu-Svq"/>
+                                                            <constraint firstAttribute="height" constant="25" id="h5A-7E-F0k"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="MJY-4F-PsB" secondAttribute="trailing" id="9Ud-RM-pZw"/>
+                                                    <constraint firstAttribute="trailing" secondItem="0zL-Su-m8V" secondAttribute="trailing" id="MBK-lD-wu7"/>
+                                                    <constraint firstItem="MJY-4F-PsB" firstAttribute="leading" secondItem="ZVE-aU-3Fn" secondAttribute="leading" id="MMZ-Tq-JQ8"/>
+                                                    <constraint firstItem="0zL-Su-m8V" firstAttribute="leading" secondItem="ZVE-aU-3Fn" secondAttribute="leading" id="PfT-3M-Dqm"/>
+                                                    <constraint firstItem="eUJ-sA-gi6" firstAttribute="leading" secondItem="ZVE-aU-3Fn" secondAttribute="leading" id="aQT-iz-tCR"/>
+                                                    <constraint firstAttribute="trailing" secondItem="eUJ-sA-gi6" secondAttribute="trailing" id="ywv-tc-0iI"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="ZVE-aU-3Fn" firstAttribute="centerY" secondItem="QCN-5O-SeY" secondAttribute="centerY" id="MBT-4T-Ao1"/>
+                                            <constraint firstItem="V4E-dH-X8g" firstAttribute="height" secondItem="QCN-5O-SeY" secondAttribute="height" multiplier="0.04" id="Paw-y5-3je"/>
+                                            <constraint firstItem="ZVE-aU-3Fn" firstAttribute="leading" secondItem="QCN-5O-SeY" secondAttribute="leading" constant="35" id="QgT-Iu-hfU"/>
+                                            <constraint firstItem="PQ7-ok-Tbg" firstAttribute="height" secondItem="QCN-5O-SeY" secondAttribute="height" multiplier="0.15" constant="-20" id="ZNK-KC-50t"/>
+                                            <constraint firstAttribute="trailing" secondItem="ZVE-aU-3Fn" secondAttribute="trailing" constant="35" id="uQQ-2P-iPE"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Qrk-ZQ-92V" secondAttribute="trailing" id="JQS-Cl-rrf"/>
-                                    <constraint firstItem="DtW-Dl-0In" firstAttribute="leading" secondItem="JN5-e9-yY9" secondAttribute="leading" id="KVa-r0-nPS"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="Qrk-ZQ-92V" secondAttribute="bottom" constant="8" id="SUc-FD-OMo"/>
-                                    <constraint firstItem="Qrk-ZQ-92V" firstAttribute="top" secondItem="DtW-Dl-0In" secondAttribute="bottom" constant="8" id="VP5-Wz-tdM"/>
-                                    <constraint firstAttribute="trailing" secondItem="Saq-Vn-37X" secondAttribute="trailing" id="c2Z-a9-5CG"/>
-                                    <constraint firstItem="Saq-Vn-37X" firstAttribute="top" secondItem="JN5-e9-yY9" secondAttribute="topMargin" id="e25-kg-32o"/>
-                                    <constraint firstItem="Qrk-ZQ-92V" firstAttribute="leading" secondItem="JN5-e9-yY9" secondAttribute="leading" id="gya-Ke-kON"/>
-                                    <constraint firstAttribute="trailing" secondItem="DtW-Dl-0In" secondAttribute="trailing" id="v9Z-gq-OuH"/>
-                                    <constraint firstItem="DtW-Dl-0In" firstAttribute="top" secondItem="Saq-Vn-37X" secondAttribute="bottom" constant="8" id="vaJ-ob-AMP"/>
-                                    <constraint firstItem="Saq-Vn-37X" firstAttribute="leading" secondItem="JN5-e9-yY9" secondAttribute="leading" id="xIc-HX-Cvd"/>
+                                    <constraint firstItem="QCN-5O-SeY" firstAttribute="leading" secondItem="2Vr-53-PgM" secondAttribute="leading" id="1as-f1-7xU"/>
+                                    <constraint firstAttribute="trailing" secondItem="QCN-5O-SeY" secondAttribute="trailing" id="7Ry-ig-6aY"/>
+                                    <constraint firstItem="QCN-5O-SeY" firstAttribute="height" secondItem="2Vr-53-PgM" secondAttribute="height" id="Doz-Ny-jY1"/>
+                                    <constraint firstAttribute="bottom" secondItem="QCN-5O-SeY" secondAttribute="bottom" id="Ogh-gT-F0Y"/>
+                                    <constraint firstItem="QCN-5O-SeY" firstAttribute="top" secondItem="2Vr-53-PgM" secondAttribute="top" id="jOj-Md-wVi"/>
                                 </constraints>
-                            </view>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="JN5-e9-yY9" firstAttribute="top" secondItem="03T-7O-dww" secondAttribute="bottom" constant="8" id="3fT-gV-Vkf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="JN5-e9-yY9" secondAttribute="trailing" id="HAe-ra-23M"/>
-                            <constraint firstItem="JN5-e9-yY9" firstAttribute="leading" secondItem="Jft-a6-SiK" secondAttribute="leadingMargin" id="ihd-wR-Rfq"/>
+                            <constraint firstItem="vQM-hq-74k" firstAttribute="top" secondItem="2Vr-53-PgM" secondAttribute="bottom" id="Cpc-Rf-qa6"/>
+                            <constraint firstItem="2Vr-53-PgM" firstAttribute="top" secondItem="03T-7O-dww" secondAttribute="bottom" id="PZp-9C-E46"/>
+                            <constraint firstAttribute="trailing" secondItem="2Vr-53-PgM" secondAttribute="trailing" id="Wdx-Tf-Lhn"/>
+                            <constraint firstItem="2Vr-53-PgM" firstAttribute="leading" secondItem="Jft-a6-SiK" secondAttribute="leading" id="XaZ-Vs-yDX"/>
+                            <constraint firstItem="QCN-5O-SeY" firstAttribute="width" secondItem="Jft-a6-SiK" secondAttribute="width" id="ykS-a8-Lls"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Local ID" id="Ns6-lf-4SR">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="7KY-pL-jdN">
-                            <connections>
-                                <action selector="saveButtonClicked:" destination="bTN-Ea-VfW" id="2ae-dm-ZfX"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="아이디 비번 추가" id="bDT-AP-jPn"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="idTextField" destination="Saq-Vn-37X" id="8w7-q7-V6c"/>
-                        <outlet property="passwordCheckTextField" destination="Qrk-ZQ-92V" id="Sy1-ue-jsc"/>
-                        <outlet property="passwordTextField" destination="DtW-Dl-0In" id="FOt-9G-daK"/>
+                        <outlet property="addButton" destination="eUJ-sA-gi6" id="OCw-Dw-xib"/>
+                        <outlet property="idTextField" destination="2tK-RB-nnP" id="NNN-JU-0qw"/>
+                        <outlet property="passwordCheckTextField" destination="cB2-Rc-KtD" id="Ldt-Qu-e3B"/>
+                        <outlet property="passwordTextField" destination="1D3-X7-gAb" id="S1p-c2-ufn"/>
+                        <outlet property="termView" destination="MJY-4F-PsB" id="HI8-nM-RaB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KQJ-cO-JkS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2916" y="-5057.7211394302849"/>
+            <point key="canvasLocation" x="2915.625" y="-5057.7464788732395"/>
         </scene>
         <!--계정 관리-->
         <scene sceneID="aFu-tK-ZkE">
             <objects>
                 <tableViewController hidesBottomBarWhenPushed="YES" id="QsL-eu-0Yg" customClass="STAccountSettingViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="WcZ-Dd-cki">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="WcZ-Dd-cki">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1366,7 +1491,7 @@
         <scene sceneID="HH0-Fx-v4L">
             <objects>
                 <tableViewController hidesBottomBarWhenPushed="YES" id="956-jF-sYJ" customClass="STTimetableSettingViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="y4y-de-Q0E">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="y4y-de-Q0E">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1458,13 +1583,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faT-Uv-JDa">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="시간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faT-Uv-JDa">
                                                     <rect key="frame" x="8" y="8" width="29.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vxa-Jk-VSs" customClass="TTRangeSlider">
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vxa-Jk-VSs" customClass="TTRangeSlider">
                                                     <rect key="frame" x="20" y="37" width="280" height="52"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>

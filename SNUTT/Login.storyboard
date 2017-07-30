@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Tm1-pJ-Grq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Tm1-pJ-Grq">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -521,8 +521,8 @@
                         <outlet property="layoutConstraint3" destination="L8T-gv-QBg" id="geY-JQ-kvw"/>
                         <outlet property="passwordCheckTextField" destination="Rdt-gi-xSB" id="b4k-0a-glf"/>
                         <outlet property="passwordTextField" destination="ybB-nv-m5b" id="FUN-wD-FI5"/>
-                        <outlet property="policyLabel" destination="x0J-cy-L9H" id="Wox-ue-GVY"/>
                         <outlet property="registerButton" destination="rvf-H6-5j3" id="Y2s-I4-HTA"/>
+                        <outlet property="termView" destination="jDX-KU-eSd" id="4iV-He-Fyj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="57e-UI-gah" userLabel="First Responder" sceneMemberID="firstResponder"/>
