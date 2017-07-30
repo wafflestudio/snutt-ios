@@ -83,8 +83,8 @@ class STTimetableLayout: UICollectionViewLayout {
     }
     
     func updateContentSize() {
-        ContentWidth = self.collectionView!.bounds.size.width
-        ContentHeight = self.collectionView!.bounds.size.height
+        ContentWidth = self.collectionView!.frame.size.width
+        ContentHeight = self.collectionView!.frame.size.height
 
         WidthPerColumn = (ContentWidth - WidthForHeader) / CGFloat(timetableView.columnNum)
         HeightPerRow = ContentHeight / (CGFloat(timetableView.rowNum) + timetableView!.RatioForHeader)

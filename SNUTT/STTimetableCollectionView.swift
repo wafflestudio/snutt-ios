@@ -60,6 +60,8 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         self.register(UINib(nibName: "STColumnHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ColumnHeaderCell")
         self.register(UINib(nibName: "STRowHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RowHeaderCell")
         self.register(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
+
+        self.backgroundColor = UIColor.white
         
         layout = STTimetableLayout()
         layout.WidthForHeader = WidthForHeader
