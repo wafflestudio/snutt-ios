@@ -120,7 +120,7 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
              if case .loading(let request) = searchController.state {
                 request.cancel()
             }
-            searchController.state = .editingQuery("", [], [])
+            searchController.state = .editingQuery(nil, [], [])
         }
         searchController.reloadData()
         searchController.tableView.reloadEmptyDataSet()

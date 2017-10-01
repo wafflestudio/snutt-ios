@@ -71,7 +71,7 @@ enum STLectureRouter : STRouter {
             }
             for (key, newVal) in newDict {
                 let oldVal = oldDict[key]
-                if oldVal != nil && JSON(oldVal!) != JSON(newVal) {
+                if oldVal == nil || JSON(oldVal!) != JSON(newVal) {
                     dict[key] = newVal
                 }
             }

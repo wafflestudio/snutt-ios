@@ -106,10 +106,14 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
     
     @IBAction func saveButtonClicked(_ sender: UIBarButtonItem) {
         self.view.endEditing(true)
-        let ret = STTimetableManager.sharedInstance.addCustomLecture(currentLecture, object: self)
-        if case STAddLectureState.success = ret {
-            self.dismiss(animated: true, completion: nil)
-        }
+        let loadingView = STAlertView.showLoading(title: "저장중...")
+        STTimetableManager.sharedInstance.addCustomLecture(currentLecture, object: self, done:{ _ in
+            loadingView.dismiss(animated: true, completion: { _ in
+                self.dismiss(animated: true)
+            })
+        }, failure: { _ in
+            loadingView.dismiss(animated: true)
+        })
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

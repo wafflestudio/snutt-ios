@@ -331,11 +331,13 @@ class STNetworking {
     
     //MARK: STEtcRouter
 
-    static func sendFeedback(_ email: String?, message: String, done: (()->())?) {
+    static func sendFeedback(_ email: String?, message: String, done: (()->())?, failure: (()->())?) {
         let request = Alamofire.request(STEtcRouter.feedback(email: email, message: message))
         request.responseWithDone({ _ in
                 done?()
-            }, failure: nil)
+        }, failure: { _ in
+            failure?()
+        })
     }
 
     static func getColors(_ done: (([STColor], [String])->())?, failure: (()->())?) {

@@ -1243,6 +1243,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APNS_SETTING = development;
 				APP_GROUP_ID = group.wafflestudio.TodayExtensionSharingDefaultsDev;
 				BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev";
 				BUNDLE_NAME = "SNUTT-Debug";
@@ -1295,6 +1296,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APNS_SETTING = development;
 				APP_GROUP_ID = group.wafflestudio.TodayExtensionSharingDefaultsDev;
 				BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev";
 				BUNDLE_NAME = "SNUTT-Staging";
@@ -1419,6 +1421,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APNS_SETTING = production;
 				APP_GROUP_ID = group.wafflestudio.TodayExtensionSharingDefaults;
 				BUNDLE_IDENTIFIER = com.wafflestudio.snutt;
 				BUNDLE_NAME = SNUTT;

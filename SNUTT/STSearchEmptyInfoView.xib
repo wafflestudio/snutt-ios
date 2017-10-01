@@ -127,6 +127,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="helpViewButton" destination="r84-hx-MHV" id="0ab-m0-ccf"/>
+                <outlet property="searchIcon" destination="QTr-5P-gih" id="qK2-k5-dk9"/>
             </connections>
             <point key="canvasLocation" x="0.0" y="-186"/>
         </view>

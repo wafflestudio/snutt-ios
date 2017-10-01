@@ -26,9 +26,19 @@ class STSupportViewController: UIViewController {
     
 
     @IBAction func sendButtonClicked(_ sender: AnyObject) {
-        STNetworking.sendFeedback(emailTextField.text, message: contentTextView.text, done: {
-            self.navigationController?.popViewController(animated: true)
-        })
+        let actions = [UIAlertAction(title: "취소", style: .cancel, handler: nil),
+                       UIAlertAction(title: "전송", style: .default, handler: { action in
+            let loadingView = STAlertView.showLoading(title: "전송 중")
+            STNetworking.sendFeedback(self.emailTextField.text, message: self.contentTextView.text, done: {
+                loadingView.dismiss(animated: true, completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }, failure: {
+                loadingView.dismiss(animated: true)
+            })
+        })]
+
+        STAlertView.showAlert(title: "전송 확인", message: "개발자에게 메세지를 전송하시겠습니까?", actions: actions)
     }
     /*
     // MARK: - Navigation

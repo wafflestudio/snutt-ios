@@ -158,6 +158,10 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         })
 
     }
+
+    func setFocusToSearch() {
+        searchBar.becomeFirstResponder()
+    }
     
     let heightForFetch = CGFloat(50.0)
     
@@ -349,10 +353,17 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         if case let .editingQuery(query, tagList, lectureList) = state {
             searchBar.resignFirstResponder()
             searchBar.isEditingTag = false
-            state = .loaded(query!, tagList)
-            FilteredList = lectureList
-            searchBar.text = query!
-            tagCollectionView.tagList = tagList
+            if query == nil {
+                state = .empty
+                FilteredList = []
+                searchBar.text = ""
+                tagCollectionView.tagList = []
+            } else {
+                state = .loaded(query!, tagList)
+                FilteredList = lectureList
+                searchBar.text = query!
+                tagCollectionView.tagList = tagList
+            }
             reloadData()
             tagCollectionView.reloadData()
             hideTagRecommendation()

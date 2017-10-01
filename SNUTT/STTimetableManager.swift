@@ -64,28 +64,31 @@ class STTimetableManager : NSObject {
         STDefaults.synchronize()
     }
     
-    func addCustomLecture(_ lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
+    func addCustomLecture(_ lecture : STLecture, object : AnyObject?, done: (()->())?, failure: (()->())?) {
         var lecture = lecture
         if currentTimetable == nil {
-            return STAddLectureState.success
+            failure?()
+            return
         }
         let ret = currentTimetable!.addLecture(lecture)
         if case STAddLectureState.success = ret {
             STNetworking.addCustomLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
                 self.currentTimetable?.lectureList = newTimetable.lectureList
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+                done?()
                 }, failure: {
                 self.currentTimetable?.deleteLecture(lecture)
+                    failure?()
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
             })
             STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
         } else if case STAddLectureState.errorTime = ret {
+            failure?()
             STAlertView.showAlert(title: "강의 추가 실패", message: "겹치는 시간대가 있습니다.")
         } else if case STAddLectureState.errorSameLecture = ret {
+            failure?()
             STAlertView.showAlert(title: "강의 추가 실패", message: "같은 강좌가 이미 존재합니다.")
         }
-        
-        return ret
     }
     
     func addLecture(_ lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
@@ -112,8 +115,9 @@ class STTimetableManager : NSObject {
         return ret
     }
     
-    func updateLecture(_ oldLecture : STLecture, newLecture : STLecture, failure: @escaping ()->()) {
+    func updateLecture(_ oldLecture : STLecture, newLecture : STLecture, done: @escaping ()->(), failure: @escaping ()->()) {
         if currentTimetable == nil {
+            failure()
             return
         }
         let index = currentTimetable!.lectureList.index(where: { lec in
@@ -126,6 +130,7 @@ class STTimetableManager : NSObject {
         STNetworking.updateLecture(currentTimetable!, oldLecture: oldLecture, newLecture: newLecture, done: { newTimetable in
             self.currentTimetable?.lectureList = newTimetable.lectureList
             STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+            done()
             }, failure: {
                 self.currentTimetable?.updateLectureAtIndex(index, lecture: oldLecture)
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)

@@ -180,12 +180,12 @@ class STTimetableTabViewController: UIViewController {
             return collectionView.cellForItem(at: tmpIndexPath) as? STCourseCellCollectionViewCell
         }
         var oldLecture = cell.lecture!
-        STColorActionSheetPicker.showWithColor(oldColorIndex, doneBlock: { selectedColorIndex in
+        STColorActionSheetPicker.showWithColor(oldColorIndex ?? 0, doneBlock: { selectedColorIndex in
             var newLecture = cell.lecture
             newLecture?.colorIndex = selectedColorIndex
             newLecture?.color = nil
             STTimetableManager.sharedInstance.updateLecture(
-                oldLecture, newLecture: newLecture!, failure: {
+                oldLecture, newLecture: newLecture!, done: { _ in return }, failure: {
                     cellList.forEach { cell in
                         cell?.setColorByLecture(lecture: oldLecture)
                     }

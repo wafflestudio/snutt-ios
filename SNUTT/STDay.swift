@@ -43,7 +43,7 @@ extension STDay: Comparable {}
 class STDayFormatter : NumberFormatter {
     override func string(from number: NSNumber) -> String? {
         let val = number.intValue
-        if 0 <= val && val <= 5 {
+        if 0 <= val && val <= 6 {
             return STDay(rawValue: val)!.shortString()
         } else {
             return ""

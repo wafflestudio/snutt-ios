@@ -82,8 +82,13 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            STTimetableManager.sharedInstance.deleteLectureAtIndex(indexPath.row, object: self)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            if tableView.numberOfRows(inSection: 0) != 2 {
+                STTimetableManager.sharedInstance.deleteLectureAtIndex(indexPath.row, object: self)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            } else {
+                STTimetableManager.sharedInstance.deleteLectureAtIndex(indexPath.row, object: self)
+                tableView.reloadData()
+            }
             self.tableView.reloadEmptyDataSet()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

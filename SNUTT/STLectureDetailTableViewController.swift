@@ -167,18 +167,18 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     }
     
     func saveBarButtonClicked() {
-        editable = false
         dismissKeyboard()
-        reloadDataWithAnimation()
-        self.navigationItem.setRightBarButton(editBarButton, animated: true)
-        self.navigationItem.setLeftBarButton(nil, animated: true)
+        let loadingView = STAlertView.showLoading(title: "저장 중")
         let oldLecture = lecture!
-        lecture = currentLecture
-        STTimetableManager.sharedInstance.updateLecture(oldLecture, newLecture: currentLecture, failure: {
-            self.lecture = oldLecture
-            self.currentLecture = oldLecture
-            self.view.layer.removeAllAnimations()
+        STTimetableManager.sharedInstance.updateLecture(oldLecture, newLecture: currentLecture, done: {
+            self.editable = false
             self.reloadDataWithAnimation()
+            self.navigationItem.setRightBarButton(self.editBarButton, animated: true)
+            self.navigationItem.setLeftBarButton(nil, animated: true)
+            self.lecture = self.currentLecture
+            loadingView.dismiss(animated: true)
+        }, failure: {
+            loadingView.dismiss(animated: true)
         })
     }
     
