@@ -9,6 +9,7 @@
 import UIKit
 import ChameleonFramework
 import SafariServices
+import Crashlytics
 
 class STRegisterViewController: UIViewController, UITextFieldDelegate {
 
@@ -145,6 +146,10 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
         STNetworking.registerLocal(id, password: password, email: email, done: { token, userId in
             STDefaults[.token] = token
             STDefaults[.userId] = userId
+            #if DEBUG
+            #else
+                Crashlytics.sharedInstance().setUserIdentifier(userId)
+            #endif
             STUser.loadMainPage()
         }, failure: { _ in
             //STAlertView.showAlert(title: "회원가입 실패", message: "회원가입에 실패하였습니다.")

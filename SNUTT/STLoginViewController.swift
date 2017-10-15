@@ -10,6 +10,7 @@ import UIKit
 import ChameleonFramework
 import FBSDKLoginKit
 import Firebase
+import Crashlytics
 import SafariServices
 
 class STLoginViewController: UIViewController, UITextFieldDelegate {
@@ -101,6 +102,10 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         STNetworking.loginLocal(id, password: password, done: { token, userId in
             STDefaults[.token] = token
             STDefaults[.userId] = userId
+            #if DEBUG
+            #else
+                Crashlytics.sharedInstance().setUserIdentifier(userId)
+            #endif
             STUser.loadMainPage()
         }, failure: { _ in
             //STAlertView.showAlert(title: "로그인 실패", message: "아이디나 비밀번호가 올바르지 않습니다.")

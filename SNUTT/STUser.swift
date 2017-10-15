@@ -11,6 +11,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import Firebase
+import Crashlytics
 import FBSDKLoginKit
 
 class STUser {
@@ -65,6 +66,10 @@ class STUser {
         STUser.currentUser = nil
         STDefaults[.token] = nil
         STDefaults[.userId] = nil
+        #if DEBUG
+        #else
+            Crashlytics.sharedInstance().setUserIdentifier(nil)
+        #endif
         STDefaults[.registeredFCMToken] = nil
         STDefaults[.shouldShowBadge] = false
         UIApplication.shared.delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateInitialViewController()
