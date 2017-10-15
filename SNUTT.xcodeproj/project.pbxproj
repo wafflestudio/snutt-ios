@@ -89,11 +89,15 @@
 		E19E23211B4691D90010DFB1 /* STLectureSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E23201B4691D90010DFB1 /* STLectureSearchTableViewCell.swift */; };
 		E1A664F61EED8F77003B2D43 /* STTagSearchInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A664F51EED8F77003B2D43 /* STTagSearchInfoView.xib */; };
 		E1A664F81EED8F8C003B2D43 /* STTagSearchInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A664F71EED8F8C003B2D43 /* STTagSearchInfoView.swift */; };
+		E1A946DF1F8B74DC00991CB3 /* STFCMInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AC20F41F8B6DD4005B5DE7 /* STFCMInfo.swift */; };
+		E1A946E11F8B7D8700991CB3 /* STFCMInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A946E01F8B7D8700991CB3 /* STFCMInfoList.swift */; };
+		E1A946E21F8B7ED800991CB3 /* STFCMInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A946E01F8B7D8700991CB3 /* STFCMInfoList.swift */; };
 		E1A99D891CABE47000953A4B /* STRowHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A99D881CABE47000953A4B /* STRowHeaderCollectionViewCell.xib */; };
 		E1A99D8B1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A99D8A1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift */; };
 		E1A99D8D1CB0FD2C00953A4B /* STAccountSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A99D8C1CB0FD2C00953A4B /* STAccountSettingViewController.swift */; };
 		E1A99D8F1CB0FE1800953A4B /* STUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A99D8E1CB0FE1800953A4B /* STUser.swift */; };
 		E1A99D931CB112EE00953A4B /* STRedButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A99D921CB112EE00953A4B /* STRedButtonTableViewCell.swift */; };
+		E1AC20F51F8B6DD4005B5DE7 /* STFCMInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AC20F41F8B6DD4005B5DE7 /* STFCMInfo.swift */; };
 		E1B34A4C1EB20DCA004C5E5E /* STViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B34A4B1EB20DCA004C5E5E /* STViewButton.swift */; };
 		E1B34A501EB2278C004C5E5E /* STRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B34A4F1EB2278B004C5E5E /* STRegisterViewController.swift */; };
 		E1B381A71C6C4AA0007E1A15 /* STTagCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B381A61C6C4AA0007E1A15 /* STTagCollectionView.swift */; };
@@ -295,11 +299,13 @@
 		E19E23201B4691D90010DFB1 /* STLectureSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureSearchTableViewCell.swift; sourceTree = "<group>"; };
 		E1A664F51EED8F77003B2D43 /* STTagSearchInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STTagSearchInfoView.xib; sourceTree = "<group>"; };
 		E1A664F71EED8F8C003B2D43 /* STTagSearchInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagSearchInfoView.swift; sourceTree = "<group>"; };
+		E1A946E01F8B7D8700991CB3 /* STFCMInfoList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STFCMInfoList.swift; sourceTree = "<group>"; };
 		E1A99D881CABE47000953A4B /* STRowHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STRowHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		E1A99D8A1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRowHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A99D8C1CB0FD2C00953A4B /* STAccountSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAccountSettingViewController.swift; sourceTree = "<group>"; };
 		E1A99D8E1CB0FE1800953A4B /* STUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STUser.swift; sourceTree = "<group>"; };
 		E1A99D921CB112EE00953A4B /* STRedButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRedButtonTableViewCell.swift; sourceTree = "<group>"; };
+		E1AC20F41F8B6DD4005B5DE7 /* STFCMInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STFCMInfo.swift; sourceTree = "<group>"; };
 		E1B34A4B1EB20DCA004C5E5E /* STViewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STViewButton.swift; sourceTree = "<group>"; };
 		E1B34A4F1EB2278B004C5E5E /* STRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRegisterViewController.swift; sourceTree = "<group>"; };
 		E1B381A61C6C4AA0007E1A15 /* STTagCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagCollectionView.swift; sourceTree = "<group>"; };
@@ -573,6 +579,8 @@
 				E110CFDC1C888FC300ED0590 /* STTag.swift */,
 				E110CFE01C8C017E00ED0590 /* STTagList.swift */,
 				E1130AD51E7C272A00ADE84F /* STColorList.swift */,
+				E1AC20F41F8B6DD4005B5DE7 /* STFCMInfo.swift */,
+				E1A946E01F8B7D8700991CB3 /* STFCMInfoList.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1089,6 +1097,7 @@
 				E14992011C463AC600DC6756 /* STTimetableRouter.swift in Sources */,
 				E139B26C1E4C349400E2ADF5 /* STAddLocalIDViewController.swift in Sources */,
 				E1F58AA41C3CED3600F6A0FC /* STTimetable.swift in Sources */,
+				E1A946E11F8B7D8700991CB3 /* STFCMInfoList.swift in Sources */,
 				E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */,
 				E184359D1D69A2C200BE5D58 /* STAlertView.swift in Sources */,
 				E149920D1C4F6D1F00DC6756 /* STTimetableCellType.swift in Sources */,
@@ -1132,6 +1141,7 @@
 				E11E61031EED13890036F3F2 /* STSearchEmptyInfoView.swift in Sources */,
 				E1130AD61E7C272A00ADE84F /* STColorList.swift in Sources */,
 				E110CFD71C88424000ED0590 /* STNotification.swift in Sources */,
+				E1AC20F51F8B6DD4005B5DE7 /* STFCMInfo.swift in Sources */,
 				E1F946251DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift in Sources */,
 				E1B381AB1C6C61E2007E1A15 /* STTagCollectionViewCell.swift in Sources */,
 				E14992091C4B828500DC6756 /* STSwiftyJSONRequest.swift in Sources */,
@@ -1178,9 +1188,11 @@
 				E1BEF0911E702F3900BBFDB1 /* STColor.swift in Sources */,
 				E1BEF08A1E702F3900BBFDB1 /* STLecture.swift in Sources */,
 				E1BEF08D1E702F3900BBFDB1 /* STSemester.swift in Sources */,
+				E1A946DF1F8B74DC00991CB3 /* STFCMInfo.swift in Sources */,
 				E1BEF0901E702F3900BBFDB1 /* STPeriod.swift in Sources */,
 				E1BEF0A11E7042CC00BBFDB1 /* STDefaults.swift in Sources */,
 				E1BEF0961E703EE000BBFDB1 /* STTimetableCollectionView.swift in Sources */,
+				E1A946E21F8B7ED800991CB3 /* STFCMInfoList.swift in Sources */,
 				E1BEF0971E703EE000BBFDB1 /* STTimetableLayout.swift in Sources */,
 				E1BEF0931E70380300BBFDB1 /* STUtil.swift in Sources */,
 				E1BEF08E1E702F3900BBFDB1 /* STQuarter.swift in Sources */,

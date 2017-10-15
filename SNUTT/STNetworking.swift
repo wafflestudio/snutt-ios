@@ -9,37 +9,47 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import Firebase
 
 class STNetworking {
     
     //MARK: AuthRouter
     
-    static func loginLocal(_ id: String, password: String, done: @escaping (String)->(), failure: @escaping ()->()) {
+    static func loginLocal(_ id: String, password: String, done: @escaping (String, String)->(), failure: @escaping ()->()) {
         let request = Alamofire.request(STAuthRouter.localLogin(id: id, password: password))
         
         request.responseWithDone({ statusCode, json in
-            done(json["token"].stringValue)
+            done(json["token"].stringValue, json["user_id"].stringValue)
         }, failure: { err in
             failure()
         })
     }
     
-    static func registerLocal(_ id: String, password: String, email: String?, done: @escaping (String)->(), failure: @escaping ()->()) {
+    static func registerLocal(_ id: String, password: String, email: String?, done: @escaping (String, String)->(), failure: @escaping ()->()) {
         let request = Alamofire.request(STAuthRouter.localRegister(id: id, password: password, email: email))
         request.responseWithDone({ _, json in
-            done(json["token"].stringValue)
+            done(json["token"].stringValue, json["user_id"].stringValue)
         }, failure: { err in
             failure()
         })
     }
     
-    static func registerFB(_ id: String, token: String, done: @escaping (String)->(), failure: @escaping ()->()) {
+    static func registerFB(_ id: String, token: String, done: @escaping (String, String)->(), failure: @escaping ()->()) {
         let request = Alamofire.request(STAuthRouter.fbRegister(id: id, token: token))
         request.responseWithDone({ statusCode, json in
-            done(json["token"].stringValue)
+            done(json["token"].stringValue, json["user_id"].stringValue)
         }, failure: { err in
             failure()
         })
+    }
+
+    static func logOut(userId: String, fcmToken: String, done: @escaping ()->(), failure: (()->())?) {
+        let request = Alamofire.request(STAuthRouter.logOutDevice(userId: userId, fcmToken: fcmToken))
+        request.responseWithDone({ statusCode, json in
+            done()
+        }, failure: { err in
+            failure?()
+        }, showNetworkAlert: false)
     }
     
     //MARK: TimetableRouter
@@ -303,8 +313,14 @@ class STNetworking {
     
     static func addDevice(_ deviceId : String) {
         let request = Alamofire.request(STUserRouter.addDevice(id: deviceId))
+        if let token = InstanceID.instanceID().token(), let userId = STDefaults[.userId] {
+            let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
+            let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+            STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
+        }
+
         request.responseWithDone({ statusCode, json in
-            STDefaults[.isFCMRegistered] = true
+            STDefaults[.registeredFCMToken] = deviceId
             }, failure: nil
             , showNetworkAlert: false
         )

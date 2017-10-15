@@ -142,8 +142,9 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
         }
         let emailText = emailTextField.text
         let email = emailText == "" ? nil : emailText
-        STNetworking.registerLocal(id, password: password, email: email, done: { token in
+        STNetworking.registerLocal(id, password: password, email: email, done: { token, userId in
             STDefaults[.token] = token
+            STDefaults[.userId] = userId
             STUser.loadMainPage()
         }, failure: { _ in
             //STAlertView.showAlert(title: "회원가입 실패", message: "회원가입에 실패하였습니다.")

@@ -101,7 +101,7 @@ extension DataRequest {
                         }
                         switch (errCode) {
                         case STErrorCode.NO_USER_TOKEN, STErrorCode.WRONG_USER_TOKEN:
-                            STUser.loadLoginPage()
+                            STUser.logOut()
                         default:
                             if showAlert {
                                 if let alertTitle = alertTitle {

@@ -98,8 +98,9 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
 
-        STNetworking.loginLocal(id, password: password, done: { token in
+        STNetworking.loginLocal(id, password: password, done: { token, userId in
             STDefaults[.token] = token
+            STDefaults[.userId] = userId
             STUser.loadMainPage()
         }, failure: { _ in
             //STAlertView.showAlert(title: "로그인 실패", message: "아이디나 비밀번호가 올바르지 않습니다.")

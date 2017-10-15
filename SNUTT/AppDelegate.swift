@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 import Fabric
 import Crashlytics
 import SwiftyJSON
@@ -44,10 +45,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let configKey = "staging"
         #endif
 
+        print(infoName);
+        print(configKey);
+
         let configDict = configAllDict.object(forKey: configKey) as! NSDictionary
         let filePath = Bundle.main.path(forResource: infoName, ofType: "plist")
-        let options = FIROptions(contentsOfFile: filePath)
-        FIRApp.configure(with: options!)
+        let options = FirebaseOptions(contentsOfFile: filePath!)
+        FirebaseApp.configure(options: options!)
+
+        print(configDict.object(forKey: "api_server_url") as! String);
 
         STConfig.sharedInstance.baseURL = configDict.object(forKey: "api_server_url") as! String
 
@@ -72,18 +78,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
+
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
         
-        let settings: UIUserNotificationSettings =
-            UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
-        
-        NotificationCenter.default.addObserver(self,
-                                                         selector: #selector(self.tokenRefreshNotification),
-                                                         name: NSNotification.Name.firInstanceIDTokenRefresh,
-                                                         object: nil)
-        
-        if (FIRInstanceID.instanceID().token() != nil) {
+
+        if (InstanceID.instanceID().token() != nil) {
             STUser.updateDeviceIdIfNeeded()
             connectToFcm()
         }
@@ -91,7 +103,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // For STColorList UserDefaults
         NSKeyedArchiver.setClassName("STColorList", for: STColorList.self)
         NSKeyedUnarchiver.setClass(STColorList.self, forClassName: "STColorList")
+        // For STFCMInfo UserDefaults
+        NSKeyedArchiver.setClassName("STFCMInfo", for: STFCMInfo.self)
+        NSKeyedUnarchiver.setClass(STFCMInfo.self, forClassName: "STFCMInfo")
+
         
+        var fcmInfos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+        for fcmInfo in fcmInfos {
+            STNetworking.logOut(userId: fcmInfo.userId, fcmToken: fcmInfo.fcmToken, done: {
+                let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+                STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
+            }, failure: nil)
+        }
+
         return true
     }
     
@@ -100,38 +124,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = UIColor.black
     }
     
-    func tokenRefreshNotification(_ notification: Notification) {
-        STUser.updateDeviceIdIfNeeded()
-        connectToFcm()
-    }
-    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        
-        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.sandbox)
-        //FIXME: Production Firebase
-        //FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Prod)
+        Messaging.messaging().apnsToken = deviceToken
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         // If you are receiving a notification message while your app is in the background,
         // this callback will not be fired till the user taps on the notification launching the application.
-        
-        STMainTabBarController.controller?.setNotiBadge(true)
-        
+
+        receivedNotification()
+
         // Print message ID.
         #if DEBUG
-        print("Message ID: \(userInfo["gcm.message_id"]!)")
-        print("%@", userInfo)
+            print("Message ID: \(userInfo["gcm.message_id"]!)")
+            print("%@", userInfo)
         #endif
+
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+
+    func receivedNotification() {
+        STMainTabBarController.controller?.setNotiBadge(true)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
+
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        STUser.updateDeviceIdIfNeeded()
+        connectToFcm()
+    }
+
     func connectToFcm() {
-        FIRMessaging.messaging().connect { (error) in
+        Messaging.messaging().connect { (error) in
             #if DEBUG
             if (error != nil) {
                 print("Unable to connect with FCM. \(error)")
@@ -142,7 +170,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     func applicationDidEnterBackground(_ application: UIApplication) {
-        FIRMessaging.messaging().disconnect()
+        Messaging.messaging().disconnect()
         print("Disconnected from FCM.")
     }
 
@@ -162,6 +190,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let fbHandled = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
         return fbHandled
     }
-
 }
 
+@available(iOS 10, *)
+extension AppDelegate : UNUserNotificationCenterDelegate {
+
+    // Receive displayed notifications for iOS 10 devices.
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        receivedNotification()
+    }
+}
+
+extension AppDelegate : MessagingDelegate {
+    // Receive data message on iOS 10 devices.
+    func applicationReceivedRemoteMessage(remoteMessage: MessagingRemoteMessage) {
+        #if DEBUG
+        print("%@", remoteMessage.appData)
+        #endif
+        receivedNotification()
+    }
+}

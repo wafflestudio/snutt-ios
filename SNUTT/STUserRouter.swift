@@ -58,8 +58,10 @@ enum STUserRouter : STRouter {
             return "/password"
         case .addFB, .detachFB, .getFB:
             return "/facebook"
-        case .addDevice, .deleteDevice:
-            return "/device"
+        case let .addDevice(id):
+            return "/device/\(id)"
+        case let .deleteDevice(id):
+            return "/device/\(id)"
         case .deleteUser:
             return "/account"
         }
@@ -82,10 +84,10 @@ enum STUserRouter : STRouter {
             return nil
         case .getFB:
             return nil
-        case let .addDevice(id):
-            return ["registration_id": id]
-        case let .deleteDevice(id):
-            return ["registration_id": id]
+        case .addDevice:
+            return nil
+        case let .deleteDevice:
+            return nil
         case .deleteUser:
             return nil
         }

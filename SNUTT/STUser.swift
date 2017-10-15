@@ -46,10 +46,16 @@ class STUser {
     }
     
     static func logOut() {
-        if let token = FIRInstanceID.instanceID().token() {
-            STNetworking.deleteDevice(token, done: {
-                loadLoginPage()
-            })
+        var fcmInfos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+        if let token = InstanceID.instanceID().token(), let userId = STDefaults[.userId] {
+            let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
+            fcmInfos.append(fcmInfo)
+            STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: fcmInfos)
+            STNetworking.logOut(userId: userId, fcmToken: token, done: {
+                let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+                STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
+            }, failure: nil)
+            loadLoginPage()
         } else {
             loadLoginPage()
         }
@@ -58,14 +64,15 @@ class STUser {
     static func loadLoginPage() {
         STUser.currentUser = nil
         STDefaults[.token] = nil
-        STDefaults[.isFCMRegistered] = false
+        STDefaults[.userId] = nil
+        STDefaults[.registeredFCMToken] = nil
         STDefaults[.shouldShowBadge] = false
         UIApplication.shared.delegate?.window??.rootViewController = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateInitialViewController()
     }
 
     static func loadMainPage() {
         let openController : () -> () = { _ in
-            if let deviceId = FIRInstanceID.instanceID().token() {
+            if let deviceId = InstanceID.instanceID().token() {
                 STNetworking.addDevice(deviceId)
             }
             let appDelegate = UIApplication.shared.delegate!
@@ -83,8 +90,9 @@ class STUser {
     }
 
     static func tryFBLogin(controller: UIViewController) {
-        let done : (String) -> () = { token in
+        let done : (String, String) -> () = { token, userId in
             STDefaults[.token] = token
+            STDefaults[.userId] = userId
             STUser.loadMainPage()
         }
 
@@ -125,10 +133,10 @@ class STUser {
     }
 
     static func updateDeviceIdIfNeeded() {
-        guard let refreshedToken = FIRInstanceID.instanceID().token() else {
+        guard let refreshedToken = InstanceID.instanceID().token() else {
             return
         }
-        if (STDefaults[.token] != nil && !STDefaults[.isFCMRegistered]) {
+        if (STDefaults[.token] != nil && STDefaults[.registeredFCMToken] != refreshedToken) {
             STNetworking.addDevice(refreshedToken)
         }
     }
