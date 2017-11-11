@@ -87,15 +87,6 @@ class STTimetable {
         return -1;
     }
     
-    func addIdForLecture(_ lecture: STLecture, id : String) {
-        for (index, element) in lectureList.enumerated() {
-            if element == lecture {
-                lectureList[index].id = id
-                break
-            }
-        }
-    }
-    
     func deleteLectureAtIndex(_ index: Int) {
         lectureList.remove(at: index)
     }

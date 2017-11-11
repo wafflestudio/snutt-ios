@@ -156,9 +156,6 @@ struct STLecture {
     func isSameLecture(_ right : STLecture) -> Bool {
         return (courseNumber == right.courseNumber && lectureNumber == right.lectureNumber) && courseNumber != nil && lectureNumber != nil
     }
-
-
-    
 }
 
 extension STLecture : Equatable {}
@@ -177,4 +174,6 @@ func ==(lhs: STLecture, rhs: STLecture) -> Bool {
         && lhs.category == rhs.category
         && lhs.id == rhs.id
         && lhs.classList == rhs.classList
+        && lhs.color == rhs.color
+        && lhs.colorIndex == rhs.colorIndex
 }
