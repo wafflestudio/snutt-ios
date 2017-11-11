@@ -11,7 +11,9 @@ import UIKit
 class STMainTabBarController: UITabBarController {
 
     static weak var controller : STMainTabBarController? = nil
-    
+
+    weak var notificationController : STNotificationTableViewController? = nil
+
     override func viewDidLoad() {
         super.viewDidLoad()
         STMainTabBarController.controller = self

@@ -145,6 +145,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func receivedNotification() {
+        STMainTabBarController.controller?.notificationController?.refreshList()
         STMainTabBarController.controller?.setNotiBadge(true)
     }
 

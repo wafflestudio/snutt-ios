@@ -22,6 +22,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        STMainTabBarController.controller?.notificationController = self
 
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 27
