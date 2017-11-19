@@ -64,7 +64,7 @@ class STTimetableListController: UITableViewController {
             return timetableList.filter({ timetable in
                 timetable.quarter == courseBook.quarter
             })
-        })
+        }).filter({ timetableList in !timetableList.isEmpty})
     }
 
     func getTimetable(from indexPath: IndexPath) -> STTimetable {
