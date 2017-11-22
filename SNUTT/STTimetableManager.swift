@@ -120,9 +120,12 @@ class STTimetableManager : NSObject {
             failure()
             return
         }
-        let index = currentTimetable!.lectureList.index(where: { lec in
+        guard let index = currentTimetable!.lectureList.index(where: { lec in
             return lec.id == newLecture.id
-        })!
+        }) else {
+            failure()
+            return
+        }
         
         currentTimetable!.updateLectureAtIndex(index, lecture: newLecture)
         STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
