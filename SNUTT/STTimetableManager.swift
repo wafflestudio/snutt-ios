@@ -160,9 +160,12 @@ class STTimetableManager : NSObject {
         if currentTimetable == nil {
             return
         }
-        let index = currentTimetable!.lectureList.index(where: { lec in
+        guard let index = currentTimetable!.lectureList.index(where: { lec in
             return lec.id == lecture.id
-        })!
+        }) else {
+            done()
+            return
+        }
         
         STNetworking.resetLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
             self.currentTimetable?.lectureList = newTimetable.lectureList
