@@ -96,7 +96,7 @@ class STTimetableListController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return STCourseBookList.sharedInstance.courseBookList[section].quarter.longString()
+        return sectionedList[section].first?.quarter.longString() ?? ""
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -140,9 +140,14 @@ class STTimetableListController: UITableViewController {
                 guard let index = self.timetableList.index(of: timetable) else {
                     return
                 }
+                let section = self.sectionedList.filter({ list in list.contains(timetable)})
                 self.timetableList.remove(at: index)
                 self.updateSectionedList()
-                self.tableView.deleteRows(at: [indexPath], with: .fade)
+                if section.count > 0 && section.first!.count > 1 {
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                } else {
+                    self.tableView.reloadData()
+                }
             }, failure: { _ in
                 
             })

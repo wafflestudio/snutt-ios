@@ -120,9 +120,12 @@ class STTimetableManager : NSObject {
             failure()
             return
         }
-        let index = currentTimetable!.lectureList.index(where: { lec in
+        guard let index = currentTimetable!.lectureList.index(where: { lec in
             return lec.id == newLecture.id
-        })!
+        }) else {
+            failure()
+            return
+        }
         
         currentTimetable!.updateLectureAtIndex(index, lecture: newLecture)
         STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
@@ -160,9 +163,12 @@ class STTimetableManager : NSObject {
         if currentTimetable == nil {
             return
         }
-        let index = currentTimetable!.lectureList.index(where: { lec in
+        guard let index = currentTimetable!.lectureList.index(where: { lec in
             return lec.id == lecture.id
-        })!
+        }) else {
+            done()
+            return
+        }
         
         STNetworking.resetLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
             self.currentTimetable?.lectureList = newTimetable.lectureList

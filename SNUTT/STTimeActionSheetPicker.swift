@@ -44,9 +44,9 @@ class STTimeActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
         actionSheetPicker.toolbar.tintColor = UIColor.black
         
         let dayIndex = dayRow.index(of: initialTime.day)!
-        let startPeriodIndex = startPeriodRow.index(of: initialTime.startPeriod)!
+        let startPeriodIndex = startPeriodRow.index(of: initialTime.startPeriod) ?? 0
         setEndPeriodRowWithStartPeriod(initialTime.startPeriod)
-        let endPeriodIndex = endPeriodRow.index(of: initialTime.endPeriod)!
+        let endPeriodIndex = endPeriodRow.index(of: initialTime.endPeriod) ?? endPeriodRow.count - 1
         pickerView.selectRow(dayIndex, inComponent: 0, animated: false)
         pickerView.selectRow(startPeriodIndex, inComponent: 1, animated: false)
         pickerView.selectRow(endPeriodIndex, inComponent: 2, animated: false)
@@ -85,7 +85,10 @@ class STTimeActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
         let pickerView = actionSheetPicker.pickerView as! UIPickerView
         let day = dayRow[pickerView.selectedRow(inComponent: 0)]
         let startPeriod = startPeriodRow[pickerView.selectedRow(inComponent: 1)]
-        let endPeriod = endPeriodRow[pickerView.selectedRow(inComponent: 2)]
+        var endPeriod = endPeriodRow[pickerView.selectedRow(inComponent: 2)]
+        if startPeriod > endPeriod {
+            endPeriod = startPeriod + 0.5
+        }
         let selectedTime = STTime(day: day.rawValue, startPeriod: startPeriod, duration: endPeriod - startPeriod)
         doneBlock?(selectedTime)
     }
