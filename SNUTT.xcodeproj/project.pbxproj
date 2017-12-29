@@ -77,7 +77,6 @@
 		E184359D1D69A2C200BE5D58 /* STAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E184359C1D69A2C200BE5D58 /* STAlertView.swift */; };
 		E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */; };
 		E18F2E501C5E6FBC00114ADF /* STTagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */; };
-		E195B4C91E51DB330090FA31 /* login_winter.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E195B4C81E51DB330090FA31 /* login_winter.jpg */; };
 		E1986A401F10C2D700337419 /* STSearchEmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1986A3F1F10C2D700337419 /* STSearchEmptyView.xib */; };
 		E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */; };
 		E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E19A3A9E1B453770007FCAD7 /* Main.storyboard */; };
@@ -283,7 +282,6 @@
 		E184359C1D69A2C200BE5D58 /* STAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAlertView.swift; sourceTree = "<group>"; };
 		E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchBar.swift; sourceTree = "<group>"; };
 		E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagListView.swift; sourceTree = "<group>"; };
-		E195B4C81E51DB330090FA31 /* login_winter.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login_winter.jpg; sourceTree = "<group>"; };
 		E1986A3F1F10C2D700337419 /* STSearchEmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSearchEmptyView.xib; sourceTree = "<group>"; };
 		E19A3A951B453770007FCAD7 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19A3A991B453770007FCAD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -714,7 +712,6 @@
 			isa = PBXGroup;
 			children = (
 				E1773CAF1C959B5300AF36AF /* FB_logo_white.png */,
-				E195B4C81E51DB330090FA31 /* login_winter.jpg */,
 				E1F0CA1C1C7482D300A4F4ED /* delete.png */,
 			);
 			name = Images;
@@ -883,7 +880,6 @@
 				E1773CB01C959B5300AF36AF /* FB_logo_white.png in Resources */,
 				E14DF21E1C3FB7820076FDDE /* STLectureTableViewCell.xib in Resources */,
 				E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */,
-				E195B4C91E51DB330090FA31 /* login_winter.jpg in Resources */,
 				E1CD92671E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib in Resources */,
 				E19A3AA51B453770007FCAD7 /* LaunchScreen.xib in Resources */,
 				E1C48BA21C79C0E300BC469E /* Localizable.strings in Resources */,
