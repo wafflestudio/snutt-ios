@@ -217,6 +217,11 @@ extension UITextField {
             }
         }
     }
-    
+}
+
+extension Collection {
+    func get(_ index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
 }
 
