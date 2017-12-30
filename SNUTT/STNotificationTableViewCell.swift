@@ -22,6 +22,11 @@ class STNotificationTableViewCell: UITableViewCell {
             message.append(timeText)
             descriptionLabel.attributedText = message
             iconImageView.image = notification.image
+            if case .Link = notification.type {
+                self.selectionStyle = .gray
+            } else {
+                self.selectionStyle = .none
+            }
         }
     }
     

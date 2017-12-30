@@ -96,6 +96,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
             }
             UIApplication.shared.openURL(url)
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     // MARK: refresh
     
