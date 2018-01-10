@@ -146,7 +146,7 @@ struct STLinkNotification : STNotification {
     let type = STNotificationType.Link
     let url: String?
 
-    static let _image: UIImage = #imageLiteral(resourceName: "noticeWarning")
+    static let _image: UIImage = #imageLiteral(resourceName: "noticeInfo")
     var image: UIImage {
         get {
             return STLinkNotification._image
