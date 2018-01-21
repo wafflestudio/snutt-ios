@@ -10,17 +10,22 @@ import UIKit
 import Alamofire
 
 class STTimetableListController: UITableViewController {
-    
+
+    struct Section {
+        var timetableList : [STTimetable]
+        var courseBook : STCourseBook
+    }
+
     var timetableList : [STTimetable] = []
-    var sectionedList : [[STTimetable]] = []
+    var sectionList : [Section] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         STNetworking.getTimetableList({ list in
-                self.timetableList = list
-                self.reloadList()
-            }, failure: {
-                self.dismiss(animated: true, completion: nil)
+            self.timetableList = list
+            self.reloadList()
+        }, failure: {
+            self.dismiss(animated: true, completion: nil)
         })
     }
     
@@ -47,9 +52,9 @@ class STTimetableListController: UITableViewController {
         STNetworking.createTimetable(title, courseBook: courseBook, done: { list in
             self.timetableList = list
             self.reloadList()
-            }, failure: { _ in
-                let index = self.timetableList.index(of: newTimetable)
-                self.timetableList.remove(at: index!)
+        }, failure: { _ in
+            let index = self.timetableList.index(of: newTimetable)
+            self.timetableList.remove(at: index!)
         })
     }
     
@@ -60,47 +65,66 @@ class STTimetableListController: UITableViewController {
     
     func updateSectionedList() {
         let courseBookList = STCourseBookList.sharedInstance.courseBookList
-        sectionedList = courseBookList.map({ courseBook in
-            return timetableList.filter({ timetable in
-                timetable.quarter == courseBook.quarter
-            })
-        }).filter({ timetableList in !timetableList.isEmpty})
+        sectionList = courseBookList.map({ courseBook in
+            return Section.init(timetableList:
+                timetableList.filter({ timetable in
+                    timetable.quarter == courseBook.quarter
+                }), courseBook: courseBook)
+        })
     }
 
-    func getTimetable(from indexPath: IndexPath) -> STTimetable {
-        return sectionedList[indexPath.section][indexPath.row]
+    func getTimetable(from indexPath: IndexPath) -> STTimetable? {
+        return sectionList.get(indexPath.section)?.timetableList.get(indexPath.row)
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionedList.count
+        return sectionList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sectionedList[section].count
+        return max(sectionList[section].timetableList.count, 1)
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "STTimetableListCell", for: indexPath)
-        let timetable = getTimetable(from: indexPath)
-        cell.textLabel!.text = timetable.title
-        if STTimetableManager.sharedInstance.currentTimetable?.id == timetable.id {
-            cell.accessoryType = .checkmark
+        if let timetable = getTimetable(from: indexPath) {
+            cell.textLabel?.text = timetable.title
+            if STTimetableManager.sharedInstance.currentTimetable?.id == timetable.id {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
+            if timetable.isLoaded {
+                cell.textLabel?.textColor = UIColor.black
+            } else {
+                cell.textLabel?.textColor = UIColor.gray
+            }
         } else {
-            cell.accessoryType = .none
+            if sectionList[indexPath.section].timetableList.count == 0 {
+                cell.textLabel?.text = "+ 새로운 시간표"
+                cell.accessoryType = .none
+            }
+            cell.textLabel?.textColor = UIColor.gray
         }
-        //configure the cell for loading timetable
+
         return cell
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionedList[section].first?.quarter.longString() ?? ""
+        return sectionList[section].courseBook.quarter.longString()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let id = getTimetable(from: indexPath).id else {
+        let section = sectionList[indexPath.section]
+        if section.timetableList.count == 0 {
+            // create a new timetable and move to that timetable
+            addTimetable("시간표 1", courseBook: section.courseBook)
+            return
+        }
+        guard let id = getTimetable(from: indexPath)?.id else {
             return
         }
         STNetworking.getTimetable(id, done: { timetable in
@@ -108,17 +132,17 @@ class STTimetableListController: UITableViewController {
                 STAlertView.showAlert(title: "시간표 로딩 실패", message: "선택한 시간표가 서버에 존재하지 않습니다.")
             }
             STTimetableManager.sharedInstance.currentTimetable = timetable
-            tableView.deselectRow(at: indexPath, animated: false)
             self.navigationController?.popViewController(animated: true)
-            }, failure: { _ in
-                
+        }, failure: { _ in
+
         })
     }
     
-    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        let timetable = getTimetable(from: indexPath)
+        guard let timetable = getTimetable(from: indexPath) else {
+            return false
+        }
         if timetable.isLoaded {
             if STTimetableManager.sharedInstance.currentTimetable?.id == timetable.id  {
                 return false
@@ -132,21 +156,20 @@ class STTimetableListController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let timetable = getTimetable(from: indexPath)
-            if timetable.id == nil {
+            guard let timetable = getTimetable(from: indexPath), let id = timetable.id else {
                 return
             }
-            STNetworking.deleteTimetable(timetable.id!, done: {
+            STNetworking.deleteTimetable(id, done: {
                 guard let index = self.timetableList.index(of: timetable) else {
                     return
                 }
-                let section = self.sectionedList.filter({ list in list.contains(timetable)})
+                let section = self.sectionList.filter({ section in section.timetableList.contains(timetable)})
                 self.timetableList.remove(at: index)
                 self.updateSectionedList()
-                if section.count > 0 && section.first!.count > 1 {
+                if section.count > 0 && section.first!.timetableList.count > 1 {
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                 } else {
-                    self.tableView.reloadData()
+                    self.tableView.reloadRows(at: [indexPath], with: .fade)
                 }
             }, failure: { _ in
                 
@@ -154,23 +177,6 @@ class STTimetableListController: UITableViewController {
             
         }
     }
-    
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
