@@ -78,6 +78,27 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
 
         return cell
     }
+
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        let notification = notiList[indexPath.row]
+        if case .Link = notification.type {
+            return indexPath
+        }
+        return nil
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let notification = notiList[indexPath.row]
+        if let linkNotification = notification as? STLinkNotification {
+            guard let urlString = linkNotification.url,
+                let url = URL.init(string: urlString) else {
+                    return
+            }
+            UIApplication.shared.openURL(url)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    // MARK: refresh
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentSize.height == 0 {
@@ -165,50 +186,4 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
