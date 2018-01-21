@@ -27,7 +27,10 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var constraintForShown: NSLayoutConstraint!
 
     func indexInTimetable() -> Int {
-        let index = STTimetableManager.sharedInstance.currentTimetable?.indexOf(lecture: lecture!) ?? -1
+        guard let lecture = lecture else {
+            return -1
+        }
+        let index = STTimetableManager.sharedInstance.currentTimetable?.indexOf(lecture: lecture) ?? -1
         return index
     }
 

@@ -152,7 +152,11 @@ class STNetworking {
     }
     
     static func resetLecture(_ timetable: STTimetable, lecture: STLecture, done: @escaping (STTimetable)->(), failure: (()->())?) {
-        let request = Alamofire.request(STLectureRouter.resetLecture(timetableId: timetable.id!, lectureId: lecture.id!))
+        guard let timetableId = timetable.id, let lectureId = lecture.id else {
+            failure?()
+            return
+        }
+        let request = Alamofire.request(STLectureRouter.resetLecture(timetableId: timetableId, lectureId: lectureId))
         request.responseWithDone({ statusCode, json in
                 done(STTimetable(json: json))
             }, failure: { _ in

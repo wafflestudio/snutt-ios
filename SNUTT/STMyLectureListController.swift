@@ -84,10 +84,8 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         if editingStyle == .delete {
             if tableView.numberOfRows(inSection: 0) != 2 {
                 STTimetableManager.sharedInstance.deleteLectureAtIndex(indexPath.row, object: self)
-                tableView.deleteRows(at: [indexPath], with: .fade)
             } else {
                 STTimetableManager.sharedInstance.deleteLectureAtIndex(indexPath.row, object: self)
-                tableView.reloadData()
             }
             self.tableView.reloadEmptyDataSet()
         } else if editingStyle == .insert {
