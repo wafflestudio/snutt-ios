@@ -29,7 +29,7 @@ class STTimetableTabViewController: UIViewController {
         // Add tap recognizer to title in NavigationBar
         let titleView = UILabel()
         titleView.font = UIFont(name: "HelveticaNeue-Medium", size: 17)
-        titleView.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: CGFloat.greatestFiniteMagnitude, height: 500))
+        titleView.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
         titleView.textAlignment = .center
         self.navigationItem.titleView = titleView
         
