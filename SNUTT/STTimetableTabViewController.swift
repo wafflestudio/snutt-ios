@@ -28,10 +28,8 @@ class STTimetableTabViewController: UIViewController {
         
         // Add tap recognizer to title in NavigationBar
         let titleView = UILabel()
-        titleView.text = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
         titleView.font = UIFont(name: "HelveticaNeue-Medium", size: 17)
-        let width = titleView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
-        titleView.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: width, height: 500))
+        titleView.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
         titleView.textAlignment = .center
         self.navigationItem.titleView = titleView
         
@@ -59,7 +57,8 @@ class STTimetableTabViewController: UIViewController {
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableChanged, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableSwitched, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: "settingChanged", event: STEvent.SettingChanged, object: nil)
-
+        
+        reloadData()
     }
 
     deinit {
@@ -73,8 +72,14 @@ class STTimetableTabViewController: UIViewController {
     
     func reloadData() {
         let titleView = (self.navigationItem.titleView as! UILabel)
-        titleView.text = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
-        titleView.sizeToFit();
+        let attribute = [NSForegroundColorAttributeName : UIColor.darkGray,
+                         NSFontAttributeName : UIFont.systemFont(ofSize: 15)]
+        let totalCreditStr = NSAttributedString(string: " \(STTimetableManager.sharedInstance.currentTimetable?.totalCredit ?? 0)학점", attributes: attribute)
+        let mutableStr = NSMutableAttributedString()
+        mutableStr.append(NSAttributedString(string: STTimetableManager.sharedInstance.currentTimetable?.title ?? ""))
+        mutableStr.append(totalCreditStr)
+        titleView.attributedText = mutableStr
+        titleView.invalidateIntrinsicContentSize()
         
         timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableView.reloadTimetable()
