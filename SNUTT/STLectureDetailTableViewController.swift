@@ -122,6 +122,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
         if custom {
             switch section {
             case 0: return 6
@@ -140,6 +141,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
             default: return 0
             }
         }
+
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

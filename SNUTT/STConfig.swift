@@ -24,7 +24,7 @@ class STConfig {
     }
     fileprivate init() {
     }
-    
     var baseURL : String! = nil
+    
     
 }
