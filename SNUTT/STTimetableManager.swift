@@ -9,21 +9,9 @@
 import Foundation
 import SwiftyJSON
 
-class STTimetableManager : NSObject {
-    
-    // MARK: Singleton
-    
-    fileprivate static var sharedManager : STTimetableManager? = nil
-    static var sharedInstance : STTimetableManager{
-        get {
-            if sharedManager == nil {
-                sharedManager = STTimetableManager()
-            }
-            return sharedManager!
-        }
-    }
-    fileprivate override init() {
-        super.init()
+class STTimetableManager {
+
+    init() {
         self.loadData()
         if let timetableId = currentTimetable?.id {
             STNetworking.getTimetable(timetableId, done: { timetable in
@@ -57,7 +45,7 @@ class STTimetableManager : NSObject {
         }
     }
     
-    func saveData() {
+    @objc func saveData() {
         let dict = currentTimetable?.toDictionary()
         STDefaults[.currentTimetable] = dict as? NSDictionary
         STDefaults.synchronize()

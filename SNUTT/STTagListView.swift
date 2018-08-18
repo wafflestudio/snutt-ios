@@ -10,16 +10,10 @@ import UIKit
 
 class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
     weak var searchController : STLectureSearchTableViewController!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+
+    var tagManager = AppContainer.resolver.resolve(STTagManager.self)!
     
     var filteredList : [STTag] = []
     
@@ -36,9 +30,9 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func showTagsFor(_ query : String, type: STTagType?) {
         if query == "" {
-            filteredList = STTagManager.sharedInstance.tagList.tagList
+            filteredList = tagManager.tagList.tagList
         } else {
-            filteredList = STTagManager.sharedInstance.tagList.tagList.filter{ tag in
+            filteredList = tagManager.tagList.tagList.filter{ tag in
                 return tag.text.hasPrefix(query)
             }
         }

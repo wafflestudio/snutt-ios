@@ -10,7 +10,7 @@ import UIKit
 import ChameleonFramework
 
 class STLectureDetailTableViewController: STSingleLectureTableViewController {
-    
+
     var lecture : STLecture!
     var editable : Bool = false
     
@@ -172,7 +172,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         dismissKeyboard()
         let loadingView = STAlertView.showLoading(title: "저장 중")
         let oldLecture = lecture!
-        STTimetableManager.sharedInstance.updateLecture(oldLecture, newLecture: currentLecture, done: {
+        timetableManager.updateLecture(oldLecture, newLecture: currentLecture, done: {
             self.editable = false
             self.reloadDataWithAnimation()
             self.navigationItem.setRightBarButton(self.editBarButton, animated: true)
@@ -199,8 +199,8 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     }
     
     override func resetButtonClicked() {
-        STTimetableManager.sharedInstance.resetLecture(self.currentLecture) {
-            let lectureList = STTimetableManager.sharedInstance.currentTimetable!.lectureList
+        timetableManager.resetLecture(self.currentLecture) {
+            let lectureList = self.timetableManager.currentTimetable!.lectureList
             if let index = lectureList.index(where: { lecture in lecture.id == self.currentLecture.id}) {
                 self.currentLecture = lectureList[index]
                 self.lecture = lectureList[index]

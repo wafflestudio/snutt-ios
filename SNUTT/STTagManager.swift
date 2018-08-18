@@ -8,22 +8,14 @@
 
 import Foundation
 import Alamofire
+import Swinject
 
 class STTagManager {
-    
-    // MARK: Singleton
-    
-    fileprivate static var sharedManager : STTagManager? = nil
-    static var sharedInstance : STTagManager{
-        get {
-            if sharedManager == nil {
-                sharedManager = STTagManager()
-            }
-            return sharedManager!
-        }
-    }
-    
-    fileprivate init() {
+
+    let timetableManager: STTimetableManager
+
+    init(resolver r: Resolver) {
+        timetableManager = r.resolve(STTimetableManager.self)!
         self.loadData()
         STEventCenter.sharedInstance.addObserver(self, selector: "loadData", event: STEvent.CurrentTimetableSwitched, object: nil)
     }
@@ -31,7 +23,7 @@ class STTagManager {
     var tagList : STTagList!
     
     dynamic func loadData() {
-        guard let quarter = STTimetableManager.sharedInstance.currentTimetable?.quarter else {
+        guard let quarter = timetableManager.currentTimetable?.quarter else {
             return
         }
         let tagList = NSKeyedUnarchiver.unarchiveObject(withFile: getDocumentsDirectory().appendingPathComponent("tagList\(quarter.shortString()).archive")) as? STTagList

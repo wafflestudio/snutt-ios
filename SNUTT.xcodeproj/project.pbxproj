@@ -29,6 +29,7 @@
 		E11902E91CCE44E7002436B9 /* STLectureDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11902E81CCE44E7002436B9 /* STLectureDetailTableViewCell.swift */; };
 		E11E61011EED0C390036F3F2 /* STSearchEmptyInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E11E61001EED0C390036F3F2 /* STSearchEmptyInfoView.xib */; };
 		E11E61031EED13890036F3F2 /* STSearchEmptyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E61021EED13890036F3F2 /* STSearchEmptyInfoView.swift */; };
+		E11F5E4321281BF7002FBA8F /* STTodayColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11F5E4121281BF3002FBA8F /* STTodayColorManager.swift */; };
 		E133794F1D41E26C00AD10F4 /* STRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133794E1D41E26C00AD10F4 /* STRouter.swift */; };
 		E137998A1C3FBEC70043A5EE /* STMyLectureListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */; };
 		E137C8031F24A1E2005F612A /* STLeftAlignedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E137C8011F24A1E2005F612A /* STLeftAlignedLabelCell.swift */; };
@@ -72,7 +73,6 @@
 		E17825CD1D577CD8009ACEC3 /* STNotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17825CC1D577CD8009ACEC3 /* STNotificationRouter.swift */; };
 		E1799E881D8E28D20014794F /* STMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1799E871D8E28D20014794F /* STMainTabBarController.swift */; };
 		E17D45F51E9A1AF800E6973B /* STColorManagerUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17D45F41E9A1AF800E6973B /* STColorManagerUpdate.swift */; };
-		E17D45F61E9A1D0B00E6973B /* STColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1130AD81E7C38DD00ADE84F /* STColorManager.swift */; };
 		E181131C1E52E60600ECA64E /* STColorActionSheetPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E181131B1E52E60600ECA64E /* STColorActionSheetPicker.swift */; };
 		E184359D1D69A2C200BE5D58 /* STAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E184359C1D69A2C200BE5D58 /* STAlertView.swift */; };
 		E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */; };
@@ -86,6 +86,8 @@
 		E19ABD711EAB49BE0051B1C7 /* STOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19ABD701EAB49BE0051B1C7 /* STOnBoardingViewController.swift */; };
 		E19E231F1B468B700010DFB1 /* STLectureSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E231E1B468B700010DFB1 /* STLectureSearchTableViewController.swift */; };
 		E19E23211B4691D90010DFB1 /* STLectureSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19E23201B4691D90010DFB1 /* STLectureSearchTableViewCell.swift */; };
+		E1A616AB212039620064ACF3 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A616AA212039620064ACF3 /* CoreAssembly.swift */; };
+		E1A616AD21203FDD0064ACF3 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A616AC21203FDD0064ACF3 /* AppContainer.swift */; };
 		E1A664F61EED8F77003B2D43 /* STTagSearchInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A664F51EED8F77003B2D43 /* STTagSearchInfoView.xib */; };
 		E1A664F81EED8F8C003B2D43 /* STTagSearchInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A664F71EED8F8C003B2D43 /* STTagSearchInfoView.swift */; };
 		E1A946DF1F8B74DC00991CB3 /* STFCMInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AC20F41F8B6DD4005B5DE7 /* STFCMInfo.swift */; };
@@ -234,6 +236,7 @@
 		E11902E81CCE44E7002436B9 /* STLectureDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E11E61001EED0C390036F3F2 /* STSearchEmptyInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSearchEmptyInfoView.xib; sourceTree = "<group>"; };
 		E11E61021EED13890036F3F2 /* STSearchEmptyInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchEmptyInfoView.swift; sourceTree = "<group>"; };
+		E11F5E4121281BF3002FBA8F /* STTodayColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTodayColorManager.swift; sourceTree = "<group>"; };
 		E133794E1D41E26C00AD10F4 /* STRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRouter.swift; sourceTree = "<group>"; };
 		E13799891C3FBEC70043A5EE /* STMyLectureListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMyLectureListController.swift; sourceTree = "<group>"; };
 		E137C8011F24A1E2005F612A /* STLeftAlignedLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLeftAlignedLabelCell.swift; sourceTree = "<group>"; };
@@ -295,6 +298,8 @@
 		E19ABD701EAB49BE0051B1C7 /* STOnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STOnBoardingViewController.swift; sourceTree = "<group>"; };
 		E19E231E1B468B700010DFB1 /* STLectureSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureSearchTableViewController.swift; sourceTree = "<group>"; };
 		E19E23201B4691D90010DFB1 /* STLectureSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureSearchTableViewCell.swift; sourceTree = "<group>"; };
+		E1A616AA212039620064ACF3 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
+		E1A616AC21203FDD0064ACF3 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		E1A664F51EED8F77003B2D43 /* STTagSearchInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STTagSearchInfoView.xib; sourceTree = "<group>"; };
 		E1A664F71EED8F8C003B2D43 /* STTagSearchInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagSearchInfoView.swift; sourceTree = "<group>"; };
 		E1A946E01F8B7D8700991CB3 /* STFCMInfoList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STFCMInfoList.swift; sourceTree = "<group>"; };
@@ -426,6 +431,7 @@
 				E1EE1B301CCCDE20003DF250 /* STDefaults.swift */,
 				E184359C1D69A2C200BE5D58 /* STAlertView.swift */,
 				E1130AD81E7C38DD00ADE84F /* STColorManager.swift */,
+				E11F5E4121281BF3002FBA8F /* STTodayColorManager.swift */,
 				E17D45F41E9A1AF800E6973B /* STColorManagerUpdate.swift */,
 			);
 			name = Library;
@@ -506,6 +512,7 @@
 		E19A3A971B453770007FCAD7 /* SNUTT */ = {
 			isa = PBXGroup;
 			children = (
+				E1A616A9212039410064ACF3 /* DI */,
 				E14A7F5D1E406CAA003B3EA9 /* SNUTT.entitlements */,
 				E1F0CA1A1C7475A600A4F4ED /* Asset */,
 				E1C28B191B9C4B7B00B8C493 /* Controller */,
@@ -546,6 +553,15 @@
 				E19A3AAF1B453770007FCAD7 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E1A616A9212039410064ACF3 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				E1A616AA212039620064ACF3 /* CoreAssembly.swift */,
+				E1A616AC21203FDD0064ACF3 /* AppContainer.swift */,
+			);
+			name = DI;
 			sourceTree = "<group>";
 		};
 		E1BEF07A1E702E9A00BBFDB1 /* SNUTT Today */ = {
@@ -755,7 +771,6 @@
 				E16A884F1C9F8D7C003D94AB /* Carte Post */,
 				E14991F91C45F0E000DC6756 /* Run Script */,
 				5DF3E55534CBCE108DC5CF5E /* [CP] Embed Pods Frameworks */,
-				AE703475AD04158506090D3E /* [CP] Copy Pods Resources */,
 				E1BEF0881E702E9A00BBFDB1 /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -794,7 +809,6 @@
 				E1BEF0731E702E9A00BBFDB1 /* Sources */,
 				E1BEF0741E702E9A00BBFDB1 /* Frameworks */,
 				E1BEF0751E702E9A00BBFDB1 /* Resources */,
-				6E974AEBAF59D734C7FA9483 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -936,13 +950,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SNUTT-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5DF3E55534CBCE108DC5CF5E /* [CP] Embed Pods Frameworks */ = {
@@ -951,9 +968,56 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ActionSheetPicker-3.0/ActionSheetPicker_3_0.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/B68UIFloatLabelTextField/B68UIFloatLabelTextField.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/Carte/Carte.framework",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/Color-Picker-for-iOS/Color_Picker_for_iOS.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/EGOTableViewPullRefreshAndLoadMore/EGOTableViewPullRefreshAndLoadMore.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
+				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
+				"${BUILT_PRODUCTS_DIR}/SwinjectStoryboard/SwinjectStoryboard.framework",
+				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
+				"${BUILT_PRODUCTS_DIR}/TTRangeSlider/TTRangeSlider.framework",
+				"${BUILT_PRODUCTS_DIR}/UITextView+Placeholder/UITextView_Placeholder.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionSheetPicker_3_0.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/B68UIFloatLabelTextField.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Carte.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Color_Picker_for_iOS.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EGOTableViewPullRefreshAndLoadMore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwinjectStoryboard.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTRangeSlider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextView_Placeholder.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -966,43 +1030,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SNUTT Today-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		6E974AEBAF59D734C7FA9483 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AE703475AD04158506090D3E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E14991F91C45F0E000DC6756 /* Run Script */ = {
@@ -1107,6 +1144,7 @@
 				E14DF2201C3FBB0E0076FDDE /* STLectureTableViewCell.swift in Sources */,
 				E1130AD91E7C38DD00ADE84F /* STColorManager.swift in Sources */,
 				E1CD926A1E46EAE100AF5FE4 /* STTagFilterCollectionViewCell.swift in Sources */,
+				E1A616AD21203FDD0064ACF3 /* AppContainer.swift in Sources */,
 				E16A88531C9FB98F003D94AB /* STSupportViewController.swift in Sources */,
 				E16A88571C9FC4AD003D94AB /* STSettingViewController.swift in Sources */,
 				E110CFD51C883FC000ED0590 /* STNotificationTableViewCell.swift in Sources */,
@@ -1130,6 +1168,7 @@
 				E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */,
 				E166435B1B46734C00387EF8 /* STLectureDetailTableViewController.swift in Sources */,
 				E137998A1C3FBEC70043A5EE /* STMyLectureListController.swift in Sources */,
+				E1A616AB212039620064ACF3 /* CoreAssembly.swift in Sources */,
 				E1F632921C8D0C040030BE7D /* STLectureRouter.swift in Sources */,
 				E1B34A4C1EB20DCA004C5E5E /* STViewButton.swift in Sources */,
 				E1A99D8B1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift in Sources */,
@@ -1175,7 +1214,6 @@
 				E1BEF0891E702F2300BBFDB1 /* STTimetable.swift in Sources */,
 				E1130ADA1E7C390700ADE84F /* STColorList.swift in Sources */,
 				E1BEF08C1E702F3900BBFDB1 /* STTime.swift in Sources */,
-				E17D45F61E9A1D0B00E6973B /* STColorManager.swift in Sources */,
 				E1BEF09A1E703EE000BBFDB1 /* STColumnHeaderCollectionViewCell.swift in Sources */,
 				E1BEF08B1E702F3900BBFDB1 /* STSingleClass.swift in Sources */,
 				E1BEF09E1E703EE000BBFDB1 /* STTimetableCellType.swift in Sources */,
@@ -1183,6 +1221,7 @@
 				E1BEF0941E70381400BBFDB1 /* STCourseBook.swift in Sources */,
 				E1BEF0911E702F3900BBFDB1 /* STColor.swift in Sources */,
 				E1BEF08A1E702F3900BBFDB1 /* STLecture.swift in Sources */,
+				E11F5E4321281BF7002FBA8F /* STTodayColorManager.swift in Sources */,
 				E1BEF08D1E702F3900BBFDB1 /* STSemester.swift in Sources */,
 				E1A946DF1F8B74DC00991CB3 /* STFCMInfo.swift in Sources */,
 				E1BEF0901E702F3900BBFDB1 /* STPeriod.swift in Sources */,

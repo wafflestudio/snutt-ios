@@ -12,6 +12,7 @@ import SafariServices
 
 class STSingleLectureTableViewController: UITableViewController {
     // TODO: Seriously needs refactoring
+    let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
     var custom : Bool = false
     var currentLecture : STLecture = STLecture()
     var sectionForSingleClass : Int = 4
@@ -159,7 +160,7 @@ class STSingleLectureTableViewController: UITableViewController {
             })
         case .syllabusButton:
             return .button(title: "강의계획서", color: UIColor.black,  onClick: { _ in
-                let quarter = STTimetableManager.sharedInstance.currentTimetable!.quarter
+                let quarter = self.timetableManager.currentTimetable!.quarter
                 let lecture = self.currentLecture
                 STNetworking.getSyllabus(quarter, lecture: lecture, done: { url in
                     self.showWebView(url)
@@ -167,7 +168,7 @@ class STSingleLectureTableViewController: UITableViewController {
                     let year = quarter.year
                     let course_number = lecture.courseNumber!
                     let lecture_number = lecture.lectureNumber!
-                    let semester = STTimetableManager.sharedInstance.currentTimetable!.quarter.semester;
+                    let semester = self.timetableManager.currentTimetable!.quarter.semester;
                     var openShtmFg = "", openDetaShtmFg = ""
                     switch semester {
                     case .first:
@@ -191,8 +192,8 @@ class STSingleLectureTableViewController: UITableViewController {
             return .button(title: "삭제", color: UIColor.red, onClick: { _ in
                 let actions = [
                     UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
-                        if let index = STTimetableManager.sharedInstance.currentTimetable?.lectureList.index(of: self.currentLecture) {
-                            STTimetableManager.sharedInstance.deleteLectureAtIndex(index, object: nil)
+                        if let index = self.timetableManager.currentTimetable?.lectureList.index(of: self.currentLecture) {
+                            self.timetableManager.deleteLectureAtIndex(index, object: nil)
                         }
                         self.navigationController?.popViewController(animated: true)
                     }),

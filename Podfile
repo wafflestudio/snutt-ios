@@ -23,6 +23,8 @@ target 'SNUTT' do
   pod 'TPKeyboardAvoiding'
   pod 'MarqueeLabel/Swift'
   pod 'UITextView+Placeholder', '~> 1.2'
+  pod 'Swinject'
+  pod 'SwinjectStoryboard'
 end
 
 target 'SNUTT Today' do

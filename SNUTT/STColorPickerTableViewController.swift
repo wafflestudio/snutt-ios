@@ -11,6 +11,8 @@ import ChameleonFramework
 
 class STColorPickerTableViewController: UITableViewController {
 
+    let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
+
     var customColorIndex = 1
     var color : STColor!
     var colorIndex: Int = 1
@@ -48,7 +50,7 @@ class STColorPickerTableViewController: UITableViewController {
     }
 
     func colorListUpdated() {
-        colorList = STColorManager.sharedInstance.colorList
+        colorList = colorManager.colorList
         customColorIndex = colorList.colorList.count
         if colorIndex == 0 {
             selectedColorIndex = customColorIndex

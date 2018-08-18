@@ -17,14 +17,18 @@ class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
     var selectedBlock: ((Int)->Void)?
     var initialColorIndex : Int
 
-    var colorList = STColorManager.sharedInstance.colorList.colorList
-    var nameList = STColorManager.sharedInstance.colorList.nameList
+    let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
+
+    var colorList : [STColor]
+    var nameList : [String]
 
     init(initialColorIndex : Int, doneBlock: ((Int) -> Void)?, cancelBlock: (() -> Void)?, selectedBlock: ((Int)->Void)?) {
         self.doneBlock = doneBlock
         self.cancelBlock = cancelBlock
         self.selectedBlock = selectedBlock
         self.initialColorIndex = initialColorIndex
+        colorList = colorManager.colorList.colorList
+        nameList = colorManager.colorList.nameList
         super.init()
     }
 

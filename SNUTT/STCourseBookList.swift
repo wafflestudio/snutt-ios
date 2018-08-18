@@ -8,19 +8,8 @@
 
 import Foundation
 
-class STCourseBookList {
-    // MARK: Singleton
-    
-    fileprivate static var sharedManager : STCourseBookList? = nil
-    static var sharedInstance : STCourseBookList {
-        get {
-            if sharedManager == nil {
-                sharedManager = STCourseBookList()
-            }
-            return sharedManager!
-        }
-    }
-    fileprivate init() {
+class STCourseBookListManager {
+    init() {
         self.loadCourseBooks()
         self.getCourseBooks()
     }
@@ -28,7 +17,6 @@ class STCourseBookList {
     var courseBookList : [STCourseBook] = []
     
     func loadCourseBooks () {
-        
         guard let courseBookList = NSKeyedUnarchiver.unarchiveObject(withFile: getDocumentsDirectory().appendingPathComponent("courseBookList.archive")) as? [NSDictionary] else {
             self.courseBookList = []
             return

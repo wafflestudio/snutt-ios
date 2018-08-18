@@ -86,8 +86,10 @@ class STUser {
             window.rootViewController = mainController
         }
 
+        // TODO: this is not DI.
+        let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
         STNetworking.getRecentTimetable({ timetable in
-            STTimetableManager.sharedInstance.currentTimetable = timetable
+            timetableManager.currentTimetable = timetable
             openController()
         }, failure: {
             openController()

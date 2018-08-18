@@ -11,6 +11,9 @@ import Alamofire
 
 class STTimetableListController: UITableViewController {
 
+    let courseBookListManager = AppContainer.resolver.resolve(STCourseBookListManager.self)!
+    let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
+
     struct Section {
         var timetableList : [STTimetable]
         var courseBook : STCourseBook
@@ -64,7 +67,7 @@ class STTimetableListController: UITableViewController {
     }
     
     func updateSectionedList() {
-        let courseBookList = STCourseBookList.sharedInstance.courseBookList
+        let courseBookList = courseBookListManager.courseBookList
         sectionList = courseBookList.map({ courseBook in
             return Section.init(timetableList:
                 timetableList.filter({ timetable in
@@ -92,7 +95,7 @@ class STTimetableListController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "STTimetableListCell", for: indexPath)
         if let timetable = getTimetable(from: indexPath) {
             cell.textLabel?.text = timetable.title
-            if STTimetableManager.sharedInstance.currentTimetable?.id == timetable.id {
+            if timetableManager.currentTimetable?.id == timetable.id {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
@@ -131,7 +134,7 @@ class STTimetableListController: UITableViewController {
             if (timetable == nil) {
                 STAlertView.showAlert(title: "시간표 로딩 실패", message: "선택한 시간표가 서버에 존재하지 않습니다.")
             }
-            STTimetableManager.sharedInstance.currentTimetable = timetable
+            self.timetableManager.currentTimetable = timetable
             self.navigationController?.popViewController(animated: true)
         }, failure: { _ in
 
@@ -144,7 +147,7 @@ class STTimetableListController: UITableViewController {
             return false
         }
         if timetable.isLoaded {
-            if STTimetableManager.sharedInstance.currentTimetable?.id == timetable.id  {
+            if timetableManager.currentTimetable?.id == timetable.id  {
                 return false
             }
             return true
