@@ -26,11 +26,13 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var constraintForHidden: NSLayoutConstraint!
     @IBOutlet weak var constraintForShown: NSLayoutConstraint!
 
+    let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
+
     func indexInTimetable() -> Int {
         guard let lecture = lecture else {
             return -1
         }
-        let index = STTimetableManager.sharedInstance.currentTimetable?.indexOf(lecture: lecture) ?? -1
+        let index = timetableManager.currentTimetable?.indexOf(lecture: lecture) ?? -1
         return index
     }
 
@@ -85,14 +87,14 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         tagLabel.trailingBuffer = 10.0
         titleLabel.animationDelay = 0.3
         tagLabel.animationDelay = 0.3
-        addButton.buttonPressAction = { _ in
-            STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
+        addButton.buttonPressAction = {
+            self.timetableManager.setTemporaryLecture(nil, object: self)
             self.tableView.deselectRow(at: self.tableView.indexPath(for: self)!, animated: true)
             let index = self.indexInTimetable()
             if index >= 0{
-                STTimetableManager.sharedInstance.deleteLectureAtIndex(index, object: self)
+                self.timetableManager.deleteLectureAtIndex(index, object: self)
             } else {
-                STTimetableManager.sharedInstance.addLecture(self.lecture!, object: self)
+                self.timetableManager.addLecture(self.lecture!, object: self)
             }
             self.setAddButton()
         }

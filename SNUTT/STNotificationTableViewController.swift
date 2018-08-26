@@ -127,7 +127,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         })
     }
     
-    func refreshList() {
+    @objc func refreshList() {
         loading = true
         pageCnt = 0
         isLast = false
@@ -168,8 +168,8 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "알림이 없습니다."
-        let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0)
+        let attributes: [NSAttributedStringKey : AnyObject] = [
+            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18.0)
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }
@@ -179,10 +179,10 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineBreakMode = .byWordWrapping
         paragraph.alignment = .center
-        let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.systemFont(ofSize: 14.0),
-            NSForegroundColorAttributeName : UIColor.lightGray,
-            NSParagraphStyleAttributeName : paragraph
+        let attributes: [NSAttributedStringKey : AnyObject] = [
+            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14.0),
+            NSAttributedStringKey.foregroundColor : UIColor.lightGray,
+            NSAttributedStringKey.paragraphStyle : paragraph
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }

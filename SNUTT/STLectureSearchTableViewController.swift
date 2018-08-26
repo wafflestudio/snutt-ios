@@ -13,18 +13,19 @@ import DZNEmptyDataSet
 class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     @IBOutlet weak var searchBar : STSearchBar!
-    
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var tagCollectionView: STTagCollectionView!
     @IBOutlet weak var tagTableView: STTagListView!
-    
     @IBOutlet weak var tagCollectionViewConstraint: NSLayoutConstraint!
-    
     @IBOutlet var searchToolbarView: STLectureSearchToolbarView!
-    
     @IBOutlet weak var timetableView: STTimetableCollectionView!
-    var FilteredList : [STLecture] = []
+
+    let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
+    var FilteredList : [STLecture] = [] {
+        didSet(oldVal) {
+            print(oldVal)
+        }
+    }
     var pageNum : Int = 0
     var perPage : Int = 20
     var isLast : Bool = false
@@ -39,15 +40,15 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func reloadData() {
         tableView.reloadData()
-        STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
+        timetableManager.setTemporaryLecture(nil, object: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        STEventCenter.sharedInstance.addObserver(self, selector: "timetableSwitched", event: STEvent.CurrentTimetableSwitched, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadTimetable", event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadTempLecture", event: STEvent.CurrentTemporaryLectureChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.timetableSwitched), event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.reloadTimetable), event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.reloadTempLecture), event: STEvent.CurrentTemporaryLectureChanged, object: nil)
         
         tableView.emptyDataSetSource = self;
         tableView.emptyDataSetDelegate = self;
@@ -68,10 +69,10 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         
         searchBar.inputAccessoryView = searchToolbarView
 
-        timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
+        timetableView.timetable = timetableManager.currentTimetable
         timetableView.showTemporary = true
         settingChanged()
-        STEventCenter.sharedInstance.addObserver(self, selector: "settingChanged", event: STEvent.SettingChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -91,7 +92,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         super.viewWillDisappear(animated)
     }
 
-    func settingChanged() {
+    @objc func settingChanged() {
         if STDefaults[.autoFit] {
             timetableView.shouldAutofit = true
         } else {
@@ -116,7 +117,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         // This is for saving the request
         isLast = false
         let tagList = tagCollectionView.tagList
-        let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
+        let mask = searchToolbarView.isEmptyTime ? timetableManager.currentTimetable?.timetableReverseTimeMask() : nil
         let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: 0, limit: perPage))
         state = .loading(request)
         request.responseWithDone({ statusCode, json in
@@ -138,7 +139,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func getMoreLectureList(_ searchString: String) {
         let tagList = tagCollectionView.tagList
-        let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
+        let mask = searchToolbarView.isEmptyTime ? timetableManager.currentTimetable?.timetableReverseTimeMask() : nil
         let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: perPage * pageNum, limit: perPage))
         state = .loading(request)
         request.responseWithDone({ statusCode, json in
@@ -175,11 +176,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         }
     }
     
-    func timetableSwitched() {
+    @objc func timetableSwitched() {
         state = .empty
         searchBar.text = ""
         FilteredList = []
-        self.timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
+        self.timetableView.timetable = timetableManager.currentTimetable
         tagTableView.filteredList = []
         tagCollectionView.tagList = []
         searchToolbarView.currentTagType = nil
@@ -191,11 +192,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         tagCollectionView.reloadData()
     }
     
-    func reloadTimetable() {
+    @objc func reloadTimetable() {
         self.timetableView.reloadTimetable()
     }
     
-    func reloadTempLecture() {
+    @objc func reloadTempLecture() {
         self.timetableView.reloadTempLecture()
     }
     
@@ -263,13 +264,13 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         willSelectRow = false
-        STTimetableManager.sharedInstance.setTemporaryLecture(FilteredList[indexPath.row], object: self)
+        timetableManager.setTemporaryLecture(FilteredList[indexPath.row], object: self)
         //TimetableCollectionViewController.datasource.addLecture(FilteredList[indexPath.row])
         
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if STTimetableManager.sharedInstance.currentTimetable?.temporaryLecture == FilteredList[indexPath.row] && !willSelectRow {
-            STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
+        if timetableManager.currentTimetable?.temporaryLecture == FilteredList[indexPath.row] && !willSelectRow {
+            timetableManager.setTemporaryLecture(nil, object: self)
         }
     }
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -349,7 +350,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
 
 
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         if case let .editingQuery(query, tagList, lectureList) = state {
             searchBar.resignFirstResponder()
             searchBar.isEditingTag = false

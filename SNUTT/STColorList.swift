@@ -8,7 +8,7 @@
 
 import Foundation
 
-
+@objc(STColorList)
 class STColorList : NSObject, NSCoding {
 
     var colorList : [STColor] = []

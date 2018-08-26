@@ -34,8 +34,10 @@ enum STSearchRouter : STRouter {
         switch self {
         case let .search(query, tagList, mask, offset, limit):
             // FIXME: is there better way?
-            let year = STTimetableManager.sharedInstance.currentTimetable?.quarter.year ?? 0
-            let semester = STTimetableManager.sharedInstance.currentTimetable?.quarter.semester ?? STSemester.first
+            // TODO: make api controller to fill in year and semester and make thir router pure.
+            let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
+            let year = timetableManager.currentTimetable?.quarter.year ?? 0
+            let semester = timetableManager.currentTimetable?.quarter.semester ?? STSemester.first
             var credit : [Int] = []
             var instructor : [String] = []
             var department : [String] = []

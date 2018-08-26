@@ -12,7 +12,9 @@ class STTimetableTabViewController: UIViewController {
     
     @IBOutlet weak var timetableView: STTimetableCollectionView!
     var lectureListController : STMyLectureListController!
-    
+    let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
+    let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
+
     enum State {
     case timetable
     case lectureList
@@ -33,7 +35,7 @@ class STTimetableTabViewController: UIViewController {
         titleView.textAlignment = .center
         self.navigationItem.titleView = titleView
         
-        let recognizer = UITapGestureRecognizer(target: self, action: "titleWasTapped")
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(STTimetableTabViewController.titleWasTapped))
         titleView.isUserInteractionEnabled = true
         titleView.addGestureRecognizer(recognizer)
         
@@ -46,17 +48,15 @@ class STTimetableTabViewController: UIViewController {
         self.containerView.addSubview(lectureListController.view)
         lectureListController.view.isHidden = true
 
-        timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
+        timetableView.timetable = timetableManager.currentTimetable
         settingChanged()
 
         timetableView.cellLongClicked = self.cellLongClicked
         timetableView.cellTapped = self.cellTapped
 
-        let _ = STColorManager.sharedInstance
-
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableSwitched, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "settingChanged", event: STEvent.SettingChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.reloadData), event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.reloadData), event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
         
         reloadData()
     }
@@ -70,22 +70,22 @@ class STTimetableTabViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func reloadData() {
+    @objc func reloadData() {
         let titleView = (self.navigationItem.titleView as! UILabel)
-        let attribute = [NSForegroundColorAttributeName : UIColor.darkGray,
-                         NSFontAttributeName : UIFont.systemFont(ofSize: 15)]
-        let totalCreditStr = NSAttributedString(string: " \(STTimetableManager.sharedInstance.currentTimetable?.totalCredit ?? 0)학점", attributes: attribute)
+        let attribute = [NSAttributedStringKey.foregroundColor : UIColor.darkGray,
+                         NSAttributedStringKey.font : UIFont.systemFont(ofSize: 15)]
+        let totalCreditStr = NSAttributedString(string: " \(timetableManager.currentTimetable?.totalCredit ?? 0)학점", attributes: attribute)
         let mutableStr = NSMutableAttributedString()
-        mutableStr.append(NSAttributedString(string: STTimetableManager.sharedInstance.currentTimetable?.title ?? ""))
+        mutableStr.append(NSAttributedString(string: timetableManager.currentTimetable?.title ?? ""))
         mutableStr.append(totalCreditStr)
         titleView.attributedText = mutableStr
         titleView.invalidateIntrinsicContentSize()
         
-        timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
+        timetableView.timetable = timetableManager.currentTimetable
         timetableView.reloadTimetable()
     }
     
-    func settingChanged() {
+    @objc func settingChanged() {
         if STDefaults[.autoFit] {
             timetableView.shouldAutofit = true
         } else {
@@ -106,7 +106,7 @@ class STTimetableTabViewController: UIViewController {
         timetableView.reloadTimetable()
     }
     
-    func switchView() {
+    @objc func switchView() {
 
         if (isInAnimation) {
             return
@@ -140,8 +140,8 @@ class STTimetableTabViewController: UIViewController {
         })
     }
     
-    func titleWasTapped() {
-        guard let currentTimetable = STTimetableManager.sharedInstance.currentTimetable else {
+    @objc func titleWasTapped() {
+        guard let currentTimetable = timetableManager.currentTimetable else {
             return
         }
         guard let timetableId = currentTimetable.id else {
@@ -155,8 +155,9 @@ class STTimetableTabViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "이름 변경", style: .default, handler: { _ in
                 if let timetableName = alert.textFields?.first?.text {
+                    let timetableManager = self.timetableManager
                     STNetworking.updateTimetable(timetableId, title: timetableName, done: {
-                        STTimetableManager.sharedInstance.currentTimetable?.title = timetableName
+                        timetableManager.currentTimetable?.title = timetableName
                         STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
                     })
                 }
@@ -185,12 +186,14 @@ class STTimetableTabViewController: UIViewController {
             return collectionView.cellForItem(at: tmpIndexPath) as? STCourseCellCollectionViewCell
         }
         var oldLecture = cell.lecture!
+        let timetableManager = self.timetableManager
+        let colorManager = self.colorManager
         STColorActionSheetPicker.showWithColor(oldColorIndex ?? 0, doneBlock: { selectedColorIndex in
             var newLecture = cell.lecture
             newLecture?.colorIndex = selectedColorIndex
             newLecture?.color = nil
-            STTimetableManager.sharedInstance.updateLecture(
-                oldLecture, newLecture: newLecture!, done: { _ in return }, failure: {
+            timetableManager.updateLecture(
+                oldLecture, newLecture: newLecture!, done: {  return }, failure: {
                     cellList.forEach { cell in
                         cell?.setColorByLecture(lecture: oldLecture)
                     }
@@ -201,7 +204,7 @@ class STTimetableTabViewController: UIViewController {
                 }
             }, selectedBlock: { colorIndex in
                 cellList.forEach { cell in
-                    let color = STColorManager.sharedInstance.colorList.colorList[colorIndex-1]
+                    let color = colorManager.colorList.colorList[colorIndex-1]
                     cell?.setColor(color: color)
                 }
             }, origin: self)

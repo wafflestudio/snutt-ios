@@ -44,7 +44,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         NotificationCenter.default.addObserver(self, selector: #selector(userDefaultsDidChange), name: UserDefaults.didChangeNotification, object: nil)
     }
 
-    func userDefaultsDidChange (_ notification: Notification) {
+    @objc func userDefaultsDidChange (_ notification: Notification) {
         updateTimetable()
         updateSetting()
         reloadData()

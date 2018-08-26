@@ -8,24 +8,9 @@
 
 class STColorManager {
 
-    // MARK: Singleton
-
-    fileprivate static var sharedManager : STColorManager? = nil
-    static var sharedInstance : STColorManager{
-        get {
-            if sharedManager == nil {
-                sharedManager = STColorManager()
-            }
-            return sharedManager!
-        }
-    }
-
-    fileprivate init() {
+    init() {
         self.loadData()
-        #if TODAY_EXTENSION
-        #else
-            self.updateData()
-        #endif
+        self.updateData()
     }
 
     var colorList: STColorList!

@@ -12,6 +12,7 @@ import SafariServices
 
 class STSingleLectureTableViewController: UITableViewController {
     // TODO: Seriously needs refactoring
+    let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
     var custom : Bool = false
     var currentLecture : STLecture = STLecture()
     var sectionForSingleClass : Int = 4
@@ -121,7 +122,7 @@ class STSingleLectureTableViewController: UITableViewController {
             case .singleClass: return .singleClass
             case .padding: return .padding
             case .addButton, .resetButton, .syllabusButton, .deleteButton:
-                return .button(title: "", color: UIColor.black, onClick: { _ in })
+                return .button(title: "", color: UIColor.black, onClick: {  })
             case .singleClassTitle:
                 return .leftAlignedLabel(string: "")
             }
@@ -143,12 +144,12 @@ class STSingleLectureTableViewController: UITableViewController {
         case .padding:
             return .padding
         case .addButton:
-            return .button(title: "+ 시간 추가", color: UIColor.black, onClick: { _ in
+            return .button(title: "+ 시간 추가", color: UIColor.black, onClick: { 
                 self.currentLecture.classList.append(STSingleClass(time: STTime(day: 0, startPeriod: 0.0, duration: 1.0), place: ""))
                 self.tableView.insertRows(at: [IndexPath(row: self.currentLecture.classList.count, section: self.sectionForSingleClass)], with: .automatic);
             })
         case .resetButton:
-            return .button(title: "초기화", color: UIColor.red, onClick: { _ in
+            return .button(title: "초기화", color: UIColor.red, onClick: { 
                 let actions = [
                     UIAlertAction(title: "초기화", style: .destructive, handler: { _ in
                         self.resetButtonClicked()
@@ -158,8 +159,8 @@ class STSingleLectureTableViewController: UITableViewController {
                 STAlertView.showAlert(title: "강좌 초기화", message: "강좌를 원래 상태로 초기화하시겠습니까?", actions: actions)
             })
         case .syllabusButton:
-            return .button(title: "강의계획서", color: UIColor.black,  onClick: { _ in
-                let quarter = STTimetableManager.sharedInstance.currentTimetable!.quarter
+            return .button(title: "강의계획서", color: UIColor.black,  onClick: { 
+                let quarter = self.timetableManager.currentTimetable!.quarter
                 let lecture = self.currentLecture
                 STNetworking.getSyllabus(quarter, lecture: lecture, done: { url in
                     self.showWebView(url)
@@ -167,7 +168,7 @@ class STSingleLectureTableViewController: UITableViewController {
                     let year = quarter.year
                     let course_number = lecture.courseNumber!
                     let lecture_number = lecture.lectureNumber!
-                    let semester = STTimetableManager.sharedInstance.currentTimetable!.quarter.semester;
+                    let semester = self.timetableManager.currentTimetable!.quarter.semester;
                     var openShtmFg = "", openDetaShtmFg = ""
                     switch semester {
                     case .first:
@@ -188,11 +189,11 @@ class STSingleLectureTableViewController: UITableViewController {
                 })
             })
         case .deleteButton:
-            return .button(title: "삭제", color: UIColor.red, onClick: { _ in
+            return .button(title: "삭제", color: UIColor.red, onClick: { 
                 let actions = [
                     UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
-                        if let index = STTimetableManager.sharedInstance.currentTimetable?.lectureList.index(of: self.currentLecture) {
-                            STTimetableManager.sharedInstance.deleteLectureAtIndex(index, object: nil)
+                        if let index = self.timetableManager.currentTimetable?.lectureList.index(of: self.currentLecture) {
+                            self.timetableManager.deleteLectureAtIndex(index, object: nil)
                         }
                         self.navigationController?.popViewController(animated: true)
                     }),
@@ -219,7 +220,7 @@ class STSingleLectureTableViewController: UITableViewController {
         tableView.register(UINib(nibName: "STSingleClassTableViewCell", bundle: Bundle.main),
                               forCellReuseIdentifier: CellViewType.singleClass.identifier)
         tableView.register(UINib(nibName: "STSingleLectureButtonCell", bundle: Bundle.main),
-                           forCellReuseIdentifier: CellViewType.button(title: "", color: UIColor.black, onClick: { _ in return }).identifier)
+                           forCellReuseIdentifier: CellViewType.button(title: "", color: UIColor.black, onClick: {  return }).identifier)
         tableView.register(UINib(nibName: "STTextViewTableViewCell", bundle: Bundle.main),
                               forCellReuseIdentifier: CellViewType.textView(title: "").identifier)
         tableView.register(STPaddingTableViewCell.self, forCellReuseIdentifier: CellViewType.padding.identifier)
@@ -233,7 +234,7 @@ class STSingleLectureTableViewController: UITableViewController {
         self.tableView.addGestureRecognizer(tapGesture)
     }
     
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         self.view.endEditing(true)
     }
     
@@ -273,7 +274,7 @@ class STSingleLectureTableViewController: UITableViewController {
             cell.placeDoneBlock = { value in self.currentLecture.classList[indexPath.row - 1].place = value }
             cell.timeDoneBlock = { value in self.currentLecture.classList[indexPath.row - 1].time = value }
             cell.custom = true // Single Class Editable in non-custom
-            cell.deleteLectureBlock = { _ in
+            cell.deleteLectureBlock = { 
                 guard let indexPathNow = self.tableView.indexPath(for: cell) else {
                     return
                 }

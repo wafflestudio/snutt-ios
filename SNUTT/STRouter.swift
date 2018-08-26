@@ -26,7 +26,7 @@ extension STRouter {
         let mutableURLRequest = NSMutableURLRequest(url: URL.appendingPathComponent(path))
         mutableURLRequest.httpMethod = method.rawValue
         
-        let apikey = STDefaults[.apiKey]
+        let apikey = STConfig.sharedInstance.apiKey
         mutableURLRequest.setValue(apikey, forHTTPHeaderField: "x-access-apikey")
         return mutableURLRequest
     }

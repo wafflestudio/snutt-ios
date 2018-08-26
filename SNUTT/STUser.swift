@@ -76,7 +76,7 @@ class STUser {
     }
 
     static func loadMainPage() {
-        let openController : () -> () = { _ in
+        let openController : () -> () = { 
             if let deviceId = InstanceID.instanceID().token() {
                 STNetworking.addDevice(deviceId)
             }
@@ -86,8 +86,10 @@ class STUser {
             window.rootViewController = mainController
         }
 
+        // TODO: this is not DI.
+        let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
         STNetworking.getRecentTimetable({ timetable in
-            STTimetableManager.sharedInstance.currentTimetable = timetable
+            timetableManager.currentTimetable = timetable
             openController()
         }, failure: {
             openController()
@@ -102,7 +104,7 @@ class STUser {
         }
 
         let registerFB : (String, String) -> () = { id, token in
-            STNetworking.registerFB(id, token: token, done: done, failure: { _ in
+            STNetworking.registerFB(id, token: token, done: done, failure: { 
 
             })
         }

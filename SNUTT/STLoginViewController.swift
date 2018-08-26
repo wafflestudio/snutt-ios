@@ -41,13 +41,13 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
             textField.delegate = self
         }
 
-        loginButton.buttonPressAction = { _ in
+        loginButton.buttonPressAction = {
             self.loginButtonClicked()
         }
-        facebookButton.buttonPressAction = { _ in
+        facebookButton.buttonPressAction = {
             self.fbButonClicked()
         }
-        backBtnView.buttonPressAction = { _ in
+        backBtnView.buttonPressAction = {
             self.dismiss(animated: true, completion: nil)
         }
 
@@ -70,14 +70,14 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 
-    func keyboardWillShow(noti : NSNotification) {
-        UIView.animate(withDuration: 1.0, animations: { _ in
+    @objc func keyboardWillShow(noti : NSNotification) {
+        UIView.animate(withDuration: 1.0, animations: {
             self.backBtnView.alpha = 0.0
         })
     }
 
-    func keyboardWillHide(noti: NSNotification) {
-        UIView.animate(withDuration: 1.0, animations: { _ in
+    @objc func keyboardWillHide(noti: NSNotification) {
+        UIView.animate(withDuration: 1.0, animations: { 
             self.backBtnView.alpha = 1.0
         })
     }
@@ -107,7 +107,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
                 Crashlytics.sharedInstance().setUserIdentifier(userId)
             #endif
             STUser.loadMainPage()
-        }, failure: { _ in
+        }, failure: { 
             //STAlertView.showAlert(title: "로그인 실패", message: "아이디나 비밀번호가 올바르지 않습니다.")
         })
     }

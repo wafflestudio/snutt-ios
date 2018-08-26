@@ -11,6 +11,8 @@ import DZNEmptyDataSet
 
 class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
+    let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
+
     weak var timetableTabViewController : STTimetableTabViewController?
 
     override func viewDidLoad() {
@@ -24,8 +26,8 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         self.tableView.separatorStyle = .none
         self.tableView.rowHeight = 74.0
         
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData:", event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData:", event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STMyLectureListController.reloadData(_:)), event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STMyLectureListController.reloadData(_:)), event: STEvent.CurrentTimetableSwitched, object: nil)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -38,7 +40,7 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         // Dispose of any resources that can be recreated.
     }
 
-    func reloadData(_ notification : Notification) {
+    @objc func reloadData(_ notification : Notification) {
         if((notification.object as AnyObject) === self) {
             return //This is because of delete animation.
         }
@@ -53,20 +55,20 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let cnt = STTimetableManager.sharedInstance.currentTimetable?.lectureList.count {
+        if let cnt = timetableManager.currentTimetable?.lectureList.count {
             return cnt == 0 ? 0 : cnt + 1
         }
         return 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == STTimetableManager.sharedInstance.currentTimetable?.lectureList.count {
+        if indexPath.row == timetableManager.currentTimetable?.lectureList.count {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddButtonCell", for: indexPath) as! STAddLectureButtonCell
             cell.titleLabel.text = "직접 강좌 추가하기"
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LectureCell", for: indexPath) as! STLectureTableViewCell
-            cell.lecture = STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row]
+            cell.lecture = timetableManager.currentTimetable?.lectureList[indexPath.row]
             return cell
         }
     }
@@ -74,7 +76,7 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.row == STTimetableManager.sharedInstance.currentTimetable?.lectureList.count {
+        if indexPath.row == timetableManager.currentTimetable?.lectureList.count {
             return false
         }
         return true
@@ -83,9 +85,9 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if tableView.numberOfRows(inSection: 0) != 2 {
-                STTimetableManager.sharedInstance.deleteLectureAtIndex(indexPath.row, object: self)
+                timetableManager.deleteLectureAtIndex(indexPath.row, object: self)
             } else {
-                STTimetableManager.sharedInstance.deleteLectureAtIndex(indexPath.row, object: self)
+                timetableManager.deleteLectureAtIndex(indexPath.row, object: self)
             }
             self.tableView.reloadEmptyDataSet()
         } else if editingStyle == .insert {
@@ -94,18 +96,18 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == STTimetableManager.sharedInstance.currentTimetable?.lectureList.count {
+        if indexPath.row == timetableManager.currentTimetable?.lectureList.count {
             self.performSegue(withIdentifier: "AddCustomLecture", sender: self)
         } else {
             let detailController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LectureDetailTableViewController") as! STLectureDetailTableViewController
-            detailController.lecture = STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row]
+            detailController.lecture = timetableManager.currentTimetable?.lectureList[indexPath.row]
             timetableTabViewController?.navigationController?.pushViewController(detailController, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == STTimetableManager.sharedInstance.currentTimetable?.lectureList.count {
+        if indexPath.row == timetableManager.currentTimetable?.lectureList.count {
             return 40.0
         }
         return 106.0
@@ -123,8 +125,8 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "시간표에 강좌가 없습니다."
-        let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0)
+        let attributes: [NSAttributedStringKey : AnyObject] = [
+            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18.0)
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }
@@ -134,18 +136,18 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineBreakMode = .byWordWrapping
         paragraph.alignment = .center
-        let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.systemFont(ofSize: 14.0),
-            NSForegroundColorAttributeName : UIColor.lightGray,
-            NSParagraphStyleAttributeName : paragraph
+        let attributes: [NSAttributedStringKey: AnyObject] = [
+            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14.0),
+            NSAttributedStringKey.foregroundColor : UIColor.lightGray,
+            NSAttributedStringKey.paragraphStyle : paragraph
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }
     
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
         let text = "직접 만들기"
-        let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 17.0)
+        let attributes: [NSAttributedStringKey : AnyObject] = [
+            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 17.0)
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }

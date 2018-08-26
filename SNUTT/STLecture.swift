@@ -33,7 +33,13 @@ struct STLecture {
     var titleBreakLine = ""
 
     func getColor() -> STColor {
-        let colorList = STColorManager.sharedInstance.colorList!
+        // TODO: need some thinking about this
+        #if TODAY_EXTENSION
+            let colorManager = STTodayColorManager.sharedInstance
+        #else
+            let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
+        #endif
+        let colorList = colorManager.colorList!
         if colorIndex == 0 {
             return color ?? STColor()
         } else if (colorIndex <= colorList.colorList.count && colorIndex >= 1) {
@@ -150,7 +156,7 @@ struct STLecture {
             }
         }
         
-        return dict as! [String: AnyObject]
+        return dict as [String: AnyObject]
     }
     
     func isSameLecture(_ right : STLecture) -> Bool {
