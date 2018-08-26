@@ -17,12 +17,12 @@ class STTagManager {
     init(resolver r: Resolver) {
         timetableManager = r.resolve(STTimetableManager.self)!
         self.loadData()
-        STEventCenter.sharedInstance.addObserver(self, selector: "loadData", event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTagManager.loadData), event: STEvent.CurrentTimetableSwitched, object: nil)
     }
     
     var tagList : STTagList!
     
-    dynamic func loadData() {
+    @objc dynamic func loadData() {
         guard let quarter = timetableManager.currentTimetable?.quarter else {
             return
         }
@@ -48,7 +48,7 @@ class STTagManager {
                 self.tagList = tagList
                 self.saveData(quarter)
             }
-        }, failure: { _ in
+        }, failure: { 
             self.tagList = STTagList(quarter: quarter, tagList: [], updatedTime: 0)
         })
     }

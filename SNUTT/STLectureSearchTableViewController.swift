@@ -21,7 +21,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     @IBOutlet weak var timetableView: STTimetableCollectionView!
 
     let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
-    var FilteredList : [STLecture] = []
+    var FilteredList : [STLecture] = [] {
+        didSet(oldVal) {
+            print(oldVal)
+        }
+    }
     var pageNum : Int = 0
     var perPage : Int = 20
     var isLast : Bool = false
@@ -42,9 +46,9 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        STEventCenter.sharedInstance.addObserver(self, selector: "timetableSwitched", event: STEvent.CurrentTimetableSwitched, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadTimetable", event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadTempLecture", event: STEvent.CurrentTemporaryLectureChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.timetableSwitched), event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.reloadTimetable), event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.reloadTempLecture), event: STEvent.CurrentTemporaryLectureChanged, object: nil)
         
         tableView.emptyDataSetSource = self;
         tableView.emptyDataSetDelegate = self;
@@ -68,7 +72,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         timetableView.timetable = timetableManager.currentTimetable
         timetableView.showTemporary = true
         settingChanged()
-        STEventCenter.sharedInstance.addObserver(self, selector: "settingChanged", event: STEvent.SettingChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -88,7 +92,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         super.viewWillDisappear(animated)
     }
 
-    func settingChanged() {
+    @objc func settingChanged() {
         if STDefaults[.autoFit] {
             timetableView.shouldAutofit = true
         } else {
@@ -172,7 +176,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         }
     }
     
-    func timetableSwitched() {
+    @objc func timetableSwitched() {
         state = .empty
         searchBar.text = ""
         FilteredList = []
@@ -188,11 +192,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         tagCollectionView.reloadData()
     }
     
-    func reloadTimetable() {
+    @objc func reloadTimetable() {
         self.timetableView.reloadTimetable()
     }
     
-    func reloadTempLecture() {
+    @objc func reloadTempLecture() {
         self.timetableView.reloadTempLecture()
     }
     
@@ -346,7 +350,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
 
 
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         if case let .editingQuery(query, tagList, lectureList) = state {
             searchBar.resignFirstResponder()
             searchBar.isEditingTag = false

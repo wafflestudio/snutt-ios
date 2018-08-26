@@ -66,8 +66,8 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "STTagTableViewCell", for: indexPath) as! STTagTableViewCell
-        let whiteAttribute = [NSForegroundColorAttributeName: UIColor.white]
-        let colorAttribute = [NSForegroundColorAttributeName: filteredList[indexPath.row].type.tagColor]
+        let whiteAttribute = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        let colorAttribute = [NSAttributedStringKey.foregroundColor: filteredList[indexPath.row].type.tagColor]
         let text = NSMutableAttributedString()
         let sharpText = NSAttributedString(string: "# ", attributes: colorAttribute)
         let tagText = NSAttributedString(string: filteredList[indexPath.row].text, attributes: whiteAttribute)

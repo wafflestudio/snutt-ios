@@ -13,11 +13,13 @@ class CoreAssembly : Assembly {
     func assemble(container: Container) {
         container.register(STTimetableManager.self) { r in
             STTimetableManager()
-        }
+        }.inObjectScope(.container)
         container.register(STCourseBookListManager.self) { r in
             STCourseBookListManager()
-        }
+        }.inObjectScope(.container)
         container.register(STTagManager.self) { r in STTagManager(resolver: r) }
+            .inObjectScope(.container)
         container.register(STColorManager.self) { r in STColorManager() }
+            .inObjectScope(.container)
     }
 }

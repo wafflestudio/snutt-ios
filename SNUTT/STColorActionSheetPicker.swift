@@ -35,7 +35,7 @@ class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         switch component {
         case 0:
-            let attribute = [NSForegroundColorAttributeName: colorList[row].bgColor.lighten(byPercentage: 0.4)]
+            let attribute = [NSAttributedStringKey.foregroundColor: colorList[row].bgColor.lighten(byPercentage: 0.4)]
             return NSAttributedString(string: nameList[row], attributes: attribute)
         default: return nil
         }

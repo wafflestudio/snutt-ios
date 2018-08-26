@@ -80,7 +80,7 @@ class STNetworking {
     
     static func updateTimetable(_ id: String, title: String, done: (()->())?) {
         let request = Alamofire.request(STTimetableRouter.updateTimetable(id: id, title: title))
-        request.responseWithDone({ _ in
+        request.responseWithDone({ _, _ in
                 done?()
             }, failure: nil
         )
@@ -353,7 +353,7 @@ class STNetworking {
 
     static func sendFeedback(_ email: String?, message: String, done: (()->())?, failure: (()->())?) {
         let request = Alamofire.request(STEtcRouter.feedback(email: email, message: message))
-        request.responseWithDone({ _ in
+        request.responseWithDone({ _, _ in
                 done?()
         }, failure: { _ in
             failure?()

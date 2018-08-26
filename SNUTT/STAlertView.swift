@@ -29,7 +29,7 @@ class STAlertView {
                 if topController is UIAlertController {
                     let topAlertController = topController as! UIAlertController
                     if topAlertController.actions.count == 0 {
-                        topController.dismiss(animated: false, completion: { _ in
+                        topController.dismiss(animated: false, completion: {
                             showAlert(alert)
                         })
                         return

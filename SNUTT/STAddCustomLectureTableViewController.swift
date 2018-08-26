@@ -108,11 +108,11 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
     @IBAction func saveButtonClicked(_ sender: UIBarButtonItem) {
         self.view.endEditing(true)
         let loadingView = STAlertView.showLoading(title: "저장중...")
-        timetableManager.addCustomLecture(currentLecture, object: self, done:{ _ in
-            loadingView.dismiss(animated: true, completion: { _ in
+        timetableManager.addCustomLecture(currentLecture, object: self, done:{
+            loadingView.dismiss(animated: true, completion: {
                 self.dismiss(animated: true)
             })
-        }, failure: { _ in
+        }, failure: {
             loadingView.dismiss(animated: true)
         })
     }

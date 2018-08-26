@@ -34,7 +34,7 @@ class STAddLocalIDViewController: UIViewController, UITextFieldDelegate {
             textField.delegate = self
         }
 
-        addButton.buttonPressAction = { _ in
+        addButton.buttonPressAction = {
             self.saveButtonClicked()
         }
 
@@ -80,7 +80,7 @@ class STAddLocalIDViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-    func termLabelClicked() {
+    @objc func termLabelClicked() {
         self.view.endEditing(true)
         let url = STConfig.sharedInstance.baseURL + "/terms_of_service"
         let svc = SFSafariViewController(url: URL(string: url)!)

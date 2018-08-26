@@ -36,26 +36,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         #if DEBUG
             let infoName = "GoogleService-Info-Dev"
-            let configKey = "debug"
         #elseif PRODUCTION
             let infoName = "GoogleService-Info-Production"
-            let configKey = "production"
         #else
             let infoName = "GoogleService-Info-Dev"
-            let configKey = "staging"
         #endif
 
-        print(infoName);
-        print(configKey);
-
-        let configDict = configAllDict.object(forKey: configKey) as! NSDictionary
         let filePath = Bundle.main.path(forResource: infoName, ofType: "plist")
         let options = FirebaseOptions(contentsOfFile: filePath!)
         FirebaseApp.configure(options: options!)
-
-        print(configDict.object(forKey: "api_server_url") as! String);
-
-        STConfig.sharedInstance.baseURL = configDict.object(forKey: "api_server_url") as! String
 
         setColors()
         
@@ -66,14 +55,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateInitialViewController()
         }
         
-        // set the api key base on config.plist
-        STDefaults[.apiKey] = configDict.object(forKey: "api_key") as! String
         if STDefaults[.token] != nil {
             STMainTabBarController.controller?.setNotiBadge(STDefaults[.shouldShowBadge])
             STNetworking.getNotificationCount({ cnt in
                 STMainTabBarController.controller?.setNotiBadge(cnt != 0)
                 
-                }, failure: { _ in
+                }, failure: { 
                     return
             })
         }

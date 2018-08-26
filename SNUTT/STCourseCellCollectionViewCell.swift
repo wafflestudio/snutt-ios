@@ -62,7 +62,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         var text = NSMutableAttributedString()
         if let lecture = self.lecture {
             let font = UIFont.systemFont(ofSize: 10.0)
-            text.append(NSAttributedString(string: lecture.titleBreakLine, attributes: [NSFontAttributeName: font]))
+            text.append(NSAttributedString(string: lecture.titleBreakLine, attributes: [NSAttributedStringKey.font: font]))
         }
         if let singleClass = self.singleClass {
             let placeText = singleClass.place
@@ -85,7 +85,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
                 text.append(NSAttributedString(string: "\n"))
             }
             if singleClass.place != "" {
-                text.append(NSAttributedString(string: singleClass.placeBreakLine, attributes: [NSFontAttributeName: font]))
+                text.append(NSAttributedString(string: singleClass.placeBreakLine, attributes: [NSAttributedStringKey.font: font]))
             }
         }
         courseText.attributedText = text
@@ -109,12 +109,12 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         }
         */
     }
-    func longClick(_ gesture : UILongPressGestureRecognizer) {
+    @objc func longClick(_ gesture : UILongPressGestureRecognizer) {
         if gesture.state == UIGestureRecognizerState.began {
             longClicked?(self)
         }
     }
-    func tap(_ gesture: UITapGestureRecognizer) {
+    @objc func tap(_ gesture: UITapGestureRecognizer) {
         if gesture.state == UIGestureRecognizerState.recognized {
             tapped?(self)
         }

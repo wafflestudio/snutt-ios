@@ -26,8 +26,8 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         self.tableView.separatorStyle = .none
         self.tableView.rowHeight = 74.0
         
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData:", event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData:", event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STMyLectureListController.reloadData(_:)), event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STMyLectureListController.reloadData(_:)), event: STEvent.CurrentTimetableSwitched, object: nil)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -40,7 +40,7 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         // Dispose of any resources that can be recreated.
     }
 
-    func reloadData(_ notification : Notification) {
+    @objc func reloadData(_ notification : Notification) {
         if((notification.object as AnyObject) === self) {
             return //This is because of delete animation.
         }
@@ -125,8 +125,8 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "시간표에 강좌가 없습니다."
-        let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0)
+        let attributes: [NSAttributedStringKey : AnyObject] = [
+            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18.0)
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }
@@ -136,18 +136,18 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineBreakMode = .byWordWrapping
         paragraph.alignment = .center
-        let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.systemFont(ofSize: 14.0),
-            NSForegroundColorAttributeName : UIColor.lightGray,
-            NSParagraphStyleAttributeName : paragraph
+        let attributes: [NSAttributedStringKey: AnyObject] = [
+            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14.0),
+            NSAttributedStringKey.foregroundColor : UIColor.lightGray,
+            NSAttributedStringKey.paragraphStyle : paragraph
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }
     
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
         let text = "직접 만들기"
-        let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 17.0)
+        let attributes: [NSAttributedStringKey : AnyObject] = [
+            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 17.0)
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }

@@ -37,7 +37,7 @@ class STCourseBookListManager {
             self.courseBookList = list
             STEventCenter.sharedInstance.postNotification(event: .CourseBookUpdated, object: nil)
             self.saveCourseBooks()
-            }, failure: { _ in
+            }, failure: { 
                 return
         })
     }

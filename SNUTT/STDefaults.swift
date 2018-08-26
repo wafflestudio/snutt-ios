@@ -17,7 +17,6 @@ extension DefaultsKeys {
     static let autoFit = DefaultsKey<Bool>("autoFit", true)
     static let dayRange = DefaultsKey<[Int]>("dayRange", [0,4])
     static let timeRange = DefaultsKey<[Double]>("timeRange", [0.0, 14.0])
-    static let apiKey = DefaultsKey<String>("apiKey")
     static let registeredFCMToken = DefaultsKey<String?>("registeredFCMToken")
     static let shouldShowBadge = DefaultsKey<Bool>("shouldShowBadge", false)
     static let currentTimetable = DefaultsKey<NSDictionary?>("currentTimetable")

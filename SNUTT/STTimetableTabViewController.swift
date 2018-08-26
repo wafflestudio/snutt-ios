@@ -35,7 +35,7 @@ class STTimetableTabViewController: UIViewController {
         titleView.textAlignment = .center
         self.navigationItem.titleView = titleView
         
-        let recognizer = UITapGestureRecognizer(target: self, action: "titleWasTapped")
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(STTimetableTabViewController.titleWasTapped))
         titleView.isUserInteractionEnabled = true
         titleView.addGestureRecognizer(recognizer)
         
@@ -54,9 +54,9 @@ class STTimetableTabViewController: UIViewController {
         timetableView.cellLongClicked = self.cellLongClicked
         timetableView.cellTapped = self.cellTapped
 
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData", event: STEvent.CurrentTimetableSwitched, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "settingChanged", event: STEvent.SettingChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.reloadData), event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.reloadData), event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
         
         reloadData()
     }
@@ -70,10 +70,10 @@ class STTimetableTabViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func reloadData() {
+    @objc func reloadData() {
         let titleView = (self.navigationItem.titleView as! UILabel)
-        let attribute = [NSForegroundColorAttributeName : UIColor.darkGray,
-                         NSFontAttributeName : UIFont.systemFont(ofSize: 15)]
+        let attribute = [NSAttributedStringKey.foregroundColor : UIColor.darkGray,
+                         NSAttributedStringKey.font : UIFont.systemFont(ofSize: 15)]
         let totalCreditStr = NSAttributedString(string: " \(timetableManager.currentTimetable?.totalCredit ?? 0)학점", attributes: attribute)
         let mutableStr = NSMutableAttributedString()
         mutableStr.append(NSAttributedString(string: timetableManager.currentTimetable?.title ?? ""))
@@ -85,7 +85,7 @@ class STTimetableTabViewController: UIViewController {
         timetableView.reloadTimetable()
     }
     
-    func settingChanged() {
+    @objc func settingChanged() {
         if STDefaults[.autoFit] {
             timetableView.shouldAutofit = true
         } else {
@@ -106,7 +106,7 @@ class STTimetableTabViewController: UIViewController {
         timetableView.reloadTimetable()
     }
     
-    func switchView() {
+    @objc func switchView() {
 
         if (isInAnimation) {
             return
@@ -140,7 +140,7 @@ class STTimetableTabViewController: UIViewController {
         })
     }
     
-    func titleWasTapped() {
+    @objc func titleWasTapped() {
         guard let currentTimetable = timetableManager.currentTimetable else {
             return
         }
@@ -193,7 +193,7 @@ class STTimetableTabViewController: UIViewController {
             newLecture?.colorIndex = selectedColorIndex
             newLecture?.color = nil
             timetableManager.updateLecture(
-                oldLecture, newLecture: newLecture!, done: { _ in return }, failure: {
+                oldLecture, newLecture: newLecture!, done: {  return }, failure: {
                     cellList.forEach { cell in
                         cell?.setColorByLecture(lecture: oldLecture)
                     }
