@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class STTimetableTabViewController: UIViewController {
     
@@ -14,6 +15,10 @@ class STTimetableTabViewController: UIViewController {
     var lectureListController : STMyLectureListController!
     let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
     let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
+    let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
+    let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
+
+    let disposeBag = DisposeBag()
 
     enum State {
     case timetable
@@ -153,13 +158,17 @@ class STTimetableTabViewController: UIViewController {
                 textfield.placeholder = "새로운 시간표 이름"
             })
             alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "이름 변경", style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "이름 변경", style: .default, handler: { [weak self] _ in
+                guard let self = self else { return }
                 if let timetableName = alert.textFields?.first?.text {
                     let timetableManager = self.timetableManager
-                    STNetworking.updateTimetable(timetableId, title: timetableName, done: {
-                        timetableManager.currentTimetable?.title = timetableName
-                        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
-                    })
+                    self.networkProvider.rx.request(STTarget.UpdateTimetable(params: .init(title: timetableName), id: timetableId))
+                        .subscribe(onSuccess: { [weak self] _ in
+                            self?.timetableManager.currentTimetable?.title = timetableName
+                            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+                        }, onError: self.errorHandler.apiOnError
+                    )
+                    .disposed(by: self.disposeBag)
                 }
             }))
         })

@@ -9,8 +9,13 @@
 import UIKit
 import Alamofire
 import DZNEmptyDataSet
+import RxSwift
 
 class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
+    let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
+    let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
+    let disposeBag = DisposeBag()
+
     let heightForFetch : CGFloat = CGFloat(50.0)
 
     var notiList : [STNotification] = []
@@ -89,11 +94,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let notification = notiList[indexPath.row]
-        if let linkNotification = notification as? STLinkNotification {
-            guard let urlString = linkNotification.url,
-                let url = URL.init(string: urlString) else {
-                    return
-            }
+        if let urlString = notification.url, let url = URL.init(string: urlString) {
             UIApplication.shared.openURL(url)
         }
         tableView.deselectRow(at: indexPath, animated: true)
@@ -112,19 +113,22 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     
     func getMoreList() {
         loading = true
-        STNetworking.getNotificationList(numPerPage, offset: numPerPage * pageCnt, explicit: true, done: { list in
-            self.loading = false
-            self.notiList = self.notiList + list
-            self.pageCnt += 1
-            
-            if list.count < self.numPerPage {
-                self.isLast = true
-            }
-            self.tableView.reloadData()
-        }, failure: {
-            // There is no error other than networking error
-            self.loading = false
-        })
+        networkProvider.rx.request(STTarget.GetNotificationList(params: .init(limit: numPerPage, offset: numPerPage * pageCnt, explicit: true)))
+            .subscribe(onSuccess: { [weak self] list in
+                guard let self = self else { return }
+
+                self.loading = false
+                self.notiList = self.notiList + list
+                self.pageCnt += 1
+
+                if list.count < self.numPerPage {
+                    self.isLast = true
+                }
+                self.tableView.reloadData()
+                }, onError: { [weak self] err in
+                    self?.errorHandler.apiOnError(err)
+                    self?.loading = false
+            }).disposed(by: disposeBag)
     }
     
     @objc func refreshList() {
@@ -132,28 +136,31 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         pageCnt = 0
         isLast = false
         STMainTabBarController.controller?.setNotiBadge(false)
-        STNetworking.getNotificationList(numPerPage, offset: numPerPage * pageCnt, explicit: true, done: { list in
-            self.loading = false
-            self.notiList = list
-            STMainTabBarController.controller?.setNotiBadge(false)
-            if list.count < self.numPerPage {
-                self.isLast = true
-            }
-            self.pageCnt += 1
-            
-            let formatter = DateFormatter()
-            formatter.dateStyle = DateFormatter.Style.medium
-            formatter.timeStyle = DateFormatter.Style.medium
-            
-            let title = "Last update: \(formatter.string(from: Date()))"
-            self.refreshControl?.attributedTitle = NSAttributedString(string: title)
-            
-            self.tableView.reloadData()
-            self.refreshControl?.endRefreshing()
-            }, failure: {
-                // There is no error other than networking error
+        networkProvider.rx.request(STTarget.GetNotificationList(params: .init(limit: numPerPage, offset: numPerPage * pageCnt, explicit: true)))
+            .subscribe(onSuccess: { [weak self] list in
+                guard let self = self else { return }
                 self.loading = false
-        })
+                self.notiList = list
+                STMainTabBarController.controller?.setNotiBadge(false)
+                if list.count < self.numPerPage {
+                    self.isLast = true
+                }
+                self.pageCnt += 1
+
+                let formatter = DateFormatter()
+                formatter.dateStyle = DateFormatter.Style.medium
+                formatter.timeStyle = DateFormatter.Style.medium
+
+                let title = "Last update: \(formatter.string(from: Date()))"
+                self.refreshControl?.attributedTitle = NSAttributedString(string: title)
+
+                self.tableView.reloadData()
+                self.refreshControl?.endRefreshing()
+                }, onError: { [weak self] err in
+                    self?.errorHandler.apiOnError(err)
+                    self?.loading = false
+            })
+            .disposed(by: disposeBag)
     }
     
     //MARK: DNZEmptyDataSet

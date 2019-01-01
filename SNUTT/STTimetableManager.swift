@@ -8,21 +8,25 @@
 
 import Foundation
 import SwiftyJSON
+import RxSwift
 
 class STTimetableManager {
+
+    let disposeBag = DisposeBag()
+    let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
+    let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
 
     init() {
         self.loadData()
         if let timetableId = currentTimetable?.id {
-            STNetworking.getTimetable(timetableId, done: { timetable in
-                self.currentTimetable = timetable
-            }, failure: { errorCode in
-                if errorCode == STErrorCode.NO_NETWORK {
-                    return
-                } else {
-                    self.currentTimetable = nil
-                }
-            })
+            networkProvider.rx.request(STTarget.GetTimetable(id: timetableId))
+                .subscribe(onSuccess: { [weak self] timetable in
+                    self?.currentTimetable = timetable
+                    }, onError: { [weak self] e in
+                        self?.errorHandler.apiOnError(e)
+                        self?.currentTimetable = nil
+                })
+                .disposed(by: disposeBag)
         }
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableManager.saveData), event: STEvent.CurrentTimetableChanged, object: nil)
     }
@@ -53,21 +57,42 @@ class STTimetableManager {
     
     func addCustomLecture(_ lecture : STLecture, object : AnyObject?, done: (()->())?, failure: (()->())?) {
         var lecture = lecture
-        if currentTimetable == nil {
+        guard let currentTimetable = currentTimetable else {
             failure?()
             return
         }
-        let ret = currentTimetable!.addLecture(lecture)
+        let ret = currentTimetable.addLecture(lecture)
         if case STAddLectureState.success = ret {
-            STNetworking.addCustomLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
-                self.currentTimetable?.lectureList = newTimetable.lectureList
-                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-                done?()
-                }, failure: {
-                self.currentTimetable?.deleteLecture(lecture)
-                    failure?()
-                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-            })
+
+            let params = STTarget.AddCustomLecture.Params(
+                classification: lecture.classification,
+                department: lecture.department,
+                academic_year: lecture.academicYear,
+                course_number: lecture.courseNumber,
+                lecture_number: lecture.lectureNumber,
+                course_title: lecture.title,
+                credit: lecture.credit,
+                instructor: lecture.instructor,
+                quota: lecture.quota,
+                remark: lecture.remark,
+                category: lecture.category,
+                class_time_json: lecture.classList,
+                color: lecture.color,
+                colorIndex: lecture.colorIndex
+            )
+            networkProvider.rx.request(STTarget.AddCustomLecture(params: params, timetableId: currentTimetable.id!))
+                .subscribe(onSuccess: { [weak self] newTimetable in
+                    self?.currentTimetable?.lectureList = newTimetable.lectureList
+                    STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+                    done?()
+                    }, onError: { [weak self] err in
+                        self?.errorHandler.apiOnError(err)
+                        self?.currentTimetable?.deleteLecture(lecture)
+                        failure?()
+                        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+
+                })
+                .disposed(by: disposeBag)
             STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
         } else if case STAddLectureState.errorTime = ret {
             failure?()
@@ -79,19 +104,20 @@ class STTimetableManager {
     }
     
     func addLecture(_ lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
-        var lecture = lecture
-        if currentTimetable == nil {
+        guard let currentTimetable = currentTimetable else {
             return STAddLectureState.success
         }
-        let ret = currentTimetable!.addLecture(lecture)
+        let ret = currentTimetable.addLecture(lecture)
         if case STAddLectureState.success = ret {
-            STNetworking.addLecture(currentTimetable!, lectureId: lecture.id!, done: { newTimetable in
-                self.currentTimetable?.lectureList = newTimetable.lectureList
-                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-                }, failure: {
-                    self.currentTimetable?.deleteLecture(lecture)
+            networkProvider.rx.request(STTarget.AddLecture(timetableId: currentTimetable.id!, lectureId: lecture.id!))
+                .subscribe(onSuccess: { [weak self] newTimetable in
+                    self?.currentTimetable?.lectureList = newTimetable.lectureList
                     STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-            })
+                }, onError: { [weak self] err in
+                    self?.currentTimetable?.deleteLecture(lecture)
+                    STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+                })
+                .disposed(by: disposeBag)
             STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
         } else if case STAddLectureState.errorTime = ret {
             STAlertView.showAlert(title: "강의 추가 실패", message: "겹치는 시간대가 있습니다.")
@@ -129,39 +155,42 @@ class STTimetableManager {
     }
     
     func deleteLectureAtIndex(_ index: Int, object : AnyObject? ) {
-        if currentTimetable == nil {
+        guard let currentTimetable = currentTimetable else {
             return
         }
-        let lecture = currentTimetable!.lectureList[index]
-        currentTimetable?.deleteLectureAtIndex(index)
+        let lecture = currentTimetable.lectureList[index]
+        currentTimetable.deleteLectureAtIndex(index)
         STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
-        STNetworking.deleteLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
-            self.currentTimetable?.lectureList = newTimetable.lectureList
-            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
-        }, failure: {
-            self.currentTimetable?.addLecture(lecture)
-            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
-        })
+        networkProvider.rx.request(STTarget.DeleteLecture(timetableId: currentTimetable.id!, lectureId: lecture.id!))
+            .subscribe(onSuccess: { [weak self] newTimetable in
+                self?.currentTimetable?.lectureList = newTimetable.lectureList
+                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+                }, onError: { [weak self] err in
+                    self?.errorHandler.apiOnError(err)
+                    self?.currentTimetable?.addLecture(lecture)
+                    STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+            })
+            .disposed(by: disposeBag)
     }
     
     
     //FIXME: Refactoring Needed
     func resetLecture(_ lecture: STLecture, done: @escaping ()->()) {
-        if currentTimetable == nil {
+        guard let currentTimetable = currentTimetable else {
             return
         }
-        guard let index = currentTimetable!.lectureList.index(where: { lec in
+        guard let index = currentTimetable.lectureList.index(where: { lec in
             return lec.id == lecture.id
         }) else {
             done()
             return
         }
-        
-        STNetworking.resetLecture(currentTimetable!, lecture: lecture, done: { newTimetable in
-            self.currentTimetable?.lectureList = newTimetable.lectureList
-            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
-            done()
-        }, failure: nil)
+        networkProvider.rx.request(STTarget.ResetLecture(timetableId: currentTimetable.id!, lectureId: lecture.id!))
+            .subscribe(onSuccess: { [weak self] newTimetable in
+                self?.currentTimetable?.lectureList = newTimetable.lectureList
+                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+            }, onError: errorHandler.apiOnError)
+            .disposed(by: disposeBag)
         STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
     }
     

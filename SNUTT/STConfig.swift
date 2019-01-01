@@ -24,12 +24,13 @@ class STConfig {
     }
 
     fileprivate init() {
+        // FIXME: we only use production since there is no test server.
         #if DEBUG
-        let configKey = "debug"
+        let configKey = "production"
         #elseif PRODUCTION
         let configKey = "production"
         #else
-        let configKey = "staging"
+        let configKey = "production"
         #endif
 
         let path = Bundle.main.path(forResource: "config", ofType: "plist")!

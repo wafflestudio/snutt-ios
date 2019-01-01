@@ -9,13 +9,19 @@
 import Foundation
 import Alamofire
 import Swinject
+import RxSwift
 
 class STTagManager {
 
     let timetableManager: STTimetableManager
+    let networkProvider: STNetworkProvider
+    let errorHandler: STErrorHandler
+    let disposeBag = DisposeBag()
 
     init(resolver r: Resolver) {
         timetableManager = r.resolve(STTimetableManager.self)!
+        networkProvider = r.resolve(STNetworkProvider.self)!
+        errorHandler = r.resolve(STErrorHandler.self)!
         self.loadData()
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTagManager.loadData), event: STEvent.CurrentTimetableSwitched, object: nil)
     }
@@ -38,30 +44,56 @@ class STTagManager {
     func saveData(_ quarter: STQuarter) {
         NSKeyedArchiver.archiveRootObject(self.tagList, toFile: getDocumentsDirectory().appendingPathComponent("tagList\(quarter.shortString()).archive"))
     }
-    
-    
-    
-    
+
     func getTagListWithQuarter(_ quarter: STQuarter, updatedTime : Int64) {
-        STNetworking.getTagListForQuarter(quarter, done: { tagList in
-            if self.tagList.quarter == quarter {
-                self.tagList = tagList
-                self.saveData(quarter)
-            }
-        }, failure: { 
-            self.tagList = STTagList(quarter: quarter, tagList: [], updatedTime: 0)
-        })
+        networkProvider.rx.request(STTarget.GetTagList(year: quarter.year, semester: quarter.semester))
+            .map { result -> STTagList in
+                var tags: [STTag] = []
+                tags += result.classification?.map {
+                    return STTag(type: .Classification, text: $0)
+                } ?? []
+                tags += result.department?.map {
+                    return STTag(type: .Department, text: $0)
+                    } ?? []
+                tags += result.academic_year?.map {
+                    return STTag(type: .AcademicYear, text: $0)
+                    } ?? []
+                tags += result.credit?.map {
+                    return STTag(type: .Credit, text: $0)
+                    } ?? []
+                tags += result.instructor?.map {
+                    return STTag(type: .Instructor, text: $0)
+                    } ?? []
+                tags += result.category?.map {
+                    return STTag(type: .Category, text: $0)
+                    } ?? []
+                let updatedTime = result.updated_at
+                return STTagList(quarter: quarter, tagList: tags, updatedTime: updatedTime)
+            }.subscribe(onSuccess: { [weak self] tagList in
+                guard let self = self else { return }
+                if self.tagList.quarter == quarter {
+                    self.tagList = tagList
+                    self.saveData(quarter)
+                }
+            }, onError: { [weak self] err in
+                self?.errorHandler.apiOnError(err)
+                self?.tagList = STTagList(quarter: quarter, tagList: [], updatedTime: 0)
+            })
+            .disposed(by: disposeBag)
     }
 
 
     
     func updateTagList() {
-        STNetworking.getTagUpdateTimeForQuarter(tagList.quarter, done: { updatedTime in
-            if self.tagList.updatedTime != updatedTime {
+        networkProvider.rx.request(STTarget.GetTagListUpdateTime(year: tagList.quarter.year, semester: tagList.quarter.semester))
+            .map { $0.updated_at}
+            .subscribe(onSuccess: { [weak self] updatedTime in
+                guard let self = self else { return }
+                if self.tagList.updatedTime != updatedTime {
                     self.getTagListWithQuarter(self.tagList.quarter, updatedTime: updatedTime)
-            }
-            }, failure: nil
-        )
+                }
+                }, onError: errorHandler.apiOnError)
+            .disposed(by: disposeBag)
     }
 
 }

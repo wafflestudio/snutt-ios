@@ -21,5 +21,9 @@ class CoreAssembly : Assembly {
             .inObjectScope(.container)
         container.register(STColorManager.self) { r in STColorManager() }
             .inObjectScope(.container)
+        container.register(STNetworkProvider.self) { r in STNetworkProvider() }
+            .inObjectScope(.container)
+        container.register(STErrorHandler.self) { r in STErrorHandler() }
+            .inObjectScope(.container)
     }
 }

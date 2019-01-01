@@ -164,6 +164,52 @@ struct STLecture {
     }
 }
 
+extension STLecture: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case classification
+        case department
+        case academic_year
+        case course_number
+        case lecture_number
+        case course_title
+        case credit
+        case instructor
+        case quota
+        case remark
+        case category
+        case _id
+        case class_time_json
+        case class_time_mask
+        case color
+        case colorIndex
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        // TODO:
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        classification = try container.decodeIfPresent(String.self, forKey: .classification)
+        department = try container.decodeIfPresent(String.self, forKey: .department)
+        academicYear = try container.decodeIfPresent(String.self, forKey: .academic_year)
+        courseNumber = try container.decodeIfPresent(String.self, forKey: .course_number)
+        title = try container.decode(String.self, forKey: .course_title)
+        titleBreakLine = title.breakOnlyAtNewLineAndSpace
+        credit = (try container.decodeIfPresent(Int.self, forKey: .credit)) ?? 0
+        instructor = (try container.decodeIfPresent(String.self, forKey: .instructor)) ?? ""
+        quota = (try container.decodeIfPresent(Int.self, forKey: .quota)) ?? 0
+        remark = try container.decodeIfPresent(String.self, forKey: .remark)
+        category = try container.decodeIfPresent(String.self, forKey: .category)
+        timeMask = try container.decode([Int].self, forKey: .class_time_mask)
+        id = try container.decodeIfPresent(String.self, forKey: ._id)
+        colorIndex = (try container.decodeIfPresent(Int.self, forKey: .colorIndex)) ?? 0
+        color = try? container.decode(STColor.self, forKey: .color)
+        classList = try container.decode([STSingleClass].self, forKey: .class_time_json)
+    }
+}
+
 extension STLecture : Equatable {}
 
 func ==(lhs: STLecture, rhs: STLecture) -> Bool {

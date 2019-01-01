@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum STSemester : Int {
+enum STSemester : Int, Codable {
     case first = 1, summer, second, winter
     
     static let allValues = [first, summer, second, winter]

@@ -13,8 +13,7 @@ enum STAddLectureState {
     case success, errorTime, errorSameLecture
 }
 
-class STTimetable {
-    
+class STTimetable: Codable {
     var lectureList : [STLecture] = []
     var quarter : STQuarter
     var title : String
@@ -46,7 +45,7 @@ class STTimetable {
         self.quarter = courseBook.quarter
         self.title = title
     }
-    
+
     init(json : JSON) {
         let year = json["year"].intValue
         let semester = STSemester(rawValue: json["semester"].intValue)!
@@ -117,6 +116,36 @@ class STTimetable {
     
     func timetableReverseTimeMask() -> [Int] {
         return timetableTimeMask().map {t1 in 0x3FFFFFFF ^ t1 }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case year
+        case semester
+        case title
+        case _id
+        case lecture_list
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(quarter.year, forKey: .year)
+        try container.encode(quarter.semester, forKey: .semester)
+        try container.encode(title, forKey: .title)
+        try container.encode(id, forKey: ._id)
+        try container.encode(lectureList, forKey: .lecture_list)
+    }
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let year = try container.decode(Int.self, forKey: .year)
+        let semester = try container.decode(STSemester.self, forKey: .semester)
+        quarter = STQuarter(year: year, semester: semester)
+        title = (try? container.decode(String.self, forKey: .title)) ?? ""
+        id = try container.decodeIfPresent(String.self, forKey: ._id)
+        let lectures = (try container.decodeIfPresent([STLecture].self, forKey: .lecture_list)) ?? []
+        lectures.forEach {
+            self.addLecture($0)
+        }
     }
 }
 

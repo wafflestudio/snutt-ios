@@ -10,6 +10,7 @@ import UIKit
 import ChameleonFramework
 import SafariServices
 import Crashlytics
+import RxSwift
 
 class STRegisterViewController: UIViewController, UITextFieldDelegate {
 
@@ -26,8 +27,11 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var layoutConstraint2: NSLayoutConstraint!
     @IBOutlet weak var layoutConstraint3: NSLayoutConstraint!
 
-
     @IBOutlet weak var termView: UIView!
+
+    let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
+    let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
+    let disposeBag = DisposeBag()
 
     var textFields : [STLoginTextField] {
         get {
@@ -143,17 +147,17 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
         }
         let emailText = emailTextField.text
         let email = emailText == "" ? nil : emailText
-        STNetworking.registerLocal(id, password: password, email: email, done: { token, userId in
-            STDefaults[.token] = token
-            STDefaults[.userId] = userId
-            #if DEBUG
-            #else
-                Crashlytics.sharedInstance().setUserIdentifier(userId)
-            #endif
-            STUser.loadMainPage()
-        }, failure: { 
-            //STAlertView.showAlert(title: "회원가입 실패", message: "회원가입에 실패하였습니다.")
-        })
+        networkProvider.rx.request(STTarget.LocalRegister(params: .init(id: id, password: password, email: email)))
+            .subscribe(onSuccess: { result in
+                STDefaults[.token] = result.token
+                STDefaults[.userId] = result.user_id
+                #if DEBUG
+                #else
+                Crashlytics.sharedInstance().setUserIdentifier(result.user_id)
+                #endif
+                STUser.loadMainPage()
+            }, onError: errorHandler.apiOnError)
+            .disposed(by: disposeBag)
     }
 
     @objc func termLabelClicked() {

@@ -24,7 +24,9 @@ target 'SNUTT' do
   pod 'MarqueeLabel/Swift'
   pod 'UITextView+Placeholder', '~> 1.2'
   pod 'Swinject'
-  pod 'SwinjectStoryboard'
+  pod 'RxSwift'
+  pod 'RxSwiftExt'
+  pod 'Moya/RxSwift'
 end
 
 target 'SNUTT Today' do

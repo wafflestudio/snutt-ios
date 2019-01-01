@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
+    let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
@@ -34,12 +36,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let path = Bundle.main.path(forResource: "config", ofType: "plist")!
         let configAllDict = NSDictionary(contentsOfFile: path)!
 
+        // FIXME: there is no test server now...
         #if DEBUG
-            let infoName = "GoogleService-Info-Dev"
+            let infoName = "GoogleService-Info-Production"
         #elseif PRODUCTION
             let infoName = "GoogleService-Info-Production"
         #else
-            let infoName = "GoogleService-Info-Dev"
+            let infoName = "GoogleService-Info-Production"
         #endif
 
         let filePath = Bundle.main.path(forResource: infoName, ofType: "plist")
@@ -57,12 +60,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if STDefaults[.token] != nil {
             STMainTabBarController.controller?.setNotiBadge(STDefaults[.shouldShowBadge])
-            STNetworking.getNotificationCount({ cnt in
-                STMainTabBarController.controller?.setNotiBadge(cnt != 0)
-                
-                }, failure: { 
-                    return
-            })
+            networkProvider.rx.request(STTarget.GetNotificationCount())
+                .map { $0.count }
+                .subscribe(onSuccess: { count in
+                    STMainTabBarController.controller?.setNotiBadge(count != 0)
+                }, onError: errorHandler.apiOnError)
         }
         
 
@@ -97,10 +99,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var fcmInfos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
         for fcmInfo in fcmInfos {
-            STNetworking.logOut(userId: fcmInfo.userId, fcmToken: fcmInfo.fcmToken, done: {
-                let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
-                STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
-            }, failure: nil)
+            let _ = networkProvider.rx.request(STTarget.LogOutDevice(params: .init(user_id: fcmInfo.userId, registration_id: fcmInfo.fcmToken )))
+                .subscribe({ _ in
+                    let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+                    STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
+                })
         }
 
         return true

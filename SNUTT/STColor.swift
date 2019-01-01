@@ -30,6 +30,27 @@ struct STColor {
     }
 }
 
+extension STColor: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case fg
+        case bg
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(fgColor.toHexString(), forKey: .fg)
+        try container.encode(bgColor.toHexString(), forKey: .bg)
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let fgHex = try container.decode(String.self, forKey: .fg)
+        let bgHex = try container.decode(String.self, forKey: .bg)
+        fgColor = UIColor(hexString: fgHex)
+        bgColor = UIColor(hexString: bgHex)
+    }
+}
+
 extension STColor : Equatable {}
 
 func == (lhs : STColor, rhs : STColor) -> Bool  {
