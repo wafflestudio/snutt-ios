@@ -101,7 +101,8 @@ extension DataRequest {
                         }
                         switch (errCode) {
                         case STErrorCode.NO_USER_TOKEN, STErrorCode.WRONG_USER_TOKEN:
-                            STUser.logOut()
+                            // TODO: not proper DI but works...
+                            AppContainer.resolver.resolve(STUserManager.self)!.logOut()
                         default:
                             if showAlert {
                                 if let alertTitle = alertTitle {

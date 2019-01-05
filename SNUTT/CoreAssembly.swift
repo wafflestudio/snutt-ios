@@ -15,7 +15,7 @@ class CoreAssembly : Assembly {
             STTimetableManager()
         }.inObjectScope(.container)
         container.register(STCourseBookListManager.self) { r in
-            STCourseBookListManager()
+            STCourseBookListManager(resolver: r)
         }.inObjectScope(.container)
         container.register(STTagManager.self) { r in STTagManager(resolver: r) }
             .inObjectScope(.container)
@@ -24,6 +24,8 @@ class CoreAssembly : Assembly {
         container.register(STNetworkProvider.self) { r in STNetworkProvider() }
             .inObjectScope(.container)
         container.register(STErrorHandler.self) { r in STErrorHandler() }
+            .inObjectScope(.container)
+        container.register(STUserManager.self) { r in STUserManager(resolver: r) }
             .inObjectScope(.container)
     }
 }

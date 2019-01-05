@@ -31,6 +31,7 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
 
     let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
     let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
+    let userManager = AppContainer.resolver.resolve(STUserManager.self)!
     let disposeBag = DisposeBag()
 
     var textFields : [STLoginTextField] {
@@ -113,7 +114,7 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
 
     func fbButtonClicked() {
         self.view.endEditing(true)
-        STUser.tryFBLogin(controller:self)
+        userManager.tryFBLogin(controller: self)
     }
 
     func registerButtonClicked() {
@@ -148,14 +149,14 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
         let emailText = emailTextField.text
         let email = emailText == "" ? nil : emailText
         networkProvider.rx.request(STTarget.LocalRegister(params: .init(id: id, password: password, email: email)))
-            .subscribe(onSuccess: { result in
+            .subscribe(onSuccess: { [weak self] result in
                 STDefaults[.token] = result.token
                 STDefaults[.userId] = result.user_id
                 #if DEBUG
                 #else
                 Crashlytics.sharedInstance().setUserIdentifier(result.user_id)
                 #endif
-                STUser.loadMainPage()
+                self?.userManager.loadMainPage()
             }, onError: errorHandler.apiOnError)
             .disposed(by: disposeBag)
     }

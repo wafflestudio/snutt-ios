@@ -30,6 +30,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     let disposeBag = DisposeBag()
     let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
     let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
+    let userManager = AppContainer.resolver.resolve(STUserManager.self)!
 
     var textFields : [STLoginTextField] {
         get {
@@ -89,7 +90,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
 
     func fbButonClicked() {
         self.view.endEditing(true)
-        STUser.tryFBLogin(controller: self)
+        userManager.tryFBLogin(controller: self)
     }
     
     func loginButtonClicked() {
@@ -104,14 +105,14 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         networkProvider.rx.request(STTarget.LocalLogin(params: .init(id: id, password: password)))
-            .subscribe(onSuccess: {result in
+            .subscribe(onSuccess: {[weak self] result in
                 STDefaults[.token] = result.token
                 STDefaults[.userId] = result.user_id
                 #if DEBUG
                 #else
                 Crashlytics.sharedInstance().setUserIdentifier(userId)
                 #endif
-                STUser.loadMainPage()
+                self?.userManager.loadMainPage()
             }, onError: errorHandler.apiOnError)
             .disposed(by: disposeBag)
     }

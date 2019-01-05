@@ -12,50 +12,6 @@ import SwiftyJSON
 import Firebase
 
 class STNetworking {
-    
-    //MARK: AuthRouter
-    
-    static func registerFB(_ id: String, token: String, done: @escaping (String, String)->(), failure: @escaping ()->()) {
-        let request = Alamofire.request(STAuthRouter.fbRegister(id: id, token: token))
-        request.responseWithDone({ statusCode, json in
-            done(json["token"].stringValue, json["user_id"].stringValue)
-        }, failure: { err in
-            failure()
-        })
-    }
-
-    static func logOut(userId: String, fcmToken: String, done: @escaping ()->(), failure: (()->())?) {
-        let request = Alamofire.request(STAuthRouter.logOutDevice(userId: userId, fcmToken: fcmToken))
-        request.responseWithDone({ statusCode, json in
-            done()
-        }, failure: { err in
-            failure?()
-        }, showNetworkAlert: false)
-    }
-    
-    //MARK: TimetableRouter
-    
-    static func createTimetable(_ title: String, courseBook: STCourseBook, done: @escaping ([STTimetable])->(), failure: @escaping ()->()) {
-        Alamofire.request(STTimetableRouter.createTimetable(title: title, courseBook: courseBook)).responseWithDone({ statusCode, json in
-            let timetables = json.arrayValue
-            let timetableList = timetables.map { json in
-                return STTimetable(json: json)
-            }
-            done(timetableList)
-            }, failure: { _ in
-                failure()
-        })
-    }
-
-    static func getRecentTimetable(_ done: @escaping (STTimetable?)->(), failure: @escaping ()->()) {
-        Alamofire.request(STTimetableRouter.getRecentTimetable())
-            .responseWithDone({ statusCode, json in
-                done(STTimetable(json: json))
-            }, failure: { _ in
-                failure()
-            })
-    }
-    
     //MARK: LectureRouter
     
     static func updateLecture(_ timetable: STTimetable, oldLecture: STLecture, newLecture: STLecture, done: @escaping (STTimetable)->(), failure: @escaping ()->()) {
@@ -70,18 +26,6 @@ class STNetworking {
     
     //MARK: CourseBookRouter
     
-    static func getCourseBookList(_ done: @escaping ([STCourseBook])->(), failure: @escaping ()->()) {
-        let request = Alamofire.request(STCourseBookRouter.get)
-        request.responseWithDone({ statusCode, json in
-            let list = json.arrayValue.map({ json in
-                return STCourseBook(json: json)
-            })
-            done(list)
-            }, failure: { _ in
-                failure()
-        })
-    }
-    
     static func getSyllabus(_ quarter: STQuarter, lecture: STLecture, done: @escaping (String)->(), failure: (()->())?) {
         let request = Alamofire.request(STCourseBookRouter.syllabus(quarter: quarter, lecture: lecture))
         request.responseWithDone({ statusCode, json in
@@ -94,15 +38,6 @@ class STNetworking {
     }
     
     //MARK: UserRouter
-
-    static func getUser(_ done: ((STUser)->())?, failure: (()->())?) {
-        let request = Alamofire.request(STUserRouter.getUser);
-        request.responseWithDone({ statusCode, json in
-            done?(STUser(json:json))
-            }, failure: { err in
-                failure?()
-        })
-    }
 
     static func detachFB(_ done: @escaping ()->(), failure: @escaping ()->()) {
         let request = Alamofire.request(STUserRouter.detachFB)
@@ -129,30 +64,10 @@ class STNetworking {
     static func unregister(_ failure: @escaping ()->()) {
         let request = Alamofire.request(STUserRouter.deleteUser)
         request.responseWithDone({ _, json in
-            STUser.loadLoginPage()
+            // TODO: Not proper DI, but still works..
+            AppContainer.resolver.resolve(STUserManager.self)!.loadLoginPage()
             }, failure: { _ in
                 failure()
-        })
-    }
-    
-    static func editUser(_ email: String, done: @escaping ()->(), failure: @escaping ()->()) {
-        let request = Alamofire.request(STUserRouter.editUser(email: email))
-        request.responseWithDone({ _, _ in
-            done()
-            }, failure: { _ in
-                failure()
-        })
-    }
-    
-    static func changePassword(_ curPassword: String, newPassword: String, done: @escaping () -> (), failure: @escaping (String?)->()) {
-        let request = Alamofire.request(STUserRouter.changePassword(oldPassword: curPassword, newPassword: newPassword))
-        request.responseWithDone({ statusCode, json in
-            if let token = json["token"].string {
-                STDefaults[.token] = token
-            }
-            done()
-            }, failure: { _ in
-                failure(nil)
         })
     }
     
@@ -169,47 +84,6 @@ class STNetworking {
             }, failure: nil
             , showNetworkAlert: false
         )
-    }
-    
-    static func deleteDevice(_ deviceId : String, done: @escaping ()->()) {
-        let request = Alamofire.request(STUserRouter.deleteDevice(id: deviceId))
-        request.responseWithDone({ statusCode, json in
-            done()
-            }, failure: nil, showNetworkAlert: true
-        )
-    }
-    
-    static func addLocalID(_ id: String, password: String, done: @escaping ()->()) {
-        let request = Alamofire.request(STUserRouter.addLocalId(id: id, password: password))
-        request.responseWithDone({statusCode, json in
-            if let token = json["token"].string {
-                STDefaults[.token] = token
-            }
-            STUser.getUser()
-            done()
-        }, failure: nil)
-    }
-    
-    //MARK: STEtcRouter
-
-    static func sendFeedback(_ email: String?, message: String, done: (()->())?, failure: (()->())?) {
-        let request = Alamofire.request(STEtcRouter.feedback(email: email, message: message))
-        request.responseWithDone({ _, _ in
-                done?()
-        }, failure: { _ in
-            failure?()
-        })
-    }
-
-    static func getColors(_ done: (([STColor], [String])->())?, failure: (()->())?) {
-        let request = Alamofire.request(STEtcRouter.getColor)
-        request.responseWithDone({ statusCode, json in
-            let colors = json["colors"].arrayValue.map { colorJson in STColor(json: colorJson) }
-            let names = json["names"].arrayValue.map { it in it.stringValue }
-            done?(colors, names)
-            }, failure: { _ in
-                failure?()
-        }, showNetworkAlert: false)
     }
 
     //MARK: AppVersion

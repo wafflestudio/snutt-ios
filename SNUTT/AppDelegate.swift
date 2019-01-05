@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
     let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
+    let userManager = AppContainer.resolver.resolve(STUserManager.self)!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
@@ -85,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
 
         if (InstanceID.instanceID().token() != nil) {
-            STUser.updateDeviceIdIfNeeded()
+            userManager.updateDeviceIdIfNeeded()
             connectToFcm()
         }
 
@@ -145,7 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
-        STUser.updateDeviceIdIfNeeded()
+        userManager.updateDeviceIdIfNeeded()
         connectToFcm()
     }
 

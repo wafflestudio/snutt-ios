@@ -11,6 +11,9 @@ import UIKit
 class STSettingViewController: UITableViewController {
 
     @IBOutlet weak var versionCell: UITableViewCell!
+
+    let userManager = AppContainer.resolver.resolve(STUserManager.self)!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         versionCell.detailTextLabel!.text = "최신 버전 사용중"
@@ -38,8 +41,8 @@ class STSettingViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.section, indexPath.row) == (4,0) {
             tableView.deselectRow(at: indexPath, animated: true)
-            let logout = UIAlertAction(title: "로그아웃", style: .destructive, handler: { _ in
-                STUser.logOut()
+            let logout = UIAlertAction(title: "로그아웃", style: .destructive, handler: { [weak self] _ in
+                self?.userManager.logOut()
             })
             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             STAlertView.showAlert(title: "로그아웃", message: "로그아웃 하시겠습니까?", actions: [cancel, logout])

@@ -58,13 +58,18 @@ class STTimetableListController: UITableViewController {
         let newTimetable = STTimetable(courseBook: courseBook, title: title)
         timetableList.append(newTimetable)
         reloadList()
-        STNetworking.createTimetable(title, courseBook: courseBook, done: { list in
-            self.timetableList = list
-            self.reloadList()
-        }, failure: { 
-            let index = self.timetableList.index(of: newTimetable)
-            self.timetableList.remove(at: index!)
-        })
+        let quarter = courseBook.quarter
+        networkProvider.rx.request(STTarget.CreateTimetable(params: .init(title: title, year: quarter.year, semester: quarter.semester)))
+            .subscribe(onSuccess: { [weak self] list in
+                self?.timetableList = list
+                self?.reloadList()
+                }, onError: { [weak self] error in
+                    guard let self = self else { return }
+                    self.errorHandler.apiOnError(error)
+                    let index = self.timetableList.index(of: newTimetable)
+                    self.timetableList.remove(at: index!)
+            })
+            .disposed(by: disposeBag)
     }
     
     @objc func reloadList() {

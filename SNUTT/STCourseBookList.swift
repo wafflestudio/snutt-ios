@@ -7,9 +7,17 @@
 //
 
 import Foundation
+import Swinject
+import RxSwift
 
 class STCourseBookListManager {
-    init() {
+    let networkProvider: STNetworkProvider
+    let errorHandler : STErrorHandler
+    let disposeBag = DisposeBag()
+
+    init(resolver r: Resolver) {
+        networkProvider = r.resolve(STNetworkProvider.self)!
+        errorHandler = r.resolve(STErrorHandler.self)!
         self.loadCourseBooks()
         self.getCourseBooks()
     }
@@ -33,13 +41,13 @@ class STCourseBookListManager {
     }
     
     func getCourseBooks () {
-        STNetworking.getCourseBookList({ list in
-            self.courseBookList = list
-            STEventCenter.sharedInstance.postNotification(event: .CourseBookUpdated, object: nil)
-            self.saveCourseBooks()
-            }, failure: { 
-                return
-        })
+        networkProvider.rx.request(STTarget.GetCourseBookList())
+            .subscribe(onSuccess: { [weak self] list in
+                guard let self = self else { return }
+                self.courseBookList = list
+                STEventCenter.sharedInstance.postNotification(event: .CourseBookUpdated, object: nil)
+                self.saveCourseBooks()
+            }, onError: errorHandler.apiOnError)
     }
     
 }

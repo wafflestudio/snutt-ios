@@ -14,7 +14,13 @@ class STErrorHandler {
         case STHttpError.networkError:
             showNetworkError()
         case let STHttpError.errorCode(errorCode):
-            STAlertView.showAlert(title: errorCode.errorTitle, message: errorCode.errorMessage)
+            switch errorCode {
+            case STErrorCode.NO_USER_TOKEN, STErrorCode.WRONG_USER_TOKEN:
+                // TODO: not proper DI but works...
+                AppContainer.resolver.resolve(STUserManager.self)!.logOut()
+            default:
+                STAlertView.showAlert(title: errorCode.errorTitle, message: errorCode.errorMessage)
+            }
         default:
             break
         }

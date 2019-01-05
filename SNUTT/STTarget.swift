@@ -93,12 +93,10 @@ struct STTarget {
         let method: Moya.Method = .post
         struct Params: Codable {
             var title: String
-            var year: String
+            var year: Int
             var semester: STSemester
         }
-        struct Result: Codable {
-            // DAVID
-        }
+        typealias Result = [STTimetable]
     }
 
     struct UpdateTimetable: STTargetType {
@@ -132,9 +130,7 @@ struct STTarget {
         let path = "/tables/recent"
         let method: Moya.Method = .get
         struct Params: Codable {}
-        struct Result: Codable {
-            // DAVID
-        }
+        typealias Result = STTimetable
     }
 
     struct AddCustomLecture: STTargetType {
@@ -329,9 +325,7 @@ struct STTarget {
         let path = "/user/info"
         let method: Moya.Method = .get
         struct Params: Codable {}
-        struct Result: Codable {
-            // TODO
-        }
+        typealias Result = STUser
     }
 
     struct EditUser: STTargetType {
@@ -341,9 +335,7 @@ struct STTarget {
         struct Params: Codable {
             var email: String
         }
-        struct Result: Codable {
-            // TODO
-        }
+        struct Result: Codable {}
     }
 
     struct ChangePassword: STTargetType {
@@ -355,7 +347,7 @@ struct STTarget {
             var new_password: String
         }
         struct Result: Codable {
-            // TODO
+            var token: String
         }
     }
 
@@ -368,7 +360,7 @@ struct STTarget {
             var password: String
         }
         struct Result: Codable {
-            // TODO
+            var token: String
         }
     }
 
@@ -413,9 +405,7 @@ struct STTarget {
         let method: Moya.Method = .post
         var id: String
         struct Params: Codable {}
-        struct Result: Codable {
-
-        }
+        struct Result: Codable {}
     }
 
     struct DeleteDevice: STTargetType {
@@ -448,9 +438,7 @@ struct STTarget {
         let path = "/course_books"
         let method: Moya.Method = .get
         struct Params: Codable {}
-        struct Result: Codable {
-
-        }
+        typealias Result = [STCourseBook]
     }
 
     struct GetRecentCourseBook: STTargetType {
@@ -474,7 +462,7 @@ struct STTarget {
             var lecture_number: String
         }
         struct Result: Codable {
-
+            var url : String?
         }
     }
 
@@ -488,9 +476,7 @@ struct STTarget {
             var message: String
             var email: String?
         }
-        struct Result: Codable {
-
-        }
+        struct Result: Codable {}
     }
 
     struct GetColorList: STTargetType {
@@ -499,7 +485,8 @@ struct STTarget {
         let method: Moya.Method = .get
         struct Params: Codable {}
         struct Result: Codable {
-
+            var colors: [STColor]
+            var names: [String]
         }
     }
 }

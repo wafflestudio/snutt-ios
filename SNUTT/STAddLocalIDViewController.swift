@@ -9,6 +9,7 @@
 import UIKit
 import B68UIFloatLabelTextField
 import SafariServices
+import RxSwift
 
 class STAddLocalIDViewController: UIViewController, UITextFieldDelegate {
 
@@ -24,6 +25,11 @@ class STAddLocalIDViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var addButton: STViewButton!
     @IBOutlet weak var termView: UIView!
+
+    let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
+    let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
+    let userManager = AppContainer.resolver.resolve(STUserManager.self)!
+    let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,9 +80,13 @@ class STAddLocalIDViewController: UIViewController, UITextFieldDelegate {
         if failure {
             STAlertView.showAlert(title: title, message: message)
         } else {
-            STNetworking.addLocalID(id, password: password, done: {
-                self.navigationController?.popViewController(animated: true)
-            })
+            networkProvider.rx.request(STTarget.AddLocalId(params: .init(id: id, password: password)))
+                .subscribe(onSuccess: { [weak self] result in
+                    STDefaults[.token] = result.token
+                    self?.userManager.getUser()
+                    self?.navigationController?.popViewController(animated: true)
+                }, onError: errorHandler.apiOnError)
+                .disposed(by: disposeBag)
         }
     }
 
