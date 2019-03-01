@@ -14,6 +14,9 @@ class CoreAssembly : Assembly {
         container.register(STTimetableManager.self) { r in
             STTimetableManager()
         }.inObjectScope(.container)
+        container.register(STSettingManager.self) { r in
+            STSettingManager()
+            }.inObjectScope(.container)
         container.register(STCourseBookListManager.self) { r in
             STCourseBookListManager(resolver: r)
         }.inObjectScope(.container)

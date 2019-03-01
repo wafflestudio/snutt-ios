@@ -23,12 +23,17 @@ class STTagManager {
         networkProvider = r.resolve(STNetworkProvider.self)!
         errorHandler = r.resolve(STErrorHandler.self)!
         self.loadData()
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTagManager.loadData), event: STEvent.CurrentTimetableSwitched, object: nil)
+        timetableManager.rx.currentTimetable
+            .map { $0?.quarter }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] _ in
+                self?.loadData()
+            }).disposed(by: disposeBag)
     }
     
     var tagList : STTagList!
     
-    @objc dynamic func loadData() {
+    func loadData() {
         guard let quarter = timetableManager.currentTimetable?.quarter else {
             return
         }

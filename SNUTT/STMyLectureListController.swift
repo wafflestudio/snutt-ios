@@ -8,9 +8,10 @@
 
 import UIKit
 import DZNEmptyDataSet
+import RxSwift
 
 class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
-
+    let disposeBag = DisposeBag()
     let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
 
     weak var timetableTabViewController : STTimetableTabViewController?
@@ -25,9 +26,11 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         self.tableView.register(UINib(nibName: "STAddLectureButtonCell", bundle: nil), forCellReuseIdentifier: "AddButtonCell")
         self.tableView.separatorStyle = .none
         self.tableView.rowHeight = 74.0
-        
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STMyLectureListController.reloadData(_:)), event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STMyLectureListController.reloadData(_:)), event: STEvent.CurrentTimetableSwitched, object: nil)
+
+        timetableManager.rx.currentTimetable.subscribe(onNext: {[weak self] _ in
+            self?.reloadData()
+        })
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -40,10 +43,11 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         // Dispose of any resources that can be recreated.
     }
 
-    @objc func reloadData(_ notification : Notification) {
-        if((notification.object as AnyObject) === self) {
-            return //This is because of delete animation.
-        }
+    func reloadData() {
+        // TODO: check delete animation and delete this snippet
+//        if((notification.object as AnyObject) === self) {
+//            return //This is because of delete animation.
+//        }
         self.tableView.reloadData()
     }
     
@@ -84,12 +88,9 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if tableView.numberOfRows(inSection: 0) != 2 {
-                timetableManager.deleteLectureAtIndex(indexPath.row, object: self)
-            } else {
-                timetableManager.deleteLectureAtIndex(indexPath.row, object: self)
-            }
-            self.tableView.reloadEmptyDataSet()
+            timetableManager.deleteLectureAtIndex(indexPath.row)
+                .subscribe()
+                .disposed(by: disposeBag)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    

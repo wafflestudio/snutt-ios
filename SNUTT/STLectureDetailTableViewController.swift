@@ -8,8 +8,10 @@
 
 import UIKit
 import ChameleonFramework
+import RxSwift
 
 class STLectureDetailTableViewController: STSingleLectureTableViewController {
+    let disposeBag = DisposeBag()
 
     var lecture : STLecture!
     var editable : Bool = false
@@ -199,20 +201,24 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
     }
     
     override func resetButtonClicked() {
-        timetableManager.resetLecture(self.currentLecture) {
-            let lectureList = self.timetableManager.currentTimetable!.lectureList
-            if let index = lectureList.index(where: { lecture in lecture.id == self.currentLecture.id}) {
-                self.currentLecture = lectureList[index]
-                self.lecture = lectureList[index]
-                self.navigationItem.setRightBarButton(self.editBarButton, animated: true)
-                self.navigationItem.setLeftBarButton(nil, animated: true)
-                UIView.transition(with: self.tableView, duration:0.35, options:.transitionCrossDissolve,
-                                          animations: {
-                                            self.editable = false
-                                            self.tableView.reloadData()
-                    }, completion: nil);
-            }
+        guard let currentLectureId = self.currentLecture.id else {
+            return
         }
+        timetableManager.resetLecture(currentLectureId)
+            .subscribe(onCompleted: {
+                let lectureList = self.timetableManager.currentTimetable!.lectureList
+                if let index = lectureList.index(where: { lecture in lecture.id == self.currentLecture.id}) {
+                    self.currentLecture = lectureList[index]
+                    self.lecture = lectureList[index]
+                    self.navigationItem.setRightBarButton(self.editBarButton, animated: true)
+                    self.navigationItem.setLeftBarButton(nil, animated: true)
+                    UIView.transition(with: self.tableView, duration:0.35, options:.transitionCrossDissolve,
+                                      animations: {
+                                        self.editable = false
+                                        self.tableView.reloadData()
+                    }, completion: nil);
+                }
+            }).disposed(by: disposeBag)
     }
     // MARK: - Table view data source
     

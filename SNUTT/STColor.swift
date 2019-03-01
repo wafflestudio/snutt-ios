@@ -10,52 +10,38 @@ import Foundation
 import UIKit
 import SwiftyJSON
 
-struct STColor {
+// TODO: Do something about this
+struct STColor: Codable, Hashable {
+
+    var fg: String?
+    var bg: String?
     
-    var fgColor : UIColor
-    var bgColor : UIColor
+    var fgColor : UIColor {
+        if let fg = fg {
+            return UIColor(hexString: fg)
+        } else {
+            return UIColor(hexString: "#333333")
+        }
+    }
+    var bgColor : UIColor {
+        if let bg = bg {
+            return UIColor(hexString: bg)
+        } else {
+            return UIColor(hexString: "#E0E0E0")
+        }
+    }
     
     init() {
-        fgColor = UIColor(hexString: "#333333")
-        bgColor = UIColor(hexString: "#E0E0E0")
     }
     
     init(fgHex : String, bgHex : String) {
-        fgColor = UIColor(hexString: fgHex)
-        bgColor = UIColor(hexString: bgHex)
+        fg = fgHex
+        bg = bgHex
     }
 
     init(json: JSON) {
         self.init(fgHex: json["fg"].stringValue, bgHex: json["bg"].stringValue)
     }
-}
-
-extension STColor: Codable {
-    private enum CodingKeys: String, CodingKey {
-        case fg
-        case bg
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(fgColor.toHexString(), forKey: .fg)
-        try container.encode(bgColor.toHexString(), forKey: .bg)
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let fgHex = try container.decode(String.self, forKey: .fg)
-        let bgHex = try container.decode(String.self, forKey: .bg)
-        fgColor = UIColor(hexString: fgHex)
-        bgColor = UIColor(hexString: bgHex)
-    }
-}
-
-extension STColor : Equatable {}
-
-func == (lhs : STColor, rhs : STColor) -> Bool  {
-    return lhs.fgColor.toHexString() == rhs.fgColor.toHexString() &&
-        lhs.bgColor.toHexString() == rhs.bgColor.toHexString()
 }
 
 extension STColor : DictionaryRepresentable {
@@ -68,8 +54,8 @@ extension STColor : DictionaryRepresentable {
         guard let fg = values["fg"] as? String, let bg = values["bg"] as? String else {
             return nil
         }
-        self.fgColor = UIColor(hexString: fg)
-        self.bgColor = UIColor(hexString: bg)
+        self.fg = fg
+        self.bg = bg
     }
 }
 

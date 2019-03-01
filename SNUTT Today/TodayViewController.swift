@@ -47,20 +47,19 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     @objc func userDefaultsDidChange (_ notification: Notification) {
         updateTimetable()
         updateSetting()
-        reloadData()
     }
 
     func updateTimetable() {
         if let dict = STDefaults[.currentTimetable] {
             let timetable = STTimetable(json: JSON(dict))
-            timetableView.timetable = timetable
+            timetableView.reloadTimetable(timetable)
         } else {
             timetableView.timetable = nil
         }
     }
 
     func reloadData() {
-        timetableView.reloadTimetable()
+        timetableView.reloadData()
     }
 
     func updateSetting() {

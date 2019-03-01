@@ -80,6 +80,12 @@
 		E18AEEEA21D7CE2C005E6F67 /* STErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18AEEE921D7CE2C005E6F67 /* STErrorHandler.swift */; };
 		E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */; };
 		E18F2E501C5E6FBC00114ADF /* STTagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */; };
+		E1958B2A22056CBA009CB04B /* STTimetableLayout2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1958B2922056CBA009CB04B /* STTimetableLayout2.swift */; };
+		E1958B2C22056D1E009CB04B /* STTimetableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1958B2B22056D1E009CB04B /* STTimetableDataSource.swift */; };
+		E1958B2F22057FBD009CB04B /* STTimetableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1958B2E22057FBD009CB04B /* STTimetableView.swift */; };
+		E1958B32220811B4009CB04B /* STTimetableGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1958B31220811B4009CB04B /* STTimetableGridView.swift */; };
+		E1958B342208205C009CB04B /* STSingleClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1958B332208205C009CB04B /* STSingleClassView.swift */; };
+		E1958B3622226798009CB04B /* STSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1958B3522226798009CB04B /* STSettingManager.swift */; };
 		E1986A401F10C2D700337419 /* STSearchEmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1986A3F1F10C2D700337419 /* STSearchEmptyView.xib */; };
 		E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A3A9A1B453770007FCAD7 /* AppDelegate.swift */; };
 		E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E19A3A9E1B453770007FCAD7 /* Main.storyboard */; };
@@ -296,6 +302,12 @@
 		E18AEEE921D7CE2C005E6F67 /* STErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STErrorHandler.swift; sourceTree = "<group>"; };
 		E18F2E4D1C5E610F00114ADF /* STSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchBar.swift; sourceTree = "<group>"; };
 		E18F2E4F1C5E6FBC00114ADF /* STTagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagListView.swift; sourceTree = "<group>"; };
+		E1958B2922056CBA009CB04B /* STTimetableLayout2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTimetableLayout2.swift; sourceTree = "<group>"; };
+		E1958B2B22056D1E009CB04B /* STTimetableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTimetableDataSource.swift; sourceTree = "<group>"; };
+		E1958B2E22057FBD009CB04B /* STTimetableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTimetableView.swift; sourceTree = "<group>"; };
+		E1958B31220811B4009CB04B /* STTimetableGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STTimetableGridView.swift; sourceTree = "<group>"; };
+		E1958B332208205C009CB04B /* STSingleClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STSingleClassView.swift; sourceTree = "<group>"; };
+		E1958B3522226798009CB04B /* STSettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STSettingManager.swift; sourceTree = "<group>"; };
 		E1986A3F1F10C2D700337419 /* STSearchEmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSearchEmptyView.xib; sourceTree = "<group>"; };
 		E19A3A951B453770007FCAD7 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19A3A991B453770007FCAD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -450,6 +462,7 @@
 				E11F5E4121281BF3002FBA8F /* STTodayColorManager.swift */,
 				E17D45F41E9A1AF800E6973B /* STColorManagerUpdate.swift */,
 				E1B147D121DB5F3E000145B3 /* STUserManager.swift */,
+				E1958B3522226798009CB04B /* STSettingManager.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -502,6 +515,16 @@
 				E1B34A4F1EB2278B004C5E5E /* STRegisterViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		E1958B2D22057FA0009CB04B /* Timetable2 */ = {
+			isa = PBXGroup;
+			children = (
+				E1958B2E22057FBD009CB04B /* STTimetableView.swift */,
+				E1958B332208205C009CB04B /* STSingleClassView.swift */,
+				E1958B31220811B4009CB04B /* STTimetableGridView.swift */,
+			);
+			name = Timetable2;
 			sourceTree = "<group>";
 		};
 		E19A3A8C1B453770007FCAD7 = {
@@ -630,6 +653,7 @@
 		E1C28B191B9C4B7B00B8C493 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E1958B2D22057FA0009CB04B /* Timetable2 */,
 				E1F946211DB449A200CC8AF6 /* MyLectureList */,
 				E16A88451C9F782F003D94AB /* Setting */,
 				E1773CAC1C953E6D00AF36AF /* Login */,
@@ -651,7 +675,9 @@
 			isa = PBXGroup;
 			children = (
 				E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */,
+				E1958B2B22056D1E009CB04B /* STTimetableDataSource.swift */,
 				E16643501B4623BB00387EF8 /* STTimetableLayout.swift */,
+				E1958B2922056CBA009CB04B /* STTimetableLayout2.swift */,
 				E16643581B46624500387EF8 /* STCourseCellCollectionViewCell.swift */,
 				E16643561B46623900387EF8 /* STSlotCellCollectionViewCell.swift */,
 				E16643541B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift */,
@@ -1017,6 +1043,7 @@
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/Color-Picker-for-iOS/Color_Picker_for_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/EGOTableViewPullRefreshAndLoadMore/EGOTableViewPullRefreshAndLoadMore.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
@@ -1026,8 +1053,11 @@
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwiftExt/RxSwiftExt.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
@@ -1046,6 +1076,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Color_Picker_for_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EGOTableViewPullRefreshAndLoadMore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
@@ -1055,8 +1086,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwiftExt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
@@ -1145,9 +1179,11 @@
 				E19E23211B4691D90010DFB1 /* STLectureSearchTableViewCell.swift in Sources */,
 				E1B147D021DB5AE8000145B3 /* Codable+Extension.swift in Sources */,
 				E1C828771E7D1C5700E63A9B /* STTextViewTableViewCell.swift in Sources */,
+				E1958B2F22057FBD009CB04B /* STTimetableView.swift in Sources */,
 				E1D0FB6B1C86D47900ACDC2F /* STColor.swift in Sources */,
 				E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */,
 				E181131C1E52E60600ECA64E /* STColorActionSheetPicker.swift in Sources */,
+				E1958B342208205C009CB04B /* STSingleClassView.swift in Sources */,
 				E1CAAA391CF07F1000D16183 /* STSingleLectureButtonCell.swift in Sources */,
 				E16643571B46623900387EF8 /* STSlotCellCollectionViewCell.swift in Sources */,
 				E1BB29CD1D4896D300150DD4 /* STTimetableSettingViewController.swift in Sources */,
@@ -1160,6 +1196,7 @@
 				E19ABD711EAB49BE0051B1C7 /* STOnBoardingViewController.swift in Sources */,
 				E1D0FB651C86CDCE00ACDC2F /* STColorPickerTableViewController.swift in Sources */,
 				E14DF2161C3F8F920076FDDE /* STCourseBook.swift in Sources */,
+				E1958B2A22056CBA009CB04B /* STTimetableLayout2.swift in Sources */,
 				E110CFCE1C87FED300ED0590 /* STCustomColorPickerViewController.swift in Sources */,
 				E19E231F1B468B700010DFB1 /* STLectureSearchTableViewController.swift in Sources */,
 				E168FA301E3F037B004F933A /* STErrorCode.swift in Sources */,
@@ -1167,6 +1204,7 @@
 				E1EF8B301D6D640100791778 /* STUserRouter.swift in Sources */,
 				E10CBEE11C7B71E400E8FE26 /* STAddCustomLectureTableViewController.swift in Sources */,
 				E1B381A91C6C52D9007E1A15 /* STUtil.swift in Sources */,
+				E1958B2C22056D1E009CB04B /* STTimetableDataSource.swift in Sources */,
 				E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */,
 				E16A88551C9FC460003D94AB /* STDeveloperViewController.swift in Sources */,
 				E1E90EE12132A78F004847C7 /* STTargetType.swift in Sources */,
@@ -1174,6 +1212,7 @@
 				E1CD92651E45CF8C00AF5FE4 /* STLectureSearchToolbarView.swift in Sources */,
 				E1C48B971C79BA4100BC469E /* STTimeActionSheetPicker.swift in Sources */,
 				E1C48B991C79BDD300BC469E /* STSemester.swift in Sources */,
+				E1958B3622226798009CB04B /* STSettingManager.swift in Sources */,
 				E1EE1B331CCDAAB6003DF250 /* STPaddingTableViewCell.swift in Sources */,
 				E18AEEE821D767D5005E6F67 /* STHttpError.swift in Sources */,
 				E14992011C463AC600DC6756 /* STTimetableRouter.swift in Sources */,
@@ -1231,6 +1270,7 @@
 				E1B381AB1C6C61E2007E1A15 /* STTagCollectionViewCell.swift in Sources */,
 				E18AEEE621D75C9E005E6F67 /* STTarget.swift in Sources */,
 				E14992091C4B828500DC6756 /* STSwiftyJSONRequest.swift in Sources */,
+				E1958B32220811B4009CB04B /* STTimetableGridView.swift in Sources */,
 				E1C48B901C78736C00BC469E /* STColorPickTableViewCell.swift in Sources */,
 				E18AEEEA21D7CE2C005E6F67 /* STErrorHandler.swift in Sources */,
 				E17D45F51E9A1AF800E6973B /* STColorManagerUpdate.swift in Sources */,

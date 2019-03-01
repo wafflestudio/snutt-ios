@@ -9,13 +9,10 @@
 import Foundation
 import SwiftyJSON
 
-struct STSingleClass {
+struct STSingleClass : Hashable {
     var time : STTime
-    var place : String {
-        didSet {
-            placeBreakLine = place.breakOnlyAtNewLineAndSpace
-        }
-    }
+    var place : String
+    // TODO: remove this
     var placeBreakLine: String
 
     init(time : STTime, place: String) {

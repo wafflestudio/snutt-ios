@@ -141,14 +141,10 @@ class STTimetableListController: UITableViewController {
         guard let id = getTimetable(from: indexPath)?.id else {
             return
         }
-        networkProvider.rx.request(STTarget.GetTimetable(id: id))
-            .subscribe(onSuccess: { [weak self] timetable in
-                if (timetable == nil) {
-                    STAlertView.showAlert(title: "시간표 로딩 실패", message: "선택한 시간표가 서버에 존재하지 않습니다.")
-                }
-                self?.timetableManager.currentTimetable = timetable
+        timetableManager.getTimetable(id: id)
+            .subscribe(onCompleted: { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
-            }, onError: errorHandler.apiOnError)
+            }).disposed(by: disposeBag)
     }
     
     // Override to support conditional editing of the table view.

@@ -87,14 +87,17 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         tagLabel.trailingBuffer = 10.0
         titleLabel.animationDelay = 0.3
         tagLabel.animationDelay = 0.3
-        addButton.buttonPressAction = {
-            self.timetableManager.setTemporaryLecture(nil, object: self)
+        addButton.buttonPressAction = { [ weak self] in
+            guard let self = self else { return }
+            self.timetableManager.setTemporaryLecture(nil)
             self.tableView.deselectRow(at: self.tableView.indexPath(for: self)!, animated: true)
             let index = self.indexInTimetable()
             if index >= 0{
-                self.timetableManager.deleteLectureAtIndex(index, object: self)
+                // TODO: move this buttonPressAction to controller
+                let _ = self.timetableManager.deleteLectureAtIndex(index).subscribe()
             } else {
-                self.timetableManager.addLecture(self.lecture!, object: self)
+                // TODO: move this buttonPressAction to controller
+                let _ = self.timetableManager.addLecture(self.lecture!.id!).subscribe()
             }
             self.setAddButton()
         }

@@ -9,12 +9,17 @@
 import Foundation
 import SwiftyJSON
 import RxSwift
+import RxCocoa
 
-class STTimetableManager {
+class STTimetableManager : ReactiveCompatible {
+
+    // TODO: eager loading. (with alpha in actual timetable)
 
     let disposeBag = DisposeBag()
     let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
     let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
+    let currentTimetableSubject = BehaviorRelay<STTimetable?>(value: nil)
+    let currentTemporaryLectureSubject = BehaviorRelay<STLecture?>(value: nil)
 
     init() {
         self.loadData()
@@ -28,17 +33,28 @@ class STTimetableManager {
                 })
                 .disposed(by: disposeBag)
         }
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableManager.saveData), event: STEvent.CurrentTimetableChanged, object: nil)
     }
     
-    deinit {
-        STEventCenter.sharedInstance.removeObserver(self)
-    }
-    
-    var currentTimetable : STTimetable? {
-        didSet {
-            STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableSwitched, object: self)
+    private(set) var currentTimetable : STTimetable? {
+        get {
+            return currentTimetableSubject.value
+        }
+        set {
+            let oldValue = currentTimetable
+            currentTimetableSubject.accept(newValue)
+            if oldValue?.id != newValue?.id {
+                currentTemporaryLectureSubject.accept(nil)
+            }
             saveData()
+        }
+    }
+
+    private(set) var currentTemporaryLecture: STLecture? {
+        get {
+            return currentTemporaryLectureSubject.value
+        }
+        set {
+            currentTemporaryLectureSubject.accept(newValue)
         }
     }
 
@@ -49,86 +65,55 @@ class STTimetableManager {
         }
     }
     
-    @objc func saveData() {
+    func saveData() {
+        // TODO: serialization by jsonDecoder
         let dict = currentTimetable?.toDictionary()
         STDefaults[.currentTimetable] = dict as? NSDictionary
         STDefaults.synchronize()
     }
     
-    func addCustomLecture(_ lecture : STLecture, object : AnyObject?, done: (()->())?, failure: (()->())?) {
-        var lecture = lecture
-        guard let currentTimetable = currentTimetable else {
-            failure?()
-            return
+    func addCustomLecture(_ lecture : STLecture) -> Completable {
+        guard let currentTimetableId = currentTimetable?.id else {
+            return Completable.error("Current Timetable does not exist")
         }
-        let ret = currentTimetable.addLecture(lecture)
-        if case STAddLectureState.success = ret {
-
-            let params = STTarget.AddCustomLecture.Params(
-                classification: lecture.classification,
-                department: lecture.department,
-                academic_year: lecture.academicYear,
-                course_number: lecture.courseNumber,
-                lecture_number: lecture.lectureNumber,
-                course_title: lecture.title,
-                credit: lecture.credit,
-                instructor: lecture.instructor,
-                quota: lecture.quota,
-                remark: lecture.remark,
-                category: lecture.category,
-                class_time_json: lecture.classList,
-                color: lecture.color,
-                colorIndex: lecture.colorIndex
-            )
-            networkProvider.rx.request(STTarget.AddCustomLecture(params: params, timetableId: currentTimetable.id!))
-                .subscribe(onSuccess: { [weak self] newTimetable in
-                    self?.currentTimetable?.lectureList = newTimetable.lectureList
-                    STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-                    done?()
-                    }, onError: { [weak self] err in
-                        self?.errorHandler.apiOnError(err)
-                        self?.currentTimetable?.deleteLecture(lecture)
-                        failure?()
-                        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-
-                })
-                .disposed(by: disposeBag)
-            STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
-        } else if case STAddLectureState.errorTime = ret {
-            failure?()
-            STAlertView.showAlert(title: "강의 추가 실패", message: "겹치는 시간대가 있습니다.")
-        } else if case STAddLectureState.errorSameLecture = ret {
-            failure?()
-            STAlertView.showAlert(title: "강의 추가 실패", message: "같은 강좌가 이미 존재합니다.")
-        }
+        let params = STTarget.AddCustomLecture.Params(
+            classification: lecture.classification,
+            department: lecture.department,
+            academic_year: lecture.academicYear,
+            course_number: lecture.courseNumber,
+            lecture_number: lecture.lectureNumber,
+            course_title: lecture.title,
+            credit: lecture.credit,
+            instructor: lecture.instructor,
+            quota: lecture.quota,
+            remark: lecture.remark,
+            category: lecture.category,
+            class_time_json: lecture.classList,
+            color: lecture.color,
+            colorIndex: lecture.colorIndex
+        )
+        return networkProvider.rx.request(STTarget.AddCustomLecture(params: params, timetableId: currentTimetableId))
+            .do(onSuccess: { [weak self] newTimetable in
+                self?.currentTimetable = newTimetable
+                }, onError: { [weak self] err in
+                    self?.errorHandler.apiOnError(err)
+            }).asCompletable()
     }
     
-    func addLecture(_ lecture : STLecture, object : AnyObject? ) -> STAddLectureState {
-        guard let currentTimetable = currentTimetable else {
-            return STAddLectureState.success
+    func addLecture(_ lectureId : String) -> Completable {
+        guard let currentTimetableId = currentTimetable?.id else {
+            return Completable.error("Current timetable does not exist")
         }
-        let ret = currentTimetable.addLecture(lecture)
-        if case STAddLectureState.success = ret {
-            networkProvider.rx.request(STTarget.AddLecture(timetableId: currentTimetable.id!, lectureId: lecture.id!))
-                .subscribe(onSuccess: { [weak self] newTimetable in
-                    self?.currentTimetable?.lectureList = newTimetable.lectureList
-                    STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+        return networkProvider.rx.request(STTarget.AddLecture(timetableId: currentTimetableId, lectureId: lectureId))
+            .do(onSuccess: { [weak self] newTimetable in
+                self?.currentTimetable = newTimetable
                 }, onError: { [weak self] err in
-                    self?.currentTimetable?.deleteLecture(lecture)
-                    STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-                })
-                .disposed(by: disposeBag)
-            STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
-        } else if case STAddLectureState.errorTime = ret {
-            STAlertView.showAlert(title: "강의 추가 실패", message: "겹치는 시간대가 있습니다.")
-        } else if case STAddLectureState.errorSameLecture = ret {
-            STAlertView.showAlert(title: "강의 추가 실패", message: "같은 강좌가 이미 존재합니다.")
-        }
-        
-        return ret
+                    self?.errorHandler.apiOnError(err)
+            }).asCompletable()
     }
     
     func updateLecture(_ oldLecture : STLecture, newLecture : STLecture, done: @escaping ()->(), failure: @escaping ()->()) {
+        // TODO: return type as Completable
         if currentTimetable == nil {
             failure()
             return
@@ -141,64 +126,83 @@ class STTimetableManager {
         }
         
         currentTimetable!.updateLectureAtIndex(index, lecture: newLecture)
-        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
-        
-        STNetworking.updateLecture(currentTimetable!, oldLecture: oldLecture, newLecture: newLecture, done: { newTimetable in
-            self.currentTimetable?.lectureList = newTimetable.lectureList
-            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+
+        STNetworking.updateLecture(currentTimetable!, oldLecture: oldLecture, newLecture: newLecture, done: { [weak self] newTimetable in
+            self?.currentTimetable = newTimetable
             done()
             }, failure: {
                 self.currentTimetable?.updateLectureAtIndex(index, lecture: oldLecture)
-                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
                 failure()
         })
     }
     
-    func deleteLectureAtIndex(_ index: Int, object : AnyObject? ) {
-        guard let currentTimetable = currentTimetable else {
-            return
+    func deleteLectureAtIndex(_ index: Int) -> Completable {
+        guard let currentTimetableId = currentTimetable?.id else {
+            return Completable.error("Current timetable does not exist.")
         }
-        let lecture = currentTimetable.lectureList[index]
-        currentTimetable.deleteLectureAtIndex(index)
-        STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
-        networkProvider.rx.request(STTarget.DeleteLecture(timetableId: currentTimetable.id!, lectureId: lecture.id!))
-            .subscribe(onSuccess: { [weak self] newTimetable in
-                self?.currentTimetable?.lectureList = newTimetable.lectureList
-                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+        guard let lectureId = currentTimetable?.lectureList[index].id else {
+            return Completable.error("lecture does not have id")
+        }
+        return networkProvider.rx.request(STTarget.DeleteLecture(timetableId: currentTimetableId, lectureId: lectureId))
+            .do(onSuccess: { [weak self] newTimetable in
+                self?.currentTimetable = newTimetable
                 }, onError: { [weak self] err in
                     self?.errorHandler.apiOnError(err)
-                    self?.currentTimetable?.addLecture(lecture)
-                    STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
-            })
-            .disposed(by: disposeBag)
+                    })
+            .asCompletable()
     }
-    
+
+    func updateTitle(title: String) -> Completable {
+        guard let currentTimetableId = currentTimetable?.id else {
+            return Completable.error("Current timetable does not exist.")
+        }
+        return self.networkProvider.rx.request(STTarget.UpdateTimetable(params: .init(title: title), id: currentTimetableId))
+            .do(onSuccess: { [weak self] _ in
+                self?.currentTimetable?.title = title
+                }, onError: self.errorHandler.apiOnError
+            ).asCompletable()
+    }
+
+    func getTimetable(id: String) -> Completable {
+        return networkProvider.rx.request(STTarget.GetTimetable(id: id))
+            .do(onSuccess: { [weak self] timetable in
+                self?.currentTimetable = timetable
+                }, onError: errorHandler.apiOnError)
+        .asCompletable()
+    }
+
+    func getRecentTimetable() -> Completable {
+        return networkProvider.rx.request(STTarget.GetRecentTimetable())
+            .do(onSuccess: { [weak self] timetable in
+                self?.currentTimetable = timetable
+                }, onError: { [weak self] error in
+                    self?.errorHandler.apiOnError(error)
+            }).asCompletable()
+    }
     
     //FIXME: Refactoring Needed
-    func resetLecture(_ lecture: STLecture, done: @escaping ()->()) {
-        guard let currentTimetable = currentTimetable else {
-            return
+    func resetLecture(_ lectureId: String) -> Completable {
+        guard let currentTimetableId = currentTimetable?.id else {
+            return Completable.error("Current timetable does not exist")
         }
-        guard let index = currentTimetable.lectureList.index(where: { lec in
-            return lec.id == lecture.id
-        }) else {
-            done()
-            return
-        }
-        networkProvider.rx.request(STTarget.ResetLecture(timetableId: currentTimetable.id!, lectureId: lecture.id!))
-            .subscribe(onSuccess: { [weak self] newTimetable in
+        return networkProvider.rx.request(STTarget.ResetLecture(timetableId: currentTimetableId, lectureId: lectureId))
+            .do(onSuccess: {[weak self] newTimetable in
                 self?.currentTimetable?.lectureList = newTimetable.lectureList
-                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
-            }, onError: errorHandler.apiOnError)
-            .disposed(by: disposeBag)
-        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+                }, onError: errorHandler.apiOnError
+            ).asCompletable()
     }
     
-    func setTemporaryLecture(_ lecture :STLecture?, object : AnyObject? ) {
-        if currentTimetable?.temporaryLecture == lecture {
-            return
-        }
-        currentTimetable?.temporaryLecture = lecture
-        STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTemporaryLectureChanged, object: object)
+    func setTemporaryLecture(_ lecture :STLecture?) {
+        // TODO: check timetable Id?
+        currentTemporaryLecture = lecture
+    }
+}
+
+extension Reactive where Base == STTimetableManager {
+    var currentTimetable : Observable<STTimetable?> {
+        return base.currentTimetableSubject.asObservable()
+    }
+    var currentTemporaryLecture: Observable<STLecture?> {
+        return base.currentTemporaryLectureSubject.asObservable()
     }
 }
