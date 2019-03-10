@@ -180,7 +180,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="plr-x9-uzV" customClass="STTimetableCollectionView" customModule="SNUTT" customModuleProvider="target">
+                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="plr-x9-uzV" customClass="STTimetableView" customModule="SNUTT" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="375" height="443"/>
                             </containerView>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wf4-PD-nbb">
@@ -290,6 +290,9 @@
                             </collectionView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Zht-ES-N3O" customClass="STSearchBar" customModule="SNUTT" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="20" width="320" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="foO-UF-xke"/>
+                                </constraints>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 <scopeButtonTitles>
                                     <string>Title</string>

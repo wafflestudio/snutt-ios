@@ -13,6 +13,7 @@ import RxSwift
 import RxCocoa
 
 class STTimetableView : UIView {
+    let disposeBag = DisposeBag()
     var lectureList: [STLecture] = []
 
     let columnHeader = UIView()
@@ -25,6 +26,7 @@ class STTimetableView : UIView {
     var lectureViews : [CompactLecture: [STSingleClassView]] = [:]
     let lectureListSubject = BehaviorRelay<[CompactLecture]>(value: [])
     let fitModeSubject = BehaviorRelay<FitMode>(value: .auto)
+    let colorListSubject = BehaviorRelay<STColorList>(value: STColorList(colorList: [], nameList: []))
 
     let columnHeaderCells = ["월", "화", "수", "목", "금", "토", "일"].map { text -> UILabel in
         let label = UILabel()
@@ -70,12 +72,16 @@ class STTimetableView : UIView {
     }
 
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        initInternal()
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        // TODO: uncomment this
+        initInternal()
+    }
+
+    func initInternal() {
         addSubview(gridView)
         addSubview(cornerSizeView)
         addSubview(columnHeader)
@@ -110,9 +116,9 @@ class STTimetableView : UIView {
         }
         lectureContainer.clipsToBounds = true
 
-        Observable.combineLatest(lectureListSubject, fitModeSubject, resultSelector: { (lectureList, fitMode) in
-            (lectureList, fitMode)
-        }).subscribe(onNext: { [weak self] (lectureList, fitMode) in
+        Observable.combineLatest(lectureListSubject, fitModeSubject, colorListSubject, resultSelector: { (lectureList, fitMode, colorList) in
+            (lectureList, fitMode, colorList)
+        }).subscribe(onNext: { [weak self] (lectureList, fitMode, colorList) in
             guard let self = self else { return }
             var fitSpec: FitSpec
             switch fitMode {
@@ -122,8 +128,9 @@ class STTimetableView : UIView {
                 fitSpec = spec
             }
             self.updateBackground(fitSpec: fitSpec)
-            self.updateLecture(lectureList: lectureList, fitSpec: fitSpec)
-        })
+            self.updateLecture(lectureList: lectureList, fitSpec: fitSpec, colorList: colorList)
+        }).disposed(by: disposeBag)
+
     }
 
     var backgroundSpec: FitSpec? = nil
@@ -170,13 +177,20 @@ class STTimetableView : UIView {
         gridView.setNeedsDisplay()
     }
 
-    func setTimetable(_ timetable : STTimetable?) {
-        let lectureList = timetable?.lectureList.map { $0.toCompactLecture() } ?? []
+    func setTimetable(_ timetable : STTimetable?, tempLecture: STLecture? = nil) {
+        var lectureList = timetable?.lectureList.map { $0.toCompactLecture() } ?? []
+        if let tempLecture = tempLecture {
+            lectureList = lectureList + [tempLecture.toCompactLecture()]
+        }
         lectureListSubject.accept(lectureList)
     }
 
     func setFitMode(_ mode: FitMode) {
         fitModeSubject.accept(mode)
+    }
+
+    func setColorList(_ colorList: STColorList) {
+        colorListSubject.accept(colorList)
     }
 
     private func getAutoFitSpec(lectureList: [CompactLecture]) -> FitSpec {
@@ -196,21 +210,21 @@ class STTimetableView : UIView {
         }
     }
 
-    private func updateLecture(lectureList: [CompactLecture], fitSpec spec: FitSpec) {
+    private func updateLecture(lectureList: [CompactLecture], fitSpec spec: FitSpec, colorList: STColorList) {
         var oldLectureViews = self.lectureViews
         var newLectureViews : [CompactLecture: [STSingleClassView]] = [:]
         for lecture in lectureList {
             if let views = oldLectureViews[lecture] {
                 for (index, view) in views.enumerated() {
                     let singleClass = lecture.singleClassList[index]
-                    view.setData(lecture: lecture, singleClass: singleClass, fitSpec: spec)
+                    view.setData(lecture: lecture, singleClass: singleClass, fitSpec: spec, colorList: colorList)
                 }
                 newLectureViews[lecture] = views
                 oldLectureViews.removeValue(forKey: lecture)
             } else {
                 // create views
                 let views = lecture.singleClassList.map { singleClass -> STSingleClassView in
-                    let view = createSingleLectureView(lecture: lecture, singleClass: singleClass, fitspec: spec)
+                    let view = createSingleLectureView(lecture: lecture, singleClass: singleClass, fitspec: spec, colorList: colorList)
                     return view
                 }
                 newLectureViews[lecture] = views
@@ -222,10 +236,10 @@ class STTimetableView : UIView {
         self.lectureViews = newLectureViews
     }
 
-    private func createSingleLectureView(lecture: CompactLecture, singleClass : STSingleClass, fitspec spec: FitSpec) -> STSingleClassView {
+    private func createSingleLectureView(lecture: CompactLecture, singleClass : STSingleClass, fitspec spec: FitSpec, colorList: STColorList) -> STSingleClassView {
         let view = STSingleClassView()
         lectureContainer.addSubview(view)
-        view.setData(lecture: lecture, singleClass: singleClass, fitSpec: spec)
+        view.setData(lecture: lecture, singleClass: singleClass, fitSpec: spec, colorList: colorList)
         return view
     }
 }
@@ -236,9 +250,7 @@ struct CompactLecture : Hashable {
     var colorIndex: Int
     var singleClassList: [STSingleClass]
 
-    func getColor() -> STColor {
-        let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
-        let colorList = colorManager.colorList!
+    func getColor(colorList: STColorList) -> STColor {
         if colorIndex == 0 {
             return color ?? STColor()
         } else if (colorIndex <= colorList.colorList.count && colorIndex >= 1) {

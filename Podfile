@@ -35,6 +35,10 @@ end
 target 'SNUTT Today' do
   pod 'SwiftyJSON'
   pod 'SwiftyUserDefaults', :git => 'https://github.com/Rajin9601/SwiftyUserDefaults.git'
+  pod 'RxSwift'
+  pod 'RxSwiftExt'
+  pod 'RxCocoa'
+  pod 'SnapKit', '~> 4.0.0'
 end
 
 post_install do |installer|

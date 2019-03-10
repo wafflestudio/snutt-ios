@@ -31,9 +31,9 @@ class STSingleClassView : UIView {
         self.layoutMargins = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }
 
-    func setData(lecture: CompactLecture, singleClass: STSingleClass, fitSpec spec: STTimetableView.FitSpec) {
+    func setData(lecture: CompactLecture, singleClass: STSingleClass, fitSpec spec: STTimetableView.FitSpec, colorList: STColorList) {
         setText(lectureTitle: lecture.title, place: singleClass.place)
-        setColor(lecture: lecture)
+        setColor(lecture: lecture, colorList: colorList)
         setConstraints(time: singleClass.time, fitSpec: spec)
     }
 
@@ -78,8 +78,8 @@ class STSingleClassView : UIView {
         label.baselineAdjustment = .alignCenters
     }
 
-    private func setColor(lecture: CompactLecture) {
-        let color = lecture.getColor()
+    private func setColor(lecture: CompactLecture, colorList: STColorList) {
+        let color = lecture.getColor(colorList: colorList)
         self.backgroundColor = color.bgColor
         label.textColor = color.fgColor
     }

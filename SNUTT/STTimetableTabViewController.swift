@@ -51,6 +51,10 @@ class STTimetableTabViewController: UIViewController {
                 self?.timetableView2.setFitMode(fitMode)
             }).disposed(by: disposeBag)
 
+        colorManager.rx.colorList
+            .subscribe(onNext: {[weak self] colorList in
+                self?.timetableView2.setColorList(colorList)
+            }).disposed(by: disposeBag)
 
         // Add tap recognizer to title in NavigationBar
         let titleView = UILabel()

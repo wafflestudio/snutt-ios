@@ -15,7 +15,7 @@ extension STColorManager {
         let _ = networkProvider.rx.request(STTarget.GetColorList())
             .subscribe(onSuccess: { [weak self] result in
                 guard let self = self else { return }
-                self.colorList = STColorList(colorList: result.colors, nameList: result.names)
+                self.colorListSubject.accept(STColorList(colorList: result.colors, nameList: result.names))
                 self.saveData()
                 STEventCenter.sharedInstance.postNotification(event: STEvent.ColorListUpdated, object: nil)
                 })

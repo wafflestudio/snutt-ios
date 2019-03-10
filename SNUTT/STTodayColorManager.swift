@@ -24,7 +24,7 @@ class STTodayColorManager {
         self.loadData()
     }
 
-    var colorList: STColorList!
+    var colorList: STColorList = STColorList(colorList: [], nameList: [])
 
     func loadData() {
         colorList = STDefaults[.colorList] ?? STColorList(colorList: [], nameList: [])
