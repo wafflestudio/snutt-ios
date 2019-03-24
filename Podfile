@@ -27,6 +27,7 @@ target 'SNUTT' do
   pod 'RxSwift'
   pod 'RxSwiftExt'
   pod 'RxCocoa'
+  pod 'RxGesture'
   pod 'RxDataSources', '~> 3.0'
   pod 'SnapKit', '~> 4.0.0'
   pod 'Moya/RxSwift'
@@ -38,6 +39,7 @@ target 'SNUTT Today' do
   pod 'RxSwift'
   pod 'RxSwiftExt'
   pod 'RxCocoa'
+  pod 'RxGesture'
   pod 'SnapKit', '~> 4.0.0'
 end
 

@@ -14,7 +14,6 @@ import RxCocoa
 
 class STTimetableView : UIView {
     let disposeBag = DisposeBag()
-    var lectureList: [STLecture] = []
 
     let columnHeader = UIView()
     let rowHeader = UIView()
@@ -24,9 +23,13 @@ class STTimetableView : UIView {
     var cornerSizeWidthConstraint: Constraint!
     var cornerSizeHeightConstraint: Constraint!
     var lectureViews : [CompactLecture: [STSingleClassView]] = [:]
+
     let lectureListSubject = BehaviorRelay<[CompactLecture]>(value: [])
     let fitModeSubject = BehaviorRelay<FitMode>(value: .auto)
     let colorListSubject = BehaviorRelay<STColorList>(value: STColorList(colorList: [], nameList: []))
+
+    let clickedLectureRelay = PublishRelay<String?>()
+    let longPressedLectureRelay = PublishRelay<String?>()
 
     let columnHeaderCells = ["월", "화", "수", "목", "금", "토", "일"].map { text -> UILabel in
         let label = UILabel()
@@ -178,10 +181,11 @@ class STTimetableView : UIView {
     }
 
     func setTimetable(_ timetable : STTimetable?, tempLecture: STLecture? = nil) {
-        var lectureList = timetable?.lectureList.map { $0.toCompactLecture() } ?? []
-        if let tempLecture = tempLecture {
-            lectureList = lectureList + [tempLecture.toCompactLecture()]
-        }
+        let lectureList = (timetable?.lectureList ?? []) + [tempLecture].compactMap { $0 }
+        lectureListSubject.accept(lectureList.map { $0.toCompactLecture() })
+    }
+
+    func setCompactLectureList(_ lectureList: [CompactLecture]) {
         lectureListSubject.accept(lectureList)
     }
 
@@ -217,7 +221,7 @@ class STTimetableView : UIView {
             if let views = oldLectureViews[lecture] {
                 for (index, view) in views.enumerated() {
                     let singleClass = lecture.singleClassList[index]
-                    view.setData(lecture: lecture, singleClass: singleClass, fitSpec: spec, colorList: colorList)
+                    setData(to: view, lecture: lecture, singleClass: singleClass, fitSpec: spec, colorList: colorList)
                 }
                 newLectureViews[lecture] = views
                 oldLectureViews.removeValue(forKey: lecture)
@@ -239,12 +243,25 @@ class STTimetableView : UIView {
     private func createSingleLectureView(lecture: CompactLecture, singleClass : STSingleClass, fitspec spec: FitSpec, colorList: STColorList) -> STSingleClassView {
         let view = STSingleClassView()
         lectureContainer.addSubview(view)
-        view.setData(lecture: lecture, singleClass: singleClass, fitSpec: spec, colorList: colorList)
+        setData(to: view, lecture: lecture, singleClass: singleClass, fitSpec: spec, colorList: colorList)
         return view
+    }
+
+    private func setData(to view: STSingleClassView, lecture: CompactLecture, singleClass: STSingleClass, fitSpec: FitSpec, colorList: STColorList) {
+        view.setData(lecture: lecture, singleClass: singleClass, fitSpec: fitSpec, colorList: colorList)
+        view.onClick = { [weak self] in
+            guard let self = self else { return }
+            self.clickedLectureRelay.accept(lecture.id)
+        }
+        view.onLongPress = { [weak self] in
+            guard let self = self else { return }
+            self.longPressedLectureRelay.accept(lecture.id)
+        }
     }
 }
 
 struct CompactLecture : Hashable {
+    var id : String?
     var title: String
     var color: STColor? = nil
     var colorIndex: Int
@@ -263,6 +280,6 @@ struct CompactLecture : Hashable {
 
 extension STLecture {
     func toCompactLecture() -> CompactLecture {
-        return CompactLecture(title: title, color: color, colorIndex: colorIndex, singleClassList: self.classList)
+        return CompactLecture(id: id, title: title, color: color, colorIndex: colorIndex, singleClassList: self.classList)
     }
 }

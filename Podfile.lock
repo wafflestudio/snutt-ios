@@ -73,6 +73,9 @@ PODS:
     - Differentiator (~> 3.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
+  - RxGesture (1.2.1):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
   - RxSwiftExt (3.3.0):
     - RxSwiftExt/Core (= 3.3.0)
@@ -106,6 +109,7 @@ DEPENDENCIES:
   - Moya/RxSwift
   - RxCocoa
   - RxDataSources (~> 3.0)
+  - RxGesture
   - RxSwift
   - RxSwiftExt
   - SnapKit (~> 4.0.0)
@@ -143,6 +147,7 @@ SPEC REPOS:
     - Result
     - RxCocoa
     - RxDataSources
+    - RxGesture
     - RxSwift
     - RxSwiftExt
     - SnapKit
@@ -207,6 +212,7 @@ SPEC CHECKSUMS:
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
+  RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   RxSwiftExt: 81afb48ab0602f503147417baeb3989d64c7687d
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
@@ -217,6 +223,6 @@ SPEC CHECKSUMS:
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
   "UITextView+Placeholder": 77680995fcdd07c3f52ec92fe1150874a2ac89ff
 
-PODFILE CHECKSUM: 960c3d3d0106a29a5f45f4ac368da45f235c5190
+PODFILE CHECKSUM: cff1cf15659027d1b23cc7ba4b982cc57fc18816
 
 COCOAPODS: 1.5.3

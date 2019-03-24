@@ -9,9 +9,17 @@
 import Foundation
 import UIKit
 import SnapKit
+import RxCocoa
+import RxSwift
+import RxGesture
 
 class STSingleClassView : UIView {
     let label = UILabel()
+    let disposeBag = DisposeBag()
+
+    var onClick: (()->())? = nil
+    var onLongPress: (()->())? = nil
+    private var blockClickEvent = false
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -29,6 +37,29 @@ class STSingleClassView : UIView {
         label.numberOfLines = -1
         let inset : CGFloat = isLargerThanSE() ? 5.0 : 4.0
         self.layoutMargins = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+
+        self.rx.longPressGesture(minimumPressDuration: 0.0)
+            .subscribe(onNext: { [weak self] gesture in
+                guard let self = self else { return }
+                switch gesture.state {
+                case .began:
+                    self.blockClickEvent = false
+                case .ended:
+                    if (!self.blockClickEvent) {
+                        self.onClick?()
+                    }
+                default:
+                    break
+                }
+            }).disposed(by: disposeBag)
+
+        self.rx.longPressGesture()
+            .when(.began)
+            .subscribe(onNext: { [weak self] _ in
+                self?.onLongPress?()
+                self?.blockClickEvent = true
+            }).disposed(by: disposeBag)
+
     }
 
     func setData(lecture: CompactLecture, singleClass: STSingleClass, fitSpec spec: STTimetableView.FitSpec, colorList: STColorList) {
