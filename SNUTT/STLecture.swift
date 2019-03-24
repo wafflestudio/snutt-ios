@@ -15,11 +15,7 @@ struct STLecture {
     var academicYear : String?
     var courseNumber : String?
     var lectureNumber : String?
-    var title : String = "" {
-        didSet {
-            titleBreakLine = title.breakOnlyAtNewLineAndSpace
-        }
-    }
+    var title : String = ""
     var credit : Int = 0
     var instructor : String = ""
     var quota : Int?
@@ -30,7 +26,6 @@ struct STLecture {
     var color : STColor? = nil
     var colorIndex: Int = 0
     var timeMask: [Int] = []
-    var titleBreakLine = ""
 
     func getColor() -> STColor {
         // TODO: need some thinking about this
@@ -104,7 +99,6 @@ struct STLecture {
         courseNumber = data["course_number"].string
         lectureNumber = data["lecture_number"].string
         title = data["course_title"].stringValue
-        titleBreakLine = title.breakOnlyAtNewLineAndSpace
         credit = data["credit"].intValue
         instructor = data["instructor"].stringValue
         quota = data["quota"].int
@@ -186,7 +180,21 @@ extension STLecture: Codable {
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        // TODO:
+        try container.encodeIfPresent(classification, forKey: .classification)
+        try container.encodeIfPresent(department, forKey: .department)
+        try container.encodeIfPresent(academicYear, forKey: .academic_year)
+        try container.encodeIfPresent(courseNumber, forKey: .course_number)
+        try container.encode(title, forKey: .course_title)
+        try container.encodeIfPresent(credit, forKey: .credit)
+        try container.encodeIfPresent(instructor, forKey: .instructor)
+        try container.encodeIfPresent(quota, forKey: .quota)
+        try container.encodeIfPresent(remark, forKey: .remark)
+        try container.encodeIfPresent(category, forKey: .category)
+        try container.encode(timeMask, forKey: .class_time_mask)
+        try container.encodeIfPresent(id, forKey: ._id)
+        try container.encodeIfPresent(colorIndex, forKey: .colorIndex)
+        try container.encodeIfPresent(color, forKey: .color)
+        try container.encode(classList, forKey: .class_time_json)
     }
 
     init(from decoder: Decoder) throws {
@@ -196,7 +204,6 @@ extension STLecture: Codable {
         academicYear = try container.decodeIfPresent(String.self, forKey: .academic_year)
         courseNumber = try container.decodeIfPresent(String.self, forKey: .course_number)
         title = try container.decode(String.self, forKey: .course_title)
-        titleBreakLine = title.breakOnlyAtNewLineAndSpace
         credit = (try container.decodeIfPresent(Int.self, forKey: .credit)) ?? 0
         instructor = (try container.decodeIfPresent(String.self, forKey: .instructor)) ?? ""
         quota = (try container.decodeIfPresent(Int.self, forKey: .quota)) ?? 0

@@ -12,13 +12,10 @@ import SwiftyJSON
 struct STSingleClass : Hashable {
     var time : STTime
     var place : String
-    // TODO: remove this
-    var placeBreakLine: String
 
     init(time : STTime, place: String) {
         self.time = time
         self.place = place
-        self.placeBreakLine = place.breakOnlyAtNewLineAndSpace
     }
     
     func toDictionary() -> [String: Any] {
@@ -57,7 +54,6 @@ extension STSingleClass : Codable {
         let len = try container.decode(Double.self, forKey: .len)
         time = STTime(day: day, startPeriod: startPeriod, duration : len)
         place = (try? container.decode(String.self, forKey: .place)) ?? ""
-        placeBreakLine = place.breakOnlyAtNewLineAndSpace
     }
 }
 
