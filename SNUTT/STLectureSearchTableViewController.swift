@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import DZNEmptyDataSet
+import RxSwift
 
 class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
@@ -18,9 +19,13 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     @IBOutlet weak var tagTableView: STTagListView!
     @IBOutlet weak var tagCollectionViewConstraint: NSLayoutConstraint!
     @IBOutlet var searchToolbarView: STLectureSearchToolbarView!
-    @IBOutlet weak var timetableView: STTimetableCollectionView!
+    @IBOutlet weak var timetableView: STTimetableView!
 
     let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
+    let settingManager = AppContainer.resolver.resolve(STSettingManager.self)!
+    let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
+
+    let disposeBag = DisposeBag()
     var FilteredList : [STLecture] = [] {
         didSet(oldVal) {
             print(oldVal)
@@ -40,16 +45,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func reloadData() {
         tableView.reloadData()
-        timetableManager.setTemporaryLecture(nil, object: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.timetableSwitched), event: STEvent.CurrentTimetableSwitched, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.reloadTimetable), event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.reloadTempLecture), event: STEvent.CurrentTemporaryLectureChanged, object: nil)
-        
+
         tableView.emptyDataSetSource = self;
         tableView.emptyDataSetDelegate = self;
         
@@ -69,10 +69,31 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         
         searchBar.inputAccessoryView = searchToolbarView
 
-        timetableView.timetable = timetableManager.currentTimetable
-        timetableView.showTemporary = true
-        settingChanged()
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
+        // TODO: use the actual value of timetable
+        timetableManager.rx.currentTimetable
+            .map { $0?.id }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] _ in
+                self?.timetableSwitched()
+            }).disposed(by: disposeBag)
+
+        Observable.combineLatest(
+            timetableManager.rx.currentTimetable,
+            timetableManager.rx.currentTemporaryLecture
+        ) { a, b in (a,b)}
+            .subscribe(onNext: { [weak self] (timetable, tempLecture) in
+                self?.timetableView.setTimetable(timetable, tempLecture: tempLecture)
+            }).disposed(by: disposeBag)
+
+        settingManager.rx.fitMode
+            .subscribe(onNext: {[weak self] fitMode in
+                self?.timetableView.setFitMode(fitMode)
+            }).disposed(by: disposeBag)
+
+        colorManager.rx.colorList
+            .subscribe(onNext: {[weak self] colorList in
+                self?.timetableView.setColorList(colorList)
+            }).disposed(by: disposeBag)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -92,27 +113,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         super.viewWillDisappear(animated)
     }
 
-    @objc func settingChanged() {
-        if STDefaults[.autoFit] {
-            timetableView.shouldAutofit = true
-        } else {
-            timetableView.shouldAutofit = false
-            let dayRange = STDefaults[.dayRange]
-            var columnHidden : [Bool] = []
-            for i in 0..<6 {
-                if dayRange[0] <= i && i <= dayRange[1] {
-                    columnHidden.append(false)
-                } else {
-                    columnHidden.append(true)
-                }
-            }
-            timetableView.columnHidden = columnHidden
-            timetableView.rowStart = Int(STDefaults[.timeRange][0])
-            timetableView.rowEnd = Int(STDefaults[.timeRange][1])
-        }
-        timetableView.reloadTimetable()
-    }
-    
     func getLectureList(_ searchString : String) {
         // This is for saving the request
         isLast = false
@@ -176,30 +176,20 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         }
     }
     
-    @objc func timetableSwitched() {
+    func timetableSwitched() {
         state = .empty
         searchBar.text = ""
         FilteredList = []
-        self.timetableView.timetable = timetableManager.currentTimetable
         tagTableView.filteredList = []
         tagCollectionView.tagList = []
         searchToolbarView.currentTagType = nil
         searchToolbarView.isEmptyTime = false
         
-        self.reloadTimetable()
         self.reloadData()
         tagTableView.hide()
         tagCollectionView.reloadData()
     }
-    
-    @objc func reloadTimetable() {
-        self.timetableView.reloadTimetable()
-    }
-    
-    @objc func reloadTempLecture() {
-        self.timetableView.reloadTempLecture()
-    }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -264,13 +254,13 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         willSelectRow = false
-        timetableManager.setTemporaryLecture(FilteredList[indexPath.row], object: self)
+        timetableManager.setTemporaryLecture(FilteredList[indexPath.row])
         //TimetableCollectionViewController.datasource.addLecture(FilteredList[indexPath.row])
         
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if timetableManager.currentTimetable?.temporaryLecture == FilteredList[indexPath.row] && !willSelectRow {
-            timetableManager.setTemporaryLecture(nil, object: self)
+        if timetableManager.currentTemporaryLecture == FilteredList[indexPath.row] && !willSelectRow {
+            timetableManager.setTemporaryLecture(nil)
         }
     }
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

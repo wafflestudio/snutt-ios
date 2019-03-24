@@ -97,13 +97,11 @@ class STUserManager {
 
         // TODO: this is not DI.
         let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
-        networkProvider.rx.request(STTarget.GetRecentTimetable())
-            .subscribe(onSuccess: { [weak self] timetable in
-                timetableManager.currentTimetable = timetable
+        timetableManager.getRecentTimetable()
+            .subscribe(onCompleted: {
                 openController()
-                }, onError: { [weak self] error in
-                    self?.errorHandler.apiOnError(error)
-                    openController()
+            }, onError: { _ in
+                openController()
             }).disposed(by: disposeBag)
     }
 

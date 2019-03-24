@@ -191,9 +191,11 @@ class STSingleLectureTableViewController: UITableViewController {
         case .deleteButton:
             return .button(title: "삭제", color: UIColor.red, onClick: { 
                 let actions = [
-                    UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+                    UIAlertAction(title: "삭제", style: .destructive, handler: { [weak self] _ in
+                        guard let self = self else { return }
                         if let index = self.timetableManager.currentTimetable?.lectureList.index(of: self.currentLecture) {
-                            self.timetableManager.deleteLectureAtIndex(index, object: nil)
+                            // TODO: disposeBag
+                            let _ = self.timetableManager.deleteLectureAtIndex(index).subscribe()
                         }
                         self.navigationController?.popViewController(animated: true)
                     }),

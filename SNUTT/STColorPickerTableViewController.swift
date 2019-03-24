@@ -137,13 +137,13 @@ class STColorPickerTableViewController: UITableViewController {
             if indexPath.row == 0 {
                 pickerViewController.color = self.color.bgColor
                 pickerViewController.doneBlock = { color in
-                    self.color.bgColor = color
+                    self.color.bg = color.toHexString()
                     self.tableView.reloadSections(IndexSet(integer: 1), with: .none)
                 }
             } else {
                 pickerViewController.color = self.color.fgColor
                 pickerViewController.doneBlock = { color in
-                    self.color.fgColor = color
+                    self.color.fg = color.toHexString()
                     self.tableView.reloadSections(IndexSet(integer: 1), with: .none)
                 }
             }

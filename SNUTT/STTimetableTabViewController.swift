@@ -8,21 +8,26 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
+import SnapKit
 
 class STTimetableTabViewController: UIViewController {
     
-    @IBOutlet weak var timetableView: STTimetableCollectionView!
+    lazy var timetableView2 = STTimetableView()
     var lectureListController : STMyLectureListController!
     let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
+    let settingManager = AppContainer.resolver.resolve(STSettingManager.self)!
     let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
     let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
     let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
 
+    var colorPickerInfoRelay = BehaviorRelay<(id: String, colorIndex: Int)?>(value: nil)
+
     let disposeBag = DisposeBag()
 
     enum State {
-    case timetable
-    case lectureList
+        case timetable
+        case lectureList
     }
     
     var state : State = .timetable
@@ -32,7 +37,38 @@ class STTimetableTabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        containerView.addSubview(timetableView2)
+        timetableView2.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        Observable.combineLatest(
+            timetableManager.rx.currentTimetable,
+            colorPickerInfoRelay.asObservable(),
+            resultSelector: {(timetable, info) -> [CompactLecture] in
+                timetable?.lectureList.map { lecture -> CompactLecture in
+                    if lecture.id == info?.id {
+                        var compactLecture = lecture.toCompactLecture()
+                        compactLecture.colorIndex = info?.colorIndex ?? 0
+                        return compactLecture
+                    } else {
+                        return lecture.toCompactLecture()
+                    }
+                    } ?? []
+        }).subscribe(onNext: { [weak self] compactLectureList in
+            self?.timetableView2.setCompactLectureList(compactLectureList)
+        }).disposed(by: disposeBag)
+
+        settingManager.rx.fitMode
+            .subscribe(onNext: {[weak self] fitMode in
+                self?.timetableView2.setFitMode(fitMode)
+            }).disposed(by: disposeBag)
+
+        colorManager.rx.colorList
+            .subscribe(onNext: {[weak self] colorList in
+                self?.timetableView2.setColorList(colorList)
+            }).disposed(by: disposeBag)
+
         // Add tap recognizer to title in NavigationBar
         let titleView = UILabel()
         titleView.font = UIFont(name: "HelveticaNeue-Medium", size: 17)
@@ -53,17 +89,38 @@ class STTimetableTabViewController: UIViewController {
         self.containerView.addSubview(lectureListController.view)
         lectureListController.view.isHidden = true
 
-        timetableView.timetable = timetableManager.currentTimetable
-        settingChanged()
+        timetableManager.rx.currentTimetable.subscribe(onNext: { [weak self] timetable in
+            guard let self = self else { return }
+            let titleView = (self.navigationItem.titleView as! UILabel)
+            let attribute = [NSAttributedStringKey.foregroundColor : UIColor.darkGray,
+                             NSAttributedStringKey.font : UIFont.systemFont(ofSize: 15)]
+            let totalCreditStr = NSAttributedString(string: " \(timetable?.totalCredit ?? 0)학점", attributes: attribute)
+            let mutableStr = NSMutableAttributedString()
+            mutableStr.append(NSAttributedString(string: timetable?.title ?? ""))
+            mutableStr.append(totalCreditStr)
+            titleView.attributedText = mutableStr
+            titleView.invalidateIntrinsicContentSize()
+        }).disposed(by: disposeBag)
 
-        timetableView.cellLongClicked = self.cellLongClicked
-        timetableView.cellTapped = self.cellTapped
+        timetableView2.clickedLectureRelay.asObservable()
+            .subscribe(onNext: { [weak self] lectureId in
+                guard let self = self else { return }
+                guard let lecture = self.timetableManager.currentTimetable?.lectureList.first(where: { $0.id == lectureId}) else {
+                    return
+                }
+                self.lectureViewTapped(lecture)
+            })
+            .disposed(by: disposeBag)
 
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.reloadData), event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.reloadData), event: STEvent.CurrentTimetableSwitched, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
-        
-        reloadData()
+        timetableView2.longPressedLectureRelay.asObservable()
+            .subscribe(onNext: { [weak self] lectureId in
+                guard let self = self else { return }
+                guard let lecture = self.timetableManager.currentTimetable?.lectureList.first(where: { $0.id == lectureId}) else {
+                    return
+                }
+                self.lectureViewLongPressed(lecture)
+            })
+            .disposed(by: disposeBag)
     }
 
     deinit {
@@ -75,42 +132,6 @@ class STTimetableTabViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @objc func reloadData() {
-        let titleView = (self.navigationItem.titleView as! UILabel)
-        let attribute = [NSAttributedStringKey.foregroundColor : UIColor.darkGray,
-                         NSAttributedStringKey.font : UIFont.systemFont(ofSize: 15)]
-        let totalCreditStr = NSAttributedString(string: " \(timetableManager.currentTimetable?.totalCredit ?? 0)학점", attributes: attribute)
-        let mutableStr = NSMutableAttributedString()
-        mutableStr.append(NSAttributedString(string: timetableManager.currentTimetable?.title ?? ""))
-        mutableStr.append(totalCreditStr)
-        titleView.attributedText = mutableStr
-        titleView.invalidateIntrinsicContentSize()
-        
-        timetableView.timetable = timetableManager.currentTimetable
-        timetableView.reloadTimetable()
-    }
-    
-    @objc func settingChanged() {
-        if STDefaults[.autoFit] {
-            timetableView.shouldAutofit = true
-        } else {
-            timetableView.shouldAutofit = false
-            let dayRange = STDefaults[.dayRange]
-            var columnHidden : [Bool] = []
-            for i in 0..<6 {
-                if dayRange[0] <= i && i <= dayRange[1] {
-                    columnHidden.append(false)
-                } else {
-                    columnHidden.append(true)
-                }
-            }
-            timetableView.columnHidden = columnHidden
-            timetableView.rowStart = Int(STDefaults[.timeRange][0])
-            timetableView.rowEnd = Int(STDefaults[.timeRange][1])
-        }
-        timetableView.reloadTimetable()
-    }
-    
     @objc func switchView() {
 
         if (isInAnimation) {
@@ -120,11 +141,11 @@ class STTimetableTabViewController: UIViewController {
         var oldView, newView : UIView!
         switch state {
         case .timetable:
-            oldView = timetableView
+            oldView = timetableView2
             newView = lectureListController.view
         case .lectureList:
             oldView = lectureListController.view
-            newView = timetableView
+            newView = timetableView2
         }
 
         UIView.animate(withDuration: 0.65, animations: {
@@ -137,11 +158,11 @@ class STTimetableTabViewController: UIViewController {
         })
 
         UIView.transition(with: containerView, duration: 0.65, options: .transitionFlipFromRight, animations: {
-                oldView.isHidden = true
-                newView.isHidden = false
-            }, completion: { finished in
-                self.state = (self.state == .timetable) ? .lectureList : .timetable
-                self.isInAnimation = false
+            oldView.isHidden = true
+            newView.isHidden = false
+        }, completion: { finished in
+            self.state = (self.state == .timetable) ? .lectureList : .timetable
+            self.isInAnimation = false
         })
     }
     
@@ -162,60 +183,41 @@ class STTimetableTabViewController: UIViewController {
                 guard let self = self else { return }
                 if let timetableName = alert.textFields?.first?.text {
                     let timetableManager = self.timetableManager
-                    self.networkProvider.rx.request(STTarget.UpdateTimetable(params: .init(title: timetableName), id: timetableId))
-                        .subscribe(onSuccess: { [weak self] _ in
-                            self?.timetableManager.currentTimetable?.title = timetableName
-                            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
-                        }, onError: self.errorHandler.apiOnError
-                    )
-                    .disposed(by: self.disposeBag)
+                    timetableManager.updateTitle(title: timetableName)
+                        .subscribe()
+                        .disposed(by: self.disposeBag)
                 }
             }))
         })
     }
 
-    func cellTapped(_ cell: STCourseCellCollectionViewCell) {
+    func lectureViewTapped(_ lecture: STLecture) {
         let detailController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LectureDetailTableViewController") as! STLectureDetailTableViewController
-        detailController.lecture = cell.lecture
+        detailController.lecture = lecture
         self.navigationController?.pushViewController(detailController, animated: true)
 
     }
 
-    func cellLongClicked (_ cell : STCourseCellCollectionViewCell) {
-        let oldColorIndex = cell.lecture.colorIndex;
-        guard let collectionView = timetableView else {
-            return
-        }
-        guard let indexPath = timetableView.indexPath(for: cell) else {
-            return
-        }
-        let num = collectionView.numberOfItems(inSection: indexPath.section)
-        let cellList : [STCourseCellCollectionViewCell?] = (0..<num).map { i in
-            let tmpIndexPath = IndexPath(row: i, section: indexPath.section)
-            return collectionView.cellForItem(at: tmpIndexPath) as? STCourseCellCollectionViewCell
-        }
-        var oldLecture = cell.lecture!
-        let timetableManager = self.timetableManager
-        let colorManager = self.colorManager
-        STColorActionSheetPicker.showWithColor(oldColorIndex ?? 0, doneBlock: { selectedColorIndex in
-            var newLecture = cell.lecture
-            newLecture?.colorIndex = selectedColorIndex
-            newLecture?.color = nil
-            timetableManager.updateLecture(
-                oldLecture, newLecture: newLecture!, done: {  return }, failure: {
-                    cellList.forEach { cell in
-                        cell?.setColorByLecture(lecture: oldLecture)
-                    }
+    func lectureViewLongPressed (_ lecture: STLecture) {
+        guard let lectureId = lecture.id else { return }
+        let oldColorIndex = lecture.colorIndex
+        let oldLecture = lecture
+        STColorActionSheetPicker.showWithColor(oldColorIndex ?? 0, doneBlock: { [weak self] selectedColorIndex in
+            self?.colorPickerInfoRelay.accept((lectureId, selectedColorIndex))
+            var newLecture = lecture
+            newLecture.colorIndex = selectedColorIndex
+            newLecture.color = nil
+            self?.timetableManager.updateLecture(
+                oldLecture, newLecture: newLecture,
+                done: { [weak self] in
+                    self?.colorPickerInfoRelay.accept(nil)
+                }, failure: { [weak self] in
+                    self?.colorPickerInfoRelay.accept(nil)
             })
-            }, cancelBlock: {
-                cellList.forEach { cell in
-                    cell?.setColorByLecture(lecture: oldLecture)
-                }
-            }, selectedBlock: { colorIndex in
-                cellList.forEach { cell in
-                    let color = colorManager.colorList.colorList[colorIndex-1]
-                    cell?.setColor(color: color)
-                }
+            }, cancelBlock: { [weak self] in
+                self?.colorPickerInfoRelay.accept(nil)
+            }, selectedBlock: { [weak self] colorIndex in
+                self?.colorPickerInfoRelay.accept((lectureId, colorIndex))
             }, origin: self)
     }
 }

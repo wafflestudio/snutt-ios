@@ -26,18 +26,30 @@ target 'SNUTT' do
   pod 'Swinject'
   pod 'RxSwift'
   pod 'RxSwiftExt'
+  pod 'RxCocoa'
+  pod 'RxGesture'
+  pod 'RxDataSources', '~> 3.0'
+  pod 'SnapKit', '~> 4.0.0'
   pod 'Moya/RxSwift'
 end
 
 target 'SNUTT Today' do
   pod 'SwiftyJSON'
   pod 'SwiftyUserDefaults', :git => 'https://github.com/Rajin9601/SwiftyUserDefaults.git'
+  pod 'RxSwift'
+  pod 'RxSwiftExt'
+  pod 'RxCocoa'
+  pod 'RxGesture'
+  pod 'SnapKit', '~> 4.0.0'
 end
 
 post_install do |installer|
+  swift3 = ['EGOTableViewPullRefreshAndLoadMore', 'SwiftyJSON', 'B68UIFloatLabelTextField', 'ChameleonFramwork/Swift', 'ActionSheePicker-3.0', 'Color-Picker-for-iOS', 'Carte', 'SwiftyUserDefaults', 'TTRangeSlider', 'DNZEmptyDataSet', 'TPKeyboardAvoiding', 'UITextView+Placeholder']
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['SWIFT_VERSION'] = '3.0'
+      if swift3.include?(target.name)
+        config.build_settings['SWIFT_VERSION'] = '3.0'
+      end
     end
   end
 end

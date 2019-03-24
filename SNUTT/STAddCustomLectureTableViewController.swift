@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import RxSwift
 
 class STAddCustomLectureTableViewController: STSingleLectureTableViewController {
+    let disposeBag = DisposeBag()
 
     let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
     override func viewDidLoad() {
@@ -108,13 +110,14 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
     @IBAction func saveButtonClicked(_ sender: UIBarButtonItem) {
         self.view.endEditing(true)
         let loadingView = STAlertView.showLoading(title: "저장중...")
-        timetableManager.addCustomLecture(currentLecture, object: self, done:{
-            loadingView.dismiss(animated: true, completion: {
-                self.dismiss(animated: true)
-            })
-        }, failure: {
-            loadingView.dismiss(animated: true)
-        })
+        timetableManager.addCustomLecture(currentLecture)
+            .subscribe(onCompleted: { [weak self] in
+                loadingView.dismiss(animated: true, completion: { [weak self] in
+                    self?.dismiss(animated: true)
+                })
+                }, onError: { err in
+                    loadingView.dismiss(animated: true)
+            }).disposed(by: disposeBag)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

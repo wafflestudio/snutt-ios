@@ -15,6 +15,7 @@ PODS:
   - Color-Picker-for-iOS (2.0.2)
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
+  - Differentiator (3.0.2)
   - DZNEmptyDataSet (1.8)
   - EGOTableViewPullRefreshAndLoadMore (1.0.4)
   - Fabric (1.6.11)
@@ -52,7 +53,7 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - "GoogleToolboxForMac/NSData+zlib (2.1.3)":
     - GoogleToolboxForMac/Defines (= 2.1.3)
-  - MarqueeLabel/Swift (3.0.1)
+  - MarqueeLabel/Swift (3.2.0)
   - Moya/Core (11.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
@@ -66,11 +67,21 @@ PODS:
   - nanopb/encode (0.3.8)
   - Protobuf (3.4.0)
   - Result (3.2.4)
+  - RxCocoa (4.2.0):
+    - RxSwift (~> 4.0)
+  - RxDataSources (3.0.2):
+    - Differentiator (~> 3.0)
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - RxGesture (1.2.1):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
   - RxSwiftExt (3.3.0):
     - RxSwiftExt/Core (= 3.3.0)
   - RxSwiftExt/Core (3.3.0):
     - RxSwift (~> 4.0)
+  - SnapKit (4.0.0)
   - SwiftyJSON (3.1.4)
   - SwiftyUserDefaults (3.0.1)
   - Swinject (2.1.1)
@@ -96,8 +107,12 @@ DEPENDENCIES:
   - Firebase/Messaging
   - MarqueeLabel/Swift
   - Moya/RxSwift
+  - RxCocoa
+  - RxDataSources (~> 3.0)
+  - RxGesture
   - RxSwift
   - RxSwiftExt
+  - SnapKit (~> 4.0.0)
   - SwiftyJSON
   - SwiftyUserDefaults (from `https://github.com/Rajin9601/SwiftyUserDefaults.git`)
   - Swinject
@@ -113,6 +128,7 @@ SPEC REPOS:
     - Carte
     - Color-Picker-for-iOS
     - Crashlytics
+    - Differentiator
     - EGOTableViewPullRefreshAndLoadMore
     - Fabric
     - FBSDKCoreKit
@@ -129,8 +145,12 @@ SPEC REPOS:
     - nanopb
     - Protobuf
     - Result
+    - RxCocoa
+    - RxDataSources
+    - RxGesture
     - RxSwift
     - RxSwiftExt
+    - SnapKit
     - SwiftyJSON
     - Swinject
     - TPKeyboardAvoiding
@@ -172,6 +192,7 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Color-Picker-for-iOS: 4980589b3e3cfe7198f227dd50be9adb02d8bc0b
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
+  Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
   DZNEmptyDataSet: d2351b2e8daefa40433ef292e246e21f6be31a7b
   EGOTableViewPullRefreshAndLoadMore: 118a0824590db042d42e08fcc442b93cebf15e73
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
@@ -184,13 +205,17 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 70c2b877e9338971b2429ea5a4293df6961aa44e
   FirebaseMessaging: 3dd86bfda2acb680b05c97f3f8ac566e9bb87b2a
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  MarqueeLabel: 80ba85d2b76a9f5fa6c13de337db80bcd94feb1d
+  MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   Moya: a725035953bc1c0eb1be505ab903984501d82440
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
+  RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
+  RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   RxSwiftExt: 81afb48ab0602f503147417baeb3989d64c7687d
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SwiftyUserDefaults: 38267a30d58b7c8570995cd5defd354e43f056c6
   Swinject: afea49fd95f392b41171669f165842879c48fad6
@@ -198,6 +223,6 @@ SPEC CHECKSUMS:
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
   "UITextView+Placeholder": 77680995fcdd07c3f52ec92fe1150874a2ac89ff
 
-PODFILE CHECKSUM: 605860bc31aae20a4cdcf45b05ad31442f9c0908
+PODFILE CHECKSUM: cff1cf15659027d1b23cc7ba4b982cc57fc18816
 
 COCOAPODS: 1.5.3

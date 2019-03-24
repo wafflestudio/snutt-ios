@@ -34,7 +34,6 @@ extension UserDefaults {
         get { return unarchive(key) }
         set { archive(key, newValue) }
     }
-
     subscript(key: DefaultsKey<STFCMInfoList?>) -> STFCMInfoList? {
         get { return unarchive(key) }
         set { archive(key, newValue) }

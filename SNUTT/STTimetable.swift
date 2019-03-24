@@ -13,13 +13,13 @@ enum STAddLectureState {
     case success, errorTime, errorSameLecture
 }
 
-class STTimetable: Codable {
+struct STTimetable: Codable {
     var lectureList : [STLecture] = []
     var quarter : STQuarter
     var title : String
+    // TODO: id is not nullable
     var id : String? = ""
-    var temporaryLecture : STLecture? = nil
-    
+
     var isLoaded : Bool {
         get {
             return !(id==nil)
@@ -52,12 +52,30 @@ class STTimetable: Codable {
         self.quarter = STQuarter(year: year, semester: semester)
         self.title = json["title"].stringValue
         self.id = json["_id"].string
+
         let lectures = json["lecture_list"].arrayValue
-        lectures.forEach {data in
-            self.addLecture(STLecture(json: data))
+        lectures.forEach { data in
+            let lecture = STLecture(json: data)
+            addLecture(lecture)
         }
     }
-    
+
+    private func canAddLecture(lectureList: [STLecture], lecture: STLecture) -> Bool {
+        for it in lectureList {
+            if it.isSameLecture(lecture) {
+                return false
+            }
+            for class1 in it.classList {
+                for class2 in lecture.classList {
+                    if class1.time.isOverlappingWith(class2.time) {
+                        return false
+                    }
+                }
+            }
+        }
+        return true
+    }
+
     func toDictionary() -> [String: Any] {
         return [
             "year" : quarter.year,
@@ -70,7 +88,7 @@ class STTimetable: Codable {
         ]
     }
     
-    func addLecture(_ lecture : STLecture) -> STAddLectureState {
+    mutating func addLecture(_ lecture : STLecture) -> STAddLectureState {
         for it in lectureList {
             if it.isSameLecture(lecture){
                 return STAddLectureState.errorSameLecture
@@ -96,15 +114,15 @@ class STTimetable: Codable {
         return -1;
     }
     
-    func deleteLectureAtIndex(_ index: Int) {
+    mutating func deleteLectureAtIndex(_ index: Int) {
         lectureList.remove(at: index)
     }
-    func deleteLecture(_ lecture: STLecture) {
+    mutating func deleteLecture(_ lecture: STLecture) {
         if let index = lectureList.index(of: lecture) {
             lectureList.remove(at: index)
         }
     }
-    func updateLectureAtIndex(_ index: Int, lecture :STLecture) {
+    mutating func updateLectureAtIndex(_ index: Int, lecture :STLecture) {
         lectureList[index] = lecture
     }
     
@@ -135,7 +153,7 @@ class STTimetable: Codable {
         try container.encode(lectureList, forKey: .lecture_list)
     }
 
-    required init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let year = try container.decode(Int.self, forKey: .year)
         let semester = try container.decode(STSemester.self, forKey: .semester)

@@ -39,7 +39,7 @@ struct STLecture {
         #else
             let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
         #endif
-        let colorList = colorManager.colorList!
+        let colorList = colorManager.colorList
         if colorIndex == 0 {
             return color ?? STColor()
         } else if (colorIndex <= colorList.colorList.count && colorIndex >= 1) {
