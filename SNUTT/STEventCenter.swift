@@ -9,7 +9,6 @@
 import Foundation
 
 enum STEvent : String {
-    case SettingChanged = "SettingChanged"
     case CourseBookUpdated = "CourseBookUpdated"
     case TagListUpdated = "TagListUpdated"
     case UserUpdated = "UserUpdated"

@@ -50,8 +50,6 @@ class STSettingManager: ReactiveCompatible {
                 ]
             }
             fitModeSubject.accept(newValue)
-            // TODO: remove this
-            STEventCenter.sharedInstance.postNotification(event: .SettingChanged, object: self)
         }
     }
 }
