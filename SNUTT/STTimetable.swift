@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 enum STAddLectureState {
     case success, errorTime, errorSameLecture
@@ -46,20 +45,6 @@ struct STTimetable: Codable {
         self.title = title
     }
 
-    init(json : JSON) {
-        let year = json["year"].intValue
-        let semester = STSemester(rawValue: json["semester"].intValue)!
-        self.quarter = STQuarter(year: year, semester: semester)
-        self.title = json["title"].stringValue
-        self.id = json["_id"].string
-
-        let lectures = json["lecture_list"].arrayValue
-        lectures.forEach { data in
-            let lecture = STLecture(json: data)
-            addLecture(lecture)
-        }
-    }
-
     private func canAddLecture(lectureList: [STLecture], lecture: STLecture) -> Bool {
         for it in lectureList {
             if it.isSameLecture(lecture) {
@@ -74,18 +59,6 @@ struct STTimetable: Codable {
             }
         }
         return true
-    }
-
-    func toDictionary() -> [String: Any] {
-        return [
-            "year" : quarter.year,
-            "semester" : quarter.semester.rawValue,
-            "title" : title,
-            "_id" : id!,
-            "lecture_list" : lectureList.map({ lecture in
-                return lecture.toDictionary()
-            })
-        ]
     }
     
     mutating func addLecture(_ lecture : STLecture) -> STAddLectureState {

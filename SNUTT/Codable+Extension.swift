@@ -17,3 +17,25 @@ extension Encodable {
         return dictionary
     }
 }
+
+extension Dictionary {
+    func toObject<T: Decodable>(_ type: T.Type) throws -> T{
+        let data = try JSONSerialization.data(withJSONObject: self)
+        return try JSONDecoder().decode(type, from: data)
+    }
+}
+
+extension NSDictionary {
+    var swiftDictionary: Dictionary<String, Any> {
+        var swiftDictionary = Dictionary<String, Any>()
+
+        for key : Any in self.allKeys {
+            let stringKey = key as! String
+            if let keyValue = self.value(forKey: stringKey){
+                swiftDictionary[stringKey] = keyValue
+            }
+        }
+
+        return swiftDictionary
+    }
+}

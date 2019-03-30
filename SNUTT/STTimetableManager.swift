@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 import RxSwift
 import RxCocoa
 
@@ -59,16 +58,11 @@ class STTimetableManager : ReactiveCompatible {
     }
 
     func loadData() {
-        if let dict = STDefaults[.currentTimetable] {
-            let timetable = STTimetable(json: JSON(dict))
-            currentTimetable = timetable
-        }
+        currentTimetable = STDefaults[.currentTimetable]
     }
     
     func saveData() {
-        // TODO: serialization by jsonDecoder
-        let dict = currentTimetable?.toDictionary()
-        STDefaults[.currentTimetable] = dict as? NSDictionary
+        STDefaults[.currentTimetable] = currentTimetable
         STDefaults.synchronize()
     }
     

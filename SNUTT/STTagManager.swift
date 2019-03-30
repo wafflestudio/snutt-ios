@@ -22,7 +22,6 @@ class STTagManager {
         timetableManager = r.resolve(STTimetableManager.self)!
         networkProvider = r.resolve(STNetworkProvider.self)!
         errorHandler = r.resolve(STErrorHandler.self)!
-        self.loadData()
         timetableManager.rx.currentTimetable
             .map { $0?.quarter }
             .distinctUntilChanged()
@@ -37,8 +36,8 @@ class STTagManager {
         guard let quarter = timetableManager.currentTimetable?.quarter else {
             return
         }
-        let tagList = NSKeyedUnarchiver.unarchiveObject(withFile: getDocumentsDirectory().appendingPathComponent("tagList\(quarter.shortString()).archive")) as? STTagList
-        if tagList != nil {
+        if let data = try? Data(contentsOf: getFileUrl(quarter: quarter)),
+            let tagList = try? PropertyListDecoder().decode(STTagList.self, from: data) {
             self.tagList = tagList
         } else {
             self.tagList = STTagList(quarter: quarter, tagList: [], updatedTime: 0)
@@ -47,7 +46,18 @@ class STTagManager {
     }
     
     func saveData(_ quarter: STQuarter) {
-        NSKeyedArchiver.archiveRootObject(self.tagList, toFile: getDocumentsDirectory().appendingPathComponent("tagList\(quarter.shortString()).archive"))
+        guard let data = try? PropertyListEncoder().encode(tagList) else { return }
+        do {
+            try data.write(to: getFileUrl(quarter: quarter))
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+
+    private func getFileUrl(quarter: STQuarter) -> URL {
+        var url = getDocumentsDirectory()
+        url.appendPathComponent("tagList\(quarter.shortString()).archive")
+        return url
     }
 
     func getTagListWithQuarter(_ quarter: STQuarter, updatedTime : Int64) {

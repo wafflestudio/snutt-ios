@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import SwiftyJSON
 
 // TODO: Do something about this
 struct STColor: Codable, Hashable {
@@ -37,25 +36,6 @@ struct STColor: Codable, Hashable {
     init(fgHex : String, bgHex : String) {
         fg = fgHex
         bg = bgHex
-    }
-
-    init(json: JSON) {
-        self.init(fgHex: json["fg"].stringValue, bgHex: json["bg"].stringValue)
-    }
-}
-
-extension STColor : DictionaryRepresentable {
-    func dictionaryValue() -> NSDictionary {
-        return ["fg": self.fgColor.toHexString(), "bg" : self.bgColor.toHexString()]
-    }
-
-    init?(dictionary: NSDictionary?) {
-        guard let values = dictionary else {return nil}
-        guard let fg = values["fg"] as? String, let bg = values["bg"] as? String else {
-            return nil
-        }
-        self.fg = fg
-        self.bg = bg
     }
 }
 

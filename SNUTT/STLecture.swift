@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 struct STLecture {
     var classification : String?
@@ -90,67 +89,6 @@ struct STLecture {
     }
     
     init() {
-    }
-    
-    init(json data : JSON) {
-        classification = data["classification"].string
-        department = data["department"].string
-        academicYear = data["academic_year"].string
-        courseNumber = data["course_number"].string
-        lectureNumber = data["lecture_number"].string
-        title = data["course_title"].stringValue
-        credit = data["credit"].intValue
-        instructor = data["instructor"].stringValue
-        quota = data["quota"].int
-        remark = data["remark"].string
-        category = data["category"].string
-        timeMask = data["class_time_mask"].arrayValue.map{mask in mask.intValue}
-        id = data["_id"].string
-        let colorJson = data["color"]
-        colorIndex = data["colorIndex"].intValue
-        if let fgHex = colorJson["fg"].string, let bgHex = colorJson["bg"].string {
-            color = STColor(fgHex: fgHex, bgHex: bgHex)
-        }
-
-        let listData = data["class_time_json"].arrayValue
-        for it in listData {
-            let time = STTime(day: it["day"].intValue, startPeriod: it["start"].doubleValue, duration: it["len"].doubleValue)
-            let singleClass = STSingleClass(time: time, place: it["place"].stringValue)
-            classList.append(singleClass)
-        }
-    }
-    
-    func toDictionary() -> [String : Any] {
-        
-        let classTimeJSON = classList.map{ singleClass in
-            return singleClass.toDictionary()
-        }
-        
-        var dict : [String: Any?] = [
-            "classification" : classification,
-            "department" : department,
-            "academic_year" : academicYear,
-            "course_number" : courseNumber,
-            "lecture_number" : lectureNumber,
-            "course_title" : title,
-            "credit" : credit,
-            "instructor" : instructor,
-            "quota" : quota,
-            "remark" : remark,
-            "category" : category,
-            "id" : id,
-            "class_time_json" : classTimeJSON,
-            "color" : color?.dictionaryValue(),
-            "colorIndex" : colorIndex,
-            ]
-        
-        for (key, value) in dict {
-            if (value == nil) {
-                dict.removeValue(forKey: key)
-            }
-        }
-        
-        return dict as [String: AnyObject]
     }
     
     func isSameLecture(_ right : STLecture) -> Bool {

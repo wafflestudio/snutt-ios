@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import Alamofire
-import SwiftyJSON
 import Firebase
 import Crashlytics
 import FBSDKLoginKit
@@ -18,13 +17,6 @@ class STUser: Codable {
     var localId : String?
     var fbName : String?
     var email : String?
-    
-    init(json: JSON) {
-        self.localId = json["local_id"].string
-        self.fbName = json["fb_name"].string
-        self.email = json["email"].string
-        
-    }
     
     init(localId : String?, fbName : String?) {
         self.localId = localId

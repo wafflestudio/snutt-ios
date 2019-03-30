@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 struct STSingleClass : Hashable {
     var time : STTime
@@ -17,17 +16,6 @@ struct STSingleClass : Hashable {
         self.time = time
         self.place = place
     }
-    
-    func toDictionary() -> [String: Any] {
-        let dict : [String: Any] = [
-            "day" : time.day.rawValue,
-            "start" : time.startPeriod,
-            "len" : time.duration,
-            "place" : place
-        ]
-        return dict
-    }
-    
 }
 
 

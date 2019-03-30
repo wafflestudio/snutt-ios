@@ -10,7 +10,6 @@ import UIKit
 import UserNotifications
 import Fabric
 import Crashlytics
-import SwiftyJSON
 import FBSDKCoreKit
 import Firebase
 import Alamofire
@@ -34,8 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 
-        let path = Bundle.main.path(forResource: "config", ofType: "plist")!
-        let configAllDict = NSDictionary(contentsOfFile: path)!
+        STVersionManager().checkUpgrade()
 
         // FIXME: there is no test server now...
         #if DEBUG
@@ -53,11 +51,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setColors()
         
         // open main or login depending on the token
+        let viewController: UIViewController?
         if STDefaults[.token] != nil {
-            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()
+            viewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()
         } else {
-            self.window?.rootViewController = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateInitialViewController()
+            viewController = UIStoryboard(name: "Login", bundle: Bundle.main).instantiateInitialViewController()
         }
+
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = viewController
+        window?.makeKeyAndVisible()
         
         if STDefaults[.token] != nil {
             STMainTabBarController.controller?.setNotiBadge(STDefaults[.shouldShowBadge])
@@ -89,19 +92,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userManager.updateDeviceIdIfNeeded()
             connectToFcm()
         }
-
-        // For STColorList UserDefaults
-        NSKeyedArchiver.setClassName("STColorList", for: STColorList.self)
-        NSKeyedUnarchiver.setClass(STColorList.self, forClassName: "STColorList")
-        // For STFCMInfo UserDefaults
-        NSKeyedArchiver.setClassName("STFCMInfo", for: STFCMInfo.self)
-        NSKeyedUnarchiver.setClass(STFCMInfo.self, forClassName: "STFCMInfo")
-
         
         var fcmInfos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
         for fcmInfo in fcmInfos {
             let _ = networkProvider.rx.request(STTarget.LogOutDevice(params: .init(user_id: fcmInfo.userId, registration_id: fcmInfo.fcmToken )))
-                .subscribe({ _ in
+                .subscribe(onSuccess: { _ in
                     let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
                     STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
                 })

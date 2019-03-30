@@ -8,7 +8,6 @@
 
 import UIKit
 import NotificationCenter
-import SwiftyJSON
 import SwiftyUserDefaults
 
 class TodayViewController: UIViewController, NCWidgetProviding {
@@ -22,10 +21,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     let sharedDefaults = UserDefaults(suiteName: "group.wafflestudio.TodayExtensionSharingDefaults")
 
     override func viewDidLoad() {
-        // For STColorList UserDefaults
-        NSKeyedArchiver.setClassName("STColorList", for: STColorList.self)
-        NSKeyedUnarchiver.setClass(STColorList.self, forClassName: "STColorList")
-
         super.viewDidLoad()
         guard let extensionContext = self.extensionContext else {
             return
@@ -51,12 +46,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
 
     func updateTimetable() {
-        if let dict = STDefaults[.currentTimetable] {
-            let timetable = STTimetable(json: JSON(dict))
-            timetableView.setTimetable(timetable)
-        } else {
-            timetableView.setTimetable(nil)
-        }
+        timetableView.setTimetable(STDefaults[.currentTimetable])
     }
 
     func updateSetting() {

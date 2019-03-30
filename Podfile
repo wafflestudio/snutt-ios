@@ -6,7 +6,6 @@ target 'SNUTT' do
   pod 'Alamofire'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'SwiftyJSON'
   pod 'B68UIFloatLabelTextField', :git => 'https://github.com/Rajin9601/B68FloatingLabelTextField.git', :branch => 'Swift_3.0'
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
   pod 'ActionSheetPicker-3.0'
@@ -34,7 +33,6 @@ target 'SNUTT' do
 end
 
 target 'SNUTT Today' do
-  pod 'SwiftyJSON'
   pod 'SwiftyUserDefaults', :git => 'https://github.com/Rajin9601/SwiftyUserDefaults.git'
   pod 'RxSwift'
   pod 'RxSwiftExt'

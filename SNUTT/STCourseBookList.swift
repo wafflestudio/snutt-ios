@@ -25,19 +25,12 @@ class STCourseBookListManager {
     var courseBookList : [STCourseBook] = []
     
     func loadCourseBooks () {
-        guard let courseBookList = NSKeyedUnarchiver.unarchiveObject(withFile: getDocumentsDirectory().appendingPathComponent("courseBookList.archive")) as? [NSDictionary] else {
-            self.courseBookList = []
-            return
-        }
-        self.courseBookList = courseBookList.map({ dict in
-            return STCourseBook(dictionary: dict)!
-        })
+        self.courseBookList = STDefaults[.courseBookList]
     }
     
     func saveCourseBooks () {
-        NSKeyedArchiver.archiveRootObject(courseBookList.map({ book in
-            return book.dictionaryValue()
-        }), toFile: getDocumentsDirectory().appendingPathComponent("courseBookList.archive"))
+        STDefaults[.courseBookList] = courseBookList
+        STDefaults.synchronize()
     }
     
     func getCourseBooks () {
