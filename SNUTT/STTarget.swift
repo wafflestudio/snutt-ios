@@ -183,8 +183,6 @@ struct STTarget {
         typealias Result = STTimetable
     }
 
-    // TODO: UpdateLecture
-
     struct UpdateLecture: STTargetType {
         var params: Params
         var path: String {
@@ -398,9 +396,7 @@ struct STTarget {
             var fb_id: String
             var fb_token: String
         }
-        struct Result: Codable {
-            // TODO
-        }
+        struct Result: Codable {}
     }
 
     struct DetachFacebook: STTargetType {
@@ -408,9 +404,7 @@ struct STTarget {
         let path = "/user/facebook"
         let method: Moya.Method = .delete
         struct Params: Codable {}
-        struct Result: Codable {
-            // TODO
-        }
+        struct Result: Codable {}
     }
 
     struct GetFacebook: STTargetType {

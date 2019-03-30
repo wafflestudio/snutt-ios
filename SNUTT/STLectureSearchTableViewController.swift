@@ -69,8 +69,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         //Tag Button to KeyboardToolbar
         
         searchBar.inputAccessoryView = searchToolbarView
-
-        // TODO: use the actual value of timetable
+        
         timetableManager.rx.currentTimetable
             .map { $0?.id }
             .distinctUntilChanged()

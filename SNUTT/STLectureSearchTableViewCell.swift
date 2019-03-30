@@ -56,26 +56,6 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         guard let lecture = lecture else {
             return
         }
-        // TODO : Erase this code
-        // Left this code if there is specific length for titleLabel's min width
-        /*
-        let isSE = !isLargerThanSE()
-        let instructorText = lecture.instructor
-        var length = 0
-        if self.isSelected {
-            if instructorText.isEnglish() {
-                length = isSE ? 6 : 8
-            } else {
-                length = isSE ? 3 : 4
-            }
-        } else {
-            if instructorText.isEnglish() {
-                length = isSE ? 13 : 15
-            } else {
-                length = isSE ? 7 : 9
-            }
-        }
-        */
         profLabel.text = lecture.instructor
         descriptionLabel.text = (lecture.instructor == "" ? "" : "/") + "\(lecture.credit)학점"
     }
