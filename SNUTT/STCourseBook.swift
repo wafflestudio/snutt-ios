@@ -32,8 +32,6 @@ struct STCourseBook : DictionaryRepresentable, Codable {
         self.quarter = quarter
     }
 
-    // TODO: this can encode, decode can be removed.
-
     private enum CodingKeys: String, CodingKey {
         case year
         case semester

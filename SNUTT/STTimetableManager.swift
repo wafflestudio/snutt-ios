@@ -112,28 +112,47 @@ class STTimetableManager : ReactiveCompatible {
             }).asCompletable()
     }
     
-    func updateLecture(_ oldLecture : STLecture, newLecture : STLecture, done: @escaping ()->(), failure: @escaping ()->()) {
+    func updateLecture(_ oldLecture : STLecture, newLecture : STLecture) -> Completable {
         // TODO: return type as Completable
-        if currentTimetable == nil {
-            failure()
-            return
+        guard let timetableId = currentTimetable?.id,
+            let lectureId = oldLecture.id,
+            let index = currentTimetable?.lectureList.index(where: { lec in
+                return lec.id == newLecture.id
+            }) else {
+                return Completable.error("lecture or timetable doesn't exist")
         }
-        guard let index = currentTimetable!.lectureList.index(where: { lec in
-            return lec.id == newLecture.id
-        }) else {
-            failure()
-            return
-        }
-        
-        currentTimetable!.updateLectureAtIndex(index, lecture: newLecture)
 
-        STNetworking.updateLecture(currentTimetable!, oldLecture: oldLecture, newLecture: newLecture, done: { [weak self] newTimetable in
-            self?.currentTimetable = newTimetable
-            done()
-            }, failure: {
-                self.currentTimetable?.updateLectureAtIndex(index, lecture: oldLecture)
-                failure()
-        })
+        let updateLectureParams = STTarget.UpdateLecture.Params(
+            classification: difference(oldLecture.classification, to: newLecture.classification),
+            department: difference(oldLecture.department, to: newLecture.department),
+            academic_year: difference(oldLecture.academicYear, to: newLecture.academicYear),
+            course_number: difference(oldLecture.courseNumber, to: newLecture.courseNumber),
+            lecture_number: difference(oldLecture.lectureNumber, to: newLecture.lectureNumber),
+            course_title: difference(oldLecture.title, to: newLecture.title),
+            credit: difference(oldLecture.credit, to: newLecture.credit),
+            instructor: difference(oldLecture.instructor, to: newLecture.instructor),
+            quota: difference(oldLecture.quota, to: newLecture.quota),
+            remark: difference(oldLecture.remark, to: newLecture.remark),
+            category: difference(oldLecture.category, to: newLecture.category),
+            class_time_json: difference(oldLecture.classList, to: newLecture.classList),
+            color: difference(oldLecture.color, to: newLecture.color),
+            colorIndex: difference(oldLecture.colorIndex, to: newLecture.colorIndex)
+        )
+
+        return networkProvider.rx.request(STTarget.UpdateLecture(params: updateLectureParams, timetableId: timetableId, lectureId: lectureId))
+            .do(onSuccess: { [weak self] newTimetable in
+                self?.currentTimetable = newTimetable
+                }
+            )
+            .asCompletable()
+    }
+
+    private func difference<T: Equatable>(_ a: T, to b: T) -> T? {
+        if (a == b) {
+            return nil
+        } else {
+            return b
+        }
     }
     
     func deleteLectureAtIndex(_ index: Int) -> Completable {

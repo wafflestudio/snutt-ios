@@ -85,9 +85,10 @@ class STUserManager {
 
     func loadMainPage() {
         // TODO: self leak?
-        let openController : () -> () = {
+        let openController : () -> () = { [weak self] in
+            guard let self = self else { return }
             if let deviceId = InstanceID.instanceID().token() {
-                STNetworking.addDevice(deviceId)
+                self.addDevice(deviceId)
             }
             let appDelegate = UIApplication.shared.delegate!
             let window = appDelegate.window!!
@@ -153,8 +154,22 @@ class STUserManager {
             return
         }
         if (STDefaults[.token] != nil && STDefaults[.registeredFCMToken] != refreshedToken) {
-            STNetworking.addDevice(refreshedToken)
+            addDevice(refreshedToken)
         }
+    }
+
+    private func addDevice(_ deviceId: String) {
+        if let userId = STDefaults[.userId] {
+            let fcmInfo = STFCMInfo(userId: userId, fcmToken: deviceId)
+            let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+            STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
+        }
+
+        networkProvider.rx.request(STTarget.AddDevice(id: deviceId))
+            .subscribe(onSuccess: { _ in
+                STDefaults[.registeredFCMToken] = deviceId
+                }, onError: { _ in })
+            .disposed(by: disposeBag)
     }
 
 }

@@ -10,8 +10,6 @@ import UIKit
 import RxSwift
 
 class STAddCustomLectureTableViewController: STSingleLectureTableViewController {
-    let disposeBag = DisposeBag()
-
     let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
     override func viewDidLoad() {
         super.viewDidLoad()

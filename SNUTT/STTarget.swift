@@ -185,6 +185,33 @@ struct STTarget {
 
     // TODO: UpdateLecture
 
+    struct UpdateLecture: STTargetType {
+        var params: Params
+        var path: String {
+            return "/tables/\(timetableId)/lecture/\(lectureId)"
+        }
+        let method: Moya.Method = .put
+        var timetableId: String
+        var lectureId: String
+        struct Params: Codable {
+            var classification : String??
+            var department: String??
+            var academic_year: String??
+            var course_number: String??
+            var lecture_number: String??
+            var course_title: String?
+            var credit: Int?
+            var instructor: String?
+            var quota: Int??
+            var remark: String??
+            var category: String??
+            var class_time_json: [STSingleClass]?
+            var color: STColor??
+            var colorIndex: Int?
+        }
+        typealias Result = STTimetable
+    }
+
     struct ResetLecture: STTargetType {
         let params = Params()
         var path: String {
@@ -205,7 +232,7 @@ struct STTarget {
         let method: Moya.Method = .post
         struct Params: Codable {
             var title: String
-            var year: String
+            var year: Int
             var semester: STSemester
             var credit: [Int]
             var instructor: [String]
@@ -216,9 +243,8 @@ struct STTarget {
             var offset: Int
             var limit: Int
         }
-        struct Result: Codable {
-            // DAVID
-        }
+
+        typealias Result = [STLecture]
     }
 
     // MARK: /tags
@@ -487,6 +513,26 @@ struct STTarget {
         struct Result: Codable {
             var colors: [STColor]
             var names: [String]
+        }
+    }
+
+    // MARK: AppVersion
+
+    struct CheckLatestAppVersion: STTargetType {
+        var baseURL: URL {
+            return URL(string: "http://itunes.apple.com/kr")!
+        }
+        let params = Params()
+        let path = "/lookup"
+        let method: Moya.Method = .get
+        struct Params: Codable {
+            var bundleId: String = Bundle.main.bundleIdentifier!
+        }
+        struct Result: Codable {
+            var results: [VersionResult]
+            struct VersionResult: Codable {
+                var version: String?
+            }
         }
     }
 }

@@ -118,7 +118,7 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
             searchController.state = .editingQuery(query, tagList, searchController.FilteredList)
         } else {
              if case .loading(let request) = searchController.state {
-                request.cancel()
+                request.dispose()
             }
             searchController.state = .editingQuery(nil, [], [])
         }

@@ -24,7 +24,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
     let settingManager = AppContainer.resolver.resolve(STSettingManager.self)!
     let colorManager = AppContainer.resolver.resolve(STColorManager.self)!
-
+    let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
+    let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
     let disposeBag = DisposeBag()
     var FilteredList : [STLecture] = [] {
         didSet(oldVal) {
@@ -38,7 +39,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     enum SearchState {
         case empty
         case editingQuery(String?, [STTag], [STLecture])
-        case loading(Request)
+        case loading(Disposable)
         case loaded(String, [STTag])
     }
     var state : SearchState = SearchState.empty
@@ -118,46 +119,94 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         isLast = false
         let tagList = tagCollectionView.tagList
         let mask = searchToolbarView.isEmptyTime ? timetableManager.currentTimetable?.timetableReverseTimeMask() : nil
-        let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: 0, limit: perPage))
-        state = .loading(request)
-        request.responseWithDone({ statusCode, json in
-            self.FilteredList = json.arrayValue.map { data in
-                return STLecture(json: data)
-            }
-            self.state = .loaded(searchString, tagList)
-            if json.arrayValue.count < self.perPage {
-                self.isLast = true
-            }
-            self.pageNum = 1
-            self.reloadData()
-        }, failure: { _ in
-            self.state = .empty
-            self.FilteredList = []
-            self.reloadData()
-        })
+        guard let quarter = timetableManager.currentTimetable?.quarter else { return }
+
+        let disposable = requestSearch(quarter: quarter, query: searchString, tagList: tagList, mask: mask, offset: 0, limit: perPage)
+            .subscribe(onSuccess: { [weak self] lectureList in
+                guard let self = self else { return }
+                self.FilteredList = lectureList
+                self.state = .loaded(searchString, tagList)
+                if lectureList.count < self.perPage {
+                    self.isLast = true
+                }
+                self.pageNum = 1
+                self.reloadData()
+            }, onError: { [weak self] err in
+                guard let self = self else { return }
+                self.errorHandler.apiOnError(err)
+                self.state = .empty
+                self.FilteredList = []
+                self.reloadData()
+            })
+        state = .loading(disposable)
+        disposeBag.insert(disposable)
     }
     
     func getMoreLectureList(_ searchString: String) {
         let tagList = tagCollectionView.tagList
         let mask = searchToolbarView.isEmptyTime ? timetableManager.currentTimetable?.timetableReverseTimeMask() : nil
-        let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: perPage * pageNum, limit: perPage))
-        state = .loading(request)
-        request.responseWithDone({ statusCode, json in
-            self.state = .loaded(searchString, tagList)
-            self.FilteredList = self.FilteredList + json.arrayValue.map { data in
-                return STLecture(json: data)
-            }
-            if json.arrayValue.count < self.perPage {
-                self.isLast = true
-            }
-            self.pageNum = self.pageNum + 1
-            self.reloadData()
-            }, failure: { _ in
-                self.state = .empty
-                self.FilteredList = []
-                self.reloadData()
-        })
+        guard let quarter = timetableManager.currentTimetable?.quarter else { return }
 
+        let disposable = requestSearch(quarter: quarter, query: searchString, tagList: tagList, mask: mask, offset: perPage * pageNum, limit: perPage)
+            .subscribe(onSuccess: { [weak self] lectureList in
+                guard let self = self else { return }
+                self.state = .loaded(searchString, tagList)
+                self.FilteredList = self.FilteredList + lectureList
+                if lectureList.count < self.perPage {
+                    self.isLast = true
+                }
+                self.pageNum = self.pageNum + 1
+                self.reloadData()
+                }, onError: { [weak self] err in
+                    guard let self = self else { return }
+                    self.errorHandler.apiOnError(err)
+                    self.state = .empty
+                    self.FilteredList = []
+                    self.reloadData()
+            })
+        state = .loading(disposable)
+        disposeBag.insert(disposable)
+    }
+
+    private func requestSearch(quarter: STQuarter, query: String, tagList: [STTag], mask: [Int]?, offset: Int, limit: Int) -> Single<[STLecture]>{
+        let year = quarter.year
+        let semester = quarter.semester
+        var credit : [Int] = []
+        var instructor : [String] = []
+        var department : [String] = []
+        var academicYear : [String] = []
+        var classification : [String] = []
+        var category : [String] = []
+        for tag in tagList {
+            switch tag.type {
+            case .Credit:
+                credit.append(Int(tag.text.trimmingCharacters(in: CharacterSet.decimalDigits.inverted))!)
+            case .Department:
+                department.append(tag.text)
+            case .Instructor:
+                instructor.append(tag.text)
+            case .AcademicYear:
+                academicYear.append(tag.text)
+            case .Classification:
+                classification.append(tag.text)
+            case .Category:
+                category.append(tag.text)
+            }
+        }
+        let params = STTarget.SearchLectures.Params(
+            title: query,
+            year: year,
+            semester: semester,
+            credit: credit,
+            instructor: instructor,
+            department: department,
+            academic_year: academicYear,
+            classification: classification,
+            category: category,
+            offset: offset,
+            limit: limit
+        )
+        return networkProvider.rx.request(STTarget.SearchLectures(params: params))
     }
 
     func setFocusToSearch() {
@@ -224,7 +273,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func searchBarSearchButtonClicked(_ query : String) {
         switch state {
         case .loading(let request):
-            request.cancel()
+            request.dispose()
         default:
             break
         }
@@ -239,7 +288,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
             searchBar.text = ""
             tagCollectionView.tagList = []
         case .loading(let request):
-            request.cancel()
+            request.dispose()
             state = .empty
             FilteredList = []
             searchBar.text = ""

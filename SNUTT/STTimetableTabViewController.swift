@@ -203,17 +203,19 @@ class STTimetableTabViewController: UIViewController {
         let oldColorIndex = lecture.colorIndex
         let oldLecture = lecture
         STColorActionSheetPicker.showWithColor(oldColorIndex ?? 0, doneBlock: { [weak self] selectedColorIndex in
-            self?.colorPickerInfoRelay.accept((lectureId, selectedColorIndex))
+            guard let self = self else { return }
+            self.colorPickerInfoRelay.accept((lectureId, selectedColorIndex))
             var newLecture = lecture
             newLecture.colorIndex = selectedColorIndex
             newLecture.color = nil
-            self?.timetableManager.updateLecture(
-                oldLecture, newLecture: newLecture,
-                done: { [weak self] in
+            self.timetableManager.updateLecture(oldLecture, newLecture: newLecture)
+                .subscribe(onCompleted: { [weak self] in
                     self?.colorPickerInfoRelay.accept(nil)
-                }, failure: { [weak self] in
-                    self?.colorPickerInfoRelay.accept(nil)
-            })
+                    }, onError: { [weak self] err in
+                        self?.errorHandler.apiOnError(err)
+                        self?.colorPickerInfoRelay.accept(nil)
+                }).disposed(by: self.disposeBag)
+
             }, cancelBlock: { [weak self] in
                 self?.colorPickerInfoRelay.accept(nil)
             }, selectedBlock: { [weak self] colorIndex in

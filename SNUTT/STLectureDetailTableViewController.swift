@@ -11,8 +11,6 @@ import ChameleonFramework
 import RxSwift
 
 class STLectureDetailTableViewController: STSingleLectureTableViewController {
-    let disposeBag = DisposeBag()
-
     var lecture : STLecture!
     var editable : Bool = false
     
@@ -174,16 +172,20 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         dismissKeyboard()
         let loadingView = STAlertView.showLoading(title: "저장 중")
         let oldLecture = lecture!
-        timetableManager.updateLecture(oldLecture, newLecture: currentLecture, done: {
-            self.editable = false
-            self.reloadDataWithAnimation()
-            self.navigationItem.setRightBarButton(self.editBarButton, animated: true)
-            self.navigationItem.setLeftBarButton(nil, animated: true)
-            self.lecture = self.currentLecture
-            loadingView.dismiss(animated: true)
-        }, failure: {
-            loadingView.dismiss(animated: true)
-        })
+        timetableManager.updateLecture(oldLecture, newLecture: currentLecture)
+            .subscribe(onCompleted: { [weak self] in
+                guard let self = self else { return }
+                self.editable = false
+                self.reloadDataWithAnimation()
+                self.navigationItem.setRightBarButton(self.editBarButton, animated: true)
+                self.navigationItem.setLeftBarButton(nil, animated: true)
+                self.lecture = self.currentLecture
+                loadingView.dismiss(animated: true)
+                }, onError: { [weak self] err in
+                    self?.errorHandler.apiOnError(err)
+                    loadingView.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     @objc func cancelBarButtonClicked() {

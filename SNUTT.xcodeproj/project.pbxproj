@@ -20,7 +20,6 @@
 		E110CFD71C88424000ED0590 /* STNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFD61C88424000ED0590 /* STNotification.swift */; };
 		E110CFDB1C888F5700ED0590 /* STTagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFDA1C888F5700ED0590 /* STTagManager.swift */; };
 		E110CFDD1C888FC300ED0590 /* STTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFDC1C888FC300ED0590 /* STTag.swift */; };
-		E110CFDF1C88916400ED0590 /* STTagRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFDE1C88916400ED0590 /* STTagRouter.swift */; };
 		E110CFE11C8C017E00ED0590 /* STTagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E110CFE01C8C017E00ED0590 /* STTagList.swift */; };
 		E1130AD61E7C272A00ADE84F /* STColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1130AD51E7C272A00ADE84F /* STColorList.swift */; };
 		E1130AD91E7C38DD00ADE84F /* STColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1130AD81E7C38DD00ADE84F /* STColorManager.swift */; };
@@ -38,12 +37,10 @@
 		E139B26C1E4C349400E2ADF5 /* STAddLocalIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E139B26B1E4C349400E2ADF5 /* STAddLocalIDViewController.swift */; };
 		E13CBA8C1E4D492E006B2364 /* STEtcRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13CBA8B1E4D492E006B2364 /* STEtcRouter.swift */; };
 		E14188D61C3E195000D4E712 /* STTimetableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */; };
-		E1420B951D769D0400D1B6F7 /* STCourseBookRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1420B941D769D0400D1B6F7 /* STCourseBookRouter.swift */; };
 		E14991FD1C46241700DC6756 /* STConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14991FC1C46241700DC6756 /* STConfig.swift */; };
 		E14991FF1C46387600DC6756 /* STAuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14991FE1C46387600DC6756 /* STAuthRouter.swift */; };
 		E14992011C463AC600DC6756 /* STTimetableRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14992001C463AC600DC6756 /* STTimetableRouter.swift */; };
 		E14992091C4B828500DC6756 /* STSwiftyJSONRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14992081C4B828500DC6756 /* STSwiftyJSONRequest.swift */; };
-		E149920F1C549D7900DC6756 /* STSearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E149920E1C549D7900DC6756 /* STSearchRouter.swift */; };
 		E14DF2141C3F71A70076FDDE /* STTimetableAddController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DF2131C3F71A70076FDDE /* STTimetableAddController.swift */; };
 		E14DF2161C3F8F920076FDDE /* STCourseBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DF2151C3F8F920076FDDE /* STCourseBook.swift */; };
 		E14DF2181C3F914E0076FDDE /* STCourseBookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DF2171C3F914E0076FDDE /* STCourseBookList.swift */; };
@@ -64,7 +61,6 @@
 		E1773CB41C95B05800AF36AF /* STLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1773CB31C95B05800AF36AF /* STLoginViewController.swift */; };
 		E1773CB61C95B94C00AF36AF /* STLoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1773CB51C95B94B00AF36AF /* STLoginTextField.swift */; };
 		E17825C91D560A10009ACEC3 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E17825C81D560A10009ACEC3 /* config.plist */; };
-		E17825CD1D577CD8009ACEC3 /* STNotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17825CC1D577CD8009ACEC3 /* STNotificationRouter.swift */; };
 		E1799E881D8E28D20014794F /* STMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1799E871D8E28D20014794F /* STMainTabBarController.swift */; };
 		E17D45F51E9A1AF800E6973B /* STColorManagerUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17D45F41E9A1AF800E6973B /* STColorManagerUpdate.swift */; };
 		E181131C1E52E60600ECA64E /* STColorActionSheetPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E181131B1E52E60600ECA64E /* STColorActionSheetPicker.swift */; };
@@ -158,7 +154,6 @@
 		E1E99A6B1C423CDB004A426A /* STEventCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E99A6A1C423CDB004A426A /* STEventCenter.swift */; };
 		E1EE1B311CCCDE20003DF250 /* STDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EE1B301CCCDE20003DF250 /* STDefaults.swift */; };
 		E1EE1B331CCDAAB6003DF250 /* STPaddingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EE1B321CCDAAB6003DF250 /* STPaddingTableViewCell.swift */; };
-		E1EF8B301D6D640100791778 /* STUserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF8B2F1D6D640100791778 /* STUserRouter.swift */; };
 		E1F0CA1D1C7482D300A4F4ED /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA1C1C7482D300A4F4ED /* delete.png */; };
 		E1F0CA1F1C748B6000A4F4ED /* STTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */; };
 		E1F0CA271C75B01900A4F4ED /* STLectureSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F0CA261C75B01900A4F4ED /* STLectureSearchTableViewCell.xib */; };
@@ -222,7 +217,6 @@
 		E110CFD61C88424000ED0590 /* STNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STNotification.swift; sourceTree = "<group>"; };
 		E110CFDA1C888F5700ED0590 /* STTagManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagManager.swift; sourceTree = "<group>"; };
 		E110CFDC1C888FC300ED0590 /* STTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTag.swift; sourceTree = "<group>"; };
-		E110CFDE1C88916400ED0590 /* STTagRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagRouter.swift; sourceTree = "<group>"; };
 		E110CFE01C8C017E00ED0590 /* STTagList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagList.swift; sourceTree = "<group>"; };
 		E1130AD51E7C272A00ADE84F /* STColorList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorList.swift; sourceTree = "<group>"; };
 		E1130AD81E7C38DD00ADE84F /* STColorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorManager.swift; sourceTree = "<group>"; };
@@ -239,12 +233,10 @@
 		E139B26B1E4C349400E2ADF5 /* STAddLocalIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAddLocalIDViewController.swift; sourceTree = "<group>"; };
 		E13CBA8B1E4D492E006B2364 /* STEtcRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STEtcRouter.swift; sourceTree = "<group>"; };
 		E14188D51C3E195000D4E712 /* STTimetableTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableTabViewController.swift; sourceTree = "<group>"; };
-		E1420B941D769D0400D1B6F7 /* STCourseBookRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STCourseBookRouter.swift; sourceTree = "<group>"; };
 		E14991FC1C46241700DC6756 /* STConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STConfig.swift; sourceTree = "<group>"; };
 		E14991FE1C46387600DC6756 /* STAuthRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAuthRouter.swift; sourceTree = "<group>"; };
 		E14992001C463AC600DC6756 /* STTimetableRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableRouter.swift; sourceTree = "<group>"; };
 		E14992081C4B828500DC6756 /* STSwiftyJSONRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSwiftyJSONRequest.swift; sourceTree = "<group>"; };
-		E149920E1C549D7900DC6756 /* STSearchRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSearchRouter.swift; sourceTree = "<group>"; };
 		E14A7F5D1E406CAA003B3EA9 /* SNUTT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTT.entitlements; sourceTree = "<group>"; };
 		E14DF2131C3F71A70076FDDE /* STTimetableAddController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableAddController.swift; sourceTree = "<group>"; };
 		E14DF2151C3F8F920076FDDE /* STCourseBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STCourseBook.swift; sourceTree = "<group>"; };
@@ -266,7 +258,6 @@
 		E1773CB31C95B05800AF36AF /* STLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLoginViewController.swift; sourceTree = "<group>"; };
 		E1773CB51C95B94B00AF36AF /* STLoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLoginTextField.swift; sourceTree = "<group>"; };
 		E17825C81D560A10009ACEC3 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
-		E17825CC1D577CD8009ACEC3 /* STNotificationRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STNotificationRouter.swift; sourceTree = "<group>"; };
 		E1799E871D8E28D20014794F /* STMainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STMainTabBarController.swift; sourceTree = "<group>"; };
 		E17D45F41E9A1AF800E6973B /* STColorManagerUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorManagerUpdate.swift; sourceTree = "<group>"; };
 		E181131B1E52E60600ECA64E /* STColorActionSheetPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorActionSheetPicker.swift; sourceTree = "<group>"; };
@@ -348,7 +339,6 @@
 		E1E99A6A1C423CDB004A426A /* STEventCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STEventCenter.swift; sourceTree = "<group>"; };
 		E1EE1B301CCCDE20003DF250 /* STDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STDefaults.swift; sourceTree = "<group>"; };
 		E1EE1B321CCDAAB6003DF250 /* STPaddingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STPaddingTableViewCell.swift; sourceTree = "<group>"; };
-		E1EF8B2F1D6D640100791778 /* STUserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STUserRouter.swift; sourceTree = "<group>"; };
 		E1F0CA1C1C7482D300A4F4ED /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = images/delete.png; sourceTree = "<group>"; };
 		E1F0CA1E1C748B6000A4F4ED /* STTagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagTableViewCell.swift; sourceTree = "<group>"; };
 		E1F0CA261C75B01900A4F4ED /* STLectureSearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STLectureSearchTableViewCell.xib; sourceTree = "<group>"; };
@@ -440,14 +430,9 @@
 				E14991FE1C46387600DC6756 /* STAuthRouter.swift */,
 				E14992001C463AC600DC6756 /* STTimetableRouter.swift */,
 				E14992081C4B828500DC6756 /* STSwiftyJSONRequest.swift */,
-				E149920E1C549D7900DC6756 /* STSearchRouter.swift */,
-				E110CFDE1C88916400ED0590 /* STTagRouter.swift */,
 				E1F632911C8D0C030030BE7D /* STLectureRouter.swift */,
 				E1F632931C8D21C20030BE7D /* STNetworking.swift */,
 				E133794E1D41E26C00AD10F4 /* STRouter.swift */,
-				E17825CC1D577CD8009ACEC3 /* STNotificationRouter.swift */,
-				E1EF8B2F1D6D640100791778 /* STUserRouter.swift */,
-				E1420B941D769D0400D1B6F7 /* STCourseBookRouter.swift */,
 				E168FA2F1E3F037B004F933A /* STErrorCode.swift */,
 				E13CBA8B1E4D492E006B2364 /* STEtcRouter.swift */,
 			);
@@ -1126,11 +1111,9 @@
 				E1958B342208205C009CB04B /* STSingleClassView.swift in Sources */,
 				E1CAAA391CF07F1000D16183 /* STSingleLectureButtonCell.swift in Sources */,
 				E1BB29CD1D4896D300150DD4 /* STTimetableSettingViewController.swift in Sources */,
-				E1420B951D769D0400D1B6F7 /* STCourseBookRouter.swift in Sources */,
 				E1534D501F12316000CEE1D2 /* STLeftAlignedTextFieldCell.swift in Sources */,
 				E1EE1B311CCCDE20003DF250 /* STDefaults.swift in Sources */,
 				E16A88591C9FC59F003D94AB /* STTermAndConditionViewController.swift in Sources */,
-				E17825CD1D577CD8009ACEC3 /* STNotificationRouter.swift in Sources */,
 				E1A99D931CB112EE00953A4B /* STRedButtonTableViewCell.swift in Sources */,
 				E19ABD711EAB49BE0051B1C7 /* STOnBoardingViewController.swift in Sources */,
 				E1D0FB651C86CDCE00ACDC2F /* STColorPickerTableViewController.swift in Sources */,
@@ -1139,7 +1122,6 @@
 				E19E231F1B468B700010DFB1 /* STLectureSearchTableViewController.swift in Sources */,
 				E168FA301E3F037B004F933A /* STErrorCode.swift in Sources */,
 				E14991FD1C46241700DC6756 /* STConfig.swift in Sources */,
-				E1EF8B301D6D640100791778 /* STUserRouter.swift in Sources */,
 				E10CBEE11C7B71E400E8FE26 /* STAddCustomLectureTableViewController.swift in Sources */,
 				E1B381A91C6C52D9007E1A15 /* STUtil.swift in Sources */,
 				E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */,
@@ -1172,7 +1154,6 @@
 				E16A88571C9FC4AD003D94AB /* STSettingViewController.swift in Sources */,
 				E110CFD51C883FC000ED0590 /* STNotificationTableViewCell.swift in Sources */,
 				E1773CB41C95B05800AF36AF /* STLoginViewController.swift in Sources */,
-				E110CFDF1C88916400ED0590 /* STTagRouter.swift in Sources */,
 				E16A88511C9F97EB003D94AB /* STLicenseViewController.swift in Sources */,
 				E11902E91CCE44E7002436B9 /* STLectureDetailTableViewCell.swift in Sources */,
 				E14991FF1C46387600DC6756 /* STAuthRouter.swift in Sources */,
@@ -1205,7 +1186,6 @@
 				E1C48B901C78736C00BC469E /* STColorPickTableViewCell.swift in Sources */,
 				E18AEEEA21D7CE2C005E6F67 /* STErrorHandler.swift in Sources */,
 				E17D45F51E9A1AF800E6973B /* STColorManagerUpdate.swift in Sources */,
-				E149920F1C549D7900DC6756 /* STSearchRouter.swift in Sources */,
 				E1C48BB21C79C8E200BC469E /* STDay.swift in Sources */,
 				E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */,
 				E10CBEDF1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift in Sources */,

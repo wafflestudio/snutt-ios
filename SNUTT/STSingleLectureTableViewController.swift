@@ -9,13 +9,18 @@
 import UIKit
 import ChameleonFramework
 import SafariServices
+import RxSwift
 
 class STSingleLectureTableViewController: UITableViewController {
     // TODO: Seriously needs refactoring
     let timetableManager = AppContainer.resolver.resolve(STTimetableManager.self)!
+    let errorHandler = AppContainer.resolver.resolve(STErrorHandler.self)!
+    let networkProvider = AppContainer.resolver.resolve(STNetworkProvider.self)!
+
     var custom : Bool = false
     var currentLecture : STLecture = STLecture()
     var sectionForSingleClass : Int = 4
+    let disposeBag = DisposeBag()
 
     enum LectureAttributes {
         case title
@@ -162,31 +167,36 @@ class STSingleLectureTableViewController: UITableViewController {
             return .button(title: "강의계획서", color: UIColor.black,  onClick: { 
                 let quarter = self.timetableManager.currentTimetable!.quarter
                 let lecture = self.currentLecture
-                STNetworking.getSyllabus(quarter, lecture: lecture, done: { url in
-                    self.showWebView(url)
-                }, failure: {
-                    let year = quarter.year
-                    let course_number = lecture.courseNumber!
-                    let lecture_number = lecture.lectureNumber!
-                    let semester = self.timetableManager.currentTimetable!.quarter.semester;
-                    var openShtmFg = "", openDetaShtmFg = ""
-                    switch semester {
-                    case .first:
-                        openShtmFg = "U000200001";
-                        openDetaShtmFg = "U000300001";
-                    case .second:
-                        openShtmFg = "U000200002";
-                        openDetaShtmFg = "U000300001";
-                    case .summer:
-                        openShtmFg = "U000200001";
-                        openDetaShtmFg = "U000300002";
-                    case .winter:
-                        openShtmFg = "U000200002";
-                        openDetaShtmFg = "U000300002";
+                let target = STTarget.GetSyllabus(params: .init(year: quarter.year, semester: quarter.semester, course_number: lecture.courseNumber ?? "", lecture_number: lecture.lectureNumber ?? ""))
+                self.networkProvider.rx.request(target)
+                    .map { result in result.url }
+                    .catchError { err -> Single<String?> in
+                        let year = quarter.year
+                        let course_number = lecture.courseNumber!
+                        let lecture_number = lecture.lectureNumber!
+                        let semester = self.timetableManager.currentTimetable!.quarter.semester;
+                        var openShtmFg = "", openDetaShtmFg = ""
+                        switch semester {
+                        case .first:
+                            openShtmFg = "U000200001";
+                            openDetaShtmFg = "U000300001";
+                        case .second:
+                            openShtmFg = "U000200002";
+                            openDetaShtmFg = "U000300001";
+                        case .summer:
+                            openShtmFg = "U000200001";
+                            openDetaShtmFg = "U000300002";
+                        case .winter:
+                            openShtmFg = "U000200002";
+                            openDetaShtmFg = "U000300002";
+                        }
+                        let url = "http://sugang.snu.ac.kr/sugang/cc/cc103.action?openSchyy=\(year)&openShtmFg=\(openShtmFg)&openDetaShtmFg=\(openDetaShtmFg)&sbjtCd=\(course_number)&ltNo=\(lecture_number)&sbjtSubhCd=000";
+                        return Single.just(url)
                     }
-                    let url = "http://sugang.snu.ac.kr/sugang/cc/cc103.action?openSchyy=\(year)&openShtmFg=\(openShtmFg)&openDetaShtmFg=\(openDetaShtmFg)&sbjtCd=\(course_number)&ltNo=\(lecture_number)&sbjtSubhCd=000";
-                    self.showWebView(url)
-                })
+                    .subscribe(onSuccess: { [weak self] url in
+                        guard let url = url else { return }
+                        self?.showWebView(url)
+                    }).disposed(by: self.disposeBag)
             })
         case .deleteButton:
             return .button(title: "삭제", color: UIColor.red, onClick: { 
@@ -195,9 +205,12 @@ class STSingleLectureTableViewController: UITableViewController {
                         guard let self = self else { return }
                         if let index = self.timetableManager.currentTimetable?.lectureList.index(of: self.currentLecture) {
                             // TODO: disposeBag
-                            let _ = self.timetableManager.deleteLectureAtIndex(index).subscribe()
+                            self.timetableManager.deleteLectureAtIndex(index)
+                                .subscribe(onCompleted: { [weak self] in
+                                    self?.navigationController?.popViewController(animated: true)
+                                }, onError: { _ in }
+                            ).disposed(by: self.disposeBag)
                         }
-                        self.navigationController?.popViewController(animated: true)
                     }),
                     UIAlertAction(title: "취소", style: .cancel, handler: nil)
                 ]
