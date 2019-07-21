@@ -58,8 +58,8 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         }
 
         let center = NotificationCenter.default
-        center.addObserver(self, selector: #selector(self.keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        center.addObserver(self, selector: #selector(self.keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        center.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         if isLargerThanSE() {
             layoutConstraint1.constant = 118

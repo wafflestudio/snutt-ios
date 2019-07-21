@@ -62,8 +62,8 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
         termView.addGestureRecognizer(termTapRecognizer)
 
         let center = NotificationCenter.default
-        center.addObserver(self, selector: #selector(self.keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        center.addObserver(self, selector: #selector(self.keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        center.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         if (UIScreen.main.bounds.height > 700) {
             layoutConstraint1.constant = 104

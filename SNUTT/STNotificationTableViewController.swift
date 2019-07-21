@@ -29,7 +29,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         super.viewDidLoad()
         STMainTabBarController.controller?.notificationController = self
 
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 27
         
         self.tableView.emptyDataSetSource = self;
@@ -42,7 +42,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         
         self.refreshControl = UIRefreshControl()
         
-        self.refreshControl?.addTarget(self, action: #selector(self.refreshList), for: UIControlEvents.valueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(self.refreshList), for: UIControl.Event.valueChanged)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -175,8 +175,8 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "알림이 없습니다."
-        let attributes: [NSAttributedStringKey : AnyObject] = [
-            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18.0)
+        let attributes: [NSAttributedString.Key : AnyObject] = [
+            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18.0)
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }
@@ -186,10 +186,10 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineBreakMode = .byWordWrapping
         paragraph.alignment = .center
-        let attributes: [NSAttributedStringKey : AnyObject] = [
-            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14.0),
-            NSAttributedStringKey.foregroundColor : UIColor.lightGray,
-            NSAttributedStringKey.paragraphStyle : paragraph
+        let attributes: [NSAttributedString.Key : AnyObject] = [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14.0),
+            NSAttributedString.Key.foregroundColor : UIColor.lightGray,
+            NSAttributedString.Key.paragraphStyle : paragraph
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }

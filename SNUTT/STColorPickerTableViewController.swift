@@ -36,7 +36,7 @@ class STColorPickerTableViewController: UITableViewController {
         STEventCenter.sharedInstance.removeObserver(self)
     }
     
-    override func willMove(toParentViewController parent: UIViewController?) {
+    override func willMove(toParent parent: UIViewController?) {
         if parent == nil {
             let retColorIndex = selectedColorIndex == customColorIndex ? 0 : selectedColorIndex + 1
             let retColor = selectedColorIndex == customColorIndex ? color : nil
@@ -154,7 +154,7 @@ class STColorPickerTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
+            self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableView.ScrollPosition.none)
         }
     }
     /*

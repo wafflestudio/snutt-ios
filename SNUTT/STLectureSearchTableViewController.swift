@@ -322,11 +322,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         if tagCollectionView.tagList.count == 1 {
             let indexPath = IndexPath(row: 0, section: 0)
             tagCollectionView.reloadData()
-            tagCollectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.right, animated: false)
+            tagCollectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.right, animated: false)
         } else {
             let indexPath = IndexPath(row: tagCollectionView.tagList.count - 1, section: 0)
             tagCollectionView.insertItems(at: [indexPath])
-            tagCollectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.right, animated: true)
+            tagCollectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.right, animated: true)
         }
         tagCollectionView.setHidden()
         tagTableView.hide()

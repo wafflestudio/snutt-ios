@@ -37,9 +37,9 @@ class STSingleClassView : UIView {
         label.numberOfLines = -1
         let inset : CGFloat = isLargerThanSE() ? 5.0 : 4.0
         self.layoutMargins = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-
-        self.rx.longPressGesture(minimumPressDuration: 0.0)
-            .subscribe(onNext: { [weak self] gesture in
+        self.rx.longPressGesture(configuration: { recognizer, _ in
+            recognizer.minimumPressDuration = 0.0
+        }).subscribe(onNext: { [weak self] gesture in
                 guard let self = self else { return }
                 switch gesture.state {
                 case .began:
@@ -81,7 +81,7 @@ class STSingleClassView : UIView {
         var text = NSMutableAttributedString()
         if !lectureTitle.isEmpty {
             let font = UIFont.systemFont(ofSize: 10.0)
-            text.append(NSAttributedString(string: lectureTitle.breakOnlyAtNewLineAndSpace, attributes: [NSAttributedStringKey.font: font]))
+            text.append(NSAttributedString(string: lectureTitle.breakOnlyAtNewLineAndSpace, attributes: [NSAttributedString.Key.font: font]))
         }
         if !place.isEmpty {
             var size : CGFloat
@@ -102,7 +102,7 @@ class STSingleClassView : UIView {
             if text.length != 0 {
                 text.append(NSAttributedString(string: "\n"))
             }
-            text.append(NSAttributedString(string: place.breakOnlyAtNewLineAndSpace, attributes: [NSAttributedStringKey.font: font]))
+            text.append(NSAttributedString(string: place.breakOnlyAtNewLineAndSpace, attributes: [NSAttributedString.Key.font: font]))
         }
 
         label.attributedText = text

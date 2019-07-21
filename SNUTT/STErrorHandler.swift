@@ -27,8 +27,8 @@ class STErrorHandler {
     }
 
     private func showNetworkError() {
-        let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: nil))
         UIApplication.shared.keyWindow!.rootViewController!.present(alert, animated: true, completion: nil)
     }
 }

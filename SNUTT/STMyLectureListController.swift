@@ -86,7 +86,7 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         return true
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             timetableManager.deleteLectureAtIndex(indexPath.row)
                 .subscribe()
@@ -126,8 +126,8 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "시간표에 강좌가 없습니다."
-        let attributes: [NSAttributedStringKey : AnyObject] = [
-            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18.0)
+        let attributes: [NSAttributedString.Key : AnyObject] = [
+            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18.0)
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }
@@ -137,18 +137,18 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineBreakMode = .byWordWrapping
         paragraph.alignment = .center
-        let attributes: [NSAttributedStringKey: AnyObject] = [
-            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14.0),
-            NSAttributedStringKey.foregroundColor : UIColor.lightGray,
-            NSAttributedStringKey.paragraphStyle : paragraph
+        let attributes: [NSAttributedString.Key: AnyObject] = [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14.0),
+            NSAttributedString.Key.foregroundColor : UIColor.lightGray,
+            NSAttributedString.Key.paragraphStyle : paragraph
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }
     
-    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControl.State) -> NSAttributedString! {
         let text = "직접 만들기"
-        let attributes: [NSAttributedStringKey : AnyObject] = [
-            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 17.0)
+        let attributes: [NSAttributedString.Key : AnyObject] = [
+            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17.0)
         ]
         return NSAttributedString(string: text, attributes: attributes)
     }

@@ -107,7 +107,6 @@ class STTimetableManager : ReactiveCompatible {
     }
     
     func updateLecture(_ oldLecture : STLecture, newLecture : STLecture) -> Completable {
-        // TODO: return type as Completable
         guard let timetableId = currentTimetable?.id,
             let lectureId = oldLecture.id,
             let index = currentTimetable?.lectureList.index(where: { lec in

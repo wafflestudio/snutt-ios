@@ -92,8 +92,8 @@ class STTimetableTabViewController: UIViewController {
         timetableManager.rx.currentTimetable.subscribe(onNext: { [weak self] timetable in
             guard let self = self else { return }
             let titleView = (self.navigationItem.titleView as! UILabel)
-            let attribute = [NSAttributedStringKey.foregroundColor : UIColor.darkGray,
-                             NSAttributedStringKey.font : UIFont.systemFont(ofSize: 15)]
+            let attribute = [NSAttributedString.Key.foregroundColor : UIColor.darkGray,
+                             NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)]
             let totalCreditStr = NSAttributedString(string: " \(timetable?.totalCredit ?? 0)학점", attributes: attribute)
             let mutableStr = NSMutableAttributedString()
             mutableStr.append(NSAttributedString(string: timetable?.title ?? ""))

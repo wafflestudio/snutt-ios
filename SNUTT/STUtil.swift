@@ -184,12 +184,12 @@ extension UITextField {
 
     @IBInspectable var hideBorder: Bool {
         get {
-            return borderStyle == UITextBorderStyle.none
+            return borderStyle == UITextField.BorderStyle.none
         }
         set {
             if newValue {
-                borderStyle = UITextBorderStyle.line
-                borderStyle = UITextBorderStyle.none
+                borderStyle = UITextField.BorderStyle.line
+                borderStyle = UITextField.BorderStyle.none
             }
         }
     }

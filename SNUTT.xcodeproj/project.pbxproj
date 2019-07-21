@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1631446E472512479C1BD808 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736548D365BF8D4D41EF1881 /* Pods_SNUTT.framework */; };
 		4BBA38FE9BD88EC2B95A5504 /* Pods_SNUTT_Today.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055D8A5252D54AED8FAA67A1 /* Pods_SNUTT_Today.framework */; };
+		636CD4A42259EDA6002B52BE /* B68FloatingLabelTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636CD4A32259EDA6002B52BE /* B68FloatingLabelTextField.swift */; };
 		E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C61B4CCD16006FD8B3 /* STLecture.swift */; };
 		E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109CC781C3E8C050050399A /* STTimetableListController.swift */; };
 		E10CBEDF1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10CBEDE1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift */; };
@@ -196,6 +197,7 @@
 		37A93C6F95D45D19C5E9F19A /* Pods-SNUTT.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.production.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT.production.xcconfig"; sourceTree = "<group>"; };
 		5B3CFB5C77928A059DB2CFA6 /* Pods-SNUTT Today.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.production.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.production.xcconfig"; sourceTree = "<group>"; };
 		6365ECB7CCF2B23FCF489CBE /* Pods-SNUTT Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.debug.xcconfig"; sourceTree = "<group>"; };
+		636CD4A32259EDA6002B52BE /* B68FloatingLabelTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = B68FloatingLabelTextField.swift; sourceTree = "<group>"; };
 		6A48F3E50D8BD4041AD725F7 /* Pods-SNUTT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.release.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT.release.xcconfig"; sourceTree = "<group>"; };
 		736548D365BF8D4D41EF1881 /* Pods_SNUTT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77FBD91482809C5F65991C05 /* Pods-SNUTT Today.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.release.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.release.xcconfig"; sourceTree = "<group>"; };
@@ -536,6 +538,7 @@
 			children = (
 				E1B147CD21DB45F3000145B3 /* String+Extension.swift */,
 				E1B147CF21DB5AE7000145B3 /* Codable+Extension.swift */,
+				636CD4A32259EDA6002B52BE /* B68FloatingLabelTextField.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -738,9 +741,9 @@
 				2CE23887BA346237D7CA4434 /* [CP] Check Pods Manifest.lock */,
 				E19A3A911B453770007FCAD7 /* Sources */,
 				E19A3A921B453770007FCAD7 /* Frameworks */,
-				E16A884E1C9F8D74003D94AB /* Carte Pre */,
+				E62EED9B3D667B480F11A2F0 /* [Carte] Pre Script */,
 				E19A3A931B453770007FCAD7 /* Resources */,
-				E16A884F1C9F8D7C003D94AB /* Carte Post */,
+				6F09AC68488332B30709BADD /* [Carte] Post Script */,
 				E14991F91C45F0E000DC6756 /* Run Script */,
 				5DF3E55534CBCE108DC5CF5E /* [CP] Embed Pods Frameworks */,
 				E1BEF0881E702E9A00BBFDB1 /* Embed App Extensions */,
@@ -780,7 +783,9 @@
 				6AEFD03C79D2B9865C30C7B2 /* [CP] Check Pods Manifest.lock */,
 				E1BEF0731E702E9A00BBFDB1 /* Sources */,
 				E1BEF0741E702E9A00BBFDB1 /* Frameworks */,
+				E62EED9B3D667B480F11A2F0 /* [Carte] Pre Script */,
 				E1BEF0751E702E9A00BBFDB1 /* Resources */,
+				6F09AC68488332B30709BADD /* [Carte] Post Script */,
 			);
 			buildRules = (
 			);
@@ -841,6 +846,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				Base,
 			);
 			mainGroup = E19A3A8C1B453770007FCAD7;
@@ -932,10 +938,9 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ActionSheetPicker-3.0/ActionSheetPicker_3_0.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/B68UIFloatLabelTextField/B68UIFloatLabelTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Carte/Carte.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
@@ -946,11 +951,12 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
@@ -968,7 +974,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionSheetPicker_3_0.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/B68UIFloatLabelTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Carte.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
@@ -979,11 +984,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
@@ -999,7 +1005,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6AEFD03C79D2B9865C30C7B2 /* [CP] Check Pods Manifest.lock */ = {
@@ -1020,6 +1026,25 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6F09AC68488332B30709BADD /* [Carte] Post Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Carte] Post Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby ${PODS_ROOT}/Carte/Sources/Carte/carte.rb post";
+			showEnvVarsInLog = 0;
+		};
 		E14991F91C45F0E000DC6756 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1032,35 +1057,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 912a8af108739f04584a158ec817fb8e5723181d 48c06a22b17baf01f882498c99315bf378f3bbdb78ec1fc0bdbb0972a3d01d58";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 912a8af108739f04584a158ec817fb8e5723181d 48c06a22b17baf01f882498c99315bf378f3bbdb78ec1fc0bdbb0972a3d01d58\n";
 		};
-		E16A884E1C9F8D74003D94AB /* Carte Pre */ = {
+		E62EED9B3D667B480F11A2F0 /* [Carte] Pre Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
 			inputPaths = (
 			);
-			name = "Carte Pre";
+			name = "[Carte] Pre Script";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "ruby ${SRCROOT}/Pods/Carte/Carte/carte.rb pre";
-		};
-		E16A884F1C9F8D7C003D94AB /* Carte Post */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Carte Post";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "ruby ${SRCROOT}/Pods/Carte/Carte/carte.rb post";
+			shellScript = "ruby ${PODS_ROOT}/Carte/Sources/Carte/carte.rb pre";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1131,6 +1147,7 @@
 				E1773CB61C95B94C00AF36AF /* STLoginTextField.swift in Sources */,
 				E14DF2181C3F914E0076FDDE /* STCourseBookList.swift in Sources */,
 				E1A664F81EED8F8C003B2D43 /* STTagSearchInfoView.swift in Sources */,
+				636CD4A42259EDA6002B52BE /* B68FloatingLabelTextField.swift in Sources */,
 				E1C48BB41C79CAE800BC469E /* STPeriod.swift in Sources */,
 				E1A99D8F1CB0FE1800953A4B /* STUser.swift in Sources */,
 				E14DF2141C3F71A70076FDDE /* STTimetableAddController.swift in Sources */,
@@ -1305,6 +1322,7 @@
 				PRODUCT_NAME = SNUTT;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1349,6 +1367,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = SNUTT;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1373,7 +1392,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "SNUTT/SNUTT-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1395,7 +1414,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SNUTT/SNUTT-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -1416,7 +1435,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SNUTT.app/SNUTT";
 			};
 			name = Debug;
@@ -1433,7 +1452,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SNUTT.app/SNUTT";
 			};
 			name = Release;
@@ -1479,6 +1498,7 @@
 				OTHER_SWIFT_FLAGS = "-D PRODUCTION";
 				PRODUCT_NAME = SNUTT;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1501,7 +1521,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SNUTT/SNUTT-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Production;
@@ -1518,7 +1538,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SNUTT.app/SNUTT";
 			};
 			name = Production;
@@ -1550,7 +1570,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TODAY_EXTENSION";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1580,7 +1600,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TODAY_EXTENSION;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1610,7 +1630,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TODAY_EXTENSION;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Production;
 		};

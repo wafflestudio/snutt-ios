@@ -45,7 +45,7 @@ class STTagCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func tap(_ gesture: UITapGestureRecognizer) {
-        if gesture.state == UIGestureRecognizerState.ended {
+        if gesture.state == UIGestureRecognizer.State.ended {
             deleteTag()
         }
     }

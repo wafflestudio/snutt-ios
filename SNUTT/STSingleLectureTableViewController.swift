@@ -204,7 +204,6 @@ class STSingleLectureTableViewController: UITableViewController {
                     UIAlertAction(title: "삭제", style: .destructive, handler: { [weak self] _ in
                         guard let self = self else { return }
                         if let index = self.timetableManager.currentTimetable?.lectureList.index(of: self.currentLecture) {
-                            // TODO: disposeBag
                             self.timetableManager.deleteLectureAtIndex(index)
                                 .subscribe(onCompleted: { [weak self] in
                                     self?.navigationController?.popViewController(animated: true)
@@ -328,7 +327,7 @@ class STSingleLectureTableViewController: UITableViewController {
             let cell = tmpCell as! STSingleLectureButtonCell
             cell.buttonAction = onClick
             cell.button.tintColor = color
-            cell.button.setTitle(title, for: UIControlState())
+            cell.button.setTitle(title, for: .normal)
             cell.button.titleLabel?.text = title
             return cell
         case let .leftAlignedLabel(string):
