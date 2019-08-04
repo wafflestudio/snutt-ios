@@ -110,7 +110,7 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
                 STDefaults[.userId] = result.user_id
                 #if DEBUG
                 #else
-                Crashlytics.sharedInstance().setUserIdentifier(userId)
+                Crashlytics.sharedInstance().setUserIdentifier(id)
                 #endif
                 self?.userManager.loadMainPage()
             }, onError: errorHandler.apiOnError)

@@ -44,10 +44,6 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     }
 
     func reloadData() {
-        // TODO: check delete animation and delete this snippet
-//        if((notification.object as AnyObject) === self) {
-//            return //This is because of delete animation.
-//        }
         self.tableView.reloadData()
     }
     
