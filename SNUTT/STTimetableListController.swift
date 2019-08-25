@@ -68,6 +68,7 @@ class STTimetableListController: UITableViewController {
                     self.errorHandler.apiOnError(error)
                     let index = self.timetableList.index(of: newTimetable)
                     self.timetableList.remove(at: index!)
+                    self.reloadList()
             })
             .disposed(by: disposeBag)
     }

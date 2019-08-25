@@ -84,7 +84,6 @@ class STUserManager {
     }
 
     func loadMainPage() {
-        // TODO: self leak?
         let openController : () -> () = { [weak self] in
             guard let self = self else { return }
             if let deviceId = InstanceID.instanceID().token() {

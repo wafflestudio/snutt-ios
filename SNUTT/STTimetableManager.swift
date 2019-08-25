@@ -28,9 +28,10 @@ class STTimetableManager : ReactiveCompatible {
                     self?.currentTimetable = timetable
                     }, onError: { [weak self] e in
                         self?.errorHandler.apiOnError(e)
-                        self?.currentTimetable = nil
                 })
                 .disposed(by: disposeBag)
+        } else {
+            currentTimetable = nil
         }
     }
     

@@ -1387,7 +1387,7 @@
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" ";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.com.snutt-dev";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SNUTT/SNUTT-Bridging-Header.h";

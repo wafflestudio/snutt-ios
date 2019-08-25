@@ -164,39 +164,17 @@ class STSingleLectureTableViewController: UITableViewController {
                 STAlertView.showAlert(title: "강좌 초기화", message: "강좌를 원래 상태로 초기화하시겠습니까?", actions: actions)
             })
         case .syllabusButton:
-            return .button(title: "강의계획서", color: UIColor.black,  onClick: { 
+            return .button(title: "강의계획서", color: UIColor.black,  onClick: { [errorHandler] in 
                 let quarter = self.timetableManager.currentTimetable!.quarter
                 let lecture = self.currentLecture
                 let target = STTarget.GetSyllabus(params: .init(year: quarter.year, semester: quarter.semester, course_number: lecture.courseNumber ?? "", lecture_number: lecture.lectureNumber ?? ""))
                 self.networkProvider.rx.request(target)
                     .map { result in result.url }
-                    .catchError { err -> Single<String?> in
-                        let year = quarter.year
-                        let course_number = lecture.courseNumber!
-                        let lecture_number = lecture.lectureNumber!
-                        let semester = self.timetableManager.currentTimetable!.quarter.semester;
-                        var openShtmFg = "", openDetaShtmFg = ""
-                        switch semester {
-                        case .first:
-                            openShtmFg = "U000200001";
-                            openDetaShtmFg = "U000300001";
-                        case .second:
-                            openShtmFg = "U000200002";
-                            openDetaShtmFg = "U000300001";
-                        case .summer:
-                            openShtmFg = "U000200001";
-                            openDetaShtmFg = "U000300002";
-                        case .winter:
-                            openShtmFg = "U000200002";
-                            openDetaShtmFg = "U000300002";
-                        }
-                        let url = "http://sugang.snu.ac.kr/sugang/cc/cc103.action?openSchyy=\(year)&openShtmFg=\(openShtmFg)&openDetaShtmFg=\(openDetaShtmFg)&sbjtCd=\(course_number)&ltNo=\(lecture_number)&sbjtSubhCd=000";
-                        return Single.just(url)
-                    }
                     .subscribe(onSuccess: { [weak self] url in
                         guard let url = url else { return }
                         self?.showWebView(url)
-                    }).disposed(by: self.disposeBag)
+                        }, onError: errorHandler.apiOnError)
+                    .disposed(by: self.disposeBag)
             })
         case .deleteButton:
             return .button(title: "삭제", color: UIColor.red, onClick: { 
