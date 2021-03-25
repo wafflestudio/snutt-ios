@@ -150,7 +150,7 @@ struct STLecture {
             }
         }
         
-        return dict as! [String: AnyObject]
+        return dict as [String: AnyObject]
     }
     
     func isSameLecture(_ right : STLecture) -> Bool {

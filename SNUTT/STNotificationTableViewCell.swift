@@ -16,8 +16,8 @@ class STNotificationTableViewCell: UITableViewCell {
     var notification : STNotification! {
         didSet {
             
-            let grayAttribute = [NSForegroundColorAttributeName: UIColor.gray]
-            let timeText = NSAttributedString(string: notification.createdFrom, attributes: grayAttribute)
+            let grayAttribute = [convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): UIColor.gray]
+            let timeText = NSAttributedString(string: notification.createdFrom, attributes: convertToOptionalNSAttributedStringKeyDictionary(grayAttribute))
             var message = NSMutableAttributedString(string: notification.message+" ")
             message.append(timeText)
             descriptionLabel.attributedText = message
@@ -42,4 +42,15 @@ class STNotificationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

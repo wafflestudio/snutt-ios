@@ -25,12 +25,12 @@ class STTagManager {
     
     fileprivate init() {
         self.loadData()
-        STEventCenter.sharedInstance.addObserver(self, selector: "loadData", event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTagManager.loadData), event: STEvent.CurrentTimetableSwitched, object: nil)
     }
     
     var tagList : STTagList!
     
-    dynamic func loadData() {
+    @objc dynamic func loadData() {
         guard let quarter = STTimetableManager.sharedInstance.currentTimetable?.quarter else {
             return
         }
@@ -56,7 +56,7 @@ class STTagManager {
                 self.tagList = tagList
                 self.saveData(quarter)
             }
-        }, failure: { _ in
+        }, failure: { 
             self.tagList = STTagList(quarter: quarter, tagList: [], updatedTime: 0)
         })
     }

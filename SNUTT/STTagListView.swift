@@ -72,11 +72,11 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "STTagTableViewCell", for: indexPath) as! STTagTableViewCell
-        let whiteAttribute = [NSForegroundColorAttributeName: UIColor.white]
-        let colorAttribute = [NSForegroundColorAttributeName: filteredList[indexPath.row].type.tagColor]
+        let whiteAttribute = [convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): UIColor.white]
+        let colorAttribute = [convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): filteredList[indexPath.row].type.tagColor]
         let text = NSMutableAttributedString()
-        let sharpText = NSAttributedString(string: "# ", attributes: colorAttribute)
-        let tagText = NSAttributedString(string: filteredList[indexPath.row].text, attributes: whiteAttribute)
+        let sharpText = NSAttributedString(string: "# ", attributes: convertToOptionalNSAttributedStringKeyDictionary(colorAttribute))
+        let tagText = NSAttributedString(string: filteredList[indexPath.row].text, attributes: convertToOptionalNSAttributedStringKeyDictionary(whiteAttribute))
         text.append(sharpText)
         text.append(tagText)
         cell.tagLabel.attributedText = text
@@ -93,4 +93,15 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
         addTagAtIndex(indexPath.row)
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

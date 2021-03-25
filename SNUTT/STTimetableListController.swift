@@ -52,13 +52,13 @@ class STTimetableListController: UITableViewController {
         STNetworking.createTimetable(title, courseBook: courseBook, done: { list in
             self.timetableList = list
             self.reloadList()
-        }, failure: { _ in
+        }, failure: { 
             let index = self.timetableList.index(of: newTimetable)
             self.timetableList.remove(at: index!)
         })
     }
     
-    func reloadList() {
+    @objc func reloadList() {
         self.updateSectionedList()
         self.tableView.reloadData()
     }
@@ -154,7 +154,7 @@ class STTimetableListController: UITableViewController {
     }
     
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             guard let timetable = getTimetable(from: indexPath), let id = timetable.id else {
                 return
@@ -171,7 +171,7 @@ class STTimetableListController: UITableViewController {
                 } else {
                     self.tableView.reloadRows(at: [indexPath], with: .fade)
                 }
-            }, failure: { _ in
+            }, failure: { 
                 
             })
             

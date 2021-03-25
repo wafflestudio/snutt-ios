@@ -62,7 +62,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         var text = NSMutableAttributedString()
         if let lecture = self.lecture {
             let font = UIFont.systemFont(ofSize: 10.0)
-            text.append(NSAttributedString(string: lecture.titleBreakLine, attributes: [NSFontAttributeName: font]))
+            text.append(NSAttributedString(string: lecture.titleBreakLine, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): font])))
         }
         if let singleClass = self.singleClass {
             let placeText = singleClass.place
@@ -85,7 +85,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
                 text.append(NSAttributedString(string: "\n"))
             }
             if singleClass.place != "" {
-                text.append(NSAttributedString(string: singleClass.placeBreakLine, attributes: [NSFontAttributeName: font]))
+                text.append(NSAttributedString(string: singleClass.placeBreakLine, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): font])))
             }
         }
         courseText.attributedText = text
@@ -109,13 +109,13 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         }
         */
     }
-    func longClick(_ gesture : UILongPressGestureRecognizer) {
-        if gesture.state == UIGestureRecognizerState.began {
+    @objc func longClick(_ gesture : UILongPressGestureRecognizer) {
+        if gesture.state == UIGestureRecognizer.State.began {
             longClicked?(self)
         }
     }
-    func tap(_ gesture: UITapGestureRecognizer) {
-        if gesture.state == UIGestureRecognizerState.recognized {
+    @objc func tap(_ gesture: UITapGestureRecognizer) {
+        if gesture.state == UIGestureRecognizer.State.recognized {
             tapped?(self)
         }
     }
@@ -123,4 +123,15 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         // no resizing
         return layoutAttributes
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

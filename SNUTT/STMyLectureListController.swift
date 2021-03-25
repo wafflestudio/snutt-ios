@@ -24,8 +24,8 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         self.tableView.separatorStyle = .none
         self.tableView.rowHeight = 74.0
         
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData:", event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadData:", event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STMyLectureListController.reloadData(_:)), event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STMyLectureListController.reloadData(_:)), event: STEvent.CurrentTimetableSwitched, object: nil)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -38,7 +38,7 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         // Dispose of any resources that can be recreated.
     }
 
-    func reloadData(_ notification : Notification) {
+    @objc func reloadData(_ notification : Notification) {
         if((notification.object as AnyObject) === self) {
             return //This is because of delete animation.
         }
@@ -80,7 +80,7 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         return true
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if tableView.numberOfRows(inSection: 0) != 2 {
                 STTimetableManager.sharedInstance.deleteLectureAtIndex(indexPath.row, object: self)
@@ -124,9 +124,9 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "시간표에 강좌가 없습니다."
         let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0)
+            convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.boldSystemFont(ofSize: 18.0)
         ]
-        return NSAttributedString(string: text, attributes: attributes)
+        return NSAttributedString(string: text, attributes: convertToOptionalNSAttributedStringKeyDictionary(attributes))
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
@@ -135,19 +135,19 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         paragraph.lineBreakMode = .byWordWrapping
         paragraph.alignment = .center
         let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.systemFont(ofSize: 14.0),
-            NSForegroundColorAttributeName : UIColor.lightGray,
-            NSParagraphStyleAttributeName : paragraph
+            convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 14.0),
+            convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.lightGray,
+            convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle) : paragraph
         ]
-        return NSAttributedString(string: text, attributes: attributes)
+        return NSAttributedString(string: text, attributes: convertToOptionalNSAttributedStringKeyDictionary(attributes))
     }
     
-    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControl.State) -> NSAttributedString! {
         let text = "직접 만들기"
         let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 17.0)
+            convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.boldSystemFont(ofSize: 17.0)
         ]
-        return NSAttributedString(string: text, attributes: attributes)
+        return NSAttributedString(string: text, attributes: convertToOptionalNSAttributedStringKeyDictionary(attributes))
     }
     
     func emptyDataSetDidTapButton(_ scrollView: UIScrollView!) {
@@ -170,4 +170,15 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
     }
     */
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

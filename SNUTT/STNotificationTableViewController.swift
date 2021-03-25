@@ -24,7 +24,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         super.viewDidLoad()
         STMainTabBarController.controller?.notificationController = self
 
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 27
         
         self.tableView.emptyDataSetSource = self;
@@ -37,7 +37,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         
         self.refreshControl = UIRefreshControl()
         
-        self.refreshControl?.addTarget(self, action: #selector(self.refreshList), for: UIControlEvents.valueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(self.refreshList), for: UIControl.Event.valueChanged)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -127,7 +127,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         })
     }
     
-    func refreshList() {
+    @objc func refreshList() {
         loading = true
         pageCnt = 0
         isLast = false
@@ -169,9 +169,9 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "알림이 없습니다."
         let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0)
+            convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.boldSystemFont(ofSize: 18.0)
         ]
-        return NSAttributedString(string: text, attributes: attributes)
+        return NSAttributedString(string: text, attributes: convertToOptionalNSAttributedStringKeyDictionary(attributes))
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
@@ -180,10 +180,21 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         paragraph.lineBreakMode = .byWordWrapping
         paragraph.alignment = .center
         let attributes: [String : AnyObject] = [
-            NSFontAttributeName : UIFont.systemFont(ofSize: 14.0),
-            NSForegroundColorAttributeName : UIColor.lightGray,
-            NSParagraphStyleAttributeName : paragraph
+            convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 14.0),
+            convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.lightGray,
+            convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle) : paragraph
         ]
-        return NSAttributedString(string: text, attributes: attributes)
+        return NSAttributedString(string: text, attributes: convertToOptionalNSAttributedStringKeyDictionary(attributes))
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

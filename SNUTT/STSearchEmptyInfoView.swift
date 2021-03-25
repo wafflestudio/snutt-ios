@@ -24,7 +24,7 @@ class STSearchEmptyInfoView: UIView {
         }
     }
 
-    func handleIconTap(sender: UITapGestureRecognizer) {
+    @objc func handleIconTap(sender: UITapGestureRecognizer) {
         searchController.setFocusToSearch()
     }
 }

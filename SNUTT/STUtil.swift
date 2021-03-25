@@ -137,7 +137,7 @@ extension Array where Element : DictionaryRepresentable{
     init?(dictionary:[NSDictionary]?) {
         guard let values = dictionary else {return nil}
         var testArray : [Element?] = values.map({return Element(dictionary: $0)})
-        let rawArray = testArray.flatMap({ $0 })
+        let rawArray = testArray.compactMap({ $0 })
         if testArray.count != rawArray.count {
             return nil
         }
@@ -208,12 +208,12 @@ extension UITextField {
 
     @IBInspectable var hideBorder: Bool {
         get {
-            return borderStyle == UITextBorderStyle.none
+            return borderStyle == UITextField.BorderStyle.none
         }
         set {
             if newValue {
-                borderStyle = UITextBorderStyle.line
-                borderStyle = UITextBorderStyle.none
+                borderStyle = UITextField.BorderStyle.line
+                borderStyle = UITextField.BorderStyle.none
             }
         }
     }

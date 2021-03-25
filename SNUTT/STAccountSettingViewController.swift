@@ -71,7 +71,7 @@ class STAccountSettingViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    func userUpdated() {
+    @objc func userUpdated() {
         isNetworking = false
         refreshCellList()
         self.tableView.reloadData()
@@ -154,7 +154,7 @@ class STAccountSettingViewController: UITableViewController {
                     STUser.getUser()
                     self.refreshCellList()
                     self.tableView.reloadSections(IndexSet(integer: self.fbSection), with: .automatic)
-                    }, failure: { _ in
+                    }, failure: { 
                         return
                 })
             }
@@ -245,7 +245,7 @@ class STAccountSettingViewController: UITableViewController {
                         return
                     }
                     
-                    STNetworking.changePassword(curPass, newPassword: newPass, done: { _ in
+                    STNetworking.changePassword(curPass, newPassword: newPass, done: { 
                         return
                         }, failure: { errMessage in
                             if let err = errMessage {
@@ -261,11 +261,11 @@ class STAccountSettingViewController: UITableViewController {
                 return
             }
             let detachAction = UIAlertAction(title: "페이스북 연동 끊기", style: .destructive, handler: { _ in
-                STNetworking.detachFB({ _ in
+                STNetworking.detachFB({ 
                     STUser.currentUser?.fbName = nil
                     self.refreshCellList()
                     self.tableView.reloadSections(IndexSet(integer: self.fbSection), with: .automatic)
-                    }, failure: { _ in
+                    }, failure: { 
                         return
                 })
             })
@@ -274,7 +274,7 @@ class STAccountSettingViewController: UITableViewController {
             return
         case .unregister:
             let unregisterAction = UIAlertAction(title: "회원탈퇴", style: .destructive, handler: { _ in
-                STNetworking.unregister({ _ in
+                STNetworking.unregister({ 
                     return
                 })
             })

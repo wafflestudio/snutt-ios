@@ -76,7 +76,7 @@ class STUser {
     }
 
     static func loadMainPage() {
-        let openController : () -> () = { _ in
+        let openController : () -> () = { 
             if let deviceId = InstanceID.instanceID().token() {
                 STNetworking.addDevice(deviceId)
             }
@@ -102,7 +102,7 @@ class STUser {
         }
 
         let registerFB : (String, String) -> () = { id, token in
-            STNetworking.registerFB(id, token: token, done: done, failure: { _ in
+            STNetworking.registerFB(id, token: token, done: done, failure: { 
 
             })
         }

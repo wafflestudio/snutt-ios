@@ -154,21 +154,21 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         return false
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             currentLecture.classList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
     
-    func editBarButtonClicked() {
+    @objc func editBarButtonClicked() {
         editable = true
         reloadDataWithAnimation()
         self.navigationItem.setRightBarButton(saveBarButton, animated: true)
         self.navigationItem.setLeftBarButton(cancelBarButton, animated: true)
     }
     
-    func saveBarButtonClicked() {
+    @objc func saveBarButtonClicked() {
         dismissKeyboard()
         let loadingView = STAlertView.showLoading(title: "저장 중")
         let oldLecture = lecture!
@@ -184,7 +184,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         })
     }
     
-    func cancelBarButtonClicked() {
+    @objc func cancelBarButtonClicked() {
         editable = false
         dismissKeyboard()
         currentLecture = lecture

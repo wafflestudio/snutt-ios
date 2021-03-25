@@ -15,7 +15,7 @@ class STColorPickerTableViewController: UITableViewController {
     var color : STColor!
     var colorIndex: Int = 1
     var selectedColorIndex = 1
-    var doneBlock : (Int, STColor?) -> () = { _ in }
+    var doneBlock : (Int, STColor?) -> () = { _,_  in }
     var colorList : STColorList!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,7 @@ class STColorPickerTableViewController: UITableViewController {
         STEventCenter.sharedInstance.removeObserver(self)
     }
     
-    override func willMove(toParentViewController parent: UIViewController?) {
+    override func willMove(toParent parent: UIViewController?) {
         if parent == nil {
             let retColorIndex = selectedColorIndex == customColorIndex ? 0 : selectedColorIndex + 1
             let retColor = selectedColorIndex == customColorIndex ? color : nil
@@ -47,7 +47,7 @@ class STColorPickerTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func colorListUpdated() {
+    @objc func colorListUpdated() {
         colorList = STColorManager.sharedInstance.colorList
         customColorIndex = colorList.colorList.count
         if colorIndex == 0 {
@@ -152,7 +152,7 @@ class STColorPickerTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
+            self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableView.ScrollPosition.none)
         }
     }
     /*

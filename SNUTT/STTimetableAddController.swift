@@ -23,7 +23,7 @@ class STTimetableAddController: UIViewController, UIPickerViewDataSource, UIPick
         semesterPicker.dataSource = self
     }
     
-    func reloadCourseBook() {
+    @objc func reloadCourseBook() {
         semesterPicker.reloadAllComponents()
     }
 
