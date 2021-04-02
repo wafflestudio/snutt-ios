@@ -3,12 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1631446E472512479C1BD808 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736548D365BF8D4D41EF1881 /* Pods_SNUTT.framework */; };
-		4BBA38FE9BD88EC2B95A5504 /* Pods_SNUTT_Today.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055D8A5252D54AED8FAA67A1 /* Pods_SNUTT_Today.framework */; };
+		B1EB38A2D401D55B8B513965 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */; };
 		E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C61B4CCD16006FD8B3 /* STLecture.swift */; };
 		E10852C91B4CCD16006FD8B3 /* STTimetableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */; };
 		E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109CC781C3E8C050050399A /* STTimetableListController.swift */; };
@@ -172,6 +171,7 @@
 		E1F632941C8D21C20030BE7D /* STNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F632931C8D21C20030BE7D /* STNetworking.swift */; };
 		E1F946231DB449E300CC8AF6 /* STAddLectureButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F946221DB449E300CC8AF6 /* STAddLectureButtonCell.xib */; };
 		E1F946251DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F946241DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift */; };
+		FBAC5660C06F5760A3B127FB /* Pods_SNUTT_Today.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7540205FB7071F642F9B022F /* Pods_SNUTT_Today.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,14 +206,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		055D8A5252D54AED8FAA67A1 /* Pods_SNUTT_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		37A93C6F95D45D19C5E9F19A /* Pods-SNUTT.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.production.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT.production.xcconfig"; sourceTree = "<group>"; };
-		5B3CFB5C77928A059DB2CFA6 /* Pods-SNUTT Today.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.production.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.production.xcconfig"; sourceTree = "<group>"; };
-		6365ECB7CCF2B23FCF489CBE /* Pods-SNUTT Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.debug.xcconfig"; sourceTree = "<group>"; };
-		6A48F3E50D8BD4041AD725F7 /* Pods-SNUTT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.release.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT.release.xcconfig"; sourceTree = "<group>"; };
-		736548D365BF8D4D41EF1881 /* Pods_SNUTT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		77FBD91482809C5F65991C05 /* Pods-SNUTT Today.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.release.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.release.xcconfig"; sourceTree = "<group>"; };
+		223CBE9DBCD4D00F39D695B3 /* Pods-SNUTT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT/Pods-SNUTT.debug.xcconfig"; sourceTree = "<group>"; };
+		408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		660A222EE72A6506889A28CE /* Pods-SNUTT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.release.xcconfig"; path = "Target Support Files/Pods-SNUTT/Pods-SNUTT.release.xcconfig"; sourceTree = "<group>"; };
+		6BA0D3F478A2EABE78D7E93D /* Pods-SNUTT.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.production.xcconfig"; path = "Target Support Files/Pods-SNUTT/Pods-SNUTT.production.xcconfig"; sourceTree = "<group>"; };
+		7540205FB7071F642F9B022F /* Pods_SNUTT_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		923560D5D97F8A3548E9547A /* Pods-SNUTT Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.debug.xcconfig"; sourceTree = "<group>"; };
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0B8ADB76AB6B75793967316 /* Pods-SNUTT Today.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.production.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.production.xcconfig"; sourceTree = "<group>"; };
 		E10852C61B4CCD16006FD8B3 /* STLecture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLecture.swift; sourceTree = "<group>"; };
 		E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableCollectionView.swift; sourceTree = "<group>"; };
 		E10852CA1B4CCF85006FD8B3 /* SNUTT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SNUTT-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -358,7 +358,7 @@
 		E1F632931C8D21C20030BE7D /* STNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STNetworking.swift; sourceTree = "<group>"; };
 		E1F946221DB449E300CC8AF6 /* STAddLectureButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STAddLectureButtonCell.xib; sourceTree = "<group>"; };
 		E1F946241DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STAddLectureButtonCell.swift; sourceTree = "<group>"; };
-		EC67A2D0072E64D419116691 /* Pods-SNUTT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SNUTT/Pods-SNUTT.debug.xcconfig"; sourceTree = "<group>"; };
+		F214BF853FAFFD62D3D06505 /* Pods-SNUTT Today.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.release.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,7 +366,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1631446E472512479C1BD808 /* Pods_SNUTT.framework in Frameworks */,
+				B1EB38A2D401D55B8B513965 /* Pods_SNUTT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,24 +382,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1BEF0791E702E9A00BBFDB1 /* NotificationCenter.framework in Frameworks */,
-				4BBA38FE9BD88EC2B95A5504 /* Pods_SNUTT_Today.framework in Frameworks */,
+				FBAC5660C06F5760A3B127FB /* Pods_SNUTT_Today.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9DFA6A01F66A7BEA2E1102F4 /* Pods */ = {
+		68B8CC35E1A2F7C82D301653 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EC67A2D0072E64D419116691 /* Pods-SNUTT.debug.xcconfig */,
-				6A48F3E50D8BD4041AD725F7 /* Pods-SNUTT.release.xcconfig */,
-				37A93C6F95D45D19C5E9F19A /* Pods-SNUTT.production.xcconfig */,
-				6365ECB7CCF2B23FCF489CBE /* Pods-SNUTT Today.debug.xcconfig */,
-				77FBD91482809C5F65991C05 /* Pods-SNUTT Today.release.xcconfig */,
-				5B3CFB5C77928A059DB2CFA6 /* Pods-SNUTT Today.production.xcconfig */,
+				223CBE9DBCD4D00F39D695B3 /* Pods-SNUTT.debug.xcconfig */,
+				660A222EE72A6506889A28CE /* Pods-SNUTT.release.xcconfig */,
+				6BA0D3F478A2EABE78D7E93D /* Pods-SNUTT.production.xcconfig */,
+				923560D5D97F8A3548E9547A /* Pods-SNUTT Today.debug.xcconfig */,
+				F214BF853FAFFD62D3D06505 /* Pods-SNUTT Today.release.xcconfig */,
+				E0B8ADB76AB6B75793967316 /* Pods-SNUTT Today.production.xcconfig */,
 			);
 			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		E110CFCF1C883DB300ED0590 /* Notification */ = {
@@ -489,7 +490,7 @@
 				E1BEF07A1E702E9A00BBFDB1 /* SNUTT Today */,
 				E19A3A961B453770007FCAD7 /* Products */,
 				F3F7582CA3722E59E3E117F1 /* Frameworks */,
-				9DFA6A01F66A7BEA2E1102F4 /* Pods */,
+				68B8CC35E1A2F7C82D301653 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -733,9 +734,9 @@
 			isa = PBXGroup;
 			children = (
 				A23D953E6E8C81FC5C2181B0 /* Pods.framework */,
-				736548D365BF8D4D41EF1881 /* Pods_SNUTT.framework */,
 				E1BEF0781E702E9A00BBFDB1 /* NotificationCenter.framework */,
-				055D8A5252D54AED8FAA67A1 /* Pods_SNUTT_Today.framework */,
+				408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */,
+				7540205FB7071F642F9B022F /* Pods_SNUTT_Today.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -747,15 +748,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E19A3AB41B453770007FCAD7 /* Build configuration list for PBXNativeTarget "SNUTT" */;
 			buildPhases = (
-				2CE23887BA346237D7CA4434 /* [CP] Check Pods Manifest.lock */,
+				4CC471F93D1E8A1ECFE084A1 /* [CP] Check Pods Manifest.lock */,
 				E19A3A911B453770007FCAD7 /* Sources */,
 				E19A3A921B453770007FCAD7 /* Frameworks */,
 				E16A884E1C9F8D74003D94AB /* Carte Pre */,
 				E19A3A931B453770007FCAD7 /* Resources */,
 				E16A884F1C9F8D7C003D94AB /* Carte Post */,
 				E14991F91C45F0E000DC6756 /* Run Script */,
-				5DF3E55534CBCE108DC5CF5E /* [CP] Embed Pods Frameworks */,
 				E1BEF0881E702E9A00BBFDB1 /* Embed App Extensions */,
+				0AF3BD52B7E1DF08D1DA8012 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -789,7 +790,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1BEF0871E702E9A00BBFDB1 /* Build configuration list for PBXNativeTarget "SNUTT Today" */;
 			buildPhases = (
-				6AEFD03C79D2B9865C30C7B2 /* [CP] Check Pods Manifest.lock */,
+				022A0387CE40CAA0196EA457 /* [CP] Check Pods Manifest.lock */,
 				E1BEF0731E702E9A00BBFDB1 /* Sources */,
 				E1BEF0741E702E9A00BBFDB1 /* Frameworks */,
 				E1BEF0751E702E9A00BBFDB1 /* Resources */,
@@ -848,10 +849,11 @@
 				};
 			};
 			buildConfigurationList = E19A3A901B453770007FCAD7 /* Build configuration list for PBXProject "SNUTT" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				Base,
 			);
 			mainGroup = E19A3A8C1B453770007FCAD7;
@@ -927,94 +929,61 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2CE23887BA346237D7CA4434 /* [CP] Check Pods Manifest.lock */ = {
+		022A0387CE40CAA0196EA457 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SNUTT-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SNUTT Today-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5DF3E55534CBCE108DC5CF5E /* [CP] Embed Pods Frameworks */ = {
+		0AF3BD52B7E1DF08D1DA8012 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ActionSheetPicker-3.0/ActionSheetPicker_3_0.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/B68UIFloatLabelTextField/B68UIFloatLabelTextField.framework",
-				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
-				"${BUILT_PRODUCTS_DIR}/Carte/Carte.framework",
-				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
-				"${BUILT_PRODUCTS_DIR}/Color-Picker-for-iOS/Color_Picker_for_iOS.framework",
-				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
-				"${BUILT_PRODUCTS_DIR}/EGOTableViewPullRefreshAndLoadMore/EGOTableViewPullRefreshAndLoadMore.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
-				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
-				"${BUILT_PRODUCTS_DIR}/TTRangeSlider/TTRangeSlider.framework",
-				"${BUILT_PRODUCTS_DIR}/UITextView+Placeholder/UITextView_Placeholder.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionSheetPicker_3_0.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/B68UIFloatLabelTextField.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Carte.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Color_Picker_for_iOS.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EGOTableViewPullRefreshAndLoadMore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTRangeSlider.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextView_Placeholder.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6AEFD03C79D2B9865C30C7B2 /* [CP] Check Pods Manifest.lock */ = {
+		4CC471F93D1E8A1ECFE084A1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SNUTT Today-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SNUTT-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1363,7 +1332,7 @@
 		};
 		E19A3AB51B453770007FCAD7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EC67A2D0072E64D419116691 /* Pods-SNUTT.debug.xcconfig */;
+			baseConfigurationReference = 223CBE9DBCD4D00F39D695B3 /* Pods-SNUTT.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1373,7 +1342,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SNUTT/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" ";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1387,7 +1360,7 @@
 		};
 		E19A3AB61B453770007FCAD7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6A48F3E50D8BD4041AD725F7 /* Pods-SNUTT.release.xcconfig */;
+			baseConfigurationReference = 660A222EE72A6506889A28CE /* Pods-SNUTT.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1397,7 +1370,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SNUTT/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SNUTT/SNUTT-Bridging-Header.h";
@@ -1411,6 +1389,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1420,7 +1399,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = SNUTTTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
@@ -1432,12 +1415,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = SNUTTTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
@@ -1493,7 +1482,7 @@
 		};
 		E1BC7E471E549E4D00AF3506 /* Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 37A93C6F95D45D19C5E9F19A /* Pods-SNUTT.production.xcconfig */;
+			baseConfigurationReference = 6BA0D3F478A2EABE78D7E93D /* Pods-SNUTT.production.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1503,7 +1492,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SNUTT/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SNUTT/SNUTT-Bridging-Header.h";
@@ -1517,12 +1511,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = SNUTTTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
@@ -1532,7 +1533,7 @@
 		};
 		E1BEF0841E702E9A00BBFDB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6365ECB7CCF2B23FCF489CBE /* Pods-SNUTT Today.debug.xcconfig */;
+			baseConfigurationReference = 923560D5D97F8A3548E9547A /* Pods-SNUTT Today.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1551,7 +1552,11 @@
 				);
 				INFOPLIST_FILE = "SNUTT Today/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1563,7 +1568,7 @@
 		};
 		E1BEF0851E702E9A00BBFDB1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 77FBD91482809C5F65991C05 /* Pods-SNUTT Today.release.xcconfig */;
+			baseConfigurationReference = F214BF853FAFFD62D3D06505 /* Pods-SNUTT Today.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1580,12 +1585,17 @@
 				);
 				INFOPLIST_FILE = "SNUTT Today/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-dev.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TODAY_EXTENSION;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
 			};
@@ -1593,7 +1603,7 @@
 		};
 		E1BEF0861E702E9A00BBFDB1 /* Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B3CFB5C77928A059DB2CFA6 /* Pods-SNUTT Today.production.xcconfig */;
+			baseConfigurationReference = E0B8ADB76AB6B75793967316 /* Pods-SNUTT Today.production.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1610,12 +1620,17 @@
 				);
 				INFOPLIST_FILE = "SNUTT Today/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TODAY_EXTENSION;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
 			};
