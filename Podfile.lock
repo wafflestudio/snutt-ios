@@ -116,9 +116,9 @@ PODS:
 DEPENDENCIES:
   - ActionSheetPicker-3.0
   - Alamofire
-  - B68UIFloatLabelTextField (from `https://github.com/Rajin9601/B68FloatingLabelTextField.git`, branch `Swift_3.0`)
+  - B68UIFloatLabelTextField (from `https://github.com/JSKeum/B68FloatingLabelTextField.git`)
   - Carte
-  - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
+  - ChameleonFramework/Swift (from `https://github.com/JSKeum/Chameleon.git`)
   - Color-Picker-for-iOS (~> 2.0)
   - Crashlytics
   - DZNEmptyDataSet (from `https://github.com/Rajin9601/DZNEmptyDataSet.git`, branch `fix-hitTest`)
@@ -168,10 +168,9 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   B68UIFloatLabelTextField:
-    :branch: Swift_3.0
-    :git: https://github.com/Rajin9601/B68FloatingLabelTextField.git
+    :git: https://github.com/JSKeum/B68FloatingLabelTextField.git
   ChameleonFramework:
-    :git: https://github.com/ViccAlexander/Chameleon.git
+    :git: https://github.com/JSKeum/Chameleon.git
   DZNEmptyDataSet:
     :branch: fix-hitTest
     :git: https://github.com/Rajin9601/DZNEmptyDataSet.git
@@ -180,11 +179,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   B68UIFloatLabelTextField:
-    :commit: e04611ad6248e30d1c4c30b9d56b312ed9a471a1
-    :git: https://github.com/Rajin9601/B68FloatingLabelTextField.git
+    :commit: 0ebc6ce20a395f6494b881aaeaf3f32e5a18aa65
+    :git: https://github.com/JSKeum/B68FloatingLabelTextField.git
   ChameleonFramework:
-    :commit: 6dd284bde21ea2e7f9fd89bc36f40df16e16369d
-    :git: https://github.com/ViccAlexander/Chameleon.git
+    :commit: e92807fa7e51ea70d58ec0290c8ba55e20b99fc2
+    :git: https://github.com/JSKeum/Chameleon.git
   DZNEmptyDataSet:
     :commit: db6e1747b383fbbaad429a40f5f5700dd86f8e4c
     :git: https://github.com/Rajin9601/DZNEmptyDataSet.git
@@ -225,6 +224,6 @@ SPEC CHECKSUMS:
   TTRangeSlider: 8cf72eca457c3b700c92eb0074be908c986e25ec
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: 167dbc6d58fb45d29d18140bac21508bf05333e9
+PODFILE CHECKSUM: bdcccae4ffee3e20e0a16a13c9bc35d67fca92f4
 
 COCOAPODS: 1.10.1
