@@ -34,7 +34,7 @@ class STAddLocalIDViewController: UIViewController, UITextFieldDelegate {
             textField.delegate = self
         }
 
-        addButton.buttonPressAction = { _ in
+        addButton.buttonPressAction = {
             self.saveButtonClicked()
         }
 

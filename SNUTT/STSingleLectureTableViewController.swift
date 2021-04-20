@@ -273,7 +273,7 @@ class STSingleLectureTableViewController: UITableViewController {
             cell.placeDoneBlock = { value in self.currentLecture.classList[indexPath.row - 1].place = value }
             cell.timeDoneBlock = { value in self.currentLecture.classList[indexPath.row - 1].time = value }
             cell.custom = true // Single Class Editable in non-custom
-            cell.deleteLectureBlock = { _ in
+            cell.deleteLectureBlock = {
                 guard let indexPathNow = self.tableView.indexPath(for: cell) else {
                     return
                 }

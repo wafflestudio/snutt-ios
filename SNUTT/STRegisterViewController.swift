@@ -43,13 +43,13 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
             textField.delegate = self
         }
 
-        registerButton.buttonPressAction = { _ in
+        registerButton.buttonPressAction = { 
             self.registerButtonClicked()
         }
-        facebookButton.buttonPressAction = { _ in
+        facebookButton.buttonPressAction = {
             self.fbButtonClicked()
         }
-        backBtnView.buttonPressAction = { _ in
+        backBtnView.buttonPressAction = {
             self.dismiss(animated: true, completion: nil)
         }
 
@@ -77,13 +77,13 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func keyboardWillShow(noti : NSNotification) {
-        UIView.animate(withDuration: 1.0, animations: { _ in
+        UIView.animate(withDuration: 1.0, animations: {
             self.backBtnView.alpha = 0.0
         })
     }
 
     @objc func keyboardWillHide(noti: NSNotification) {
-        UIView.animate(withDuration: 1.0, animations: { _ in
+        UIView.animate(withDuration: 1.0, animations: {
             self.backBtnView.alpha = 1.0
         })
     }

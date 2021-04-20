@@ -16,7 +16,7 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         self.custom = true
         currentLecture.color = nil
         if let timetable = STTimetableManager.sharedInstance.currentTimetable {
-            var colorList = STColorManager.sharedInstance.colorList.colorList
+            let colorList = STColorManager.sharedInstance.colorList.colorList
             var indexList = (0..<colorList.count).sorted()
             for lecture in timetable.lectureList {
                 indexList = indexList.filter({colorList[$0] != lecture.color})
@@ -107,11 +107,11 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
     @IBAction func saveButtonClicked(_ sender: UIBarButtonItem) {
         self.view.endEditing(true)
         let loadingView = STAlertView.showLoading(title: "저장중...")
-        STTimetableManager.sharedInstance.addCustomLecture(currentLecture, object: self, done:{ _ in
-            loadingView.dismiss(animated: true, completion: { _ in
+        STTimetableManager.sharedInstance.addCustomLecture(currentLecture, object: self, done:{
+            loadingView.dismiss(animated: true, completion: {
                 self.dismiss(animated: true)
             })
-        }, failure: { _ in
+        }, failure: {
             loadingView.dismiss(animated: true)
         })
     }
