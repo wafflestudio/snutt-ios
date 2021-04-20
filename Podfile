@@ -3,7 +3,7 @@ use_frameworks!
 
 target 'SNUTT' do
   pod 'EGOTableViewPullRefreshAndLoadMore'
-  pod 'Alamofire'
+  pod 'Alamofire', '~> 4.9.1'
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'SwiftyJSON'
@@ -35,7 +35,6 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['SWIFT_VERSION'] = '4.2'
       config.build_settings["ONLY_ACTIVE_ARCH"] = "YES"
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
     end
   end
 end
