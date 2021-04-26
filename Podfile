@@ -14,7 +14,7 @@ target 'SNUTT' do
   pod 'FBSDKCoreKit'
   pod 'FBSDKLoginKit'
   pod 'FBSDKShareKit'
-  pod 'Carte'
+  pod 'Carte', '~> 1.0.2'
   pod 'SwiftyUserDefaults', :git => 'https://github.com/Rajin9601/SwiftyUserDefaults.git'
   pod 'TTRangeSlider'
   pod 'Firebase'
@@ -35,6 +35,7 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['SWIFT_VERSION'] = '4.2'
       config.build_settings["ONLY_ACTIVE_ARCH"] = "YES"
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
     end
   end
 end

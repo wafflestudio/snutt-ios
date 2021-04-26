@@ -2,7 +2,7 @@ PODS:
   - ActionSheetPicker-3.0 (2.7.1)
   - Alamofire (4.9.1)
   - B68UIFloatLabelTextField (0.1.2)
-  - Carte (2.2.1)
+  - Carte (1.0.2)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
@@ -26,52 +26,71 @@ PODS:
     - FBSDKShareKit/Share (= 9.2.0)
   - FBSDKShareKit/Share (9.2.0):
     - FBSDKCoreKit (~> 9.2.0)
-  - Firebase (7.10.0):
-    - Firebase/Core (= 7.10.0)
-  - Firebase/Core (7.10.0):
+  - Firebase (7.11.0):
+    - Firebase/Core (= 7.11.0)
+  - Firebase/Core (7.11.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (~> 7.10.0)
-  - Firebase/CoreOnly (7.10.0):
-    - FirebaseCore (= 7.10.0)
-  - Firebase/Messaging (7.10.0):
+    - FirebaseAnalytics (~> 7.11.0)
+  - Firebase/CoreOnly (7.11.0):
+    - FirebaseCore (= 7.11.0)
+  - Firebase/Messaging (7.11.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (~> 7.10.0)
-  - FirebaseAnalytics (7.10.0):
+    - FirebaseMessaging (~> 7.11.0)
+  - FirebaseAnalytics (7.11.0):
+    - FirebaseAnalytics/AdIdSupport (= 7.11.0)
     - FirebaseCore (~> 7.0)
     - FirebaseInstallations (~> 7.0)
-    - GoogleAppMeasurement (= 7.10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/MethodSwizzler (~> 7.0)
     - GoogleUtilities/Network (~> 7.0)
     - "GoogleUtilities/NSData+zlib (~> 7.0)"
     - nanopb (~> 2.30908.0)
-  - FirebaseCore (7.10.0):
+  - FirebaseAnalytics/AdIdSupport (7.11.0):
+    - FirebaseAnalytics/Base (= 7.11.0)
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleAppMeasurement/AdIdSupport (= 7.11.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30908.0)
+  - FirebaseAnalytics/Base (7.11.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30908.0)
+  - FirebaseCore (7.11.0):
     - FirebaseCoreDiagnostics (~> 7.4)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
-  - FirebaseCoreDiagnostics (7.10.0):
+  - FirebaseCoreDiagnostics (7.11.0):
     - GoogleDataTransport (~> 8.4)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
     - nanopb (~> 2.30908.0)
-  - FirebaseInstallations (7.10.0):
+  - FirebaseInstallations (7.11.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
     - PromisesObjC (~> 1.2)
-  - FirebaseInstanceID (7.10.0):
+  - FirebaseInstanceID (7.11.0):
     - FirebaseCore (~> 7.0)
     - FirebaseInstallations (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
-  - FirebaseMessaging (7.10.0):
+  - FirebaseMessaging (7.11.0):
     - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
     - FirebaseInstanceID (~> 7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Reachability (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
-  - GoogleAppMeasurement (7.10.0):
+  - GoogleAppMeasurement/AdIdSupport (7.11.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/MethodSwizzler (~> 7.0)
     - GoogleUtilities/Network (~> 7.0)
@@ -117,7 +136,7 @@ DEPENDENCIES:
   - ActionSheetPicker-3.0
   - Alamofire (~> 4.9.1)
   - B68UIFloatLabelTextField (from `https://github.com/JSKeum/B68FloatingLabelTextField.git`)
-  - Carte
+  - Carte (~> 1.0.2)
   - ChameleonFramework/Swift (from `https://github.com/JSKeum/Chameleon.git`)
   - Color-Picker-for-iOS (~> 2.0)
   - Crashlytics
@@ -195,7 +214,7 @@ SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 36da254b97a09ff89679ecb8b8510bd3e5bdc773
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   B68UIFloatLabelTextField: 337894ff837df84e19636c99f3f5f88c4fad60d7
-  Carte: 6bcff4eaa894ff5b979d646de833fec96e04a38c
+  Carte: c1980ae6a0218fbe9cd01a9f1799d260650ed429
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Color-Picker-for-iOS: 1fe5c2bdad770aff88150393bb920e6718d03535
   Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
@@ -205,14 +224,14 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: dace5abafc2fd9272733e6d027bcf18102712117
   FBSDKLoginKit: 43f377b451d391f5bc9dd774f51a391db1072029
   FBSDKShareKit: 1210ece9e8f516ef0bb40ac329929a2874aef274
-  Firebase: fffddd0bab8677d07376538365faa93ff3889b39
-  FirebaseAnalytics: 4641d7ae4220174f6ca5626163ffc5de2e90391e
-  FirebaseCore: ec566d917b2195fc2610aeb148dae99f57a788f9
-  FirebaseCoreDiagnostics: 5662a3823ffcc0acbaa9a21ba5ed302fac634705
-  FirebaseInstallations: bf2ec8dbf36ff4c91af6b9a003d15855757680c1
-  FirebaseInstanceID: 5ad92c898e1328b66e8dd58811964d6fe4d334c3
-  FirebaseMessaging: 76b3058cef7f339cf10db196e03bbbb2165fb5d7
-  GoogleAppMeasurement: 1c863b1161fc3c8cf614a7460d1be6a7c262aab3
+  Firebase: c121feb35e4126c0b355e3313fa9b487d47319fd
+  FirebaseAnalytics: cd3bd84d722a24a8923918af8af8e5236f615d77
+  FirebaseCore: 907447d8917a4d3eb0cce2829c5a0ad21d90b432
+  FirebaseCoreDiagnostics: 68ad972f99206cef818230f3f3179d52ccfb7f8c
+  FirebaseInstallations: a58d4f72ec5861840b84df489f2668d970df558a
+  FirebaseInstanceID: ad5135045a498d7775903efd39762d2cdfa1be27
+  FirebaseMessaging: 163435fb6db065e3b6228f1e577b10ed2cc506d2
+  GoogleAppMeasurement: fd19169c3034975cb934e865e5667bfdce59df7f
   GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
   GoogleUtilities: e1d9ed4e544fc32a93e00e721400cbc3f377200d
   MarqueeLabel: 2daf039bf916937c8a4c9adfc13577cc5e51b4ce
@@ -224,6 +243,6 @@ SPEC CHECKSUMS:
   TTRangeSlider: 8cf72eca457c3b700c92eb0074be908c986e25ec
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: ef5a60f5200df650b59d266cc7f42fe7ff76d24a
+PODFILE CHECKSUM: ece3d00e12c134243ca2fcb88b8109a47c98bdb2
 
 COCOAPODS: 1.10.1
