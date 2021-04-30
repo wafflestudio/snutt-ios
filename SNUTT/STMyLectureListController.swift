@@ -24,8 +24,8 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         self.tableView.separatorStyle = .none
         self.tableView.rowHeight = 74.0
         
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STMyLectureListController.reloadData(_:)), event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STMyLectureListController.reloadData(_:)), event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(reloadData(_:)), event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(reloadData(_:)), event: STEvent.CurrentTimetableSwitched, object: nil)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -42,7 +42,10 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         if((notification.object as AnyObject) === self) {
             return //This is because of delete animation.
         }
+        
+        DispatchQueue.main.async {
         self.tableView.reloadData()
+        }
     }
     
     // MARK: - Table view data source
