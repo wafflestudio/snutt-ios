@@ -80,7 +80,7 @@ class STNetworking {
     
     static func updateTimetable(_ id: String, title: String, done: (()->())?) {
         let request = Alamofire.request(STTimetableRouter.updateTimetable(id: id, title: title))
-        request.responseWithDone({ _ in
+        request.responseWithDone({ _,_  in
                 done?()
             }, failure: nil
         )
@@ -317,11 +317,28 @@ class STNetworking {
     
     static func addDevice(_ deviceId : String) {
         let request = Alamofire.request(STUserRouter.addDevice(id: deviceId))
-        if let token = InstanceID.instanceID().token(), let userId = STDefaults[.userId] {
-            let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
-            let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
-            STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
+        
+        if let userId = STDefaults[.userId] {
+            Messaging.messaging().token { token, error in
+                if let error = error {
+                   print("Error fetching FCM registration token: \(error)")
+                 
+                }
+                
+                if let token = token {
+                    let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
+                    let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+                    STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { $0 != fcmInfo }))
+                }
+                // Check for error. Otherwise do what you will with token here
+            }
         }
+        
+//        if let token = InstanceID.instanceID().token(), let userId = STDefaults[.userId] {
+//            let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
+//            let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+//            STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { $0 != fcmInfo }))
+//        }
 
         request.responseWithDone({ statusCode, json in
             STDefaults[.registeredFCMToken] = deviceId
@@ -353,7 +370,7 @@ class STNetworking {
 
     static func sendFeedback(_ email: String?, message: String, done: (()->())?, failure: (()->())?) {
         let request = Alamofire.request(STEtcRouter.feedback(email: email, message: message))
-        request.responseWithDone({ _ in
+        request.responseWithDone({ _,_  in
                 done?()
         }, failure: { _ in
             failure?()
@@ -395,8 +412,8 @@ class STNetworking {
 
 
     static func showNetworkError() {
-        let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: nil))
         UIApplication.shared.keyWindow!.rootViewController!.present(alert, animated: true, completion: nil)
     }
 

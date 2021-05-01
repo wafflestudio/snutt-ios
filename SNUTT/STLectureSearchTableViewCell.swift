@@ -85,7 +85,7 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         tagLabel.trailingBuffer = 10.0
         titleLabel.animationDelay = 0.3
         tagLabel.animationDelay = 0.3
-        addButton.buttonPressAction = { _ in
+        addButton.buttonPressAction = {
             STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
             self.tableView.deselectRow(at: self.tableView.indexPath(for: self)!, animated: true)
             let index = self.indexInTimetable()

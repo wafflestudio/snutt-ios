@@ -43,13 +43,13 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
             textField.delegate = self
         }
 
-        registerButton.buttonPressAction = { _ in
+        registerButton.buttonPressAction = { 
             self.registerButtonClicked()
         }
-        facebookButton.buttonPressAction = { _ in
+        facebookButton.buttonPressAction = {
             self.fbButtonClicked()
         }
-        backBtnView.buttonPressAction = { _ in
+        backBtnView.buttonPressAction = {
             self.dismiss(animated: true, completion: nil)
         }
 
@@ -57,8 +57,8 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
         termView.addGestureRecognizer(termTapRecognizer)
 
         let center = NotificationCenter.default
-        center.addObserver(self, selector: #selector(self.keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        center.addObserver(self, selector: #selector(self.keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        center.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         if (UIScreen.main.bounds.height > 700) {
             layoutConstraint1.constant = 104
@@ -76,14 +76,14 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 
-    func keyboardWillShow(noti : NSNotification) {
-        UIView.animate(withDuration: 1.0, animations: { _ in
+    @objc func keyboardWillShow(noti : NSNotification) {
+        UIView.animate(withDuration: 1.0, animations: {
             self.backBtnView.alpha = 0.0
         })
     }
 
-    func keyboardWillHide(noti: NSNotification) {
-        UIView.animate(withDuration: 1.0, animations: { _ in
+    @objc func keyboardWillHide(noti: NSNotification) {
+        UIView.animate(withDuration: 1.0, animations: {
             self.backBtnView.alpha = 1.0
         })
     }
@@ -151,12 +151,12 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
                 Crashlytics.sharedInstance().setUserIdentifier(userId)
             #endif
             STUser.loadMainPage()
-        }, failure: { _ in
+        }, failure: { 
             //STAlertView.showAlert(title: "회원가입 실패", message: "회원가입에 실패하였습니다.")
         })
     }
 
-    func termLabelClicked() {
+    @objc func termLabelClicked() {
         self.view.endEditing(true)
         let url = STConfig.sharedInstance.baseURL + "/terms_of_service"
         let svc = SFSafariViewController(url: URL(string: url)!)

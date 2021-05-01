@@ -93,7 +93,7 @@ class STTimetableSettingViewController: UITableViewController {
     }
     */
     
-    override func willMove(toParentViewController parent: UIViewController?) {
+    override func willMove(toParent parent: UIViewController?) {
         if parent == nil { // check if it is popping from the navigation stack
             saveSetting()
             STEventCenter.sharedInstance.postNotification(event: .SettingChanged, object: self)

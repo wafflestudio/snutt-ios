@@ -31,8 +31,8 @@ class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         switch component {
         case 0:
-            let attribute = [NSForegroundColorAttributeName: colorList[row].bgColor.lighten(byPercentage: 0.4)]
-            return NSAttributedString(string: nameList[row], attributes: attribute)
+            let attribute = [convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): colorList[row].bgColor.lighten(byPercentage: 0.4)]
+            return NSAttributedString(string: nameList[row], attributes: convertToOptionalNSAttributedStringKeyDictionary(attribute))
         default: return nil
         }
     }
@@ -102,4 +102,15 @@ class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
         
         actionSheetPicker.show()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

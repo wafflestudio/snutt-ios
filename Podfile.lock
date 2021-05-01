@@ -1,76 +1,143 @@
 PODS:
-  - ActionSheetPicker-3.0 (2.2.0)
-  - Alamofire (4.4.0)
+  - ActionSheetPicker-3.0 (2.7.1)
+  - Alamofire (4.9.1)
   - B68UIFloatLabelTextField (0.1.2)
-  - Bolts (1.8.4):
-    - Bolts/AppLinks (= 1.8.4)
-    - Bolts/Tasks (= 1.8.4)
-  - Bolts/AppLinks (1.8.4):
-    - Bolts/Tasks
-  - Bolts/Tasks (1.8.4)
   - Carte (1.0.2)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
   - Color-Picker-for-iOS (2.0.2)
-  - Crashlytics (3.8.4):
-    - Fabric (~> 1.6.3)
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
   - DZNEmptyDataSet (1.8)
   - EGOTableViewPullRefreshAndLoadMore (1.0.4)
-  - Fabric (1.6.11)
-  - FBSDKCoreKit (4.20.2):
-    - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.20.2):
-    - FBSDKCoreKit
-  - FBSDKShareKit (4.20.2):
-    - FBSDKCoreKit
-  - Firebase (4.3.0):
-    - Firebase/Core (= 4.3.0)
-  - Firebase/Core (4.3.0):
-    - FirebaseAnalytics (= 4.0.4)
-    - FirebaseCore (= 4.0.8)
-  - Firebase/Messaging (4.3.0):
-    - Firebase/Core
-    - FirebaseMessaging (= 2.0.4)
-  - FirebaseAnalytics (4.0.4):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - nanopb (~> 0.3)
-  - FirebaseCore (4.0.8):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - nanopb (~> 0.3)
-  - FirebaseInstanceID (2.0.4)
-  - FirebaseMessaging (2.0.4):
-    - FirebaseAnalytics (~> 4.0)
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/Logger (~> 2.1)
-    - Protobuf (~> 3.1)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/Logger (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - MarqueeLabel/Swift (3.0.1)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
-  - Protobuf (3.4.0)
-  - SwiftyJSON (3.1.4)
+  - Fabric (1.10.2)
+  - FBSDKCoreKit (9.2.0):
+    - FBSDKCoreKit/Basics (= 9.2.0)
+    - FBSDKCoreKit/Core (= 9.2.0)
+  - FBSDKCoreKit/Basics (9.2.0)
+  - FBSDKCoreKit/Core (9.2.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (9.2.0):
+    - FBSDKLoginKit/Login (= 9.2.0)
+  - FBSDKLoginKit/Login (9.2.0):
+    - FBSDKCoreKit (~> 9.2.0)
+  - FBSDKShareKit (9.2.0):
+    - FBSDKShareKit/Share (= 9.2.0)
+  - FBSDKShareKit/Share (9.2.0):
+    - FBSDKCoreKit (~> 9.2.0)
+  - Firebase (7.11.0):
+    - Firebase/Core (= 7.11.0)
+  - Firebase/Core (7.11.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (~> 7.11.0)
+  - Firebase/CoreOnly (7.11.0):
+    - FirebaseCore (= 7.11.0)
+  - Firebase/Messaging (7.11.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 7.11.0)
+  - FirebaseAnalytics (7.11.0):
+    - FirebaseAnalytics/AdIdSupport (= 7.11.0)
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30908.0)
+  - FirebaseAnalytics/AdIdSupport (7.11.0):
+    - FirebaseAnalytics/Base (= 7.11.0)
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleAppMeasurement/AdIdSupport (= 7.11.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30908.0)
+  - FirebaseAnalytics/Base (7.11.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30908.0)
+  - FirebaseCore (7.11.0):
+    - FirebaseCoreDiagnostics (~> 7.4)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/Logger (~> 7.0)
+  - FirebaseCoreDiagnostics (7.11.0):
+    - GoogleDataTransport (~> 8.4)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/Logger (~> 7.0)
+    - nanopb (~> 2.30908.0)
+  - FirebaseInstallations (7.11.0):
+    - FirebaseCore (~> 7.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/UserDefaults (~> 7.0)
+    - PromisesObjC (~> 1.2)
+  - FirebaseInstanceID (7.11.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/UserDefaults (~> 7.0)
+  - FirebaseMessaging (7.11.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - FirebaseInstanceID (~> 7.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/Reachability (~> 7.0)
+    - GoogleUtilities/UserDefaults (~> 7.0)
+  - GoogleAppMeasurement/AdIdSupport (7.11.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30908.0)
+  - GoogleDataTransport (8.4.0):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/AppDelegateSwizzler (7.3.1):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.3.1):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (7.3.1):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (7.3.1):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (7.3.1):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.3.1)"
+  - GoogleUtilities/Reachability (7.3.1):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.3.1):
+    - GoogleUtilities/Logger
+  - MarqueeLabel/Swift (3.2.1)
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
+  - PromisesObjC (1.2.12)
+  - SwiftyJSON (5.0.1)
   - SwiftyUserDefaults (3.0.1)
-  - TPKeyboardAvoiding (1.3.1)
-  - TTRangeSlider (1.0.5)
-  - UITextView+Placeholder (1.2.0)
+  - TPKeyboardAvoiding (1.3.5)
+  - TTRangeSlider (1.0.7)
+  - "UITextView+Placeholder (1.4.0)"
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
-  - Alamofire
-  - B68UIFloatLabelTextField (from `https://github.com/Rajin9601/B68FloatingLabelTextField.git`, branch `Swift_3.0`)
-  - Carte
-  - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
+  - Alamofire (~> 4.9.1)
+  - B68UIFloatLabelTextField (from `https://github.com/JSKeum/B68FloatingLabelTextField.git`)
+  - Carte (~> 1.0.2)
+  - ChameleonFramework/Swift (from `https://github.com/JSKeum/Chameleon.git`)
   - Color-Picker-for-iOS (~> 2.0)
   - Crashlytics
   - DZNEmptyDataSet (from `https://github.com/Rajin9601/DZNEmptyDataSet.git`, branch `fix-hitTest`)
@@ -86,14 +153,43 @@ DEPENDENCIES:
   - SwiftyUserDefaults (from `https://github.com/Rajin9601/SwiftyUserDefaults.git`)
   - TPKeyboardAvoiding
   - TTRangeSlider
-  - UITextView+Placeholder (~> 1.2)
+  - "UITextView+Placeholder (~> 1.2)"
+
+SPEC REPOS:
+  trunk:
+    - ActionSheetPicker-3.0
+    - Alamofire
+    - Carte
+    - Color-Picker-for-iOS
+    - Crashlytics
+    - EGOTableViewPullRefreshAndLoadMore
+    - Fabric
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FBSDKShareKit
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseInstallations
+    - FirebaseInstanceID
+    - FirebaseMessaging
+    - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleUtilities
+    - MarqueeLabel
+    - nanopb
+    - PromisesObjC
+    - SwiftyJSON
+    - TPKeyboardAvoiding
+    - TTRangeSlider
+    - "UITextView+Placeholder"
 
 EXTERNAL SOURCES:
   B68UIFloatLabelTextField:
-    :branch: Swift_3.0
-    :git: https://github.com/Rajin9601/B68FloatingLabelTextField.git
+    :git: https://github.com/JSKeum/B68FloatingLabelTextField.git
   ChameleonFramework:
-    :git: https://github.com/ViccAlexander/Chameleon.git
+    :git: https://github.com/JSKeum/Chameleon.git
   DZNEmptyDataSet:
     :branch: fix-hitTest
     :git: https://github.com/Rajin9601/DZNEmptyDataSet.git
@@ -102,11 +198,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   B68UIFloatLabelTextField:
-    :commit: e04611ad6248e30d1c4c30b9d56b312ed9a471a1
-    :git: https://github.com/Rajin9601/B68FloatingLabelTextField.git
+    :commit: 0ebc6ce20a395f6494b881aaeaf3f32e5a18aa65
+    :git: https://github.com/JSKeum/B68FloatingLabelTextField.git
   ChameleonFramework:
-    :commit: acc480fbe023c6e5fe40f68593f4a70a8c4c7ad5
-    :git: https://github.com/ViccAlexander/Chameleon.git
+    :commit: e92807fa7e51ea70d58ec0290c8ba55e20b99fc2
+    :git: https://github.com/JSKeum/Chameleon.git
   DZNEmptyDataSet:
     :commit: db6e1747b383fbbaad429a40f5f5700dd86f8e4c
     :git: https://github.com/Rajin9601/DZNEmptyDataSet.git
@@ -115,35 +211,38 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Rajin9601/SwiftyUserDefaults.git
 
 SPEC CHECKSUMS:
-  ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  ActionSheetPicker-3.0: 36da254b97a09ff89679ecb8b8510bd3e5bdc773
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   B68UIFloatLabelTextField: 337894ff837df84e19636c99f3f5f88c4fad60d7
-  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Carte: c1980ae6a0218fbe9cd01a9f1799d260650ed429
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
-  Color-Picker-for-iOS: 4980589b3e3cfe7198f227dd50be9adb02d8bc0b
-  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
+  Color-Picker-for-iOS: 1fe5c2bdad770aff88150393bb920e6718d03535
+  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   DZNEmptyDataSet: d2351b2e8daefa40433ef292e246e21f6be31a7b
   EGOTableViewPullRefreshAndLoadMore: 118a0824590db042d42e08fcc442b93cebf15e73
-  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  FBSDKCoreKit: 82eac696eb6157da5f4266c3a241f00e9bd72471
-  FBSDKLoginKit: 2211bede07c83391349eacc1fd86cf6d9289ce38
-  FBSDKShareKit: ca9b22264ea49a896dafb2467c1a4f72aa41996f
-  Firebase: 83283761a1ef6dc9846e03d08059f51421afbd65
-  FirebaseAnalytics: 722b53c7b32bfc7806b06e0093a2f5180d4f2c5a
-  FirebaseCore: 69b1a5ac5f857ba6d5fd9d5fe794f4786dd5e579
-  FirebaseInstanceID: 70c2b877e9338971b2429ea5a4293df6961aa44e
-  FirebaseMessaging: 3dd86bfda2acb680b05c97f3f8ac566e9bb87b2a
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  MarqueeLabel: 80ba85d2b76a9f5fa6c13de337db80bcd94feb1d
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
+  FBSDKCoreKit: dace5abafc2fd9272733e6d027bcf18102712117
+  FBSDKLoginKit: 43f377b451d391f5bc9dd774f51a391db1072029
+  FBSDKShareKit: 1210ece9e8f516ef0bb40ac329929a2874aef274
+  Firebase: c121feb35e4126c0b355e3313fa9b487d47319fd
+  FirebaseAnalytics: cd3bd84d722a24a8923918af8af8e5236f615d77
+  FirebaseCore: 907447d8917a4d3eb0cce2829c5a0ad21d90b432
+  FirebaseCoreDiagnostics: 68ad972f99206cef818230f3f3179d52ccfb7f8c
+  FirebaseInstallations: a58d4f72ec5861840b84df489f2668d970df558a
+  FirebaseInstanceID: ad5135045a498d7775903efd39762d2cdfa1be27
+  FirebaseMessaging: 163435fb6db065e3b6228f1e577b10ed2cc506d2
+  GoogleAppMeasurement: fd19169c3034975cb934e865e5667bfdce59df7f
+  GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
+  GoogleUtilities: e1d9ed4e544fc32a93e00e721400cbc3f377200d
+  MarqueeLabel: 2daf039bf916937c8a4c9adfc13577cc5e51b4ce
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   SwiftyUserDefaults: 38267a30d58b7c8570995cd5defd354e43f056c6
-  TPKeyboardAvoiding: 0d6af20e95e2850f4c621841225b59ec7d8dd852
-  TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
-  UITextView+Placeholder: 77680995fcdd07c3f52ec92fe1150874a2ac89ff
+  TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
+  TTRangeSlider: 8cf72eca457c3b700c92eb0074be908c986e25ec
+  "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: ad63f910b007b47ac347c9c6979599f1e2a74d04
+PODFILE CHECKSUM: ece3d00e12c134243ca2fcb88b8109a47c98bdb2
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.10.1

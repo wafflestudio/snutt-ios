@@ -71,7 +71,7 @@ class STAccountSettingViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    func userUpdated() {
+    @objc func userUpdated() {
         isNetworking = false
         refreshCellList()
         self.tableView.reloadData()
@@ -154,18 +154,19 @@ class STAccountSettingViewController: UITableViewController {
                     STUser.getUser()
                     self.refreshCellList()
                     self.tableView.reloadSections(IndexSet(integer: self.fbSection), with: .automatic)
-                    }, failure: { _ in
+                    }, failure: {
+                        STAlertView.showAlert(title: "페북 연동 실패", message: "페이스북 연동에 실패했습니다.")
                         return
                 })
             }
             
-            if let accessToken = FBSDKAccessToken.current(),
-                let id = accessToken.userID,
-                let token = accessToken.tokenString {
+            if let accessToken = AccessToken.current {
+                let id = accessToken.userID
+                let token = accessToken.tokenString
                 registerFB(id, token)
             } else {
-                let fbLoginManager = FBSDKLoginManager()
-                fbLoginManager.logIn(withReadPermissions: ["public_profile"], from: self, handler:{result, error in
+                let fbLoginManager = LoginManager()
+                fbLoginManager.logIn(permissions: ["public_profile"], from: self, handler:{result, error in
                     if error != nil {
                         STAlertView.showAlert(title: "페북 연동 실패", message: "페이스북 연동에 실패했습니다.")
                         return
@@ -176,8 +177,8 @@ class STAccountSettingViewController: UITableViewController {
                     }
                     if result.isCancelled {
                         STAlertView.showAlert(title: "페북 연동 실패", message: "페이스북 연동에 실패했습니다.")
-                    } else if let id = result.token.userID,
-                        let token = result.token.tokenString {
+                    } else if let id = result.token?.userID,
+                              let token = result.token?.tokenString {
                         registerFB(id, token)
                     } else {
                         STAlertView.showAlert(title: "페북 연동 실패", message: "페이스북 연동에 실패했습니다.")
@@ -236,7 +237,7 @@ class STAccountSettingViewController: UITableViewController {
                         return
                     } else if (!STUtil.validatePassword(newPass)) {
                         var message : String = ""
-                        if (newPass.characters.count > 20  || newPass.characters.count < 6) {
+                        if (newPass.count > 20  || newPass.count < 6) {
                             message = "비밀번호는 6자 이상, 20자 이하여야 합니다."
                         } else {
                             message = "비밀번호는 최소 숫자 1개와 영문자 1개를 포함해야 합니다."
@@ -245,7 +246,7 @@ class STAccountSettingViewController: UITableViewController {
                         return
                     }
                     
-                    STNetworking.changePassword(curPass, newPassword: newPass, done: { _ in
+                    STNetworking.changePassword(curPass, newPassword: newPass, done: { 
                         return
                         }, failure: { errMessage in
                             if let err = errMessage {
@@ -261,11 +262,11 @@ class STAccountSettingViewController: UITableViewController {
                 return
             }
             let detachAction = UIAlertAction(title: "페이스북 연동 끊기", style: .destructive, handler: { _ in
-                STNetworking.detachFB({ _ in
+                STNetworking.detachFB({ 
                     STUser.currentUser?.fbName = nil
                     self.refreshCellList()
                     self.tableView.reloadSections(IndexSet(integer: self.fbSection), with: .automatic)
-                    }, failure: { _ in
+                    }, failure: { 
                         return
                 })
             })
@@ -274,7 +275,7 @@ class STAccountSettingViewController: UITableViewController {
             return
         case .unregister:
             let unregisterAction = UIAlertAction(title: "회원탈퇴", style: .destructive, handler: { _ in
-                STNetworking.unregister({ _ in
+                STNetworking.unregister({ 
                     return
                 })
             })

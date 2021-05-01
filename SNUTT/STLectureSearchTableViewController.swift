@@ -45,9 +45,9 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        STEventCenter.sharedInstance.addObserver(self, selector: "timetableSwitched", event: STEvent.CurrentTimetableSwitched, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadTimetable", event: STEvent.CurrentTimetableChanged, object: nil)
-        STEventCenter.sharedInstance.addObserver(self, selector: "reloadTempLecture", event: STEvent.CurrentTemporaryLectureChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.timetableSwitched), event: STEvent.CurrentTimetableSwitched, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.reloadTimetable), event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.reloadTempLecture), event: STEvent.CurrentTemporaryLectureChanged, object: nil)
         
         tableView.emptyDataSetSource = self;
         tableView.emptyDataSetDelegate = self;
@@ -71,7 +71,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableView.showTemporary = true
         settingChanged()
-        STEventCenter.sharedInstance.addObserver(self, selector: "settingChanged", event: STEvent.SettingChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -91,7 +91,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         super.viewWillDisappear(animated)
     }
 
-    func settingChanged() {
+    @objc func settingChanged() {
         if STDefaults[.autoFit] {
             timetableView.shouldAutofit = true
         } else {
@@ -175,7 +175,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         }
     }
     
-    func timetableSwitched() {
+    @objc func timetableSwitched() {
         state = .empty
         searchBar.text = ""
         FilteredList = []
@@ -191,11 +191,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         tagCollectionView.reloadData()
     }
     
-    func reloadTimetable() {
+    @objc func reloadTimetable() {
         self.timetableView.reloadTimetable()
     }
     
-    func reloadTempLecture() {
+    @objc func reloadTempLecture() {
         self.timetableView.reloadTempLecture()
     }
     
@@ -283,11 +283,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         if tagCollectionView.tagList.count == 1 {
             let indexPath = IndexPath(row: 0, section: 0)
             tagCollectionView.reloadData()
-            tagCollectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.right, animated: false)
+            tagCollectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.right, animated: false)
         } else {
             let indexPath = IndexPath(row: tagCollectionView.tagList.count - 1, section: 0)
             tagCollectionView.insertItems(at: [indexPath])
-            tagCollectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.right, animated: true)
+            tagCollectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition.right, animated: true)
         }
         tagCollectionView.setHidden()
         tagTableView.hide()
@@ -349,7 +349,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
 
 
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         if case let .editingQuery(query, tagList, lectureList) = state {
             searchBar.resignFirstResponder()
             searchBar.isEditingTag = false

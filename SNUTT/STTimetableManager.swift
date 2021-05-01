@@ -57,7 +57,7 @@ class STTimetableManager : NSObject {
         }
     }
     
-    func saveData() {
+    @objc func saveData() {
         let dict = currentTimetable?.toDictionary()
         STDefaults[.currentTimetable] = dict as? NSDictionary
         STDefaults.synchronize()
