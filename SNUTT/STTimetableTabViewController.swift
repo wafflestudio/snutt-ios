@@ -20,7 +20,11 @@ class STTimetableTabViewController: UIViewController {
     
     var state : State = .timetable
     var isInAnimation : Bool = false
-
+    
+    @IBAction func captureTimeTable(_ sender: UIBarButtonItem) {
+        showCaptureAlert()
+    }
+    
     @IBOutlet weak var containerView: UIView!
     
     override func viewDidLoad() {
@@ -205,6 +209,50 @@ class STTimetableTabViewController: UIViewController {
                     cell?.setColor(color: color)
                 }
             }, origin: self)
+    }
+}
+
+extension STTimetableTabViewController {
+    func showCaptureAlert() {
+        let actions = [UIAlertAction(title: "취소", style: .cancel, handler: nil),
+                       UIAlertAction(title: "확인", style: .default, handler: { action in
+                        self.captureTimetableView(of: self.view)
+        })]
+        
+        STAlertView.showAlert(title: "시간표를 이미지로 저장하시겠습니까?", message: "", actions: actions)
+    }
+    
+    func captureTimetableView(of view: UIView) {
+        UIGraphicsBeginImageContextWithOptions(
+            CGSize(
+                width: view.bounds.width,
+                height: view.bounds.height
+            ),
+            false,
+            2
+        )
+
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let screenshot = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        UIView.animate(withDuration: 0.3, animations: { self.view.alpha = 0.4 }) {_ in
+            self.view.alpha = 1
+        }
+        
+        UIImageWriteToSavedPhotosAlbum (
+            screenshot,
+            self,
+            #selector(imageSaved),
+            nil
+        )
+    }
+            
+    @objc func imageSaved(_ image: UIImage, error: Error?, context: UnsafeMutableRawPointer) {
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
     }
 }
 
