@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Fabric.with([Crashlytics.self])
         #endif
 
-        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 
         let path = Bundle.main.path(forResource: "config", ofType: "plist")!
         let configAllDict = NSDictionary(contentsOfFile: path)!
@@ -94,11 +94,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         application.registerForRemoteNotifications()
-//
-//        if (InstanceID.instanceID().token() != nil) {
-//            STUser.updateDeviceIdIfNeeded()
-//            connectToFcm()
-//        }
+
+        if (InstanceID.instanceID().token() != nil) {
+            STUser.updateDeviceIdIfNeeded()
+            connectToFcm()
+        }
 
         // For STColorList UserDefaults
         NSKeyedArchiver.setClassName("STColorList", for: STColorList.self)
@@ -160,18 +160,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func connectToFcm() {
-//        Messaging.messaging(). { (error) in
-//            #if DEBUG
-//            if (error != nil) {
-//                print("Unable to connect with FCM. \(error)")
-//            } else {
-//                print("Connected to FCM.")
-//            }
-//            #endif
-//        }
+        Messaging.messaging().connect { (error) in
+            #if DEBUG
+            if (error != nil) {
+                print("Unable to connect with FCM. \(error)")
+            } else {
+                print("Connected to FCM.")
+            }
+            #endif
+        }
     }
     func applicationDidEnterBackground(_ application: UIApplication) {
-//        Messaging.messaging().disconnect()
+        Messaging.messaging().disconnect()
         print("Disconnected from FCM.")
     }
 
@@ -188,7 +188,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        let fbHandled = ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        let fbHandled = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
         return fbHandled
     }
 }
@@ -205,14 +205,10 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
 
 extension AppDelegate : MessagingDelegate {
     // Receive data message on iOS 10 devices.
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+    func applicationReceivedRemoteMessage(remoteMessage: MessagingRemoteMessage) {
         #if DEBUG
-        print("%@", messaging)
+        print("%@", remoteMessage.appData)
         #endif
-        if (fcmToken != nil) {
-            STUser.updateDeviceIdIfNeeded()
-        }
-
         receivedNotification()
     }
 }

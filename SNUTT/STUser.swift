@@ -48,42 +48,20 @@ class STUser {
     
     static func logOut() {
         var fcmInfos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
-        
-        if let userId = STDefaults[.userId] {
-            Messaging.messaging().token { token, error in
-                if let error = error {
-                   print("Error fetching FCM registration token: \(error)")
-                 
-                }
-                
-                if let token = token {
-                    let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
-                    fcmInfos.append(fcmInfo)
-                    STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: fcmInfos)
-                    STNetworking.logOut(userId: userId, fcmToken: token, done: {
-                        let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
-                        STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
-                    }, failure: nil)
-                    loadLoginPage()
-                }
-            }
+        if let token = InstanceID.instanceID().token(), let userId = STDefaults[.userId] {
+            let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
+            fcmInfos.append(fcmInfo)
+            STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: fcmInfos)
+            STNetworking.logOut(userId: userId, fcmToken: token, done: {
+                let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+                STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
+            }, failure: nil)
+            loadLoginPage()
         } else {
-        loadLoginPage()
+            loadLoginPage()
         }
     }
-        
-//        if let token = InstanceID.instanceID().token(), let userId = STDefaults[.userId] {
-//            let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
-//            fcmInfos.append(fcmInfo)
-//            STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: fcmInfos)
-//            STNetworking.logOut(userId: userId, fcmToken: token, done: {
-//                let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
-//                STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
-//            }, failure: nil)
-//            loadLoginPage()
-//        } else {
-//            loadLoginPage()
-//        }
+    
     static func loadLoginPage() {
         STUser.currentUser = nil
         STDefaults[.token] = nil
@@ -98,17 +76,10 @@ class STUser {
     }
 
     static func loadMainPage() {
-        let openController : () -> () = {
-            Messaging.messaging().token { token, error in
-                if let error = error {
-                   print("Error fetching FCM registration token: \(error)")
-                 
-                }
-                if let token = token {
-                    STNetworking.addDevice(token)
-                }
+        let openController : () -> () = { 
+            if let deviceId = InstanceID.instanceID().token() {
+                STNetworking.addDevice(deviceId)
             }
-            
             let appDelegate = UIApplication.shared.delegate!
             let window = appDelegate.window!!
             let mainController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()
@@ -132,17 +103,20 @@ class STUser {
 
         let registerFB : (String, String) -> () = { id, token in
             STNetworking.registerFB(id, token: token, done: done, failure: { 
-                STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
+
             })
         }
 
-        if let accessToken = AccessToken.current {
-            let id = accessToken.userID
-            let token = accessToken.tokenString
-            registerFB(id, token)
+        if let accessToken = FBSDKAccessToken.current() {
+            if let id = accessToken.userID,
+                let token = accessToken.tokenString {
+                registerFB(id, token)
+            } else {
+                STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
+            }
         } else {
-            let fbLoginManager = LoginManager()
-            fbLoginManager.logIn(permissions: ["public_profile"], from: controller, handler:{result, error in
+            let fbLoginManager = FBSDKLoginManager()
+            fbLoginManager.logIn(withReadPermissions: ["public_profile"], from: controller, handler:{result, error in
                 if error != nil {
                     STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
                 } else {
@@ -150,10 +124,9 @@ class STUser {
                         if result.isCancelled {
                             STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
                         } else {
-                            if let id = result.token?.userID,
-                               let token = result.token?.tokenString {
-                                registerFB(id, token)
-                            }
+                            let id = result.token.userID!
+                            let token = result.token.tokenString!
+                            registerFB(id, token)
                         }
                     } else {
                         STAlertView.showAlert(title: "로그인 실패", message: "페이스북 로그인에 실패했습니다.")
@@ -165,12 +138,11 @@ class STUser {
     }
 
     static func updateDeviceIdIfNeeded() {
-        Messaging.messaging().token { token, error in
-            guard let refreshedToken = token else { return }
-            
-            if (STDefaults[.token] != nil && STDefaults[.registeredFCMToken] != refreshedToken) {
-                STNetworking.addDevice(refreshedToken)
-            }
+        guard let refreshedToken = InstanceID.instanceID().token() else {
+            return
+        }
+        if (STDefaults[.token] != nil && STDefaults[.registeredFCMToken] != refreshedToken) {
+            STNetworking.addDevice(refreshedToken)
         }
     }
     
