@@ -18,6 +18,7 @@ class STTimetableManager : NSObject {
         get {
             if sharedManager == nil {
                 sharedManager = STTimetableManager()
+                let _ = STTagManager.sharedInstance
             }
             return sharedManager!
         }

@@ -32,8 +32,10 @@ class STTimetableTabViewController: UIViewController {
         
         // Add tap recognizer to title in NavigationBar
         let titleView = UILabel()
+        titleView.text = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
         titleView.font = UIFont(name: "HelveticaNeue-Medium", size: 17)
-        titleView.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+        let width = titleView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
+        titleView.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: width, height: 500))
         titleView.textAlignment = .center
         self.navigationItem.titleView = titleView
         
@@ -76,14 +78,8 @@ class STTimetableTabViewController: UIViewController {
     
     @objc func reloadData() {
         let titleView = (self.navigationItem.titleView as! UILabel)
-        let attribute = [convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.darkGray,
-                         convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 15)]
-        let totalCreditStr = NSAttributedString(string: " \(STTimetableManager.sharedInstance.currentTimetable?.totalCredit ?? 0)학점", attributes: convertToOptionalNSAttributedStringKeyDictionary(attribute))
-        let mutableStr = NSMutableAttributedString()
-        mutableStr.append(NSAttributedString(string: STTimetableManager.sharedInstance.currentTimetable?.title ?? ""))
-        mutableStr.append(totalCreditStr)
-        titleView.attributedText = mutableStr
-        titleView.invalidateIntrinsicContentSize()
+        titleView.text = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
+        titleView.sizeToFit();
         
         timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableView.reloadTimetable()
