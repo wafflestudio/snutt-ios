@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="l7g-9O-bfT">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -76,7 +77,7 @@
                                     <segue destination="eOk-et-eG5" kind="push" id="Uhg-sr-SqZ"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="icon_capture" id="nbi-ue-X3V">
+                            <barButtonItem image="topbar_capture" id="nbi-ue-X3V">
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <action selector="captureTimeTable:" destination="Ybg-bY-Wbe" id="Edg-4x-E1w"/>
@@ -702,7 +703,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EvE-NX-428" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" image="tabTimetableOff" selectedImage="tabTimetableOn" id="jfH-wd-GaS">
-                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                        <inset key="imageInsets" minX="0.0" minY="5.5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="YZr-TV-yDy">
@@ -750,9 +751,7 @@
         <scene sceneID="4Qm-4D-iNk">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aj0-Z9-skP" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="tabSearchOff" selectedImage="tabSearchOn" id="fYX-OP-AfH">
-                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="" image="tabSearchOff" selectedImage="tabSearchOn" id="fYX-OP-AfH"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="jK4-QT-rjO">
@@ -827,9 +826,7 @@
         <scene sceneID="app-u8-e8R">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Ze-X7-etd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="tabAlarmOff" selectedImage="tabAlarmOn" id="lHI-2m-jug">
-                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="" image="tabAlarmOff" selectedImage="tabAlarmOn" id="lHI-2m-jug"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Cgb-zL-JZM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1170,9 +1167,7 @@
         <scene sceneID="Mpi-IC-jSN">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gtz-1X-Yjk" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="tabSettingOff" selectedImage="tabSettingOn" id="79h-lE-fw7">
-                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="" image="tabSettingOff" selectedImage="tabSettingOn" id="79h-lE-fw7"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="sLa-JJ-Ot9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1772,7 +1767,6 @@
         </designable>
     </designables>
     <resources>
-        <image name="icon_capture" width="30.5" height="30.5"/>
         <image name="tabAlarmOff" width="30" height="30"/>
         <image name="tabAlarmOn" width="30" height="30"/>
         <image name="tabSearchOff" width="30" height="30"/>
@@ -1783,6 +1777,7 @@
         <image name="tabTimetableOn" width="30" height="30"/>
         <image name="topbarBox" width="22" height="22"/>
         <image name="topbarListview" width="22" height="22"/>
+        <image name="topbar_capture" width="22" height="22"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
