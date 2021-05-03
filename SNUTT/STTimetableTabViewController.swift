@@ -20,7 +20,11 @@ class STTimetableTabViewController: UIViewController {
     
     var state : State = .timetable
     var isInAnimation : Bool = false
-
+    
+    @IBAction func captureTimeTable(_ sender: UIBarButtonItem) {
+        showCaptureAlert()
+    }
+    
     @IBOutlet weak var containerView: UIView!
     
     override func viewDidLoad() {
@@ -28,8 +32,10 @@ class STTimetableTabViewController: UIViewController {
         
         // Add tap recognizer to title in NavigationBar
         let titleView = UILabel()
+        titleView.text = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
         titleView.font = UIFont(name: "HelveticaNeue-Medium", size: 17)
-        titleView.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+        let width = titleView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
+        titleView.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: width, height: 500))
         titleView.textAlignment = .center
         self.navigationItem.titleView = titleView
         
@@ -72,14 +78,8 @@ class STTimetableTabViewController: UIViewController {
     
     @objc func reloadData() {
         let titleView = (self.navigationItem.titleView as! UILabel)
-        let attribute = [convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor) : UIColor.darkGray,
-                         convertFromNSAttributedStringKey(NSAttributedString.Key.font) : UIFont.systemFont(ofSize: 15)]
-        let totalCreditStr = NSAttributedString(string: " \(STTimetableManager.sharedInstance.currentTimetable?.totalCredit ?? 0)학점", attributes: convertToOptionalNSAttributedStringKeyDictionary(attribute))
-        let mutableStr = NSMutableAttributedString()
-        mutableStr.append(NSAttributedString(string: STTimetableManager.sharedInstance.currentTimetable?.title ?? ""))
-        mutableStr.append(totalCreditStr)
-        titleView.attributedText = mutableStr
-        titleView.invalidateIntrinsicContentSize()
+        titleView.text = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
+        titleView.sizeToFit();
         
         timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableView.reloadTimetable()
@@ -205,6 +205,50 @@ class STTimetableTabViewController: UIViewController {
                     cell?.setColor(color: color)
                 }
             }, origin: self)
+    }
+}
+
+extension STTimetableTabViewController {
+    func showCaptureAlert() {
+        let actions = [UIAlertAction(title: "취소", style: .cancel, handler: nil),
+                       UIAlertAction(title: "확인", style: .default, handler: { action in
+                        self.captureTimetableView(of: self.view)
+        })]
+        
+        STAlertView.showAlert(title: "시간표를 이미지로 저장하시겠습니까?", message: "", actions: actions)
+    }
+    
+    func captureTimetableView(of view: UIView) {
+        UIGraphicsBeginImageContextWithOptions(
+            CGSize(
+                width: view.bounds.width,
+                height: view.bounds.height
+            ),
+            false,
+            2
+        )
+
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let screenshot = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        UIView.animate(withDuration: 0.3, animations: { self.view.alpha = 0.4 }) {_ in
+            self.view.alpha = 1
+        }
+        
+        UIImageWriteToSavedPhotosAlbum (
+            screenshot,
+            self,
+            #selector(imageSaved),
+            nil
+        )
+    }
+            
+    @objc func imageSaved(_ image: UIImage, error: Error?, context: UnsafeMutableRawPointer) {
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
     }
 }
 
