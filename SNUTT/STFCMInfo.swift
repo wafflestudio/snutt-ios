@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objc(STFCMInfo)
 class STFCMInfo : NSObject, NSCoding {
 
     var userId : String = ""
