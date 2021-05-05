@@ -538,10 +538,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wy-QY-nTt" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="562"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2wE-9g-YO4">
-                                                <rect key="frame" x="35" y="0.0" width="305" height="562"/>
+                                                <rect key="frame" x="35" y="0.0" width="305" height="600"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" translatesAutoresizingMaskIntoConstraints="NO" id="k0q-WX-OYt">
                                                         <rect key="frame" x="110" y="118" width="85" height="98"/>
@@ -618,7 +618,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0qk-7V-eKc">
-                                                        <rect key="frame" x="0.0" y="384" width="305" height="153"/>
+                                                        <rect key="frame" x="0.0" y="384" width="305" height="250"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yza-ms-S8t" customClass="STViewButton" customModule="SNUTT" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="305" height="45"/>
@@ -787,7 +787,7 @@
                                                             <constraint firstItem="yza-ms-S8t" firstAttribute="leading" secondItem="0qk-7V-eKc" secondAttribute="leading" id="OpA-gv-lHc"/>
                                                             <constraint firstItem="yza-ms-S8t" firstAttribute="top" secondItem="0qk-7V-eKc" secondAttribute="top" id="SQ0-A0-gjk"/>
                                                             <constraint firstItem="lHM-Tg-eYV" firstAttribute="leading" secondItem="0qk-7V-eKc" secondAttribute="leading" id="TUX-Nb-BUd"/>
-                                                            <constraint firstAttribute="bottom" secondItem="hVS-SR-U6n" secondAttribute="bottom" id="daU-jk-bgK"/>
+                                                            <constraint firstAttribute="bottom" secondItem="hVS-SR-U6n" secondAttribute="bottom" constant="97" id="daU-jk-bgK"/>
                                                             <constraint firstItem="IRq-5V-Pn4" firstAttribute="leading" secondItem="0qk-7V-eKc" secondAttribute="leading" id="fC4-C8-Hck"/>
                                                             <constraint firstItem="hVS-SR-U6n" firstAttribute="leading" secondItem="0qk-7V-eKc" secondAttribute="leading" id="gBW-VP-HI8"/>
                                                             <constraint firstItem="hVS-SR-U6n" firstAttribute="top" secondItem="IRq-5V-Pn4" secondAttribute="bottom" id="nfb-y6-RAp"/>
@@ -803,7 +803,7 @@
                                                     <constraint firstItem="k0q-WX-OYt" firstAttribute="centerX" secondItem="2wE-9g-YO4" secondAttribute="centerX" id="RVs-dP-wan"/>
                                                     <constraint firstItem="k0q-WX-OYt" firstAttribute="top" secondItem="2wE-9g-YO4" secondAttribute="top" constant="118" id="TEq-io-8vJ"/>
                                                     <constraint firstItem="Rwi-L1-6wt" firstAttribute="leading" secondItem="2wE-9g-YO4" secondAttribute="leading" id="Zvj-ms-Vgl"/>
-                                                    <constraint firstAttribute="bottom" secondItem="0qk-7V-eKc" secondAttribute="bottom" constant="25" id="kgJ-c1-Pac"/>
+                                                    <constraint firstAttribute="bottom" secondItem="0qk-7V-eKc" secondAttribute="bottom" constant="-34" id="kgJ-c1-Pac"/>
                                                     <constraint firstItem="0qk-7V-eKc" firstAttribute="leading" secondItem="2wE-9g-YO4" secondAttribute="leading" id="tg0-fV-ZwH"/>
                                                     <constraint firstItem="Rwi-L1-6wt" firstAttribute="top" secondItem="k0q-WX-OYt" secondAttribute="bottom" constant="46" id="uMX-Ul-4Za"/>
                                                     <constraint firstAttribute="trailing" secondItem="Rwi-L1-6wt" secondAttribute="trailing" id="v2g-eT-zvA"/>
@@ -813,10 +813,10 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="2wE-9g-YO4" firstAttribute="top" secondItem="4wy-QY-nTt" secondAttribute="top" id="3du-M3-DYc"/>
-                                            <constraint firstAttribute="bottom" secondItem="2wE-9g-YO4" secondAttribute="bottom" id="5m6-LR-vUR"/>
+                                            <constraint firstAttribute="bottom" secondItem="2wE-9g-YO4" secondAttribute="bottom" constant="47" id="5m6-LR-vUR"/>
                                             <constraint firstItem="2wE-9g-YO4" firstAttribute="leading" secondItem="4wy-QY-nTt" secondAttribute="leading" constant="35" id="7R7-kE-WUs"/>
                                             <constraint firstAttribute="trailing" secondItem="2wE-9g-YO4" secondAttribute="trailing" constant="35" id="dLI-4D-rI6"/>
-                                            <constraint firstItem="2wE-9g-YO4" firstAttribute="centerY" secondItem="4wy-QY-nTt" secondAttribute="centerY" id="vYs-oh-O7l"/>
+                                            <constraint firstItem="2wE-9g-YO4" firstAttribute="centerY" secondItem="4wy-QY-nTt" secondAttribute="centerY" constant="-23.5" id="vYs-oh-O7l"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -868,6 +868,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="appleButton" destination="lHM-Tg-eYV" id="AhU-2N-EFL"/>
                         <outlet property="backBtnView" destination="R8O-Q8-Dos" id="u6B-ul-Zqm"/>
                         <outlet property="facebookButton" destination="hVS-SR-U6n" id="aot-De-t1w"/>
                         <outlet property="idTextField" destination="icH-uj-Nys" id="fKz-CH-XcP"/>
