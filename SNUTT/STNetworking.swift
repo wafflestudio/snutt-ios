@@ -317,28 +317,11 @@ class STNetworking {
     
     static func addDevice(_ deviceId : String) {
         let request = Alamofire.request(STUserRouter.addDevice(id: deviceId))
-        
-        if let userId = STDefaults[.userId] {
-            Messaging.messaging().token { token, error in
-                if let error = error {
-                   print("Error fetching FCM registration token: \(error)")
-                 
-                }
-                
-                if let token = token {
-                    let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
-                    let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
-                    STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { $0 != fcmInfo }))
-                }
-                // Check for error. Otherwise do what you will with token here
-            }
+        if let token = InstanceID.instanceID().token(), let userId = STDefaults[.userId] {
+            let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
+            let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+            STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
         }
-        
-//        if let token = InstanceID.instanceID().token(), let userId = STDefaults[.userId] {
-//            let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
-//            let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
-//            STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { $0 != fcmInfo }))
-//        }
 
         request.responseWithDone({ statusCode, json in
             STDefaults[.registeredFCMToken] = deviceId

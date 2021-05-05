@@ -6,19 +6,19 @@ target 'SNUTT' do
   pod 'Alamofire', '~> 4.9.1'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'SwiftyJSON'
+  pod 'SwiftyJSON', '~> 3.1.4'
   pod 'B68UIFloatLabelTextField', :git => 'https://github.com/JSKeum/B68FloatingLabelTextField.git'
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/JSKeum/Chameleon.git'
   pod 'ActionSheetPicker-3.0'
   pod 'Color-Picker-for-iOS', '~> 2.0'
-  pod 'FBSDKCoreKit'
-  pod 'FBSDKLoginKit'
-  pod 'FBSDKShareKit'
+  pod 'FBSDKCoreKit', '~> 4.20.2'
+  pod 'FBSDKLoginKit', '~> 4.20.2'
+  pod 'FBSDKShareKit', '~> 4.20.2'
   pod 'Carte', '~> 1.0.2'
   pod 'SwiftyUserDefaults', :git => 'https://github.com/Rajin9601/SwiftyUserDefaults.git'
   pod 'TTRangeSlider'
-  pod 'Firebase'
-  pod 'Firebase/Messaging'
+  pod 'Firebase', '~> 4.3.0'
+  pod 'Firebase/Messaging', '~> 4.3.0'
   pod 'DZNEmptyDataSet', :git => 'https://github.com/Rajin9601/DZNEmptyDataSet.git', :branch => 'fix-hitTest'
   pod 'TPKeyboardAvoiding'
   pod 'MarqueeLabel/Swift'
@@ -26,7 +26,7 @@ target 'SNUTT' do
 end
 
 target 'SNUTT Today' do
-  pod 'SwiftyJSON'
+  pod 'SwiftyJSON', '~> 3.1.4'
   pod 'SwiftyUserDefaults', :git => 'https://github.com/Rajin9601/SwiftyUserDefaults.git'
 end
 
