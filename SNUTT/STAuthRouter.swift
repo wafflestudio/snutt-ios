@@ -17,6 +17,7 @@ enum STAuthRouter : STRouter {
     case localLogin(id: String, password: String)
     case localRegister(id: String, password: String, email: String?)
     case fbRegister(id: String, token: String)
+    case appleRegister(token: String)
     case logOutDevice(userId: String, fcmToken: String)
     
     //MARK: STRouter
@@ -28,6 +29,8 @@ enum STAuthRouter : STRouter {
         case .localRegister:
             return .post
         case .fbRegister:
+            return .post
+        case .appleRegister:
             return .post
         case .logOutDevice:
             return .post
@@ -42,6 +45,8 @@ enum STAuthRouter : STRouter {
             return "/register_local"
         case .fbRegister:
             return "/login_fb"
+        case .appleRegister:
+            return "/login_apple"
         case .logOutDevice:
             return "/logout"
         }
@@ -59,6 +64,8 @@ enum STAuthRouter : STRouter {
             return ret
         case let .fbRegister(id, token):
             return ["fb_id" : id, "fb_token" : token]
+        case let .appleRegister(token):
+            return ["apple_token" : token]
         case let .logOutDevice(userId, fcmToken):
             return ["user_id": userId, "registration_id": fcmToken]
         }

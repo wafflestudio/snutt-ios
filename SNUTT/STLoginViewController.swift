@@ -12,16 +12,19 @@ import FBSDKLoginKit
 import Firebase
 import Crashlytics
 import SafariServices
+import AuthenticationServices
 
-class STLoginViewController: UIViewController, UITextFieldDelegate {
+class STLoginViewController: UIViewController, UITextFieldDelegate, ASAuthorizationControllerDelegate {
 
+    
     @IBOutlet weak var backBtnView: STViewButton!
     @IBOutlet weak var idTextField: STLoginTextField!
     @IBOutlet weak var passwordTextField: STLoginTextField!
 
     @IBOutlet weak var loginButton: STViewButton!
     @IBOutlet weak var facebookButton: STViewButton!
-
+    @IBOutlet weak var appleButton: STViewButton!
+    
     @IBOutlet weak var layoutConstraint1: NSLayoutConstraint!
     @IBOutlet weak var layoutConstraint2: NSLayoutConstraint!
     @IBOutlet weak var layoutConstraint3: NSLayoutConstraint!
@@ -40,13 +43,19 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
         for textField in textFieldList {
             textField.delegate = self
         }
+        
+        appleButton.buttonPressAction = {
+            self.appleButonClicked()
+        }
 
         loginButton.buttonPressAction = {
             self.loginButtonClicked()
         }
+        
         facebookButton.buttonPressAction = {
             self.fbButonClicked()
         }
+        
         backBtnView.buttonPressAction = {
             self.dismiss(animated: true, completion: nil)
         }
@@ -85,6 +94,11 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     func fbButonClicked() {
         self.view.endEditing(true)
         STUser.tryFBLogin(controller: self)
+    }
+    
+    func appleButonClicked() {
+        self.view.endEditing(true)
+        appleLogin()
     }
     
     func loginButtonClicked() {
@@ -148,4 +162,46 @@ class STLoginViewController: UIViewController, UITextFieldDelegate {
     }
     */
 
+}
+
+// MARK: - Apple Login
+extension STLoginViewController: ASAuthorizationControllerPresentationContextProviding {
+    private func appleLogin() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+                
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                
+            let userIdentifier = appleIDCredential.user
+            
+            guard let token = String(data: appleIDCredential.identityToken!, encoding: .utf8) else {
+                STAlertView.showAlert(title: "로그인 실패", message: "애플 로그인에 실패했습니다.")
+                return
+            }
+            
+            STUser.tryAppleLogin(id: userIdentifier, token: token)
+     
+        default:
+            break
+        }
+    }
+        
+    // Handle error
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+      debugPrint(error)
+    }
 }

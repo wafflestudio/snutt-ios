@@ -213,6 +213,8 @@
 		7540205FB7071F642F9B022F /* Pods_SNUTT_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		923560D5D97F8A3548E9547A /* Pods-SNUTT Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.debug.xcconfig"; sourceTree = "<group>"; };
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC822D7F26426E3300D57D58 /* SNUTTRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTRelease.entitlements; sourceTree = "<group>"; };
+		DC822DA426428D2B00D57D58 /* SNUTTDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTDebug.entitlements; sourceTree = "<group>"; };
 		E0B8ADB76AB6B75793967316 /* Pods-SNUTT Today.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.production.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.production.xcconfig"; sourceTree = "<group>"; };
 		E10852C61B4CCD16006FD8B3 /* STLecture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLecture.swift; sourceTree = "<group>"; };
 		E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableCollectionView.swift; sourceTree = "<group>"; };
@@ -506,6 +508,8 @@
 		E19A3A971B453770007FCAD7 /* SNUTT */ = {
 			isa = PBXGroup;
 			children = (
+				DC822DA426428D2B00D57D58 /* SNUTTDebug.entitlements */,
+				DC822D7F26426E3300D57D58 /* SNUTTRelease.entitlements */,
 				E14A7F5D1E406CAA003B3EA9 /* SNUTT.entitlements */,
 				E1F0CA1A1C7475A600A4F4ED /* Asset */,
 				E1C28B191B9C4B7B00B8C493 /* Controller */,
