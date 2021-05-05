@@ -1,5 +1,5 @@
 PODS:
-  - ActionSheetPicker-3.0 (2.7.1)
+  - ActionSheetPicker-3.0 (2.2.0)
   - Alamofire (4.9.1)
   - B68UIFloatLabelTextField (0.1.2)
   - Bolts (1.9.1):
@@ -67,7 +67,7 @@ PODS:
   - "UITextView+Placeholder (1.4.0)"
 
 DEPENDENCIES:
-  - ActionSheetPicker-3.0
+  - ActionSheetPicker-3.0 (~> 2.2.0)
   - Alamofire (~> 4.9.1)
   - B68UIFloatLabelTextField (from `https://github.com/JSKeum/B68FloatingLabelTextField.git`)
   - Carte (~> 1.0.2)
@@ -142,7 +142,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Rajin9601/SwiftyUserDefaults.git
 
 SPEC CHECKSUMS:
-  ActionSheetPicker-3.0: 36da254b97a09ff89679ecb8b8510bd3e5bdc773
+  ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   B68UIFloatLabelTextField: 337894ff837df84e19636c99f3f5f88c4fad60d7
   Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
@@ -171,6 +171,6 @@ SPEC CHECKSUMS:
   TTRangeSlider: 8cf72eca457c3b700c92eb0074be908c986e25ec
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: 329094d1f52d80f6d3b9a035e8a3a6becd00fb0c
+PODFILE CHECKSUM: 7f184ea4ca9a3ba813138be1a7bbaa1609c63c43
 
 COCOAPODS: 1.10.1

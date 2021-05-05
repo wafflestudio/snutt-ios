@@ -9,7 +9,7 @@ target 'SNUTT' do
   pod 'SwiftyJSON', '~> 3.1.4'
   pod 'B68UIFloatLabelTextField', :git => 'https://github.com/JSKeum/B68FloatingLabelTextField.git'
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/JSKeum/Chameleon.git'
-  pod 'ActionSheetPicker-3.0'
+  pod 'ActionSheetPicker-3.0', '~> 2.2.0'
   pod 'Color-Picker-for-iOS', '~> 2.0'
   pod 'FBSDKCoreKit', '~> 4.20.2'
   pod 'FBSDKLoginKit', '~> 4.20.2'
