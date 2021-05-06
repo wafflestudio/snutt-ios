@@ -402,11 +402,11 @@ class STNetworking {
 
 // MARK: - Apple login
 extension STNetworking {
-    static func registerApple(id: String, token: String, done: @escaping (String, String)->(), failure: @escaping ()->()) {
+    static func registerApple(token: String, done: @escaping (String, String)->(), failure: @escaping ()->()) {
         let request = Alamofire.request(STAuthRouter.appleRegister(token: token))
         
-        request.responseWithDone({ statusCode, json in
-            done(json["token"].stringValue, id)
+        request.responseWithDone({ statusCode, json in   
+            done(json["token"].stringValue, json["user_id"].stringValue)
         }, failure: { err in
             failure()
         })

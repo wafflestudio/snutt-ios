@@ -166,14 +166,14 @@ class STUser {
 
 // MARK: - Apple Login
 extension STUser {
-    static func tryAppleLogin(id: String, token: String) {
+    static func tryAppleLogin(token: String) {
         let done : (String, String) -> () = { token, userId in
             STDefaults[.token] = token
             STDefaults[.userId] = userId
             STUser.loadMainPage()
         }
         
-        STNetworking.registerApple(id: id, token: token, done: done, failure: {
+        STNetworking.registerApple(token: token, done: done, failure: {
             STAlertView.showAlert(title: "로그인 실패", message: "애플 로그인에 실패했습니다.")
         })
     }

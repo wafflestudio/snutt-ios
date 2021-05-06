@@ -185,16 +185,12 @@ extension STLoginViewController: ASAuthorizationControllerPresentationContextPro
         switch authorization.credential {
         
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                
-            let userIdentifier = appleIDCredential.user
-            
             guard let token = String(data: appleIDCredential.identityToken!, encoding: .utf8) else {
                 STAlertView.showAlert(title: "로그인 실패", message: "애플 로그인에 실패했습니다.")
                 return
             }
             
-            STUser.tryAppleLogin(id: userIdentifier, token: token)
-     
+            STUser.tryAppleLogin(token: token)
         default:
             break
         }
