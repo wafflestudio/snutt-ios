@@ -51,12 +51,16 @@ class STUser {
         if let token = InstanceID.instanceID().token(), let userId = STDefaults[.userId] {
             let fcmInfo = STFCMInfo(userId: userId, fcmToken: token)
             fcmInfos.append(fcmInfo)
+            
             STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: fcmInfos)
-            STNetworking.logOut(userId: userId, fcmToken: token, done: {
-                let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
-                STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
-            }, failure: nil)
-            loadLoginPage()
+            
+            DispatchQueue.main.async {
+                STNetworking.logOut(userId: userId, fcmToken: token, done: {
+                    let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
+                    STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
+                }, failure: nil)
+                loadLoginPage()
+            }
         } else {
             loadLoginPage()
         }
@@ -162,4 +166,19 @@ class STUser {
         return localId != nil || fbName != nil
     }
     
+}
+
+// MARK: - Apple Login
+extension STUser {
+    static func tryAppleLogin(token: String) {
+        let done : (String, String) -> () = { token, userId in
+            STDefaults[.token] = token
+            STDefaults[.userId] = userId
+            STUser.loadMainPage()
+        }
+        
+        STNetworking.registerApple(token: token, done: done, failure: {
+            STAlertView.showAlert(title: "로그인 실패", message: "애플 로그인에 실패했습니다.")
+        })
+    }
 }

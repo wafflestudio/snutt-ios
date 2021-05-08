@@ -393,11 +393,22 @@ class STNetworking {
 
     //MARK: Others
 
-
     static func showNetworkError() {
         let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: nil))
         UIApplication.shared.keyWindow!.rootViewController!.present(alert, animated: true, completion: nil)
     }
+}
 
+// MARK: - Apple login
+extension STNetworking {
+    static func registerApple(token: String, done: @escaping (String, String)->(), failure: @escaping ()->()) {
+        let request = Alamofire.request(STAuthRouter.appleRegister(token: token))
+        
+        request.responseWithDone({ statusCode, json in   
+            done(json["token"].stringValue, json["user_id"].stringValue)
+        }, failure: { err in
+            failure()
+        })
+    }
 }

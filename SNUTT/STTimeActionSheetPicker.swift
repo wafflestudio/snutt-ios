@@ -81,7 +81,7 @@ class STTimeActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
         }
     }
     
-    func actionSheetPickerDidSucceed(_ actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {
+    func actionSheetPickerDidSucceed(_ actionSheetPicker: AbstractActionSheetPicker!, origin: Any?) {
         let pickerView = actionSheetPicker.pickerView as! UIPickerView
         let day = dayRow[pickerView.selectedRow(inComponent: 0)]
         let startPeriod = startPeriodRow[pickerView.selectedRow(inComponent: 1)]
@@ -93,7 +93,7 @@ class STTimeActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
         doneBlock?(selectedTime)
     }
     
-    func actionSheetPickerDidCancel(_ actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {
+    func actionSheetPickerDidCancel(_ actionSheetPicker: AbstractActionSheetPicker!, origin: Any?) {
         cancelBlock?()
     }
     

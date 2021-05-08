@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let infoName = "GoogleService-Info-Production"
             let configKey = "production"
         #else
-            let infoName = "GoogleService-Info-Dev"
+            let infoName = "GoogleService-Info-Production"
             let configKey = "staging"
         #endif
 
