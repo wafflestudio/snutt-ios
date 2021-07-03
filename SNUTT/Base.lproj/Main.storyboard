@@ -67,9 +67,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="i2B-jy-PUt">
-                        <barButtonItem key="leftBarButtonItem" image="topbarListview" style="plain" id="gnE-zE-Exs">
-                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" image="topbarListview" id="xBB-5S-dBD"/>
                         <rightBarButtonItems>
                             <barButtonItem image="topbarBox" id="diC-Ny-PMc">
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -83,12 +81,20 @@
                                     <action selector="captureTimeTable:" destination="Ybg-bY-Wbe" id="Edg-4x-E1w"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem image="navigationbaritem_list" style="plain" id="gnE-zE-Exs">
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="switchToTimetableListView:" destination="Ybg-bY-Wbe" id="YMZ-pW-hVs"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="containerView" destination="gPH-UC-il9" id="87M-tR-494"/>
                         <outlet property="timetableView" destination="zsa-uu-87y" id="V8P-f4-YaD"/>
+                        <outletCollection property="rightBarButtonsForTimetable" destination="gnE-zE-Exs" collectionClass="NSMutableArray" id="spb-Sa-qz7"/>
+                        <outletCollection property="rightBarButtonsForTimetable" destination="nbi-ue-X3V" collectionClass="NSMutableArray" id="Iq3-fR-vvh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9sT-yZ-cLs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1767,6 +1773,7 @@
         </designable>
     </designables>
     <resources>
+        <image name="navigationbaritem_list" width="22" height="20"/>
         <image name="tabAlarmOff" width="30" height="30"/>
         <image name="tabAlarmOn" width="30" height="30"/>
         <image name="tabSearchOff" width="30" height="30"/>

@@ -27,6 +27,13 @@ class STTimetableTabViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
     
+    
+    @IBAction func switchToTimetableListView(_ sender: UIBarButtonItem) {
+        switchView()
+    }
+    
+    @IBOutlet var rightBarButtonsForTimetable: [UIBarButtonItem]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,7 +51,6 @@ class STTimetableTabViewController: UIViewController {
         titleView.addGestureRecognizer(recognizer)
         
         self.navigationItem.leftBarButtonItem!.target = self
-        self.navigationItem.leftBarButtonItem!.action = #selector(self.switchView)
         
         lectureListController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MyLectureListController") as! STMyLectureListController
         lectureListController.timetableTabViewController = self
@@ -106,7 +112,7 @@ class STTimetableTabViewController: UIViewController {
         timetableView.reloadTimetable()
     }
     
-    @objc func switchView() {
+    func switchView() {
 
         if (isInAnimation) {
             return
@@ -127,16 +133,18 @@ class STTimetableTabViewController: UIViewController {
             case .lectureList:
                 self.navigationItem.leftBarButtonItem!.image = #imageLiteral(resourceName: "topbarListview")
             case .timetable:
-                self.navigationItem.leftBarButtonItem!.image = #imageLiteral(resourceName: "group2Copy")
+                self.navigationItem.leftBarButtonItem!.image = #imageLiteral(resourceName: "btnLoginBack")
             }
         })
 
-        UIView.transition(with: containerView, duration: 0.65, options: .transitionFlipFromRight, animations: {
+        UIView.transition(with: containerView, duration: 0.45, options: .curveEaseInOut, animations: {
                 oldView.isHidden = true
                 newView.isHidden = false
             }, completion: { finished in
                 self.state = (self.state == .timetable) ? .lectureList : .timetable
+                self.toggleBarItemsAccess(items: self.rightBarButtonsForTimetable)
                 self.isInAnimation = false
+                
         })
     }
     
@@ -248,6 +256,21 @@ extension STTimetableTabViewController {
         if let error = error {
             print(error.localizedDescription)
             return
+        }
+    }
+}
+
+extension STTimetableTabViewController {
+    private func toggleBarItemsAccess(items: [UIBarButtonItem]) {
+        for item in items {
+            switch state {
+            case .timetable:
+                item.tintColor = .black
+                item.isEnabled = true
+            case .lectureList:
+                item.tintColor = .clear
+                item.isEnabled = false
+            }
         }
     }
 }
