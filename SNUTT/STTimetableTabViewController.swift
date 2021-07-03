@@ -12,13 +12,21 @@ class STTimetableTabViewController: UIViewController {
     
     @IBOutlet weak var timetableView: STTimetableCollectionView!
     var lectureListController : STMyLectureListController!
+    let menuController = MenuViewController()
+    let backgroundView = UIView()
     
-    enum State {
-    case timetable
-    case lectureList
+    enum ContainerViewState {
+        case timetable
+        case lectureList
     }
     
-    var state : State = .timetable
+    enum MenuControllerState {
+        case opened
+        case closed
+    }
+    
+    var containerViewState : ContainerViewState = .timetable
+    var menuControllerState : MenuControllerState = .closed
     var isInAnimation : Bool = false
     
     @IBAction func captureTimeTable(_ sender: UIBarButtonItem) {
@@ -27,18 +35,16 @@ class STTimetableTabViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
     
-    
     @IBAction func switchToTimetableListView(_ sender: UIBarButtonItem) {
         switchView()
     }
     
     @IBOutlet var rightBarButtonsForTimetable: [UIBarButtonItem]!
     
-    
     @IBAction func leftBarButtonItem(_ sender: UIBarButtonItem) {
-        switch state {
+        switch containerViewState {
         case .timetable:
-            return
+            toggleMenuView()
         case .lectureList:
             switchView()
         }
@@ -46,6 +52,8 @@ class STTimetableTabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addMenuView()
         
         // Add tap recognizer to title in NavigationBar
         let titleView = UILabel()
@@ -129,7 +137,7 @@ class STTimetableTabViewController: UIViewController {
         }
         isInAnimation = true
         var oldView, newView : UIView!
-        switch state {
+        switch containerViewState {
         case .timetable:
             oldView = timetableView
             newView = lectureListController.view
@@ -139,7 +147,7 @@ class STTimetableTabViewController: UIViewController {
         }
 
         UIView.animate(withDuration: 0.65, animations: {
-            switch self.state {
+            switch self.containerViewState {
             case .lectureList:
                 self.navigationItem.leftBarButtonItem!.image = #imageLiteral(resourceName: "topbarListview")
             case .timetable:
@@ -151,7 +159,7 @@ class STTimetableTabViewController: UIViewController {
                 oldView.isHidden = true
                 newView.isHidden = false
             }, completion: { finished in
-                self.state = (self.state == .timetable) ? .lectureList : .timetable
+                self.containerViewState = (self.containerViewState == .timetable) ? .lectureList : .timetable
                 self.toggleBarItemsAccess(items: self.rightBarButtonsForTimetable)
                 self.isInAnimation = false
                 
@@ -273,13 +281,81 @@ extension STTimetableTabViewController {
 extension STTimetableTabViewController {
     private func toggleBarItemsAccess(items: [UIBarButtonItem]) {
         for item in items {
-            switch state {
+            switch containerViewState {
             case .timetable:
                 item.tintColor = .black
                 item.isEnabled = true
             case .lectureList:
                 item.tintColor = .clear
                 item.isEnabled = false
+            }
+        }
+    }
+}
+
+// MARK: Menu view stuff
+extension STTimetableTabViewController {
+    private func addMenuView() {
+        self.tabBarController!.view.addSubview(backgroundView)
+        self.tabBarController!.view.addSubview(menuController.view)
+
+        menuController.view.frame.size.width = 0
+        menuController.view.isHidden = true
+        
+        backgroundView.isHidden = true
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didMenuViewSwipe(_:)))
+        swipeGestureRecognizer.direction = .left
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView(_:)))
+        
+        menuController.view.addGestureRecognizer(swipeGestureRecognizer)
+        backgroundView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc private func didMenuViewSwipe(_ sender: UISwipeGestureRecognizer) {
+        toggleMenuView()
+    }
+    
+    @objc private func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
+        toggleMenuView()
+    }
+    
+    private func showBackgroundCoverView() {
+        backgroundView.isHidden = false
+        backgroundView.frame.size.width = self.containerView.frame.size.width
+        backgroundView.frame.size.height = self.tabBarController!.view.frame.size.height
+        backgroundView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+    }
+    
+    private func hideBackgroundCoverView() {
+        backgroundView.frame.size.width = 0
+        backgroundView.isHidden = true
+    }
+    
+    private func toggleMenuView() {
+        if (containerViewState == .lectureList) {
+            return
+        }
+        
+        switch menuControllerState {
+        case .closed:
+            showBackgroundCoverView()
+            UIView.animate(withDuration: 0.34, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                self.menuController.view.isHidden = false
+                self.menuController.view.frame.size.width = self.containerView.frame.size.width - 72
+                
+            } completion: { finished in
+                self.menuControllerState = .opened
+            }
+            
+        case .opened:
+            hideBackgroundCoverView()
+            UIView.animate(withDuration: 0.34, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                self.menuController.view.frame.size.width = 0
+
+            } completion: { finished in
+                self.menuController.view.isHidden = true
+                self.menuControllerState = .closed
             }
         }
     }
