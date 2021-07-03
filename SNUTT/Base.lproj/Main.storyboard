@@ -67,7 +67,11 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="i2B-jy-PUt">
-                        <barButtonItem key="leftBarButtonItem" image="topbarListview" id="xBB-5S-dBD"/>
+                        <barButtonItem key="leftBarButtonItem" image="topbarListview" id="xBB-5S-dBD">
+                            <connections>
+                                <action selector="leftBarButtonItem:" destination="Ybg-bY-Wbe" id="2qd-Iw-CHk"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem image="topbarBox" id="diC-Ny-PMc">
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

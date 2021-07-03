@@ -34,6 +34,16 @@ class STTimetableTabViewController: UIViewController {
     
     @IBOutlet var rightBarButtonsForTimetable: [UIBarButtonItem]!
     
+    
+    @IBAction func leftBarButtonItem(_ sender: UIBarButtonItem) {
+        switch state {
+        case .timetable:
+            return
+        case .lectureList:
+            switchView()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
