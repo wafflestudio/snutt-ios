@@ -12,7 +12,7 @@ class STTimetableTabViewController: UIViewController {
     
     @IBOutlet weak var timetableView: STTimetableCollectionView!
     var lectureListController : STMyLectureListController!
-    let menuController = MenuViewController()
+    var menuController: MenuViewController!
     let backgroundView = UIView()
     
     enum ContainerViewState {
@@ -53,8 +53,6 @@ class STTimetableTabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addMenuView()
-        
         // Add tap recognizer to title in NavigationBar
         let titleView = UILabel()
         titleView.text = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
@@ -89,6 +87,9 @@ class STTimetableTabViewController: UIViewController {
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
         
         reloadData()
+        
+        menuController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+        addMenuView()
     }
 
     deinit {
@@ -296,13 +297,17 @@ extension STTimetableTabViewController {
 // MARK: Menu view stuff
 extension STTimetableTabViewController {
     private func addMenuView() {
+        guard let menuVC = menuController else {
+            return
+        }
         self.tabBarController!.view.addSubview(backgroundView)
-        self.tabBarController!.view.addSubview(menuController.view)
+        self.tabBarController!.view.addSubview(menuVC.view)
 
-        menuController.view.frame.size.width = 0
-        menuController.view.isHidden = true
+        menuController.view.frame.origin.x = -(containerView.frame.size.width - 72)
         
+        menuController.view.isHidden = true
         backgroundView.isHidden = true
+        
         let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didMenuViewSwipe(_:)))
         swipeGestureRecognizer.direction = .left
         
@@ -340,9 +345,9 @@ extension STTimetableTabViewController {
         switch menuControllerState {
         case .closed:
             showBackgroundCoverView()
-            UIView.animate(withDuration: 0.34, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
-                self.menuController.view.isHidden = false
-                self.menuController.view.frame.size.width = self.containerView.frame.size.width - 72
+            self.menuController.view.isHidden = false
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                self.menuController.view.frame.origin.x = 0
                 
             } completion: { finished in
                 self.menuControllerState = .opened
@@ -351,7 +356,7 @@ extension STTimetableTabViewController {
         case .opened:
             hideBackgroundCoverView()
             UIView.animate(withDuration: 0.34, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
-                self.menuController.view.frame.size.width = 0
+                self.menuController.view.frame.origin.x = -(self.containerView.frame.size.width - 72)
 
             } completion: { finished in
                 self.menuController.view.isHidden = true
