@@ -303,26 +303,48 @@ extension STTimetableTabViewController {
         self.tabBarController!.view.addSubview(backgroundView)
         self.tabBarController!.view.addSubview(menuVC.view)
 
-        menuController.view.frame.origin.x = -(containerView.frame.size.width - 72)
+        menuVC.view.frame.origin.x = -(menuVC.view.frame.width)
         
-        menuController.view.isHidden = true
+        menuVC.view.isHidden = true
         backgroundView.isHidden = true
-        
-        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didMenuViewSwipe(_:)))
-        swipeGestureRecognizer.direction = .left
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView(_:)))
         
-        menuController.view.addGestureRecognizer(swipeGestureRecognizer)
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanGestureActionInMenuView(_:)))
+        
+        menuVC.view.addGestureRecognizer(panGestureRecognizer)
         backgroundView.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    @objc private func didMenuViewSwipe(_ sender: UISwipeGestureRecognizer) {
-        toggleMenuView()
     }
     
     @objc private func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
         toggleMenuView()
+    }
+    
+    @objc private func didPanGestureActionInMenuView(_ sender: UIPanGestureRecognizer) {
+        guard let menuView = menuController.view else { return }
+        let translation = sender.translation(in: menuView)
+        sender.setTranslation(CGPoint.zero, in: menuView)
+
+        if sender.state == .changed {
+            guard (menuView.frame.origin.x + translation.x) <= 0 else { return }
+            
+            menuView.frame.origin.x += translation.x
+        }
+        
+        let currentOrigin = menuView.frame.origin.x
+        let halfOfWidth = menuView.frame.width / 2
+        
+        if sender.state == .ended {
+            if (sender.velocity(in: menuView).x < -550) {
+                toggleMenuView()
+            } else if (currentOrigin >= -(halfOfWidth)) {
+                UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                    self.menuController.view.frame.origin.x = 0
+                }
+            } else {
+                toggleMenuView()
+            }
+        }
     }
     
     private func showBackgroundCoverView() {
@@ -346,7 +368,7 @@ extension STTimetableTabViewController {
         case .closed:
             showBackgroundCoverView()
             self.menuController.view.isHidden = false
-            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
                 self.menuController.view.frame.origin.x = 0
                 
             } completion: { finished in
@@ -354,11 +376,10 @@ extension STTimetableTabViewController {
             }
             
         case .opened:
-            hideBackgroundCoverView()
-            UIView.animate(withDuration: 0.34, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
-                self.menuController.view.frame.origin.x = -(self.containerView.frame.size.width - 72)
-
+            UIView.animate(withDuration: 0.32, delay: 0, options: .curveEaseInOut) {
+                self.menuController.view.frame.origin.x = -(self.containerView.frame.width)
             } completion: { finished in
+                self.hideBackgroundCoverView()
                 self.menuController.view.isHidden = true
                 self.menuControllerState = .closed
             }
