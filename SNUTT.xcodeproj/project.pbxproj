@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		B1EB38A2D401D55B8B513965 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */; };
+		DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */; };
+		DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */; };
+		DC2BFCEB26935963007C3F79 /* MenuHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BFCE926935963007C3F79 /* MenuHeaderTableViewCell.swift */; };
+		DC2BFCEC26935963007C3F79 /* MenuHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC2BFCEA26935963007C3F79 /* MenuHeaderTableViewCell.xib */; };
 		DC5B8CD726905CB40085268B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B8CD626905CB40085268B /* MenuViewController.swift */; };
 		E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C61B4CCD16006FD8B3 /* STLecture.swift */; };
 		E10852C91B4CCD16006FD8B3 /* STTimetableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */; };
@@ -214,6 +218,10 @@
 		7540205FB7071F642F9B022F /* Pods_SNUTT_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		923560D5D97F8A3548E9547A /* Pods-SNUTT Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.debug.xcconfig"; sourceTree = "<group>"; };
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
+		DC2BFCE926935963007C3F79 /* MenuHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		DC2BFCEA26935963007C3F79 /* MenuHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		DC5B8CD626905CB40085268B /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		DC822D7F26426E3300D57D58 /* SNUTTRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTRelease.entitlements; sourceTree = "<group>"; };
 		DC822DA426428D2B00D57D58 /* SNUTTDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTDebug.entitlements; sourceTree = "<group>"; };
@@ -410,6 +418,10 @@
 			isa = PBXGroup;
 			children = (
 				DC5B8CD626905CB40085268B /* MenuViewController.swift */,
+				DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */,
+				DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */,
+				DC2BFCE926935963007C3F79 /* MenuHeaderTableViewCell.swift */,
+				DC2BFCEA26935963007C3F79 /* MenuHeaderTableViewCell.xib */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -891,6 +903,7 @@
 				E14DF21E1C3FB7820076FDDE /* STLectureTableViewCell.xib in Resources */,
 				E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */,
 				E1CD92671E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib in Resources */,
+				DC2BFCEC26935963007C3F79 /* MenuHeaderTableViewCell.xib in Resources */,
 				E19A3AA51B453770007FCAD7 /* LaunchScreen.xib in Resources */,
 				E1C48BA21C79C0E300BC469E /* Localizable.strings in Resources */,
 				E1F946231DB449E300CC8AF6 /* STAddLectureButtonCell.xib in Resources */,
@@ -914,6 +927,7 @@
 				E17825C91D560A10009ACEC3 /* config.plist in Resources */,
 				E1B381AD1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib in Resources */,
 				E1F0CA1D1C7482D300A4F4ED /* delete.png in Resources */,
+				DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */,
 				E1F58AAA1C3CFC1C00F6A0FC /* STColumnHeaderCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1099,6 +1113,7 @@
 				E16A88531C9FB98F003D94AB /* STSupportViewController.swift in Sources */,
 				E16A88571C9FC4AD003D94AB /* STSettingViewController.swift in Sources */,
 				E110CFD51C883FC000ED0590 /* STNotificationTableViewCell.swift in Sources */,
+				DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */,
 				E1773CB41C95B05800AF36AF /* STLoginViewController.swift in Sources */,
 				E110CFDF1C88916400ED0590 /* STTagRouter.swift in Sources */,
 				E16A88511C9F97EB003D94AB /* STLicenseViewController.swift in Sources */,
@@ -1136,6 +1151,7 @@
 				E1C48BB21C79C8E200BC469E /* STDay.swift in Sources */,
 				E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */,
 				DC5B8CD726905CB40085268B /* MenuViewController.swift in Sources */,
+				DC2BFCEB26935963007C3F79 /* MenuHeaderTableViewCell.swift in Sources */,
 				E10CBEDF1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift in Sources */,
 				E133794F1D41E26C00AD10F4 /* STRouter.swift in Sources */,
 				E1B381A71C6C4AA0007E1A15 /* STTagCollectionView.swift in Sources */,
