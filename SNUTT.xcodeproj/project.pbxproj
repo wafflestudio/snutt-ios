@@ -10,9 +10,11 @@
 		B1EB38A2D401D55B8B513965 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */; };
 		DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */; };
 		DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */; };
-		DC2BFCEB26935963007C3F79 /* MenuHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BFCE926935963007C3F79 /* MenuHeaderTableViewCell.swift */; };
-		DC2BFCEC26935963007C3F79 /* MenuHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC2BFCEA26935963007C3F79 /* MenuHeaderTableViewCell.xib */; };
 		DC5B8CD726905CB40085268B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B8CD626905CB40085268B /* MenuViewController.swift */; };
+		DC6CD12326959A6600B3869F /* TimetablePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6CD12126959A6600B3869F /* TimetablePickerViewController.swift */; };
+		DC6CD12426959A6600B3869F /* TimetablePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC6CD12226959A6600B3869F /* TimetablePickerViewController.xib */; };
+		DCA8D3312695D9E90009AA7A /* MenuTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA8D3302695D9E90009AA7A /* MenuTableViewHeaderView.swift */; };
+		DCA8D3482695DD1E0009AA7A /* MenuTableViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCA8D3472695DD1E0009AA7A /* MenuTableViewHeaderView.xib */; };
 		E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C61B4CCD16006FD8B3 /* STLecture.swift */; };
 		E10852C91B4CCD16006FD8B3 /* STTimetableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */; };
 		E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109CC781C3E8C050050399A /* STTimetableListController.swift */; };
@@ -220,11 +222,13 @@
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
-		DC2BFCE926935963007C3F79 /* MenuHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeaderTableViewCell.swift; sourceTree = "<group>"; };
-		DC2BFCEA26935963007C3F79 /* MenuHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		DC5B8CD626905CB40085268B /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		DC6CD12126959A6600B3869F /* TimetablePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetablePickerViewController.swift; sourceTree = "<group>"; };
+		DC6CD12226959A6600B3869F /* TimetablePickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetablePickerViewController.xib; sourceTree = "<group>"; };
 		DC822D7F26426E3300D57D58 /* SNUTTRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTRelease.entitlements; sourceTree = "<group>"; };
 		DC822DA426428D2B00D57D58 /* SNUTTDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTDebug.entitlements; sourceTree = "<group>"; };
+		DCA8D3302695D9E90009AA7A /* MenuTableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewHeaderView.swift; sourceTree = "<group>"; };
+		DCA8D3472695DD1E0009AA7A /* MenuTableViewHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewHeaderView.xib; sourceTree = "<group>"; };
 		E0B8ADB76AB6B75793967316 /* Pods-SNUTT Today.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.production.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.production.xcconfig"; sourceTree = "<group>"; };
 		E10852C61B4CCD16006FD8B3 /* STLecture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLecture.swift; sourceTree = "<group>"; };
 		E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableCollectionView.swift; sourceTree = "<group>"; };
@@ -420,8 +424,10 @@
 				DC5B8CD626905CB40085268B /* MenuViewController.swift */,
 				DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */,
 				DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */,
-				DC2BFCE926935963007C3F79 /* MenuHeaderTableViewCell.swift */,
-				DC2BFCEA26935963007C3F79 /* MenuHeaderTableViewCell.xib */,
+				DC6CD12126959A6600B3869F /* TimetablePickerViewController.swift */,
+				DC6CD12226959A6600B3869F /* TimetablePickerViewController.xib */,
+				DCA8D3302695D9E90009AA7A /* MenuTableViewHeaderView.swift */,
+				DCA8D3472695DD1E0009AA7A /* MenuTableViewHeaderView.xib */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -903,7 +909,7 @@
 				E14DF21E1C3FB7820076FDDE /* STLectureTableViewCell.xib in Resources */,
 				E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */,
 				E1CD92671E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib in Resources */,
-				DC2BFCEC26935963007C3F79 /* MenuHeaderTableViewCell.xib in Resources */,
+				DC6CD12426959A6600B3869F /* TimetablePickerViewController.xib in Resources */,
 				E19A3AA51B453770007FCAD7 /* LaunchScreen.xib in Resources */,
 				E1C48BA21C79C0E300BC469E /* Localizable.strings in Resources */,
 				E1F946231DB449E300CC8AF6 /* STAddLectureButtonCell.xib in Resources */,
@@ -921,6 +927,7 @@
 				E1986A401F10C2D700337419 /* STSearchEmptyView.xib in Resources */,
 				E1F0CA271C75B01900A4F4ED /* STLectureSearchTableViewCell.xib in Resources */,
 				E1C48B921C7879E600BC469E /* STSingleClassTableViewCell.xib in Resources */,
+				DCA8D3482695DD1E0009AA7A /* MenuTableViewHeaderView.xib in Resources */,
 				E19A3AA21B453770007FCAD7 /* Images.xcassets in Resources */,
 				E1C48B8E1C78736000BC469E /* STColorPickTableViewCell.xib in Resources */,
 				E1F58AAC1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib in Resources */,
@@ -1075,6 +1082,7 @@
 				E1EE1B311CCCDE20003DF250 /* STDefaults.swift in Sources */,
 				E16A88591C9FC59F003D94AB /* STTermAndConditionViewController.swift in Sources */,
 				E17825CD1D577CD8009ACEC3 /* STNotificationRouter.swift in Sources */,
+				DC6CD12326959A6600B3869F /* TimetablePickerViewController.swift in Sources */,
 				E1A99D931CB112EE00953A4B /* STRedButtonTableViewCell.swift in Sources */,
 				E19ABD711EAB49BE0051B1C7 /* STOnBoardingViewController.swift in Sources */,
 				E1D0FB651C86CDCE00ACDC2F /* STColorPickerTableViewController.swift in Sources */,
@@ -1104,6 +1112,7 @@
 				E1B34A501EB2278C004C5E5E /* STRegisterViewController.swift in Sources */,
 				E10852C91B4CCD16006FD8B3 /* STTimetableCollectionView.swift in Sources */,
 				E1526E971E51742600A58F40 /* STPrivacyPolicyViewController.swift in Sources */,
+				DCA8D3312695D9E90009AA7A /* MenuTableViewHeaderView.swift in Sources */,
 				E1C48BB01C79C45500BC469E /* STQuarter.swift in Sources */,
 				E16643551B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift in Sources */,
 				E1C48B941C787A3C00BC469E /* STSingleClassTableViewCell.swift in Sources */,
@@ -1151,7 +1160,6 @@
 				E1C48BB21C79C8E200BC469E /* STDay.swift in Sources */,
 				E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */,
 				DC5B8CD726905CB40085268B /* MenuViewController.swift in Sources */,
-				DC2BFCEB26935963007C3F79 /* MenuHeaderTableViewCell.swift in Sources */,
 				E10CBEDF1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift in Sources */,
 				E133794F1D41E26C00AD10F4 /* STRouter.swift in Sources */,
 				E1B381A71C6C4AA0007E1A15 /* STTagCollectionView.swift in Sources */,

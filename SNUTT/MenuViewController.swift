@@ -32,7 +32,7 @@ class MenuViewController: UIViewController {
         timetableListTableView.delegate = self
         timetableListTableView.dataSource = self
         registerCellXib()
-        registerHeaderCellXib()
+        registerHeaderView()
         
         STNetworking.getTimetableList({ list in
             self.timetableList = list
@@ -86,12 +86,12 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = timetableListTableView.dequeueReusableCell(withIdentifier: "menuHeaderTableViewCell") as! MenuHeaderTableViewCell
-        if let currentTT = currentTimetable() {
-            cell.setHeaderLabel(text: currentTT.quarter.longString())
-        }
-        
-        return cell.contentView
+        guard let view = timetableListTableView.dequeueReusableHeaderFooterView(withIdentifier: "MenuTableViewHeaderView") as? MenuTableViewHeaderView, let currentTT = currentTimetable()
+                else { return nil }
+        view.delegate = self
+        view.setHeaderLabel(text: currentTT.quarter.longString())
+    
+        return view
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -103,8 +103,17 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         timetableListTableView.register(nib, forCellReuseIdentifier: "menuTableViewCell")
     }
     
-    private func registerHeaderCellXib() {
-        let nib = UINib(nibName: "MenuHeaderTableViewCell", bundle: nil)
-        timetableListTableView.register(nib, forCellReuseIdentifier: "menuHeaderTableViewCell")
+    private func registerHeaderView() {
+        let nib = UINib(nibName: "MenuTableViewHeaderView", bundle: nil)
+        timetableListTableView.register(nib, forHeaderFooterViewReuseIdentifier: "MenuTableViewHeaderView")
+    }
+}
+
+extension MenuViewController: MenuTableViewHeaderViewDelegate {
+    func presentSemesterPickView(_: MenuTableViewHeaderView) {
+        let pickerViewController = TimetablePickerViewController(nibName: "TimetablePickerViewController", bundle: nil)
+        pickerViewController.modalPresentationStyle = .currentContext
+        
+        present(pickerViewController, animated: true)
     }
 }
