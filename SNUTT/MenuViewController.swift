@@ -10,6 +10,18 @@ import Foundation
 
 class MenuViewController: UIViewController {
     
+    struct Section {
+        var timetableList : [STTimetable]
+        var courseBook : STCourseBook
+    }
+    
+    var timetableList : [STTimetable] = []
+    var sectionList : [Section] = []
+    
+    let currentTimetable = {
+        return STTimetableManager.sharedInstance.currentTimetable
+    }
+    
     @IBOutlet weak var timetableListTableView: UITableView!
     
     override func viewDidLoad() {
@@ -21,18 +33,53 @@ class MenuViewController: UIViewController {
         timetableListTableView.dataSource = self
         registerCellXib()
         registerHeaderCellXib()
+        
+        STNetworking.getTimetableList({ list in
+            self.timetableList = list
+            self.reloadList()
+        }, failure: {
+            // TODO: No network status handling
+            self.dismiss(animated: true, completion: nil)
+        })
+        
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(self.reloadList), event: STEvent.CourseBookUpdated, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(self.reloadList), event: STEvent.CurrentTimetableChanged, object: nil)
+        STEventCenter.sharedInstance.addObserver(self, selector: #selector(self.reloadList), event: STEvent.CurrentTimetableSwitched, object: nil)
+        reloadList()
+    }
+    
+    @objc func reloadList() {
+        
+        self.updateSectionedList()
+        timetableListTableView.reloadData()
+    }
+    
+    func updateSectionedList() {
+        let courseBookList = STCourseBookList.sharedInstance.courseBookList
+        sectionList = courseBookList.map({ courseBook in
+            return Section.init(timetableList:
+                timetableList.filter({ timetable in
+                    timetable.quarter == courseBook.quarter
+                }), courseBook: courseBook)
+        })
     }
 }
 
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        if let currentTT = currentTimetable() {
+            return currentTT.lectureList.count
+            
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = timetableListTableView.dequeueReusableCell(withIdentifier: "menuTableViewCell", for: indexPath)
-        if let customCell = cell as? MenuTableViewCell {
-            customCell.setLabel(text: "야야야")
+        if let customCell = cell as? MenuTableViewCell, let currentTT = currentTimetable() {
+            let title = currentTT.lectureList[indexPath.row].title
+            customCell.setLabel(text: title)
         }
         
         return cell
@@ -40,8 +87,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = timetableListTableView.dequeueReusableCell(withIdentifier: "menuHeaderTableViewCell") as! MenuHeaderTableViewCell
-        
-        cell.setHeaderLabel(text: "밥묵자")
+        if let currentTT = currentTimetable() {
+            cell.setHeaderLabel(text: currentTT.quarter.longString())
+        }
         
         return cell.contentView
     }
