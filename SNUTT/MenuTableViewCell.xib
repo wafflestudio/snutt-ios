@@ -39,24 +39,26 @@
                         <color key="textColor" systemColor="opaqueSeparatorColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Azq-zd-SU2">
-                        <rect key="frame" x="230" y="0.0" width="30" height="30"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Azq-zd-SU2">
+                        <rect key="frame" x="236" y="3" width="24" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="30" id="Bsw-mr-dvH"/>
-                            <constraint firstAttribute="height" constant="30" id="Rif-Da-npL"/>
+                            <constraint firstAttribute="width" constant="24" id="Bsw-mr-dvH"/>
+                            <constraint firstAttribute="height" constant="24" id="Rif-Da-npL"/>
                         </constraints>
-                        <state key="normal" image="group2Copy"/>
+                        <color key="tintColor" red="0.006906411082" green="0.006906411082" blue="0.006906411082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <state key="normal" image="dotdotdot"/>
                         <connections>
                             <action selector="settingButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xfa-vx-K84"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KQe-B6-dJx">
-                        <rect key="frame" x="196" y="0.0" width="30" height="30"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KQe-B6-dJx">
+                        <rect key="frame" x="208" y="3" width="24" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="30" id="kRl-y7-IK1"/>
-                            <constraint firstAttribute="height" constant="30" id="l99-s5-Vcq"/>
+                            <constraint firstAttribute="width" constant="24" id="kRl-y7-IK1"/>
+                            <constraint firstAttribute="height" constant="24" id="l99-s5-Vcq"/>
                         </constraints>
-                        <state key="normal" image="group2Copy"/>
+                        <color key="tintColor" red="0.006906411082" green="0.006906411082" blue="0.006906411082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <state key="normal" image="duplicate"/>
                         <connections>
                             <action selector="duplicateButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YtN-6h-sCB"/>
                         </connections>
@@ -86,7 +88,8 @@
     </objects>
     <resources>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
-        <image name="group2Copy" width="22" height="22"/>
+        <image name="dotdotdot" width="3.5" height="21.5"/>
+        <image name="duplicate" width="30" height="29"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
