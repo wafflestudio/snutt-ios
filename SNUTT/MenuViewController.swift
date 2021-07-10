@@ -13,6 +13,7 @@ class MenuViewController: UIViewController {
     struct Section {
         var timetableList : [STTimetable]
         var courseBook : STCourseBook
+        var quarter: STQuarter
     }
     
     var timetableList : [STTimetable] = []
@@ -20,6 +21,18 @@ class MenuViewController: UIViewController {
     
     let currentTimetable = {
         return STTimetableManager.sharedInstance.currentTimetable
+    }
+    
+    var currentQurterTimetableList: [STTimetable] {
+        return timetableList.filter({ table in
+            table.quarter == currentTimetable()?.quarter
+        })
+    }
+    
+    var currentSection: [Section] {
+        return sectionList.filter({ section in
+            section.quarter == currentTimetable()?.quarter
+        })
     }
     
     @IBOutlet weak var timetableListTableView: UITableView!
@@ -66,26 +79,30 @@ class MenuViewController: UIViewController {
             return Section.init(timetableList:
                                     timetableList.filter({ timetable in
                                         timetable.quarter == courseBook.quarter
-                                    }), courseBook: courseBook)
+                                    }), courseBook: courseBook, quarter: courseBook.quarter)
         })
     }
 }
 
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTableViewHeaderViewDelegate {
+    var cellLength: Int {
+        return currentQurterTimetableList.count + 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let currentTT = currentTimetable() {
-            return currentTT.lectureList.count
-            
-        } else {
-            return 1
-        }
+        return cellLength
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = timetableListTableView.dequeueReusableCell(withIdentifier: "menuTableViewCell", for: indexPath)
-        if let customCell = cell as? MenuTableViewCell, let currentTT = currentTimetable() {
-            let title = currentTT.lectureList[indexPath.row].title
-            customCell.setLabel(text: title)
+        if let customCell = cell as? MenuTableViewCell {
+            if indexPath.row == cellLength - 1 {
+                customCell.setLabel(text: "+ 시간표 추가하기")
+            } else {
+                let timatable = currentQurterTimetableList[indexPath.row]
+                customCell.setLabel(text: timatable.title)
+                customCell.setCredit(credit: timatable.totalCredit)
+            }
         }
         
         return cell
@@ -104,6 +121,12 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
         return 32
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == cellLength - 1 {
+            showCreateTextfield()
+        }
+    }
+    
     private func registerCellXib() {
         let nib = UINib(nibName: "MenuTableViewCell", bundle: nil)
         timetableListTableView.register(nib, forCellReuseIdentifier: "menuTableViewCell")
@@ -112,6 +135,25 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
     private func registerHeaderView() {
         let nib = UINib(nibName: "MenuTableViewHeaderView", bundle: nil)
         timetableListTableView.register(nib, forHeaderFooterViewReuseIdentifier: "MenuTableViewHeaderView")
+    }
+    
+    private func showCreateTextfield() {
+        let alert = UIAlertController(title: "시간표 이름", message: nil, preferredStyle: .alert)
+        alert.addTextField { textfield in
+            textfield.minimumFontSize = 21
+            textfield.placeholder = "멋진 시간표"
+        }
+        
+        let create = UIAlertAction(title: "만들기", style: .default) { action in
+            guard let text = alert.textFields?[0].text else { return }
+            do {
+                self.addTimetable(text, courseBook: self.currentSection[0].courseBook)
+            } catch {
+            }
+        }
+        
+        alert.addAction(create)
+        present(alert, animated: true)
     }
 }
 
@@ -136,7 +178,7 @@ extension MenuViewController: TimetablePickerViewControllerDelegate {
         let section = sectionList[index]
         if section.timetableList.count == 0 {
             // create a new timetable and move to that timetable
-            addTimetable("시간표 1", courseBook: section.courseBook)
+            addTimetable("새로운 시간표", courseBook: section.courseBook)
             return
         }
         
@@ -156,15 +198,16 @@ extension MenuViewController: TimetablePickerViewControllerDelegate {
     }
     
     private func addTimetable(_ title : String, courseBook : STCourseBook) {
-        let newTimetable = STTimetable(courseBook: courseBook, title: title)
-        timetableList.append(newTimetable)
-        reloadList()
         STNetworking.createTimetable(title, courseBook: courseBook, done: { list in
             self.timetableList = list
             self.reloadList()
         }, failure: {
-            let index = self.timetableList.index(of: newTimetable)
-            self.timetableList.remove(at: index!)
+            // TODO: 응답에 따른 에러 핸들링
+            let alert = UIAlertController(title: "시간표 만들기 실패", message: "중복된 시간표 이름입니다", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .cancel)
+            alert.addAction(ok)
+            self.present(alert, animated: true)
+            
         })
     }
 }

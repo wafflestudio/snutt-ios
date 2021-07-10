@@ -39,4 +39,8 @@ class MenuTableViewCell: UITableViewCell {
     func setLabel(text: String) {
         timetableLabel.text = text
     }
+    
+    func setCredit(credit: Int) {
+        credits.text = "(" + String(credit) + " 학점)"
+    }
 }
