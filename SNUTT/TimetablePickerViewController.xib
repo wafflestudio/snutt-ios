@@ -17,23 +17,39 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NCz-Tw-lkZ">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
-                </pickerView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WXQ-QN-EZj">
+                    <rect key="frame" x="36" y="328" width="342" height="240"/>
+                    <subviews>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NCz-Tw-lkZ">
+                            <rect key="frame" x="0.0" y="24" width="342" height="216"/>
+                        </pickerView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1y0-8X-dAG">
+                            <rect key="frame" x="171" y="43" width="42" height="20.5"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="NCz-Tw-lkZ" firstAttribute="leading" secondItem="WXQ-QN-EZj" secondAttribute="leading" id="2c3-xp-YtG"/>
+                        <constraint firstAttribute="trailing" secondItem="NCz-Tw-lkZ" secondAttribute="trailing" id="NSa-AO-0RU"/>
+                        <constraint firstAttribute="bottom" secondItem="NCz-Tw-lkZ" secondAttribute="bottom" id="Wzy-DG-EOO"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="NCz-Tw-lkZ" secondAttribute="trailing" id="18K-Ew-v0Z"/>
-                <constraint firstItem="NCz-Tw-lkZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="4Cb-Bh-0KC"/>
-                <constraint firstItem="NCz-Tw-lkZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="65g-gZ-VKI"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="NCz-Tw-lkZ" secondAttribute="bottom" id="AMu-rh-gbR"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="WXQ-QN-EZj" secondAttribute="trailing" constant="36" id="897-Ub-Il6"/>
+                <constraint firstItem="WXQ-QN-EZj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="36" id="Kj9-UR-RO3"/>
+                <constraint firstItem="WXQ-QN-EZj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="284" id="cXD-2C-Ker"/>
+                <constraint firstItem="WXQ-QN-EZj" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="rah-jQ-77A"/>
             </constraints>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-54" y="85"/>
+            <point key="canvasLocation" x="-55.072463768115945" y="84.375"/>
         </view>
     </objects>
     <resources>

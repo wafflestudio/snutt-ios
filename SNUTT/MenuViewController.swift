@@ -48,6 +48,12 @@ class MenuViewController: UIViewController {
         reloadList()
     }
     
+    var semesterList: [String]  {
+        return self.sectionList.map({section in
+            return section.courseBook.quarter.longString()
+        })
+    }
+    
     @objc func reloadList() {
         
         self.updateSectionedList()
@@ -58,9 +64,9 @@ class MenuViewController: UIViewController {
         let courseBookList = STCourseBookList.sharedInstance.courseBookList
         sectionList = courseBookList.map({ courseBook in
             return Section.init(timetableList:
-                timetableList.filter({ timetable in
-                    timetable.quarter == courseBook.quarter
-                }), courseBook: courseBook)
+                                    timetableList.filter({ timetable in
+                                        timetable.quarter == courseBook.quarter
+                                    }), courseBook: courseBook)
         })
     }
 }
@@ -87,10 +93,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let view = timetableListTableView.dequeueReusableHeaderFooterView(withIdentifier: "MenuTableViewHeaderView") as? MenuTableViewHeaderView, let currentTT = currentTimetable()
-                else { return nil }
+        else { return nil }
         view.delegate = self
         view.setHeaderLabel(text: currentTT.quarter.longString())
-    
+        
         return view
     }
     
@@ -112,7 +118,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
 extension MenuViewController: MenuTableViewHeaderViewDelegate {
     func presentSemesterPickView(_: MenuTableViewHeaderView) {
         let pickerViewController = TimetablePickerViewController(nibName: "TimetablePickerViewController", bundle: nil)
-        pickerViewController.modalPresentationStyle = .currentContext
+        pickerViewController.setSemesterList(list: semesterList)
+        pickerViewController.modalPresentationStyle = .formSheet
         
         present(pickerViewController, animated: true)
     }

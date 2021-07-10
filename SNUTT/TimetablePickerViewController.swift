@@ -15,24 +15,33 @@ protocol TimetablePickerViewControllerDelegate: UIViewController {
 class TimetablePickerViewController: UIViewController {
     
     weak var delegate: TimetablePickerViewControllerDelegate?
+    
+    var semesterList: [String] = []
 
     @IBOutlet weak var semesterPickerView: UIPickerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        semesterPickerView.delegate = self
+        semesterPickerView.dataSource = self
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func setSemesterList(list: [String]) {
+        semesterList = list
     }
-    */
+}
 
+extension TimetablePickerViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return semesterList.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return semesterList[row]
+    }
 }
