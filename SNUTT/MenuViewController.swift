@@ -48,9 +48,9 @@ class MenuViewController: UIViewController {
         reloadList()
     }
     
-    var semesterList: [String]  {
+    var semesterList: [STQuarter]  {
         return self.sectionList.map({section in
-            return section.courseBook.quarter.longString()
+            return section.courseBook.quarter
         })
     }
     
@@ -71,7 +71,7 @@ class MenuViewController: UIViewController {
     }
 }
 
-extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
+extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTableViewHeaderViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let currentTT = currentTimetable() {
             return currentTT.lectureList.count
@@ -115,12 +115,56 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension MenuViewController: MenuTableViewHeaderViewDelegate {
+extension MenuViewController: TimetablePickerViewControllerDelegate {
     func presentSemesterPickView(_: MenuTableViewHeaderView) {
         let pickerViewController = TimetablePickerViewController(nibName: "TimetablePickerViewController", bundle: nil)
         pickerViewController.setSemesterList(list: semesterList)
+        
+        if let currentQuarter = currentTimetable()?.quarter {
+            pickerViewController.setSelectedSemester(index: semesterList.index(of: currentQuarter))
+        } else {
+            pickerViewController.setSelectedSemester(index: 0)
+        }
+        
+        pickerViewController.delegate = self
         pickerViewController.modalPresentationStyle = .formSheet
         
         present(pickerViewController, animated: true)
+    }
+    
+    func changeSemester(_ controller: TimetablePickerViewController, index: Int) {
+        let section = sectionList[index]
+        if section.timetableList.count == 0 {
+            // create a new timetable and move to that timetable
+            addTimetable("시간표 1", courseBook: section.courseBook)
+            return
+        }
+        
+        guard let id = sectionList.get(index)?.timetableList.get(0)?.id else {
+            return
+        }
+        
+        STNetworking.getTimetable(id, done: { timetable in
+            if (timetable == nil) {
+                STAlertView.showAlert(title: "시간표 로딩 실패", message: "선택한 시간표가 서버에 존재하지 않습니다.")
+            }
+            STTimetableManager.sharedInstance.currentTimetable = timetable
+            self.navigationController?.popViewController(animated: true)
+        }, failure: { _ in
+
+        })
+    }
+    
+    private func addTimetable(_ title : String, courseBook : STCourseBook) {
+        let newTimetable = STTimetable(courseBook: courseBook, title: title)
+        timetableList.append(newTimetable)
+        reloadList()
+        STNetworking.createTimetable(title, courseBook: courseBook, done: { list in
+            self.timetableList = list
+            self.reloadList()
+        }, failure: {
+            let index = self.timetableList.index(of: newTimetable)
+            self.timetableList.remove(at: index!)
+        })
     }
 }
