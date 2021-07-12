@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol MenuTableViewCellDelegate: class {
+    func showSettingSheet(_ cell: MenuTableViewCell)
+}
+
 class MenuTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
@@ -21,6 +25,8 @@ class MenuTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    var delegate: MenuTableViewCellDelegate?
+    
     @IBOutlet weak var credits: UILabel!
     @IBOutlet weak var timetableLabel: UILabel!
     @IBOutlet weak var checkedIcon: UIImageView!
@@ -29,7 +35,11 @@ class MenuTableViewCell: UITableViewCell {
     }
     
     @IBAction func settingButton(_ sender: UIButton) {
+        delegate?.showSettingSheet(self)
     }
+    
+    @IBOutlet weak var duplicateBButton: UIButton!
+    @IBOutlet weak var settingBButton: UIButton!
     
     func checkCurrentTimetable() {
         checkedIcon.image = UIImage(systemName: "circle.fill")
@@ -42,5 +52,17 @@ class MenuTableViewCell: UITableViewCell {
     
     func setCredit(credit: Int) {
         credits.text = "(" + String(credit) + " 학점)"
+    }
+    
+    func setCreateNewCellStyle() {
+        credits.isHidden = true
+        checkedIcon.isHidden = true
+        timetableLabel.textColor = .gray
+        duplicateBButton.isHidden = true
+        settingBButton.isHidden = true
+    }
+    
+    func hideCheckIcon() {
+        checkedIcon.isHidden = true
     }
 }
