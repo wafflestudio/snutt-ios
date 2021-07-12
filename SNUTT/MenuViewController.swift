@@ -24,9 +24,7 @@ class MenuViewController: UIViewController {
     }
     
     var currentQurterTimetableList: [STTimetable] {
-        return timetableList.filter({ table in
-            table.quarter == currentTimetable()?.quarter
-        })
+        return currentSection[0].timetableList
     }
     
     var currentSection: [Section] {
@@ -36,6 +34,11 @@ class MenuViewController: UIViewController {
     }
     
     @IBOutlet weak var timetableListTableView: UITableView!
+    
+    
+    @IBAction func dismiss(_ sender: UIButton) {
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,7 +89,7 @@ class MenuViewController: UIViewController {
 
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTableViewHeaderViewDelegate {
     var cellLength: Int {
-        return currentQurterTimetableList.count + 1
+        return currentSection[0].timetableList.count + 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,14 +98,25 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = timetableListTableView.dequeueReusableCell(withIdentifier: "menuTableViewCell", for: indexPath)
+        // 요거 고쳐야댐
+        if cellLength > 1 {
+        
         if let customCell = cell as? MenuTableViewCell {
-            if indexPath.row == cellLength - 1 {
+            customCell.delegate = self
+            if indexPath.row == cellLength - 1 && cellLength > 1{
                 customCell.setLabel(text: "+ 시간표 추가하기")
+                customCell.setCreateNewCellStyle()
             } else {
                 let timatable = currentQurterTimetableList[indexPath.row]
                 customCell.setLabel(text: timatable.title)
                 customCell.setCredit(credit: timatable.totalCredit)
+                
+                if !(currentQurterTimetableList[indexPath.row] == currentTimetable()) {
+                    customCell.hideCheckIcon()
+                }
             }
+        }
+            
         }
         
         return cell
@@ -146,13 +160,14 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
         
         let create = UIAlertAction(title: "만들기", style: .default) { action in
             guard let text = alert.textFields?[0].text else { return }
-            do {
-                self.addTimetable(text, courseBook: self.currentSection[0].courseBook)
-            } catch {
-            }
+            
+            self.addTimetable(text, courseBook: self.currentSection[0].courseBook)
         }
         
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
         alert.addAction(create)
+        alert.addAction(cancel)
         present(alert, animated: true)
     }
 }
@@ -169,7 +184,6 @@ extension MenuViewController: TimetablePickerViewControllerDelegate {
         }
         
         pickerViewController.delegate = self
-        pickerViewController.modalPresentationStyle = .formSheet
         
         present(pickerViewController, animated: true)
     }
@@ -193,12 +207,15 @@ extension MenuViewController: TimetablePickerViewControllerDelegate {
             STTimetableManager.sharedInstance.currentTimetable = timetable
             self.navigationController?.popViewController(animated: true)
         }, failure: { _ in
-
+            
         })
     }
     
     private func addTimetable(_ title : String, courseBook : STCourseBook) {
+        let newTimetable = STTimetable(courseBook: courseBook, title: title)
         STNetworking.createTimetable(title, courseBook: courseBook, done: { list in
+            
+            self.timetableList.append(newTimetable)
             self.timetableList = list
             self.reloadList()
         }, failure: {
@@ -209,5 +226,24 @@ extension MenuViewController: TimetablePickerViewControllerDelegate {
             self.present(alert, animated: true)
             
         })
+    }
+}
+
+extension MenuViewController: MenuTableViewCellDelegate {
+    func showSettingSheet(_ cell: MenuTableViewCell) {
+        let sheetAlert = UIAlertController(title: "곧 만들게영", message: "", preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "", style: .cancel)
+        sheetAlert.addAction(cancel)
+        
+//        let settingController = SettingViewController(nibName: "SettingViewController", bundle: nil)
+        
+//        sheetAlert.addChild(settingController)
+//        sheetAlert.view.addSubview(settingController.view)
+        
+//        sheetAlert.addAction(cancel, handler: {
+//                    (alertAction: UIAlertAction!) in
+//            sheetAlert.dismiss(animated: true, completion: nil)
+//                })
+        present(sheetAlert, animated: true)
     }
 }

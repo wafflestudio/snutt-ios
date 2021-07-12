@@ -131,12 +131,15 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wac-6A-cxu">
-                                                <rect key="frame" x="254.5" y="28" width="17.5" height="26"/>
+                                                <rect key="frame" x="242" y="28" width="30" height="38"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                 <color key="tintColor" red="0.006906411082" green="0.006906411082" blue="0.006906411082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" image="xmark" catalog="system">
+                                                <state key="normal">
                                                     <color key="titleColor" red="0.006906411082" green="0.006906411082" blue="0.006906411082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="dismiss:" destination="PMK-Ec-4Lz" eventType="touchUpInside" id="0at-2u-fad"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fEK-kl-cru" userLabel="Logo">
                                                 <rect key="frame" x="0.0" y="26" width="21" height="21"/>
@@ -1886,7 +1889,6 @@
         <image name="topbarBox" width="22" height="22"/>
         <image name="topbarListview" width="22" height="22"/>
         <image name="topbar_capture" width="22" height="22"/>
-        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
