@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WXQ-QN-EZj">
-                    <rect key="frame" x="36" y="297" width="342" height="240"/>
+                    <rect key="frame" x="36" y="287" width="342" height="260"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시간표" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1y0-8X-dAG">
                             <rect key="frame" x="149" y="20" width="44.5" height="20"/>
@@ -30,7 +30,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <pickerView contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="NCz-Tw-lkZ">
-                            <rect key="frame" x="0.0" y="44" width="342" height="196"/>
+                            <rect key="frame" x="0.0" y="44" width="342" height="216"/>
                         </pickerView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IZG-bQ-qyj">
                             <rect key="frame" x="288" y="14" width="30" height="32"/>
@@ -72,7 +72,6 @@
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="WXQ-QN-EZj" secondAttribute="trailing" constant="36" id="897-Ub-Il6"/>
                 <constraint firstItem="WXQ-QN-EZj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="36" id="Kj9-UR-RO3"/>
-                <constraint firstItem="WXQ-QN-EZj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="253" id="cXD-2C-Ker"/>
                 <constraint firstItem="WXQ-QN-EZj" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-31" id="rah-jQ-77A"/>
             </constraints>
             <point key="canvasLocation" x="-55.072463768115945" y="84.375"/>
