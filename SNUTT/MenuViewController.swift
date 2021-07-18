@@ -89,7 +89,7 @@ class MenuViewController: UIViewController {
 
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTableViewHeaderViewDelegate {
     var cellLength: Int {
-        return currentSection[0].timetableList.count + 1
+        return currentSection.count == 0 ? 0 : currentSection[0].timetableList.count + 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
