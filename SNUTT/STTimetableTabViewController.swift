@@ -35,6 +35,8 @@ class STTimetableTabViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
     
+    @IBOutlet weak var notiBarItem: UIBarButtonItem!
+    
     @IBAction func switchToTimetableListView(_ sender: UIBarButtonItem) {
         switchView()
     }
@@ -90,6 +92,10 @@ class STTimetableTabViewController: UIViewController {
         
         menuController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
         addMenuView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setNotiBadge(STDefaults[.shouldShowBadge])
     }
 
     deinit {
@@ -384,6 +390,18 @@ extension STTimetableTabViewController {
                 self.menuControllerState = .closed
             }
         }
+    }
+}
+
+// MARK: Set noti navbar item
+extension STTimetableTabViewController {
+    func setNotiBadge(_ shouldShowBadge: Bool) {
+        if (shouldShowBadge) {
+            notiBarItem.image = #imageLiteral(resourceName: "tabAlarmNotiOff").withRenderingMode(.alwaysOriginal)
+        } else {
+            notiBarItem.image = #imageLiteral(resourceName: "tabAlarmOff").withRenderingMode(.alwaysOriginal)
+        }
+        STDefaults[.shouldShowBadge] = shouldShowBadge
     }
 }
 

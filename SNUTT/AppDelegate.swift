@@ -69,10 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // set the api key base on config.plist
         STDefaults[.apiKey] = configDict.object(forKey: "api_key") as! String
         if STDefaults[.token] != nil {
-            STMainTabBarController.controller?.setNotiBadge(STDefaults[.shouldShowBadge])
             STNetworking.getNotificationCount({ cnt in
-                STMainTabBarController.controller?.setNotiBadge(cnt != 0)
-                
+                STDefaults[.shouldShowBadge] = cnt != 0
                 }, failure: { 
                     return
             })
@@ -146,7 +144,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func receivedNotification() {
         STMainTabBarController.controller?.notificationController?.refreshList()
-        STMainTabBarController.controller?.setNotiBadge(true)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

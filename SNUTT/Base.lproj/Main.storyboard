@@ -74,10 +74,10 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="topbarBox" id="diC-Ny-PMc">
+                            <barButtonItem image="tabAlarmOff" id="diC-Ny-PMc">
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <segue destination="eOk-et-eG5" kind="push" id="Uhg-sr-SqZ"/>
+                                    <segue destination="2Xm-tS-Iwu" kind="show" id="3Jl-z2-KT8"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem image="topbar_capture" id="nbi-ue-X3V">
@@ -97,6 +97,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="containerView" destination="gPH-UC-il9" id="87M-tR-494"/>
+                        <outlet property="notiBarItem" destination="diC-Ny-PMc" id="7JY-y3-Hkk"/>
                         <outlet property="timetableView" destination="zsa-uu-87y" id="V8P-f4-YaD"/>
                         <outletCollection property="rightBarButtonsForTimetable" destination="gnE-zE-Exs" collectionClass="NSMutableArray" id="spb-Sa-qz7"/>
                         <outletCollection property="rightBarButtonsForTimetable" destination="nbi-ue-X3V" collectionClass="NSMutableArray" id="Iq3-fR-vvh"/>
@@ -209,7 +210,7 @@
             <objects>
                 <tableViewController hidesBottomBarWhenPushed="YES" id="eOk-et-eG5" customClass="STTimetableListController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="an3-Px-V2s">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -251,14 +252,14 @@
                         <viewControllerLayoutGuide type="bottom" id="uLo-1x-He4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Dp4-te-caD">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esT-Nf-ktR">
-                                <rect key="frame" x="0.0" y="44" width="320" height="216"/>
+                                <rect key="frame" x="0.0" y="56" width="320" height="216"/>
                             </pickerView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="시간표 이름" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vhv-Xg-cXK">
-                                <rect key="frame" x="35" y="260" width="250" height="34"/>
+                                <rect key="frame" x="35" y="272" width="250" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="ygR-oZ-F0g"/>
                                 </constraints>
@@ -882,7 +883,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qUh-B3-8yj" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9rD-e2-jc3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -899,7 +900,7 @@
             <objects>
                 <tableViewController id="2Xm-tS-Iwu" customClass="STNotificationTableViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="48" sectionHeaderHeight="28" sectionFooterHeight="28" id="hjY-cd-K5k">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="475"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
@@ -911,7 +912,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ue6-Ty-9fF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1954.5" y="-2463.5"/>
+            <point key="canvasLocation" x="2828" y="-568"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yKO-CV-rmO">
@@ -935,7 +936,7 @@
         <scene sceneID="app-u8-e8R">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Ze-X7-etd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="tabAlarmOff" selectedImage="tabAlarmOn" id="lHI-2m-jug"/>
+                    <tabBarItem key="tabBarItem" title="" image="review" selectedImage="reviewOn0.5x" id="lHI-2m-jug"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Cgb-zL-JZM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -943,12 +944,43 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="2Xm-tS-Iwu" kind="relationship" relationship="rootViewController" id="uDE-xJ-W08"/>
+                        <segue destination="SBU-Fp-9dQ" kind="relationship" relationship="rootViewController" id="qk3-HV-wMu"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2uF-ho-bKj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1221" y="-2464"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="mx3-vH-CQW">
+            <objects>
+                <viewController id="SBU-Fp-9dQ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MfS-FY-cCq"/>
+                        <viewControllerLayoutGuide type="bottom" id="mOq-mq-B23"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="V58-Mx-cel">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="웹뷰 강의평 넣을거에여" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7KE-Pw-z8A">
+                                <rect key="frame" x="33" y="243" width="254.5" height="33.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="7KE-Pw-z8A" firstAttribute="centerX" secondItem="V58-Mx-cel" secondAttribute="centerX" id="7bR-JY-gte"/>
+                            <constraint firstItem="7KE-Pw-z8A" firstAttribute="centerY" secondItem="V58-Mx-cel" secondAttribute="centerY" id="HIW-br-ceH"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="jhi-gB-6jX"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GqQ-1n-H57" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1892" y="-2464"/>
         </scene>
         <!--설정-->
         <scene sceneID="y8O-ui-lJB">
@@ -1878,15 +1910,15 @@
     <resources>
         <image name="logo" width="51" height="52"/>
         <image name="navigationbaritem_list" width="22" height="20"/>
+        <image name="review" width="30" height="30"/>
+        <image name="reviewOn0.5x" width="28.5" height="24"/>
         <image name="tabAlarmOff" width="30" height="30"/>
-        <image name="tabAlarmOn" width="30" height="30"/>
         <image name="tabSearchOff" width="30" height="30"/>
         <image name="tabSearchOn" width="30" height="30"/>
         <image name="tabSettingOff" width="30" height="30"/>
         <image name="tabSettingOn" width="30" height="30"/>
         <image name="tabTimetableOff" width="30" height="30"/>
         <image name="tabTimetableOn" width="30" height="30"/>
-        <image name="topbarBox" width="22" height="22"/>
         <image name="topbarListview" width="22" height="22"/>
         <image name="topbar_capture" width="22" height="22"/>
         <systemColor name="groupTableViewBackgroundColor">
