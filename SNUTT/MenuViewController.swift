@@ -27,9 +27,11 @@ class MenuViewController: UIViewController {
         return currentSection[0].timetableList
     }
     
+    var currentQuarter = STTimetableManager.sharedInstance.currentTimetable?.quarter
+    
     var currentSection: [Section] {
         return sectionList.filter({ section in
-            section.quarter == currentTimetable()?.quarter
+            section.quarter == currentQuarter
         })
     }
     
@@ -125,10 +127,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let view = timetableListTableView.dequeueReusableHeaderFooterView(withIdentifier: "MenuTableViewHeaderView") as? MenuTableViewHeaderView, let currentTT = currentTimetable()
+        guard let view = timetableListTableView.dequeueReusableHeaderFooterView(withIdentifier: "MenuTableViewHeaderView") as? MenuTableViewHeaderView, let quarter = currentQuarter
         else { return nil }
         view.delegate = self
-        view.setHeaderLabel(text: currentTT.quarter.longString())
+        view.setHeaderLabel(text: quarter.longString())
         
         return view
     }
@@ -204,26 +206,8 @@ extension MenuViewController: TimetablePickerViewControllerDelegate {
     }
     
     func changeSemester(_ controller: TimetablePickerViewController, index: Int) {
-        let section = sectionList[index]
-        if section.timetableList.count == 0 {
-            // create a new timetable and move to that timetable
-            addTimetable("새로운 시간표", courseBook: section.courseBook)
-            return
-        }
-        
-        guard let id = sectionList.get(index)?.timetableList.get(0)?.id else {
-            return
-        }
-        
-        STNetworking.getTimetable(id, done: { timetable in
-            if (timetable == nil) {
-                STAlertView.showAlert(title: "시간표 로딩 실패", message: "선택한 시간표가 서버에 존재하지 않습니다.")
-            }
-            STTimetableManager.sharedInstance.currentTimetable = timetable
-            self.navigationController?.popViewController(animated: true)
-        }, failure: { _ in
-            
-        })
+        currentQuarter = sectionList[index].quarter
+        self.timetableListTableView.reloadData()
     }
     
     private func addTimetable(_ title : String, courseBook : STCourseBook) {
