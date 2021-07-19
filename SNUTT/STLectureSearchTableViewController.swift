@@ -81,6 +81,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         
         let filterImage = UIImage(image: UIImage(named: "filter"), scaledTo: CGSize(width: 24, height: 24))
         searchBar.setImage(filterImage, for: .bookmark, state: .normal)
+        searchBar.placeholder = "ex) 대영 Paul"
         
         timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableView.showTemporary = true
@@ -456,12 +457,13 @@ extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate
         }
         
         let currentOrigin = filterView.frame.origin.y
-        let halfOfWidth = filterView.frame.height / 2
+        let halfOfHeight = filterView.frame.height / 2
         
         if sender.state == .ended {
-            if (sender.velocity(in: filterView).x < -550) {
+            if (sender.velocity(in: filterView).y > 400) {
                 toggleFilterView()
-            } else if (currentOrigin >= -(halfOfWidth)) {
+            } else if (currentOrigin <= self.tabBarController!.view.frame.height - halfOfHeight) {
+                
                 UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
                     filterView.frame.origin.y = self.tabBarController!.view.frame.height - filterView.frame.height
                 }
