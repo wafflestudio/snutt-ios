@@ -19,7 +19,7 @@ class MenuViewController: UIViewController {
     var timetableList : [STTimetable] = []
     var sectionList : [Section] = []
     
-    let currentTimetable = {
+    var currentTimetable: STTimetable? {
         return STTimetableManager.sharedInstance.currentTimetable
     }
     
@@ -110,15 +110,15 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
             if indexPath.row == cellLength - 1 {
                 customCell.setLabel(text: "+ 시간표 추가하기")
                 customCell.setCreateNewCellStyle()
-                // 요거랑 밑에 hide 제대로 고치기!
             } else {
                 let timatable = currentQurterTimetableList[indexPath.row]
+                customCell.timetable = timatable
                 customCell.setDefaultCellStyle()
                 customCell.setLabel(text: timatable.title)
                 customCell.setCredit(credit: timatable.totalCredit)
                 customCell.hideCheckIcon()
                 
-                if (currentQurterTimetableList[indexPath.row] == currentTimetable()) {
+                if (timatable == currentTimetable) {
                     customCell.showCheckIcon()
                 }
             }
@@ -194,7 +194,7 @@ extension MenuViewController: TimetablePickerViewControllerDelegate {
         let pickerViewController = TimetablePickerViewController(nibName: "TimetablePickerViewController", bundle: nil)
         pickerViewController.setSemesterList(list: semesterList)
         
-        if let currentQuarter = currentTimetable()?.quarter {
+        if let currentQuarter = currentTimetable?.quarter {
             pickerViewController.setSelectedSemester(index: semesterList.index(of: currentQuarter))
         } else {
             pickerViewController.setSelectedSemester(index: 0)
@@ -211,10 +211,7 @@ extension MenuViewController: TimetablePickerViewControllerDelegate {
     }
     
     private func addTimetable(_ title : String, courseBook : STCourseBook) {
-        let newTimetable = STTimetable(courseBook: courseBook, title: title)
         STNetworking.createTimetable(title, courseBook: courseBook, done: { list in
-            
-            self.timetableList.append(newTimetable)
             self.timetableList = list
             self.reloadList()
         }, failure: {
@@ -235,10 +232,59 @@ extension MenuViewController: MenuTableViewCellDelegate {
         sheetAlert.addAction(cancel)
         
         let settingController = SettingViewController(nibName: "SettingViewController", bundle: nil)
+        settingController.delegate = self
+        settingController.timetable = cell.timetable
         sheetAlert.view.frame = settingController.view.frame
+        
         sheetAlert.addChild(settingController)
         sheetAlert.view.addSubview(settingController.view)
         
         present(sheetAlert, animated: true)
+    }
+}
+
+extension MenuViewController: SettingViewControllerDelegate {
+    func renameTimetable(_: SettingViewController, _ timetable: STTimetable, title: String) {
+        guard let id = timetable.id else {
+            STAlertView.showAlert(title: "시간표 이름 수정 실패", message: "")
+            return
+        }
+        
+        STNetworking.updateTimetable(id, title: title, done: { timetableList in
+            if self.currentTimetable?.id == timetable.id {
+                let updatedTimetable = timetableList.filter({ tt in
+                    return tt.id == timetable.id
+                })
+                
+                STTimetableManager.sharedInstance.currentTimetable = updatedTimetable[0]
+            }
+           
+            self.timetableList = timetableList
+            self.reloadList()
+        }, failure: { errorTitle in
+            STAlertView.showAlert(title: errorTitle, message: "")
+            return
+        })
+    }
+    
+    func deleteTimetable(_: SettingViewController, _ timetable: STTimetable) {
+        guard let id = timetable.id else {
+            STAlertView.showAlert(title: "시간표 삭제 실패", message: "")
+            return
+        }
+        
+        if timetable == currentTimetable {
+            STAlertView.showAlert(title: "현재 시간표는 삭제할 수 없습니다 ", message: "")
+            return
+        }
+        
+        STNetworking.deleteTimetable(id) {
+            if let deletedIndex = self.timetableList.index(of: timetable) {
+                self.timetableList.remove(at: deletedIndex)
+                self.reloadList()
+            }
+        } failure: {
+            STAlertView.showAlert(title: "시간표 삭제 실패", message: "")
+        }
     }
 }

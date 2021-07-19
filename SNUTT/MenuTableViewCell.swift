@@ -26,6 +26,7 @@ class MenuTableViewCell: UITableViewCell {
     }
     
     var delegate: MenuTableViewCellDelegate?
+    var timetable: STTimetable?
     
     @IBOutlet weak var credits: UILabel!
     @IBOutlet weak var timetableLabel: UILabel!
@@ -40,11 +41,6 @@ class MenuTableViewCell: UITableViewCell {
     
     @IBOutlet weak var duplicateBButton: UIButton!
     @IBOutlet weak var settingBButton: UIButton!
-    
-    func checkCurrentTimetable() {
-        checkedIcon.image = UIImage(systemName: "circle.fill")
-        checkedIcon.tintColor = .red
-    }
     
     func setLabel(text: String) {
         timetableLabel.text = text

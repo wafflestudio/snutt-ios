@@ -182,10 +182,10 @@ class STTimetableTabViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "이름 변경", style: .default, handler: { _ in
                 if let timetableName = alert.textFields?.first?.text {
-                    STNetworking.updateTimetable(timetableId, title: timetableName, done: {
+                    STNetworking.updateTimetable(timetableId, title: timetableName, done: {_ in 
                         STTimetableManager.sharedInstance.currentTimetable?.title = timetableName
                         STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
-                    })
+                    }, failure: nil)
                 }
             }))
         })

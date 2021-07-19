@@ -41,6 +41,9 @@
                                     <state key="normal" title="이름 변경">
                                         <color key="titleColor" systemColor="labelColor"/>
                                     </state>
+                                    <connections>
+                                        <action selector="rename:" destination="-1" eventType="touchUpInside" id="E3h-36-K3x"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -71,6 +74,9 @@
                                     <state key="normal" title="시간표 삭제">
                                         <color key="titleColor" systemColor="labelColor"/>
                                     </state>
+                                    <connections>
+                                        <action selector="remove:" destination="-1" eventType="touchUpInside" id="lLk-py-5zp"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -99,7 +105,7 @@
     </objects>
     <resources>
         <image name="noticeTrash" width="20" height="20"/>
-        <image name="pen" width="42" height="42"/>
+        <image name="pen" width="32" height="31.5"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

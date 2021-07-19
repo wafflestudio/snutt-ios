@@ -78,12 +78,17 @@ class STNetworking {
         })
     }
     
-    static func updateTimetable(_ id: String, title: String, done: (()->())?) {
-        let request = Alamofire.request(STTimetableRouter.updateTimetable(id: id, title: title))
-        request.responseWithDone({ _,_  in
-                done?()
-            }, failure: nil
-        )
+    static func updateTimetable(_ id: String, title: String, done: @escaping ([STTimetable])->(), failure: ((String)->())?) {
+        Alamofire.request(STTimetableRouter.updateTimetable(id: id, title: title))
+            .responseWithDone({ status, json  in
+                let timetableList = json.arrayValue.map { json in
+                    return STTimetable(json: json)
+                    
+                }
+                done(timetableList)
+            }, failure: { status in
+                failure?(status.errorTitle)
+            })
     }
     
     static func deleteTimetable(_ id: String, done: @escaping ()->(), failure: @escaping ()->()) {
