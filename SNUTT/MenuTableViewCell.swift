@@ -62,7 +62,19 @@ class MenuTableViewCell: UITableViewCell {
         settingBButton.isHidden = true
     }
     
+    func setDefaultCellStyle() {
+        credits.isHidden = false
+        checkedIcon.isHidden = false
+        timetableLabel.textColor = .black
+        duplicateBButton.isHidden = false
+        settingBButton.isHidden = false
+    }
+    
     func hideCheckIcon() {
         checkedIcon.isHidden = true
+    }
+    
+    func showCheckIcon() {
+        checkedIcon.isHidden = false
     }
 }

@@ -50,18 +50,21 @@ class MenuViewController: UIViewController {
         registerCellXib()
         registerHeaderView()
         
-        STNetworking.getTimetableList({ list in
-            self.timetableList = list
-            self.reloadList()
-        }, failure: {
-            // TODO: No network status handling
-            self.dismiss(animated: true, completion: nil)
-        })
+        fetchTablelist()
         
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(self.reloadList), event: STEvent.CourseBookUpdated, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(self.reloadList), event: STEvent.CurrentTimetableChanged, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(self.reloadList), event: STEvent.CurrentTimetableSwitched, object: nil)
         reloadList()
+    }
+    
+    private func fetchTablelist() {
+        STNetworking.getTimetableList({ list in
+            self.timetableList = list
+            self.reloadList()
+        }, failure: {
+            // TODO: No network status handling
+        })
     }
     
     var semesterList: [STQuarter]  {
@@ -71,7 +74,6 @@ class MenuViewController: UIViewController {
     }
     
     @objc func reloadList() {
-        
         self.updateSectionedList()
         timetableListTableView.reloadData()
     }
@@ -98,27 +100,27 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = timetableListTableView.dequeueReusableCell(withIdentifier: "menuTableViewCell", for: indexPath)
-        // 요거 고쳐야댐
-        if cellLength > 1 {
+        guard cellLength > 0 else { return cell }
         
         if let customCell = cell as? MenuTableViewCell {
             customCell.delegate = self
-            if indexPath.row == cellLength - 1 && cellLength > 1{
+            
+            if indexPath.row == cellLength - 1 {
                 customCell.setLabel(text: "+ 시간표 추가하기")
                 customCell.setCreateNewCellStyle()
+                // 요거랑 밑에 hide 제대로 고치기!
             } else {
                 let timatable = currentQurterTimetableList[indexPath.row]
+                customCell.setDefaultCellStyle()
                 customCell.setLabel(text: timatable.title)
                 customCell.setCredit(credit: timatable.totalCredit)
+                customCell.hideCheckIcon()
                 
-                if !(currentQurterTimetableList[indexPath.row] == currentTimetable()) {
-                    customCell.hideCheckIcon()
+                if (currentQurterTimetableList[indexPath.row] == currentTimetable()) {
+                    customCell.showCheckIcon()
                 }
             }
         }
-            
-        }
-        
         return cell
     }
     
@@ -138,6 +140,19 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == cellLength - 1 {
             showCreateTextfield()
+        } else {
+            let selectedTimetable = currentQurterTimetableList[indexPath.row]
+            guard let id = selectedTimetable.id else { return }
+            
+            STNetworking.getTimetable(id, done: { timetable in
+                if (timetable == nil) {
+                    STAlertView.showAlert(title: "시간표 로딩 실패", message: "선택한 시간표가 서버에 존재하지 않습니다.")
+                }
+                STTimetableManager.sharedInstance.currentTimetable = timetable
+                self.fetchTablelist()
+            }, failure: { _ in
+                
+            })
         }
     }
     
@@ -235,15 +250,15 @@ extension MenuViewController: MenuTableViewCellDelegate {
         let cancel = UIAlertAction(title: "", style: .cancel)
         sheetAlert.addAction(cancel)
         
-//        let settingController = SettingViewController(nibName: "SettingViewController", bundle: nil)
+        //        let settingController = SettingViewController(nibName: "SettingViewController", bundle: nil)
         
-//        sheetAlert.addChild(settingController)
-//        sheetAlert.view.addSubview(settingController.view)
+        //        sheetAlert.addChild(settingController)
+        //        sheetAlert.view.addSubview(settingController.view)
         
-//        sheetAlert.addAction(cancel, handler: {
-//                    (alertAction: UIAlertAction!) in
-//            sheetAlert.dismiss(animated: true, completion: nil)
-//                })
+        //        sheetAlert.addAction(cancel, handler: {
+        //                    (alertAction: UIAlertAction!) in
+        //            sheetAlert.dismiss(animated: true, completion: nil)
+        //                })
         present(sheetAlert, animated: true)
     }
 }
