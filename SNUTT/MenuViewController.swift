@@ -230,19 +230,15 @@ extension MenuViewController: TimetablePickerViewControllerDelegate {
 
 extension MenuViewController: MenuTableViewCellDelegate {
     func showSettingSheet(_ cell: MenuTableViewCell) {
-        let sheetAlert = UIAlertController(title: "곧 만들게영", message: "", preferredStyle: .actionSheet)
+        let sheetAlert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "", style: .cancel)
         sheetAlert.addAction(cancel)
         
-        //        let settingController = SettingViewController(nibName: "SettingViewController", bundle: nil)
+        let settingController = SettingViewController(nibName: "SettingViewController", bundle: nil)
+        sheetAlert.view.frame = settingController.view.frame
+        sheetAlert.addChild(settingController)
+        sheetAlert.view.addSubview(settingController.view)
         
-        //        sheetAlert.addChild(settingController)
-        //        sheetAlert.view.addSubview(settingController.view)
-        
-        //        sheetAlert.addAction(cancel, handler: {
-        //                    (alertAction: UIAlertAction!) in
-        //            sheetAlert.dismiss(animated: true, completion: nil)
-        //                })
         present(sheetAlert, animated: true)
     }
 }
