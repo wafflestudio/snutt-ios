@@ -84,6 +84,9 @@
                     <state key="normal" title="필터 적용">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <connections>
+                        <action selector="applyFilter:" destination="-1" eventType="touchUpInside" id="kvy-SD-kwl"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

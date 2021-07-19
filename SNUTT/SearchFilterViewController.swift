@@ -10,6 +10,9 @@ import UIKit
 
 protocol SearchFilterViewControllerDelegate: class {
     func hide(_: SearchFilterViewController)
+    func addDetailTag(_: SearchFilterViewController, tag: STTag)
+    func removeDetailTag(_: SearchFilterViewController, tag: STTag)
+    func search(_: SearchFilterViewController)
 }
 
 class SearchFilterViewController: UIViewController {
@@ -30,6 +33,11 @@ class SearchFilterViewController: UIViewController {
     @IBOutlet weak var tagDetailListTableView: UITableView!
     
     @IBAction func hide(_ sender: UIButton) {
+        delegate?.hide(self)
+    }
+    
+    @IBAction func applyFilter(_ sender: UIButton) {
+        delegate?.search(self)
         delegate?.hide(self)
     }
     
@@ -128,9 +136,11 @@ extension SearchFilterViewController: UITableViewDelegate, UITableViewDataSource
             
             if !currentDetailTagList.contains(selectedTag) {
                 currentDetailTagList.append(selectedTag)
+                delegate?.addDetailTag(self, tag: selectedTag)
             } else {
                 if let index = currentDetailTagList.index(of: selectedTag) {
                     currentDetailTagList.remove(at: index)
+                    delegate?.removeDetailTag(self, tag: selectedTag)
                 }
             }
             tagDetailListTableView.reloadData()
@@ -142,5 +152,10 @@ extension SearchFilterViewController: UITableViewDelegate, UITableViewDataSource
         let tagDetailNib = UINib(nibName: "TagDetailTableViewCell", bundle: nil)
         tagTypeListTableView.register(tagTypeNib, forCellReuseIdentifier: "tagTypeTableViewCell")
         tagDetailListTableView.register(tagDetailNib, forCellReuseIdentifier: "tagDetailTableViewCell")
+    }
+    
+    func reloadSelectedTagList() {
+        tagTypeListTableView.reloadData()
+        tagDetailListTableView.reloadData()
     }
 }

@@ -56,6 +56,8 @@ class STTagCollectionViewCell: UICollectionViewCell {
         collectionView.deleteItems(at: [indexPath])
         collectionView.setHidden()
         collectionView.searchController.searchBar.becomeFirstResponder()
+        collectionView.searchController.filterViewController?.currentDetailTagList = collectionView.tagList
+        collectionView.searchController.filterViewController?.reloadSelectedTagList()
     }
     
 }
