@@ -10,6 +10,8 @@
 		B1EB38A2D401D55B8B513965 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */; };
 		DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */; };
 		DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */; };
+		DC4D9F9F26A5D3A2000EA8F9 /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */; };
+		DC4D9FA026A5D3A2000EA8F9 /* SearchFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC4D9F9E26A5D3A2000EA8F9 /* SearchFilterViewController.xib */; };
 		DC546BDD2699816700A1BDD8 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC546BDB2699816700A1BDD8 /* SettingViewController.swift */; };
 		DC546BDE2699816700A1BDD8 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC546BDC2699816700A1BDD8 /* SettingViewController.xib */; };
 		DC5B8CD726905CB40085268B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B8CD626905CB40085268B /* MenuViewController.swift */; };
@@ -224,6 +226,8 @@
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
+		DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterViewController.swift; sourceTree = "<group>"; };
+		DC4D9F9E26A5D3A2000EA8F9 /* SearchFilterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchFilterViewController.xib; sourceTree = "<group>"; };
 		DC546BDB2699816700A1BDD8 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		DC546BDC2699816700A1BDD8 /* SettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
 		DC5B8CD626905CB40085268B /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -420,6 +424,15 @@
 				E0B8ADB76AB6B75793967316 /* Pods-SNUTT Today.production.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		DC4D9F9C26A5D34D000EA8F9 /* SearchFilter */ = {
+			isa = PBXGroup;
+			children = (
+				DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */,
+				DC4D9F9E26A5D3A2000EA8F9 /* SearchFilterViewController.xib */,
+			);
+			name = SearchFilter;
 			sourceTree = "<group>";
 		};
 		DC5B8CD526905C890085268B /* Menu */ = {
@@ -663,6 +676,7 @@
 		E1C28B1B1B9C4BB900B8C493 /* LectureSearch */ = {
 			isa = PBXGroup;
 			children = (
+				DC4D9F9C26A5D34D000EA8F9 /* SearchFilter */,
 				E1CD92681E46EAB300AF5FE4 /* SearchToolbar */,
 				E1F0CA261C75B01900A4F4ED /* STLectureSearchTableViewCell.xib */,
 				E19E231E1B468B700010DFB1 /* STLectureSearchTableViewController.swift */,
@@ -918,6 +932,7 @@
 				DC6CD12426959A6600B3869F /* TimetablePickerViewController.xib in Resources */,
 				E19A3AA51B453770007FCAD7 /* LaunchScreen.xib in Resources */,
 				E1C48BA21C79C0E300BC469E /* Localizable.strings in Resources */,
+				DC4D9FA026A5D3A2000EA8F9 /* SearchFilterViewController.xib in Resources */,
 				E1F946231DB449E300CC8AF6 /* STAddLectureButtonCell.xib in Resources */,
 				E13984311EF690A2007DD319 /* STSingleColorTableViewCell.xib in Resources */,
 				E11E61011EED0C390036F3F2 /* STSearchEmptyInfoView.xib in Resources */,
@@ -1167,6 +1182,7 @@
 				E149920F1C549D7900DC6756 /* STSearchRouter.swift in Sources */,
 				E1C48BB21C79C8E200BC469E /* STDay.swift in Sources */,
 				E18F2E4E1C5E610F00114ADF /* STSearchBar.swift in Sources */,
+				DC4D9F9F26A5D3A2000EA8F9 /* SearchFilterViewController.swift in Sources */,
 				DC5B8CD726905CB40085268B /* MenuViewController.swift in Sources */,
 				E10CBEDF1C7B6EC800E8FE26 /* STSingleLectureTableViewController.swift in Sources */,
 				E133794F1D41E26C00AD10F4 /* STRouter.swift in Sources */,

@@ -35,7 +35,16 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         case loading(Request)
         case loaded(String, [STTag])
     }
-    var state : SearchState = SearchState.empty
+    
+    enum FilterViewState {
+        case opened
+        case closed
+    }
+    
+    var searchState : SearchState = SearchState.empty
+    var filterViewState: FilterViewState = FilterViewState.closed
+    
+    var filterViewController: SearchFilterViewController?
     
     func reloadData() {
         tableView.reloadData()
@@ -64,14 +73,17 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
 
         tableView.register(UINib(nibName: "STLectureSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "STLectureSearchTableViewCell")
         
-        //Tag Button to KeyboardToolbar
-        
         searchBar.inputAccessoryView = searchToolbarView
-
+        searchBar.showsBookmarkButton = true
+        let filterImage = UIImage(image: UIImage(named: "filter"), scaledTo: CGSize(width: 24, height: 24))
+        searchBar.setImage(filterImage, for: .bookmark, state: .normal)
+        
         timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableView.showTemporary = true
         settingChanged()
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
+        
+        addShowFilterView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -118,19 +130,19 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         let tagList = tagCollectionView.tagList
         let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
         let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: 0, limit: perPage))
-        state = .loading(request)
+        searchState = .loading(request)
         request.responseWithDone({ statusCode, json in
             self.FilteredList = json.arrayValue.map { data in
                 return STLecture(json: data)
             }
-            self.state = .loaded(searchString, tagList)
+            self.searchState = .loaded(searchString, tagList)
             if json.arrayValue.count < self.perPage {
                 self.isLast = true
             }
             self.pageNum = 1
             self.reloadData()
         }, failure: { _ in
-            self.state = .empty
+            self.searchState = .empty
             self.FilteredList = []
             self.reloadData()
         })
@@ -140,9 +152,9 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         let tagList = tagCollectionView.tagList
         let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
         let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: perPage * pageNum, limit: perPage))
-        state = .loading(request)
+        searchState = .loading(request)
         request.responseWithDone({ statusCode, json in
-            self.state = .loaded(searchString, tagList)
+            self.searchState = .loaded(searchString, tagList)
             self.FilteredList = self.FilteredList + json.arrayValue.map { data in
                 return STLecture(json: data)
             }
@@ -152,7 +164,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
             self.pageNum = self.pageNum + 1
             self.reloadData()
             }, failure: { _ in
-                self.state = .empty
+                self.searchState = .empty
                 self.FilteredList = []
                 self.reloadData()
         })
@@ -169,14 +181,14 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         if scrollView.contentSize.height == 0 {
             return
         } else if scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height - heightForFetch && !isLast{
-            if case SearchState.loaded(let searchString, let _) = state {
+            if case SearchState.loaded(let searchString, let _) = searchState {
                 getMoreLectureList(searchString)
             }
         }
     }
     
     @objc func timetableSwitched() {
-        state = .empty
+        searchState = .empty
         searchBar.text = ""
         FilteredList = []
         self.timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
@@ -209,7 +221,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        switch state {
+        switch searchState {
         case .loaded:
             return 1
         case .loading, .empty, .editingQuery:
@@ -231,7 +243,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     func searchBarSearchButtonClicked(_ query : String) {
-        switch state {
+        switch searchState {
         case .loading(let request):
             request.cancel()
         default:
@@ -241,15 +253,15 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         reloadData()
     }
     func searchBarCancelButtonClicked() {
-        switch state {
+        switch searchState {
         case .editingQuery(let query, let tagList, let lectureList):
-            state = .empty
+            searchState = .empty
             FilteredList = []
             searchBar.text = ""
             tagCollectionView.tagList = []
         case .loading(let request):
             request.cancel()
-            state = .empty
+            searchState = .empty
             FilteredList = []
             searchBar.text = ""
             tagCollectionView.tagList = []
@@ -327,9 +339,9 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
 
     func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
-        if case .loaded = state {
+        if case .loaded = searchState {
             return emptySearchView
-        } else if case .empty = state {
+        } else if case .empty = searchState {
             if showInfo {
                 return infoView
             } else {
@@ -342,7 +354,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func emptyDataSetShouldDisplay(_ scrollView: UIScrollView!) -> Bool {
         if searchBar.isFirstResponder {
             return false
-        } else if case .loading = state {
+        } else if case .loading = searchState {
             return false
         }
         return true
@@ -350,16 +362,16 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
 
 
     @objc func dismissKeyboard() {
-        if case let .editingQuery(query, tagList, lectureList) = state {
+        if case let .editingQuery(query, tagList, lectureList) = searchState {
             searchBar.resignFirstResponder()
             searchBar.isEditingTag = false
             if query == nil {
-                state = .empty
+                searchState = .empty
                 FilteredList = []
                 searchBar.text = ""
                 tagCollectionView.tagList = []
             } else {
-                state = .loaded(query!, tagList)
+                searchState = .loaded(query!, tagList)
                 FilteredList = lectureList
                 searchBar.text = query!
                 tagCollectionView.tagList = tagList
@@ -369,42 +381,76 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
             hideTagRecommendation()
         }
     }
+}
+
+// MARK: Filter view
+extension STLectureSearchTableViewController {
+    private func addShowFilterView() {
+        filterViewController = SearchFilterViewController(nibName: "SearchFilterViewController", bundle: nil)
+        
+        self.tabBarController!.view.addSubview(filterViewController!.view)
+        
+        filterViewController!.view.frame.size.width = self.tabBarController!.view.frame.width
+        filterViewController!.view.frame.origin.y = self.tabBarController!.view.frame.height
+        filterViewController!.view.layer.masksToBounds = true
+        filterViewController!.view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        filterViewController!.view.layer.cornerRadius = 16
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView(_:)))
+
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanGestureActionInFilterView(_:)))
+        
+        filterViewController!.view.addGestureRecognizer(panGestureRecognizer)
+        tableView.addGestureRecognizer(tapGestureRecognizer)
+    }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    @objc private func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
+        toggleFilterView()
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
+    @objc private func didPanGestureActionInFilterView(_ sender: UIPanGestureRecognizer) {
+        guard let filterView = filterViewController?.view else { return }
+        let translation = sender.translation(in: filterView)
+        sender.setTranslation(CGPoint.zero, in: filterView)
 
+        if sender.state == .changed {
+            guard translation.y >= 0 else { return }
+            
+            filterView.frame.origin.y += translation.y
+        }
+        
+        let currentOrigin = filterView.frame.origin.y
+        let halfOfWidth = filterView.frame.height / 2
+        
+        if sender.state == .ended {
+            if (sender.velocity(in: filterView).x < -550) {
+                toggleFilterView()
+            } else if (currentOrigin >= -(halfOfWidth)) {
+                UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                    filterView.frame.origin.y = self.tabBarController!.view.frame.height - filterView.frame.height
+                }
+            } else {
+                toggleFilterView()
+            }
+        }
+    }
+    
+    func toggleFilterView() {
+        switch filterViewState {
+        case .closed:
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                self.filterViewController?.view.frame.origin.y = self.tabBarController!.view.frame.height - (self.filterViewController?.view.frame.height ?? 0)
+                
+            } completion: { finished in
+                self.filterViewState = .opened
+            }
+            
+        case .opened:
+            UIView.animate(withDuration: 0.32, delay: 0, options: .curveEaseInOut) {
+                self.filterViewController?.view.frame.origin.y = self.tabBarController!.view.frame.height
+            } completion: { finished in
+                self.filterViewState = .closed
+            }
+        }
+    }
 }
