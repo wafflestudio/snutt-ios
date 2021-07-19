@@ -76,3 +76,9 @@ struct STTag : DictionaryRepresentable {
     }
     
 }
+
+extension STTag : Equatable {
+    public static func ==(lhs: STTag, rhs: STTag) -> Bool {
+        return lhs.type == rhs.type && lhs.text == rhs.text
+    }
+}

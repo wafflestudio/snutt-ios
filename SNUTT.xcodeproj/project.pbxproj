@@ -12,6 +12,10 @@
 		DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */; };
 		DC4D9F9F26A5D3A2000EA8F9 /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */; };
 		DC4D9FA026A5D3A2000EA8F9 /* SearchFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC4D9F9E26A5D3A2000EA8F9 /* SearchFilterViewController.xib */; };
+		DC4D9FA926A5F16C000EA8F9 /* TagTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D9FA726A5F16C000EA8F9 /* TagTypeTableViewCell.swift */; };
+		DC4D9FAA26A5F16C000EA8F9 /* TagTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC4D9FA826A5F16C000EA8F9 /* TagTypeTableViewCell.xib */; };
+		DC4D9FB026A5FCEF000EA8F9 /* TagDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D9FAE26A5FCEF000EA8F9 /* TagDetailTableViewCell.swift */; };
+		DC4D9FB126A5FCEF000EA8F9 /* TagDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC4D9FAF26A5FCEF000EA8F9 /* TagDetailTableViewCell.xib */; };
 		DC546BDD2699816700A1BDD8 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC546BDB2699816700A1BDD8 /* SettingViewController.swift */; };
 		DC546BDE2699816700A1BDD8 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC546BDC2699816700A1BDD8 /* SettingViewController.xib */; };
 		DC5B8CD726905CB40085268B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B8CD626905CB40085268B /* MenuViewController.swift */; };
@@ -228,6 +232,10 @@
 		DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
 		DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterViewController.swift; sourceTree = "<group>"; };
 		DC4D9F9E26A5D3A2000EA8F9 /* SearchFilterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchFilterViewController.xib; sourceTree = "<group>"; };
+		DC4D9FA726A5F16C000EA8F9 /* TagTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTypeTableViewCell.swift; sourceTree = "<group>"; };
+		DC4D9FA826A5F16C000EA8F9 /* TagTypeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagTypeTableViewCell.xib; sourceTree = "<group>"; };
+		DC4D9FAE26A5FCEF000EA8F9 /* TagDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagDetailTableViewCell.swift; sourceTree = "<group>"; };
+		DC4D9FAF26A5FCEF000EA8F9 /* TagDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagDetailTableViewCell.xib; sourceTree = "<group>"; };
 		DC546BDB2699816700A1BDD8 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		DC546BDC2699816700A1BDD8 /* SettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
 		DC5B8CD626905CB40085268B /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -431,6 +439,10 @@
 			children = (
 				DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */,
 				DC4D9F9E26A5D3A2000EA8F9 /* SearchFilterViewController.xib */,
+				DC4D9FA726A5F16C000EA8F9 /* TagTypeTableViewCell.swift */,
+				DC4D9FA826A5F16C000EA8F9 /* TagTypeTableViewCell.xib */,
+				DC4D9FAE26A5FCEF000EA8F9 /* TagDetailTableViewCell.swift */,
+				DC4D9FAF26A5FCEF000EA8F9 /* TagDetailTableViewCell.xib */,
 			);
 			name = SearchFilter;
 			sourceTree = "<group>";
@@ -955,7 +967,9 @@
 				E1F58AAC1C3D074A00F6A0FC /* STSlotCellCollectionViewCell.xib in Resources */,
 				E17825C91D560A10009ACEC3 /* config.plist in Resources */,
 				E1B381AD1C6C7DDA007E1A15 /* STTagCollectionViewCell.xib in Resources */,
+				DC4D9FB126A5FCEF000EA8F9 /* TagDetailTableViewCell.xib in Resources */,
 				E1F0CA1D1C7482D300A4F4ED /* delete.png in Resources */,
+				DC4D9FAA26A5F16C000EA8F9 /* TagTypeTableViewCell.xib in Resources */,
 				DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */,
 				E1F58AAA1C3CFC1C00F6A0FC /* STColumnHeaderCollectionViewCell.xib in Resources */,
 			);
@@ -1131,6 +1145,7 @@
 				E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */,
 				E184359D1D69A2C200BE5D58 /* STAlertView.swift in Sources */,
 				E149920D1C4F6D1F00DC6756 /* STTimetableCellType.swift in Sources */,
+				DC4D9FB026A5FCEF000EA8F9 /* TagDetailTableViewCell.swift in Sources */,
 				E13CBA8C1E4D492E006B2364 /* STEtcRouter.swift in Sources */,
 				E1B34A501EB2278C004C5E5E /* STRegisterViewController.swift in Sources */,
 				E10852C91B4CCD16006FD8B3 /* STTimetableCollectionView.swift in Sources */,
@@ -1156,6 +1171,7 @@
 				E1773CB61C95B94C00AF36AF /* STLoginTextField.swift in Sources */,
 				E16643591B46624500387EF8 /* STCourseCellCollectionViewCell.swift in Sources */,
 				E14DF2181C3F914E0076FDDE /* STCourseBookList.swift in Sources */,
+				DC4D9FA926A5F16C000EA8F9 /* TagTypeTableViewCell.swift in Sources */,
 				E1A664F81EED8F8C003B2D43 /* STTagSearchInfoView.swift in Sources */,
 				E1C48BB41C79CAE800BC469E /* STPeriod.swift in Sources */,
 				E1A99D8F1CB0FE1800953A4B /* STUser.swift in Sources */,

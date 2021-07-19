@@ -384,9 +384,14 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
 }
 
 // MARK: Filter view
-extension STLectureSearchTableViewController {
+extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate {
+    func hide(_: SearchFilterViewController) {
+        toggleFilterView()
+    }
+    
     private func addShowFilterView() {
         filterViewController = SearchFilterViewController(nibName: "SearchFilterViewController", bundle: nil)
+        filterViewController?.delegate = self
         
         self.tabBarController!.view.addSubview(filterViewController!.view)
         
