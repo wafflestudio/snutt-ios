@@ -105,11 +105,6 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
             // searchController.state = .empty
             return
         }
-        
-        if isEditingTag {
-            searchController.showTagRecommendation()
-        }
-        
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {

@@ -77,7 +77,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         
         tableView.register(UINib(nibName: "STLectureSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "STLectureSearchTableViewCell")
         
-        searchBar.inputAccessoryView = searchToolbarView
         searchBar.showsBookmarkButton = true
         
         let filterImage = UIImage(image: UIImage(named: "filter"), scaledTo: CGSize(width: 24, height: 24))
@@ -319,11 +318,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         filterViewController?.currentDetailTagList = tagList
         
         filterViewController?.reloadSelectedTagList()
-    }
-    
-    func showTagRecommendation() {
-        tagTableView.showTagsFor(searchBar.text!, type: searchToolbarView.currentTagType)
-        tagTableView.setContentOffset(CGPoint(x: 0, y: -tagTableView.contentInset.top), animated: true)
     }
     
     func hideTagRecommendation() {
