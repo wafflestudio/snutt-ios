@@ -55,7 +55,7 @@
                             <action selector="duplicateButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YtN-6h-sCB"/>
                         </connections>
                     </button>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkMint1x" translatesAutoresizingMaskIntoConstraints="NO" id="jXi-j5-I6Y">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkMint" translatesAutoresizingMaskIntoConstraints="NO" id="jXi-j5-I6Y">
                         <rect key="frame" x="10" y="7" width="16" height="16"/>
                         <color key="tintColor" systemColor="systemRedColor"/>
                         <constraints>
@@ -89,7 +89,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="checkMint1x" width="30" height="30.5"/>
+        <image name="checkMint" width="30" height="30.5"/>
         <image name="dotdotdot" width="3.5" height="21.5"/>
         <image name="duplicate" width="23" height="22"/>
         <systemColor name="opaqueSeparatorColor">

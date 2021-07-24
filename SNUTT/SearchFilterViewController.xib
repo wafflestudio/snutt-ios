@@ -49,14 +49,14 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZtD-32-Ra7">
-                    <rect key="frame" x="0.0" y="68" width="414" height="336"/>
+                    <rect key="frame" x="0.0" y="68" width="414" height="324"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r4M-kU-CFe">
-                            <rect key="frame" x="140" y="0.0" width="254" height="336"/>
+                            <rect key="frame" x="140" y="0.0" width="254" height="324"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7xT-ZP-ITa">
-                            <rect key="frame" x="20" y="0.0" width="120" height="336"/>
+                            <rect key="frame" x="20" y="0.0" width="120" height="324"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="120" id="rbr-oX-SqU"/>
@@ -75,10 +75,10 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9v-nV-BGi">
-                    <rect key="frame" x="0.0" y="406" width="414" height="60"/>
+                    <rect key="frame" x="0.0" y="394" width="414" height="72"/>
                     <color key="backgroundColor" red="0.10588235294117647" green="0.81568627450980391" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="Zta-UO-3Ss"/>
+                        <constraint firstAttribute="height" constant="72" id="Zta-UO-3Ss"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                     <state key="normal" title="필터 적용">

@@ -29,10 +29,10 @@ class TagDetailTableViewCell: UITableViewCell {
     }
     
     func check() {
-        checkedImage.isHidden = false
+        checkedImage.image = UIImage(named: "checkMint")
     }
     
     func unCheck() {
-        checkedImage.isHidden = true
+        checkedImage.image = UIImage(named: "unCheck")
     }
 }

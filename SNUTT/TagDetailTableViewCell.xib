@@ -17,16 +17,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkMint1x" translatesAutoresizingMaskIntoConstraints="NO" id="NvA-IR-RxU">
-                        <rect key="frame" x="0.0" y="12" width="20" height="20"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkMint" translatesAutoresizingMaskIntoConstraints="NO" id="NvA-IR-RxU">
+                        <rect key="frame" x="0.0" y="13" width="18" height="18"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="Qip-Pl-08u"/>
-                            <constraint firstAttribute="width" constant="20" id="Wha-yt-t57"/>
+                            <constraint firstAttribute="height" constant="18" id="Qip-Pl-08u"/>
+                            <constraint firstAttribute="width" constant="18" id="Wha-yt-t57"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmI-8o-DWX">
-                        <rect key="frame" x="32" y="11.5" width="44" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <rect key="frame" x="30" y="13.5" width="35.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -47,6 +47,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="checkMint1x" width="30" height="30.5"/>
+        <image name="checkMint" width="30" height="30.5"/>
     </resources>
 </document>

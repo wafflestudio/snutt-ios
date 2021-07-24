@@ -1,18 +1,8 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "filter2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "filter3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "filter.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
