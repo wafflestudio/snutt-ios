@@ -50,6 +50,9 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         return tagCollectionView.tagList
     }
     
+    var backgroundTapGestureRecognizer: UITapGestureRecognizer?
+    var filterViewPanGestureRecognizer: UIPanGestureRecognizer?
+    
     func reloadData() {
         tableView.reloadData()
         STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
@@ -88,6 +91,9 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         settingChanged()
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
         
+        backgroundTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView(_:)))
+
+        filterViewPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanGestureActionInFilterView(_:)))
         addShowFilterView()
     }
     
@@ -430,13 +436,18 @@ extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate
         filterViewController!.view.layer.masksToBounds = true
         filterViewController!.view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         filterViewController!.view.layer.cornerRadius = 16
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView(_:)))
-        
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanGestureActionInFilterView(_:)))
-        
-        filterViewController!.view.addGestureRecognizer(panGestureRecognizer)
-        tableView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    private func addGestureRecognizers() {
+        guard let panGR = filterViewPanGestureRecognizer, let tapGR = backgroundTapGestureRecognizer else { return }
+        filterViewController!.view.addGestureRecognizer(panGR)
+        tableView.addGestureRecognizer(tapGR)
+    }
+    
+    private func removeGestureRecognizersInFilter() {
+        guard let panGR = filterViewPanGestureRecognizer, let tapGR = backgroundTapGestureRecognizer else { return }
+        filterViewController!.view.removeGestureRecognizer(panGR)
+        tableView.removeGestureRecognizer(tapGR)
     }
     
     @objc private func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
@@ -483,6 +494,7 @@ extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate
                 
             } completion: { finished in
                 self.filterViewState = .opened
+                self.addGestureRecognizers()
             }
             
         case .opened:
@@ -490,6 +502,7 @@ extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate
                 self.filterViewController?.view.frame.origin.y = self.tabBarController!.view.frame.height
             } completion: { finished in
                 self.filterViewState = .closed
+                self.removeGestureRecognizersInFilter()
             }
         }
     }
