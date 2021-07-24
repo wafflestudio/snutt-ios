@@ -28,7 +28,7 @@ class STNotificationTableViewCell: UITableViewCell {
             }
             
             timeLabel.text = timeText
-            timeLabel.textColor = .gray
+            timeLabel.textColor = UIColor(red: 119, green: 119, blue: 119)
             
             titleLabel.text = notification.notificationTitle
             
