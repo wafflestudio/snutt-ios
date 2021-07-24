@@ -485,7 +485,8 @@ extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate
     }
     
     func toggleFilterView() {
-        self.dismissKeyboard()
+//        self.dismissKeyboard()
+        searchBar.resignFirstResponder()
         
         switch filterViewState {
         case .closed:
