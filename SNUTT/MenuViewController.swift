@@ -62,11 +62,15 @@ class MenuViewController: UIViewController {
     
     private func fetchTablelist() {
         STNetworking.getTimetableList({ list in
-            self.timetableList = list
-            self.reloadList()
+            self.updateTableviewData(timetableList: list)
         }, failure: {
             // TODO: No network status handling
         })
+    }
+    
+    private func updateTableviewData(timetableList: [STTimetable]) {
+        self.timetableList = timetableList
+        self.reloadList()
     }
     
     var semesterList: [STQuarter]  {
@@ -226,6 +230,10 @@ extension MenuViewController: TimetablePickerViewControllerDelegate {
 }
 
 extension MenuViewController: MenuTableViewCellDelegate {
+    func updateTableViewData(_ cell: MenuTableViewCell, timetableList: [STTimetable]) {
+        updateTableviewData(timetableList: timetableList)
+    }
+    
     func showSettingSheet(_ cell: MenuTableViewCell) {
         let sheetAlert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "", style: .cancel)

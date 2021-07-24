@@ -42,7 +42,7 @@ class STNetworking {
             failure()
         })
     }
-
+    
     static func logOut(userId: String, fcmToken: String, done: @escaping ()->(), failure: (()->())?) {
         let request = Alamofire.request(STAuthRouter.logOutDevice(userId: userId, fcmToken: fcmToken))
         request.responseWithDone({ statusCode, json in
@@ -61,8 +61,8 @@ class STNetworking {
                 return STTimetable(json: json)
             }
             done(timetableList)
-            }, failure: { _ in
-                failure()
+        }, failure: { _ in
+            failure()
         })
     }
     
@@ -73,8 +73,8 @@ class STNetworking {
                 return STTimetable(json: json)
             }
             done(timetableList)
-            }, failure: { _ in
-                failure()
+        }, failure: { _ in
+            failure()
         })
     }
     
@@ -117,13 +117,26 @@ class STNetworking {
             })
     }
     
+    static func copyTimetable(id: String, _ done: @escaping ([STTimetable])->(), failure: @escaping (STErrorCode)->()) {
+        Alamofire.request(STTimetableRouter.copyTimetable(id: id))
+            .responseWithDone { (statusCode, json) in
+                let timetables = json.arrayValue
+                let timetableList = timetables.map { json in
+                    return STTimetable(json: json)
+                }
+                done(timetableList)
+            } failure: { (errorCode) in
+                failure(errorCode)
+            }
+    }
+    
     //MARK: LectureRouter
     
     static func addCustomLecture(_ timetable: STTimetable, lecture: STLecture, done: @escaping (STTimetable)->(), failure: @escaping ()->()) {
         let request = Alamofire.request(STLectureRouter.addCustomLecture(timetableId: timetable.id!, lecture: lecture))
         request.responseWithDone({ statusCode, json in
             done(STTimetable(json: json))
-            }, failure: { _ in
+        }, failure: { _ in
             failure()
         })
     }
@@ -132,8 +145,8 @@ class STNetworking {
         let request = Alamofire.request(STLectureRouter.addLecture(timetableId: timetable.id!, lectureId: lectureId))
         request.responseWithDone({ statusCode, json in
             done(STTimetable(json: json))
-            }, failure: { _ in
-                failure()
+        }, failure: { _ in
+            failure()
         })
     }
     
@@ -141,9 +154,9 @@ class STNetworking {
         let request = Alamofire.request(STLectureRouter.updateLecture(timetableId: timetable.id!, oldLecture: oldLecture, newLecture : newLecture))
         request.responseWithDone({ statusCode, json in
             done(STTimetable(json: json))
-            }, failure: { _ in
-                failure()
-            }, showNetworkAlert: true, alertTitle: "강좌 수정 실패"
+        }, failure: { _ in
+            failure()
+        }, showNetworkAlert: true, alertTitle: "강좌 수정 실패"
         )
     }
     
@@ -151,8 +164,8 @@ class STNetworking {
         let request = Alamofire.request(STLectureRouter.deleteLecture(timetableId: timetable.id!, lecture: lecture))
         request.responseWithDone({ statusCode, json in
             done(STTimetable(json: json))
-            }, failure: { _ in
-                failure()
+        }, failure: { _ in
+            failure()
         })
     }
     
@@ -163,9 +176,9 @@ class STNetworking {
         }
         let request = Alamofire.request(STLectureRouter.resetLecture(timetableId: timetableId, lectureId: lectureId))
         request.responseWithDone({ statusCode, json in
-                done(STTimetable(json: json))
-            }, failure: { _ in
-                failure?()
+            done(STTimetable(json: json))
+        }, failure: { _ in
+            failure?()
         })
     }
     
@@ -241,8 +254,8 @@ class STNetworking {
                 return STCourseBook(json: json)
             })
             done(list)
-            }, failure: { _ in
-                failure()
+        }, failure: { _ in
+            failure()
         })
     }
     
@@ -251,30 +264,30 @@ class STNetworking {
         request.responseWithDone({ statusCode, json in
             let url = json["url"].stringValue
             done(url)
-            }, failure: { _ in
-                failure?()
+        }, failure: { _ in
+            failure?()
         }, showNetworkAlert: false, showAlert: false)
-
+        
     }
     
     //MARK: UserRouter
-
+    
     static func getUser(_ done: ((STUser)->())?, failure: (()->())?) {
         let request = Alamofire.request(STUserRouter.getUser);
         request.responseWithDone({ statusCode, json in
             done?(STUser(json:json))
-            }, failure: { err in
-                failure?()
+        }, failure: { err in
+            failure?()
         })
     }
-
+    
     static func detachFB(_ done: @escaping ()->(), failure: @escaping ()->()) {
         let request = Alamofire.request(STUserRouter.detachFB)
         request.responseWithDone({ _, json in
             STDefaults[.token] = json["token"].stringValue
             done()
-            }, failure: { _ in
-                failure()
+        }, failure: { _ in
+            failure()
         })
     }
     
@@ -285,8 +298,8 @@ class STNetworking {
                 STDefaults[.token] = token
             }
             done()
-            }, failure: { _ in
-                failure()
+        }, failure: { _ in
+            failure()
         })
     }
     
@@ -294,8 +307,8 @@ class STNetworking {
         let request = Alamofire.request(STUserRouter.deleteUser)
         request.responseWithDone({ _, json in
             STUser.loadLoginPage()
-            }, failure: { _ in
-                failure()
+        }, failure: { _ in
+            failure()
         })
     }
     
@@ -303,8 +316,8 @@ class STNetworking {
         let request = Alamofire.request(STUserRouter.editUser(email: email))
         request.responseWithDone({ _, _ in
             done()
-            }, failure: { _ in
-                failure()
+        }, failure: { _ in
+            failure()
         })
     }
     
@@ -315,8 +328,8 @@ class STNetworking {
                 STDefaults[.token] = token
             }
             done()
-            }, failure: { _ in
-                failure(nil)
+        }, failure: { _ in
+            failure(nil)
         })
     }
     
@@ -327,11 +340,11 @@ class STNetworking {
             let infos = STDefaults[.shouldDeleteFCMInfos]?.infoList ?? []
             STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter( { info in info != fcmInfo}))
         }
-
+        
         request.responseWithDone({ statusCode, json in
             STDefaults[.registeredFCMToken] = deviceId
-            }, failure: nil
-            , showNetworkAlert: false
+        }, failure: nil
+        , showNetworkAlert: false
         )
     }
     
@@ -339,7 +352,7 @@ class STNetworking {
         let request = Alamofire.request(STUserRouter.deleteDevice(id: deviceId))
         request.responseWithDone({ statusCode, json in
             done()
-            }, failure: nil, showNetworkAlert: true
+        }, failure: nil, showNetworkAlert: true
         )
     }
     
@@ -355,33 +368,33 @@ class STNetworking {
     }
     
     //MARK: STEtcRouter
-
+    
     static func sendFeedback(_ email: String?, message: String, done: (()->())?, failure: (()->())?) {
         let request = Alamofire.request(STEtcRouter.feedback(email: email, message: message))
         request.responseWithDone({ _,_  in
-                done?()
+            done?()
         }, failure: { _ in
             failure?()
         })
     }
-
+    
     static func getColors(_ done: (([STColor], [String])->())?, failure: (()->())?) {
         let request = Alamofire.request(STEtcRouter.getColor)
         request.responseWithDone({ statusCode, json in
             let colors = json["colors"].arrayValue.map { colorJson in STColor(json: colorJson) }
             let names = json["names"].arrayValue.map { it in it.stringValue }
             done?(colors, names)
-            }, failure: { _ in
-                failure?()
+        }, failure: { _ in
+            failure?()
         }, showNetworkAlert: false)
     }
-
+    
     //MARK: AppVersion
     
     static func checkLatestAppVersion(_ done:@escaping (String)->()) -> Void {
         
         let requestURL = "http://itunes.apple.com/kr/lookup?bundleId=" + Bundle.main.bundleIdentifier!
-
+        
         Alamofire.request(requestURL, method: .post).responseSwiftyJSON { response in
             switch response.result {
             case .success(let json):
@@ -395,9 +408,9 @@ class STNetworking {
             }
         }
     }
-
+    
     //MARK: Others
-
+    
     static func showNetworkError() {
         let alert = UIAlertController(title: "Network Error", message: "네트워크 환경이 원활하지 않습니다.", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: nil))

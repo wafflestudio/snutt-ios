@@ -44,7 +44,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KQe-B6-dJx">
-                        <rect key="frame" x="208" y="3" width="24" height="24"/>
+                        <rect key="frame" x="196" y="3" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="kRl-y7-IK1"/>
                             <constraint firstAttribute="height" constant="24" id="l99-s5-Vcq"/>
@@ -72,7 +72,7 @@
                     <constraint firstItem="jXi-j5-I6Y" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="LIn-ct-ZqR"/>
                     <constraint firstItem="jXi-j5-I6Y" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="QCj-rS-jKl"/>
                     <constraint firstItem="xfS-5S-K5S" firstAttribute="leading" secondItem="jXi-j5-I6Y" secondAttribute="trailing" constant="8" id="UKh-YF-9tw"/>
-                    <constraint firstItem="Azq-zd-SU2" firstAttribute="leading" secondItem="KQe-B6-dJx" secondAttribute="trailing" constant="4" id="Z9s-yW-BMA"/>
+                    <constraint firstItem="Azq-zd-SU2" firstAttribute="leading" secondItem="KQe-B6-dJx" secondAttribute="trailing" constant="16" id="Z9s-yW-BMA"/>
                     <constraint firstItem="xfS-5S-K5S" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jse-94-jsB"/>
                     <constraint firstItem="ETx-wt-a18" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rPs-Lp-ti1"/>
                 </constraints>
@@ -89,7 +89,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="checkMint1x" width="41" height="41"/>
+        <image name="checkMint1x" width="30" height="30.5"/>
         <image name="dotdotdot" width="3.5" height="21.5"/>
         <image name="duplicate" width="23" height="22"/>
         <systemColor name="opaqueSeparatorColor">

@@ -10,6 +10,7 @@ import UIKit
 
 protocol MenuTableViewCellDelegate: class {
     func showSettingSheet(_ cell: MenuTableViewCell)
+    func updateTableViewData(_ cell: MenuTableViewCell, timetableList: [STTimetable])
 }
 
 class MenuTableViewCell: UITableViewCell {
@@ -33,6 +34,12 @@ class MenuTableViewCell: UITableViewCell {
     @IBOutlet weak var checkedIcon: UIImageView!
     
     @IBAction func duplicateButton(_ sender: UIButton) {
+        guard let timetable = timetable, let id = timetable.id else { return }
+        STNetworking.copyTimetable(id: id) { timetableList in
+            self.delegate?.updateTableViewData(self, timetableList: timetableList)
+        } failure: { errorCode in
+            STAlertView.showAlert(title: "시간표 복사 실패", message: errorCode.errorMessage)
+        }
     }
     
     @IBAction func settingButton(_ sender: UIButton) {

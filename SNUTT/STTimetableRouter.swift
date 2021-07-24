@@ -20,6 +20,7 @@ enum STTimetableRouter : STRouter {
     case updateTimetable(id: String,title: String)
     case deleteTimetable(id: String)
     case getRecentTimetable()
+    case copyTimetable(id: String)
     
     var method: HTTPMethod {
         switch self {
@@ -35,6 +36,8 @@ enum STTimetableRouter : STRouter {
             return .delete
         case .getRecentTimetable:
             return .get
+        case .copyTimetable:
+            return .post
         }
     }
     
@@ -52,6 +55,8 @@ enum STTimetableRouter : STRouter {
             return "/\(id)"
         case .getRecentTimetable:
             return "/recent"
+        case .copyTimetable(let id):
+            return "/\(id)/copy"
         }
     }
     
@@ -68,6 +73,8 @@ enum STTimetableRouter : STRouter {
         case .deleteTimetable:
             return nil
         case .getRecentTimetable:
+            return nil
+        case .copyTimetable:
             return nil
         }
     }

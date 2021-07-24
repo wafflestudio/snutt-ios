@@ -15,20 +15,21 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2021 2학기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLh-HH-f4C">
-                    <rect key="frame" x="0.0" y="19" width="83" height="22"/>
+                    <rect key="frame" x="0.0" y="20.5" width="80" height="19.5"/>
                     <color key="tintColor" red="0.006906411082" green="0.006906411082" blue="0.006906411082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="18"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                     <color key="textColor" red="0.006906411082" green="0.006906411082" blue="0.006906411082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AkT-p1-DzU">
-                    <rect key="frame" x="91" y="23" width="14" height="14"/>
+                    <rect key="frame" x="88" y="17.5" width="25" height="25"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="14" id="lLp-R0-LRd"/>
-                        <constraint firstAttribute="width" constant="14" id="sZo-uZ-a8S"/>
+                        <constraint firstAttribute="height" constant="25" id="lLp-R0-LRd"/>
+                        <constraint firstAttribute="width" constant="25" id="sZo-uZ-a8S"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="tintColor" red="0.006906411082" green="0.006906411082" blue="0.006906411082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                    <state key="normal" image="duplicate"/>
+                    <state key="normal" image="arrowDown" backgroundImage="arrowDown"/>
                     <connections>
                         <action selector="chooseSemester:" destination="iN0-l3-epB" eventType="touchUpInside" id="nSp-Sx-yly"/>
                     </connections>
@@ -36,7 +37,7 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
-                <constraint firstItem="AkT-p1-DzU" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="1Zm-xL-snf"/>
+                <constraint firstItem="AkT-p1-DzU" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="9b2-4p-IYj"/>
                 <constraint firstItem="gLh-HH-f4C" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="JkS-Mt-IqJ"/>
                 <constraint firstItem="AkT-p1-DzU" firstAttribute="leading" secondItem="gLh-HH-f4C" secondAttribute="trailing" constant="8" id="NPQ-8P-3x6"/>
                 <constraint firstItem="gLh-HH-f4C" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="d3I-GI-N9O"/>
@@ -50,6 +51,6 @@
         </view>
     </objects>
     <resources>
-        <image name="duplicate" width="23" height="22"/>
+        <image name="arrowDown" width="60" height="60"/>
     </resources>
 </document>
