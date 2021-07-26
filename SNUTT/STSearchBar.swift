@@ -105,22 +105,17 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
             // searchController.state = .empty
             return
         }
-        
-        if isEditingTag {
-            searchController.showTagRecommendation()
-        }
-        
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.showsCancelButton = true
-        if case .loaded(let query, let tagList) = searchController.state {
-            searchController.state = .editingQuery(query, tagList, searchController.FilteredList)
+        if case .loaded(let query, let tagList) = searchController.searchState {
+            searchController.searchState = .editingQuery(query, tagList, searchController.FilteredList)
         } else {
-             if case .loading(let request) = searchController.state {
+             if case .loading(let request) = searchController.searchState {
                 request.cancel()
             }
-            searchController.state = .editingQuery(nil, [], [])
+            searchController.searchState = .editingQuery(nil, [], [])
         }
         searchController.reloadData()
         searchController.tableView.reloadEmptyDataSet()
@@ -142,4 +137,7 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         
     }
     
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        searchController.toggleFilterView()
+    }
 }

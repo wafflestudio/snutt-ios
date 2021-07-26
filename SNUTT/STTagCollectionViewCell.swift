@@ -51,11 +51,8 @@ class STTagCollectionViewCell: UICollectionViewCell {
     }
     
     func deleteTag() {
-        let indexPath = self.collectionView.indexPath(for: self)!
-        collectionView.tagList.remove(at: indexPath.row)
-        collectionView.deleteItems(at: [indexPath])
         collectionView.setHidden()
         collectionView.searchController.searchBar.becomeFirstResponder()
+        collectionView.searchController.removeTag(searchTag)
     }
-    
 }

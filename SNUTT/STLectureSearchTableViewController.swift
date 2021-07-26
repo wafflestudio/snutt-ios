@@ -35,7 +35,23 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         case loading(Request)
         case loaded(String, [STTag])
     }
-    var state : SearchState = SearchState.empty
+    
+    enum FilterViewState {
+        case opened
+        case closed
+    }
+    
+    var searchState : SearchState = SearchState.empty
+    var filterViewState: FilterViewState = FilterViewState.closed
+    
+    var filterViewController: SearchFilterViewController?
+    
+    var tagList: [STTag] {
+        return tagCollectionView.tagList
+    }
+    
+    var backgroundTapGestureRecognizer: UITapGestureRecognizer?
+    var filterViewPanGestureRecognizer: UIPanGestureRecognizer?
     
     func reloadData() {
         tableView.reloadData()
@@ -55,23 +71,30 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         searchBar.searchController = self
         tagTableView.searchController = self
         tagCollectionView.searchController = self
-
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tapGesture)
-
+        
         initEmptyDataSet()
-
+        
         tableView.register(UINib(nibName: "STLectureSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "STLectureSearchTableViewCell")
         
-        //Tag Button to KeyboardToolbar
+        searchBar.showsBookmarkButton = true
         
-        searchBar.inputAccessoryView = searchToolbarView
-
+        let filterImage = UIImage(image: UIImage(named: "filter"), scaledTo: CGSize(width: 24, height: 24))
+        searchBar.setImage(filterImage, for: .bookmark, state: .normal)
+        searchBar.placeholder = "ex) 대영 Paul"
+        
         timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableView.showTemporary = true
         settingChanged()
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
+        
+        backgroundTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView(_:)))
+
+        filterViewPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanGestureActionInFilterView(_:)))
+        addShowFilterView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -90,7 +113,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         super.viewWillDisappear(animated)
     }
-
+    
     @objc func settingChanged() {
         if STDefaults[.autoFit] {
             timetableView.shouldAutofit = true
@@ -115,34 +138,32 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func getLectureList(_ searchString : String) {
         // This is for saving the request
         isLast = false
-        let tagList = tagCollectionView.tagList
         let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
         let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: 0, limit: perPage))
-        state = .loading(request)
+        searchState = .loading(request)
         request.responseWithDone({ statusCode, json in
             self.FilteredList = json.arrayValue.map { data in
                 return STLecture(json: data)
             }
-            self.state = .loaded(searchString, tagList)
+            self.searchState = .loaded(searchString, self.tagList)
             if json.arrayValue.count < self.perPage {
                 self.isLast = true
             }
             self.pageNum = 1
             self.reloadData()
         }, failure: { _ in
-            self.state = .empty
+            self.searchState = .empty
             self.FilteredList = []
             self.reloadData()
         })
     }
     
     func getMoreLectureList(_ searchString: String) {
-        let tagList = tagCollectionView.tagList
         let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
         let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: perPage * pageNum, limit: perPage))
-        state = .loading(request)
+        searchState = .loading(request)
         request.responseWithDone({ statusCode, json in
-            self.state = .loaded(searchString, tagList)
+            self.searchState = .loaded(searchString, self.tagList)
             self.FilteredList = self.FilteredList + json.arrayValue.map { data in
                 return STLecture(json: data)
             }
@@ -151,14 +172,14 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
             }
             self.pageNum = self.pageNum + 1
             self.reloadData()
-            }, failure: { _ in
-                self.state = .empty
-                self.FilteredList = []
-                self.reloadData()
+        }, failure: { _ in
+            self.searchState = .empty
+            self.FilteredList = []
+            self.reloadData()
         })
-
+        
     }
-
+    
     func setFocusToSearch() {
         searchBar.becomeFirstResponder()
     }
@@ -169,14 +190,14 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         if scrollView.contentSize.height == 0 {
             return
         } else if scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height - heightForFetch && !isLast{
-            if case SearchState.loaded(let searchString, let _) = state {
+            if case SearchState.loaded(let searchString, let _) = searchState {
                 getMoreLectureList(searchString)
             }
         }
     }
     
     @objc func timetableSwitched() {
-        state = .empty
+        searchState = .empty
         searchBar.text = ""
         FilteredList = []
         self.timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
@@ -203,20 +224,20 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        switch state {
+        switch searchState {
         case .loaded:
             return 1
         case .loading, .empty, .editingQuery:
             return 0
         }
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
@@ -231,7 +252,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     func searchBarSearchButtonClicked(_ query : String) {
-        switch state {
+        switch searchState {
         case .loading(let request):
             request.cancel()
         default:
@@ -241,15 +262,15 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         reloadData()
     }
     func searchBarCancelButtonClicked() {
-        switch state {
+        switch searchState {
         case .editingQuery(let query, let tagList, let lectureList):
-            state = .empty
+            searchState = .empty
             FilteredList = []
             searchBar.text = ""
             tagCollectionView.tagList = []
         case .loading(let request):
             request.cancel()
-            state = .empty
+            searchState = .empty
             FilteredList = []
             searchBar.text = ""
             tagCollectionView.tagList = []
@@ -258,7 +279,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         reloadData()
         tagCollectionView.reloadData()
     }
-
+    
     var willSelectRow: Bool = false
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -291,11 +312,19 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         }
         tagCollectionView.setHidden()
         tagTableView.hide()
+        filterViewController?.currentDetailTagList = tagList
+        filterViewController?.reloadSelectedTagList()
     }
     
-    func showTagRecommendation() {
-        tagTableView.showTagsFor(searchBar.text!, type: searchToolbarView.currentTagType)
-        tagTableView.setContentOffset(CGPoint(x: 0, y: -tagTableView.contentInset.top), animated: true)
+    func removeTag(_ tag: STTag) {
+        guard let index = tagCollectionView.tagList.index(of: tag) else { return }
+        tagCollectionView.tagList.remove(at: index)
+        let indexPath = IndexPath(row: index, section: 0)
+        tagCollectionView.deleteItems(at: [indexPath])
+        
+        filterViewController?.currentDetailTagList = tagList
+        
+        filterViewController?.reloadSelectedTagList()
     }
     
     func hideTagRecommendation() {
@@ -303,20 +332,20 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     //MARK: DNZEmptyDataSet
-
+    
     var emptyInfoView: STSearchEmptyInfoView!;
     var infoView: STTagSearchInfoView!;
     var emptySearchView: UIView!;
     var showInfo: Bool = false
-
+    
     func initEmptyDataSet() {
         let emptyInfoViewNib = Bundle.main.loadNibNamed("STSearchEmptyInfoView", owner: nil, options: nil)
         emptyInfoView = emptyInfoViewNib![0] as! STSearchEmptyInfoView
         emptyInfoView.searchController = self
-
+        
         let emptySearchViewNib = Bundle.main.loadNibNamed("STSearchEmptyView", owner: nil, options: nil)
         emptySearchView = emptySearchViewNib![0] as! UIView
-
+        
         let infoViewNib = Bundle.main.loadNibNamed("STTagSearchInfoView", owner: nil, options: nil)
         if isLargerThanSE() {
             infoView = infoViewNib![0] as! STTagSearchInfoView
@@ -325,11 +354,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         }
         infoView.searchController = self
     }
-
+    
     func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {
-        if case .loaded = state {
+        if case .loaded = searchState {
             return emptySearchView
-        } else if case .empty = state {
+        } else if case .empty = searchState {
             if showInfo {
                 return infoView
             } else {
@@ -342,24 +371,24 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func emptyDataSetShouldDisplay(_ scrollView: UIScrollView!) -> Bool {
         if searchBar.isFirstResponder {
             return false
-        } else if case .loading = state {
+        } else if case .loading = searchState {
             return false
         }
         return true
     }
-
-
+    
+    
     @objc func dismissKeyboard() {
-        if case let .editingQuery(query, tagList, lectureList) = state {
+        if case let .editingQuery(query, tagList, lectureList) = searchState {
             searchBar.resignFirstResponder()
             searchBar.isEditingTag = false
             if query == nil {
-                state = .empty
+                searchState = .empty
                 FilteredList = []
                 searchBar.text = ""
                 tagCollectionView.tagList = []
             } else {
-                state = .loaded(query!, tagList)
+                searchState = .loaded(query!, tagList)
                 FilteredList = lectureList
                 searchBar.text = query!
                 tagCollectionView.tagList = tagList
@@ -369,42 +398,113 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
             hideTagRecommendation()
         }
     }
+}
+
+// MARK: Filter view
+extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate {
+    func search(_: SearchFilterViewController) {
+        switch searchState {
+        case .loading(let request):
+            request.cancel()
+        default:
+            break
+        }
+        getLectureList(searchBar?.text ?? "")
+        reloadData()
+    }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    func addDetailTag(_: SearchFilterViewController, tag: STTag) {
+        addTag(tag)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
-
+    func removeDetailTag(_: SearchFilterViewController, tag: STTag) {
+        removeTag(tag)
+    }
+    
+    func hide(_: SearchFilterViewController) {
+        toggleFilterView()
+    }
+    
+    private func addShowFilterView() {
+        filterViewController = SearchFilterViewController(nibName: "SearchFilterViewController", bundle: nil)
+        filterViewController?.delegate = self
+        
+        self.tabBarController!.view.addSubview(filterViewController!.view)
+        
+        filterViewController!.view.frame.size.width = self.tabBarController!.view.frame.width
+        filterViewController!.view.frame.origin.y = self.tabBarController!.view.frame.height
+        filterViewController!.view.layer.masksToBounds = true
+        filterViewController!.view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        filterViewController!.view.layer.cornerRadius = 16
+    }
+    
+    private func addGestureRecognizers() {
+        guard let panGR = filterViewPanGestureRecognizer, let tapGR = backgroundTapGestureRecognizer else { return }
+        filterViewController!.view.addGestureRecognizer(panGR)
+        tableView.addGestureRecognizer(tapGR)
+    }
+    
+    private func removeGestureRecognizersInFilter() {
+        guard let panGR = filterViewPanGestureRecognizer, let tapGR = backgroundTapGestureRecognizer else { return }
+        filterViewController!.view.removeGestureRecognizer(panGR)
+        tableView.removeGestureRecognizer(tapGR)
+    }
+    
+    @objc private func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
+        if filterViewState == .opened {
+            toggleFilterView()
+        }
+    }
+    
+    @objc private func didPanGestureActionInFilterView(_ sender: UIPanGestureRecognizer) {
+        guard let filterView = filterViewController?.view else { return }
+        let translation = sender.translation(in: filterView)
+        sender.setTranslation(CGPoint.zero, in: filterView)
+        
+        if sender.state == .changed {
+            guard translation.y >= 0 else { return }
+            
+            filterView.frame.origin.y += translation.y
+        }
+        
+        let currentOrigin = filterView.frame.origin.y
+        let halfOfHeight = filterView.frame.height / 2
+        
+        if sender.state == .ended {
+            if (sender.velocity(in: filterView).y > 400) {
+                toggleFilterView()
+            } else if (currentOrigin <= self.tabBarController!.view.frame.height - halfOfHeight) {
+                
+                UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                    filterView.frame.origin.y = self.tabBarController!.view.frame.height - filterView.frame.height
+                }
+            } else {
+                toggleFilterView()
+            }
+        }
+    }
+    
+    func toggleFilterView() {
+//        self.dismissKeyboard()
+        searchBar.resignFirstResponder()
+        
+        switch filterViewState {
+        case .closed:
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                self.filterViewController?.view.frame.origin.y = self.tabBarController!.view.frame.height - (self.filterViewController?.view.frame.height ?? 0)
+                
+            } completion: { finished in
+                self.filterViewState = .opened
+                self.addGestureRecognizers()
+            }
+            
+        case .opened:
+            UIView.animate(withDuration: 0.32, delay: 0, options: .curveEaseInOut) {
+                self.filterViewController?.view.frame.origin.y = self.tabBarController!.view.frame.height
+            } completion: { finished in
+                self.filterViewState = .closed
+                self.removeGestureRecognizersInFilter()
+            }
+        }
+    }
 }

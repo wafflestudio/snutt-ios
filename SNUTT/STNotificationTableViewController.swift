@@ -39,11 +39,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         
         self.refreshControl?.addTarget(self, action: #selector(self.refreshList), for: UIControl.Event.valueChanged)
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        STDefaults[.shouldShowBadge] = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -131,11 +127,9 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         loading = true
         pageCnt = 0
         isLast = false
-        STMainTabBarController.controller?.setNotiBadge(false)
         STNetworking.getNotificationList(numPerPage, offset: numPerPage * pageCnt, explicit: true, done: { list in
             self.loading = false
             self.notiList = list
-            STMainTabBarController.controller?.setNotiBadge(false)
             if list.count < self.numPerPage {
                 self.isLast = true
             }

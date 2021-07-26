@@ -119,7 +119,6 @@ class STLectureSearchToolbarView: UIView, UICollectionViewDelegate, UICollection
             }
         }
         collectionView.reloadItems(at: reloadIndexPaths)
-        searchTableViewController.showTagRecommendation()
     }
 
 }
