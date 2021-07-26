@@ -12,7 +12,6 @@ class STLectureTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var profLabel: UILabel!
     @IBOutlet weak var tagLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var placeLabel: UILabel!
@@ -21,8 +20,7 @@ class STLectureTableViewCell: UITableViewCell {
         didSet {
             titleLabel.text = lecture.title == "" ? "강좌명" : lecture.title
             titleLabel.textColor = lecture.title == "" ? UIColor(white: 0.4, alpha: 1.0) : UIColor(white: 0.0, alpha: 1.0)
-            profLabel.text = lecture.instructor
-            descriptionLabel.text = (lecture.instructor == "" ? "" : "/") + "\(lecture.credit)학점"
+            descriptionLabel.text = "\(lecture.instructor) / \(lecture.credit)학점"
             tagLabel.text = lecture.tagDescription
             timeLabel.text = lecture.timeDescription
             placeLabel.text = lecture.placeDescription
