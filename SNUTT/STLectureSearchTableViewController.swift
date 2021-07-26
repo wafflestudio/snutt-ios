@@ -341,7 +341,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func initEmptyDataSet() {
         let emptyInfoViewNib = Bundle.main.loadNibNamed("STSearchEmptyInfoView", owner: nil, options: nil)
         emptyInfoView = emptyInfoViewNib![0] as! STSearchEmptyInfoView
-        emptyInfoView.searchController = self
         
         let emptySearchViewNib = Bundle.main.loadNibNamed("STSearchEmptyView", owner: nil, options: nil)
         emptySearchView = emptySearchViewNib![0] as! UIView
