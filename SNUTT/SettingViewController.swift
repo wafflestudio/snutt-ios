@@ -47,13 +47,14 @@ class SettingViewController: UIViewController {
         let alert = UIAlertController(title: "시간표 이름", message: nil, preferredStyle: .alert)
         alert.addTextField { textfield in
             textfield.minimumFontSize = 21
-            textfield.placeholder = self.timetable?.title
+            textfield.text = self.timetable?.title
             textfield.textAlignment = .center
         }
         
         let create = UIAlertAction(title: "바꾸기", style: .default) { action in
             guard let text = alert.textFields?[0].text, let timetable = self.timetable else { return }
             self.delegate?.renameTimetable(self, timetable, title: text)
+            self.dismiss(animated: true, completion: nil)
         }
         
         let cancel = UIAlertAction(title: "취소", style: .cancel)
