@@ -82,7 +82,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         
         searchBar.showsBookmarkButton = true
         
-        let filterImage = UIImage(image: UIImage(named: "filter"), scaledTo: CGSize(width: 24, height: 24))
+        let filterImage = UIImage(named: "filter")
         searchBar.setImage(filterImage, for: .bookmark, state: .normal)
         searchBar.placeholder = "ex) 대영 Paul"
         
