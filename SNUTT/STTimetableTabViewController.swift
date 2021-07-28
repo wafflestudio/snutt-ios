@@ -235,7 +235,7 @@ class STTimetableTabViewController: UIViewController {
             }, selectedBlock: { colorIndex in
                 cellList.forEach { cell in
                     let color = STColorManager.sharedInstance.colorList.colorList[colorIndex-1]
-                    cell?.setColor(color: color)
+//                    cell?.setColor(color: color)
                 }
             }, origin: self)
     }
