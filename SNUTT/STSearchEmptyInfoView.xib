@@ -46,6 +46,9 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="searchIcon" destination="QTr-5P-gih" id="rEB-Lv-p48"/>
+            </connections>
             <point key="canvasLocation" x="0.0" y="-186.65667166416793"/>
         </view>
     </objects>
