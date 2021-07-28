@@ -281,9 +281,13 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CourseCell", for: indexPath) as! STCourseCellCollectionViewCell
             cell.isHidden = false
             cell.layer.mask=nil
-            cell.setData(lecture: getLecture(indexPath), singleClass: getSingleClass(indexPath))
+            
+            let lecture = getLecture(indexPath)
             cell.longClicked = cellLongClicked
             cell.tapped = cellTapped
+            cell.theme = timetable?.theme
+            cell.indexInTheme = timetable?.lectureList.index(of: lecture)
+            cell.setData(lecture: lecture, singleClass: getSingleClass(indexPath))
             if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
                 cell.isHidden = true
             }

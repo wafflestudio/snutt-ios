@@ -20,6 +20,7 @@ class STTimetable {
     var title : String
     var id : String? = ""
     var temporaryLecture : STLecture? = nil
+    var theme : STTheme?
     
     var isLoaded : Bool {
         get {
@@ -52,6 +53,7 @@ class STTimetable {
         self.quarter = STQuarter(year: year, semester: semester)
         self.title = json["title"].stringValue
         self.id = json["_id"].string
+        self.theme = STTheme(rawValue: json["theme"].intValue)
         let lectures = json["lecture_list"].arrayValue
         lectures.forEach {data in
             self.addLecture(STLecture(json: data))

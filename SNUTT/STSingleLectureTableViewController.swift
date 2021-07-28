@@ -263,7 +263,7 @@ class STSingleLectureTableViewController: UITableViewController {
         switch cellViewType {
         case .colorPick:
             let cell =  tmpCell as! STColorPickTableViewCell
-            cell.color = currentLecture.getColor()
+//            cell.color = currentLecture.getColor()
             return cell
         case .padding:
             return tmpCell
@@ -343,7 +343,7 @@ class STSingleLectureTableViewController: UITableViewController {
     
     func triggerColorPicker() {
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "STColorPickerTableViewController") as! STColorPickerTableViewController
-        viewController.color = currentLecture.getColor()
+//        viewController.color = currentLecture.getColor()
         viewController.colorIndex = currentLecture.colorIndex
         viewController.doneBlock = { colorIndex, color in
             self.currentLecture.color = color
