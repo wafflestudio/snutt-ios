@@ -286,7 +286,6 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             cell.longClicked = cellLongClicked
             cell.tapped = cellTapped
             cell.theme = timetable?.theme
-            cell.indexInTheme = timetable?.lectureList.index(of: lecture)
             cell.setData(lecture: lecture, singleClass: getSingleClass(indexPath))
             if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
                 cell.isHidden = true

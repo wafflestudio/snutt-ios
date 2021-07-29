@@ -62,6 +62,3 @@ enum STTheme: Int {
         }
     }
 }
-
-typealias ThemeColor = String
-

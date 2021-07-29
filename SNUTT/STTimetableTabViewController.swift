@@ -200,6 +200,7 @@ class STTimetableTabViewController: UIViewController {
     func cellTapped(_ cell: STCourseCellCollectionViewCell) {
         let detailController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LectureDetailTableViewController") as! STLectureDetailTableViewController
         detailController.lecture = cell.lecture
+        detailController.theme = cell.theme
         self.navigationController?.pushViewController(detailController, animated: true)
 
     }

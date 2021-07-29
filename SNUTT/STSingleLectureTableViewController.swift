@@ -14,6 +14,7 @@ class STSingleLectureTableViewController: UITableViewController {
     // TODO: Seriously needs refactoring
     var custom : Bool = false
     var currentLecture : STLecture = STLecture()
+    var theme: STTheme?
     var sectionForSingleClass : Int = 4
 
     enum LectureAttributes {
@@ -263,7 +264,10 @@ class STSingleLectureTableViewController: UITableViewController {
         switch cellViewType {
         case .colorPick:
             let cell =  tmpCell as! STColorPickTableViewCell
-//            cell.color = currentLecture.getColor()
+            if let theme = theme {
+                let color = currentLecture.getColor(theme: theme)
+                cell.color = color
+            }
             return cell
         case .padding:
             return tmpCell
@@ -343,7 +347,10 @@ class STSingleLectureTableViewController: UITableViewController {
     
     func triggerColorPicker() {
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "STColorPickerTableViewController") as! STColorPickerTableViewController
-//        viewController.color = currentLecture.getColor()
+        if let theme = theme {
+            let color = currentLecture.getColor(theme: theme)
+            viewController.color = color
+        }
         viewController.colorIndex = currentLecture.colorIndex
         viewController.doneBlock = { colorIndex, color in
             self.currentLecture.color = color

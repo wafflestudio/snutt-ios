@@ -32,20 +32,14 @@ struct STLecture {
     var timeMask: [Int] = []
     var titleBreakLine = ""
 
-    func getColor(theme: STTheme, index: Int) -> String {
+    func getColor(theme: STTheme) -> STColor {
         let colorList = theme.getColorList()
-        let color = colorList[index]
-        return color
+        var bgColor = colorList[colorIndex]
+        var fgColor = "#ffffff"
         
-//        let colorList = STColorManager.sharedInstance.colorList!
-//
-//        if colorIndex == 0 {
-//            return color ?? STColor()
-//        } else if (colorIndex <= colorList.colorList.count && colorIndex >= 1) {
-//            return colorList.colorList[colorIndex - 1]
-//        } else {
-//            return STColor()
-//        }
+        guard let color = color else { return STColor(fgHex: fgColor, bgHex: bgColor) }
+        
+        return STColor(fgHex: color.fgColor.toHexString(), bgHex: color.bgColor.toHexString())
     }
 
     var timeDescription : String {

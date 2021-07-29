@@ -36,7 +36,7 @@ class STColorPickerTableViewController: UITableViewController {
     
     override func willMove(toParent parent: UIViewController?) {
         if parent == nil {
-            let retColorIndex = selectedColorIndex == customColorIndex ? 0 : selectedColorIndex + 1
+            let retColorIndex = selectedColorIndex == customColorIndex ? 0 : selectedColorIndex
             let retColor = selectedColorIndex == customColorIndex ? color : nil
             doneBlock(retColorIndex, retColor)
         }

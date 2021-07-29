@@ -16,7 +16,6 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     private var oldLecture: STLecture? = nil
     private var oldSingleClass: STSingleClass? = nil
     var theme: STTheme?
-    var indexInTheme: Int?
     
     var longClicked: ((STCourseCellCollectionViewCell)->())?
     var tapped: ((STCourseCellCollectionViewCell)->())?
@@ -56,8 +55,8 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     }
 
     func setColorByLecture(lecture: STLecture) {
-        guard let theme = theme, let index = indexInTheme else { return }
-        let color = lecture.getColor(theme: theme, index: index)
+        guard let theme = theme else { return }
+        let color = lecture.getColor(theme: theme)
         setColor(color: color)
     }
     
@@ -96,14 +95,14 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     }
     
     func setColor() {
-        guard let theme = theme, let index = indexInTheme else { return }
-        let color = lecture.getColor(theme: theme, index: index)
+        guard let theme = theme else { return }
+        let color = lecture.getColor(theme: theme)
         setColor(color: color)
     }
 
-    func setColor(color: ThemeColor) {
-        self.backgroundColor = UIColor(hexString: color)
-        courseText.textColor = .white // color.fgColor
+    func setColor(color: STColor) {
+        self.backgroundColor = UIColor(hexString: color.bgColor.toHexString())
+        courseText.textColor = UIColor(hexString: color.fgColor.toHexString())
     }
 
     func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
