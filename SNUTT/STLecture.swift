@@ -37,7 +37,7 @@ struct STLecture {
         var bgColor = colorList[colorIndex]
         var fgColor = "#ffffff"
         
-        guard let color = color else { return STColor(fgHex: fgColor, bgHex: bgColor) }
+        guard let color = color, colorIndex == 0 else { return STColor(fgHex: fgColor, bgHex: bgColor) }
         
         return STColor(fgHex: color.fgColor.toHexString(), bgHex: color.bgColor.toHexString())
     }
