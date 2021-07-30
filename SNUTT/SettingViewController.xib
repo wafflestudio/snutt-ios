@@ -16,17 +16,17 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="125"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="175"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="6hS-6C-Ytg">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="125"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="175"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a5u-DG-atv">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="62.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="58.5"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jT6-tn-vhk">
-                                    <rect key="frame" x="20" y="21" width="21" height="21"/>
+                                    <rect key="frame" x="20" y="18.5" width="21" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="3Lb-ZC-Bnu"/>
                                         <constraint firstAttribute="width" constant="21" id="ecI-JJ-hoc"/>
@@ -36,7 +36,7 @@
                                     </state>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rf-1G-mdI">
-                                    <rect key="frame" x="81" y="15" width="333" height="33"/>
+                                    <rect key="frame" x="81" y="12.5" width="333" height="33"/>
                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                     <state key="normal" title="이름 변경">
                                         <color key="titleColor" systemColor="labelColor"/>
@@ -56,10 +56,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x1c-eg-s7V">
-                            <rect key="frame" x="0.0" y="62.5" width="414" height="62.5"/>
+                            <rect key="frame" x="0.0" y="58.5" width="414" height="58"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="if9-w3-6IR">
-                                    <rect key="frame" x="20" y="21" width="21" height="21"/>
+                                    <rect key="frame" x="20" y="18.5" width="21" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="PYl-kx-kDc"/>
                                         <constraint firstAttribute="width" constant="21" id="wgJ-s1-eDs"/>
@@ -69,7 +69,7 @@
                                     </state>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eOd-gd-01J">
-                                    <rect key="frame" x="81" y="15" width="333" height="33"/>
+                                    <rect key="frame" x="81" y="12.5" width="333" height="33"/>
                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                     <state key="normal" title="시간표 삭제">
                                         <color key="titleColor" systemColor="labelColor"/>
@@ -86,6 +86,39 @@
                                 <constraint firstItem="if9-w3-6IR" firstAttribute="leading" secondItem="x1c-eg-s7V" secondAttribute="leading" constant="20" id="cqU-x8-mnh"/>
                                 <constraint firstItem="eOd-gd-01J" firstAttribute="leading" secondItem="if9-w3-6IR" secondAttribute="trailing" constant="40" id="hrl-SM-dIo"/>
                                 <constraint firstAttribute="trailing" secondItem="eOd-gd-01J" secondAttribute="trailing" id="j4X-Aq-fQL"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBq-h2-wHB">
+                            <rect key="frame" x="0.0" y="116.5" width="414" height="58.5"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7H-rr-e45">
+                                    <rect key="frame" x="20" y="19" width="21" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="21" id="Ahs-mS-zML"/>
+                                        <constraint firstAttribute="height" constant="21" id="oNI-2Q-uJK"/>
+                                    </constraints>
+                                    <state key="normal" image="noticeTrash">
+                                        <color key="titleColor" systemColor="labelColor"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLd-nb-05o">
+                                    <rect key="frame" x="81" y="13" width="333" height="33"/>
+                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                    <state key="normal" title="시간표 테마 설정">
+                                        <color key="titleColor" systemColor="labelColor"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="showThemeSetting:" destination="-1" eventType="touchUpInside" id="x6i-ca-q9m"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="OLd-nb-05o" secondAttribute="trailing" id="0bP-WY-2bU"/>
+                                <constraint firstItem="d7H-rr-e45" firstAttribute="leading" secondItem="oBq-h2-wHB" secondAttribute="leading" constant="20" id="MBd-5t-ZIt"/>
+                                <constraint firstItem="d7H-rr-e45" firstAttribute="centerY" secondItem="oBq-h2-wHB" secondAttribute="centerY" id="MLU-Ux-5El"/>
+                                <constraint firstItem="OLd-nb-05o" firstAttribute="leading" secondItem="d7H-rr-e45" secondAttribute="trailing" constant="40" id="S1n-bq-VDT"/>
+                                <constraint firstItem="OLd-nb-05o" firstAttribute="centerY" secondItem="oBq-h2-wHB" secondAttribute="centerY" id="hez-pe-NQL"/>
                             </constraints>
                         </view>
                     </subviews>

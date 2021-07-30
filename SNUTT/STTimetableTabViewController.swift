@@ -13,6 +13,7 @@ class STTimetableTabViewController: UIViewController {
     @IBOutlet weak var timetableView: STTimetableCollectionView!
     var lectureListController : STMyLectureListController!
     var menuController: MenuViewController!
+    var themeSettingController: ThemeSettingViewController!
     let backgroundView = UIView()
     
     enum ContainerViewState {
@@ -25,8 +26,14 @@ class STTimetableTabViewController: UIViewController {
         case closed
     }
     
+    enum ThemeSettingViewState {
+        case opened
+        case closed
+    }
+    
     var containerViewState : ContainerViewState = .timetable
     var menuControllerState : MenuControllerState = .closed
+    var themeSettingViewState : ThemeSettingViewState = .closed
     var isInAnimation : Bool = false
     
     @IBAction func captureTimeTable(_ sender: UIBarButtonItem) {
@@ -91,7 +98,10 @@ class STTimetableTabViewController: UIViewController {
         reloadData()
         
         menuController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+        menuController.delegate = self
         addMenuView()
+        
+        addThemeSettingView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -324,7 +334,12 @@ extension STTimetableTabViewController {
     }
     
     @objc private func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
-        toggleMenuView()
+        if (menuControllerState == .opened) {
+            toggleMenuView()
+        }
+        if (themeSettingViewState == .opened) {
+            toggleThemeSettingView()
+        }
     }
     
     @objc private func didPanGestureActionInMenuView(_ sender: UIPanGestureRecognizer) {
@@ -383,16 +398,52 @@ extension STTimetableTabViewController {
             }
             
         case .opened:
+            self.hideBackgroundCoverView()
             UIView.animate(withDuration: 0.32, delay: 0, options: .curveEaseInOut) {
                 self.menuController.view.frame.origin.x = -(self.containerView.frame.width)
             } completion: { finished in
-                self.hideBackgroundCoverView()
                 self.menuController.view.isHidden = true
                 self.menuControllerState = .closed
             }
         }
     }
 }
+
+extension STTimetableTabViewController {
+        private func addThemeSettingView() {
+            themeSettingController = ThemeSettingViewController(nibName: "ThemeSettingViewController", bundle: nil)
+//            themeSettingViewController?.delegate = self
+            
+            self.tabBarController!.view.addSubview(themeSettingController!.view)
+            
+            themeSettingController!.view.frame.size.width = self.tabBarController!.view.frame.width
+            themeSettingController!.view.frame.origin.y = self.tabBarController!.view.frame.height
+            themeSettingController!.view.layer.masksToBounds = true
+            themeSettingController!.view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+            themeSettingController!.view.layer.cornerRadius = 16
+        }
+        
+        func toggleThemeSettingView() {
+            switch themeSettingViewState {
+            case .closed:
+                showBackgroundCoverView()
+                UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                    self.themeSettingController?.view.frame.origin.y = self.tabBarController!.view.frame.height - (self.themeSettingController?.view.frame.height ?? 0)
+                    
+                } completion: { finished in
+                    self.themeSettingViewState = .opened
+                }
+                
+            case .opened:
+                hideBackgroundCoverView()
+                UIView.animate(withDuration: 0.32, delay: 0, options: .curveEaseInOut) {
+                    self.themeSettingController?.view.frame.origin.y = self.tabBarController!.view.frame.height
+                } completion: { finished in
+                    self.themeSettingViewState = .closed
+                }
+            }
+        }
+    }
 
 // MARK: Set noti navbar item
 extension STTimetableTabViewController {
@@ -403,6 +454,16 @@ extension STTimetableTabViewController {
             notiBarItem.image = #imageLiteral(resourceName: "tabAlarmOff").withRenderingMode(.alwaysOriginal)
         }
         STDefaults[.shouldShowBadge] = shouldShowBadge
+    }
+}
+
+extension STTimetableTabViewController: MenuViewControllerDelegate {
+    func close(_: MenuViewController) {
+        toggleMenuView()
+    }
+    
+    func showThemeSettingView(_: MenuViewController, _ timetable: STTimetable) {
+        toggleThemeSettingView()
     }
 }
 

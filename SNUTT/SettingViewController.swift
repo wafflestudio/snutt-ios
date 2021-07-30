@@ -11,15 +11,22 @@ import UIKit
 protocol SettingViewControllerDelegate: class {
     func renameTimetable(_: SettingViewController, _ timetable: STTimetable, title: String)
     func deleteTimetable(_: SettingViewController, _ timetable: STTimetable)
+    func showChangeThemeView(_: SettingViewController, _ timetable: STTimetable)
 }
 
 class SettingViewController: UIViewController {
     weak var delegate: SettingViewControllerDelegate?
     
     var timetable: STTimetable?
+    var settingSheet: UIAlertController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let screen = UIScreen.main.bounds
+        let screenWidth = screen.size.width
+        let screenHeight = screen.size.height
+        
+//        self.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: screenWidth, height: 175))
     }
     
     @IBAction func remove(_ sender: UIButton) {
@@ -43,6 +50,10 @@ class SettingViewController: UIViewController {
         showRenameTextfield()
     }
     
+    @IBAction func showThemeSetting(_ sender: UIButton) {
+        showChangeThemeView()
+    }
+    
     private func showRenameTextfield() {
         let alert = UIAlertController(title: "시간표 이름", message: nil, preferredStyle: .alert)
         alert.addTextField { textfield in
@@ -62,5 +73,11 @@ class SettingViewController: UIViewController {
         alert.addAction(create)
         alert.addAction(cancel)
         present(alert, animated: true)
+    }
+    
+    private func showChangeThemeView() {
+        guard let timetable = timetable else { return }
+        settingSheet?.dismiss(animated: true, completion: nil)
+        delegate?.showChangeThemeView(self, timetable)
     }
 }

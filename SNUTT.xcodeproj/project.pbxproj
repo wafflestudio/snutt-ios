@@ -10,6 +10,8 @@
 		B1EB38A2D401D55B8B513965 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */; };
 		DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */; };
 		DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */; };
+		DC39728F26B4490800187DFC /* ThemeSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC39728D26B4490800187DFC /* ThemeSettingViewController.swift */; };
+		DC39729026B4490800187DFC /* ThemeSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC39728E26B4490800187DFC /* ThemeSettingViewController.xib */; };
 		DC4D9F9F26A5D3A2000EA8F9 /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */; };
 		DC4D9FA026A5D3A2000EA8F9 /* SearchFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC4D9F9E26A5D3A2000EA8F9 /* SearchFilterViewController.xib */; };
 		DC4D9FA926A5F16C000EA8F9 /* TagTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D9FA726A5F16C000EA8F9 /* TagTypeTableViewCell.swift */; };
@@ -230,6 +232,8 @@
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
+		DC39728D26B4490800187DFC /* ThemeSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingViewController.swift; sourceTree = "<group>"; };
+		DC39728E26B4490800187DFC /* ThemeSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeSettingViewController.xib; sourceTree = "<group>"; };
 		DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterViewController.swift; sourceTree = "<group>"; };
 		DC4D9F9E26A5D3A2000EA8F9 /* SearchFilterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchFilterViewController.xib; sourceTree = "<group>"; };
 		DC4D9FA726A5F16C000EA8F9 /* TagTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTypeTableViewCell.swift; sourceTree = "<group>"; };
@@ -432,6 +436,15 @@
 				E0B8ADB76AB6B75793967316 /* Pods-SNUTT Today.production.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		DC39728C26B448C400187DFC /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				DC39728D26B4490800187DFC /* ThemeSettingViewController.swift */,
+				DC39728E26B4490800187DFC /* ThemeSettingViewController.xib */,
+			);
+			name = Theme;
 			sourceTree = "<group>";
 		};
 		DC4D9F9C26A5D34D000EA8F9 /* SearchFilter */ = {
@@ -649,6 +662,7 @@
 		E1C28B191B9C4B7B00B8C493 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DC39728C26B448C400187DFC /* Theme */,
 				DC5B8CD526905C890085268B /* Menu */,
 				E1F946211DB449A200CC8AF6 /* MyLectureList */,
 				E16A88451C9F782F003D94AB /* Setting */,
@@ -956,6 +970,7 @@
 				E13984331EF69111007DD319 /* STColorTableViewCell.xib in Resources */,
 				E1CAAA351CF07E7E00D16183 /* STSingleLectureButtonCell.xib in Resources */,
 				E1A664F61EED8F77003B2D43 /* STTagSearchInfoView.xib in Resources */,
+				DC39729026B4490800187DFC /* ThemeSettingViewController.xib in Resources */,
 				DC546BDE2699816700A1BDD8 /* SettingViewController.xib in Resources */,
 				E1773CAE1C953E8B00AF36AF /* Login.storyboard in Resources */,
 				E1986A401F10C2D700337419 /* STSearchEmptyView.xib in Resources */,
@@ -1178,6 +1193,7 @@
 				E16643511B4623BB00387EF8 /* STTimetableLayout.swift in Sources */,
 				E14DF2141C3F71A70076FDDE /* STTimetableAddController.swift in Sources */,
 				E110CFE11C8C017E00ED0590 /* STTagList.swift in Sources */,
+				DC39728F26B4490800187DFC /* ThemeSettingViewController.swift in Sources */,
 				E1C28B181B9C4B3600B8C493 /* STTime.swift in Sources */,
 				E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */,
 				E166435B1B46734C00387EF8 /* STLectureDetailTableViewController.swift in Sources */,

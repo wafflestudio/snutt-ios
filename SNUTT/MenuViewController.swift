@@ -8,6 +8,11 @@
 
 import Foundation
 
+protocol MenuViewControllerDelegate: class {
+    func close(_: MenuViewController)
+    func showThemeSettingView(_: MenuViewController, _ timetable: STTimetable )
+}
+
 class MenuViewController: UIViewController {
     
     struct Section {
@@ -18,6 +23,8 @@ class MenuViewController: UIViewController {
     
     var timetableList : [STTimetable] = []
     var sectionList : [Section] = []
+    var delegate: MenuViewControllerDelegate?
+    var sheetAlert: UIAlertController?
     
     var currentTimetable: STTimetable? {
         return STTimetableManager.sharedInstance.currentTimetable
@@ -235,23 +242,34 @@ extension MenuViewController: MenuTableViewCellDelegate {
     }
     
     func showSettingSheet(_ cell: MenuTableViewCell) {
-        let sheetAlert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "", style: .cancel)
-        sheetAlert.addAction(cancel)
-        
+        sheet.addAction(cancel)
+         
         let settingController = SettingViewController(nibName: "SettingViewController", bundle: nil)
         settingController.delegate = self
         settingController.timetable = cell.timetable
-        sheetAlert.view.frame = settingController.view.frame
+        settingController.settingSheet = sheet
         
-        sheetAlert.addChild(settingController)
-        sheetAlert.view.addSubview(settingController.view)
+        sheet.view.frame = settingController.view.frame
         
-        present(sheetAlert, animated: true)
+//        sheetAlert.view.frame.size.height = 240
+        
+        sheet.addChild(settingController)
+        sheet.view.addSubview(settingController.view)
+        
+        present(sheet, animated: true)
     }
 }
 
 extension MenuViewController: SettingViewControllerDelegate {
+    func showChangeThemeView(_: SettingViewController, _ timetable: STTimetable) {
+        guard let timetable = currentTimetable else { return }
+        delegate?.close(self)
+        delegate?.showThemeSettingView(self, timetable)
+        
+    }
+    
     func renameTimetable(_: SettingViewController, _ timetable: STTimetable, title: String) {
         guard let id = timetable.id else {
             STAlertView.showAlert(title: "시간표 이름 수정 실패", message: "")
