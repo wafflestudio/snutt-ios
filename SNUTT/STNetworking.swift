@@ -130,6 +130,15 @@ class STNetworking {
             }
     }
     
+    static func updateTheme(id: String, theme: Int, _ done: @escaping (STTimetable?)->(), failure: @escaping (STErrorCode)->()) {
+        Alamofire.request(STTimetableRouter.updateTheme(id: id, theme: theme))
+            .responseWithDone { (statusCode, json) in
+                done(STTimetable(json: json))
+            } failure: { (errorCode) in
+                failure(errorCode)
+            }
+    }
+    
     //MARK: LectureRouter
     
     static func addCustomLecture(_ timetable: STTimetable, lecture: STLecture, done: @escaping (STTimetable)->(), failure: @escaping ()->()) {

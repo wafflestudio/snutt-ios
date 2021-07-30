@@ -31,6 +31,9 @@ class STTimetableTabViewController: UIViewController {
         case closed
     }
     
+    var originalTheme: STTheme?
+    var temporaryTheme: STTheme?
+    
     var containerViewState : ContainerViewState = .timetable
     var menuControllerState : MenuControllerState = .closed
     var themeSettingViewState : ThemeSettingViewState = .closed
@@ -102,6 +105,7 @@ class STTimetableTabViewController: UIViewController {
         addMenuView()
         
         addThemeSettingView()
+        originalTheme = STTimetableManager.sharedInstance.currentTimetable?.theme
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -377,6 +381,11 @@ extension STTimetableTabViewController {
     }
     
     private func hideBackgroundCoverView() {
+        if (themeSettingViewState == .opened) {
+            STTimetableManager.sharedInstance.currentTimetable?.theme = originalTheme
+            temporaryTheme = nil
+            timetableView.reloadData()
+        }
         backgroundView.frame.size.width = 0
         backgroundView.isHidden = true
     }
@@ -413,14 +422,14 @@ extension STTimetableTabViewController {
         private func addThemeSettingView() {
             themeSettingController = ThemeSettingViewController(nibName: "ThemeSettingViewController", bundle: nil)
 //            themeSettingViewController?.delegate = self
-            
+            themeSettingController.setTemporaryTheme = setTemporaryTheme
+            themeSettingController.setTheme = setTheme
             self.tabBarController!.view.addSubview(themeSettingController!.view)
             
             themeSettingController!.view.frame.size.width = self.tabBarController!.view.frame.width
             themeSettingController!.view.frame.origin.y = self.tabBarController!.view.frame.height
             themeSettingController!.view.layer.masksToBounds = true
             themeSettingController!.view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-            themeSettingController!.view.layer.cornerRadius = 16
         }
         
         func toggleThemeSettingView() {
@@ -458,12 +467,34 @@ extension STTimetableTabViewController {
 }
 
 extension STTimetableTabViewController: MenuViewControllerDelegate {
+    
     func close(_: MenuViewController) {
         toggleMenuView()
     }
     
     func showThemeSettingView(_: MenuViewController, _ timetable: STTimetable) {
         toggleThemeSettingView()
+    }
+    
+    private func setTemporaryTheme(_ theme: STTheme) {
+        STTimetableManager.sharedInstance.currentTimetable?.theme = theme
+        temporaryTheme = theme
+        timetableView.reloadData()
+    }
+    
+    private func setTheme() {
+        if let timetable = STTimetableManager.sharedInstance.currentTimetable, let id = timetable.id {
+            guard let theme = temporaryTheme else { return }
+            STNetworking.updateTheme(id: id, theme: theme.rawValue) { (timetable) in
+                self.originalTheme = self.temporaryTheme
+                self.temporaryTheme = nil
+                STTimetableManager.sharedInstance.currentTimetable = timetable
+                self.toggleThemeSettingView()
+                self.timetableView.reloadData()
+            } failure: { (_) in
+                
+            }
+        }
     }
 }
 

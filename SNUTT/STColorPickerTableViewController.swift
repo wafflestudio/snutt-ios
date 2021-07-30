@@ -91,9 +91,13 @@ class STColorPickerTableViewController: UITableViewController {
                 cell.colorLabel.text = "직접 지정하기"
                 cell.setBorder(false)
             } else {
-                cell.color = colorList.colorList[indexPath.row]
-                cell.colorLabel.text = colorList.nameList[indexPath.row]
-                cell.setBorder(true)
+                if let theme = STTimetableManager.sharedInstance.currentTimetable?.theme {
+                    let colorList = theme.getColorList()
+                    let fgColor = "#ffffff"
+                    cell.color =  STColor(fgHex: fgColor, bgHex: colorList[indexPath.row])
+                    cell.colorLabel.text = "\(theme.getName()) \(indexPath.row)"
+                    cell.setBorder(true)
+                }
             }
             return cell
         } else {

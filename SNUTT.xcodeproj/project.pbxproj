@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B1EB38A2D401D55B8B513965 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */; };
+		DC20CF3426B4768100F31830 /* ThemeSettingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */; };
+		DC20CF3526B4768100F31830 /* ThemeSettingCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */; };
 		DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */; };
 		DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */; };
 		DC39728F26B4490800187DFC /* ThemeSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC39728D26B4490800187DFC /* ThemeSettingViewController.swift */; };
@@ -230,6 +232,8 @@
 		7540205FB7071F642F9B022F /* Pods_SNUTT_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		923560D5D97F8A3548E9547A /* Pods-SNUTT Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.debug.xcconfig"; sourceTree = "<group>"; };
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingCollectionViewCell.swift; sourceTree = "<group>"; };
+		DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeSettingCollectionViewCell.xib; sourceTree = "<group>"; };
 		DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
 		DC39728D26B4490800187DFC /* ThemeSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingViewController.swift; sourceTree = "<group>"; };
@@ -443,6 +447,8 @@
 			children = (
 				DC39728D26B4490800187DFC /* ThemeSettingViewController.swift */,
 				DC39728E26B4490800187DFC /* ThemeSettingViewController.xib */,
+				DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */,
+				DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */,
 			);
 			name = Theme;
 			sourceTree = "<group>";
@@ -987,6 +993,7 @@
 				DC4D9FAA26A5F16C000EA8F9 /* TagTypeTableViewCell.xib in Resources */,
 				DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */,
 				E1F58AAA1C3CFC1C00F6A0FC /* STColumnHeaderCollectionViewCell.xib in Resources */,
+				DC20CF3526B4768100F31830 /* ThemeSettingCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1204,6 +1211,7 @@
 				E110CFD11C883DC900ED0590 /* STNotificationTableViewController.swift in Sources */,
 				E11E61031EED13890036F3F2 /* STSearchEmptyInfoView.swift in Sources */,
 				E1130AD61E7C272A00ADE84F /* STColorList.swift in Sources */,
+				DC20CF3426B4768100F31830 /* ThemeSettingCollectionViewCell.swift in Sources */,
 				E110CFD71C88424000ED0590 /* STNotification.swift in Sources */,
 				E1AC20F51F8B6DD4005B5DE7 /* STFCMInfo.swift in Sources */,
 				E1F946251DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift in Sources */,

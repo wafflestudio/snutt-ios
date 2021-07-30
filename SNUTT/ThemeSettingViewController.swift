@@ -8,23 +8,58 @@
 
 import UIKit
 
-class ThemeSettingViewController: UIViewController {
-
+class ThemeSettingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBAction func updateTheme(_ sender: UIButton) {
+        setTheme?()
+    }
+    
+    var setTemporaryTheme: ((_ theme: STTheme) -> ())?
+    var setTheme: (() -> ())?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 90, height: collectionView.frame.height)
+        
+        layout.scrollDirection = .horizontal
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.collectionViewLayout = layout
+        
+        addCellXib()
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return STTheme.allCases.count
     }
-    */
-
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "themeSettingCollectionViewCell", for: indexPath)
+        
+        if let customCell = cell as? ThemeSettingCollectionViewCell {
+            customCell.setLabelText("얍얍얍")
+            
+            guard let theme = STTheme(rawValue: indexPath.row), let image = UIImage(named: theme.getImageName()) else { return cell }
+            
+            customCell.setThemeImage(image)
+            customCell.setLabelText(theme.getName())
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let selectedTheme = STTheme(rawValue: indexPath.row) {
+            setTemporaryTheme?(selectedTheme)
+        }
+    }
+    
+    private func addCellXib() {
+        let nib = UINib(nibName: "ThemeSettingCollectionViewCell", bundle: nil)
+        
+        collectionView.register(nib, forCellWithReuseIdentifier: "themeSettingCollectionViewCell")
+    }
 }
