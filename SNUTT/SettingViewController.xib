@@ -20,13 +20,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="6hS-6C-Ytg">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="175"/>
+                    <rect key="frame" x="0.0" y="13" width="414" height="162"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a5u-DG-atv">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="58.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jT6-tn-vhk">
-                                    <rect key="frame" x="20" y="18.5" width="21" height="21"/>
+                                    <rect key="frame" x="20" y="16.5" width="21" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="3Lb-ZC-Bnu"/>
                                         <constraint firstAttribute="width" constant="21" id="ecI-JJ-hoc"/>
@@ -36,7 +36,7 @@
                                     </state>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rf-1G-mdI">
-                                    <rect key="frame" x="81" y="12.5" width="333" height="33"/>
+                                    <rect key="frame" x="81" y="10.5" width="333" height="33"/>
                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                     <state key="normal" title="이름 변경">
                                         <color key="titleColor" systemColor="labelColor"/>
@@ -56,10 +56,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x1c-eg-s7V">
-                            <rect key="frame" x="0.0" y="58.5" width="414" height="58"/>
+                            <rect key="frame" x="0.0" y="54" width="414" height="54"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="if9-w3-6IR">
-                                    <rect key="frame" x="20" y="18.5" width="21" height="21"/>
+                                    <rect key="frame" x="20" y="16.5" width="21" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="PYl-kx-kDc"/>
                                         <constraint firstAttribute="width" constant="21" id="wgJ-s1-eDs"/>
@@ -69,7 +69,7 @@
                                     </state>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eOd-gd-01J">
-                                    <rect key="frame" x="81" y="12.5" width="333" height="33"/>
+                                    <rect key="frame" x="81" y="10.5" width="333" height="33"/>
                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                     <state key="normal" title="시간표 삭제">
                                         <color key="titleColor" systemColor="labelColor"/>
@@ -89,20 +89,20 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBq-h2-wHB">
-                            <rect key="frame" x="0.0" y="116.5" width="414" height="58.5"/>
+                            <rect key="frame" x="0.0" y="108" width="414" height="54"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7H-rr-e45">
-                                    <rect key="frame" x="20" y="19" width="21" height="21"/>
+                                    <rect key="frame" x="20" y="16.5" width="21" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="21" id="Ahs-mS-zML"/>
                                         <constraint firstAttribute="height" constant="21" id="oNI-2Q-uJK"/>
                                     </constraints>
-                                    <state key="normal" image="noticeTrash">
+                                    <state key="normal" image="palette">
                                         <color key="titleColor" systemColor="labelColor"/>
                                     </state>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLd-nb-05o">
-                                    <rect key="frame" x="81" y="13" width="333" height="33"/>
+                                    <rect key="frame" x="81" y="10.5" width="333" height="33"/>
                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                     <state key="normal" title="시간표 테마 설정">
                                         <color key="titleColor" systemColor="labelColor"/>
@@ -128,7 +128,7 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6hS-6C-Ytg" secondAttribute="trailing" id="Oco-Le-Rg5"/>
-                <constraint firstItem="6hS-6C-Ytg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fJX-9l-hgf"/>
+                <constraint firstItem="6hS-6C-Ytg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="13" id="fJX-9l-hgf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="6hS-6C-Ytg" secondAttribute="bottom" id="gPh-gT-9mw"/>
                 <constraint firstItem="6hS-6C-Ytg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="iJ1-wr-87U"/>
             </constraints>
@@ -138,6 +138,7 @@
     </objects>
     <resources>
         <image name="noticeTrash" width="20" height="20"/>
+        <image name="palette" width="22" height="21"/>
         <image name="pen" width="32" height="31.5"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

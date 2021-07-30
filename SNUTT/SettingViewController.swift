@@ -22,11 +22,6 @@ class SettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let screen = UIScreen.main.bounds
-        let screenWidth = screen.size.width
-        let screenHeight = screen.size.height
-        
-//        self.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: screenWidth, height: 175))
     }
     
     @IBAction func remove(_ sender: UIButton) {

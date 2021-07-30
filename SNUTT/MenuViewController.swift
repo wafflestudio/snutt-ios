@@ -245,15 +245,24 @@ extension MenuViewController: MenuTableViewCellDelegate {
         let sheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "", style: .cancel)
         sheet.addAction(cancel)
-         
+        
         let settingController = SettingViewController(nibName: "SettingViewController", bundle: nil)
         settingController.delegate = self
         settingController.timetable = cell.timetable
         settingController.settingSheet = sheet
         
+        // Action Sheet를 커스터마이징하기 위한 트릭들
+        guard let superview = view.superview?.superview?.superview?.superview else { return }
+        
+        superview.addSubview(sheet.view)
+        
         sheet.view.frame = settingController.view.frame
         
-//        sheetAlert.view.frame.size.height = 240
+        let screenWidth = UIScreen.main.bounds.size.width
+        sheet.view.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
+        sheet.view.widthAnchor.constraint(equalToConstant: screenWidth)
+            .isActive = true
+        sheet.view.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         sheet.addChild(settingController)
         sheet.view.addSubview(settingController.view)
@@ -284,7 +293,7 @@ extension MenuViewController: SettingViewControllerDelegate {
                 
                 STTimetableManager.sharedInstance.currentTimetable = updatedTimetable[0]
             }
-           
+            
             self.timetableList = timetableList
             self.reloadList()
         }, failure: { errorTitle in
