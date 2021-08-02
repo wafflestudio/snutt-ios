@@ -11,7 +11,7 @@ import ChameleonFramework
 
 class STColorPickerTableViewController: UITableViewController {
 
-    var customColorIndex = 1
+    var customColorIndex = 9
     var color : STColor!
     var colorIndex: Int = 1
     var selectedColorIndex = 1
