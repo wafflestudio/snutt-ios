@@ -113,18 +113,15 @@ class STTimetableTabViewController: UIViewController {
         
         menuController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
         menuController.delegate = self
-        addMenuView()
         
         originalTheme = STTimetableManager.sharedInstance.currentTimetable?.theme
+        
+        addMenuView()
+        addThemeSettingView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         setNotiBadge(STDefaults[.shouldShowBadge])
-        addThemeSettingView()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        removeThemeSettingView()
     }
     
     deinit {
@@ -328,13 +325,8 @@ extension STTimetableTabViewController {
         guard let menuVC = menuController else {
             return
         }
-        self.tabBarController!.view.addSubview(backgroundView)
-        self.tabBarController!.view.addSubview(menuVC.view)
         
-        menuVC.view.frame.origin.x = -(menuVC.view.frame.width)
-        
-        menuVC.view.isHidden = true
-        backgroundView.isHidden = true
+        menuController.view.frame.origin.x = -(self.containerView.frame.width)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView(_:)))
         
@@ -406,6 +398,8 @@ extension STTimetableTabViewController {
         switch menuControllerState {
         case .closed:
             showBackgroundCoverView()
+            self.tabBarController!.view.addSubview(backgroundView)
+            self.tabBarController!.view.addSubview(menuController.view)
             self.menuController?.view.isHidden = false
             UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
                 menuController.view.frame.origin.x = 0
@@ -432,8 +426,11 @@ extension STTimetableTabViewController {
         //            themeSettingViewController?.delegate = self
         themeSettingController.setTemporaryTheme = setTemporaryTheme
         themeSettingController.setTheme = setTheme
-        self.tabBarController!.view.addSubview(themeSettingController!.view)
         
+        let key = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        key?.addSubview(themeSettingController!.view)
+        key?.bringSubviewToFront(themeSettingController!.view)
+
         themeSettingController!.view.frame.size.width = self.tabBarController!.view.frame.width
         themeSettingController!.view.frame.origin.y = self.tabBarController!.view.frame.height
         themeSettingController!.view.layer.masksToBounds = true
@@ -503,10 +500,6 @@ extension STTimetableTabViewController: MenuViewControllerDelegate {
                 
             }
         }
-    }
-    
-    private func removeThemeSettingView() {
-        self.themeSettingController!.view.removeFromSuperview()
     }
 }
 
