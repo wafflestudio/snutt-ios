@@ -80,13 +80,13 @@
                                     <segue destination="2Xm-tS-Iwu" kind="show" id="3Jl-z2-KT8"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="topbar_capture" id="nbi-ue-X3V">
+                            <barButtonItem image="share" id="nbi-ue-X3V">
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <action selector="captureTimeTable:" destination="Ybg-bY-Wbe" id="Edg-4x-E1w"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="navigationbaritem_list" style="plain" id="gnE-zE-Exs">
+                            <barButtonItem image="table" style="plain" id="gnE-zE-Exs">
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="switchToTimetableListView:" destination="Ybg-bY-Wbe" id="YMZ-pW-hVs"/>
@@ -1909,9 +1909,9 @@
     </designables>
     <resources>
         <image name="logo" width="51" height="52"/>
-        <image name="navigationbaritem_list" width="22" height="20"/>
         <image name="review" width="30" height="30"/>
         <image name="reviewOn0.5x" width="28.5" height="24"/>
+        <image name="share" width="30" height="30"/>
         <image name="tabAlarmOff" width="30" height="30"/>
         <image name="tabSearchOff" width="30" height="30"/>
         <image name="tabSearchOn" width="30" height="30"/>
@@ -1919,8 +1919,8 @@
         <image name="tabSettingOn" width="30" height="30"/>
         <image name="tabTimetableOff" width="30" height="30"/>
         <image name="tabTimetableOn" width="30" height="30"/>
+        <image name="table" width="30" height="30"/>
         <image name="topbarListview" width="22" height="22"/>
-        <image name="topbar_capture" width="22" height="22"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

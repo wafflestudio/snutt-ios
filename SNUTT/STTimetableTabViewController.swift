@@ -85,15 +85,15 @@ class STTimetableTabViewController: UIViewController {
         lectureListController.view.frame = self.containerView.frame
         self.containerView.addSubview(lectureListController.view)
         lectureListController.view.isHidden = true
-
+        
         timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         settingChanged()
-
+        
         timetableView.cellLongClicked = self.cellLongClicked
         timetableView.cellTapped = self.cellTapped
-
+        
         let _ = STColorManager.sharedInstance
-
+        
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.reloadData), event: STEvent.CurrentTimetableChanged, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.reloadData), event: STEvent.CurrentTimetableSwitched, object: nil)
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTimetableTabViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
@@ -111,7 +111,7 @@ class STTimetableTabViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         setNotiBadge(STDefaults[.shouldShowBadge])
     }
-
+    
     deinit {
         STEventCenter.sharedInstance.removeObserver(self)
     }
@@ -152,7 +152,7 @@ class STTimetableTabViewController: UIViewController {
     }
     
     func switchView() {
-
+        
         if (isInAnimation) {
             return
         }
@@ -166,7 +166,7 @@ class STTimetableTabViewController: UIViewController {
             oldView = lectureListController.view
             newView = timetableView
         }
-
+        
         UIView.animate(withDuration: 0.65, animations: {
             switch self.containerViewState {
             case .lectureList:
@@ -175,15 +175,15 @@ class STTimetableTabViewController: UIViewController {
                 self.navigationItem.leftBarButtonItem!.image = #imageLiteral(resourceName: "btnLoginBack")
             }
         })
-
+        
         UIView.transition(with: containerView, duration: 0.45, options: .curveEaseInOut, animations: {
-                oldView.isHidden = true
-                newView.isHidden = false
-            }, completion: { finished in
-                self.containerViewState = (self.containerViewState == .timetable) ? .lectureList : .timetable
-                self.toggleBarItemsAccess(items: self.rightBarButtonsForTimetable)
-                self.isInAnimation = false
-                
+            oldView.isHidden = true
+            newView.isHidden = false
+        }, completion: { finished in
+            self.containerViewState = (self.containerViewState == .timetable) ? .lectureList : .timetable
+            self.toggleBarItemsAccess(items: self.rightBarButtonsForTimetable)
+            self.isInAnimation = false
+            
         })
     }
     
@@ -210,15 +210,15 @@ class STTimetableTabViewController: UIViewController {
             }))
         })
     }
-
+    
     func cellTapped(_ cell: STCourseCellCollectionViewCell) {
         let detailController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LectureDetailTableViewController") as! STLectureDetailTableViewController
         detailController.lecture = cell.lecture
         detailController.theme = cell.theme
         self.navigationController?.pushViewController(detailController, animated: true)
-
+        
     }
-
+    
     func cellLongClicked (_ cell : STCourseCellCollectionViewCell) {
         let oldColorIndex = cell.lecture.colorIndex;
         guard let collectionView = timetableView else {
@@ -242,31 +242,31 @@ class STTimetableTabViewController: UIViewController {
                     cellList.forEach { cell in
                         cell?.setColorByLecture(lecture: oldLecture)
                     }
-            })
-            }, cancelBlock: {
-                cellList.forEach { cell in
-                    cell?.setColorByLecture(lecture: oldLecture)
-                }
-            }, selectedBlock: { colorIndex in
-                cellList.forEach { cell in
-                    let color = STColorManager.sharedInstance.colorList.colorList[colorIndex-1]
-//                    cell?.setColor(color: color)
-                }
-            }, origin: self)
+                })
+        }, cancelBlock: {
+            cellList.forEach { cell in
+                cell?.setColorByLecture(lecture: oldLecture)
+            }
+        }, selectedBlock: { colorIndex in
+            cellList.forEach { cell in
+                let color = STColorManager.sharedInstance.colorList.colorList[colorIndex-1]
+                //                    cell?.setColor(color: color)
+            }
+        }, origin: self)
     }
 }
 
 extension STTimetableTabViewController {
     func showCaptureAlert() {
-        let actions = [UIAlertAction(title: "취소", style: .cancel, handler: nil),
-                       UIAlertAction(title: "확인", style: .default, handler: { action in
-                        self.captureTimetableView(of: self.view)
-        })]
+        let image = captureTimetableView(of: self.view)
         
-        STAlertView.showAlert(title: "시간표를 이미지로 저장하시겠습니까?", message: "", actions: actions)
+        let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view
+        
+        self.present(activityVC, animated: true, completion: nil)
     }
     
-    func captureTimetableView(of view: UIView) {
+    func captureTimetableView(of view: UIView) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(
             CGSize(
                 width: view.bounds.width,
@@ -275,28 +275,12 @@ extension STTimetableTabViewController {
             false,
             2
         )
-
+        
         view.layer.render(in: UIGraphicsGetCurrentContext()!)
         let screenshot = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-
-        UIView.animate(withDuration: 0.3, animations: { self.view.alpha = 0.4 }) {_ in
-            self.view.alpha = 1
-        }
         
-        UIImageWriteToSavedPhotosAlbum (
-            screenshot,
-            self,
-            #selector(imageSaved),
-            nil
-        )
-    }
-            
-    @objc func imageSaved(_ image: UIImage, error: Error?, context: UnsafeMutableRawPointer) {
-        if let error = error {
-            print(error.localizedDescription)
-            return
-        }
+        return screenshot
     }
 }
 
@@ -323,7 +307,7 @@ extension STTimetableTabViewController {
         }
         self.tabBarController!.view.addSubview(backgroundView)
         self.tabBarController!.view.addSubview(menuVC.view)
-
+        
         menuVC.view.frame.origin.x = -(menuVC.view.frame.width)
         
         menuVC.view.isHidden = true
@@ -350,7 +334,7 @@ extension STTimetableTabViewController {
         guard let menuView = menuController.view else { return }
         let translation = sender.translation(in: menuView)
         sender.setTranslation(CGPoint.zero, in: menuView)
-
+        
         if sender.state == .changed {
             guard (menuView.frame.origin.x + translation.x) <= 0 else { return }
             
@@ -419,40 +403,40 @@ extension STTimetableTabViewController {
 }
 
 extension STTimetableTabViewController {
-        private func addThemeSettingView() {
-            themeSettingController = ThemeSettingViewController(nibName: "ThemeSettingViewController", bundle: nil)
-//            themeSettingViewController?.delegate = self
-            themeSettingController.setTemporaryTheme = setTemporaryTheme
-            themeSettingController.setTheme = setTheme
-            self.tabBarController!.view.addSubview(themeSettingController!.view)
-            
-            themeSettingController!.view.frame.size.width = self.tabBarController!.view.frame.width
-            themeSettingController!.view.frame.origin.y = self.tabBarController!.view.frame.height
-            themeSettingController!.view.layer.masksToBounds = true
-            themeSettingController!.view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        }
+    private func addThemeSettingView() {
+        themeSettingController = ThemeSettingViewController(nibName: "ThemeSettingViewController", bundle: nil)
+        //            themeSettingViewController?.delegate = self
+        themeSettingController.setTemporaryTheme = setTemporaryTheme
+        themeSettingController.setTheme = setTheme
+        self.tabBarController!.view.addSubview(themeSettingController!.view)
         
-        func toggleThemeSettingView() {
-            switch themeSettingViewState {
-            case .closed:
-                showBackgroundCoverView()
-                UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
-                    self.themeSettingController?.view.frame.origin.y = self.tabBarController!.view.frame.height - (self.themeSettingController?.view.frame.height ?? 0)
-                    
-                } completion: { finished in
-                    self.themeSettingViewState = .opened
-                }
+        themeSettingController!.view.frame.size.width = self.tabBarController!.view.frame.width
+        themeSettingController!.view.frame.origin.y = self.tabBarController!.view.frame.height
+        themeSettingController!.view.layer.masksToBounds = true
+        themeSettingController!.view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+    }
+    
+    func toggleThemeSettingView() {
+        switch themeSettingViewState {
+        case .closed:
+            showBackgroundCoverView()
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                self.themeSettingController?.view.frame.origin.y = self.tabBarController!.view.frame.height - (self.themeSettingController?.view.frame.height ?? 0)
                 
-            case .opened:
-                hideBackgroundCoverView()
-                UIView.animate(withDuration: 0.32, delay: 0, options: .curveEaseInOut) {
-                    self.themeSettingController?.view.frame.origin.y = self.tabBarController!.view.frame.height
-                } completion: { finished in
-                    self.themeSettingViewState = .closed
-                }
+            } completion: { finished in
+                self.themeSettingViewState = .opened
+            }
+            
+        case .opened:
+            hideBackgroundCoverView()
+            UIView.animate(withDuration: 0.32, delay: 0, options: .curveEaseInOut) {
+                self.themeSettingController?.view.frame.origin.y = self.tabBarController!.view.frame.height
+            } completion: { finished in
+                self.themeSettingViewState = .closed
             }
         }
     }
+}
 
 // MARK: Set noti navbar item
 extension STTimetableTabViewController {
@@ -500,11 +484,11 @@ extension STTimetableTabViewController: MenuViewControllerDelegate {
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
-	return input.rawValue
+    return input.rawValue
 }
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+    guard let input = input else { return nil }
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }
