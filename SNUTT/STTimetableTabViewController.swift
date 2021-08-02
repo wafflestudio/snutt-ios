@@ -72,7 +72,9 @@ class STTimetableTabViewController: UIViewController {
         let width = titleView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
         titleView.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: width, height: 500))
         titleView.textAlignment = .center
-        self.navigationItem.titleView = titleView
+
+        let leftItem = UIBarButtonItem(customView: titleView)
+        self.navigationItem.leftBarButtonItems?.append(leftItem)
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(STTimetableTabViewController.titleWasTapped))
         titleView.isUserInteractionEnabled = true
@@ -126,9 +128,13 @@ class STTimetableTabViewController: UIViewController {
     }
     
     @objc func reloadData() {
-        let titleView = (self.navigationItem.titleView as! UILabel)
-        titleView.text = STTimetableManager.sharedInstance.currentTimetable?.title ?? ""
-        titleView.sizeToFit();
+        if let titleView = self.navigationItem.leftBarButtonItems?.last?.customView as? UILabel {
+            if let credit = STTimetableManager.sharedInstance.currentTimetable?.totalCredit, let title = STTimetableManager.sharedInstance.currentTimetable?.title {
+                titleView.text = "\(title)"
+            }
+            
+            titleView.sizeToFit();
+        }
         
         timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableView.reloadTimetable()
