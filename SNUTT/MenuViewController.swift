@@ -126,7 +126,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
                 customCell.timetable = timatable
                 customCell.setDefaultCellStyle()
                 customCell.setLabel(text: timatable.title)
-                customCell.setCredit(credit: timatable.totalCredit)
+                customCell.setCredit(credit: timatable.totalCredit ?? 0)
                 customCell.hideCheckIcon()
                 
                 if (timatable == currentTimetable) {

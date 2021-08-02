@@ -21,20 +21,12 @@ class STTimetable {
     var id : String? = ""
     var temporaryLecture : STLecture? = nil
     var theme : STTheme?
+    var totalCredit: Int?
     
     var isLoaded : Bool {
         get {
             return !(id==nil)
         }
-    }
-    
-    var totalCredit : Int {
-        var credits = 0
-        for lecture in lectureList {
-            credits += lecture.credit
-        }
-        
-        return credits
     }
     
     init(year aYear: Int, semester aSemester: STSemester, title aTitle: String) {
@@ -54,6 +46,7 @@ class STTimetable {
         self.title = json["title"].stringValue
         self.id = json["_id"].string
         self.theme = STTheme(rawValue: json["theme"].intValue)
+        self.totalCredit = json["total_credit"].intValue
         let lectures = json["lecture_list"].arrayValue
         lectures.forEach {data in
             self.addLecture(STLecture(json: data))
