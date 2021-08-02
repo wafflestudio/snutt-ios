@@ -18,12 +18,6 @@ class STTimetableTabViewController: UIViewController {
     var currentTimetable: STTimetable? {
         return STTimetableManager.sharedInstance.currentTimetable
     }
-    
-    enum ContainerViewState {
-        case timetable
-        case lectureList
-    }
-    
     enum MenuControllerState {
         case opened
         case closed
@@ -37,7 +31,6 @@ class STTimetableTabViewController: UIViewController {
     var originalTheme: STTheme?
     var temporaryTheme: STTheme?
     
-    var containerViewState : ContainerViewState = .timetable
     var menuControllerState : MenuControllerState = .closed
     var themeSettingViewState : ThemeSettingViewState = .closed
     var isInAnimation : Bool = false
@@ -50,19 +43,10 @@ class STTimetableTabViewController: UIViewController {
     
     @IBOutlet weak var notiBarItem: UIBarButtonItem!
     
-    @IBAction func switchToTimetableListView(_ sender: UIBarButtonItem) {
-        switchView()
-    }
-    
     @IBOutlet var rightBarButtonsForTimetable: [UIBarButtonItem]!
     
     @IBAction func leftBarButtonItem(_ sender: UIBarButtonItem) {
-        switch containerViewState {
-        case .timetable:
-            toggleMenuView()
-        case .lectureList:
-            switchView()
-        }
+        toggleMenuView()
     }
     
     override func viewDidLoad() {
@@ -171,42 +155,6 @@ class STTimetableTabViewController: UIViewController {
         timetableView.reloadTimetable()
     }
     
-    func switchView() {
-        
-        if (isInAnimation) {
-            return
-        }
-        isInAnimation = true
-        var oldView, newView : UIView!
-        switch containerViewState {
-        case .timetable:
-            oldView = timetableView
-            newView = lectureListController.view
-        case .lectureList:
-            oldView = lectureListController.view
-            newView = timetableView
-        }
-        
-        UIView.animate(withDuration: 0.65, animations: {
-            switch self.containerViewState {
-            case .lectureList:
-                self.navigationItem.leftBarButtonItem!.image = #imageLiteral(resourceName: "topbarListview")
-            case .timetable:
-                self.navigationItem.leftBarButtonItem!.image = #imageLiteral(resourceName: "btnLoginBack")
-            }
-        })
-        
-        UIView.transition(with: containerView, duration: 0.45, options: .curveEaseInOut, animations: {
-            oldView.isHidden = true
-            newView.isHidden = false
-        }, completion: { finished in
-            self.containerViewState = (self.containerViewState == .timetable) ? .lectureList : .timetable
-            self.toggleBarItemsAccess(items: self.rightBarButtonsForTimetable)
-            self.isInAnimation = false
-            
-        })
-    }
-    
     @objc func titleWasTapped() {
         guard let currentTimetable = currentTimetable else {
             return
@@ -307,14 +255,8 @@ extension STTimetableTabViewController {
 extension STTimetableTabViewController {
     private func toggleBarItemsAccess(items: [UIBarButtonItem]) {
         for item in items {
-            switch containerViewState {
-            case .timetable:
-                item.tintColor = .black
-                item.isEnabled = true
-            case .lectureList:
-                item.tintColor = .clear
-                item.isEnabled = false
-            }
+            item.tintColor = .black
+            item.isEnabled = true
         }
     }
 }
@@ -391,10 +333,6 @@ extension STTimetableTabViewController {
     
     private func toggleMenuView() {
         guard let menuController = menuController else { return }
-        if (containerViewState == .lectureList) {
-            return
-        }
-        
         switch menuControllerState {
         case .closed:
             showBackgroundCoverView()
