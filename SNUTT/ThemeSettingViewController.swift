@@ -19,6 +19,10 @@ class ThemeSettingViewController: UIViewController, UICollectionViewDelegate, UI
     var setTemporaryTheme: ((_ theme: STTheme) -> ())?
     var setTheme: (() -> ())?
     
+    var currentTheme: STTheme? {
+        return STTimetableManager.sharedInstance.currentTimetable?.theme
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let layout = UICollectionViewFlowLayout()
@@ -40,12 +44,16 @@ class ThemeSettingViewController: UIViewController, UICollectionViewDelegate, UI
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "themeSettingCollectionViewCell", for: indexPath)
         
         if let customCell = cell as? ThemeSettingCollectionViewCell {
-            customCell.setLabelText("얍얍얍")
-            
-            guard let theme = STTheme(rawValue: indexPath.row), let image = UIImage(named: theme.getImageName()) else { return cell }
+            guard let theme = STTheme(rawValue: indexPath.row), let image = UIImage(named: theme.getImageName()), let currentTheme = currentTheme else { return cell }
             
             customCell.setThemeImage(image)
             customCell.setLabelText(theme.getName())
+            
+            if currentTheme == theme {
+                customCell.setThemeSelected()
+            } else {
+                customCell.setThemeDeselected()
+            }
         }
         
         return cell
@@ -54,6 +62,7 @@ class ThemeSettingViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let selectedTheme = STTheme(rawValue: indexPath.row) {
             setTemporaryTheme?(selectedTheme)
+            collectionView.reloadData()
         }
     }
     
