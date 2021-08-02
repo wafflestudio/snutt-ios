@@ -16,7 +16,7 @@ class STColorPickerTableViewController: UITableViewController {
     var colorIndex: Int = 1
     var selectedColorIndex = 1
     var doneBlock : (Int, STColor?) -> () = { _,_  in }
-    var colorList : STColorList!
+    var theme: STTheme?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,15 +48,7 @@ class STColorPickerTableViewController: UITableViewController {
     }
 
     @objc func colorListUpdated() {
-        colorList = STColorManager.sharedInstance.colorList
-        customColorIndex = colorList.colorList.count
-        if colorIndex == 0 {
-            selectedColorIndex = customColorIndex
-        } else if colorIndex > colorList.colorList.count {
-            selectedColorIndex = customColorIndex
-        } else {
-            selectedColorIndex = colorIndex - 1
-        }
+        selectedColorIndex = colorIndex
         tableView.reloadData()
         self.tableView.selectRow(at: IndexPath(row: selectedColorIndex, section: 0), animated: false, scrollPosition: .none)
     }
@@ -70,11 +62,19 @@ class STColorPickerTableViewController: UITableViewController {
             return 1
         }
     }
+    
+    var colorList: [String]? {
+        return theme?.getColorList()
+    }
+    
+    var colorListCount: Int {
+        return theme?.getColorList().count ?? 0
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return colorList.colorList.count + 1
+            return colorListCount + 1
         case 1:
             return 2
         default:
@@ -86,12 +86,12 @@ class STColorPickerTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "STColorTableViewCell", for: indexPath) as! STColorTableViewCell
-            if indexPath.row == colorList.colorList.count {
+            if indexPath.row == colorListCount {
                 cell.color = STColor()
                 cell.colorLabel.text = "직접 지정하기"
                 cell.setBorder(false)
             } else {
-                if let theme = STTimetableManager.sharedInstance.currentTimetable?.theme {
+                if let theme = theme {
                     let colorList = theme.getColorList()
                     let fgColor = "#ffffff"
                     cell.color =  STColor(fgHex: fgColor, bgHex: colorList[indexPath.row])
@@ -127,7 +127,9 @@ class STColorPickerTableViewController: UITableViewController {
                     self.tableView.deleteSections(IndexSet(integer: 1), with: .top)
                 }
                 if selectedColorIndex != customColorIndex {
-                    color = colorList.colorList[indexPath.row]
+                    if let bg = colorList?[indexPath.row] {
+                        color = STColor(fgHex: "ffffff", bgHex: bg)
+                    }
                 } else {
                     color = STColor()
                     self.tableView.insertSections(IndexSet(integer: 1), with: .top)

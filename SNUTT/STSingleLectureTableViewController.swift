@@ -348,10 +348,20 @@ class STSingleLectureTableViewController: UITableViewController {
     func triggerColorPicker() {
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "STColorPickerTableViewController") as! STColorPickerTableViewController
         if let theme = theme {
-            let color = currentLecture.getColor(theme: theme)
-            viewController.color = color
+            if custom {
+                let color = currentLecture.getColor(theme: theme)
+                viewController.color = color
+            }
+            viewController.theme = theme
+            
+            viewController.colorIndex = currentLecture.colorIndex
+            
+            if (currentLecture.colorIndex == 0 && currentLecture.color != nil) {
+                viewController.colorIndex = theme.getColorList().count
+                viewController.color = currentLecture.color
+            }
         }
-        viewController.colorIndex = currentLecture.colorIndex
+        
         viewController.doneBlock = { colorIndex, color in
             self.currentLecture.color = color
             self.currentLecture.colorIndex = colorIndex
