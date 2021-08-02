@@ -255,6 +255,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         let cell = tableView.dequeueReusableCell(withIdentifier: "STLectureSearchTableViewCell", for: indexPath) as! STLectureSearchTableViewCell
         cell.lecture = FilteredList[indexPath.row]
         cell.tableView = tableView
+        cell.quarter = STTimetableManager.sharedInstance.currentTimetable?.quarter
+        
         return cell
     }
     
@@ -288,11 +290,22 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     var willSelectRow: Bool = false
+    var selectedRow: Int? = nil
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath == tableView.indexPathForSelectedRow {
+            return 150
+        } else {
+            return 106
+        }
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         willSelectRow = false
         STTimetableManager.sharedInstance.setTemporaryLecture(FilteredList[indexPath.row], object: self)
         //TimetableCollectionViewController.datasource.addLecture(FilteredList[indexPath.row])
+        selectedRow = indexPath.row
+        tableView.performBatchUpdates(nil, completion: nil)
         
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
