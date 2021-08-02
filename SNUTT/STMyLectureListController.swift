@@ -103,7 +103,7 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
             let detailController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LectureDetailTableViewController") as! STLectureDetailTableViewController
             detailController.lecture = STTimetableManager.sharedInstance.currentTimetable?.lectureList[indexPath.row]
             detailController.theme = STTimetableManager.sharedInstance.currentTimetable?.theme
-            timetableTabViewController?.navigationController?.pushViewController(detailController, animated: true)
+            navigationController?.pushViewController(detailController, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

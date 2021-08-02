@@ -57,7 +57,7 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="KYn-Qk-8dQ" secondAttribute="bottom" constant="20" id="GNU-wI-iB2"/>
+                <constraint firstAttribute="bottom" secondItem="KYn-Qk-8dQ" secondAttribute="bottom" constant="20" id="GNU-wI-iB2"/>
                 <constraint firstAttribute="trailing" secondItem="lSt-se-BNt" secondAttribute="trailing" constant="20" id="JqK-VN-fTQ"/>
                 <constraint firstItem="Hbf-nO-JBF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="XKV-Jq-Z6b"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="KYn-Qk-8dQ" secondAttribute="trailing" id="cEU-Jq-UGS"/>
