@@ -72,9 +72,9 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         tagTableView.searchController = self
         tagCollectionView.searchController = self
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-        tapGesture.cancelsTouchesInView = false
-        self.tableView.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+//        tapGesture.cancelsTouchesInView = false
+//        self.tableView.addGestureRecognizer(tapGesture)
         
         initEmptyDataSet()
         
@@ -386,24 +386,24 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     
     @objc func dismissKeyboard() {
-        if case let .editingQuery(query, tagList, lectureList) = searchState {
-            searchBar.resignFirstResponder()
-            searchBar.isEditingTag = false
-            if query == nil {
-                searchState = .empty
-                FilteredList = []
-                searchBar.text = ""
-                tagCollectionView.tagList = []
-            } else {
-                searchState = .loaded(query!, tagList)
-                FilteredList = lectureList
-                searchBar.text = query!
-                tagCollectionView.tagList = tagList
-            }
-            reloadData()
-            tagCollectionView.reloadData()
-            hideTagRecommendation()
-        }
+//        if case let .editingQuery(query, tagList, lectureList) = searchState {
+//            searchBar.resignFirstResponder()
+//            searchBar.isEditingTag = false
+//            if query == nil {
+//                searchState = .empty
+//                FilteredList = []
+//                searchBar.text = ""
+//                tagCollectionView.tagList = []
+//            } else {
+//                searchState = .loaded(query!, tagList)
+//                FilteredList = lectureList
+//                searchBar.text = query!
+//                tagCollectionView.tagList = tagList
+//            }
+//            reloadData()
+//            tagCollectionView.reloadData()
+//            hideTagRecommendation()
+//        }
     }
 }
 
