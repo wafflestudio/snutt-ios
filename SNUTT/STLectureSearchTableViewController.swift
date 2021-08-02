@@ -94,7 +94,14 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         backgroundTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView(_:)))
 
         filterViewPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanGestureActionInFilterView(_:)))
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         addShowFilterView()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        removeShowFilterView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -436,6 +443,11 @@ extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate
         filterViewController!.view.layer.masksToBounds = true
         filterViewController!.view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         filterViewController!.view.layer.cornerRadius = 16
+    }
+    
+    private func removeShowFilterView() {
+        filterViewController?.view.removeFromSuperview()
+        filterViewController = nil
     }
     
     private func addGestureRecognizers() {

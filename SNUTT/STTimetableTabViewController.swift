@@ -104,12 +104,16 @@ class STTimetableTabViewController: UIViewController {
         menuController.delegate = self
         addMenuView()
         
-        addThemeSettingView()
         originalTheme = STTimetableManager.sharedInstance.currentTimetable?.theme
     }
     
     override func viewDidAppear(_ animated: Bool) {
         setNotiBadge(STDefaults[.shouldShowBadge])
+        addThemeSettingView()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        removeThemeSettingView()
     }
     
     deinit {
@@ -479,6 +483,10 @@ extension STTimetableTabViewController: MenuViewControllerDelegate {
                 
             }
         }
+    }
+    
+    private func removeThemeSettingView() {
+        self.themeSettingController!.view.removeFromSuperview()
     }
 }
 
