@@ -28,8 +28,8 @@
                                     <constraint firstAttribute="height" constant="80" id="koQ-l7-1tT"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SNUTT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gCH-3N-Jmr">
-                                <rect key="frame" x="29.5" y="90" width="41" height="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SNUTT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gCH-3N-Jmr">
+                                <rect key="frame" x="14" y="86" width="72" height="19"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -37,9 +37,12 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="gCH-3N-Jmr" firstAttribute="top" secondItem="dka-By-Owc" secondAttribute="bottom" constant="10" id="0YP-QM-o8r"/>
+                            <constraint firstAttribute="bottom" secondItem="gCH-3N-Jmr" secondAttribute="bottom" constant="5" id="3fR-T9-cET"/>
                             <constraint firstItem="dka-By-Owc" firstAttribute="centerX" secondItem="S1l-GD-9dA" secondAttribute="centerX" id="69f-ZI-ijS"/>
-                            <constraint firstItem="gCH-3N-Jmr" firstAttribute="centerX" secondItem="S1l-GD-9dA" secondAttribute="centerX" id="SNm-FL-zCZ"/>
+                            <constraint firstAttribute="trailing" secondItem="gCH-3N-Jmr" secondAttribute="trailing" constant="14" id="YPv-Me-Tdu"/>
+                            <constraint firstItem="gCH-3N-Jmr" firstAttribute="top" secondItem="dka-By-Owc" secondAttribute="bottom" constant="6" id="eZt-sa-Qf6"/>
+                            <constraint firstItem="gCH-3N-Jmr" firstAttribute="leading" secondItem="S1l-GD-9dA" secondAttribute="leading" constant="14" id="iJO-yT-CU2"/>
+                            <constraint firstItem="gCH-3N-Jmr" firstAttribute="centerX" secondItem="S1l-GD-9dA" secondAttribute="centerX" id="pjG-lQ-MD1"/>
                             <constraint firstItem="dka-By-Owc" firstAttribute="top" secondItem="S1l-GD-9dA" secondAttribute="top" id="qO3-Na-75H"/>
                         </constraints>
                     </view>
