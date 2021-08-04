@@ -70,10 +70,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         tagTableView.searchController = self
         tagCollectionView.searchController = self
         
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-//        tapGesture.cancelsTouchesInView = false
-//        self.tableView.addGestureRecognizer(tapGesture)
-        
         initEmptyDataSet()
         
         tableView.register(UINib(nibName: "STLectureSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "STLectureSearchTableViewCell")
@@ -143,10 +139,14 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func getLectureList(_ searchString : String) {
         // This is for saving the request
         isLast = false
-//        let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
-        let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: nil, offset: 0, limit: perPage))
+        let emptyTag = tagList.filter { (tag) -> Bool in
+            tag.text == EtcTag.empty.rawValue
+        }
+        
+        let mask = emptyTag.count != 0 ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
+        let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: 0, limit: perPage))
         searchState = .loading(request)
-        request.responseWithDone({ statusCode, json in
+        request.debugLog().responseWithDone({ statusCode, json in
             self.FilteredList = json.arrayValue.map { data in
                 return STLecture(json: data)
             }
@@ -164,9 +164,12 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     func getMoreLectureList(_ searchString: String) {
-        // TODO
-//        let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
-        let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: nil, offset: perPage * pageNum, limit: perPage))
+        let emptyTag = tagList.filter { (tag) -> Bool in
+            tag.text == EtcTag.empty.rawValue
+        }
+        
+        let mask = emptyTag.count != 0 ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
+        let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: perPage * pageNum, limit: perPage))
         searchState = .loading(request)
         request.responseWithDone({ statusCode, json in
             self.searchState = .loaded(searchString, self.tagList)

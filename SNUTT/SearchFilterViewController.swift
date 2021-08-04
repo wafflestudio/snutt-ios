@@ -43,7 +43,7 @@ class SearchFilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tagTypeList = [.AcademicYear, .Classification, .Credit, .Department, .Category]
+        tagTypeList = [.AcademicYear, .Classification, .Credit, .Department, .Category, .Etc]
         currentTagType = tagTypeList[0]
         
         tagTypeListTableView.delegate = self

@@ -42,6 +42,8 @@ enum STSearchRouter : STRouter {
             var academicYear : [String] = []
             var classification : [String] = []
             var category : [String] = []
+            var etc : [String] = []
+            
             for tag in tagList {
                 switch tag.type {
                 case .Credit:
@@ -56,6 +58,10 @@ enum STSearchRouter : STRouter {
                     classification.append(tag.text)
                 case .Category:
                     category.append(tag.text)
+                case .Etc:
+                    if let etcTag = EtcTag(rawValue: tag.text), etcTag != .empty {
+                        etc.append(etcTag.convertToAbb())
+                    }
                 }
             }
             var parameters : [String : Any] = [
@@ -71,11 +77,15 @@ enum STSearchRouter : STRouter {
                 "offset": offset,
                 "limit" : limit
             ]
+            
+            if (etc.count != 0) {
+                parameters["etc"] = etc
+            }
+            
             if (mask != nil) {
                 parameters["time_mask"] = mask
             }
             return parameters
         }
     }
-    
 }
