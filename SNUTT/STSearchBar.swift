@@ -19,12 +19,10 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
                 self.returnKeyType = .done
                 self.reloadInputViews()
                 self.setImage(UIImage(named: "icon_tag_gray"), for: .search, state: UIControl.State())
-                searchController.searchToolbarView.setEditingTag(true)
             } else {
                 self.returnKeyType = .search
                 self.reloadInputViews()
                 self.setImage(nil, for: .search, state: UIControl.State())
-                searchController.searchToolbarView.setEditingTag(false)
             }
         }
     }

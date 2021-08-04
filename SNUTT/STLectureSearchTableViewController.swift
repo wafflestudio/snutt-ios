@@ -21,8 +21,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     @IBOutlet weak var tagCollectionViewConstraint: NSLayoutConstraint!
     
-    @IBOutlet var searchToolbarView: STLectureSearchToolbarView!
-    
     @IBOutlet weak var timetableView: STTimetableCollectionView!
     var FilteredList : [STLecture] = []
     var pageNum : Int = 0
@@ -145,8 +143,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     func getLectureList(_ searchString : String) {
         // This is for saving the request
         isLast = false
-        let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
-        let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: 0, limit: perPage))
+//        let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
+        let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: nil, offset: 0, limit: perPage))
         searchState = .loading(request)
         request.responseWithDone({ statusCode, json in
             self.FilteredList = json.arrayValue.map { data in
@@ -166,8 +164,9 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     }
     
     func getMoreLectureList(_ searchString: String) {
-        let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
-        let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: perPage * pageNum, limit: perPage))
+        // TODO
+//        let mask = searchToolbarView.isEmptyTime ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
+        let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: nil, offset: perPage * pageNum, limit: perPage))
         searchState = .loading(request)
         request.responseWithDone({ statusCode, json in
             self.searchState = .loaded(searchString, self.tagList)
@@ -210,8 +209,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         self.timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         tagTableView.filteredList = []
         tagCollectionView.tagList = []
-        searchToolbarView.currentTagType = nil
-        searchToolbarView.isEmptyTime = false
         
         self.reloadTimetable()
         self.reloadData()
