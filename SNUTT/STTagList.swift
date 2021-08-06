@@ -15,6 +15,15 @@ class STTagList : NSObject, NSCoding {
     init(quarter: STQuarter, tagList: [STTag], updatedTime: Int64) {
         self.quarter = quarter
         self.tagList = tagList
+        
+        let englishTag: EtcTag = .english
+        let armyTag: EtcTag = .army
+        let emptyTag: EtcTag = .empty
+        
+        let otherTagList: [STTag] = [STTag(type: .Etc, text: emptyTag.rawValue), STTag(type: .Etc, text: englishTag.rawValue), STTag(type: .Etc, text: armyTag.rawValue)]
+        
+        self.tagList = tagList + otherTagList
+        
         self.updatedTime = updatedTime
     }
     
@@ -30,6 +39,24 @@ class STTagList : NSObject, NSCoding {
             return nil
         }
         let updatedTime = decoder.decodeInt64(forKey: "updatedTime")
+        
         self.init(quarter: quarter, tagList: tagList, updatedTime: updatedTime)
+    }
+}
+
+enum EtcTag: String {
+    case empty = "빈 시간대"
+    case english = "영어진행 강의"
+    case army = "군휴학 원격수업"
+    
+    func convertToAbb() -> String {
+        switch self {
+        case .empty:
+            return ""
+        case .english:
+            return "E"
+        case .army:
+            return "MO"
+        }
     }
 }

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="STSearchEmptyInfoView" customModule="SNUTT" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="308" height="189"/>
+            <rect key="frame" x="0.0" y="0.0" width="308" height="220"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgSearchBig" translatesAutoresizingMaskIntoConstraints="NO" id="QTr-5P-gih">
@@ -21,119 +20,39 @@
                         <constraint firstAttribute="width" constant="58" id="E0T-eE-HHW"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t36-6w-mdU">
-                    <rect key="frame" x="35.5" y="92" width="237.5" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="Zaq-S1-l1w"/>
-                    </constraints>
-                    <string key="text">과목명을 직접 검색하거나
-원하는 태그로 쉽게 검색해보세요!</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tip. 줄임말로도 검색해보세요!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t36-6w-mdU">
+                    <rect key="frame" x="49" y="100" width="210" height="22"/>
+                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="18"/>
                     <color key="textColor" white="1" alpha="0.70208154965753422" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r84-hx-MHV" customClass="STViewButton" customModule="SNUTT" customModuleProvider="target">
-                    <rect key="frame" x="48.5" y="149" width="211" height="40"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconHelp" translatesAutoresizingMaskIntoConstraints="NO" id="Cx7-b1-lbO">
-                            <rect key="frame" x="20" y="11.5" width="17" height="17"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="17" id="EB5-eD-RGU"/>
-                                <constraint firstAttribute="height" constant="17" id="RDP-RS-rIc"/>
-                            </constraints>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWj-PH-auz">
-                            <rect key="frame" x="43" y="12" width="148" height="17"/>
-                            <attributedString key="attributedText">
-                                <fragment content="태그검색은">
-                                    <attributes>
-                                        <color key="NSColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
-                                        <font key="NSFont" size="14" name=".AppleSDGothicNeoI-Regular"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        <integer key="NSUnderline" value="1"/>
-                                    </attributes>
-                                </fragment>
-                                <fragment content=" ">
-                                    <attributes>
-                                        <color key="NSColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
-                                        <font key="NSFont" metaFont="system" size="14"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        <integer key="NSUnderline" value="1"/>
-                                    </attributes>
-                                </fragment>
-                                <fragment content="어떻게">
-                                    <attributes>
-                                        <color key="NSColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
-                                        <font key="NSFont" size="14" name=".AppleSDGothicNeoI-Regular"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        <integer key="NSUnderline" value="1"/>
-                                    </attributes>
-                                </fragment>
-                                <fragment content=" ">
-                                    <attributes>
-                                        <color key="NSColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
-                                        <font key="NSFont" metaFont="system" size="14"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        <integer key="NSUnderline" value="1"/>
-                                    </attributes>
-                                </fragment>
-                                <fragment content="하나요">
-                                    <attributes>
-                                        <color key="NSColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
-                                        <font key="NSFont" size="14" name=".AppleSDGothicNeoI-Regular"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        <integer key="NSUnderline" value="1"/>
-                                    </attributes>
-                                </fragment>
-                                <fragment content="?">
-                                    <attributes>
-                                        <color key="NSColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
-                                        <font key="NSFont" metaFont="system" size="14"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        <integer key="NSUnderline" value="1"/>
-                                    </attributes>
-                                </fragment>
-                            </attributedString>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="nWj-PH-auz" firstAttribute="leading" secondItem="Cx7-b1-lbO" secondAttribute="trailing" constant="6" id="6yx-50-h4J"/>
-                        <constraint firstItem="nWj-PH-auz" firstAttribute="centerY" secondItem="r84-hx-MHV" secondAttribute="centerY" id="Sas-Sn-lAt"/>
-                        <constraint firstItem="Cx7-b1-lbO" firstAttribute="leading" secondItem="r84-hx-MHV" secondAttribute="leading" constant="20" id="VNJ-mn-F9j"/>
-                        <constraint firstAttribute="height" constant="40" id="bXr-eG-dEx"/>
-                        <constraint firstAttribute="trailing" secondItem="nWj-PH-auz" secondAttribute="trailing" constant="20" id="rEp-pb-si3"/>
-                        <constraint firstItem="Cx7-b1-lbO" firstAttribute="centerY" secondItem="r84-hx-MHV" secondAttribute="centerY" id="yIn-1t-eyL"/>
-                    </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                            <real key="value" value="0.0"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="ex) 대영 Paul / 죽과이 유성호" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Klf-2W-4Ry">
+                    <rect key="frame" x="67" y="130" width="174.5" height="25"/>
+                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <constraints>
-                <constraint firstItem="t36-6w-mdU" firstAttribute="top" secondItem="QTr-5P-gih" secondAttribute="bottom" constant="26" id="1Re-2d-UIM"/>
+                <constraint firstItem="t36-6w-mdU" firstAttribute="top" secondItem="QTr-5P-gih" secondAttribute="bottom" constant="34" id="1Re-2d-UIM"/>
                 <constraint firstItem="QTr-5P-gih" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="DSR-Zu-Xbc"/>
-                <constraint firstItem="r84-hx-MHV" firstAttribute="top" secondItem="t36-6w-mdU" secondAttribute="bottom" constant="7" id="Inh-q8-kyM"/>
+                <constraint firstItem="Klf-2W-4Ry" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="L38-q1-OpB"/>
                 <constraint firstItem="QTr-5P-gih" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="PYp-62-zpq"/>
-                <constraint firstAttribute="bottom" secondItem="r84-hx-MHV" secondAttribute="bottom" id="aMP-fh-INy"/>
                 <constraint firstItem="t36-6w-mdU" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="cjz-ef-8af"/>
-                <constraint firstItem="r84-hx-MHV" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="d2h-wy-sfj"/>
+                <constraint firstItem="Klf-2W-4Ry" firstAttribute="top" secondItem="t36-6w-mdU" secondAttribute="bottom" constant="8" id="hNf-uP-wS0"/>
+                <constraint firstAttribute="bottom" secondItem="Klf-2W-4Ry" secondAttribute="bottom" constant="65" id="yjN-47-UWp"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="helpViewButton" destination="r84-hx-MHV" id="0ab-m0-ccf"/>
-                <outlet property="searchIcon" destination="QTr-5P-gih" id="qK2-k5-dk9"/>
+                <outlet property="searchIcon" destination="QTr-5P-gih" id="rEB-Lv-p48"/>
             </connections>
-            <point key="canvasLocation" x="0.0" y="-186"/>
+            <point key="canvasLocation" x="0.0" y="-186.65667166416793"/>
         </view>
     </objects>
     <resources>
-        <image name="iconHelp" width="17" height="17"/>
-        <image name="imgSearchBig" width="57" height="55"/>
+        <image name="imgSearchBig" width="57.5" height="55.5"/>
     </resources>
 </document>

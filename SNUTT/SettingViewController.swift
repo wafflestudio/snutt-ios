@@ -11,12 +11,14 @@ import UIKit
 protocol SettingViewControllerDelegate: class {
     func renameTimetable(_: SettingViewController, _ timetable: STTimetable, title: String)
     func deleteTimetable(_: SettingViewController, _ timetable: STTimetable)
+    func showChangeThemeView(_: SettingViewController, _ timetable: STTimetable)
 }
 
 class SettingViewController: UIViewController {
     weak var delegate: SettingViewControllerDelegate?
     
     var timetable: STTimetable?
+    var settingSheet: UIAlertController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,17 +45,22 @@ class SettingViewController: UIViewController {
         showRenameTextfield()
     }
     
+    @IBAction func showThemeSetting(_ sender: UIButton) {
+        showChangeThemeView()
+    }
+    
     private func showRenameTextfield() {
         let alert = UIAlertController(title: "시간표 이름", message: nil, preferredStyle: .alert)
         alert.addTextField { textfield in
             textfield.minimumFontSize = 21
-            textfield.placeholder = self.timetable?.title
+            textfield.text = self.timetable?.title
             textfield.textAlignment = .center
         }
         
         let create = UIAlertAction(title: "바꾸기", style: .default) { action in
             guard let text = alert.textFields?[0].text, let timetable = self.timetable else { return }
             self.delegate?.renameTimetable(self, timetable, title: text)
+            self.dismiss(animated: true, completion: nil)
         }
         
         let cancel = UIAlertAction(title: "취소", style: .cancel)
@@ -61,5 +68,11 @@ class SettingViewController: UIViewController {
         alert.addAction(create)
         alert.addAction(cancel)
         present(alert, animated: true)
+    }
+    
+    private func showChangeThemeView() {
+        guard let timetable = timetable else { return }
+        settingSheet?.dismiss(animated: true, completion: nil)
+        delegate?.showChangeThemeView(self, timetable)
     }
 }

@@ -281,9 +281,12 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CourseCell", for: indexPath) as! STCourseCellCollectionViewCell
             cell.isHidden = false
             cell.layer.mask=nil
-            cell.setData(lecture: getLecture(indexPath), singleClass: getSingleClass(indexPath))
+            
+            let lecture = getLecture(indexPath)
             cell.longClicked = cellLongClicked
             cell.tapped = cellTapped
+            cell.theme = timetable?.theme
+            cell.setData(lecture: lecture, singleClass: getSingleClass(indexPath))
             if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
                 cell.isHidden = true
             }
@@ -305,6 +308,9 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             if Double(rowStart) > cell.singleClass.time.startPeriod {
                 cell.mask(CGRect(x: 0, y: heightPerRow * CGFloat(Double(rowStart) - cell.singleClass.time.startPeriod), width: cell.frame.width, height:cell.frame.height))
             }
+            
+            cell.backgroundColor = UIColor(red: 207, green: 207, blue: 207)
+            
             return cell
         }
     }

@@ -15,6 +15,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     public private(set) var lecture : STLecture!
     private var oldLecture: STLecture? = nil
     private var oldSingleClass: STSingleClass? = nil
+    var theme: STTheme?
     
     var longClicked: ((STCourseCellCollectionViewCell)->())?
     var tapped: ((STCourseCellCollectionViewCell)->())?
@@ -54,7 +55,8 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     }
 
     func setColorByLecture(lecture: STLecture) {
-        let color = lecture.getColor()
+        guard let theme = theme else { return }
+        let color = lecture.getColor(theme: theme)
         setColor(color: color)
     }
     
@@ -93,13 +95,14 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     }
     
     func setColor() {
-        let color = lecture.getColor()
+        guard let theme = theme else { return }
+        let color = lecture.getColor(theme: theme)
         setColor(color: color)
     }
 
     func setColor(color: STColor) {
-        self.backgroundColor = color.bgColor
-        courseText.textColor = color.fgColor
+        self.backgroundColor = UIColor(hexString: color.bgColor.toHexString())
+        courseText.textColor = UIColor(hexString: color.fgColor.toHexString())
     }
 
     func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {

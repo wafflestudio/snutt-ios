@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,15 +15,8 @@
             <rect key="frame" x="0.0" y="0.0" width="242" height="60"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2021 2학기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLh-HH-f4C">
-                    <rect key="frame" x="0.0" y="20.5" width="80" height="19.5"/>
-                    <color key="tintColor" red="0.006906411082" green="0.006906411082" blue="0.006906411082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                    <color key="textColor" red="0.006906411082" green="0.006906411082" blue="0.006906411082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AkT-p1-DzU">
-                    <rect key="frame" x="88" y="17.5" width="25" height="25"/>
+                    <rect key="frame" x="109" y="17.5" width="25" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="lLp-R0-LRd"/>
                         <constraint firstAttribute="width" constant="25" id="sZo-uZ-a8S"/>
@@ -34,23 +28,38 @@
                         <action selector="chooseSemester:" destination="iN0-l3-epB" eventType="touchUpInside" id="nSp-Sx-yly"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bmi-qs-lDY">
+                    <rect key="frame" x="0.0" y="14" width="100" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="qhc-qk-aQO"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                    <state key="normal" title="2020 겨울학기">
+                        <color key="titleColor" systemColor="labelColor"/>
+                    </state>
+                    <connections>
+                        <action selector="chooseSemesterOnLabel:" destination="-1" eventType="touchUpInside" id="0Yp-XO-qdF"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
+                <constraint firstItem="AkT-p1-DzU" firstAttribute="leading" secondItem="bmi-qs-lDY" secondAttribute="trailing" constant="9" id="2it-xp-xDN"/>
                 <constraint firstItem="AkT-p1-DzU" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="9b2-4p-IYj"/>
-                <constraint firstItem="gLh-HH-f4C" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="JkS-Mt-IqJ"/>
-                <constraint firstItem="AkT-p1-DzU" firstAttribute="leading" secondItem="gLh-HH-f4C" secondAttribute="trailing" constant="8" id="NPQ-8P-3x6"/>
-                <constraint firstItem="gLh-HH-f4C" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="d3I-GI-N9O"/>
-                <constraint firstItem="AkT-p1-DzU" firstAttribute="leading" secondItem="gLh-HH-f4C" secondAttribute="trailing" constant="8" id="lyk-dr-RP1"/>
+                <constraint firstItem="bmi-qs-lDY" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="SpF-Ko-4st"/>
+                <constraint firstItem="bmi-qs-lDY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Xf1-o4-Xpq"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="headerLabel" destination="gLh-HH-f4C" id="9Pu-ig-CUL"/>
+                <outlet property="headerLabelButton" destination="bmi-qs-lDY" id="5WF-pF-Rwj"/>
             </connections>
             <point key="canvasLocation" x="63.768115942028992" y="63.616071428571423"/>
         </view>
     </objects>
     <resources>
         <image name="arrowDown" width="60" height="60"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

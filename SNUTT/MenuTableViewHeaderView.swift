@@ -20,9 +20,13 @@ class MenuTableViewHeaderView: UITableViewHeaderFooterView {
         delegate?.presentSemesterPickView(self)
     }
     
-    @IBOutlet weak var headerLabel: UILabel!
+    @IBAction func chooseSemesterOnLabel(_ sender: UIButton) {
+        delegate?.presentSemesterPickView(self)
+    }
+    
+    @IBOutlet weak var headerLabelButton: UIButton!
     
     func setHeaderLabel(text: String) {
-        headerLabel.text = text
+        headerLabelButton.setTitle(text, for: .normal)
     }
 }

@@ -15,6 +15,7 @@ enum STTagType : String {
     case Credit = "credit"
     case Instructor = "instructor"
     case Category = "category"
+    case Etc = "etc"
     
     var tagColor: UIColor {
         switch self {
@@ -24,6 +25,7 @@ enum STTagType : String {
         case .Department: return UIColor(hexString: "#0cada6")
         case .Instructor: return UIColor(hexString: "#0d82cd")
         case .Category: return UIColor(hexString: "#9c45a0")
+        case .Etc: return UIColor(hexString: "#AF56B3")
         }
     }
     
@@ -35,6 +37,7 @@ enum STTagType : String {
         case .Department: return UIColor(hexString: "#1bd0c9")
         case .Instructor: return UIColor(hexString: "#1d99e9")
         case .Category: return UIColor(hexString: "#af56b3")
+        case .Etc: return UIColor(hexString: "#AF56B3")
         }
     }
     
@@ -46,6 +49,7 @@ enum STTagType : String {
         case .Department: return "학과"
         case .Instructor: return "교수"
         case .Category: return "교양분류"
+        case .Etc: return "기타"
         }
     }
 }

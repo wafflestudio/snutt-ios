@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		B1EB38A2D401D55B8B513965 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */; };
+		DC20CF3426B4768100F31830 /* ThemeSettingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */; };
+		DC20CF3526B4768100F31830 /* ThemeSettingCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */; };
 		DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */; };
 		DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */; };
+		DC39728F26B4490800187DFC /* ThemeSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC39728D26B4490800187DFC /* ThemeSettingViewController.swift */; };
+		DC39729026B4490800187DFC /* ThemeSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC39728E26B4490800187DFC /* ThemeSettingViewController.xib */; };
 		DC4D9F9F26A5D3A2000EA8F9 /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */; };
 		DC4D9FA026A5D3A2000EA8F9 /* SearchFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC4D9F9E26A5D3A2000EA8F9 /* SearchFilterViewController.xib */; };
 		DC4D9FA926A5F16C000EA8F9 /* TagTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D9FA726A5F16C000EA8F9 /* TagTypeTableViewCell.swift */; };
@@ -163,7 +167,6 @@
 		E1C828781E7D1C5700E63A9B /* STTextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C828761E7D1C5700E63A9B /* STTextViewTableViewCell.xib */; };
 		E1CAAA351CF07E7E00D16183 /* STSingleLectureButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1CAAA341CF07E7E00D16183 /* STSingleLectureButtonCell.xib */; };
 		E1CAAA391CF07F1000D16183 /* STSingleLectureButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CAAA381CF07F1000D16183 /* STSingleLectureButtonCell.swift */; };
-		E1CD92651E45CF8C00AF5FE4 /* STLectureSearchToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD92641E45CF8C00AF5FE4 /* STLectureSearchToolbarView.swift */; };
 		E1CD92671E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1CD92661E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib */; };
 		E1CD926A1E46EAE100AF5FE4 /* STTagFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD92691E46EAE100AF5FE4 /* STTagFilterCollectionViewCell.swift */; };
 		E1D0FB651C86CDCE00ACDC2F /* STColorPickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D0FB641C86CDCE00ACDC2F /* STColorPickerTableViewController.swift */; };
@@ -228,8 +231,12 @@
 		7540205FB7071F642F9B022F /* Pods_SNUTT_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		923560D5D97F8A3548E9547A /* Pods-SNUTT Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.debug.xcconfig"; sourceTree = "<group>"; };
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingCollectionViewCell.swift; sourceTree = "<group>"; };
+		DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeSettingCollectionViewCell.xib; sourceTree = "<group>"; };
 		DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
+		DC39728D26B4490800187DFC /* ThemeSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingViewController.swift; sourceTree = "<group>"; };
+		DC39728E26B4490800187DFC /* ThemeSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeSettingViewController.xib; sourceTree = "<group>"; };
 		DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterViewController.swift; sourceTree = "<group>"; };
 		DC4D9F9E26A5D3A2000EA8F9 /* SearchFilterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchFilterViewController.xib; sourceTree = "<group>"; };
 		DC4D9FA726A5F16C000EA8F9 /* TagTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTypeTableViewCell.swift; sourceTree = "<group>"; };
@@ -367,7 +374,6 @@
 		E1C828761E7D1C5700E63A9B /* STTextViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STTextViewTableViewCell.xib; sourceTree = "<group>"; };
 		E1CAAA341CF07E7E00D16183 /* STSingleLectureButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSingleLectureButtonCell.xib; sourceTree = "<group>"; };
 		E1CAAA381CF07F1000D16183 /* STSingleLectureButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STSingleLectureButtonCell.swift; sourceTree = "<group>"; };
-		E1CD92641E45CF8C00AF5FE4 /* STLectureSearchToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLectureSearchToolbarView.swift; sourceTree = "<group>"; };
 		E1CD92661E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STTagFilterCollectionViewCell.xib; sourceTree = "<group>"; };
 		E1CD92691E46EAE100AF5FE4 /* STTagFilterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTagFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1D0FB641C86CDCE00ACDC2F /* STColorPickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STColorPickerTableViewController.swift; sourceTree = "<group>"; };
@@ -432,6 +438,17 @@
 				E0B8ADB76AB6B75793967316 /* Pods-SNUTT Today.production.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		DC39728C26B448C400187DFC /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				DC39728D26B4490800187DFC /* ThemeSettingViewController.swift */,
+				DC39728E26B4490800187DFC /* ThemeSettingViewController.xib */,
+				DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */,
+				DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */,
+			);
+			name = Theme;
 			sourceTree = "<group>";
 		};
 		DC4D9F9C26A5D34D000EA8F9 /* SearchFilter */ = {
@@ -649,6 +666,7 @@
 		E1C28B191B9C4B7B00B8C493 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DC39728C26B448C400187DFC /* Theme */,
 				DC5B8CD526905C890085268B /* Menu */,
 				E1F946211DB449A200CC8AF6 /* MyLectureList */,
 				E16A88451C9F782F003D94AB /* Setting */,
@@ -745,7 +763,6 @@
 		E1CD92681E46EAB300AF5FE4 /* SearchToolbar */ = {
 			isa = PBXGroup;
 			children = (
-				E1CD92641E45CF8C00AF5FE4 /* STLectureSearchToolbarView.swift */,
 				E1CD92661E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib */,
 				E1CD92691E46EAE100AF5FE4 /* STTagFilterCollectionViewCell.swift */,
 			);
@@ -956,6 +973,7 @@
 				E13984331EF69111007DD319 /* STColorTableViewCell.xib in Resources */,
 				E1CAAA351CF07E7E00D16183 /* STSingleLectureButtonCell.xib in Resources */,
 				E1A664F61EED8F77003B2D43 /* STTagSearchInfoView.xib in Resources */,
+				DC39729026B4490800187DFC /* ThemeSettingViewController.xib in Resources */,
 				DC546BDE2699816700A1BDD8 /* SettingViewController.xib in Resources */,
 				E1773CAE1C953E8B00AF36AF /* Login.storyboard in Resources */,
 				E1986A401F10C2D700337419 /* STSearchEmptyView.xib in Resources */,
@@ -972,6 +990,7 @@
 				DC4D9FAA26A5F16C000EA8F9 /* TagTypeTableViewCell.xib in Resources */,
 				DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */,
 				E1F58AAA1C3CFC1C00F6A0FC /* STColumnHeaderCollectionViewCell.xib in Resources */,
+				DC20CF3526B4768100F31830 /* ThemeSettingCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1134,7 +1153,6 @@
 				E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */,
 				E16A88551C9FC460003D94AB /* STDeveloperViewController.swift in Sources */,
 				E1799E881D8E28D20014794F /* STMainTabBarController.swift in Sources */,
-				E1CD92651E45CF8C00AF5FE4 /* STLectureSearchToolbarView.swift in Sources */,
 				E1C48B971C79BA4100BC469E /* STTimeActionSheetPicker.swift in Sources */,
 				E1C48B991C79BDD300BC469E /* STSemester.swift in Sources */,
 				E1EE1B331CCDAAB6003DF250 /* STPaddingTableViewCell.swift in Sources */,
@@ -1178,6 +1196,7 @@
 				E16643511B4623BB00387EF8 /* STTimetableLayout.swift in Sources */,
 				E14DF2141C3F71A70076FDDE /* STTimetableAddController.swift in Sources */,
 				E110CFE11C8C017E00ED0590 /* STTagList.swift in Sources */,
+				DC39728F26B4490800187DFC /* ThemeSettingViewController.swift in Sources */,
 				E1C28B181B9C4B3600B8C493 /* STTime.swift in Sources */,
 				E19A3A9B1B453770007FCAD7 /* AppDelegate.swift in Sources */,
 				E166435B1B46734C00387EF8 /* STLectureDetailTableViewController.swift in Sources */,
@@ -1188,6 +1207,7 @@
 				E110CFD11C883DC900ED0590 /* STNotificationTableViewController.swift in Sources */,
 				E11E61031EED13890036F3F2 /* STSearchEmptyInfoView.swift in Sources */,
 				E1130AD61E7C272A00ADE84F /* STColorList.swift in Sources */,
+				DC20CF3426B4768100F31830 /* ThemeSettingCollectionViewCell.swift in Sources */,
 				E110CFD71C88424000ED0590 /* STNotification.swift in Sources */,
 				E1AC20F51F8B6DD4005B5DE7 /* STFCMInfo.swift in Sources */,
 				E1F946251DB44A5D00CC8AF6 /* STAddLectureButtonCell.swift in Sources */,
@@ -1436,7 +1456,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1444,7 +1464,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" ";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1468,7 +1488,7 @@
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTTRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1476,7 +1496,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1607,7 +1627,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1615,7 +1635,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1665,7 +1685,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 35;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				ENABLE_TESTABILITY = YES;
@@ -1681,7 +1701,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "com.wafflestudio.snutt.SNUTT-Today development";
@@ -1704,7 +1724,7 @@
 				CODE_SIGN_ENTITLEMENTS = "SNUTT Today/SNUTT Today.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1718,7 +1738,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "com.wafflestudio.snutt.SNUTT-Today distribution";
@@ -1743,7 +1763,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1757,7 +1777,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "com.wafflestudio.snutt.SNUTT-Today distribution";

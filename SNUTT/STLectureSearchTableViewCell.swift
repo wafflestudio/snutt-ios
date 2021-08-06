@@ -10,7 +10,7 @@ import UIKit
 import MarqueeLabel
 
 class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
-
+    
     @IBOutlet weak var titleLabel: MarqueeLabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var profLabel: UILabel!
@@ -20,12 +20,31 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var addButton: STViewButton!
     @IBOutlet weak var containerView: UIView!
     
-    @IBOutlet weak var addButtonLabel: UILabel!
+    @IBOutlet weak var viewForSelected: UIView!
+    @IBOutlet weak var
+        addButtonLabel: UILabel!
+    
+    @IBAction func showSyllabus(_ sender: UIButton) {
+        openSyllabus()
+    }
+    
+    @IBAction func showReview(_ sender: UIButton) {
+        STAlertView.showAlert(title: "준비중입니다", message: "")
+    }
+    
+    @IBOutlet weak var reviewButton: UIButton!
+    @IBOutlet weak var syllabusButton: UIButton!
+    
+    private func openSyllabus() {
+        if let url = syllabusUrl {
+            showWebView(url)
+        }
+    }
+    
+    var quarter: STQuarter?
+    var syllabusUrl: String?
     weak var tableView : UITableView!
-
-    @IBOutlet weak var constraintForHidden: NSLayoutConstraint!
-    @IBOutlet weak var constraintForShown: NSLayoutConstraint!
-
+    
     func indexInTimetable() -> Int {
         guard let lecture = lecture else {
             return -1
@@ -33,7 +52,7 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         let index = STTimetableManager.sharedInstance.currentTimetable?.indexOf(lecture: lecture) ?? -1
         return index
     }
-
+    
     var lecture : STLecture? {
         didSet {
             titleLabel.text = lecture!.title == "" ? "강좌명" : lecture!.title
@@ -49,35 +68,15 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
             setDescLabel()
         }
     }
-
+    
     func setDescLabel() {
         guard let lecture = lecture else {
             return
         }
-        // TODO : Erase this code
-        // Left this code if there is specific length for titleLabel's min width
-        /*
-        let isSE = !isLargerThanSE()
-        let instructorText = lecture.instructor
-        var length = 0
-        if self.isSelected {
-            if instructorText.isEnglish() {
-                length = isSE ? 6 : 8
-            } else {
-                length = isSE ? 3 : 4
-            }
-        } else {
-            if instructorText.isEnglish() {
-                length = isSE ? 13 : 15
-            } else {
-                length = isSE ? 7 : 9
-            }
-        }
-        */
         profLabel.text = lecture.instructor
-        descriptionLabel.text = (lecture.instructor == "" ? "" : "/") + "\(lecture.credit)학점"
+        descriptionLabel.text = (lecture.instructor == "" ? "" : "/ ") + "\(lecture.credit)학점"
     }
-
+    
     func setUp() {
         self.backgroundColor = UIColor.clear
         self.selectionStyle = .none
@@ -85,6 +84,7 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         tagLabel.trailingBuffer = 10.0
         titleLabel.animationDelay = 0.3
         tagLabel.animationDelay = 0.3
+        
         addButton.buttonPressAction = {
             STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
             self.tableView.deselectRow(at: self.tableView.indexPath(for: self)!, animated: true)
@@ -95,9 +95,10 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
                 STTimetableManager.sharedInstance.addLecture(self.lecture!, object: self)
             }
             self.setAddButton()
+            self.tableView.performBatchUpdates(nil, completion: nil)
         }
     }
-
+    
     func setAddButton() {
         let index = indexInTimetable()
         if index < 0 {
@@ -105,16 +106,20 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         } else {
             addButtonLabel.text = "제거하기"
         }
-
+        
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setUp();
+        self.frame.size.height = 106
+        viewForSelected.isHidden = true
+        setUp()
+        syllabusButton.isHidden = true
+        reviewButton.isHidden = true
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -123,20 +128,35 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
             self.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
             setAddButton()
             addButton.isHidden = false
+            reviewButton.isHidden = false
             tagLabel.text = lecture!.remark == "" ? lecture!.tagDescription : lecture!.remark
+            getSyllabus()
         } else {
             self.backgroundColor = UIColor.clear
             addButton.isHidden = true
+            syllabusButton.isHidden = true
+            reviewButton.isHidden = true
+            viewForSelected.isHidden = false
             tagLabel.text = lecture?.tagDescription
         }
         titleLabel.labelize = !selected
         tagLabel.labelize = !selected
-        // 800, 790 is because of priority in content wrapping
-        constraintForHidden.priority = !selected ? UILayoutPriority(800):UILayoutPriority(790)
-        constraintForShown.priority = selected ? UILayoutPriority(800):UILayoutPriority(790)
         setDescLabel()
-        // Configure the view for the selected state
+        self.frame.size.height = 150
     }
-
-
+    
+    private func showWebView(_ url: String) {
+        UIApplication.shared.openURL(URL(string: url)!)
+    }
+    
+    private func getSyllabus() {
+        if let quarter = quarter, let lecture = lecture {
+            STNetworking.getSyllabus(quarter, lecture: lecture, done: { url in
+                self.syllabusUrl = url
+                self.syllabusButton.isHidden = false
+            }) {
+            }
+        }
+    }
 }
+

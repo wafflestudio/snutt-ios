@@ -8,6 +8,11 @@
 
 import Foundation
 
+protocol MenuViewControllerDelegate: class {
+    func close(_: MenuViewController)
+    func showThemeSettingView(_: MenuViewController, _ timetable: STTimetable )
+}
+
 class MenuViewController: UIViewController {
     
     struct Section {
@@ -18,6 +23,8 @@ class MenuViewController: UIViewController {
     
     var timetableList : [STTimetable] = []
     var sectionList : [Section] = []
+    var delegate: MenuViewControllerDelegate?
+    var sheetAlert: UIAlertController?
     
     var currentTimetable: STTimetable? {
         return STTimetableManager.sharedInstance.currentTimetable
@@ -60,7 +67,7 @@ class MenuViewController: UIViewController {
         reloadList()
     }
     
-    private func fetchTablelist() {
+    func fetchTablelist() {
         STNetworking.getTimetableList({ list in
             self.updateTableviewData(timetableList: list)
         }, failure: {
@@ -119,7 +126,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
                 customCell.timetable = timatable
                 customCell.setDefaultCellStyle()
                 customCell.setLabel(text: timatable.title)
-                customCell.setCredit(credit: timatable.totalCredit)
+                customCell.setCredit(credit: timatable.totalCredit ?? 0)
                 customCell.hideCheckIcon()
                 
                 if (timatable == currentTimetable) {
@@ -176,7 +183,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
         let alert = UIAlertController(title: "시간표 이름", message: nil, preferredStyle: .alert)
         alert.addTextField { textfield in
             textfield.minimumFontSize = 21
-            textfield.placeholder = "멋진 시간표"
+            textfield.placeholder = ""
         }
         
         let create = UIAlertAction(title: "만들기", style: .default) { action in
@@ -235,23 +242,43 @@ extension MenuViewController: MenuTableViewCellDelegate {
     }
     
     func showSettingSheet(_ cell: MenuTableViewCell) {
-        let sheetAlert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "", style: .cancel)
-        sheetAlert.addAction(cancel)
+        sheet.addAction(cancel)
         
         let settingController = SettingViewController(nibName: "SettingViewController", bundle: nil)
         settingController.delegate = self
         settingController.timetable = cell.timetable
-        sheetAlert.view.frame = settingController.view.frame
+        settingController.settingSheet = sheet
         
-        sheetAlert.addChild(settingController)
-        sheetAlert.view.addSubview(settingController.view)
+        // Action Sheet를 커스터마이징하기 위한 트릭들
+        guard let superview = view.superview?.superview?.superview?.superview else { return }
         
-        present(sheetAlert, animated: true)
+        superview.addSubview(sheet.view)
+        
+        sheet.view.frame = settingController.view.frame
+        
+        let screenWidth = UIScreen.main.bounds.size.width
+        sheet.view.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
+        sheet.view.widthAnchor.constraint(equalToConstant: screenWidth)
+            .isActive = true
+        sheet.view.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        sheet.addChild(settingController)
+        sheet.view.addSubview(settingController.view)
+        
+        present(sheet, animated: true)
     }
 }
 
 extension MenuViewController: SettingViewControllerDelegate {
+    func showChangeThemeView(_: SettingViewController, _ timetable: STTimetable) {
+        guard let timetable = currentTimetable else { return }
+        delegate?.close(self)
+        delegate?.showThemeSettingView(self, timetable)
+        
+    }
+    
     func renameTimetable(_: SettingViewController, _ timetable: STTimetable, title: String) {
         guard let id = timetable.id else {
             STAlertView.showAlert(title: "시간표 이름 수정 실패", message: "")
@@ -266,7 +293,7 @@ extension MenuViewController: SettingViewControllerDelegate {
                 
                 STTimetableManager.sharedInstance.currentTimetable = updatedTimetable[0]
             }
-           
+            
             self.timetableList = timetableList
             self.reloadList()
         }, failure: { errorTitle in
