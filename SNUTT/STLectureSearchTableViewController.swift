@@ -151,7 +151,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         let mask = emptyTag.count != 0 ? STTimetableManager.sharedInstance.currentTimetable?.timetableReverseTimeMask() : nil
         let request = Alamofire.request(STSearchRouter.search(query: searchString, tagList: tagList, mask: mask, offset: 0, limit: perPage))
         searchState = .loading(request)
-        request.debugLog().responseWithDone({ statusCode, json in
+        request.responseWithDone({ statusCode, json in
             self.FilteredList = json.arrayValue.map { data in
                 return STLecture(json: data)
             }
@@ -459,7 +459,7 @@ extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate
     }
     
     @objc private func didTapBackgView(_ sender: UITapGestureRecognizer) {
-        if tagList.count == 0 && FilteredList == [] {
+        if tagList.count == 0 {
             searchBarCancelButtonClicked()
             searchBar.resignFirstResponder()
         }

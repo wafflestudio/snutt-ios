@@ -829,25 +829,30 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@wafflestudio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0K-2f-5HQ">
-                                <rect key="frame" x="126" y="367" width="68.5" height="12"/>
+                                <rect key="frame" x="126" y="431" width="68.5" height="12"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="waffleCat" translatesAutoresizingMaskIntoConstraints="NO" id="VqR-7j-3at">
+                                <rect key="frame" x="76" y="235" width="169" height="177"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="7KE-Pw-z8A" firstAttribute="centerX" secondItem="V58-Mx-cel" secondAttribute="centerX" id="7bR-JY-gte"/>
-                            <constraint firstItem="7KE-Pw-z8A" firstAttribute="top" secondItem="MfS-FY-cCq" secondAttribute="bottom" constant="130" id="BWc-TB-Dgl"/>
-                            <constraint firstItem="mOq-mq-B23" firstAttribute="top" secondItem="R0K-2f-5HQ" secondAttribute="bottom" constant="140" id="cNX-AS-oQ9"/>
-                            <constraint firstItem="R0K-2f-5HQ" firstAttribute="centerX" secondItem="V58-Mx-cel" secondAttribute="centerX" id="uEl-R2-5jF"/>
+                            <constraint firstItem="7KE-Pw-z8A" firstAttribute="centerX" secondItem="V58-Mx-cel" secondAttribute="centerX" id="6qQ-NS-5rN"/>
+                            <constraint firstItem="R0K-2f-5HQ" firstAttribute="centerX" secondItem="V58-Mx-cel" secondAttribute="centerX" id="7oc-xY-k8T"/>
+                            <constraint firstItem="R0K-2f-5HQ" firstAttribute="top" secondItem="VqR-7j-3at" secondAttribute="bottom" constant="19" id="DS8-3G-fme"/>
+                            <constraint firstItem="7KE-Pw-z8A" firstAttribute="top" secondItem="MfS-FY-cCq" secondAttribute="bottom" constant="130" id="HZJ-fy-2er"/>
+                            <constraint firstItem="VqR-7j-3at" firstAttribute="top" secondItem="7KE-Pw-z8A" secondAttribute="bottom" constant="40" id="cjf-T6-fGT"/>
+                            <constraint firstItem="VqR-7j-3at" firstAttribute="centerX" secondItem="V58-Mx-cel" secondAttribute="centerX" id="ss2-UN-KrY"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="강의평" id="jhi-gB-6jX"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GqQ-1n-H57" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1892" y="-2464"/>
+            <point key="canvasLocation" x="1891.875" y="-2464.4366197183099"/>
         </scene>
         <!--설정-->
         <scene sceneID="y8O-ui-lJB">
@@ -1785,6 +1790,7 @@
         <image name="tabTimetableOff" width="30" height="30"/>
         <image name="tabTimetableOn" width="30" height="30"/>
         <image name="topbarListview" width="22" height="22"/>
+        <image name="waffleCat" width="169" height="177"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
