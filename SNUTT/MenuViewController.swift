@@ -183,7 +183,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource, MenuTa
         let alert = UIAlertController(title: "시간표 이름", message: nil, preferredStyle: .alert)
         alert.addTextField { textfield in
             textfield.minimumFontSize = 21
-            textfield.placeholder = "멋진 시간표"
+            textfield.placeholder = ""
         }
         
         let create = UIAlertAction(title: "만들기", style: .default) { action in

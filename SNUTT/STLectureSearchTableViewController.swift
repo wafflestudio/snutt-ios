@@ -78,7 +78,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         
         let filterImage = UIImage(named: "filter")
         searchBar.setImage(filterImage, for: .bookmark, state: .normal)
-        searchBar.placeholder = "ex) 대영 Paul"
+        searchBar.placeholder = "검색어를 입력하세요"
         
         timetableView.timetable = STTimetableManager.sharedInstance.currentTimetable
         timetableView.showTemporary = true
