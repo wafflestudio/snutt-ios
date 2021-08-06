@@ -29,6 +29,7 @@ class STNotificationTableViewController: UITableViewController, DZNEmptyDataSetD
         
         self.tableView.emptyDataSetSource = self;
         self.tableView.emptyDataSetDelegate = self;
+        self.tableView.separatorStyle = .none
         
         let nib = UINib(nibName: "STNotificationTableViewCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "STNotificationTableViewCell")

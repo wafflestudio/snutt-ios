@@ -254,16 +254,14 @@ extension MenuViewController: MenuTableViewCellDelegate {
         // Action Sheet를 커스터마이징하기 위한 트릭들
         guard let superview = view.superview?.superview?.superview?.superview else { return }
         
-        superview.addSubview(sheet.view)
-        
         sheet.view.frame = settingController.view.frame
+        superview.addSubview(sheet.view)
         
         let screenWidth = UIScreen.main.bounds.size.width
         sheet.view.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
         sheet.view.widthAnchor.constraint(equalToConstant: screenWidth)
             .isActive = true
         sheet.view.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        
         sheet.addChild(settingController)
         sheet.view.addSubview(settingController.view)
         
