@@ -34,14 +34,12 @@ struct STLecture {
 
     func getColor(theme: STTheme) -> STColor {
         let colorList = theme.getColorList()
-        var bgColor = colorList[colorIndex]
-        var fgColor = "#ffffff"
+        let bgColor = colorList[colorIndex]
+        let fgColor = "#ffffff"
         
-        guard let color = color else {
+        guard let color = color, colorIndex == 0 else {
             return STColor(fgHex: fgColor, bgHex: bgColor)
-            
         }
-        
         
         return STColor(fgHex: color.fgColor.toHexString(), bgHex: color.bgColor.toHexString())
     }

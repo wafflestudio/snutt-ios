@@ -36,7 +36,7 @@ class STColorPickerTableViewController: UITableViewController {
     
     override func willMove(toParent parent: UIViewController?) {
         if parent == nil {
-            let retColorIndex = selectedColorIndex == customColorIndex ? 0 : selectedColorIndex
+            let retColorIndex = selectedColorIndex == customColorIndex ? 0 : selectedColorIndex + 1
             let retColor = selectedColorIndex == customColorIndex ? color : nil
             doneBlock(retColorIndex, retColor)
         }
@@ -64,11 +64,16 @@ class STColorPickerTableViewController: UITableViewController {
     }
     
     var colorList: [String]? {
-        return theme?.getColorList()
+        if var list = theme?.getColorList() {
+            list.removeFirst()
+            return list
+        } else {
+            return []
+        }
     }
     
     var colorListCount: Int {
-        return theme?.getColorList().count ?? 0
+        return colorList?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,7 +87,6 @@ class STColorPickerTableViewController: UITableViewController {
         }
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "STColorTableViewCell", for: indexPath) as! STColorTableViewCell
@@ -91,8 +95,7 @@ class STColorPickerTableViewController: UITableViewController {
                 cell.colorLabel.text = "직접 지정하기"
                 cell.setBorder(false)
             } else {
-                if let theme = theme {
-                    let colorList = theme.getColorList()
+                if let theme = theme, let colorList = colorList {
                     let fgColor = "#ffffff"
                     cell.color =  STColor(fgHex: fgColor, bgHex: colorList[indexPath.row])
                     cell.colorLabel.text = "\(theme.getName()) \(indexPath.row)"
