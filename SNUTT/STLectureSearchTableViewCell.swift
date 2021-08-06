@@ -28,6 +28,11 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         openSyllabus()
     }
     
+    @IBAction func showReview(_ sender: UIButton) {
+        STAlertView.showAlert(title: "준비중입니다", message: "")
+    }
+    
+    @IBOutlet weak var reviewButton: UIButton!
     @IBOutlet weak var syllabusButton: UIButton!
     
     private func openSyllabus() {
@@ -114,6 +119,7 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         viewForSelected.isHidden = true
         setUp()
         syllabusButton.isHidden = true
+        reviewButton.isHidden = true
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -122,12 +128,14 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
             self.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
             setAddButton()
             addButton.isHidden = false
+            reviewButton.isHidden = false
             tagLabel.text = lecture!.remark == "" ? lecture!.tagDescription : lecture!.remark
             getSyllabus()
         } else {
             self.backgroundColor = UIColor.clear
             addButton.isHidden = true
             syllabusButton.isHidden = true
+            reviewButton.isHidden = true
             viewForSelected.isHidden = false
             tagLabel.text = lecture?.tagDescription
         }

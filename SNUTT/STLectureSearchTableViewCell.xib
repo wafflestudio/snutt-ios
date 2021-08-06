@@ -134,14 +134,26 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6E-fg-wxW">
+                                    <rect key="frame" x="171.5" y="8.5" width="32" height="27"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <state key="normal" title="강의평">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="showReview:" destination="iN0-l3-epB" eventType="touchUpInside" id="LZX-pn-l7z"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="WXD-nq-Kpw" firstAttribute="centerY" secondItem="Yit-hb-30N" secondAttribute="centerY" id="5Hi-gD-AgL"/>
                                 <constraint firstItem="WnH-G6-1TC" firstAttribute="top" secondItem="Yit-hb-30N" secondAttribute="top" constant="13.5" id="Eg8-Ge-lWy"/>
                                 <constraint firstItem="WnH-G6-1TC" firstAttribute="leading" secondItem="Yit-hb-30N" secondAttribute="leading" constant="296" id="M0f-Od-aU4"/>
+                                <constraint firstItem="Z6E-fg-wxW" firstAttribute="centerY" secondItem="Yit-hb-30N" secondAttribute="centerY" id="QGU-kC-JcH"/>
                                 <constraint firstItem="WXD-nq-Kpw" firstAttribute="leading" secondItem="Yit-hb-30N" secondAttribute="leading" constant="21" id="ifF-Ow-FCn"/>
                                 <constraint firstItem="WnH-G6-1TC" firstAttribute="centerY" secondItem="Yit-hb-30N" secondAttribute="centerY" id="m5G-qP-fzh"/>
                                 <constraint firstAttribute="trailing" secondItem="WnH-G6-1TC" secondAttribute="trailing" constant="18" id="o9u-wn-1Ii"/>
+                                <constraint firstItem="Z6E-fg-wxW" firstAttribute="centerX" secondItem="Yit-hb-30N" secondAttribute="centerX" id="snB-d9-ZSb"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -175,6 +187,7 @@
                 <outlet property="descriptionLabel" destination="9XL-qV-5wF" id="Bb0-Ed-4Cb"/>
                 <outlet property="placeLabel" destination="i34-ak-vOJ" id="3mb-OA-bwS"/>
                 <outlet property="profLabel" destination="kzZ-Wp-ohA" id="TAT-wx-Hch"/>
+                <outlet property="reviewButton" destination="Z6E-fg-wxW" id="5cn-V5-FTd"/>
                 <outlet property="syllabusButton" destination="WXD-nq-Kpw" id="IN9-4U-Atn"/>
                 <outlet property="tagLabel" destination="xVT-8g-nId" id="Vqj-YF-6hQ"/>
                 <outlet property="timeLabel" destination="yug-XZ-ewZ" id="YDD-YB-hWm"/>
