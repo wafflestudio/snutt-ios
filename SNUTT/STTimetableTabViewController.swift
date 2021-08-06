@@ -35,10 +35,6 @@ class STTimetableTabViewController: UIViewController {
     var themeSettingViewState : ThemeSettingViewState = .closed
     var isInAnimation : Bool = false
     
-    @IBAction func captureTimeTable(_ sender: UIBarButtonItem) {
-        showCaptureAlert()
-    }
-    
     @IBOutlet weak var containerView: UIView!
     
     @IBOutlet weak var notiBarItem: UIBarButtonItem!
@@ -56,18 +52,18 @@ class STTimetableTabViewController: UIViewController {
         let titleView = UILabel()
         titleView.text = currentTimetable?.title ?? ""
         titleView.font = UIFont(name: "HelveticaNeue-Medium", size: 17)
-//        let width = titleView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
         let creditLabel = UILabel()
         creditLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 12)
         creditLabel.textColor = UIColor(hexString: "#B3B3B3")
         creditLabel.text = "(\(currentTimetable?.totalCredit ?? 0) 학점)"
-//        titleView.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: width, height: 500))
         titleView.textAlignment = .center
 
         let leftTitleItem = UIBarButtonItem(customView: titleView)
         let leftCreditItem = UIBarButtonItem(customView: creditLabel)
         self.navigationItem.leftBarButtonItems?.append(leftTitleItem)
         self.navigationItem.leftBarButtonItems?.append(leftCreditItem)
+        
+        addRightBarButtons()
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(STTimetableTabViewController.titleWasTapped))
         titleView.isUserInteractionEnabled = true
@@ -104,6 +100,40 @@ class STTimetableTabViewController: UIViewController {
         addThemeSettingView()
     }
     
+    private func addRightBarButtons() {
+        let imageList: [UIImage?] = [UIImage(named: "list"), UIImage(named: "share"), UIImage(named: "tabAlarmOff")]
+        
+        
+        for (index, item) in rightBarButtonsForTimetable.enumerated() {
+            let button = UIButton()
+            button.setImage(imageList[index], for: .normal)
+            button.frame.size = CGSize(width: 30, height: 30)
+            
+            
+            switch index {
+            case 0:
+                button.addTarget(self, action: #selector(presentTimetableListView), for: .touchUpInside)
+            case 1:
+                button.addTarget(self, action: #selector(showCaptureAlert), for: .touchUpInside)
+            case 2:
+                button.addTarget(self, action: #selector(presentNotiView), for: .touchUpInside)
+            default:
+                return
+            }
+            item.customView = button
+        }
+    }
+    
+    @objc private func presentTimetableListView() {
+        let vc = STMyLectureListController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func presentNotiView() {
+        let vc = STNotificationTableViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         setNotiBadge(STDefaults[.shouldShowBadge])
     }
@@ -122,7 +152,7 @@ class STTimetableTabViewController: UIViewController {
             return
         }
         if let titleView = self.navigationItem.leftBarButtonItems?[count -  2].customView as? UILabel, let creditLabel = self.navigationItem.leftBarButtonItems?[count - 1].customView as? UILabel {
-            if let credit = currentTimetable?.totalCredit, let title = currentTimetable?.title {
+            if let credit = currentTimetable?.totalCreditByCal, let title = currentTimetable?.title {
                 titleView.text = "\(title)"
                 creditLabel.text = credit != 0 ? "(\(String(credit)) 학점)" : ""
             }
@@ -225,7 +255,7 @@ class STTimetableTabViewController: UIViewController {
 }
 
 extension STTimetableTabViewController {
-    func showCaptureAlert() {
+    @objc func showCaptureAlert() {
         let image = captureTimetableView(of: self.view)
         
         let activityVC = UIActivityViewController(activityItems: [image, "SNUTT 공유하기"], applicationActivities: nil)
@@ -400,10 +430,14 @@ extension STTimetableTabViewController {
 // MARK: Set noti navbar item
 extension STTimetableTabViewController {
     func setNotiBadge(_ shouldShowBadge: Bool) {
+        let notiButton = rightBarButtonsForTimetable.last?.customView as? UIButton
+        
         if (shouldShowBadge) {
-            notiBarItem.image = #imageLiteral(resourceName: "tabAlarmNotiOff").withRenderingMode(.alwaysOriginal)
+            let image = #imageLiteral(resourceName: "tabAlarmNotiOff").withRenderingMode(.alwaysOriginal)
+            notiButton?.setImage(image, for: .normal)
         } else {
-            notiBarItem.image = #imageLiteral(resourceName: "tabAlarmOff").withRenderingMode(.alwaysOriginal)
+            let image = #imageLiteral(resourceName: "tabAlarmOff").withRenderingMode(.alwaysOriginal)
+            notiButton?.setImage(image, for: .normal)
         }
         STDefaults[.shouldShowBadge] = shouldShowBadge
     }

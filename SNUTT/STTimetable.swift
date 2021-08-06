@@ -29,6 +29,14 @@ class STTimetable {
         }
     }
     
+    var totalCreditByCal: Int {
+        var credit = 0
+        for lecture in lectureList {
+            credit += lecture.credit
+        }
+        return credit
+    }
+    
     init(year aYear: Int, semester aSemester: STSemester, title aTitle: String) {
         self.quarter = STQuarter(year: aYear, semester: aSemester)
         self.title = aTitle
