@@ -51,8 +51,8 @@ class STTagCollectionViewCell: UICollectionViewCell {
     }
     
     func deleteTag() {
-        collectionView.setHidden()
         collectionView.searchController.searchBar.becomeFirstResponder()
         collectionView.searchController.removeTag(searchTag)
+        collectionView.setHidden()
     }
 }

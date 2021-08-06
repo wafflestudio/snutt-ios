@@ -90,6 +90,7 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
                 STTimetableManager.sharedInstance.addLecture(self.lecture!, object: self)
             }
             self.setAddButton()
+            self.tableView.performBatchUpdates(nil, completion: nil)
         }
     }
     

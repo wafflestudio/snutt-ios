@@ -48,7 +48,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         return tagCollectionView.tagList
     }
     
-    var backgroundTapGestureRecognizer: UITapGestureRecognizer?
+    var backgTapRecognizerWhenFilter: UITapGestureRecognizer?
+    var backgTapRecognizer: UITapGestureRecognizer?
     var filterViewPanGestureRecognizer: UIPanGestureRecognizer?
     
     func reloadData() {
@@ -85,7 +86,11 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         settingChanged()
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STLectureSearchTableViewController.settingChanged), event: STEvent.SettingChanged, object: nil)
         
-        backgroundTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundView(_:)))
+        backgTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackgView(_:)))
+        backgTapRecognizer?.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(backgTapRecognizer!)
+        
+        backgTapRecognizerWhenFilter = UITapGestureRecognizer(target: self, action: #selector(didTapBackgViewWhenFilter(_:)))
 
         filterViewPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPanGestureActionInFilterView(_:)))
     }
@@ -396,28 +401,6 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         }
         return true
     }
-    
-    
-    @objc func dismissKeyboard() {
-//        if case let .editingQuery(query, tagList, lectureList) = searchState {
-//            searchBar.resignFirstResponder()
-//            searchBar.isEditingTag = false
-//            if query == nil {
-//                searchState = .empty
-//                FilteredList = []
-//                searchBar.text = ""
-//                tagCollectionView.tagList = []
-//            } else {
-//                searchState = .loaded(query!, tagList)
-//                FilteredList = lectureList
-//                searchBar.text = query!
-//                tagCollectionView.tagList = tagList
-//            }
-//            reloadData()
-//            tagCollectionView.reloadData()
-//            hideTagRecommendation()
-//        }
-    }
 }
 
 // MARK: Filter view
@@ -464,20 +447,30 @@ extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate
     }
     
     private func addGestureRecognizers() {
-        guard let panGR = filterViewPanGestureRecognizer, let tapGR = backgroundTapGestureRecognizer else { return }
+        guard let panGR = filterViewPanGestureRecognizer, let tapGR = backgTapRecognizerWhenFilter else { return }
         filterViewController!.view.addGestureRecognizer(panGR)
         tableView.addGestureRecognizer(tapGR)
     }
     
     private func removeGestureRecognizersInFilter() {
-        guard let panGR = filterViewPanGestureRecognizer, let tapGR = backgroundTapGestureRecognizer else { return }
+        guard let panGR = filterViewPanGestureRecognizer, let tapGR = backgTapRecognizerWhenFilter else { return }
         filterViewController!.view.removeGestureRecognizer(panGR)
         tableView.removeGestureRecognizer(tapGR)
     }
     
-    @objc private func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
+    @objc private func didTapBackgView(_ sender: UITapGestureRecognizer) {
+        if tagList.count == 0 && FilteredList == [] {
+            searchBarCancelButtonClicked()
+            searchBar.resignFirstResponder()
+        }
+    }
+    
+    @objc private func didTapBackgViewWhenFilter(_ sender: UITapGestureRecognizer) {
         if filterViewState == .opened {
             toggleFilterView()
+        } else if tagList.count == 0 {
+            searchBarCancelButtonClicked()
+            searchBar.resignFirstResponder()
         }
     }
     

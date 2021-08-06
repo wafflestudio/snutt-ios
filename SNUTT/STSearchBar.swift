@@ -117,6 +117,10 @@ class STSearchBar: UISearchBar, UISearchBarDelegate{
         }
         searchController.reloadData()
         searchController.tableView.reloadEmptyDataSet()
+        
+        if searchController.filterViewState == .opened {
+            self.searchController.toggleFilterView()
+        }
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
