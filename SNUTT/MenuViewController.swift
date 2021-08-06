@@ -251,17 +251,13 @@ extension MenuViewController: MenuTableViewCellDelegate {
         settingController.timetable = cell.timetable
         settingController.settingSheet = sheet
         
-        // Action Sheet를 커스터마이징하기 위한 트릭들
-        guard let superview = view.superview?.superview?.superview?.superview else { return }
-        
-        sheet.view.frame = settingController.view.frame
-        superview.addSubview(sheet.view)
+        // Action Sheet를 바닥에 붙이기 위해 y = -8
+        sheet.view.bounds = CGRect(x: 0, y: -8, width: settingController.view.frame.width, height: settingController.view.frame.height)
         
         let screenWidth = UIScreen.main.bounds.size.width
-        sheet.view.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
         sheet.view.widthAnchor.constraint(equalToConstant: screenWidth)
             .isActive = true
-        sheet.view.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        sheet.view.heightAnchor.constraint(equalToConstant: 175).isActive = true
         sheet.addChild(settingController)
         sheet.view.addSubview(settingController.view)
         
