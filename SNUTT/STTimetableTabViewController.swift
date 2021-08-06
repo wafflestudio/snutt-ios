@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LinkPresentation
 
 class STTimetableTabViewController: UIViewController {
     
@@ -254,14 +255,28 @@ class STTimetableTabViewController: UIViewController {
     }
 }
 
-extension STTimetableTabViewController {
+extension STTimetableTabViewController: UIActivityItemSource {
     @objc func showCaptureAlert() {
         let image = captureTimetableView(of: self.view)
         
-        let activityVC = UIActivityViewController(activityItems: [image, "SNUTT 공유하기"], applicationActivities: nil)
+        let activityVC = UIActivityViewController(activityItems: [self, image], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view
         
         self.present(activityVC, animated: true, completion: nil)
+    }
+    
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return ""
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        return nil
+    }
+
+    func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
+        let metadata = LPLinkMetadata()
+        metadata.title = "SNUTT"
+        return metadata
     }
     
     func captureTimetableView(of view: UIView) -> UIImage {
@@ -368,6 +383,7 @@ extension STTimetableTabViewController {
             showBackgroundCoverView()
             self.tabBarController!.view.addSubview(backgroundView)
             self.tabBarController!.view.addSubview(menuController.view)
+            self.menuController?.fetchTablelist()
             self.menuController?.view.isHidden = false
             UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
                 menuController.view.frame.origin.x = 0

@@ -67,7 +67,7 @@ class MenuViewController: UIViewController {
         reloadList()
     }
     
-    private func fetchTablelist() {
+    func fetchTablelist() {
         STNetworking.getTimetableList({ list in
             self.updateTableviewData(timetableList: list)
         }, failure: {

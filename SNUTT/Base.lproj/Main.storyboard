@@ -74,23 +74,14 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="tabAlarmOff" id="diC-Ny-PMc">
+                            <barButtonItem title="item" id="diC-Ny-PMc">
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <segue destination="2Xm-tS-Iwu" kind="show" id="3Jl-z2-KT8"/>
-                                </connections>
                             </barButtonItem>
-                            <barButtonItem image="share" id="nbi-ue-X3V">
+                            <barButtonItem title="item" id="nbi-ue-X3V">
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <connections>
-                                    <action selector="captureTimeTable:" destination="Ybg-bY-Wbe" id="Edg-4x-E1w"/>
-                                </connections>
                             </barButtonItem>
-                            <barButtonItem image="table" style="plain" id="gnE-zE-Exs">
+                            <barButtonItem title="item" style="plain" id="gnE-zE-Exs">
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <segue destination="kjU-KQ-Hco" kind="show" id="Udc-qM-PAq"/>
-                                </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
@@ -101,6 +92,7 @@
                         <outlet property="timetableView" destination="zsa-uu-87y" id="V8P-f4-YaD"/>
                         <outletCollection property="rightBarButtonsForTimetable" destination="gnE-zE-Exs" collectionClass="NSMutableArray" id="spb-Sa-qz7"/>
                         <outletCollection property="rightBarButtonsForTimetable" destination="nbi-ue-X3V" collectionClass="NSMutableArray" id="Iq3-fR-vvh"/>
+                        <outletCollection property="rightBarButtonsForTimetable" destination="diC-Ny-PMc" collectionClass="NSMutableArray" id="Wv8-zP-HeO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9sT-yZ-cLs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -417,7 +409,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Zht-ES-N3O" customClass="STSearchBar" customModule="SNUTT" customModuleProvider="target">
+                            <searchBar contentMode="redraw" text="" translatesAutoresizingMaskIntoConstraints="NO" id="Zht-ES-N3O" customClass="STSearchBar" customModule="SNUTT" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 <scopeButtonTitles>
@@ -480,7 +472,7 @@
             <objects>
                 <tableViewController id="T6i-Pp-rYg" customClass="STAddCustomLectureTableViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="52" sectionHeaderHeight="18" sectionFooterHeight="18" id="x4K-d6-tnU">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <color key="sectionIndexBackgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -648,7 +640,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="LectureDetailTableViewController" hidesBottomBarWhenPushed="YES" id="sek-gO-kxt" customClass="STLectureDetailTableViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="52" sectionHeaderHeight="18" sectionFooterHeight="18" id="Zd7-NY-TuW">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <color key="sectionIndexBackgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -701,7 +693,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="MyLectureListController" id="kjU-KQ-Hco" customClass="STMyLectureListController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="123" sectionHeaderHeight="28" sectionFooterHeight="28" id="gPa-E7-HNW">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="475"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
@@ -767,7 +759,7 @@
             <objects>
                 <tableViewController id="2Xm-tS-Iwu" customClass="STNotificationTableViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="48" sectionHeaderHeight="28" sectionFooterHeight="28" id="hjY-cd-K5k">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="475"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
@@ -787,7 +779,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3XN-a4-gSd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bk6-dJ-mH0">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1786,15 +1778,12 @@
         <image name="logo" width="51" height="52"/>
         <image name="review" width="30" height="30"/>
         <image name="reviewOn0.5x" width="28.5" height="24"/>
-        <image name="share" width="30" height="30"/>
-        <image name="tabAlarmOff" width="30" height="30"/>
         <image name="tabSearchOff" width="30" height="30"/>
         <image name="tabSearchOn" width="30" height="30"/>
         <image name="tabSettingOff" width="30" height="30"/>
         <image name="tabSettingOn" width="30" height="30"/>
         <image name="tabTimetableOff" width="30" height="30"/>
         <image name="tabTimetableOn" width="30" height="30"/>
-        <image name="table" width="30" height="30"/>
         <image name="topbarListview" width="22" height="22"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
