@@ -308,6 +308,9 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             if Double(rowStart) > cell.singleClass.time.startPeriod {
                 cell.mask(CGRect(x: 0, y: heightPerRow * CGFloat(Double(rowStart) - cell.singleClass.time.startPeriod), width: cell.frame.width, height:cell.frame.height))
             }
+            
+            cell.backgroundColor = UIColor(red: 207, green: 207, blue: 207)
+            
             return cell
         }
     }
