@@ -21,7 +21,6 @@ class STMyLectureListController: UITableViewController, DZNEmptyDataSetSource, D
         
         self.tableView.register(UINib(nibName: "STLectureTableViewCell", bundle: nil), forCellReuseIdentifier: "LectureCell")
         self.tableView.register(UINib(nibName: "STAddLectureButtonCell", bundle: nil), forCellReuseIdentifier: "AddButtonCell")
-        self.tableView.separatorStyle = .none
         self.tableView.rowHeight = 74.0
         
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(reloadData(_:)), event: STEvent.CurrentTimetableChanged, object: nil)
