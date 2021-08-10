@@ -63,23 +63,14 @@ class STColorPickerTableViewController: UITableViewController {
         }
     }
     
-    var colorList: [String]? {
-        if var list = theme?.getColorList() {
-            list.removeFirst()
-            return list
-        } else {
-            return []
-        }
-    }
-    
-    var colorListCount: Int {
-        return colorList?.count ?? 0
+    var colorList: [String] {
+        return theme?.getColorList() ?? []
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return colorListCount + 1
+            return colorList.count
         case 1:
             return 2
         default:
@@ -90,15 +81,15 @@ class STColorPickerTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "STColorTableViewCell", for: indexPath) as! STColorTableViewCell
-            if indexPath.row == colorListCount {
+            if indexPath.row == colorList.count - 1 {
                 cell.color = STColor()
                 cell.colorLabel.text = "직접 지정하기"
                 cell.setBorder(false)
             } else {
-                if let theme = theme, let colorList = colorList {
+                if let theme = theme {
                     let fgColor = "#ffffff"
-                    cell.color =  STColor(fgHex: fgColor, bgHex: colorList[indexPath.row])
-                    cell.colorLabel.text = "\(theme.getName()) \(indexPath.row)"
+                    cell.color =  STColor(fgHex: fgColor, bgHex: colorList[indexPath.row + 1])
+                    cell.colorLabel.text = "\(theme.getName()) \(indexPath.row + 1)"
                     cell.setBorder(true)
                 }
             }
@@ -130,9 +121,8 @@ class STColorPickerTableViewController: UITableViewController {
                     self.tableView.deleteSections(IndexSet(integer: 1), with: .top)
                 }
                 if selectedColorIndex != customColorIndex {
-                    if let bg = colorList?[indexPath.row] {
-                        color = STColor(fgHex: "ffffff", bgHex: bg)
-                    }
+                    let bg = colorList[indexPath.row]
+                    color = STColor(fgHex: "ffffff", bgHex: bg)
                 } else {
                     color = STColor()
                     self.tableView.insertSections(IndexSet(integer: 1), with: .top)
