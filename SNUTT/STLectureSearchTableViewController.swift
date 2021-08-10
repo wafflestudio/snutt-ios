@@ -459,9 +459,14 @@ extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate
     }
     
     @objc private func didTapBackgView(_ sender: UITapGestureRecognizer) {
-        if tagList.count == 0 {
-            searchBarCancelButtonClicked()
-            searchBar.resignFirstResponder()
+        switch searchState {
+        case .empty, .editingQuery:
+            if tagList.count == 0 {
+                searchBarCancelButtonClicked()
+                searchBar.resignFirstResponder()
+            }
+        default:
+            return
         }
     }
     

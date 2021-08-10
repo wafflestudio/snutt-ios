@@ -27,7 +27,7 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         }
 
         self.sectionForSingleClass = 2
-        self.theme = .SNUTT
+        self.theme = STTimetableManager.sharedInstance.currentTimetable?.theme
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

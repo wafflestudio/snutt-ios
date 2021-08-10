@@ -17,7 +17,7 @@ class MenuTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        timetableLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 105).isActive = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

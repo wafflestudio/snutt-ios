@@ -12,7 +12,6 @@ import LinkPresentation
 class STTimetableTabViewController: UIViewController {
     
     @IBOutlet weak var timetableView: STTimetableCollectionView!
-    var lectureListController : STMyLectureListController!
     var menuController: MenuViewController!
     var themeSettingController: ThemeSettingViewController!
     let backgroundView = UIView()
@@ -72,12 +71,6 @@ class STTimetableTabViewController: UIViewController {
         
         self.navigationItem.leftBarButtonItem!.target = self
         
-        lectureListController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MyLectureListController") as! STMyLectureListController
-        lectureListController.timetableTabViewController = self
-        lectureListController.view.frame = self.containerView.frame
-        self.containerView.addSubview(lectureListController.view)
-        lectureListController.view.isHidden = true
-        
         timetableView.timetable = currentTimetable
         settingChanged()
         
@@ -126,13 +119,15 @@ class STTimetableTabViewController: UIViewController {
     }
     
     @objc private func presentTimetableListView() {
-        let vc = STMyLectureListController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        if let vc = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MyLectureListController") as? STMyLectureListController {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @objc private func presentNotiView() {
-        let vc = STNotificationTableViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        if let vc = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "NotiListController") as? STNotificationTableViewController {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

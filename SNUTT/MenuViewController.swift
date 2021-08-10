@@ -26,6 +26,16 @@ class MenuViewController: UIViewController {
     var delegate: MenuViewControllerDelegate?
     var sheetAlert: UIAlertController?
     
+    @IBOutlet weak var headerView: UIView! {
+        didSet {
+            headerView.setBottomBorder(UIColor(hexString: "#F2F2F2"), width: 1)
+        }
+    }
+    
+    @IBAction func close(_ sender: UIButton) {
+        delegate?.close(self)
+    }
+    
     var currentTimetable: STTimetable? {
         return STTimetableManager.sharedInstance.currentTimetable
     }
@@ -251,19 +261,16 @@ extension MenuViewController: MenuTableViewCellDelegate {
         settingController.timetable = cell.timetable
         settingController.settingSheet = sheet
         
-        // Action Sheet를 커스터마이징하기 위한 트릭들
-        guard let superview = view.superview?.superview?.superview?.superview else { return }
-        
-        superview.addSubview(sheet.view)
-        
-        sheet.view.frame = settingController.view.frame
+        // safe area
+        guard let window = UIApplication.shared.windows.first else { return }
+        let bottomPadding = window.safeAreaInsets.bottom
         
         let screenWidth = UIScreen.main.bounds.size.width
-        sheet.view.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
         sheet.view.widthAnchor.constraint(equalToConstant: screenWidth)
             .isActive = true
-        sheet.view.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        sheet.view.heightAnchor.constraint(equalToConstant: 175 + bottomPadding).isActive = true
         
+        sheet.view.bounds = CGRect(x: 0, y: 0 - (bottomPadding == 0 ? 8 : bottomPadding ), width: settingController.view.frame.width, height: settingController.view.frame.height)
         sheet.addChild(settingController)
         sheet.view.addSubview(settingController.view)
         
