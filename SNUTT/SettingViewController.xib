@@ -122,6 +122,9 @@
                             </constraints>
                         </view>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="162" id="loX-jc-mIs"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -129,7 +132,7 @@
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6hS-6C-Ytg" secondAttribute="trailing" id="Oco-Le-Rg5"/>
                 <constraint firstItem="6hS-6C-Ytg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="13" id="fJX-9l-hgf"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="6hS-6C-Ytg" secondAttribute="bottom" id="gPh-gT-9mw"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="6hS-6C-Ytg" secondAttribute="bottom" id="gPh-gT-9mw"/>
                 <constraint firstItem="6hS-6C-Ytg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="iJ1-wr-87U"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

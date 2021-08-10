@@ -12,7 +12,6 @@ import LinkPresentation
 class STTimetableTabViewController: UIViewController {
     
     @IBOutlet weak var timetableView: STTimetableCollectionView!
-    var lectureListController : STMyLectureListController!
     var menuController: MenuViewController!
     var themeSettingController: ThemeSettingViewController!
     let backgroundView = UIView()
@@ -71,12 +70,6 @@ class STTimetableTabViewController: UIViewController {
         titleView.addGestureRecognizer(recognizer)
         
         self.navigationItem.leftBarButtonItem!.target = self
-        
-        lectureListController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MyLectureListController") as! STMyLectureListController
-        lectureListController.timetableTabViewController = self
-        lectureListController.view.frame = self.containerView.frame
-        self.containerView.addSubview(lectureListController.view)
-        lectureListController.view.isHidden = true
         
         timetableView.timetable = currentTimetable
         settingChanged()

@@ -251,13 +251,16 @@ extension MenuViewController: MenuTableViewCellDelegate {
         settingController.timetable = cell.timetable
         settingController.settingSheet = sheet
         
-        // Action Sheet를 바닥에 붙이기 위해 y = -8
-        sheet.view.bounds = CGRect(x: 0, y: -8, width: settingController.view.frame.width, height: settingController.view.frame.height)
+        // safe area
+        guard let window = UIApplication.shared.windows.first else { return }
+        let bottomPadding = window.safeAreaInsets.bottom
         
         let screenWidth = UIScreen.main.bounds.size.width
         sheet.view.widthAnchor.constraint(equalToConstant: screenWidth)
             .isActive = true
-        sheet.view.heightAnchor.constraint(equalToConstant: 175).isActive = true
+        sheet.view.heightAnchor.constraint(equalToConstant: 175 + bottomPadding).isActive = true
+        
+        sheet.view.bounds = CGRect(x: 0, y: 0 - (bottomPadding == 0 ? 8 : bottomPadding ), width: settingController.view.frame.width, height: settingController.view.frame.height)
         sheet.addChild(settingController)
         sheet.view.addSubview(settingController.view)
         
