@@ -26,6 +26,16 @@ class MenuViewController: UIViewController {
     var delegate: MenuViewControllerDelegate?
     var sheetAlert: UIAlertController?
     
+    @IBOutlet weak var headerView: UIView! {
+        didSet {
+            headerView.setBottomBorder(UIColor(hexString: "#F2F2F2"), width: 1)
+        }
+    }
+    
+    @IBAction func close(_ sender: UIButton) {
+        delegate?.close(self)
+    }
+    
     var currentTimetable: STTimetable? {
         return STTimetableManager.sharedInstance.currentTimetable
     }

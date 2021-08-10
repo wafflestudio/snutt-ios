@@ -1456,7 +1456,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1488,7 +1488,7 @@
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTTRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1627,7 +1627,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1685,7 +1685,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				ENABLE_TESTABILITY = YES;
@@ -1724,7 +1724,7 @@
 				CODE_SIGN_ENTITLEMENTS = "SNUTT Today/SNUTT Today.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1763,7 +1763,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
