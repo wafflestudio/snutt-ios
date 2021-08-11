@@ -24,6 +24,10 @@ class SettingViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    var currentTimetable: STTimetable? {
+        return STTimetableManager.sharedInstance.currentTimetable
+    }
+    
     @IBAction func remove(_ sender: UIButton) {
         guard let timetable = self.timetable else { return }
         let alert = UIAlertController(title: "\"\(timetable.title)\" 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
@@ -46,6 +50,9 @@ class SettingViewController: UIViewController {
     }
     
     @IBAction func showThemeSetting(_ sender: UIButton) {
+        guard currentTimetable == timetable else { STAlertView.showAlert(title: "", message: "현재 시간표의 테마만 변경할 수 있습니다")
+            return
+        }
         showChangeThemeView()
     }
     
