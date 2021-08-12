@@ -167,7 +167,7 @@ class STTimetableTabViewController: UIViewController {
             timetableView.shouldAutofit = false
             let dayRange = STDefaults[.dayRange]
             var columnHidden : [Bool] = []
-            for i in 0..<6 {
+            for i in 0...6 {
                 if dayRange[0] <= i && i <= dayRange[1] {
                     columnHidden.append(false)
                 } else {
