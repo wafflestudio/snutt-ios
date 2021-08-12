@@ -472,7 +472,10 @@ extension STTimetableTabViewController: MenuViewControllerDelegate {
     
     private func setTheme() {
         if let timetable = currentTimetable, let id = timetable.id {
-            guard let theme = temporaryTheme else { return }
+            guard let theme = temporaryTheme else {
+                self.toggleThemeSettingView()
+                return
+            }
             STNetworking.updateTheme(id: id, theme: theme.rawValue) { (timetable) in
                 self.originalTheme = self.temporaryTheme
                 self.temporaryTheme = nil
