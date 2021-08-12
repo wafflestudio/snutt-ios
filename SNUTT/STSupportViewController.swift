@@ -32,6 +32,7 @@ class STSupportViewController: UIViewController {
             STNetworking.sendFeedback(self.emailTextField.text, message: self.contentTextView.text, done: {
                 loadingView.dismiss(animated: true, completion: {
                     self.navigationController?.popViewController(animated: true)
+                    STAlertView.showAlert(title: "전송되었습니다", message: "")
                 })
             }, failure: {
                 loadingView.dismiss(animated: true)

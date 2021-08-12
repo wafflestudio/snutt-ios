@@ -380,7 +380,7 @@ class STNetworking {
     
     static func sendFeedback(_ email: String?, message: String, done: (()->())?, failure: (()->())?) {
         let request = Alamofire.request(STEtcRouter.feedback(email: email, message: message))
-        request.responseWithDone({ _,_  in
+        request.responseWithDone({ statusCode, json  in
             done?()
         }, failure: { _ in
             failure?()
