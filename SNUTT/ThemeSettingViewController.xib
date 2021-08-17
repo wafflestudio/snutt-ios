@@ -26,20 +26,6 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSt-se-BNt">
-                    <rect key="frame" x="369" y="24" width="25" height="15"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="15" id="Ory-db-aSu"/>
-                        <constraint firstAttribute="width" constant="25" id="iuH-3Y-wzg"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <state key="normal" title="적용">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <connections>
-                        <action selector="updateTheme:" destination="-1" eventType="touchUpInside" id="Asl-Xn-7RL"/>
-                    </connections>
-                </button>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="KYn-Qk-8dQ">
                     <rect key="frame" x="0.0" y="60" width="414" height="110"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -53,15 +39,29 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSt-se-BNt">
+                    <rect key="frame" x="362" y="14" width="40" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="Ory-db-aSu"/>
+                        <constraint firstAttribute="width" constant="40" id="ZHG-RH-swi"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="적용">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="updateTheme:" destination="-1" eventType="touchUpInside" id="Asl-Xn-7RL"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="KYn-Qk-8dQ" secondAttribute="bottom" constant="20" id="GNU-wI-iB2"/>
-                <constraint firstAttribute="trailing" secondItem="lSt-se-BNt" secondAttribute="trailing" constant="20" id="JqK-VN-fTQ"/>
+                <constraint firstAttribute="trailing" secondItem="lSt-se-BNt" secondAttribute="trailing" constant="12" id="JqK-VN-fTQ"/>
                 <constraint firstItem="Hbf-nO-JBF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="XKV-Jq-Z6b"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="KYn-Qk-8dQ" secondAttribute="trailing" id="cEU-Jq-UGS"/>
-                <constraint firstItem="lSt-se-BNt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="24" id="heq-57-uGm"/>
+                <constraint firstItem="lSt-se-BNt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="14" id="heq-57-uGm"/>
                 <constraint firstItem="KYn-Qk-8dQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="r8x-pc-PjG"/>
                 <constraint firstItem="Hbf-nO-JBF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="24" id="tHK-Uh-Xop"/>
             </constraints>

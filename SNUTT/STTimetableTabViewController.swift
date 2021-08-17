@@ -167,7 +167,7 @@ class STTimetableTabViewController: UIViewController {
             timetableView.shouldAutofit = false
             let dayRange = STDefaults[.dayRange]
             var columnHidden : [Bool] = []
-            for i in 0..<6 {
+            for i in 0...6 {
                 if dayRange[0] <= i && i <= dayRange[1] {
                     columnHidden.append(false)
                 } else {
@@ -472,7 +472,10 @@ extension STTimetableTabViewController: MenuViewControllerDelegate {
     
     private func setTheme() {
         if let timetable = currentTimetable, let id = timetable.id {
-            guard let theme = temporaryTheme else { return }
+            guard let theme = temporaryTheme else {
+                self.toggleThemeSettingView()
+                return
+            }
             STNetworking.updateTheme(id: id, theme: theme.rawValue) { (timetable) in
                 self.originalTheme = self.temporaryTheme
                 self.temporaryTheme = nil

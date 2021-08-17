@@ -297,7 +297,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plr-x9-uzV" customClass="STTimetableCollectionView" customModule="SNUTT" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="320" height="443"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="475"/>
                             </containerView>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wf4-PD-nbb">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="487"/>
@@ -422,7 +422,7 @@
                             <constraint firstItem="Q60-nN-90y" firstAttribute="top" secondItem="Zht-ES-N3O" secondAttribute="bottom" priority="700" id="AF1-z4-6ly"/>
                             <constraint firstAttribute="trailing" secondItem="38X-iM-cc3" secondAttribute="trailing" id="B26-Zk-O6T"/>
                             <constraint firstItem="XID-hC-pe0" firstAttribute="leading" secondItem="Kj5-zA-s3U" secondAttribute="leading" id="Jns-L3-YT6"/>
-                            <constraint firstItem="kbG-Pe-fQU" firstAttribute="top" secondItem="plr-x9-uzV" secondAttribute="bottom" constant="32" id="LQd-m3-wZa"/>
+                            <constraint firstItem="kbG-Pe-fQU" firstAttribute="top" secondItem="plr-x9-uzV" secondAttribute="bottom" id="LQd-m3-wZa"/>
                             <constraint firstItem="Q60-nN-90y" firstAttribute="bottom" secondItem="Zht-ES-N3O" secondAttribute="bottom" priority="750" id="S0K-QB-Z02"/>
                             <constraint firstItem="plr-x9-uzV" firstAttribute="top" secondItem="Pe0-MI-3Cc" secondAttribute="bottom" id="VWu-Kl-1aa"/>
                             <constraint firstItem="XID-hC-pe0" firstAttribute="top" secondItem="Q60-nN-90y" secondAttribute="bottom" id="Vg9-3E-veB"/>
@@ -1706,11 +1706,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" directionalLockEnabled="YES" text="불편한 점이나 버그를 적어주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GnI-JC-PIw">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" directionalLockEnabled="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GnI-JC-PIw">
                                 <rect key="frame" x="16" y="111" width="343" height="237"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="불편한 점이나 버그를 적어주세요."/>
+                                </userDefinedRuntimeAttributes>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Nv-EG-bIg">
                                 <rect key="frame" x="20" y="86" width="280" height="1"/>
