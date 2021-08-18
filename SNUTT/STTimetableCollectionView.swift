@@ -175,9 +175,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         let oldCH = columnHidden
         let oldRE = rowEnd
         let oldRS = rowStart
-        if STDefaults[.autoFit] {
-            autofit(includeTemp: true)
-        }
+        autofit(includeTemp: true)
         if (columnList == oldCL && columnHidden == oldCH && rowEnd == oldRE && rowStart == oldRS) {
             reloadTempOnly()
         } else {
