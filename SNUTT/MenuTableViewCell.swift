@@ -37,8 +37,9 @@ class MenuTableViewCell: UITableViewCell {
         guard let timetable = timetable, let id = timetable.id else { return }
         STNetworking.copyTimetable(id: id) { timetableList in
             self.delegate?.updateTableViewData(self, timetableList: timetableList)
+            STAlertView.showAlert(title: "시간표가 복제되었습니다", message: "")
         } failure: { errorCode in
-            STAlertView.showAlert(title: "시간표 복사 실패", message: errorCode.errorMessage)
+            STAlertView.showAlert(title: "시간표 복제 실패", message: errorCode.errorMessage)
         }
     }
     
