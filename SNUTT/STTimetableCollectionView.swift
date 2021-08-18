@@ -311,6 +311,8 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
                 cell.mask(CGRect(x: 0, y: heightPerRow * CGFloat(Double(rowStart) - cell.singleClass.time.startPeriod), width: cell.frame.width, height:cell.frame.height))
             }
             
+            // TODO: 임시 강의 색깔 정하는게 조금 부자연스러움
+            cell.courseText.textColor = .black
             cell.backgroundColor = UIColor(red: 207, green: 207, blue: 207)
             
             return cell
