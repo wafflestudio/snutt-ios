@@ -22,7 +22,9 @@ class STTagList : NSObject, NSCoding {
         
         let otherTagList: [STTag] = [STTag(type: .Etc, text: emptyTag.rawValue), STTag(type: .Etc, text: englishTag.rawValue), STTag(type: .Etc, text: armyTag.rawValue)]
         
-        self.tagList = tagList + otherTagList
+        if !tagList.contains(otherTagList[0]) {
+            self.tagList = tagList + otherTagList
+        }
         
         self.updatedTime = updatedTime
     }
