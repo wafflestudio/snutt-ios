@@ -37,7 +37,7 @@
                             <constraint firstAttribute="width" constant="24" id="Bsw-mr-dvH"/>
                             <constraint firstAttribute="height" constant="24" id="Rif-Da-npL"/>
                         </constraints>
-                        <color key="tintColor" red="0.006906411082" green="0.006906411082" blue="0.006906411082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <state key="normal" image="dotdotdot"/>
                         <connections>
                             <action selector="settingButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xfa-vx-K84"/>
@@ -49,8 +49,10 @@
                             <constraint firstAttribute="width" constant="24" id="kRl-y7-IK1"/>
                             <constraint firstAttribute="height" constant="24" id="l99-s5-Vcq"/>
                         </constraints>
-                        <color key="tintColor" red="0.006906411082" green="0.006906411082" blue="0.006906411082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <state key="normal" image="duplicate"/>
+                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <state key="normal" image="duplicate">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
                         <connections>
                             <action selector="duplicateButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YtN-6h-sCB"/>
                         </connections>
@@ -90,8 +92,8 @@
     </objects>
     <resources>
         <image name="checkMint" width="30" height="30.5"/>
-        <image name="dotdotdot" width="3.5" height="21.5"/>
-        <image name="duplicate" width="23" height="22"/>
+        <image name="dotdotdot" width="4" height="28"/>
+        <image name="duplicate" width="30" height="29"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
