@@ -23,7 +23,7 @@ class SearchFilterViewController: UIViewController {
     var currentDetailTagList: [STTag] = []
     
     var tagDetailList: [STTag] {
-        let tagList = STTagManager.sharedInstance.tagList.tagList
+        guard let tagList = STTagManager.sharedInstance.tagList?.tagList else { return [] }
         let filteredTagList = tagList.filter { tag in tag.type == currentTagType }
         return filteredTagList
     }

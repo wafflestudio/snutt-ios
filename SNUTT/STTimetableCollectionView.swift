@@ -161,8 +161,9 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
     }
 
     private func reloadTempOnly() {
+        guard let timetable = timetable else { return }
         UIView.performWithoutAnimation {
-            reloadSections(IndexSet(integer: (timetable?.lectureList.count)! + LectureSectionOffset))
+            reloadSections(IndexSet(integer: (timetable.lectureList.count) + LectureSectionOffset))
         }
     }
     
@@ -179,11 +180,12 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         if (columnList == oldCL && columnHidden == oldCH && rowEnd == oldRE && rowStart == oldRS) {
             reloadTempOnly()
         } else {
+            guard let timetable = timetable else { return }
             UIView.performWithoutAnimation {
                 self.performBatchUpdates({
                     //self.reloadItems(at: self.getAllIndexesForLecture())
                     self.reloadSections(IndexSet(integersIn: 0..<self.LectureSectionOffset))
-                    self.reloadSections(IndexSet(integer: (self.timetable?.lectureList.count)! + self.LectureSectionOffset))
+                    self.reloadSections(IndexSet(integer: (timetable.lectureList.count) + self.LectureSectionOffset))
                 }, completion: { _ in
                 })
             }

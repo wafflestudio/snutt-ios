@@ -28,7 +28,7 @@ class STTagManager {
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STTagManager.loadData), event: STEvent.CurrentTimetableSwitched, object: nil)
     }
     
-    var tagList : STTagList!
+    var tagList : STTagList?
     
     @objc dynamic func loadData() {
         guard let quarter = STTimetableManager.sharedInstance.currentTimetable?.quarter else {
@@ -52,7 +52,7 @@ class STTagManager {
     
     func getTagListWithQuarter(_ quarter: STQuarter, updatedTime : Int64) {
         STNetworking.getTagListForQuarter(quarter, done: { tagList in
-            if self.tagList.quarter == quarter {
+            if self.tagList?.quarter == quarter {
                 self.tagList = tagList
                 self.saveData(quarter)
             }
@@ -64,9 +64,10 @@ class STTagManager {
 
     
     func updateTagList() {
+        guard let tagList = tagList else { return }
         STNetworking.getTagUpdateTimeForQuarter(tagList.quarter, done: { updatedTime in
-            if self.tagList.updatedTime != updatedTime {
-                    self.getTagListWithQuarter(self.tagList.quarter, updatedTime: updatedTime)
+            if tagList.updatedTime != updatedTime {
+                    self.getTagListWithQuarter(tagList.quarter, updatedTime: updatedTime)
             }
             }, failure: nil
         )
