@@ -161,8 +161,9 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
     }
 
     private func reloadTempOnly() {
+        guard let timetable = timetable else { return }
         UIView.performWithoutAnimation {
-            reloadSections(IndexSet(integer: (timetable?.lectureList.count)! + LectureSectionOffset))
+            reloadSections(IndexSet(integer: (timetable.lectureList.count) + LectureSectionOffset))
         }
     }
     
@@ -175,17 +176,16 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         let oldCH = columnHidden
         let oldRE = rowEnd
         let oldRS = rowStart
-        if STDefaults[.autoFit] {
-            autofit(includeTemp: true)
-        }
+        autofit(includeTemp: true)
         if (columnList == oldCL && columnHidden == oldCH && rowEnd == oldRE && rowStart == oldRS) {
             reloadTempOnly()
         } else {
+            guard let timetable = timetable else { return }
             UIView.performWithoutAnimation {
                 self.performBatchUpdates({
                     //self.reloadItems(at: self.getAllIndexesForLecture())
                     self.reloadSections(IndexSet(integersIn: 0..<self.LectureSectionOffset))
-                    self.reloadSections(IndexSet(integer: (self.timetable?.lectureList.count)! + self.LectureSectionOffset))
+                    self.reloadSections(IndexSet(integer: (timetable.lectureList.count) + self.LectureSectionOffset))
                 }, completion: { _ in
                 })
             }
@@ -311,6 +311,8 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
                 cell.mask(CGRect(x: 0, y: heightPerRow * CGFloat(Double(rowStart) - cell.singleClass.time.startPeriod), width: cell.frame.width, height:cell.frame.height))
             }
             
+            // TODO: 임시 강의 색깔 정하는게 조금 부자연스러움
+            cell.courseText.textColor = .black
             cell.backgroundColor = UIColor(red: 207, green: 207, blue: 207)
             
             return cell

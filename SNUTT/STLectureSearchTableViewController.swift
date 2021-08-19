@@ -97,6 +97,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     override func viewDidAppear(_ animated: Bool) {
         addShowFilterView()
+        reloadTempLecture()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -127,7 +128,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
             timetableView.shouldAutofit = false
             let dayRange = STDefaults[.dayRange]
             var columnHidden : [Bool] = []
-            for i in 0..<6 {
+            for i in 0...6 {
                 if dayRange[0] <= i && i <= dayRange[1] {
                     columnHidden.append(false)
                 } else {
@@ -226,6 +227,7 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
     
     @objc func reloadTimetable() {
         self.timetableView.reloadTimetable()
+        self.timetableView.reloadTempLecture()
     }
     
     @objc func reloadTempLecture() {

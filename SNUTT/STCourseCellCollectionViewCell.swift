@@ -43,15 +43,16 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     }
 
     func setData(lecture: STLecture, singleClass: STSingleClass) {
-        if (oldLecture == lecture && oldSingleClass == singleClass) {
-            return
-        }
+        // TODO: oldLecture 둔 이유가 뭔가요?
+//        if (oldLecture == lecture && oldSingleClass == singleClass) {
+//            return
+//        }
         self.lecture = lecture
         self.singleClass = singleClass
         setText()
         setColor()
-        oldLecture = lecture
-        oldSingleClass = singleClass
+//        oldLecture = lecture
+//        oldSingleClass = singleClass
     }
 
     func setColorByLecture(lecture: STLecture) {

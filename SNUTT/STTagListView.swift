@@ -35,10 +35,11 @@ class STTagListView: UITableView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func showTagsFor(_ query : String, type: STTagType?) {
+        guard let tagList = STTagManager.sharedInstance.tagList else { return }
         if query == "" {
-            filteredList = STTagManager.sharedInstance.tagList.tagList
+            filteredList = tagList.tagList
         } else {
-            filteredList = STTagManager.sharedInstance.tagList.tagList.filter{ tag in
+            filteredList = tagList.tagList.filter{ tag in
                 return tag.text.hasPrefix(query)
             }
         }
