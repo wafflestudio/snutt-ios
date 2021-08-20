@@ -10,6 +10,7 @@ import UIKit
 import ChameleonFramework
 import SafariServices
 import Crashlytics
+import AuthenticationServices
 
 class STRegisterViewController: UIViewController, UITextFieldDelegate {
 
@@ -21,7 +22,8 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var registerButton: STViewButton!
     @IBOutlet weak var facebookButton: STViewButton!
-
+    @IBOutlet weak var appleButton: STViewButton!
+    
     @IBOutlet weak var layoutConstraint1: NSLayoutConstraint!
     @IBOutlet weak var layoutConstraint2: NSLayoutConstraint!
     @IBOutlet weak var layoutConstraint3: NSLayoutConstraint!
@@ -48,6 +50,9 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
         }
         facebookButton.buttonPressAction = {
             self.fbButtonClicked()
+        }
+        appleButton.buttonPressAction = {
+            self.appleButtonClicked()
         }
         backBtnView.buttonPressAction = {
             self.dismiss(animated: true, completion: nil)
@@ -110,6 +115,11 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
     func fbButtonClicked() {
         self.view.endEditing(true)
         STUser.tryFBLogin(controller:self)
+    }
+    
+    func appleButtonClicked() {
+        self.view.endEditing(true)
+        appleLogin()
     }
 
     func registerButtonClicked() {
@@ -180,4 +190,42 @@ class STRegisterViewController: UIViewController, UITextFieldDelegate {
     }
     */
 
+}
+
+// MARK: - Apple Login
+extension STRegisterViewController: ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
+    private func appleLogin() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+                
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            guard let token = String(data: appleIDCredential.identityToken!, encoding: .utf8) else {
+                STAlertView.showAlert(title: "로그인 실패", message: "애플 로그인에 실패했습니다.")
+                return
+            }
+            
+            STUser.tryAppleLogin(token: token)
+        default:
+            break
+        }
+    }
+        
+    // Handle error
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+      debugPrint(error)
+    }
 }
