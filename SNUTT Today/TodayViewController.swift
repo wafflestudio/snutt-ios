@@ -83,10 +83,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
     }
 
-    func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize){
-        if (activeDisplayMode == NCWidgetDisplayMode.compact) {
-            self.preferredContentSize = maxSize
-            timetableView.frame.size = maxSize
+    func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
+        if (activeDisplayMode == .compact) {
             reloadData()
             timetableView.isHidden = true
             descriptionLabel.isHidden = false
