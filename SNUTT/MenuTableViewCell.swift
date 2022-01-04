@@ -48,7 +48,11 @@ class MenuTableViewCell: UITableViewCell {
     }
     
     @IBOutlet weak var duplicateBButton: UIButton!
-    @IBOutlet weak var settingBButton: UIButton!
+    @IBOutlet weak var settingBButton: UIButton! {
+        didSet {
+            settingBButton?.imageView?.contentMode = .scaleAspectFit
+        }
+    }
     
     func setLabel(text: String) {
         timetableLabel.text = text
