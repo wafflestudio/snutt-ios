@@ -17,12 +17,10 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var tagLabel: MarqueeLabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var placeLabel: UILabel!
-    @IBOutlet weak var addButton: STViewButton!
+    @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var containerView: UIView!
     
     @IBOutlet weak var viewForSelected: UIView!
-    @IBOutlet weak var
-        addButtonLabel: UILabel!
     
     @IBAction func showSyllabus(_ sender: UIButton) {
         openSyllabus()
@@ -30,6 +28,19 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     @IBAction func showReview(_ sender: UIButton) {
         STAlertView.showAlert(title: "준비중입니다", message: "")
+    }
+    
+    @IBAction func add(_ sender: UIButton) {
+        STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
+        self.tableView.deselectRow(at: self.tableView.indexPath(for: self)!, animated: true)
+        let index = self.indexInTimetable()
+        if index >= 0{
+            STTimetableManager.sharedInstance.deleteLectureAtIndex(index, object: self)
+        } else {
+            STTimetableManager.sharedInstance.addLecture(self.lecture!, object: self)
+        }
+        self.setAddButton()
+        self.tableView.performBatchUpdates(nil, completion: nil)
     }
     
     @IBOutlet weak var reviewButton: UIButton!
@@ -84,27 +95,14 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
         tagLabel.trailingBuffer = 10.0
         titleLabel.animationDelay = 0.3
         tagLabel.animationDelay = 0.3
-        
-        addButton.buttonPressAction = {
-            STTimetableManager.sharedInstance.setTemporaryLecture(nil, object: self)
-            self.tableView.deselectRow(at: self.tableView.indexPath(for: self)!, animated: true)
-            let index = self.indexInTimetable()
-            if index >= 0{
-                STTimetableManager.sharedInstance.deleteLectureAtIndex(index, object: self)
-            } else {
-                STTimetableManager.sharedInstance.addLecture(self.lecture!, object: self)
-            }
-            self.setAddButton()
-            self.tableView.performBatchUpdates(nil, completion: nil)
-        }
     }
     
     func setAddButton() {
         let index = indexInTimetable()
         if index < 0 {
-            addButtonLabel.text = "+ 추가하기"
+            addButton.titleLabel?.text = "+ 추가하기"
         } else {
-            addButtonLabel.text = "제거하기"
+            addButton.titleLabel?.text = "제거하기"
         }
         
     }

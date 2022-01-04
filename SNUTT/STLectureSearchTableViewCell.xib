@@ -116,24 +116,6 @@
                                         <action selector="showSyllabus:" destination="iN0-l3-epB" eventType="touchUpInside" id="f3T-bc-Qib"/>
                                     </connections>
                                 </button>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WnH-G6-1TC" customClass="STViewButton" customModule="SNUTT" customModuleProvider="target">
-                                    <rect key="frame" x="296" y="13.5" width="61" height="17"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+ 추가하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bxw-6j-sna">
-                                            <rect key="frame" x="0.0" y="0.0" width="57" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="color" keyPath="pressedBgColor">
-                                            <color key="value" white="0.0" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6E-fg-wxW">
                                     <rect key="frame" x="171.5" y="8.5" width="32" height="27"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -144,15 +126,23 @@
                                         <action selector="showReview:" destination="iN0-l3-epB" eventType="touchUpInside" id="LZX-pn-l7z"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="McI-n9-ymM" userLabel="Add Button">
+                                    <rect key="frame" x="301" y="8.5" width="53" height="27"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <state key="normal" title="+ 추가하기">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="add:" destination="iN0-l3-epB" eventType="touchUpInside" id="S0E-rn-4w5"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="WXD-nq-Kpw" firstAttribute="centerY" secondItem="Yit-hb-30N" secondAttribute="centerY" id="5Hi-gD-AgL"/>
-                                <constraint firstItem="WnH-G6-1TC" firstAttribute="top" secondItem="Yit-hb-30N" secondAttribute="top" constant="13.5" id="Eg8-Ge-lWy"/>
-                                <constraint firstItem="WnH-G6-1TC" firstAttribute="leading" secondItem="Yit-hb-30N" secondAttribute="leading" constant="296" id="M0f-Od-aU4"/>
+                                <constraint firstItem="McI-n9-ymM" firstAttribute="centerY" secondItem="Yit-hb-30N" secondAttribute="centerY" id="KAf-TP-vHv"/>
                                 <constraint firstItem="Z6E-fg-wxW" firstAttribute="centerY" secondItem="Yit-hb-30N" secondAttribute="centerY" id="QGU-kC-JcH"/>
                                 <constraint firstItem="WXD-nq-Kpw" firstAttribute="leading" secondItem="Yit-hb-30N" secondAttribute="leading" constant="21" id="ifF-Ow-FCn"/>
-                                <constraint firstItem="WnH-G6-1TC" firstAttribute="centerY" secondItem="Yit-hb-30N" secondAttribute="centerY" id="m5G-qP-fzh"/>
-                                <constraint firstAttribute="trailing" secondItem="WnH-G6-1TC" secondAttribute="trailing" constant="18" id="o9u-wn-1Ii"/>
+                                <constraint firstAttribute="trailing" secondItem="McI-n9-ymM" secondAttribute="trailing" constant="21" id="q4K-p4-McW"/>
                                 <constraint firstItem="Z6E-fg-wxW" firstAttribute="centerX" secondItem="Yit-hb-30N" secondAttribute="centerX" id="snB-d9-ZSb"/>
                             </constraints>
                         </view>
@@ -165,9 +155,7 @@
                         <constraint firstAttribute="bottom" secondItem="Yit-hb-30N" secondAttribute="bottom" id="a1t-Q1-WnL"/>
                         <constraint firstItem="Yit-hb-30N" firstAttribute="top" secondItem="2eP-RY-WV5" secondAttribute="bottom" id="bBp-rQ-toj"/>
                         <constraint firstAttribute="trailing" secondItem="Yit-hb-30N" secondAttribute="trailing" id="bJL-KP-Iej"/>
-                        <constraint firstAttribute="trailing" secondItem="Yit-hb-30N" secondAttribute="trailing" id="cHc-Bk-2tt"/>
                         <constraint firstAttribute="trailing" secondItem="2eP-RY-WV5" secondAttribute="trailing" id="gBg-xN-t6Y"/>
-                        <constraint firstItem="Yit-hb-30N" firstAttribute="leading" secondItem="CzV-ea-EQN" secondAttribute="leading" id="jSd-3b-3R0"/>
                     </constraints>
                 </view>
             </subviews>
@@ -181,8 +169,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="addButton" destination="WnH-G6-1TC" id="f3E-pK-0Z2"/>
-                <outlet property="addButtonLabel" destination="Bxw-6j-sna" id="bEV-Ev-FLK"/>
+                <outlet property="addButton" destination="McI-n9-ymM" id="u3z-ff-7D0"/>
                 <outlet property="containerView" destination="CzV-ea-EQN" id="bKY-hT-hzG"/>
                 <outlet property="descriptionLabel" destination="9XL-qV-5wF" id="Bb0-Ed-4Cb"/>
                 <outlet property="placeLabel" destination="i34-ak-vOJ" id="3mb-OA-bwS"/>
