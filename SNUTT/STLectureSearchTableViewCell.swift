@@ -100,9 +100,9 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     func setAddButton() {
         let index = indexInTimetable()
         if index < 0 {
-            addButton.titleLabel?.text = "+ 추가하기"
+            addButton.setTitle("+ 추가하기", for: .normal)
         } else {
-            addButton.titleLabel?.text = "제거하기"
+            addButton.setTitle("제거하기", for: .normal)
         }
         
     }
