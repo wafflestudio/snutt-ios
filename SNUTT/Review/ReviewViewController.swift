@@ -13,6 +13,9 @@ class ReviewViewController: UIViewController, WKUIDelegate {
     
     var webView: WKWebView!
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
