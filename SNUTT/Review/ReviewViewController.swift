@@ -14,19 +14,18 @@ class ReviewViewController: UIViewController, WKUIDelegate {
     var webView: WKWebView!
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
+        loadWebViews()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadWebViews()
     }
     
     private func loadWebViews() {
         let webConfiguration = WKWebViewConfiguration()
         let wkDataStore = WKWebsiteDataStore.nonPersistent()
         
-        let url = "https://apple.com"
+        let url = "https://dkm8g3eihm1nu.cloudfront.net/main"
         let myURL = URL(string: url)
         let myRequest = URLRequest(url: myURL!)
         
@@ -48,9 +47,9 @@ class ReviewViewController: UIViewController, WKUIDelegate {
             dispatchGroup.notify(queue: DispatchQueue.main) {
                 webConfiguration.websiteDataStore = wkDataStore
                 
-                self.webView = WKWebView(frame: .zero, configuration: webConfiguration)
+                self.webView = WKWebView(frame: CGRect(x: 20, y: 47, width: 388, height: 796), configuration: webConfiguration)
                 self.webView.uiDelegate = self
-                self.view = self.webView
+                self.webView.navigationDelegate = self
                 self.webView.load(myRequest)
             }
         }
@@ -65,7 +64,7 @@ class ReviewViewController: UIViewController, WKUIDelegate {
         }
         
         guard let apiKeyCookie = HTTPCookie(properties: [
-            .domain: "snutt.wafflestudio.com",
+            .domain: ".dkm8g3eihm1nu.cloudfront.net",
             .path: "/",
             .name: "x-access-apikey",
             .value: apiKey,
@@ -75,7 +74,7 @@ class ReviewViewController: UIViewController, WKUIDelegate {
         }
         
         guard let tokenCookie = HTTPCookie(properties: [
-            .domain: "snutt.wafflestudio.com",
+            .domain: ".dkm8g3eihm1nu.cloudfront.net",
             .path: "/",
             .name: "x-access-token",
             .value: token,
@@ -85,5 +84,48 @@ class ReviewViewController: UIViewController, WKUIDelegate {
         }
         
         return [apiKeyCookie, tokenCookie]
+    }
+    
+    private func addErrorView() {
+        let identifier = String(describing: ErrorView.self)
+        let nibs = Bundle.main.loadNibNamed(identifier, owner: self, options: nil)
+
+        guard let errorView = nibs?.first as? ErrorView else {
+            print("cannot load error view")
+            return
+        }
+        
+        view = errorView
+    }
+    
+    private func showNavbar() {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
+    private func hideNavbar() {
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    
+}
+
+extension ReviewViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print("욥욥")
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        print("에러 났따 얌마")
+        
+        DispatchQueue.main.async {
+            self.showNavbar()
+            self.addErrorView()
+        }
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        hideNavbar()
+        self.view = self.webView
+        print("끝났어용")
     }
 }

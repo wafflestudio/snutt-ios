@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="ErrorView" id="iN0-l3-epB" customClass="ErrorView" customModule="SNUTT" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="niZ-ll-tIN" userLabel="ErrorView">
+                    <rect key="frame" x="63" y="198" width="288" height="500"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="g2t-dS-qad">
+                            <rect key="frame" x="119" y="190" width="50" height="50"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="네트워크 연결을 확인해주세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDU-d2-oiW">
+                            <rect key="frame" x="43.5" y="260" width="201" height="21"/>
+                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="g2t-dS-qad" firstAttribute="top" secondItem="niZ-ll-tIN" secondAttribute="top" constant="190" id="3J3-SK-Jzq"/>
+                        <constraint firstItem="zDU-d2-oiW" firstAttribute="top" secondItem="g2t-dS-qad" secondAttribute="bottom" constant="20" id="JVa-FP-3ko"/>
+                        <constraint firstItem="zDU-d2-oiW" firstAttribute="centerX" secondItem="niZ-ll-tIN" secondAttribute="centerX" id="NwR-Sx-UkC"/>
+                        <constraint firstItem="g2t-dS-qad" firstAttribute="centerX" secondItem="niZ-ll-tIN" secondAttribute="centerX" id="Sha-Vd-Rvk"/>
+                        <constraint firstItem="zDU-d2-oiW" firstAttribute="centerX" secondItem="niZ-ll-tIN" secondAttribute="centerX" id="aNl-xb-G48"/>
+                        <constraint firstItem="g2t-dS-qad" firstAttribute="top" secondItem="niZ-ll-tIN" secondAttribute="top" constant="190" id="o6i-1W-wMf"/>
+                        <constraint firstItem="g2t-dS-qad" firstAttribute="centerX" secondItem="niZ-ll-tIN" secondAttribute="centerX" id="yTy-k8-ajG"/>
+                        <constraint firstItem="zDU-d2-oiW" firstAttribute="top" secondItem="g2t-dS-qad" secondAttribute="bottom" constant="20" id="zoJ-VL-jK3"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="niZ-ll-tIN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="63" id="5mk-ag-rUq"/>
+                <constraint firstItem="niZ-ll-tIN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="LUd-qq-f8b"/>
+                <constraint firstItem="niZ-ll-tIN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vcc-dw-xRr"/>
+                <constraint firstItem="niZ-ll-tIN" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="154" id="yC2-0r-Glc"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="117"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="warning" width="50" height="50"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
