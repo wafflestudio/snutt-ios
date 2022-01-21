@@ -792,7 +792,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Ze-X7-etd" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="review" selectedImage="reviewOn0.5x" id="lHI-2m-jug"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Cgb-zL-JZM">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Cgb-zL-JZM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -805,7 +805,7 @@
             </objects>
             <point key="canvasLocation" x="1221" y="-2464"/>
         </scene>
-        <!--강의평-->
+        <!--Review View Controller-->
         <scene sceneID="mx3-vH-CQW">
             <objects>
                 <viewController id="SBU-Fp-9dQ" customClass="ReviewViewController" customModule="SNUTT" customModuleProvider="target" sceneMemberID="viewController">
@@ -814,11 +814,21 @@
                         <viewControllerLayoutGuide type="bottom" id="mOq-mq-B23"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="V58-Mx-cel">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="475"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="강의평" id="jhi-gB-6jX"/>
+                    <navigationItem key="navigationItem" id="jhi-gB-6jX">
+                        <leftBarButtonItems>
+                            <barButtonItem title="Item" image="timetable_on" style="plain" id="Lic-fR-N17"/>
+                            <barButtonItem title="강의평" style="plain" id="VZ9-56-g9E">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="navbarTitle" destination="VZ9-56-g9E" id="Zog-eh-QHu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GqQ-1n-H57" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1763,6 +1773,7 @@
         <image name="tabSettingOn" width="30" height="30"/>
         <image name="tabTimetableOff" width="30" height="30"/>
         <image name="tabTimetableOn" width="30" height="30"/>
+        <image name="timetable_on" width="30" height="30"/>
         <image name="topbarListview" width="22" height="22"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

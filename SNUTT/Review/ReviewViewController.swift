@@ -14,14 +14,23 @@ class ReviewViewController: UIViewController, WKUIDelegate {
     var webView: WKWebView!
     
     override func viewWillAppear(_ animated: Bool) {
-        loadWebViews()
+//        loadWebViews()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadWebViews()
     }
     
+    @IBOutlet weak var navbarTitle: UIBarButtonItem! {
+        didSet {
+            navbarTitle.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AppleSDGothicNeo-Bold", size: 17)], for: .normal)
+        }
+    }
+ 
     private func loadWebViews() {
+        hideNavbar()
+        
         let webConfiguration = WKWebViewConfiguration()
         let wkDataStore = WKWebsiteDataStore.nonPersistent()
         
@@ -47,7 +56,7 @@ class ReviewViewController: UIViewController, WKUIDelegate {
             dispatchGroup.notify(queue: DispatchQueue.main) {
                 webConfiguration.websiteDataStore = wkDataStore
                 
-                self.webView = WKWebView(frame: CGRect(x: 20, y: 47, width: 388, height: 796), configuration: webConfiguration)
+                self.webView = WKWebView(frame: CGRect.zero, configuration: webConfiguration)
                 self.webView.uiDelegate = self
                 self.webView.navigationDelegate = self
                 self.webView.load(myRequest)
@@ -110,13 +119,7 @@ class ReviewViewController: UIViewController, WKUIDelegate {
 }
 
 extension ReviewViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        print("욥욥")
-    }
-    
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        print("에러 났따 얌마")
-        
         DispatchQueue.main.async {
             self.showNavbar()
             self.addErrorView()
@@ -126,6 +129,5 @@ extension ReviewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideNavbar()
         self.view = self.webView
-        print("끝났어용")
     }
 }
