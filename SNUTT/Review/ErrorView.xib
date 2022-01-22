@@ -16,27 +16,41 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="niZ-ll-tIN" userLabel="ErrorView">
-                    <rect key="frame" x="63" y="198" width="288" height="500"/>
+                    <rect key="frame" x="63" y="174" width="288" height="548"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="g2t-dS-qad">
-                            <rect key="frame" x="119" y="190" width="50" height="50"/>
+                            <rect key="frame" x="119" y="193.5" width="50" height="50"/>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPo-1u-UbI">
+                            <rect key="frame" x="99" y="314.5" width="90" height="30"/>
+                            <color key="backgroundColor" red="0.10588235294117647" green="0.81568627450980391" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="45u-sD-Yy9"/>
+                                <constraint firstAttribute="width" constant="90" id="uI0-Im-dPn"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="12"/>
+                            <state key="normal" title="다시 불러오기">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="retry:" destination="iN0-l3-epB" eventType="touchUpInside" id="cdZ-n8-I0F"/>
+                            </connections>
+                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="네트워크 연결을 확인해주세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDU-d2-oiW">
-                            <rect key="frame" x="43.5" y="260" width="201" height="21"/>
+                            <rect key="frame" x="43.5" y="263.5" width="201" height="21"/>
                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="g2t-dS-qad" firstAttribute="top" secondItem="niZ-ll-tIN" secondAttribute="top" constant="190" id="3J3-SK-Jzq"/>
-                        <constraint firstItem="zDU-d2-oiW" firstAttribute="top" secondItem="g2t-dS-qad" secondAttribute="bottom" constant="20" id="JVa-FP-3ko"/>
-                        <constraint firstItem="zDU-d2-oiW" firstAttribute="centerX" secondItem="niZ-ll-tIN" secondAttribute="centerX" id="NwR-Sx-UkC"/>
                         <constraint firstItem="g2t-dS-qad" firstAttribute="centerX" secondItem="niZ-ll-tIN" secondAttribute="centerX" id="Sha-Vd-Rvk"/>
-                        <constraint firstItem="zDU-d2-oiW" firstAttribute="centerX" secondItem="niZ-ll-tIN" secondAttribute="centerX" id="aNl-xb-G48"/>
-                        <constraint firstItem="g2t-dS-qad" firstAttribute="top" secondItem="niZ-ll-tIN" secondAttribute="top" constant="190" id="o6i-1W-wMf"/>
+                        <constraint firstItem="PPo-1u-UbI" firstAttribute="centerX" secondItem="niZ-ll-tIN" secondAttribute="centerX" id="aay-uT-0Ua"/>
+                        <constraint firstItem="zDU-d2-oiW" firstAttribute="centerY" secondItem="niZ-ll-tIN" secondAttribute="centerY" id="bpb-R8-2DY"/>
+                        <constraint firstItem="PPo-1u-UbI" firstAttribute="top" secondItem="zDU-d2-oiW" secondAttribute="bottom" constant="30" id="j79-ys-IXD"/>
+                        <constraint firstItem="zDU-d2-oiW" firstAttribute="centerX" secondItem="niZ-ll-tIN" secondAttribute="centerX" id="jSQ-5X-z6d"/>
+                        <constraint firstItem="zDU-d2-oiW" firstAttribute="top" secondItem="g2t-dS-qad" secondAttribute="bottom" constant="20" id="q4f-Hj-d1b"/>
                         <constraint firstItem="g2t-dS-qad" firstAttribute="centerX" secondItem="niZ-ll-tIN" secondAttribute="centerX" id="yTy-k8-ajG"/>
-                        <constraint firstItem="zDU-d2-oiW" firstAttribute="top" secondItem="g2t-dS-qad" secondAttribute="bottom" constant="20" id="zoJ-VL-jK3"/>
                     </constraints>
                 </view>
             </subviews>
@@ -46,9 +60,12 @@
                 <constraint firstItem="niZ-ll-tIN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="63" id="5mk-ag-rUq"/>
                 <constraint firstItem="niZ-ll-tIN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="LUd-qq-f8b"/>
                 <constraint firstItem="niZ-ll-tIN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vcc-dw-xRr"/>
-                <constraint firstItem="niZ-ll-tIN" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="154" id="yC2-0r-Glc"/>
+                <constraint firstItem="niZ-ll-tIN" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="130" id="yC2-0r-Glc"/>
             </constraints>
-            <point key="canvasLocation" x="139" y="117"/>
+            <connections>
+                <outlet property="retryButton" destination="PPo-1u-UbI" id="ndZ-9h-a5w"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="116.51785714285714"/>
         </view>
     </objects>
     <resources>

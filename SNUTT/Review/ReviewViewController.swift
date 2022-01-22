@@ -10,12 +10,9 @@ import UIKit
 import WebKit
 
 class ReviewViewController: UIViewController, WKUIDelegate {
-    
     var webView: WKWebView!
     
-    override func viewWillAppear(_ animated: Bool) {
-//        loadWebViews()
-    }
+    private let apiUri = "https://snutt-ev-web.wafflestudio.com"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +26,10 @@ class ReviewViewController: UIViewController, WKUIDelegate {
     }
  
     private func loadWebViews() {
-        hideNavbar()
-        
         let webConfiguration = WKWebViewConfiguration()
         let wkDataStore = WKWebsiteDataStore.nonPersistent()
         
-        let url = "https://dkm8g3eihm1nu.cloudfront.net/main"
+        let url = apiUri
         let myURL = URL(string: url)
         let myRequest = URLRequest(url: myURL!)
         
@@ -73,7 +68,7 @@ class ReviewViewController: UIViewController, WKUIDelegate {
         }
         
         guard let apiKeyCookie = HTTPCookie(properties: [
-            .domain: ".dkm8g3eihm1nu.cloudfront.net",
+            .domain: apiUri.replacingOccurrences(of: "https://", with: ""),
             .path: "/",
             .name: "x-access-apikey",
             .value: apiKey,
@@ -83,7 +78,7 @@ class ReviewViewController: UIViewController, WKUIDelegate {
         }
         
         guard let tokenCookie = HTTPCookie(properties: [
-            .domain: ".dkm8g3eihm1nu.cloudfront.net",
+            .domain: apiUri.replacingOccurrences(of: "https://", with: ""),
             .path: "/",
             .name: "x-access-token",
             .value: token,
@@ -104,6 +99,8 @@ class ReviewViewController: UIViewController, WKUIDelegate {
             return
         }
         
+        errorView.delegate = self
+        
         view = errorView
     }
     
@@ -114,20 +111,22 @@ class ReviewViewController: UIViewController, WKUIDelegate {
     private func hideNavbar() {
         self.navigationController?.isNavigationBarHidden = true
     }
-    
-    
 }
 
 extension ReviewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        DispatchQueue.main.async {
-            self.showNavbar()
-            self.addErrorView()
-        }
+        showNavbar()
+        addErrorView()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideNavbar()
         self.view = self.webView
+    }
+}
+
+extension ReviewViewController: ErrorViewDelegate {
+    func retry(_: ErrorView) {
+        loadWebViews()
     }
 }

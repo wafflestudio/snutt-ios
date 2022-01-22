@@ -8,14 +8,22 @@
 
 import UIKit
 
+protocol ErrorViewDelegate: AnyObject {
+    func retry(_: ErrorView)
+}
+
 class ErrorView: UIView {
+    
+    weak var delegate: ErrorViewDelegate?
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    @IBOutlet weak var retryButton: UIButton! {
+        didSet {
+            retryButton.layer.cornerRadius = 8
+            retryButton.contentVerticalAlignment = .center
+        }
     }
-    */
-
+    
+    @IBAction func retry(_ sender: UIButton) {
+        delegate?.retry(self)
+    }
 }
