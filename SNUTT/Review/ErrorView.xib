@@ -18,8 +18,8 @@
                 <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="niZ-ll-tIN" userLabel="ErrorView">
                     <rect key="frame" x="63" y="174" width="288" height="548"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="g2t-dS-qad">
-                            <rect key="frame" x="119" y="193.5" width="50" height="50"/>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning_cat" translatesAutoresizingMaskIntoConstraints="NO" id="g2t-dS-qad">
+                            <rect key="frame" x="117.5" y="185" width="53.5" height="58.5"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPo-1u-UbI">
                             <rect key="frame" x="99" y="314.5" width="90" height="30"/>
@@ -69,7 +69,7 @@
         </view>
     </objects>
     <resources>
-        <image name="warning" width="50" height="50"/>
+        <image name="warning_cat" width="53.5" height="58.5"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
