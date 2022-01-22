@@ -12,6 +12,7 @@
 		DC20CF3526B4768100F31830 /* ThemeSettingCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */; };
 		DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */; };
 		DC2BFCD526934DF9007C3F79 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */; };
+		DC332C21279AFB2C005B3D83 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC332C20279AFB2C005B3D83 /* ErrorView.swift */; };
 		DC39728F26B4490800187DFC /* ThemeSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC39728D26B4490800187DFC /* ThemeSettingViewController.swift */; };
 		DC39729026B4490800187DFC /* ThemeSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC39728E26B4490800187DFC /* ThemeSettingViewController.xib */; };
 		DC4D9F9F26A5D3A2000EA8F9 /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */; };
@@ -25,8 +26,10 @@
 		DC5B8CD726905CB40085268B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B8CD626905CB40085268B /* MenuViewController.swift */; };
 		DC6CD12326959A6600B3869F /* TimetablePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6CD12126959A6600B3869F /* TimetablePickerViewController.swift */; };
 		DC6CD12426959A6600B3869F /* TimetablePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC6CD12226959A6600B3869F /* TimetablePickerViewController.xib */; };
+		DCA2FA2B2798576400D8A6FC /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCA2FA2A2798576400D8A6FC /* ErrorView.xib */; };
 		DCA8D3312695D9E90009AA7A /* MenuTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA8D3302695D9E90009AA7A /* MenuTableViewHeaderView.swift */; };
 		DCA8D3482695DD1E0009AA7A /* MenuTableViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCA8D3472695DD1E0009AA7A /* MenuTableViewHeaderView.xib */; };
+		DCCFE8F12789BED80074BCA6 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCFE8F02789BED80074BCA6 /* ReviewViewController.swift */; };
 		E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C61B4CCD16006FD8B3 /* STLecture.swift */; };
 		E10852C91B4CCD16006FD8B3 /* STTimetableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */; };
 		E109CC791C3E8C050050399A /* STTimetableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109CC781C3E8C050050399A /* STTimetableListController.swift */; };
@@ -235,6 +238,7 @@
 		DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeSettingCollectionViewCell.xib; sourceTree = "<group>"; };
 		DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		DC2BFCD326934DF9007C3F79 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
+		DC332C20279AFB2C005B3D83 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		DC39728D26B4490800187DFC /* ThemeSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingViewController.swift; sourceTree = "<group>"; };
 		DC39728E26B4490800187DFC /* ThemeSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeSettingViewController.xib; sourceTree = "<group>"; };
 		DC4D9F9D26A5D3A2000EA8F9 /* SearchFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterViewController.swift; sourceTree = "<group>"; };
@@ -250,8 +254,10 @@
 		DC6CD12226959A6600B3869F /* TimetablePickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetablePickerViewController.xib; sourceTree = "<group>"; };
 		DC822D7F26426E3300D57D58 /* SNUTTRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTRelease.entitlements; sourceTree = "<group>"; };
 		DC822DA426428D2B00D57D58 /* SNUTTDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTDebug.entitlements; sourceTree = "<group>"; };
+		DCA2FA2A2798576400D8A6FC /* ErrorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
 		DCA8D3302695D9E90009AA7A /* MenuTableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewHeaderView.swift; sourceTree = "<group>"; };
 		DCA8D3472695DD1E0009AA7A /* MenuTableViewHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewHeaderView.xib; sourceTree = "<group>"; };
+		DCCFE8F02789BED80074BCA6 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 		E0B8ADB76AB6B75793967316 /* Pods-SNUTT Today.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.production.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.production.xcconfig"; sourceTree = "<group>"; };
 		E10852C61B4CCD16006FD8B3 /* STLecture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STLecture.swift; sourceTree = "<group>"; };
 		E10852C71B4CCD16006FD8B3 /* STTimetableCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STTimetableCollectionView.swift; sourceTree = "<group>"; };
@@ -480,6 +486,16 @@
 			name = Menu;
 			sourceTree = "<group>";
 		};
+		DCCFE8EF2789BEAB0074BCA6 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				DCCFE8F02789BED80074BCA6 /* ReviewViewController.swift */,
+				DCA2FA2A2798576400D8A6FC /* ErrorView.xib */,
+				DC332C20279AFB2C005B3D83 /* ErrorView.swift */,
+			);
+			path = Review;
+			sourceTree = "<group>";
+		};
 		E110CFCF1C883DB300ED0590 /* Notification */ = {
 			isa = PBXGroup;
 			children = (
@@ -666,6 +682,7 @@
 		E1C28B191B9C4B7B00B8C493 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DCCFE8EF2789BEAB0074BCA6 /* Review */,
 				DC39728C26B448C400187DFC /* Theme */,
 				DC5B8CD526905C890085268B /* Menu */,
 				E1F946211DB449A200CC8AF6 /* MyLectureList */,
@@ -955,6 +972,7 @@
 				E1F58AA81C3CFA6400F6A0FC /* STCourseCellCollectionViewCell.xib in Resources */,
 				E1534D511F12316000CEE1D2 /* STLeftAlignedTextFieldCell.xib in Resources */,
 				E1773CB01C959B5300AF36AF /* FB_logo_white.png in Resources */,
+				DCA2FA2B2798576400D8A6FC /* ErrorView.xib in Resources */,
 				E14DF21E1C3FB7820076FDDE /* STLectureTableViewCell.xib in Resources */,
 				E19A3AA01B453770007FCAD7 /* Main.storyboard in Resources */,
 				E1CD92671E46E96800AF5FE4 /* STTagFilterCollectionViewCell.xib in Resources */,
@@ -1181,6 +1199,7 @@
 				DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */,
 				E1773CB41C95B05800AF36AF /* STLoginViewController.swift in Sources */,
 				E110CFDF1C88916400ED0590 /* STTagRouter.swift in Sources */,
+				DCCFE8F12789BED80074BCA6 /* ReviewViewController.swift in Sources */,
 				E16A88511C9F97EB003D94AB /* STLicenseViewController.swift in Sources */,
 				E11902E91CCE44E7002436B9 /* STLectureDetailTableViewCell.swift in Sources */,
 				E14991FF1C46387600DC6756 /* STAuthRouter.swift in Sources */,
@@ -1194,6 +1213,7 @@
 				E1C48BB41C79CAE800BC469E /* STPeriod.swift in Sources */,
 				E1A99D8F1CB0FE1800953A4B /* STUser.swift in Sources */,
 				E16643511B4623BB00387EF8 /* STTimetableLayout.swift in Sources */,
+				DC332C21279AFB2C005B3D83 /* ErrorView.swift in Sources */,
 				E14DF2141C3F71A70076FDDE /* STTimetableAddController.swift in Sources */,
 				E110CFE11C8C017E00ED0590 /* STTagList.swift in Sources */,
 				DC39728F26B4490800187DFC /* ThemeSettingViewController.swift in Sources */,
