@@ -1680,7 +1680,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이메일 (옵션)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sv5-7I-edr" customClass="B68UIFloatLabelTextField" customModule="B68UIFloatLabelTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이메일" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sv5-7I-edr" customClass="B68UIFloatLabelTextField" customModule="B68UIFloatLabelTextField">
                                 <rect key="frame" x="20" y="52" width="280" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="82l-Hr-87x"/>
