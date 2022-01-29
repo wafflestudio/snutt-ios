@@ -69,6 +69,7 @@ class MenuViewController: UIViewController {
         registerCellXib()
         registerHeaderView()
         
+        fetchCurrentTimetable()
         fetchTablelist()
         
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(self.reloadList), event: STEvent.CourseBookUpdated, object: nil)
@@ -328,5 +329,15 @@ extension MenuViewController: SettingViewControllerDelegate {
         } failure: {
             STAlertView.showAlert(title: "시간표 삭제 실패", message: "")
         }
+    }
+}
+
+extension MenuViewController {
+    private func fetchCurrentTimetable() {
+        STNetworking.getRecentTimetable({ timetable in
+            STTimetableManager.sharedInstance.currentTimetable = timetable
+        }, failure: {
+            STAlertView.showAlert(title: "시간표 로딩 실패", message: "시간표가 서버에 존재하지 않습니다.")
+        })
     }
 }
