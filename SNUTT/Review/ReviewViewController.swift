@@ -16,6 +16,7 @@ class ReviewViewController: UIViewController, WKUIDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideNavbar()
         loadWebViews()
     }
     
@@ -24,7 +25,7 @@ class ReviewViewController: UIViewController, WKUIDelegate {
             navbarTitle.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AppleSDGothicNeo-Bold", size: 17)], for: .normal)
         }
     }
- 
+    
     private func loadWebViews() {
         let webConfiguration = WKWebViewConfiguration()
         let wkDataStore = WKWebsiteDataStore.nonPersistent()
@@ -93,7 +94,7 @@ class ReviewViewController: UIViewController, WKUIDelegate {
     private func addErrorView() {
         let identifier = String(describing: ErrorView.self)
         let nibs = Bundle.main.loadNibNamed(identifier, owner: self, options: nil)
-
+        
         guard let errorView = nibs?.first as? ErrorView else {
             print("cannot load error view")
             return
@@ -101,7 +102,15 @@ class ReviewViewController: UIViewController, WKUIDelegate {
         
         errorView.delegate = self
         
-        view = errorView
+        self.view.addSubview(errorView)
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            errorView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            errorView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            errorView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            errorView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
     }
     
     private func showNavbar() {
@@ -110,6 +119,20 @@ class ReviewViewController: UIViewController, WKUIDelegate {
     
     private func hideNavbar() {
         self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    private func addWebview() {
+        self.view.addSubview(webView)
+        
+        webView.scrollView.bounces = false
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
     }
 }
 
@@ -121,7 +144,7 @@ extension ReviewViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideNavbar()
-        self.view = self.webView
+        addWebview()
     }
 }
 
