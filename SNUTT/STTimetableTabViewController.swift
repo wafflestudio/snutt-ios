@@ -48,6 +48,8 @@ class STTimetableTabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fetchCurrentTimetable()
+        
         // Add tap recognizer to title in NavigationBar
         let titleView = UILabel()
         titleView.text = currentTimetable?.title ?? ""
@@ -486,6 +488,16 @@ extension STTimetableTabViewController: MenuViewControllerDelegate {
                 
             }
         }
+    }
+}
+
+extension STTimetableTabViewController {
+    private func fetchCurrentTimetable() {
+        STNetworking.getRecentTimetable({ timetable in
+            STTimetableManager.sharedInstance.currentTimetable = timetable
+        }, failure: {
+            STAlertView.showAlert(title: "시간표 로딩 실패", message: "시간표가 서버에 존재하지 않습니다.")
+        })
     }
 }
 
