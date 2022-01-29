@@ -102,7 +102,15 @@ class ReviewViewController: UIViewController, WKUIDelegate {
         
         errorView.delegate = self
         
-        view = errorView
+        self.view.addSubview(errorView)
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            errorView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            errorView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            errorView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            errorView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
     }
     
     private func showNavbar() {
