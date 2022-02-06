@@ -178,4 +178,12 @@ extension ReviewViewController {
     func setIdForLoadDetailView(with id: String) {
         idForLoadDetailView = id
     }
+    
+    func loadMainView() {
+        let url = apiUri
+        let myURL = URL(string: url)
+        let myRequest = URLRequest(url: myURL!)
+        
+        webView.load(myRequest)
+    }
 }
