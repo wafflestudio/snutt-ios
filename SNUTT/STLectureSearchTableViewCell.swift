@@ -27,7 +27,22 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     }
     
     @IBAction func showReview(_ sender: UIButton) {
-        STAlertView.showAlert(title: "준비중입니다", message: "")
+        guard let lecture = lecture else {
+            print("Error: lecure is nil")
+            return
+        }
+        
+        guard let courseNumber = lecture.courseNumber else {
+            print("Error: course number is nil")
+            return
+        }
+        
+        STNetworking.getReviewIdFromLecture(courseNumber, lecture.instructor) { id in
+            self.moveToReviewDetail?(id)
+            
+        } failure: {
+            STAlertView.showAlert(title: "", message: "강의평을 찾을 수 없습니다")
+        }
     }
     
     @IBAction func add(_ sender: UIButton) {
@@ -45,6 +60,8 @@ class STLectureSearchTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     @IBOutlet weak var reviewButton: UIButton!
     @IBOutlet weak var syllabusButton: UIButton!
+    
+    var moveToReviewDetail: ((_ withId: String) -> Void)?
     
     private func openSyllabus() {
         if let url = syllabusUrl {

@@ -12,12 +12,20 @@ import WebKit
 class ReviewViewController: UIViewController, WKUIDelegate {
     var webView: WKWebView!
     
-    private let apiUri = "https://snutt-ev-web.wafflestudio.com"
+    private let apiUri = "https://snutt-ev-web-dev.wafflestudio.com"
+    
+    private var idForLoadDetailView: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         hideNavbar()
-        loadWebViews()
+        
+        if let id = idForLoadDetailView {
+            loadWebViews(withApiUrl: apiUri + "/detail/?id=\(id)")
+        } else {
+            loadWebViews(withApiUrl: apiUri)
+        }
     }
     
     @IBOutlet weak var navbarTitle: UIBarButtonItem! {
@@ -26,11 +34,11 @@ class ReviewViewController: UIViewController, WKUIDelegate {
         }
     }
     
-    private func loadWebViews() {
+    private func loadWebViews(withApiUrl: String) {
         let webConfiguration = WKWebViewConfiguration()
         let wkDataStore = WKWebsiteDataStore.nonPersistent()
         
-        let url = apiUri
+        let url = withApiUrl
         let myURL = URL(string: url)
         let myRequest = URLRequest(url: myURL!)
         
@@ -150,6 +158,24 @@ extension ReviewViewController: WKNavigationDelegate {
 
 extension ReviewViewController: ErrorViewDelegate {
     func retry(_: ErrorView) {
-        loadWebViews()
+        if let id = idForLoadDetailView {
+            loadWebViews(withApiUrl: apiUri + "/detail/\(id)")
+        } else {
+            loadWebViews(withApiUrl: apiUri)
+        }
+    }
+}
+
+extension ReviewViewController {
+    func loadDetailView(withId id: String) {
+        let url = apiUri + "/detail/?id=\(id)"
+        let myURL = URL(string: url)
+        let myRequest = URLRequest(url: myURL!)
+        
+        webView.load(myRequest)
+    }
+    
+    func setIdForLoadDetailView(with id: String) {
+        idForLoadDetailView = id
     }
 }

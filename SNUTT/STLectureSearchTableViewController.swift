@@ -264,6 +264,8 @@ class STLectureSearchTableViewController: UIViewController,UITableViewDelegate, 
         cell.tableView = tableView
         cell.quarter = STTimetableManager.sharedInstance.currentTimetable?.quarter
         
+        cell.moveToReviewDetail = moveToReviewDetail
+        
         return cell
     }
     
@@ -529,6 +531,20 @@ extension STLectureSearchTableViewController: SearchFilterViewControllerDelegate
             } completion: { finished in
                 self.filterViewState = .closed
                 self.removeGestureRecognizersInFilter()
+            }
+        }
+    }
+}
+
+extension STLectureSearchTableViewController {
+    private func moveToReviewDetail(withId id: String) {
+        self.tabBarController?.selectedIndex = 2
+        if let reviewNC = self.tabBarController?.viewControllers?[2] as? UINavigationController, let reviewVC = reviewNC.topViewController as? ReviewViewController {
+            
+            if (reviewVC.isViewLoaded) {
+                reviewVC.loadDetailView(withId: id)
+            } else {
+                reviewVC.setIdForLoadDetailView(with: id)
             }
         }
     }

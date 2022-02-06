@@ -26,6 +26,8 @@
 		DC5B8CD726905CB40085268B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B8CD626905CB40085268B /* MenuViewController.swift */; };
 		DC6CD12326959A6600B3869F /* TimetablePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6CD12126959A6600B3869F /* TimetablePickerViewController.swift */; };
 		DC6CD12426959A6600B3869F /* TimetablePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC6CD12226959A6600B3869F /* TimetablePickerViewController.xib */; };
+		DC9C04C227AFCEF400569F79 /* STNetworking+ev.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C04C127AFCEF400569F79 /* STNetworking+ev.swift */; };
+		DC9C04C427AFCFCE00569F79 /* STTimetableRouter+ev.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C04C327AFCFCE00569F79 /* STTimetableRouter+ev.swift */; };
 		DCA2FA2B2798576400D8A6FC /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCA2FA2A2798576400D8A6FC /* ErrorView.xib */; };
 		DCA8D3312695D9E90009AA7A /* MenuTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA8D3302695D9E90009AA7A /* MenuTableViewHeaderView.swift */; };
 		DCA8D3482695DD1E0009AA7A /* MenuTableViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCA8D3472695DD1E0009AA7A /* MenuTableViewHeaderView.xib */; };
@@ -254,6 +256,8 @@
 		DC6CD12226959A6600B3869F /* TimetablePickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetablePickerViewController.xib; sourceTree = "<group>"; };
 		DC822D7F26426E3300D57D58 /* SNUTTRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTRelease.entitlements; sourceTree = "<group>"; };
 		DC822DA426428D2B00D57D58 /* SNUTTDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTDebug.entitlements; sourceTree = "<group>"; };
+		DC9C04C127AFCEF400569F79 /* STNetworking+ev.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "STNetworking+ev.swift"; sourceTree = "<group>"; };
+		DC9C04C327AFCFCE00569F79 /* STTimetableRouter+ev.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "STTimetableRouter+ev.swift"; sourceTree = "<group>"; };
 		DCA2FA2A2798576400D8A6FC /* ErrorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
 		DCA8D3302695D9E90009AA7A /* MenuTableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewHeaderView.swift; sourceTree = "<group>"; };
 		DCA8D3472695DD1E0009AA7A /* MenuTableViewHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewHeaderView.xib; sourceTree = "<group>"; };
@@ -486,6 +490,15 @@
 			name = Menu;
 			sourceTree = "<group>";
 		};
+		DC9C04C027AFCE7400569F79 /* SNUTT-ev */ = {
+			isa = PBXGroup;
+			children = (
+				DC9C04C127AFCEF400569F79 /* STNetworking+ev.swift */,
+				DC9C04C327AFCFCE00569F79 /* STTimetableRouter+ev.swift */,
+			);
+			name = "SNUTT-ev";
+			sourceTree = "<group>";
+		};
 		DCCFE8EF2789BEAB0074BCA6 /* Review */ = {
 			isa = PBXGroup;
 			children = (
@@ -514,7 +527,6 @@
 				E1F58AA51C3CF0E600F6A0FC /* STTimetableManager.swift */,
 				E14DF2171C3F914E0076FDDE /* STCourseBookList.swift */,
 				E1E99A6A1C423CDB004A426A /* STEventCenter.swift */,
-				E14991FC1C46241700DC6756 /* STConfig.swift */,
 				E1B381A81C6C52D9007E1A15 /* STUtil.swift */,
 				E110CFDA1C888F5700ED0590 /* STTagManager.swift */,
 				E1EE1B301CCCDE20003DF250 /* STDefaults.swift */,
@@ -528,6 +540,7 @@
 		E14992031C46418800DC6756 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				DC9C04C027AFCE7400569F79 /* SNUTT-ev */,
 				E14991FE1C46387600DC6756 /* STAuthRouter.swift */,
 				E14992001C463AC600DC6756 /* STTimetableRouter.swift */,
 				E14992081C4B828500DC6756 /* STSwiftyJSONRequest.swift */,
@@ -538,6 +551,7 @@
 				E133794E1D41E26C00AD10F4 /* STRouter.swift */,
 				E17825CC1D577CD8009ACEC3 /* STNotificationRouter.swift */,
 				E1EF8B2F1D6D640100791778 /* STUserRouter.swift */,
+				E14991FC1C46241700DC6756 /* STConfig.swift */,
 				E1420B941D769D0400D1B6F7 /* STCourseBookRouter.swift */,
 				E168FA2F1E3F037B004F933A /* STErrorCode.swift */,
 				E13CBA8B1E4D492E006B2364 /* STEtcRouter.swift */,
@@ -1171,6 +1185,7 @@
 				E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */,
 				E16A88551C9FC460003D94AB /* STDeveloperViewController.swift in Sources */,
 				E1799E881D8E28D20014794F /* STMainTabBarController.swift in Sources */,
+				DC9C04C427AFCFCE00569F79 /* STTimetableRouter+ev.swift in Sources */,
 				E1C48B971C79BA4100BC469E /* STTimeActionSheetPicker.swift in Sources */,
 				E1C48B991C79BDD300BC469E /* STSemester.swift in Sources */,
 				E1EE1B331CCDAAB6003DF250 /* STPaddingTableViewCell.swift in Sources */,
@@ -1190,6 +1205,7 @@
 				E1C48BB01C79C45500BC469E /* STQuarter.swift in Sources */,
 				E16643551B4630B500387EF8 /* STColumnHeaderCollectionViewCell.swift in Sources */,
 				E1C48B941C787A3C00BC469E /* STSingleClassTableViewCell.swift in Sources */,
+				DC9C04C227AFCEF400569F79 /* STNetworking+ev.swift in Sources */,
 				E14DF2201C3FBB0E0076FDDE /* STLectureTableViewCell.swift in Sources */,
 				E1130AD91E7C38DD00ADE84F /* STColorManager.swift in Sources */,
 				E1CD926A1E46EAE100AF5FE4 /* STTagFilterCollectionViewCell.swift in Sources */,
@@ -1476,7 +1492,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1484,7 +1500,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" ";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1508,7 +1524,7 @@
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTTRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1516,7 +1532,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1647,7 +1663,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1655,7 +1671,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1705,7 +1721,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				ENABLE_TESTABILITY = YES;
@@ -1721,7 +1737,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "com.wafflestudio.snutt.SNUTT-Today development";
@@ -1744,7 +1760,7 @@
 				CODE_SIGN_ENTITLEMENTS = "SNUTT Today/SNUTT Today.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1758,7 +1774,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "com.wafflestudio.snutt.SNUTT-Today distribution";
@@ -1783,7 +1799,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1797,7 +1813,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "com.wafflestudio.snutt.SNUTT-Today distribution";
