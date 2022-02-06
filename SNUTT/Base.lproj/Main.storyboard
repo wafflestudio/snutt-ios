@@ -1696,9 +1696,9 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="84x-fu-U08"/>
                                 <exclude reference="dyR-5E-sVm"/>
                                 <exclude reference="Qk6-Q8-TTw"/>
-                                <exclude reference="84x-fu-U08"/>
                             </mask>
                         </variation>
                     </view>
