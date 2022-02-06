@@ -14,12 +14,16 @@ class STMainTabBarController: UITabBarController {
     
     weak var notificationController : STNotificationTableViewController? = nil
     
+    private var reviewTabBarItem: UITabBarItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         STMainTabBarController.controller = self
         for item in self.tabBar.items! {
             item.image = item.image!.withRenderingMode(.alwaysOriginal)
         }
+        
+        reviewTabBarItem = tabBar.items![2]
     }
     
     override func didReceiveMemoryWarning() {
@@ -28,9 +32,7 @@ class STMainTabBarController: UITabBarController {
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        let reviewTabIndex = 2
-        
-        if self.selectedIndex == reviewTabIndex {
+        if item == reviewTabBarItem {
             if let navVC = self.viewControllers?[self.selectedIndex] as? UINavigationController, let reviewVC = navVC.viewControllers.first as? ReviewViewController {
                 reviewVC.loadMainView()
             }
