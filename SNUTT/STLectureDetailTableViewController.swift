@@ -101,6 +101,8 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
                 return .syllabusButton
             }
         case (4, 0):
+            return .reviewDetailButton
+        case (5, 0):
             return .deleteButton
         default: return .padding // Never Reach
         }
@@ -110,7 +112,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         if custom {
             return editable ? 3 : 4
         } else {
-            return editable ? 4 : 5
+            return editable ? 4 : 6
         }
     }
     
@@ -138,6 +140,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
             case 2: return currentLecture.classList.count + 2
             case 3: return 1
             case 4: return 1
+            case 5: return 1
             default: return 0
             }
         }

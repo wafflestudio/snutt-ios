@@ -16,7 +16,7 @@ class STSingleLectureTableViewController: UITableViewController {
     var currentLecture : STLecture = STLecture()
     var theme: STTheme?
     var sectionForSingleClass : Int = 4
-
+    
     enum LectureAttributes {
         case title
         case instructor
@@ -27,7 +27,7 @@ class STSingleLectureTableViewController: UITableViewController {
         case category
         case courseNum
         case lectureNum
-
+        
         var titleName : String {
             switch self {
             case .title: return "lecture_title".localizedString()
@@ -42,9 +42,9 @@ class STSingleLectureTableViewController: UITableViewController {
             }
         }
     }
-
-
-
+    
+    
+    
     func doneBlockFor(attribute : LectureAttributes) -> (String)->() {
         return { (str: String) -> Void in
             switch attribute {
@@ -64,7 +64,7 @@ class STSingleLectureTableViewController: UITableViewController {
             }
         }
     }
-
+    
     func initialValueFor(attribute: LectureAttributes) -> String {
         switch attribute {
         case .title: return currentLecture.title
@@ -78,7 +78,7 @@ class STSingleLectureTableViewController: UITableViewController {
         case .lectureNum: return currentLecture.lectureNumber ?? ""
         }
     }
-
+    
     enum CellViewType {
         case leftAligned(title: String, doneBlock: (String)->(), initialValue: String)
         case colorPick
@@ -99,7 +99,7 @@ class STSingleLectureTableViewController: UITableViewController {
             case .button: return "ButtonCell"
             }
         }
-
+        
     }
     
     enum CellType {
@@ -113,7 +113,8 @@ class STSingleLectureTableViewController: UITableViewController {
         case resetButton
         case syllabusButton
         case deleteButton
-
+        case reviewDetailButton
+        
         var simpleCellViewType : CellViewType {
             switch self {
             case let .editLecture(attribute): return .leftAligned(title: "", doneBlock: { _ in return }, initialValue: "")
@@ -121,14 +122,14 @@ class STSingleLectureTableViewController: UITableViewController {
             case .remark: return .textView(title: "")
             case .singleClass: return .singleClass
             case .padding: return .padding
-            case .addButton, .resetButton, .syllabusButton, .deleteButton:
+            case .addButton, .resetButton, .syllabusButton, .deleteButton, .reviewDetailButton:
                 return .button(title: "", color: UIColor.black, onClick: {  })
             case .singleClassTitle:
                 return .leftAlignedLabel(string: "")
             }
         }
     }
-
+    
     func getCellViewTypeFrom(cellType: CellType) -> CellViewType {
         switch cellType {
         case let .editLecture(attribute):
@@ -143,6 +144,19 @@ class STSingleLectureTableViewController: UITableViewController {
             return .leftAlignedLabel(string: "시간 및 장소")
         case .padding:
             return .padding
+        case .reviewDetailButton:
+            return .button(title: "강의평", color: UIColor.black, onClick: {
+                if let courseNumber = self.currentLecture.courseNumber {
+                    STNetworking.getReviewIdFromLecture(courseNumber, self.currentLecture.instructor) { id in
+                        self.moveToReviewDetail(withId: id)
+                        
+                    } failure: {
+                        STAlertView.showAlert(title: "", message: "강의평을 찾을 수 없습니다")
+                    }
+                } else {
+                    STAlertView.showAlert(title: "", message: "강의평을 찾을 수 없습니다")
+                }
+            })
         case .addButton:
             return .button(title: "+ 시간 추가", color: UIColor.black, onClick: { 
                 self.currentLecture.classList.append(STSingleClass(time: STTime(day: 0, startPeriod: 0.0, duration: 1.0), place: ""))
@@ -202,33 +216,33 @@ class STSingleLectureTableViewController: UITableViewController {
                 STAlertView.showAlert(title: "강좌 삭제", message: "강좌를 삭제하시겠습니까?", actions: actions)
             })
         }
-
+        
     }
-
+    
     func cellTypeAtIndexPath(_ indexPath : IndexPath) -> CellType {
         return .padding // should override
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.register(UINib(nibName: "STLeftAlignedTextFieldCell", bundle: Bundle.main),
                            forCellReuseIdentifier: CellViewType.leftAligned(title: "", doneBlock: {_ in return }, initialValue: "").identifier)
         tableView.register(UINib(nibName: "STLeftAlignedLabelCell", bundle: Bundle.main), forCellReuseIdentifier: CellViewType.leftAlignedLabel(string: "").identifier)
         tableView.register(UINib(nibName: "STColorPickTableViewCell", bundle: Bundle.main),
-                              forCellReuseIdentifier: CellViewType.colorPick.identifier)
+                           forCellReuseIdentifier: CellViewType.colorPick.identifier)
         tableView.register(UINib(nibName: "STSingleClassTableViewCell", bundle: Bundle.main),
-                              forCellReuseIdentifier: CellViewType.singleClass.identifier)
+                           forCellReuseIdentifier: CellViewType.singleClass.identifier)
         tableView.register(UINib(nibName: "STSingleLectureButtonCell", bundle: Bundle.main),
                            forCellReuseIdentifier: CellViewType.button(title: "", color: UIColor.black, onClick: {  return }).identifier)
         tableView.register(UINib(nibName: "STTextViewTableViewCell", bundle: Bundle.main),
-                              forCellReuseIdentifier: CellViewType.textView(title: "").identifier)
+                           forCellReuseIdentifier: CellViewType.textView(title: "").identifier)
         tableView.register(STPaddingTableViewCell.self, forCellReuseIdentifier: CellViewType.padding.identifier)
-
+        
         textviewCell = UINib(nibName: "STTextViewTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil)[0] as! STTextViewTableViewCell
-
+        
         self.tableView.backgroundColor = UIColor(white: 0.97, alpha: 1.0)
-
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(STSingleLectureTableViewController.dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tapGesture)
@@ -325,9 +339,9 @@ class STSingleLectureTableViewController: UITableViewController {
             return cell
         }
     }
-
+    
     var textviewCell : STTextViewTableViewCell!
-
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cellType = cellTypeAtIndexPath(indexPath)
         if case CellType.remark = cellType {
@@ -382,29 +396,43 @@ class STSingleLectureTableViewController: UITableViewController {
     }
     
     /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
-    return true
-    }
-    */
+     // Override to support rearranging the table view.
+     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+     
+     }
+     */
     
     /*
-    // MARK: - Navigation
+     // Override to support conditional rearranging of the table view.
+     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+     // Return NO if you do not want the item to be re-orderable.
+     return true
+     }
+     */
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using [segue destinationViewController].
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
+    
+}
+
+extension STSingleLectureTableViewController {
+    private func moveToReviewDetail(withId id: String) {
+        self.tabBarController?.selectedIndex = 2
+        if let reviewNC = self.tabBarController?.viewControllers?[2] as? UINavigationController, let reviewVC = reviewNC.topViewController as? ReviewViewController {
+            
+            if (reviewVC.isViewLoaded) {
+                reviewVC.loadDetailView(withId: id)
+            } else {
+                reviewVC.setIdForLoadDetailView(with: id)
+            }
+        }
     }
-    */
-
-
 }
