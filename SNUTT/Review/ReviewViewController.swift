@@ -12,7 +12,7 @@ import WebKit
 class ReviewViewController: UIViewController, WKUIDelegate {
     var webView: WKWebView!
     
-    private let apiUri = "https://snutt-ev-web-dev.wafflestudio.com"
+    private let apiUri = STDefaults[.snuevWebUrl]
     
     private var idForLoadDetailView: String?
     

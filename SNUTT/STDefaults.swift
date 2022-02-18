@@ -23,6 +23,7 @@ extension DefaultsKeys {
     static let currentTimetable = DefaultsKey<NSDictionary?>("currentTimetable")
     static let shouldDeleteFCMInfos = DefaultsKey<STFCMInfoList?>("shouldDeleteFCMInfos")
     static let colorList = DefaultsKey<STColorList?>("colorList")
+    static let snuevWebUrl = DefaultsKey<String>("snuevWebUrl")
 }
 
 extension UserDefaults {
