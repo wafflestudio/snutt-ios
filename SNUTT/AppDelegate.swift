@@ -122,6 +122,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setColors() {
         UINavigationBar.appearance().tintColor = UIColor.black
         UITabBar.appearance().tintColor = UIColor.black
+        
+        window?.backgroundColor = .systemBackground
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
