@@ -8,41 +8,38 @@
 
 import Foundation
 
-enum STEvent : String {
-    case CurrentTimetableSwitched = "CurrentTimetableSwitched"
-    case CurrentTimetableChanged = "CurrentTimetableChanged"
-    case CurrentTemporaryLectureChanged = "CurrentTemporaryLectureChanged"
-    case SettingChanged = "SettingChanged"
-    case CourseBookUpdated = "CourseBookUpdated"
-    case TagListUpdated = "TagListUpdated"
-    case UserUpdated = "UserUpdated"
-    case ColorListUpdated = "ColorListUpdated"
+enum STEvent: String {
+    case CurrentTimetableSwitched
+    case CurrentTimetableChanged
+    case CurrentTemporaryLectureChanged
+    case SettingChanged
+    case CourseBookUpdated
+    case TagListUpdated
+    case UserUpdated
+    case ColorListUpdated
 }
 
-class STEventCenter : NotificationCenter {
-    
+class STEventCenter: NotificationCenter {
     // MARK: Singleton
-    
-    fileprivate static var sharedEventCenter : STEventCenter? = nil
-    
-    static var sharedInstance : STEventCenter {
-        get {
-            if sharedEventCenter == nil {
-                sharedEventCenter = STEventCenter()
-            }
-            return sharedEventCenter!
+
+    fileprivate static var sharedEventCenter: STEventCenter?
+
+    static var sharedInstance: STEventCenter {
+        if sharedEventCenter == nil {
+            sharedEventCenter = STEventCenter()
         }
+        return sharedEventCenter!
     }
-    fileprivate override init() {
+
+    override fileprivate init() {
         super.init()
     }
-    
-    func addObserver(_ observer: AnyObject, selector aSelector: Selector, event aEvent : STEvent, object anObject: AnyObject?) {
-        self.addObserver(observer, selector: aSelector, name: NSNotification.Name(rawValue: aEvent.rawValue), object: anObject)
+
+    func addObserver(_ observer: AnyObject, selector aSelector: Selector, event aEvent: STEvent, object anObject: AnyObject?) {
+        addObserver(observer, selector: aSelector, name: NSNotification.Name(rawValue: aEvent.rawValue), object: anObject)
     }
-    
-    func postNotification(event aEvent : STEvent, object anObject: AnyObject?) {
-        self.post(name: Notification.Name(rawValue: aEvent.rawValue), object: anObject)
+
+    func postNotification(event aEvent: STEvent, object anObject: AnyObject?) {
+        post(name: Notification.Name(rawValue: aEvent.rawValue), object: anObject)
     }
-    
 }

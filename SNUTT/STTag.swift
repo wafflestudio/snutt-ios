@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum STTagType : String {
+enum STTagType: String {
     case Classification = "classification"
     case Department = "department"
     case AcademicYear = "academic_year"
@@ -16,7 +16,7 @@ enum STTagType : String {
     case Instructor = "instructor"
     case Category = "category"
     case Etc = "etc"
-    
+
     var tagColor: UIColor {
         switch self {
         case .AcademicYear: return UIColor(hexString: "#dc2f45")
@@ -28,7 +28,7 @@ enum STTagType : String {
         case .Etc: return UIColor(hexString: "#AF56B3")
         }
     }
-    
+
     var tagLightColor: UIColor {
         switch self {
         case .AcademicYear: return UIColor(hexString: "#e54459")
@@ -40,7 +40,7 @@ enum STTagType : String {
         case .Etc: return UIColor(hexString: "#AF56B3")
         }
     }
-    
+
     var typeStr: String {
         switch self {
         case .AcademicYear: return "학년"
@@ -54,35 +54,36 @@ enum STTagType : String {
     }
 }
 
-struct STTag : DictionaryRepresentable {
-    var type : STTagType
-    var text : String
+struct STTag: DictionaryRepresentable {
+    var type: STTagType
+    var text: String
     init(type: STTagType, text: String) {
         self.type = type
         self.text = text
     }
-    
-    //MARK: DictionaryRepresentable
-    
+
+    // MARK: DictionaryRepresentable
+
     func dictionaryValue() -> NSDictionary {
-        let representation : [String: Any] = ["type": type.rawValue, "text": text]
+        let representation: [String: Any] = ["type": type.rawValue, "text": text]
         return representation as NSDictionary
     }
+
     init?(dictionary: NSDictionary?) {
-        guard let values = dictionary else {return nil}
+        guard let values = dictionary else { return nil }
         if let type = STTagType(raw: values["type"] as? String),
-            let text = values["text"] as? String {
-                    self.type = type
-                    self.text = text
+           let text = values["text"] as? String
+        {
+            self.type = type
+            self.text = text
         } else {
             return nil
         }
     }
-    
 }
 
-extension STTag : Equatable {
-    public static func ==(lhs: STTag, rhs: STTag) -> Bool {
+extension STTag: Equatable {
+    public static func == (lhs: STTag, rhs: STTag) -> Bool {
         return lhs.type == rhs.type && lhs.text == rhs.text
     }
 }

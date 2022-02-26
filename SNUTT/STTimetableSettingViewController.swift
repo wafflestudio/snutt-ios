@@ -6,42 +6,41 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import UIKit
 import TTRangeSlider
+import UIKit
 
 class STTimetableSettingViewController: UITableViewController {
+    @IBOutlet var trimmingSwitch: UISwitch!
+    @IBOutlet var daySlider: TTRangeSlider!
+    @IBOutlet var dayText: UILabel!
+    @IBOutlet var timeSlider: TTRangeSlider!
+    @IBOutlet var timeText: UILabel!
 
-    @IBOutlet weak var trimmingSwitch: UISwitch!
-    @IBOutlet weak var daySlider: TTRangeSlider!
-    @IBOutlet weak var dayText: UILabel!
-    @IBOutlet weak var timeSlider: TTRangeSlider!
-    @IBOutlet weak var timeText: UILabel!
-    
     func setInitialUI() {
         let dayRange = STDefaults[.dayRange]
         let timeRange = STDefaults[.timeRange]
-        
+
         daySlider.selectedMinimum = Float(dayRange[0])
         daySlider.selectedMaximum = Float(dayRange[1])
         timeSlider.selectedMinimum = Float(timeRange[0])
         timeSlider.selectedMaximum = Float(timeRange[1])
-        
+
         daySlider.step = 1.0
         timeSlider.step = 1.0
-        
+
         daySlider.numberFormatterOverride = STDayFormatter()
-        
+
         daySlider.minDistance = 2.0
         timeSlider.minDistance = 7.0
-        
+
         setUI()
     }
-    
+
     func setUI() {
-        let sliders : [TTRangeSlider?] = [daySlider, timeSlider]
-        var textColor : UIColor! = nil
-        var tintColor : UIColor! = nil
-        var handleColor : UIColor! = nil
+        let sliders: [TTRangeSlider?] = [daySlider, timeSlider]
+        var textColor: UIColor!
+        var tintColor: UIColor!
+        var handleColor: UIColor!
         if STDefaults[.autoFit] {
             trimmingSwitch.isOn = true
             textColor = UIColor.gray
@@ -64,7 +63,7 @@ class STTimetableSettingViewController: UITableViewController {
         dayText.textColor = textColor
         timeText.textColor = textColor
     }
-    
+
     func saveSetting() {
         STDefaults[.autoFit] = trimmingSwitch.isOn
         STDefaults[.timeRange] = [Double(timeSlider.selectedMinimum),
@@ -72,35 +71,35 @@ class STTimetableSettingViewController: UITableViewController {
         STDefaults[.dayRange] = [Int(daySlider.selectedMinimum),
                                  Int(daySlider.selectedMaximum)]
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setInitialUI()
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
     /*
-    // MARK: - Navigation
+     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+         // Get the new view controller using segue.destinationViewController.
+         // Pass the selected object to the new view controller.
+     }
+     */
+
     override func willMove(toParent parent: UIViewController?) {
         if parent == nil { // check if it is popping from the navigation stack
             saveSetting()
             STEventCenter.sharedInstance.postNotification(event: .SettingChanged, object: self)
         }
     }
-    
-    @IBAction func autoFitValueChanged(_ sender: AnyObject) {
+
+    @IBAction func autoFitValueChanged(_: AnyObject) {
         saveSetting()
         setUI()
     }

@@ -6,18 +6,18 @@
 //  Copyright © 2017년 WaffleStudio. All rights reserved.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
-enum STEtcRouter : STRouter {
-    
-    static let baseURLString : String = STConfig.sharedInstance.baseURL
+enum STEtcRouter: STRouter {
+    static let baseURLString: String = STConfig.sharedInstance.baseURL
     static let shouldAddToken: Bool = false
-    
+
     case feedback(email: String?, message: String)
     case getColor
-    //MARK: STRouter
-    
+
+    // MARK: STRouter
+
     var method: HTTPMethod {
         switch self {
         case .feedback:
@@ -26,7 +26,7 @@ enum STEtcRouter : STRouter {
             return .get
         }
     }
-    
+
     var path: String {
         switch self {
         case .feedback:
@@ -35,11 +35,11 @@ enum STEtcRouter : STRouter {
             return "/colors/vivid_ios"
         }
     }
-    
-    var parameters: [String : Any]? {
+
+    var parameters: [String: Any]? {
         switch self {
         case let .feedback(email, message):
-            var ret: [String : Any] = [ "message" : message ]
+            var ret: [String: Any] = ["message": message]
             if let emailStr = email {
                 ret["email"] = emailStr
             }
@@ -48,5 +48,4 @@ enum STEtcRouter : STRouter {
             return nil
         }
     }
-    
 }

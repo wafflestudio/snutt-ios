@@ -9,16 +9,16 @@
 import UIKit
 
 class STTextViewTableViewCell: STLectureDetailTableViewCell, UITextViewDelegate {
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var titleLabel: UILabel!
 
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet var textView: UITextView!
 
-    var doneBlock: ((String)->())?
-    weak var tableView : UITableView!
+    var doneBlock: ((String) -> Void)?
+    weak var tableView: UITableView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.selectionStyle = .none
+        selectionStyle = .none
         textView.delegate = self
         textView.textContainerInset = UIEdgeInsets.zero
         textView.textContainer.lineFragmentPadding = 0
@@ -30,12 +30,11 @@ class STTextViewTableViewCell: STLectureDetailTableViewCell, UITextViewDelegate 
 
     func textViewDidChange(_ textView: UITextView) {
         doneBlock?(textView.text)
-        self.tableView.beginUpdates()
-        self.tableView.endUpdates()
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
 
-    override func setEditable (_ editable: Bool) {
+    override func setEditable(_ editable: Bool) {
         textView.isEditable = editable
     }
-
 }

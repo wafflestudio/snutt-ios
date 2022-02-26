@@ -9,41 +9,40 @@
 import UIKit
 
 class STTimetableLayout: UICollectionViewLayout {
-    var ContentWidth : CGFloat = 0.0
-    var ContentHeight : CGFloat = 0.0
-    
-    var HeightForHeader : CGFloat = 0.0
-    var HeightPerRow : CGFloat = 0.0
-    var WidthForHeader : CGFloat = 0.0
-    var WidthPerColumn : CGFloat = 0.0
+    var ContentWidth: CGFloat = 0.0
+    var ContentHeight: CGFloat = 0.0
 
-    var timetableView : STTimetableCollectionView!
-    
-    
+    var HeightForHeader: CGFloat = 0.0
+    var HeightPerRow: CGFloat = 0.0
+    var WidthForHeader: CGFloat = 0.0
+    var WidthPerColumn: CGFloat = 0.0
+
+    var timetableView: STTimetableCollectionView!
+
     override init() {
         super.init()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes {
-        
-        let ret : UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+        let ret = UICollectionViewLayoutAttributes(forCellWith: indexPath)
         let type = timetableView!.getCellType(indexPath)
-        
-        var width : CGFloat
-        var height : CGFloat
-        var locX : CGFloat
-        var locY : CGFloat
-        
+
+        var width: CGFloat
+        var height: CGFloat
+        var locX: CGFloat
+        var locY: CGFloat
+
         switch type {
         case .course, .temporaryCourse:
             let singleClass = timetableView.getSingleClass(indexPath)
             let rowIndex = CGFloat(timetableView.getRowFromPeriod(singleClass.time.startPeriod))
             let columnIndex = timetableView.dayToColumn[singleClass.time.day.rawValue]
-            
+
             width = WidthPerColumn
             height = HeightPerRow * CGFloat(singleClass.time.duration) + 0.4
             locX = CGFloat(columnIndex) * WidthPerColumn + WidthForHeader
@@ -77,30 +76,29 @@ class STTimetableLayout: UICollectionViewLayout {
         ret.frame = CGRect(x: locX, y: locY, width: width, height: height)
         return ret
     }
-    override var collectionViewContentSize : CGSize {
+
+    override var collectionViewContentSize: CGSize {
         updateContentSize()
         return CGSize(width: ContentWidth, height: ContentHeight)
     }
-    
+
     func updateContentSize() {
-        ContentWidth = self.collectionView!.frame.size.width
-        ContentHeight = self.collectionView!.frame.size.height
+        ContentWidth = collectionView!.frame.size.width
+        ContentHeight = collectionView!.frame.size.height
 
         WidthPerColumn = (ContentWidth - WidthForHeader) / CGFloat(timetableView.columnNum)
         HeightPerRow = ContentHeight / (CGFloat(timetableView.rowNum) + timetableView!.RatioForHeader)
         HeightForHeader = timetableView!.RatioForHeader * HeightPerRow
     }
-    
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        var ret : [UICollectionViewLayoutAttributes] = []
-        for i in 0..<(timetableView!.numberOfSections(in: collectionView!)) {
-            for j in 0..<(timetableView!.collectionView(collectionView!, numberOfItemsInSection: i)) {
+
+    override func layoutAttributesForElements(in _: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        var ret: [UICollectionViewLayoutAttributes] = []
+        for i in 0 ..< (timetableView!.numberOfSections(in: collectionView!)) {
+            for j in 0 ..< (timetableView!.collectionView(collectionView!, numberOfItemsInSection: i)) {
                 let indexPath = IndexPath(row: j, section: i)
-                ret.append(self.layoutAttributesForItem(at: indexPath))
+                ret.append(layoutAttributesForItem(at: indexPath))
             }
         }
         return ret
     }
-
-    
 }

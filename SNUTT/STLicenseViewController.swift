@@ -6,16 +6,15 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import UIKit
 import Carte
+import UIKit
 
 class STLicenseViewController: CarteViewController {
-
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        self.hidesBottomBarWhenPushed = true
+        hidesBottomBarWhenPushed = true
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -23,5 +22,4 @@ class STLicenseViewController: CarteViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
 }
