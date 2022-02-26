@@ -1,0 +1,42 @@
+name: Lint
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/lint.yml"
+      - "**.swift"
+      - '.swiftlint.yml'
+      - '.swiftformat'
+
+jobs:
+  format:
+    name: SwiftFormat
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install SwiftFormat
+        run: brew install swiftformat
+
+      - name: Format Swift code
+        run: swiftformat --verbose .
+        
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply SwiftFormat changes
+
+  lint:
+    name: SwiftLint
+    runs-on: ubuntu-latest
+    needs: format
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: SwiftLint
+        uses: norio-nomura/action-swiftlint@3.2.1
+        env:
+          DIFF_BASE: ${{ github.base_ref }} # only files changed in the PR

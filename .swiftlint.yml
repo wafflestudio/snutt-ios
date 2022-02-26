@@ -1,0 +1,17 @@
+disabled_rules:
+    - type_body_length
+
+function_body_length:
+    warning: 100
+    error: 300
+
+large_tuple:
+    warning: 3
+    error: 5
+
+function_parameter_count:
+    warning: 6
+    error: 20
+    
+excluded: 
+  - Pods
