@@ -15,14 +15,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Get list changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v17
+        with:
+          files: |
+            **/*.swift
 
       - name: Install SwiftFormat
         run: brew install swiftformat
 
       - name: Format Swift code
-        run: swiftformat --verbose .
-        
+        run: swiftformat --verbose ${{ steps.changed-files.outputs.all_changed_files }} --config .swiftformat
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply SwiftFormat changes
