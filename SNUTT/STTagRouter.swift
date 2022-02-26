@@ -6,16 +6,17 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import Alamofire
 import Foundation
+import Alamofire
 
-enum STTagRouter: STRouter {
-    static let baseURLString = STConfig.sharedInstance.baseURL + "/tags"
+enum STTagRouter : STRouter {
+    
+    static let baseURLString = STConfig.sharedInstance.baseURL+"/tags"
     static let shouldAddToken: Bool = true
-
-    case updateTime(quarter: STQuarter)
-    case get(quarter: STQuarter)
-
+    
+    case updateTime(quarter : STQuarter)
+    case get(quarter : STQuarter)
+    
     var method: HTTPMethod {
         switch self {
         case .updateTime:
@@ -24,17 +25,18 @@ enum STTagRouter: STRouter {
             return .get
         }
     }
-
+    
     var path: String {
         switch self {
-        case let .updateTime(quarter):
+        case .updateTime(let quarter):
             return "/\(quarter.year)/\(quarter.semester.rawValue)/update_time"
-        case let .get(quarter):
+        case .get(let quarter):
             return "/\(quarter.year)/\(quarter.semester.rawValue)"
         }
     }
-
-    var parameters: [String: Any]? {
+    
+    var parameters: [String : Any]? {
         return nil
     }
+    
 }

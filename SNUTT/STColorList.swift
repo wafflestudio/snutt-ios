@@ -8,12 +8,14 @@
 
 import Foundation
 
-class STColorList: NSObject, NSCoding {
-    var colorList: [STColor] = []
-    var nameList: [String] = []
+
+class STColorList : NSObject, NSCoding {
+
+    var colorList : [STColor] = []
+    var nameList : [String] = []
 
     init(colorList: [STColor], nameList: [String]) {
-        if colorList.count != nameList.count || colorList.count == 0 {
+        if (colorList.count != nameList.count || colorList.count == 0) {
             self.colorList = [STColor()]
             self.nameList = ["회색"]
         } else {
@@ -29,10 +31,10 @@ class STColorList: NSObject, NSCoding {
 
     required convenience init?(coder decoder: NSCoder) {
         guard let colorList = [STColor](dictionary: decoder.decodeObject(forKey: "colorList") as? [NSDictionary]),
-              let nameList = decoder.decodeObject(forKey: "nameList") as? [String]
-        else {
-            return nil
+            let nameList = decoder.decodeObject(forKey: "nameList") as? [String] else {
+                return nil
         }
         self.init(colorList: colorList, nameList: nameList)
     }
+    
 }

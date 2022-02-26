@@ -6,19 +6,21 @@
 //  Copyright © 2017년 WaffleStudio. All rights reserved.
 //
 
-import ActionSheetPicker_3_0
 import Foundation
+import Foundation
+import ActionSheetPicker_3_0
 
-class STColorActionSheetPicker: NSObject, ActionSheetCustomPickerDelegate {
-    var doneBlock: ((Int) -> Void)?
-    var cancelBlock: (() -> Void)?
-    var selectedBlock: ((Int) -> Void)?
-    var initialColorIndex: Int
+class STColorActionSheetPicker : NSObject, ActionSheetCustomPickerDelegate {
+    
+    var doneBlock : ((Int) -> Void)?
+    var cancelBlock : (() -> Void)?
+    var selectedBlock: ((Int)->Void)?
+    var initialColorIndex : Int
 
     var colorList = STColorManager.sharedInstance.colorList.colorList
     var nameList = STColorManager.sharedInstance.colorList.nameList
 
-    init(initialColorIndex: Int, doneBlock: ((Int) -> Void)?, cancelBlock: (() -> Void)?, selectedBlock: ((Int) -> Void)?) {
+    init(initialColorIndex : Int, doneBlock: ((Int) -> Void)?, cancelBlock: (() -> Void)?, selectedBlock: ((Int)->Void)?) {
         self.doneBlock = doneBlock
         self.cancelBlock = cancelBlock
         self.selectedBlock = selectedBlock
@@ -26,7 +28,7 @@ class STColorActionSheetPicker: NSObject, ActionSheetCustomPickerDelegate {
         super.init()
     }
 
-    func pickerView(_: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         switch component {
         case 0:
             let attribute = [convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): colorList[row].bgColor.lighten(byPercentage: 0.4)]
@@ -35,7 +37,7 @@ class STColorActionSheetPicker: NSObject, ActionSheetCustomPickerDelegate {
         }
     }
 
-    func onePixelImageWithColor(_ color: UIColor) -> UIImage {
+    func onePixelImageWithColor(_ color : UIColor) -> UIImage {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = CGImageAlphaInfo.premultipliedLast
         let context = CGContext(data: nil, width: 1, height: 1, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
@@ -54,61 +56,61 @@ class STColorActionSheetPicker: NSObject, ActionSheetCustomPickerDelegate {
         actionSheetPicker.toolbar.tintColor = UIColor.white
         actionSheetPicker.toolbar.barTintColor = UIColor.white
 
-        if initialColorIndex == 0 {
+        if (initialColorIndex == 0) {
             pickerView.selectRow(0, inComponent: 0, animated: false)
             selectedBlock?(1)
         } else {
-            pickerView.selectRow(initialColorIndex - 1, inComponent: 0, animated: false)
+            pickerView.selectRow(initialColorIndex-1, inComponent: 0, animated: false)
         }
     }
 
-    func pickerView(_: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch component {
         case 0: return nameList.count
         default: return 0
         }
     }
 
-    func numberOfComponents(in _: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 
-    func pickerView(_: UIPickerView, didSelectRow row: Int, inComponent _: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedBlock?(row + 1)
     }
 
-    func actionSheetPickerDidSucceed(_ actionSheetPicker: AbstractActionSheetPicker!, origin _: AnyObject!) {
+    func actionSheetPickerDidSucceed(_ actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {
         let pickerView = actionSheetPicker.pickerView as! UIPickerView
         let index = pickerView.selectedRow(inComponent: 0)
         doneBlock?(index + 1)
     }
 
-    func actionSheetPickerDidCancel(_: AbstractActionSheetPicker!, origin _: AnyObject!) {
+    func actionSheetPickerDidCancel(_ actionSheetPicker: AbstractActionSheetPicker!, origin: AnyObject!) {
         cancelBlock?()
     }
 
-    internal static func showWithColor(_ colorIndex: Int, doneBlock: ((Int) -> Void)?, cancelBlock: (() -> Void)?, selectedBlock: ((Int) -> Void)?, origin _: AnyObject!) {
+    internal static func showWithColor(_ colorIndex: Int, doneBlock: ((Int) -> Void)?, cancelBlock: (() -> Void)?, selectedBlock: ((Int)->Void)?, origin : AnyObject! ) {
         let colorPickerDelegate = STColorActionSheetPicker(initialColorIndex: colorIndex, doneBlock: doneBlock, cancelBlock: cancelBlock, selectedBlock: selectedBlock)
         let actionSheetPicker = ActionSheetCustomPicker()
-
+        
         let overlayBlack = UIColor.black.withAlphaComponent(0.3)
         actionSheetPicker.pickerBackgroundColor = overlayBlack
         actionSheetPicker.delegate = colorPickerDelegate
         actionSheetPicker.hideCancel = false
-
+        
         actionSheetPicker.tapDismissAction = TapAction.cancel
-
+        
         actionSheetPicker.show()
     }
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-private func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
-    return input.rawValue
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-private func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-    guard let input = input else { return nil }
-    return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value) })
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

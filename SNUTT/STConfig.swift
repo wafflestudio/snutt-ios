@@ -6,22 +6,25 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import Alamofire
 import Foundation
+import Alamofire
 
 class STConfig {
     // MARK: Singleton
-
-    fileprivate static var sharedConfig: STConfig?
-
-    static var sharedInstance: STConfig {
-        if sharedConfig == nil {
-            sharedConfig = STConfig()
+    
+    fileprivate static var sharedConfig : STConfig? = nil
+    
+    static var sharedInstance : STConfig {
+        get {
+            if sharedConfig == nil {
+                sharedConfig = STConfig()
+            }
+            return sharedConfig!
         }
-        return sharedConfig!
     }
-
-    fileprivate init() {}
-
-    var baseURL: String!
+    fileprivate init() {
+    }
+    var baseURL : String! = nil
+    
+    
 }

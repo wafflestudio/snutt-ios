@@ -9,10 +9,11 @@
 import UIKit
 
 class STRowHeaderCollectionViewCell: UICollectionViewCell {
-    @IBOutlet var timeLabel: UILabel!
-    @IBOutlet var titleLabel: UILabel!
+    
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        layer.zPosition = CGFloat(layoutAttributes.zIndex)
+        self.layer.zPosition = CGFloat(layoutAttributes.zIndex)
     }
 }

@@ -10,12 +10,12 @@ import UIKit
 
 @IBDesignable
 class STViewButton: UIView {
+
     @IBInspectable var borderWidth: CGFloat = 0 {
         didSet {
             layer.borderWidth = borderWidth
         }
     }
-
     @IBInspectable var borderColor: UIColor? {
         didSet {
             layer.borderColor = borderColor?.cgColor
@@ -25,7 +25,7 @@ class STViewButton: UIView {
     @IBInspectable var pressedBgColor: UIColor?
     var origBgColor: UIColor!
 
-    var buttonPressAction: (() -> Void)?
+    var buttonPressAction: (()->())? = nil
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -38,27 +38,28 @@ class STViewButton: UIView {
     }
 
     func setup() {
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(buttonPressed))
-        addGestureRecognizer(tapRecognizer)
-        origBgColor = backgroundColor
+        let tapRecognizer = UITapGestureRecognizer(target: self, action:#selector(buttonPressed))
+        self.addGestureRecognizer(tapRecognizer)
+        origBgColor = self.backgroundColor
     }
 
-    @objc func buttonPressed(gesture _: UITapGestureRecognizer) {
+    @objc func buttonPressed(gesture: UITapGestureRecognizer) {
+
         buttonPressAction?()
-        backgroundColor = origBgColor
+        self.backgroundColor = origBgColor
     }
 
-    override func touchesBegan(_: Set<UITouch>, with _: UIEvent?) {
+    override func touchesBegan(_ presses: Set<UITouch>, with event: UIEvent?) {
         if let bgColor = pressedBgColor {
-            backgroundColor = bgColor
+            self.backgroundColor = bgColor
         }
     }
 
-    override func touchesEnded(_: Set<UITouch>, with _: UIEvent?) {
-        backgroundColor = origBgColor
+    override func touchesEnded(_ presses: Set<UITouch>, with event: UIEvent?) {
+        self.backgroundColor = origBgColor
     }
 
-    override func touchesCancelled(_: Set<UITouch>, with _: UIEvent?) {
-        backgroundColor = origBgColor
+    override func touchesCancelled(_ presses: Set<UITouch>, with event: UIEvent?) {
+        self.backgroundColor = origBgColor
     }
 }

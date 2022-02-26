@@ -13,65 +13,67 @@ protocol TimetablePickerViewControllerDelegate: UIViewController {
 }
 
 class TimetablePickerViewController: UIViewController {
+    
     weak var delegate: TimetablePickerViewControllerDelegate?
-
+    
     var semesterList: [STQuarter] = []
     var selectedSemesterIndex = 0
 
-    @IBOutlet var semesterPickerView: UIPickerView!
-
-    @IBAction func selectSemester(_: UIButton) {
+    @IBOutlet weak var semesterPickerView: UIPickerView!
+    
+    @IBAction func selectSemester(_ sender: UIButton) {
         delegate?.changeSemester(self, index: selectedSemesterIndex)
-
+        
         dismiss(animated: true)
     }
-
-    @IBAction func cancel(_: UIButton) {
+    
+    @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true)
     }
-
+    
+    
     var semesterListInString: [String] {
-        return semesterList.map { semseter in
-            semseter.longString()
-        }
+        return semesterList.map({ semseter in
+            return semseter.longString()
+        })
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         semesterPickerView.delegate = self
         semesterPickerView.dataSource = self
-
+        
         semesterPickerView.selectRow(selectedSemesterIndex, inComponent: 0, animated: true)
     }
-
+    
     func setSemesterList(list: [STQuarter]) {
         semesterList = list
     }
-
+    
     func setSelectedSemester(index: Int?) {
         selectedSemesterIndex = index ?? 0
     }
 }
 
 extension TimetablePickerViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in _: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-
-    func pickerView(_: UIPickerView, numberOfRowsInComponent _: Int) -> Int {
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return semesterList.count
     }
-
-    func pickerView(_: UIPickerView, titleForRow row: Int, forComponent _: Int) -> String? {
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return semesterListInString[row]
     }
-
-    func pickerView(_: UIPickerView, rowHeightForComponent _: Int) -> CGFloat {
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 32
     }
-
-    func pickerView(_: UIPickerView, didSelectRow row: Int, inComponent _: Int) {
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedSemesterIndex = row
     }
 }

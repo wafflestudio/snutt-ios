@@ -6,13 +6,14 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import Alamofire
 import Foundation
+import Alamofire
 
-enum STUserRouter: STRouter {
+enum STUserRouter : STRouter {
+    
     static let baseURLString: String = STConfig.sharedInstance.baseURL + "/user"
     static let shouldAddToken: Bool = true
-
+    
     case getUser
     case editUser(email: String)
     case changePassword(oldPassword: String, newPassword: String)
@@ -23,7 +24,7 @@ enum STUserRouter: STRouter {
     case addDevice(id: String)
     case deleteDevice(id: String)
     case deleteUser
-
+    
     var method: HTTPMethod {
         switch self {
         case .getUser:
@@ -48,7 +49,7 @@ enum STUserRouter: STRouter {
             return .delete
         }
     }
-
+    
     var path: String {
         switch self {
         case .getUser, .editUser:
@@ -65,17 +66,18 @@ enum STUserRouter: STRouter {
             return "/account"
         }
     }
-
-    var parameters: [String: Any]? {
+    
+    var parameters: [String : Any]? {
+        
         switch self {
         case .getUser:
             return nil
         case let .editUser(email):
-            return ["email": email]
+            return ["email" : email]
         case let .changePassword(oldPassword, newPassword):
-            return ["old_password": oldPassword, "new_password": newPassword]
+            return ["old_password" : oldPassword, "new_password": newPassword]
         case let .addLocalId(id, password):
-            return ["id": id, "password": password]
+            return ["id": id, "password" : password]
         case let .addFB(id, token):
             return ["fb_id": id, "fb_token": token]
         case .detachFB:

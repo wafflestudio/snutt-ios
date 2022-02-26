@@ -7,47 +7,48 @@
 //
 
 import Foundation
-import SwiftyJSON
 import UIKit
+import SwiftyJSON
 
 struct STColor {
-    var fgColor: UIColor
-    var bgColor: UIColor
-
+    
+    var fgColor : UIColor
+    var bgColor : UIColor
+    
     init() {
         fgColor = UIColor(hexString: "#333333")
         bgColor = UIColor(hexString: "#E0E0E0")
     }
-
-    init(fgHex: String, bgHex: String) {
+    
+    init(fgHex : String, bgHex : String) {
         fgColor = UIColor(hexString: fgHex)
         bgColor = UIColor(hexString: bgHex)
     }
-
+    
     init(json: JSON) {
         self.init(fgHex: json["fg"].stringValue, bgHex: json["bg"].stringValue)
     }
 }
 
-extension STColor: Equatable {}
+extension STColor : Equatable {}
 
-func == (lhs: STColor, rhs: STColor) -> Bool {
+func == (lhs : STColor, rhs : STColor) -> Bool  {
     return lhs.fgColor.toHexString() == rhs.fgColor.toHexString() &&
         lhs.bgColor.toHexString() == rhs.bgColor.toHexString()
 }
 
-extension STColor: DictionaryRepresentable {
+extension STColor : DictionaryRepresentable {
     func dictionaryValue() -> NSDictionary {
-        return ["fg": fgColor.toHexString(), "bg": bgColor.toHexString()]
+        return ["fg": self.fgColor.toHexString(), "bg" : self.bgColor.toHexString()]
     }
-
+    
     init?(dictionary: NSDictionary?) {
-        guard let values = dictionary else { return nil }
+        guard let values = dictionary else {return nil}
         guard let fg = values["fg"] as? String, let bg = values["bg"] as? String else {
             return nil
         }
-        fgColor = UIColor(hexString: fg)
-        bgColor = UIColor(hexString: bg)
+        self.fgColor = UIColor(hexString: fg)
+        self.bgColor = UIColor(hexString: bg)
     }
 }
 
@@ -69,21 +70,21 @@ extension UIColor {
         }
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
-
+    
     func toHexString() -> String {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-
+        var r:CGFloat = 0
+        var g:CGFloat = 0
+        var b:CGFloat = 0
+        var a:CGFloat = 0
+        
         getRed(&r, green: &g, blue: &b, alpha: &a)
-
-        let rgb = Int(r * 255) << 16 | Int(g * 255) << 8 | Int(b * 255) << 0
-
-        return String(format: "#%06x", rgb)
+        
+        let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
+        
+        return String(format:"#%06x", rgb)
     }
-
+    
     convenience init(red: CGFloat, green: CGFloat, blue: CGFloat) {
-        self.init(red: red / 255, green: green / 255, blue: blue / 255, alpha: 1)
+        self.init(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
 }

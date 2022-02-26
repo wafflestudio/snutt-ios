@@ -9,42 +9,42 @@
 import Foundation
 
 struct STTime {
-    var day: STDay
-    var startPeriod: Double
-    var duration: Double
-    var endPeriod: Double {
+    var day : STDay
+    var startPeriod : Double
+    var duration : Double
+    var endPeriod : Double {
         return startPeriod + duration
     }
-
+    
     init(day: Int, startPeriod: Double, duration: Double) {
         self.day = STDay(rawValue: day)!
         self.startPeriod = startPeriod
         self.duration = duration
     }
-
+    
     func longString() -> String {
         return day.longString() + " " + startPeriod.periodString() + "~" + endPeriod.periodString()
     }
-
+    
     func shortString() -> String {
         return day.shortString() + " " + startPeriod.periodString() + "~" + endPeriod.periodString()
     }
-
+    
     func startString() -> String {
-        return day.shortString() + String(format: "%g", startPeriod)
+        return day.shortString() + String.init(format: "%g", startPeriod)
     }
-
-    func isOverlappingWith(_ tmp: STTime) -> Bool {
+    
+    func isOverlappingWith(_ tmp : STTime) -> Bool {
         if day != tmp.day {
             return false
         }
         if tmp.startPeriod < startPeriod {
-            if tmp.startPeriod + tmp.duration > startPeriod {
+            if (tmp.startPeriod + tmp.duration > startPeriod) {
                 return true
             }
             return false
         } else {
-            if startPeriod + duration > tmp.startPeriod {
+            if (startPeriod + duration > tmp.startPeriod) {
                 return true
             }
             return false
@@ -52,8 +52,8 @@ struct STTime {
     }
 }
 
-extension STTime: Equatable {}
+extension STTime : Equatable {}
 
-func == (lhs: STTime, rhs: STTime) -> Bool {
+func ==(lhs: STTime, rhs: STTime) -> Bool {
     return lhs.day == rhs.day && lhs.startPeriod == rhs.startPeriod && lhs.duration == rhs.duration
 }

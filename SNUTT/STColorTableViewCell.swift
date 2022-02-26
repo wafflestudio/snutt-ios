@@ -9,24 +9,25 @@
 import UIKit
 
 class STColorTableViewCell: UITableViewCell {
-    @IBOutlet var fgColorView: UIView!
-    @IBOutlet var bgColorView: UIView!
-    @IBOutlet var colorContainerView: UIView!
-    @IBOutlet var colorLabel: UILabel!
 
-    var color: STColor! {
+    @IBOutlet weak var fgColorView: UIView!
+    @IBOutlet weak var bgColorView: UIView!
+    @IBOutlet weak var colorContainerView: UIView!
+    @IBOutlet weak var colorLabel: UILabel!
+    
+    var color : STColor! {
         didSet {
             fgColorView.backgroundColor = color.bgColor
             bgColorView.backgroundColor = color.fgColor
         }
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        selectionStyle = .none
+        self.selectionStyle = .none
     }
 
-    func setBorder(_ isBorder: Bool) {
+    func setBorder(_ isBorder : Bool) {
         if isBorder {
             colorContainerView.layer.borderWidth = 1.0
             colorContainerView.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.15).cgColor
@@ -39,9 +40,10 @@ class STColorTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
         if selected {
-            accessoryType = .checkmark
+            self.accessoryType = .checkmark
         } else {
-            accessoryType = .none
+            self.accessoryType = .none
         }
     }
+
 }

@@ -9,9 +9,10 @@
 import Foundation
 
 @objc(STFCMInfo)
-class STFCMInfo: NSObject, NSCoding {
-    var userId: String = ""
-    var fcmToken: String = ""
+class STFCMInfo : NSObject, NSCoding {
+
+    var userId : String = ""
+    var fcmToken : String = ""
 
     init(userId: String, fcmToken: String) {
         self.userId = userId
