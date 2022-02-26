@@ -9,16 +9,16 @@
 import UIKit
 
 class STSearchEmptyInfoView: UIView {
-    @IBOutlet weak var searchIcon: UIImageView!
-        weak var searchController: STLectureSearchTableViewController!
+    @IBOutlet var searchIcon: UIImageView!
+    weak var searchController: STLectureSearchTableViewController!
 
     override func awakeFromNib() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleIconTap))
-                searchIcon.addGestureRecognizer(tapGesture)
-                searchIcon.isUserInteractionEnabled = true
+        searchIcon.addGestureRecognizer(tapGesture)
+        searchIcon.isUserInteractionEnabled = true
     }
-    
-    @objc func handleIconTap(sender: UITapGestureRecognizer) {
-            searchController.setFocusToSearch()
-        }
+
+    @objc func handleIconTap(sender _: UITapGestureRecognizer) {
+        searchController.setFocusToSearch()
+    }
 }

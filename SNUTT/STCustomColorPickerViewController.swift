@@ -6,19 +6,18 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import UIKit
 import Color_Picker_for_iOS
+import UIKit
 
 class STCustomColorPickerViewController: UIViewController {
+    @IBOutlet var colorPickerView: HRColorPickerView!
 
-    @IBOutlet weak var colorPickerView: HRColorPickerView!
-    
-    var doneBlock : (UIColor) -> () = { _ in }
-    var color : UIColor!
-    
+    var doneBlock: (UIColor) -> Void = { _ in }
+    var color: UIColor!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        colorPickerView.color = self.color
+        colorPickerView.color = color
         // Do any additional setup after loading the view.
     }
 
@@ -27,22 +26,19 @@ class STCustomColorPickerViewController: UIViewController {
             doneBlock(colorPickerView.color)
         }
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    
+
     /*
-    // MARK: - Navigation
+     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+         // Get the new view controller using segue.destinationViewController.
+         // Pass the selected object to the new view controller.
+     }
+     */
 }

@@ -9,14 +9,13 @@
 import UIKit
 
 class STColumnHeaderCollectionViewCell: UICollectionViewCell {
-    
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet var contentLabel: UILabel!
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        self.layer.zPosition = CGFloat(layoutAttributes.zIndex)
+        layer.zPosition = CGFloat(layoutAttributes.zIndex)
     }
 }

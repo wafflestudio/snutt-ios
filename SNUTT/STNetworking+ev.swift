@@ -6,15 +6,15 @@
 //  Copyright © 2022 WaffleStudio. All rights reserved.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 import SwiftyJSON
 
 // for SNUTT-ev api
 extension STNetworking {
-    static func getReviewIdFromLecture(_ courseNumber: String, _ instructor: String,_ done: @escaping (String)->(), failure: @escaping ()->()) {
-        Alamofire.request(STEVRouter.getReviewId(courseNumber: courseNumber, instructor: instructor)).responseWithDone({ statusCode, json in
-            
+    static func getReviewIdFromLecture(_ courseNumber: String, _ instructor: String, _ done: @escaping (String) -> Void, failure: @escaping () -> Void) {
+        Alamofire.request(STEVRouter.getReviewId(courseNumber: courseNumber, instructor: instructor)).responseWithDone({ _, json in
+
             if let id = json.dictionaryValue["id"]?.number {
                 done(id.stringValue)
             } else {
@@ -25,5 +25,4 @@ extension STNetworking {
             failure()
         })
     }
-    
 }

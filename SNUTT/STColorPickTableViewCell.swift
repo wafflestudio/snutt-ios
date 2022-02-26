@@ -6,21 +6,18 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import UIKit
 import ChameleonFramework
+import UIKit
 
 class STColorPickTableViewCell: STLectureDetailTableViewCell {
+    @IBOutlet var bgColorView: UIView!
+    @IBOutlet var fgColorView: UIView!
+    @IBOutlet var colorContainerView: UIView!
+    @IBOutlet var titleLabel: UILabel!
 
-    
-    @IBOutlet weak var bgColorView: UIView!
-    @IBOutlet weak var fgColorView: UIView!
-    @IBOutlet weak var colorContainerView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var arrowImage: UIImageView!
 
-    @IBOutlet weak var arrowImage: UIImageView!
-    
-
-    var color : STColor! {
+    var color: STColor! {
         didSet {
             bgColorView.backgroundColor = color.bgColor
             fgColorView.backgroundColor = color.fgColor
@@ -28,7 +25,7 @@ class STColorPickTableViewCell: STLectureDetailTableViewCell {
         }
     }
 
-    func setBorder(_ isBorder : Bool) {
+    func setBorder(_ isBorder: Bool) {
         if isBorder {
             colorContainerView.layer.borderWidth = 1.0
             colorContainerView.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.05).cgColor
@@ -36,11 +33,11 @@ class STColorPickTableViewCell: STLectureDetailTableViewCell {
             colorContainerView.layer.borderWidth = 0.0
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.accessoryType = .none
-        self.selectionStyle = .none
+        accessoryType = .none
+        selectionStyle = .none
         color = STColor()
         // Initialization code
     }
@@ -50,8 +47,8 @@ class STColorPickTableViewCell: STLectureDetailTableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    override func setEditable (_ editable: Bool) {
+
+    override func setEditable(_ editable: Bool) {
         arrowImage.isHidden = !editable
     }
 }

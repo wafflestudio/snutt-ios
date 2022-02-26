@@ -9,12 +9,11 @@
 import UIKit
 
 class STSingleColorTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var colorView: UIView!
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet var colorView: UIView!
+    @IBOutlet var label: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.selectionStyle = .none
+        selectionStyle = .none
         // Initialization code
     }
 
@@ -23,5 +22,4 @@ class STSingleColorTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

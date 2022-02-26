@@ -14,21 +14,18 @@ enum STAddLectureState {
 }
 
 class STTimetable {
-    
-    var lectureList : [STLecture] = []
-    var quarter : STQuarter
-    var title : String
-    var id : String? = ""
-    var temporaryLecture : STLecture? = nil
-    var theme : STTheme?
+    var lectureList: [STLecture] = []
+    var quarter: STQuarter
+    var title: String
+    var id: String? = ""
+    var temporaryLecture: STLecture?
+    var theme: STTheme?
     var totalCredit: Int?
-    
-    var isLoaded : Bool {
-        get {
-            return !(id==nil)
-        }
+
+    var isLoaded: Bool {
+        return !(id == nil)
     }
-    
+
     var totalCreditByCal: Int {
         var credit = 0
         for lecture in lectureList {
@@ -36,46 +33,46 @@ class STTimetable {
         }
         return credit
     }
-    
+
     init(year aYear: Int, semester aSemester: STSemester, title aTitle: String) {
-        self.quarter = STQuarter(year: aYear, semester: aSemester)
-        self.title = aTitle
+        quarter = STQuarter(year: aYear, semester: aSemester)
+        title = aTitle
     }
-    
-    init(courseBook : STCourseBook, title: String) {
-        self.quarter = courseBook.quarter
+
+    init(courseBook: STCourseBook, title: String) {
+        quarter = courseBook.quarter
         self.title = title
     }
-    
-    init(json : JSON) {
+
+    init(json: JSON) {
         let year = json["year"].intValue
         let semester = STSemester(rawValue: json["semester"].intValue)!
-        self.quarter = STQuarter(year: year, semester: semester)
-        self.title = json["title"].stringValue
-        self.id = json["_id"].string
-        self.theme = STTheme(rawValue: json["theme"].intValue)
-        self.totalCredit = json["total_credit"].intValue
+        quarter = STQuarter(year: year, semester: semester)
+        title = json["title"].stringValue
+        id = json["_id"].string
+        theme = STTheme(rawValue: json["theme"].intValue)
+        totalCredit = json["total_credit"].intValue
         let lectures = json["lecture_list"].arrayValue
-        lectures.forEach {data in
+        lectures.forEach { data in
             self.addLecture(STLecture(json: data))
         }
     }
-    
+
     func toDictionary() -> [String: Any] {
         return [
-            "year" : quarter.year,
-            "semester" : quarter.semester.rawValue,
-            "title" : title,
-            "_id" : id!,
-            "lecture_list" : lectureList.map({ lecture in
-                return lecture.toDictionary()
-            })
+            "year": quarter.year,
+            "semester": quarter.semester.rawValue,
+            "title": title,
+            "_id": id!,
+            "lecture_list": lectureList.map { lecture in
+                lecture.toDictionary()
+            },
         ]
     }
-    
-    func addLecture(_ lecture : STLecture) -> STAddLectureState {
+
+    func addLecture(_ lecture: STLecture) -> STAddLectureState {
         for it in lectureList {
-            if it.isSameLecture(lecture){
+            if it.isSameLecture(lecture) {
                 return STAddLectureState.errorSameLecture
             }
             for class1 in it.classList {
@@ -89,41 +86,43 @@ class STTimetable {
         lectureList.append(lecture)
         return STAddLectureState.success
     }
-    
+
     func indexOf(lecture: STLecture) -> Int {
         for (index, it) in lectureList.enumerated() {
             if it.isSameLecture(lecture) {
-                return index;
+                return index
             }
         }
-        return -1;
+        return -1
     }
-    
+
     func deleteLectureAtIndex(_ index: Int) {
         lectureList.remove(at: index)
     }
+
     func deleteLecture(_ lecture: STLecture) {
         if let index = lectureList.index(of: lecture) {
             lectureList.remove(at: index)
         }
     }
-    func updateLectureAtIndex(_ index: Int, lecture :STLecture) {
+
+    func updateLectureAtIndex(_ index: Int, lecture: STLecture) {
         lectureList[index] = lecture
     }
-    
+
     func timetableTimeMask() -> [Int] {
-        return lectureList.reduce([0,0,0,0,0,0,0], { mask, lecture in
-            return zip(mask, lecture.timeMask).map { t1, t2 in t1 | t2 }
-        })
+        return lectureList.reduce([0, 0, 0, 0, 0, 0, 0]) { mask, lecture in
+            zip(mask, lecture.timeMask).map { t1, t2 in t1 | t2 }
+        }
     }
-    
+
     func timetableReverseTimeMask() -> [Int] {
-        return timetableTimeMask().map {t1 in 0x3FFFFFFF ^ t1 }
+        return timetableTimeMask().map { t1 in 0x3FFF_FFFF ^ t1 }
     }
 }
 
-extension STTimetable : Equatable {}
+extension STTimetable: Equatable {}
 
-func ==(lhs: STTimetable, rhs: STTimetable) -> Bool {
+func == (lhs: STTimetable, rhs: STTimetable) -> Bool {
     return lhs.quarter == rhs.quarter && lhs.title == rhs.title && lhs.id == rhs.id
 }

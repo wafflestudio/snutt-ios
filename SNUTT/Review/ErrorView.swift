@@ -13,17 +13,16 @@ protocol ErrorViewDelegate: AnyObject {
 }
 
 class ErrorView: UIView {
-    
     weak var delegate: ErrorViewDelegate?
 
-    @IBOutlet weak var retryButton: UIButton! {
+    @IBOutlet var retryButton: UIButton! {
         didSet {
             retryButton.layer.cornerRadius = 8
             retryButton.contentVerticalAlignment = .center
         }
     }
-    
-    @IBAction func retry(_ sender: UIButton) {
+
+    @IBAction func retry(_: UIButton) {
         delegate?.retry(self)
     }
 }

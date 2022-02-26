@@ -11,55 +11,55 @@ import WebKit
 
 class ReviewViewController: UIViewController, WKUIDelegate {
     var webView: WKWebView!
-    
+
     private let apiUri = STDefaults[.snuevWebUrl]
-    
+
     private var idForLoadDetailView: String?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         hideNavbar()
-        
+
         if let id = idForLoadDetailView {
             loadWebViews(withApiUrl: apiUri + "/detail/?id=\(id)")
         } else {
             loadWebViews(withApiUrl: apiUri)
         }
     }
-    
-    @IBOutlet weak var navbarTitle: UIBarButtonItem! {
+
+    @IBOutlet var navbarTitle: UIBarButtonItem! {
         didSet {
-            navbarTitle.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AppleSDGothicNeo-Bold", size: 17)], for: .normal)
+            navbarTitle.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-Bold", size: 17)], for: .normal)
         }
     }
-    
+
     private func loadWebViews(withApiUrl: String) {
         let webConfiguration = WKWebViewConfiguration()
         let wkDataStore = WKWebsiteDataStore.nonPersistent()
-        
+
         let url = withApiUrl
         let myURL = URL(string: url)
         let myRequest = URLRequest(url: myURL!)
-        
+
         guard let cookies = getCookiesFromUserDefaults() else {
             print("cannot get cookies form userdefaults")
             return
         }
-        
+
         let dispatchGroup = DispatchGroup()
-        
+
         if cookies.count > 0 {
-            for cookie in cookies{
+            for cookie in cookies {
                 dispatchGroup.enter()
-                wkDataStore.httpCookieStore.setCookie(cookie){
+                wkDataStore.httpCookieStore.setCookie(cookie) {
                     dispatchGroup.leave()
                 }
             }
-            
+
             dispatchGroup.notify(queue: DispatchQueue.main) {
                 webConfiguration.websiteDataStore = wkDataStore
-                
+
                 self.webView = WKWebView(frame: CGRect.zero, configuration: webConfiguration)
                 self.webView.uiDelegate = self
                 self.webView.navigationDelegate = self
@@ -67,15 +67,15 @@ class ReviewViewController: UIViewController, WKUIDelegate {
             }
         }
     }
-    
+
     private func getCookiesFromUserDefaults() -> [HTTPCookie]? {
         let apiKey = STDefaults[.apiKey]
-        
+
         guard let token = STDefaults[.token] else {
             print("cannot find token")
             return nil
         }
-        
+
         guard let apiKeyCookie = HTTPCookie(properties: [
             .domain: apiUri.replacingOccurrences(of: "https://", with: ""),
             .path: "/",
@@ -85,7 +85,7 @@ class ReviewViewController: UIViewController, WKUIDelegate {
             print("cannot set api cookie")
             return nil
         }
-        
+
         guard let tokenCookie = HTTPCookie(properties: [
             .domain: apiUri.replacingOccurrences(of: "https://", with: ""),
             .path: "/",
@@ -95,62 +95,62 @@ class ReviewViewController: UIViewController, WKUIDelegate {
             print("cannot set token cookie")
             return nil
         }
-        
+
         return [apiKeyCookie, tokenCookie]
     }
-    
+
     private func addErrorView() {
         let identifier = String(describing: ErrorView.self)
         let nibs = Bundle.main.loadNibNamed(identifier, owner: self, options: nil)
-        
+
         guard let errorView = nibs?.first as? ErrorView else {
             print("cannot load error view")
             return
         }
-        
+
         errorView.delegate = self
-        
-        self.view.addSubview(errorView)
+
+        view.addSubview(errorView)
         errorView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
-            errorView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            errorView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            errorView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            errorView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            errorView.topAnchor.constraint(equalTo: view.topAnchor),
+            errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
-    
+
     private func showNavbar() {
-        self.navigationController?.isNavigationBarHidden = false
+        navigationController?.isNavigationBarHidden = false
     }
-    
+
     private func hideNavbar() {
-        self.navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = true
     }
-    
+
     private func addWebview() {
-        self.view.addSubview(webView)
-        
+        view.addSubview(webView)
+
         webView.scrollView.bounces = false
         webView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
-            webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            webView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 }
 
 extension ReviewViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
         showNavbar()
         addErrorView()
     }
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+
+    func webView(_: WKWebView, didFinish _: WKNavigation!) {
         hideNavbar()
         addWebview()
     }
@@ -171,19 +171,19 @@ extension ReviewViewController {
         let url = apiUri + "/detail/?id=\(id)"
         let myURL = URL(string: url)
         let myRequest = URLRequest(url: myURL!)
-        
+
         webView.load(myRequest)
     }
-    
+
     func setIdForLoadDetailView(with id: String) {
         idForLoadDetailView = id
     }
-    
+
     func loadMainView() {
         let url = apiUri
         let myURL = URL(string: url)
         let myRequest = URLRequest(url: myURL!)
-        
+
         webView.load(myRequest)
     }
 }

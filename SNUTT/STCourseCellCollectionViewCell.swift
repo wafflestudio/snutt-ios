@@ -1,4 +1,4 @@
- //
+//
 //  STCourseCellCollectionViewCell.swift
 //  SNUTT
 //
@@ -8,38 +8,37 @@
 
 import UIKit
 
-class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
-    
-    @IBOutlet weak var courseText: UILabel!
-    public private(set) var singleClass : STSingleClass!
-    public private(set) var lecture : STLecture!
-    private var oldLecture: STLecture? = nil
-    private var oldSingleClass: STSingleClass? = nil
+class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate {
+    @IBOutlet var courseText: UILabel!
+    public private(set) var singleClass: STSingleClass!
+    public private(set) var lecture: STLecture!
+    private var oldLecture: STLecture?
+    private var oldSingleClass: STSingleClass?
     var theme: STTheme?
-    
-    var longClicked: ((STCourseCellCollectionViewCell)->())?
-    var tapped: ((STCourseCellCollectionViewCell)->())?
-    
+
+    var longClicked: ((STCourseCellCollectionViewCell) -> Void)?
+    var tapped: ((STCourseCellCollectionViewCell) -> Void)?
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        var margin : CGFloat = 4.0;
+        var margin: CGFloat = 4.0
         if isLargerThanSE() {
-            margin = 5.0;
+            margin = 5.0
         }
-        self.layoutMargins = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
-        
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longClick))
-        self.addGestureRecognizer(longPress)
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.tap))
-        self.addGestureRecognizer(tap)
+        layoutMargins = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
 
-        self.layer.borderWidth = 0.5
-        self.layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.05).cgColor
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longClick))
+        addGestureRecognizer(longPress)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.tap))
+        addGestureRecognizer(tap)
+
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.05).cgColor
     }
 
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        self.layer.zPosition = CGFloat(layoutAttributes.zIndex)
+        layer.zPosition = CGFloat(layoutAttributes.zIndex)
     }
 
     func setData(lecture: STLecture, singleClass: STSingleClass) {
@@ -60,16 +59,16 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         let color = lecture.getColor(theme: theme)
         setColor(color: color)
     }
-    
+
     func setText() {
         var text = NSMutableAttributedString()
-        if let lecture = self.lecture {
+        if let lecture = lecture {
             let font = UIFont.systemFont(ofSize: 10.0)
             text.append(NSAttributedString(string: lecture.titleBreakLine, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): font])))
         }
-        if let singleClass = self.singleClass {
+        if let singleClass = singleClass {
             let placeText = singleClass.place
-            var size : CGFloat = 11.0
+            var size: CGFloat = 11.0
             if isLargerThanSE() {
                 if placeText.characters.count >= 8 {
                     size = 10.0
@@ -84,7 +83,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
                 }
             }
             let font = UIFont.boldSystemFont(ofSize: size)
-            if text.length != 0 && singleClass.place != "" {
+            if text.length != 0, singleClass.place != "" {
                 text.append(NSAttributedString(string: "\n"))
             }
             if singleClass.place != "" {
@@ -94,7 +93,7 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
         courseText.attributedText = text
         courseText.baselineAdjustment = .alignCenters
     }
-    
+
     func setColor() {
         guard let theme = theme else { return }
         let color = lecture.getColor(theme: theme)
@@ -102,27 +101,30 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
     }
 
     func setColor(color: STColor) {
-        self.backgroundColor = UIColor(hexString: color.bgColor.toHexString())
+        backgroundColor = UIColor(hexString: color.bgColor.toHexString())
         courseText.textColor = UIColor(hexString: color.fgColor.toHexString())
     }
 
-    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
+    func alertView(_: UIAlertView, clickedButtonAt _: Int) {
         /* //DEBUG
-        if(buttonIndex == 1) {
-            STCourseBooksManager.sharedInstance.currentCourseBook?.deleteLecture(singleClass!.lecture!)
-        }
-        */
+         if(buttonIndex == 1) {
+             STCourseBooksManager.sharedInstance.currentCourseBook?.deleteLecture(singleClass!.lecture!)
+         }
+         */
     }
-    @objc func longClick(_ gesture : UILongPressGestureRecognizer) {
+
+    @objc func longClick(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == UIGestureRecognizer.State.began {
             longClicked?(self)
         }
     }
+
     @objc func tap(_ gesture: UITapGestureRecognizer) {
         if gesture.state == UIGestureRecognizer.State.recognized {
             tapped?(self)
         }
     }
+
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         // no resizing
         return layoutAttributes
@@ -130,12 +132,12 @@ class STCourseCellCollectionViewCell: UICollectionViewCell, UIAlertViewDelegate{
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+private func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+    guard let input = input else { return nil }
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value) })
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
-	return input.rawValue
+private func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+    return input.rawValue
 }

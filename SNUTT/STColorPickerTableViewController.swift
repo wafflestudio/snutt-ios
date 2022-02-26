@@ -6,16 +6,15 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import UIKit
 import ChameleonFramework
+import UIKit
 
 class STColorPickerTableViewController: UITableViewController {
-
     var customColorIndex = 9
-    var color : STColor!
+    var color: STColor!
     var colorIndex: Int = 1
     var selectedColorIndex = 1
-    var doneBlock : (Int, STColor?) -> () = { _,_  in }
+    var doneBlock: (Int, STColor?) -> Void = { _, _ in }
     var theme: STTheme?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +32,7 @@ class STColorPickerTableViewController: UITableViewController {
     deinit {
         STEventCenter.sharedInstance.removeObserver(self)
     }
-    
+
     override func willMove(toParent parent: UIViewController?) {
         if parent == nil {
             let retColorIndex = selectedColorIndex == customColorIndex ? 0 : selectedColorIndex + 1
@@ -41,7 +40,7 @@ class STColorPickerTableViewController: UITableViewController {
             doneBlock(retColorIndex, retColor)
         }
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -50,24 +49,24 @@ class STColorPickerTableViewController: UITableViewController {
     @objc func colorListUpdated() {
         selectedColorIndex = colorIndex
         tableView.reloadData()
-        self.tableView.selectRow(at: IndexPath(row: selectedColorIndex, section: 0), animated: false, scrollPosition: .none)
+        tableView.selectRow(at: IndexPath(row: selectedColorIndex, section: 0), animated: false, scrollPosition: .none)
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in _: UITableView) -> Int {
         if selectedColorIndex == customColorIndex {
             return 2
         } else {
             return 1
         }
     }
-    
+
     var colorList: [String] {
         return theme?.getColorList() ?? []
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return colorList.count
@@ -88,7 +87,7 @@ class STColorPickerTableViewController: UITableViewController {
             } else {
                 if let theme = theme {
                     let fgColor = "#ffffff"
-                    cell.color =  STColor(fgHex: fgColor, bgHex: colorList[indexPath.row + 1])
+                    cell.color = STColor(fgHex: fgColor, bgHex: colorList[indexPath.row + 1])
                     cell.colorLabel.text = "\(theme.getName()) \(indexPath.row + 1)"
                     cell.setBorder(true)
                 }
@@ -107,81 +106,79 @@ class STColorPickerTableViewController: UITableViewController {
             return cell
         }
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
+    override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             if indexPath.row != selectedColorIndex {
-                self.tableView.deselectRow(at: IndexPath(row: selectedColorIndex, section: 0), animated: true)
-                
+                tableView.deselectRow(at: IndexPath(row: selectedColorIndex, section: 0), animated: true)
+
                 let wasSelectedColorIndex = selectedColorIndex
                 selectedColorIndex = indexPath.row
-                
+
                 if wasSelectedColorIndex == customColorIndex {
-                    self.tableView.deleteSections(IndexSet(integer: 1), with: .top)
+                    tableView.deleteSections(IndexSet(integer: 1), with: .top)
                 }
                 if selectedColorIndex != customColorIndex {
                     let bg = colorList[indexPath.row]
                     color = STColor(fgHex: "ffffff", bgHex: bg)
                 } else {
                     color = STColor()
-                    self.tableView.insertSections(IndexSet(integer: 1), with: .top)
+                    tableView.insertSections(IndexSet(integer: 1), with: .top)
                 }
             }
         } else if indexPath.section == 1 {
-            self.tableView.deselectRow(at: indexPath, animated: true)
-            let pickerViewController = self.storyboard?.instantiateViewController(withIdentifier: "STCustomColorPickerViewController") as! STCustomColorPickerViewController
+            tableView.deselectRow(at: indexPath, animated: true)
+            let pickerViewController = storyboard?.instantiateViewController(withIdentifier: "STCustomColorPickerViewController") as! STCustomColorPickerViewController
             if indexPath.row == 0 {
-                pickerViewController.color = self.color.bgColor
+                pickerViewController.color = color.bgColor
                 pickerViewController.doneBlock = { color in
                     self.color.bgColor = color
                     self.tableView.reloadSections(IndexSet(integer: 1), with: .none)
                 }
             } else {
-                pickerViewController.color = self.color.fgColor
+                pickerViewController.color = color.fgColor
                 pickerViewController.doneBlock = { color in
                     self.color.fgColor = color
                     self.tableView.reloadSections(IndexSet(integer: 1), with: .none)
                 }
             }
-            
-            self.navigationController?.pushViewController(pickerViewController, animated: true)
+
+            navigationController?.pushViewController(pickerViewController, animated: true)
         }
     }
 
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    override func tableView(_: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableView.ScrollPosition.none)
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableView.ScrollPosition.none)
         }
     }
     /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
+     // Override to support conditional editing of the table view.
+     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+         // Return false if you do not want the specified item to be editable.
+         return true
+     }
+     */
 
     /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
+     // Override to support editing the table view.
+     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+         if editingStyle == .Delete {
+             // Delete the row from the data source
+             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+         } else if editingStyle == .Insert {
+             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+         }
+     }
+     */
 
     /*
-    // MARK: - Navigation
+     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+         // Get the new view controller using segue.destinationViewController.
+         // Pass the selected object to the new view controller.
+     }
+     */
 }

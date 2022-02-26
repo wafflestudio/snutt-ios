@@ -10,34 +10,34 @@ import Foundation
 import SwiftyJSON
 
 struct STSingleClass {
-    var time : STTime
-    var place : String {
+    var time: STTime
+    var place: String {
         didSet {
             placeBreakLine = place.breakOnlyAtNewLineAndSpace
         }
     }
+
     var placeBreakLine: String
 
-    init(time : STTime, place: String) {
+    init(time: STTime, place: String) {
         self.time = time
         self.place = place
-        self.placeBreakLine = place.breakOnlyAtNewLineAndSpace
+        placeBreakLine = place.breakOnlyAtNewLineAndSpace
     }
-    
+
     func toDictionary() -> [String: Any] {
-        let dict : [String: Any] = [
-            "day" : time.day.rawValue,
-            "start" : time.startPeriod,
-            "len" : time.duration,
-            "place" : place
+        let dict: [String: Any] = [
+            "day": time.day.rawValue,
+            "start": time.startPeriod,
+            "len": time.duration,
+            "place": place,
         ]
         return dict
     }
-    
 }
 
-extension STSingleClass : Equatable {}
+extension STSingleClass: Equatable {}
 
-func ==(lhs: STSingleClass, rhs: STSingleClass) -> Bool {
+func == (lhs: STSingleClass, rhs: STSingleClass) -> Bool {
     return lhs.time == rhs.time && lhs.place == rhs.place
 }
