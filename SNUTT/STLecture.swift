@@ -10,25 +10,24 @@ import Foundation
 import SwiftyJSON
 
 struct STLecture {
-    var classification: String?
-    var department: String?
-    var academicYear: String?
-    var courseNumber: String?
-    var lectureNumber: String?
-    var title: String = "" {
+    var classification : String?
+    var department : String?
+    var academicYear : String?
+    var courseNumber : String?
+    var lectureNumber : String?
+    var title : String = "" {
         didSet {
             titleBreakLine = title.breakOnlyAtNewLineAndSpace
         }
     }
-
-    var credit: Int = 0
-    var instructor: String = ""
-    var quota: Int?
-    var remark: String?
-    var category: String?
-    var id: String?
-    var classList: [STSingleClass] = []
-    var color: STColor?
+    var credit : Int = 0
+    var instructor : String = ""
+    var quota : Int?
+    var remark : String?
+    var category : String?
+    var id : String?
+    var classList :[STSingleClass] = []
+    var color : STColor? = nil
     var colorIndex: Int = 0
     var timeMask: [Int] = []
     var titleBreakLine = ""
@@ -37,16 +36,16 @@ struct STLecture {
         let colorList = theme.getColorList()
         let bgColor = colorList[colorIndex]
         let fgColor = "#ffffff"
-
+        
         guard let color = color, colorIndex == 0 else {
             return STColor(fgHex: fgColor, bgHex: bgColor)
         }
-
+        
         return STColor(fgHex: color.fgColor.toHexString(), bgHex: color.bgColor.toHexString())
     }
 
-    var timeDescription: String {
-        var ret = ""
+    var timeDescription : String {
+        var ret: String = ""
         for it in classList {
             ret = ret + "/" + it.time.startString()
         }
@@ -57,9 +56,9 @@ struct STLecture {
         }
         return ret
     }
-
-    var placeDescription: String {
-        var ret = ""
+    
+    var placeDescription : String {
+        var ret: String = ""
         for it in classList {
             ret = ret + "/" + it.place
         }
@@ -70,16 +69,16 @@ struct STLecture {
         }
         return ret
     }
-
-    var tagDescription: String {
-        var ret = ""
-        if category != nil, category != "" {
+    
+    var tagDescription : String {
+        var ret: String = ""
+        if category != nil && category != ""{
             ret = ret + ", " + category!
         }
-        if department != nil, department != "" {
+        if department != nil && department != "" {
             ret = ret + ", " + department!
         }
-        if academicYear != nil, academicYear != "" {
+        if academicYear != nil && academicYear != "" {
             ret = ret + ", " + academicYear!
         }
         if ret != "" {
@@ -89,10 +88,11 @@ struct STLecture {
         }
         return ret
     }
-
-    init() {}
-
-    init(json data: JSON) {
+    
+    init() {
+    }
+    
+    init(json data : JSON) {
         classification = data["classification"].string
         department = data["department"].string
         academicYear = data["academic_year"].string
@@ -105,7 +105,7 @@ struct STLecture {
         quota = data["quota"].int
         remark = data["remark"].string
         category = data["category"].string
-        timeMask = data["class_time_mask"].arrayValue.map { mask in mask.intValue }
+        timeMask = data["class_time_mask"].arrayValue.map{mask in mask.intValue}
         id = data["_id"].string
         let colorJson = data["color"]
         colorIndex = data["colorIndex"].intValue
@@ -120,47 +120,48 @@ struct STLecture {
             classList.append(singleClass)
         }
     }
-
-    func toDictionary() -> [String: Any] {
-        let classTimeJSON = classList.map { singleClass in
-            singleClass.toDictionary()
+    
+    func toDictionary() -> [String : Any] {
+        
+        let classTimeJSON = classList.map{ singleClass in
+            return singleClass.toDictionary()
         }
-
-        var dict: [String: Any?] = [
-            "classification": classification,
-            "department": department,
-            "academic_year": academicYear,
-            "course_number": courseNumber,
-            "lecture_number": lectureNumber,
-            "course_title": title,
-            "credit": credit,
-            "instructor": instructor,
-            "quota": quota,
-            "remark": remark,
-            "category": category,
-            "id": id,
-            "class_time_json": classTimeJSON,
-            "color": color?.dictionaryValue(),
-            "colorIndex": colorIndex,
-        ]
-
+        
+        var dict : [String: Any?] = [
+            "classification" : classification,
+            "department" : department,
+            "academic_year" : academicYear,
+            "course_number" : courseNumber,
+            "lecture_number" : lectureNumber,
+            "course_title" : title,
+            "credit" : credit,
+            "instructor" : instructor,
+            "quota" : quota,
+            "remark" : remark,
+            "category" : category,
+            "id" : id,
+            "class_time_json" : classTimeJSON,
+            "color" : color?.dictionaryValue(),
+            "colorIndex" : colorIndex,
+            ]
+        
         for (key, value) in dict {
-            if value == nil {
+            if (value == nil) {
                 dict.removeValue(forKey: key)
             }
         }
-
+        
         return dict as [String: AnyObject]
     }
-
-    func isSameLecture(_ right: STLecture) -> Bool {
+    
+    func isSameLecture(_ right : STLecture) -> Bool {
         return (courseNumber == right.courseNumber && lectureNumber == right.lectureNumber) && courseNumber != nil && lectureNumber != nil
     }
 }
 
-extension STLecture: Equatable {}
+extension STLecture : Equatable {}
 
-func == (lhs: STLecture, rhs: STLecture) -> Bool {
+func ==(lhs: STLecture, rhs: STLecture) -> Bool {
     return lhs.classification == rhs.classification
         && lhs.department == rhs.department
         && lhs.academicYear == rhs.academicYear

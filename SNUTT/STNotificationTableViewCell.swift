@@ -9,31 +9,33 @@
 import UIKit
 
 class STNotificationTableViewCell: UITableViewCell {
-    @IBOutlet var iconImageView: UIImageView!
-    @IBOutlet var descriptionLabel: UILabel!
-    @IBOutlet var timeLabel: UILabel!
-    @IBOutlet var titleLabel: UILabel!
 
-    var notification: STNotification! {
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    var notification : STNotification! {
         didSet {
+    
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy/MM/dd"
-
+            
             var timeText = ""
-
+            
             if let text = notification.createdTime {
                 timeText = dateFormatter.string(from: text)
             }
-
+            
             timeLabel.text = timeText
             timeLabel.textColor = UIColor(red: 119, green: 119, blue: 119)
-
+            
             titleLabel.text = notification.notificationTitle
-
+            
             let message = notification.message
             descriptionLabel.text = message
             iconImageView.image = notification.image
-
+            
             if case .Link = notification.type {
                 self.selectionStyle = .gray
             } else {
@@ -41,7 +43,7 @@ class STNotificationTableViewCell: UITableViewCell {
             }
         }
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         descriptionLabel.lineBreakMode = .byWordWrapping
@@ -53,19 +55,18 @@ class STNotificationTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
     override func layoutSubviews() {
         super.layoutSubviews()
     }
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-private func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
-    return input.rawValue
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-private func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-    guard let input = input else { return nil }
-    return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value) })
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

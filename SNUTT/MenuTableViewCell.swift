@@ -14,6 +14,7 @@ protocol MenuTableViewCellDelegate: class {
 }
 
 class MenuTableViewCell: UITableViewCell {
+
     override func awakeFromNib() {
         super.awakeFromNib()
         timetableLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 105).isActive = true
@@ -24,15 +25,15 @@ class MenuTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
     var delegate: MenuTableViewCellDelegate?
     var timetable: STTimetable?
-
-    @IBOutlet var credits: UILabel!
-    @IBOutlet var timetableLabel: UILabel!
-    @IBOutlet var checkedIcon: UIImageView!
-
-    @IBAction func duplicateButton(_: UIButton) {
+    
+    @IBOutlet weak var credits: UILabel!
+    @IBOutlet weak var timetableLabel: UILabel!
+    @IBOutlet weak var checkedIcon: UIImageView!
+    
+    @IBAction func duplicateButton(_ sender: UIButton) {
         guard let timetable = timetable, let id = timetable.id else { return }
         STNetworking.copyTimetable(id: id) { timetableList in
             self.delegate?.updateTableViewData(self, timetableList: timetableList)
@@ -41,26 +42,26 @@ class MenuTableViewCell: UITableViewCell {
             STAlertView.showAlert(title: "시간표 복제 실패", message: errorCode.errorMessage)
         }
     }
-
-    @IBAction func settingButton(_: UIButton) {
+    
+    @IBAction func settingButton(_ sender: UIButton) {
         delegate?.showSettingSheet(self)
     }
-
-    @IBOutlet var duplicateBButton: UIButton!
-    @IBOutlet var settingBButton: UIButton! {
+    
+    @IBOutlet weak var duplicateBButton: UIButton!
+    @IBOutlet weak var settingBButton: UIButton! {
         didSet {
             settingBButton?.imageView?.contentMode = .scaleAspectFit
         }
     }
-
+    
     func setLabel(text: String) {
         timetableLabel.text = text
     }
-
+    
     func setCredit(credit: Int) {
         credits.text = "(" + String(credit) + " 학점)"
     }
-
+    
     func setCreateNewCellStyle() {
         credits.isHidden = true
         checkedIcon.isHidden = true
@@ -68,7 +69,7 @@ class MenuTableViewCell: UITableViewCell {
         duplicateBButton.isHidden = true
         settingBButton.isHidden = true
     }
-
+    
     func setDefaultCellStyle() {
         credits.isHidden = false
         checkedIcon.isHidden = false
@@ -76,11 +77,11 @@ class MenuTableViewCell: UITableViewCell {
         duplicateBButton.isHidden = false
         settingBButton.isHidden = false
     }
-
+    
     func hideCheckIcon() {
         checkedIcon.isHidden = true
     }
-
+    
     func showCheckIcon() {
         checkedIcon.isHidden = false
     }

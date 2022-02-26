@@ -6,19 +6,19 @@
 //  Copyright © 2017년 WaffleStudio. All rights reserved.
 //
 
+import UIKit
 import NotificationCenter
 import SwiftyJSON
 import SwiftyUserDefaults
-import UIKit
 
 class TodayViewController: UIViewController, NCWidgetProviding {
-    // TODO: iOS 9 Testing
+    //TODO: iOS 9 Testing
+    
+    @IBOutlet weak var timetableView: STTimetableCollectionView!
+    var maxHeight : CGFloat =  400.0
 
-    @IBOutlet var timetableView: STTimetableCollectionView!
-    var maxHeight: CGFloat = 400.0
-
-    @IBOutlet var descriptionLabel: UILabel!
-    @IBOutlet var containerView: UIView!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var containerView: UIView!
 
     let sharedDefaults = UserDefaults(suiteName: "group.wafflestudio.TodayExtensionSharingDefaults")
 
@@ -28,7 +28,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         NSKeyedUnarchiver.setClass(STColorList.self, forClassName: "STColorList")
 
         super.viewDidLoad()
-        guard let extensionContext = extensionContext else {
+        guard let extensionContext = self.extensionContext else {
             return
         }
         descriptionLabel.text = "SNUTT 시간표를 보기 위해서는 위의 더보기를 눌러주세요."
@@ -39,12 +39,12 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         extensionContext.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
         let displayMode = extensionContext.widgetActiveDisplayMode
         let maxSize = extensionContext.widgetMaximumSize(for: displayMode)
-        widgetActiveDisplayModeDidChange(displayMode, withMaximumSize: maxSize)
+        self.widgetActiveDisplayModeDidChange(displayMode, withMaximumSize: maxSize)
 
         NotificationCenter.default.addObserver(self, selector: #selector(userDefaultsDidChange), name: UserDefaults.didChangeNotification, object: nil)
     }
 
-    @objc func userDefaultsDidChange(_: Notification) {
+    @objc func userDefaultsDidChange (_ notification: Notification) {
         updateTimetable()
         updateSetting()
         reloadData()
@@ -69,9 +69,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         } else {
             timetableView.shouldAutofit = false
             let dayRange = STDefaults[.dayRange]
-            var columnHidden: [Bool] = []
-            for i in 0 ..< 6 {
-                if dayRange[0] <= i, i <= dayRange[1] {
+            var columnHidden : [Bool] = []
+            for i in 0..<6 {
+                if dayRange[0] <= i && i <= dayRange[1] {
                     columnHidden.append(false)
                 } else {
                     columnHidden.append(true)
@@ -83,15 +83,16 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
     }
 
-    func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
-        if activeDisplayMode == NCWidgetDisplayMode.compact {
-            preferredContentSize = maxSize
+    func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize){
+        if (activeDisplayMode == NCWidgetDisplayMode.compact) {
+            self.preferredContentSize = maxSize
             timetableView.frame.size = maxSize
             reloadData()
             timetableView.isHidden = true
             descriptionLabel.isHidden = false
-        } else {
-            preferredContentSize = CGSize(width: 0, height: maxHeight)
+        }
+        else {
+            self.preferredContentSize = CGSize(width: 0, height: maxHeight)
             timetableView.frame.size = CGSize(width: 0, height: maxHeight)
             reloadData()
             timetableView.isHidden = false
@@ -99,16 +100,16 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
     }
 
-    func widgetPerformUpdate(completionHandler: @escaping (NCUpdateResult) -> Void) {
-        DispatchQueue.main.async {
+    func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
+        DispatchQueue.main.async(execute: {
             self.updateTimetable()
             self.updateSetting()
             self.reloadData()
-        }
+        });
 
         completionHandler(NCUpdateResult.newData)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

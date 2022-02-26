@@ -9,5 +9,7 @@
 import UIKit
 
 class STLectureDetailTableViewCell: UITableViewCell {
-    func setEditable(_: Bool) {}
+    func setEditable(_ editable: Bool) {
+        
+    }
 }

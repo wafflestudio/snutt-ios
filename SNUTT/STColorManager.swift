@@ -7,37 +7,41 @@
 //
 
 class STColorManager {
+    
     // MARK: Singleton
-
-    fileprivate static var sharedManager: STColorManager?
-    static var sharedInstance: STColorManager {
-        if sharedManager == nil {
-            sharedManager = STColorManager()
+    
+    fileprivate static var sharedManager : STColorManager? = nil
+    static var sharedInstance : STColorManager{
+        get {
+            if sharedManager == nil {
+                sharedManager = STColorManager()
+            }
+            return sharedManager!
         }
-        return sharedManager!
     }
-
+    
     fileprivate init() {
-        loadData()
+        self.loadData()
         #if TODAY_EXTENSION
         #else
-            updateData()
+        self.updateData()
         #endif
     }
-
+    
     var colorList: STColorList!
-
+    
     func loadData() {
         colorList = STDefaults[.colorList] ?? STColorList(colorList: [], nameList: [])
     }
-
+    
     func saveData() {
         STDefaults[.colorList] = colorList
     }
+    
 }
 
 struct ColorListInTheme {
-    static let SNUTT = ["#ffffff", "#E54459", "#F58D3D", "#FAC42D", "#A6D930", "#2BC267", "#1BD0C8", "#1D99E8", "#4F48C4", "#AF56B3"]
+    static let SNUTT = ["#ffffff", "#E54459", "#F58D3D", "#FAC42D", "#A6D930", "#2BC267","#1BD0C8", "#1D99E8", "#4F48C4", "#AF56B3"]
     static let FALL = ["#ffffff", "#B82E31", "#DB701C", "#EAA32A", "#C6C013", "#3A856E", "#19B2AC", "#3994CE", "#3F3A9C", "#924396"]
     static let MODERN = ["#ffffff", "#F0652A", "#F5AD3E", "#998F36", "#89C291", "#266F55", "#13808F", "#366689", "#432920", "#D82F3D"]
     static let CHERRY_BLOSSOM = ["#ffffff", "#FD79A8", "#FEC9DD", "#FEB0CC", "#FE93BF", "#E9B1D0", "#C67D97", "#BB8EA7", "#BDB4BF", "#E16597"]
@@ -52,7 +56,7 @@ enum STTheme: Int, CaseIterable {
     case CHERRY_BLOSSOM = 3
     case ICE = 4
     case LAWN = 5
-
+    
     func getColorList() -> [String] {
         switch self {
         case .SNUTT:
@@ -69,7 +73,7 @@ enum STTheme: Int, CaseIterable {
             return ColorListInTheme.LAWN
         }
     }
-
+    
     func getImageName() -> String {
         switch self {
         case .SNUTT:
@@ -86,7 +90,7 @@ enum STTheme: Int, CaseIterable {
             return "LawnTheme"
         }
     }
-
+    
     func getName() -> String {
         switch self {
         case .SNUTT:

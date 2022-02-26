@@ -13,18 +13,19 @@ protocol MenuTableViewHeaderViewDelegate: class {
 }
 
 class MenuTableViewHeaderView: UITableViewHeaderFooterView {
+    
     weak var delegate: MenuTableViewHeaderViewDelegate?
-
-    @IBAction func chooseSemester(_: UIButton) {
+    
+    @IBAction func chooseSemester(_ sender: UIButton) {
         delegate?.presentSemesterPickView(self)
     }
-
-    @IBAction func chooseSemesterOnLabel(_: UIButton) {
+    
+    @IBAction func chooseSemesterOnLabel(_ sender: UIButton) {
         delegate?.presentSemesterPickView(self)
     }
-
-    @IBOutlet var headerLabelButton: UIButton!
-
+    
+    @IBOutlet weak var headerLabelButton: UIButton!
+    
     func setHeaderLabel(text: String) {
         headerLabelButton.setTitle(text, for: .normal)
     }

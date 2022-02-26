@@ -9,10 +9,12 @@
 import UIKit
 
 class STSingleLectureButtonCell: STLectureDetailTableViewCell {
-    @IBOutlet var button: UIButton!
-
-    var buttonAction: (() -> Void)?
-
+    
+    
+    @IBOutlet weak var button: UIButton!
+    
+    var buttonAction : (()->())?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,7 +26,7 @@ class STSingleLectureButtonCell: STLectureDetailTableViewCell {
         // Configure the view for the selected state
     }
 
-    @IBAction func buttonClicked(_: AnyObject) {
-        buttonAction?()
+    @IBAction func buttonClicked(_ sender: AnyObject) {
+        buttonAction?();
     }
 }

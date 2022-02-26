@@ -9,8 +9,10 @@
 import UIKit
 
 class STPaddingTableViewCell: STLectureDetailTableViewCell {
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+    
 }

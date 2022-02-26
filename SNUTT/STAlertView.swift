@@ -10,16 +10,17 @@ import Foundation
 import UIKit
 
 class STAlertView {
+    
     // Possible TODO:
     // It does not do anything else other than show the alertview.
     // It would be good idea to make the alertview as stack internally and show them one by one,
     // or there can be other solutions.
-
-    fileprivate static func createAlert(title: String, message: String) -> UIAlertController {
+    
+    static fileprivate func createAlert(title: String, message: String) -> UIAlertController {
         return UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
     }
-
-    fileprivate static func showAlert(_ alert: UIAlertController) {
+    
+    static fileprivate func showAlert(_ alert: UIAlertController) {
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while true {
                 while let presentedViewController = topController.presentedViewController {
@@ -39,13 +40,13 @@ class STAlertView {
             }
         }
     }
-
+    
     static func showAlert(title: String, message: String) {
         let alert = STAlertView.createAlert(title: title, message: message)
         alert.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: nil))
         STAlertView.showAlert(alert)
     }
-
+    
     static func showAlert(title: String, message: String, actions: [UIAlertAction]) {
         let alert = STAlertView.createAlert(title: title, message: message)
         for it in actions {
@@ -53,8 +54,7 @@ class STAlertView {
         }
         STAlertView.showAlert(alert)
     }
-
-    static func showAlert(title: String, message: String, configAlert: (UIAlertController) -> Void) {
+    static func showAlert(title: String, message: String, configAlert: (UIAlertController) -> ()) {
         let alert = STAlertView.createAlert(title: title, message: message)
         configAlert(alert)
         STAlertView.showAlert(alert)
@@ -68,7 +68,7 @@ class STAlertView {
         indicator.translatesAutoresizingMaskIntoConstraints = false
         pending.view.addSubview(indicator)
 
-        let views = ["pending": pending.view, "indicator": indicator]
+        let views = ["pending" : pending.view, "indicator" : indicator]
 
         var constraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[indicator]-(-50)-|", options: NSLayoutConstraint.FormatOptions.alignAllCenterY, metrics: nil, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[indicator]|", options: NSLayoutConstraint.FormatOptions.alignAllCenterX, metrics: nil, views: views)

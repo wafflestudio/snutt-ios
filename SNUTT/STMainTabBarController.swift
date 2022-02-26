@@ -9,30 +9,31 @@
 import UIKit
 
 class STMainTabBarController: UITabBarController {
-    weak static var controller: STMainTabBarController?
-
-    weak var notificationController: STNotificationTableViewController?
-
+    
+    static weak var controller : STMainTabBarController? = nil
+    
+    weak var notificationController : STNotificationTableViewController? = nil
+    
     private var reviewTabBarItem: UITabBarItem?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         STMainTabBarController.controller = self
-        for item in tabBar.items! {
+        for item in self.tabBar.items! {
             item.image = item.image!.withRenderingMode(.alwaysOriginal)
         }
-
+        
         reviewTabBarItem = tabBar.items![2]
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    override func tabBar(_: UITabBar, didSelect item: UITabBarItem) {
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item == reviewTabBarItem {
-            if let navVC = viewControllers?[selectedIndex] as? UINavigationController, let reviewVC = navVC.viewControllers.first as? ReviewViewController {
+            if let navVC = self.viewControllers?[self.selectedIndex] as? UINavigationController, let reviewVC = navVC.viewControllers.first as? ReviewViewController {
                 reviewVC.loadMainView()
             }
         }

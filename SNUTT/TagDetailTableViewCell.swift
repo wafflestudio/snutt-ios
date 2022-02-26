@@ -9,6 +9,7 @@
 import UIKit
 
 class TagDetailTableViewCell: UITableViewCell {
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,18 +20,18 @@ class TagDetailTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
-    @IBOutlet var tagDetailLabel: UILabel!
-    @IBOutlet var checkedImage: UIImageView!
-
+    
+    @IBOutlet weak var tagDetailLabel: UILabel!
+    @IBOutlet weak var checkedImage: UIImageView!
+    
     func setLabel(text: String) {
         tagDetailLabel.text = text
     }
-
+    
     func check() {
         checkedImage.image = UIImage(named: "checkMint")
     }
-
+    
     func unCheck() {
         checkedImage.image = UIImage(named: "unCheck")
     }

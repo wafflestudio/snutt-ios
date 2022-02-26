@@ -7,15 +7,15 @@
 //
 
 import Foundation
-import SwiftyUserDefaults
 import UIKit
+import SwiftyUserDefaults
 
 extension DefaultsKeys {
     static let token = DefaultsKey<String?>("token")
     static let userId = DefaultsKey<String?>("userId")
     static let appVersion = DefaultsKey<String>("appVersion")
     static let autoFit = DefaultsKey<Bool>("autoFit", true)
-    static let dayRange = DefaultsKey<[Int]>("dayRange", [0, 4])
+    static let dayRange = DefaultsKey<[Int]>("dayRange", [0,4])
     static let timeRange = DefaultsKey<[Double]>("timeRange", [0.0, 14.0])
     static let apiKey = DefaultsKey<String>("apiKey")
     static let registeredFCMToken = DefaultsKey<String?>("registeredFCMToken")
@@ -31,7 +31,7 @@ extension UserDefaults {
         get { return unarchive(key) }
         set { archive(key, newValue) }
     }
-
+    
     subscript(key: DefaultsKey<STColorList?>) -> STColorList? {
         get { return unarchive(key) }
         set { archive(key, newValue) }

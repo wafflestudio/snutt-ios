@@ -6,14 +6,15 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import ChameleonFramework
 import UIKit
+import ChameleonFramework
 
 @IBDesignable
 class STLoginTextField: UITextField {
+
     let lineView = UIView()
 
-    @IBInspectable var lineColor: UIColor = .black {
+    @IBInspectable var lineColor: UIColor = UIColor.black {
         didSet {
             setLineView()
         }
@@ -57,12 +58,13 @@ class STLoginTextField: UITextField {
         super.layoutSubviews()
         setLineView()
     }
-
+    
     /*
-     // Only override drawRect: if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func drawRect(rect: CGRect) {
-         // Drawing code
-     }
-     */
+    // Only override drawRect: if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func drawRect(rect: CGRect) {
+        // Drawing code
+    }
+    */
+
 }

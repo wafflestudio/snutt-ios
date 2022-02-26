@@ -6,21 +6,22 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import Alamofire
 import Foundation
+import Alamofire
 
-enum STAuthRouter: STRouter {
-    static let baseURLString: String = STConfig.sharedInstance.baseURL + "/auth"
+enum STAuthRouter : STRouter {
+    
+    static let baseURLString : String = STConfig.sharedInstance.baseURL+"/auth"
     static let shouldAddToken: Bool = false
-
+    
     case localLogin(id: String, password: String)
     case localRegister(id: String, password: String, email: String?)
     case fbRegister(id: String, token: String)
     case appleRegister(token: String)
     case logOutDevice(userId: String, fcmToken: String)
-
-    // MARK: STRouter
-
+    
+    //MARK: STRouter
+    
     var method: HTTPMethod {
         switch self {
         case .localLogin:
@@ -35,7 +36,7 @@ enum STAuthRouter: STRouter {
             return .post
         }
     }
-
+    
     var path: String {
         switch self {
         case .localLogin:
@@ -50,23 +51,24 @@ enum STAuthRouter: STRouter {
             return "/logout"
         }
     }
-
-    var parameters: [String: Any]? {
+    
+    var parameters: [String : Any]? {
         switch self {
-        case let .localLogin(id, password):
-            return ["id": id, "password": password]
+        case .localLogin(let id, let password):
+            return ["id" : id, "password" : password]
         case let .localRegister(id, password, email):
-            var ret = ["id": id, "password": password]
+            var ret = ["id" : id, "password" : password]
             if let email = email {
                 ret["email"] = email
             }
             return ret
         case let .fbRegister(id, token):
-            return ["fb_id": id, "fb_token": token]
+            return ["fb_id" : id, "fb_token" : token]
         case let .appleRegister(token):
-            return ["apple_token": token]
+            return ["apple_token" : token]
         case let .logOutDevice(userId, fcmToken):
             return ["user_id": userId, "registration_id": fcmToken]
         }
     }
+    
 }

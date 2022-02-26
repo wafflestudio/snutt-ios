@@ -8,11 +8,12 @@
 
 import UIKit
 
-class STSearchBar: UISearchBar, UISearchBarDelegate {
-    weak var searchController: STLectureSearchTableViewController!
-    var queryString: String = ""
-
-    var isEditingTag: Bool = false {
+class STSearchBar: UISearchBar, UISearchBarDelegate{
+    
+    weak var searchController : STLectureSearchTableViewController!
+    var queryString : String = ""
+    
+    var isEditingTag : Bool = false {
         didSet {
             if isEditingTag {
                 self.returnKeyType = .done
@@ -25,38 +26,38 @@ class STSearchBar: UISearchBar, UISearchBarDelegate {
             }
         }
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        delegate = self
-        keyboardType = .default
-        returnKeyType = .search
-        enablesReturnKeyAutomatically = false
-        tintColor = UIColor.black
+        self.delegate = self
+        self.keyboardType = .default
+        self.returnKeyType = .search
+        self.enablesReturnKeyAutomatically = false
+        self.tintColor = UIColor.black
     }
-
+    
     func disableEditingTag() {
-        if isEditingTag {
+        if (isEditingTag) {
             isEditingTag = false
-            text = queryString
+            self.text = queryString
             queryString = ""
             searchController.hideTagRecommendation()
         }
     }
-
+    
     func enableEditingTag() {
-        if !isEditingTag {
-            queryString = text!
-            text = ""
+        if (!isEditingTag) {
+            queryString = self.text!
+            self.text = "";
             isEditingTag = true
-            searchBar(self, textDidChange: text!)
+            self.searchBar(self, textDidChange: self.text!)
         }
     }
-
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         if isEditingTag {
             isEditingTag = false
-            text = queryString
+            self.text = queryString
             queryString = ""
             searchController.hideTagRecommendation()
         } else {
@@ -64,13 +65,13 @@ class STSearchBar: UISearchBar, UISearchBarDelegate {
             searchBar.resignFirstResponder()
         }
     }
-
-    func searchBar(_: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if isEditingTag {
             if text.contains("#") {
                 let replacement = text.replacingOccurrences(of: "#", with: "")
                 self.text!.replaceSubrange(STUtil.getRangeFromNSRange(self.text!, range: range), with: replacement)
-                searchBar(self, textDidChange: self.text!)
+                self.searchBar(self, textDidChange: self.text!)
                 return false
             }
             return true
@@ -78,63 +79,67 @@ class STSearchBar: UISearchBar, UISearchBarDelegate {
             if text == "#" {
                 queryString = self.text!
                 queryString.replaceSubrange(STUtil.getRangeFromNSRange(queryString, range: range), with: "")
-                self.text = ""
+                self.text = "";
                 isEditingTag = true
-                searchBar(self, textDidChange: self.text!)
+                self.searchBar(self, textDidChange: self.text!)
                 return false
             } else if text.contains("#") {
                 let replacement = text.replacingOccurrences(of: "#", with: "")
                 self.text!.replaceSubrange(STUtil.getRangeFromNSRange(self.text!, range: range), with: replacement)
-                searchBar(self, textDidChange: self.text!)
+                self.searchBar(self, textDidChange: self.text!)
                 return false
             }
             return true
         }
     }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange _: String) {
+    
+    
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
         if !searchBar.isFirstResponder {
             // this is only for the case of clicking clear button while not in focus
             // searchController.state = .empty
             return
         }
     }
-
-    func searchBarTextDidBeginEditing(_: UISearchBar) {
-        showsCancelButton = true
-        if case let .loaded(query, tagList) = searchController.searchState {
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.showsCancelButton = true
+        if case .loaded(let query, let tagList) = searchController.searchState {
             searchController.searchState = .editingQuery(query, tagList, searchController.FilteredList)
         } else {
-            if case let .loading(request) = searchController.searchState {
+             if case .loading(let request) = searchController.searchState {
                 request.cancel()
             }
             searchController.searchState = .editingQuery(nil, [], [])
         }
         searchController.reloadData()
         searchController.tableView.reloadEmptyDataSet()
-
+        
         if searchController.filterViewState == .opened {
-            searchController.toggleFilterView()
+            self.searchController.toggleFilterView()
         }
     }
-
-    func searchBarTextDidEndEditing(_: UISearchBar) {
-        showsCancelButton = false
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.showsCancelButton = false
         searchController.reloadData()
     }
-
-    func searchBarSearchButtonClicked(_: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if isEditingTag {
             if searchController.tagTableView.filteredList.count != 0 {
                 searchController.tagTableView.addTagAtIndex(0)
             }
         } else {
-            resignFirstResponder()
-            searchController.searchBarSearchButtonClicked(text!)
+            self.resignFirstResponder()
+            searchController.searchBarSearchButtonClicked(self.text!)
         }
+        
     }
-
-    func searchBarBookmarkButtonClicked(_: UISearchBar) {
+    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
         searchController.toggleFilterView()
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 extension STColorManager {
     func updateData() {
-        STNetworking.getColors({ colorList, nameList in
+        STNetworking.getColors({colorList, nameList in
             self.colorList = STColorList(colorList: colorList, nameList: nameList)
             self.saveData()
             STEventCenter.sharedInstance.postNotification(event: STEvent.ColorListUpdated, object: nil)

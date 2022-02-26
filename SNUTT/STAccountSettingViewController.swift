@@ -6,18 +6,19 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import FBSDKLoginKit
 import UIKit
+import FBSDKLoginKit
 
 class STAccountSettingViewController: UITableViewController {
-    var isNetworking = true
-
+    
+    var isNetworking = true;
+    
     enum CellType {
         case rightDetail(title: String, detail: String)
         case button(title: String)
         case redButton(title: String)
     }
-
+    
     enum Cell {
         case showId
         case changePassword
@@ -28,9 +29,9 @@ class STAccountSettingViewController: UITableViewController {
         case showEmail
         case changeEmail
         case unregister
-
-        var cellType: CellType {
-            switch self {
+        
+        var cellType : CellType {
+            switch (self) {
             case .showId:
                 return CellType.rightDetail(title: "아이디", detail: STUser.currentUser?.localId ?? "(없음)")
             case .changePassword:
@@ -52,15 +53,15 @@ class STAccountSettingViewController: UITableViewController {
             }
         }
     }
-
-    var cellList: [[Cell]] = []
-    var fbSection: Int = 0
-    var emailSection: Int = 0
-
+    
+    var cellList : [[Cell]] = []
+    var fbSection : Int = 0
+    var emailSection : Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         STEventCenter.sharedInstance.addObserver(self, selector: #selector(STAccountSettingViewController.userUpdated), event: STEvent.UserUpdated, object: nil)
-
+        
         refreshCellList()
         getUser()
         // Uncomment the following line to preserve selection between presentations
@@ -69,39 +70,40 @@ class STAccountSettingViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
+    
     @objc func userUpdated() {
         isNetworking = false
         refreshCellList()
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
-
+    
     func getUser() {
-        isNetworking = true
+        isNetworking = true;
         STUser.getUser()
     }
-
+    
     func refreshCellList() {
         cellList = []
-
-        if STUser.currentUser?.localId == nil {
+        
+        if (STUser.currentUser?.localId == nil) {
             cellList.append([Cell.attachLocalId])
         } else {
             cellList.append([Cell.showId, Cell.changePassword])
         }
-
+        
         fbSection = cellList.count
-        if STUser.currentUser?.fbName == nil {
+        if (STUser.currentUser?.fbName == nil) {
             cellList.append([Cell.attachFB])
         } else {
             cellList.append([Cell.showFBId, Cell.detachFB])
         }
-
+        
         emailSection = cellList.count
         cellList.append([Cell.showEmail, Cell.changeEmail])
-
+        
         cellList.append([Cell.unregister])
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -110,58 +112,60 @@ class STAccountSettingViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in _: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return cellList.count
     }
 
-    override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellList[section].count
     }
-
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellType = cellList[indexPath.section][indexPath.row].cellType
         switch cellType {
-        case let .rightDetail(title, detail):
+        case .rightDetail(let title, let detail):
             let cell = tableView.dequeueReusableCell(withIdentifier: "RightDetailCell", for: indexPath)
             cell.textLabel?.text = title
             cell.detailTextLabel?.text = detail
             return cell
-        case let .button(title):
+        case .button(let title):
             let cell = tableView.dequeueReusableCell(withIdentifier: "ButtonCell", for: indexPath)
             cell.textLabel?.text = title
             cell.accessoryType = .disclosureIndicator
             return cell
-        case let .redButton(title):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RedButtonCell", for: indexPath) as! STRedButtonTableViewCell
+        case .redButton(let title):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RedButtonCell",for: indexPath) as! STRedButtonTableViewCell
             cell.buttonLabel.text = title
             return cell
         }
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if isNetworking {
             return
         }
         let cell = cellList[indexPath.section][indexPath.row]
-        switch cell {
+        switch (cell) {
         case .attachFB:
-            let registerFB: (String, String) -> Void = { id, token in
+            let registerFB : (String, String) -> () = { id, token in
                 STNetworking.attachFB(fb_id: id, fb_token: token, done: {
                     STUser.getUser()
                     self.refreshCellList()
                     self.tableView.reloadSections(IndexSet(integer: self.fbSection), with: .automatic)
-                }, failure: {})
+                    }, failure: { 
+                        return
+                })
             }
-
+            
             if let accessToken = FBSDKAccessToken.current(),
-               let id = accessToken.userID,
-               let token = accessToken.tokenString
-            {
+                let id = accessToken.userID,
+                let token = accessToken.tokenString {
                 registerFB(id, token)
             } else {
                 let fbLoginManager = FBSDKLoginManager()
-                fbLoginManager.logIn(withReadPermissions: ["public_profile"], from: self, handler: { result, error in
+                fbLoginManager.logIn(withReadPermissions: ["public_profile"], from: self, handler:{result, error in
                     if error != nil {
                         STAlertView.showAlert(title: "페북 연동 실패", message: "페이스북 연동에 실패했습니다.")
                         return
@@ -173,8 +177,7 @@ class STAccountSettingViewController: UITableViewController {
                     if result.isCancelled {
                         STAlertView.showAlert(title: "페북 연동 실패", message: "페이스북 연동에 실패했습니다.")
                     } else if let id = result.token.userID,
-                              let token = result.token.tokenString
-                    {
+                        let token = result.token.tokenString {
                         registerFB(id, token)
                     } else {
                         STAlertView.showAlert(title: "페북 연동 실패", message: "페이스북 연동에 실패했습니다.")
@@ -194,13 +197,13 @@ class STAccountSettingViewController: UITableViewController {
                 alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                 alert.addAction(UIAlertAction(title: "이메일 변경", style: .default, handler: { _ in
                     if let email = alert.textFields?.first?.text {
-                        if STUtil.validateEmail(email) {
+                        if (STUtil.validateEmail(email)) {
                             STNetworking.editUser(email, done: {
                                 STUser.currentUser?.email = email
                                 self.tableView.reloadSections(IndexSet(integer: self.emailSection), with: .automatic)
-                            },
-                            failure: {
-                                STAlertView.showAlert(title: "이메일 변경", message: "이메일 변경에 실패했습니다.")
+                                }
+                                , failure: {
+                                    STAlertView.showAlert(title: "이메일 변경", message: "이메일 변경에 실패했습니다.")
                             })
                             return
                         }
@@ -228,12 +231,12 @@ class STAccountSettingViewController: UITableViewController {
                     let curPass = alert.textFields?[0].text ?? ""
                     let newPass = alert.textFields?[1].text ?? ""
                     let newPass2 = alert.textFields?[2].text ?? ""
-                    if newPass != newPass2 {
+                    if (newPass != newPass2) {
                         STAlertView.showAlert(title: "비밀번호 변경", message: "비밀번호와 비밀번호 확인란이 다릅니다.")
                         return
-                    } else if !STUtil.validatePassword(newPass) {
-                        var message = ""
-                        if newPass.characters.count > 20 || newPass.characters.count < 6 {
+                    } else if (!STUtil.validatePassword(newPass)) {
+                        var message : String = ""
+                        if (newPass.characters.count > 20  || newPass.characters.count < 6) {
                             message = "비밀번호는 6자 이상, 20자 이하여야 합니다."
                         } else {
                             message = "비밀번호는 최소 숫자 1개와 영문자 1개를 포함해야 합니다."
@@ -241,11 +244,13 @@ class STAccountSettingViewController: UITableViewController {
                         STAlertView.showAlert(title: "비밀번호 변경", message: message)
                         return
                     }
-
-                    STNetworking.changePassword(curPass, newPassword: newPass, done: {}, failure: { errMessage in
-                        if let err = errMessage {
-                            STAlertView.showAlert(title: "비밀번호 변경", message: err)
-                        }
+                    
+                    STNetworking.changePassword(curPass, newPassword: newPass, done: { 
+                        return
+                        }, failure: { errMessage in
+                            if let err = errMessage {
+                                STAlertView.showAlert(title: "비밀번호 변경", message: err)
+                            }
                     })
                 }))
             })
@@ -256,18 +261,22 @@ class STAccountSettingViewController: UITableViewController {
                 return
             }
             let detachAction = UIAlertAction(title: "페이스북 연동 끊기", style: .destructive, handler: { _ in
-                STNetworking.detachFB({
+                STNetworking.detachFB({ 
                     STUser.currentUser?.fbName = nil
                     self.refreshCellList()
                     self.tableView.reloadSections(IndexSet(integer: self.fbSection), with: .automatic)
-                }, failure: {})
+                    }, failure: { 
+                        return
+                })
             })
             let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             STAlertView.showAlert(title: "페이스북 연동 끊기", message: "페이스북 연동을 끊겠습니까?", actions: [cancelAction, detachAction])
             return
         case .unregister:
             let unregisterAction = UIAlertAction(title: "회원탈퇴", style: .destructive, handler: { _ in
-                STNetworking.unregister {}
+                STNetworking.unregister({ 
+                    return
+                })
             })
             let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             STAlertView.showAlert(title: "회원탈퇴", message: "SNUTT 회원 탈퇴를 하겠습니까?", actions: [cancelAction, unregisterAction])
@@ -276,49 +285,50 @@ class STAccountSettingViewController: UITableViewController {
             return
         }
     }
+    
+    /*
+    // Override to support conditional editing of the table view.
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    */
 
     /*
-     // Override to support conditional editing of the table view.
-     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-         // Return false if you do not want the specified item to be editable.
-         return true
-     }
-     */
+    // Override to support editing the table view.
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            // Delete the row from the data source
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }    
+    }
+    */
 
     /*
-     // Override to support editing the table view.
-     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-         if editingStyle == .Delete {
-             // Delete the row from the data source
-             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-         } else if editingStyle == .Insert {
-             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-         }
-     }
-     */
+    // Override to support rearranging the table view.
+    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+
+    }
+    */
 
     /*
-     // Override to support rearranging the table view.
-     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-     }
-     */
-
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-         // Return false if you do not want the item to be re-orderable.
-         return true
-     }
-     */
+    // Override to support conditional rearranging of the table view.
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // Return false if you do not want the item to be re-orderable.
+        return true
+    }
+    */
 
     /*
-     // MARK: - Navigation
+    // MARK: - Navigation
 
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-         // Get the new view controller using segue.destinationViewController.
-         // Pass the selected object to the new view controller.
-     }
-     */
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }

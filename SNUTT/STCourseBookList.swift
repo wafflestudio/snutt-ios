@@ -10,43 +10,48 @@ import Foundation
 
 class STCourseBookList {
     // MARK: Singleton
-
-    fileprivate static var sharedManager: STCourseBookList?
-    static var sharedInstance: STCourseBookList {
-        if sharedManager == nil {
-            sharedManager = STCourseBookList()
+    
+    fileprivate static var sharedManager : STCourseBookList? = nil
+    static var sharedInstance : STCourseBookList {
+        get {
+            if sharedManager == nil {
+                sharedManager = STCourseBookList()
+            }
+            return sharedManager!
         }
-        return sharedManager!
     }
-
     fileprivate init() {
-        loadCourseBooks()
-        getCourseBooks()
+        self.loadCourseBooks()
+        self.getCourseBooks()
     }
-
-    var courseBookList: [STCourseBook] = []
-
-    func loadCourseBooks() {
+    
+    var courseBookList : [STCourseBook] = []
+    
+    func loadCourseBooks () {
+        
         guard let courseBookList = NSKeyedUnarchiver.unarchiveObject(withFile: getDocumentsDirectory().appendingPathComponent("courseBookList.archive")) as? [NSDictionary] else {
             self.courseBookList = []
             return
         }
-        self.courseBookList = courseBookList.map { dict in
-            STCourseBook(dictionary: dict)!
-        }
+        self.courseBookList = courseBookList.map({ dict in
+            return STCourseBook(dictionary: dict)!
+        })
     }
-
-    func saveCourseBooks() {
-        NSKeyedArchiver.archiveRootObject(courseBookList.map { book in
-            book.dictionaryValue()
-        }, toFile: getDocumentsDirectory().appendingPathComponent("courseBookList.archive"))
+    
+    func saveCourseBooks () {
+        NSKeyedArchiver.archiveRootObject(courseBookList.map({ book in
+            return book.dictionaryValue()
+        }), toFile: getDocumentsDirectory().appendingPathComponent("courseBookList.archive"))
     }
-
-    func getCourseBooks() {
+    
+    func getCourseBooks () {
         STNetworking.getCourseBookList({ list in
             self.courseBookList = list
             STEventCenter.sharedInstance.postNotification(event: .CourseBookUpdated, object: nil)
             self.saveCourseBooks()
-        }, failure: {})
+            }, failure: { 
+                return
+        })
     }
+    
 }
