@@ -294,12 +294,13 @@ extension MenuViewController: SettingViewControllerDelegate {
         }
         
         STNetworking.updateTimetable(id, title: title, done: { timetableList in
-            if self.currentTimetable?.id == timetable.id {
+            if let currentTimetable = self.currentTimetable, currentTimetable.id == timetable.id {
                 let updatedTimetable = timetableList.filter({ tt in
                     return tt.id == timetable.id
                 })
                 
-                STTimetableManager.sharedInstance.currentTimetable = updatedTimetable[0]
+                currentTimetable.title = updatedTimetable[0].title
+                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
             }
             
             self.timetableList = timetableList
