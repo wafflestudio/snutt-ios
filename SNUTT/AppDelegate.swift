@@ -122,6 +122,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setColors() {
         UINavigationBar.appearance().tintColor = UIColor.black
         UITabBar.appearance().tintColor = UIColor.black
+
+        if #available(iOS 15.0, *) {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithOpaqueBackground()
+            navigationBarAppearance.backgroundColor = .systemBackground
+            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+            
+            let tabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.configureWithOpaqueBackground()
+            tabBarAppearance.backgroundColor = .systemBackground
+            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        }
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
