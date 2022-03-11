@@ -11,7 +11,7 @@ import NotificationCenter
 import SwiftyJSON
 import SwiftyUserDefaults
 
-class TodayViewController: UIViewController, NCWidgetProviding {
+class TodayViewController: UIViewController {
     //TODO: iOS 9 Testing
     
     @IBOutlet weak var timetableView: STTimetableCollectionView!
@@ -83,6 +83,15 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
     }
 
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+}
+
+extension TodayViewController:NCWidgetProviding{
+    
     func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize){
         if (activeDisplayMode == NCWidgetDisplayMode.compact) {
             self.preferredContentSize = maxSize
@@ -108,10 +117,5 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         });
 
         completionHandler(NCUpdateResult.newData)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
