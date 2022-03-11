@@ -95,14 +95,12 @@ extension TodayViewController:NCWidgetProviding{
     func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize){
         if (activeDisplayMode == .compact) {
             self.preferredContentSize = maxSize
-            timetableView.frame.size = maxSize
             reloadData()
             timetableView.isHidden = true
             descriptionLabel.isHidden = false
         }
         else {
             self.preferredContentSize = CGSize(width: 0, height: maxHeight)
-            timetableView.frame.size = CGSize(width: 0, height: maxHeight)
             reloadData()
             timetableView.isHidden = false
             descriptionLabel.isHidden = true
