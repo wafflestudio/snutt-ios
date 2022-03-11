@@ -27,6 +27,7 @@ jobs:
         with:
           sha: ${{ github.event.pull_request.head.sha }}
           base_sha: ${{ github.event.pull_request.base.sha }}
+          separator: ","
           files: |
             **/*.swift
 
@@ -35,7 +36,7 @@ jobs:
 
       - name: Format Swift code
         run: |
-          LIST=${{ steps.changed-files.outputs.all_changed_files }}
+          LIST='${{ steps.changed-files.outputs.all_changed_files }}'
           echo $LIST
           double_quoted="\"${LIST//,/\" \"}\""
           echo $double_quoted
