@@ -6,16 +6,16 @@
 //  Copyright © 2017년 WaffleStudio. All rights reserved.
 //
 
-import UIKit
 import NotificationCenter
 import SwiftyJSON
 import SwiftyUserDefaults
+import UIKit
 
 class TodayViewController: UIViewController {
-    //TODO: iOS 9 Testing
-    
+    // TODO: iOS 9 Testing
+
     @IBOutlet weak var timetableView: STTimetableCollectionView!
-    var maxHeight : CGFloat =  400.0
+    var maxHeight: CGFloat = 400.0
 
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
@@ -28,7 +28,7 @@ class TodayViewController: UIViewController {
         NSKeyedUnarchiver.setClass(STColorList.self, forClassName: "STColorList")
 
         super.viewDidLoad()
-        guard let extensionContext = self.extensionContext else {
+        guard let extensionContext = extensionContext else {
             return
         }
         descriptionLabel.text = "SNUTT 시간표를 보기 위해서는 위의 더보기를 눌러주세요."
@@ -39,12 +39,12 @@ class TodayViewController: UIViewController {
         extensionContext.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
         let displayMode = extensionContext.widgetActiveDisplayMode
         let maxSize = extensionContext.widgetMaximumSize(for: displayMode)
-        self.widgetActiveDisplayModeDidChange(displayMode, withMaximumSize: maxSize)
+        widgetActiveDisplayModeDidChange(displayMode, withMaximumSize: maxSize)
 
         NotificationCenter.default.addObserver(self, selector: #selector(userDefaultsDidChange), name: UserDefaults.didChangeNotification, object: nil)
     }
 
-    @objc func userDefaultsDidChange (_ notification: Notification) {
+    @objc func userDefaultsDidChange(_: Notification) {
         updateTimetable()
         updateSetting()
         reloadData()
@@ -69,9 +69,9 @@ class TodayViewController: UIViewController {
         } else {
             timetableView.shouldAutofit = false
             let dayRange = STDefaults[.dayRange]
-            var columnHidden : [Bool] = []
-            for i in 0..<6 {
-                if dayRange[0] <= i && i <= dayRange[1] {
+            var columnHidden: [Bool] = []
+            for i in 0 ..< 6 {
+                if dayRange[0] <= i, i <= dayRange[1] {
                     columnHidden.append(false)
                 } else {
                     columnHidden.append(true)
@@ -83,36 +83,33 @@ class TodayViewController: UIViewController {
         }
     }
 
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 }
 
-extension TodayViewController:NCWidgetProviding{
-    
-    func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize){
-        if (activeDisplayMode == .compact) {
-            self.preferredContentSize = maxSize
+extension TodayViewController: NCWidgetProviding {
+    func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
+        if activeDisplayMode == .compact {
+            preferredContentSize = maxSize
             reloadData()
             timetableView.isHidden = true
             descriptionLabel.isHidden = false
-        }
-        else {
-            self.preferredContentSize = CGSize(width: 0, height: maxHeight)
+        } else {
+            preferredContentSize = CGSize(width: 0, height: maxHeight)
             reloadData()
             timetableView.isHidden = false
             descriptionLabel.isHidden = true
         }
     }
 
-    func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
-        DispatchQueue.main.async(execute: {
+    func widgetPerformUpdate(completionHandler: @escaping (NCUpdateResult) -> Void) {
+        DispatchQueue.main.async {
             self.updateTimetable()
             self.updateSetting()
             self.reloadData()
-        });
+        }
 
         completionHandler(NCUpdateResult.newData)
     }
