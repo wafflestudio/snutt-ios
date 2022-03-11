@@ -36,13 +36,9 @@ jobs:
 
       - name: Format Swift code
         run: |
-          LIST='${{ steps.changed-files.outputs.all_changed_files }}'
-          echo $LIST
-          double_quoted="\"${LIST//,/\" \"}\""
-          echo $double_quoted
-          cat $double_quoted
-          echo "swiftformat --verbose $double_quoted --config .swiftformat"
-          swiftformat --verbose $double_quoted --config .swiftformat
+          string='${{ steps.changed-files.outputs.all_changed_files }}'
+          IFS=, read -r -a files  <<<"$string"
+          swiftformat --verbose "${files[@]}" --config .swiftformat
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
