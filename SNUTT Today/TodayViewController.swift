@@ -93,7 +93,7 @@ class TodayViewController: UIViewController {
 extension TodayViewController:NCWidgetProviding{
     
     func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize){
-        if (activeDisplayMode == NCWidgetDisplayMode.compact) {
+        if (activeDisplayMode == .compact) {
             self.preferredContentSize = maxSize
             timetableView.frame.size = maxSize
             reloadData()
