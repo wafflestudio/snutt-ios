@@ -40,6 +40,7 @@ jobs:
           echo $LIST
           double_quoted="\"${LIST//,/\" \"}\""
           echo $double_quoted
+          cat $double_quoted
           echo "swiftformat --verbose $double_quoted --config .swiftformat"
           swiftformat --verbose $double_quoted --config .swiftformat
 
