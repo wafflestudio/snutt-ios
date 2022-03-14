@@ -90,8 +90,6 @@ class STTimetableTabViewController: UIViewController {
         menuController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
         menuController.delegate = self
         
-        originalTheme = STTimetableManager.sharedInstance.currentTimetable?.theme
-        
         addMenuView()
         addThemeSettingView()
     }
@@ -475,7 +473,6 @@ extension STTimetableTabViewController: MenuViewControllerDelegate {
     private func setTheme() {
         if let timetable = currentTimetable, let id = timetable.id {
             guard let theme = temporaryTheme else {
-                self.toggleThemeSettingView()
                 return
             }
             STNetworking.updateTheme(id: id, theme: theme.rawValue) { (timetable) in
@@ -493,8 +490,9 @@ extension STTimetableTabViewController: MenuViewControllerDelegate {
 
 extension STTimetableTabViewController {
     private func fetchCurrentTimetable() {
-        STNetworking.getRecentTimetable({ timetable in
+        STNetworking.getRecentTimetable({ [weak self] timetable in
             STTimetableManager.sharedInstance.currentTimetable = timetable
+            self?.originalTheme = timetable?.theme
         }, failure: {
             STAlertView.showAlert(title: "시간표 로딩 실패", message: "시간표가 서버에 존재하지 않습니다.")
         })
