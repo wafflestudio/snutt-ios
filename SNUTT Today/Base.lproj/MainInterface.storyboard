@@ -24,6 +24,9 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RaS-jH-fp2" customClass="STTimetableCollectionView" customModule="SNUTT_Today" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="400" id="Rbb-PT-hgO"/>
+                                </constraints>
                             </containerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yob-Pd-1js">
                                 <rect key="frame" x="31" y="0.0" width="258" height="400"/>
@@ -38,7 +41,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="yob-Pd-1js" secondAttribute="trailing" constant="15" id="TCl-MV-tQW"/>
                             <constraint firstItem="RaS-jH-fp2" firstAttribute="top" secondItem="S3S-Oj-5AN" secondAttribute="top" id="Xcm-69-5wX"/>
                             <constraint firstAttribute="trailing" secondItem="RaS-jH-fp2" secondAttribute="trailing" id="egp-vj-VCh"/>
-                            <constraint firstAttribute="bottom" secondItem="RaS-jH-fp2" secondAttribute="bottom" id="h8g-3K-B43"/>
                             <constraint firstItem="yob-Pd-1js" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leadingMargin" constant="15" id="nAY-AI-5HZ"/>
                             <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="yob-Pd-1js" secondAttribute="bottom" id="tsm-tp-ATv"/>
                         </constraints>
@@ -57,6 +59,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="133" y="67"/>
         </scene>
     </scenes>
 </document>

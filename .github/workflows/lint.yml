@@ -27,6 +27,7 @@ jobs:
         with:
           sha: ${{ github.event.pull_request.head.sha }}
           base_sha: ${{ github.event.pull_request.base.sha }}
+          separator: ","
           files: |
             **/*.swift
 
@@ -34,7 +35,10 @@ jobs:
         run: brew install swiftformat
 
       - name: Format Swift code
-        run: swiftformat --verbose ${{ steps.changed-files.outputs.all_changed_files }} --config .swiftformat
+        run: |
+          string='${{ steps.changed-files.outputs.all_changed_files }}'
+          IFS=, read -r -a files  <<<"$string"
+          swiftformat --verbose "${files[@]}" --config .swiftformat
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
