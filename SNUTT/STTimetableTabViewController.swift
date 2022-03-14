@@ -366,6 +366,7 @@ extension STTimetableTabViewController {
             temporaryTheme = nil
             timetableView.reloadData()
         }
+        originalTheme = currentTimetable?.theme
         backgroundView.frame.size.width = 0
         backgroundView.isHidden = true
     }
@@ -421,7 +422,6 @@ extension STTimetableTabViewController {
             showBackgroundCoverView()
             UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.92, initialSpringVelocity: 0, options: .curveEaseInOut) {
                 self.themeSettingController?.view.frame.origin.y = self.tabBarController!.view.frame.height - (self.themeSettingController?.view.frame.height ?? 0)
-
             } completion: { _ in
                 self.themeSettingViewState = .opened
             }
@@ -490,7 +490,6 @@ extension STTimetableTabViewController {
     private func fetchCurrentTimetable() {
         STNetworking.getRecentTimetable({ [weak self] timetable in
             STTimetableManager.sharedInstance.currentTimetable = timetable
-            self?.originalTheme = timetable?.theme
         }, failure: {
             STAlertView.showAlert(title: "시간표 로딩 실패", message: "시간표가 서버에 존재하지 않습니다.")
         })
