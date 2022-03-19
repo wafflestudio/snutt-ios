@@ -8,59 +8,59 @@
 
 import Foundation
 
-public enum STErrorCode : Int {
-    case SERVER_FAULT = 0x0000;
-    case NO_NETWORK = 0x0001;
-    
+public enum STErrorCode: Int {
+    case SERVER_FAULT = 0x0000
+    case NO_NETWORK = 0x0001
+
     /* 401 - Request was invalid */
-    case NO_FB_ID_OR_TOKEN = 0x1001;
-    case NO_YEAR_OR_SEMESTER = 0x1002;
-    case NOT_ENOUGH_TO_CREATE_TIMETABLE = 0x1003;
-    case NO_LECTURE_INPUT = 0x1004;
-    case NO_LECTURE_ID = 0x1005;
-    case ATTEMPT_TO_MODIFY_IDENTITIY = 0x1006;
-    case NO_TIMETABLE_TITLE = 0x1007;
-    case NO_REGISTRATION_ID = 0x1008;
-    case INVALID_TIMEMASK = 0x1009;
-    case INVALID_COLOR = 0x100A;
-    case NO_LECTURE_TITLE = 0x100B;
-    
+    case NO_FB_ID_OR_TOKEN = 0x1001
+    case NO_YEAR_OR_SEMESTER = 0x1002
+    case NOT_ENOUGH_TO_CREATE_TIMETABLE = 0x1003
+    case NO_LECTURE_INPUT = 0x1004
+    case NO_LECTURE_ID = 0x1005
+    case ATTEMPT_TO_MODIFY_IDENTITIY = 0x1006
+    case NO_TIMETABLE_TITLE = 0x1007
+    case NO_REGISTRATION_ID = 0x1008
+    case INVALID_TIMEMASK = 0x1009
+    case INVALID_COLOR = 0x100A
+    case NO_LECTURE_TITLE = 0x100B
+
     /* 403 - Authorization-related */
-    case WRONG_API_KEY = 0x2000;
-    case NO_USER_TOKEN = 0x2001;
-    case WRONG_USER_TOKEN = 0x2002;
-    case NO_ADMIN_PRIVILEGE = 0x2003;
-    case WRONG_ID = 0x2004;
-    case WRONG_PASSWORD = 0x2005;
-    case WRONG_FB_TOKEN = 0x2006;
-    case UNKNOWN_APP = 0x2007;
-    
+    case WRONG_API_KEY = 0x2000
+    case NO_USER_TOKEN = 0x2001
+    case WRONG_USER_TOKEN = 0x2002
+    case NO_ADMIN_PRIVILEGE = 0x2003
+    case WRONG_ID = 0x2004
+    case WRONG_PASSWORD = 0x2005
+    case WRONG_FB_TOKEN = 0x2006
+    case UNKNOWN_APP = 0x2007
+
     /* 403 - Restrictions */
-    case INVALID_ID = 0x3000;
-    case INVALID_PASSWORD = 0x3001;
-    case DUPLICATE_ID = 0x3002;
-    case DUPLICATE_TIMETABLE_TITLE = 0x3003;
-    case DUPLICATE_LECTURE = 0x3004;
-    case ALREADY_LOCAL_ACCOUNT = 0x3005;
-    case ALREADY_FB_ACCOUNT = 0x3006;
-    case NOT_LOCAL_ACCOUNT = 0x3007;
-    case NOT_FB_ACCOUNT = 0x3008;
-    case FB_ID_WITH_SOMEONE_ELSE = 0x3009;
-    case WRONG_SEMESTER = 0x300A;
-    case NOT_CUSTOM_LECTURE = 0x300B;
-    case LECTURE_TIME_OVERLAP = 0x300C;
-    case IS_CUSTOM_LECTURE = 0x300D;
-    case USER_HAS_NO_FCM_KEY = 0x300E;
-    
+    case INVALID_ID = 0x3000
+    case INVALID_PASSWORD = 0x3001
+    case DUPLICATE_ID = 0x3002
+    case DUPLICATE_TIMETABLE_TITLE = 0x3003
+    case DUPLICATE_LECTURE = 0x3004
+    case ALREADY_LOCAL_ACCOUNT = 0x3005
+    case ALREADY_FB_ACCOUNT = 0x3006
+    case NOT_LOCAL_ACCOUNT = 0x3007
+    case NOT_FB_ACCOUNT = 0x3008
+    case FB_ID_WITH_SOMEONE_ELSE = 0x3009
+    case WRONG_SEMESTER = 0x300A
+    case NOT_CUSTOM_LECTURE = 0x300B
+    case LECTURE_TIME_OVERLAP = 0x300C
+    case IS_CUSTOM_LECTURE = 0x300D
+    case USER_HAS_NO_FCM_KEY = 0x300E
+
     /* 404 - NOT found */
-    case TAG_NOT_FOUND = 0x4000;
-    case TIMETABLE_NOT_FOUND = 0x4001;
-    case LECTURE_NOT_FOUND = 0x4002;
-    case REF_LECTURE_NOT_FOUND = 0x4003;
-    case USER_NOT_FOUND = 0x4004;
-    case COLORLIST_NOT_FOUND = 0x4005;
-    
-    var errorTitle : String {
+    case TAG_NOT_FOUND = 0x4000
+    case TIMETABLE_NOT_FOUND = 0x4001
+    case LECTURE_NOT_FOUND = 0x4002
+    case REF_LECTURE_NOT_FOUND = 0x4003
+    case USER_NOT_FOUND = 0x4004
+    case COLORLIST_NOT_FOUND = 0x4005
+
+    var errorTitle: String {
         switch self {
         case .SERVER_FAULT:
             return "서버 문제"
@@ -114,8 +114,8 @@ public enum STErrorCode : Int {
             return "찾지 못함"
         }
     }
-    
-    var errorMessage : String {
+
+    var errorMessage: String {
         switch self {
         case .SERVER_FAULT:
             return "서버에 문제가 있으니, 잠시후 다시 시도해주세요."

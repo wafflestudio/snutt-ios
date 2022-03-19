@@ -9,24 +9,23 @@
 import UIKit
 
 class STTagCollectionViewCell: UICollectionViewCell {
-    
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var tagLabel: UILabel!
-    weak var collectionView : STTagCollectionView!
+    weak var collectionView: STTagCollectionView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
 
-    var searchTag : STTag! {
+    var searchTag: STTag! {
         didSet {
             tagLabel.text = searchTag.text
             containerView.backgroundColor = searchTag.type.tagLightColor
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.tap))
-        self.addGestureRecognizer(tap)
+        addGestureRecognizer(tap)
     }
 
     override func awakeFromNib() {
@@ -43,13 +42,13 @@ class STTagCollectionViewCell: UICollectionViewCell {
             tagLabel.font = UIFont.systemFont(ofSize: 14.0)
         }
     }
-    
+
     @objc func tap(_ gesture: UITapGestureRecognizer) {
         if gesture.state == UIGestureRecognizer.State.ended {
             deleteTag()
         }
     }
-    
+
     func deleteTag() {
         collectionView.searchController.searchBar.becomeFirstResponder()
         collectionView.searchController.removeTag(searchTag)

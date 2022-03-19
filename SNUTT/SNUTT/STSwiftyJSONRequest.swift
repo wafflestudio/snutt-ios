@@ -8,11 +8,11 @@
 
 // code referenced from https://github.com/SwiftyJSON/Alamofire-SwiftyJSON
 
-import Foundation
 import Alamofire
+import Foundation
 import SwiftyJSON
 
-extension Request {
+public extension Request {
     /// Returns a SwiftyJSON object contained in a result type constructed from the response data using `JSONSerialization`
     /// with the specified reading options.
     ///
@@ -22,11 +22,12 @@ extension Request {
     /// - parameter error:    The error already encountered if it exists.
     ///
     /// - returns: The result data type.
-    public static func serializeResponseSwiftyJSON(
+    static func serializeResponseSwiftyJSON(
         options: JSONSerialization.ReadingOptions,
         response: HTTPURLResponse?,
         data: Data?,
-        error: Error?)
+        error: Error?
+    )
         -> Result<JSON>
     {
         guard error == nil else { return .failure(error!) }
@@ -46,19 +47,19 @@ extension Request {
     }
 }
 
-extension DataRequest {
+public extension DataRequest {
     /// Creates a response serializer that returns a SwiftyJSON object result type constructed from the response data using
     /// `JSONSerialization` with the specified reading options.
     ///
     /// - parameter options: The JSON serialization reading options. Defaults to `.allowFragments`.
     ///
     /// - returns: A JSON object response serializer.
-    public static func swiftyJSONResponseSerializer(
+    static func swiftyJSONResponseSerializer(
         options: JSONSerialization.ReadingOptions = .allowFragments)
         -> DataResponseSerializer<JSON>
     {
         return DataResponseSerializer { _, response, data, error in
-            return Request.serializeResponseSwiftyJSON(options: options, response: response, data: data, error: error)
+            Request.serializeResponseSwiftyJSON(options: options, response: response, data: data, error: error)
         }
     }
 
@@ -69,10 +70,11 @@ extension DataRequest {
     ///
     /// - returns: The request.
     @discardableResult
-    public func responseSwiftyJSON(
+    func responseSwiftyJSON(
         queue: DispatchQueue? = nil,
         options: JSONSerialization.ReadingOptions = .allowFragments,
-        completionHandler: @escaping (DataResponse<JSON>) -> Void)
+        completionHandler: @escaping (DataResponse<JSON>) -> Void
+    )
         -> Self
     {
         return response(
@@ -82,24 +84,24 @@ extension DataRequest {
         )
     }
 
-    public func responseWithDone(_ done: ((Int, JSON) -> ())?, failure: ((STErrorCode) -> ())?, showNetworkAlert: Bool = true, showAlert: Bool = true, alertTitle: String? = nil ) {
-        self.responseSwiftyJSON { response in
+    func responseWithDone(_ done: ((Int, JSON) -> Void)?, failure: ((STErrorCode) -> Void)?, showNetworkAlert: Bool = true, showAlert: Bool = true, alertTitle: String? = nil) {
+        responseSwiftyJSON { response in
             switch response.result {
-            case .success(let json):
+            case let .success(json):
                 #if DEBUG
                     print(json)
                 #endif
                 if let statusCode = response.response?.statusCode {
                     if statusCode != 200 {
                         guard let errCodeRaw = json["errcode"].int else {
-                            done?(response.response?.statusCode ?? 200 ,json)
+                            done?(response.response?.statusCode ?? 200, json)
                             return
                         }
                         guard let errCode = STErrorCode(rawValue: errCodeRaw) else {
                             failure?(STErrorCode.SERVER_FAULT)
                             return
                         }
-                        switch (errCode) {
+                        switch errCode {
                         case STErrorCode.NO_USER_TOKEN, STErrorCode.WRONG_USER_TOKEN:
                             STUser.logOut()
                         default:
@@ -115,8 +117,8 @@ extension DataRequest {
                         return
                     }
                 }
-                done?(response.response?.statusCode ?? 200 ,json)
-            case .failure(let error):
+                done?(response.response?.statusCode ?? 200, json)
+            case let .failure(error):
                 #if DEBUG
                     print("Error on Networking")
                 #endif
@@ -128,7 +130,6 @@ extension DataRequest {
                     failure?(errorCode)
                 } else {
                     if showNetworkAlert {
-                        
                         STNetworking.showNetworkError()
                     }
                     failure?(STErrorCode.NO_NETWORK)
@@ -142,12 +143,12 @@ private let emptyDataStatusCodes: Set<Int> = [204, 205]
 
 /*
 
-extension JSON {
-    public var date : NSDate? {
-        let dateFor: NSDateFormatter = NSDateFormatter()
-        dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss:SSS"
-        
-        return dateFor.dateFromString(self.stringValue)
-    }
-}
-*/
+ extension JSON {
+     public var date : NSDate? {
+         let dateFor: NSDateFormatter = NSDateFormatter()
+         dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss:SSS"
+
+         return dateFor.dateFromString(self.stringValue)
+     }
+ }
+ */

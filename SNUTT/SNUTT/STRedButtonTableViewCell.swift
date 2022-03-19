@@ -9,7 +9,6 @@
 import UIKit
 
 class STRedButtonTableViewCell: UITableViewCell {
-
     @IBOutlet weak var buttonLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,5 +20,4 @@ class STRedButtonTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

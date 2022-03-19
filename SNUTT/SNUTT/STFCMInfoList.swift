@@ -8,8 +8,8 @@
 
 import Foundation
 
-class STFCMInfoList : NSObject, NSCoding {
-    var infoList : [STFCMInfo] = []
+class STFCMInfoList: NSObject, NSCoding {
+    var infoList: [STFCMInfo] = []
 
     init(infoList: [STFCMInfo]) {
         self.infoList = infoList

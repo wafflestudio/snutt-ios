@@ -9,7 +9,6 @@
 import UIKit
 
 class STAddLectureButtonCell: UITableViewCell {
-
     @IBOutlet weak var titleLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,5 +20,4 @@ class STAddLectureButtonCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }
