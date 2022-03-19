@@ -9,11 +9,10 @@
 import UIKit
 
 class STLeftAlignedLabelCell: STLectureDetailTableViewCell {
-
     @IBOutlet weak var label: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.selectionStyle = .none
+        selectionStyle = .none
         // Initialization code
     }
 
@@ -22,5 +21,4 @@ class STLeftAlignedLabelCell: STLectureDetailTableViewCell {
 
         // Configure the view for the selected state
     }
-    
 }

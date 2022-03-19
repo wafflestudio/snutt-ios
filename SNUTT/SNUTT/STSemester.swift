@@ -8,11 +8,11 @@
 
 import Foundation
 
-enum STSemester : Int {
+enum STSemester: Int {
     case first = 1, summer, second, winter
-    
+
     static let allValues = [first, summer, second, winter]
-    
+
     func shortString() -> String {
         switch self {
         case .first: return "1"
@@ -21,6 +21,7 @@ enum STSemester : Int {
         case .winter: return "W"
         }
     }
+
     func longString() -> String {
         switch self {
         case .first: return NSLocalizedString("first_semester", comment: "")
@@ -31,8 +32,8 @@ enum STSemester : Int {
     }
 }
 
-extension STSemester : Comparable {}
+extension STSemester: Comparable {}
 
-func <<T: RawRepresentable>(a: T, b: T) -> Bool where T.RawValue: Comparable {
+func < <T: RawRepresentable>(a: T, b: T) -> Bool where T.RawValue: Comparable {
     return a.rawValue < b.rawValue
 }

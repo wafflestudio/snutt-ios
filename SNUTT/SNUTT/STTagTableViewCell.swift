@@ -9,7 +9,6 @@
 import UIKit
 
 class STTagTableViewCell: UITableViewCell {
-
     @IBOutlet weak var tagLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,5 +20,4 @@ class STTagTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

@@ -13,7 +13,6 @@ protocol ErrorViewDelegate: AnyObject {
 }
 
 class ErrorView: UIView {
-    
     weak var delegate: ErrorViewDelegate?
 
     @IBOutlet weak var retryButton: UIButton! {
@@ -22,8 +21,8 @@ class ErrorView: UIView {
             retryButton.contentVerticalAlignment = .center
         }
     }
-    
-    @IBAction func retry(_ sender: UIButton) {
+
+    @IBAction func retry(_: UIButton) {
         delegate?.retry(self)
     }
 }

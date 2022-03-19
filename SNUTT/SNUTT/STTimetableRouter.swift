@@ -6,23 +6,22 @@
 //  Copyright © 2016년 WaffleStudio. All rights reserved.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
-enum STTimetableRouter : STRouter {
-    
-    static let baseURLString : String = STConfig.sharedInstance.baseURL+"/tables"
+enum STTimetableRouter: STRouter {
+    static let baseURLString: String = STConfig.sharedInstance.baseURL + "/tables"
     static let shouldAddToken: Bool = true
-    
+
     case getTimetableList
     case getTimetable(id: String)
-    case createTimetable(title : String, courseBook : STCourseBook)
-    case updateTimetable(id: String,title: String)
+    case createTimetable(title: String, courseBook: STCourseBook)
+    case updateTimetable(id: String, title: String)
     case deleteTimetable(id: String)
     case getRecentTimetable()
     case copyTimetable(id: String)
     case updateTheme(id: String, theme: Int)
-    
+
     var method: HTTPMethod {
         switch self {
         case .getTimetableList:
@@ -43,47 +42,46 @@ enum STTimetableRouter : STRouter {
             return .put
         }
     }
-    
+
     var path: String {
         switch self {
         case .getTimetableList:
             return ""
-        case .getTimetable(let id):
+        case let .getTimetable(id):
             return "/\(id)"
         case .createTimetable:
             return ""
-        case .updateTimetable(let id, _):
+        case let .updateTimetable(id, _):
             return "/\(id)"
-        case .deleteTimetable(let id):
+        case let .deleteTimetable(id):
             return "/\(id)"
         case .getRecentTimetable:
             return "/recent"
-        case .copyTimetable(let id):
+        case let .copyTimetable(id):
             return "/\(id)/copy"
-        case .updateTheme(let id, _):
+        case let .updateTheme(id, _):
             return "/\(id)/theme"
         }
     }
-    
-    var parameters: [String : Any]? {
+
+    var parameters: [String: Any]? {
         switch self {
         case .getTimetableList:
             return nil
         case .getTimetable:
             return nil
-        case .createTimetable(let title, let courseBook):
-            return ["title" : title, "year" : courseBook.quarter.year, "semester" : courseBook.quarter.semester.rawValue]
-        case .updateTimetable(_, let title):
-            return ["title" : title]
+        case let .createTimetable(title, courseBook):
+            return ["title": title, "year": courseBook.quarter.year, "semester": courseBook.quarter.semester.rawValue]
+        case let .updateTimetable(_, title):
+            return ["title": title]
         case .deleteTimetable:
             return nil
         case .getRecentTimetable:
             return nil
         case .copyTimetable:
             return nil
-        case .updateTheme(_, let theme):
-            return ["theme" : theme]
+        case let .updateTheme(_, theme):
+            return ["theme": theme]
         }
     }
-    
 }

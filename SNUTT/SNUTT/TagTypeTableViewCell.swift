@@ -9,7 +9,6 @@
 import UIKit
 
 class TagTypeTableViewCell: UITableViewCell {
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,17 +19,17 @@ class TagTypeTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
     @IBOutlet weak var tagLabel: UILabel!
-    
+
     func setLabel(text: String) {
         tagLabel.text = text
     }
-    
+
     func checkLabel() {
         tagLabel.textColor = .black
     }
-    
+
     func unCheckLabel() {
         tagLabel.textColor = .lightGray
     }

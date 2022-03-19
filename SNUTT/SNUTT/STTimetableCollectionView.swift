@@ -11,11 +11,10 @@ import UIKit
 let reuseIdentifier = "Cell"
 
 class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
-    
     var columnList = ["월", "화", "수", "목", "금", "토", "일"]
     var columnHidden = [false, false, false, false, false, false, false] {
         didSet {
-            columnNum = columnHidden.filter({ hidden in return !hidden}).count
+            columnNum = columnHidden.filter { hidden in !hidden }.count
             var cnt = 0
             for (index, element) in columnHidden.enumerated() {
                 if element {
@@ -27,66 +26,66 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             }
         }
     }
-    var shouldAutofit : Bool = false
-    
-    fileprivate(set) var dayToColumn : [Int] = [0,1,2,3,4,5,6]
-    fileprivate(set) var columnNum : Int = 7
-    
-    var rowStart : Int = 0
-    var rowEnd : Int = STPeriod.periodNum - 1
-    var rowNum : Int {
-        get {
-            return rowEnd - rowStart + 1
-        }
+
+    var shouldAutofit: Bool = false
+
+    fileprivate(set) var dayToColumn: [Int] = [0, 1, 2, 3, 4, 5, 6]
+    fileprivate(set) var columnNum: Int = 7
+
+    var rowStart: Int = 0
+    var rowEnd: Int = STPeriod.periodNum - 1
+    var rowNum: Int {
+        return rowEnd - rowStart + 1
     }
-    func getRowFromPeriod(_ period : Double) -> Double {
+
+    func getRowFromPeriod(_ period: Double) -> Double {
         return period - Double(rowStart)
     }
 
-    var cellLongClicked: ((STCourseCellCollectionViewCell)->())?
-    var cellTapped: ((STCourseCellCollectionViewCell)->())?
-    
-    var showTemporary : Bool = false
-    var timetable : STTimetable? = nil
-    var layout : STTimetableLayout! = nil
-    
+    var cellLongClicked: ((STCourseCellCollectionViewCell) -> Void)?
+    var cellTapped: ((STCourseCellCollectionViewCell) -> Void)?
+
+    var showTemporary: Bool = false
+    var timetable: STTimetable?
+    var layout: STTimetableLayout!
+
     let LectureSectionOffset = 3
-    let RatioForHeader : CGFloat = 0.67
-    let WidthForHeader : CGFloat = 25.0
-    
+    let RatioForHeader: CGFloat = 0.67
+    let WidthForHeader: CGFloat = 25.0
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.register(UINib(nibName: "STCourseCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CourseCell")
-        self.register(UINib(nibName: "STColumnHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ColumnHeaderCell")
-        self.register(UINib(nibName: "STRowHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RowHeaderCell")
-        self.register(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
+        register(UINib(nibName: "STCourseCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CourseCell")
+        register(UINib(nibName: "STColumnHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ColumnHeaderCell")
+        register(UINib(nibName: "STRowHeaderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RowHeaderCell")
+        register(UINib(nibName: "STSlotCellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SlotCell")
 
-        self.backgroundColor = UIColor.white
-        
+        backgroundColor = UIColor.white
+
         layout = STTimetableLayout()
         layout.WidthForHeader = WidthForHeader
-        self.collectionViewLayout = layout
-        (self.collectionViewLayout as! STTimetableLayout).timetableView = self
-        self.dataSource = self
-        if (shouldAutofit) {
+        collectionViewLayout = layout
+        (collectionViewLayout as! STTimetableLayout).timetableView = self
+        dataSource = self
+        if shouldAutofit {
             autofit()
         }
-        
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        //self.collectionView!.dataSource = TimetableCollectionViewController.datasource
-        //TimetableCollectionViewController.datasource.collectionView = self.collectionView
+        // self.collectionView!.dataSource = TimetableCollectionViewController.datasource
+        // TimetableCollectionViewController.datasource.collectionView = self.collectionView
         // Do any additional setup after loading the view.
     }
-    
+
     func autofit(includeTemp: Bool = false) {
-        if timetable != nil && timetable?.lectureList.count != 0 {
-            var tmpColumnHidden = [false,false,false,false,false,true,true]
+        if timetable != nil, timetable?.lectureList.count != 0 {
+            var tmpColumnHidden = [false, false, false, false, false, true, true]
             rowStart = 2
             rowEnd = 10
-            
+
             for lecture in timetable!.lectureList {
                 for singleClass in lecture.classList {
                     let startPeriod = Int(singleClass.time.startPeriod)
@@ -97,7 +96,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
                     tmpColumnHidden[day] = false
                 }
             }
-            if (includeTemp && timetable!.temporaryLecture != nil) {
+            if includeTemp, timetable!.temporaryLecture != nil {
                 for singleClass in timetable!.temporaryLecture!.classList {
                     let startPeriod = Int(singleClass.time.startPeriod)
                     let endPeriod = Int(singleClass.time.endPeriod - 0.5)
@@ -107,17 +106,17 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
                     tmpColumnHidden[day] = false
                 }
             }
-            columnHidden = tmpColumnHidden;
-            
+            columnHidden = tmpColumnHidden
+
         } else {
-            columnHidden = [false,false,false,false,false,true,true]
+            columnHidden = [false, false, false, false, false, true, true]
             rowStart = 1
             rowEnd = 12
         }
         layout?.updateContentSize()
     }
 
-    func getCellType(_ indexPath : IndexPath) -> STTimetableCellType {
+    func getCellType(_ indexPath: IndexPath) -> STTimetableCellType {
         switch indexPath.section {
         case 0:
             return .slot
@@ -131,8 +130,8 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             return .course
         }
     }
-    
-    func getSingleClass(_ indexPath : IndexPath) -> STSingleClass {
+
+    func getSingleClass(_ indexPath: IndexPath) -> STSingleClass {
         let lectureIndex = indexPath.section - LectureSectionOffset
         let classIndex = indexPath.row
         if lectureIndex == timetable!.lectureList.count {
@@ -140,7 +139,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         }
         return timetable!.lectureList[lectureIndex].classList[classIndex]
     }
-    
+
     func getLecture(_ indexPath: IndexPath) -> STLecture {
         let lectureIndex = indexPath.section - LectureSectionOffset
         if lectureIndex == timetable!.lectureList.count {
@@ -148,16 +147,15 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         }
         return timetable!.lectureList[lectureIndex]
     }
-    
+
     func reloadTimetable() {
-        
         if shouldAutofit {
             autofit()
         } else {
             layout?.updateContentSize()
         }
-        
-        self.reloadData()
+
+        reloadData()
     }
 
     private func reloadTempOnly() {
@@ -166,7 +164,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             reloadSections(IndexSet(integer: (timetable.lectureList.count) + LectureSectionOffset))
         }
     }
-    
+
     func reloadTempLecture() {
         // Assumption: autofit didn't change
         if !shouldAutofit {
@@ -177,19 +175,19 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         let oldRE = rowEnd
         let oldRS = rowStart
         autofit(includeTemp: true)
-        if (columnList == oldCL && columnHidden == oldCH && rowEnd == oldRE && rowStart == oldRS) {
+        if columnList == oldCL, columnHidden == oldCH, rowEnd == oldRE, rowStart == oldRS {
             reloadTempOnly()
         } else {
             guard let timetable = timetable else { return }
             UIView.performWithoutAnimation {
                 self.performBatchUpdates({
-                    //self.reloadItems(at: self.getAllIndexesForLecture())
-                    self.reloadSections(IndexSet(integersIn: 0..<self.LectureSectionOffset))
+                    // self.reloadItems(at: self.getAllIndexesForLecture())
+                    self.reloadSections(IndexSet(integersIn: 0 ..< self.LectureSectionOffset))
                     self.reloadSections(IndexSet(integer: (timetable.lectureList.count) + self.LectureSectionOffset))
                 }, completion: { _ in
                 })
             }
-            self.layout.invalidateLayout()
+            layout.invalidateLayout()
         }
     }
 
@@ -197,10 +195,10 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         // Assumption: only used when there is temp
         var indices = [IndexPath]()
         let lectureCnt = (timetable?.lectureList.count)!
-        for s in LectureSectionOffset...LectureSectionOffset+lectureCnt-1 {
-            let rows = self.numberOfItems(inSection: s)
-            if rows > 0{
-                for r in 0...rows - 1{
+        for s in LectureSectionOffset ... LectureSectionOffset + lectureCnt - 1 {
+            let rows = numberOfItems(inSection: s)
+            if rows > 0 {
+                for r in 0 ... rows - 1 {
                     let index = IndexPath(row: r, section: s)
                     indices.append(index)
                 }
@@ -208,19 +206,20 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         }
         return indices
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
+    /*
+     // MARK: - Navigation
+
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+         // Get the new view controller using [segue destinationViewController].
+         // Pass the selected object to the new view controller.
+     }
+     */
 
     // MARK: UICollectionViewDataSource
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
+    func collectionView(_: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 1
@@ -230,17 +229,17 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             return STPeriod.periodNum
         default:
             let index = section - LectureSectionOffset
-            if index < timetable!.lectureList.count{
+            if index < timetable!.lectureList.count {
                 return timetable!.lectureList[index].classList.count
-            } else if index == timetable!.lectureList.count && timetable!.temporaryLecture != nil {
+            } else if index == timetable!.lectureList.count, timetable!.temporaryLecture != nil {
                 return timetable!.temporaryLecture!.classList.count
             } else {
                 return 0
             }
         }
     }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+
+    func numberOfSections(in _: UICollectionView) -> Int {
         if timetable == nil {
             return LectureSectionOffset
         } else if showTemporary {
@@ -249,9 +248,8 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             return LectureSectionOffset + timetable!.lectureList.count
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         switch getCellType(indexPath) {
         case .headerColumn:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ColumnHeaderCell", for: indexPath) as! STColumnHeaderCollectionViewCell
@@ -265,7 +263,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RowHeaderCell", for: indexPath) as! STRowHeaderCollectionViewCell
             cell.isHidden = false
             cell.titleLabel.isHidden = true
-            //cell.titleLabel.text = String(indexPath.row);
+            // cell.titleLabel.text = String(indexPath.row);
             cell.timeLabel.text = String(indexPath.row + 8)
             if !(rowStart <= indexPath.row && indexPath.row <= rowEnd) {
                 cell.isHidden = true
@@ -282,8 +280,8 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
         case .course:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CourseCell", for: indexPath) as! STCourseCellCollectionViewCell
             cell.isHidden = false
-            cell.layer.mask=nil
-            
+            cell.layer.mask = nil
+
             let lecture = getLecture(indexPath)
             cell.longClicked = cellLongClicked
             cell.tapped = cellTapped
@@ -292,10 +290,10 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             if dayToColumn[cell.singleClass.time.day.rawValue] == -1 {
                 cell.isHidden = true
             }
-            
+
             let heightPerRow = collectionView.frame.height / (CGFloat(rowNum) + RatioForHeader)
             if Double(rowStart) > cell.singleClass.time.startPeriod {
-                cell.mask(CGRect(x: 0, y: heightPerRow * CGFloat(Double(rowStart) - cell.singleClass.time.startPeriod), width: cell.frame.width, height:cell.frame.height))
+                cell.mask(CGRect(x: 0, y: heightPerRow * CGFloat(Double(rowStart) - cell.singleClass.time.startPeriod), width: cell.frame.width, height: cell.frame.height))
             }
             return cell
         case .temporaryCourse:
@@ -308,48 +306,47 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             }
             let heightPerRow = collectionView.frame.height / (CGFloat(rowNum) + RatioForHeader)
             if Double(rowStart) > cell.singleClass.time.startPeriod {
-                cell.mask(CGRect(x: 0, y: heightPerRow * CGFloat(Double(rowStart) - cell.singleClass.time.startPeriod), width: cell.frame.width, height:cell.frame.height))
+                cell.mask(CGRect(x: 0, y: heightPerRow * CGFloat(Double(rowStart) - cell.singleClass.time.startPeriod), width: cell.frame.width, height: cell.frame.height))
             }
-            
+
             // TODO: 임시 강의 색깔 정하는게 조금 부자연스러움
             cell.courseText.textColor = .black
             cell.backgroundColor = UIColor(red: 207, green: 207, blue: 207)
-            
+
             return cell
         }
     }
-    
+
     // MARK: UICollectionViewSupplementary
-    
+
     // MARK: UICollectionViewDelegate
 
     /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
+     // Uncomment this method to specify if the specified item should be highlighted during tracking
+     override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+         return true
+     }
+     */
 
     /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
+     // Uncomment this method to specify if the specified item should be selected
+     override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+         return true
+     }
+     */
 
     /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
+     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
+     override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+         return false
+     }
 
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
+     override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
+         return false
+     }
 
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
+     override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
 
+     }
+     */
 }
