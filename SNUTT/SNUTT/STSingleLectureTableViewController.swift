@@ -1,0 +1,428 @@
+//
+//  STSingleLectureTableViewController.swift
+//  SNUTT
+//
+//  Created by Rajin on 2016. 2. 23..
+//  Copyright © 2016년 WaffleStudio. All rights reserved.
+//
+
+import ChameleonFramework
+import SafariServices
+import UIKit
+
+class STSingleLectureTableViewController: UITableViewController {
+    // TODO: Seriously needs refactoring
+    var custom: Bool = false
+    var currentLecture: STLecture = .init()
+    var theme: STTheme?
+    var sectionForSingleClass: Int = 4
+
+    enum LectureAttributes {
+        case title
+        case instructor
+        case credit
+        case department
+        case academicYear
+        case classification
+        case category
+        case courseNum
+        case lectureNum
+
+        var titleName: String {
+            switch self {
+            case .title: return "lecture_title".localizedString()
+            case .instructor: return "instructor".localizedString()
+            case .credit: return "credit".localizedString()
+            case .department: return "department".localizedString()
+            case .academicYear: return "academic_year".localizedString()
+            case .classification: return "classification".localizedString()
+            case .category: return "category".localizedString()
+            case .courseNum: return "course_number".localizedString()
+            case .lectureNum: return "lecture_number".localizedString()
+            }
+        }
+    }
+
+    func doneBlockFor(attribute: LectureAttributes) -> (String) -> Void {
+        return { (str: String) in
+            switch attribute {
+            case .title: self.currentLecture.title = str
+            case .instructor: self.currentLecture.instructor = str
+            case .credit:
+                self.currentLecture.credit = Int(str) ?? 0
+                if self.currentLecture.credit < 0 {
+                    self.currentLecture.credit = 0
+                }
+            case .department: self.currentLecture.department = str
+            case .academicYear: self.currentLecture.academicYear = str
+            case .classification: self.currentLecture.classification = str
+            case .category: self.currentLecture.category = str
+            case .courseNum: return
+            case .lectureNum: return
+            }
+        }
+    }
+
+    func initialValueFor(attribute: LectureAttributes) -> String {
+        switch attribute {
+        case .title: return currentLecture.title
+        case .instructor: return currentLecture.instructor
+        case .credit: return String(currentLecture.credit)
+        case .department: return currentLecture.department ?? ""
+        case .academicYear: return currentLecture.academicYear ?? ""
+        case .classification: return currentLecture.classification ?? ""
+        case .category: return currentLecture.category ?? ""
+        case .courseNum: return currentLecture.courseNumber ?? ""
+        case .lectureNum: return currentLecture.lectureNumber ?? ""
+        }
+    }
+
+    enum CellViewType {
+        case leftAligned(title: String, doneBlock: (String) -> Void, initialValue: String)
+        case colorPick
+        case padding
+        case singleClass
+        case leftAlignedLabel(string: String)
+        case textView(title: String)
+        case button(title: String, color: UIColor, onClick: () -> Void)
+
+        var identifier: String {
+            switch self {
+            case .leftAligned: return "LeftAlignedCell"
+            case .leftAlignedLabel: return "LeftAlignedLabelCell"
+            case .colorPick: return "ColorPickCell"
+            case .padding: return "PaddingCell"
+            case .singleClass: return "SingleClassCell"
+            case .textView: return "TextViewCell"
+            case .button: return "ButtonCell"
+            }
+        }
+    }
+
+    enum CellType {
+        case editLecture(attribute: LectureAttributes)
+        case color
+        case remark
+        case singleClass
+        case singleClassTitle
+        case padding
+        case addButton(section: Int)
+        case resetButton
+        case syllabusButton
+        case deleteButton
+        case reviewDetailButton
+
+        var simpleCellViewType: CellViewType {
+            switch self {
+            case let .editLecture(attribute): return .leftAligned(title: "", doneBlock: { _ in }, initialValue: "")
+            case .color: return .colorPick
+            case .remark: return .textView(title: "")
+            case .singleClass: return .singleClass
+            case .padding: return .padding
+            case .addButton, .resetButton, .syllabusButton, .deleteButton, .reviewDetailButton:
+                return .button(title: "", color: UIColor.black, onClick: {})
+            case .singleClassTitle:
+                return .leftAlignedLabel(string: "")
+            }
+        }
+    }
+
+    func getCellViewTypeFrom(cellType: CellType) -> CellViewType {
+        switch cellType {
+        case let .editLecture(attribute):
+            return .leftAligned(title: attribute.titleName, doneBlock: doneBlockFor(attribute: attribute), initialValue: initialValueFor(attribute: attribute))
+        case .color:
+            return .colorPick
+        case .remark:
+            return .textView(title: "비고")
+        case .singleClass:
+            return .singleClass
+        case .singleClassTitle:
+            return .leftAlignedLabel(string: "시간 및 장소")
+        case .padding:
+            return .padding
+        case .reviewDetailButton:
+            return .button(title: "강의평", color: UIColor.black, onClick: {
+                if let courseNumber = self.currentLecture.courseNumber {
+                    STNetworking.getReviewIdFromLecture(courseNumber, self.currentLecture.instructor) { id in
+                        self.moveToReviewDetail(withId: id)
+
+                    } failure: {
+                        STAlertView.showAlert(title: "", message: "강의평을 찾을 수 없습니다")
+                    }
+                } else {
+                    STAlertView.showAlert(title: "", message: "강의평을 찾을 수 없습니다")
+                }
+            })
+        case .addButton:
+            return .button(title: "+ 시간 추가", color: UIColor.black, onClick: {
+                self.currentLecture.classList.append(STSingleClass(time: STTime(day: 0, startPeriod: 0.0, duration: 1.0), place: ""))
+                self.tableView.insertRows(at: [IndexPath(row: self.currentLecture.classList.count, section: self.sectionForSingleClass)], with: .automatic)
+            })
+        case .resetButton:
+            return .button(title: "초기화", color: UIColor.red, onClick: {
+                let actions = [
+                    UIAlertAction(title: "초기화", style: .destructive, handler: { _ in
+                        self.resetButtonClicked()
+                    }),
+                    UIAlertAction(title: "취소", style: .cancel, handler: nil),
+                ]
+                STAlertView.showAlert(title: "강좌 초기화", message: "강좌를 원래 상태로 초기화하시겠습니까?", actions: actions)
+            })
+        case .syllabusButton:
+            return .button(title: "강의계획서", color: UIColor.black, onClick: {
+                let quarter = STTimetableManager.sharedInstance.currentTimetable!.quarter
+                let lecture = self.currentLecture
+                STNetworking.getSyllabus(quarter, lecture: lecture, done: { url in
+                    self.showWebView(url)
+                }, failure: {
+                    let year = quarter.year
+                    let course_number = lecture.courseNumber!
+                    let lecture_number = lecture.lectureNumber!
+                    let semester = STTimetableManager.sharedInstance.currentTimetable!.quarter.semester
+                    var openShtmFg = "", openDetaShtmFg = ""
+                    switch semester {
+                    case .first:
+                        openShtmFg = "U000200001"
+                        openDetaShtmFg = "U000300001"
+                    case .second:
+                        openShtmFg = "U000200002"
+                        openDetaShtmFg = "U000300001"
+                    case .summer:
+                        openShtmFg = "U000200001"
+                        openDetaShtmFg = "U000300002"
+                    case .winter:
+                        openShtmFg = "U000200002"
+                        openDetaShtmFg = "U000300002"
+                    }
+                    let url = "http://sugang.snu.ac.kr/sugang/cc/cc103.action?openSchyy=\(year)&openShtmFg=\(openShtmFg)&openDetaShtmFg=\(openDetaShtmFg)&sbjtCd=\(course_number)&ltNo=\(lecture_number)&sbjtSubhCd=000"
+                    self.showWebView(url)
+                })
+            })
+        case .deleteButton:
+            return .button(title: "삭제", color: UIColor.red, onClick: {
+                let actions = [
+                    UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+                        if let index = STTimetableManager.sharedInstance.currentTimetable?.lectureList.index(of: self.currentLecture) {
+                            STTimetableManager.sharedInstance.deleteLectureAtIndex(index, object: nil)
+                        }
+                        self.navigationController?.popViewController(animated: true)
+                    }),
+                    UIAlertAction(title: "취소", style: .cancel, handler: nil),
+                ]
+                STAlertView.showAlert(title: "강좌 삭제", message: "강좌를 삭제하시겠습니까?", actions: actions)
+            })
+        }
+    }
+
+    func cellTypeAtIndexPath(_: IndexPath) -> CellType {
+        return .padding // should override
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        tableView.register(UINib(nibName: "STLeftAlignedTextFieldCell", bundle: Bundle.main),
+                           forCellReuseIdentifier: CellViewType.leftAligned(title: "", doneBlock: { _ in }, initialValue: "").identifier)
+        tableView.register(UINib(nibName: "STLeftAlignedLabelCell", bundle: Bundle.main), forCellReuseIdentifier: CellViewType.leftAlignedLabel(string: "").identifier)
+        tableView.register(UINib(nibName: "STColorPickTableViewCell", bundle: Bundle.main),
+                           forCellReuseIdentifier: CellViewType.colorPick.identifier)
+        tableView.register(UINib(nibName: "STSingleClassTableViewCell", bundle: Bundle.main),
+                           forCellReuseIdentifier: CellViewType.singleClass.identifier)
+        tableView.register(UINib(nibName: "STSingleLectureButtonCell", bundle: Bundle.main),
+                           forCellReuseIdentifier: CellViewType.button(title: "", color: UIColor.black, onClick: {}).identifier)
+        tableView.register(UINib(nibName: "STTextViewTableViewCell", bundle: Bundle.main),
+                           forCellReuseIdentifier: CellViewType.textView(title: "").identifier)
+        tableView.register(STPaddingTableViewCell.self, forCellReuseIdentifier: CellViewType.padding.identifier)
+
+        textviewCell = UINib(nibName: "STTextViewTableViewCell", bundle: Bundle.main).instantiate(withOwner: self, options: nil)[0] as! STTextViewTableViewCell
+
+        tableView.backgroundColor = UIColor(white: 0.97, alpha: 1.0)
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(STSingleLectureTableViewController.dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(tapGesture)
+    }
+
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    // MARK: - Table view data source
+
+    override func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 15
+        }
+        return 10
+    }
+
+    override func tableView(_: UITableView, heightForFooterInSection _: Int) -> CGFloat {
+        return 10
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let type = cellTypeAtIndexPath(indexPath)
+        let cellViewType = getCellViewTypeFrom(cellType: type)
+        let tmpCell = tableView.dequeueReusableCell(withIdentifier: cellViewType.identifier, for: indexPath)
+        switch cellViewType {
+        case .colorPick:
+            let cell = tmpCell as! STColorPickTableViewCell
+            if let theme = theme {
+                let color = currentLecture.getColor(theme: theme)
+                cell.color = color
+            }
+            return cell
+        case .padding:
+            return tmpCell
+        case .singleClass:
+            let cell = tmpCell as! STSingleClassTableViewCell
+            cell.singleClass = currentLecture.classList[indexPath.row - 1]
+            cell.placeDoneBlock = { value in self.currentLecture.classList[indexPath.row - 1].place = value }
+            cell.timeDoneBlock = { value in self.currentLecture.classList[indexPath.row - 1].time = value }
+            cell.custom = true // Single Class Editable in non-custom
+            cell.deleteLectureBlock = {
+                guard let indexPathNow = self.tableView.indexPath(for: cell) else {
+                    return
+                }
+                self.currentLecture.classList.remove(at: indexPathNow.row - 1)
+                tableView.deleteRows(at: [indexPathNow], with: .middle)
+            }
+            return cell
+        case let .leftAligned(title, doneBlock, initialValue):
+            let cell = tmpCell as! STLeftAlignedTextFieldCell
+            cell.titleLabel.text = title
+            cell.textField.text = initialValue
+            cell.doneBlock = doneBlock
+            cell.textField.keyboardType = .default
+            cell.isEditableField = true
+            if case let .editLecture(attribute) = type {
+                switch attribute {
+                case .credit:
+                    cell.textField.keyboardType = .numberPad
+                case .lectureNum, .courseNum:
+                    cell.isEditableField = false
+                default:
+                    break
+                }
+            }
+            return cell
+        case let .textView(title):
+            let cell = tmpCell as! STTextViewTableViewCell
+            cell.doneBlock = { value in self.currentLecture.remark = value
+            }
+            cell.textView.text = currentLecture.remark
+            cell.textView.placeholder = "(없음)"
+            cell.titleLabel.text = title
+            cell.tableView = self.tableView
+            return cell
+        case let .button(title, color, onClick):
+            let cell = tmpCell as! STSingleLectureButtonCell
+            cell.buttonAction = onClick
+            cell.button.tintColor = color
+            cell.button.setTitle(title, for: UIControl.State())
+            cell.button.titleLabel?.text = title
+            return cell
+        case let .leftAlignedLabel(string):
+            let cell = tmpCell as! STLeftAlignedLabelCell
+            cell.label.text = string
+            return cell
+        }
+    }
+
+    var textviewCell: STTextViewTableViewCell!
+
+    override func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let cellType = cellTypeAtIndexPath(indexPath)
+        if case CellType.remark = cellType {
+            textviewCell.textView.text = STUtil.isEmptyOrNil(str: currentLecture.remark) ? "(없음)" : currentLecture.remark
+            return textviewCell.textView.sizeThatFits(CGSize(width: textviewCell.textView.frame.width, height: 300)).height + 20
+        }
+        switch cellType.simpleCellViewType {
+        case .leftAligned: return 40
+        case .colorPick: return 40
+        case .padding: return 4
+        case .singleClass: return 60
+        case .button: return 48
+        case .textView: return 75
+        case .leftAlignedLabel: return 36
+        }
+    }
+
+    func triggerColorPicker() {
+        let viewController = storyboard?.instantiateViewController(withIdentifier: "STColorPickerTableViewController") as! STColorPickerTableViewController
+        if let theme = theme {
+            viewController.theme = theme
+
+            if currentLecture.colorIndex == 0, currentLecture.color != nil {
+                viewController.colorIndex = theme.getColorList().count - 1
+                viewController.color = currentLecture.color
+            } else {
+                let color = currentLecture.getColor(theme: theme)
+                viewController.color = color
+                viewController.colorIndex = currentLecture.colorIndex - 1
+            }
+        }
+
+        viewController.doneBlock = { colorIndex, color in
+            self.currentLecture.color = color
+            self.currentLecture.colorIndex = colorIndex
+            self.tableView.reloadData()
+        }
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    func showWebView(_ url: String) {
+        if #available(iOS 9.0, *) {
+            let svc = SFSafariViewController(url: URL(string: url)!)
+            self.present(svc, animated: true, completion: nil)
+        } else {
+            UIApplication.shared.openURL(URL(string: url)!)
+        }
+    }
+
+    func resetButtonClicked() {}
+
+    /*
+     // Override to support rearranging the table view.
+     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+
+     }
+     */
+
+    /*
+     // Override to support conditional rearranging of the table view.
+     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+     // Return NO if you do not want the item to be re-orderable.
+     return true
+     }
+     */
+
+    /*
+     // MARK: - Navigation
+
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using [segue destinationViewController].
+     // Pass the selected object to the new view controller.
+     }
+     */
+}
+
+extension STSingleLectureTableViewController {
+    private func moveToReviewDetail(withId id: String) {
+        tabBarController?.selectedIndex = 2
+        if let reviewNC = tabBarController?.viewControllers?[2] as? UINavigationController, let reviewVC = reviewNC.topViewController as? ReviewViewController {
+            if reviewVC.isViewLoaded {
+                reviewVC.loadDetailView(withId: id)
+            } else {
+                reviewVC.setIdForLoadDetailView(with: id)
+            }
+        }
+    }
+}

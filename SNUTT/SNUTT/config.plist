@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>staging</key>
+	<dict>
+		<key>api_server_url</key>
+		<string>https://snutt-api.wafflestudio.com</string>
+		<key>snuev_web_url</key>
+		<string>https://snutt-ev-web.wafflestudio.com</string>
+		<key>api_key</key>
+		<string>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdHJpbmciOiJpb3MiLCJrZXlfdmVyc2lvbiI6IjAiLCJpYXQiOjE1MDc3MjM3MDd9.wlhtBwB2e9A4qzA7PdjR-NdER2O_jajPCzlMhcREpig</string>
+	</dict>
+	<key>debug</key>
+	<dict>
+		<key>snuev_web_url</key>
+		<string>https://snutt-ev-web-dev.wafflestudio.com</string>
+		<key>api_server_url</key>
+		<string>https://snutt-api-dev.wafflestudio.com</string>
+		<key>api_key</key>
+		<string>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdHJpbmciOiJpb3MiLCJrZXlfdmVyc2lvbiI6IjAiLCJpYXQiOjE1MDc3MjM3MDd9.wlhtBwB2e9A4qzA7PdjR-NdER2O_jajPCzlMhcREpig</string>
+	</dict>
+	<key>production</key>
+	<dict>
+		<key>snuev_web_url</key>
+		<string>https://snutt-ev-web.wafflestudio.com</string>
+		<key>api_server_url</key>
+		<string>https://snutt-api.wafflestudio.com</string>
+		<key>api_key</key>
+		<string>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdHJpbmciOiJpb3MiLCJrZXlfdmVyc2lvbiI6IjAiLCJpYXQiOjE1MDc3MjM3MDd9.wlhtBwB2e9A4qzA7PdjR-NdER2O_jajPCzlMhcREpig</string>
+	</dict>
+</dict>
+</plist>
