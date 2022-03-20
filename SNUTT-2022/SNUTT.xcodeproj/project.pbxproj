@@ -14,7 +14,7 @@
 		DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F5927E5C87F0068C94B /* SNUTTTests.swift */; };
 		DC860F6427E5C87F0068C94B /* SNUTTUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F6327E5C87F0068C94B /* SNUTTUITests.swift */; };
 		DC860F6627E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F6527E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift */; };
-		DCD41A6027E5CC7700CF380E /* Tiemtable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Tiemtable.swift */; };
+		DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
 		DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6227E5CCD500CF380E /* TimetableService.swift */; };
 		DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */; };
 		DCD41A6A27E5CD8700CF380E /* TimetableApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6927E5CD8700CF380E /* TimetableApi.swift */; };
@@ -51,7 +51,7 @@
 		DC860F5F27E5C87F0068C94B /* SNUTTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNUTTUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F6327E5C87F0068C94B /* SNUTTUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTUITests.swift; sourceTree = "<group>"; };
 		DC860F6527E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		DCD41A5F27E5CC7700CF380E /* Tiemtable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tiemtable.swift; sourceTree = "<group>"; };
+		DCD41A5F27E5CC7700CF380E /* Timetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timetable.swift; sourceTree = "<group>"; };
 		DCD41A6227E5CCD500CF380E /* TimetableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableService.swift; sourceTree = "<group>"; };
 		DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		DCD41A6927E5CD8700CF380E /* TimetableApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableApi.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 		DCD41A5E27E5CC4700CF380E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				DCD41A5F27E5CC7700CF380E /* Tiemtable.swift */,
+				DCD41A5F27E5CC7700CF380E /* Timetable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -366,7 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCD41A6027E5CC7700CF380E /* Tiemtable.swift in Sources */,
+				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
