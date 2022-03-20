@@ -180,5 +180,4 @@ extension ReviewViewController {
     func setIdForLoadDetailView(with id: String) {
         idForLoadDetailView = id
     }
-
 }
