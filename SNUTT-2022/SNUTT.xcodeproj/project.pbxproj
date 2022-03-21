@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BE41C55C27E8AE0500D321E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE41C55B27E8AE0500D321E2 /* SceneDelegate.swift */; };
 		BE41C56127E8B36000D321E2 /* TimetableListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE41C56027E8B36000D321E2 /* TimetableListCell.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4B27E5C87D0068C94B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4A27E5C87D0068C94B /* ContentView.swift */; };
@@ -43,7 +42,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BE41C55B27E8AE0500D321E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BE41C55D27E8AF3C00D321E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BE41C56027E8B36000D321E2 /* TimetableListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableListCell.swift; sourceTree = "<group>"; };
 		DC860F4527E5C87D0068C94B /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -196,7 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				DC860F4827E5C87D0068C94B /* SNUTTApp.swift */,
-				BE41C55B27E8AE0500D321E2 /* SceneDelegate.swift */,
 				DCD41A6D27E5CDCA00CF380E /* Components */,
 				DCD41A6C27E5CDBE00CF380E /* Scenes */,
 			);
@@ -380,7 +377,6 @@
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				DCD41A6F27E5CDF700CF380E /* Header.swift in Sources */,
-				BE41C55C27E8AE0500D321E2 /* SceneDelegate.swift in Sources */,
 				DC860F4B27E5C87D0068C94B /* ContentView.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
