@@ -9,8 +9,6 @@ import XCTest
 
 @available(iOS 15.0, *)
 class SNUTTUITestsLaunchTests: XCTestCase {
-    
-    
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
