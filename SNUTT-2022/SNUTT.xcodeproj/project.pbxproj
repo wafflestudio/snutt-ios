@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE41C55C27E8AE0500D321E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE41C55B27E8AE0500D321E2 /* SceneDelegate.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4B27E5C87D0068C94B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4A27E5C87D0068C94B /* ContentView.swift */; };
 		DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4C27E5C87F0068C94B /* Assets.xcassets */; };
@@ -41,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BE41C55B27E8AE0500D321E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		BE41C55D27E8AF3C00D321E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DC860F4527E5C87D0068C94B /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
 		DC860F4A27E5C87D0068C94B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -108,6 +111,7 @@
 		DC860F4727E5C87D0068C94B /* SNUTT */ = {
 			isa = PBXGroup;
 			children = (
+				BE41C55D27E8AF3C00D321E2 /* Info.plist */,
 				DCD41A7627E5CED100CF380E /* Assets */,
 				DCD41A7327E5CE5F00CF380E /* AppState */,
 				DCD41A7027E5CE0800CF380E /* ViewModels */,
@@ -190,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				DC860F4827E5C87D0068C94B /* SNUTTApp.swift */,
+				BE41C55B27E8AE0500D321E2 /* SceneDelegate.swift */,
 				DCD41A6D27E5CDCA00CF380E /* Components */,
 				DCD41A6C27E5CDBE00CF380E /* Scenes */,
 			);
@@ -371,6 +376,7 @@
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				DCD41A6F27E5CDF700CF380E /* Header.swift in Sources */,
+				BE41C55C27E8AE0500D321E2 /* SceneDelegate.swift in Sources */,
 				DC860F4B27E5C87D0068C94B /* ContentView.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
@@ -537,12 +543,13 @@
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SNUTT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -566,12 +573,13 @@
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SNUTT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
