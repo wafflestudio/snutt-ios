@@ -7,9 +7,7 @@
 
 import XCTest
 
-
 class SNUTTUITestsLaunchTests: XCTestCase {
-    
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
