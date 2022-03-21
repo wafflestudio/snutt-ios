@@ -13,8 +13,7 @@ struct SNUTTAppWrapper {
     static func main() {
         if #available(iOS 14.0, *) {
             SNUTTApp.main()
-        }
-        else {
+        } else {
             /// In iOS 13, use `SceneDelegate` instead of `@main`.
             UIApplicationMain(CommandLine.argc, CommandLine.unsafeArgv, nil, NSStringFromClass(SceneDelegate.self))
         }
