@@ -47,4 +47,5 @@ jobs:
         scheme: ${{ matrix.scheme }}
         verbosity: xcpretty
         upload-logs: always
+        configuration: Debug
         working-directory: SNUTT-2022
