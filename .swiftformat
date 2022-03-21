@@ -1,3 +1,4 @@
 --disable enumNamespaces
 --disable strongOutlets
---exclude Pods
+--exclude SNUTT/Pods
+--exclude SNUTT-2022/Pods
