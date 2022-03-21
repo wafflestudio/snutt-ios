@@ -3,7 +3,7 @@ name: Build Test
 on:
   pull_request:
     paths:
-      - 'SNUTT-2022'
+      - 'SNUTT-2022/**'
 
 jobs:
   build-and-test:
