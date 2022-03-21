@@ -36,6 +36,9 @@ jobs:
     - uses: maxim-lobanov/setup-xcode@v1.2.3
       with:
         xcode-version: ${{ matrix.xcode }}
+    
+    - run: |
+        ls
       
     - uses: mxcl/xcodebuild@v1.9.2
       with:
@@ -44,4 +47,4 @@ jobs:
         code-coverage: true
         verbosity: xcpretty
         upload-logs: always
-        working-directory: ./SNUTT-2022
+        working-directory: SNUTT-2022
