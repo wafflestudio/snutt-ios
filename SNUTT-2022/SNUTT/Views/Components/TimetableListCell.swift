@@ -7,11 +7,9 @@
 
 import SwiftUI
 
-extension Font {
-    struct STFont {
-        static let subheading: Font = .system(size: 15, weight: .bold)
-        static let details: Font = .system(size: 12, weight: .regular)
-    }
+struct STFont {
+    static let subheading: Font = .system(size: 15, weight: .bold)
+    static let details: Font = .system(size: 12, weight: .regular)
 }
 
 struct TimetableListCell: View {
@@ -20,7 +18,7 @@ struct TimetableListCell: View {
         HStack {
             Image(imageName)
             Text(text)
-                .font(.STFont.details)
+                .font(STFont.details)
             Spacer()
         }
     }
@@ -30,10 +28,10 @@ struct TimetableListCell: View {
             // title
             HStack {
                 Text("편집디자인")
-                    .font(.STFont.subheading)
+                    .font(STFont.subheading)
                 Spacer()
                 Text("정희숙 / 3학점")
-                    .font(.STFont.details)
+                    .font(STFont.details)
             }
 
             // details
