@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BE41C55C27E8AE0500D321E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE41C55B27E8AE0500D321E2 /* SceneDelegate.swift */; };
+		BE41C56127E8B36000D321E2 /* TimetableListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE41C56027E8B36000D321E2 /* TimetableListCell.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4B27E5C87D0068C94B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4A27E5C87D0068C94B /* ContentView.swift */; };
 		DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4C27E5C87F0068C94B /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		BE41C55B27E8AE0500D321E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BE41C55D27E8AF3C00D321E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BE41C56027E8B36000D321E2 /* TimetableListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableListCell.swift; sourceTree = "<group>"; };
 		DC860F4527E5C87D0068C94B /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
 		DC860F4A27E5C87D0068C94B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				DCD41A6E27E5CDF700CF380E /* Header.swift */,
+				BE41C56027E8B36000D321E2 /* TimetableListCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE41C56127E8B36000D321E2 /* TimetableListCell.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
