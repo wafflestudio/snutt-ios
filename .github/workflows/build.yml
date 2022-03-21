@@ -32,18 +32,11 @@ jobs:
           - macos: 'macos-10.15'
             xcode: '12.5.1'
 
-    defaults:
-      run:
-        working-directory: ./SNUTT-2022
-    
     steps:
     - uses: maxim-lobanov/setup-xcode@v1.2.3
       with:
         xcode-version: ${{ matrix.xcode }}
       
-    - name: Which SDK do I have?
-      run: xcodebuild -showsdks
-
     - uses: mxcl/xcodebuild@v1.9.2
       with:
         platform: iOS
