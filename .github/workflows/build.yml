@@ -40,7 +40,7 @@ jobs:
       with:
         xcode-version: ${{ matrix.xcode }}
     
-    - run: xcodebuild --showsdks
+    - run: xcodebuild -showsdks
     
     - uses: mxcl/xcodebuild@v1.9.2
       with:
