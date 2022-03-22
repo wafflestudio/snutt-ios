@@ -19,7 +19,7 @@ jobs:
           - '12.0.1' # iOS 14.0
           - '11.7' # iOS 13.7
         macos: ['macos-11', 'macos-10.15']
-        command: ['build', 'test']
+        command: ['test']
         scheme: ['SNUTT']
         exclude:
           # excluding xcodes not present on given macOS versions
