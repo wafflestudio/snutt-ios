@@ -1,0 +1,46 @@
+name: Build Test
+
+on:
+  pull_request:
+    paths:
+      - 'SNUTT-2022/**'
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.command }} on  ${{ matrix.platform }} (xcode ${{ matrix.xcode }}, ${{ matrix.macos }})
+    runs-on: ${{ matrix.macos }} # os switching
+    
+    strategy:
+      fail-fast: false # if 'true' then one failed job cancels all jobs remaining
+      matrix:
+        xcode: 
+          - '13.2.1' # iOS 15.2
+          - '12.5.1' # iOS 14.5
+        macos: ['macos-11']
+        command: ['test']
+        scheme: ['SNUTT']
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: maxim-lobanov/setup-xcode@v1.2.3
+      with:
+        xcode-version: ${{ matrix.xcode }}
+    
+    - run: xcodebuild -showsdks
+    
+    - uses: mxcl/xcodebuild@v1.9.2
+      with:
+        platform: iOS
+        action: ${{ matrix.command }} 
+        code-coverage: true
+        scheme: ${{ matrix.scheme }}
+        verbosity: xcpretty
+        upload-logs: always
+        configuration: Debug
+        working-directory: SNUTT-2022
+    
+    - name: Manual xcodebuild test
+      run: |
+        cd SNUTT-2022
+        xcodebuild -destination 'platform=iphonesimulator,os=14.5,name=iPhone 12'
