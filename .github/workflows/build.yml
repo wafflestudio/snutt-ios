@@ -1,4 +1,4 @@
-name: Build Test
+name: xcodebuild
 
 on:
   pull_request:
@@ -16,7 +16,6 @@ jobs:
       matrix:
         xcode: 
           - '13.2.1' # iOS 15.2
-          - '12.5.1' # iOS 14.5
         macos: ['macos-11']
         command: ['test']
         scheme: ['SNUTT']
@@ -41,7 +40,3 @@ jobs:
         configuration: Debug
         working-directory: SNUTT-2022
     
-    - name: Manual xcodebuild test
-      run: |
-        cd SNUTT-2022
-        xcodebuild -destination 'platform=iphonesimulator,os=14.5,name=iPhone 12' -scheme SNUTT -configuration Debug test
