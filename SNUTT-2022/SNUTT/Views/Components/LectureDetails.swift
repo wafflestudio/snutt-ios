@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct LectureDetailList: View {
+struct LectureDetails: View {
     var body: some View {
-        Text("This is LectureDetailList View.")
+        Text("This is LectureDetails View.")
     }
 }
 
 struct LectureDetailList_Previews: PreviewProvider {
     static var previews: some View {
-        LectureDetailList()
+        LectureDetails()
     }
 }

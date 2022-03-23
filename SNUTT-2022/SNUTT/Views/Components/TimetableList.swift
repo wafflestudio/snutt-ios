@@ -13,7 +13,7 @@ struct TimetableList: View {
             ForEach(1 ..< 10) { _ in
                 ZStack {
                     NavigationLink {
-                        LectureDetailList()
+                        LectureDetails()
                     } label: {
                         EmptyView()
                     }
