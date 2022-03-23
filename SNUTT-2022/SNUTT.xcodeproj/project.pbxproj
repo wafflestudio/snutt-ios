@@ -10,6 +10,9 @@
 		BE3C7B9127EA100200633416 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3C7B9027EA100200633416 /* AppDelegate.swift */; };
 		BE3C7B9327EA102200633416 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3C7B9227EA102200633416 /* SceneDelegate.swift */; };
 		BE41C56127E8B36000D321E2 /* TimetableListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE41C56027E8B36000D321E2 /* TimetableListCell.swift */; };
+		BEF62AD727EAE5DB007A25EB /* TimetableList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF62AD627EAE5DB007A25EB /* TimetableList.swift */; };
+		BEF62AD927EAE8B1007A25EB /* LectureDetailList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF62AD827EAE8B1007A25EB /* LectureDetailList.swift */; };
+		BEF62ADB27EAE8C6007A25EB /* LectureDetailListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF62ADA27EAE8C6007A25EB /* LectureDetailListCell.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4B27E5C87D0068C94B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4A27E5C87D0068C94B /* ContentView.swift */; };
 		DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4C27E5C87F0068C94B /* Assets.xcassets */; };
@@ -21,7 +24,6 @@
 		DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6227E5CCD500CF380E /* TimetableService.swift */; };
 		DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */; };
 		DCD41A6A27E5CD8700CF380E /* TimetableApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6927E5CD8700CF380E /* TimetableApi.swift */; };
-		DCD41A6F27E5CDF700CF380E /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6E27E5CDF700CF380E /* Header.swift */; };
 		DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */; };
 		DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7427E5CEA500CF380E /* AppState.swift */; };
 /* End PBXBuildFile section */
@@ -48,6 +50,9 @@
 		BE3C7B9227EA102200633416 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BE41C55D27E8AF3C00D321E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BE41C56027E8B36000D321E2 /* TimetableListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableListCell.swift; sourceTree = "<group>"; };
+		BEF62AD627EAE5DB007A25EB /* TimetableList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableList.swift; sourceTree = "<group>"; };
+		BEF62AD827EAE8B1007A25EB /* LectureDetailList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetailList.swift; sourceTree = "<group>"; };
+		BEF62ADA27EAE8C6007A25EB /* LectureDetailListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetailListCell.swift; sourceTree = "<group>"; };
 		DC860F4527E5C87D0068C94B /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
 		DC860F4A27E5C87D0068C94B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,7 +67,6 @@
 		DCD41A6227E5CCD500CF380E /* TimetableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableService.swift; sourceTree = "<group>"; };
 		DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		DCD41A6927E5CD8700CF380E /* TimetableApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableApi.swift; sourceTree = "<group>"; };
-		DCD41A6E27E5CDF700CF380E /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableViewModel.swift; sourceTree = "<group>"; };
 		DCD41A7427E5CEA500CF380E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -217,8 +221,10 @@
 		DCD41A6D27E5CDCA00CF380E /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				DCD41A6E27E5CDF700CF380E /* Header.swift */,
+				BEF62AD627EAE5DB007A25EB /* TimetableList.swift */,
 				BE41C56027E8B36000D321E2 /* TimetableListCell.swift */,
+				BEF62AD827EAE8B1007A25EB /* LectureDetailList.swift */,
+				BEF62ADA27EAE8C6007A25EB /* LectureDetailListCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -377,13 +383,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEF62AD727EAE5DB007A25EB /* TimetableList.swift in Sources */,
 				BE3C7B9127EA100200633416 /* AppDelegate.swift in Sources */,
 				BE41C56127E8B36000D321E2 /* TimetableListCell.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
+				BEF62ADB27EAE8C6007A25EB /* LectureDetailListCell.swift in Sources */,
 				DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
-				DCD41A6F27E5CDF700CF380E /* Header.swift in Sources */,
+				BEF62AD927EAE8B1007A25EB /* LectureDetailList.swift in Sources */,
 				DC860F4B27E5C87D0068C94B /* ContentView.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
