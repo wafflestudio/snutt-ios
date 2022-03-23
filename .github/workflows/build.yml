@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test:
-    name: ${{ matrix.command }} on  ${{ matrix.platform }} (xcode ${{ matrix.xcode }}, ${{ matrix.macos }})
+    name: ${{ matrix.command }} on Xcode ${{ matrix.xcode }}, ${{ matrix.macos }})
     runs-on: ${{ matrix.macos }} # os switching
     
     strategy:
