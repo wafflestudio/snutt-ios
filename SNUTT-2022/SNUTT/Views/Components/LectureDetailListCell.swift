@@ -13,13 +13,13 @@ extension Font {
 }
 
 extension Color {
-    static let secondaryLabel: Color = Color(UIColor.secondaryLabel.withAlphaComponent(0.9))
+    static let secondaryLabel: Color = .init(UIColor.secondaryLabel.withAlphaComponent(0.9))
 }
 
 struct LectureDetailListCell: View {
     let label: String
     let content: String
-    
+
     var body: some View {
         HStack {
             Text(label)

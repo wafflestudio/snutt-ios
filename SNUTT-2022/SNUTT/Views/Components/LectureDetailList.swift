@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct LectureDetailList: View {
     var body: some View {
         ScrollView {
@@ -17,7 +16,7 @@ struct LectureDetailList: View {
             }
             .padding()
             .background(Color.white)
-            
+
             VStack(spacing: 15) {
                 LectureDetailListCell(label: "강의명", content: "운영체제")
                 LectureDetailListCell(label: "교수", content: "전병곤")
@@ -26,7 +25,6 @@ struct LectureDetailList: View {
             .background(Color.white)
 
         }.background(Color(UIColor.quaternarySystemFill))
-        
     }
 }
 

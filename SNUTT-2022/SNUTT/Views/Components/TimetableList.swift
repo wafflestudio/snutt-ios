@@ -10,7 +10,7 @@ import SwiftUI
 struct TimetableList: View {
     var body: some View {
         List {
-            ForEach (1..<10) {_ in
+            ForEach(1 ..< 10) { _ in
                 ZStack {
                     NavigationLink {
                         LectureDetailList()
@@ -20,7 +20,7 @@ struct TimetableList: View {
                     // workarounds to hide arrow indicator
                     .opacity(0.0)
                     .buttonStyle(PlainButtonStyle())
-                    
+
                     TimetableListCell()
                 }
             }
