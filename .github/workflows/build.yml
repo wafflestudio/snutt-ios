@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'SNUTT-2022/**'
+      - ".github/workflows/build.yml"
 
 jobs:
   build-and-test:
