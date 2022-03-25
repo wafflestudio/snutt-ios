@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Font {
-    static let subheading: Font = .system(size: 15, weight: .semibold)
+    static let subheading: Font = .system(size: 14, weight: .bold)
     static let details: Font = .system(size: 12, weight: .regular)
 }
 
