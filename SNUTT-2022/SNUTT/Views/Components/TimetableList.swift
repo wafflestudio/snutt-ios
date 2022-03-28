@@ -32,6 +32,5 @@ struct TimetableList_Previews: PreviewProvider {
         NavigationView {
             TimetableList()
         }
-        
     }
 }
