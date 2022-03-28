@@ -19,7 +19,6 @@ struct TimetableList: View {
                     }
                     // workarounds to hide arrow indicator
                     .opacity(0.0)
-                    .buttonStyle(PlainButtonStyle())
 
                     TimetableListCell()
                 }
