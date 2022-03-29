@@ -17,7 +17,7 @@ jobs:
         xcode: 
           - '13.2.1' # iOS 15.2
         macos: ['macos-11']
-        command: ['test']
+        command: ['build', 'test']
         scheme: ['SNUTT']
 
     steps:
