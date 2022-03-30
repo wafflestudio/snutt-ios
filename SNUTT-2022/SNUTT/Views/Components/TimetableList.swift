@@ -8,20 +8,21 @@
 import SwiftUI
 
 struct TimetableList: View {
+    
+    let lectures : [Lecture]
+    
     var body: some View {
-        List {
-            ForEach(1 ..< 10) { _ in
-                ZStack {
-                    NavigationLink {
-                        LectureDetails()
-                    } label: {
-                        EmptyView()
-                    }
-                    // workarounds to hide arrow indicator
-                    .opacity(0.0)
-
-                    TimetableListCell()
+        List(lectures) { lecture in
+            ZStack {
+                NavigationLink {
+                    LectureDetails()
+                } label: {
+                    EmptyView()
                 }
+                // workarounds to hide arrow indicator
+                .opacity(0.0)
+
+                TimetableListCell(lecture: lecture)
             }
         }.listStyle(GroupedListStyle())
     }
@@ -30,7 +31,7 @@ struct TimetableList: View {
 struct TimetableList_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TimetableList()
+            TimetableList(lectures: DummyAppState.shared.lectures)
         }
     }
 }

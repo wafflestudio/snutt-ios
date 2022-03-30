@@ -10,6 +10,8 @@
 		BEDF506B27EB73EE00CDCC13 /* TimetableListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506A27EB73EE00CDCC13 /* TimetableListCell.swift */; };
 		BEDF506D27EB740F00CDCC13 /* TimetableList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506C27EB740E00CDCC13 /* TimetableList.swift */; };
 		BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506E27EB744A00CDCC13 /* LectureDetails.swift */; };
+		BEDF507327F427FA00CDCC13 /* MyTimetableListScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507227F427FA00CDCC13 /* MyTimetableListScene.swift */; };
+		BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507427F4289B00CDCC13 /* Lecture.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4B27E5C87D0068C94B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4A27E5C87D0068C94B /* ContentView.swift */; };
 		DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4C27E5C87F0068C94B /* Assets.xcassets */; };
@@ -47,6 +49,8 @@
 		BEDF506A27EB73EE00CDCC13 /* TimetableListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableListCell.swift; sourceTree = "<group>"; };
 		BEDF506C27EB740E00CDCC13 /* TimetableList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableList.swift; sourceTree = "<group>"; };
 		BEDF506E27EB744A00CDCC13 /* LectureDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetails.swift; sourceTree = "<group>"; };
+		BEDF507227F427FA00CDCC13 /* MyTimetableListScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTimetableListScene.swift; sourceTree = "<group>"; };
+		BEDF507427F4289B00CDCC13 /* Lecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lecture.swift; sourceTree = "<group>"; };
 		DC860F4527E5C87D0068C94B /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
 		DC860F4A27E5C87D0068C94B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				DCD41A5F27E5CC7700CF380E /* Timetable.swift */,
+				BEDF507427F4289B00CDCC13 /* Lecture.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				DC860F4A27E5C87D0068C94B /* ContentView.swift */,
+				BEDF507227F427FA00CDCC13 /* MyTimetableListScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -376,8 +382,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEDF506D27EB740F00CDCC13 /* TimetableList.swift in Sources */,
+				BEDF507327F427FA00CDCC13 /* MyTimetableListScene.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
+				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* TimetableListCell.swift in Sources */,

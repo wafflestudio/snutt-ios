@@ -13,6 +13,9 @@ extension Font {
 }
 
 struct TimetableListCell: View {
+    
+    let lecture: Lecture
+    
     @ViewBuilder
     func detailRow(imageName: String, text: String) -> some View {
         HStack {
@@ -45,6 +48,6 @@ struct TimetableListCell: View {
 
 struct TimetableListCell_Previews: PreviewProvider {
     static var previews: some View {
-        TimetableListCell()
+        TimetableListCell(lecture: DummyAppState.shared.dummyLecture)
     }
 }

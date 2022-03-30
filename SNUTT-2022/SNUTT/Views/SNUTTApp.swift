@@ -13,7 +13,7 @@ struct SNUTTApp: App {
         WindowGroup {
             // 임시 Entry Point
             NavigationView {
-                TimetableList()
+                MyTimetableListScene()
             }
         }
     }
