@@ -12,6 +12,8 @@
 		BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506E27EB744A00CDCC13 /* LectureDetails.swift */; };
 		BEDF507327F427FA00CDCC13 /* MyTimetableListScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507227F427FA00CDCC13 /* MyTimetableListScene.swift */; };
 		BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507427F4289B00CDCC13 /* Lecture.swift */; };
+		BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507627F42D1100CDCC13 /* STFont.swift */; };
+		BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507827F42D7500CDCC13 /* STColor.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4B27E5C87D0068C94B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4A27E5C87D0068C94B /* ContentView.swift */; };
 		DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4C27E5C87F0068C94B /* Assets.xcassets */; };
@@ -51,6 +53,8 @@
 		BEDF506E27EB744A00CDCC13 /* LectureDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetails.swift; sourceTree = "<group>"; };
 		BEDF507227F427FA00CDCC13 /* MyTimetableListScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTimetableListScene.swift; sourceTree = "<group>"; };
 		BEDF507427F4289B00CDCC13 /* Lecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lecture.swift; sourceTree = "<group>"; };
+		BEDF507627F42D1100CDCC13 /* STFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STFont.swift; sourceTree = "<group>"; };
+		BEDF507827F42D7500CDCC13 /* STColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STColor.swift; sourceTree = "<group>"; };
 		DC860F4527E5C87D0068C94B /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
 		DC860F4A27E5C87D0068C94B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -247,6 +251,8 @@
 			isa = PBXGroup;
 			children = (
 				DC860F4C27E5C87F0068C94B /* Assets.xcassets */,
+				BEDF507627F42D1100CDCC13 /* STFont.swift */,
+				BEDF507827F42D7500CDCC13 /* STColor.swift */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -382,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEDF506D27EB740F00CDCC13 /* TimetableList.swift in Sources */,
+				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* MyTimetableListScene.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
@@ -394,6 +401,7 @@
 				DC860F4B27E5C87D0068C94B /* ContentView.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
+				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
 				DCD41A6A27E5CD8700CF380E /* TimetableApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
