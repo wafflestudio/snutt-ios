@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct TimetableList: View {
-    
-    let lectures : [Lecture]
-    
+    let lectures: [Lecture]
+
     var body: some View {
         List(lectures) { lecture in
             ZStack {

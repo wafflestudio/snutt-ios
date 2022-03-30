@@ -7,11 +7,9 @@
 
 import SwiftUI
 
-
 struct TimetableListCell: View {
-    
     let lecture: Lecture
-    
+
     @ViewBuilder
     func detailRow(imageName: String, text: String) -> some View {
         HStack {
