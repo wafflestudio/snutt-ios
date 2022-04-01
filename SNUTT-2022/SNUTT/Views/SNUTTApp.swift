@@ -11,7 +11,10 @@ import SwiftUI
 struct SNUTTApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            // 임시 Entry Point
+            NavigationView {
+                MyTimetableListScene()
+            }
         }
     }
 }
