@@ -16,12 +16,12 @@ extension Double {
             return "\(Int(self) + 8):30"
         }
     }
-    
+
     /// `Double`을 분 단위로 정확하게 60진법 수로 환산한다.
     /// ex) 7.3교시 -> 15시 18분 (`7 + 8 == 15`, `0.3 * 60 == 18`)
     func periodStringPrecise() -> String {
-        let hour: Int = Int(self) + 8
-        let minute:Double = (self.truncatingRemainder(dividingBy: 1) * 60).rounded()  // schoolbook rounding
+        let hour = Int(self) + 8
+        let minute: Double = (truncatingRemainder(dividingBy: 1) * 60).rounded() // schoolbook rounding
         return "\(hour):\(Int(minute))"
     }
 }

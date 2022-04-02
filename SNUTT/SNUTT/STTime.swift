@@ -15,11 +15,11 @@ struct STTime {
     var endPeriod: Double {
         return startPeriod + duration
     }
-    
+
     /// 수업이 실제로 끝나는 시각(교시). `duration`이 `0.5`로 끝나는지에 따라 적절한 시간(10분 또는 15분)을 빼준다.
     var endPeriodPrecise: Double {
         let isHalfPeriod = duration.truncatingRemainder(dividingBy: 1) == 0.5
-        return startPeriod + duration - (isHalfPeriod ? 15/60 : 10/60)
+        return startPeriod + duration - (isHalfPeriod ? 15 / 60 : 10 / 60)
     }
 
     init(day: Int, startPeriod: Double, duration: Double) {
@@ -27,8 +27,6 @@ struct STTime {
         self.startPeriod = startPeriod
         self.duration = duration
     }
-    
-    
 
     func longString() -> String {
         return day.longString() + " " + startPeriod.periodString() + "~" + endPeriodPrecise.periodStringPrecise()
