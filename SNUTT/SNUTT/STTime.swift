@@ -31,15 +31,11 @@ struct STTime {
     
 
     func longString() -> String {
-        let ret =  day.longString() + " " + startPeriod.periodString() + "~" + endPeriodPrecise.periodStringPrecise()
-        print("long", ret);
-        return ret
+        return day.longString() + " " + startPeriod.periodString() + "~" + endPeriodPrecise.periodStringPrecise()
     }
 
     func shortString() -> String {
-        let ret =  day.shortString() + " " + startPeriod.periodString() + "~" + endPeriodPrecise.periodStringPrecise()
-        print("short", ret)
-        return ret
+        return day.shortString() + " " + startPeriod.periodString() + "~" + endPeriodPrecise.periodStringPrecise()
     }
 
     func startString() -> String {
