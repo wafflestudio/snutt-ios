@@ -33,7 +33,8 @@ class STMainTabBarController: UITabBarController {
     override func tabBar(_: UITabBar, didSelect item: UITabBarItem) {
         if item == reviewTabBarItem {
             if let navVC = viewControllers?[selectedIndex] as? UINavigationController, let reviewVC = navVC.viewControllers.first as? ReviewViewController {
-                reviewVC.loadMainView()
+                let apiUri = STDefaults[.snuevWebUrl]
+                reviewVC.loadWebViews(withApiUrl: apiUri)
             }
         }
     }

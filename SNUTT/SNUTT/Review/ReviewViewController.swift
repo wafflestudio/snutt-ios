@@ -12,7 +12,9 @@ import WebKit
 class ReviewViewController: UIViewController, WKUIDelegate {
     var webView: WKWebView!
 
-    private let apiUri = STDefaults[.snuevWebUrl]
+    var apiUri: String {
+        return STDefaults[.snuevWebUrl]
+    }
 
     private var idForLoadDetailView: String?
 
@@ -34,7 +36,7 @@ class ReviewViewController: UIViewController, WKUIDelegate {
         }
     }
 
-    private func loadWebViews(withApiUrl: String) {
+    func loadWebViews(withApiUrl: String) {
         let webConfiguration = WKWebViewConfiguration()
         let wkDataStore = WKWebsiteDataStore.nonPersistent()
 
@@ -177,13 +179,5 @@ extension ReviewViewController {
 
     func setIdForLoadDetailView(with id: String) {
         idForLoadDetailView = id
-    }
-
-    func loadMainView() {
-        let url = apiUri
-        let myURL = URL(string: url)
-        let myRequest = URLRequest(url: myURL!)
-
-        webView.load(myRequest)
     }
 }
