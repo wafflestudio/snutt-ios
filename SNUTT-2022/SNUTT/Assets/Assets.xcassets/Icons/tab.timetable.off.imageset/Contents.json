@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "mapVectorBlack.png",
+      "filename" : "tabTimetableOff.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "mapVectorBlack@2x.png",
+      "filename" : "tabTimetableOff@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "mapVectorBlack@3x.png",
+      "filename" : "tabTimetableOff@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
