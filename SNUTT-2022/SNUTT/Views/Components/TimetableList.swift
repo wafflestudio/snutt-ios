@@ -18,12 +18,12 @@ struct TimetableList: View {
                 } label: {
                     EmptyView()
                 }
-                // workarounds to hide arrow indicator
+                // workaround to hide arrow indicator
                 .opacity(0.0)
 
                 TimetableListCell(lecture: lecture)
             }
-        }.listStyle(GroupedListStyle())
+        }.listStyle(PlainListStyle())
     }
 }
 

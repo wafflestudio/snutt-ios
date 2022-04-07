@@ -9,14 +9,26 @@ import SwiftUI
 
 struct MyTimetableListScene: View {
     let myDummyLectureList = DummyAppState.shared.lectures
-
+    
     var body: some View {
         TimetableList(lectures: myDummyLectureList)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavBarButton(imageName: "nav.plus") {
+                        print("menu tapped.")
+                    }
+                }
+            }
     }
 }
 
 struct MyTimetableListScene_Previews: PreviewProvider {
     static var previews: some View {
-        MyTimetableListScene()
+        NavigationView {
+            TabView {
+                MyTimetableListScene()
+            }
+        }
     }
 }

@@ -12,28 +12,31 @@ struct SNUTTApp: App {
     
     @State private var selectedSceneId = 0
     
-    let scenes: [SceneItem] = [
-        SceneItem(id: 0, view: AnyView(MyTimetableListScene()), symbolName: "timetable"),
-        SceneItem(id: 1, view: AnyView(MyTimetableListScene()), symbolName: "search"),
-        SceneItem(id: 2, view: AnyView(MyTimetableListScene()), symbolName: "settings"),
-        SceneItem(id: 3, view: AnyView(MyTimetableListScene()), symbolName: "settings"),
+    let tabItems: [TabItem] = [
+        TabItem(id: 0, view: AnyView(MyTimetableScene()), symbolName: "timetable"),
+        TabItem(id: 1, view: AnyView(MyTimetableListScene()), symbolName: "search"),
+        TabItem(id: 2, view: AnyView(MyTimetableListScene()), symbolName: "review"),
+        TabItem(id: 3, view: AnyView(MyTimetableListScene()), symbolName: "settings"),
     ]
     
     var body: some Scene {
         WindowGroup {
             // 임시 Entry Point
-            NavigationView {
-                TabView(selection: $selectedSceneId) {
-                    ForEach(scenes) { sceneItem in
-                        sceneItem.view
-                            .tabItem {
-                                selectedSceneId == sceneItem.id ? Image(sceneItem.onImageName) : Image(sceneItem.offImageName)
-                            }
+            TabView(selection: $selectedSceneId) {
+                ForEach(tabItems) { tab in
+                    NavigationView {
+                        tab.view
                     }
+                    .accentColor(Color(UIColor.label))
+                    .tabItem {
+                        Image(selectedSceneId == tab.id ? tab.onImageName : tab.offImageName)
+                    }
+                    
                 }
-                .onAppear {
-                    setTabBarStyle()
-                }
+            }
+            .onAppear {
+                setTabBarStyle()
+                setNavBarStyle()
             }
         }
     }
@@ -47,10 +50,22 @@ struct SNUTTApp: App {
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
     }
+    
+    /// Globally set the background color of the nav bar to white.
+    private func setNavBarStyle() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .white
+        UINavigationBar.appearance().standardAppearance = appearance
+        if #available(iOS 15.0, *) {
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
+    }
 }
 
+
+
 /// A simple wrapper struct that represents a tab view item.
-struct SceneItem: Identifiable {
+struct TabItem: Identifiable {
     let id: Int
     let view: AnyView
     let symbolName: String
