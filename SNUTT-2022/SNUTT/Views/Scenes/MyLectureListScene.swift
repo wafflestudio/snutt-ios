@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct MyTimetableListScene: View {
+struct MyLectureListScene: View {
     let myDummyLectureList = DummyAppState.shared.lectures
 
     var body: some View {
-        TimetableList(lectures: myDummyLectureList)
+        LectureList(lectures: myDummyLectureList)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -27,7 +27,7 @@ struct MyTimetableListScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             TabView {
-                MyTimetableListScene()
+                MyLectureListScene()
             }
         }
     }

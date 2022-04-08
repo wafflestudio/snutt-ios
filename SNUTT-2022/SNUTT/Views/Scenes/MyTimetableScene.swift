@@ -21,7 +21,7 @@ struct MyTimetableScene: View {
         }
         // navigate programmatically, because NavigationLink inside toolbar doesn't work
         .background(
-            NavigationLink(destination: MyTimetableListScene(), isActive: $pushToListScene) {
+            NavigationLink(destination: MyLectureListScene(), isActive: $pushToListScene) {
                 EmptyView()
             }
         )

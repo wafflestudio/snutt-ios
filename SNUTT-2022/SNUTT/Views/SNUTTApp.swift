@@ -13,9 +13,9 @@ struct SNUTTApp: App {
 
     let tabItems: [TabItem] = [
         TabItem(id: 0, view: AnyView(MyTimetableScene()), symbolName: "timetable"),
-        TabItem(id: 1, view: AnyView(MyTimetableListScene()), symbolName: "search"),
-        TabItem(id: 2, view: AnyView(MyTimetableListScene()), symbolName: "review"),
-        TabItem(id: 3, view: AnyView(MyTimetableListScene()), symbolName: "settings"),
+        TabItem(id: 1, view: AnyView(MyLectureListScene()), symbolName: "search"),
+        TabItem(id: 2, view: AnyView(MyLectureListScene()), symbolName: "review"),
+        TabItem(id: 3, view: AnyView(MyLectureListScene()), symbolName: "settings"),
     ]
 
     var body: some Scene {

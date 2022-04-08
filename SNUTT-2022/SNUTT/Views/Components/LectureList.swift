@@ -1,5 +1,5 @@
 //
-//  TimetableList.swift
+//  LectureList.swift
 //  SNUTT
 //
 //  Created by 박신홍 on 2022/03/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TimetableList: View {
+struct LectureList: View {
     let lectures: [Lecture]
 
     var body: some View {
@@ -21,7 +21,7 @@ struct TimetableList: View {
                 // workaround to hide arrow indicator
                 .opacity(0.0)
 
-                TimetableListCell(lecture: lecture)
+                LectureListCell(lecture: lecture)
             }
         }.listStyle(PlainListStyle())
     }
@@ -30,7 +30,7 @@ struct TimetableList: View {
 struct TimetableList_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TimetableList(lectures: DummyAppState.shared.lectures)
+            LectureList(lectures: DummyAppState.shared.lectures)
         }
     }
 }
