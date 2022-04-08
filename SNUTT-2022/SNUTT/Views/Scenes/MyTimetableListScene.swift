@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyTimetableListScene: View {
     let myDummyLectureList = DummyAppState.shared.lectures
-    
+
     var body: some View {
         TimetableList(lectures: myDummyLectureList)
             .navigationBarTitleDisplayMode(.inline)

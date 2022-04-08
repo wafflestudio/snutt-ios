@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct MyTimetableScene: View {
-    
     @State private var pushToListScene = false
-    
+
     var body: some View {
-        
         VStack {
             Text("This is the main timetable view.")
             NavigationLink {
@@ -34,22 +32,22 @@ struct MyTimetableScene: View {
                     NavBarButton(imageName: "nav.menu") {
                         print("menu tapped.")
                     }
-                    
+
                     Text("나의 시간표").font(STFont.title)
                     Text("(18 학점)")
                         .font(STFont.details)
                         .foregroundColor(Color(UIColor.secondaryLabel))
-                    
+
                     Spacer()
-                    
+
                     NavBarButton(imageName: "nav.list") {
                         pushToListScene = true
                     }
-                    
+
                     NavBarButton(imageName: "nav.share") {
                         print("share tapped")
                     }
-                    
+
                     NavBarButton(imageName: "nav.alarm.off") {
                         print("alarm tapped")
                     }
