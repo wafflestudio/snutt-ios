@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE1D2B38280142EB008F9134 /* TimetableGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGrid.swift */; };
+		BE1D2B3A28014527008F9134 /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Week.swift */; };
 		BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */; };
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
 		BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */; };
@@ -48,6 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BE1D2B37280142EB008F9134 /* TimetableGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableGrid.swift; sourceTree = "<group>"; };
+		BE1D2B3928014527008F9134 /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
 		BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTimetableScene.swift; sourceTree = "<group>"; };
 		BE7E230227FF3C38004DC202 /* NavBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarButton.swift; sourceTree = "<group>"; };
 		BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureListCell.swift; sourceTree = "<group>"; };
@@ -99,6 +103,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE1D2B3228012059008F9134 /* Timetable */ = {
+			isa = PBXGroup;
+			children = (
+				BE1D2B37280142EB008F9134 /* TimetableGrid.swift */,
+			);
+			path = Timetable;
+			sourceTree = "<group>";
+		};
 		DC860F3C27E5C87D0068C94B = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +176,7 @@
 			children = (
 				DCD41A5F27E5CC7700CF380E /* Timetable.swift */,
 				BEDF507427F4289B00CDCC13 /* Lecture.swift */,
+				BE1D2B3928014527008F9134 /* Week.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -227,6 +240,7 @@
 				BEDF506C27EB740E00CDCC13 /* LectureList.swift */,
 				BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */,
 				BE7E230227FF3C38004DC202 /* NavBarButton.swift */,
+				BE1D2B3228012059008F9134 /* Timetable */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -392,11 +406,13 @@
 				BEDF507327F427FA00CDCC13 /* MyLectureListScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */,
+				BE1D2B3A28014527008F9134 /* Week.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
+				BE1D2B38280142EB008F9134 /* TimetableGrid.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */,

@@ -11,14 +11,7 @@ struct MyTimetableScene: View {
     @State private var pushToListScene = false
 
     var body: some View {
-        VStack {
-            Text("This is the main timetable view.")
-            NavigationLink {
-                LectureDetails()
-            } label: {
-                Text("> Click one of the lectures! <")
-            }
-        }
+        TimetableGrid()
         // navigate programmatically, because NavigationLink inside toolbar doesn't work
         .background(
             NavigationLink(destination: MyLectureListScene(), isActive: $pushToListScene) {
