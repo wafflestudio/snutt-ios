@@ -9,14 +9,15 @@ import SwiftUI
 
 
 struct TimetableGrid: View {
-    let timeWidth: CGFloat = 20
-    let weekHeight: CGFloat = 25
-    let minTime: Int = 6
-    let maxTime: Int = 23
-    var hourNum: Int {
-        maxTime - minTime + 1
+
+    let hourWidth: CGFloat = 20
+    let minHour: Int = 6
+    let maxHour: Int = 23
+    var hourCount: Int {
+        maxHour - minHour + 1
     }
     
+    let weekHeight: CGFloat = 25
     let visibleWeeks: [Week] = [.mon, .tue, .wed, .thu, .fri]
     var weekCount: Int {
         visibleWeeks.count
@@ -24,8 +25,8 @@ struct TimetableGrid: View {
     
     var body: some View {
         GeometryReader { reader in
-            weeksView
-            timesView
+            weeksHStack
+            hoursVStack
             verticalPaths(in: reader.size)
                 .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(0.1)))
             horizontalHourlyPaths(in: reader.size)
@@ -39,54 +40,54 @@ struct TimetableGrid: View {
     // MARK: Grid Paths
     
     /// 컨테이너의 사이즈가 주어졌을 때, 하루의 너비를 계산한다.
-    func getWeekWidth(in rect: CGSize) -> CGFloat {
-        return (rect.width - timeWidth) / CGFloat(weekCount)
+    func getWeekWidth(in size: CGSize) -> CGFloat {
+        return (size.width - hourWidth) / CGFloat(weekCount)
     }
     
     /// 컨테이너의 사이즈가 주어졌을 때, 한 시간의 높이를 계산한다.
-    func getTimeHeight(in rect: CGSize) -> CGFloat {
-        return (rect.height - weekHeight) / CGFloat(hourNum)
+    func getHourHeight(in size: CGSize) -> CGFloat {
+        return (size.height - weekHeight) / CGFloat(hourCount)
     }
     
     /// 하루 간격의 수직선
-    func verticalPaths(in rect: CGSize) -> Path {
-        let weekWidth = getWeekWidth(in: rect)
+    func verticalPaths(in size: CGSize) -> Path {
+        let weekWidth = getWeekWidth(in: size)
         return Path { path in
             for i in 0..<weekCount {
-                let x = timeWidth + CGFloat(i) * weekWidth
+                let x = hourWidth + CGFloat(i) * weekWidth
                 path.move(to: CGPoint(x: x, y: 0))
-                path.addLine(to: CGPoint(x: x, y: rect.height))
+                path.addLine(to: CGPoint(x: x, y: size.height))
             }
         }
     }
     
     /// 한 시간 간격의 수평선
-    func horizontalHourlyPaths(in rect: CGSize) -> Path {
-        let timeHeight = getTimeHeight(in: rect)
+    func horizontalHourlyPaths(in size: CGSize) -> Path {
+        let hourHeight = getHourHeight(in: size)
         return Path { path in
-            for i in 0..<hourNum {
-                let y = weekHeight + CGFloat(i) * timeHeight
+            for i in 0..<hourCount {
+                let y = weekHeight + CGFloat(i) * hourHeight
                 path.move(to: CGPoint(x: 0, y: y))
-                path.addLine(to: CGPoint(x: rect.width, y: y))
+                path.addLine(to: CGPoint(x: size.width, y: y))
             }
         }
     }
     
     /// 30분 간격의 수평선
-    func horizontalHalfHourlyPaths(in rect: CGSize) -> Path {
-        let timeHeight = getTimeHeight(in: rect)
+    func horizontalHalfHourlyPaths(in size: CGSize) -> Path {
+        let hourHeight = getHourHeight(in: size)
         return Path { path in
-            for i in 0..<hourNum {
-                let y = weekHeight + CGFloat(i) * timeHeight + timeHeight / 2
-                path.move(to: CGPoint(x: 0 + timeWidth, y: y))
-                path.addLine(to: CGPoint(x: rect.width, y: y))
+            for i in 0..<hourCount {
+                let y = weekHeight + CGFloat(i) * hourHeight + hourHeight / 2
+                path.move(to: CGPoint(x: 0 + hourWidth, y: y))
+                path.addLine(to: CGPoint(x: size.width, y: y))
             }
         }
     }
     
     // MARK: Week and Time Texts
     
-    var weeksView: some View {
+    var weeksHStack: some View {
         HStack(spacing: 0) {
             ForEach(visibleWeeks) { week in
                 Text(week.shortSymbol)
@@ -96,17 +97,17 @@ struct TimetableGrid: View {
                     .frame(height: weekHeight)
             }
         }
-        .padding(.leading, timeWidth)
+        .padding(.leading, hourWidth)
     }
     
-    var timesView: some View {
+    var hoursVStack: some View {
         VStack(spacing: 0) {
-            ForEach(minTime...maxTime, id: \.self) { time in
-                Text(String(time))
+            ForEach(minHour...maxHour, id: \.self) { hour in
+                Text(String(hour))
                     .font(STFont.details)
                     .foregroundColor(Color(UIColor.secondaryLabel))
                     .padding(.top, 5)
-                    .frame(width: timeWidth)
+                    .frame(width: hourWidth)
                     .frame(maxHeight: .infinity, alignment: .top)
             }
         }
