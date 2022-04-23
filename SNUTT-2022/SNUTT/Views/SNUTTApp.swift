@@ -62,14 +62,13 @@ struct SNUTTApp: App {
 
 /// A simple wrapper struct that represents a tab view item.
 struct TabItem: Identifiable {
-    
     enum SymbolName: String {
         case timetable
         case search
         case review
         case settings
     }
-    
+
     let id: Int
     let view: AnyView
     let symbolName: SymbolName
@@ -82,5 +81,3 @@ struct TabItem: Identifiable {
         "tab.\(symbolName.rawValue).off"
     }
 }
-
-
