@@ -9,14 +9,18 @@ import SwiftUI
 
 struct MyTimetableScene: View {
     @State private var pushToListScene = false
+    @State private var presentLectureDetails = false
 
     var body: some View {
         VStack {
             Text("This is the main timetable view.")
-            NavigationLink {
-                LectureDetails()
+            Button {
+                presentLectureDetails = true
             } label: {
                 Text("> Click one of the lectures! <")
+            }
+            .sheet(isPresented: $presentLectureDetails) {
+                LectureDetails()
             }
         }
         // navigate programmatically, because NavigationLink inside toolbar doesn't work
