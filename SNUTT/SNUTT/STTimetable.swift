@@ -67,6 +67,7 @@ class STTimetable {
             "lecture_list": lectureList.map { lecture in
                 lecture.toDictionary()
             },
+            "theme": theme?.rawValue ?? 1
         ]
     }
 
