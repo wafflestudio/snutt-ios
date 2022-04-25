@@ -11,15 +11,15 @@ import Foundation
 extension Double {
     func periodString() -> String {
         if Int(self * 2.0) % 2 == 0 {
-            return "\(Int(self) + 8):00"
+            return "\(Int(self)):00"
         } else {
-            return "\(Int(self) + 8):30"
+            return "\(Int(self)):30"
         }
     }
 }
 
 class STPeriod {
-    static let periodNum: Int = 14
+    static let periodNum: Int = 24
     static var allValues: [Double] {
         var arr: [Double] = []
         for i in 0 ..< STPeriod.periodNum {

@@ -115,7 +115,9 @@ struct STLecture {
 
         let listData = data["class_time_json"].arrayValue
         for it in listData {
-            let time = STTime(day: it["day"].intValue, startPeriod: it["start"].doubleValue, duration: it["len"].doubleValue)
+            // 커스텀 강의만 서버에서 + 8 을 해버리는 것 같네요. 0~23시 이슈 해결 위한 임시 처방입니다
+            let startPeriod = courseNumber == nil ? it["start"].doubleValue : it["start"].doubleValue + 8.0
+            let time = STTime(day: it["day"].intValue, startPeriod: startPeriod, duration: it["len"].doubleValue)
             let singleClass = STSingleClass(time: time, place: it["place"].stringValue)
             classList.append(singleClass)
         }
