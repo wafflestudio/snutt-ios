@@ -32,7 +32,7 @@ struct STLecture {
     var colorIndex: Int = 0
     var timeMask: [Int] = []
     var titleBreakLine = ""
-    
+
     var isCustomLecture: Bool {
         return courseNumber == nil
     }
