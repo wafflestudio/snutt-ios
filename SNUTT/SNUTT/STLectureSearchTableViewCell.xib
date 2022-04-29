@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -86,6 +86,7 @@
                                 <constraint firstAttribute="trailing" secondItem="xVT-8g-nId" secondAttribute="trailing" constant="20" id="8H2-PR-U9S"/>
                                 <constraint firstItem="dFX-UE-KFU" firstAttribute="leading" secondItem="2eP-RY-WV5" secondAttribute="leading" constant="17" id="8Vg-HJ-tYU"/>
                                 <constraint firstAttribute="trailing" secondItem="9XL-qV-5wF" secondAttribute="trailing" constant="23" id="Egh-4e-DgT"/>
+                                <constraint firstItem="kzZ-Wp-ohA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="AtQ-FO-5s1" secondAttribute="trailing" constant="6" id="I4o-hp-oR2"/>
                                 <constraint firstItem="yug-XZ-ewZ" firstAttribute="centerY" secondItem="dFX-UE-KFU" secondAttribute="centerY" id="LAQ-Rf-ZFV"/>
                                 <constraint firstItem="kzZ-Wp-ohA" firstAttribute="top" secondItem="2eP-RY-WV5" secondAttribute="top" constant="8" id="LHT-Kw-jI0"/>
                                 <constraint firstItem="xVT-8g-nId" firstAttribute="leading" secondItem="oSo-L8-L6Q" secondAttribute="trailing" constant="6" id="Ss3-X3-u3l"/>

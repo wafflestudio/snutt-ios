@@ -264,7 +264,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             cell.isHidden = false
             cell.titleLabel.isHidden = true
             // cell.titleLabel.text = String(indexPath.row);
-            cell.timeLabel.text = String(indexPath.row + 8)
+            cell.timeLabel.text = String(indexPath.row)
             if !(rowStart <= indexPath.row && indexPath.row <= rowEnd) {
                 cell.isHidden = true
             }
