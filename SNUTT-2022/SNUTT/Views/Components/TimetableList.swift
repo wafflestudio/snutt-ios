@@ -26,7 +26,7 @@ struct TimetableList: View {
             }
         }
         .onAppear {
-            print("Main List Page...showActivityIndicator: \(appState.showActivityIndicator)")
+            print("Main List Page...showActivityIndicator: \(appState.system.showActivityIndicator)")
         }
         .listStyle(GroupedListStyle())
     }

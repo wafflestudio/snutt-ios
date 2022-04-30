@@ -13,7 +13,7 @@ struct LectureDetails: View {
     var body: some View {
         Text("This is LectureDetails View.")
             .onAppear {
-                self.appState.showActivityIndicator = !self.appState.showActivityIndicator
+                self.appState.system.showActivityIndicator = !self.appState.system.showActivityIndicator
             }
     }
 }
