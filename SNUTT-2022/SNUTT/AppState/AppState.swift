@@ -15,9 +15,6 @@ class AppState: ObservableObject {
     @Published var system = System()
     
     @Published var selectedTab: SelectedTab = .timetable
-    
-    @Published var state: State = .success
-    @Published var showActivityIndicator = false
 }
 
 extension AppState {
@@ -74,7 +71,8 @@ extension AppState {
 // 시스템 상태
 extension AppState {
     struct System {
-        var keyboardHeight: CGFloat = 0
+        var showActivityIndicator = false
+        var state: State = .success
     }
 }
 
