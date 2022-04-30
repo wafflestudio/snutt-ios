@@ -1,5 +1,5 @@
 //
-//  TimetableListCell.swift
+//  LectureListCell.swift
 //  SNUTT
 //
 //  Created by 박신홍 on 2022/03/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TimetableListCell: View {
+struct LectureListCell: View {
     let lecture: Lecture
 
     @ViewBuilder
@@ -42,6 +42,6 @@ struct TimetableListCell: View {
 
 struct TimetableListCell_Previews: PreviewProvider {
     static var previews: some View {
-        TimetableListCell(lecture: DummyAppState.shared.dummyLecture)
+        LectureListCell(lecture: DummyAppState.shared.dummyLecture)
     }
 }
