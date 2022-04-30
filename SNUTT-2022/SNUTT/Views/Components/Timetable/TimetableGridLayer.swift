@@ -1,5 +1,5 @@
 //
-//  TimetableGrid.swift
+//  TimetableGridLayer.swift
 //  SNUTT
 //
 //  Created by 박신홍 on 2022/04/09.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct TimetableGrid: View {
+struct TimetableGridLayer: View {
     
     let viewModel: TimetableViewModel
     
@@ -44,7 +44,7 @@ struct TimetableGrid: View {
         let hourHeight = viewModel.getHourHeight(in: containerSize)
         return Path { path in
             for i in 0..<viewModel.hourCount {
-                let y = viewModel.weekHeight + CGFloat(i) * hourHeight
+                let y = viewModel.weekdayHeight + CGFloat(i) * hourHeight
                 path.move(to: CGPoint(x: 0, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))
             }
@@ -56,7 +56,7 @@ struct TimetableGrid: View {
         let hourHeight = viewModel.getHourHeight(in: containerSize)
         return Path { path in
             for i in 0..<viewModel.hourCount {
-                let y = viewModel.weekHeight + CGFloat(i) * hourHeight + hourHeight / 2
+                let y = viewModel.weekdayHeight + CGFloat(i) * hourHeight + hourHeight / 2
                 path.move(to: CGPoint(x: 0 + viewModel.hourWidth, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))
             }
@@ -73,7 +73,7 @@ struct TimetableGrid: View {
                     .font(STFont.details)
                     .foregroundColor(Color(UIColor.secondaryLabel))
                     .frame(maxWidth: .infinity)
-                    .frame(height: viewModel.weekHeight)
+                    .frame(height: viewModel.weekdayHeight)
             }
         }
         .padding(.leading, viewModel.hourWidth)
@@ -91,13 +91,13 @@ struct TimetableGrid: View {
                     .frame(maxHeight: .infinity, alignment: .top)
             }
         }
-        .padding(.top, viewModel.weekHeight)
+        .padding(.top, viewModel.weekdayHeight)
     }
 }
 
 
 struct TimetableGrid_Previews: PreviewProvider {
     static var previews: some View {
-        TimetableGrid(viewModel: TimetableViewModel())
+        TimetableGridLayer(viewModel: TimetableViewModel())
     }
 }

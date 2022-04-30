@@ -11,7 +11,7 @@ struct MyTimetableScene: View {
     @State private var pushToListScene = false
 
     var body: some View {
-        TimetableGrid()
+        TimetableZStack(viewModel: TimetableViewModel())
         // navigate programmatically, because NavigationLink inside toolbar doesn't work
         .background(
             NavigationLink(destination: MyLectureListScene(), isActive: $pushToListScene) {
