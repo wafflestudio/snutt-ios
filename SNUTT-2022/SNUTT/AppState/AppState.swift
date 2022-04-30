@@ -13,11 +13,13 @@ class AppState: ObservableObject {
     @Published var currentTimetable = CurrentTimetable()
     @Published var setting = Setting()
     @Published var system = System()
+
+    @Published var showActivityIndicator = false
 }
 
 extension AppState {
     struct CurrentUser {
-        //var user = User()
+        //var user = User()             // User Model 생성 후 주석 해제
         var token: String?
         var userId: String?
         var registeredFCMToken: String?
@@ -60,12 +62,12 @@ extension AppState {
 }
 
 // if needed
-extension AppState: Equatable {
-    static func == (lhs: AppState, rhs: AppState) -> Bool {
-        //return lhs.currentTimetable == rhs.currentTimetable
-        return true
-    }
-}
+//extension AppState: Equatable {
+//    static func == (lhs: AppState, rhs: AppState) -> Bool {
+//        //return lhs.currentTimetable == rhs.currentTimetable
+//        return true
+//    }
+//}
 
 /// For demo purpose. To be removed.
 class DummyAppState {
