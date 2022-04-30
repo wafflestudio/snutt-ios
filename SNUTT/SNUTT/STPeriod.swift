@@ -20,7 +20,7 @@ extension Double {
     /// `Double`을 분 단위로 정확하게 60진법 수로 환산한다.
     /// ex) 7.3교시 -> 15시 18분 (`7 + 8 == 15`, `0.3 * 60 == 18`)
     func periodStringPrecise() -> String {
-        let hour = Int(self) + 8
+        let hour = Int(self)
         let minute: Double = (truncatingRemainder(dividingBy: 1) * 60).rounded() // schoolbook rounding
         return "\(hour):\(Int(minute))"
     }

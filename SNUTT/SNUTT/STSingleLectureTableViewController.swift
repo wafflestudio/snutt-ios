@@ -282,6 +282,7 @@ class STSingleLectureTableViewController: UITableViewController {
             return tmpCell
         case .singleClass:
             let cell = tmpCell as! STSingleClassTableViewCell
+            cell.customLecture = currentLecture.isCustomLecture  // order matters
             cell.singleClass = currentLecture.classList[indexPath.row - 1]
             cell.placeDoneBlock = { value in self.currentLecture.classList[indexPath.row - 1].place = value }
             cell.timeDoneBlock = { value in self.currentLecture.classList[indexPath.row - 1].time = value }

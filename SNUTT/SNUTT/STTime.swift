@@ -28,12 +28,12 @@ struct STTime {
         self.duration = duration
     }
 
-    func longString() -> String {
-        return day.longString() + " " + startPeriod.periodString() + "~" + endPeriodPrecise.periodStringPrecise()
+    func longString(precise: Bool = true) -> String {
+        return day.longString() + " " + startPeriod.periodString() + "~" + (precise ? endPeriodPrecise.periodStringPrecise() : endPeriod.periodString())
     }
 
-    func shortString() -> String {
-        return day.shortString() + " " + startPeriod.periodString() + "~" + endPeriodPrecise.periodStringPrecise()
+    func shortString(precise: Bool = true) -> String {
+        return day.shortString() + " " + startPeriod.periodString() + "~" + (precise ? endPeriodPrecise.periodStringPrecise() : endPeriod.periodString())
     }
 
     func startString() -> String {
