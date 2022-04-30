@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct TimetableList: View {
-    let lectures: [Lecture]
+    @EnvironmentObject var appState: AppState
+    var lectures: [Lecture]
 
     var body: some View {
         List(lectures) { lecture in
             ZStack {
                 NavigationLink {
-                    LectureDetails()
+                    LectureDetails().environmentObject(self.appState)
                 } label: {
                     EmptyView()
                 }
@@ -23,14 +24,18 @@ struct TimetableList: View {
 
                 TimetableListCell(lecture: lecture)
             }
-        }.listStyle(GroupedListStyle())
-    }
-}
-
-struct TimetableList_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TimetableList(lectures: DummyAppState.shared.lectures)
         }
+        .onAppear {
+            print("Main List Page...showActivityIndicator: \(appState.showActivityIndicator)")
+        }
+        .listStyle(GroupedListStyle())
     }
 }
+//
+//struct TimetableList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationView {
+//            TimetableList(lectures: AppState().currentTimetable.lectures)
+//        }
+//    }
+//}

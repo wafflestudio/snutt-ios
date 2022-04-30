@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TimetableListCell: View {
-    let lecture: Lecture
+    var lecture: Lecture
 
     @ViewBuilder
     func detailRow(imageName: String, text: String) -> some View {
@@ -24,7 +24,7 @@ struct TimetableListCell: View {
         VStack(spacing: 8) {
             // title
             HStack {
-                Text("편집디자인")
+                Text("\(lecture.id)")
                     .font(STFont.subheading)
                 Spacer()
                 Text("정희숙 / 3학점")
@@ -39,9 +39,9 @@ struct TimetableListCell: View {
         .padding(.vertical, 5)
     }
 }
-
-struct TimetableListCell_Previews: PreviewProvider {
-    static var previews: some View {
-        TimetableListCell(lecture: DummyAppState.shared.dummyLecture)
-    }
-}
+//
+//struct TimetableListCell_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TimetableListCell(lecture: AppState().currentTimetable.dummyLecture)
+//    }
+//}

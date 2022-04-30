@@ -8,15 +8,16 @@
 import SwiftUI
 
 struct MyTimetableListScene: View {
-    let myDummyLectureList = DummyAppState.shared.lectures
+    @EnvironmentObject var appState: AppState
 
     var body: some View {
-        TimetableList(lectures: myDummyLectureList)
+        TimetableList(lectures: appState.currentTimetable.lectures)
+            .environmentObject(self.appState)
     }
 }
-
-struct MyTimetableListScene_Previews: PreviewProvider {
-    static var previews: some View {
-        MyTimetableListScene()
-    }
-}
+//
+//struct MyTimetableListScene_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyTimetableListScene().environmentObject(AppState())
+//    }
+//}
