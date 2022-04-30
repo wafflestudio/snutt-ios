@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct TimetableBlock: View {
-    
     let lecture: Lecture
     let timePlace: TimePlace
-    
+
     var body: some View {
         ZStack {
             Rectangle()

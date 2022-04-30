@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct TimetableBlocksLayer: View {
-    
     let viewModel: TimetableViewModel
-    
+
     var body: some View {
         GeometryReader { reader in
             ForEach(viewModel.lectures) { lecture in
@@ -27,14 +26,11 @@ struct TimetableBlocksLayer: View {
 }
 
 struct TimetableBlocks_Previews: PreviewProvider {
-    
-    
     static var previews: some View {
         ZStack {
             let viewModel = TimetableViewModel()
             TimetableBlocksLayer(viewModel: viewModel)
             TimetableGridLayer(viewModel: viewModel)
         }
-        
     }
 }
