@@ -13,7 +13,7 @@ class AppState: ObservableObject {
     @Published var currentTimetable = CurrentTimetable()
     @Published var setting = Setting()
     @Published var system = System()
-    
+
     @Published var selectedTab: SelectedTab = .timetable
 }
 
@@ -24,7 +24,7 @@ extension AppState {
         case review
         case settings
     }
-    
+
     enum State {
         case error
         case success
@@ -33,18 +33,17 @@ extension AppState {
 
 extension AppState {
     struct CurrentUser {
-        //var user = User()             // User Model 생성 후 주석 해제
+        // var user = User()             // User Model 생성 후 주석 해제
         var token: String?
         var userId: String?
         var registeredFCMToken: String?
-        
     }
 }
 
 extension AppState {
     struct CurrentTimetable {
         var timetable = Timetable()
-        
+
         // for test(will be removed)
         let lectures = [Lecture(id: 1), Lecture(id: 2), Lecture(id: 3)]
         var dummyLecture: Lecture {
@@ -62,8 +61,8 @@ extension AppState {
         var shouldShowBadge: Bool = false
         var appVersion: String?
         var apiKey: String?
-        var shouldDeleteFCMInfos: String?    // STFCMInfoList
-        var colorList: String?               // STColorList
+        var shouldDeleteFCMInfos: String? // STFCMInfoList
+        var colorList: String? // STColorList
         var snuevWebUrl: String?
     }
 }
@@ -77,9 +76,9 @@ extension AppState {
 }
 
 // if needed
-//extension AppState: Equatable {
+// extension AppState: Equatable {
 //    static func == (lhs: AppState, rhs: AppState) -> Bool {
 //        //return lhs.currentTimetable == rhs.currentTimetable
 //        return true
 //    }
-//}
+// }

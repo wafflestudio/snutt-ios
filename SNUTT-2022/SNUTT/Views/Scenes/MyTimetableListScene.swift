@@ -15,9 +15,10 @@ struct MyTimetableListScene: View {
             .environmentObject(self.appState)
     }
 }
+
 //
-//struct MyTimetableListScene_Previews: PreviewProvider {
+// struct MyTimetableListScene_Previews: PreviewProvider {
 //    static var previews: some View {
 //        MyTimetableListScene().environmentObject(AppState())
 //    }
-//}
+// }

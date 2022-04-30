@@ -31,11 +31,12 @@ struct TimetableList: View {
         .listStyle(GroupedListStyle())
     }
 }
+
 //
-//struct TimetableList_Previews: PreviewProvider {
+// struct TimetableList_Previews: PreviewProvider {
 //    static var previews: some View {
 //        NavigationView {
 //            TimetableList(lectures: AppState().currentTimetable.lectures)
 //        }
 //    }
-//}
+// }

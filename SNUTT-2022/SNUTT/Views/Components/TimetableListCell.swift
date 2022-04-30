@@ -39,9 +39,10 @@ struct TimetableListCell: View {
         .padding(.vertical, 5)
     }
 }
+
 //
-//struct TimetableListCell_Previews: PreviewProvider {
+// struct TimetableListCell_Previews: PreviewProvider {
 //    static var previews: some View {
 //        TimetableListCell(lecture: AppState().currentTimetable.dummyLecture)
 //    }
-//}
+// }
