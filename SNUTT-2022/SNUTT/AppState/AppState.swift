@@ -13,8 +13,25 @@ class AppState: ObservableObject {
     @Published var currentTimetable = CurrentTimetable()
     @Published var setting = Setting()
     @Published var system = System()
-
+    
+    @Published var selectedTab: SelectedTab = .timetable
+    
+    @Published var state: State = .success
     @Published var showActivityIndicator = false
+}
+
+extension AppState {
+    enum SelectedTab {
+        case timetable
+        case search
+        case review
+        case settings
+    }
+    
+    enum State {
+        case error
+        case success
+    }
 }
 
 extension AppState {
