@@ -1492,7 +1492,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1500,7 +1500,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" ";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1524,7 +1524,7 @@
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTTRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1532,7 +1532,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.1;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1663,7 +1663,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				INFOPLIST_FILE = SNUTT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1671,7 +1671,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.1;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1721,7 +1721,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jin Hyung Kim (UNKZQ59SP4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				ENABLE_TESTABILITY = YES;
@@ -1737,7 +1737,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "com.wafflestudio.snutt.SNUTT-Today development";
@@ -1760,7 +1760,7 @@
 				CODE_SIGN_ENTITLEMENTS = "SNUTT Today/SNUTT Today.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1774,7 +1774,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "com.wafflestudio.snutt.SNUTT-Today distribution";
@@ -1799,7 +1799,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jin Hyung Kim (6CP294YE57)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6CP294YE57;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1813,7 +1813,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt.SNUTT-Today";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "com.wafflestudio.snutt.SNUTT-Today distribution";
