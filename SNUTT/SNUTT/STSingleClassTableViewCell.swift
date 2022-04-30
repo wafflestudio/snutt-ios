@@ -45,9 +45,9 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
         if textField == timeTextField {
             STTimeActionSheetPicker.showWithTime(singleClass.time,
                                                  doneBlock: { [weak self] time in
-                guard let self = self else { return}
+                                                     guard let self = self else { return }
                                                      self.singleClass.time = time
-                self.timeTextField.text = self.singleClass.time.shortString(precise: !self.customLecture)
+                                                     self.timeTextField.text = self.singleClass.time.shortString(precise: !self.customLecture)
                                                      self.timeDoneBlock?(time)
                                                  }, cancelBlock: nil, origin: textField)
             return false
