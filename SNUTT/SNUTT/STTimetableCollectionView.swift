@@ -83,8 +83,8 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
     func autofit(includeTemp: Bool = false) {
         if timetable != nil, timetable?.lectureList.count != 0 {
             var tmpColumnHidden = [false, false, false, false, false, true, true]
-            rowStart = 2
-            rowEnd = 10
+            rowStart = 9
+            rowEnd = 17
 
             for lecture in timetable!.lectureList {
                 for singleClass in lecture.classList {
@@ -110,8 +110,8 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
 
         } else {
             columnHidden = [false, false, false, false, false, true, true]
-            rowStart = 1
-            rowEnd = 12
+            rowStart = 9
+            rowEnd = 17
         }
         layout?.updateContentSize()
     }
@@ -264,7 +264,7 @@ class STTimetableCollectionView: UICollectionView, UICollectionViewDataSource {
             cell.isHidden = false
             cell.titleLabel.isHidden = true
             // cell.titleLabel.text = String(indexPath.row);
-            cell.timeLabel.text = String(indexPath.row + 8)
+            cell.timeLabel.text = String(indexPath.row)
             if !(rowStart <= indexPath.row && indexPath.row <= rowEnd) {
                 cell.isHidden = true
             }

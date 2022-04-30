@@ -12,10 +12,10 @@ struct SNUTTApp: App {
     @State private var selectedSceneId = 0
 
     let tabItems: [TabItem] = [
-        TabItem(id: 0, view: AnyView(MyTimetableScene()), symbolName: "timetable"),
-        TabItem(id: 1, view: AnyView(MyLectureListScene()), symbolName: "search"),
-        TabItem(id: 2, view: AnyView(MyLectureListScene()), symbolName: "review"),
-        TabItem(id: 3, view: AnyView(MyLectureListScene()), symbolName: "settings"),
+        TabItem(id: 0, view: AnyView(MyTimetableScene()), symbolName: .timetable),
+        TabItem(id: 1, view: AnyView(MyLectureListScene()), symbolName: .search),
+        TabItem(id: 2, view: AnyView(MyLectureListScene()), symbolName: .review),
+        TabItem(id: 3, view: AnyView(MyLectureListScene()), symbolName: .settings),
     ]
 
     var body: some Scene {
@@ -62,15 +62,22 @@ struct SNUTTApp: App {
 
 /// A simple wrapper struct that represents a tab view item.
 struct TabItem: Identifiable {
+    enum SymbolName: String {
+        case timetable
+        case search
+        case review
+        case settings
+    }
+
     let id: Int
     let view: AnyView
-    let symbolName: String
+    let symbolName: SymbolName
 
     var onImageName: String {
-        "tab.\(symbolName).on"
+        "tab.\(symbolName.rawValue).on"
     }
 
     var offImageName: String {
-        "tab.\(symbolName).off"
+        "tab.\(symbolName.rawValue).off"
     }
 }
