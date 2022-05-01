@@ -14,8 +14,8 @@ struct SNUTTApp: App {
         WindowGroup {
             // 임시 Entry Point
             NavigationView {
-                MyTimetableListScene().environmentObject(appState)
-            }
+                MyTimetableListScene()
+            }.environmentObject(appState)
         }
     }
 }

@@ -11,8 +11,9 @@ struct MyTimetableListScene: View {
     @EnvironmentObject var appState: AppState
 
     var body: some View {
-        TimetableList(lectures: appState.currentTimetable.lectures)
-            .environmentObject(self.appState)
+        TimetableList(lectures: appState.currentTimetable.lectures).onAppear {
+            print("Main List Page...showActivityIndicator: \(appState.system.showActivityIndicator)")
+        }
     }
 }
 

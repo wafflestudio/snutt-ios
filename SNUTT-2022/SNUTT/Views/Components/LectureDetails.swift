@@ -8,13 +8,8 @@
 import SwiftUI
 
 struct LectureDetails: View {
-    @EnvironmentObject var appState: AppState
-
     var body: some View {
         Text("This is LectureDetails View.")
-            .onAppear {
-                self.appState.system.showActivityIndicator = !self.appState.system.showActivityIndicator
-            }
     }
 }
 

@@ -15,7 +15,9 @@ struct TimetableList: View {
         List(lectures) { lecture in
             ZStack {
                 NavigationLink {
-                    LectureDetails().environmentObject(self.appState)
+                    LectureDetails().onAppear {
+                        appState.system.showActivityIndicator = !appState.system.showActivityIndicator
+                    }
                 } label: {
                     EmptyView()
                 }
@@ -24,9 +26,6 @@ struct TimetableList: View {
 
                 TimetableListCell(lecture: lecture)
             }
-        }
-        .onAppear {
-            print("Main List Page...showActivityIndicator: \(appState.system.showActivityIndicator)")
         }
         .listStyle(GroupedListStyle())
     }
