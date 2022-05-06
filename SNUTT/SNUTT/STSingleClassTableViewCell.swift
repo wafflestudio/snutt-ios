@@ -13,10 +13,10 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
     @IBOutlet weak var timeTextField: UITextField!
     @IBOutlet weak var placeTextField: UITextField!
     @IBOutlet weak var deleteBtn: STViewButton!
-
+    var customLecture: Bool = false
     var singleClass: STSingleClass! {
         didSet {
-            timeTextField.text = singleClass.time.shortString()
+            timeTextField.text = singleClass.time.shortString(precise: !customLecture) // customLecture가 아닐때만 하드코딩된 값을 빼주도록 한다.
             placeTextField.text = singleClass.place
         }
     }
@@ -44,9 +44,10 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == timeTextField {
             STTimeActionSheetPicker.showWithTime(singleClass.time,
-                                                 doneBlock: { time in
+                                                 doneBlock: { [weak self] time in
+                                                     guard let self = self else { return }
                                                      self.singleClass.time = time
-                                                     self.timeTextField.text = self.singleClass.time.shortString()
+                                                     self.timeTextField.text = self.singleClass.time.shortString(precise: !self.customLecture)
                                                      self.timeDoneBlock?(time)
                                                  }, cancelBlock: nil, origin: textField)
             return false
