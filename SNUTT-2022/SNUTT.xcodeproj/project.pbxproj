@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
 		BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
+		BE46B131282F95C90032EF82 /* TimetableLectureBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE46B130282F95C90032EF82 /* TimetableLectureBlocks.swift */; };
 		BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */; };
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
 		BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableGridLayer.swift; sourceTree = "<group>"; };
 		BE1D2B3928014527008F9134 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
+		BE46B130282F95C90032EF82 /* TimetableLectureBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableLectureBlocks.swift; sourceTree = "<group>"; };
 		BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTimetableScene.swift; sourceTree = "<group>"; };
 		BE7E230227FF3C38004DC202 /* NavBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarButton.swift; sourceTree = "<group>"; };
 		BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBlocksLayer.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			children = (
 				BE982FBF281D762F005F71E6 /* TimetableZStack.swift */,
 				BE982FBD281D6244005F71E6 /* TimetableBlock.swift */,
+				BE46B130282F95C90032EF82 /* TimetableLectureBlocks.swift */,
 				BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */,
 				BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */,
 			);
@@ -414,6 +417,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
+				BE46B131282F95C90032EF82 /* TimetableLectureBlocks.swift in Sources */,
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* MyLectureListScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,

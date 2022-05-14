@@ -12,7 +12,7 @@ struct TimetableZStack: View {
     var body: some View {
         ZStack {
             TimetableGridLayer(viewModel: viewModel)
-            TimetableBlocksLayer(viewModel: viewModel)
+            TimetableBlocksLayer(lectures: viewModel.lectures, getOffset: viewModel.getOffset, getWeekWidth: viewModel.getWeekWidth, getHeight: viewModel.getHeight)
         }
     }
 }
