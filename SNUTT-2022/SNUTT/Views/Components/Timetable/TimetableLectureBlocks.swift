@@ -10,11 +10,11 @@ import SwiftUI
 struct TimetableLectureBlocks: View {
     let lecture: Lecture
     let timetableSize: CGSize
-    
+
     let getOffset: (_ of: TimePlace, _ in: CGSize) -> CGPoint?
     let getWeekWidth: (_ in: CGSize) -> CGFloat
     let getHeight: (_ of: TimePlace, _ in: CGSize) -> CGFloat
-    
+
     var body: some View {
         ForEach(lecture.timePlaces) { timePlace in
             if let offsetPoint = getOffset(timePlace, timetableSize) {
@@ -26,8 +26,8 @@ struct TimetableLectureBlocks: View {
     }
 }
 
-//struct TimetableLectureBlocks_Previews: PreviewProvider {
+// struct TimetableLectureBlocks_Previews: PreviewProvider {
 //    static var previews: some View {
 //        TimetableLectureBlocks()
 //    }
-//}
+// }

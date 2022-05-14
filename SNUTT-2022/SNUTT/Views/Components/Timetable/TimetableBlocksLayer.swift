@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TimetableBlocksLayer: View {
-    
     let lectures: [Lecture]
     let getOffset: (_ of: TimePlace, _ in: CGSize) -> CGPoint?
     let getWeekWidth: (_ in: CGSize) -> CGFloat
@@ -23,7 +22,7 @@ struct TimetableBlocksLayer: View {
     }
 }
 
-//struct TimetableBlocks_Previews: PreviewProvider {
+// struct TimetableBlocks_Previews: PreviewProvider {
 //    static var previews: some View {
 //        ZStack {
 //            let viewModel = TimetableViewModel()
@@ -31,4 +30,4 @@ struct TimetableBlocksLayer: View {
 //            TimetableGridLayer(viewModel: viewModel)
 //        }
 //    }
-//}
+// }
