@@ -7,4 +7,13 @@
 
 import Foundation
 
-class TimetableViewModel {}
+class TimetableViewModel: SNUTTViewModel {
+    var lectures: [Lecture]  {
+        appState.currentTimetable.lectures
+    }
+    
+    // for test(remove and implement otherwise)
+    func update() {
+        appState.system.showActivityIndicator = !appState.system.showActivityIndicator
+    }
+}

@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct SNUTTApp: App {
+    @StateObject var appState = AppState()
+    
     @State private var selectedSceneId = 0
 
     let tabItems: [TabItem] = [
@@ -19,7 +21,12 @@ struct SNUTTApp: App {
     ]
 
     var body: some Scene {
+        let _ = AppStateContainer.shared.setAppState(appState: appState)
+        
         WindowGroup {
+            NavigationView {
+                MyTimetableListScene(viewModel: TimetableViewModel())
+            }
             // 임시 Entry Point
             TabView(selection: $selectedSceneId) {
                 ForEach(tabItems) { tab in

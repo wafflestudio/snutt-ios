@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct LectureDetails: View {
+    var lecture: Lecture
+    
     var body: some View {
         Text("This is LectureDetails View.")
     }
 }
 
-struct LectureDetailList_Previews: PreviewProvider {
-    static var previews: some View {
-        LectureDetails()
-    }
-}
+//struct LectureDetailList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LectureDetails()
+//    }
+//}
