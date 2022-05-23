@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct TimetableList: View {
-    @EnvironmentObject var appState: AppState
-    var lectures: [Lecture]
+    @ObservedObject var viewModel: TimetableViewModel
 
     var body: some View {
-        List(lectures) { lecture in
+        List(viewModel.lectures) { lecture in
             ZStack {
                 NavigationLink {
-                    LectureDetails().onAppear {
-                        appState.system.showActivityIndicator = !appState.system.showActivityIndicator
+                    // for test(remove and implement otherwise)
+                    LectureDetails(lecture: lecture).onAppear {
+                        viewModel.update()
                     }
                 } label: {
                     EmptyView()
@@ -24,7 +24,8 @@ struct TimetableList: View {
                 // workarounds to hide arrow indicator
                 .opacity(0.0)
 
-                TimetableListCell(lecture: lecture)
+                // for test(remove and implement otherwise)
+                TimetableListCell(lecture: lecture).foregroundColor(viewModel.appState.system.showActivityIndicator ? .yellow : .gray)
             }
         }
         .listStyle(GroupedListStyle())

@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct MyTimetableListScene: View {
-    @EnvironmentObject var appState: AppState
-
+    @ObservedObject var viewModel: TimetableViewModel
+    
     var body: some View {
-        TimetableList(lectures: appState.currentTimetable.lectures).onAppear {
-            print("Main List Page...showActivityIndicator: \(appState.system.showActivityIndicator)")
-        }
+        TimetableList(viewModel: viewModel)
     }
 }
 

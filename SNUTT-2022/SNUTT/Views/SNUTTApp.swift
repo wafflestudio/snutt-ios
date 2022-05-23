@@ -9,13 +9,15 @@ import SwiftUI
 
 @main
 struct SNUTTApp: App {
-    var appState = AppState()
+    @StateObject var appState = AppState()
+    
     var body: some Scene {
+        let _ = AppStateContainer.shared.setAppState(appState: appState)
+        
         WindowGroup {
-            // 임시 Entry Point
             NavigationView {
-                MyTimetableListScene()
-            }.environmentObject(appState)
+                MyTimetableListScene(viewModel: TimetableViewModel())
+            }
         }
     }
 }
