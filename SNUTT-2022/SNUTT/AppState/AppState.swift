@@ -7,7 +7,14 @@
 
 import Foundation
 
-class AppState {}
+class AppState {
+    static let shared = AppState()
+    let testState = TestState()
+}
+
+class TestState: ObservableObject {
+    @Published var isMenuOpen: Bool = false
+}
 
 /// For demo purpose. To be removed.
 class DummyAppState {

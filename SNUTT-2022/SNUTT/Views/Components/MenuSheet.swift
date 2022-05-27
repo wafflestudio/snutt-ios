@@ -1,5 +1,5 @@
 //
-//  LeftSheet.swift
+//  MenuSheet.swift
 //  SNUTT
 //
 //  Created by 박신홍 on 2022/05/23.
@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-struct LeftSheet<Content>: View where Content: View {
+struct MenuSheet<Content>: View where Content: View {
     
     let maxWidth: CGFloat = 290
     
     @Binding var isOpen: Bool
     @ViewBuilder var content: () -> Content
+    
     @GestureState private var translation: CGFloat = 0
     @State private var backgroundOpacity: CGFloat = 0
     
@@ -41,7 +42,7 @@ struct LeftSheet<Content>: View where Content: View {
                 .edgesIgnoringSafeArea(.all)
                 .disabled(!isOpen)
                 .onTapGesture {
-                    withAnimation(.easeInOut(duration: 0.3)) {
+                    withAnimation(.easeInOut(duration: 0.2)) {
                         self.isOpen = false
                     }
                 }
@@ -59,7 +60,7 @@ struct LeftSheet<Content>: View where Content: View {
             dragGesture
         )
         .onChange(of: isOpen, perform: { newValue in
-            withAnimation(.easeInOut(duration: 0.3)) {
+            withAnimation(.easeInOut(duration: 0.2)) {
                 backgroundOpacity = newValue ? 1 : 0
             }
         })
@@ -72,8 +73,8 @@ extension Animation {
     }
 }
 
-
-struct LeftSheetWrapper: View {
+/// A simple wrapper that is used to preview `MenuSheet`.
+struct MenuSheetWrapper: View {
     @State var isOpen = false;
     var body: some View {
         ZStack {
@@ -83,15 +84,15 @@ struct LeftSheetWrapper: View {
                 Text("버튼을 탭하세요.")
             }
             
-            LeftSheet(isOpen: $isOpen) {
+            MenuSheet(isOpen: $isOpen) {
                 Text("This is dummy content.")
             }
         }
     }
 }
 
-struct LeftSheetWrapper_Previews: PreviewProvider {
+struct MenuSheetWrapper_Previews: PreviewProvider {
     static var previews: some View {
-        LeftSheetWrapper()
+        MenuSheetWrapper()
     }
 }

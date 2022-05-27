@@ -9,24 +9,18 @@ import SwiftUI
 
 struct MyTimetableScene: View {
     @State private var pushToListScene = false
-    @State private var isOpen = false
-
+    
     var body: some View {
         ZStack {
-            
-        VStack {
-            Text("This is the main timetable view.")
-            NavigationLink {
-                LectureDetails()
-            } label: {
-                Text("> Click one of the lectures! <")
+            VStack {
+                Text("This is the main timetable view.")
+                NavigationLink {
+                    LectureDetails()
+                } label: {
+                    Text("> Click one of the lectures! <")
+                }
             }
         }
-            LeftSheet(isOpen: $isOpen) {
-                Text("hello")
-            }
-        }
-        
         // navigate programmatically, because NavigationLink inside toolbar doesn't work
         .background(
             NavigationLink(destination: MyLectureListScene(), isActive: $pushToListScene) {
@@ -38,7 +32,8 @@ struct MyTimetableScene: View {
             ToolbarItem(placement: .principal) {
                 HStack {
                     NavBarButton(imageName: "nav.menu") {
-                        isOpen.toggle()
+                        // TODO: put the code below inside view model
+                        AppState.shared.testState.isMenuOpen.toggle()
                     }
 
                     Text("나의 시간표").font(STFont.title)

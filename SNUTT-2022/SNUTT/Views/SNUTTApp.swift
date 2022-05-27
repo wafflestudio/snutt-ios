@@ -10,35 +10,41 @@ import SwiftUI
 @main
 struct SNUTTApp: App {
     @State private var selectedSceneId = 0
-
+    
     let tabItems: [TabItem] = [
         TabItem(id: 0, view: AnyView(MyTimetableScene()), symbolName: .timetable),
         TabItem(id: 1, view: AnyView(MyLectureListScene()), symbolName: .search),
         TabItem(id: 2, view: AnyView(MyLectureListScene()), symbolName: .review),
         TabItem(id: 3, view: AnyView(MyLectureListScene()), symbolName: .settings),
     ]
-
+    
     var body: some Scene {
+        let _ = print("evaluation")
         WindowGroup {
-            // 임시 Entry Point
-            TabView(selection: $selectedSceneId) {
-                ForEach(tabItems) { tab in
-                    NavigationView {
-                        tab.view
-                    }
-                    .accentColor(Color(UIColor.label))
-                    .tabItem {
-                        Image(selectedSceneId == tab.id ? tab.onImageName : tab.offImageName)
+            ZStack {
+                // 임시 Entry Point
+                TabView(selection: $selectedSceneId) {
+                    ForEach(tabItems) { tab in
+                        NavigationView {
+                            tab.view
+                        }
+                        .accentColor(Color(UIColor.label))
+                        .tabItem {
+                            Image(selectedSceneId == tab.id ? tab.onImageName : tab.offImageName)
+                        }
                     }
                 }
-            }
-            .onAppear {
-                setTabBarStyle()
-                setNavBarStyle()
+                .onAppear {
+                    setTabBarStyle()
+                    setNavBarStyle()
+                }
+                
+                MenuSheetScene()
+                
             }
         }
     }
-
+    
     /// Globally set the background color of the tab bar to white.
     private func setTabBarStyle() {
         let appearance = UITabBarAppearance()
@@ -48,7 +54,7 @@ struct SNUTTApp: App {
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
     }
-
+    
     /// Globally set the background color of the nav bar to white.
     private func setNavBarStyle() {
         let appearance = UINavigationBarAppearance()
@@ -68,15 +74,15 @@ struct TabItem: Identifiable {
         case review
         case settings
     }
-
+    
     let id: Int
     let view: AnyView
     let symbolName: SymbolName
-
+    
     var onImageName: String {
         "tab.\(symbolName.rawValue).on"
     }
-
+    
     var offImageName: String {
         "tab.\(symbolName.rawValue).off"
     }
