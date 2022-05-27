@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyTimetableScene: View {
     @State private var pushToListScene = false
-    
+
     var body: some View {
         ZStack {
             VStack {

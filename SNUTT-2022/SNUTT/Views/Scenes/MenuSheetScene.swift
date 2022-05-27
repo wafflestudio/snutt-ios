@@ -9,11 +9,11 @@ import SwiftUI
 
 struct MenuSheetScene: View {
     @ObservedObject var menuSheetState: MenuSheetStates
-    
+
     init() {
         menuSheetState = AppState.of.menuSheet
     }
-    
+
     var body: some View {
         MenuSheet(isOpen: $menuSheetState.isMenuOpen) {
             Text("helllllo")
