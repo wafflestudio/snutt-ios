@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct MenuSheetScene: View {
-    @ObservedObject var testState: TestState
+    @ObservedObject var menuSheetState: MenuSheetStates
     
     init() {
-        testState = AppState.shared.testState
+        menuSheetState = AppState.of.menuSheet
     }
     
     var body: some View {
-        MenuSheet(isOpen: $testState.isMenuOpen) {
+        MenuSheet(isOpen: $menuSheetState.isMenuOpen) {
             Text("helllllo")
         }
     }

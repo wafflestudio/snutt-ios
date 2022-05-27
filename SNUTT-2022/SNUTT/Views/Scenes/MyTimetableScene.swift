@@ -33,7 +33,7 @@ struct MyTimetableScene: View {
                 HStack {
                     NavBarButton(imageName: "nav.menu") {
                         // TODO: put the code below inside view model
-                        AppState.shared.testState.isMenuOpen.toggle()
+                        AppState.of.menuSheet.isMenuOpen.toggle()
                     }
 
                     Text("나의 시간표").font(STFont.title)

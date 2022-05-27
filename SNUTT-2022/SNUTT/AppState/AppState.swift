@@ -8,11 +8,11 @@
 import Foundation
 
 class AppState {
-    static let shared = AppState()
-    let testState = TestState()
+    static let of = AppState()
+    let menuSheet = MenuSheetStates()
 }
 
-class TestState: ObservableObject {
+class MenuSheetStates: ObservableObject {
     @Published var isMenuOpen: Bool = false
 }
 
