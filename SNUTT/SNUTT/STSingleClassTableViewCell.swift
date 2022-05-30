@@ -29,7 +29,6 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
         }
     }
 
-    var custom: Bool = false
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -71,9 +70,9 @@ class STSingleClassTableViewCell: STLectureDetailTableViewCell, UITextFieldDeleg
 
     override func setEditable(_ editable: Bool) {
         placeTextField.isEnabled = editable
-        timeTextField.isEnabled = custom && editable
-        deleteBtn.isHidden = !(custom && editable)
-        if editable, !custom {
+        timeTextField.isEnabled = customLecture && editable
+        deleteBtn.isHidden = !(customLecture && editable)
+        if editable, !customLecture {
             timeTextField.textColor = UIColor(white: 0.67, alpha: 1.0)
         } else {
             timeTextField.textColor = UIColor(white: 0.0, alpha: 1.0)
