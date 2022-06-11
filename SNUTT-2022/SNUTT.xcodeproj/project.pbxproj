@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B87431CB283B5A7300D78C59 /* SNUTTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* SNUTTViewModel.swift */; };
 		BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */; };
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
 		BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B87431CA283B5A7300D78C59 /* SNUTTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTViewModel.swift; sourceTree = "<group>"; };
 		BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTimetableScene.swift; sourceTree = "<group>"; };
 		BE7E230227FF3C38004DC202 /* NavBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarButton.swift; sourceTree = "<group>"; };
 		BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureListCell.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 		DCD41A7027E5CE0800CF380E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B87431CA283B5A7300D78C59 /* SNUTTViewModel.swift */,
 				DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */,
 			);
 			path = ViewModels;
@@ -393,6 +396,7 @@
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
+				B87431CB283B5A7300D78C59 /* SNUTTViewModel.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
