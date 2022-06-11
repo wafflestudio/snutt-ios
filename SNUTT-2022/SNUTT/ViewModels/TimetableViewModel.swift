@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class TimetableViewModel {
     /// 시간표 맨 왼쪽, 시간들을 나타내는 열의 너비
     let hourWidth: CGFloat = 20
