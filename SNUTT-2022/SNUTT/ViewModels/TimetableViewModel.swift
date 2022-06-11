@@ -63,9 +63,10 @@ class TimetableViewModel {
     /// 주어진 `TimePlace`블록의 높이를 구한다.
     func getHeight(of timePlace: TimePlace, in containerSize: CGSize) -> CGFloat {
         return timePlace.len * getHourHeight(in: containerSize)
+    }
 
     // for test(remove and implement otherwise)
-    func update() {
-        appState.system.showActivityIndicator = !appState.system.showActivityIndicator
-    }
+//    func update() {
+//        appState.system.showActivityIndicator = !appState.system.showActivityIndicator
+//    }
 }
