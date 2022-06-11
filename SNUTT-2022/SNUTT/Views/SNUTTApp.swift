@@ -20,7 +20,7 @@ struct SNUTTApp: App {
 
     var body: some Scene {
         let _ = AppStateContainer.shared.setAppState(appState: appState)
-        
+
         WindowGroup {
             // 임시 Entry Point
             TabView(selection: $appState.selectedTab) {
