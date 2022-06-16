@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B1EB38A2D401D55B8B513965 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */; };
+		BEB9D71F285B9189005D9A93 /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9D71E285B9189005D9A93 /* PopUpView.swift */; };
+		BEB9D721285B9194005D9A93 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9D720285B9194005D9A93 /* PopUpViewController.swift */; };
 		DC20CF3426B4768100F31830 /* ThemeSettingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */; };
 		DC20CF3526B4768100F31830 /* ThemeSettingCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */; };
 		DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */; };
@@ -236,6 +238,8 @@
 		7540205FB7071F642F9B022F /* Pods_SNUTT_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		923560D5D97F8A3548E9547A /* Pods-SNUTT Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.debug.xcconfig"; sourceTree = "<group>"; };
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEB9D71E285B9189005D9A93 /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
+		BEB9D720285B9194005D9A93 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingCollectionViewCell.swift; sourceTree = "<group>"; };
 		DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeSettingCollectionViewCell.xib; sourceTree = "<group>"; };
 		DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -448,6 +452,15 @@
 				E0B8ADB76AB6B75793967316 /* Pods-SNUTT Today.production.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		BEB9D71D285B917C005D9A93 /* PopUp */ = {
+			isa = PBXGroup;
+			children = (
+				BEB9D71E285B9189005D9A93 /* PopUpView.swift */,
+				BEB9D720285B9194005D9A93 /* PopUpViewController.swift */,
+			);
+			path = PopUp;
 			sourceTree = "<group>";
 		};
 		DC39728C26B448C400187DFC /* Theme */ = {
@@ -696,6 +709,7 @@
 		E1C28B191B9C4B7B00B8C493 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				BEB9D71D285B917C005D9A93 /* PopUp */,
 				DCCFE8EF2789BEAB0074BCA6 /* Review */,
 				DC39728C26B448C400187DFC /* Theme */,
 				DC5B8CD526905C890085268B /* Menu */,
@@ -1166,6 +1180,7 @@
 				E16643571B46623900387EF8 /* STSlotCellCollectionViewCell.swift in Sources */,
 				E1BB29CD1D4896D300150DD4 /* STTimetableSettingViewController.swift in Sources */,
 				E1420B951D769D0400D1B6F7 /* STCourseBookRouter.swift in Sources */,
+				BEB9D71F285B9189005D9A93 /* PopUpView.swift in Sources */,
 				E1534D501F12316000CEE1D2 /* STLeftAlignedTextFieldCell.swift in Sources */,
 				E1EE1B311CCCDE20003DF250 /* STDefaults.swift in Sources */,
 				E16A88591C9FC59F003D94AB /* STTermAndConditionViewController.swift in Sources */,
@@ -1215,6 +1230,7 @@
 				DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */,
 				E1773CB41C95B05800AF36AF /* STLoginViewController.swift in Sources */,
 				E110CFDF1C88916400ED0590 /* STTagRouter.swift in Sources */,
+				BEB9D721285B9194005D9A93 /* PopUpViewController.swift in Sources */,
 				DCCFE8F12789BED80074BCA6 /* ReviewViewController.swift in Sources */,
 				E16A88511C9F97EB003D94AB /* STLicenseViewController.swift in Sources */,
 				E11902E91CCE44E7002436B9 /* STLectureDetailTableViewCell.swift in Sources */,
