@@ -17,6 +17,7 @@ class STTimetableTabViewController: UIViewController {
     var currentTimetable: STTimetable? {
         return STTimetableManager.sharedInstance.currentTimetable
     }
+
     let popUpViewController = PopUpViewController()
 
     enum MenuControllerState {
@@ -93,11 +94,11 @@ class STTimetableTabViewController: UIViewController {
 
         addMenuView()
         addThemeSettingView()
-        
+
         popUpViewController.delegate = self
         popUpViewController.presentIfNeeded()
     }
-    
+
     private func addRightBarButtons() {
         let imageList: [UIImage?] = [UIImage(named: "list"), UIImage(named: "share"), UIImage(named: "tabAlarmOff")]
 
@@ -444,11 +445,10 @@ extension STTimetableTabViewController {
 // MARK: PopUp stuff
 
 extension STTimetableTabViewController: PopUpViewControllerDelegate {
-    
     var rootVC: UIViewController? {
         UIApplication.shared.windows.first!.rootViewController
     }
-    
+
     func present() {
         rootVC?.add(childVC: popUpViewController)
     }

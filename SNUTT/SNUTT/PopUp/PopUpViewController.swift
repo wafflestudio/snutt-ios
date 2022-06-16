@@ -13,45 +13,43 @@ protocol PopUpViewControllerDelegate: class {
 }
 
 class PopUpViewController: UIViewController {
-    
     var delegate: PopUpViewControllerDelegate?
     let popUpView = PopUpView()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
         setButtonActions()
     }
-    
+
     private func setLayout() {
-        self.view.addSubview(popUpView)
+        view.addSubview(popUpView)
         NSLayoutConstraint.activate([
-            popUpView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            popUpView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            popUpView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            popUpView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            popUpView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            popUpView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            popUpView.topAnchor.constraint(equalTo: view.topAnchor),
+            popUpView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
-    
+
     private func setButtonActions() {
         popUpView.dismissOnceButton.addTarget(self, action: #selector(dismissOnce), for: .touchUpInside)
         popUpView.dismissForNdaysButton.addTarget(self, action: #selector(dismissForNdays), for: .touchUpInside)
     }
-    
+
     @objc func dismissOnce() {
-        self.remove()
+        remove()
     }
-    
+
     @objc func dismissForNdays() {
         // TODO: check UserDefaults
-        self.remove()
+        remove()
     }
-    
+
     func presentIfNeeded() {
         delegate?.present()
     }
 }
-
 
 extension UIViewController {
     /// `child`를 `self`의 자식 뷰 컨트롤러로 추가한다.
@@ -60,7 +58,7 @@ extension UIViewController {
         view.addSubview(childVC.view)
         childVC.didMove(toParent: self)
     }
-    
+
     /// 부모 뷰 컨트롤러로부터 `self`를 제거한다.
     func remove(animate: Bool = true) {
         // Just to be safe, we check that this view controller

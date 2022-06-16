@@ -9,32 +9,32 @@
 import UIKit
 
 class PopUpView: UIView {
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .black.withAlphaComponent(0.5)
-        
+
         addSubview(vstack)
-        
+
         NSLayoutConstraint.activate([
-            vstack.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            vstack.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            vstack.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -120),
-            vstack.heightAnchor.constraint(equalTo: vstack.widthAnchor, multiplier: 4 / 3)
+            vstack.centerXAnchor.constraint(equalTo: centerXAnchor),
+            vstack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            vstack.widthAnchor.constraint(equalTo: widthAnchor, constant: -120),
+            vstack.heightAnchor.constraint(equalTo: vstack.widthAnchor, multiplier: 4 / 3),
         ])
     }
-    
+
     // MARK: View Components
-    
+
     lazy var hstack: UIStackView = {
         let hstack = UIStackView(arrangedSubviews: [dismissForNdaysButton, divider, dismissOnceButton])
         NSLayoutConstraint.activate([
@@ -49,7 +49,7 @@ class PopUpView: UIView {
         hstack.translatesAutoresizingMaskIntoConstraints = false
         return hstack
     }()
-    
+
     lazy var vstack: UIStackView = {
         let vstack = UIStackView(arrangedSubviews: [imageView, hstack])
         vstack.axis = .vertical
@@ -57,14 +57,14 @@ class PopUpView: UIView {
         vstack.translatesAutoresizingMaskIntoConstraints = false
         return vstack
     }()
-    
+
     lazy var divider: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white.withAlphaComponent(0.5)
         return view
     }()
-    
+
     lazy var imageView: UIImageView = {
         let imgView = UIImageView()
         imgView.contentMode = .scaleAspectFit
@@ -72,8 +72,8 @@ class PopUpView: UIView {
         imgView.translatesAutoresizingMaskIntoConstraints = false
         return imgView
     }()
-    
-    private func createDismissButton(text:String) ->UIButton {
+
+    private func createDismissButton(text: String) -> UIButton {
         let button = UIButton()
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
@@ -82,12 +82,8 @@ class PopUpView: UIView {
         button.setTitleColor(.white.withAlphaComponent(0.7), for: .highlighted)
         return button
     }
-    
-    lazy var dismissOnceButton: UIButton = {
-        return createDismissButton(text: "닫기")
-    }()
-    
-    lazy var dismissForNdaysButton: UIButton = {
-        return createDismissButton(text: "다시 보지 않기")
-    }()
+
+    lazy var dismissOnceButton: UIButton = createDismissButton(text: "닫기")
+
+    lazy var dismissForNdaysButton: UIButton = createDismissButton(text: "다시 보지 않기")
 }
