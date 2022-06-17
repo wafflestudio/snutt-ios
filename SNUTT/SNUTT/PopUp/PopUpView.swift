@@ -26,10 +26,13 @@ class PopUpView: UIView {
         addSubview(vstack)
 
         NSLayoutConstraint.activate([
-            vstack.centerXAnchor.constraint(equalTo: centerXAnchor),
-            vstack.centerYAnchor.constraint(equalTo: centerYAnchor),
-            vstack.widthAnchor.constraint(equalTo: widthAnchor, constant: -120),
-            vstack.heightAnchor.constraint(equalTo: vstack.widthAnchor, multiplier: 4 / 3),
+            vstack.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            vstack.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -120),
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 4 / 3) // 4:3 image ratio, scale to fill
         ])
     }
 
@@ -67,7 +70,8 @@ class PopUpView: UIView {
 
     lazy var imageView: UIImageView = {
         let imgView = UIImageView()
-        imgView.contentMode = .scaleAspectFit
+        imgView.contentMode = .scaleAspectFill
+        imgView.clipsToBounds = true
         imgView.backgroundColor = .white
         imgView.translatesAutoresizingMaskIntoConstraints = false
         return imgView
