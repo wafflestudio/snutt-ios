@@ -47,16 +47,39 @@ class PopUpViewController: UIViewController {
     }
 
     func presentIfNeeded() {
-        delegate?.present()
+        loadPopUpImage(url: "https://img.hankyung.com/photo/201811/01.18271154.1.jpg") {
+            self.delegate?.present()
+        }
+    }
+    
+    func loadPopUpImage(url: String, completion: @escaping ()-> Void) {
+        if let url = URL(string: url) {
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data, error == nil else { return }
+                
+                DispatchQueue.main.async {
+                    self.popUpView.imageView.image = UIImage(data: data)
+                    completion()
+                }
+            }
+            
+            task.resume()
+        }
     }
 }
 
 extension UIViewController {
     /// `child`를 `self`의 자식 뷰 컨트롤러로 추가한다.
-    func add(childVC: UIViewController) {
+    func add(childVC: UIViewController, animate: Bool = true) {
+        childVC.view.alpha = 0
+        
         addChild(childVC)
         view.addSubview(childVC.view)
         childVC.didMove(toParent: self)
+        
+        UIView.animate(withDuration: animate ? 0.3 : 0, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: []) {
+            childVC.view.alpha = 1
+        }
     }
 
     /// 부모 뷰 컨트롤러로부터 `self`를 제거한다.
