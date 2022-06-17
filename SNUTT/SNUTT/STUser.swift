@@ -143,9 +143,12 @@ class STUser {
         guard let refreshedToken = InstanceID.instanceID().token() else {
             return
         }
+        #if DEBUG
+        #else
         if STDefaults[.token] != nil && STDefaults[.registeredFCMToken] != refreshedToken {
             STNetworking.addDevice(refreshedToken)
         }
+        #endif
     }
 
     init(json: JSON) {
