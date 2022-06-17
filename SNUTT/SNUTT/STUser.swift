@@ -145,9 +145,9 @@ class STUser {
         }
         #if DEBUG
         #else
-        if STDefaults[.token] != nil && STDefaults[.registeredFCMToken] != refreshedToken {
-            STNetworking.addDevice(refreshedToken)
-        }
+            if STDefaults[.token] != nil && STDefaults[.registeredFCMToken] != refreshedToken {
+                STNetworking.addDevice(refreshedToken)
+            }
         #endif
     }
 
