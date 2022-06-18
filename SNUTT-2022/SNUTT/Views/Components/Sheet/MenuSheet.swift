@@ -73,11 +73,10 @@ extension Animation {
 }
 
 struct MenuSheetWrapper: View {
-    
     class isOpenObject: ObservableObject {
         @Published var value = false
     }
-    
+
     @StateObject var isOpen = isOpenObject()
     var body: some View {
         ZStack {
@@ -89,7 +88,7 @@ struct MenuSheetWrapper: View {
 
             MenuSheet(isOpen: $isOpen.value) {
                 List {
-                    ForEach(1..<100) { _ in
+                    ForEach(1 ..< 100) { _ in
                         Text("helllllo")
                     }
                 }

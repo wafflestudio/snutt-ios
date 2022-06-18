@@ -58,11 +58,10 @@ struct FilterSheet<Content>: View where Content: View {
 
 /// A simple wrapper that is used to preview `Filter`.
 struct FilterSheetWrapper: View {
-    
     class isOpenObject: ObservableObject {
         @Published var value = false
     }
-    
+
     @StateObject var isOpen = isOpenObject()
     var body: some View {
         ZStack {

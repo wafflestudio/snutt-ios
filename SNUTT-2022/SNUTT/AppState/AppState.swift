@@ -21,7 +21,6 @@ class FilterSheetStates: ObservableObject {
     @Published var isOpen: Bool = false
 }
 
-
 /// For demo purpose. To be removed.
 class DummyAppState {
     static let shared = DummyAppState()

@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct SearchLectureScene: View {
-    
     @ObservedObject var filterSheetState: FilterSheetStates
 
     init() {
         filterSheetState = AppState.of.filterSheet
     }
-    
+
     @State private var searchText = ""
-    
+
     var body: some View {
         ZStack {
             Text("This is the main timetable view.")

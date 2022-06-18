@@ -32,7 +32,7 @@ struct SearchBar: View {
 
                         Spacer()
 
-                        if (isEditing && !text.isEmpty) {
+                        if isEditing && !text.isEmpty {
                             Button(action: {
                                 self.text = ""
                             }) {
@@ -40,7 +40,7 @@ struct SearchBar: View {
                                     .foregroundColor(.gray)
                             }
                         }
-                        
+
                         Button {
                             isFilterOpen.toggle()
                             if isFilterOpen {
@@ -50,26 +50,23 @@ struct SearchBar: View {
                             Image("search.filter")
                                 .padding(.trailing, 8)
                         }
-
                     }
                 )
                 .animation(.easeOut(duration: 0.2), value: isEditing)
-            
+
             Group {
-                
-            if isEditing {
-                Button(action: {
-                    text = ""
-                    isEditing = false
-                    resignFirstResponder()
-                }) {
-                    Text("취소")
+                if isEditing {
+                    Button(action: {
+                        text = ""
+                        isEditing = false
+                        resignFirstResponder()
+                    }) {
+                        Text("취소")
+                    }
                 }
-            }
             }
             .transition(.move(edge: .trailing).combined(with: .opacity))
             .animation(.easeOut(duration: 0.2), value: isEditing)
-                
         }
         .padding(10)
         .background(Color.white)
@@ -77,11 +74,11 @@ struct SearchBar: View {
 }
 
 #if canImport(UIKit)
-extension View {
-    func resignFirstResponder() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    extension View {
+        func resignFirstResponder() {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
     }
-}
 #endif
 
 struct SearchBar_Previews: PreviewProvider {
