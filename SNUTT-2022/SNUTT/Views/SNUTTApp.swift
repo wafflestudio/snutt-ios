@@ -13,7 +13,7 @@ struct SNUTTApp: App {
 
     let tabItems: [TabItem] = [
         TabItem(id: 0, view: AnyView(MyTimetableScene()), symbolName: .timetable),
-        TabItem(id: 1, view: AnyView(MyLectureListScene()), symbolName: .search),
+        TabItem(id: 1, view: AnyView(SearchLectureScene()), symbolName: .search),
         TabItem(id: 2, view: AnyView(MyLectureListScene()), symbolName: .review),
         TabItem(id: 3, view: AnyView(MyLectureListScene()), symbolName: .settings),
     ]
@@ -40,6 +40,7 @@ struct SNUTTApp: App {
                 }
 
                 MenuSheetScene()
+                FilterSheetScene()
             }
         }
     }

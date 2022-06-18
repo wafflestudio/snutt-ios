@@ -15,13 +15,13 @@ struct MenuSheetScene: View {
     }
 
     var body: some View {
-        MenuSheet(isOpen: $menuSheetState.isMenuOpen) {
+        MenuSheet(isOpen: $menuSheetState.isOpen) {
             Text("helllllo")
         }
     }
 }
 
-struct LeftSheetScene_Previews: PreviewProvider {
+struct MenuSheetScene_Previews: PreviewProvider {
     static var previews: some View {
         MenuSheetScene()
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MenuSheet<Content>: View where Content: View {
-    let maxWidth: CGFloat = 290
+    let maxArea: CGFloat = 290
 
     @Binding var isOpen: Bool
     @ViewBuilder var content: () -> Content
@@ -22,7 +22,7 @@ struct MenuSheet<Content>: View where Content: View {
         }
         .onChanged { value in
             let translation = value.translation.width
-            let percent = translation > 0 ? 1 : 1 + translation / maxWidth
+            let percent = translation > 0 ? 1 : 1 + translation / maxArea
             backgroundOpacity = percent
         }
         .onEnded { value in
@@ -31,7 +31,7 @@ struct MenuSheet<Content>: View where Content: View {
     }
 
     private var offset: CGFloat {
-        isOpen ? 0 : maxWidth
+        isOpen ? 0 : maxArea
     }
 
     var body: some View {
@@ -51,11 +51,11 @@ struct MenuSheet<Content>: View where Content: View {
                     .edgesIgnoringSafeArea(.all)
                 self.content()
             }
-            .frame(width: maxWidth, height: reader.size.height)
+            .frame(width: maxArea, height: reader.size.height)
             .offset(x: min(-self.offset + self.translation, 0))
             .animation(.customSpring, value: isOpen)
         }
-        .highPriorityGesture(
+        .gesture(
             dragGesture
         )
         .onChange(of: isOpen, perform: { newValue in
@@ -72,19 +72,27 @@ extension Animation {
     }
 }
 
-/// A simple wrapper that is used to preview `MenuSheet`.
 struct MenuSheetWrapper: View {
-    @State var isOpen = false
+    
+    class isOpenObject: ObservableObject {
+        @Published var value = false
+    }
+    
+    @StateObject var isOpen = isOpenObject()
     var body: some View {
         ZStack {
             Button {
-                isOpen = !isOpen
+                isOpen.value.toggle()
             } label: {
                 Text("버튼을 탭하세요.")
             }
 
-            MenuSheet(isOpen: $isOpen) {
-                Text("This is dummy content.")
+            MenuSheet(isOpen: $isOpen.value) {
+                List {
+                    ForEach(1..<100) { _ in
+                        Text("helllllo")
+                    }
+                }
             }
         }
     }

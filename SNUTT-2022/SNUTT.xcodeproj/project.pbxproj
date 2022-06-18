@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */; };
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
+		BE8BB3A8285CF0BE00070A66 /* FilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3A7285CF0BE00070A66 /* FilterSheet.swift */; };
+		BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */; };
+		BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AE285D77D000070A66 /* SearchBar.swift */; };
+		BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */; };
 		BECDB898283B876300F62AC8 /* MenuSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB897283B876300F62AC8 /* MenuSheet.swift */; };
 		BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */; };
 		BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */; };
@@ -52,6 +56,10 @@
 /* Begin PBXFileReference section */
 		BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTimetableScene.swift; sourceTree = "<group>"; };
 		BE7E230227FF3C38004DC202 /* NavBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarButton.swift; sourceTree = "<group>"; };
+		BE8BB3A7285CF0BE00070A66 /* FilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheet.swift; sourceTree = "<group>"; };
+		BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLectureScene.swift; sourceTree = "<group>"; };
+		BE8BB3AE285D77D000070A66 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetScene.swift; sourceTree = "<group>"; };
 		BECDB897283B876300F62AC8 /* MenuSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheet.swift; sourceTree = "<group>"; };
 		BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetScene.swift; sourceTree = "<group>"; };
 		BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureListCell.swift; sourceTree = "<group>"; };
@@ -103,6 +111,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE8BB3AB285CF73300070A66 /* Sheet */ = {
+			isa = PBXGroup;
+			children = (
+				BECDB897283B876300F62AC8 /* MenuSheet.swift */,
+				BE8BB3A7285CF0BE00070A66 /* FilterSheet.swift */,
+			);
+			path = Sheet;
+			sourceTree = "<group>";
+		};
 		DC860F3C27E5C87D0068C94B = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +238,8 @@
 				BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */,
 				BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */,
 				BEDF507227F427FA00CDCC13 /* MyLectureListScene.swift */,
+				BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */,
+				BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -232,7 +251,8 @@
 				BEDF506C27EB740E00CDCC13 /* LectureList.swift */,
 				BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */,
 				BE7E230227FF3C38004DC202 /* NavBarButton.swift */,
-				BECDB897283B876300F62AC8 /* MenuSheet.swift */,
+				BE8BB3AE285D77D000070A66 /* SearchBar.swift */,
+				BE8BB3AB285CF73300070A66 /* Sheet */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -395,6 +415,8 @@
 			files = (
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
+				BE8BB3A8285CF0BE00070A66 /* FilterSheet.swift in Sources */,
+				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* MyLectureListScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */,
@@ -405,7 +427,9 @@
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
+				BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
+				BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,

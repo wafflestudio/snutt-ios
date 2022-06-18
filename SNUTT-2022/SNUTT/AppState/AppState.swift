@@ -10,11 +10,17 @@ import Foundation
 class AppState {
     static let of = AppState()
     let menuSheet = MenuSheetStates()
+    let filterSheet = FilterSheetStates()
 }
 
 class MenuSheetStates: ObservableObject {
-    @Published var isMenuOpen: Bool = false
+    @Published var isOpen: Bool = false
 }
+
+class FilterSheetStates: ObservableObject {
+    @Published var isOpen: Bool = false
+}
+
 
 /// For demo purpose. To be removed.
 class DummyAppState {
