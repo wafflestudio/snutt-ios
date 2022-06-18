@@ -14,16 +14,10 @@ struct FilterSheet<Content>: View where Content: View {
     @ViewBuilder var content: () -> Content
 
     @GestureState private var translation: CGFloat = 0
-    @State private var backgroundOpacity: CGFloat = 0
 
     private var dragGesture: some Gesture {
         DragGesture().updating(self.$translation) { value, state, _ in
             state = value.translation.height
-        }
-        .onChanged { value in
-            let translation = value.translation.height
-            let percent = translation < 0 ? 1 : 1 - translation / maxArea
-            backgroundOpacity = percent
         }
         .onEnded { value in
             self.isOpen = value.translation.height < 0
@@ -32,16 +26,6 @@ struct FilterSheet<Content>: View where Content: View {
 
     var body: some View {
         GeometryReader { reader in
-            Color.black.opacity(0.3)
-                .opacity(backgroundOpacity)
-                .edgesIgnoringSafeArea(.all)
-                .disabled(!isOpen)
-                .onTapGesture {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        self.isOpen = false
-                    }
-                }
-
             ZStack {
                 Color(UIColor.systemBackground)
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
@@ -69,13 +53,7 @@ struct FilterSheet<Content>: View where Content: View {
         .gesture(
             dragGesture
         )
-        .onChange(of: isOpen, perform: { newValue in
-            withAnimation(.easeInOut(duration: 0.2)) {
-                backgroundOpacity = newValue ? 1 : 0
-            }
-        })
     }
-        
 }
 
 /// A simple wrapper that is used to preview `Filter`.
