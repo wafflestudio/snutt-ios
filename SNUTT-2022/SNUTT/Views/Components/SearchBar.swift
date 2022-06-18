@@ -43,6 +43,9 @@ struct SearchBar: View {
                         
                         Button {
                             isFilterOpen.toggle()
+                            if isFilterOpen {
+                                resignFirstResponder()
+                            }
                         } label: {
                             Image("search.filter")
                                 .padding(.trailing, 8)
@@ -56,8 +59,8 @@ struct SearchBar: View {
                 
             if isEditing {
                 Button(action: {
-                    self.isEditing = false
-                    self.text = ""
+                    text = ""
+                    isEditing = false
                     resignFirstResponder()
                 }) {
                     Text("취소")
