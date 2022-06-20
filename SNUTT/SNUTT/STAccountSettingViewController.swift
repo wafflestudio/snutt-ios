@@ -98,7 +98,7 @@ class STAccountSettingViewController: UITableViewController {
         }
 
         emailSection = cellList.count
-        cellList.append([Cell.showEmail, Cell.changeEmail])
+        cellList.append([Cell.showEmail])
 
         cellList.append([Cell.unregister])
     }
