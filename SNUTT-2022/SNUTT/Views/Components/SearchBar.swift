@@ -38,17 +38,17 @@ struct SearchBar: View {
                                     .padding(.trailing, 8)
                             }
                         }
-                        
+
                         if text.isEmpty {
-                        Button {
-                            isFilterOpen.toggle()
-                            if isFilterOpen {
-                                resignFirstResponder()
+                            Button {
+                                isFilterOpen.toggle()
+                                if isFilterOpen {
+                                    resignFirstResponder()
+                                }
+                            } label: {
+                                Image("search.filter")
+                                    .padding(.trailing, 8)
                             }
-                        } label: {
-                            Image("search.filter")
-                                .padding(.trailing, 8)
-                        }
                         }
                     }
                 )
