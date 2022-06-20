@@ -15,11 +15,8 @@ struct SearchBar: View {
 
     var body: some View {
         HStack {
-            TextField("검색어를 입력하세요", text: $text)
-                .onTapGesture {
-                    self.isEditing = true
-                    // TODO: make TextField first responder
-                }
+            STTextField("검색어를 입력하세요", text: $text, focused: $isEditing)
+                .frame(maxHeight: 22)
                 .padding(7)
                 .padding(.horizontal, 25)
                 .background(Color(.systemGray6))
