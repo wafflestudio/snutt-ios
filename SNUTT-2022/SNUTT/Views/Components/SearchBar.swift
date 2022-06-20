@@ -35,9 +35,11 @@ struct SearchBar: View {
                             }) {
                                 Image(systemName: "multiply.circle.fill")
                                     .foregroundColor(.gray)
+                                    .padding(.trailing, 8)
                             }
                         }
-
+                        
+                        if text.isEmpty {
                         Button {
                             isFilterOpen.toggle()
                             if isFilterOpen {
@@ -46,6 +48,7 @@ struct SearchBar: View {
                         } label: {
                             Image("search.filter")
                                 .padding(.trailing, 8)
+                        }
                         }
                     }
                 )
