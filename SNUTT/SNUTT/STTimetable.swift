@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 
 enum STAddLectureState {
-    case success, errorTime, errorSameLecture
+    case success, errorTime(STLecture), errorSameLecture
 }
 
 class STTimetable {
@@ -79,7 +79,7 @@ class STTimetable {
             for class1 in it.classList {
                 for class2 in lecture.classList {
                     if class1.time.isOverlappingWith(class2.time) {
-                        return STAddLectureState.errorTime
+                        return STAddLectureState.errorTime(it)
                     }
                 }
             }

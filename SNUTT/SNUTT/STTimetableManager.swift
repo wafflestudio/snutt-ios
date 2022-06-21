@@ -63,7 +63,6 @@ class STTimetableManager: NSObject {
     }
 
     func addCustomLecture(_ lecture: STLecture, object: AnyObject?, done: (() -> Void)?, failure: (() -> Void)?) {
-        var lecture = lecture
         if currentTimetable == nil {
             failure?()
             return
@@ -89,13 +88,9 @@ class STTimetableManager: NSObject {
         }
     }
 
-    func addLecture(_ lecture: STLecture, object: AnyObject?) -> STAddLectureState {
-        var lecture = lecture
-        if currentTimetable == nil {
-            return STAddLectureState.success
-        }
-        let ret = currentTimetable!.addLecture(lecture)
-        if case STAddLectureState.success = ret {
+    func addLecture(_ lecture: STLecture, object: AnyObject?) {
+        let state = currentTimetable!.addLecture(lecture)
+        if case STAddLectureState.success = state {
             STNetworking.addLecture(currentTimetable!, lectureId: lecture.id!, done: { newTimetable in
                 self.currentTimetable?.lectureList = newTimetable.lectureList
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
@@ -103,14 +98,27 @@ class STTimetableManager: NSObject {
                 self.currentTimetable?.deleteLecture(lecture)
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
             })
-            STEventCenter.sharedInstance.postNotification(event: STEvent.CurrentTimetableChanged, object: object)
-        } else if case STAddLectureState.errorTime = ret {
-            STAlertView.showAlert(title: "강의 추가 실패", message: "겹치는 시간대가 있습니다.")
-        } else if case STAddLectureState.errorSameLecture = ret {
-            STAlertView.showAlert(title: "강의 추가 실패", message: "같은 강좌가 이미 존재합니다.")
-        }
+        } else if case STAddLectureState.errorTime(let overlapping) = state {
+            STAlertView.showAlert(title: "시간대 겹침", message: "\"(공유)AI입문, 20세기 일본의 역사\" 강의가 해당 시간대에 이미 존재합니다. 기존 강의를 덮어쓰시겠습니까?", actions: [
+                UIAlertAction(title: "덮어쓰기", style: .default, handler: { _ in
+                    STNetworking.deleteLecture(self.currentTimetable!, lecture: overlapping) { newTimetable in
+                        self.currentTimetable?.lectureList = newTimetable.lectureList
+                        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+                    } failure: {
+                        _ = self.currentTimetable?.addLecture(lecture)
+                        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+                    }
 
-        return ret
+                    STNetworking.addLecture(self.currentTimetable!, lectureId: lecture.id!, done: { newTimetable in
+                        self.currentTimetable?.lectureList = newTimetable.lectureList
+                        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+                    }, failure: {
+                        self.currentTimetable?.deleteLecture(lecture)
+                        STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+                    })
+                }), UIAlertAction(title: "취소", style: .cancel)
+            ])
+        }
     }
 
     func updateLecture(_ oldLecture: STLecture, newLecture: STLecture, done: @escaping () -> Void, failure: @escaping () -> Void) {
