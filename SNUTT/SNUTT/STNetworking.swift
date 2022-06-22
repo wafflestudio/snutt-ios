@@ -148,12 +148,14 @@ class STNetworking {
         })
     }
 
-    static func addLecture(_ timetable: STTimetable, lectureId: String, done: @escaping (STTimetable) -> Void, failure: @escaping () -> Void) {
+    static func addLecture(_ timetable: STTimetable, lectureId: String, done: @escaping (STTimetable) -> Void, failure: @escaping () -> Void, confirmAction: (() -> Void)? = nil) {
         let request = Alamofire.request(STLectureRouter.addLecture(timetableId: timetable.id!, lectureId: lectureId))
         request.responseWithDone({ _, json in
             done(STTimetable(json: json))
         }, failure: { _ in
             failure()
+        }, confirmAction: {
+            confirmAction?()
         })
     }
 

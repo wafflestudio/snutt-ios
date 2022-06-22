@@ -87,6 +87,20 @@ class STTimetable {
         lectureList.append(lecture)
         return STAddLectureState.success
     }
+    
+    func overlappingLectures(with: STLecture) -> [STLecture]? {
+        var overlapping: [STLecture] = []
+        for lecture in lectureList {
+            for class1 in lecture.classList {
+                for class2 in with.classList {
+                    if class1.time.isOverlappingWith(class2.time) {
+                        overlapping.append(lecture)
+                    }
+                }
+            }
+        }
+        return overlapping
+    }
 
     func indexOf(lecture: STLecture) -> Int {
         for (index, it) in lectureList.enumerated() {
