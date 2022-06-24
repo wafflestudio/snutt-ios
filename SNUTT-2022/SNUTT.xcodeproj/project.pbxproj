@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B87431CB283B5A7300D78C59 /* SNUTTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* SNUTTViewModel.swift */; };
 		BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
 		BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
-		B87431CB283B5A7300D78C59 /* SNUTTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* SNUTTViewModel.swift */; };
 		BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */; };
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
 		BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */; };
@@ -23,6 +23,11 @@
 		BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507427F4289B00CDCC13 /* Lecture.swift */; };
 		BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507627F42D1100CDCC13 /* STFont.swift */; };
 		BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507827F42D7500CDCC13 /* STColor.swift */; };
+		DC2915992865D69700FE5F9A /* MyLectureListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915982865D69700FE5F9A /* MyLectureListViewModel.swift */; };
+		DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159A2865F95100FE5F9A /* SettingScene.swift */; };
+		DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */; };
+		DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159E28660F7800FE5F9A /* ReviewScene.swift */; };
+		DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4C27E5C87F0068C94B /* Assets.xcassets */; };
 		DC860F5027E5C87F0068C94B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4F27E5C87F0068C94B /* Preview Assets.xcassets */; };
@@ -55,9 +60,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B87431CA283B5A7300D78C59 /* SNUTTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTViewModel.swift; sourceTree = "<group>"; };
 		BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableGridLayer.swift; sourceTree = "<group>"; };
 		BE1D2B3928014527008F9134 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
-		B87431CA283B5A7300D78C59 /* SNUTTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTViewModel.swift; sourceTree = "<group>"; };
 		BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTimetableScene.swift; sourceTree = "<group>"; };
 		BE7E230227FF3C38004DC202 /* NavBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarButton.swift; sourceTree = "<group>"; };
 		BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBlocksLayer.swift; sourceTree = "<group>"; };
@@ -71,6 +76,11 @@
 		BEDF507427F4289B00CDCC13 /* Lecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lecture.swift; sourceTree = "<group>"; };
 		BEDF507627F42D1100CDCC13 /* STFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STFont.swift; sourceTree = "<group>"; };
 		BEDF507827F42D7500CDCC13 /* STColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STColor.swift; sourceTree = "<group>"; };
+		DC2915982865D69700FE5F9A /* MyLectureListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLectureListViewModel.swift; sourceTree = "<group>"; };
+		DC29159A2865F95100FE5F9A /* SettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScene.swift; sourceTree = "<group>"; };
+		DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		DC29159E28660F7800FE5F9A /* ReviewScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewScene.swift; sourceTree = "<group>"; };
+		DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
 		DC860F4527E5C87D0068C94B /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
 		DC860F4C27E5C87F0068C94B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -243,6 +253,8 @@
 			children = (
 				BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */,
 				BEDF507227F427FA00CDCC13 /* MyLectureListScene.swift */,
+				DC29159A2865F95100FE5F9A /* SettingScene.swift */,
+				DC29159E28660F7800FE5F9A /* ReviewScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -264,6 +276,9 @@
 			children = (
 				B87431CA283B5A7300D78C59 /* SNUTTViewModel.swift */,
 				DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */,
+				DC2915982865D69700FE5F9A /* MyLectureListViewModel.swift */,
+				DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */,
+				DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -418,7 +433,10 @@
 			files = (
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
+				DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* MyLectureListScene.swift in Sources */,
+				DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */,
+				DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
@@ -433,6 +451,8 @@
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
+				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
+				DC2915992865D69700FE5F9A /* MyLectureListViewModel.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */,

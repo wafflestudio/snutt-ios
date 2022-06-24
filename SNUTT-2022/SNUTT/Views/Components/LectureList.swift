@@ -24,13 +24,17 @@ struct LectureList: View {
                 LectureListCell(lecture: lecture)
             }
         }.listStyle(PlainListStyle())
+        
+        let _ = debugChanges()
     }
 }
 
 struct TimetableList_Previews: PreviewProvider {
     static var previews: some View {
+        let appState = AppState()
+        
         NavigationView {
-            LectureList(lectures: DummyAppState.shared.lectures)
+            LectureList(lectures: appState.currentTimetable.lectures)
         }
     }
 }

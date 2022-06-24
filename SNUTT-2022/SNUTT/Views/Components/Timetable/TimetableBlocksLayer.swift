@@ -8,29 +8,33 @@
 import SwiftUI
 
 struct TimetableBlocksLayer: View {
-    let viewModel: TimetableViewModel
-
+    let drawing: TimetableViewModel.TimetableDrawing
+    @EnvironmentObject var drawingSetting: AppState.DrawingSetting
+    @EnvironmentObject var currentTimetable: AppState.CurrentTimetable
+    
     var body: some View {
         GeometryReader { reader in
-            ForEach(viewModel.lectures) { lecture in
+            ForEach(currentTimetable.lectures) { lecture in
                 ForEach(lecture.timePlaces) { timePlace in
-                    if let offsetPoint = viewModel.getOffset(of: timePlace, in: reader.size) {
+                    if let offsetPoint = drawing.getOffset(of: timePlace, in: reader.size, drawingSetting: drawingSetting) {
                         TimetableBlock(lecture: lecture, timePlace: timePlace)
-                            .frame(width: viewModel.getWeekWidth(in: reader.size), height: viewModel.getHeight(of: timePlace, in: reader.size), alignment: .center)
+                            .frame(width: drawing.getWeekWidth(in: reader.size, weekCount: drawingSetting.weekCount), height: drawing.getHeight(of: timePlace, in: reader.size, hourCount: drawingSetting.hourCount), alignment: .center)
                             .offset(x: offsetPoint.x, y: offsetPoint.y)
                     }
                 }
             }
         }
+        
+        let _ = debugChanges()
     }
 }
-
-struct TimetableBlocks_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            let viewModel = TimetableViewModel()
-            TimetableBlocksLayer(viewModel: viewModel)
-            TimetableGridLayer(viewModel: viewModel)
-        }
-    }
-}
+//
+//struct TimetableBlocks_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ZStack {
+//            let viewModel = TimetableViewModel()
+//            TimetableBlocksLayer(viewModel: viewModel)
+//            TimetableGridLayer(viewModel: viewModel)
+//        }
+//    }
+//}

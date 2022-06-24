@@ -11,15 +11,13 @@ import SwiftUI
 struct SNUTTApp: App {
     @StateObject var appState = AppState()
 
-    let tabItems: [TabItem] = [
-        TabItem(id: .timetable, view: AnyView(MyTimetableScene()), symbolName: .timetable),
-        TabItem(id: .search, view: AnyView(MyLectureListScene()), symbolName: .search),
-        TabItem(id: .review, view: AnyView(MyLectureListScene()), symbolName: .review),
-        TabItem(id: .settings, view: AnyView(MyLectureListScene()), symbolName: .settings),
-    ]
-
     var body: some Scene {
-        let _ = AppStateContainer.shared.setAppState(appState: appState)
+        let tabItems: [TabItem] = [
+            TabItem(id: .timetable, view: AnyView(MyTimetableScene(viewModel: TimetableViewModel(appState: appState))), symbolName: .timetable),
+            TabItem(id: .search, view: AnyView(MyLectureListScene()), symbolName: .search),
+            TabItem(id: .review, view: AnyView(ReviewScene(viewModel: ReviewViewModel(appState: appState))), symbolName: .review),
+            TabItem(id: .settings, view: AnyView(SettingScene(viewModel: SettingViewModel(appState: appState))), symbolName: .settings),
+        ]
 
         WindowGroup {
             // 임시 Entry Point
@@ -81,5 +79,13 @@ struct TabItem: Identifiable {
 
     var offImageName: String {
         "tab.\(symbolName.rawValue).off"
+    }
+}
+
+extension View {
+    func debugChanges() {
+        if #available(iOS 15.0, *) {
+            let _ = Self._printChanges()
+        }
     }
 }
