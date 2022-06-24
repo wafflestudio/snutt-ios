@@ -10,16 +10,16 @@ import SwiftUI
 
 class MyLectureListViewModel: ObservableObject {
     @ObservedObject private var state: AppState
-    
+
     var currentTimetable: AppState.CurrentTimetable {
         state.currentTimetable
     }
-    
+
     func updateTimetable(timeTable: AppState.CurrentTimetable) {
         state.currentTimetable = timeTable
     }
-    
+
     init(appState: AppState) {
-        self.state = appState
+        state = appState
     }
 }

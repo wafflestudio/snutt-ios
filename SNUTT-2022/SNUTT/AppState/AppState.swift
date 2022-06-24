@@ -13,7 +13,7 @@ class AppState: ObservableObject {
     @Published var currentTimetable = CurrentTimetable()
     @Published var setting = Setting()
     @Published var system = System()
-    
+
     @Published var selectedTab: SelectedTab = .timetable
 }
 
@@ -24,7 +24,7 @@ extension AppState {
         case review
         case settings
     }
-    
+
     enum State {
         case error
         case success
@@ -43,7 +43,7 @@ extension AppState {
 extension AppState {
     class CurrentTimetable: ObservableObject {
         var timetable = Timetable()
-        
+
         // for test(will be removed)
         var lectures = [
             Lecture(id: 1, title: "컴파일러", instructor: "전병곤", timePlaces: [
@@ -71,20 +71,20 @@ extension AppState {
         var shouldDeleteFCMInfos: String? // STFCMInfoList
         var colorList: String? // STColorList
         var snuevWebUrl: String?
-        
-        var drawing: DrawingSetting = DrawingSetting()
+
+        var drawing: DrawingSetting = .init()
     }
-    
+
     class DrawingSetting: ObservableObject {
         let minHour: Int = 8
         let maxHour: Int = 19
-        
+
         let visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
-        
+
         var hourCount: Int {
             maxHour - minHour + 1
         }
-        
+
         var weekCount: Int {
             visibleWeeks.count
         }

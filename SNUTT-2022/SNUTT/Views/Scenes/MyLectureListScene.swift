@@ -19,7 +19,7 @@ struct MyLectureListScene: View {
             TimePlace(day: Weekday(rawValue: 4)!, start: 7.5, len: 1.5, place: "302-123"),
         ]),
     ]
-    
+
     var body: some View {
         LectureList(lectures: myDummyLectureList)
             .navigationBarTitleDisplayMode(.inline)
@@ -30,7 +30,7 @@ struct MyLectureListScene: View {
                     }
                 }
             }
-        
+
         let _ = debugChanges()
     }
 }

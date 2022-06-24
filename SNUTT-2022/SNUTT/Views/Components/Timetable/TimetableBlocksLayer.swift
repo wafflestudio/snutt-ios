@@ -11,7 +11,7 @@ struct TimetableBlocksLayer: View {
     let drawing: TimetableViewModel.TimetableDrawing
     @EnvironmentObject var drawingSetting: AppState.DrawingSetting
     @EnvironmentObject var currentTimetable: AppState.CurrentTimetable
-    
+
     var body: some View {
         GeometryReader { reader in
             ForEach(currentTimetable.lectures) { lecture in
@@ -24,12 +24,13 @@ struct TimetableBlocksLayer: View {
                 }
             }
         }
-        
+
         let _ = debugChanges()
     }
 }
+
 //
-//struct TimetableBlocks_Previews: PreviewProvider {
+// struct TimetableBlocks_Previews: PreviewProvider {
 //    static var previews: some View {
 //        ZStack {
 //            let viewModel = TimetableViewModel()
@@ -37,4 +38,4 @@ struct TimetableBlocksLayer: View {
 //            TimetableGridLayer(viewModel: viewModel)
 //        }
 //    }
-//}
+// }

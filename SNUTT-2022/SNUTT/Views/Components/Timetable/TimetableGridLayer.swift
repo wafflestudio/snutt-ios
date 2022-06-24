@@ -22,7 +22,7 @@ struct TimetableGridLayer: View {
             horizontalHalfHourlyPaths(in: reader.size)
                 .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(0.05)))
         }
-        
+
         let _ = debugChanges()
     }
 
@@ -95,9 +95,10 @@ struct TimetableGridLayer: View {
         .padding(.top, drawing.weekdayHeight)
     }
 }
+
 //
-//struct TimetableGrid_Previews: PreviewProvider {
+// struct TimetableGrid_Previews: PreviewProvider {
 //    static var previews: some View {
 //        TimetableGridLayer(viewModel: TimetableViewModel())
 //    }
-//}
+// }

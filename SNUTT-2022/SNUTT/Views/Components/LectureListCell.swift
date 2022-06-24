@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LectureListCell: View {
     let lecture: Lecture
-    
+
     @ViewBuilder
     func detailRow(imageName: String, text: String) -> some View {
         HStack {
@@ -19,7 +19,7 @@ struct LectureListCell: View {
             Spacer()
         }
     }
-    
+
     var body: some View {
         VStack(spacing: 8) {
             // title
@@ -30,14 +30,14 @@ struct LectureListCell: View {
                 Text("정희숙 / 3학점")
                     .font(STFont.details)
             }
-            
+
             // details
             detailRow(imageName: "tag.black", text: "디자인학부(디자인전공), 3학년")
             detailRow(imageName: "clock.black", text: "목2")
             detailRow(imageName: "map.black", text: "049-215")
         }
         .padding(.vertical, 5)
-        
+
         let _ = debugChanges()
     }
 }
@@ -49,7 +49,7 @@ struct TimetableListCell_Previews: PreviewProvider {
             TimePlace(day: Weekday(rawValue: 3)!, start: 3.15, len: 1.5, place: "302-123"),
             TimePlace(day: Weekday(rawValue: 3)!, start: 4.70, len: 1.5, place: "302-123"),
         ])
-        
+
         LectureListCell(lecture: lecture)
     }
 }

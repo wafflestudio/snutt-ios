@@ -85,7 +85,7 @@ struct TabItem: Identifiable {
 extension View {
     func debugChanges() {
         if #available(iOS 15.0, *) {
-            let _ = Self._printChanges()
+            _ = Self._printChanges()
         }
     }
 }

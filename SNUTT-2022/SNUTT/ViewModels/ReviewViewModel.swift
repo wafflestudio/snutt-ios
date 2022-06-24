@@ -10,7 +10,7 @@ import SwiftUI
 
 class ReviewViewModel: ObservableObject {
     @ObservedObject private var state: AppState
-    
+
     var currentTimetable: AppState.CurrentTimetable {
         state.currentTimetable
     }
@@ -18,8 +18,8 @@ class ReviewViewModel: ObservableObject {
     func updateTimetable(timeTable: AppState.CurrentTimetable) {
         state.currentTimetable = timeTable
     }
-    
+
     init(appState: AppState) {
-        self.state = appState
+        state = appState
     }
 }

@@ -10,14 +10,14 @@ import SwiftUI
 struct ReviewScene: View {
     // for test
     @ObservedObject var viewModel: ReviewViewModel
-    
+
     var body: some View {
-        Button{
+        Button {
             viewModel.updateTimetable(timeTable: AppState.CurrentTimetable())
         } label: {
             Text("Change current timetable")
         }
-        
+
         let _ = debugChanges()
     }
 }
