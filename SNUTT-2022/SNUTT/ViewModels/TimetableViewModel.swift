@@ -17,7 +17,7 @@ class TimetableViewModel: ObservableObject {
         state.currentTimetable
     }
     
-    var drawingSetting: DrawingSetting {
+    var drawingSetting: TimetableSetting {
         state.setting.drawing
     }
     
@@ -49,7 +49,7 @@ class TimetableViewModel: ObservableObject {
         /// 주어진 `TimePlace` 블록의 좌표(오프셋)를 구한다.
         ///
         /// 주어진 `TimePlace`를 시간표에 표시할 수 없는 경우(e.g. 시간이나 요일 범위에서 벗어난 경우 등)에는 `nil`을 리턴한다.
-        func getOffset(of timePlace: TimePlace, in containerSize: CGSize, drawingSetting: DrawingSetting) -> CGPoint? {
+        func getOffset(of timePlace: TimePlace, in containerSize: CGSize, drawingSetting: TimetableSetting) -> CGPoint? {
             if containerSize == .zero {
                 return nil
             }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class DrawingSetting: ObservableObject {
+class TimetableSetting: ObservableObject {
     let minHour: Int = 8
     let maxHour: Int = 19
     

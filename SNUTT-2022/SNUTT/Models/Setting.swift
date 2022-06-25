@@ -18,5 +18,5 @@ class Setting: ObservableObject {
     var colorList: String? // STColorList
     var snuevWebUrl: String?
     
-    var drawing: DrawingSetting = DrawingSetting()
+    var drawing: TimetableSetting = TimetableSetting()
 }

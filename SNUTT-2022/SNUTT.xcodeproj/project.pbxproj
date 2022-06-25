@@ -30,7 +30,7 @@
 		DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */; };
 		DC2915A32866958100FE5F9A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A22866958100FE5F9A /* User.swift */; };
 		DC2915A52866980B00FE5F9A /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A42866980B00FE5F9A /* Setting.swift */; };
-		DC2915A72866984000FE5F9A /* DrawingSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A62866984000FE5F9A /* DrawingSetting.swift */; };
+		DC2915A72866984000FE5F9A /* TimetableSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A62866984000FE5F9A /* TimetableSetting.swift */; };
 		DC2915A92866986600FE5F9A /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A82866986600FE5F9A /* System.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4C27E5C87F0068C94B /* Assets.xcassets */; };
@@ -87,7 +87,7 @@
 		DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
 		DC2915A22866958100FE5F9A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DC2915A42866980B00FE5F9A /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
-		DC2915A62866984000FE5F9A /* DrawingSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingSetting.swift; sourceTree = "<group>"; };
+		DC2915A62866984000FE5F9A /* TimetableSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSetting.swift; sourceTree = "<group>"; };
 		DC2915A82866986600FE5F9A /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		DC860F4527E5C87D0068C94B /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 				BE1D2B3928014527008F9134 /* Weekday.swift */,
 				DC2915A22866958100FE5F9A /* User.swift */,
 				DC2915A42866980B00FE5F9A /* Setting.swift */,
-				DC2915A62866984000FE5F9A /* DrawingSetting.swift */,
+				DC2915A62866984000FE5F9A /* TimetableSetting.swift */,
 				DC2915A82866986600FE5F9A /* System.swift */,
 			);
 			path = Models;
@@ -472,7 +472,7 @@
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
-				DC2915A72866984000FE5F9A /* DrawingSetting.swift in Sources */,
+				DC2915A72866984000FE5F9A /* TimetableSetting.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
 				DCD41A6A27E5CD8700CF380E /* TimetableApi.swift in Sources */,
 			);
