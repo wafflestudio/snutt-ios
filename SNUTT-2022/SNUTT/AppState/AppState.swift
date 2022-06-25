@@ -8,21 +8,30 @@
 import Combine
 import SwiftUI
 
-class AppState: ObservableObject {
-    @Published var currentUser = CurrentUser()
-    @Published var currentTimetable = CurrentTimetable()
-    @Published var setting = Setting()
-    @Published var system = System()
-
-    @Published var selectedTab: SelectedTab = .timetable
+class AppState {
+    static var of: AppState = AppState()
+    var currentUser = CurrentUser()
+    var currentTimetable = CurrentTimetable()
+    var setting = Setting()
+    var timetableSetting = DrawingSetting()
+    var system = System()
 }
 
 extension AppState {
-    enum SelectedTab {
+    
+    enum TabType: String {
         case timetable
         case search
         case review
         case settings
+        
+        var onImageName: String {
+            "tab.\(rawValue).on"
+        }
+
+        var offImageName: String {
+            "tab.\(rawValue).off"
+        }
     }
 
     enum State {
@@ -45,7 +54,7 @@ extension AppState {
         var timetable = Timetable()
 
         // for test(will be removed)
-        var lectures = [
+        @Published var lectures = [
             Lecture(id: 1, title: "컴파일러", instructor: "전병곤", timePlaces: [
                 TimePlace(day: Weekday(rawValue: 1)!, start: 5.5, len: 1.5, place: "302-123"),
                 TimePlace(day: Weekday(rawValue: 3)!, start: 3.15, len: 1.5, place: "302-123"),
@@ -76,10 +85,10 @@ extension AppState {
     }
 
     class DrawingSetting: ObservableObject {
-        let minHour: Int = 8
-        let maxHour: Int = 19
+        @Published var minHour: Int = 8
+        @Published var maxHour: Int = 19
 
-        let visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
+        @Published var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
 
         var hourCount: Int {
             maxHour - minHour + 1
@@ -93,8 +102,9 @@ extension AppState {
 
 // 시스템 상태
 extension AppState {
-    struct System {
-        var showActivityIndicator = false
-        var state: State = .success
+    class System: ObservableObject {
+        @Published var showActivityIndicator = false
+        @Published var state: State = .success
+        @Published var selectedTab: TabType = .timetable
     }
 }

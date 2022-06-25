@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ReviewScene: View {
     // for test
-    @ObservedObject var viewModel: ReviewViewModel
+    @StateObject var viewModel = ReviewViewModel()
 
     var body: some View {
         Button {
@@ -24,7 +24,6 @@ struct ReviewScene: View {
 
 struct ReviewScene_Previews: PreviewProvider {
     static var previews: some View {
-        let appState = AppState()
-        ReviewScene(viewModel: ReviewViewModel(appState: appState))
+        ReviewScene()
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyTimetableScene: View {
     @State private var pushToListScene = false
-    @ObservedObject var viewModel: TimetableViewModel
+    @StateObject var viewModel = TimetableViewModel()
 
     var body: some View {
         TimetableZStack()
@@ -53,11 +53,11 @@ struct MyTimetableScene: View {
     }
 }
 
-// struct MyTimetableScene_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationView {
-//            MyTimetableScene(currentTimetable: TimetableViewModel(appState: AppState().currentTimetable))
-//        }
-//    }
-// }
-//
+ struct MyTimetableScene_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            MyTimetableScene()
+        }
+    }
+ }
+

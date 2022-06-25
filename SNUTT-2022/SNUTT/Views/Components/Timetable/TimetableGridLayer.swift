@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct TimetableGridLayer: View {
-    @EnvironmentObject var drawingSetting: AppState.DrawingSetting
     typealias Painter = TimetableViewModel.TimetablePainter
+    @ObservedObject var drawingSetting = AppState.of.timetableSetting
 
     var body: some View {
         GeometryReader { reader in
@@ -97,8 +97,8 @@ struct TimetableGridLayer: View {
 }
 
 //
-// struct TimetableGrid_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TimetableGridLayer(viewModel: TimetableViewModel())
-//    }
-// }
+ struct TimetableGrid_Previews: PreviewProvider {
+    static var previews: some View {
+        TimetableGridLayer()
+    }
+ }

@@ -18,9 +18,8 @@ struct TimetableZStack: View {
     }
 }
 
-//
-// struct TimetableStack_Previews: PreviewProvider {
-//    static var previews: some View {
-////        TimetableZStack(viewModel: TimetableViewModel())
-//    }
-// }
+ struct TimetableStack_Previews: PreviewProvider {
+    static var previews: some View {
+        TimetableZStack()
+    }
+ }
