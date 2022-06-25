@@ -23,6 +23,8 @@
 		BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507427F4289B00CDCC13 /* Lecture.swift */; };
 		BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507627F42D1100CDCC13 /* STFont.swift */; };
 		BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507827F42D7500CDCC13 /* STColor.swift */; };
+		BEF7871A286632C700010ED2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF78719286632C700010ED2 /* ContentView.swift */; };
+		BEF7871C2866349F00010ED2 /* TabScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF7871B2866349F00010ED2 /* TabScene.swift */; };
 		DC2915992865D69700FE5F9A /* MyLectureListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915982865D69700FE5F9A /* MyLectureListViewModel.swift */; };
 		DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159A2865F95100FE5F9A /* SettingScene.swift */; };
 		DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */; };
@@ -76,6 +78,8 @@
 		BEDF507427F4289B00CDCC13 /* Lecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lecture.swift; sourceTree = "<group>"; };
 		BEDF507627F42D1100CDCC13 /* STFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STFont.swift; sourceTree = "<group>"; };
 		BEDF507827F42D7500CDCC13 /* STColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STColor.swift; sourceTree = "<group>"; };
+		BEF78719286632C700010ED2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BEF7871B2866349F00010ED2 /* TabScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabScene.swift; sourceTree = "<group>"; };
 		DC2915982865D69700FE5F9A /* MyLectureListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLectureListViewModel.swift; sourceTree = "<group>"; };
 		DC29159A2865F95100FE5F9A /* SettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScene.swift; sourceTree = "<group>"; };
 		DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				DC860F4827E5C87D0068C94B /* SNUTTApp.swift */,
+				BEF78719286632C700010ED2 /* ContentView.swift */,
 				DCD41A6D27E5CDCA00CF380E /* Components */,
 				DCD41A6C27E5CDBE00CF380E /* Scenes */,
 			);
@@ -251,6 +256,7 @@
 		DCD41A6C27E5CDBE00CF380E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				BEF7871B2866349F00010ED2 /* TabScene.swift */,
 				BE7E230027FF20EE004DC202 /* MyTimetableScene.swift */,
 				BEDF507227F427FA00CDCC13 /* MyLectureListScene.swift */,
 				DC29159A2865F95100FE5F9A /* SettingScene.swift */,
@@ -439,6 +445,7 @@
 				DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */,
+				BEF7871C2866349F00010ED2 /* TabScene.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* SNUTTViewModel.swift in Sources */,
@@ -457,6 +464,7 @@
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
+				BEF7871A286632C700010ED2 /* ContentView.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
 				DCD41A6A27E5CD8700CF380E /* TimetableApi.swift in Sources */,
 			);
