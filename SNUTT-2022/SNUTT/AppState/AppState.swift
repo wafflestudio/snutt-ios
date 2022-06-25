@@ -14,8 +14,6 @@ class AppState: ObservableObject {
     @Published var setting = Setting()
     @Published var system = System()
     
-    @Published var selectedTab: SelectedTab = .timetable
-    
     init() {
         let mockLectures = [
             Lecture(id: 1, title: "컴파일러", instructor: "전병곤", timePlaces: [
@@ -30,14 +28,5 @@ class AppState: ObservableObject {
         ]
         
         currentTimetable.lectures = mockLectures
-    }
-}
-
-extension AppState {
-    enum SelectedTab {
-        case timetable
-        case search
-        case review
-        case settings
     }
 }

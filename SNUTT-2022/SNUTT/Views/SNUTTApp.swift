@@ -10,6 +10,14 @@ import SwiftUI
 @main
 struct SNUTTApp: App {
     @StateObject var appState = AppState()
+    @State var selectedTab: SelectedTab = .timetable
+    
+    enum SelectedTab {
+        case timetable
+        case search
+        case review
+        case settings
+    }
 
     var body: some Scene {
         let tabItems: [TabItem] = [
@@ -21,14 +29,14 @@ struct SNUTTApp: App {
 
         WindowGroup {
             // 임시 Entry Point
-            TabView(selection: $appState.selectedTab) {
+            TabView(selection: $selectedTab) {
                 ForEach(tabItems) { tab in
                     NavigationView {
                         tab.view
                     }
                     .accentColor(Color(UIColor.label))
                     .tabItem {
-                        Image(appState.selectedTab == tab.id ? tab.onImageName : tab.offImageName)
+                        Image(selectedTab == tab.id ? tab.onImageName : tab.offImageName)
                     }
                 }
             }
@@ -58,27 +66,27 @@ struct SNUTTApp: App {
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
     }
-}
+    
+    /// A simple wrapper struct that represents a tab view item.
+    struct TabItem: Identifiable {
+        enum SymbolName: String {
+            case timetable
+            case search
+            case review
+            case settings
+        }
 
-/// A simple wrapper struct that represents a tab view item.
-struct TabItem: Identifiable {
-    enum SymbolName: String {
-        case timetable
-        case search
-        case review
-        case settings
-    }
+        let id: SelectedTab
+        let view: AnyView
+        let symbolName: SymbolName
 
-    let id: AppState.SelectedTab
-    let view: AnyView
-    let symbolName: SymbolName
+        var onImageName: String {
+            "tab.\(symbolName.rawValue).on"
+        }
 
-    var onImageName: String {
-        "tab.\(symbolName.rawValue).on"
-    }
-
-    var offImageName: String {
-        "tab.\(symbolName.rawValue).off"
+        var offImageName: String {
+            "tab.\(symbolName.rawValue).off"
+        }
     }
 }
 
