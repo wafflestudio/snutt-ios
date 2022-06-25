@@ -12,7 +12,7 @@ struct SettingScene: View {
     
     var body: some View {
         Button{
-            viewModel.updateCurrentUser(user: AppState.CurrentUser())
+            viewModel.updateCurrentUser(user: User())
         } label: {
             Text("Change current user")
         }

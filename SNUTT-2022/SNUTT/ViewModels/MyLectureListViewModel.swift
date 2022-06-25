@@ -11,11 +11,11 @@ import SwiftUI
 class MyLectureListViewModel: ObservableObject {
     @ObservedObject private var state: AppState
     
-    var currentTimetable: AppState.CurrentTimetable {
+    var currentTimetable: Timetable {
         state.currentTimetable
     }
     
-    func updateTimetable(timeTable: AppState.CurrentTimetable) {
+    func updateTimetable(timeTable: Timetable) {
         state.currentTimetable = timeTable
     }
     

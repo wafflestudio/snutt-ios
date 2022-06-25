@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TimetableGridLayer: View {
     let drawing: TimetableViewModel.TimetableDrawing
-    @EnvironmentObject var drawingSetting: AppState.DrawingSetting
+    @EnvironmentObject var drawingSetting: DrawingSetting
 
     var body: some View {
         GeometryReader { reader in

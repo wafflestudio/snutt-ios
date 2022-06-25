@@ -9,8 +9,8 @@ import SwiftUI
 
 struct TimetableBlocksLayer: View {
     let drawing: TimetableViewModel.TimetableDrawing
-    @EnvironmentObject var drawingSetting: AppState.DrawingSetting
-    @EnvironmentObject var currentTimetable: AppState.CurrentTimetable
+    @EnvironmentObject var drawingSetting: DrawingSetting
+    @EnvironmentObject var currentTimetable: Timetable
     
     var body: some View {
         GeometryReader { reader in

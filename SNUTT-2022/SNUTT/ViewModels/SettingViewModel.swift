@@ -11,11 +11,11 @@ import SwiftUI
 class SettingViewModel: ObservableObject {
     @ObservedObject private var state: AppState
     
-    var currentUser: AppState.CurrentUser {
+    var currentUser: User {
         state.currentUser
     }
     
-    func updateCurrentUser(user: AppState.CurrentUser) {
+    func updateCurrentUser(user: User) {
         state.currentUser = user
     }
     
