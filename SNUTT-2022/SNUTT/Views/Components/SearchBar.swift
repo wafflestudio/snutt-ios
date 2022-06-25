@@ -53,6 +53,11 @@ struct SearchBar: View {
                     }
                 )
                 .animation(.easeOut(duration: 0.2), value: isEditing)
+                .onChange(of: isEditing) { newValue in
+                    if newValue {
+                        isFilterOpen = false
+                    }
+                }
 
             Group {
                 if isEditing {
