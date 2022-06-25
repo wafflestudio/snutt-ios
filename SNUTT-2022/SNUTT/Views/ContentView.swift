@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var systemState = AppState.of.system
-    
+
     var body: some View {
         TabView(selection: $systemState.selectedTab) {
             TabScene(tabType: .timetable) {
@@ -32,7 +32,7 @@ struct ContentView: View {
         }
         let _ = debugChanges()
     }
-    
+
     /// Globally set the background color of the tab bar to white.
     private func setTabBarStyle() {
         let appearance = UITabBarAppearance()
@@ -42,7 +42,7 @@ struct ContentView: View {
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
     }
-    
+
     /// Globally set the background color of the nav bar to white.
     private func setNavBarStyle() {
         let appearance = UINavigationBarAppearance()

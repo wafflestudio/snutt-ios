@@ -33,7 +33,7 @@ struct MyTimetableScene: View {
                             .foregroundColor(Color(UIColor.secondaryLabel))
 
                         Spacer()
-                        
+
                         Button {
                             viewModel.updateDrawingSettings()
                             viewModel.updateCurrentTimetable()
@@ -41,7 +41,7 @@ struct MyTimetableScene: View {
                             Image(systemName: "arrow.clockwise")
                         }
                         .frame(width: 30, height: 45)
-                        
+
                         NavBarButton(imageName: "nav.list") {
                             pushToListScene = true
                         }
@@ -61,11 +61,10 @@ struct MyTimetableScene: View {
     }
 }
 
- struct MyTimetableScene_Previews: PreviewProvider {
+struct MyTimetableScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             MyTimetableScene()
         }
     }
- }
-
+}

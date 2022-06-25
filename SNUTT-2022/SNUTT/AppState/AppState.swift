@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 
 class AppState {
-    static var of: AppState = AppState()
+    static var of: AppState = .init()
     var currentUser = CurrentUser()
     var currentTimetable = CurrentTimetable()
     var setting = Setting()
@@ -18,13 +18,12 @@ class AppState {
 }
 
 extension AppState {
-    
     enum TabType: String {
         case timetable
         case search
         case review
         case settings
-        
+
         var onImageName: String {
             "tab.\(rawValue).on"
         }

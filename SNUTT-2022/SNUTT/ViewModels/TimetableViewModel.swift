@@ -14,31 +14,30 @@ class TimetableViewModel: ObservableObject {
     func updateTimetable(timeTable: AppState.CurrentTimetable) {
         AppState.of.currentTimetable = timeTable
     }
-    
+
     func updateDrawingSettings() {
-        drawingSetting.minHour = Int.random(in: 0...9)
-        drawingSetting.maxHour = Int.random(in: 18...23)
+        drawingSetting.minHour = Int.random(in: 0 ... 9)
+        drawingSetting.maxHour = Int.random(in: 18 ... 23)
     }
-    
+
     func updateCurrentTimetable() {
         currentTimetable.lectures = [
-            Lecture(id: 1, title: "강의-\(Int.random(in: 0...50))", instructor: "전병곤", timePlaces: [
-                TimePlace(day: Weekday(rawValue: Int.random(in: 1...4))!, start: Double.random(in: 1...10), len: Double.random(in: 0.5...3), place: "302-123"),
-                TimePlace(day: Weekday(rawValue: Int.random(in: 1...4))!, start: Double.random(in: 1...10), len: 1.5, place: "302-123"),
-                TimePlace(day: Weekday(rawValue: Int.random(in: 1...4))!, start: Double.random(in: 1...10), len: 1.5, place: "302-123"),
+            Lecture(id: 1, title: "강의-\(Int.random(in: 0 ... 50))", instructor: "전병곤", timePlaces: [
+                TimePlace(day: Weekday(rawValue: Int.random(in: 1 ... 4))!, start: Double.random(in: 1 ... 10), len: Double.random(in: 0.5 ... 3), place: "302-123"),
+                TimePlace(day: Weekday(rawValue: Int.random(in: 1 ... 4))!, start: Double.random(in: 1 ... 10), len: 1.5, place: "302-123"),
+                TimePlace(day: Weekday(rawValue: Int.random(in: 1 ... 4))!, start: Double.random(in: 1 ... 10), len: 1.5, place: "302-123"),
             ]),
-            Lecture(id: 2, title: "강의-\(Int.random(in: 0...50))", instructor: "전병곤", timePlaces: [
-                TimePlace(day: Weekday(rawValue: Int.random(in: 1...4))!, start: Double.random(in: 1...10), len: Double.random(in: 0.5...3), place: "302-123"),
-                TimePlace(day: Weekday(rawValue: Int.random(in: 1...4))!, start: Double.random(in: 1...10), len: 1.5, place: "302-123"),
-                TimePlace(day: Weekday(rawValue: Int.random(in: 1...4))!, start: Double.random(in: 1...10), len: 1.5, place: "302-123"),
+            Lecture(id: 2, title: "강의-\(Int.random(in: 0 ... 50))", instructor: "전병곤", timePlaces: [
+                TimePlace(day: Weekday(rawValue: Int.random(in: 1 ... 4))!, start: Double.random(in: 1 ... 10), len: Double.random(in: 0.5 ... 3), place: "302-123"),
+                TimePlace(day: Weekday(rawValue: Int.random(in: 1 ... 4))!, start: Double.random(in: 1 ... 10), len: 1.5, place: "302-123"),
+                TimePlace(day: Weekday(rawValue: Int.random(in: 1 ... 4))!, start: Double.random(in: 1 ... 10), len: 1.5, place: "302-123"),
             ]),
-            Lecture(id: 3, title: "강의-\(Int.random(in: 0...50))", instructor: "전병곤", timePlaces: [
-                TimePlace(day: Weekday(rawValue: Int.random(in: 1...4))!, start: Double.random(in: 1...10), len: Double.random(in: 0.5...3), place: "302-123"),
-                TimePlace(day: Weekday(rawValue: Int.random(in: 1...4))!, start: Double.random(in: 1...10), len: 1.5, place: "302-123"),
-                TimePlace(day: Weekday(rawValue: Int.random(in: 1...4))!, start: Double.random(in: 1...10), len: 1.5, place: "302-123"),
+            Lecture(id: 3, title: "강의-\(Int.random(in: 0 ... 50))", instructor: "전병곤", timePlaces: [
+                TimePlace(day: Weekday(rawValue: Int.random(in: 1 ... 4))!, start: Double.random(in: 1 ... 10), len: Double.random(in: 0.5 ... 3), place: "302-123"),
+                TimePlace(day: Weekday(rawValue: Int.random(in: 1 ... 4))!, start: Double.random(in: 1 ... 10), len: 1.5, place: "302-123"),
+                TimePlace(day: Weekday(rawValue: Int.random(in: 1 ... 4))!, start: Double.random(in: 1 ... 10), len: 1.5, place: "302-123"),
             ]),
         ]
-        
     }
 
     struct TimetablePainter {
