@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct TimetableZStack: View {
-    let drawing: TimetableViewModel.TimetableDrawing
-
     var body: some View {
         ZStack {
-            TimetableGridLayer(drawing: drawing)
-            TimetableBlocksLayer(drawing: drawing)
+            TimetableGridLayer()
+            TimetableBlocksLayer()
         }
 
         let _ = debugChanges()

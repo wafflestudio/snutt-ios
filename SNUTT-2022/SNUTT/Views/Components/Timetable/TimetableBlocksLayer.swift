@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct TimetableBlocksLayer: View {
-    let drawing: TimetableViewModel.TimetableDrawing
     @EnvironmentObject var drawingSetting: AppState.DrawingSetting
     @EnvironmentObject var currentTimetable: AppState.CurrentTimetable
+    typealias Painter = TimetableViewModel.TimetablePainter
 
     var body: some View {
         GeometryReader { reader in
             ForEach(currentTimetable.lectures) { lecture in
                 ForEach(lecture.timePlaces) { timePlace in
-                    if let offsetPoint = drawing.getOffset(of: timePlace, in: reader.size, drawingSetting: drawingSetting) {
+                    if let offsetPoint = Painter.getOffset(of: timePlace, in: reader.size, drawingSetting: drawingSetting) {
                         TimetableBlock(lecture: lecture, timePlace: timePlace)
-                            .frame(width: drawing.getWeekWidth(in: reader.size, weekCount: drawingSetting.weekCount), height: drawing.getHeight(of: timePlace, in: reader.size, hourCount: drawingSetting.hourCount), alignment: .center)
+                            .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: drawingSetting.weekCount), height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: drawingSetting.hourCount), alignment: .center)
                             .offset(x: offsetPoint.x, y: offsetPoint.y)
                     }
                 }
