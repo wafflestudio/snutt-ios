@@ -33,7 +33,15 @@ struct MyTimetableScene: View {
                             .foregroundColor(Color(UIColor.secondaryLabel))
 
                         Spacer()
-
+                        
+                        Button {
+                            viewModel.updateDrawingSettings()
+                            viewModel.updateCurrentTimetable()
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                        .frame(width: 30, height: 45)
+                        
                         NavBarButton(imageName: "nav.list") {
                             pushToListScene = true
                         }
