@@ -9,7 +9,7 @@ import SwiftUI
 
 class Timetable: ObservableObject {
     @Published var lectures: [Lecture]
-    
+
     init(lectures: [Lecture]) {
         self.lectures = lectures
     }

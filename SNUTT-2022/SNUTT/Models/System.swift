@@ -12,7 +12,7 @@ struct System {
         case error
         case success
     }
-    
+
     var showActivityIndicator = false
     var state: State = .success
 }

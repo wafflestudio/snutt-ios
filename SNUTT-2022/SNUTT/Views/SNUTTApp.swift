@@ -11,7 +11,7 @@ import SwiftUI
 struct SNUTTApp: App {
     let appState = AppState()
     @State var selectedTab: SelectedTab = .timetable
-    
+
     enum SelectedTab {
         case timetable
         case search
@@ -66,7 +66,7 @@ struct SNUTTApp: App {
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
     }
-    
+
     /// A simple wrapper struct that represents a tab view item.
     struct TabItem: Identifiable {
         enum SymbolName: String {
@@ -93,7 +93,7 @@ struct SNUTTApp: App {
 extension View {
     func debugChanges() {
         if #available(iOS 15.0, *) {
-            let _ = Self._printChanges()
+            _ = Self._printChanges()
         }
     }
 }

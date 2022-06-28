@@ -10,13 +10,13 @@ import SwiftUI
 class TimetableSetting: ObservableObject {
     let minHour: Int = 8
     let maxHour: Int = 19
-    
+
     let visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
-    
+
     var hourCount: Int {
         maxHour - minHour + 1
     }
-    
+
     var weekCount: Int {
         visibleWeeks.count
     }

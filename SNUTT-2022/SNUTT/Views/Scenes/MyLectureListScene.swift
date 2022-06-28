@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyLectureListScene: View {
     let viewModel: MyLectureListViewModel
-    
+
     var body: some View {
         LectureList(lectures: viewModel.currentTimetable.lectures)
             .navigationBarTitleDisplayMode(.inline)
@@ -20,7 +20,7 @@ struct MyLectureListScene: View {
                     }
                 }
             }
-        
+
         let _ = debugChanges()
     }
 }

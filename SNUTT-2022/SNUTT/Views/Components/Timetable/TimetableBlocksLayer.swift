@@ -10,7 +10,7 @@ import SwiftUI
 struct TimetableBlocksLayer: View {
     @EnvironmentObject var drawingSetting: TimetableSetting
     @EnvironmentObject var currentTimetable: Timetable
-    
+
     var body: some View {
         GeometryReader { reader in
             ForEach(currentTimetable.lectures) { lecture in
@@ -23,7 +23,7 @@ struct TimetableBlocksLayer: View {
                 }
             }
         }
-        
+
         let _ = debugChanges()
     }
 }

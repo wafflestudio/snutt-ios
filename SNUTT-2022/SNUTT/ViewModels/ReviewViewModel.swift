@@ -10,15 +10,15 @@ import SwiftUI
 
 class ReviewViewModel {
     var appState: AppState
-    
+
     var currentTimetable: Timetable {
         appState.currentTimetable
     }
 
-    func updateTimetable(timeTable: Timetable) {
+    func updateTimetable(timeTable _: Timetable) {
         appState.currentTimetable.lectures = []
     }
-    
+
     init(appState: AppState) {
         self.appState = appState
     }

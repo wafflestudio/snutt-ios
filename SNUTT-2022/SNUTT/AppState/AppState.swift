@@ -13,7 +13,7 @@ class AppState {
     var currentTimetable = Timetable(lectures: [])
     var setting = Setting()
     var system = System()
-    
+
     init() {
         let mockLectures = [
             Lecture(id: 1, title: "컴파일러", instructor: "전병곤", timePlaces: [
@@ -26,7 +26,7 @@ class AppState {
                 TimePlace(day: Weekday(rawValue: 4)!, start: 7.5, len: 1.5, place: "302-123"),
             ]),
         ]
-        
+
         currentTimetable.lectures = mockLectures
     }
 }

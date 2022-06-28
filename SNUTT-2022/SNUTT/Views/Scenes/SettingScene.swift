@@ -9,14 +9,14 @@ import SwiftUI
 
 struct SettingScene: View {
     let viewModel: SettingViewModel
-    
+
     var body: some View {
-        Button{
+        Button {
             viewModel.updateCurrentUser(user: User())
         } label: {
             Text("Change current user")
         }
-        
+
         let _ = debugChanges()
     }
 }

@@ -21,7 +21,7 @@ struct TimetableGridLayer: View {
             horizontalHalfHourlyPaths(in: reader.size)
                 .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(0.05)))
         }
-        
+
         let _ = debugChanges()
     }
 

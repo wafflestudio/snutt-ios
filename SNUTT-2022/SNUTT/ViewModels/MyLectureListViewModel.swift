@@ -10,15 +10,15 @@ import SwiftUI
 
 class MyLectureListViewModel {
     var appState: AppState
-    
+
     var currentTimetable: Timetable {
         appState.currentTimetable
     }
-    
+
     func updateTimetable(timeTable: Timetable) {
         appState.currentTimetable = timeTable
     }
-    
+
     init(appState: AppState) {
         self.appState = appState
     }

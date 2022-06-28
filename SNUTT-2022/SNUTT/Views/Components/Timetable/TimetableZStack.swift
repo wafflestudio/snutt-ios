@@ -13,10 +13,11 @@ struct TimetableZStack: View {
             TimetableGridLayer()
             TimetableBlocksLayer()
         }
-        
+
         let _ = debugChanges()
     }
 }
+
 //
 struct TimetableStack_Previews: PreviewProvider {
     static var previews: some View {
