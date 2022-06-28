@@ -9,17 +9,17 @@ import Foundation
 import SwiftUI
 
 class SettingViewModel {
-     private var state: AppState
+    var appState: AppState
     
     var currentUser: User {
-        state.currentUser
+        appState.currentUser
     }
     
     func updateCurrentUser(user: User) {
-        state.currentUser = user
+        appState.currentUser = user
     }
     
     init(appState: AppState) {
-        self.state = appState
+        self.appState = appState
     }
 }

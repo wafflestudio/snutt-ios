@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MyLectureListScene: View {
+    let viewModel: MyLectureListViewModel
+    
     let myDummyLectureList = [
         Lecture(id: 1, title: "컴파일러", instructor: "전병곤", timePlaces: [
             TimePlace(day: Weekday(rawValue: 1)!, start: 5.5, len: 1.5, place: "302-123"),
@@ -39,7 +41,7 @@ struct MyTimetableListScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             TabView {
-                MyLectureListScene()
+                MyLectureListScene(viewModel: MyLectureListViewModel(appState: AppState()))
             }
         }
     }

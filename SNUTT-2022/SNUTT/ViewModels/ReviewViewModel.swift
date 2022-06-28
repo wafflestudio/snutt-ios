@@ -9,17 +9,17 @@ import Foundation
 import SwiftUI
 
 class ReviewViewModel {
-    private var state: AppState
+    var appState: AppState
     
     var currentTimetable: Timetable {
-        state.currentTimetable
+        appState.currentTimetable
     }
 
     func updateTimetable(timeTable: Timetable) {
-        state.currentTimetable.lectures = []
+        appState.currentTimetable.lectures = []
     }
     
     init(appState: AppState) {
-        self.state = appState
+        self.appState = appState
     }
 }

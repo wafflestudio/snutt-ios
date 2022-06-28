@@ -22,7 +22,7 @@ struct SNUTTApp: App {
     var body: some Scene {
         let tabItems: [TabItem] = [
             TabItem(id: .timetable, view: AnyView(MyTimetableScene(viewModel: TimetableViewModel(appState: appState))), symbolName: .timetable),
-            TabItem(id: .search, view: AnyView(MyLectureListScene()), symbolName: .search),
+            TabItem(id: .search, view: AnyView(MyLectureListScene(viewModel: MyLectureListViewModel(appState: appState))), symbolName: .search),
             TabItem(id: .review, view: AnyView(ReviewScene(viewModel: ReviewViewModel(appState: appState))), symbolName: .review),
             TabItem(id: .settings, view: AnyView(SettingScene(viewModel: SettingViewModel(appState: appState))), symbolName: .settings),
         ]

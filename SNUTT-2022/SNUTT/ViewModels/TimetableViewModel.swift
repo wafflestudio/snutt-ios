@@ -9,24 +9,24 @@ import UIKit
 import SwiftUI
 
 class TimetableViewModel {
-    private var state: AppState
+    var appState: AppState
     
     var drawing = TimetableDrawing()
     
     var currentTimetable: Timetable {
-        state.currentTimetable
+        appState.currentTimetable
     }
     
     var drawingSetting: TimetableSetting {
-        state.setting.drawing
+        appState.setting.drawing
     }
     
     func updateTimetable(timeTable: Timetable) {
-        state.currentTimetable = timeTable
+        appState.currentTimetable = timeTable
     }
     
     init(appState: AppState) {
-        self.state = appState
+        self.appState = appState
     }
     
     struct TimetableDrawing {

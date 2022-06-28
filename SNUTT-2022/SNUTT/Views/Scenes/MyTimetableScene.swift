@@ -17,7 +17,7 @@ struct MyTimetableScene: View {
             .environmentObject(viewModel.drawingSetting)
         // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
-                NavigationLink(destination: MyLectureListScene(), isActive: $pushToListScene) {
+                NavigationLink(destination: MyLectureListScene(viewModel: MyLectureListViewModel(appState: viewModel.appState)), isActive: $pushToListScene) {
                     EmptyView()
                 }
             )

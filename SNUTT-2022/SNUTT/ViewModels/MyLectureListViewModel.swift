@@ -9,17 +9,17 @@ import Foundation
 import SwiftUI
 
 class MyLectureListViewModel {
-    private var state: AppState
+    var appState: AppState
     
     var currentTimetable: Timetable {
-        state.currentTimetable
+        appState.currentTimetable
     }
     
     func updateTimetable(timeTable: Timetable) {
-        state.currentTimetable = timeTable
+        appState.currentTimetable = timeTable
     }
     
     init(appState: AppState) {
-        self.state = appState
+        self.appState = appState
     }
 }
