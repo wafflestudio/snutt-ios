@@ -8,15 +8,15 @@
 import Foundation
 import SwiftUI
 
-class ReviewViewModel: ObservableObject {
-    @ObservedObject private var state: AppState
+class ReviewViewModel {
+    private var state: AppState
     
     var currentTimetable: Timetable {
         state.currentTimetable
     }
 
     func updateTimetable(timeTable: Timetable) {
-        state.currentTimetable = timeTable
+        state.currentTimetable.lectures = []
     }
     
     init(appState: AppState) {

@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-class MyLectureListViewModel: ObservableObject {
-    @ObservedObject private var state: AppState
+class MyLectureListViewModel {
+    private var state: AppState
     
     var currentTimetable: Timetable {
         state.currentTimetable

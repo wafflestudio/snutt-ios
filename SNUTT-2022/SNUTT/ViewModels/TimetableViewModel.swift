@@ -8,8 +8,8 @@
 import UIKit
 import SwiftUI
 
-class TimetableViewModel: ObservableObject {
-    @ObservedObject private var state: AppState
+class TimetableViewModel {
+    private var state: AppState
     
     var drawing = TimetableDrawing()
     

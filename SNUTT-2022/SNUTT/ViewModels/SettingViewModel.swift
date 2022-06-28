@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-class SettingViewModel: ObservableObject {
-    @ObservedObject private var state: AppState
+class SettingViewModel {
+     private var state: AppState
     
     var currentUser: User {
         state.currentUser

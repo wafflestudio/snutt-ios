@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ReviewScene: View {
     // for test
-    @ObservedObject var viewModel: ReviewViewModel
+    var viewModel: ReviewViewModel
     
     var body: some View {
         Button{

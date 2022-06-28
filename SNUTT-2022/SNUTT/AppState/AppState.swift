@@ -8,11 +8,11 @@
 import Combine
 import SwiftUI
 
-class AppState: ObservableObject {
-    @Published var currentUser = User()
-    @Published var currentTimetable = Timetable(lectures: [])
-    @Published var setting = Setting()
-    @Published var system = System()
+class AppState {
+    var currentUser = User()
+    var currentTimetable = Timetable(lectures: [])
+    var setting = Setting()
+    var system = System()
     
     init() {
         let mockLectures = [
