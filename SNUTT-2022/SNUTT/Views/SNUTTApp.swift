@@ -9,28 +9,34 @@ import SwiftUI
 
 @main
 struct SNUTTApp: App {
-    @StateObject var appState = AppState()
+    let appState = AppState()
+    @State var selectedTab: SelectedTab = .timetable
 
-    let tabItems: [TabItem] = [
-        TabItem(id: .timetable, view: AnyView(MyTimetableScene()), symbolName: .timetable),
-        TabItem(id: .search, view: AnyView(MyLectureListScene()), symbolName: .search),
-        TabItem(id: .review, view: AnyView(MyLectureListScene()), symbolName: .review),
-        TabItem(id: .settings, view: AnyView(MyLectureListScene()), symbolName: .settings),
-    ]
+    enum SelectedTab {
+        case timetable
+        case search
+        case review
+        case settings
+    }
 
     var body: some Scene {
-        let _ = AppStateContainer.shared.setAppState(appState: appState)
+        let tabItems: [TabItem] = [
+            TabItem(id: .timetable, view: AnyView(MyTimetableScene(viewModel: TimetableViewModel(appState: appState))), symbolName: .timetable),
+            TabItem(id: .search, view: AnyView(MyLectureListScene(viewModel: MyLectureListViewModel(appState: appState))), symbolName: .search),
+            TabItem(id: .review, view: AnyView(ReviewScene(viewModel: ReviewViewModel(appState: appState))), symbolName: .review),
+            TabItem(id: .settings, view: AnyView(SettingScene(viewModel: SettingViewModel(appState: appState))), symbolName: .settings),
+        ]
 
         WindowGroup {
             // 임시 Entry Point
-            TabView(selection: $appState.selectedTab) {
+            TabView(selection: $selectedTab) {
                 ForEach(tabItems) { tab in
                     NavigationView {
                         tab.view
                     }
                     .accentColor(Color(UIColor.label))
                     .tabItem {
-                        Image(appState.selectedTab == tab.id ? tab.onImageName : tab.offImageName)
+                        Image(selectedTab == tab.id ? tab.onImageName : tab.offImageName)
                     }
                 }
             }
@@ -60,26 +66,34 @@ struct SNUTTApp: App {
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
     }
+
+    /// A simple wrapper struct that represents a tab view item.
+    struct TabItem: Identifiable {
+        enum SymbolName: String {
+            case timetable
+            case search
+            case review
+            case settings
+        }
+
+        let id: SelectedTab
+        let view: AnyView
+        let symbolName: SymbolName
+
+        var onImageName: String {
+            "tab.\(symbolName.rawValue).on"
+        }
+
+        var offImageName: String {
+            "tab.\(symbolName.rawValue).off"
+        }
+    }
 }
 
-/// A simple wrapper struct that represents a tab view item.
-struct TabItem: Identifiable {
-    enum SymbolName: String {
-        case timetable
-        case search
-        case review
-        case settings
-    }
-
-    let id: AppState.SelectedTab
-    let view: AnyView
-    let symbolName: SymbolName
-
-    var onImageName: String {
-        "tab.\(symbolName.rawValue).on"
-    }
-
-    var offImageName: String {
-        "tab.\(symbolName.rawValue).off"
+extension View {
+    func debugChanges() {
+        if #available(iOS 15.0, *) {
+            _ = Self._printChanges()
+        }
     }
 }

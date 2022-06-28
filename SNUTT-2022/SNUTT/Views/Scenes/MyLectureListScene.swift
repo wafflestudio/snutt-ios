@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct MyLectureListScene: View {
-    let myDummyLectureList = DummyAppState.shared.lectures
+    let viewModel: MyLectureListViewModel
 
     var body: some View {
-        LectureList(lectures: myDummyLectureList)
+        LectureList(lectures: viewModel.currentTimetable.lectures)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -20,6 +20,8 @@ struct MyLectureListScene: View {
                     }
                 }
             }
+
+        let _ = debugChanges()
     }
 }
 
@@ -27,7 +29,7 @@ struct MyTimetableListScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             TabView {
-                MyLectureListScene()
+                MyLectureListScene(viewModel: MyLectureListViewModel(appState: AppState()))
             }
         }
     }

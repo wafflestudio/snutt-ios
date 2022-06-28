@@ -9,12 +9,15 @@ import SwiftUI
 
 struct MyTimetableScene: View {
     @State private var pushToListScene = false
+    let viewModel: TimetableViewModel
 
     var body: some View {
-        TimetableZStack(viewModel: TimetableViewModel())
+        TimetableZStack()
+            .environmentObject(viewModel.currentTimetable)
+            .environmentObject(viewModel.drawingSetting)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
-                NavigationLink(destination: MyLectureListScene(), isActive: $pushToListScene) {
+                NavigationLink(destination: MyLectureListScene(viewModel: MyLectureListViewModel(appState: viewModel.appState)), isActive: $pushToListScene) {
                     EmptyView()
                 }
             )
@@ -47,13 +50,15 @@ struct MyTimetableScene: View {
                     }
                 }
             }
+
+        let _ = debugChanges()
     }
 }
 
 struct MyTimetableScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            MyTimetableScene()
+            MyTimetableScene(viewModel: TimetableViewModel(appState: AppState()))
         }
     }
 }

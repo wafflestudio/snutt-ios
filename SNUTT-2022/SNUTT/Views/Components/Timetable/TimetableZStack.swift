@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct TimetableZStack: View {
-    let viewModel: TimetableViewModel
     var body: some View {
         ZStack {
-            TimetableGridLayer(viewModel: viewModel)
-            TimetableBlocksLayer(viewModel: viewModel)
+            TimetableGridLayer()
+            TimetableBlocksLayer()
         }
+
+        let _ = debugChanges()
     }
 }
 
+//
 struct TimetableStack_Previews: PreviewProvider {
     static var previews: some View {
-        TimetableZStack(viewModel: TimetableViewModel())
+        TimetableZStack()
     }
 }

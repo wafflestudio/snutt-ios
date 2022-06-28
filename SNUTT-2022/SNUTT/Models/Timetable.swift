@@ -5,6 +5,12 @@
 //  Created by Jinsup Keum on 2022/03/19.
 //
 
-import Foundation
+import SwiftUI
 
-struct Timetable {}
+class Timetable: ObservableObject {
+    @Published var lectures: [Lecture]
+
+    init(lectures: [Lecture]) {
+        self.lectures = lectures
+    }
+}
