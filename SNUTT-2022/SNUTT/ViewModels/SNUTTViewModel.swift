@@ -7,21 +7,11 @@
 
 import SwiftUI
 
-class AppStateContainer {
-    fileprivate var appState: AppState?
 
-    static let shared = AppStateContainer()
-    private init() {}
-
-    func setAppState(appState: AppState) {
-        self.appState = appState
-    }
-}
-
-class SNUTTViewModel: ObservableObject {
+class SNUTTViewModel {
     var appState: AppState
 
-    init() {
-        appState = AppStateContainer.shared.appState!
+    init(appState: AppState) {
+        self.appState = appState
     }
 }
