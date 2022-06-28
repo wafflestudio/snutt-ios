@@ -28,13 +28,15 @@ struct TimetableBlocksLayer: View {
         let _ = debugChanges()
     }
 }
-//
-//struct TimetableBlocks_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ZStack {
-//            let viewModel = TimetableViewModel()
-//            TimetableBlocksLayer(viewModel: viewModel)
-//            TimetableGridLayer(viewModel: viewModel)
-//        }
-//    }
-//}
+
+struct TimetableBlocks_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            let viewModel = TimetableViewModel(appState: AppState())
+            TimetableBlocksLayer(drawing: viewModel.drawing)
+                .environmentObject(viewModel.currentTimetable)
+                .environmentObject(viewModel.drawingSetting)
+            TimetableGridLayer(drawing: viewModel.drawing)
+        }
+    }
+}

@@ -55,12 +55,10 @@ struct MyTimetableScene: View {
     }
 }
 
-//struct MyTimetableScene_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationView {
-//            MyTimetableScene(currentTimetable: TimetableViewModel(appState: AppState().currentTimetable))
-//        }
-//    }
-//}
-//
-
+struct MyTimetableScene_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            MyTimetableScene(viewModel: TimetableViewModel(appState: AppState()))
+        }
+    }
+}

@@ -15,8 +15,8 @@ struct LectureDetails: View {
     }
 }
 
-// struct LectureDetailList_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LectureDetails()
-//    }
-// }
+ struct LectureDetailList_Previews: PreviewProvider {
+    static var previews: some View {
+        LectureDetails()
+    }
+ }

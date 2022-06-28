@@ -95,9 +95,11 @@ struct TimetableGridLayer: View {
         .padding(.top, drawing.weekdayHeight)
     }
 }
-//
-//struct TimetableGrid_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TimetableGridLayer(viewModel: TimetableViewModel())
-//    }
-//}
+
+struct TimetableGrid_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = TimetableViewModel(appState: AppState())
+        TimetableGridLayer(drawing: viewModel.drawing)
+            .environmentObject(viewModel.drawingSetting)
+    }
+}
