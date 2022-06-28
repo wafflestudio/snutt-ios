@@ -24,7 +24,7 @@ struct LectureListCell: View {
         VStack(spacing: 8) {
             // title
             HStack {
-                Text("편집디자인")
+                Text(lecture.title)
                     .font(STFont.subheading)
                 Spacer()
                 Text("정희숙 / 3학점")
