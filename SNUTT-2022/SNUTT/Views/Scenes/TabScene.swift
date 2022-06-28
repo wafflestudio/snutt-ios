@@ -11,7 +11,6 @@ struct TabScene<Content>: View where Content: View {
     let tabType: TabType
     @State var isViewVisible = false
     @ViewBuilder var content: () -> Content
-    
 
     var onImageName: String {
         "tab.\(tabType.rawValue).on"
@@ -20,7 +19,6 @@ struct TabScene<Content>: View where Content: View {
     var offImageName: String {
         "tab.\(tabType.rawValue).off"
     }
-    
 
     var body: some View {
         NavigationView {
@@ -40,4 +38,3 @@ struct TabScene<Content>: View where Content: View {
         let _ = debugChanges()
     }
 }
-

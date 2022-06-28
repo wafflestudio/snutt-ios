@@ -9,12 +9,12 @@ import SwiftUI
 
 struct TimetableBlocksLayer: View {
     @EnvironmentObject var currentTimetable: Timetable
-    
+
     var body: some View {
         ForEach(currentTimetable.lectures) { lecture in
             LectureBlocks(lecture: lecture)
         }
-        
+
         let _ = debugChanges()
     }
 }

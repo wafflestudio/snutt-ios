@@ -10,13 +10,12 @@ import SwiftUI
 @main
 struct SNUTTApp: App {
     let appState = AppState()
-    
+
     var body: some Scene {
         WindowGroup {
             SNUTTView(viewModel: .init(appState: appState))
         }
     }
-    
 }
 
 extension View {

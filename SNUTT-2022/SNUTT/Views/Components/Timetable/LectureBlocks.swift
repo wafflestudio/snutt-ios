@@ -9,10 +9,10 @@ import SwiftUI
 
 struct LectureBlocks: View {
     typealias Painter = TimetableViewModel.TimetablePainter
-    
+
     let lecture: Lecture
     @EnvironmentObject var timetableSetting: TimetableSetting
-    
+
     var body: some View {
         GeometryReader { reader in
             ForEach(lecture.timePlaces) { timePlace in

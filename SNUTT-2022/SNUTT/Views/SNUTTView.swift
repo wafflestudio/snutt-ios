@@ -10,29 +10,29 @@ import SwiftUI
 struct SNUTTView: View {
     @State var selectedTab: TabType = .timetable
     let viewModel: SNUTTViewModel
-    
+
     var body: some View {
-            TabView(selection: $selectedTab) {
-                TabScene(tabType: .timetable) {
-                    MyTimetableScene(viewModel: .init(appState: viewModel.appState))
-                }
-                TabScene(tabType: .search) {
-                    MyLectureListScene(viewModel: .init(appState: viewModel.appState))
-                }
-                TabScene(tabType: .review) {
-                    ReviewScene(viewModel: .init(appState: viewModel.appState))
-                }
-                TabScene(tabType: .settings) {
-                    SettingScene(viewModel: .init(appState: viewModel.appState))
-                }
+        TabView(selection: $selectedTab) {
+            TabScene(tabType: .timetable) {
+                MyTimetableScene(viewModel: .init(appState: viewModel.appState))
             }
-            .accentColor(Color(UIColor.label))
-            .onAppear {
-                setTabBarStyle()
-                setNavBarStyle()
+            TabScene(tabType: .search) {
+                MyLectureListScene(viewModel: .init(appState: viewModel.appState))
             }
-            let _ = debugChanges()
+            TabScene(tabType: .review) {
+                ReviewScene(viewModel: .init(appState: viewModel.appState))
+            }
+            TabScene(tabType: .settings) {
+                SettingScene(viewModel: .init(appState: viewModel.appState))
+            }
         }
+        .accentColor(Color(UIColor.label))
+        .onAppear {
+            setTabBarStyle()
+            setNavBarStyle()
+        }
+        let _ = debugChanges()
+    }
 
     /// Globally set the background color of the tab bar to white.
     private func setTabBarStyle() {

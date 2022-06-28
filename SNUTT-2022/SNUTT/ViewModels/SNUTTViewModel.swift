@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 class SNUTTViewModel {
     var appState: AppState
 
