@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct SNUTTApp: App {
-    var appState = AppState()
+    let appState = AppState()
     @State var selectedTab: SelectedTab = .timetable
     
     enum SelectedTab {

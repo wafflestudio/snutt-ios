@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyTimetableScene: View {
     @State private var pushToListScene = false
-    var viewModel: TimetableViewModel
+    let viewModel: TimetableViewModel
     
     var body: some View {
         TimetableZStack(drawing: viewModel.drawing)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingScene: View {
-    var viewModel: SettingViewModel
+    let viewModel: SettingViewModel
     
     var body: some View {
         Button{
