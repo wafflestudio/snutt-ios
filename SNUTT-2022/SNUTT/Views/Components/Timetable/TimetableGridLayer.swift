@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TimetableGridLayer: View {
-    let drawing: TimetableViewModel.TimetableDrawing
     @EnvironmentObject var drawingSetting: TimetableSetting
 
     var body: some View {
@@ -30,10 +29,10 @@ struct TimetableGridLayer: View {
 
     /// 하루 간격의 수직선
     func verticalPaths(in containerSize: CGSize) -> Path {
-        let weekWidth = drawing.getWeekWidth(in: containerSize, weekCount: drawingSetting.weekCount)
+        let weekWidth = TimetableViewModel.timetableDrawing.getWeekWidth(in: containerSize, weekCount: drawingSetting.weekCount)
         return Path { path in
             for i in 0 ..< drawingSetting.weekCount {
-                let x = drawing.hourWidth + CGFloat(i) * weekWidth
+                let x = TimetableViewModel.timetableDrawing.hourWidth + CGFloat(i) * weekWidth
                 path.move(to: CGPoint(x: x, y: 0))
                 path.addLine(to: CGPoint(x: x, y: containerSize.height))
             }
@@ -42,10 +41,10 @@ struct TimetableGridLayer: View {
 
     /// 한 시간 간격의 수평선
     func horizontalHourlyPaths(in containerSize: CGSize) -> Path {
-        let hourHeight = drawing.getHourHeight(in: containerSize, hourCount: drawingSetting.hourCount)
+        let hourHeight = TimetableViewModel.timetableDrawing.getHourHeight(in: containerSize, hourCount: drawingSetting.hourCount)
         return Path { path in
             for i in 0 ..< drawingSetting.hourCount {
-                let y = drawing.weekdayHeight + CGFloat(i) * hourHeight
+                let y = TimetableViewModel.timetableDrawing.weekdayHeight + CGFloat(i) * hourHeight
                 path.move(to: CGPoint(x: 0, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))
             }
@@ -54,11 +53,11 @@ struct TimetableGridLayer: View {
 
     /// 30분 간격의 수평선
     func horizontalHalfHourlyPaths(in containerSize: CGSize) -> Path {
-        let hourHeight = drawing.getHourHeight(in: containerSize, hourCount: drawingSetting.hourCount)
+        let hourHeight = TimetableViewModel.timetableDrawing.getHourHeight(in: containerSize, hourCount: drawingSetting.hourCount)
         return Path { path in
             for i in 0 ..< drawingSetting.hourCount {
-                let y = drawing.weekdayHeight + CGFloat(i) * hourHeight + hourHeight / 2
-                path.move(to: CGPoint(x: 0 + drawing.hourWidth, y: y))
+                let y = TimetableViewModel.timetableDrawing.weekdayHeight + CGFloat(i) * hourHeight + hourHeight / 2
+                path.move(to: CGPoint(x: 0 + TimetableViewModel.timetableDrawing.hourWidth, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))
             }
         }
@@ -74,10 +73,10 @@ struct TimetableGridLayer: View {
                     .font(STFont.details)
                     .foregroundColor(Color(UIColor.secondaryLabel))
                     .frame(maxWidth: .infinity)
-                    .frame(height: drawing.weekdayHeight)
+                    .frame(height: TimetableViewModel.timetableDrawing.weekdayHeight)
             }
         }
-        .padding(.leading, drawing.hourWidth)
+        .padding(.leading, TimetableViewModel.timetableDrawing.hourWidth)
     }
 
     /// 시간표 맨 왼쪽, 시간들을 나타내는 행
@@ -88,18 +87,18 @@ struct TimetableGridLayer: View {
                     .font(STFont.details)
                     .foregroundColor(Color(UIColor.secondaryLabel))
                     .padding(.top, 5)
-                    .frame(width: drawing.hourWidth)
+                    .frame(width: TimetableViewModel.timetableDrawing.hourWidth)
                     .frame(maxHeight: .infinity, alignment: .top)
             }
         }
-        .padding(.top, drawing.weekdayHeight)
+        .padding(.top, TimetableViewModel.timetableDrawing.weekdayHeight)
     }
 }
 
 struct TimetableGrid_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = TimetableViewModel(appState: AppState())
-        TimetableGridLayer(drawing: viewModel.drawing)
+        TimetableGridLayer()
             .environmentObject(viewModel.drawingSetting)
     }
 }

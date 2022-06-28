@@ -11,7 +11,7 @@ import SwiftUI
 class TimetableViewModel {
     var appState: AppState
     
-    var drawing = TimetableDrawing()
+    static let timetableDrawing = TimetableDrawing()
     
     var currentTimetable: Timetable {
         appState.currentTimetable

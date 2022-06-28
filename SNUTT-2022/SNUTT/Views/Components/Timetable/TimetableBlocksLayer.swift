@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TimetableBlocksLayer: View {
-    let drawing: TimetableViewModel.TimetableDrawing
     @EnvironmentObject var drawingSetting: TimetableSetting
     @EnvironmentObject var currentTimetable: Timetable
     
@@ -16,9 +15,9 @@ struct TimetableBlocksLayer: View {
         GeometryReader { reader in
             ForEach(currentTimetable.lectures) { lecture in
                 ForEach(lecture.timePlaces) { timePlace in
-                    if let offsetPoint = drawing.getOffset(of: timePlace, in: reader.size, drawingSetting: drawingSetting) {
+                    if let offsetPoint = TimetableViewModel.timetableDrawing.getOffset(of: timePlace, in: reader.size, drawingSetting: drawingSetting) {
                         TimetableBlock(lecture: lecture, timePlace: timePlace)
-                            .frame(width: drawing.getWeekWidth(in: reader.size, weekCount: drawingSetting.weekCount), height: drawing.getHeight(of: timePlace, in: reader.size, hourCount: drawingSetting.hourCount), alignment: .center)
+                            .frame(width: TimetableViewModel.timetableDrawing.getWeekWidth(in: reader.size, weekCount: drawingSetting.weekCount), height: TimetableViewModel.timetableDrawing.getHeight(of: timePlace, in: reader.size, hourCount: drawingSetting.hourCount), alignment: .center)
                             .offset(x: offsetPoint.x, y: offsetPoint.y)
                     }
                 }
@@ -33,10 +32,10 @@ struct TimetableBlocks_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             let viewModel = TimetableViewModel(appState: AppState())
-            TimetableBlocksLayer(drawing: viewModel.drawing)
+            TimetableBlocksLayer()
                 .environmentObject(viewModel.currentTimetable)
                 .environmentObject(viewModel.drawingSetting)
-            TimetableGridLayer(drawing: viewModel.drawing)
+            TimetableGridLayer()
         }
     }
 }
