@@ -14,7 +14,7 @@ struct MyTimetableScene: View {
     var body: some View {
         TimetableZStack()
             .environmentObject(viewModel.currentTimetable)
-            .environmentObject(viewModel.drawingSetting)
+            .environmentObject(viewModel.timetableSetting)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
                 NavigationLink(destination: MyLectureListScene(viewModel: MyLectureListViewModel(appState: viewModel.appState)), isActive: $pushToListScene) {

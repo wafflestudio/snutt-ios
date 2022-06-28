@@ -1,5 +1,5 @@
 //
-//  DrawingSetting.swift
+//  TimetableSetting.swift
 //  SNUTT
 //
 //  Created by Jinsup Keum on 2022/06/25.
