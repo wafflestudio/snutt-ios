@@ -9,20 +9,33 @@ import SwiftUI
 
 struct FilterSheetScene: View {
     @ObservedObject var filterSheetState: FilterSheetStates
-
+    
     init() {
         filterSheetState = AppState.of.filterSheet
     }
-
+    
+    
+    
     var body: some View {
         FilterSheet(isOpen: $filterSheetState.isOpen) {
-            Text("helllllo")
+            FilterSheetContent()
         }
     }
 }
 
+
+
 struct FilterSheetScene_Previews: PreviewProvider {
     static var previews: some View {
-        FilterSheetScene()
+        ZStack {
+            Color.gray
+            Button {
+                AppState.of.filterSheet.isOpen.toggle()
+            } label: {
+                Text("버튼 클릭")
+            }
+            FilterSheetScene()
+        }
+        
     }
 }

@@ -50,7 +50,7 @@ struct FilterSheet<Content>: View where Content: View {
             .animation(.customSpring, value: isOpen)
         }
         .edgesIgnoringSafeArea(.bottom)
-        .gesture(
+        .highPriorityGesture(
             dragGesture
         )
     }
