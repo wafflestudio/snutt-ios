@@ -26,7 +26,6 @@ struct TimetableBlocks_Previews: PreviewProvider {
             TimetableBlocksLayer()
                 .environmentObject(viewModel.currentTimetable)
                 .environmentObject(viewModel.timetableSetting)
-            TimetableGridLayer()
         }
     }
 }
