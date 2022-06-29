@@ -89,7 +89,7 @@ class STTimetableManager: NSObject {
     }
 
     func addLecture(_ lecture: STLecture, object: AnyObject?) {
-        STNetworking.addLecture(self.currentTimetable!, lectureId: lecture.id!, done: { newTimetable in
+        STNetworking.addLecture(currentTimetable!, lectureId: lecture.id!, done: { newTimetable in
             self.currentTimetable?.lectureList = newTimetable.lectureList
             STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
         }, failure: {
@@ -161,12 +161,12 @@ class STTimetableManager: NSObject {
         }, failure: nil)
         STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
     }
-    
+
     func overwriteLecture(with lecture: STLecture, object: AnyObject?) {
-        guard let overlappingLectures = self.currentTimetable!.overlappingLectures(with: lecture) else { return }
-        
+        guard let overlappingLectures = currentTimetable!.overlappingLectures(with: lecture) else { return }
+
         for lec in overlappingLectures {
-            STNetworking.deleteLecture(self.currentTimetable!, lecture: lec) { newTimetable in
+            STNetworking.deleteLecture(currentTimetable!, lecture: lec) { newTimetable in
                 self.currentTimetable?.lectureList = newTimetable.lectureList
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
             } failure: {
@@ -174,8 +174,8 @@ class STTimetableManager: NSObject {
                 STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
             }
         }
-        
-        STNetworking.addLecture(self.currentTimetable!, lectureId: lecture.id!, done: { newTimetable in
+
+        STNetworking.addLecture(currentTimetable!, lectureId: lecture.id!, done: { newTimetable in
             self.currentTimetable?.lectureList = newTimetable.lectureList
             STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
         }, failure: {
