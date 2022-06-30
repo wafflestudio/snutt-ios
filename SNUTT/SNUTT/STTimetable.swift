@@ -9,10 +9,6 @@
 import Foundation
 import SwiftyJSON
 
-enum STAddLectureState {
-    case success, errorTime(STLecture), errorSameLecture
-}
-
 class STTimetable {
     var lectureList: [STLecture] = []
     var quarter: STQuarter
@@ -71,35 +67,20 @@ class STTimetable {
         ]
     }
 
-    func addLecture(_ lecture: STLecture) -> STAddLectureState {
+    func addLecture(_ lecture: STLecture) {
         for it in lectureList {
             if it.isSameLecture(lecture) {
-                return STAddLectureState.errorSameLecture
+                return
             }
             for class1 in it.classList {
                 for class2 in lecture.classList {
                     if class1.time.isOverlappingWith(class2.time) {
-                        return STAddLectureState.errorTime(it)
+                        return
                     }
                 }
             }
         }
         lectureList.append(lecture)
-        return STAddLectureState.success
-    }
-
-    func overlappingLectures(with: STLecture) -> [STLecture]? {
-        var overlapping: [STLecture] = []
-        for lecture in lectureList {
-            for class1 in lecture.classList {
-                for class2 in with.classList {
-                    if class1.time.isOverlappingWith(class2.time) {
-                        overlapping.append(lecture)
-                    }
-                }
-            }
-        }
-        return overlapping
     }
 
     func indexOf(lecture: STLecture) -> Int {

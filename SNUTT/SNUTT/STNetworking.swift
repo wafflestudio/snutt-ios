@@ -139,17 +139,19 @@ class STNetworking {
 
     // MARK: LectureRouter
 
-    static func addCustomLecture(_ timetable: STTimetable, lecture: STLecture, done: @escaping (STTimetable) -> Void, failure: @escaping () -> Void) {
-        let request = Alamofire.request(STLectureRouter.addCustomLecture(timetableId: timetable.id!, lecture: lecture))
+    static func addCustomLecture(_ timetable: STTimetable, lecture: STLecture, isForced: Bool = false, done: @escaping (STTimetable) -> Void, failure: @escaping () -> Void, confirmAction: (() -> Void)? = nil) {
+        let request = Alamofire.request(STLectureRouter.addCustomLecture(timetableId: timetable.id!, lecture: lecture, isForced: isForced))
         request.responseWithDone({ _, json in
             done(STTimetable(json: json))
         }, failure: { _ in
             failure()
+        }, confirmAction: {
+            confirmAction?()
         })
     }
 
-    static func addLecture(_ timetable: STTimetable, lectureId: String, done: @escaping (STTimetable) -> Void, failure: @escaping () -> Void, confirmAction: (() -> Void)? = nil) {
-        let request = Alamofire.request(STLectureRouter.addLecture(timetableId: timetable.id!, lectureId: lectureId))
+    static func addLecture(_ timetable: STTimetable, lectureId: String, isForced: Bool = false, done: @escaping (STTimetable) -> Void, failure: @escaping () -> Void, confirmAction: (() -> Void)? = nil) {
+        let request = Alamofire.request(STLectureRouter.addLecture(timetableId: timetable.id!, lectureId: lectureId, isForced: isForced))
         request.responseWithDone({ _, json in
             done(STTimetable(json: json))
         }, failure: { _ in

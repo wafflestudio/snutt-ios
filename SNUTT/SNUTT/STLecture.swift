@@ -119,8 +119,7 @@ struct STLecture {
 
         let listData = data["class_time_json"].arrayValue
         for it in listData {
-            let startPeriod = isCustomLecture ? it["start"].doubleValue
-            let time = STTime(day: it["day"].intValue, startPeriod: startPeriod, duration: it["len"].doubleValue)
+            let time = STTime(day: it["day"].intValue, startPeriod: it["start"].doubleValue, duration: it["len"].doubleValue)
             let singleClass = STSingleClass(time: time, place: it["place"].stringValue)
             classList.append(singleClass)
         }
