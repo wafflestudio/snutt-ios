@@ -9,21 +9,21 @@ import SwiftUI
 
 struct SNUTTView: View {
     @State var selectedTab: TabType = .timetable
-    let viewModel: SNUTTViewModel
+    let appState: AppState
 
     var body: some View {
         TabView(selection: $selectedTab) {
             TabScene(tabType: .timetable) {
-                MyTimetableScene(viewModel: .init(appState: viewModel.appState))
+                MyTimetableScene(viewModel: .init(appState: appState))
             }
             TabScene(tabType: .search) {
-                MyLectureListScene(viewModel: .init(appState: viewModel.appState))
+                MyLectureListScene(viewModel: .init(appState: appState))
             }
             TabScene(tabType: .review) {
-                ReviewScene(viewModel: .init(appState: viewModel.appState))
+                ReviewScene(viewModel: .init(appState: appState))
             }
             TabScene(tabType: .settings) {
-                SettingScene(viewModel: .init(appState: viewModel.appState))
+                SettingScene(viewModel: .init(appState: appState))
             }
         }
         .accentColor(Color(UIColor.label))
@@ -64,6 +64,6 @@ enum TabType: String {
 
 struct SNUTTView_Previews: PreviewProvider {
     static var previews: some View {
-        SNUTTView(viewModel: .init(appState: AppState()))
+        SNUTTView(appState: AppState())
     }
 }

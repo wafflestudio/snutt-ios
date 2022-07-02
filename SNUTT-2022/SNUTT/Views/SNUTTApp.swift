@@ -13,7 +13,7 @@ struct SNUTTApp: App {
 
     var body: some Scene {
         WindowGroup {
-            SNUTTView(viewModel: .init(appState: appState))
+            SNUTTView(appState: appState)
         }
     }
 }
