@@ -18,6 +18,19 @@ protocol STRouter: URLRequestConvertible {
 }
 
 extension STRouter {
+    private func setVersionHeaders(in request: NSMutableURLRequest) {
+        request.setValue(UIDevice.current.systemVersion, forHTTPHeaderField: "x-os-version")
+        request.setValue("ios", forHTTPHeaderField: "x-os-type")
+        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            request.setValue(appVersion, forHTTPHeaderField: "x-app-version")
+        }
+        #if DEBUG
+        request.setValue("debug", forHTTPHeaderField: "x-app-type")
+        #else
+        request.setValue("release", forHTTPHeaderField: "x-app-type")
+        #endif
+    }
+    
     var defaultURLRequest: NSMutableURLRequest {
         let URL = Foundation.URL(string: Self.baseURLString)!
         let mutableURLRequest = NSMutableURLRequest(url: URL.appendingPathComponent(path))
@@ -25,6 +38,7 @@ extension STRouter {
 
         let apikey = STDefaults[.apiKey]
         mutableURLRequest.setValue(apikey, forHTTPHeaderField: "x-access-apikey")
+        setVersionHeaders(in: mutableURLRequest)
         return mutableURLRequest
     }
 
@@ -33,6 +47,7 @@ extension STRouter {
         if let token = STDefaults[.token] {
             mutableURLRequest.setValue(token, forHTTPHeaderField: "x-access-token")
         }
+        setVersionHeaders(in: mutableURLRequest)
         return mutableURLRequest
     }
 
