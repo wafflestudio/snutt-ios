@@ -25,12 +25,12 @@ extension STRouter {
             request.setValue(appVersion, forHTTPHeaderField: "x-app-version")
         }
         #if DEBUG
-        request.setValue("debug", forHTTPHeaderField: "x-app-type")
+            request.setValue("debug", forHTTPHeaderField: "x-app-type")
         #else
-        request.setValue("release", forHTTPHeaderField: "x-app-type")
+            request.setValue("release", forHTTPHeaderField: "x-app-type")
         #endif
     }
-    
+
     var defaultURLRequest: NSMutableURLRequest {
         let URL = Foundation.URL(string: Self.baseURLString)!
         let mutableURLRequest = NSMutableURLRequest(url: URL.appendingPathComponent(path))
