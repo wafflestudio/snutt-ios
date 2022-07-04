@@ -87,7 +87,7 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
             return .singleClassTitle
 
         case (2, currentLecture.classList.count + 1):
-            return editable ? .addButton(section: 2) : .padding
+            return editable && custom ? .addButton(section: 2) : .padding
 
         case (2, _): return .singleClass
 
