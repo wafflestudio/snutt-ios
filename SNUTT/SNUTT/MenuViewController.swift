@@ -232,14 +232,7 @@ extension MenuViewController: TimetablePickerViewControllerDelegate {
         STNetworking.createTimetable(title, courseBook: courseBook, done: { list in
             self.timetableList = list
             self.reloadList()
-        }, failure: {
-            // TODO: 응답에 따른 에러 핸들링
-            let alert = UIAlertController(title: "시간표 만들기 실패", message: "중복된 시간표 이름입니다", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "확인", style: .cancel)
-            alert.addAction(ok)
-            self.present(alert, animated: true)
-
-        })
+        }) {}
     }
 }
 
