@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct MenuSheetScene: View {
-    @ObservedObject var menuSheetState: MenuSheetStates
-
-    init() {
-        menuSheetState = AppState.of.menuSheet
+    
+    let viewModel: MenuSheetViewModel
+    @ObservedObject var menuSheetSetting: MenuSheetSetting
+    
+    init(viewModel:MenuSheetViewModel) {
+        self.viewModel = viewModel
+        menuSheetSetting = self.viewModel.menuSheetSetting
     }
 
     var body: some View {
-        MenuSheet(isOpen: $menuSheetState.isMenuOpen) {
+        MenuSheet(isOpen: $menuSheetSetting.isOpen) {
             Text("helllllo")
         }
     }
@@ -23,6 +26,6 @@ struct MenuSheetScene: View {
 
 struct LeftSheetScene_Previews: PreviewProvider {
     static var previews: some View {
-        MenuSheetScene()
+        MenuSheetScene(viewModel: .init(appState: AppState()))
     }
 }
