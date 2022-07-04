@@ -26,7 +26,7 @@ class TimetableViewModel {
     init(appState: AppState) {
         self.appState = appState
     }
-    
+
     func toggleMenuSheet() {
         appState.setting.menuSheetSetting.isOpen.toggle()
     }

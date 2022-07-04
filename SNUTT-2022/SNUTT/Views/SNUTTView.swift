@@ -27,7 +27,7 @@ struct SNUTTView: View {
                     SettingScene(viewModel: .init(appState: appState))
                 }
             }
-            
+
             MenuSheetScene(viewModel: .init(appState: appState))
         }
         .accentColor(Color(UIColor.label))

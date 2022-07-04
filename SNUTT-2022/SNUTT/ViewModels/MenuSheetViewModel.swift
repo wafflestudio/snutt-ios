@@ -11,7 +11,7 @@ class MenuSheetViewModel {
     init(appState: AppState) {
         self.appState = appState
     }
-    
+
     var menuSheetSetting: MenuSheetSetting {
         appState.setting.menuSheetSetting
     }

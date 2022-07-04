@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct MenuSheetScene: View {
-    
     let viewModel: MenuSheetViewModel
     @ObservedObject var menuSheetSetting: MenuSheetSetting
-    
-    init(viewModel:MenuSheetViewModel) {
+
+    init(viewModel: MenuSheetViewModel) {
         self.viewModel = viewModel
         menuSheetSetting = self.viewModel.menuSheetSetting
     }
