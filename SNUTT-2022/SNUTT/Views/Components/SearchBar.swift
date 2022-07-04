@@ -12,7 +12,7 @@ struct SearchBar: View {
     @Binding var text: String
     @Binding var isFilterOpen: Bool
     @State private var isEditing = false
-    
+
     var body: some View {
         HStack {
             TextField("검색어를 입력하세요", text: $text) { startedEditing in
@@ -31,9 +31,9 @@ struct SearchBar: View {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.gray)
                         .padding(.leading, 8)
-                    
+
                     Spacer()
-                    
+
                     if isEditing && !text.isEmpty {
                         Button(action: {
                             self.text = ""
@@ -43,7 +43,7 @@ struct SearchBar: View {
                                 .padding(.trailing, 8)
                         }
                     }
-                    
+
                     if text.isEmpty {
                         Button {
                             isFilterOpen.toggle()
@@ -58,7 +58,7 @@ struct SearchBar: View {
                 }
             )
             .animation(.easeOut(duration: 0.2), value: isEditing)
-            
+
             Group {
                 if isEditing {
                     Button(action: {
@@ -79,11 +79,11 @@ struct SearchBar: View {
 }
 
 #if canImport(UIKit)
-extension View {
-    func resignFirstResponder() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    extension View {
+        func resignFirstResponder() {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
     }
-}
 #endif
 
 struct SearchBar_Previews: PreviewProvider {

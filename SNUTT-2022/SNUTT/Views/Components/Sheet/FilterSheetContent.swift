@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct FilterSheetContent: View {
     @State var selectedCategory: STTagType = .academicYear
     var body: some View {
@@ -32,14 +31,13 @@ struct FilterSheetContent: View {
                 }
                 .padding()
                 .frame(maxWidth: 130)
-                
+
                 Divider()
-                
+
                 ScrollView {
-                    Group{
-                        ForEach(1..<100) { num in
-                            Button {
-                            } label: {
+                    Group {
+                        ForEach(1 ..< 100) { num in
+                            Button {} label: {
                                 HStack {
                                     Image("checkmark.circle.\(num % 4 == 0 ? "tick" : "untick")")
                                         .resizable()
@@ -48,13 +46,12 @@ struct FilterSheetContent: View {
                                         .padding(.trailing, 5)
                                     Text("\(num)학년")
                                         .font(.system(size: 15))
-                                        .frame(maxWidth:.infinity, alignment: .leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 10)
                             }
                             .buttonStyle(.plain)
-                            
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -66,12 +63,10 @@ struct FilterSheetContent: View {
                     .init(color: .black, location: 0.97),
                     .init(color: .clear, location: 1),
                 ]), startPoint: .top, endPoint: .bottom))
-                
             }
-            
+
             if #available(iOS 15.0, *) {
-                Button {
-                } label: {
+                Button {} label: {
                     Text("필터 적용")
                         .font(.system(size: 17, weight: .bold))
                         .frame(maxWidth: .infinity)
@@ -82,7 +77,6 @@ struct FilterSheetContent: View {
                 .padding(.bottom, 10)
                 .tint(STColor.cyan)
             }
-            
         }
     }
 }
@@ -95,12 +89,12 @@ struct FilterSheetContent_Previews: PreviewProvider {
 
 enum STTagType: String, CaseIterable {
     case academicYear = "academic_year"
-    case classification = "classification"
-    case credit = "credit"
-    case department = "department"
-    case category = "category"
-    case etc = "etc"
-    
+    case classification
+    case credit
+    case department
+    case category
+    case etc
+
     var typeStr: String {
         switch self {
         case .academicYear: return "학년"
