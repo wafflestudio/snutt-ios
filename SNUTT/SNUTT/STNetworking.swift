@@ -161,13 +161,15 @@ class STNetworking {
         })
     }
 
-    static func updateLecture(_ timetable: STTimetable, oldLecture: STLecture, newLecture: STLecture, done: @escaping (STTimetable) -> Void, failure: @escaping () -> Void) {
-        let request = Alamofire.request(STLectureRouter.updateLecture(timetableId: timetable.id!, oldLecture: oldLecture, newLecture: newLecture))
+    static func updateLecture(_ timetable: STTimetable, oldLecture: STLecture, newLecture: STLecture, isForced: Bool = false, done: @escaping (STTimetable) -> Void, failure: @escaping () -> Void, confirmAction: (() -> Void)? = nil) {
+        let request = Alamofire.request(STLectureRouter.updateLecture(timetableId: timetable.id!, oldLecture: oldLecture, newLecture: newLecture, isForced: isForced))
         request.responseWithDone({ _, json in
             done(STTimetable(json: json))
         }, failure: { _ in
             failure()
-        }, showNetworkAlert: true, alertTitle: "강좌 수정 실패")
+        }, confirmAction: {
+            confirmAction?()
+        })
     }
 
     static func deleteLecture(_ timetable: STTimetable, lecture: STLecture, done: @escaping (STTimetable) -> Void, failure: @escaping () -> Void) {

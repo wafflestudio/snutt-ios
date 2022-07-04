@@ -73,18 +73,10 @@ class STTimetableManager: NSObject {
             done?()
         }, failure: {
             self.currentTimetable?.deleteLecture(lecture)
-            failure?()
             STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+            failure?()
         }, confirmAction: {
-            STNetworking.addCustomLecture(self.currentTimetable!, lecture: lecture, isForced: true, done: { newTimetable in
-                self.currentTimetable?.lectureList = newTimetable.lectureList
-                done?()
-                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-            }, failure: {
-                self.currentTimetable?.deleteLecture(lecture)
-                failure?()
-                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-            })
+            self.overwriteCustomLecture(lecture: lecture, object: object, done: done, failure: failure)
         })
     }
 
@@ -96,13 +88,7 @@ class STTimetableManager: NSObject {
             self.currentTimetable?.deleteLecture(lecture)
             STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
         }, confirmAction: {
-            STNetworking.addLecture(self.currentTimetable!, lectureId: lecture.id!, isForced: true) { newTimetable in
-                self.currentTimetable?.lectureList = newTimetable.lectureList
-                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-            } failure: {
-                self.currentTimetable?.deleteLecture(lecture)
-                STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
-            }
+            self.overwriteLecture(lecture: lecture, object: object)
         })
     }
 
@@ -122,6 +108,42 @@ class STTimetableManager: NSObject {
         STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
 
         STNetworking.updateLecture(currentTimetable!, oldLecture: oldLecture, newLecture: newLecture, done: { newTimetable in
+            self.currentTimetable?.lectureList = newTimetable.lectureList
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+            done()
+        }, failure: {
+            self.currentTimetable?.updateLectureAtIndex(index, lecture: oldLecture)
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
+            failure()
+        }, confirmAction: {
+            self.updateToOverwriteCustomLecture(oldLecture, newLecture: newLecture, index: index, done: done, failure: failure)
+        })
+    }
+    
+    func overwriteLecture(lecture: STLecture, object: AnyObject?) {
+        STNetworking.addLecture(currentTimetable!, lectureId: lecture.id!, isForced: true) { newTimetable in
+            self.currentTimetable?.lectureList = newTimetable.lectureList
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+        } failure: {
+            self.currentTimetable?.deleteLecture(lecture)
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+        }
+    }
+    
+    func overwriteCustomLecture(lecture: STLecture, object: AnyObject?, done: (() -> Void)?, failure: (() -> Void)?) {
+        STNetworking.addCustomLecture(currentTimetable!, lecture: lecture, isForced: true) { newTimetable in
+            self.currentTimetable?.lectureList = newTimetable.lectureList
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+            done?()
+        } failure: {
+            self.currentTimetable?.deleteLecture(lecture)
+            STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
+            failure?()
+        }
+    }
+    
+    func updateToOverwriteCustomLecture(_ oldLecture: STLecture, newLecture: STLecture, index: Int, done: @escaping () -> Void, failure: @escaping () -> Void) {
+        STNetworking.updateLecture(currentTimetable!, oldLecture: oldLecture, newLecture: newLecture, isForced: true, done: { newTimetable in
             self.currentTimetable?.lectureList = newTimetable.lectureList
             STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: nil)
             done()

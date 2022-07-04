@@ -17,7 +17,7 @@ enum STLectureRouter: STRouter {
     case addCustomLecture(timetableId: String, lecture: STLecture, isForced: Bool)
     case addLecture(timetableId: String, lectureId: String, isForced: Bool)
     case deleteLecture(timetableId: String, lecture: STLecture)
-    case updateLecture(timetableId: String, oldLecture: STLecture, newLecture: STLecture)
+    case updateLecture(timetableId: String, oldLecture: STLecture, newLecture: STLecture, isForced: Bool)
     case resetLecture(timetableId: String, lectureId: String)
 
     var method: HTTPMethod {
@@ -41,7 +41,7 @@ enum STLectureRouter: STRouter {
             return "/\(timetableId)/lecture/\(lectureId)"
         case let .deleteLecture(timetableId, lecture):
             return "/\(timetableId)/lecture/\(lecture.id ?? "")"
-        case let .updateLecture(timetableId, curLecture, _):
+        case let .updateLecture(timetableId, curLecture, _, _):
             return "/\(timetableId)/lecture/\(curLecture.id ?? "")"
         case let .resetLecture(timetableId, lectureId):
             return "/\(timetableId)/lecture/\(lectureId)/reset"
@@ -53,14 +53,14 @@ enum STLectureRouter: STRouter {
         case let .addCustomLecture(_, lecture, isForced):
             var dict = lecture.toDictionary()
             dict.removeValue(forKey: "id")
-            dict.updateValue(isForced, forKey: "is_forced")
+            dict["is_forced"] = isForced
             return dict
         case let .addLecture(_, _, isForced):
             let dict = ["is_forced": isForced]
             return dict
         case .deleteLecture:
             return nil
-        case let .updateLecture(_, oldLecture, newLecture):
+        case let .updateLecture(_, oldLecture, newLecture, isForced):
             var dict: [String: Any] = [:]
             let oldDict = oldLecture.toDictionary()
             let newDict = newLecture.toDictionary()
@@ -76,6 +76,7 @@ enum STLectureRouter: STRouter {
                     dict[key] = newVal
                 }
             }
+            dict["is_forced"] = isForced
             return dict
         case .resetLecture:
             return nil
