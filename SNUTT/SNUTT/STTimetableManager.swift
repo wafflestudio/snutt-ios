@@ -119,7 +119,7 @@ class STTimetableManager: NSObject {
             self.updateToOverwriteCustomLecture(oldLecture, newLecture: newLecture, index: index, done: done, failure: failure)
         })
     }
-    
+
     func overwriteLecture(lecture: STLecture, object: AnyObject?) {
         STNetworking.addLecture(currentTimetable!, lectureId: lecture.id!, isForced: true) { newTimetable in
             self.currentTimetable?.lectureList = newTimetable.lectureList
@@ -129,7 +129,7 @@ class STTimetableManager: NSObject {
             STEventCenter.sharedInstance.postNotification(event: .CurrentTimetableChanged, object: object)
         }
     }
-    
+
     func overwriteCustomLecture(lecture: STLecture, object: AnyObject?, done: (() -> Void)?, failure: (() -> Void)?) {
         STNetworking.addCustomLecture(currentTimetable!, lecture: lecture, isForced: true) { newTimetable in
             self.currentTimetable?.lectureList = newTimetable.lectureList
@@ -141,7 +141,7 @@ class STTimetableManager: NSObject {
             failure?()
         }
     }
-    
+
     func updateToOverwriteCustomLecture(_ oldLecture: STLecture, newLecture: STLecture, index: Int, done: @escaping () -> Void, failure: @escaping () -> Void) {
         STNetworking.updateLecture(currentTimetable!, oldLecture: oldLecture, newLecture: newLecture, isForced: true, done: { newTimetable in
             self.currentTimetable?.lectureList = newTimetable.lectureList
