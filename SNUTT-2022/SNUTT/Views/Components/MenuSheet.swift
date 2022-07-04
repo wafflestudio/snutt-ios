@@ -72,24 +72,6 @@ extension Animation {
     }
 }
 
-/// A simple wrapper that is used to preview `MenuSheet`.
-struct MenuSheetWrapper: View {
-    @State var isOpen = false
-    var body: some View {
-        ZStack {
-            Button {
-                isOpen = !isOpen
-            } label: {
-                Text("버튼을 탭하세요.")
-            }
-
-            MenuSheet(isOpen: $isOpen) {
-                Text("This is dummy content.")
-            }
-        }
-    }
-}
-
 struct MenuSheetWrapper_Previews: PreviewProvider {
     static var previews: some View {
         MenuSheetWrapper()

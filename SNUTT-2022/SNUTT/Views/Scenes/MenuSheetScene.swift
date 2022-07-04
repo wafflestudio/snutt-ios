@@ -23,8 +23,21 @@ struct MenuSheetScene: View {
     }
 }
 
-struct LeftSheetScene_Previews: PreviewProvider {
+///// A simple wrapper that is used to preview `MenuSheet`.
+struct MenuSheetWrapper: View {
+    let appState = AppState()
+    var body: some View {
+        ZStack {
+            NavBarButton(imageName: "nav.menu") {
+                appState.setting.menuSheetSetting.isOpen.toggle()
+            }
+            MenuSheetScene(viewModel: .init(appState: appState))
+        }
+    }
+}
+
+struct MenuSheetScene_Previews: PreviewProvider {
     static var previews: some View {
-        MenuSheetScene(viewModel: .init(appState: AppState()))
+        MenuSheetWrapper()
     }
 }
