@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LectureDetails: View {
+    // var lecture: Lecture
+
     var body: some View {
         Text("This is LectureDetails View.")
     }
