@@ -12,53 +12,53 @@ struct SearchBar: View {
     @Binding var text: String
     @Binding var isFilterOpen: Bool
     @State private var isEditing = false
-
+    
     var body: some View {
         HStack {
-            STTextField("검색어를 입력하세요", text: $text, focused: $isEditing)
-                .frame(maxHeight: 22)
-                .padding(7)
-                .padding(.horizontal, 25)
-                .background(Color(.systemGray6))
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                .overlay(
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                            .padding(.leading, 8)
-
-                        Spacer()
-
-                        if isEditing && !text.isEmpty {
-                            Button(action: {
-                                self.text = ""
-                            }) {
-                                Image(systemName: "multiply.circle.fill")
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, 8)
-                            }
-                        }
-
-                        if text.isEmpty {
-                            Button {
-                                isFilterOpen.toggle()
-                                if isFilterOpen {
-                                    resignFirstResponder()
-                                }
-                            } label: {
-                                Image("search.filter")
-                                    .padding(.trailing, 8)
-                            }
+            TextField("검색어를 입력하세요", text: $text) { startedEditing in
+                isEditing = startedEditing
+                if isEditing {
+                    isFilterOpen = false
+                }
+            }
+            .frame(maxHeight: 22)
+            .padding(7)
+            .padding(.horizontal, 25)
+            .background(Color(.systemGray6))
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .overlay(
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+                        .padding(.leading, 8)
+                    
+                    Spacer()
+                    
+                    if isEditing && !text.isEmpty {
+                        Button(action: {
+                            self.text = ""
+                        }) {
+                            Image(systemName: "multiply.circle.fill")
+                                .foregroundColor(.gray)
+                                .padding(.trailing, 8)
                         }
                     }
-                )
-                .animation(.easeOut(duration: 0.2), value: isEditing)
-                .onChange(of: isEditing) { newValue in
-                    if newValue {
-                        isFilterOpen = false
+                    
+                    if text.isEmpty {
+                        Button {
+                            isFilterOpen.toggle()
+                            if isFilterOpen {
+                                resignFirstResponder()
+                            }
+                        } label: {
+                            Image("search.filter")
+                                .padding(.trailing, 8)
+                        }
                     }
                 }
-
+            )
+            .animation(.easeOut(duration: 0.2), value: isEditing)
+            
             Group {
                 if isEditing {
                     Button(action: {
@@ -79,11 +79,11 @@ struct SearchBar: View {
 }
 
 #if canImport(UIKit)
-    extension View {
-        func resignFirstResponder() {
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        }
+extension View {
+    func resignFirstResponder() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
+}
 #endif
 
 struct SearchBar_Previews: PreviewProvider {
