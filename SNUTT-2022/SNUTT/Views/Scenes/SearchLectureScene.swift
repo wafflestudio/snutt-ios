@@ -22,6 +22,8 @@ struct SearchLectureScene: View {
             Color.black.opacity(0.3)
             VStack {
                 SearchBar(text: $searchText, isFilterOpen: $filterSheetState.isOpen)
+                    .padding(10)
+                    .background(Color.white)
                 Spacer()
             }
         }
