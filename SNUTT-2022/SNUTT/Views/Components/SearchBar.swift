@@ -43,7 +43,7 @@ struct SearchBar: View {
             }
             .background(Color(.systemGray6))
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-            
+
             Group {
                 if isEditing {
                     Button(action: {
