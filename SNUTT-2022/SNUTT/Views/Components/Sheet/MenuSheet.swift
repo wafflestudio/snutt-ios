@@ -72,31 +72,6 @@ extension Animation {
     }
 }
 
-struct MenuSheetWrapper: View {
-    class isOpenObject: ObservableObject {
-        @Published var value = false
-    }
-
-    @StateObject var isOpen = isOpenObject()
-    var body: some View {
-        ZStack {
-            Button {
-                isOpen.value.toggle()
-            } label: {
-                Text("버튼을 탭하세요.")
-            }
-
-            MenuSheet(isOpen: $isOpen.value) {
-                List {
-                    ForEach(1 ..< 100) { _ in
-                        Text("helllllo")
-                    }
-                }
-            }
-        }
-    }
-}
-
 struct MenuSheetWrapper_Previews: PreviewProvider {
     static var previews: some View {
         MenuSheetWrapper()

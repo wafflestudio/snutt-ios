@@ -7,4 +7,7 @@
 
 struct Lecture: Codable, Identifiable {
     let id: Int
+    let title: String
+    let instructor: String
+    let timePlaces: [TimePlace]
 }
