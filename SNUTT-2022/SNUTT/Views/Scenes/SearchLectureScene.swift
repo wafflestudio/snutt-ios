@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchLectureScene: View {
     @State var searchBarHeight: CGFloat = .zero
+    @State var isVisibleRate: CGFloat = 0
     
     @ObservedObject var viewModel: SearchSceneViewModel
     @ObservedObject var filterSheetSetting: FilterSheetSetting
@@ -23,50 +24,30 @@ struct SearchLectureScene: View {
             Group {
                 VStack {
                     Spacer()
-                        .frame(height: searchBarHeight)
-                    
+                        .frame(height: 44)
                     TimetableZStack()
                         .environmentObject(viewModel.currentTimetable)
                         .environmentObject(viewModel.timetableSetting)
                 }
-                
                 Color.black.opacity(0.3)
             }
             .ignoresSafeArea([.keyboard])
-            
             VStack {
                 SearchBar(text: $viewModel.searchText, isFilterOpen: $filterSheetSetting.isOpen)
-                    .readSize { size in
-                        searchBarHeight = size.height
-                    }
                 Spacer()
             }
         }
+        .navigationBarHidden(true)
         
         let _ = debugChanges()
     }
 }
 
-// TODO: move elsewhere
-struct SizePreferenceKey: PreferenceKey {
-    static var defaultValue: CGSize = .zero
-    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
-}
-
-extension View {
-    func readSize(onChange: @escaping (CGSize) -> Void) -> some View {
-        background(
-            GeometryReader { geometryProxy in
-                Color.clear
-                    .preference(key: SizePreferenceKey.self, value: geometryProxy.size)
-            }
-        )
-        .onPreferenceChange(SizePreferenceKey.self, perform: onChange)
-    }
-}
 
 struct SearchLectureScene_Previews: PreviewProvider {
     static var previews: some View {
-        SearchLectureScene(viewModel: .init(appState: AppState()))
+        NavigationView {
+            SearchLectureScene(viewModel: .init(appState: AppState()))
+        }
     }
 }
