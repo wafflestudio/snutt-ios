@@ -56,27 +56,6 @@ struct FilterSheet<Content>: View where Content: View {
     }
 }
 
-/// A simple wrapper that is used to preview `Filter`.
-struct FilterSheetWrapper: View {
-    class isOpenObject: ObservableObject {
-        @Published var value = false
-    }
-
-    @StateObject var isOpen = isOpenObject()
-    var body: some View {
-        ZStack {
-            Button {
-                isOpen.value.toggle()
-            } label: {
-                Text("버튼을 탭하세요.")
-            }
-
-            FilterSheet(isOpen: $isOpen.value) {
-                Text("helllllo")
-            }
-        }
-    }
-}
 
 struct FilterSheetWrapper_Previews: PreviewProvider {
     static var previews: some View {

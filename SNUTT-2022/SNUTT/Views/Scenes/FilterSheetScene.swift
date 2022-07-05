@@ -8,29 +8,36 @@
 import SwiftUI
 
 struct FilterSheetScene: View {
-    @ObservedObject var filterSheetState: FilterSheetStates
+    let viewModel: FilterSheetViewModel
+    @ObservedObject var filterSheetSetting: FilterSheetSetting
 
-    init() {
-        filterSheetState = AppState.of.filterSheet
+    init(viewModel: FilterSheetViewModel) {
+        self.viewModel = viewModel
+        filterSheetSetting = self.viewModel.filterSheetSetting
     }
-
+    
     var body: some View {
-        FilterSheet(isOpen: $filterSheetState.isOpen) {
+        FilterSheet(isOpen: $filterSheetSetting.isOpen) {
             FilterSheetContent()
+        }
+    }
+}
+
+///// A simple wrapper that is used to preview `FilterSheet`.
+struct FilterSheetWrapper: View {
+    let appState = AppState()
+    var body: some View {
+        ZStack {
+            NavBarButton(imageName: "search.filter") {
+                appState.setting.filterSheetSetting.isOpen.toggle()
+            }
+            FilterSheetScene(viewModel: .init(appState: appState))
         }
     }
 }
 
 struct FilterSheetScene_Previews: PreviewProvider {
     static var previews: some View {
-        ZStack {
-            Color.gray
-            Button {
-                AppState.of.filterSheet.isOpen.toggle()
-            } label: {
-                Text("버튼 클릭")
-            }
-            FilterSheetScene()
-        }
+        FilterSheetWrapper()
     }
 }
