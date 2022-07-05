@@ -293,7 +293,7 @@ extension MenuViewController: SettingViewControllerDelegate {
 
             self.timetableList = timetableList
             self.reloadList()
-        }) {_ in }
+        }) { _ in }
     }
 
     func deleteTimetable(_: SettingViewController, _ timetable: STTimetable) {
