@@ -293,9 +293,7 @@ extension MenuViewController: SettingViewControllerDelegate {
 
             self.timetableList = timetableList
             self.reloadList()
-        }, failure: { errorTitle in
-            STAlertView.showAlert(title: errorTitle, message: "")
-        })
+        }) {_ in }
     }
 
     func deleteTimetable(_: SettingViewController, _ timetable: STTimetable) {
