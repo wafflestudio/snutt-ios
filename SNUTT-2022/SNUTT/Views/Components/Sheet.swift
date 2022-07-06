@@ -12,7 +12,7 @@ struct Sheet<Content>: View where Content: View {
     let orientation: SheetOrientation
     var cornerRadius: CGFloat = 20
     @ViewBuilder var content: () -> Content
-    
+
     @GestureState private var translation: CGFloat = 0
     @State private var backgroundOpacity: CGFloat = 0
 
@@ -71,56 +71,56 @@ extension Animation {
 enum SheetOrientation {
     case left(maxWidth: CGFloat)
     case bottom(maxHeight: CGFloat)
-    
+
     func getTranslation(from value: DragGesture.Value) -> CGFloat {
         switch self {
-        case .left(_):
+        case .left:
             return value.translation.width
-        case .bottom(_):
+        case .bottom:
             return value.translation.height
         }
     }
-    
+
     func getIsOpen(from value: DragGesture.Value) -> Bool {
         switch self {
-        case .left(_):
+        case .left:
             return value.translation.width > 0
-        case .bottom(_):
+        case .bottom:
             return value.translation.height < 0
         }
     }
-    
+
     func getOpacity(from value: DragGesture.Value) -> CGFloat {
-        let translation = self.getTranslation(from: value)
+        let translation = getTranslation(from: value)
         switch self {
-        case .left(let maxWidth):
+        case let .left(maxWidth):
             return translation > 0 ? 1 : 1 + translation / maxWidth
-        case .bottom(let maxHeight):
+        case let .bottom(maxHeight):
             return translation < 0 ? 1 : 1 - translation / maxHeight
         }
     }
-    
+
     func getOffset(isOpen: Bool, translation: CGFloat, reader: GeometryProxy) -> CGSize {
         switch self {
-        case .left(let maxWidth):
+        case let .left(maxWidth):
             return .init(width: min(-(isOpen ? 0 : maxWidth) + translation, 0), height: 0)
-        case .bottom(let maxHeight):
+        case let .bottom(maxHeight):
             return .init(width: 0, height: isOpen ? max(reader.size.height - maxHeight + translation, reader.size.height - maxHeight) : reader.size.height)
         }
     }
-    
+
     func getFrame(reader: GeometryProxy) -> (width: CGFloat, height: CGFloat) {
         switch self {
-        case .left(let maxWidth):
+        case let .left(maxWidth):
             return (width: maxWidth, height: reader.size.height)
-        case .bottom(let maxHeight):
+        case let .bottom(maxHeight):
             return (width: reader.size.width, height: maxHeight)
         }
     }
 }
 
-//struct Sheet_Previews: PreviewProvider {
+// struct Sheet_Previews: PreviewProvider {
 //    static var previews: some View {
 //        Sheet()
 //    }
-//}
+// }

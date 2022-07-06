@@ -15,7 +15,7 @@ struct FilterSheetScene: View {
         self.viewModel = viewModel
         filterSheetSetting = self.viewModel.filterSheetSetting
     }
-    
+
     var body: some View {
         Sheet(isOpen: $filterSheetSetting.isOpen, orientation: .bottom(maxHeight: 500)) {
             VStack {

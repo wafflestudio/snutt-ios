@@ -14,11 +14,11 @@ class SearchSceneViewModel: ObservableObject {
     init(appState: AppState) {
         self.appState = appState
     }
-    
+
     var filterSheetSetting: FilterSheetSetting {
         appState.setting.filterSheetSetting
     }
-    
+
     var currentTimetable: Timetable {
         appState.currentTimetable
     }
@@ -26,10 +26,8 @@ class SearchSceneViewModel: ObservableObject {
     var timetableSetting: TimetableSetting {
         appState.setting.timetableSetting
     }
-    
+
     func toggleFilterSheet() {
         appState.setting.filterSheetSetting.isOpen.toggle()
     }
-    
-    
 }

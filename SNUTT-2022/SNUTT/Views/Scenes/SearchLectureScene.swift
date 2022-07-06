@@ -10,15 +10,15 @@ import SwiftUI
 struct SearchLectureScene: View {
     @State var searchBarHeight: CGFloat = .zero
     @State var isVisibleRate: CGFloat = 0
-    
+
     @ObservedObject var viewModel: SearchSceneViewModel
     @ObservedObject var filterSheetSetting: FilterSheetSetting
-    
+
     init(viewModel: SearchSceneViewModel) {
         self.viewModel = viewModel
         filterSheetSetting = viewModel.filterSheetSetting
     }
-    
+
     var body: some View {
         ZStack {
             Group {
@@ -38,11 +38,10 @@ struct SearchLectureScene: View {
             }
         }
         .navigationBarHidden(true)
-        
+
         let _ = debugChanges()
     }
 }
-
 
 struct SearchLectureScene_Previews: PreviewProvider {
     static var previews: some View {
