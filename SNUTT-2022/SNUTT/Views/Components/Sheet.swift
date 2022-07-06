@@ -50,7 +50,7 @@ struct Sheet<Content>: View where Content: View {
             .offset(orientation.getOffset(isOpen: isOpen, translation: translation, reader: reader))
             .animation(.customSpring, value: isOpen)
         }
-        .edgesIgnoringSafeArea(.bottom)
+        .ignoresSafeArea()
         .highPriorityGesture(
             dragGesture
         )
@@ -105,7 +105,8 @@ enum SheetOrientation {
         case let .left(maxWidth):
             return .init(width: min(-(isOpen ? 0 : maxWidth) + translation, 0), height: 0)
         case let .bottom(maxHeight):
-            return .init(width: 0, height: isOpen ? max(reader.size.height - maxHeight + translation, reader.size.height - maxHeight) : reader.size.height)
+            let maxOffset = reader.size.height - maxHeight
+            return .init(width: 0, height: isOpen ? max(maxOffset + translation, maxOffset) : reader.size.height + 10)
         }
     }
 
