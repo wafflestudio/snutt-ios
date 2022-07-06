@@ -391,6 +391,18 @@ class STNetworking {
             failure?()
         }, showNetworkAlert: false)
     }
+    
+    // MARK: PopUp
+    
+    static func getPopUps(_ done: @escaping ([STPopUp]) -> Void, failure: (() -> Void)?) {
+        Alamofire.request(STPopUpRouter.getPopUpList)
+            .responseWithDone({ _, json in
+                let popUps = json["content"].arrayValue.map { popUp in STPopUp(json: popUp) }
+                done(popUps)
+            }, failure: { _ in
+                failure?()
+            })
+    }
 
     // MARK: AppVersion
 

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B1EB38A2D401D55B8B513965 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */; };
+		B864A7A62865F7A500D28F8B /* STPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864A7A52865F7A500D28F8B /* STPopUp.swift */; };
+		B864A7A82865FB8E00D28F8B /* STPopUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864A7A72865FB8E00D28F8B /* STPopUpRouter.swift */; };
 		BEB9D71F285B9189005D9A93 /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9D71E285B9189005D9A93 /* PopUpView.swift */; };
 		BEB9D721285B9194005D9A93 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9D720285B9194005D9A93 /* PopUpViewController.swift */; };
 		DC20CF3426B4768100F31830 /* ThemeSettingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */; };
@@ -238,6 +240,8 @@
 		7540205FB7071F642F9B022F /* Pods_SNUTT_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		923560D5D97F8A3548E9547A /* Pods-SNUTT Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.debug.xcconfig"; sourceTree = "<group>"; };
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B864A7A52865F7A500D28F8B /* STPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STPopUp.swift; sourceTree = "<group>"; };
+		B864A7A72865FB8E00D28F8B /* STPopUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STPopUpRouter.swift; sourceTree = "<group>"; };
 		BEB9D71E285B9189005D9A93 /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
 		BEB9D720285B9194005D9A93 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -564,6 +568,7 @@
 				E133794E1D41E26C00AD10F4 /* STRouter.swift */,
 				E17825CC1D577CD8009ACEC3 /* STNotificationRouter.swift */,
 				E1EF8B2F1D6D640100791778 /* STUserRouter.swift */,
+				B864A7A72865FB8E00D28F8B /* STPopUpRouter.swift */,
 				E14991FC1C46241700DC6756 /* STConfig.swift */,
 				E1420B941D769D0400D1B6F7 /* STCourseBookRouter.swift */,
 				E168FA2F1E3F037B004F933A /* STErrorCode.swift */,
@@ -695,6 +700,7 @@
 				E1C48BAF1C79C45500BC469E /* STQuarter.swift */,
 				E1C48BB11C79C8E200BC469E /* STDay.swift */,
 				E1C48BB31C79CAE800BC469E /* STPeriod.swift */,
+				B864A7A52865F7A500D28F8B /* STPopUp.swift */,
 				E1D0FB6A1C86D47900ACDC2F /* STColor.swift */,
 				E110CFD61C88424000ED0590 /* STNotification.swift */,
 				E110CFDC1C888FC300ED0590 /* STTag.swift */,
@@ -1196,6 +1202,7 @@
 				E14991FD1C46241700DC6756 /* STConfig.swift in Sources */,
 				E1EF8B301D6D640100791778 /* STUserRouter.swift in Sources */,
 				E10CBEE11C7B71E400E8FE26 /* STAddCustomLectureTableViewController.swift in Sources */,
+				B864A7A62865F7A500D28F8B /* STPopUp.swift in Sources */,
 				E1B381A91C6C52D9007E1A15 /* STUtil.swift in Sources */,
 				E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */,
 				E16A88551C9FC460003D94AB /* STDeveloperViewController.swift in Sources */,
@@ -1257,6 +1264,7 @@
 				E1B34A4C1EB20DCA004C5E5E /* STViewButton.swift in Sources */,
 				E1A99D8B1CABED1500953A4B /* STRowHeaderCollectionViewCell.swift in Sources */,
 				E110CFD11C883DC900ED0590 /* STNotificationTableViewController.swift in Sources */,
+				B864A7A82865FB8E00D28F8B /* STPopUpRouter.swift in Sources */,
 				E11E61031EED13890036F3F2 /* STSearchEmptyInfoView.swift in Sources */,
 				E1130AD61E7C272A00ADE84F /* STColorList.swift in Sources */,
 				DC20CF3426B4768100F31830 /* ThemeSettingCollectionViewCell.swift in Sources */,

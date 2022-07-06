@@ -47,11 +47,19 @@ class PopUpViewController: UIViewController {
     }
 
     func presentIfNeeded() {
-        loadPopUpImage(url: "https://img.hankyung.com/photo/201811/01.18271154.1.jpg") {
-            self.delegate?.present()
+        print(STPopUpList.sharedInstance)
+        let popUpList = STPopUpList.sharedInstance?.popUpList
+        guard let popUpList = popUpList else {
+            return
+        }
+        for popup in popUpList {
+            guard let url = popup.imageURL else { continue }
+            loadPopUpImage(url: url) {
+                self.delegate?.present()
+            }
         }
     }
-
+    
     func loadPopUpImage(url: String, completion: @escaping () -> Void) {
         if let url = URL(string: url) {
             let task = URLSession.shared.dataTask(with: url) { data, _, error in
