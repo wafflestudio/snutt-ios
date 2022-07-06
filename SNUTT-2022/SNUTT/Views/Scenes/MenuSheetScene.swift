@@ -17,7 +17,7 @@ struct MenuSheetScene: View {
     }
 
     var body: some View {
-        MenuSheet(isOpen: $menuSheetSetting.isOpen) {
+        Sheet(isOpen: $menuSheetSetting.isOpen, orientation: .left(maxWidth: 290), cornerRadius: 0) {
             Text("helllllo")
         }
     }

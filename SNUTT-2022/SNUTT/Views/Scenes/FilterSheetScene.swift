@@ -17,8 +17,21 @@ struct FilterSheetScene: View {
     }
     
     var body: some View {
-        FilterSheet(isOpen: $filterSheetSetting.isOpen) {
-            FilterSheetContent()
+        Sheet(isOpen: $filterSheetSetting.isOpen, orientation: .bottom(maxHeight: 500)) {
+            VStack {
+                HStack {
+                    Spacer()
+                    Button {
+                        filterSheetSetting.isOpen.toggle()
+                    } label: {
+                        Image("xmark")
+                    }
+                }
+                .padding(20)
+                Spacer()
+                FilterSheetContent()
+                Spacer()
+            }
         }
     }
 }
