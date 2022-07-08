@@ -1,0 +1,16 @@
+platform :ios, '15.0'
+use_frameworks!
+
+target 'SNUTT' do
+  # Networking
+  pod 'Alamofire', '~> 5.5.0'
+  
+  target 'SNUTTTests' do
+    inherit! :complete
+  end
+
+  target 'SNUTTUITests' do
+  end
+
+end
+
