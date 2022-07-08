@@ -57,8 +57,6 @@
 		DC9C2CAC287805D3009EC3BC /* TimetableDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */; };
 		DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
 		DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6227E5CCD500CF380E /* TimetableService.swift */; };
-		DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */; };
-		DCD41A6A27E5CD8700CF380E /* TimetableApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6927E5CD8700CF380E /* TimetableApi.swift */; };
 		DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */; };
 		DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7427E5CEA500CF380E /* AppState.swift */; };
 /* End PBXBuildFile section */
@@ -137,8 +135,6 @@
 		DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDto.swift; sourceTree = "<group>"; };
 		DCD41A5F27E5CC7700CF380E /* Timetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timetable.swift; sourceTree = "<group>"; };
 		DCD41A6227E5CCD500CF380E /* TimetableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableService.swift; sourceTree = "<group>"; };
-		DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		DCD41A6927E5CD8700CF380E /* TimetableApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableApi.swift; sourceTree = "<group>"; };
 		DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableViewModel.swift; sourceTree = "<group>"; };
 		DCD41A7427E5CEA500CF380E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -316,28 +312,10 @@
 			children = (
 				DC9C2CA928780589009EC3BC /* Dto */,
 				DC1E0ED2287738DF005632A3 /* Router */,
-				DCD41A6627E5CD1100CF380E /* Local */,
-				DCD41A6527E5CD0500CF380E /* Api */,
 				DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */,
 				DC1E0ECE28772F13005632A3 /* NetworkiUtils.swift */,
 			);
 			path = Repositories;
-			sourceTree = "<group>";
-		};
-		DCD41A6527E5CD0500CF380E /* Api */ = {
-			isa = PBXGroup;
-			children = (
-				DCD41A6927E5CD8700CF380E /* TimetableApi.swift */,
-			);
-			path = Api;
-			sourceTree = "<group>";
-		};
-		DCD41A6627E5CD1100CF380E /* Local */ = {
-			isa = PBXGroup;
-			children = (
-				DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */,
-			);
-			path = Local;
 			sourceTree = "<group>";
 		};
 		DCD41A6B27E5CDAF00CF380E /* Views */ = {
@@ -678,7 +656,6 @@
 				B87431CB283B5A7300D78C59 /* SNUTTViewModel.swift in Sources */,
 				DC2915A92866986600FE5F9A /* System.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
-				DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
 				DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
@@ -700,7 +677,6 @@
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
 				DC2915A72866984000FE5F9A /* TimetableSetting.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
-				DCD41A6A27E5CD8700CF380E /* TimetableApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
