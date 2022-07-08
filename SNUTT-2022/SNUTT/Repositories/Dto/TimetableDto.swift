@@ -47,3 +47,23 @@ struct ClassTimeJsonDto: Codable {
     let len: Int
     let place: String
 }
+
+struct TimetableListDto: Codable {
+    let _id: String
+    let user_id: String
+    let year: Int
+    let semester: Int
+    let title: String
+    let lecture_list: [LectureDto]
+    let theme: Int
+    let updated_at: String
+}
+
+struct TimetableMetadataDto: Codable {
+    let _id: String
+    let year: Int
+    let semester: Int
+    let title: String
+    let updated_at: String
+    let total_credit: Int
+}
