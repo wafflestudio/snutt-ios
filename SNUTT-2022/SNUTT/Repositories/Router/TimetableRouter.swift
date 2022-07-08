@@ -5,12 +5,12 @@
 //  Created by Jinsup Keum on 2022/07/08.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 enum TimetableRouter: Router {
     var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/tables")! } // For test
-    
+
     case getTimetableList
     case getTimetable(id: String)
     //    case createTimetable(title: String, courseBook: STCourseBook)
@@ -19,7 +19,7 @@ enum TimetableRouter: Router {
     case getRecentTimetable
     case copyTimetable(id: String)
     case updateTheme(id: String, theme: Int)
-    
+
     var method: HTTPMethod {
         switch self {
         case .getTimetableList:
@@ -40,7 +40,7 @@ enum TimetableRouter: Router {
             return .put
         }
     }
-    
+
     var path: String {
         switch self {
         case .getTimetableList:
@@ -61,7 +61,7 @@ enum TimetableRouter: Router {
             return "/\(id)/theme"
         }
     }
-        
+
     var parameters: Parameters? {
         switch self {
         case .getTimetableList:
