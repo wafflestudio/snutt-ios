@@ -26,7 +26,7 @@ struct MyTimetableScene: View {
                 ToolbarItem(placement: .principal) {
                     HStack {
                         NavBarButton(imageName: "nav.menu") {
-                            print("menu tapped.")
+                            viewModel.toggleMenuSheet()
                         }
 
                         Text("나의 시간표").font(STFont.title)

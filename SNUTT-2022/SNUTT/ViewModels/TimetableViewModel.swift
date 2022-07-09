@@ -27,6 +27,10 @@ class TimetableViewModel {
         self.appState = appState
     }
 
+    func toggleMenuSheet() {
+        appState.setting.menuSheetSetting.isOpen.toggle()
+    }
+
     struct TimetablePainter {
         /// 시간표 맨 왼쪽, 시간들을 나타내는 열의 너비
         static let hourWidth: CGFloat = 20
