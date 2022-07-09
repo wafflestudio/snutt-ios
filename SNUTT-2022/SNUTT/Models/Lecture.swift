@@ -23,13 +23,12 @@ extension Lecture {
     }
 }
 
-
 #if DEBUG
-extension Lecture {
-    static var preview: Lecture {
-        let instructors = ["염헌영", "엄현상", "김진수", "김형주", "이영기", "배영애", "유성호"]
-        let titles = ["시스템프로그래밍", "양궁", "죽음의 과학적 이해", "북한학개론", "Operating System"]
-        return Lecture(id: UUID().uuidString, title: titles.randomElement()!, instructor: instructors.randomElement()!, timePlaces: [.preview, .preview])
+    extension Lecture {
+        static var preview: Lecture {
+            let instructors = ["염헌영", "엄현상", "김진수", "김형주", "이영기", "배영애", "유성호"]
+            let titles = ["시스템프로그래밍", "양궁", "죽음의 과학적 이해", "북한학개론", "Operating System"]
+            return Lecture(id: UUID().uuidString, title: titles.randomElement()!, instructor: instructors.randomElement()!, timePlaces: [.preview, .preview])
+        }
     }
-}
 #endif

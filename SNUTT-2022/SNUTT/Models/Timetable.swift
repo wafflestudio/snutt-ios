@@ -13,16 +13,16 @@ class Timetable: ObservableObject {
     init(lectures: [Lecture]) {
         self.lectures = lectures
     }
-    
+
     init(from dto: TimetableDto) {
-        lectures = dto.lecture_list.map { .init(from: $0)}
+        lectures = dto.lecture_list.map { .init(from: $0) }
     }
 }
 
 #if DEBUG
-extension Timetable {
-    static var preview: Timetable {
-        return .init(lectures: [.preview, .preview, .preview])
+    extension Timetable {
+        static var preview: Timetable {
+            return .init(lectures: [.preview, .preview, .preview])
+        }
     }
-}
 #endif

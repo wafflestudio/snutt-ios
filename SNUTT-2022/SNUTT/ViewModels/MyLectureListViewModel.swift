@@ -10,11 +10,11 @@ import SwiftUI
 
 class MyLectureListViewModel {
     var container: DIContainer
-    
+
     init(container: DIContainer) {
         self.container = container
     }
-    
+
     private var appState: AppState {
         container.appState
     }

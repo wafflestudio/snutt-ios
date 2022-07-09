@@ -23,8 +23,6 @@ struct TimePlace: Identifiable {
     var len: Double
 
     var place: String
-    
-    
 
     var startTime: Double {
         start + 8
@@ -45,12 +43,11 @@ extension TimePlace {
     }
 }
 
-
 #if DEBUG
-extension TimePlace {
-    static var preview: Self {
-        let place = "\(Int.random(in: 100...999))-\(Int.random(in: 100...999))"
-        return TimePlace(id: UUID().uuidString, day: .init(rawValue: Int.random(in: 0...6))!, start:Double.random(in: 1...8), len: Double.random(in: 0...3), place: place)
+    extension TimePlace {
+        static var preview: Self {
+            let place = "\(Int.random(in: 100 ... 999))-\(Int.random(in: 100 ... 999))"
+            return TimePlace(id: UUID().uuidString, day: .init(rawValue: Int.random(in: 0 ... 6))!, start: Double.random(in: 1 ... 8), len: Double.random(in: 0 ... 3), place: place)
+        }
     }
-}
 #endif

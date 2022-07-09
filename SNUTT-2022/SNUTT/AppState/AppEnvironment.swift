@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2022/07/09.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 struct AppEnvironment {
     let container: DIContainer
@@ -24,11 +24,9 @@ extension AppEnvironment {
         let timetableRepository: TimetableRepositoryProtocol
         let userRepository: UserRepositoryProtocol
     }
-    
-    struct DBRepositories {
-    }
-}
 
+    struct DBRepositories {}
+}
 
 extension AppEnvironment {
     static func bootstrap() -> Self {
@@ -40,23 +38,23 @@ extension AppEnvironment {
         let container = DIContainer(appState: appState, services: services)
         return .init(container: container)
     }
-    
+
     private static func configuredSession() -> Session {
         return Session(interceptor: Interceptor(authStorage: Storage()), eventMonitors: [Logger()])
     }
-    
+
     private static func configuredWebRepositories(session: Session) -> WebRepositories {
         let timetableRepository = TimetableRepository(session: session)
         let userRepository = UserRepository(session: session)
         return .init(timetableRepository: timetableRepository, userRepository: userRepository)
     }
-    
+
     // unused for now
-    private static func configuredDBRepositories(appState: AppState) -> DBRepositories {
+    private static func configuredDBRepositories(appState _: AppState) -> DBRepositories {
         return .init()
     }
-    
-    private static func configuredServices(appState: AppState, webRepositories: WebRepositories, dbRepositories: DBRepositories) -> Services {
+
+    private static func configuredServices(appState: AppState, webRepositories: WebRepositories, dbRepositories _: DBRepositories) -> Services {
         let timetableService = TimetableService(appState: appState, webRepositories: webRepositories)
         let userService = UserService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService, userService: userService)
@@ -64,9 +62,9 @@ extension AppEnvironment {
 }
 
 #if DEBUG
-extension AppEnvironment.Services {
-    static var preview: Self {
-        .init(timetableService: FakeTimetableService(), userService: FakeUserService())
+    extension AppEnvironment.Services {
+        static var preview: Self {
+            .init(timetableService: FakeTimetableService(), userService: FakeUserService())
+        }
     }
-}
 #endif

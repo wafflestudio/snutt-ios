@@ -16,12 +16,12 @@ class Storage: AuthStorage {
 @main
 struct SNUTTApp: App {
     let container: DIContainer
-    
+
     init() {
         let appEnvironment = AppEnvironment.bootstrap()
         container = appEnvironment.container
     }
-    
+
     var body: some Scene {
         WindowGroup {
             SNUTTView(container: container)

@@ -10,11 +10,11 @@ import SwiftUI
 
 class SettingViewModel {
     var container: DIContainer
-    
+
     init(container: DIContainer) {
         self.container = container
     }
-    
+
     private var appState: AppState {
         container.appState
     }
@@ -26,5 +26,4 @@ class SettingViewModel {
     func updateCurrentUser(user: User) {
         appState.currentUser = user
     }
-
 }
