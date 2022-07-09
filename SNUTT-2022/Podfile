@@ -3,7 +3,7 @@ use_frameworks!
 
 target 'SNUTT' do
   # Networking
-  pod 'Alamofire', '~> 5.5.0'
+  pod 'Alamofire', '~> 5.6.1'
   
   target 'SNUTTTests' do
     inherit! :complete
