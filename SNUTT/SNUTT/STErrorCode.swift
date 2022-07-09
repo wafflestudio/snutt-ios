@@ -101,7 +101,6 @@ public enum STErrorCode: Int {
              .FB_ID_WITH_SOMEONE_ELSE,
              .WRONG_SEMESTER,
              .NOT_CUSTOM_LECTURE,
-             .LECTURE_TIME_OVERLAP,
              .IS_CUSTOM_LECTURE,
              .USER_HAS_NO_FCM_KEY:
             return "잘못된 요청"
@@ -112,6 +111,8 @@ public enum STErrorCode: Int {
              .USER_NOT_FOUND,
              .COLORLIST_NOT_FOUND:
             return "찾지 못함"
+        case .LECTURE_TIME_OVERLAP:
+            return "시간대 겹침"
         }
     }
 
