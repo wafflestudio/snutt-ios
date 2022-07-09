@@ -6,10 +6,14 @@
 //
 
 class MenuSheetViewModel {
-    var appState: AppState
-
-    init(appState: AppState) {
-        self.appState = appState
+    var container: DIContainer
+    
+    init(container: DIContainer) {
+        self.container = container
+    }
+    
+    private var appState: AppState {
+        container.appState
     }
 
     var menuSheetSetting: MenuSheetSetting {

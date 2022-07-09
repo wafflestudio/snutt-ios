@@ -21,13 +21,13 @@ struct SettingScene: View {
     }
 }
 
-struct SettingScene_Previews: PreviewProvider {
-    static var previews: some View {
-        let appState = AppState()
-        NavigationView {
-            TabView {
-                SettingScene(viewModel: SettingViewModel(appState: appState))
-            }
-        }
-    }
-}
+//struct SettingScene_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let appState = AppState()
+//        NavigationView {
+//            TabView {
+//                SettingScene(viewModel: SettingViewModel(appState: appState))
+//            }
+//        }
+//    }
+//}

@@ -1,13 +1,13 @@
 //
-//  TimetableService.swift
+//  UserService.swift
 //  SNUTT
 //
-//  Created by Jinsup Keum on 2022/03/19.
+//  Created by 박신홍 on 2022/07/09.
 //
 
 import Foundation
 
-struct TimetableService {
+class UserService {
     let appState: AppState
     let webRepositories: AppEnvironment.WebRepositories
     
@@ -15,5 +15,4 @@ struct TimetableService {
         self.appState = appState
         self.webRepositories = webRepositories
     }
-    
 }

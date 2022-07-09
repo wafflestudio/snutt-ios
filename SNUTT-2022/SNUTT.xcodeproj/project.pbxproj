@@ -21,6 +21,10 @@
 		BECDB898283B876300F62AC8 /* MenuSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB897283B876300F62AC8 /* MenuSheet.swift */; };
 		BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */; };
 		BEDE34D42879A59B00525014 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BEDE34D32879A59B00525014 /* Alamofire */; };
+		BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34D52879A7B800525014 /* DIContainer.swift */; };
+		BEDE34D82879A9DC00525014 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34D72879A9DC00525014 /* UserService.swift */; };
+		BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34D92879AA0B00525014 /* UserRepository.swift */; };
+		BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34DB2879B40100525014 /* AppEnvironment.swift */; };
 		BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */; };
 		BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506C27EB740E00CDCC13 /* LectureList.swift */; };
 		BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506E27EB744A00CDCC13 /* LectureDetails.swift */; };
@@ -97,6 +101,10 @@
 		BEDE34CF2879A3FA00525014 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SNUTT.app; path = "/Users/shp7724/dev/xcode/SNUTT-iOS/SNUTT-2022/build/Debug-iphoneos/SNUTT.app"; sourceTree = "<absolute>"; };
 		BEDE34D02879A3FA00525014 /* SNUTTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SNUTTTests.xctest; path = "/Users/shp7724/dev/xcode/SNUTT-iOS/SNUTT-2022/build/Debug-iphoneos/SNUTTTests.xctest"; sourceTree = "<absolute>"; };
 		BEDE34D12879A3FA00525014 /* SNUTTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SNUTTUITests.xctest; path = "/Users/shp7724/dev/xcode/SNUTT-iOS/SNUTT-2022/build/Debug-iphoneos/SNUTTUITests.xctest"; sourceTree = "<absolute>"; };
+		BEDE34D52879A7B800525014 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		BEDE34D72879A9DC00525014 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		BEDE34D92879AA0B00525014 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		BEDE34DB2879B40100525014 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureListCell.swift; sourceTree = "<group>"; };
 		BEDF506C27EB740E00CDCC13 /* LectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureList.swift; sourceTree = "<group>"; };
 		BEDF506E27EB744A00CDCC13 /* LectureDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetails.swift; sourceTree = "<group>"; };
@@ -259,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				DCD41A6227E5CCD500CF380E /* TimetableService.swift */,
+				BEDE34D72879A9DC00525014 /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -269,6 +278,7 @@
 				DC9C2CA928780589009EC3BC /* Dto */,
 				DC1E0ED2287738DF005632A3 /* Router */,
 				DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */,
+				BEDE34D92879AA0B00525014 /* UserRepository.swift */,
 				DC1E0ECE28772F13005632A3 /* NetworkiUtils.swift */,
 			);
 			path = Repositories;
@@ -327,7 +337,9 @@
 		DCD41A7327E5CE5F00CF380E /* AppState */ = {
 			isa = PBXGroup;
 			children = (
+				BEDE34DB2879B40100525014 /* AppEnvironment.swift */,
 				DCD41A7427E5CEA500CF380E /* AppState.swift */,
+				BEDE34D52879A7B800525014 /* DIContainer.swift */,
 			);
 			path = AppState;
 			sourceTree = "<group>";
@@ -481,6 +493,7 @@
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
 				DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */,
+				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* MyLectureListScene.swift in Sources */,
 				BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */,
 				DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */,
@@ -506,14 +519,17 @@
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
+				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
 				DC2915A52866980B00FE5F9A /* Setting.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
 				DC2915992865D69700FE5F9A /* MyLectureListViewModel.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
+				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,
+				BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,

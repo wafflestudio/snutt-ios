@@ -7,13 +7,24 @@
 
 import SwiftUI
 
+// TODO: change this
+class Storage: AuthStorage {
+    var apiKey: ApiKey = ""
+    var accessToken: AccessToken = ""
+}
+
 @main
 struct SNUTTApp: App {
-    let appState = AppState()
-
+    let container: DIContainer
+    
+    init() {
+        let appEnvironment = AppEnvironment.bootstrap()
+        container = appEnvironment.container
+    }
+    
     var body: some Scene {
         WindowGroup {
-            SNUTTView(appState: appState)
+            SNUTTView(container: container)
         }
     }
 }

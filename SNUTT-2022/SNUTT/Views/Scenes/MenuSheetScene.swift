@@ -27,12 +27,13 @@ struct MenuSheetScene: View {
 struct MenuSheetWrapper: View {
     let appState = AppState()
     var body: some View {
-        ZStack {
-            NavBarButton(imageName: "nav.menu") {
-                appState.setting.menuSheetSetting.isOpen.toggle()
-            }
-            MenuSheetScene(viewModel: .init(appState: appState))
-        }
+        EmptyView()
+//        ZStack {
+//            NavBarButton(imageName: "nav.menu") {
+//                appState.setting.menuSheetSetting.isOpen.toggle()
+//            }
+//            MenuSheetScene(viewModel: .init(appState: appState))
+//        }
     }
 }
 

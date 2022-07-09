@@ -25,12 +25,12 @@ struct MyLectureListScene: View {
     }
 }
 
-struct MyTimetableListScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TabView {
-                MyLectureListScene(viewModel: MyLectureListViewModel(appState: AppState()))
-            }
-        }
-    }
-}
+//struct MyTimetableListScene_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationView {
+//            TabView {
+//                MyLectureListScene(viewModel: MyLectureListViewModel(appState: AppState()))
+//            }
+//        }
+//    }
+//}

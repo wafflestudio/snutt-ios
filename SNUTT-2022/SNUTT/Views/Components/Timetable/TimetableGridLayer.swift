@@ -96,10 +96,10 @@ struct TimetableGridLayer: View {
     }
 }
 
-struct TimetableGrid_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewModel = TimetableViewModel(appState: AppState())
-        TimetableGridLayer()
-            .environmentObject(viewModel.timetableSetting)
-    }
-}
+//struct TimetableGrid_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let viewModel = TimetableViewModel(appState: AppState())
+//        TimetableGridLayer()
+//            .environmentObject(viewModel.timetableSetting)
+//    }
+//}

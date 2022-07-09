@@ -9,8 +9,16 @@ import Foundation
 import SwiftUI
 
 class ReviewViewModel {
-    var appState: AppState
-
+    var container: DIContainer
+    
+    init(container: DIContainer) {
+        self.container = container
+    }
+    
+    private var appState: AppState {
+        container.appState
+    }
+    
     var currentTimetable: Timetable {
         appState.currentTimetable
     }
@@ -19,7 +27,4 @@ class ReviewViewModel {
         appState.currentTimetable.lectures = []
     }
 
-    init(appState: AppState) {
-        self.appState = appState
-    }
 }

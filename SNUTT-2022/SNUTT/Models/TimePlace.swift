@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct TimePlace: Codable, Identifiable {
-    var id = UUID()
+struct TimePlace: Identifiable {
+    var id: String
 
     var day: Weekday
 
@@ -23,6 +23,14 @@ struct TimePlace: Codable, Identifiable {
     var len: Double
 
     var place: String
+    
+    init(from dto: TimePlaceDto) {
+        id = dto._id
+        start = dto.start
+        len = dto.len
+        place = dto.place
+        day = .init(rawValue: dto.day) ?? .mon
+    }
 
     var startTime: Double {
         start + 8

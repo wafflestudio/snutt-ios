@@ -13,4 +13,8 @@ class Timetable: ObservableObject {
     init(lectures: [Lecture]) {
         self.lectures = lectures
     }
+    
+    init(from dto: TimetableDto) {
+        lectures = dto.lecture_list.map { .init(from: $0)}
+    }
 }

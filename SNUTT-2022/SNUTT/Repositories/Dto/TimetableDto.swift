@@ -26,7 +26,7 @@ struct LectureDto: Codable {
     let course_title: String
     let credit: Int
     let class_time: String
-    let class_time_json: [ClassTimeJsonDto]
+    let class_time_json: [TimePlaceDto]
     let class_time_mask: [Int]
     let instructor: String
     let quota: Int
@@ -40,11 +40,11 @@ struct LectureDto: Codable {
     let colorIndex: Int
 }
 
-struct ClassTimeJsonDto: Codable {
+struct TimePlaceDto: Codable {
     let _id: String
     let day: Int
-    let start: Int
-    let len: Int
+    let start: Double
+    let len: Double
     let place: String
 }
 

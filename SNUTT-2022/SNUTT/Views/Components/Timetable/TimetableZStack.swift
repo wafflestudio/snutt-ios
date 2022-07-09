@@ -18,12 +18,11 @@ struct TimetableZStack: View {
     }
 }
 
-//
-struct TimetableStack_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewModel = TimetableViewModel(appState: AppState())
-        TimetableZStack()
-            .environmentObject(viewModel.currentTimetable)
-            .environmentObject(viewModel.timetableSetting)
-    }
-}
+//struct TimetableStack_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let viewModel = TimetableViewModel(container: .)
+//        TimetableZStack()
+//            .environmentObject(viewModel.currentTimetable)
+//            .environmentObject(viewModel.timetableSetting)
+//    }
+//}
