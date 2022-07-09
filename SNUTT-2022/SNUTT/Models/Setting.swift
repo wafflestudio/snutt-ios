@@ -19,4 +19,5 @@ class Setting: ObservableObject {
     var snuevWebUrl: String?
 
     var timetableSetting: TimetableSetting = .init()
+    var menuSheetSetting: MenuSheetSetting = .init()
 }

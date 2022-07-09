@@ -12,19 +12,23 @@ struct SNUTTView: View {
     let appState: AppState
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            TabScene(tabType: .timetable) {
-                MyTimetableScene(viewModel: .init(appState: appState))
+        ZStack {
+            TabView(selection: $selectedTab) {
+                TabScene(tabType: .timetable) {
+                    MyTimetableScene(viewModel: .init(appState: appState))
+                }
+                TabScene(tabType: .search) {
+                    MyLectureListScene(viewModel: .init(appState: appState))
+                }
+                TabScene(tabType: .review) {
+                    ReviewScene(viewModel: .init(appState: appState))
+                }
+                TabScene(tabType: .settings) {
+                    SettingScene(viewModel: .init(appState: appState))
+                }
             }
-            TabScene(tabType: .search) {
-                MyLectureListScene(viewModel: .init(appState: appState))
-            }
-            TabScene(tabType: .review) {
-                ReviewScene(viewModel: .init(appState: appState))
-            }
-            TabScene(tabType: .settings) {
-                SettingScene(viewModel: .init(appState: appState))
-            }
+
+            MenuSheetScene(viewModel: .init(appState: appState))
         }
         .accentColor(Color(UIColor.label))
         .onAppear {
