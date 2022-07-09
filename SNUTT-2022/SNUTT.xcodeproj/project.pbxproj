@@ -98,9 +98,9 @@
 		BE982FBF281D762F005F71E6 /* TimetableZStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableZStack.swift; sourceTree = "<group>"; };
 		BECDB897283B876300F62AC8 /* MenuSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheet.swift; sourceTree = "<group>"; };
 		BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetScene.swift; sourceTree = "<group>"; };
-		BEDE34CF2879A3FA00525014 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SNUTT.app; path = "/Users/shp7724/dev/xcode/SNUTT-iOS/SNUTT-2022/build/Debug-iphoneos/SNUTT.app"; sourceTree = "<absolute>"; };
-		BEDE34D02879A3FA00525014 /* SNUTTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SNUTTTests.xctest; path = "/Users/shp7724/dev/xcode/SNUTT-iOS/SNUTT-2022/build/Debug-iphoneos/SNUTTTests.xctest"; sourceTree = "<absolute>"; };
-		BEDE34D12879A3FA00525014 /* SNUTTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SNUTTUITests.xctest; path = "/Users/shp7724/dev/xcode/SNUTT-iOS/SNUTT-2022/build/Debug-iphoneos/SNUTTUITests.xctest"; sourceTree = "<absolute>"; };
+		BEDE34CF2879A3FA00525014 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SNUTT.app; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEDE34D02879A3FA00525014 /* SNUTTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SNUTTTests.xctest; path = SNUTTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEDE34D12879A3FA00525014 /* SNUTTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SNUTTUITests.xctest; path = SNUTTUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEDE34D52879A7B800525014 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		BEDE34D72879A9DC00525014 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		BEDE34D92879AA0B00525014 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
