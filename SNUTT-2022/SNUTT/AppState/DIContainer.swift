@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 
-/// A subset of `AppEnvironment` which is injected to each view models.
+/// A subset of `AppEnvironment` which is injected into each view models.
 struct DIContainer {
     let appState: AppState
     let services: AppEnvironment.Services
