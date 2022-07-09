@@ -21,6 +21,7 @@ class AppState {
 extension AppState {
     static var preview: AppState {
         let state = AppState()
+        state.currentTimetable = .preview
         return state
     }
 }

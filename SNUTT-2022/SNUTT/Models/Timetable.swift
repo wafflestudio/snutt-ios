@@ -18,3 +18,11 @@ class Timetable: ObservableObject {
         lectures = dto.lecture_list.map { .init(from: $0)}
     }
 }
+
+#if DEBUG
+extension Timetable {
+    static var preview: Timetable {
+        return .init(lectures: [.preview, .preview, .preview])
+    }
+}
+#endif
