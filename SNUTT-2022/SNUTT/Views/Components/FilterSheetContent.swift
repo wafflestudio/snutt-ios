@@ -29,9 +29,9 @@ struct FilterSheetContent: View {
                 }
                 .padding()
                 .frame(maxWidth: 130)
-                
+
                 Divider()
-                
+
                 ScrollView {
                     Group {
                         ForEach(1 ..< 100) { num in
@@ -62,7 +62,7 @@ struct FilterSheetContent: View {
                     .init(color: .clear, location: 1),
                 ]), startPoint: .top, endPoint: .bottom))
             }
-            
+
             Button {} label: {
                 Text("필터 적용")
                     .font(.system(size: 17, weight: .bold))
@@ -90,7 +90,7 @@ enum STTagType: String, CaseIterable {
     case department
     case category
     case etc
-    
+
     var typeStr: String {
         switch self {
         case .academicYear: return "학년"
