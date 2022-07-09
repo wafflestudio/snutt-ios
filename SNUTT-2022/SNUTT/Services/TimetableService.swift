@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct TimetableService {
+protocol TimetableServiceProtocol {
+    
+}
+
+struct TimetableService: TimetableServiceProtocol {
     let appState: AppState
     let webRepositories: AppEnvironment.WebRepositories
     
@@ -17,3 +21,5 @@ struct TimetableService {
     }
     
 }
+
+struct FakeTimetableService: TimetableServiceProtocol {}

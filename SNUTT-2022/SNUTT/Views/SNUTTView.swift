@@ -66,8 +66,8 @@ enum TabType: String {
     case settings
 }
 
-//struct SNUTTView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SNUTTView(appState: AppState())
-//    }
-//}
+struct SNUTTView_Previews: PreviewProvider {
+    static var previews: some View {
+        SNUTTView(container: .preview)
+    }
+}

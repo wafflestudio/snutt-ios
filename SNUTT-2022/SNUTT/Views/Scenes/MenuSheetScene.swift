@@ -25,15 +25,15 @@ struct MenuSheetScene: View {
 
 ///// A simple wrapper that is used to preview `MenuSheet`.
 struct MenuSheetWrapper: View {
-    let appState = AppState()
     var body: some View {
-        EmptyView()
-//        ZStack {
-//            NavBarButton(imageName: "nav.menu") {
-//                appState.setting.menuSheetSetting.isOpen.toggle()
-//            }
-//            MenuSheetScene(viewModel: .init(appState: appState))
-//        }
+        let container = DIContainer.preview
+        let appState = container.appState
+        ZStack {
+            NavBarButton(imageName: "nav.menu") {
+                appState.setting.menuSheetSetting.isOpen.toggle()
+            }
+            MenuSheetScene(viewModel: .init(container: .preview))
+        }
     }
 }
 

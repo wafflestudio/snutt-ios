@@ -7,7 +7,9 @@
 
 import Foundation
 
-class UserService {
+protocol UserServiceProtocol {}
+
+class UserService: UserServiceProtocol {
     let appState: AppState
     let webRepositories: AppEnvironment.WebRepositories
     
@@ -15,4 +17,8 @@ class UserService {
         self.appState = appState
         self.webRepositories = webRepositories
     }
+}
+
+class FakeUserService: UserServiceProtocol {
+    
 }

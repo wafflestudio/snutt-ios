@@ -98,9 +98,6 @@
 		BE982FBF281D762F005F71E6 /* TimetableZStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableZStack.swift; sourceTree = "<group>"; };
 		BECDB897283B876300F62AC8 /* MenuSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheet.swift; sourceTree = "<group>"; };
 		BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetScene.swift; sourceTree = "<group>"; };
-		BEDE34CF2879A3FA00525014 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SNUTT.app; path = "/Users/shp7724/dev/xcode/SNUTT-iOS/SNUTT-2022/build/Debug-iphoneos/SNUTT.app"; sourceTree = "<absolute>"; };
-		BEDE34D02879A3FA00525014 /* SNUTTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SNUTTTests.xctest; path = "/Users/shp7724/dev/xcode/SNUTT-iOS/SNUTT-2022/build/Debug-iphoneos/SNUTTTests.xctest"; sourceTree = "<absolute>"; };
-		BEDE34D12879A3FA00525014 /* SNUTTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SNUTTUITests.xctest; path = "/Users/shp7724/dev/xcode/SNUTT-iOS/SNUTT-2022/build/Debug-iphoneos/SNUTTUITests.xctest"; sourceTree = "<absolute>"; };
 		BEDE34D52879A7B800525014 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		BEDE34D72879A9DC00525014 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		BEDE34D92879AA0B00525014 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
@@ -374,7 +371,7 @@
 				BEDE34D32879A59B00525014 /* Alamofire */,
 			);
 			productName = SNUTT;
-			productReference = BEDE34CF2879A3FA00525014 /* SNUTT.app */;
+			productReference = BE546C5C2879CA96001A8F9E /* SNUTT.app */;
 			productType = "com.apple.product-type.application";
 		};
 		DC860F5427E5C87F0068C94B /* SNUTTTests */ = {
@@ -392,7 +389,7 @@
 			);
 			name = SNUTTTests;
 			productName = SNUTTTests;
-			productReference = BEDE34D02879A3FA00525014 /* SNUTTTests.xctest */;
+			productReference = BE546C5D2879CA96001A8F9E /* SNUTTTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		DC860F5E27E5C87F0068C94B /* SNUTTUITests */ = {
@@ -410,7 +407,7 @@
 			);
 			name = SNUTTUITests;
 			productName = SNUTTUITests;
-			productReference = BEDE34D12879A3FA00525014 /* SNUTTUITests.xctest */;
+			productReference = BE546C5E2879CA96001A8F9E /* SNUTTUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */

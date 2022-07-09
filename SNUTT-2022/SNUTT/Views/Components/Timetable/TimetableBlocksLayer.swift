@@ -19,13 +19,13 @@ struct TimetableBlocksLayer: View {
     }
 }
 
-//struct TimetableBlocks_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ZStack {
-//            let viewModel = TimetableViewModel(appState: AppState())
-//            TimetableBlocksLayer()
-//                .environmentObject(viewModel.currentTimetable)
-//                .environmentObject(viewModel.timetableSetting)
-//        }
-//    }
-//}
+struct TimetableBlocks_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            let viewModel = TimetableViewModel(container: .preview)
+            TimetableBlocksLayer()
+                .environmentObject(viewModel.currentTimetable)
+                .environmentObject(viewModel.timetableSetting)
+        }
+    }
+}

@@ -22,9 +22,8 @@ struct ReviewScene: View {
     }
 }
 
-//struct ReviewScene_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let appState = AppState()
-//        ReviewScene(viewModel: ReviewViewModel(appState: appState))
-//    }
-//}
+struct ReviewScene_Previews: PreviewProvider {
+    static var previews: some View {
+        ReviewScene(viewModel: .init(container: .preview))
+    }
+}

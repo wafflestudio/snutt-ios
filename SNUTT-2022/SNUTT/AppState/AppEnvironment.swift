@@ -14,8 +14,8 @@ struct AppEnvironment {
 
 extension AppEnvironment {
     struct Services {
-        let timetableService: TimetableService
-        let userService: UserService
+        let timetableService: TimetableServiceProtocol
+        let userService: UserServiceProtocol
     }
 }
 
@@ -62,3 +62,11 @@ extension AppEnvironment {
         return .init(timetableService: timetableService, userService: userService)
     }
 }
+
+#if DEBUG
+extension AppEnvironment.Services {
+    static var preview: Self {
+        .init(timetableService: FakeTimetableService(), userService: FakeUserService())
+    }
+}
+#endif

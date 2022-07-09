@@ -25,10 +25,10 @@ struct DIContainer {
 
 
 #if DEBUG
-//extension DIContainer {
-//    static var preview: Self {
-//        .init(appState: AppState(), services: .stub)
-//    }
-//}
+extension DIContainer {
+    static var preview: Self {
+        .init(appState: .preview, services: .preview)
+    }
+}
 #endif
 
