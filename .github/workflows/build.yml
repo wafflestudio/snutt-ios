@@ -14,9 +14,10 @@ jobs:
     strategy:
       fail-fast: false # if 'true' then one failed job cancels all jobs remaining
       matrix:
+        # see https://github.com/actions/virtual-environments/blob/main/images/macos/macos-12-Readme.md for available versions
         xcode: 
-          - '13.3.1' # iOS 15.2
-        macos: ['macos-11']
+          - '13.3.1'
+        macos: ['macos-12']
         command: ['build', 'test']
         scheme: ['SNUTT']
 
