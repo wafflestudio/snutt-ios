@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import Alamofire
 
 class TimetableRepositoryTests: XCTestCase {
     class Storage: AuthStorage {
@@ -13,7 +14,7 @@ class TimetableRepositoryTests: XCTestCase {
         var accessToken: AccessToken = ""
     }
 
-    let repository = TimetableRepository(interceptor: Interceptor(authStorage: Storage()), eventMonitors: [Logger()])
+    let repository = TimetableRepository(session: Session(interceptor: Interceptor(authStorage: Storage()), eventMonitors: [Logger()]))
 
     func testFetchRecentTimetable() async throws {
         let _ = try await repository.fetchRecentTimetable()
