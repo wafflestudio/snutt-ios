@@ -15,25 +15,23 @@ struct FilterSheetContent: View {
                 VStack(spacing: 20) {
                     ForEach(STTagType.allCases, id: \.self) { tag in
                         let isSelected = selectedCategory == tag
-                        if #available(iOS 15.0, *) {
-                            Button {
-                                selectedCategory = tag
-                            } label: {
-                                Text(tag.typeStr)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .font(.system(size: 18, weight: .semibold))
-                            }
-                            .foregroundColor(isSelected ? Color(uiColor: .label.withAlphaComponent(0.7)) : Color.gray)
-                            .buttonStyle(.bordered)
-                            .tint(isSelected ? STColor.cyan : Color.white)
+                        Button {
+                            selectedCategory = tag
+                        } label: {
+                            Text(tag.typeStr)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.system(size: 18, weight: .semibold))
                         }
+                        .foregroundColor(isSelected ? Color(uiColor: .label.withAlphaComponent(0.7)) : Color.gray)
+                        .buttonStyle(.bordered)
+                        .tint(isSelected ? STColor.cyan : Color.white)
                     }
                 }
                 .padding()
                 .frame(maxWidth: 130)
-
+                
                 Divider()
-
+                
                 ScrollView {
                     Group {
                         ForEach(1 ..< 100) { num in
@@ -64,19 +62,17 @@ struct FilterSheetContent: View {
                     .init(color: .clear, location: 1),
                 ]), startPoint: .top, endPoint: .bottom))
             }
-
-            if #available(iOS 15.0, *) {
-                Button {} label: {
-                    Text("필터 적용")
-                        .font(.system(size: 17, weight: .bold))
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                .padding()
-                .padding(.bottom, 10)
-                .tint(STColor.cyan)
+            
+            Button {} label: {
+                Text("필터 적용")
+                    .font(.system(size: 17, weight: .bold))
+                    .frame(maxWidth: .infinity)
             }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            .padding()
+            .padding(.bottom, 10)
+            .tint(STColor.cyan)
         }
     }
 }
@@ -94,7 +90,7 @@ enum STTagType: String, CaseIterable {
     case department
     case category
     case etc
-
+    
     var typeStr: String {
         switch self {
         case .academicYear: return "학년"
