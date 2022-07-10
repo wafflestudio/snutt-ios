@@ -8,19 +8,23 @@
 import Foundation
 
 enum Weekday: Int, Identifiable, Codable {
-    case sun, mon, tue, wed, thu, fri, sat
-
+    case mon, tue, wed, thu, fri, sat, sun
+    
     var id: RawValue { rawValue }
+    
+    var sundayIndexedId: Int {
+        (id + 1) % 7
+    }
 
     public var symbol: String {
-        Calendar.current.weekdaySymbols[id]
+        Calendar.current.weekdaySymbols[sundayIndexedId]
     }
 
     public var shortSymbol: String {
-        Calendar.current.shortWeekdaySymbols[id]
+        Calendar.current.shortWeekdaySymbols[sundayIndexedId]
     }
 
     public var veryShortSymbol: String {
-        Calendar.current.veryShortWeekdaySymbols[id]
+        Calendar.current.veryShortWeekdaySymbols[sundayIndexedId]
     }
 }

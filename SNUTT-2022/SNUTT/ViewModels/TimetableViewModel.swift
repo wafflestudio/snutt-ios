@@ -8,7 +8,8 @@
 import SwiftUI
 import UIKit
 
-class TimetableViewModel {
+class TimetableViewModel: ObservableObject {
+    @Published var showAlert: Bool = false
     var container: DIContainer
 
     init(container: DIContainer) {
@@ -18,21 +19,34 @@ class TimetableViewModel {
     private var appState: AppState {
         container.appState
     }
+    
+    private var timetableService: TimetableServiceProtocol {
+        container.services.timetableService
+    }
 
-    var currentTimetable: Timetable {
-        appState.currentTimetable
+    var currentTimetable: Timetable? {
+        appState.setting.timetableSetting.current
     }
 
     var timetableSetting: TimetableSetting {
         appState.setting.timetableSetting
     }
 
-    func updateTimetable(timeTable: Timetable) {
-        appState.currentTimetable = timeTable
-    }
-
     func toggleMenuSheet() {
         appState.setting.menuSheetSetting.isOpen.toggle()
+    }
+    
+    func fetchRecentTimetable() async {
+        if currentTimetable != nil {
+            return
+        }
+        do {
+            try await timetableService.fetchRecentTimetable()
+        } catch {
+            DispatchQueue.main.async {
+                self.showAlert = true
+            }
+        }
     }
 
     struct TimetablePainter {

@@ -27,12 +27,16 @@ struct LectureListCell: View {
                 Text(lecture.title)
                     .font(STFont.subheading)
                 Spacer()
-                Text("정희숙 / 3학점")
+                Text("\(lecture.instructor) / \(lecture.credit)학점")
                     .font(STFont.details)
             }
 
             // details
-            detailRow(imageName: "tag.black", text: "디자인학부(디자인전공), 3학년")
+            if lecture.isCustom {
+                detailRow(imageName: "tag.black", text: "(없음)")
+            } else {
+                detailRow(imageName: "tag.black", text: "\(lecture.department ?? "-"), \(lecture.academic_year ?? "-")")
+            }
             detailRow(imageName: "clock.black", text: "목2")
             detailRow(imageName: "map.black", text: "049-215")
         }

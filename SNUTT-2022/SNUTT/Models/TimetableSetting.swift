@@ -8,10 +8,11 @@
 import SwiftUI
 
 class TimetableSetting: ObservableObject {
+    @Published var current: Timetable?
     let minHour: Int = 8
     let maxHour: Int = 19
 
-    let visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
+    let visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri, .sat]
 
     var hourCount: Int {
         maxHour - minHour + 1

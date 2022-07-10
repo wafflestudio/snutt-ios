@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct TimetableBlocksLayer: View {
-    @EnvironmentObject var currentTimetable: Timetable
+    @EnvironmentObject var timetableSetting: TimetableSetting
 
     var body: some View {
-        ForEach(currentTimetable.lectures) { lecture in
+        ForEach(timetableSetting.current?.lectures ?? []) { lecture in
             LectureBlocks(lecture: lecture)
         }
 
@@ -24,7 +24,6 @@ struct TimetableBlocks_Previews: PreviewProvider {
         ZStack {
             let viewModel = TimetableViewModel(container: .preview)
             TimetableBlocksLayer()
-                .environmentObject(viewModel.currentTimetable)
                 .environmentObject(viewModel.timetableSetting)
         }
     }

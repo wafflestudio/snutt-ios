@@ -18,12 +18,8 @@ class MyLectureListViewModel {
     private var appState: AppState {
         container.appState
     }
-
-    var currentTimetable: Timetable {
-        appState.currentTimetable
-    }
-
-    func updateTimetable(timeTable: Timetable) {
-        appState.currentTimetable = timeTable
+    
+    var currentTimetable: Timetable? {
+        appState.setting.timetableSetting.current
     }
 }

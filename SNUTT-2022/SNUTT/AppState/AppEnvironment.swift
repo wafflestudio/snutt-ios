@@ -40,7 +40,10 @@ extension AppEnvironment {
     }
 
     private static func configuredSession() -> Session {
-        return Session(interceptor: Interceptor(authStorage: Storage()), eventMonitors: [Logger()])
+        let storage = Storage()
+        storage.accessToken = "c7f446a2..."
+        storage.apiKey = "eyJ0eXAiO..."
+        return Session(interceptor: Interceptor(authStorage: storage), eventMonitors: [Logger()])
     }
 
     private static func configuredWebRepositories(session: Session) -> WebRepositories {

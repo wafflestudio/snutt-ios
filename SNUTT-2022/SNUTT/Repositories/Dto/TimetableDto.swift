@@ -20,20 +20,20 @@ struct TimetableDto: Codable {
 
 struct LectureDto: Codable {
     let _id: String
-    let classification: String
-    let department: String
-    let academic_year: String
+    let classification: String?
+    let department: String?
+    let academic_year: String?
     let course_title: String
     let credit: Int
-    let class_time: String
+    let class_time: String?
     let class_time_json: [TimePlaceDto]
     let class_time_mask: [Int]
     let instructor: String
-    let quota: Int
+    let quota: Int?
     let remark: String
-    let category: String
-    let course_number: String
-    let lecture_number: String
+    let category: String?
+    let course_number: String?
+    let lecture_number: String?
     let created_at: String
     let updated_at: String
     let color: [String: String]
