@@ -9,9 +9,9 @@ import Foundation
 
 enum Weekday: Int, Identifiable, Codable {
     case mon, tue, wed, thu, fri, sat, sun
-    
+
     var id: RawValue { rawValue }
-    
+
     var sundayIndexedId: Int {
         (id + 1) % 7
     }

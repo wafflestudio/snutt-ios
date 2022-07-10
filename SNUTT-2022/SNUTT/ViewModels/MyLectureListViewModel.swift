@@ -18,7 +18,7 @@ class MyLectureListViewModel {
     private var appState: AppState {
         container.appState
     }
-    
+
     var currentTimetable: Timetable? {
         appState.setting.timetableSetting.current
     }

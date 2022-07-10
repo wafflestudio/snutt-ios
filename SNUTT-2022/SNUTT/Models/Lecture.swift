@@ -16,7 +16,7 @@ struct Lecture: Identifiable {
     let credit: Int
     let department: String?
     let academic_year: String?
-    
+
     var isCustom: Bool {
         course_number == nil
     }
@@ -47,10 +47,9 @@ extension Lecture {
                            instructor: instructors.randomElement()!,
                            timePlaces: [.preview, .preview],
                            course_number: UUID().uuidString,
-                           credit: Int.random(in: 0...4),
+                           credit: Int.random(in: 0 ... 4),
                            department: departments.randomElement(),
-                           academic_year: academic_years.randomElement()
-            )
+                           academic_year: academic_years.randomElement())
         }
     }
 #endif

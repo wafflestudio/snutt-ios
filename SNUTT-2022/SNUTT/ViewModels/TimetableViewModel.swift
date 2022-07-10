@@ -19,7 +19,7 @@ class TimetableViewModel: ObservableObject {
     private var appState: AppState {
         container.appState
     }
-    
+
     private var timetableService: TimetableServiceProtocol {
         container.services.timetableService
     }
@@ -35,7 +35,7 @@ class TimetableViewModel: ObservableObject {
     func toggleMenuSheet() {
         appState.setting.menuSheetSetting.isOpen.toggle()
     }
-    
+
     func fetchRecentTimetable() async {
         if currentTimetable != nil {
             return
