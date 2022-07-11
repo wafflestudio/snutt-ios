@@ -10,11 +10,12 @@ import SwiftUI
 struct TimetableBlock: View {
     let lecture: Lecture
     let timePlace: TimePlace
+    let theme: Theme
 
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(.orange)
+                .fill(Color(hex: theme.getColor(at: lecture.colorIndex)))
                 .border(Color.black.opacity(0.1), width: 0.5)
             VStack {
                 Group {
@@ -32,7 +33,7 @@ struct TimetableBlock: View {
 struct TimetableBlock_Previews: PreviewProvider {
     static var previews: some View {
         let lecture: Lecture = .preview
-        TimetableBlock(lecture: lecture, timePlace: lecture.timePlaces[0])
+        TimetableBlock(lecture: lecture, timePlace: lecture.timePlaces[0], theme: .SNUTT)
             .frame(width: 70, height: 100, alignment: .center)
     }
 }

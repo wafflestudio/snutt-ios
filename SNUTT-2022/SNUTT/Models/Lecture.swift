@@ -16,6 +16,7 @@ struct Lecture: Identifiable {
     let credit: Int
     let department: String?
     let academic_year: String?
+    let colorIndex: Int
 
     var isCustom: Bool {
         course_number == nil
@@ -32,6 +33,7 @@ extension Lecture {
         credit = dto.credit
         department = dto.department
         academic_year = dto.academic_year
+        colorIndex = dto.colorIndex
     }
 }
 
@@ -49,7 +51,9 @@ extension Lecture {
                            course_number: UUID().uuidString,
                            credit: Int.random(in: 0 ... 4),
                            department: departments.randomElement(),
-                           academic_year: academic_years.randomElement())
+                           academic_year: academic_years.randomElement(),
+                           colorIndex: 0
+            )
         }
     }
 #endif

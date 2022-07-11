@@ -16,8 +16,10 @@ struct LectureBlocks: View {
     var body: some View {
         GeometryReader { reader in
             ForEach(lecture.timePlaces) { timePlace in
-                if let offsetPoint = Painter.getOffset(of: timePlace, in: reader.size, timetableSetting: timetableSetting) {
-                    TimetableBlock(lecture: lecture, timePlace: timePlace)
+                if let offsetPoint = Painter.getOffset(of: timePlace,
+                                                       in: reader.size,
+                                                       timetableSetting: timetableSetting) {
+                    TimetableBlock(lecture: lecture, timePlace: timePlace, theme: timetableSetting.current?.theme ?? .SNUTT)
                         .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: timetableSetting.weekCount), height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: timetableSetting.hourCount), alignment: .center)
                         .offset(x: offsetPoint.x, y: offsetPoint.y)
                 }
