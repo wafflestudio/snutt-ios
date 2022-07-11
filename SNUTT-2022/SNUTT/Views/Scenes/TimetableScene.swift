@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyTimetableScene: View {
+struct TimetableScene: View {
     @State private var pushToListScene = false
     @StateObject var viewModel: TimetableViewModel
 
@@ -16,7 +16,7 @@ struct MyTimetableScene: View {
             .environmentObject(viewModel.timetableSetting)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
-                NavigationLink(destination: MyLectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) {
+                NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) {
                     EmptyView()
                 }
             )
@@ -63,7 +63,7 @@ struct MyTimetableScene: View {
 struct MyTimetableScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            MyTimetableScene(viewModel: .init(container: .preview))
+            TimetableScene(viewModel: .init(container: .preview))
         }
     }
 }

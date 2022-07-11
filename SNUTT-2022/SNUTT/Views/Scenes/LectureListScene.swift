@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyLectureListScene: View {
+struct LectureListScene: View {
     let viewModel: MyLectureListViewModel
 
     var body: some View {
@@ -29,7 +29,7 @@ struct MyTimetableListScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             TabView {
-                MyLectureListScene(viewModel: .init(container: .preview))
+                LectureListScene(viewModel: .init(container: .preview))
             }
         }
     }

@@ -15,10 +15,10 @@ struct SNUTTView: View {
         ZStack {
             TabView(selection: $selectedTab) {
                 TabScene(tabType: .timetable) {
-                    MyTimetableScene(viewModel: .init(container: container))
+                    TimetableScene(viewModel: .init(container: container))
                 }
                 TabScene(tabType: .search) {
-                    MyLectureListScene(viewModel: .init(container: container))
+                    LectureListScene(viewModel: .init(container: container))
                 }
                 TabScene(tabType: .review) {
                     ReviewScene(viewModel: .init(container: container))
