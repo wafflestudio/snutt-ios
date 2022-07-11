@@ -18,7 +18,8 @@ struct LectureBlocks: View {
             ForEach(lecture.timePlaces) { timePlace in
                 if let offsetPoint = Painter.getOffset(of: timePlace,
                                                        in: reader.size,
-                                                       timetableSetting: timetableSetting) {
+                                                       timetableSetting: timetableSetting)
+                {
                     TimetableBlock(lecture: lecture, timePlace: timePlace, theme: timetableSetting.current?.theme ?? .SNUTT)
                         .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: timetableSetting.weekCount), height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: timetableSetting.hourCount), alignment: .center)
                         .offset(x: offsetPoint.x, y: offsetPoint.y)

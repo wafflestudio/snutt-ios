@@ -23,8 +23,7 @@ extension Timetable {
     extension Timetable {
         static var preview: Timetable {
             return .init(lectures: [.preview, .preview, .preview],
-                         theme: .SNUTT
-            )
+                         theme: .SNUTT)
         }
     }
 #endif

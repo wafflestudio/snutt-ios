@@ -29,7 +29,7 @@ enum Theme: Int, CaseIterable {
             return ["#ffffff", "#4FBEAA", "#9FC1A4", "#5A8173", "#84AEB1", "#266F55", "#D0E0C4", "#59886D", "#476060", "#3D7068"]
         }
     }
-    
+
     func getColor(at colorIndex: Int) -> String {
         return getColorList()[colorIndex]
     }

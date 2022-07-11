@@ -52,8 +52,7 @@ extension Lecture {
                            credit: Int.random(in: 0 ... 4),
                            department: departments.randomElement(),
                            academic_year: academic_years.randomElement(),
-                           colorIndex: 0
-            )
+                           colorIndex: 0)
         }
     }
 #endif
