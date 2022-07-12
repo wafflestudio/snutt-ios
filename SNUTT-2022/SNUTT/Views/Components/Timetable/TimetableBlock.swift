@@ -15,7 +15,7 @@ struct TimetableBlock: View {
     
     var body: some View {
         ZStack {
-            NavigationLink(destination: LectureDetailScene(viewModel: .init(container: viewModel.container))) {
+            NavigationLink(destination: LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture)) {
                 ZStack {
                     Rectangle()
                         .fill(Color(hex: theme.getColor(at: lecture.colorIndex)))

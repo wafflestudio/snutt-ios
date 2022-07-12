@@ -304,10 +304,10 @@
 		DCD41A6C27E5CDBE00CF380E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				BEDF506E27EB744A00CDCC13 /* LectureDetailScene.swift */,
 				BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */,
 				BE7E230027FF20EE004DC202 /* TimetableScene.swift */,
 				BEDF507227F427FA00CDCC13 /* LectureListScene.swift */,
+				BEDF506E27EB744A00CDCC13 /* LectureDetailScene.swift */,
 				DC29159A2865F95100FE5F9A /* SettingScene.swift */,
 				DC29159E28660F7800FE5F9A /* ReviewScene.swift */,
 				BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */,

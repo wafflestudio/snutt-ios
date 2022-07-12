@@ -13,10 +13,14 @@ struct Lecture: Identifiable {
     let instructor: String
     let timePlaces: [TimePlace]
     let course_number: String?
+    let lecture_number: String?
     let credit: Int
     let department: String?
     let academic_year: String?
     let colorIndex: Int
+    let classification: String?
+    let category: String?
+    let remark: String
 
     var isCustom: Bool {
         course_number == nil
@@ -30,10 +34,14 @@ extension Lecture {
         instructor = dto.instructor
         timePlaces = dto.class_time_json.map { .init(from: $0, isCustom: dto.course_number == nil) }
         course_number = dto.course_number
+        lecture_number = dto.lecture_number
         credit = dto.credit
         department = dto.department
         academic_year = dto.academic_year
         colorIndex = dto.colorIndex
+        classification = dto.classification
+        category = dto.category
+        remark = dto.remark
     }
 }
 
@@ -48,11 +56,16 @@ extension Lecture {
                            title: titles.randomElement()!,
                            instructor: instructors.randomElement()!,
                            timePlaces: [.preview, .preview],
-                           course_number: UUID().uuidString,
+                           course_number: "400.313",
+                           lecture_number: "001",
                            credit: Int.random(in: 0 ... 4),
                            department: departments.randomElement(),
                            academic_year: academic_years.randomElement(),
-                           colorIndex: 0)
+                           colorIndex: 0,
+                           classification: "전선",
+                           category: "체육",
+                           remark: ""
+            )
         }
     }
 #endif

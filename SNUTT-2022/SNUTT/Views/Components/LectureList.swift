@@ -15,7 +15,7 @@ struct LectureList: View {
         List(lectures) { lecture in
             ZStack {
                 NavigationLink {
-                    LectureDetailScene(viewModel: .init(container: viewModel.container))
+                    LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture)
                 } label: {
                     EmptyView()
                 }
