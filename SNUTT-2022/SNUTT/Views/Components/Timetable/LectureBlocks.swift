@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LectureBlocks: View {
+    let viewModel: ViewModel
     typealias Painter = TimetableViewModel.TimetablePainter
 
     let lecture: Lecture
@@ -20,7 +21,10 @@ struct LectureBlocks: View {
                                                        in: reader.size,
                                                        timetableSetting: timetableSetting)
                 {
-                    TimetableBlock(lecture: lecture, timePlace: timePlace, theme: timetableSetting.current?.theme ?? .SNUTT)
+                    TimetableBlock(viewModel: .init(container: viewModel.container),
+                                   lecture: lecture,
+                                   timePlace: timePlace,
+                                   theme: timetableSetting.current?.theme ?? .SNUTT)
                         .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: timetableSetting.weekCount), height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: timetableSetting.hourCount), alignment: .center)
                         .offset(x: offsetPoint.x, y: offsetPoint.y)
                 }
@@ -29,10 +33,14 @@ struct LectureBlocks: View {
     }
 }
 
+extension LectureBlocks {
+    class ViewModel: BaseViewModel {}
+}
+
 struct LectureBlocks_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = TimetableViewModel(container: .preview)
-        LectureBlocks(lecture: .preview)
+        LectureBlocks(viewModel: .init(container: .preview), lecture: .preview)
             .environmentObject(viewModel.timetableSetting)
     }
 }

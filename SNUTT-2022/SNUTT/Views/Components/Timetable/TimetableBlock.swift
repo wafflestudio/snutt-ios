@@ -8,32 +8,48 @@
 import SwiftUI
 
 struct TimetableBlock: View {
+    let viewModel: ViewModel
     let lecture: Lecture
     let timePlace: TimePlace
     let theme: Theme
-
+    
     var body: some View {
         ZStack {
-            Rectangle()
-                .fill(Color(hex: theme.getColor(at: lecture.colorIndex)))
-                .border(Color.black.opacity(0.1), width: 0.5)
-            VStack {
-                Group {
-                    Text(lecture.title)
-                    Text(timePlace.place)
+            NavigationLink(destination: LectureDetailScene(viewModel: .init(container: viewModel.container))) {
+                ZStack {
+                    Rectangle()
+                        .fill(Color(hex: theme.getColor(at: lecture.colorIndex)))
+                        .border(Color.black.opacity(0.1), width: 0.5)
+                    
+                    VStack {
+                        Group {
+                            Text(lecture.title)
+                            Text(timePlace.place)
+                        }
+                        .multilineTextAlignment(.center)
+                        .font(STFont.details)
+                        .foregroundColor(.white)
+                    }.padding(2)
                 }
-                .multilineTextAlignment(.center)
-                .font(STFont.details)
-                .foregroundColor(.white)
-            }.padding(2)
+            }
+            .buttonStyle(.plain)
         }
     }
+}
+
+extension TimetableBlock {
+    class ViewModel: BaseViewModel {}
 }
 
 struct TimetableBlock_Previews: PreviewProvider {
     static var previews: some View {
         let lecture: Lecture = .preview
-        TimetableBlock(lecture: lecture, timePlace: lecture.timePlaces[0], theme: .SNUTT)
-            .frame(width: 70, height: 100, alignment: .center)
+        NavigationView {
+            TimetableBlock(viewModel: .init(container: .preview),
+                           lecture: lecture,
+                           timePlace: lecture.timePlaces[0],
+                           theme: .SNUTT)
+                .frame(width: 70, height: 100, alignment: .center)
+        }
     }
 }

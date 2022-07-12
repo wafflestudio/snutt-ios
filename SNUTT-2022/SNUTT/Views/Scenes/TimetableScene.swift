@@ -12,7 +12,7 @@ struct TimetableScene: View {
     @StateObject var viewModel: TimetableViewModel
 
     var body: some View {
-        TimetableZStack()
+        TimetableZStack(viewModel: .init(container: viewModel.container))
             .environmentObject(viewModel.timetableSetting)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(

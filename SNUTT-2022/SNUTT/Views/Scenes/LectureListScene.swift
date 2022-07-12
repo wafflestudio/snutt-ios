@@ -11,7 +11,8 @@ struct LectureListScene: View {
     let viewModel: MyLectureListViewModel
 
     var body: some View {
-        LectureList(lectures: viewModel.currentTimetable?.lectures ?? [])
+        LectureList(viewModel: .init(container: viewModel.container),
+                    lectures: viewModel.currentTimetable?.lectures ?? [])
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
