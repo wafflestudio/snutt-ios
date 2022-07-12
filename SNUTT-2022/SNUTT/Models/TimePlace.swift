@@ -34,15 +34,15 @@ struct TimePlace: Identifiable {
     var endTime: Double {
         startTime + len
     }
-    
+
     var startTimeString: String {
         getString(from: startTime)
     }
-    
+
     var endTimeString: String {
         getString(from: endTime)
     }
-    
+
     /// `time: Double`을 분 단위로 정확하게 60진법 수로 환산한다.
     /// ex) 15.3 -> 15시 18분(`0.3 * 60 == 18`)
     private func getString(from time: Double) -> String {

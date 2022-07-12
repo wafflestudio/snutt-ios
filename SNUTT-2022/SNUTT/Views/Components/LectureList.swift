@@ -37,7 +37,7 @@ extension LectureList {
 struct TimetableList_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            LectureList(viewModel: .init(container: .preview),lectures: [.preview, .preview, .preview])
+            LectureList(viewModel: .init(container: .preview), lectures: [.preview, .preview, .preview])
         }
     }
 }

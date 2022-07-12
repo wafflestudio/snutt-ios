@@ -10,14 +10,13 @@ import SwiftUI
 struct LectureDetailScene: View {
     let viewModel: ViewModel
     let lecture: Lecture
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 Group {
                     VStack {
                         Group {
-                            
                             HStack {
                                 DetailLabel(text: "강의명")
                                 DetailText(text: lecture.title)
@@ -38,14 +37,12 @@ struct LectureDetailScene: View {
                             }
                         }
                         .padding(.vertical, 5)
-                        
                     }
                     .padding()
-                    
+
                     if !lecture.isCustom {
                         VStack {
                             Group {
-                                
                                 HStack {
                                     DetailLabel(text: "학과")
                                     DetailText(text: lecture.department)
@@ -80,19 +77,17 @@ struct LectureDetailScene: View {
                                 }
                             }
                             .padding(.vertical, 5)
-                            
                         }
                         .padding()
                     }
-                    
-                    
+
                     VStack {
                         Text("시간 및 장소")
                             .padding(.leading, 5)
                             .font(STFont.detailLabel)
                             .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        
+
                         ForEach(lecture.timePlaces) { timePlace in
                             VStack {
                                 HStack {
@@ -110,23 +105,21 @@ struct LectureDetailScene: View {
                         }
                     }
                     .padding()
-                    
+
                     DetailButton(text: "강의계획서") {
                         print("tap")
                     }
-                    
+
                     DetailButton(text: "강의평") {
                         print("tap")
                     }
-                    
+
                     DetailButton(text: "삭제") {
                         print("tap")
                     }
                     .foregroundColor(.red)
-                    
                 }
                 .background(Color.white)
-                
             }
             .padding(.vertical, 20)
         }
@@ -138,10 +131,9 @@ struct LectureDetailScene: View {
 
 struct DetailLabel: View {
     let text: String
-    
+
     var body: some View {
-        VStack{
-            
+        VStack {
             Text(text)
                 .padding(.horizontal, 5)
                 .padding(.trailing, 10)
@@ -149,13 +141,12 @@ struct DetailLabel: View {
                 .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
                 .frame(maxWidth: 70, alignment: .leading)
         }
-        
     }
 }
 
 struct DetailText: View {
     let text: String?
-    
+
     var body: some View {
         Group {
             if let text = text, !text.isEmpty {
@@ -173,7 +164,7 @@ struct DetailText: View {
 struct DetailButton: View {
     let text: String
     let action: () -> Void
-    
+
     struct DetailButtonStyle: ButtonStyle {
         func makeBody(configuration: Self.Configuration) -> some View {
             configuration.label
@@ -181,7 +172,7 @@ struct DetailButton: View {
                 .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : Color(uiColor: .systemBackground))
         }
     }
-    
+
     var body: some View {
         Button {
             action()

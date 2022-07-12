@@ -64,8 +64,7 @@ extension Lecture {
                            colorIndex: 0,
                            classification: "전선",
                            category: "체육",
-                           remark: ""
-            )
+                           remark: "")
         }
     }
 #endif

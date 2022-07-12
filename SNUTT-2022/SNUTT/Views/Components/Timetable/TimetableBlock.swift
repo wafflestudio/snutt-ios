@@ -12,7 +12,7 @@ struct TimetableBlock: View {
     let lecture: Lecture
     let timePlace: TimePlace
     let theme: Theme
-    
+
     var body: some View {
         ZStack {
             NavigationLink(destination: LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture)) {
@@ -20,7 +20,7 @@ struct TimetableBlock: View {
                     Rectangle()
                         .fill(Color(hex: theme.getColor(at: lecture.colorIndex)))
                         .border(Color.black.opacity(0.1), width: 0.5)
-                    
+
                     VStack {
                         Group {
                             Text(lecture.title)
