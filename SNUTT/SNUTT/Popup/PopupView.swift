@@ -18,6 +18,8 @@ class PopupView: UIView {
                 }
                 if hiddenDays == 0 {
                     return "다시 보지 않기"
+                } else if hiddenDays == 1 {
+                    return "하루 보지 않기"
                 } else {
                     return "\(hiddenDays)일 보지 않기"
                 }

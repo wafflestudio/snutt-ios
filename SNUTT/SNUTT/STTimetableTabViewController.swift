@@ -463,20 +463,22 @@ extension STTimetableTabViewController {
     }
     
     private func loadPopUpView() {
-        print("currentPopupList: \(currentPopupList)")
         for popup in currentPopupList {
             let popUpViewController = PopupViewController()
             becomeDelegate(of: popUpViewController)
             popUpViewController.presentIfNeeded(popup: popup, at: popUpViewController)
             popUpViewController.popup = popup
-            self.currentPopup = popup
             if currentPopupList.last != popup {
                 popUpViewController.popupView.isHidden = true
             }
         }
+        setNewCurrentPopup()
     }
     
     private func changeBackgroundColor() {
+        if shouldClosePopupState() {
+            popUpControllerState = .closed
+        }
         switch popUpControllerState {
         case .opened: showBackgroundCoverView()
         case .closed: hideBackgroundCoverView()
@@ -488,6 +490,11 @@ extension STTimetableTabViewController: PopupViewControllerDelegate {
     var rootVC: UIViewController? {
         UIApplication.shared.windows.first!.rootViewController
     }
+    
+    var lastPopupVC: PopupViewController? {
+        rootVC?.children.last(where: { vc in
+            vc.isKind(of: PopupViewController.self)}) as? PopupViewController
+    }
 
     func present(viewController: PopupViewController) {
         popUpControllerState = .opened
@@ -498,59 +505,33 @@ extension STTimetableTabViewController: PopupViewControllerDelegate {
     /// 닫기
     func dismiss() {
         removePopup()
-        if shouldClosePopupState() {
-            popUpControllerState = .closed
-        }
-        changeBackgroundColor()
     }
     
     /// n일 동안 보지 않기
     func dismissForNdays() {
         removePopup()
-        if shouldClosePopupState() {
-            popUpControllerState = .closed
-        }
-        changeBackgroundColor()
         STPopupManager.saveLastUpdate(for: currentPopup)
     }
     
     /// 가장 상단의 팝업을 제거합니다.
     func removePopup() {
-        guard let rootVC = rootVC else {
-            return
-        }
-        let lastPopup = rootVC.children.last(where: { vc in
-            vc.isKind(of: PopupViewController.self)
-        })
-        lastPopup?.remove(then: setNewCurrentPopup)
+        lastPopupVC?.remove(then: setNewCurrentPopup)
     }
     
     /// 모든 PopupViewController가 제거되었는지 확인합니다.
     func shouldClosePopupState() -> Bool {
-        guard let rootVC = rootVC else {
+        if lastPopupVC != nil {
+            return false
+        } else {
             return true
         }
-        if rootVC.children.first(where: { vc in
-            vc.isKind(of: PopupViewController.self)
-        }) == rootVC.children.last(where: { vc in
-            vc.isKind(of: PopupViewController.self)
-        }) {
-            return true
-        }
-        return false
     }
     
     /// 새로운 currentPopup을 설정합니다.
     func setNewCurrentPopup() {
-        guard let rootVC = rootVC else {
-            return
-        }
-        let newLastPopup = rootVC.children.last(where: { vc in
-            vc.isKind(of: PopupViewController.self)
-        }) as? PopupViewController
-        
-        newLastPopup?.popupView.isHidden = false
-        currentPopup = newLastPopup?.popup
+        lastPopupVC?.popupView.isHidden = false
+        currentPopup = lastPopupVC?.popup
+        changeBackgroundColor()
     }
 }
 

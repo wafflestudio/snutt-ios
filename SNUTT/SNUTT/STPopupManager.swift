@@ -33,23 +33,6 @@ struct STPopupManager {
         STDefaults[.popupList] = dictList
     }
     
-    /// 서버에서 최신 팝업 정보를 받아옵니다.
-    private static func getRecentPopup() {
-        STNetworking.getPopups { popups in
-            for pop in popups {
-                if !totalPopupList.contains(where: {
-                    $0 == pop
-                }) {
-                    totalPopupList.append(pop)
-                }
-                #if DEBUG
-                print(pop)
-                #endif
-            }
-            saveData()
-        } failure: {}
-    }
-    
     /// UserDefaults에 저장된 팝업 정보를 불러옵니다.
     static func loadData(then: @escaping () -> ()) {
         if let dict = STDefaults[.popupList] {
@@ -79,6 +62,23 @@ struct STPopupManager {
             totalPopupList[$0].lastUpdate = Date()
         }
         saveData()
+    }
+    
+    /// 서버에서 최신 팝업 정보를 받아옵니다.
+    private static func getRecentPopup() {
+        STNetworking.getPopups { popups in
+            for pop in popups {
+                if !totalPopupList.contains(where: {
+                    $0 == pop
+                }) {
+                    totalPopupList.append(pop)
+                }
+                #if DEBUG
+                print(pop)
+                #endif
+            }
+            saveData()
+        } failure: {}
     }
     
     /// 유저에게 보여야 하는 팝업만 남겨 반환합니다.

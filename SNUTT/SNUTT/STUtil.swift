@@ -143,7 +143,7 @@ extension UIViewController {
         guard parent != nil else {
             return
         }
-        UIView.animate(withDuration: animate ? 0.3 : 0, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: []) {
+        UIView.animate(withDuration: animate ? 0.3 : 0, delay: 0, options: [.transitionCrossDissolve]) {
             self.view.alpha = 0
         } completion: { _ in
             self.willMove(toParent: nil)
