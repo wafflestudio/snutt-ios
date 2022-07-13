@@ -10,14 +10,21 @@ import Foundation
 import SwiftyJSON
 
 struct STPopupManager {
-    static var popupList: [STPopup] = []
+    
+    /// 유저에게 보여줄 팝업 리스트입니다.
+    static var popupList: [STPopup] {
+        STPopupManager.filterPopup()
+    }
+    
+    /// 유저에게 보여주지 않을 팝업까지 포함된 전체 리스트입니다.
+    private static var totalPopupList: [STPopup] = []
+    
+    static var hasShownPopup: Bool = false
     
     /// STPopupManager을 초기화합니다.
-    /// 반드시 UserDefaults에 저장된 데이터를 먼저 불러옵니다.
     static func initialize() {
-        STPopupManager.loadData()
-        STPopupManager.getRecentPopup()
-        print("popupList(initialize): \(popupList)")
+        STPopupManager.hasShownPopup = false
+        STPopupManager.loadData(then: getRecentPopup)
     }
     
     /// 현재 popupList를 UserDefaults에 저장합니다.
@@ -30,34 +37,35 @@ struct STPopupManager {
     private static func getRecentPopup() {
         STNetworking.getPopups { popups in
             for pop in popups {
-                if !popupList.contains(pop) {
-                    print("새롭게 추가할 팝업입니다. \(pop)")
-                    popupList.append(pop)
+                if !totalPopupList.contains(where: {
+                    $0 == pop
+                }) {
+                    totalPopupList.append(pop)
                 }
                 #if DEBUG
                 print(pop)
                 #endif
             }
-            filterData()
-            print("popupList(after filter): \(popupList)")
             saveData()
-            print("popupList(after save): \(popupList)")
         } failure: {}
     }
     
     /// UserDefaults에 저장된 팝업 정보를 불러옵니다.
-    static func loadData() {
-        print("불러온 데이터를 출력합니다.")
+    static func loadData(then: @escaping () -> ()) {
         if let dict = STDefaults[.popupList] {
             for data in dict {
                 guard let popup = STPopup(dictionary: data) else { continue }
+                #if DEBUG
                 print(popup)
-                if !popupList.contains(popup) {
-                    popupList.append(popup)
+                #endif
+                if !totalPopupList.contains(where: {
+                    $0 == popup
+                }) {
+                    totalPopupList.append(popup)
                 }
             }
         }
-        print("불러온 데이터 출력 완료")
+        then()
     }
     
     /// 마지막으로 "닫기"를 누른 시점을 저장합니다.
@@ -65,19 +73,18 @@ struct STPopupManager {
         guard let popup = popup else {
             return
         }
-        popupList.indices.filter {
-            popupList[$0] == popup
+        totalPopupList.indices.filter {
+            totalPopupList[$0] == popup
         }.forEach {
-            popupList[$0].lastUpdate = Date()
+            totalPopupList[$0].lastUpdate = Date()
         }
         saveData()
     }
     
-    /// 유저에게 보여야 하는 팝업만 남깁니다.
-    private static func filterData() {
-        popupList = popupList.filter({ popup in
-            print("이 팝업을 띄워야 할까요?: \(shouldShow(popup: popup))")
-            return shouldShow(popup: popup)
+    /// 유저에게 보여야 하는 팝업만 남겨 반환합니다.
+    private static func filterPopup() -> [STPopup] {
+        return totalPopupList.filter({ popup in
+            shouldShow(popup: popup)
         })
     }
     
@@ -86,12 +93,11 @@ struct STPopupManager {
         guard let lastUpdate = popup.lastUpdate else {
             return true
         }
-        print("\(Date().daysFrom(lastUpdate)) > \(popup.hiddenDays)")
         return Date().daysFrom(lastUpdate) > popup.hiddenDays ?? 0
     }
     
     private static func toDictionary() -> [NSDictionary]? {
-        if popupList.isEmpty { return nil }
-        return popupList.dictionaryValue()
+        if totalPopupList.isEmpty { return nil }
+        return totalPopupList.dictionaryValue()
     }
 }

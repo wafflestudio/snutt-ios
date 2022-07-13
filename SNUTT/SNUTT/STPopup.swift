@@ -27,14 +27,13 @@ struct STPopup {
 }
 
 extension STPopup: Equatable {
-    static func ==(lhs: STPopup, rhs: STPopup) -> Bool {
+    static func == (lhs: STPopup, rhs: STPopup) -> Bool {
         return lhs.key == rhs.key && lhs.imageURL == rhs.imageURL && lhs.hiddenDays == rhs.hiddenDays
     }
 }
 
 extension STPopup: DictionaryRepresentable {
     func dictionaryValue() -> NSDictionary {
-        print("dictionaryValue: \(lastUpdate)")
         return [
             "key": key ?? "",
             "imageURL": imageURL ?? "",
@@ -45,7 +44,6 @@ extension STPopup: DictionaryRepresentable {
     
     init?(dictionary: NSDictionary?) {
         guard let dict = dictionary else { return }
-        print(dict["lastUpdate"] as? String)
         guard let key = dict["key"] as? String,
               let imageURL = dict["imageURL"] as? String,
               let hiddenDays = dict["hiddenDays"] as? Int,

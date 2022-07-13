@@ -22,8 +22,6 @@ class STTimetableTabViewController: UIViewController {
     }
     var currentPopup: STPopup?
     
-    var shouldShowPopup: Bool = true
-
     enum PopupControllerState {
         case opened
         case closed
@@ -144,9 +142,12 @@ class STTimetableTabViewController: UIViewController {
 
     override func viewWillAppear(_: Bool) {
         setNotiBadge(STDefaults[.shouldShowBadge])
-        if shouldShowPopup {
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if !STPopupManager.hasShownPopup {
             loadPopUpView()
-            shouldShowPopup = false
+            STPopupManager.hasShownPopup = true
         }
     }
 
