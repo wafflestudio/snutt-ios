@@ -9,6 +9,23 @@
 import UIKit
 
 class PopupView: UIView {
+    
+    var popup: STPopup! {
+        didSet {
+            dismissForNdaysButton = createDismissButton(text: { () -> String in
+                guard let hiddenDays = popup?.hiddenDays else {
+                    return "다시 보지 않기"
+                }
+                if hiddenDays == 0 {
+                    return "다시 보지 않기"
+                } else {
+                    return "\(hiddenDays)일 보지 않기"
+                }
+            }())
+            setDismissForNdaysButton()
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -26,7 +43,6 @@ class PopupView: UIView {
         addSubview(imageView)
         addSubview(dismissOnceButton)
         addSubview(divider)
-        addSubview(dismissForNdaysButton)
 
         NSLayoutConstraint.activate([
             imageView.widthAnchor.constraint(equalTo: widthAnchor, constant: -145),
@@ -47,11 +63,14 @@ class PopupView: UIView {
             divider.trailingAnchor.constraint(equalTo: dismissOnceButton.leadingAnchor, constant: -16),
             divider.centerYAnchor.constraint(equalTo: dismissOnceButton.centerYAnchor)
         ])
-        
-        
+    }
+    
+    private func setDismissForNdaysButton() {
+        addSubview(dismissForNdaysButton!)
         NSLayoutConstraint.activate([
-            dismissForNdaysButton.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 16),
-            dismissForNdaysButton.centerYAnchor.constraint(equalTo: divider.centerYAnchor),
+            dismissForNdaysButton!.trailingAnchor.constraint(equalTo: divider.leadingAnchor, constant: -16),
+            dismissForNdaysButton!.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 16),
+            dismissForNdaysButton!.centerYAnchor.constraint(equalTo: divider.centerYAnchor),
         ])
     }
 
@@ -85,5 +104,5 @@ class PopupView: UIView {
 
     lazy var dismissOnceButton: UIButton = createDismissButton(text: "닫기")
 
-    lazy var dismissForNdaysButton: UIButton = createDismissButton(text: "다시 보지 않기")
+    var dismissForNdaysButton: UIButton?
 }
