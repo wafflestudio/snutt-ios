@@ -464,12 +464,12 @@ extension STTimetableTabViewController {
     
     private func loadPopUpView() {
         for popup in currentPopupList {
-            let popUpViewController = PopupViewController()
-            becomeDelegate(of: popUpViewController)
-            popUpViewController.presentIfNeeded(popup: popup, at: popUpViewController)
-            popUpViewController.popup = popup
+            let popupViewController = PopupViewController()
+            becomeDelegate(of: popupViewController)
+            popupViewController.presentIfNeeded(popup: popup, at: popupViewController)
+            popupViewController.popup = popup
             if currentPopupList.last != popup {
-                popUpViewController.popupView.isHidden = true
+                popupViewController.popupView.isHidden = true
             }
         }
         setNewCurrentPopup()
@@ -498,8 +498,8 @@ extension STTimetableTabViewController: PopupViewControllerDelegate {
 
     func present(viewController: PopupViewController) {
         popUpControllerState = .opened
-        changeBackgroundColor()
         rootVC?.add(childVC: viewController)
+        changeBackgroundColor()
     }
     
     /// 닫기
