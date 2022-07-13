@@ -140,11 +140,8 @@ class STTimetableTabViewController: UIViewController {
         }
     }
 
-    override func viewWillAppear(_: Bool) {
-        setNotiBadge(STDefaults[.shouldShowBadge])
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
+        setNotiBadge(STDefaults[.shouldShowBadge])
         if !STPopupManager.hasShownPopup {
             loadPopUpView()
             STPopupManager.hasShownPopup = true
