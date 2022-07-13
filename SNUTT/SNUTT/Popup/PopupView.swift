@@ -23,43 +23,39 @@ class PopupView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .clear
 
-        addSubview(vstack)
+        addSubview(imageView)
+        addSubview(dismissOnceButton)
+        addSubview(divider)
+        addSubview(dismissForNdaysButton)
 
         NSLayoutConstraint.activate([
-            vstack.centerXAnchor.constraint(equalTo: centerXAnchor),
-            vstack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            imageView.widthAnchor.constraint(equalTo: widthAnchor, constant: -145),
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 4 / 3), // 4:3 image ratio, scale to fill
+            imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
 
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalTo: widthAnchor, constant: -120),
-            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 4 / 3), // 4:3 image ratio, scale to fill
+            dismissOnceButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -16),
+            dismissOnceButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
+            dismissOnceButton.widthAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 6 / 23)
+        ])
+        
+        NSLayoutConstraint.activate([
+            divider.widthAnchor.constraint(equalToConstant: 1),
+            divider.heightAnchor.constraint(equalToConstant: 17),
+            divider.trailingAnchor.constraint(equalTo: dismissOnceButton.leadingAnchor, constant: -16),
+            divider.centerYAnchor.constraint(equalTo: dismissOnceButton.centerYAnchor)
+        ])
+        
+        
+        NSLayoutConstraint.activate([
+            dismissForNdaysButton.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 16),
+            dismissForNdaysButton.centerYAnchor.constraint(equalTo: divider.centerYAnchor),
         ])
     }
 
     // MARK: View Components
-
-    lazy var hstack: UIStackView = {
-        let hstack = UIStackView(arrangedSubviews: [dismissForNdaysButton, divider, dismissOnceButton])
-        NSLayoutConstraint.activate([
-            divider.widthAnchor.constraint(equalToConstant: 1),
-            divider.heightAnchor.constraint(equalToConstant: 17),
-        ])
-        hstack.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        hstack.isLayoutMarginsRelativeArrangement = true
-        hstack.axis = .horizontal
-        hstack.distribution = .fillProportionally
-        hstack.spacing = 10
-        hstack.translatesAutoresizingMaskIntoConstraints = false
-        return hstack
-    }()
-
-    lazy var vstack: UIStackView = {
-        let vstack = UIStackView(arrangedSubviews: [imageView, hstack])
-        vstack.axis = .vertical
-        vstack.spacing = 10
-        vstack.translatesAutoresizingMaskIntoConstraints = false
-        return vstack
-    }()
 
     lazy var divider: UIView = {
         let view = UIView()
