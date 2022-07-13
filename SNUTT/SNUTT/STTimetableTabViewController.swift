@@ -469,6 +469,9 @@ extension STTimetableTabViewController {
             popUpViewController.presentIfNeeded(popup: popup, at: popUpViewController)
             popUpViewController.popup = popup
             self.currentPopup = popup
+            if currentPopupList.last != popup {
+                popUpViewController.popupView.isHidden = true
+            }
         }
     }
     
@@ -545,6 +548,7 @@ extension STTimetableTabViewController: PopupViewControllerDelegate {
             vc.isKind(of: PopupViewController.self)
         }) as? PopupViewController
         
+        newLastPopup?.popupView.isHidden = false
         currentPopup = newLastPopup?.popup
     }
 }
