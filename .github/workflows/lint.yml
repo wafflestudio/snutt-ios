@@ -18,7 +18,9 @@ jobs:
           fetch-depth: 0
           
       - name: Print current branch name
-        run: echo ${{ github.ref_name }}
+        run: |
+          echo ${{ github.ref_name }}
+          git log -1
       
       - run: |
           echo ${{ github.event.pull_request.head.sha }}
