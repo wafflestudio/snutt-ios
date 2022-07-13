@@ -109,7 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 STDefaults[.shouldDeleteFCMInfos] = STFCMInfoList(infoList: infos.filter { info in info != fcmInfo })
             }, failure: nil)
         }
-        
+
         STPopupManager.initialize()
 
         return true

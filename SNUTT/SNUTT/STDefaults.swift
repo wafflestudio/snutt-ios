@@ -32,7 +32,7 @@ extension UserDefaults {
         get { return unarchive(key) }
         set { archive(key, newValue) }
     }
-    
+
     subscript(key: DefaultsKey<[NSDictionary]?>) -> [NSDictionary]? {
         get { return unarchive(key) }
         set { archive(key, newValue) }

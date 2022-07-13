@@ -22,7 +22,7 @@ class PopupViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.popupView.popup = popup
+        popupView.popup = popup
         setLayout()
         setButtonActions()
     }
@@ -43,12 +43,12 @@ class PopupViewController: UIViewController {
     }
 
     @objc func dismissOnce() {
-        self.delegate?.dismiss()
+        delegate?.dismiss()
     }
 
     @objc func dismissForNdays() {
         // TODO: check UserDefaults
-        self.delegate?.dismissForNdays()
+        delegate?.dismissForNdays()
     }
 
     func presentIfNeeded(popup: STPopup, at viewController: PopupViewController) {
@@ -57,7 +57,7 @@ class PopupViewController: UIViewController {
             self.delegate?.present(viewController: viewController)
         }
     }
-    
+
     func loadPopUpImage(url: String, completion: @escaping () -> Void) {
         if let url = URL(string: url) {
             let task = URLSession.shared.dataTask(with: url) { data, _, error in

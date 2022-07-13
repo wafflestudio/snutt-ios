@@ -78,7 +78,7 @@ extension String {
         let characterSet = CharacterSet.alphanumerics.inverted
         return (rangeOfCharacter(from: characterSet) != nil)
     }
-    
+
     func convertToDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -137,7 +137,7 @@ extension UIViewController {
     }
 
     /// 부모 뷰 컨트롤러로부터 `self`를 제거한다.
-    func remove(animate: Bool = true, then: @escaping () -> ()) {
+    func remove(animate: Bool = true, then: @escaping () -> Void) {
         // Just to be safe, we check that this view controller
         // is actually added to a parent before removing it.
         guard parent != nil else {
@@ -236,7 +236,7 @@ extension Date {
         if secondsFrom(date) > 0 { return "\(secondsFrom(date))초전" }
         return ""
     }
-    
+
     func convertToString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

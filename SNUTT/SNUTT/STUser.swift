@@ -96,7 +96,7 @@ class STUser {
         }, failure: {
             openController()
         })
-        
+
         STPopupManager.initialize()
     }
 

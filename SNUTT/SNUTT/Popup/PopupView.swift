@@ -9,7 +9,6 @@
 import UIKit
 
 class PopupView: UIView {
-    
     var popup: STPopup! {
         didSet {
             dismissForNdaysButton = createDismissButton(text: { () -> String in
@@ -27,7 +26,7 @@ class PopupView: UIView {
             setDismissForNdaysButton()
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -50,23 +49,23 @@ class PopupView: UIView {
             imageView.widthAnchor.constraint(equalTo: widthAnchor, constant: -145),
             imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 4 / 3), // 4:3 image ratio, scale to fill
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
 
         NSLayoutConstraint.activate([
             dismissOnceButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -16),
             dismissOnceButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-            dismissOnceButton.widthAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 6 / 23)
+            dismissOnceButton.widthAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 6 / 23),
         ])
-        
+
         NSLayoutConstraint.activate([
             divider.widthAnchor.constraint(equalToConstant: 1),
             divider.heightAnchor.constraint(equalToConstant: 17),
             divider.trailingAnchor.constraint(equalTo: dismissOnceButton.leadingAnchor, constant: -16),
-            divider.centerYAnchor.constraint(equalTo: dismissOnceButton.centerYAnchor)
+            divider.centerYAnchor.constraint(equalTo: dismissOnceButton.centerYAnchor),
         ])
     }
-    
+
     private func setDismissForNdaysButton() {
         addSubview(dismissForNdaysButton!)
         NSLayoutConstraint.activate([

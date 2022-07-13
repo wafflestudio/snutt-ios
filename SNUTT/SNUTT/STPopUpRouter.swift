@@ -13,24 +13,24 @@ import SwiftyJSON
 enum STPopUpRouter: STRouter {
     static let baseURLString = STConfig.sharedInstance.baseURL + "/v1/popups"
     static let shouldAddToken: Bool = true
-    
+
     case getPopUpList
-    
+
     var method: HTTPMethod {
         switch self {
         case .getPopUpList:
             return .get
         }
     }
-    
+
     var path: String {
         switch self {
         case .getPopUpList:
             return ""
         }
     }
-    
-    var parameters: [String : Any]? {
+
+    var parameters: [String: Any]? {
         switch self {
         case .getPopUpList:
             return nil

@@ -17,11 +17,13 @@ class STTimetableTabViewController: UIViewController {
     var currentTimetable: STTimetable? {
         return STTimetableManager.sharedInstance.currentTimetable
     }
+
     var currentPopupList: [STPopup] {
         return STPopupManager.popupList
     }
+
     var currentPopup: STPopup?
-    
+
     enum PopupControllerState {
         case opened
         case closed
@@ -102,7 +104,7 @@ class STTimetableTabViewController: UIViewController {
 
         addMenuView()
         addThemeSettingView()
-        
+
         tabBarController!.view.addSubview(backgroundView)
     }
 
@@ -140,7 +142,7 @@ class STTimetableTabViewController: UIViewController {
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_: Bool) {
         setNotiBadge(STDefaults[.shouldShowBadge])
         if !STPopupManager.hasShownPopup {
             loadPopUpView()
@@ -458,7 +460,7 @@ extension STTimetableTabViewController {
     private func becomeDelegate(of viewController: PopupViewController) {
         viewController.delegate = self
     }
-    
+
     private func loadPopUpView() {
         for popup in currentPopupList {
             let popupViewController = PopupViewController()
@@ -471,7 +473,7 @@ extension STTimetableTabViewController {
         }
         setNewCurrentPopup()
     }
-    
+
     private func changeBackgroundColor() {
         if shouldClosePopupState() {
             popUpControllerState = .closed
@@ -487,10 +489,11 @@ extension STTimetableTabViewController: PopupViewControllerDelegate {
     var rootVC: UIViewController? {
         UIApplication.shared.windows.first!.rootViewController
     }
-    
+
     var lastPopupVC: PopupViewController? {
         rootVC?.children.last(where: { vc in
-            vc.isKind(of: PopupViewController.self)}) as? PopupViewController
+            vc.isKind(of: PopupViewController.self)
+        }) as? PopupViewController
     }
 
     func present(viewController: PopupViewController) {
@@ -498,23 +501,23 @@ extension STTimetableTabViewController: PopupViewControllerDelegate {
         rootVC?.add(childVC: viewController)
         changeBackgroundColor()
     }
-    
+
     /// 닫기
     func dismiss() {
         removePopup()
     }
-    
+
     /// n일 동안 보지 않기
     func dismissForNdays() {
         removePopup()
         STPopupManager.saveLastUpdate(for: currentPopup)
     }
-    
+
     /// 가장 상단의 팝업을 제거합니다.
     func removePopup() {
         lastPopupVC?.remove(then: setNewCurrentPopup)
     }
-    
+
     /// 모든 PopupViewController가 제거되었는지 확인합니다.
     func shouldClosePopupState() -> Bool {
         if lastPopupVC != nil {
@@ -523,7 +526,7 @@ extension STTimetableTabViewController: PopupViewControllerDelegate {
             return true
         }
     }
-    
+
     /// 새로운 currentPopup을 설정합니다.
     func setNewCurrentPopup() {
         lastPopupVC?.popupView.isHidden = false

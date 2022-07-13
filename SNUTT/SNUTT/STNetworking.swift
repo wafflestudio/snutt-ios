@@ -391,9 +391,9 @@ class STNetworking {
             failure?()
         }, showNetworkAlert: false)
     }
-    
+
     // MARK: PopUp
-    
+
     static func getPopups(_ done: @escaping ([STPopup]) -> Void, failure: (() -> Void)?) {
         Alamofire.request(STPopUpRouter.getPopUpList)
             .responseWithDone({ _, json in
