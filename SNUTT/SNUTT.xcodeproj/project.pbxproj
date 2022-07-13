@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		B1EB38A2D401D55B8B513965 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408D105AB67E80C047A51DD4 /* Pods_SNUTT.framework */; };
-		B864A7A62865F7A500D28F8B /* STPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864A7A52865F7A500D28F8B /* STPopUp.swift */; };
+		B846895A287C029D00804F18 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8468959287C029D00804F18 /* PopupView.swift */; };
+		B846895C287C15A100804F18 /* STPopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B846895B287C15A100804F18 /* STPopupManager.swift */; };
+		B864A7A62865F7A500D28F8B /* STPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864A7A52865F7A500D28F8B /* STPopup.swift */; };
 		B864A7A82865FB8E00D28F8B /* STPopUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864A7A72865FB8E00D28F8B /* STPopUpRouter.swift */; };
-		BEB9D71F285B9189005D9A93 /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9D71E285B9189005D9A93 /* PopUpView.swift */; };
-		BEB9D721285B9194005D9A93 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9D720285B9194005D9A93 /* PopUpViewController.swift */; };
+		BEB9D721285B9194005D9A93 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9D720285B9194005D9A93 /* PopupViewController.swift */; };
 		DC20CF3426B4768100F31830 /* ThemeSettingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */; };
 		DC20CF3526B4768100F31830 /* ThemeSettingCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */; };
 		DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */; };
@@ -240,10 +241,11 @@
 		7540205FB7071F642F9B022F /* Pods_SNUTT_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		923560D5D97F8A3548E9547A /* Pods-SNUTT Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT Today.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT Today/Pods-SNUTT Today.debug.xcconfig"; sourceTree = "<group>"; };
 		A23D953E6E8C81FC5C2181B0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B864A7A52865F7A500D28F8B /* STPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STPopUp.swift; sourceTree = "<group>"; };
+		B8468959287C029D00804F18 /* PopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		B846895B287C15A100804F18 /* STPopupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STPopupManager.swift; sourceTree = "<group>"; };
+		B864A7A52865F7A500D28F8B /* STPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STPopup.swift; sourceTree = "<group>"; };
 		B864A7A72865FB8E00D28F8B /* STPopUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STPopUpRouter.swift; sourceTree = "<group>"; };
-		BEB9D71E285B9189005D9A93 /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
-		BEB9D720285B9194005D9A93 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
+		BEB9D720285B9194005D9A93 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		DC20CF3226B4768100F31830 /* ThemeSettingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettingCollectionViewCell.swift; sourceTree = "<group>"; };
 		DC20CF3326B4768100F31830 /* ThemeSettingCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeSettingCollectionViewCell.xib; sourceTree = "<group>"; };
 		DC2BFCD226934DF9007C3F79 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -458,13 +460,13 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		BEB9D71D285B917C005D9A93 /* PopUp */ = {
+		BEB9D71D285B917C005D9A93 /* Popup */ = {
 			isa = PBXGroup;
 			children = (
-				BEB9D71E285B9189005D9A93 /* PopUpView.swift */,
-				BEB9D720285B9194005D9A93 /* PopUpViewController.swift */,
+				B8468959287C029D00804F18 /* PopupView.swift */,
+				BEB9D720285B9194005D9A93 /* PopupViewController.swift */,
 			);
-			path = PopUp;
+			path = Popup;
 			sourceTree = "<group>";
 		};
 		DC39728C26B448C400187DFC /* Theme */ = {
@@ -550,6 +552,7 @@
 				E184359C1D69A2C200BE5D58 /* STAlertView.swift */,
 				E1130AD81E7C38DD00ADE84F /* STColorManager.swift */,
 				E17D45F41E9A1AF800E6973B /* STColorManagerUpdate.swift */,
+				B846895B287C15A100804F18 /* STPopupManager.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -700,7 +703,7 @@
 				E1C48BAF1C79C45500BC469E /* STQuarter.swift */,
 				E1C48BB11C79C8E200BC469E /* STDay.swift */,
 				E1C48BB31C79CAE800BC469E /* STPeriod.swift */,
-				B864A7A52865F7A500D28F8B /* STPopUp.swift */,
+				B864A7A52865F7A500D28F8B /* STPopup.swift */,
 				E1D0FB6A1C86D47900ACDC2F /* STColor.swift */,
 				E110CFD61C88424000ED0590 /* STNotification.swift */,
 				E110CFDC1C888FC300ED0590 /* STTag.swift */,
@@ -715,7 +718,7 @@
 		E1C28B191B9C4B7B00B8C493 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				BEB9D71D285B917C005D9A93 /* PopUp */,
+				BEB9D71D285B917C005D9A93 /* Popup */,
 				DCCFE8EF2789BEAB0074BCA6 /* Review */,
 				DC39728C26B448C400187DFC /* Theme */,
 				DC5B8CD526905C890085268B /* Menu */,
@@ -1186,7 +1189,6 @@
 				E16643571B46623900387EF8 /* STSlotCellCollectionViewCell.swift in Sources */,
 				E1BB29CD1D4896D300150DD4 /* STTimetableSettingViewController.swift in Sources */,
 				E1420B951D769D0400D1B6F7 /* STCourseBookRouter.swift in Sources */,
-				BEB9D71F285B9189005D9A93 /* PopUpView.swift in Sources */,
 				E1534D501F12316000CEE1D2 /* STLeftAlignedTextFieldCell.swift in Sources */,
 				E1EE1B311CCCDE20003DF250 /* STDefaults.swift in Sources */,
 				E16A88591C9FC59F003D94AB /* STTermAndConditionViewController.swift in Sources */,
@@ -1202,7 +1204,7 @@
 				E14991FD1C46241700DC6756 /* STConfig.swift in Sources */,
 				E1EF8B301D6D640100791778 /* STUserRouter.swift in Sources */,
 				E10CBEE11C7B71E400E8FE26 /* STAddCustomLectureTableViewController.swift in Sources */,
-				B864A7A62865F7A500D28F8B /* STPopUp.swift in Sources */,
+				B864A7A62865F7A500D28F8B /* STPopup.swift in Sources */,
 				E1B381A91C6C52D9007E1A15 /* STUtil.swift in Sources */,
 				E1F58AA61C3CF0E600F6A0FC /* STTimetableManager.swift in Sources */,
 				E16A88551C9FC460003D94AB /* STDeveloperViewController.swift in Sources */,
@@ -1213,6 +1215,7 @@
 				E1EE1B331CCDAAB6003DF250 /* STPaddingTableViewCell.swift in Sources */,
 				E14992011C463AC600DC6756 /* STTimetableRouter.swift in Sources */,
 				E139B26C1E4C349400E2ADF5 /* STAddLocalIDViewController.swift in Sources */,
+				B846895C287C15A100804F18 /* STPopupManager.swift in Sources */,
 				E1F58AA41C3CED3600F6A0FC /* STTimetable.swift in Sources */,
 				E1A946E11F8B7D8700991CB3 /* STFCMInfoList.swift in Sources */,
 				E10852C81B4CCD16006FD8B3 /* STLecture.swift in Sources */,
@@ -1237,7 +1240,8 @@
 				DC2BFCD426934DF9007C3F79 /* MenuTableViewCell.swift in Sources */,
 				E1773CB41C95B05800AF36AF /* STLoginViewController.swift in Sources */,
 				E110CFDF1C88916400ED0590 /* STTagRouter.swift in Sources */,
-				BEB9D721285B9194005D9A93 /* PopUpViewController.swift in Sources */,
+				BEB9D721285B9194005D9A93 /* PopupViewController.swift in Sources */,
+				B846895A287C029D00804F18 /* PopupView.swift in Sources */,
 				DCCFE8F12789BED80074BCA6 /* ReviewViewController.swift in Sources */,
 				E16A88511C9F97EB003D94AB /* STLicenseViewController.swift in Sources */,
 				E11902E91CCE44E7002436B9 /* STLectureDetailTableViewCell.swift in Sources */,

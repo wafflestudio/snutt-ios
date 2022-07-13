@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }, failure: nil)
         }
         
-        STPopUpList.getRecentPopUp()
+        STPopupManager.initialize()
 
         return true
     }
@@ -183,6 +183,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_: UIApplication) {
         Messaging.messaging().disconnect()
+        STPopupManager.saveData()
         print("Disconnected from FCM.")
     }
 

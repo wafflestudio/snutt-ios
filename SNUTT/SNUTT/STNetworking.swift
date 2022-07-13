@@ -394,10 +394,10 @@ class STNetworking {
     
     // MARK: PopUp
     
-    static func getPopUps(_ done: @escaping ([STPopUp]) -> Void, failure: (() -> Void)?) {
+    static func getPopups(_ done: @escaping ([STPopup]) -> Void, failure: (() -> Void)?) {
         Alamofire.request(STPopUpRouter.getPopUpList)
             .responseWithDone({ _, json in
-                let popUps = json["content"].arrayValue.map { popUp in STPopUp(json: popUp) }
+                let popUps = json["content"].arrayValue.map { popUp in STPopup(json: popUp) }
                 done(popUps)
             }, failure: { _ in
                 failure?()

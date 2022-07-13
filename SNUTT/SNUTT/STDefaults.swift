@@ -24,10 +24,16 @@ extension DefaultsKeys {
     static let shouldDeleteFCMInfos = DefaultsKey<STFCMInfoList?>("shouldDeleteFCMInfos")
     static let colorList = DefaultsKey<STColorList?>("colorList")
     static let snuevWebUrl = DefaultsKey<String>("snuevWebUrl")
+    static let popupList = DefaultsKey<[NSDictionary]?>("popupList")
 }
 
 extension UserDefaults {
     subscript(key: DefaultsKey<NSDictionary?>) -> NSDictionary? {
+        get { return unarchive(key) }
+        set { archive(key, newValue) }
+    }
+    
+    subscript(key: DefaultsKey<[NSDictionary]?>) -> [NSDictionary]? {
         get { return unarchive(key) }
         set { archive(key, newValue) }
     }

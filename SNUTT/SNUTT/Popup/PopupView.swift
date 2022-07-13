@@ -1,5 +1,5 @@
 //
-//  PopUpView.swift
+//  PopupView.swift
 //  SNUTT
 //
 //  Created by 박신홍 on 2022/06/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PopUpView: UIView {
+class PopupView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -21,7 +21,7 @@ class PopUpView: UIView {
 
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .black.withAlphaComponent(0.5)
+        backgroundColor = .clear
 
         addSubview(vstack)
 
