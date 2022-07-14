@@ -35,13 +35,13 @@
 		C74D052F5577718E30F9F3E2 /* Pods_SNUTT_SNUTTTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B06DA64B1B66B39382F1CC53 /* Pods_SNUTT_SNUTTTests.framework */; };
 		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
 		DC1E0ECD28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
-		DC1E0ECF28772F13005632A3 /* NetworkiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkiUtils.swift */; };
+		DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
 		DC1E0ED12877381F005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
 		DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */; };
 		DC1E0ED62877E32D005632A3 /* TimetableRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED52877E32D005632A3 /* TimetableRepositoryTests.swift */; };
 		DC1E0ED72877E3B3005632A3 /* TimetableRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */; };
 		DC1E0ED82877E3CC005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
-		DC1E0ED92877E78C005632A3 /* NetworkiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkiUtils.swift */; };
+		DC1E0ED92877E78C005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
 		DC2915992865D69700FE5F9A /* MyLectureListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915982865D69700FE5F9A /* MyLectureListViewModel.swift */; };
 		DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159A2865F95100FE5F9A /* SettingScene.swift */; };
 		DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */; };
@@ -116,7 +116,7 @@
 		BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureBlocks.swift; sourceTree = "<group>"; };
 		CD4FF704B86A63A15AC256E4 /* Pods-SNUTT-SNUTTUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT-SNUTTUITests.release.xcconfig"; path = "Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
-		DC1E0ECE28772F13005632A3 /* NetworkiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkiUtils.swift; sourceTree = "<group>"; };
+		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
 		DC1E0ED02877381F005632A3 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRouter.swift; sourceTree = "<group>"; };
 		DC1E0ED52877E32D005632A3 /* TimetableRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepositoryTests.swift; sourceTree = "<group>"; };
@@ -318,7 +318,7 @@
 				DC9C2CA928780589009EC3BC /* Dto */,
 				DC1E0ED2287738DF005632A3 /* Router */,
 				DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */,
-				DC1E0ECE28772F13005632A3 /* NetworkiUtils.swift */,
+				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -656,7 +656,7 @@
 				DC1E0ED12877381F005632A3 /* Router.swift in Sources */,
 				DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
-				DC1E0ECF28772F13005632A3 /* NetworkiUtils.swift in Sources */,
+				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */,
 				DC2915A32866958100FE5F9A /* User.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
@@ -697,7 +697,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC1E0ED72877E3B3005632A3 /* TimetableRouter.swift in Sources */,
-				DC1E0ED92877E78C005632A3 /* NetworkiUtils.swift in Sources */,
+				DC1E0ED92877E78C005632A3 /* NetworkUtils.swift in Sources */,
 				DC1E0ED62877E32D005632A3 /* TimetableRepositoryTests.swift in Sources */,
 				DC1E0ED82877E3CC005632A3 /* Router.swift in Sources */,
 				DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */,
