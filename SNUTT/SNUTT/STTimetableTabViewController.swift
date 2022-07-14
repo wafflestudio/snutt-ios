@@ -498,7 +498,7 @@ extension STTimetableTabViewController: PopupViewControllerDelegate {
 
     func present(viewController: PopupViewController) {
         popUpControllerState = .opened
-        rootVC?.add(childVC: viewController)
+        rootVC?.add(childVC: viewController, then: setNewCurrentPopup)
         changeBackgroundColor()
     }
 
@@ -509,8 +509,8 @@ extension STTimetableTabViewController: PopupViewControllerDelegate {
 
     /// n일 동안 보지 않기
     func dismissForNdays() {
-        removePopup()
         STPopupManager.saveLastUpdate(for: currentPopup)
+        removePopup()
     }
 
     /// 가장 상단의 팝업을 제거합니다.

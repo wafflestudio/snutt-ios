@@ -27,7 +27,6 @@ struct STPopupManager {
     static func initialize() {
         STPopupManager.hasShownPopup = false
         STPopupManager.getRecentPopup(then: loadData)
-        saveData()
     }
 
     /// 현재 popupList를 UserDefaults에 저장합니다.

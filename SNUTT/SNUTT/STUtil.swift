@@ -124,7 +124,7 @@ extension UIView {
 
 extension UIViewController {
     /// `child`를 `self`의 자식 뷰 컨트롤러로 추가한다.
-    func add(childVC: UIViewController, animate: Bool = true) {
+    func add(childVC: UIViewController, animate: Bool = true, then: @escaping () -> Void) {
         childVC.view.alpha = 0
 
         addChild(childVC)
@@ -133,6 +133,8 @@ extension UIViewController {
 
         UIView.animate(withDuration: animate ? 0.3 : 0, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: []) {
             childVC.view.alpha = 1
+        } completion: { _ in
+            then()
         }
     }
 
