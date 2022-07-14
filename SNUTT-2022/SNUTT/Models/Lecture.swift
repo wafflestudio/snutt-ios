@@ -63,8 +63,7 @@ extension Lecture {
                            classification: "전선",
                            category: "체육",
                            remark: "",
-                           isCustom: false
-            )
+                           isCustom: false)
         }
     }
 #endif

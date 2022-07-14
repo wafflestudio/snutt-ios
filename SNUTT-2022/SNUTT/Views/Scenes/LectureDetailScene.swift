@@ -5,15 +5,15 @@
 //  Created by 박신홍 on 2022/03/24.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct LectureDetailScene: View {
     let viewModel: ViewModel
     @State var lecture: Lecture
     @State private var editMode: EditMode = .inactive
     @State private var tempLecture: Lecture = .preview
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -42,7 +42,7 @@ struct LectureDetailScene: View {
                         .padding(.vertical, 5)
                     }
                     .padding()
-                    
+
                     if !lecture.isCustom {
                         VStack {
                             Group {
@@ -83,7 +83,7 @@ struct LectureDetailScene: View {
                         }
                         .padding()
                     }
-                    
+
                     VStack {
                         Text("시간 및 장소")
                             .padding(.leading, 5)
@@ -108,15 +108,15 @@ struct LectureDetailScene: View {
                         }
                     }
                     .padding()
-                    
+
                     DetailButton(text: "강의계획서") {
                         print("tap")
                     }
-                    
+
                     DetailButton(text: "강의평") {
                         print("tap")
                     }
-                    
+
                     DetailButton(text: "삭제") {
                         print("tap")
                     }
@@ -138,7 +138,6 @@ struct LectureDetailScene: View {
                     } label: {
                         Text("취소")
                     }
-                    
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -154,7 +153,7 @@ struct LectureDetailScene: View {
                 } label: {
                     Text(editMode.isEditing ? "저장" : "편집")
                 }
-                
+
                 EditButton()
             }
         }
@@ -173,22 +172,21 @@ struct DetailLabel: View {
                 .padding(.trailing, 10)
                 .font(STFont.detailLabel)
                 .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
-                .frame(maxWidth: 70,maxHeight: .infinity, alignment: .topLeading)
+                .frame(maxWidth: 70, maxHeight: .infinity, alignment: .topLeading)
         }
     }
 }
-
 
 struct EditableDetailText: View {
     @Binding var text: String
     var preventEditing: Bool = false
     var multiLine: Bool = false
     @Environment(\.editMode) private var editMode
-    
+
     var isEditing: Bool {
         editMode?.wrappedValue.isEditing ?? false
     }
-    
+
     var body: some View {
         Group {
             if multiLine {
@@ -196,7 +194,7 @@ struct EditableDetailText: View {
                     TextEditor(text: $text)
                         .disabled(!isEditing || preventEditing)
                         .opacity(text.isEmpty ? 0 : 1)
-                    Text(text).opacity(0).padding([.vertical, .trailing],10)
+                    Text(text).opacity(0).padding([.vertical, .trailing], 10)
                 }
             } else {
                 TextField("(없음)", text: $text)
@@ -222,11 +220,10 @@ extension EditableDetailText {
     }
 }
 
-
 struct EditableDetailNumber: View {
     @Binding var text: String
     @Environment(\.editMode) private var editMode
-    
+
     init(text: Binding<Int>) {
         _text = Binding(get: {
             String(text.wrappedValue)
@@ -234,11 +231,11 @@ struct EditableDetailNumber: View {
             text.wrappedValue = Int($0) ?? 0
         })
     }
-    
+
     var isEditing: Bool {
         editMode?.wrappedValue.isEditing ?? false
     }
-    
+
     var body: some View {
         Group {
             TextField("(없음)", text: $text)
@@ -260,15 +257,15 @@ struct EditableDetailTime: View {
     @Binding var lecture: Lecture
     var timePlace: TimePlace
     @Environment(\.editMode) private var editMode
-    
+
     @ViewBuilder private func timeTextLabel(from timePlace: TimePlace) -> some View {
         Text("\(timePlace.day.shortSymbol) \(timePlace.startTimeString) ~ \(timePlace.endTimeString)")
     }
-    
+
     var isEditing: Bool {
         editMode?.wrappedValue.isEditing ?? false
     }
-    
+
     var body: some View {
         Group {
             if isEditing {
@@ -286,11 +283,10 @@ struct EditableDetailTime: View {
     }
 }
 
-
 struct DetailButton: View {
     let text: String
     let action: () -> Void
-    
+
     struct DetailButtonStyle: ButtonStyle {
         func makeBody(configuration: Self.Configuration) -> some View {
             configuration.label
@@ -298,7 +294,7 @@ struct DetailButton: View {
                 .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : Color(uiColor: .systemBackground))
         }
     }
-    
+
     var body: some View {
         Button {
             action()
