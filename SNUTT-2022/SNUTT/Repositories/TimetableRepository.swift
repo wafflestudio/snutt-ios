@@ -21,8 +21,8 @@ protocol TimetableRepositoryProtocol {
 class TimetableRepository: TimetableRepositoryProtocol {
     private let session: Session
 
-    init(interceptor: RequestInterceptor, eventMonitors: [EventMonitor]) {
-        session = Session(interceptor: interceptor, eventMonitors: eventMonitors)
+    init(session: Session) {
+        self.session = session
     }
 
     func fetchRecentTimetable() async throws -> TimetableDto {
