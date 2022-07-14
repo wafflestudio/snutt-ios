@@ -5,8 +5,8 @@
 //  Created by Jinsup Keum on 2022/07/08.
 //
 
-import XCTest
 import Alamofir
+import XCTest
 
 class TimetableRepositoryTests: XCTestCase {
     class Storage: AuthStorage {
