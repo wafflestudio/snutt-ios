@@ -55,7 +55,7 @@ struct STPopupManager {
             for data in dict {
                 guard let popup = STPopup(dictionary: data) else { continue }
                 #if DEBUG
-                print(popup)
+                    print(popup)
                 #endif
                 totalPopupList.indices.filter {
                     totalPopupList[$0] == popup
@@ -72,7 +72,7 @@ struct STPopupManager {
         STNetworking.getPopups { popups in
             for popup in popups {
                 #if DEBUG
-                print(popup)
+                    print(popup)
                 #endif
                 totalPopupList.append(popup)
             }
@@ -80,7 +80,7 @@ struct STPopupManager {
             saveData()
         } failure: {}
     }
-    
+
     /// 유저에게 보여야 하는 팝업만 남겨 반환합니다.
     private static func filterPopup() -> [STPopup] {
         return totalPopupList.filter { popup in
