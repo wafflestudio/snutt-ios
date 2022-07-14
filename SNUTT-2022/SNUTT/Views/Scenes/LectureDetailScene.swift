@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import Combine
 
 struct LectureDetailScene: View {
     let viewModel: ViewModel
-    let lecture: Lecture
-
+    @State var lecture: Lecture
+    @State private var editMode: EditMode = .inactive
+    @State private var tempLecture: Lecture = .preview
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -19,68 +22,68 @@ struct LectureDetailScene: View {
                         Group {
                             HStack {
                                 DetailLabel(text: "강의명")
-                                DetailText(text: lecture.title)
+                                EditableDetailText(text: $lecture.title)
                             }
                             HStack {
                                 DetailLabel(text: "교수")
-                                DetailText(text: lecture.instructor)
+                                EditableDetailText(text: $lecture.instructor)
                             }
                             if lecture.isCustom {
                                 HStack {
                                     DetailLabel(text: "학점")
-                                    DetailText(text: String(lecture.credit))
+                                    EditableDetailNumber(text: $lecture.credit)
                                 }
                                 HStack {
                                     DetailLabel(text: "비고")
-                                    DetailText(text: lecture.remark)
+                                    EditableDetailText(text: $lecture.remark)
                                 }
                             }
                         }
                         .padding(.vertical, 5)
                     }
                     .padding()
-
+                    
                     if !lecture.isCustom {
                         VStack {
                             Group {
                                 HStack {
                                     DetailLabel(text: "학과")
-                                    DetailText(text: lecture.department)
+                                    EditableDetailText(text: $lecture.department)
                                 }
                                 HStack {
                                     DetailLabel(text: "학년")
-                                    DetailText(text: lecture.academic_year)
+                                    EditableDetailText(text: $lecture.academic_year)
                                 }
                                 HStack {
                                     DetailLabel(text: "학점")
-                                    DetailText(text: String(lecture.credit))
+                                    EditableDetailNumber(text: $lecture.credit)
                                 }
                                 HStack {
                                     DetailLabel(text: "분류")
-                                    DetailText(text: lecture.classification)
+                                    EditableDetailText(text: $lecture.classification)
                                 }
                                 HStack {
                                     DetailLabel(text: "구분")
-                                    DetailText(text: lecture.category)
+                                    EditableDetailText(text: $lecture.category)
                                 }
                                 HStack {
                                     DetailLabel(text: "강좌번호")
-                                    DetailText(text: lecture.course_number)
+                                    EditableDetailText(text: $lecture.course_number, preventEditing: true)
                                 }
                                 HStack {
                                     DetailLabel(text: "분반번호")
-                                    DetailText(text: lecture.lecture_number)
+                                    EditableDetailText(text: $lecture.lecture_number, preventEditing: true)
                                 }
                                 HStack {
                                     DetailLabel(text: "비고")
-                                    DetailText(text: lecture.remark)
+                                    EditableDetailText(text: $lecture.remark, multiLine: true)
                                 }
                             }
                             .padding(.vertical, 5)
                         }
                         .padding()
                     }
-
+                    
                     VStack {
                         Text("시간 및 장소")
                             .padding(.leading, 5)
@@ -92,28 +95,28 @@ struct LectureDetailScene: View {
                             VStack {
                                 HStack {
                                     DetailLabel(text: "시간")
-                                    DetailText(text: "\(timePlace.day.shortSymbol) \(timePlace.startTimeString) ~ \(timePlace.endTimeString)")
+                                    EditableDetailTime(lecture: $lecture, timePlace: timePlace)
                                 }
                                 Spacer()
                                     .frame(height: 5)
                                 HStack {
                                     DetailLabel(text: "장소")
-                                    DetailText(text: timePlace.place)
+                                    EditableDetailText(lecture: $lecture, timePlace: timePlace)
                                 }
                             }
                             .padding(.vertical, 2)
                         }
                     }
                     .padding()
-
+                    
                     DetailButton(text: "강의계획서") {
                         print("tap")
                     }
-
+                    
                     DetailButton(text: "강의평") {
                         print("tap")
                     }
-
+                    
                     DetailButton(text: "삭제") {
                         print("tap")
                     }
@@ -124,6 +127,38 @@ struct LectureDetailScene: View {
             .padding(.vertical, 20)
         }
         .background(Color(uiColor: .systemGroupedBackground))
+        .navigationBarBackButtonHidden(editMode.isEditing)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                if editMode.isEditing {
+                    Button {
+                        // cancel
+                        lecture = tempLecture
+                        editMode = .inactive
+                    } label: {
+                        Text("취소")
+                    }
+                    
+                }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    if editMode.isEditing {
+                        // save
+                        editMode = .inactive
+                    } else {
+                        // edit
+                        tempLecture = lecture
+                        editMode = .active
+                    }
+                } label: {
+                    Text(editMode.isEditing ? "저장" : "편집")
+                }
+                
+                EditButton()
+            }
+        }
+        .environment(\.editMode, $editMode)
     }
 }
 
@@ -131,7 +166,6 @@ struct LectureDetailScene: View {
 
 struct DetailLabel: View {
     let text: String
-
     var body: some View {
         VStack {
             Text(text)
@@ -139,21 +173,35 @@ struct DetailLabel: View {
                 .padding(.trailing, 10)
                 .font(STFont.detailLabel)
                 .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
-                .frame(maxWidth: 70, alignment: .leading)
+                .frame(maxWidth: 70,maxHeight: .infinity, alignment: .topLeading)
         }
     }
 }
 
-struct DetailText: View {
-    let text: String?
 
+struct EditableDetailText: View {
+    @Binding var text: String
+    var preventEditing: Bool = false
+    var multiLine: Bool = false
+    @Environment(\.editMode) private var editMode
+    
+    var isEditing: Bool {
+        editMode?.wrappedValue.isEditing ?? false
+    }
+    
     var body: some View {
         Group {
-            if let text = text, !text.isEmpty {
-                Text(text)
+            if multiLine {
+                ZStack {
+                    TextEditor(text: $text)
+                        .disabled(!isEditing || preventEditing)
+                        .opacity(text.isEmpty ? 0 : 1)
+                    Text(text).opacity(0).padding([.vertical, .trailing],10)
+                }
             } else {
-                Text("(없음)")
-                    .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.6)))
+                TextField("(없음)", text: $text)
+                    .foregroundColor(preventEditing ? Color(uiColor: .label.withAlphaComponent(0.6)) : Color(uiColor: .label))
+                    .disabled(!isEditing || preventEditing)
             }
         }
         .font(.system(size: 16, weight: .regular))
@@ -161,10 +209,88 @@ struct DetailText: View {
     }
 }
 
+extension EditableDetailText {
+    /// Custom initializer to support editing `place` of a `Lecture`.
+    init(lecture: Binding<Lecture>, timePlace: TimePlace) {
+        _text = Binding(get: {
+            guard let firstItem = lecture.wrappedValue.timePlaces.first(where: { $0.id == timePlace.id }) else { return "" }
+            return String(firstItem.place)
+        }, set: {
+            guard let firstIndex = lecture.wrappedValue.timePlaces.firstIndex(where: { $0.id == timePlace.id }) else { return }
+            lecture.wrappedValue.timePlaces[firstIndex].place = $0
+        })
+    }
+}
+
+
+struct EditableDetailNumber: View {
+    @Binding var text: String
+    @Environment(\.editMode) private var editMode
+    
+    init(text: Binding<Int>) {
+        _text = Binding(get: {
+            String(text.wrappedValue)
+        }, set: {
+            text.wrappedValue = Int($0) ?? 0
+        })
+    }
+    
+    var isEditing: Bool {
+        editMode?.wrappedValue.isEditing ?? false
+    }
+    
+    var body: some View {
+        Group {
+            TextField("(없음)", text: $text)
+                .disabled(!isEditing)
+                .keyboardType(.numberPad)
+                .onReceive(Just(text)) { newValue in
+                    let filtered = newValue.filter { "0123456789".contains($0) }
+                    if filtered != newValue {
+                        self.text = filtered
+                    }
+                }
+        }
+        .font(.system(size: 16, weight: .regular))
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+    }
+}
+
+struct EditableDetailTime: View {
+    @Binding var lecture: Lecture
+    var timePlace: TimePlace
+    @Environment(\.editMode) private var editMode
+    
+    @ViewBuilder private func timeTextLabel(from timePlace: TimePlace) -> some View {
+        Text("\(timePlace.day.shortSymbol) \(timePlace.startTimeString) ~ \(timePlace.endTimeString)")
+    }
+    
+    var isEditing: Bool {
+        editMode?.wrappedValue.isEditing ?? false
+    }
+    
+    var body: some View {
+        Group {
+            if isEditing {
+                Button {
+                    print("hi")
+                } label: {
+                    timeTextLabel(from: timePlace)
+                }
+            } else {
+                timeTextLabel(from: timePlace)
+            }
+        }
+        .font(.system(size: 16, weight: .regular))
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+    }
+}
+
+
 struct DetailButton: View {
     let text: String
     let action: () -> Void
-
+    
     struct DetailButtonStyle: ButtonStyle {
         func makeBody(configuration: Self.Configuration) -> some View {
             configuration.label
@@ -172,7 +298,7 @@ struct DetailButton: View {
                 .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : Color(uiColor: .systemBackground))
         }
     }
-
+    
     var body: some View {
         Button {
             action()
@@ -190,6 +316,9 @@ extension LectureDetailScene {
 
 struct LectureDetailList_Previews: PreviewProvider {
     static var previews: some View {
-        LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview)
+        NavigationView {
+            LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview)
+                .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }

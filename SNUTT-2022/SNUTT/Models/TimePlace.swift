@@ -12,14 +12,14 @@ struct TimePlace: Identifiable {
 
     let day: Weekday
 
-    private let start: Double
+    var start: Double
 
     /// 단위: 시간
     ///
     /// - TODO: 서버에서 내려주는 시간은 0.5의 배수이다. 따라서 강의가 끝나는 시각을 정확하게 나타내기 위해서는 적절한 보정이 필요하다.
-    let len: Double
+    var len: Double
 
-    let place: String
+    var place: String
 
     let isCustom: Bool
 
@@ -48,7 +48,7 @@ struct TimePlace: Identifiable {
     private func getString(from time: Double) -> String {
         let hour = Int(time)
         let minute: Double = (time.truncatingRemainder(dividingBy: 1) * 60).rounded() // schoolbook rounding
-        return "\(hour):\(Int(minute))"
+        return "\(hour):\(String(format: "%02d", Int(minute)))"
     }
 }
 
