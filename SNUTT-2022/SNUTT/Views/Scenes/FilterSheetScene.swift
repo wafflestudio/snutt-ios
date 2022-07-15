@@ -25,6 +25,7 @@ struct FilterSheetScene: View {
                         filterSheetSetting.isOpen.toggle()
                     } label: {
                         Image("xmark")
+                            .padding([.horizontal, .top], 10)
                     }
                 }
                 .padding(20)

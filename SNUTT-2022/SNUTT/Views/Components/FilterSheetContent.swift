@@ -40,14 +40,14 @@ struct FilterSheetContent: View {
                                     Image("checkmark.circle.\(num % 4 == 0 ? "tick" : "untick")")
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 20)
-                                        .padding(.trailing, 5)
+                                        .frame(width: 15)
+                                        .padding(.trailing, 3)
                                     Text("\(num)학년")
-                                        .font(.system(size: 15))
+                                        .font(.system(size: 14))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
+                                .padding(.vertical, 7)
                             }
                             .buttonStyle(.plain)
                         }
