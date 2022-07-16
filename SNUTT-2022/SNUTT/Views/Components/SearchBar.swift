@@ -12,6 +12,7 @@ struct SearchBar: View {
     @Binding var text: String
     @Binding var isFilterOpen: Bool
     @State private var isEditing = false
+    @FocusState private var isFocused: Bool
 
     var body: some View {
         HStack {
@@ -21,6 +22,7 @@ struct SearchBar: View {
                     isFilterOpen = false
                 }
             }
+            .focused($isFocused)
             .frame(maxHeight: 22)
             .padding(7)
             .padding(.horizontal, 25)
@@ -48,7 +50,7 @@ struct SearchBar: View {
                         Button {
                             isFilterOpen.toggle()
                             if isFilterOpen {
-                                resignFirstResponder()
+                                isFocused = false
                             }
                         } label: {
                             Image("search.filter")
@@ -64,7 +66,7 @@ struct SearchBar: View {
                     Button(action: {
                         text = ""
                         isEditing = false
-                        resignFirstResponder()
+                        isFocused = false
                     }) {
                         Text("취소")
                     }
@@ -78,13 +80,6 @@ struct SearchBar: View {
     }
 }
 
-#if canImport(UIKit)
-    extension View {
-        func resignFirstResponder() {
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        }
-    }
-#endif
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
