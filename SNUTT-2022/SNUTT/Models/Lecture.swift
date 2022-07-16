@@ -62,7 +62,7 @@ extension Lecture {
                            colorIndex: 0,
                            classification: "전선",
                            category: "체육",
-                           remark: "",
+                           remark: "영어강의, 복부전생수강불가, 주전공생수강불가, 어쩌구 저쩌구",
                            isCustom: false)
         }
     }
