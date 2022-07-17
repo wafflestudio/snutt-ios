@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		018854EBBE93ED6D17FA3A9A /* Pods_SNUTT_SNUTTUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA65974A9D9809C1A49D21FA /* Pods_SNUTT_SNUTTUITests.framework */; };
+		B2E6060B015FB95501C2FCFB /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1367CD9B39A9B827A8D6C5D2 /* Pods_SNUTT.framework */; };
 		B87431CB283B5A7300D78C59 /* SNUTTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* SNUTTViewModel.swift */; };
 		BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
 		BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
@@ -30,6 +32,16 @@
 		BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */; };
 		BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */; };
 		BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */; };
+		C74D052F5577718E30F9F3E2 /* Pods_SNUTT_SNUTTTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B06DA64B1B66B39382F1CC53 /* Pods_SNUTT_SNUTTTests.framework */; };
+		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
+		DC1E0ECD28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
+		DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
+		DC1E0ED12877381F005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
+		DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */; };
+		DC1E0ED62877E32D005632A3 /* TimetableRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED52877E32D005632A3 /* TimetableRepositoryTests.swift */; };
+		DC1E0ED72877E3B3005632A3 /* TimetableRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */; };
+		DC1E0ED82877E3CC005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
+		DC1E0ED92877E78C005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
 		DC2915992865D69700FE5F9A /* MyLectureListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915982865D69700FE5F9A /* MyLectureListViewModel.swift */; };
 		DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159A2865F95100FE5F9A /* SettingScene.swift */; };
 		DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */; };
@@ -45,10 +57,10 @@
 		DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F5927E5C87F0068C94B /* SNUTTTests.swift */; };
 		DC860F6427E5C87F0068C94B /* SNUTTUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F6327E5C87F0068C94B /* SNUTTUITests.swift */; };
 		DC860F6627E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F6527E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift */; };
+		DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */; };
+		DC9C2CAC287805D3009EC3BC /* TimetableDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */; };
 		DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
 		DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6227E5CCD500CF380E /* TimetableService.swift */; };
-		DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */; };
-		DCD41A6A27E5CD8700CF380E /* TimetableApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6927E5CD8700CF380E /* TimetableApi.swift */; };
 		DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */; };
 		DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7427E5CEA500CF380E /* AppState.swift */; };
 /* End PBXBuildFile section */
@@ -71,6 +83,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1367CD9B39A9B827A8D6C5D2 /* Pods_SNUTT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D22562875A5F80B8D6BAD15 /* Pods-SNUTT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.release.xcconfig"; path = "Target Support Files/Pods-SNUTT/Pods-SNUTT.release.xcconfig"; sourceTree = "<group>"; };
+		58DA763831AD9DC2BE101068 /* Pods-SNUTT-SNUTTTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT-SNUTTTests.release.xcconfig"; path = "Target Support Files/Pods-SNUTT-SNUTTTests/Pods-SNUTT-SNUTTTests.release.xcconfig"; sourceTree = "<group>"; };
+		6F6AE53803341711A6DCE084 /* Pods-SNUTT-SNUTTUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT-SNUTTUITests.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8945F254A69CE88E62187FAA /* Pods-SNUTT-SNUTTTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT-SNUTTTests.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT-SNUTTTests/Pods-SNUTT-SNUTTTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9D00E2A558B7FC46980EF99A /* Pods-SNUTT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT/Pods-SNUTT.debug.xcconfig"; sourceTree = "<group>"; };
+		AA65974A9D9809C1A49D21FA /* Pods_SNUTT_SNUTTUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_SNUTTUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B06DA64B1B66B39382F1CC53 /* Pods_SNUTT_SNUTTTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_SNUTTTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B87431CA283B5A7300D78C59 /* SNUTTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTViewModel.swift; sourceTree = "<group>"; };
 		BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableGridLayer.swift; sourceTree = "<group>"; };
 		BE1D2B3928014527008F9134 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
@@ -94,6 +114,12 @@
 		BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTView.swift; sourceTree = "<group>"; };
 		BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabScene.swift; sourceTree = "<group>"; };
 		BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureBlocks.swift; sourceTree = "<group>"; };
+		CD4FF704B86A63A15AC256E4 /* Pods-SNUTT-SNUTTUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT-SNUTTUITests.release.xcconfig"; path = "Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests.release.xcconfig"; sourceTree = "<group>"; };
+		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
+		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
+		DC1E0ED02877381F005632A3 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRouter.swift; sourceTree = "<group>"; };
+		DC1E0ED52877E32D005632A3 /* TimetableRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepositoryTests.swift; sourceTree = "<group>"; };
 		DC2915982865D69700FE5F9A /* MyLectureListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLectureListViewModel.swift; sourceTree = "<group>"; };
 		DC29159A2865F95100FE5F9A /* SettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScene.swift; sourceTree = "<group>"; };
 		DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -112,10 +138,9 @@
 		DC860F5F27E5C87F0068C94B /* SNUTTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNUTTUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F6327E5C87F0068C94B /* SNUTTUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTUITests.swift; sourceTree = "<group>"; };
 		DC860F6527E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDto.swift; sourceTree = "<group>"; };
 		DCD41A5F27E5CC7700CF380E /* Timetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timetable.swift; sourceTree = "<group>"; };
 		DCD41A6227E5CCD500CF380E /* TimetableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableService.swift; sourceTree = "<group>"; };
-		DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		DCD41A6927E5CD8700CF380E /* TimetableApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableApi.swift; sourceTree = "<group>"; };
 		DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableViewModel.swift; sourceTree = "<group>"; };
 		DCD41A7427E5CEA500CF380E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2E6060B015FB95501C2FCFB /* Pods_SNUTT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C74D052F5577718E30F9F3E2 /* Pods_SNUTT_SNUTTTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,12 +166,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				018854EBBE93ED6D17FA3A9A /* Pods_SNUTT_SNUTTUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08B59B95C09F9DFF46D37975 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1367CD9B39A9B827A8D6C5D2 /* Pods_SNUTT.framework */,
+				B06DA64B1B66B39382F1CC53 /* Pods_SNUTT_SNUTTTests.framework */,
+				AA65974A9D9809C1A49D21FA /* Pods_SNUTT_SNUTTUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		76C6BBC5ECB3033DB6C69A20 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9D00E2A558B7FC46980EF99A /* Pods-SNUTT.debug.xcconfig */,
+				4D22562875A5F80B8D6BAD15 /* Pods-SNUTT.release.xcconfig */,
+				8945F254A69CE88E62187FAA /* Pods-SNUTT-SNUTTTests.debug.xcconfig */,
+				58DA763831AD9DC2BE101068 /* Pods-SNUTT-SNUTTTests.release.xcconfig */,
+				6F6AE53803341711A6DCE084 /* Pods-SNUTT-SNUTTUITests.debug.xcconfig */,
+				CD4FF704B86A63A15AC256E4 /* Pods-SNUTT-SNUTTUITests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		BE1D2B3228012059008F9134 /* Timetable */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +208,15 @@
 			path = Timetable;
 			sourceTree = "<group>";
 		};
+		DC1E0ED2287738DF005632A3 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				DC1E0ED02877381F005632A3 /* Router.swift */,
+				DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
 		DC860F3C27E5C87D0068C94B = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +224,8 @@
 				DC860F5827E5C87F0068C94B /* SNUTTTests */,
 				DC860F6227E5C87F0068C94B /* SNUTTUITests */,
 				DC860F4627E5C87D0068C94B /* Products */,
+				76C6BBC5ECB3033DB6C69A20 /* Pods */,
+				08B59B95C09F9DFF46D37975 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -204,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				DC860F5927E5C87F0068C94B /* SNUTTTests.swift */,
+				DC1E0ED52877E32D005632A3 /* TimetableRepositoryTests.swift */,
 			);
 			path = SNUTTTests;
 			sourceTree = "<group>";
@@ -215,6 +278,14 @@
 				DC860F6527E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift */,
 			);
 			path = SNUTTUITests;
+			sourceTree = "<group>";
+		};
+		DC9C2CA928780589009EC3BC /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */,
+			);
+			path = Dto;
 			sourceTree = "<group>";
 		};
 		DCD41A5E27E5CC4700CF380E /* Models */ = {
@@ -244,26 +315,12 @@
 		DCD41A6427E5CCFD00CF380E /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				DCD41A6627E5CD1100CF380E /* Local */,
-				DCD41A6527E5CD0500CF380E /* Api */,
+				DC9C2CA928780589009EC3BC /* Dto */,
+				DC1E0ED2287738DF005632A3 /* Router */,
+				DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */,
+				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
 			);
 			path = Repositories;
-			sourceTree = "<group>";
-		};
-		DCD41A6527E5CD0500CF380E /* Api */ = {
-			isa = PBXGroup;
-			children = (
-				DCD41A6927E5CD8700CF380E /* TimetableApi.swift */,
-			);
-			path = Api;
-			sourceTree = "<group>";
-		};
-		DCD41A6627E5CD1100CF380E /* Local */ = {
-			isa = PBXGroup;
-			children = (
-				DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */,
-			);
-			path = Local;
 			sourceTree = "<group>";
 		};
 		DCD41A6B27E5CDAF00CF380E /* Views */ = {
@@ -341,9 +398,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC860F6927E5C87F0068C94B /* Build configuration list for PBXNativeTarget "SNUTT" */;
 			buildPhases = (
+				E86DF6FEB28DE670A080ADCC /* [CP] Check Pods Manifest.lock */,
 				DC860F4127E5C87D0068C94B /* Sources */,
 				DC860F4227E5C87D0068C94B /* Frameworks */,
 				DC860F4327E5C87D0068C94B /* Resources */,
+				5DFCD65CCAAD3671C5F374AB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -358,9 +417,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC860F6C27E5C87F0068C94B /* Build configuration list for PBXNativeTarget "SNUTTTests" */;
 			buildPhases = (
+				5B7410E96A42577FE94D4ED9 /* [CP] Check Pods Manifest.lock */,
 				DC860F5127E5C87F0068C94B /* Sources */,
 				DC860F5227E5C87F0068C94B /* Frameworks */,
 				DC860F5327E5C87F0068C94B /* Resources */,
+				38D389C24BBC0E3D1EDC9858 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -376,9 +437,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC860F6F27E5C87F0068C94B /* Build configuration list for PBXNativeTarget "SNUTTUITests" */;
 			buildPhases = (
+				22A1835B5440B48FB0A083D0 /* [CP] Check Pods Manifest.lock */,
 				DC860F5B27E5C87F0068C94B /* Sources */,
 				DC860F5C27E5C87F0068C94B /* Frameworks */,
 				DC860F5D27E5C87F0068C94B /* Resources */,
+				6F3B058D1C38C9180F3DC673 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -459,6 +522,126 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		22A1835B5440B48FB0A083D0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SNUTT-SNUTTUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		38D389C24BBC0E3D1EDC9858 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTTests/Pods-SNUTT-SNUTTTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTTests/Pods-SNUTT-SNUTTTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTTests/Pods-SNUTT-SNUTTTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5B7410E96A42577FE94D4ED9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SNUTT-SNUTTTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5DFCD65CCAAD3671C5F374AB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6F3B058D1C38C9180F3DC673 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E86DF6FEB28DE670A080ADCC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SNUTT-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DC860F4127E5C87D0068C94B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -470,8 +653,10 @@
 				BEDF507327F427FA00CDCC13 /* MyLectureListScene.swift in Sources */,
 				BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */,
 				DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */,
+				DC1E0ED12877381F005632A3 /* Router.swift in Sources */,
 				DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
+				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */,
 				DC2915A32866958100FE5F9A /* User.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
@@ -480,10 +665,10 @@
 				DC2915A92866986600FE5F9A /* System.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				BECDB898283B876300F62AC8 /* MenuSheet.swift in Sources */,
-				DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */,
 				BE4B0EB828735052005FE164 /* MenuSheetSetting.swift in Sources */,
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
+				DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
@@ -492,8 +677,10 @@
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				DC2915A52866980B00FE5F9A /* Setting.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
+				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
 				DC2915992865D69700FE5F9A /* MyLectureListViewModel.swift in Sources */,
+				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
@@ -501,7 +688,6 @@
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
 				DC2915A72866984000FE5F9A /* TimetableSetting.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
-				DCD41A6A27E5CD8700CF380E /* TimetableApi.swift in Sources */,
 				BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -510,7 +696,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC1E0ED72877E3B3005632A3 /* TimetableRouter.swift in Sources */,
+				DC1E0ED92877E78C005632A3 /* NetworkUtils.swift in Sources */,
+				DC1E0ED62877E32D005632A3 /* TimetableRepositoryTests.swift in Sources */,
+				DC1E0ED82877E3CC005632A3 /* Router.swift in Sources */,
 				DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */,
+				DC1E0ECD28771B32005632A3 /* TimetableRepository.swift in Sources */,
+				DC9C2CAC287805D3009EC3BC /* TimetableDto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,6 +849,7 @@
 		};
 		DC860F6A27E5C87F0068C94B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D00E2A558B7FC46980EF99A /* Pods-SNUTT.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -687,6 +880,7 @@
 		};
 		DC860F6B27E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D22562875A5F80B8D6BAD15 /* Pods-SNUTT.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -717,6 +911,7 @@
 		};
 		DC860F6D27E5C87F0068C94B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8945F254A69CE88E62187FAA /* Pods-SNUTT-SNUTTTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -736,11 +931,14 @@
 		};
 		DC860F6E27E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 58DA763831AD9DC2BE101068 /* Pods-SNUTT-SNUTTTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
@@ -755,6 +953,7 @@
 		};
 		DC860F7027E5C87F0068C94B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F6AE53803341711A6DCE084 /* Pods-SNUTT-SNUTTUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -772,6 +971,7 @@
 		};
 		DC860F7127E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD4FF704B86A63A15AC256E4 /* Pods-SNUTT-SNUTTUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
