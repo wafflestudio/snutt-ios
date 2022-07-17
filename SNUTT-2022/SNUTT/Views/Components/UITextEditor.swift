@@ -84,20 +84,16 @@ struct UITextEditor: UIViewRepresentable {
             self.placeholderTextView = placeholderTextView
             self.textDidChange = textDidChange
         }
-
+        
         func textViewDidChange(_ textView: UITextView) {
             text = textView.text
             placeholderTextView?.isHidden = !textView.text.isEmpty
             textDidChange(textView)
         }
 
-        func textViewDidBeginEditing(_ textView: UITextView) {
-            ensureCursorVisible(textView: textView)
-        }
-
         func textViewDidEndEditing(_ textView: UITextView) {
             textView.text = text
-            placeholderTextView?.isHidden = !textView.text.isEmpty
+            placeholderTextView?.isHidden = !text.isEmpty
         }
 
         // MARK: Automatic Scrolling
@@ -105,7 +101,9 @@ struct UITextEditor: UIViewRepresentable {
         // Automatically scroll to ensure that the cursor is always visible
 
         func textViewDidChangeSelection(_ textView: UITextView) {
-            ensureCursorVisible(textView: textView)
+            if textView.isFirstResponder {
+                ensureCursorVisible(textView: textView)
+            }
         }
 
         private func findParentScrollView(of view: UIView) -> UIScrollView? {

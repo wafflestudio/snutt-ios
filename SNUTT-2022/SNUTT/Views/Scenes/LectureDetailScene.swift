@@ -35,7 +35,7 @@ struct LectureDetailScene: View {
                                 }
                                 HStack {
                                     DetailLabel(text: "비고")
-                                    EditableDetailText(text: $lecture.remark)
+                                    EditableDetailText(text: $lecture.remark, multiLine: true)
                                 }
                             }
                         }
