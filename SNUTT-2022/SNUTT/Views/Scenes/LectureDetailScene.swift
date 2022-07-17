@@ -203,27 +203,20 @@ struct EditableDetailText: View {
     var body: some View {
         Group {
             if multiLine {
-                FieldView(placeholder: "(없음)", text: $text, height: $height)
+                ZStack {
+                    if text.isEmpty {
+                        Text("(없음)")
+                            .foregroundColor(preventEditing ? STColor.disabled : Color(uiColor: .placeholderText))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .disabled(true)
+                    }
+                    
+                    UITextEditor(text: $text) { textView in
+                        height = textView.contentSize.height
+                    }
                     .frame(height: height)
                     .disabled(!isEditing || preventEditing)
-                //                ZStack {
-                //                    if text.isEmpty {
-                //                        TextEditor(text: .constant("(없음)"))
-                //                            .foregroundColor(preventEditing ? STColor.disabled : Color(uiColor: .placeholderText))
-                //                            .offset(x: -5, y: 0)
-                //                            .disabled(true)
-                //
-                //                    }
-                //                    Text(text)
-                //                        .opacity(0)
-                //                        .padding(.vertical, 8)
-                //                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                //
-                //                    TextEditor(text: $text)
-                //                        .foregroundColor(preventEditing ? STColor.disabled : Color(uiColor: .label))
-                //                        .offset(x: -4, y: 0)
-                //                        .disabled(!isEditing || preventEditing)
-                //                }
+                }
             } else {
                 TextField("(없음)", text: $text)
                     .foregroundColor(preventEditing ? STColor.disabled : Color(uiColor: .label))
@@ -239,98 +232,55 @@ struct EditableDetailText: View {
             UITextView.appearance().backgroundColor = .none
             //                        UITextView.appearance().isScrollEnabled  = true
         }
-        .onChange(of: height) { newValue in
-            //            print(newValue)
-        }
     }
 }
 
 
+struct UITextEditor: UIViewRepresentable {
+    @Binding var text: String
+    let textDidChange: (UITextView) -> Void
 
-struct FieldView : UIViewRepresentable {
-    let placeholder: String
-    @Binding var text : String
-    @Binding var height: CGFloat
-    
-    var textView: PlaceholderTextView = {
-        let textView = PlaceholderTextView()
-        textView.isScrollEnabled = false
+    func makeUIView(context: Context) -> UITextView {
+        let textView = UITextView()
+        textView.text = text
         textView.font = .systemFont(ofSize: 16, weight: .regular)
         textView.textContainerInset = .zero
         textView.textContainer.lineFragmentPadding = 0
-        textView.placeholderTextView.textContainerInset = .zero
-        textView.placeholderTextView.textContainer.lineFragmentPadding = 0
-        return textView
-    }()
-    
-    
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView()
         textView.delegate = context.coordinator
-        textView.placeholder = placeholder
-        textView.text = text
-        view.addSubview(textView)
-        
-        // Auto Layout
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            textView.topAnchor.constraint(equalTo: view.topAnchor),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            textView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-        
-        
-        return view
+        return textView
     }
-    
-    func updateUIView(_ view: UIView, context: Context) {
-        print("updateUIView")
+
+    func updateUIView(_ uiView: UITextView, context: Context) {
         DispatchQueue.main.async {
-            context.coordinator.runSizing()
+            self.textDidChange(uiView)
         }
     }
-    
+
     func makeCoordinator() -> Coordinator {
-        return Coordinator(text: $text, height: $height, textView: textView)
+        return Coordinator(text: $text, textDidChange: textDidChange)
     }
-    
-    class Coordinator : NSObject, UITextViewDelegate {
-        @Binding var text : String
-        @Binding var height : CGFloat
-        weak var textView : PlaceholderTextView?
-        
-        init(text: Binding<String>, height: Binding<CGFloat>, textView: PlaceholderTextView) {
-            _text = text
-            _height = height
-            self.textView = textView
+
+    class Coordinator: NSObject, UITextViewDelegate {
+        @Binding var text: String
+        let textDidChange: (UITextView) -> Void
+
+        init(text: Binding<String>, textDidChange: @escaping (UITextView) -> Void) {
+            self._text = text
+            self.textDidChange = textDidChange
         }
-        
-        func runSizing() {
-            print("runSizing")
-            guard let textView = textView else { return }
-            textView.text = text
-            withAnimation(.easeInOut(duration: 0.2)) {
-                height = textView.frame.size.height
-            }
-            textView.placeholderTextView.isHidden = !text.isEmpty
-        }
-        
+
         func textViewDidChange(_ textView: UITextView) {
-            print("textViewDidChange")
-            text = textView.text
-            self.runSizing()
-            
+            self.text = textView.text
+            self.textDidChange(textView)
         }
         
         func textViewDidEndEditing(_ textView: UITextView) {
-            print("textViewDidChange")
-            self.runSizing()
+            textView.text = self.text
         }
         
         func textViewDidChangeSelection(_ textView: UITextView) {
-            print("selection change")
-                    ensureCursorVisible(textView: textView)
-                }
+            ensureCursorVisible(textView: textView)
+        }
         
         private func findParentScrollView(of view: UIView) -> UIScrollView? {
                 var current = view
@@ -356,9 +306,9 @@ struct FieldView : UIViewRepresentable {
             rectToMakeVisible.origin.y -= cursorRect.height
             rectToMakeVisible.size.height *= 3
             
-//            if let existing = self.cursorScrollPositionAnimator {
-//                existing.stopAnimation(false)
-//            }
+            if let existing = self.cursorScrollPositionAnimator {
+                existing.stopAnimation(true)
+            }
             
             let animator = UIViewPropertyAnimator(duration: 0.1, curve: .linear) {
                 scrollView.scrollRectToVisible(rectToMakeVisible, animated: false)
@@ -367,56 +317,6 @@ struct FieldView : UIViewRepresentable {
             self.cursorScrollPositionAnimator = animator
         }
     }
-}
-
-class PlaceholderTextView: UITextView {
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
-        super.init(frame: frame, textContainer: textContainer)
-        placeholderTextView.font = font
-        addSubview(placeholderTextView)
-        NSLayoutConstraint.activate([
-            placeholderTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            placeholderTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            placeholderTextView.topAnchor.constraint(equalTo: self.topAnchor),
-            placeholderTextView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-        ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var placeholder: String? {
-        get {
-            return placeholderTextView.text
-        }
-        set {
-            placeholderTextView.text = newValue
-        }
-    }
-    
-    override var text: String! {
-        didSet {
-            placeholderTextView.isHidden = !text.isEmpty
-        }
-    }
-    
-    override var font: UIFont? {
-        didSet {
-            placeholderTextView.font = font
-            invalidateIntrinsicContentSize()
-        }
-    }
-    
-    let placeholderTextView: UITextView = {
-        let tv = UITextView()
-        tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.backgroundColor = .clear
-        tv.isScrollEnabled = false
-        tv.isUserInteractionEnabled = false
-        tv.textColor = .placeholderText
-        return tv
-    }()
 }
 
 extension EditableDetailText {
