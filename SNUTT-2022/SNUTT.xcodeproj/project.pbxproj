@@ -13,6 +13,7 @@
 		BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */; };
 		BE4B0EB828735052005FE164 /* MenuSheetSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */; };
 		BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BB5287C40AF009EBCB7 /* Theme.swift */; };
+		BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BC528845CDB009EBCB7 /* UITextEditor.swift */; };
 		BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230027FF20EE004DC202 /* TimetableScene.swift */; };
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
 		BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */; };
@@ -95,6 +96,7 @@
 		BE682BB32879E24D009EBCB7 /* SNUTTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNUTTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE682BB42879E24D009EBCB7 /* SNUTTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNUTTUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE682BB5287C40AF009EBCB7 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		BE682BC528845CDB009EBCB7 /* UITextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextEditor.swift; sourceTree = "<group>"; };
 		BE7E230027FF20EE004DC202 /* TimetableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableScene.swift; sourceTree = "<group>"; };
 		BE7E230227FF3C38004DC202 /* NavBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarButton.swift; sourceTree = "<group>"; };
 		BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBlocksLayer.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				BE7E230227FF3C38004DC202 /* NavBarButton.swift */,
 				BE1D2B3228012059008F9134 /* Timetable */,
 				BECDB897283B876300F62AC8 /* MenuSheet.swift */,
+				BE682BC528845CDB009EBCB7 /* UITextEditor.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -535,6 +538,7 @@
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,
+				BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */,
 				BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */,

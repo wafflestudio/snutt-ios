@@ -203,20 +203,16 @@ struct EditableDetailText: View {
     var body: some View {
         Group {
             if multiLine {
-                ZStack {
-                    if text.isEmpty {
-                        Text("(없음)")
-                            .foregroundColor(preventEditing ? STColor.disabled : Color(uiColor: .placeholderText))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .disabled(true)
-                    }
-                    
-                    UITextEditor(text: $text) { textView in
-                        height = textView.contentSize.height
-                    }
-                    .frame(height: height)
-                    .disabled(!isEditing || preventEditing)
+                UITextEditor("(없음)", text: $text) { textView in
+                    textView.backgroundColor = .clear
+                    textView.textContainerInset = .zero
+                    textView.textContainer.lineFragmentPadding = 0
+                    textView.font = .systemFont(ofSize: 16, weight: .regular)
+                } onChange: { textView in
+                    height = textView.contentSize.height
                 }
+                .frame(height: height)
+                .disabled(!isEditing || preventEditing)
             } else {
                 TextField("(없음)", text: $text)
                     .foregroundColor(preventEditing ? STColor.disabled : Color(uiColor: .label))
@@ -225,99 +221,9 @@ struct EditableDetailText: View {
         }
         .font(.system(size: 16, weight: .regular))
         .frame(maxWidth: .infinity, alignment: .topLeading)
-        .onAppear {
-            UITextView.appearance().backgroundColor = .clear
-        }
-        .onDisappear {
-            UITextView.appearance().backgroundColor = .none
-            //                        UITextView.appearance().isScrollEnabled  = true
-        }
     }
 }
 
-
-struct UITextEditor: UIViewRepresentable {
-    @Binding var text: String
-    let textDidChange: (UITextView) -> Void
-
-    func makeUIView(context: Context) -> UITextView {
-        let textView = UITextView()
-        textView.text = text
-        textView.font = .systemFont(ofSize: 16, weight: .regular)
-        textView.textContainerInset = .zero
-        textView.textContainer.lineFragmentPadding = 0
-        textView.delegate = context.coordinator
-        return textView
-    }
-
-    func updateUIView(_ uiView: UITextView, context: Context) {
-        DispatchQueue.main.async {
-            self.textDidChange(uiView)
-        }
-    }
-
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(text: $text, textDidChange: textDidChange)
-    }
-
-    class Coordinator: NSObject, UITextViewDelegate {
-        @Binding var text: String
-        let textDidChange: (UITextView) -> Void
-
-        init(text: Binding<String>, textDidChange: @escaping (UITextView) -> Void) {
-            self._text = text
-            self.textDidChange = textDidChange
-        }
-
-        func textViewDidChange(_ textView: UITextView) {
-            self.text = textView.text
-            self.textDidChange(textView)
-        }
-        
-        func textViewDidEndEditing(_ textView: UITextView) {
-            textView.text = self.text
-        }
-        
-        func textViewDidChangeSelection(_ textView: UITextView) {
-            ensureCursorVisible(textView: textView)
-        }
-        
-        private func findParentScrollView(of view: UIView) -> UIScrollView? {
-                var current = view
-                while let superview = current.superview {
-                    if let scrollView = superview as? UIScrollView {
-                        return scrollView
-                    } else {
-                        current = superview
-                    }
-                }
-            return nil
-        }
-        private var cursorScrollPositionAnimator: UIViewPropertyAnimator?
-        private func ensureCursorVisible(textView: UITextView) {
-            guard let scrollView = findParentScrollView(of: textView),
-                  let range = textView.selectedTextRange else {
-                return
-            }
-            
-            let cursorRect = textView.caretRect(for: range.start)
-            var rectToMakeVisible = textView.convert(cursorRect, to: scrollView)
-            
-            rectToMakeVisible.origin.y -= cursorRect.height
-            rectToMakeVisible.size.height *= 3
-            
-            if let existing = self.cursorScrollPositionAnimator {
-                existing.stopAnimation(true)
-            }
-            
-            let animator = UIViewPropertyAnimator(duration: 0.1, curve: .linear) {
-                scrollView.scrollRectToVisible(rectToMakeVisible, animated: false)
-            }
-            animator.startAnimation()
-            self.cursorScrollPositionAnimator = animator
-        }
-    }
-}
 
 extension EditableDetailText {
     /// Custom initializer to support editing `place` of a `Lecture`.
