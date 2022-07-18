@@ -12,7 +12,7 @@ class PopupView: UIView {
     var popup: STPopup! {
         didSet {
             dismissForNdaysButton = createDismissButton(text: { () -> String in
-                return "당분간 보지 않기"
+                "당분간 보지 않기"
             }())
             setDismissForNdaysButton()
         }
