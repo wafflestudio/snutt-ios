@@ -13,7 +13,7 @@ struct LectureDetailScene: View {
     @State var lecture: Lecture
     @State private var editMode: EditMode = .inactive
     @State private var tempLecture: Lecture = .preview
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -42,7 +42,7 @@ struct LectureDetailScene: View {
                         .padding(.vertical, 5)
                     }
                     .padding()
-                    
+
                     if !lecture.isCustom {
                         VStack {
                             Group {
@@ -83,14 +83,14 @@ struct LectureDetailScene: View {
                         }
                         .padding()
                     }
-                    
+
                     VStack {
                         Text("시간 및 장소")
                             .padding(.leading, 5)
                             .font(STFont.detailLabel)
                             .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        
+
                         ForEach(lecture.timePlaces) { timePlace in
                             VStack {
                                 HStack {
@@ -108,15 +108,15 @@ struct LectureDetailScene: View {
                         }
                     }
                     .padding()
-                    
+
                     DetailButton(text: "강의계획서") {
                         print("tap")
                     }
-                    
+
                     DetailButton(text: "강의평") {
                         print("tap")
                     }
-                    
+
                     DetailButton(text: "삭제") {
                         print("tap")
                     }
@@ -156,7 +156,7 @@ struct LectureDetailScene: View {
                 } label: {
                     Text(editMode.isEditing ? "저장" : "편집")
                 }
-                
+
                 EditButton()
             }
         }
@@ -165,11 +165,11 @@ struct LectureDetailScene: View {
 }
 
 #if canImport(UIKit)
-extension View {
-    func resignFirstResponder() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    extension View {
+        func resignFirstResponder() {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
     }
-}
 #endif
 
 // MARK: TODO - Move elsewhere if necessary
@@ -195,11 +195,11 @@ struct EditableTextField: View {
     var readOnly: Bool = false
     var multiLine: Bool = false
     @Environment(\.editMode) private var editMode
-    
+
     var isEditing: Bool {
         editMode?.wrappedValue.isEditing ?? false
     }
-    
+
     var body: some View {
         if multiLine {
             UITextEditor("(없음)", text: $text) { textView in
@@ -234,16 +234,14 @@ extension EditableTextField {
     }
 }
 
-
-
 struct EditableNumberField: View {
     @Binding var value: Int
     @Environment(\.editMode) private var editMode
-    
+
     var isEditing: Bool {
         editMode?.wrappedValue.isEditing ?? false
     }
-    
+
     var body: some View {
         TextField("(없음)", value: $value, formatter: NumberFormatter())
             .disabled(!isEditing)
@@ -263,15 +261,15 @@ struct EditableTimeField: View {
     @Binding var lecture: Lecture
     var timePlace: TimePlace
     @Environment(\.editMode) private var editMode
-    
+
     @ViewBuilder private func timeTextLabel(from timePlace: TimePlace) -> some View {
         Text("\(timePlace.day.shortSymbol) \(timePlace.startTimeString) ~ \(timePlace.endTimeString)")
     }
-    
+
     var isEditing: Bool {
         editMode?.wrappedValue.isEditing ?? false
     }
-    
+
     var body: some View {
         Button {
             print("hi")
@@ -288,7 +286,7 @@ struct EditableTimeField: View {
 struct DetailButton: View {
     let text: String
     let action: () -> Void
-    
+
     struct DetailButtonStyle: ButtonStyle {
         func makeBody(configuration: Self.Configuration) -> some View {
             configuration.label
@@ -296,7 +294,7 @@ struct DetailButton: View {
                 .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : Color(uiColor: .systemBackground))
         }
     }
-    
+
     var body: some View {
         Button {
             action()

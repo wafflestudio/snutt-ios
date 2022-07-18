@@ -84,7 +84,7 @@ struct UITextEditor: UIViewRepresentable {
             self.placeholderTextView = placeholderTextView
             self.textDidChange = textDidChange
         }
-        
+
         func textViewDidChange(_ textView: UITextView) {
             text = textView.text
             placeholderTextView?.isHidden = !textView.text.isEmpty
