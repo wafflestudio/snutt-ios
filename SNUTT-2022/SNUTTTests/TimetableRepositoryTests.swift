@@ -5,7 +5,7 @@
 //  Created by Jinsup Keum on 2022/07/08.
 //
 
-import Alamofir
+import Alamofire
 import XCTest
 
 class TimetableRepositoryTests: XCTestCase {

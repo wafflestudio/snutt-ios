@@ -44,12 +44,6 @@ struct LectureListCell: View {
 
 struct TimetableListCell_Previews: PreviewProvider {
     static var previews: some View {
-        let lecture = Lecture(id: 1, title: "컴파일러", instructor: "전병곤", timePlaces: [
-            TimePlace(day: Weekday(rawValue: 1)!, start: 5.5, len: 1.5, place: "302-123"),
-            TimePlace(day: Weekday(rawValue: 3)!, start: 3.15, len: 1.5, place: "302-123"),
-            TimePlace(day: Weekday(rawValue: 3)!, start: 4.70, len: 1.5, place: "302-123"),
-        ])
-
-        LectureListCell(lecture: lecture)
+        LectureListCell(lecture: .preview)
     }
 }

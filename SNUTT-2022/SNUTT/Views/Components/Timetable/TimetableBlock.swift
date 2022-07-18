@@ -31,7 +31,7 @@ struct TimetableBlock: View {
 
 struct TimetableBlock_Previews: PreviewProvider {
     static var previews: some View {
-        let lecture = AppState().currentTimetable.lectures.first!
+        let lecture: Lecture = .preview
         TimetableBlock(lecture: lecture, timePlace: lecture.timePlaces[0])
             .frame(width: 70, height: 100, alignment: .center)
     }

@@ -31,10 +31,8 @@ struct LectureList: View {
 
 struct TimetableList_Previews: PreviewProvider {
     static var previews: some View {
-        let appState = AppState()
-
         NavigationView {
-            LectureList(lectures: appState.currentTimetable.lectures)
+            LectureList(lectures: [.preview, .preview, .preview])
         }
     }
 }

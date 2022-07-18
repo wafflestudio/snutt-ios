@@ -1,15 +1,15 @@
 //
-//  TimetableService.swift
+//  UserService.swift
 //  SNUTT
 //
-//  Created by Jinsup Keum on 2022/03/19.
+//  Created by 박신홍 on 2022/07/09.
 //
 
 import Foundation
 
-protocol TimetableServiceProtocol {}
+protocol UserServiceProtocol {}
 
-struct TimetableService: TimetableServiceProtocol {
+class UserService: UserServiceProtocol {
     let appState: AppState
     let webRepositories: AppEnvironment.WebRepositories
 
@@ -19,4 +19,4 @@ struct TimetableService: TimetableServiceProtocol {
     }
 }
 
-struct FakeTimetableService: TimetableServiceProtocol {}
+class FakeUserService: UserServiceProtocol {}
