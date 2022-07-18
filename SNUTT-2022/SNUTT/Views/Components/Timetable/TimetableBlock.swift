@@ -24,10 +24,14 @@ struct TimetableBlock: View {
                     VStack {
                         Group {
                             Text(lecture.title)
+                                .font(STFont.details)
                             Text(timePlace.place)
+                                .font(STFont.detailsSemibold)
+                                .minimumScaleFactor(0.5)
+                                .lineLimit(1)
                         }
+                        .padding(2)
                         .multilineTextAlignment(.center)
-                        .font(STFont.details)
                         .foregroundColor(.white)
                     }.padding(2)
                 }
@@ -48,7 +52,7 @@ struct TimetableBlock_Previews: PreviewProvider {
             TimetableBlock(viewModel: .init(container: .preview),
                            lecture: lecture,
                            timePlace: lecture.timePlaces[0],
-                           theme: .SNUTT)
+                           theme: .snutt)
                 .frame(width: 70, height: 100, alignment: .center)
         }
     }

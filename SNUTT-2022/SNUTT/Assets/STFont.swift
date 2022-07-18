@@ -19,4 +19,5 @@ struct STFont {
 
     /// 상세 정보를 표기할 때 사용하는 작은 글씨
     static let details: Font = .system(size: 12, weight: .regular)
+    static let detailsSemibold: Font = .system(size: 12, weight: .semibold)
 }

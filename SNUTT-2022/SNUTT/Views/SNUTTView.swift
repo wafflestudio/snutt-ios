@@ -10,7 +10,6 @@ import SwiftUI
 struct SNUTTView: View {
     @State var selectedTab: TabType = .timetable
     let container: DIContainer
-    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         ZStack {

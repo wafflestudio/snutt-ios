@@ -30,7 +30,7 @@ struct LectureDto: Codable {
     let class_time_mask: [Int]
     let instructor: String
     let quota: Int?
-    let remark: String
+    let remark: String?
     let category: String?
     let course_number: String?
     let lecture_number: String?

@@ -24,7 +24,7 @@ struct LectureBlocks: View {
                     TimetableBlock(viewModel: .init(container: viewModel.container),
                                    lecture: lecture,
                                    timePlace: timePlace,
-                                   theme: timetableSetting.current?.theme ?? .SNUTT)
+                                   theme: timetableSetting.current?.theme ?? .snutt)
                         .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: timetableSetting.weekCount), height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: timetableSetting.hourCount), alignment: .center)
                         .offset(x: offsetPoint.x, y: offsetPoint.y)
                 }

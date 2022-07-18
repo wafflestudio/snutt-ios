@@ -1,5 +1,5 @@
 //
-//  RequestInterceptor.swift
+//  NetworkUtils.swift
 //  SNUTT
 //
 //  Created by Jinsup Keum on 2022/07/08.

@@ -10,7 +10,7 @@ import SwiftUI
 struct TimetableScene: View {
     @State private var pushToListScene = false
     @StateObject var viewModel: TimetableViewModel
-
+    
     var body: some View {
         TimetableZStack(viewModel: .init(container: viewModel.container))
             .environmentObject(viewModel.timetableSetting)
@@ -28,8 +28,8 @@ struct TimetableScene: View {
                             viewModel.toggleMenuSheet()
                         }
 
-                        Text("나의 시간표").font(STFont.title)
-                        Text("(18 학점)")
+                        Text(viewModel.timetableTitle).font(STFont.title)
+                        Text("(\(viewModel.totalCredit) 학점)")
                             .font(STFont.details)
                             .foregroundColor(Color(UIColor.secondaryLabel))
 

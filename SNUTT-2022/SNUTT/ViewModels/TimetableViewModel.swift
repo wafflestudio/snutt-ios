@@ -7,13 +7,27 @@
 
 import SwiftUI
 import UIKit
+import Combine
 
 class TimetableViewModel: ObservableObject {
     @Published var showAlert: Bool = false
+    @Published var totalCredit: Int = 0
+    @Published var timetableTitle: String = ""
+    
+    private var bag = Set<AnyCancellable>()
+    
     var container: DIContainer
 
     init(container: DIContainer) {
         self.container = container
+        
+        timetableSetting.$current
+            .map { $0?.totalCredit ?? 0 }
+            .assign(to: &$totalCredit)
+        
+        timetableSetting.$current
+            .map { $0?.title ?? "" }
+            .assign(to: &$timetableTitle)
     }
 
     private var appState: AppState {
@@ -24,14 +38,14 @@ class TimetableViewModel: ObservableObject {
         container.services.timetableService
     }
 
-    var currentTimetable: Timetable? {
+    private var currentTimetable: Timetable? {
         appState.setting.timetableSetting.current
     }
 
     var timetableSetting: TimetableSetting {
         appState.setting.timetableSetting
     }
-
+    
     func toggleMenuSheet() {
         appState.setting.menuSheetSetting.isOpen.toggle()
     }
@@ -48,7 +62,7 @@ class TimetableViewModel: ObservableObject {
             }
         }
     }
-
+    
     struct TimetablePainter {
         /// 시간표 맨 왼쪽, 시간들을 나타내는 열의 너비
         static let hourWidth: CGFloat = 20
@@ -90,4 +104,6 @@ class TimetableViewModel: ObservableObject {
             return timePlace.len * getHourHeight(in: containerSize, hourCount: hourCount)
         }
     }
+
 }
+

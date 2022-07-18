@@ -68,11 +68,11 @@ struct LectureDetailScene: View {
                                 }
                                 HStack {
                                     DetailLabel(text: "강좌번호")
-                                    EditableTextField(text: $lecture.course_number, readOnly: true)
+                                    EditableTextField(text: $lecture.courseNumber, readOnly: true)
                                 }
                                 HStack {
                                     DetailLabel(text: "분반번호")
-                                    EditableTextField(text: $lecture.lecture_number, readOnly: true)
+                                    EditableTextField(text: $lecture.lectureNumber, readOnly: true)
                                 }
                                 HStack {
                                     DetailLabel(text: "비고")
@@ -127,6 +127,7 @@ struct LectureDetailScene: View {
             .padding(.vertical, 20)
         }
         .background(Color(uiColor: .systemGroupedBackground))
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(editMode.isEditing)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
