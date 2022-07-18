@@ -18,6 +18,17 @@ class STTimetableTabViewController: UIViewController {
         return STTimetableManager.sharedInstance.currentTimetable
     }
 
+    var currentPopupList: [STPopup] {
+        return STPopupManager.popupList
+    }
+
+    var currentPopup: STPopup?
+
+    enum PopupControllerState {
+        case opened
+        case closed
+    }
+
     enum MenuControllerState {
         case opened
         case closed
@@ -33,6 +44,7 @@ class STTimetableTabViewController: UIViewController {
 
     var menuControllerState: MenuControllerState = .closed
     var themeSettingViewState: ThemeSettingViewState = .closed
+    var popUpControllerState: PopupControllerState = .closed
     var isInAnimation: Bool = false
 
     @IBOutlet weak var containerView: UIView!
@@ -92,6 +104,8 @@ class STTimetableTabViewController: UIViewController {
 
         addMenuView()
         addThemeSettingView()
+
+        tabBarController!.view.addSubview(backgroundView)
     }
 
     private func addRightBarButtons() {
@@ -130,6 +144,10 @@ class STTimetableTabViewController: UIViewController {
 
     override func viewDidAppear(_: Bool) {
         setNotiBadge(STDefaults[.shouldShowBadge])
+        if !STPopupManager.hasShownPopup {
+            loadPopUpView()
+            STPopupManager.hasShownPopup = true
+        }
     }
 
     deinit {
@@ -376,7 +394,6 @@ extension STTimetableTabViewController {
         switch menuControllerState {
         case .closed:
             showBackgroundCoverView()
-            tabBarController!.view.addSubview(backgroundView)
             tabBarController!.view.addSubview(menuController.view)
             self.menuController?.fetchTablelist()
             self.menuController?.view.isHidden = false
@@ -434,6 +451,87 @@ extension STTimetableTabViewController {
                 self.themeSettingViewState = .closed
             }
         }
+    }
+}
+
+// MARK: PopUp stuff
+
+extension STTimetableTabViewController {
+    private func becomeDelegate(of viewController: PopupViewController) {
+        viewController.delegate = self
+    }
+
+    private func loadPopUpView() {
+        for popup in currentPopupList {
+            let popupViewController = PopupViewController()
+            becomeDelegate(of: popupViewController)
+            popupViewController.presentIfNeeded(popup: popup, at: popupViewController)
+            popupViewController.popup = popup
+            if currentPopupList.last != popup {
+                popupViewController.popupView.isHidden = true
+            }
+        }
+        setNewCurrentPopup()
+    }
+
+    private func changeBackgroundColor() {
+        if shouldClosePopupState() {
+            popUpControllerState = .closed
+        }
+        switch popUpControllerState {
+        case .opened: showBackgroundCoverView()
+        case .closed: hideBackgroundCoverView()
+        }
+    }
+}
+
+extension STTimetableTabViewController: PopupViewControllerDelegate {
+    var rootVC: UIViewController? {
+        UIApplication.shared.windows.first!.rootViewController
+    }
+
+    var lastPopupVC: PopupViewController? {
+        rootVC?.children.last(where: { vc in
+            vc.isKind(of: PopupViewController.self)
+        }) as? PopupViewController
+    }
+
+    func present(viewController: PopupViewController) {
+        popUpControllerState = .opened
+        rootVC?.add(childVC: viewController, then: setNewCurrentPopup)
+        changeBackgroundColor()
+    }
+
+    /// 닫기
+    func dismiss() {
+        removePopup()
+    }
+
+    /// n일 동안 보지 않기
+    func dismissForNdays() {
+        STPopupManager.saveLastUpdate(for: currentPopup)
+        removePopup()
+    }
+
+    /// 가장 상단의 팝업을 제거합니다.
+    func removePopup() {
+        lastPopupVC?.remove(then: setNewCurrentPopup)
+    }
+
+    /// 모든 PopupViewController가 제거되었는지 확인합니다.
+    func shouldClosePopupState() -> Bool {
+        if lastPopupVC != nil {
+            return false
+        } else {
+            return true
+        }
+    }
+
+    /// 새로운 currentPopup을 설정합니다.
+    func setNewCurrentPopup() {
+        lastPopupVC?.popupView.isHidden = false
+        currentPopup = lastPopupVC?.popup
+        changeBackgroundColor()
     }
 }
 

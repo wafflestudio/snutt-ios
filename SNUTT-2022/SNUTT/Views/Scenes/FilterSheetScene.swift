@@ -39,13 +39,13 @@ struct FilterSheetScene: View {
 
 ///// A simple wrapper that is used to preview `FilterSheet`.
 struct FilterSheetWrapper: View {
-    let appState = AppState()
+    let container: DIContainer = .preview
     var body: some View {
         ZStack {
             NavBarButton(imageName: "search.filter") {
-                appState.setting.filterSheetSetting.isOpen.toggle()
+                container.appState.setting.filterSheetSetting.isOpen.toggle()
             }
-            FilterSheetScene(viewModel: .init(appState: appState))
+            FilterSheetScene(viewModel: .init(container: container))
         }
     }
 }

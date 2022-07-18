@@ -46,7 +46,7 @@ struct SearchLectureScene: View {
 struct SearchLectureScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SearchLectureScene(viewModel: .init(appState: AppState()))
+            SearchLectureScene(viewModel: .init(container: .preview))
         }
     }
 }

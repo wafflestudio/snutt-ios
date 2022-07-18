@@ -28,8 +28,8 @@ struct LectureBlocks: View {
 
 struct LectureBlocks_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = TimetableViewModel(appState: AppState())
-        LectureBlocks(lecture: viewModel.currentTimetable.lectures[0])
+        let viewModel = TimetableViewModel(container: .preview)
+        LectureBlocks(lecture: .preview)
             .environmentObject(viewModel.timetableSetting)
     }
 }

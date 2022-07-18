@@ -9,7 +9,15 @@ import SwiftUI
 import UIKit
 
 class TimetableViewModel {
-    var appState: AppState
+    var container: DIContainer
+
+    init(container: DIContainer) {
+        self.container = container
+    }
+
+    private var appState: AppState {
+        container.appState
+    }
 
     var currentTimetable: Timetable {
         appState.currentTimetable
@@ -21,10 +29,6 @@ class TimetableViewModel {
 
     func updateTimetable(timeTable: Timetable) {
         appState.currentTimetable = timeTable
-    }
-
-    init(appState: AppState) {
-        self.appState = appState
     }
 
     func toggleMenuSheet() {

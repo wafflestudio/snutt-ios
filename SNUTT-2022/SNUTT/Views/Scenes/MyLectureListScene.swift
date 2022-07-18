@@ -29,7 +29,7 @@ struct MyTimetableListScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             TabView {
-                MyLectureListScene(viewModel: MyLectureListViewModel(appState: AppState()))
+                MyLectureListScene(viewModel: .init(container: .preview))
             }
         }
     }

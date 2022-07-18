@@ -6,10 +6,14 @@
 //
 
 class FilterSheetViewModel {
-    var appState: AppState
+    var container: DIContainer
 
-    init(appState: AppState) {
-        self.appState = appState
+    init(container: DIContainer) {
+        self.container = container
+    }
+
+    private var appState: AppState {
+        container.appState
     }
 
     var filterSheetSetting: FilterSheetSetting {

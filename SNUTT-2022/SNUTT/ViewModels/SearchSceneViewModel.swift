@@ -8,12 +8,17 @@
 import Combine
 
 class SearchSceneViewModel: ObservableObject {
-    var appState: AppState
-    @Published var searchText = ""
+    var container: DIContainer
 
-    init(appState: AppState) {
-        self.appState = appState
+    init(container: DIContainer) {
+        self.container = container
     }
+
+    private var appState: AppState {
+        container.appState
+    }
+    
+    @Published var searchText = ""
 
     var filterSheetSetting: FilterSheetSetting {
         appState.setting.filterSheetSetting

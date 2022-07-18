@@ -25,6 +25,11 @@
 		BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBD281D6244005F71E6 /* TimetableBlock.swift */; };
 		BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBF281D762F005F71E6 /* TimetableZStack.swift */; };
 		BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */; };
+		BEDE34D42879A59B00525014 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BEDE34D32879A59B00525014 /* Alamofire */; };
+		BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34D52879A7B800525014 /* DIContainer.swift */; };
+		BEDE34D82879A9DC00525014 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34D72879A9DC00525014 /* UserService.swift */; };
+		BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34D92879AA0B00525014 /* UserRepository.swift */; };
+		BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34DB2879B40100525014 /* AppEnvironment.swift */; };
 		BEDE34CA28754F3100525014 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34C928754F3100525014 /* Sheet.swift */; };
 		BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */; };
 		BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF506C27EB740E00CDCC13 /* LectureList.swift */; };
@@ -37,6 +42,15 @@
 		BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */; };
 		BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */; };
 		BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */; };
+		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
+		DC1E0ECD28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
+		DC1E0ECF28772F13005632A3 /* NetworkiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkiUtils.swift */; };
+		DC1E0ED12877381F005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
+		DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */; };
+		DC1E0ED62877E32D005632A3 /* TimetableRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED52877E32D005632A3 /* TimetableRepositoryTests.swift */; };
+		DC1E0ED72877E3B3005632A3 /* TimetableRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */; };
+		DC1E0ED82877E3CC005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
+		DC1E0ED92877E78C005632A3 /* NetworkiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkiUtils.swift */; };
 		DC2915992865D69700FE5F9A /* MyLectureListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915982865D69700FE5F9A /* MyLectureListViewModel.swift */; };
 		DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159A2865F95100FE5F9A /* SettingScene.swift */; };
 		DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */; };
@@ -52,10 +66,10 @@
 		DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F5927E5C87F0068C94B /* SNUTTTests.swift */; };
 		DC860F6427E5C87F0068C94B /* SNUTTUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F6327E5C87F0068C94B /* SNUTTUITests.swift */; };
 		DC860F6627E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F6527E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift */; };
+		DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */; };
+		DC9C2CAC287805D3009EC3BC /* TimetableDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */; };
 		DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
 		DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6227E5CCD500CF380E /* TimetableService.swift */; };
-		DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */; };
-		DCD41A6A27E5CD8700CF380E /* TimetableApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6927E5CD8700CF380E /* TimetableApi.swift */; };
 		DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */; };
 		DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7427E5CEA500CF380E /* AppState.swift */; };
 /* End PBXBuildFile section */
@@ -97,6 +111,13 @@
 		BE982FBF281D762F005F71E6 /* TimetableZStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableZStack.swift; sourceTree = "<group>"; };
 		BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetScene.swift; sourceTree = "<group>"; };
 		BEDE34C928754F3100525014 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
+		BEDE34CF2879A3FA00525014 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SNUTT.app; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEDE34D02879A3FA00525014 /* SNUTTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SNUTTTests.xctest; path = SNUTTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEDE34D12879A3FA00525014 /* SNUTTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SNUTTUITests.xctest; path = SNUTTUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEDE34D52879A7B800525014 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		BEDE34D72879A9DC00525014 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		BEDE34D92879AA0B00525014 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		BEDE34DB2879B40100525014 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureListCell.swift; sourceTree = "<group>"; };
 		BEDF506C27EB740E00CDCC13 /* LectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureList.swift; sourceTree = "<group>"; };
 		BEDF506E27EB744A00CDCC13 /* LectureDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetails.swift; sourceTree = "<group>"; };
@@ -108,6 +129,11 @@
 		BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTView.swift; sourceTree = "<group>"; };
 		BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabScene.swift; sourceTree = "<group>"; };
 		BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureBlocks.swift; sourceTree = "<group>"; };
+		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
+		DC1E0ECE28772F13005632A3 /* NetworkiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkiUtils.swift; sourceTree = "<group>"; };
+		DC1E0ED02877381F005632A3 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRouter.swift; sourceTree = "<group>"; };
+		DC1E0ED52877E32D005632A3 /* TimetableRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepositoryTests.swift; sourceTree = "<group>"; };
 		DC2915982865D69700FE5F9A /* MyLectureListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLectureListViewModel.swift; sourceTree = "<group>"; };
 		DC29159A2865F95100FE5F9A /* SettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScene.swift; sourceTree = "<group>"; };
 		DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -117,19 +143,15 @@
 		DC2915A42866980B00FE5F9A /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		DC2915A62866984000FE5F9A /* TimetableSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSetting.swift; sourceTree = "<group>"; };
 		DC2915A82866986600FE5F9A /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
-		DC860F4527E5C87D0068C94B /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
 		DC860F4C27E5C87F0068C94B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC860F4F27E5C87F0068C94B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		DC860F5527E5C87F0068C94B /* SNUTTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNUTTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F5927E5C87F0068C94B /* SNUTTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTTests.swift; sourceTree = "<group>"; };
-		DC860F5F27E5C87F0068C94B /* SNUTTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNUTTUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC860F6327E5C87F0068C94B /* SNUTTUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTUITests.swift; sourceTree = "<group>"; };
 		DC860F6527E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDto.swift; sourceTree = "<group>"; };
 		DCD41A5F27E5CC7700CF380E /* Timetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timetable.swift; sourceTree = "<group>"; };
 		DCD41A6227E5CCD500CF380E /* TimetableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableService.swift; sourceTree = "<group>"; };
-		DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		DCD41A6927E5CD8700CF380E /* TimetableApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableApi.swift; sourceTree = "<group>"; };
 		DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableViewModel.swift; sourceTree = "<group>"; };
 		DCD41A7427E5CEA500CF380E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,6 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEDE34D42879A59B00525014 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,24 +194,22 @@
 			path = Timetable;
 			sourceTree = "<group>";
 		};
+		DC1E0ED2287738DF005632A3 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				DC1E0ED02877381F005632A3 /* Router.swift */,
+				DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
 		DC860F3C27E5C87D0068C94B = {
 			isa = PBXGroup;
 			children = (
 				DC860F4727E5C87D0068C94B /* SNUTT */,
 				DC860F5827E5C87F0068C94B /* SNUTTTests */,
 				DC860F6227E5C87F0068C94B /* SNUTTUITests */,
-				DC860F4627E5C87D0068C94B /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		DC860F4627E5C87D0068C94B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				DC860F4527E5C87D0068C94B /* SNUTT.app */,
-				DC860F5527E5C87F0068C94B /* SNUTTTests.xctest */,
-				DC860F5F27E5C87F0068C94B /* SNUTTUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		DC860F4727E5C87D0068C94B /* SNUTT */ = {
@@ -218,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				DC860F5927E5C87F0068C94B /* SNUTTTests.swift */,
+				DC1E0ED52877E32D005632A3 /* TimetableRepositoryTests.swift */,
 			);
 			path = SNUTTTests;
 			sourceTree = "<group>";
@@ -229,6 +251,14 @@
 				DC860F6527E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift */,
 			);
 			path = SNUTTUITests;
+			sourceTree = "<group>";
+		};
+		DC9C2CA928780589009EC3BC /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */,
+			);
+			path = Dto;
 			sourceTree = "<group>";
 		};
 		DCD41A5E27E5CC4700CF380E /* Models */ = {
@@ -252,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				DCD41A6227E5CCD500CF380E /* TimetableService.swift */,
+				BEDE34D72879A9DC00525014 /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -259,26 +290,13 @@
 		DCD41A6427E5CCFD00CF380E /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				DCD41A6627E5CD1100CF380E /* Local */,
-				DCD41A6527E5CD0500CF380E /* Api */,
+				DC9C2CA928780589009EC3BC /* Dto */,
+				DC1E0ED2287738DF005632A3 /* Router */,
+				DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */,
+				BEDE34D92879AA0B00525014 /* UserRepository.swift */,
+				DC1E0ECE28772F13005632A3 /* NetworkiUtils.swift */,
 			);
 			path = Repositories;
-			sourceTree = "<group>";
-		};
-		DCD41A6527E5CD0500CF380E /* Api */ = {
-			isa = PBXGroup;
-			children = (
-				DCD41A6927E5CD8700CF380E /* TimetableApi.swift */,
-			);
-			path = Api;
-			sourceTree = "<group>";
-		};
-		DCD41A6627E5CD1100CF380E /* Local */ = {
-			isa = PBXGroup;
-			children = (
-				DCD41A6727E5CD2A00CF380E /* UserDefaults.swift */,
-			);
-			path = Local;
 			sourceTree = "<group>";
 		};
 		DCD41A6B27E5CDAF00CF380E /* Views */ = {
@@ -340,7 +358,9 @@
 		DCD41A7327E5CE5F00CF380E /* AppState */ = {
 			isa = PBXGroup;
 			children = (
+				BEDE34DB2879B40100525014 /* AppEnvironment.swift */,
 				DCD41A7427E5CEA500CF380E /* AppState.swift */,
+				BEDE34D52879A7B800525014 /* DIContainer.swift */,
 			);
 			path = AppState;
 			sourceTree = "<group>";
@@ -371,8 +391,11 @@
 			dependencies = (
 			);
 			name = SNUTT;
+			packageProductDependencies = (
+				BEDE34D32879A59B00525014 /* Alamofire */,
+			);
 			productName = SNUTT;
-			productReference = DC860F4527E5C87D0068C94B /* SNUTT.app */;
+			productReference = BEDE34CF2879A3FA00525014 /* SNUTT.app */;
 			productType = "com.apple.product-type.application";
 		};
 		DC860F5427E5C87F0068C94B /* SNUTTTests */ = {
@@ -390,7 +413,7 @@
 			);
 			name = SNUTTTests;
 			productName = SNUTTTests;
-			productReference = DC860F5527E5C87F0068C94B /* SNUTTTests.xctest */;
+			productReference = BEDE34D02879A3FA00525014 /* SNUTTTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		DC860F5E27E5C87F0068C94B /* SNUTTUITests */ = {
@@ -408,7 +431,7 @@
 			);
 			name = SNUTTUITests;
 			productName = SNUTTUITests;
-			productReference = DC860F5F27E5C87F0068C94B /* SNUTTUITests.xctest */;
+			productReference = BEDE34D12879A3FA00525014 /* SNUTTUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -443,7 +466,10 @@
 				Base,
 			);
 			mainGroup = DC860F3C27E5C87D0068C94B;
-			productRefGroup = DC860F4627E5C87D0068C94B /* Products */;
+			packageReferences = (
+				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
+			productRefGroup = DC860F3C27E5C87D0068C94B;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -490,11 +516,14 @@
 				DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */,
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
 				BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */,
+				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* MyLectureListScene.swift in Sources */,
 				BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */,
 				DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */,
+				DC1E0ED12877381F005632A3 /* Router.swift in Sources */,
 				DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
+				DC1E0ECF28772F13005632A3 /* NetworkiUtils.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetails.swift in Sources */,
 				DC2915A32866958100FE5F9A /* User.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
@@ -504,34 +533,38 @@
 				B87431CB283B5A7300D78C59 /* SNUTTViewModel.swift in Sources */,
 				DC2915A92866986600FE5F9A /* System.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
+				BECDB898283B876300F62AC8 /* MenuSheet.swift in Sources */,
 				DCD41A6827E5CD2A00CF380E /* UserDefaults.swift in Sources */,
 				BE4B0EB828735052005FE164 /* MenuSheetSetting.swift in Sources */,
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
+				DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
+				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
 				DC2915A52866980B00FE5F9A /* Setting.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
+				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
 				BE4B0EBE2873BC84005FE164 /* FilterSheetViewModel.swift in Sources */,
 				DC2915992865D69700FE5F9A /* MyLectureListViewModel.swift in Sources */,
+				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
+				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,
+				BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */,
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
-				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
 				BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */,
-				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* MyTimetableScene.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
 				DC2915A72866984000FE5F9A /* TimetableSetting.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
-				DCD41A6A27E5CD8700CF380E /* TimetableApi.swift in Sources */,
 				BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -540,7 +573,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC1E0ED72877E3B3005632A3 /* TimetableRouter.swift in Sources */,
+				DC1E0ED92877E78C005632A3 /* NetworkiUtils.swift in Sources */,
+				DC1E0ED62877E32D005632A3 /* TimetableRepositoryTests.swift in Sources */,
+				DC1E0ED82877E3CC005632A3 /* Router.swift in Sources */,
 				DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */,
+				DC1E0ECD28771B32005632A3 /* TimetableRepository.swift in Sources */,
+				DC9C2CAC287805D3009EC3BC /* TimetableDto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -769,8 +808,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
@@ -857,6 +898,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BEDE34D32879A59B00525014 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DC860F3D27E5C87D0068C94B /* Project object */;
 }
