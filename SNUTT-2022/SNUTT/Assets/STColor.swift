@@ -12,6 +12,11 @@ struct STColor {
     static let cyan: Color = .init(hex: 0x1BD0C8)
 
     static let disabled: Color = .init(uiColor: .label.withAlphaComponent(0.6))
+    
+    static let navBackground: Color = .init("nav.background")
+    static let tabBackground: Color = .init("tab.background")
+    
+    static let groupForeground: Color = .init("group.foreground")
 }
 
 extension Color {

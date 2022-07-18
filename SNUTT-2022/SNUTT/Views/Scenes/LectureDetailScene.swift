@@ -122,7 +122,7 @@ struct LectureDetailScene: View {
                     }
                     .foregroundColor(.red)
                 }
-                .background(Color.white)
+                .background(STColor.groupForeground)
             }
             .padding(.vertical, 20)
         }
@@ -291,7 +291,7 @@ struct DetailButton: View {
         func makeBody(configuration: Self.Configuration) -> some View {
             configuration.label
                 .frame(maxWidth: .infinity)
-                .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : Color(uiColor: .systemBackground))
+                .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : STColor.groupForeground)
         }
     }
 

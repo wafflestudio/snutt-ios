@@ -59,7 +59,7 @@ extension Lecture {
                            credit: Int.random(in: 0 ... 4),
                            department: departments.randomElement()!,
                            academic_year: academic_years.randomElement()!,
-                           colorIndex: 0,
+                           colorIndex: Int.random(in: 1 ... 5),
                            classification: "전선",
                            category: "체육",
                            remark: "영어강의, 복부전생수강불가, 주전공생수강불가, 어쩌구 저쩌구",

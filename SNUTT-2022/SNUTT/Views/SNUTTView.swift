@@ -10,6 +10,7 @@ import SwiftUI
 struct SNUTTView: View {
     @State var selectedTab: TabType = .timetable
     let container: DIContainer
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         ZStack {
@@ -37,25 +38,21 @@ struct SNUTTView: View {
         }
         let _ = debugChanges()
     }
+    
+    /// Globally set the background color of the nav bar to white.
+    private func setNavBarStyle() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor(STColor.navBackground)
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
 
     /// Globally set the background color of the tab bar to white.
     private func setTabBarStyle() {
         let appearance = UITabBarAppearance()
-        appearance.backgroundColor = .white
+        appearance.backgroundColor = UIColor(STColor.tabBackground)
         UITabBar.appearance().standardAppearance = appearance
-        if #available(iOS 15.0, *) {
-            UITabBar.appearance().scrollEdgeAppearance = appearance
-        }
-    }
-
-    /// Globally set the background color of the nav bar to white.
-    private func setNavBarStyle() {
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .white
-        UINavigationBar.appearance().standardAppearance = appearance
-        if #available(iOS 15.0, *) {
-            UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        }
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 }
 
