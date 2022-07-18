@@ -78,6 +78,16 @@ extension String {
         let characterSet = CharacterSet.alphanumerics.inverted
         return (rangeOfCharacter(from: characterSet) != nil)
     }
+
+    func convertToDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        if let date = dateFormatter.date(from: self) {
+            return date
+        } else {
+            return nil
+        }
+    }
 }
 
 extension UIView {
@@ -109,6 +119,40 @@ extension UIView {
         let path = CGPath(rect: rect, transform: nil)
         maskLayer.path = path
         layer.mask = maskLayer
+    }
+}
+
+extension UIViewController {
+    /// `child`를 `self`의 자식 뷰 컨트롤러로 추가한다.
+    func add(childVC: UIViewController, animate: Bool = true, then: @escaping () -> Void) {
+        childVC.view.alpha = 0
+
+        addChild(childVC)
+        view.addSubview(childVC.view)
+        childVC.didMove(toParent: self)
+
+        UIView.animate(withDuration: animate ? 0.3 : 0, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: []) {
+            childVC.view.alpha = 1
+        } completion: { _ in
+            then()
+        }
+    }
+
+    /// 부모 뷰 컨트롤러로부터 `self`를 제거한다.
+    func remove(animate: Bool = true, then: @escaping () -> Void) {
+        // Just to be safe, we check that this view controller
+        // is actually added to a parent before removing it.
+        guard parent != nil else {
+            return
+        }
+        UIView.animate(withDuration: animate ? 0.3 : 0, delay: 0, options: [.transitionCrossDissolve]) {
+            self.view.alpha = 0
+        } completion: { _ in
+            self.willMove(toParent: nil)
+            self.view.removeFromSuperview()
+            self.removeFromParent()
+            then()
+        }
     }
 }
 
@@ -193,6 +237,13 @@ extension Date {
         if minutesFrom(date) > 0 { return "\(minutesFrom(date))분전" }
         if secondsFrom(date) > 0 { return "\(secondsFrom(date))초전" }
         return ""
+    }
+
+    func convertToString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let data = dateFormatter.string(from: self)
+        return data
     }
 }
 

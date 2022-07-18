@@ -96,6 +96,8 @@ class STUser {
         }, failure: {
             openController()
         })
+
+        STPopupManager.initialize()
     }
 
     static func tryFBLogin(controller: UIViewController) {
@@ -143,9 +145,12 @@ class STUser {
         guard let refreshedToken = InstanceID.instanceID().token() else {
             return
         }
-        if STDefaults[.token] != nil && STDefaults[.registeredFCMToken] != refreshedToken {
-            STNetworking.addDevice(refreshedToken)
-        }
+        #if DEBUG
+        #else
+            if STDefaults[.token] != nil && STDefaults[.registeredFCMToken] != refreshedToken {
+                STNetworking.addDevice(refreshedToken)
+            }
+        #endif
     }
 
     init(json: JSON) {

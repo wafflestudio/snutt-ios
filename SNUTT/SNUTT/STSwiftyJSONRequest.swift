@@ -84,7 +84,7 @@ public extension DataRequest {
         )
     }
 
-    func responseWithDone(_ done: ((Int, JSON) -> Void)?, failure: ((STErrorCode) -> Void)?, showNetworkAlert: Bool = true, showAlert: Bool = true, alertTitle: String? = nil) {
+    func responseWithDone(_ done: ((Int, JSON) -> Void)?, failure: ((STErrorCode) -> Void)?, showNetworkAlert: Bool = true, showAlert: Bool = true, alertTitle: String? = nil, confirmAction: (() -> Void)? = nil, cancelAction: (() -> Void)? = nil) {
         responseSwiftyJSON { response in
             switch response.result {
             case let .success(json):
@@ -106,11 +106,16 @@ public extension DataRequest {
                             STUser.logOut()
                         default:
                             if showAlert {
-                                if let alertTitle = alertTitle {
-                                    STAlertView.showAlert(title: alertTitle, message: errCode.errorMessage)
-                                } else {
-                                    STAlertView.showAlert(title: errCode.errorTitle, message: errCode.errorMessage)
+                                let alertMessage = json["ext"]["confirm_message"].stringValue
+                                var actions: [UIAlertAction] = [UIAlertAction(title: "확인", style: .default, handler: { _ in
+                                    confirmAction?()
+                                })]
+                                if confirmAction != nil {
+                                    actions.append(UIAlertAction(title: "취소", style: .cancel, handler: { _ in
+                                        cancelAction?()
+                                    }))
                                 }
+                                STAlertView.showAlert(title: alertTitle ?? errCode.errorTitle, message: alertMessage == "" ? errCode.errorMessage : alertMessage, actions: actions)
                             }
                         }
                         failure?(errCode)

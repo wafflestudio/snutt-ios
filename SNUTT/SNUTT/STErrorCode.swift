@@ -101,7 +101,6 @@ public enum STErrorCode: Int {
              .FB_ID_WITH_SOMEONE_ELSE,
              .WRONG_SEMESTER,
              .NOT_CUSTOM_LECTURE,
-             .LECTURE_TIME_OVERLAP,
              .IS_CUSTOM_LECTURE,
              .USER_HAS_NO_FCM_KEY:
             return "잘못된 요청"
@@ -112,6 +111,8 @@ public enum STErrorCode: Int {
              .USER_NOT_FOUND,
              .COLORLIST_NOT_FOUND:
             return "찾지 못함"
+        case .LECTURE_TIME_OVERLAP:
+            return "시간대 겹침"
         }
     }
 
@@ -128,7 +129,7 @@ public enum STErrorCode: Int {
         case .NO_YEAR_OR_SEMESTER:
             return "올바른 년도와 학기를 정해주세요."
         case .NOT_ENOUGH_TO_CREATE_TIMETABLE:
-            return "올바른 년도, 학기, 이름을 정해주세요."
+            return "시간표의 이름이 비어있습니다."
         case .NO_LECTURE_INPUT:
             return "올바른 강좌를 넣어주세요."
         case .NO_LECTURE_ID:
