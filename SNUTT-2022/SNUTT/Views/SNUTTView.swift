@@ -38,7 +38,7 @@ struct SNUTTView: View {
         }
         let _ = debugChanges()
     }
-    
+
     /// Globally set the background color of the nav bar to white.
     private func setNavBarStyle() {
         let appearance = UINavigationBarAppearance()
