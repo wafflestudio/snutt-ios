@@ -12,16 +12,7 @@ class PopupView: UIView {
     var popup: STPopup! {
         didSet {
             dismissForNdaysButton = createDismissButton(text: { () -> String in
-                guard let hiddenDays = popup?.hiddenDays else {
-                    return "다시 보지 않기"
-                }
-                if hiddenDays == 0 {
-                    return "다시 보지 않기"
-                } else if hiddenDays == 1 {
-                    return "하루 보지 않기"
-                } else {
-                    return "\(hiddenDays)일 보지 않기"
-                }
+                return "당분간 보지 않기"
             }())
             setDismissForNdaysButton()
         }
