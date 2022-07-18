@@ -17,7 +17,7 @@ class SearchSceneViewModel: ObservableObject {
     private var appState: AppState {
         container.appState
     }
-    
+
     @Published var searchText = ""
 
     var filterSheetSetting: FilterSheetSetting {
