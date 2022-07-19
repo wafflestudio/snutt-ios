@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 
 struct LectureDetailScene: View {
-    let viewModel: ViewModel
+    @ObservedObject var viewModel: ViewModel
     @State var lecture: Lecture
     @State private var editMode: EditMode = .inactive
     @State private var tempLecture: Lecture = .preview
@@ -52,7 +52,7 @@ struct LectureDetailScene: View {
                                 }
                                 HStack {
                                     DetailLabel(text: "학년")
-                                    EditableTextField(text: $lecture.academic_year)
+                                    EditableTextField(text: $lecture.academicYear)
                                 }
                                 HStack {
                                     DetailLabel(text: "학점")
@@ -146,6 +146,9 @@ struct LectureDetailScene: View {
                 Button {
                     if editMode.isEditing {
                         // save
+                        Task {
+                            await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
+                        }
                         editMode = .inactive
                         resignFirstResponder()
                     } else {
@@ -307,9 +310,6 @@ struct DetailButton: View {
     }
 }
 
-extension LectureDetailScene {
-    class ViewModel: BaseViewModel {}
-}
 
 struct LectureDetailList_Previews: PreviewProvider {
     static var previews: some View {

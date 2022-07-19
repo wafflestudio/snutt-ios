@@ -17,6 +17,7 @@ struct STColor {
     static let tabBackground: Color = .init("tab.background")
 
     static let groupForeground: Color = .init("group.foreground")
+    static let systemBackground: Color = .init("system.background")
 }
 
 extension Color {

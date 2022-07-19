@@ -14,6 +14,7 @@ struct TimetableZStack: View {
             TimetableGridLayer()
             TimetableBlocksLayer(viewModel: .init(container: viewModel.container))
         }
+        .background(STColor.systemBackground)
 
         let _ = debugChanges()
     }

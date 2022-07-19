@@ -14,6 +14,17 @@
 		BE4B0EB828735052005FE164 /* MenuSheetSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */; };
 		BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BB5287C40AF009EBCB7 /* Theme.swift */; };
 		BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BC528845CDB009EBCB7 /* UITextEditor.swift */; };
+		BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BD028864CA8009EBCB7 /* LectureRouter.swift */; };
+		BE682BD3288676FA009EBCB7 /* LectureRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BD2288676FA009EBCB7 /* LectureRepositoryTests.swift */; };
+		BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BD828870718009EBCB7 /* LectureRepository.swift */; };
+		BE682BDB28870872009EBCB7 /* LectureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BDA28870872009EBCB7 /* LectureService.swift */; };
+		BE682BDC28870C4C009EBCB7 /* TimetableDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */; };
+		BE682BDD28870C58009EBCB7 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
+		BE682BDE28870C5B009EBCB7 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507427F4289B00CDCC13 /* Lecture.swift */; };
+		BE682BDF28870C69009EBCB7 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
+		BE682BE028870C6E009EBCB7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BB5287C40AF009EBCB7 /* Theme.swift */; };
+		BE682BE128870C71009EBCB7 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
+		BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */; };
 		BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230027FF20EE004DC202 /* TimetableScene.swift */; };
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
 		BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */; };
@@ -61,7 +72,6 @@
 		DC860F6427E5C87F0068C94B /* SNUTTUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F6327E5C87F0068C94B /* SNUTTUITests.swift */; };
 		DC860F6627E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F6527E5C87F0068C94B /* SNUTTUITestsLaunchTests.swift */; };
 		DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */; };
-		DC9C2CAC287805D3009EC3BC /* TimetableDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */; };
 		DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
 		DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6227E5CCD500CF380E /* TimetableService.swift */; };
 		DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */; };
@@ -96,6 +106,11 @@
 		BE682BB42879E24D009EBCB7 /* SNUTTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNUTTUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE682BB5287C40AF009EBCB7 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		BE682BC528845CDB009EBCB7 /* UITextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextEditor.swift; sourceTree = "<group>"; };
+		BE682BD028864CA8009EBCB7 /* LectureRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureRouter.swift; sourceTree = "<group>"; };
+		BE682BD2288676FA009EBCB7 /* LectureRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureRepositoryTests.swift; sourceTree = "<group>"; };
+		BE682BD828870718009EBCB7 /* LectureRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureRepository.swift; sourceTree = "<group>"; };
+		BE682BDA28870872009EBCB7 /* LectureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureService.swift; sourceTree = "<group>"; };
+		BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetailViewModel.swift; sourceTree = "<group>"; };
 		BE7E230027FF20EE004DC202 /* TimetableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableScene.swift; sourceTree = "<group>"; };
 		BE7E230227FF3C38004DC202 /* NavBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarButton.swift; sourceTree = "<group>"; };
 		BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBlocksLayer.swift; sourceTree = "<group>"; };
@@ -188,6 +203,7 @@
 			children = (
 				DC1E0ED02877381F005632A3 /* Router.swift */,
 				DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */,
+				BE682BD028864CA8009EBCB7 /* LectureRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -232,6 +248,7 @@
 			children = (
 				DC860F5927E5C87F0068C94B /* SNUTTTests.swift */,
 				DC1E0ED52877E32D005632A3 /* TimetableRepositoryTests.swift */,
+				BE682BD2288676FA009EBCB7 /* LectureRepositoryTests.swift */,
 			);
 			path = SNUTTTests;
 			sourceTree = "<group>";
@@ -275,6 +292,7 @@
 			children = (
 				DCD41A6227E5CCD500CF380E /* TimetableService.swift */,
 				BEDE34D72879A9DC00525014 /* UserService.swift */,
+				BE682BDA28870872009EBCB7 /* LectureService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -285,6 +303,7 @@
 				DC9C2CA928780589009EC3BC /* Dto */,
 				DC1E0ED2287738DF005632A3 /* Router */,
 				DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */,
+				BE682BD828870718009EBCB7 /* LectureRepository.swift */,
 				BEDE34D92879AA0B00525014 /* UserRepository.swift */,
 				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
 			);
@@ -335,6 +354,7 @@
 				B87431CA283B5A7300D78C59 /* BaseViewModel.swift */,
 				DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */,
 				DC2915982865D69700FE5F9A /* MyLectureListViewModel.swift */,
+				BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */,
 				DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */,
 				DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */,
 				BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */,
@@ -523,6 +543,8 @@
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
+				BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */,
+				BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */,
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
@@ -535,10 +557,12 @@
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
+				BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */,
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,
 				BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */,
 				BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
+				BE682BDB28870872009EBCB7 /* LectureService.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
 				BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */,
@@ -555,10 +579,16 @@
 				DC1E0ED72877E3B3005632A3 /* TimetableRouter.swift in Sources */,
 				DC1E0ED92877E78C005632A3 /* NetworkUtils.swift in Sources */,
 				DC1E0ED62877E32D005632A3 /* TimetableRepositoryTests.swift in Sources */,
+				BE682BDD28870C58009EBCB7 /* TimePlace.swift in Sources */,
+				BE682BDE28870C5B009EBCB7 /* Lecture.swift in Sources */,
+				BE682BDC28870C4C009EBCB7 /* TimetableDto.swift in Sources */,
+				BE682BDF28870C69009EBCB7 /* Timetable.swift in Sources */,
 				DC1E0ED82877E3CC005632A3 /* Router.swift in Sources */,
+				BE682BE128870C71009EBCB7 /* Weekday.swift in Sources */,
 				DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */,
+				BE682BE028870C6E009EBCB7 /* Theme.swift in Sources */,
 				DC1E0ECD28771B32005632A3 /* TimetableRepository.swift in Sources */,
-				DC9C2CAC287805D3009EC3BC /* TimetableDto.swift in Sources */,
+				BE682BD3288676FA009EBCB7 /* LectureRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -771,7 +801,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTTTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -792,7 +822,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTTTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";

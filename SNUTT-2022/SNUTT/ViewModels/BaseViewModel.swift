@@ -14,7 +14,11 @@ class BaseViewModel {
         self.container = container
     }
 
-    private var appState: AppState {
+    var appState: AppState {
         container.appState
+    }
+    
+    var services: AppEnvironment.Services {
+        container.services
     }
 }

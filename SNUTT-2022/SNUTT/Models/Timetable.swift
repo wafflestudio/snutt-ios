@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Timetable {
+    let id: String
     let title: String
     let lectures: [Lecture]
     let theme: Theme
@@ -23,6 +24,7 @@ struct Timetable {
 
 extension Timetable {
     init(from dto: TimetableDto) {
+        id = dto._id
         title = dto.title
         lectures = dto.lecture_list.map { .init(from: $0) }
         theme = .init(rawValue: dto.theme) ?? .snutt
@@ -37,6 +39,7 @@ extension Timetable {
 extension Timetable {
     static var preview: Timetable {
         return .init(
+            id: UUID().uuidString,
             title: "나의 시간표",
             lectures: [.preview, .preview, .preview],
             theme: .snutt,

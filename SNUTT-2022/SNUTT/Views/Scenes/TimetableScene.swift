@@ -28,7 +28,10 @@ struct TimetableScene: View {
                             viewModel.toggleMenuSheet()
                         }
 
-                        Text(viewModel.timetableTitle).font(STFont.title)
+                        Text(viewModel.timetableTitle)
+                            .font(STFont.title)
+                            .minimumScaleFactor(0.9)
+                            .lineLimit(1)
                         Text("(\(viewModel.totalCredit) 학점)")
                             .font(STFont.details)
                             .foregroundColor(Color(UIColor.secondaryLabel))

@@ -35,7 +35,7 @@ struct LectureListCell: View {
             if lecture.isCustom {
                 detailRow(imageName: "tag.black", text: "(없음)")
             } else {
-                detailRow(imageName: "tag.black", text: "\(lecture.department), \(lecture.academic_year)")
+                detailRow(imageName: "tag.black", text: "\(lecture.department), \(lecture.academicYear)")
             }
             detailRow(imageName: "clock.black", text: "목2")
             detailRow(imageName: "map.black", text: "049-215")
