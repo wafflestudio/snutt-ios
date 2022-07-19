@@ -24,6 +24,8 @@ struct TabScene<Content>: View where Content: View {
         NavigationView {
             self.content()
         }
+        // workaround to prevent unintend popping back
+        .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(Color(UIColor.label))
         .tabItem {
             Image(self.isViewVisible ? onImageName : offImageName)
