@@ -6,6 +6,7 @@
 //
 
 import Alamofire
+import Foundation
 
 protocol LectureRepositoryProtocol {
     func updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto) async throws -> TimetableDto
@@ -19,11 +20,9 @@ class LectureRepository: LectureRepositoryProtocol {
     }
     
     func updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto) async throws -> TimetableDto {
-        let data = try await session
+        return try await session
             .request(LectureRouter.updateLecture(timetableId: timetableId, oldLecture: oldLecture, newLecture: newLecture))
-            .validate()
             .serializingDecodable(TimetableDto.self)
-            .value
-        return data
+            .handlingError()
     }
 }

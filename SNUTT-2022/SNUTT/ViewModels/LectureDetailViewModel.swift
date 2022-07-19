@@ -19,13 +19,16 @@ extension LectureDetailScene {
             appState.setting.timetableSetting.current
         }
         
-        func updateLecture(oldLecture: Lecture, newLecture: Lecture) async {
-            guard let timetableId = currentTimetable?.id else { return }
+        func updateLecture(oldLecture: Lecture, newLecture: Lecture) async -> Bool {
+            guard let timetableId = currentTimetable?.id else { return false }
             do {
                 try await lectureService.updateLecture(timetableId: timetableId, oldLecture: oldLecture, newLecture: newLecture)
             } catch {
-//                print("sheet", error.asAFError?.errorDescription)
+                // TODO: show Error message
+                print(error.asSTError?.errorMessage)
+                return false
             }
+            return true
         }
         
     }

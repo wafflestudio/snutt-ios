@@ -147,7 +147,10 @@ struct LectureDetailScene: View {
                     if editMode.isEditing {
                         // save
                         Task {
-                            await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
+                            let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
+                            if !success {
+                                lecture = tempLecture
+                            }
                         }
                         editMode = .inactive
                         resignFirstResponder()

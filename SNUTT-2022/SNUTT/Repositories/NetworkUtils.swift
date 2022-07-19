@@ -46,3 +46,16 @@ final class Logger: EventMonitor {
         debugPrint("Finished: \(response)")
     }
 }
+
+extension DataTask {
+    /// Extract DTO from `DataTask`, or throw error parsed from the response body.
+    func handlingError() async throws -> Value {
+        if let dto = try? await self.value {
+            return dto
+        }
+        if let data = await self.response.data, let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data) {
+            throw STError(rawValue: errDto.errcode) ?? .SERVER_FAULT
+        }
+        throw STError.SERVER_FAULT
+    }
+}
