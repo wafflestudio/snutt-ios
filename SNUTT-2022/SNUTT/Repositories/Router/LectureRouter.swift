@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2022/07/19.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 enum LectureRouter: Router {
     var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/tables")! }
@@ -62,20 +62,20 @@ enum LectureRouter: Router {
     }
 }
 
-extension Encodable {
-    public func asJSONData() -> Data? {
+public extension Encodable {
+    func asJSONData() -> Data? {
         return try? JSONEncoder().encode(self)
     }
-    
-    public func asDictionary() -> [String: AnyHashable]? {
-        guard let data = self.asJSONData() else { return nil }
+
+    func asDictionary() -> [String: AnyHashable]? {
+        guard let data = asJSONData() else { return nil }
         return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: AnyHashable] }
     }
-    
+
     /// Compare two instances of `Encodable`, and extract any key-value pairs that is modified in `newData`.
-    public func extractModified(in newData: Encodable) -> [String: Any] {
+    func extractModified(in newData: Encodable) -> [String: Any] {
         var ret: [String: Any] = [:]
-        guard let oldDict = self.asDictionary() else { return ret }
+        guard let oldDict = asDictionary() else { return ret }
         guard let newDict = newData.asDictionary() else { return ret }
         for (key, newVal) in newDict {
             guard let oldVal = oldDict[key] else { continue }
@@ -92,4 +92,3 @@ extension Encodable {
         return ret
     }
 }
-

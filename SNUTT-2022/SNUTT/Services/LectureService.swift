@@ -14,7 +14,7 @@ protocol LectureServiceProtocol {
 struct LectureService: LectureServiceProtocol {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
-    
+
     var lectureRepository: LectureRepositoryProtocol {
         webRepositories.lectureRepository
     }
@@ -23,7 +23,7 @@ struct LectureService: LectureServiceProtocol {
         self.appState = appState
         self.webRepositories = webRepositories
     }
-    
+
     func updateLecture(timetableId: String, oldLecture: Lecture, newLecture: Lecture) async throws {
         let dto = try await lectureRepository.updateLecture(timetableId: timetableId, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture))
         let timetable = Timetable(from: dto)
@@ -34,5 +34,5 @@ struct LectureService: LectureServiceProtocol {
 }
 
 class FakeLectureService: LectureServiceProtocol {
-    func updateLecture(timetableId: String, oldLecture: Lecture, newLecture: Lecture) async throws {}
+    func updateLecture(timetableId _: String, oldLecture _: Lecture, newLecture _: Lecture) async throws {}
 }

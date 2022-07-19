@@ -18,7 +18,7 @@ class LectureRepository: LectureRepositoryProtocol {
     init(session: Session) {
         self.session = session
     }
-    
+
     func updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto) async throws -> TimetableDto {
         return try await session
             .request(LectureRouter.updateLecture(timetableId: timetableId, oldLecture: oldLecture, newLecture: newLecture))

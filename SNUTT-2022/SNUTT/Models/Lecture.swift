@@ -81,8 +81,7 @@ extension Lecture {
                            color: [:],
                            quota: 40,
                            createdAt: "2022-04-02T16:35:53.652Z",
-                           updatedAt: "2022-04-02T16:35:53.652Z"
-            )
+                           updatedAt: "2022-04-02T16:35:53.652Z")
         }
     }
 #endif

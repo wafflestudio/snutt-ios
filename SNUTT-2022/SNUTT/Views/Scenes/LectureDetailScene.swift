@@ -313,7 +313,6 @@ struct DetailButton: View {
     }
 }
 
-
 struct LectureDetailList_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {

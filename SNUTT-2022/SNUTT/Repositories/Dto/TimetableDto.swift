@@ -88,7 +88,7 @@ extension LectureDto {
         course_title = model.title
         credit = model.credit
         class_time = model.timeString
-        class_time_json = model.timePlaces.map { .init(from: $0 )}
+        class_time_json = model.timePlaces.map { .init(from: $0) }
         class_time_mask = model.timeMasks
         instructor = model.instructor
         quota = model.quota

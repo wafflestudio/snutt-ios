@@ -16,7 +16,7 @@ struct Timetable {
     let year: Int
     let semester: Int
     let updatedAt: String
-    
+
     var totalCredit: Int {
         lectures.reduce(0) { $0 + $1.credit }
     }
@@ -36,18 +36,18 @@ extension Timetable {
 }
 
 #if DEBUG
-extension Timetable {
-    static var preview: Timetable {
-        return .init(
-            id: UUID().uuidString,
-            title: "나의 시간표",
-            lectures: [.preview, .preview, .preview],
-            theme: .snutt,
-            userId: "1234",
-            year: 2022,
-            semester: 1,
-            updatedAt: "2022-04-02T16:35:53.652Z"
-        )
+    extension Timetable {
+        static var preview: Timetable {
+            return .init(
+                id: UUID().uuidString,
+                title: "나의 시간표",
+                lectures: [.preview, .preview, .preview],
+                theme: .snutt,
+                userId: "1234",
+                year: 2022,
+                semester: 1,
+                updatedAt: "2022-04-02T16:35:53.652Z"
+            )
+        }
     }
-}
 #endif

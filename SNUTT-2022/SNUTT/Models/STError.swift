@@ -205,8 +205,8 @@ public enum STError: Int, Error {
     }
 }
 
-extension Error {
-    public var asSTError: STError? {
+public extension Error {
+    var asSTError: STError? {
         self as? STError
     }
 }

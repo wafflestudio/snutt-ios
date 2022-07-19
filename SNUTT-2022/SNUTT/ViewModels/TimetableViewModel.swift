@@ -5,24 +5,24 @@
 //  Created by Jinsup Keum on 2022/03/19.
 //
 
+import Combine
 import SwiftUI
 import UIKit
-import Combine
 
 class TimetableViewModel: BaseViewModel, ObservableObject {
     @Published var showAlert: Bool = false
     @Published var totalCredit: Int = 0
     @Published var timetableTitle: String = ""
-    
+
     private var bag = Set<AnyCancellable>()
-    
+
     override init(container: DIContainer) {
         super.init(container: container)
-        
+
         timetableSetting.$current
             .map { $0?.totalCredit ?? 0 }
             .assign(to: &$totalCredit)
-        
+
         timetableSetting.$current
             .map { $0?.title ?? "" }
             .assign(to: &$timetableTitle)
@@ -39,7 +39,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     var timetableSetting: TimetableSetting {
         appState.setting.timetableSetting
     }
-    
+
     func toggleMenuSheet() {
         appState.setting.menuSheetSetting.isOpen.toggle()
     }
@@ -56,7 +56,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
             }
         }
     }
-    
+
     struct TimetablePainter {
         /// 시간표 맨 왼쪽, 시간들을 나타내는 열의 너비
         static let hourWidth: CGFloat = 20
@@ -98,6 +98,4 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
             return timePlace.len * getHourHeight(in: containerSize, hourCount: hourCount)
         }
     }
-
 }
-

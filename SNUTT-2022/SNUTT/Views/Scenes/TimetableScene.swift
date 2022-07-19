@@ -10,7 +10,7 @@ import SwiftUI
 struct TimetableScene: View {
     @State private var pushToListScene = false
     @StateObject var viewModel: TimetableViewModel
-    
+
     var body: some View {
         TimetableZStack(viewModel: .init(container: viewModel.container))
             .environmentObject(viewModel.timetableSetting)

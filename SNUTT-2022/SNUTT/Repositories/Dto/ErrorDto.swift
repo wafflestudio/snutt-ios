@@ -11,4 +11,3 @@ struct ErrorDto: Codable {
     let errcode: Int
     let message: String
 }
-
