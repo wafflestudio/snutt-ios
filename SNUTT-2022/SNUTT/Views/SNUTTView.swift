@@ -18,7 +18,7 @@ struct SNUTTView: View {
                     MyTimetableScene(viewModel: .init(container: container))
                 }
                 TabScene(tabType: .search) {
-                    MyLectureListScene(viewModel: .init(container: container))
+                    SearchLectureScene(viewModel: .init(container: container))
                 }
                 TabScene(tabType: .review) {
                     ReviewScene(viewModel: .init(container: container))
@@ -29,6 +29,7 @@ struct SNUTTView: View {
             }
 
             MenuSheetScene(viewModel: .init(container: container))
+            FilterSheetScene(viewModel: .init(container: container))
         }
         .accentColor(Color(UIColor.label))
         .onAppear {
