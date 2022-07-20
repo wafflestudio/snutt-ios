@@ -18,6 +18,7 @@ struct STColor {
 
     static let groupForeground: Color = .init("group.foreground")
     static let systemBackground: Color = .init("system.background")
+    static let searchBarBackground: Color = .init("searchbar.background")
 }
 
 extension Color {
