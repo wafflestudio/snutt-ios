@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LectureListScene: View {
-    let viewModel: MyLectureListViewModel
+    let viewModel: LectureListViewModel
 
     var body: some View {
         LectureList(viewModel: .init(container: viewModel.container),

@@ -14,10 +14,10 @@ enum STLectureRouter: STRouter {
     static let baseURLString = STConfig.sharedInstance.baseURL + "/tables"
     static let shouldAddToken: Bool = true
 
-    case addCustomLecture(timetableId: String, lecture: STLecture)
-    case addLecture(timetableId: String, lectureId: String)
+    case addCustomLecture(timetableId: String, lecture: STLecture, isForced: Bool)
+    case addLecture(timetableId: String, lectureId: String, isForced: Bool)
     case deleteLecture(timetableId: String, lecture: STLecture)
-    case updateLecture(timetableId: String, oldLecture: STLecture, newLecture: STLecture)
+    case updateLecture(timetableId: String, oldLecture: STLecture, newLecture: STLecture, isForced: Bool)
     case resetLecture(timetableId: String, lectureId: String)
 
     var method: HTTPMethod {
@@ -35,13 +35,13 @@ enum STLectureRouter: STRouter {
 
     var path: String {
         switch self {
-        case let .addCustomLecture(timetableId, _):
+        case let .addCustomLecture(timetableId, _, _):
             return "/\(timetableId)/lecture"
-        case let .addLecture(timetableId, lectureId):
+        case let .addLecture(timetableId, lectureId, _):
             return "/\(timetableId)/lecture/\(lectureId)"
         case let .deleteLecture(timetableId, lecture):
             return "/\(timetableId)/lecture/\(lecture.id ?? "")"
-        case let .updateLecture(timetableId, curLecture, _):
+        case let .updateLecture(timetableId, curLecture, _, _):
             return "/\(timetableId)/lecture/\(curLecture.id ?? "")"
         case let .resetLecture(timetableId, lectureId):
             return "/\(timetableId)/lecture/\(lectureId)/reset"
@@ -50,15 +50,17 @@ enum STLectureRouter: STRouter {
 
     var parameters: [String: Any]? {
         switch self {
-        case let .addCustomLecture(_, lecture):
+        case let .addCustomLecture(_, lecture, isForced):
             var dict = lecture.toDictionary()
             dict.removeValue(forKey: "id")
+            dict["is_forced"] = isForced
             return dict
-        case .addLecture:
-            return nil
+        case let .addLecture(_, _, isForced):
+            let dict = ["is_forced": isForced]
+            return dict
         case .deleteLecture:
             return nil
-        case let .updateLecture(_, oldLecture, newLecture):
+        case let .updateLecture(_, oldLecture, newLecture, isForced):
             var dict: [String: Any] = [:]
             let oldDict = oldLecture.toDictionary()
             let newDict = newLecture.toDictionary()
@@ -74,6 +76,7 @@ enum STLectureRouter: STRouter {
                     dict[key] = newVal
                 }
             }
+            dict["is_forced"] = isForced
             return dict
         case .resetLecture:
             return nil

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class MyLectureListViewModel {
+class LectureListViewModel {
     var container: DIContainer
 
     init(container: DIContainer) {

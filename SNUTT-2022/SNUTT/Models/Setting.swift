@@ -20,4 +20,5 @@ class Setting: ObservableObject {
 
     var timetableSetting: TimetableSetting = .init()
     var menuSheetSetting: MenuSheetSetting = .init()
+    var filterSheetSetting: FilterSheetSetting = .init()
 }
