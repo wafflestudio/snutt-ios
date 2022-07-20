@@ -59,7 +59,7 @@ struct SearchBar: View {
                     }
                 }
             )
-            
+
             Group {
                 if isEditing {
                     Button(action: {
