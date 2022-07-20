@@ -28,9 +28,9 @@ struct FilterSheetScene: View {
                             .padding([.horizontal, .top], 10)
                     }
                 }
-                .padding(20)
+                .padding(10)
                 Spacer()
-                FilterSheetContent()
+                FilterSheetContent(viewModel: viewModel)
                 Spacer()
             }
         }

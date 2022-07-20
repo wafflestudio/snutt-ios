@@ -66,12 +66,12 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
 
         /// 컨테이너의 사이즈가 주어졌을 때, 하루의 너비를 계산한다.
         static func getWeekWidth(in containerSize: CGSize, weekCount: Int) -> CGFloat {
-            return (containerSize.width - hourWidth) / CGFloat(weekCount)
+            return max((containerSize.width - hourWidth) / CGFloat(weekCount), 0)
         }
 
         /// 컨테이너의 사이즈가 주어졌을 때, 한 시간의 높이를 계산한다.
         static func getHourHeight(in containerSize: CGSize, hourCount: Int) -> CGFloat {
-            return (containerSize.height - weekdayHeight) / CGFloat(hourCount)
+            return max((containerSize.height - weekdayHeight) / CGFloat(hourCount), 0)
         }
 
         /// 주어진 `TimePlace` 블록의 좌표(오프셋)를 구한다.

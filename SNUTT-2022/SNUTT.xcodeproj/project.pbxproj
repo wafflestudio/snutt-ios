@@ -30,6 +30,13 @@
 		BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */; };
 		BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BEE288722A5009EBCB7 /* ErrorDto.swift */; };
 		BE682BF128872315009EBCB7 /* STError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BF028872315009EBCB7 /* STError.swift */; };
+		BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BF82887FB59009EBCB7 /* SearchRouter.swift */; };
+		BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */; };
+		BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFC2887FC78009EBCB7 /* SearchTag.swift */; };
+		BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFE2888056C009EBCB7 /* Quarter.swift */; };
+		BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C002888173B009EBCB7 /* TagRouter.swift */; };
+		BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C02288817C8009EBCB7 /* SearchRepository.swift */; };
+		BE682C0528881852009EBCB7 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C0428881852009EBCB7 /* SearchService.swift */; };
 		BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230027FF20EE004DC202 /* TimetableScene.swift */; };
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
 		BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */; };
@@ -125,6 +132,13 @@
 		BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetailViewModel.swift; sourceTree = "<group>"; };
 		BE682BEE288722A5009EBCB7 /* ErrorDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDto.swift; sourceTree = "<group>"; };
 		BE682BF028872315009EBCB7 /* STError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STError.swift; sourceTree = "<group>"; };
+		BE682BF82887FB59009EBCB7 /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
+		BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagDto.swift; sourceTree = "<group>"; };
+		BE682BFC2887FC78009EBCB7 /* SearchTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTag.swift; sourceTree = "<group>"; };
+		BE682BFE2888056C009EBCB7 /* Quarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quarter.swift; sourceTree = "<group>"; };
+		BE682C002888173B009EBCB7 /* TagRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagRouter.swift; sourceTree = "<group>"; };
+		BE682C02288817C8009EBCB7 /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
+		BE682C0428881852009EBCB7 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		BE7E230027FF20EE004DC202 /* TimetableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableScene.swift; sourceTree = "<group>"; };
 		BE7E230227FF3C38004DC202 /* NavBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarButton.swift; sourceTree = "<group>"; };
 		BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLectureScene.swift; sourceTree = "<group>"; };
@@ -222,6 +236,8 @@
 				DC1E0ED02877381F005632A3 /* Router.swift */,
 				DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */,
 				BE682BD028864CA8009EBCB7 /* LectureRouter.swift */,
+				BE682BF82887FB59009EBCB7 /* SearchRouter.swift */,
+				BE682C002888173B009EBCB7 /* TagRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -284,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */,
+				BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */,
 				BE682BEE288722A5009EBCB7 /* ErrorDto.swift */,
 			);
 			path = Dto;
@@ -296,7 +313,9 @@
 				BE982FBB281D5227005F71E6 /* TimePlace.swift */,
 				BEDF507427F4289B00CDCC13 /* Lecture.swift */,
 				BE682BB5287C40AF009EBCB7 /* Theme.swift */,
+				BE682BFE2888056C009EBCB7 /* Quarter.swift */,
 				BE1D2B3928014527008F9134 /* Weekday.swift */,
+				BE682BFC2887FC78009EBCB7 /* SearchTag.swift */,
 				DC2915A22866958100FE5F9A /* User.swift */,
 				DC2915A82866986600FE5F9A /* System.swift */,
 				DC2915A42866980B00FE5F9A /* Setting.swift */,
@@ -314,6 +333,7 @@
 				DCD41A6227E5CCD500CF380E /* TimetableService.swift */,
 				BEDE34D72879A9DC00525014 /* UserService.swift */,
 				BE682BDA28870872009EBCB7 /* LectureService.swift */,
+				BE682C0428881852009EBCB7 /* SearchService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -326,6 +346,7 @@
 				DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */,
 				BE682BD828870718009EBCB7 /* LectureRepository.swift */,
 				BEDE34D92879AA0B00525014 /* UserRepository.swift */,
+				BE682C02288817C8009EBCB7 /* SearchRepository.swift */,
 				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
 			);
 			path = Repositories;
@@ -544,10 +565,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */,
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
 				DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */,
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
+				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
@@ -572,6 +595,7 @@
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
 				DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */,
+				BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
@@ -589,12 +613,16 @@
 				DC2915992865D69700FE5F9A /* LectureListViewModel.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
+				BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */,
+				BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
 				BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */,
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,
 				BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */,
 				BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */,
+				BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */,
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
+				BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */,
 				BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */,
 				BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,

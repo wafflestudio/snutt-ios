@@ -8,52 +8,70 @@
 import SwiftUI
 
 struct FilterSheetContent: View {
-    @State var selectedCategory: STTagType = .academicYear
+    let viewModel: FilterSheetViewModel
+    @State var selectedCategory: SearchTagType = .classification
+    @ObservedObject var filterSheetSetting: FilterSheetSetting
+
+    init(viewModel: FilterSheetViewModel) {
+        self.viewModel = viewModel
+        filterSheetSetting = self.viewModel.filterSheetSetting
+    }
+    
     var body: some View {
         VStack {
             HStack(spacing: 0) {
-                VStack(spacing: 20) {
-                    ForEach(STTagType.allCases, id: \.self) { tag in
+                VStack(spacing: 25) {
+                    ForEach(SearchTagType.allCases, id: \.self) { tag in
                         let isSelected = selectedCategory == tag
                         Button {
                             selectedCategory = tag
                         } label: {
+                            Spacer()
                             Text(tag.typeStr)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(STColor.sheetBackground)
                                 .font(.system(size: 18, weight: .semibold))
+                                .foregroundColor(isSelected ? Color(uiColor: .label) : Color(uiColor: .label.withAlphaComponent(0.5)))
                         }
-                        .foregroundColor(isSelected ? Color(uiColor: .label.withAlphaComponent(0.7)) : Color.gray)
-                        .buttonStyle(.bordered)
-                        .tint(isSelected ? STColor.cyan : Color.white)
+                        .buttonStyle(.plain)
+                        
                     }
                 }
-                .padding()
-                .frame(maxWidth: 130)
-
+                .frame(maxWidth: 110, maxHeight: .infinity, alignment: .topLeading)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                
                 Divider()
-
+                
                 ScrollView {
-                    Group {
-                        ForEach(1 ..< 100) { num in
-                            Button {} label: {
-                                HStack {
-                                    Image("checkmark.circle.\(num % 4 == 0 ? "tick" : "untick")")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 15)
-                                        .padding(.trailing, 3)
-                                    Text("\(num)학년")
-                                        .font(.system(size: 14))
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                    LazyVStack {
+                        Group {
+                            ForEach(viewModel.filterTags(with: selectedCategory)) { tag in
+                                Button {
+                                    withAnimation(.customSpring) {
+                                        viewModel.toggle(tag)
+                                    }
+                                } label: {
+                                    HStack {
+                                        Image("checkmark.circle.\(viewModel.isSelected(tag: tag) ? "tick" : "untick")")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 16)
+                                            .padding(.trailing, 3)
+                                        Text(tag.text)
+                                            .font(.system(size: 14))
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 7)
                                 }
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 7)
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: .infinity)
                 }
+                .id(selectedCategory) // rerender on change of category
                 .padding(.trailing)
                 .mask(LinearGradient(gradient: Gradient(stops: [
                     .init(color: .clear, location: 0),
@@ -73,32 +91,15 @@ struct FilterSheetContent: View {
             .padding()
             .padding(.bottom, 10)
             .tint(STColor.cyan)
+            
+            
         }
     }
 }
 
 struct FilterSheetContent_Previews: PreviewProvider {
     static var previews: some View {
-        FilterSheetContent()
+        FilterSheetContent(viewModel: .init(container: .preview))
     }
 }
 
-enum STTagType: String, CaseIterable {
-    case academicYear = "academic_year"
-    case classification
-    case credit
-    case department
-    case category
-    case etc
-
-    var typeStr: String {
-        switch self {
-        case .academicYear: return "학년"
-        case .classification: return "분류"
-        case .credit: return "학점"
-        case .department: return "학과"
-        case .category: return "교양분류"
-        case .etc: return "기타"
-        }
-    }
-}

@@ -6,18 +6,9 @@
 //
 
 import Combine
+import SwiftUI
 
-class SearchSceneViewModel: ObservableObject {
-    var container: DIContainer
-
-    init(container: DIContainer) {
-        self.container = container
-    }
-
-    private var appState: AppState {
-        container.appState
-    }
-
+class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var searchText = ""
 
     var filterSheetSetting: FilterSheetSetting {
@@ -27,8 +18,36 @@ class SearchSceneViewModel: ObservableObject {
     var timetableSetting: TimetableSetting {
         appState.setting.timetableSetting
     }
-
+    
     func toggleFilterSheet() {
-        appState.setting.filterSheetSetting.isOpen.toggle()
+        if appState.setting.filterSheetSetting.searchTagList == nil {
+            return
+        }
+        services.searchService.toggleFilterSheet()
+    }
+    
+    func fetchTags() async {
+        if appState.setting.filterSheetSetting.searchTagList != nil {
+            return
+        }
+        guard let currentTimetable = timetableSetting.current else { return }
+        do {
+            try await services.searchService.fetchTags(quarter: currentTimetable.quarter)
+            print("페치 태그 완료")
+        } catch {
+            // TODO: handle error
+        }
+    }
+    
+    func getSelectedTagList() -> [SearchTag] {
+        return filterSheetSetting.selectedTagList
+    }
+    
+    var selectedCount: Int {
+        return getSelectedTagList().count
+    }
+    
+    func toggle(_ tag: SearchTag) {
+        services.searchService.toggle(tag)
     }
 }

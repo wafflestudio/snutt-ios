@@ -20,6 +20,10 @@ struct Timetable {
     var totalCredit: Int {
         lectures.reduce(0) { $0 + $1.credit }
     }
+    
+    var quarter: Quarter {
+        Quarter(year: year, semester: .init(rawValue: semester) ?? .first)
+    }
 }
 
 extension Timetable {

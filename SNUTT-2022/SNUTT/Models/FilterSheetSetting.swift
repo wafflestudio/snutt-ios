@@ -9,4 +9,6 @@ import SwiftUI
 
 class FilterSheetSetting: ObservableObject {
     @Published var isOpen = false
+    @Published var searchTagList: SearchTagList?
+    @Published var selectedTagList: [SearchTag] = []
 }
