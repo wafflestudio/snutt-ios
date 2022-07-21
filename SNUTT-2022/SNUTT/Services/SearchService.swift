@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol SearchServiceProtocol {
     func toggle(_ tag: SearchTag)
@@ -23,8 +24,8 @@ struct SearchService: SearchServiceProtocol {
         webRepositories.searchRepository
     }
     
-    var filterSheetSetting: FilterSheetSetting {
-        appState.setting.filterSheetSetting
+    var searchState: SearchState {
+        appState.search
     }
     
     var timetableSetting: TimetableSetting {
@@ -36,52 +37,62 @@ struct SearchService: SearchServiceProtocol {
         self.webRepositories = webRepositories
     }
     
+    func setLoading(_ value: Bool) {
+        DispatchQueue.main.async {
+            searchState.isLoading = value
+        }
+    }
+    
     func fetchTags(quarter: Quarter) async throws {
         // TODO: get from userDefault
         let dto = try await searchRepository.fetchTags(quarter: quarter)
         let model = SearchTagList(from: dto)
-        DispatchQueue.main.async {
-            appState.setting.filterSheetSetting.searchTagList = model
+        await MainActor.run {
+            appState.search.searchTagList = model
         }
     }
     
     private func _fetchSearchResult() async throws {
         guard let currentTimetable = timetableSetting.current else { return }
-        let tagList = filterSheetSetting.selectedTagList
+        let tagList = searchState.selectedTagList
         let mask = tagList.contains(where: { $0.type == .etc && EtcType(rawValue: $0.text) == .empty }) ? currentTimetable.reversedTimeMasks : nil
-        let offset = filterSheetSetting.perPage * filterSheetSetting.pageNum
-        let dtos = try await searchRepository.fetchSearchResult(query: filterSheetSetting.searchText,
+        let offset = searchState.perPage * searchState.pageNum
+        let dtos = try await searchRepository.fetchSearchResult(query: searchState.searchText,
                                                                 quarter: currentTimetable.quarter,
                                                                 tagList: tagList,
                                                                 mask: mask,
                                                                 offset: offset,
-                                                                limit: filterSheetSetting.perPage)
+                                                                limit: searchState.perPage)
         let models: [Lecture] = dtos.map { Lecture(from: $0) }
-        DispatchQueue.main.async {
-            self.filterSheetSetting.searchResult = offset == 0 ? models : self.filterSheetSetting.searchResult + models
+        await MainActor.run {
+            self.searchState.searchResult = offset == 0 ? models : self.searchState.searchResult + models
         }
     }
     
     func fetchInitialSearchResult() async throws {
-        filterSheetSetting.pageNum = 0
+        setLoading(true)
+        defer {
+            setLoading(false)
+        }
+        searchState.pageNum = 0
         try await _fetchSearchResult()
     }
     
     func fetchMoreSearchResult() async throws {
-        filterSheetSetting.pageNum += 1
+        searchState.pageNum += 1
         try await _fetchSearchResult()
     }
     
     func toggle(_ tag: SearchTag) {
-        if let index = filterSheetSetting.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
-            filterSheetSetting.selectedTagList.remove(at: index)
+        if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
+            searchState.selectedTagList.remove(at: index)
             return
         }
-        filterSheetSetting.selectedTagList.append(tag)
+        searchState.selectedTagList.append(tag)
     }
     
     func toggleFilterSheet() {
-        appState.setting.filterSheetSetting.isOpen.toggle()
+        appState.search.isOpen.toggle()
     }
 }
 

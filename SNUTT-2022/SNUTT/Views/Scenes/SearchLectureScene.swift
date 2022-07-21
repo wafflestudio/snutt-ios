@@ -14,11 +14,11 @@ struct SearchLectureScene: View {
     @State var previousCount: Int = 0
 
     @ObservedObject var viewModel: SearchSceneViewModel
-    @ObservedObject var filterSheetSetting: FilterSheetSetting
+    @ObservedObject var searchState: SearchState
 
     init(viewModel: SearchSceneViewModel) {
         self.viewModel = viewModel
-        filterSheetSetting = viewModel.filterSheetSetting
+        searchState = viewModel.searchState
     }
     
     var body: some View {
@@ -36,23 +36,20 @@ struct SearchLectureScene: View {
             .ignoresSafeArea([.keyboard])
             
             VStack(spacing: 0) {
-                SearchBar(text: $filterSheetSetting.searchText, isFilterOpen: $filterSheetSetting.isOpen) {
+                SearchBar(text: $searchState.searchText, isFilterOpen: $searchState.isOpen) {
                     Task {
                         await viewModel.fetchInitialSearchResult()
                     }
                 }
                 
-                if viewModel.selectedCount > 0 {
+                if viewModel.selectedTagList.count > 0 {
                     ScrollViewReader { reader in
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
-                                ForEach(viewModel.getSelectedTagList()) { tag in
+                                ForEach(viewModel.selectedTagList) { tag in
                                     Button(action: {
                                         withAnimation(.customSpring) {
                                             viewModel.toggle(tag)
-                                            Task {
-                                                await viewModel.fetchInitialSearchResult()
-                                            }
                                         }
                                     }, label: {
                                         HStack {
@@ -72,33 +69,27 @@ struct SearchLectureScene: View {
                             }
                             .padding(.horizontal, 10)
                         }
-                        .frame(height: 50, alignment: .center)
-                        .onChange(of: viewModel.selectedCount, perform: { newValue in
+                        .padding(.top, 10)
+                        .padding(.bottom, 5)
+                        .onChange(of: viewModel.selectedTagList.count, perform: { newValue in
                             if newValue <= previousCount {
                                 // no need to scroll when deselecting
                                 previousCount = newValue
                                 return
                             }
                             withAnimation(.customSpring) {
-                                reader.scrollTo(viewModel.getSelectedTagList().last?.id, anchor: .trailing)
+                                reader.scrollTo(viewModel.selectedTagList.last?.id, anchor: .trailing)
                             }
                             previousCount = newValue
                         })
                     }
                 }
                 
-                ScrollView {
-                    LazyVStack {
-                        ForEach(viewModel.searchResult) { lecture in
-                            LectureListCell(lecture: lecture, colorMode: .white)
-                                .task {
-                                    if lecture.id == viewModel.searchResult.last?.id {
-                                        await viewModel.fetchMoreSearchResult()
-                                    }
-                                }
-                        }
-                    }
-                    .padding(.horizontal, 15)
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxHeight: .infinity, alignment: .center)
+                } else {
+                    SearchLectureList(data: viewModel.searchResult, fetchMore: viewModel.fetchMoreSearchResult)
                 }
             }
         }
@@ -111,6 +102,35 @@ struct SearchLectureScene: View {
     }
 }
 
+
+struct SearchLectureList: View {
+    let data: [Lecture]
+    let fetchMore: () async -> Void
+    
+    var body: some View {
+        ScrollView {
+            LazyVStack {
+                ForEach(data) { lecture in
+                    LectureListCell(lecture: lecture, colorMode: .white)
+                        .task {
+                            if lecture.id == data.last?.id {
+                                await fetchMore()
+                            }
+                        }
+                }
+            }
+            .padding(.horizontal, 15)
+            .padding(.vertical, 5)
+        }
+        .mask(LinearGradient(gradient: Gradient(stops: [
+            .init(color: .clear, location: 0),
+            .init(color: .black, location: 0.02),
+            .init(color: .black, location: 1),
+        ]), startPoint: .top, endPoint: .bottom))
+        
+        let _ = debugChanges()
+    }
+}
 
 
 struct SearchLectureScene_Previews: PreviewProvider {

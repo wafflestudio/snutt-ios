@@ -10,11 +10,11 @@ import SwiftUI
 struct FilterSheetContent: View {
     let viewModel: FilterSheetViewModel
     @State var selectedCategory: SearchTagType = .classification
-    @ObservedObject var filterSheetSetting: FilterSheetSetting
+    @ObservedObject var searchState: SearchState
 
     init(viewModel: FilterSheetViewModel) {
         self.viewModel = viewModel
-        filterSheetSetting = self.viewModel.filterSheetSetting
+        searchState = self.viewModel.searchState
     }
     
     var body: some View {
@@ -84,7 +84,7 @@ struct FilterSheetContent: View {
             Button {
                 viewModel.toggleFilterSheet()
                 Task {
-                    await viewModel.applySelectedTags()
+                    await viewModel.fetchInitialSearchResult()
                 }
             } label: {
                 Text("필터 적용")

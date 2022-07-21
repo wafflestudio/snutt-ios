@@ -10,8 +10,8 @@ import SwiftUI
 
 class SearchSceneViewModel: BaseViewModel, ObservableObject {
     
-    var filterSheetSetting: FilterSheetSetting {
-        appState.setting.filterSheetSetting
+    var searchState: SearchState {
+        appState.search
     }
 
     var timetableSetting: TimetableSetting {
@@ -19,18 +19,22 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     }
     
     var searchResult: [Lecture] {
-        filterSheetSetting.searchResult
+        searchState.searchResult
+    }
+    
+    var isLoading: Bool {
+        searchState.isLoading
     }
     
     func toggleFilterSheet() {
-        if appState.setting.filterSheetSetting.searchTagList == nil {
+        if appState.search.searchTagList == nil {
             return
         }
         services.searchService.toggleFilterSheet()
     }
     
     func fetchTags() async {
-        if appState.setting.filterSheetSetting.searchTagList != nil {
+        if appState.search.searchTagList != nil {
             return
         }
         guard let currentTimetable = timetableSetting.current else { return }
@@ -57,15 +61,12 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         }
     }
     
-    func getSelectedTagList() -> [SearchTag] {
-        return filterSheetSetting.selectedTagList
-    }
-    
-    var selectedCount: Int {
-        return getSelectedTagList().count
+    var selectedTagList: [SearchTag] {
+        searchState.selectedTagList
     }
     
     func toggle(_ tag: SearchTag) {
         services.searchService.toggle(tag)
     }
+    
 }

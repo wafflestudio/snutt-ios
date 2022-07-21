@@ -6,8 +6,8 @@
 //
 
 class FilterSheetViewModel: BaseViewModel {
-    var filterSheetSetting: FilterSheetSetting {
-        appState.setting.filterSheetSetting
+    var searchState: SearchState {
+        appState.search
     }
     
     var timetableSetting: TimetableSetting {
@@ -15,7 +15,7 @@ class FilterSheetViewModel: BaseViewModel {
     }
     
     func filterTags(with type: SearchTagType) -> [SearchTag] {
-        guard let tagList = filterSheetSetting.searchTagList?.tagList else { return [] }
+        guard let tagList = searchState.searchTagList?.tagList else { return [] }
         return tagList.filter { $0.type == type }
     }
     
@@ -23,7 +23,7 @@ class FilterSheetViewModel: BaseViewModel {
         services.searchService.toggle(tag)
     }
     
-    func applySelectedTags() async {
+    func fetchInitialSearchResult() async {
         do {
             try await services.searchService.fetchInitialSearchResult()
         } catch {
@@ -32,10 +32,10 @@ class FilterSheetViewModel: BaseViewModel {
     }
     
     func toggleFilterSheet() {
-        filterSheetSetting.isOpen.toggle()
+        searchState.isOpen.toggle()
     }
     
     func isSelected(tag: SearchTag) -> Bool {
-        return filterSheetSetting.selectedTagList.contains(where: { $0.id == tag.id })
+        return searchState.selectedTagList.contains(where: { $0.id == tag.id })
     }
 }

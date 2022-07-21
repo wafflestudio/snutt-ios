@@ -9,20 +9,20 @@ import SwiftUI
 
 struct FilterSheetScene: View {
     let viewModel: FilterSheetViewModel
-    @ObservedObject var filterSheetSetting: FilterSheetSetting
+    @ObservedObject var searchState: SearchState
 
     init(viewModel: FilterSheetViewModel) {
         self.viewModel = viewModel
-        filterSheetSetting = self.viewModel.filterSheetSetting
+        searchState = self.viewModel.searchState
     }
 
     var body: some View {
-        Sheet(isOpen: $filterSheetSetting.isOpen, orientation: .bottom(maxHeight: 500)) {
+        Sheet(isOpen: $searchState.isOpen, orientation: .bottom(maxHeight: 500)) {
             VStack {
                 HStack {
                     Spacer()
                     Button {
-                        filterSheetSetting.isOpen.toggle()
+                        searchState.isOpen.toggle()
                     } label: {
                         Image("xmark")
                             .padding([.horizontal, .top], 10)
@@ -43,7 +43,7 @@ struct FilterSheetWrapper: View {
     var body: some View {
         ZStack {
             NavBarButton(imageName: "search.filter") {
-                container.appState.setting.filterSheetSetting.isOpen.toggle()
+                container.appState.search.isOpen.toggle()
             }
             FilterSheetScene(viewModel: .init(container: container))
         }

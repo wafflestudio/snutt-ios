@@ -12,7 +12,7 @@
 		BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
 		BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */; };
 		BE4B0EB828735052005FE164 /* MenuSheetSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */; };
-		BE4B0EBC2873BC2B005FE164 /* FilterSheetSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBB2873BC2B005FE164 /* FilterSheetSetting.swift */; };
+		BE4B0EBC2873BC2B005FE164 /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBB2873BC2B005FE164 /* SearchState.swift */; };
 		BE4B0EBE2873BC84005FE164 /* FilterSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBD2873BC84005FE164 /* FilterSheetViewModel.swift */; };
 		BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */; };
 		BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BB5287C40AF009EBCB7 /* Theme.swift */; };
@@ -117,7 +117,7 @@
 		BE1D2B3928014527008F9134 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
 		BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetViewModel.swift; sourceTree = "<group>"; };
 		BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetSetting.swift; sourceTree = "<group>"; };
-		BE4B0EBB2873BC2B005FE164 /* FilterSheetSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetSetting.swift; sourceTree = "<group>"; };
+		BE4B0EBB2873BC2B005FE164 /* SearchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
 		BE4B0EBD2873BC84005FE164 /* FilterSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetViewModel.swift; sourceTree = "<group>"; };
 		BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSceneViewModel.swift; sourceTree = "<group>"; };
 		BE682BB22879E24D009EBCB7 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -322,7 +322,7 @@
 				BE682BF028872315009EBCB7 /* STError.swift */,
 				DC2915A62866984000FE5F9A /* TimetableSetting.swift */,
 				BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */,
-				BE4B0EBB2873BC2B005FE164 /* FilterSheetSetting.swift */,
+				BE4B0EBB2873BC2B005FE164 /* SearchState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -585,7 +585,7 @@
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
 				DC2915A32866958100FE5F9A /* User.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
-				BE4B0EBC2873BC2B005FE164 /* FilterSheetSetting.swift in Sources */,
+				BE4B0EBC2873BC2B005FE164 /* SearchState.swift in Sources */,
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
