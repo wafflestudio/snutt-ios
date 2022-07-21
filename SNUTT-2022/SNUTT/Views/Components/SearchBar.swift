@@ -11,8 +11,11 @@ import UIKit
 struct SearchBar: View {
     @Binding var text: String
     @Binding var isFilterOpen: Bool
+    var action: () -> Void
+    
     @State private var isEditing = false
     @FocusState private var isFocused: Bool
+    
 
     var body: some View {
         HStack {
@@ -22,6 +25,7 @@ struct SearchBar: View {
                     isFilterOpen = false
                 }
             }
+            .onSubmit(action)
             .focused($isFocused)
             .frame(maxHeight: 22)
             .padding(7)
@@ -46,7 +50,7 @@ struct SearchBar: View {
                         }
                     }
 
-                    if text.isEmpty {
+                    if !isEditing || text.isEmpty {
                         Button {
                             isFilterOpen.toggle()
                             if isFilterOpen {
@@ -80,6 +84,6 @@ struct SearchBar: View {
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBar(text: .constant("Constant String"), isFilterOpen: .constant(false))
+        SearchBar(text: .constant("Constant String"), isFilterOpen: .constant(false), action: {})
     }
 }

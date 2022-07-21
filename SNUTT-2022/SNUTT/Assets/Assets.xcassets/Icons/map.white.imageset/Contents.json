@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "clockVectorWhite.png",
+      "filename" : "mapVectorWhite.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "clockVectorWhite@2x.png",
+      "filename" : "mapVectorWhite@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "clockVectorWhite@3x.png",
+      "filename" : "mapVectorWhite@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

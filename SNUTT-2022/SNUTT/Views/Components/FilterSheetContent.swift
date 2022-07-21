@@ -81,7 +81,12 @@ struct FilterSheetContent: View {
                 ]), startPoint: .top, endPoint: .bottom))
             }
 
-            Button {} label: {
+            Button {
+                viewModel.toggleFilterSheet()
+                Task {
+                    await viewModel.applySelectedTags()
+                }
+            } label: {
                 Text("필터 적용")
                     .font(.system(size: 17, weight: .bold))
                     .frame(maxWidth: .infinity)

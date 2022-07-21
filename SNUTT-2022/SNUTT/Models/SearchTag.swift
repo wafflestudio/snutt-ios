@@ -93,7 +93,7 @@ enum EtcType: String {
     var code: String? {
         switch self {
         case .empty:
-            return nil
+            return nil  // should not be included in parameters; use timeMasks instead
         case .english:
             return "E"
         case .army:

@@ -34,10 +34,10 @@ struct LectureDto: Codable {
     let category: String?
     let course_number: String?
     let lecture_number: String?
-    let created_at: String
-    let updated_at: String
-    let color: [String: String]
-    let colorIndex: Int
+    let created_at: String?
+    let updated_at: String?
+    let color: [String: String]?
+    let colorIndex: Int?
 }
 
 struct TimePlaceDto: Codable {

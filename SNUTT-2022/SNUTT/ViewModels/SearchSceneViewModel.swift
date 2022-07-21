@@ -9,14 +9,17 @@ import Combine
 import SwiftUI
 
 class SearchSceneViewModel: BaseViewModel, ObservableObject {
-    @Published var searchText = ""
-
+    
     var filterSheetSetting: FilterSheetSetting {
         appState.setting.filterSheetSetting
     }
 
     var timetableSetting: TimetableSetting {
         appState.setting.timetableSetting
+    }
+    
+    var searchResult: [Lecture] {
+        filterSheetSetting.searchResult
     }
     
     func toggleFilterSheet() {
@@ -33,7 +36,22 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         guard let currentTimetable = timetableSetting.current else { return }
         do {
             try await services.searchService.fetchTags(quarter: currentTimetable.quarter)
-            print("페치 태그 완료")
+        } catch {
+            // TODO: handle error
+        }
+    }
+    
+    func fetchInitialSearchResult() async {
+        do {
+            try await services.searchService.fetchInitialSearchResult()
+        } catch {
+            // TODO: handle error
+        }
+    }
+    
+    func fetchMoreSearchResult() async {
+        do {
+            try await services.searchService.fetchMoreSearchResult()
         } catch {
             // TODO: handle error
         }

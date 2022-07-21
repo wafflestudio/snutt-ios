@@ -23,6 +23,18 @@ class FilterSheetViewModel: BaseViewModel {
         services.searchService.toggle(tag)
     }
     
+    func applySelectedTags() async {
+        do {
+            try await services.searchService.fetchInitialSearchResult()
+        } catch {
+            // TODO: handle error
+        }
+    }
+    
+    func toggleFilterSheet() {
+        filterSheetSetting.isOpen.toggle()
+    }
+    
     func isSelected(tag: SearchTag) -> Bool {
         return filterSheetSetting.selectedTagList.contains(where: { $0.id == tag.id })
     }

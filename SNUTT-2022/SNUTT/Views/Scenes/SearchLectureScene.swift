@@ -20,8 +20,9 @@ struct SearchLectureScene: View {
         self.viewModel = viewModel
         filterSheetSetting = viewModel.filterSheetSetting
     }
-
+    
     var body: some View {
+        // TODO: Split components
         ZStack {
             Group {
                 VStack {
@@ -30,20 +31,28 @@ struct SearchLectureScene: View {
                     TimetableZStack(viewModel: .init(container: viewModel.container))
                         .environmentObject(viewModel.timetableSetting)
                 }
-                Color.black.opacity(0.3)
+                Color.black.opacity(0.6)
             }
             .ignoresSafeArea([.keyboard])
             
-            VStack {
-                SearchBar(text: $viewModel.searchText, isFilterOpen: $filterSheetSetting.isOpen)
+            VStack(spacing: 0) {
+                SearchBar(text: $filterSheetSetting.searchText, isFilterOpen: $filterSheetSetting.isOpen) {
+                    Task {
+                        await viewModel.fetchInitialSearchResult()
+                    }
+                }
+                
                 if viewModel.selectedCount > 0 {
                     ScrollViewReader { reader in
                         ScrollView(.horizontal, showsIndicators: false) {
-                            LazyHStack {
+                            HStack {
                                 ForEach(viewModel.getSelectedTagList()) { tag in
                                     Button(action: {
                                         withAnimation(.customSpring) {
                                             viewModel.toggle(tag)
+                                            Task {
+                                                await viewModel.fetchInitialSearchResult()
+                                            }
                                         }
                                     }, label: {
                                         HStack {
@@ -63,7 +72,7 @@ struct SearchLectureScene: View {
                             }
                             .padding(.horizontal, 10)
                         }
-                        .frame(height: 40)
+                        .frame(height: 50, alignment: .center)
                         .onChange(of: viewModel.selectedCount, perform: { newValue in
                             if newValue <= previousCount {
                                 // no need to scroll when deselecting
@@ -77,8 +86,20 @@ struct SearchLectureScene: View {
                         })
                     }
                 }
-                Spacer()
                 
+                ScrollView {
+                    LazyVStack {
+                        ForEach(viewModel.searchResult) { lecture in
+                            LectureListCell(lecture: lecture, colorMode: .white)
+                                .task {
+                                    if lecture.id == viewModel.searchResult.last?.id {
+                                        await viewModel.fetchMoreSearchResult()
+                                    }
+                                }
+                        }
+                    }
+                    .padding(.horizontal, 15)
+                }
             }
         }
         .task {

@@ -8,82 +8,69 @@
 import Foundation
 import Alamofire
 
-//enum STSearchRouter: Router {
-//    var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/search_query")! }
-//    static let shouldAddToken: Bool = true
-//
-//    case search(query: String, tagList: [SearchTag], mask: [Int]?, offset: Int, limit: Int)
-//
-//    var method: HTTPMethod {
-//        switch self {
-//        case .search:
-//            return .post
-//        }
-//    }
-//
-//    var path: String {
-//        switch self {
-//        case .search:
-//            return ""
-//        }
-//    }
-//
-//    var parameters: [String: Any]? {
-//        switch self {
-//        case let .search(query, tagList, mask, offset, limit):
-//            // FIXME: is there better way?
-//            let year = STTimetableManager.sharedInstance.currentTimetable?.quarter.year ?? 0
-//            let semester = STTimetableManager.sharedInstance.currentTimetable?.quarter.semester ?? STSemester.first
-//            var credit: [Int] = []
-//            var instructor: [String] = []
-//            var department: [String] = []
-//            var academicYear: [String] = []
-//            var classification: [String] = []
-//            var category: [String] = []
-//            var etc: [String] = []
-//
-//            for tag in tagList {
-//                switch tag.type {
-//                case .Credit:
-//                    credit.append(Int(tag.text.trimmingCharacters(in: CharacterSet.decimalDigits.inverted))!)
-//                case .Department:
-//                    department.append(tag.text)
-//                case .Instructor:
-//                    instructor.append(tag.text)
-//                case .AcademicYear:
-//                    academicYear.append(tag.text)
-//                case .Classification:
-//                    classification.append(tag.text)
-//                case .Category:
-//                    category.append(tag.text)
-//                case .Etc:
-//                    if let etcTag = EtcTag(rawValue: tag.text), etcTag != .empty {
-//                        etc.append(etcTag.convertToAbb())
-//                    }
-//                }
-//            }
-//            var parameters: [String: Any] = [
-//                "title": query,
-//                "year": year,
-//                "semester": semester.rawValue,
-//                "credit": credit,
-//                "instructor": instructor,
-//                "department": department,
-//                "academic_year": academicYear,
-//                "classification": classification,
-//                "category": category,
-//                "offset": offset,
-//                "limit": limit,
-//            ]
-//
-//            if etc.count != 0 {
-//                parameters["etc"] = etc
-//            }
-//
-//            if mask != nil {
-//                parameters["time_mask"] = mask
-//            }
-//            return parameters
-//        }
-//    }
-//}
+enum SearchRouter: Router {
+    var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/search_query")! }
+    static let shouldAddToken: Bool = true
+
+    case search(query: String, quarter: Quarter, tagList: [SearchTag], mask: [Int]?, offset: Int, limit: Int)
+
+    var method: HTTPMethod {
+        switch self {
+        case .search:
+            return .post
+        }
+    }
+
+    var path: String {
+        switch self {
+        case .search:
+            return ""
+        }
+    }
+
+    var parameters: Parameters? {
+        switch self {
+        case let .search(query, quarter, tagList, mask, offset, limit):
+            let defaultParams: [String: Any] = [
+                "title": query,
+                "year": quarter.year,
+                "semester": quarter.semester.rawValue,
+                "offset": offset,
+                "limit": limit,
+                "classification": [],
+                "category": [],
+                "credit": [],
+                "etc": [],
+                "department": [],
+                "instructor": [],
+                "academic_year": []
+            ]
+            
+            let tagParams: [String: Any] = Dictionary
+                .init(grouping: tagList, by: { $0.type.rawValue })
+                .mapValues { tags in
+                    switch tags[0].type {
+                    case .credit:
+                        return tags.map { Int($0.text.trimmingCharacters(in: CharacterSet.decimalDigits.inverted)) }.compactMap { $0 }
+                    case .etc:
+                        return tags.map { EtcType(rawValue: $0.text)?.code }.compactMap { $0 }
+                    default:
+                        return tags.map { $0.text }
+                    }
+                }
+            
+            var parameters = defaultParams.merging(tagParams, uniquingKeysWith: { $1 })
+            
+            if mask != nil {
+                parameters["time_mask"] = mask
+            }
+            
+            // the server refuses empty list of `etc`.
+            if let etc = parameters["etc"] as? [String], etc.isEmpty {
+                parameters.removeValue(forKey: "etc")
+            }
+            
+            return parameters
+        }
+    }
+}

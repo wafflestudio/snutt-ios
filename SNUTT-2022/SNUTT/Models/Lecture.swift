@@ -44,14 +44,14 @@ extension Lecture {
         credit = dto.credit
         department = dto.department ?? ""
         academicYear = dto.academic_year ?? ""
-        colorIndex = dto.colorIndex
+        colorIndex = dto.colorIndex ?? 0
         classification = dto.classification ?? ""
         category = dto.category ?? ""
         remark = dto.remark ?? ""
-        color = dto.color
+        color = dto.color ?? .init()
         quota = dto.quota ?? 0
-        createdAt = dto.created_at
-        updatedAt = dto.updated_at
+        createdAt = dto.created_at ?? ""
+        updatedAt = dto.updated_at ?? ""
     }
 }
 

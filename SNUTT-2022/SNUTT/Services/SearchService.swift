@@ -8,9 +8,11 @@
 import Foundation
 
 protocol SearchServiceProtocol {
-    func fetchTags(quarter: Quarter) async throws
     func toggle(_ tag: SearchTag)
     func toggleFilterSheet()
+    func fetchTags(quarter: Quarter) async throws
+    func fetchInitialSearchResult() async throws
+    func fetchMoreSearchResult() async throws
 }
 
 struct SearchService: SearchServiceProtocol {
@@ -25,6 +27,10 @@ struct SearchService: SearchServiceProtocol {
         appState.setting.filterSheetSetting
     }
     
+    var timetableSetting: TimetableSetting {
+        appState.setting.timetableSetting
+    }
+    
     init(appState: AppState, webRepositories: AppEnvironment.WebRepositories) {
         self.appState = appState
         self.webRepositories = webRepositories
@@ -37,6 +43,33 @@ struct SearchService: SearchServiceProtocol {
         DispatchQueue.main.async {
             appState.setting.filterSheetSetting.searchTagList = model
         }
+    }
+    
+    private func _fetchSearchResult() async throws {
+        guard let currentTimetable = timetableSetting.current else { return }
+        let tagList = filterSheetSetting.selectedTagList
+        let mask = tagList.contains(where: { $0.type == .etc && EtcType(rawValue: $0.text) == .empty }) ? currentTimetable.reversedTimeMasks : nil
+        let offset = filterSheetSetting.perPage * filterSheetSetting.pageNum
+        let dtos = try await searchRepository.fetchSearchResult(query: filterSheetSetting.searchText,
+                                                                quarter: currentTimetable.quarter,
+                                                                tagList: tagList,
+                                                                mask: mask,
+                                                                offset: offset,
+                                                                limit: filterSheetSetting.perPage)
+        let models: [Lecture] = dtos.map { Lecture(from: $0) }
+        DispatchQueue.main.async {
+            self.filterSheetSetting.searchResult = offset == 0 ? models : self.filterSheetSetting.searchResult + models
+        }
+    }
+    
+    func fetchInitialSearchResult() async throws {
+        filterSheetSetting.pageNum = 0
+        try await _fetchSearchResult()
+    }
+    
+    func fetchMoreSearchResult() async throws {
+        filterSheetSetting.pageNum += 1
+        try await _fetchSearchResult()
     }
     
     func toggle(_ tag: SearchTag) {
@@ -56,4 +89,6 @@ class FakeSearchService: SearchServiceProtocol {
     func fetchTags(quarter: Quarter) async throws {}
     func toggle(_ tag: SearchTag) {}
     func toggleFilterSheet() {}
+    func fetchInitialSearchResult() async throws {}
+    func fetchMoreSearchResult() async throws {}
 }
