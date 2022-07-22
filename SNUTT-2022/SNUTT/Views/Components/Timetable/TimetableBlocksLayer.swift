@@ -8,17 +8,22 @@
 import SwiftUI
 
 struct TimetableBlocksLayer: View {
-    let viewModel: ViewModel
-    @EnvironmentObject var timetableSetting: TimetableSetting
+    let current: Timetable?
+    let config: TimetableConfiguration
     @Environment(\.selectedLecture) var selectedLecture: Lecture?
+    
+    var currentTheme: Theme {
+        current?.theme ?? .snutt
+    }
 
     var body: some View {
-        ForEach(viewModel.lectures) { lecture in
-            LectureBlocks(viewModel: .init(container: viewModel.container), lecture: lecture)
+        ForEach(current?.lectures ?? []) { lecture in
+            LectureBlocks(lecture: lecture, theme: currentTheme, config: config)
         }
         
         if var selectedLecture = selectedLecture {
-            LectureBlocks(viewModel: .init(container: viewModel.container), lecture: selectedLecture.withTemporaryColor())
+            let _ = print("selected!")
+            LectureBlocks(lecture: selectedLecture.withTemporaryColor(), theme: currentTheme, config: config)
         }
 
         let _ = debugChanges()
@@ -28,17 +33,17 @@ struct TimetableBlocksLayer: View {
 extension TimetableBlocksLayer {
     class ViewModel: BaseViewModel {
         var lectures: [Lecture] {
-            appState.setting.timetableSetting.current?.lectures ?? []
+            appState.timetable.current?.lectures ?? []
         }
     }
 }
 
-struct TimetableBlocks_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            let viewModel = TimetableViewModel(container: .preview)
-            TimetableBlocksLayer(viewModel: .init(container: .preview))
-                .environmentObject(viewModel.timetableSetting)
-        }
-    }
-}
+//struct TimetableBlocks_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ZStack {
+//            let viewModel = TimetableViewModel(container: .preview)
+//            TimetableBlocksLayer(viewModel: .init(container: .preview))
+//                .environmentObject(viewModel.timetableState)
+//        }
+//    }
+//}

@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct SearchLectureScene: View {
-    @State var previousCount: Int = 0
-
     let viewModel: SearchSceneViewModel
     @ObservedObject var searchState: SearchState
+    
+    @State var previousCount: Int = 0
 
     init(viewModel: SearchSceneViewModel) {
         self.viewModel = viewModel
@@ -25,8 +25,7 @@ struct SearchLectureScene: View {
                 VStack {
                     Spacer()
                         .frame(height: 44)
-                    TimetableZStack(viewModel: .init(container: viewModel.container))
-                        .environmentObject(viewModel.timetableSetting)
+                    TimetableZStack(current: viewModel.timetableState.current, config: viewModel.timetableState.configuration)
                         .environment(\.selectedLecture, searchState.selectedLecture)
                 }
                 STColor.searchListBackground

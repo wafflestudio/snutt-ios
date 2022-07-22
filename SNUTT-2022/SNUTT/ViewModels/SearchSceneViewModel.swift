@@ -14,8 +14,8 @@ class SearchSceneViewModel: BaseViewModel {
         appState.search
     }
 
-    var timetableSetting: TimetableSetting {
-        appState.setting.timetableSetting
+    var timetableState: TimetableState {
+        appState.timetable
     }
     
     var searchResult: [Lecture] {
@@ -37,7 +37,7 @@ class SearchSceneViewModel: BaseViewModel {
         if appState.search.searchTagList != nil {
             return
         }
-        guard let currentTimetable = timetableSetting.current else { return }
+        guard let currentTimetable = timetableState.current else { return }
         do {
             try await services.searchService.fetchTags(quarter: currentTimetable.quarter)
         } catch {

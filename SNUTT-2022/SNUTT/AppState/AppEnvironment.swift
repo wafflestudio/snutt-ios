@@ -7,6 +7,7 @@
 
 import Alamofire
 import Foundation
+import SwiftUI
 
 struct AppEnvironment {
     let container: DIContainer
@@ -75,6 +76,17 @@ extension AppEnvironment {
                      userService: userService,
                      lectureService: lectureService,
                      searchService: searchService)
+    }
+}
+
+private struct AppEnvironmentKey: EnvironmentKey {
+    static let defaultValue: DIContainer? = nil
+}
+
+extension EnvironmentValues {
+    var dependencyContainer: DIContainer? {
+        get { self[AppEnvironmentKey.self] }
+        set { self[AppEnvironmentKey.self] = newValue }
     }
 }
 

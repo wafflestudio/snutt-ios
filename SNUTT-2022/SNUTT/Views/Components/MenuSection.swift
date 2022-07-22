@@ -105,8 +105,6 @@ struct MenuSectionRow: View {
 
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        
-        let _ = debugChanges()
     }
 }
 

@@ -19,11 +19,11 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     override init(container: DIContainer) {
         super.init(container: container)
 
-        timetableSetting.$current
+        timetableState.$current
             .map { $0?.totalCredit ?? 0 }
             .assign(to: &$totalCredit)
 
-        timetableSetting.$current
+        timetableState.$current
             .map { $0?.title ?? "" }
             .assign(to: &$timetableTitle)
     }
@@ -33,11 +33,11 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     }
 
     private var currentTimetable: Timetable? {
-        appState.setting.timetableSetting.current
+        appState.timetable.current
     }
 
-    var timetableSetting: TimetableSetting {
-        appState.setting.timetableSetting
+    var timetableState: TimetableState {
+        appState.timetable
     }
 
     func toggleMenuSheet() {
@@ -83,18 +83,18 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         /// 주어진 `TimePlace` 블록의 좌표(오프셋)를 구한다.
         ///
         /// 주어진 `TimePlace`를 시간표에 표시할 수 없는 경우(e.g. 시간이나 요일 범위에서 벗어난 경우 등)에는 `nil`을 리턴한다.
-        static func getOffset(of timePlace: TimePlace, in containerSize: CGSize, timetableSetting: TimetableSetting) -> CGPoint? {
+        static func getOffset(of timePlace: TimePlace, in containerSize: CGSize, timetableState: TimetableConfiguration) -> CGPoint? {
             if containerSize == .zero {
                 return nil
             }
-            let hourIndex = timePlace.startTime - Double(timetableSetting.minHour)
-            guard let weekdayIndex = timetableSetting.visibleWeeks.firstIndex(of: timePlace.day) else { return nil }
+            let hourIndex = timePlace.startTime - Double(timetableState.minHour)
+            guard let weekdayIndex = timetableState.visibleWeeks.firstIndex(of: timePlace.day) else { return nil }
             if hourIndex < 0 {
                 return nil
             }
 
-            let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: timetableSetting.weekCount)
-            let y = weekdayHeight + CGFloat(hourIndex) * getHourHeight(in: containerSize, hourCount: timetableSetting.hourCount)
+            let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: timetableState.weekCount)
+            let y = weekdayHeight + CGFloat(hourIndex) * getHourHeight(in: containerSize, hourCount: timetableState.hourCount)
 
             return CGPoint(x: x, y: y)
         }

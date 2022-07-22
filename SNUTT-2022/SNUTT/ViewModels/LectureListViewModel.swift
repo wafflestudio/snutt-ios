@@ -20,6 +20,6 @@ class LectureListViewModel {
     }
 
     var currentTimetable: Timetable? {
-        appState.setting.timetableSetting.current
+        appState.timetable.current
     }
 }

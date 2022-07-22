@@ -9,11 +9,11 @@ import SwiftUI
 
 struct MenuSheetContent: View {
     let viewModel: ViewModel
-    @ObservedObject var timetableSetting: TimetableSetting
+    @ObservedObject var timetableState: TimetableState
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
-        timetableSetting = self.viewModel.timetableSetting
+        timetableState = self.viewModel.timetableState
     }
     
     var body: some View {
@@ -28,7 +28,7 @@ struct MenuSheetContent: View {
                         ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { data in
                             MenuSectionRow(timetableMetadata: data,
                                            isSelected: viewModel.currentTimetable?.id == data.id,
-                                           selectTimetable: viewModel.fetchTimetable)
+                                           selectTimetable: viewModel.selectTimetable)
                         }
                     }
                 }
@@ -39,20 +39,21 @@ struct MenuSheetContent: View {
 
 extension MenuSheetContent {
     class ViewModel: BaseViewModel {
-        var timetableSetting: TimetableSetting {
-            appState.setting.timetableSetting
+        var timetableState: TimetableState {
+            appState.timetable
         }
         
         var timetablesByQuarter: [Quarter: [TimetableMetadata]] {
-            return Dictionary(grouping: timetableSetting.metadataList ?? [], by: { $0.quarter })
+            return Dictionary(grouping: timetableState.metadataList ?? [], by: { $0.quarter })
         }
         
         var currentTimetable: Timetable? {
-            appState.setting.timetableSetting.current
+            appState.timetable.current
         }
         
-        func fetchTimetable(timetableId: String) async {
+        func selectTimetable(timetableId: String) async {
             do {
+                await services.searchService.initializeSearchState()
                 try await services.timetableService.fetchTimetable(timetableId: timetableId)
             } catch {
                 // TODO: handle error

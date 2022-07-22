@@ -29,32 +29,32 @@ struct LectureService: LectureServiceProtocol {
     }
     
     func addLecture(lecture: Lecture) async throws {
-        guard let currentTimetable = appState.setting.timetableSetting.current else { return }
+        guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
         let timetable = Timetable(from: dto)
         DispatchQueue.main.async {
             withAnimation(.customSpring) {
                 appState.search.selectedLecture = nil
             }
-            appState.setting.timetableSetting.current = timetable
+            appState.timetable.current = timetable
         }
     }
 
     func updateLecture(oldLecture: Lecture, newLecture: Lecture) async throws {
-        guard let currentTimetable = appState.setting.timetableSetting.current else { return }
+        guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture))
         let timetable = Timetable(from: dto)
         DispatchQueue.main.async {
-            appState.setting.timetableSetting.current = timetable
+            appState.timetable.current = timetable
         }
     }
     
     func deleteLecture(lecture: Lecture) async throws {
-        guard let currentTimetable = appState.setting.timetableSetting.current else { return }
+        guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.deleteLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
         let timetable = Timetable(from: dto)
         DispatchQueue.main.async {
-            appState.setting.timetableSetting.current = timetable
+            appState.timetable.current = timetable
         }
     }
 }

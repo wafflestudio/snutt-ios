@@ -9,11 +9,16 @@ import SwiftUI
 
 struct TimetableScene: View {
     @State private var pushToListScene = false
-    @StateObject var viewModel: TimetableViewModel
-
+    @ObservedObject var viewModel: TimetableViewModel
+    @ObservedObject var timetableState: TimetableState
+    
+    init(viewModel: TimetableViewModel) {
+        self.viewModel = viewModel
+        timetableState = viewModel.timetableState
+    }
+    
     var body: some View {
-        TimetableZStack(viewModel: .init(container: viewModel.container))
-            .environmentObject(viewModel.timetableSetting)
+        TimetableZStack(current: viewModel.timetableState.current, config: viewModel.timetableState.configuration)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
                 NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) {

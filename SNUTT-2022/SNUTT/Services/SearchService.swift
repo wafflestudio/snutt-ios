@@ -14,6 +14,7 @@ protocol SearchServiceProtocol {
     func fetchTags(quarter: Quarter) async throws
     func fetchInitialSearchResult() async throws
     func fetchMoreSearchResult() async throws
+    func initializeSearchState() async
 }
 
 struct SearchService: SearchServiceProtocol {
@@ -28,8 +29,8 @@ struct SearchService: SearchServiceProtocol {
         appState.search
     }
     
-    var timetableSetting: TimetableSetting {
-        appState.setting.timetableSetting
+    var timetableState: TimetableState {
+        appState.timetable
     }
     
     init(appState: AppState, webRepositories: AppEnvironment.WebRepositories) {
@@ -43,8 +44,20 @@ struct SearchService: SearchServiceProtocol {
         }
     }
     
+    @MainActor
+    func initializeSearchState() async {
+        searchState.searchTagList = nil
+        searchState.selectedLecture = nil
+        searchState.selectedTagList = []
+        searchState.searchResult = []
+        searchState.searchText = ""
+    }
+    
     func fetchTags(quarter: Quarter) async throws {
         // TODO: get from userDefault
+        if let _ = searchState.searchTagList {
+            return
+        }
         let dto = try await searchRepository.fetchTags(quarter: quarter)
         let model = SearchTagList(from: dto)
         await MainActor.run {
@@ -53,7 +66,7 @@ struct SearchService: SearchServiceProtocol {
     }
     
     private func _fetchSearchResult() async throws {
-        guard let currentTimetable = timetableSetting.current else { return }
+        guard let currentTimetable = timetableState.current else { return }
         let tagList = searchState.selectedTagList
         let mask = tagList.contains(where: { $0.type == .etc && EtcType(rawValue: $0.text) == .empty }) ? currentTimetable.reversedTimeMasks : nil
         let offset = searchState.perPage * searchState.pageNum
@@ -102,4 +115,5 @@ class FakeSearchService: SearchServiceProtocol {
     func toggleFilterSheet() {}
     func fetchInitialSearchResult() async throws {}
     func fetchMoreSearchResult() async throws {}
+    func initializeSearchState() async {}
 }

@@ -14,13 +14,14 @@ class AppState {
     var system = System()
     
     var search = SearchState()
+    var timetable = TimetableState()
 }
 
 #if DEBUG
     extension AppState {
         static var preview: AppState {
             let state = AppState()
-            state.setting.timetableSetting.current = .preview
+            state.timetable.current = .preview
             return state
         }
     }

@@ -1,5 +1,5 @@
 //
-//  TimetableSetting.swift
+//  TimetableState.swift
 //  SNUTT
 //
 //  Created by Jinsup Keum on 2022/06/25.
@@ -7,10 +7,13 @@
 
 import SwiftUI
 
-class TimetableSetting: ObservableObject {
+class TimetableState: ObservableObject {
     @Published var current: Timetable?
     @Published var metadataList: [TimetableMetadata]?
-    
+    @Published var configuration: TimetableConfiguration = .init()
+}
+
+struct TimetableConfiguration {
     let minHour: Int = 8
     let maxHour: Int = 19
 

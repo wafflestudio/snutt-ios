@@ -18,6 +18,5 @@ class Setting: ObservableObject {
     var colorList: String? // STColorList
     var snuevWebUrl: String?
 
-    var timetableSetting: TimetableSetting = .init()
     var menuSheetSetting: MenuSheetSetting = .init()
 }

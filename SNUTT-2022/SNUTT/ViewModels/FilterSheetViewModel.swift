@@ -10,8 +10,8 @@ class FilterSheetViewModel: BaseViewModel {
         appState.search
     }
     
-    var timetableSetting: TimetableSetting {
-        appState.setting.timetableSetting
+    var timetableState: TimetableState {
+        appState.timetable
     }
     
     func filterTags(with type: SearchTagType) -> [SearchTag] {

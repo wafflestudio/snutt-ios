@@ -15,7 +15,7 @@ extension LectureDetailScene {
         }
 
         var currentTimetable: Timetable? {
-            appState.setting.timetableSetting.current
+            appState.timetable.current
         }
 
         func updateLecture(oldLecture: Lecture, newLecture: Lecture) async -> Bool {

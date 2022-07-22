@@ -57,7 +57,6 @@
 		BE98A06E288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */; };
 		BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */; };
 		BE98A072288AFC1600C2CE95 /* SNUTTWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BE98A061288AFC1500C2CE95 /* SNUTTWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		BE98A078288AFF0700C2CE95 /* LargeTimetableWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A077288AFF0700C2CE95 /* LargeTimetableWidgetView.swift */; };
 		BE98A07F288B046400C2CE95 /* TimetableWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A07D288B032600C2CE95 /* TimetableWidget.swift */; };
 		BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */; };
 		BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */; };
@@ -94,7 +93,7 @@
 		DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */; };
 		DC2915A32866958100FE5F9A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A22866958100FE5F9A /* User.swift */; };
 		DC2915A52866980B00FE5F9A /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A42866980B00FE5F9A /* Setting.swift */; };
-		DC2915A72866984000FE5F9A /* TimetableSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A62866984000FE5F9A /* TimetableSetting.swift */; };
+		DC2915A72866984000FE5F9A /* TimetableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A62866984000FE5F9A /* TimetableState.swift */; };
 		DC2915A92866986600FE5F9A /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A82866986600FE5F9A /* System.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4C27E5C87F0068C94B /* Assets.xcassets */; };
@@ -194,7 +193,6 @@
 		BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = SNUTTWidget.intentdefinition; sourceTree = "<group>"; };
 		BE98A06B288AFC1600C2CE95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE98A06D288AFC1600C2CE95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BE98A077288AFF0700C2CE95 /* LargeTimetableWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTimetableWidgetView.swift; sourceTree = "<group>"; };
 		BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidgetEntryView.swift; sourceTree = "<group>"; };
 		BE98A07D288B032600C2CE95 /* TimetableWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidget.swift; sourceTree = "<group>"; };
 		BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetScene.swift; sourceTree = "<group>"; };
@@ -226,7 +224,7 @@
 		DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
 		DC2915A22866958100FE5F9A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DC2915A42866980B00FE5F9A /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
-		DC2915A62866984000FE5F9A /* TimetableSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSetting.swift; sourceTree = "<group>"; };
+		DC2915A62866984000FE5F9A /* TimetableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableState.swift; sourceTree = "<group>"; };
 		DC2915A82866986600FE5F9A /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
 		DC860F4C27E5C87F0068C94B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -303,7 +301,6 @@
 				BE98A068288AFC1500C2CE95 /* SNUTTWidgetBundle.swift */,
 				BE98A07C288B02F500C2CE95 /* DailyWidget */,
 				BE98A079288B029000C2CE95 /* TimetableWidget */,
-				BE98A077288AFF0700C2CE95 /* LargeTimetableWidgetView.swift */,
 				BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */,
 				BE98A06B288AFC1600C2CE95 /* Assets.xcassets */,
 				BE98A06D288AFC1600C2CE95 /* Info.plist */,
@@ -420,8 +417,8 @@
 				DC2915A82866986600FE5F9A /* System.swift */,
 				DC2915A42866980B00FE5F9A /* Setting.swift */,
 				BE682BF028872315009EBCB7 /* STError.swift */,
-				DC2915A62866984000FE5F9A /* TimetableSetting.swift */,
 				BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */,
+				DC2915A62866984000FE5F9A /* TimetableState.swift */,
 				BE4B0EBB2873BC2B005FE164 /* SearchState.swift */,
 			);
 			path = Models;
@@ -755,7 +752,6 @@
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
-				BE98A078288AFF0700C2CE95 /* LargeTimetableWidgetView.swift in Sources */,
 				DC2915A52866980B00FE5F9A /* Setting.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
@@ -782,7 +778,7 @@
 				BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
 				BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */,
-				DC2915A72866984000FE5F9A /* TimetableSetting.swift in Sources */,
+				DC2915A72866984000FE5F9A /* TimetableState.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
 				BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */,
 			);
