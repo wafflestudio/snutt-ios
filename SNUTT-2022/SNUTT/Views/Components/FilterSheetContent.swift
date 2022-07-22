@@ -29,7 +29,7 @@ struct FilterSheetContent: View {
                             Spacer()
                             Text(tag.typeStr)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .background(STColor.sheetBackground)
+                                .contentShape(Rectangle())
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(isSelected ? Color(uiColor: .label) : Color(uiColor: .label.withAlphaComponent(0.5)))
                         }
@@ -61,6 +61,7 @@ struct FilterSheetContent: View {
                                         Text(tag.text)
                                             .font(.system(size: 14))
                                             .frame(maxWidth: .infinity, alignment: .leading)
+                                            .contentShape(Rectangle())
                                     }
                                     .padding(.horizontal, 20)
                                     .padding(.vertical, 7)
@@ -93,8 +94,7 @@ struct FilterSheetContent: View {
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
-            .padding()
-            .padding(.bottom, 10)
+            .padding(.horizontal)
             .tint(STColor.cyan)
             
             

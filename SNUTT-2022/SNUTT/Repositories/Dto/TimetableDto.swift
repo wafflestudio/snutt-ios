@@ -53,6 +53,7 @@ struct TimePlaceDto: Codable {
     let place: String
 }
 
+// TODO: when is this used?
 struct TimetableListDto: Codable {
     let _id: String
     let user_id: String

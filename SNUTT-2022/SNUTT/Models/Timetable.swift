@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: Timetable
+
 struct Timetable {
     let id: String
     let title: String
@@ -65,3 +67,31 @@ extension Timetable {
         }
     }
 #endif
+
+// MARK: TimetableMetadata
+
+struct TimetableMetadata: Codable {
+    let id: String
+    let year: Int
+    let semester: Int
+    let title: String
+    let updatedAt: String
+    let totalCredit: Int
+    
+    var quarter: Quarter {
+        Quarter(year: year, semester: .init(rawValue: semester) ?? .first)
+    }
+}
+
+extension TimetableMetadata {
+    init(from dto: TimetableMetadataDto) {
+        id = dto._id
+        year = dto.year
+        semester = dto.semester
+        title = dto.title
+        updatedAt = dto.updated_at
+        totalCredit = dto.total_credit
+    }
+}
+
+

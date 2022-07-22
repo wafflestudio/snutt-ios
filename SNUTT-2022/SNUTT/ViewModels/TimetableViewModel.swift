@@ -45,15 +45,21 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     }
 
     func fetchRecentTimetable() async {
-        if currentTimetable != nil {
-            return
-        }
         do {
             try await timetableService.fetchRecentTimetable()
         } catch {
+            // TODO: handle error
             DispatchQueue.main.async {
                 self.showAlert = true
             }
+        }
+    }
+    
+    func fetchTimetableList() async {
+        do {
+            try await timetableService.fetchTimetableList()
+        } catch {
+            // TODO: handle error
         }
     }
 

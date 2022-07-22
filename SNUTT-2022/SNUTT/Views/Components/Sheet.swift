@@ -11,7 +11,8 @@ struct Sheet<Content>: View where Content: View {
     @Binding var isOpen: Bool
     let orientation: SheetOrientation
     var cornerRadius: CGFloat = 20
-    let backgroundColor: Color = STColor.sheetBackground
+    var sheetColor: Color = STColor.sheetBackground
+    var sheetOpacity: CGFloat = 1
     @ViewBuilder var content: () -> Content
 
     @GestureState private var translation: CGFloat = 0
@@ -42,16 +43,16 @@ struct Sheet<Content>: View where Content: View {
                 }
 
             ZStack {
-                backgroundColor
+                sheetColor.opacity(sheetOpacity)
+                    .background(.thinMaterial)
                     .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                    .edgesIgnoringSafeArea(.all)
+                    .ignoresSafeArea()
                 self.content()
             }
             .frame(width: orientation.getFrame(reader: reader).width, height: orientation.getFrame(reader: reader).height)
             .offset(orientation.getOffset(isOpen: isOpen, translation: translation, reader: reader))
             .animation(.customSpring, value: isOpen)
         }
-        .ignoresSafeArea()
         .highPriorityGesture(
             dragGesture
         )

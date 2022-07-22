@@ -9,6 +9,8 @@ import SwiftUI
 
 class TimetableSetting: ObservableObject {
     @Published var current: Timetable?
+    @Published var metadataList: [TimetableMetadata]?
+    
     let minHour: Int = 8
     let maxHour: Int = 19
 

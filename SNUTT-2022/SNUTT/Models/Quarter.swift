@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Quarter {
+struct Quarter: Hashable {
     var year: Int
     var semester: Semester
     
@@ -16,7 +16,13 @@ struct Quarter {
     }
 
     func longString() -> String {
-        return String(year) + " " + semester.longString()
+        return "\(year)년 \(semester.longString())"
+    }
+}
+
+extension Quarter: Comparable {
+    static func < (lhs: Quarter, rhs: Quarter) -> Bool {
+        return (lhs.year, lhs.semester.rawValue) < (rhs.year, rhs.semester.rawValue)
     }
 }
 
@@ -34,10 +40,10 @@ enum Semester: Int {
 
     func longString() -> String {
         switch self {
-        case .first: return NSLocalizedString("first_semester", comment: "")
-        case .second: return NSLocalizedString("second_semester", comment: "")
-        case .summer: return NSLocalizedString("summer_semester", comment: "")
-        case .winter: return NSLocalizedString("winter_semester", comment: "")
+        case .first: return "1학기"
+        case .second: return "2학기"
+        case .summer: return "여름학기"
+        case .winter: return "겨울학기"
         }
     }
 }

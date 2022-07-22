@@ -17,7 +17,8 @@ struct FilterSheetScene: View {
     }
 
     var body: some View {
-        Sheet(isOpen: $searchState.isFilterOpen, orientation: .bottom(maxHeight: 500)) {
+        Sheet(isOpen: $searchState.isFilterOpen, orientation: .bottom(maxHeight: 450), sheetOpacity: 1) {
+            
             VStack {
                 HStack {
                     Spacer()
