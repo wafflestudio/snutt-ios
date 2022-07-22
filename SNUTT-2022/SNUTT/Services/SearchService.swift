@@ -92,7 +92,7 @@ struct SearchService: SearchServiceProtocol {
     }
     
     func toggleFilterSheet() {
-        appState.search.isOpen.toggle()
+        appState.search.isFilterOpen.toggle()
     }
 }
 

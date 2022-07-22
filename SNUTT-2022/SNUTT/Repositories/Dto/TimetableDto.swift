@@ -36,8 +36,13 @@ struct LectureDto: Codable {
     let lecture_number: String?
     let created_at: String?
     let updated_at: String?
-    let color: [String: String]?
+    let color: LectureColorDto?
     let colorIndex: Int?
+}
+
+struct LectureColorDto: Codable {
+    let fg: String?
+    let bg: String?
 }
 
 struct TimePlaceDto: Codable {
@@ -98,7 +103,7 @@ extension LectureDto {
         lecture_number = model.lectureNumber
         created_at = model.createdAt
         updated_at = model.updatedAt
-        color = model.color
         colorIndex = model.colorIndex
+        color = .init(fg: model.color?.fg.toHex(), bg: model.color?.bg.toHex())
     }
 }

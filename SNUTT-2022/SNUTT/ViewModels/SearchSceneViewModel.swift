@@ -8,7 +8,7 @@
 import Combine
 import SwiftUI
 
-class SearchSceneViewModel: BaseViewModel, ObservableObject {
+class SearchSceneViewModel: BaseViewModel {
     
     var searchState: SearchState {
         appState.search
@@ -63,6 +63,10 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     
     var selectedTagList: [SearchTag] {
         searchState.selectedTagList
+    }
+    
+    var selectedLecture: Published<Lecture?>.Publisher {
+        searchState.$selectedLecture
     }
     
     func toggle(_ tag: SearchTag) {

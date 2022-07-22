@@ -10,10 +10,15 @@ import SwiftUI
 struct TimetableBlocksLayer: View {
     let viewModel: ViewModel
     @EnvironmentObject var timetableSetting: TimetableSetting
+    @Environment(\.selectedLecture) var selectedLecture: Lecture?
 
     var body: some View {
-        ForEach(timetableSetting.current?.lectures ?? []) { lecture in
+        ForEach(viewModel.lectures) { lecture in
             LectureBlocks(viewModel: .init(container: viewModel.container), lecture: lecture)
+        }
+        
+        if var selectedLecture = selectedLecture {
+            LectureBlocks(viewModel: .init(container: viewModel.container), lecture: selectedLecture.withTemporaryColor())
         }
 
         let _ = debugChanges()
@@ -21,7 +26,11 @@ struct TimetableBlocksLayer: View {
 }
 
 extension TimetableBlocksLayer {
-    class ViewModel: BaseViewModel {}
+    class ViewModel: BaseViewModel {
+        var lectures: [Lecture] {
+            appState.setting.timetableSetting.current?.lectures ?? []
+        }
+    }
 }
 
 struct TimetableBlocks_Previews: PreviewProvider {

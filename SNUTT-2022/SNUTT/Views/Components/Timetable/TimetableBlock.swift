@@ -12,13 +12,13 @@ struct TimetableBlock: View {
     let lecture: Lecture
     let timePlace: TimePlace
     let theme: Theme
-
+    
     var body: some View {
         ZStack {
             NavigationLink(destination: LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture)) {
                 ZStack {
                     Rectangle()
-                        .fill(Color(hex: theme.getColor(at: lecture.colorIndex)))
+                        .fill(lecture.getColor(with: theme).bg)
                         .border(Color.black.opacity(0.1), width: 0.5)
 
                     VStack {
@@ -32,7 +32,7 @@ struct TimetableBlock: View {
                         }
                         .padding(2)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(.white)
+                        .foregroundColor(lecture.getColor(with: theme).fg)
                     }.padding(2)
                 }
             }

@@ -14,7 +14,7 @@ enum LectureRouter: Router {
 
     case addCustomLecture(timetableId: String, lecture: LectureDto)
     case addLecture(timetableId: String, lectureId: String)
-    case deleteLecture(timetableId: String, lecture: LectureDto)
+    case deleteLecture(timetableId: String, lectureId: String)
     case updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto)
     case resetLecture(timetableId: String, lectureId: String)
 
@@ -37,10 +37,10 @@ enum LectureRouter: Router {
             return "/\(timetableId)/lecture"
         case let .addLecture(timetableId, lectureId):
             return "/\(timetableId)/lecture/\(lectureId)"
-        case let .deleteLecture(timetableId, lecture):
-            return "/\(timetableId)/lecture/\(lecture._id)"
-        case let .updateLecture(timetableId, curLecture, _):
-            return "/\(timetableId)/lecture/\(curLecture._id)"
+        case let .deleteLecture(timetableId, lectureId):
+            return "/\(timetableId)/lecture/\(lectureId)"
+        case let .updateLecture(timetableId, oldLecture, _):
+            return "/\(timetableId)/lecture/\(oldLecture._id)"
         case let .resetLecture(timetableId, lectureId):
             return "/\(timetableId)/lecture/\(lectureId)/reset"
         }

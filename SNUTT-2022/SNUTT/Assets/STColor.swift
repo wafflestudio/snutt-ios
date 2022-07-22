@@ -19,6 +19,8 @@ struct STColor {
     static let groupForeground: Color = .init("group.foreground")
     static let systemBackground: Color = .init("system.background")
     static let searchBarBackground: Color = .init("searchbar.background")
+    static let searchListBackground: Color = .init("searchlist.background")
+    static let searchListForeground: Color = .init("searchlist.foreground")
     static let sheetBackground: Color = .init("sheet.background")
 }
 
@@ -49,6 +51,10 @@ extension Color {
 
         self.init(hex: rgbValue, alpha: alpha)
     }
+    
+    func toHex() -> String {
+        return UIColor(self).toHex()
+    }
 }
 
 extension UIColor {
@@ -58,5 +64,18 @@ extension UIColor {
     
     convenience init(hex: String, alpha: Double = 1) {
         self.init(.init(hex: hex, alpha: alpha))
+    }
+    
+    func toHex() -> String {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+
+        let rgb = Int(r * 255) << 16 | Int(g * 255) << 8 | Int(b * 255) << 0
+
+        return String(format: "#%06x", rgb)
     }
 }

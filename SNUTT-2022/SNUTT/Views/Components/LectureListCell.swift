@@ -9,67 +9,53 @@ import SwiftUI
 
 struct LectureListCell: View {
     let lecture: Lecture
-    var colorMode: ColorMode = .automatic
-    
-    enum ColorMode {
-        case automatic, white
-        
-        var imageColorVariant: String {
-            switch self {
-            case .automatic:
-                return "black"
-            case .white:
-                return "white"
-            }
-        }
-        
-        var fontColor: Color {
-            switch self {
-            case .automatic:
-                return Color(uiColor: .label)
-            case .white:
-                return .white
-            }
-        }
-    }
-
-    @ViewBuilder
-    func detailRow(imageName: String, text: String) -> some View {
-        HStack {
-            Image(imageName)
-            Text(text)
-                .font(STFont.details)
-                .foregroundColor(colorMode.fontColor)
-            Spacer()
-        }
-    }
 
     var body: some View {
         VStack(spacing: 8) {
             // title
-            HStack {
-                Group {
-                    Text(lecture.title)
-                        .font(STFont.subheading)
-                    Spacer()
-                    Text("\(lecture.instructor) / \(lecture.credit)학점")
-                        .font(STFont.details)
-                }
-                .foregroundColor(colorMode.fontColor)
-            }
-
+            LectureHeaderRow(lecture: lecture)
+            
             // details
             if lecture.isCustom {
-                detailRow(imageName: "tag.\(colorMode.imageColorVariant)", text: "(없음)")
+                LectureDetailRow(imageName: "tag.black", text: "(없음)")
             } else {
-                detailRow(imageName: "tag.\(colorMode.imageColorVariant)", text: "\(lecture.department), \(lecture.academicYear)")
+                LectureDetailRow(imageName: "tag.black", text: "\(lecture.department), \(lecture.academicYear)")
             }
-            detailRow(imageName: "clock.\(colorMode.imageColorVariant)", text: lecture.timeString.isEmpty ? "(없음)" : lecture.timeString)
-            detailRow(imageName: "map.\(colorMode.imageColorVariant)", text: lecture.timePlaces.isEmpty ? "(없음)" : lecture.timePlaces.map { $0.place}.joined(separator: "/"))
+            LectureDetailRow(imageName: "clock.black", text: lecture.timeString.isEmpty ? "(없음)" : lecture.timeString)
+            LectureDetailRow(imageName: "map.black", text: lecture.timePlaces.isEmpty ? "(없음)" : lecture.timePlaces.map { $0.place}.joined(separator: "/"))
         }
         .padding(.vertical, 5)
 
         let _ = debugChanges()
+    }
+}
+
+struct LectureHeaderRow: View {
+    let lecture: Lecture
+    var body: some View {
+        HStack {
+            Group {
+                Text(lecture.title)
+                    .font(STFont.subheading)
+                Spacer()
+                Text("\(lecture.instructor) / \(lecture.credit)학점")
+                    .font(STFont.details)
+            }
+        }
+    }
+}
+
+struct LectureDetailRow: View {
+    let imageName: String
+    let text: String
+    
+    var body: some View {
+        HStack {
+                Image(imageName)
+                Text(text)
+                    .font(STFont.details)
+                Spacer()
+            }
     }
 }
 

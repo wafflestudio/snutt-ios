@@ -37,6 +37,7 @@
 		BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C002888173B009EBCB7 /* TagRouter.swift */; };
 		BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C02288817C8009EBCB7 /* SearchRepository.swift */; };
 		BE682C0528881852009EBCB7 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C0428881852009EBCB7 /* SearchService.swift */; };
+		BE682C092889ADD7009EBCB7 /* SearchLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C082889ADD7009EBCB7 /* SearchLectureCell.swift */; };
 		BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230027FF20EE004DC202 /* TimetableScene.swift */; };
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
 		BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */; };
@@ -139,6 +140,7 @@
 		BE682C002888173B009EBCB7 /* TagRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagRouter.swift; sourceTree = "<group>"; };
 		BE682C02288817C8009EBCB7 /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
 		BE682C0428881852009EBCB7 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		BE682C082889ADD7009EBCB7 /* SearchLectureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLectureCell.swift; sourceTree = "<group>"; };
 		BE7E230027FF20EE004DC202 /* TimetableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableScene.swift; sourceTree = "<group>"; };
 		BE7E230227FF3C38004DC202 /* NavBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarButton.swift; sourceTree = "<group>"; };
 		BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLectureScene.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 				BE8BB3AE285D77D000070A66 /* SearchBar.swift */,
 				BEDE34C928754F3100525014 /* Sheet.swift */,
 				BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */,
+				BE682C082889ADD7009EBCB7 /* SearchLectureCell.swift */,
 				BE1D2B3228012059008F9134 /* Timetable */,
 				BE682BC528845CDB009EBCB7 /* UITextEditor.swift */,
 			);
@@ -623,6 +626,7 @@
 				BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */,
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
 				BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */,
+				BE682C092889ADD7009EBCB7 /* SearchLectureCell.swift in Sources */,
 				BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */,
 				BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
@@ -805,7 +809,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = GB5CDMBZQB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -819,11 +823,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -835,7 +839,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = GB5CDMBZQB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -849,11 +853,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

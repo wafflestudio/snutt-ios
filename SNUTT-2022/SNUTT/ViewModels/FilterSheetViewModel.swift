@@ -32,7 +32,7 @@ class FilterSheetViewModel: BaseViewModel {
     }
     
     func toggleFilterSheet() {
-        searchState.isOpen.toggle()
+        searchState.isFilterOpen.toggle()
     }
     
     func isSelected(tag: SearchTag) -> Bool {

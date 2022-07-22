@@ -8,12 +8,9 @@
 import SwiftUI
 
 struct SearchLectureScene: View {
-    @State var searchBarHeight: CGFloat = .zero
-    @State var isVisibleRate: CGFloat = 0
-    
     @State var previousCount: Int = 0
 
-    @ObservedObject var viewModel: SearchSceneViewModel
+    let viewModel: SearchSceneViewModel
     @ObservedObject var searchState: SearchState
 
     init(viewModel: SearchSceneViewModel) {
@@ -30,13 +27,14 @@ struct SearchLectureScene: View {
                         .frame(height: 44)
                     TimetableZStack(viewModel: .init(container: viewModel.container))
                         .environmentObject(viewModel.timetableSetting)
+                        .environment(\.selectedLecture, searchState.selectedLecture)
                 }
-                Color.black.opacity(0.6)
+                STColor.searchListBackground
             }
             .ignoresSafeArea([.keyboard])
             
             VStack(spacing: 0) {
-                SearchBar(text: $searchState.searchText, isFilterOpen: $searchState.isOpen) {
+                SearchBar(text: $searchState.searchText, isFilterOpen: $searchState.isFilterOpen) {
                     Task {
                         await viewModel.fetchInitialSearchResult()
                     }
@@ -55,7 +53,7 @@ struct SearchLectureScene: View {
                                         HStack {
                                             Text(tag.text)
                                                 .font(.system(size: 14))
-                                            Image("xmark")
+                                            Image("xmark.white")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .frame(width: 10)
@@ -89,7 +87,7 @@ struct SearchLectureScene: View {
                     ProgressView()
                         .frame(maxHeight: .infinity, alignment: .center)
                 } else {
-                    SearchLectureList(data: viewModel.searchResult, fetchMore: viewModel.fetchMoreSearchResult)
+                    SearchLectureList(viewModel: .init(container: viewModel.container) ,data: viewModel.searchResult, fetchMore: viewModel.fetchMoreSearchResult, selected: $searchState.selectedLecture)
                 }
             }
         }
@@ -102,33 +100,52 @@ struct SearchLectureScene: View {
     }
 }
 
+private struct SelectedLectureKey: EnvironmentKey {
+    static let defaultValue: Lecture? = nil
+}
+
+extension EnvironmentValues {
+    var selectedLecture: Lecture? {
+        get { self[SelectedLectureKey.self] }
+        set { self[SelectedLectureKey.self] = newValue }
+    }
+}
 
 struct SearchLectureList: View {
+    let viewModel: ViewModel
     let data: [Lecture]
     let fetchMore: () async -> Void
+    @Binding var selected: Lecture?
     
     var body: some View {
         ScrollView {
-            LazyVStack {
+            LazyVStack(spacing: 0) {
                 ForEach(data) { lecture in
-                    LectureListCell(lecture: lecture, colorMode: .white)
+                    SearchLectureCell(viewModel: .init(container: viewModel.container),lecture: lecture, selected: selected?.id == lecture.id)
                         .task {
                             if lecture.id == data.last?.id {
                                 await fetchMore()
                             }
                         }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            if selected?.id != lecture.id {
+                                withAnimation(.customSpring) {
+                                    selected = lecture
+                                }
+                            }
+                        }
                 }
             }
-            .padding(.horizontal, 15)
             .padding(.vertical, 5)
         }
-        .mask(LinearGradient(gradient: Gradient(stops: [
-            .init(color: .clear, location: 0),
-            .init(color: .black, location: 0.02),
-            .init(color: .black, location: 1),
-        ]), startPoint: .top, endPoint: .bottom))
         
         let _ = debugChanges()
+    }
+}
+
+extension SearchLectureList {
+    class ViewModel: BaseViewModel {
     }
 }
 

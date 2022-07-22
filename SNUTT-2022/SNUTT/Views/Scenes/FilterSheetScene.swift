@@ -17,14 +17,14 @@ struct FilterSheetScene: View {
     }
 
     var body: some View {
-        Sheet(isOpen: $searchState.isOpen, orientation: .bottom(maxHeight: 500)) {
+        Sheet(isOpen: $searchState.isFilterOpen, orientation: .bottom(maxHeight: 500)) {
             VStack {
                 HStack {
                     Spacer()
                     Button {
-                        searchState.isOpen.toggle()
+                        searchState.isFilterOpen.toggle()
                     } label: {
-                        Image("xmark")
+                        Image("xmark.black")
                             .padding([.horizontal, .top], 10)
                     }
                 }
@@ -43,7 +43,7 @@ struct FilterSheetWrapper: View {
     var body: some View {
         ZStack {
             NavBarButton(imageName: "search.filter") {
-                container.appState.search.isOpen.toggle()
+                container.appState.search.isFilterOpen.toggle()
             }
             FilterSheetScene(viewModel: .init(container: container))
         }
