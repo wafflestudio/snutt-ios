@@ -59,6 +59,7 @@ class STTimetableTabViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        STPopupManager.initialize()
 
         fetchCurrentTimetable()
 

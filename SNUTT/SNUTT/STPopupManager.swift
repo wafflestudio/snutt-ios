@@ -77,7 +77,9 @@ struct STPopupManager {
             }
             then()
             saveData()
-        } failure: {}
+        } failure: {
+            saveData()
+        }
     }
 
     /// 유저에게 보여야 하는 팝업만 남겨 반환합니다.
