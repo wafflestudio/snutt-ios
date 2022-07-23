@@ -6,24 +6,28 @@
 //
 
 import SwiftUI
+import Combine
+import WidgetKit
 
 class TimetableState: ObservableObject {
     @Published var current: Timetable?
     @Published var metadataList: [TimetableMetadata]?
     @Published var configuration: TimetableConfiguration = .init()
+    
+    private var bag = Set<AnyCancellable>()
+    
+    init() {
+        $current
+            .compactMap {$0}
+            .sink { timetable in
+                let dto = TimetableDto(from: timetable)
+                let data = dto.asJSONData()
+                if let userDefaults = UserDefaults(suiteName: "group.com.wafflestudio.snutt-2022") {
+                    userDefaults.set(data, forKey: "currentTimetable")
+                    WidgetCenter.shared.reloadTimelines(ofKind: "TimetableWidget")
+                }
+            }
+            .store(in: &bag)
+    }
 }
 
-struct TimetableConfiguration {
-    var minHour: Int = 8
-    var maxHour: Int = 19
-
-    var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri, .sat]
-
-    var hourCount: Int {
-        maxHour - minHour + 1
-    }
-
-    var weekCount: Int {
-        visibleWeeks.count
-    }
-}

@@ -24,17 +24,24 @@ struct TimetableWidget: Widget {
 struct TimetableEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
+    let currentTimetable: Timetable?
+    
+    init(date:Date, configuration: ConfigurationIntent, currentTimetable: Timetable? = nil) {
+        self.date = date
+        self.configuration = configuration
+        self.currentTimetable = currentTimetable
+    }
 }
 
 struct TimetableWidgetProvider: IntentTimelineProvider {
     typealias Entry = TimetableEntry
     
     func placeholder(in context: Context) -> Entry {
-        Entry(date: Date(), configuration: ConfigurationIntent())
+        Entry(date: Date(), configuration: ConfigurationIntent(), currentTimetable: getCurrentTimetable())
     }
     
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Entry) -> ()) {
-        let entry = Entry(date: Date(), configuration: configuration)
+        let entry = Entry(date: Date(), configuration: configuration, currentTimetable: getCurrentTimetable())
         completion(entry)
     }
     
@@ -45,11 +52,19 @@ struct TimetableWidgetProvider: IntentTimelineProvider {
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = Entry(date: entryDate, configuration: configuration)
+            let entry = Entry(date: entryDate, configuration: configuration, currentTimetable: getCurrentTimetable())
             entries.append(entry)
         }
         
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
+    }
+    
+    func getCurrentTimetable() -> Timetable? {
+        guard let userDefaults = UserDefaults(suiteName: "group.com.wafflestudio.snutt-2022") else { return nil }
+        guard let data = userDefaults.data(forKey: "currentTimetable") else { return nil }
+        guard let dto = try? JSONDecoder().decode(TimetableDto.self, from: data) else { return nil }
+        print(dto)
+        return Timetable(from: dto)
     }
 }

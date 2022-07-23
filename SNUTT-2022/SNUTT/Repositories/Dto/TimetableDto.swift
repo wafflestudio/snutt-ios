@@ -74,6 +74,19 @@ struct TimetableMetadataDto: Codable {
     let total_credit: Int
 }
 
+extension TimetableDto {
+    init(from model: Timetable) {
+        _id = model.id
+        user_id = model.userId
+        year = model.year
+        semester = model.semester
+        title = model.title
+        lecture_list = model.lectures.map{ LectureDto(from: $0)}
+        theme = model.theme.rawValue
+        updated_at = model.updatedAt
+    }
+}
+
 extension TimePlaceDto {
     init(from model: TimePlace) {
         _id = model.id

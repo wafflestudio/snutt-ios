@@ -18,7 +18,7 @@ struct TimetableWidgetEntryView: View {
     }()
     
     var body: some View {
-        TimetableZStack(current: .preview, config: config)
+        TimetableZStack(current: entry.currentTimetable, config: config)
     }
 }
 

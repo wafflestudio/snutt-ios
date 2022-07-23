@@ -18,16 +18,17 @@ struct TimetableBlock: View {
                 .fill(lecture.getColor(with: theme).bg)
                 .border(Color.black.opacity(0.1), width: 0.5)
             
-            VStack {
+            VStack(spacing: 0) {
                 Group {
                     Text(lecture.title)
                         .font(STFont.details)
+                    
                     Text(timePlace.place)
                         .font(STFont.detailsSemibold)
+                        .padding(2)
                         .minimumScaleFactor(0.5)
                         .lineLimit(1)
                 }
-                .padding(2)
                 .multilineTextAlignment(.center)
                 .foregroundColor(lecture.getColor(with: theme).fg)
             }.padding(2)
