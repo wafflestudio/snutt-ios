@@ -10,7 +10,7 @@ import SwiftUI
 struct LectureList: View {
     let viewModel: ViewModel
     let lectures: [Lecture]
-    
+
     struct NavigationButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
