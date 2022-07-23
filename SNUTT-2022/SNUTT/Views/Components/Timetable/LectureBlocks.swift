@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct LectureBlocks: View {
-    typealias Painter = TimetableViewModel.TimetablePainter
+    typealias Painter = TimetablePainter
     let lecture: Lecture
     let theme: Theme
     let config: TimetableConfiguration
     
+    #if !WIDGET
     @Environment(\.dependencyContainer) var container: DIContainer?
+    #endif
     
     var body: some View {
         GeometryReader { reader in
@@ -23,6 +25,11 @@ struct LectureBlocks: View {
                                                        timetableState: config)
                 {
                     Group {
+                        #if WIDGET
+                        TimetableBlock(lecture: lecture,
+                                       timePlace: timePlace,
+                                       theme: theme)
+                        #else
                         if let container = container {
                             NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture)) {
                                 TimetableBlock(lecture: lecture,
@@ -30,11 +37,8 @@ struct LectureBlocks: View {
                                                theme: theme)
                             }
                             .buttonStyle(.plain)
-                        } else {
-                            TimetableBlock(lecture: lecture,
-                                           timePlace: timePlace,
-                                           theme: theme)
                         }
+                        #endif
                     }
                     .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: config.weekCount), height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: config.hourCount), alignment: .center)
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
@@ -44,10 +48,6 @@ struct LectureBlocks: View {
         let _ = debugChanges()
     }
     
-}
-
-extension LectureBlocks {
-    class ViewModel: BaseViewModel {}
 }
 
 //struct LectureBlocks_Previews: PreviewProvider {

@@ -14,10 +14,10 @@ class TimetableState: ObservableObject {
 }
 
 struct TimetableConfiguration {
-    let minHour: Int = 8
-    let maxHour: Int = 19
+    var minHour: Int = 8
+    var maxHour: Int = 19
 
-    let visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri, .sat]
+    var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri, .sat]
 
     var hourCount: Int {
         maxHour - minHour + 1

@@ -22,9 +22,6 @@ struct TimetableZStack: View {
     }
 }
 
-extension TimetableZStack {
-    class ViewModel: BaseViewModel {}
-}
 
 //struct TimetableStack_Previews: PreviewProvider {
 //    static var previews: some View {

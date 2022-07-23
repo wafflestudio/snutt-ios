@@ -11,8 +11,14 @@ import WidgetKit
 struct TimetableWidgetEntryView: View {
     var entry: TimetableWidgetProvider.Entry
     
+    var config: TimetableConfiguration = {
+        var config = TimetableConfiguration()
+        config.maxHour = 18
+        return config
+    }()
+    
     var body: some View {
-        Text("1212121")
+        TimetableZStack(current: .preview, config: config)
     }
 }
 

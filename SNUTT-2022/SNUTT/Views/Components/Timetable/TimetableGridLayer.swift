@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TimetableGridLayer: View {
-    typealias Painter = TimetableViewModel.TimetablePainter
+    typealias Painter = TimetablePainter
     let config: TimetableConfiguration
 
     var body: some View {

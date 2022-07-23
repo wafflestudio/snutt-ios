@@ -38,9 +38,6 @@ struct TimetableBlock: View {
     }
 }
 
-extension TimetableBlock {
-    class ViewModel: BaseViewModel {}
-}
 //
 //struct TimetableBlock_Previews: PreviewProvider {
 //    static var previews: some View {

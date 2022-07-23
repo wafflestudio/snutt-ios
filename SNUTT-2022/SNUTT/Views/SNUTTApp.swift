@@ -28,11 +28,3 @@ struct SNUTTApp: App {
         }
     }
 }
-
-extension View {
-    func debugChanges() {
-        if #available(iOS 15.0, *) {
-            Self._printChanges()
-        }
-    }
-}

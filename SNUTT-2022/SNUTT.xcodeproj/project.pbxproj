@@ -10,6 +10,25 @@
 		B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* BaseViewModel.swift */; };
 		BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
 		BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
+		BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
+		BE419B84288B8B8F00FA9590 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
+		BE419B85288B8B8F00FA9590 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507427F4289B00CDCC13 /* Lecture.swift */; };
+		BE419B86288B8B8F00FA9590 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BB5287C40AF009EBCB7 /* Theme.swift */; };
+		BE419B87288B8B8F00FA9590 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
+		BE419B88288B8B8F00FA9590 /* Quarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFE2888056C009EBCB7 /* Quarter.swift */; };
+		BE419B89288B8BAD00FA9590 /* TimetableDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */; };
+		BE419B8A288B8BB600FA9590 /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507827F42D7500CDCC13 /* STColor.swift */; };
+		BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE419B8C288B8C5A00FA9590 /* View+Debug.swift */; };
+		BE419B8E288B8C6800FA9590 /* View+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE419B8C288B8C5A00FA9590 /* View+Debug.swift */; };
+		BE419B91288B8F9C00FA9590 /* TimetableZStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBF281D762F005F71E6 /* TimetableZStack.swift */; };
+		BE419B92288B8F9F00FA9590 /* TimetableBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBD281D6244005F71E6 /* TimetableBlock.swift */; };
+		BE419B93288B8FA600FA9590 /* TimetableBlocksLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */; };
+		BE419B94288B8FA600FA9590 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
+		BE419B95288B8FA600FA9590 /* LectureBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */; };
+		BE419B96288B8FBF00FA9590 /* TimetableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A62866984000FE5F9A /* TimetableState.swift */; };
+		BE419B98288B8FDC00FA9590 /* STFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507627F42D1100CDCC13 /* STFont.swift */; };
+		BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE419B99288B915800FA9590 /* TimetableUtils.swift */; };
+		BE419B9B288B917A00FA9590 /* TimetableUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE419B99288B915800FA9590 /* TimetableUtils.swift */; };
 		BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */; };
 		BE4B0EB828735052005FE164 /* MenuSheetSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */; };
 		BE4B0EBC2873BC2B005FE164 /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBB2873BC2B005FE164 /* SearchState.swift */; };
@@ -149,6 +168,8 @@
 		B87431CA283B5A7300D78C59 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableGridLayer.swift; sourceTree = "<group>"; };
 		BE1D2B3928014527008F9134 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
+		BE419B8C288B8C5A00FA9590 /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
+		BE419B99288B915800FA9590 /* TimetableUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableUtils.swift; sourceTree = "<group>"; };
 		BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetViewModel.swift; sourceTree = "<group>"; };
 		BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetSetting.swift; sourceTree = "<group>"; };
 		BE4B0EBB2873BC2B005FE164 /* SearchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
@@ -282,8 +303,17 @@
 				BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */,
 				BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */,
 				BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */,
+				BE419B99288B915800FA9590 /* TimetableUtils.swift */,
 			);
 			path = Timetable;
+			sourceTree = "<group>";
+		};
+		BE419B8B288B8C4900FA9590 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BE419B8C288B8C5A00FA9590 /* View+Debug.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		BE98A062288AFC1500C2CE95 /* Frameworks */ = {
@@ -342,11 +372,11 @@
 				DC860F4727E5C87D0068C94B /* SNUTT */,
 				DC860F5827E5C87F0068C94B /* SNUTTTests */,
 				DC860F6227E5C87F0068C94B /* SNUTTUITests */,
+				BE98A067288AFC1500C2CE95 /* SNUTTWidget */,
 				BE682BB22879E24D009EBCB7 /* SNUTT.app */,
 				BE682BB32879E24D009EBCB7 /* SNUTTTests.xctest */,
 				BE682BB42879E24D009EBCB7 /* SNUTTUITests.xctest */,
 				BE98A061288AFC1500C2CE95 /* SNUTTWidgetExtension.appex */,
-				BE98A067288AFC1500C2CE95 /* SNUTTWidget */,
 				BE98A062288AFC1500C2CE95 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -354,6 +384,7 @@
 		DC860F4727E5C87D0068C94B /* SNUTT */ = {
 			isa = PBXGroup;
 			children = (
+				BE419B8B288B8C4900FA9590 /* Extensions */,
 				DCD41A7627E5CED100CF380E /* Assets */,
 				DCD41A7327E5CE5F00CF380E /* AppState */,
 				DCD41A7027E5CE0800CF380E /* ViewModels */,
@@ -697,9 +728,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE419B96288B8FBF00FA9590 /* TimetableState.swift in Sources */,
+				BE419B95288B8FA600FA9590 /* LectureBlocks.swift in Sources */,
+				BE419B88288B8B8F00FA9590 /* Quarter.swift in Sources */,
+				BE419B84288B8B8F00FA9590 /* TimePlace.swift in Sources */,
+				BE419B8A288B8BB600FA9590 /* STColor.swift in Sources */,
+				BE419B89288B8BAD00FA9590 /* TimetableDto.swift in Sources */,
+				BE419B86288B8B8F00FA9590 /* Theme.swift in Sources */,
+				BE419B87288B8B8F00FA9590 /* Weekday.swift in Sources */,
+				BE419B92288B8F9F00FA9590 /* TimetableBlock.swift in Sources */,
+				BE419B93288B8FA600FA9590 /* TimetableBlocksLayer.swift in Sources */,
 				BE98A069288AFC1600C2CE95 /* SNUTTWidgetBundle.swift in Sources */,
+				BE419B9B288B917A00FA9590 /* TimetableUtils.swift in Sources */,
+				BE419B8E288B8C6800FA9590 /* View+Debug.swift in Sources */,
+				BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */,
+				BE419B91288B8F9C00FA9590 /* TimetableZStack.swift in Sources */,
+				BE419B94288B8FA600FA9590 /* TimetableGridLayer.swift in Sources */,
 				BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */,
+				BE419B85288B8B8F00FA9590 /* Lecture.swift in Sources */,
 				BE98A06E288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
+				BE419B98288B8FDC00FA9590 /* STFont.swift in Sources */,
 				BE98A07F288B046400C2CE95 /* TimetableWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -712,6 +760,8 @@
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
 				DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */,
+				BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */,
+				BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */,
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
 				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */,
@@ -853,9 +903,11 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG WIDGET";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -884,6 +936,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1031,6 +1084,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

@@ -10,7 +10,10 @@ import SwiftUI
 struct TimetableBlocksLayer: View {
     let current: Timetable?
     let config: TimetableConfiguration
+    
+    #if !WIDGET
     @Environment(\.selectedLecture) var selectedLecture: Lecture?
+    #endif
     
     var currentTheme: Theme {
         current?.theme ?? .snutt
@@ -21,22 +24,17 @@ struct TimetableBlocksLayer: View {
             LectureBlocks(lecture: lecture, theme: currentTheme, config: config)
         }
         
+        #if !WIDGET
         if var selectedLecture = selectedLecture {
             let _ = print("selected!")
             LectureBlocks(lecture: selectedLecture.withTemporaryColor(), theme: currentTheme, config: config)
         }
+        #endif
 
         let _ = debugChanges()
     }
 }
 
-extension TimetableBlocksLayer {
-    class ViewModel: BaseViewModel {
-        var lectures: [Lecture] {
-            appState.timetable.current?.lectures ?? []
-        }
-    }
-}
 
 //struct TimetableBlocks_Previews: PreviewProvider {
 //    static var previews: some View {
