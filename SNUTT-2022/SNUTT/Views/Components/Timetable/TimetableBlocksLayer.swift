@@ -26,7 +26,6 @@ struct TimetableBlocksLayer: View {
 
         #if !WIDGET
             if var selectedLecture = selectedLecture {
-                _ = print("selected!")
                 LectureBlocks(lecture: selectedLecture.withTemporaryColor(), theme: currentTheme, config: config)
             }
         #endif

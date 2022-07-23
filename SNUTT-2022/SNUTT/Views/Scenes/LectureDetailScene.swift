@@ -134,7 +134,7 @@ struct LectureDetailScene: View {
             }
             .padding(.vertical, 20)
         }
-        .background(Color(uiColor: .systemGroupedBackground))
+        .background(STColor.systemBackground)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(editMode.isEditing)
         .toolbar {

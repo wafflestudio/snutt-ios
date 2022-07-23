@@ -80,6 +80,7 @@ struct MenuSectionRow: View {
                 .contentShape(Rectangle())
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .buttonStyle(.plain)
 
             Spacer()
 

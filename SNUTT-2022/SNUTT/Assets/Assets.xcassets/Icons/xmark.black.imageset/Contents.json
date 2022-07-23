@@ -12,7 +12,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "btnTipClose 복사본-1.png",
+      "filename" : "btnTipClose dark-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -28,7 +28,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "btnTipClose@2x 복사본-1.png",
+      "filename" : "btnTipClose@2x dark-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "btnTipClose@3x 복사본-1.png",
+      "filename" : "btnTipClose@3x dark-1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

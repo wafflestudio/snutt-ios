@@ -12,7 +12,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "arrowRight 복사본.png",
+      "filename" : "arrowRight dark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -28,7 +28,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "arrowRight@2x 복사본.png",
+      "filename" : "arrowRight@2x dark.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "arrowRight@3x 복사본.png",
+      "filename" : "arrowRight@3x dark.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

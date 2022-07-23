@@ -46,8 +46,7 @@ enum SearchRouter: Router {
                 "academic_year": [],
             ]
 
-            let tagParams: [String: Any] = Dictionary
-            (grouping: tagList, by: { $0.type.rawValue })
+            let tagParams: [String: Any] = Dictionary(grouping: tagList, by: { $0.type.rawValue })
                 .mapValues { tags in
                     switch tags[0].type {
                     case .credit:

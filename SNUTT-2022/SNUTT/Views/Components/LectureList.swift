@@ -10,21 +10,38 @@ import SwiftUI
 struct LectureList: View {
     let viewModel: ViewModel
     let lectures: [Lecture]
+    
+    struct NavigationButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .contentShape(Rectangle())
+                .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : .clear)
+        }
+    }
 
     var body: some View {
-        List(lectures) { lecture in
-            ZStack {
-                NavigationLink {
-                    LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture)
-                } label: {
-                    EmptyView()
+        ScrollView {
+            LazyVStack(spacing: 0) {
+                ForEach(lectures) { lecture in
+                    NavigationLink {
+                        LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture)
+                    } label: {
+                        VStack(spacing: 0) {
+                            Divider()
+                                .frame(height: 1)
+                            LectureListCell(lecture: lecture)
+                                .padding(.vertical, 5)
+                                .padding(.trailing, 20)
+                        }
+                        .padding(.leading, 20)
+                    }
+                    .buttonStyle(NavigationButtonStyle())
                 }
-                // workaround to hide arrow indicator
-                .opacity(0.0)
-
-                LectureListCell(lecture: lecture)
+                Divider()
+                    .frame(height: 1)
+                    .padding(.leading, 20)
             }
-        }.listStyle(PlainListStyle())
+        }
 
         let _ = debugChanges()
     }
