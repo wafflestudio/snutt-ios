@@ -12,11 +12,11 @@ struct LectureBlocks: View {
     let lecture: Lecture
     let theme: Theme
     let config: TimetableConfiguration
-    
+
     #if !WIDGET
-    @Environment(\.dependencyContainer) var container: DIContainer?
+        @Environment(\.dependencyContainer) var container: DIContainer?
     #endif
-    
+
     var body: some View {
         GeometryReader { reader in
             ForEach(lecture.timePlaces) { timePlace in
@@ -26,18 +26,18 @@ struct LectureBlocks: View {
                 {
                     Group {
                         #if WIDGET
-                        TimetableBlock(lecture: lecture,
-                                       timePlace: timePlace,
-                                       theme: theme)
+                            TimetableBlock(lecture: lecture,
+                                           timePlace: timePlace,
+                                           theme: theme)
                         #else
-                        if let container = container {
-                            NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture)) {
-                                TimetableBlock(lecture: lecture,
-                                               timePlace: timePlace,
-                                               theme: theme)
+                            if let container = container {
+                                NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture)) {
+                                    TimetableBlock(lecture: lecture,
+                                                   timePlace: timePlace,
+                                                   theme: theme)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
-                        }
                         #endif
                     }
                     .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: config.weekCount), height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: config.hourCount), alignment: .center)
@@ -47,13 +47,12 @@ struct LectureBlocks: View {
         }
         let _ = debugChanges()
     }
-    
 }
 
-//struct LectureBlocks_Previews: PreviewProvider {
+// struct LectureBlocks_Previews: PreviewProvider {
 //    static var previews: some View {
 //        let viewModel = TimetableViewModel(container: .preview)
 //        LectureBlocks(viewModel: .init(container: .preview), lecture: .preview)
 //            .environmentObject(viewModel.timetableState)
 //    }
-//}
+// }

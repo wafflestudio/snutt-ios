@@ -12,10 +12,9 @@ struct SearchBar: View {
     @Binding var text: String
     @Binding var isFilterOpen: Bool
     var action: () -> Void
-    
+
     @State private var isEditing = false
     @FocusState private var isFocused: Bool
-    
 
     var body: some View {
         HStack {

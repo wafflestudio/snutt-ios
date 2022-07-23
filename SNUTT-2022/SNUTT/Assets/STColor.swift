@@ -51,7 +51,7 @@ extension Color {
 
         self.init(hex: rgbValue, alpha: alpha)
     }
-    
+
     func toHex() -> String {
         return UIColor(self).toHex()
     }
@@ -61,11 +61,11 @@ extension UIColor {
     convenience init(hex: UInt64, alpha: Double = 1) {
         self.init(.init(hex: hex, alpha: alpha))
     }
-    
+
     convenience init(hex: String, alpha: Double = 1) {
         self.init(.init(hex: hex, alpha: alpha))
     }
-    
+
     func toHex() -> String {
         var r: CGFloat = 0
         var g: CGFloat = 0

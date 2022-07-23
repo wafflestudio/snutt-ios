@@ -9,7 +9,6 @@ import Combine
 import SwiftUI
 
 class SearchSceneViewModel: BaseViewModel {
-    
     var searchState: SearchState {
         appState.search
     }
@@ -17,22 +16,22 @@ class SearchSceneViewModel: BaseViewModel {
     var timetableState: TimetableState {
         appState.timetable
     }
-    
+
     var searchResult: [Lecture] {
         searchState.searchResult
     }
-    
+
     var isLoading: Bool {
         searchState.isLoading
     }
-    
+
     func toggleFilterSheet() {
         if appState.search.searchTagList == nil {
             return
         }
         services.searchService.toggleFilterSheet()
     }
-    
+
     func fetchTags() async {
         if appState.search.searchTagList != nil {
             return
@@ -44,7 +43,7 @@ class SearchSceneViewModel: BaseViewModel {
             // TODO: handle error
         }
     }
-    
+
     func fetchInitialSearchResult() async {
         do {
             try await services.searchService.fetchInitialSearchResult()
@@ -52,7 +51,7 @@ class SearchSceneViewModel: BaseViewModel {
             // TODO: handle error
         }
     }
-    
+
     func fetchMoreSearchResult() async {
         do {
             try await services.searchService.fetchMoreSearchResult()
@@ -60,17 +59,16 @@ class SearchSceneViewModel: BaseViewModel {
             // TODO: handle error
         }
     }
-    
+
     var selectedTagList: [SearchTag] {
         searchState.selectedTagList
     }
-    
+
     var selectedLecture: Published<Lecture?>.Publisher {
         searchState.$selectedLecture
     }
-    
+
     func toggle(_ tag: SearchTag) {
         services.searchService.toggle(tag)
     }
-    
 }

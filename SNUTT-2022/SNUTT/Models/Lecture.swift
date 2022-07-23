@@ -29,18 +29,18 @@ struct Lecture: Identifiable {
     var quota: Int
     var createdAt: String
     var updatedAt: String
-    
+
     func getColor(with theme: Theme) -> LectureColor {
         // custom color
         if let color = color {
             return color
         }
-        
+
         // theme color
         let bgColor = theme.getColor(at: colorIndex)
         return LectureColor(fg: .white, bg: Color(hex: bgColor))
     }
-    
+
     mutating func withTemporaryColor() -> Self {
         color = .init(fg: .white, bg: .gray)
         return self

@@ -11,18 +11,18 @@ struct TimetableBlock: View {
     let lecture: Lecture
     let timePlace: TimePlace
     let theme: Theme
-    
+
     var body: some View {
         ZStack {
             Rectangle()
                 .fill(lecture.getColor(with: theme).bg)
                 .border(Color.black.opacity(0.1), width: 0.5)
-            
+
             VStack(spacing: 0) {
                 Group {
                     Text(lecture.title)
                         .font(STFont.details)
-                    
+
                     Text(timePlace.place)
                         .font(STFont.detailsSemibold)
                         .padding(2)
@@ -33,14 +33,13 @@ struct TimetableBlock: View {
                 .foregroundColor(lecture.getColor(with: theme).fg)
             }.padding(2)
         }
-        
+
         let _ = debugChanges()
-        
     }
 }
 
 //
-//struct TimetableBlock_Previews: PreviewProvider {
+// struct TimetableBlock_Previews: PreviewProvider {
 //    static var previews: some View {
 //        let lecture: Lecture = .preview
 //        NavigationView {
@@ -51,4 +50,4 @@ struct TimetableBlock: View {
 //            .frame(width: 70, height: 100, alignment: .center)
 //        }
 //    }
-//}
+// }

@@ -13,7 +13,7 @@ struct LectureDetailScene: View {
     @State var lecture: Lecture
     @State private var editMode: EditMode = .inactive
     @State private var tempLecture: Lecture = .preview
-    
+
     // for modal presentation
     var isPresentedModally: Bool = false
     @Environment(\.dismiss) var dismiss
@@ -120,12 +120,12 @@ struct LectureDetailScene: View {
                     DetailButton(text: "강의평") {
                         print("tap")
                     }
-                    
+
                     if !isPresentedModally {
                         DetailButton(text: "삭제", role: .destructive) {
                             // TODO: check alert
                             Task {
-                                await viewModel.deleteLecture(lecture:lecture)
+                                await viewModel.deleteLecture(lecture: lecture)
                             }
                         }
                     }
@@ -334,9 +334,9 @@ struct DetailButton: View {
 }
 
 extension DetailButton {
-    init(text: String, action: @escaping ()->Void) {
+    init(text: String, action: @escaping () -> Void) {
         self.text = text
-        self.role = nil
+        role = nil
         self.action = action
     }
 }

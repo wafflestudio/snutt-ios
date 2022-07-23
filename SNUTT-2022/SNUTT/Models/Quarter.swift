@@ -10,7 +10,7 @@ import Foundation
 struct Quarter: Hashable {
     var year: Int
     var semester: Semester
-    
+
     func shortString() -> String {
         return String(year) + semester.shortString()
     }

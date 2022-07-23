@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 
-
 protocol LectureServiceProtocol {
     func updateLecture(oldLecture: Lecture, newLecture: Lecture) async throws
     func addLecture(lecture: Lecture) async throws
@@ -27,7 +26,7 @@ struct LectureService: LectureServiceProtocol {
         self.appState = appState
         self.webRepositories = webRepositories
     }
-    
+
     func addLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
@@ -48,7 +47,7 @@ struct LectureService: LectureServiceProtocol {
             appState.timetable.current = timetable
         }
     }
-    
+
     func deleteLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.deleteLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
@@ -60,7 +59,7 @@ struct LectureService: LectureServiceProtocol {
 }
 
 class FakeLectureService: LectureServiceProtocol {
-    func updateLecture(oldLecture: Lecture, newLecture: Lecture) async throws {}
-    func addLecture(lecture: Lecture) async throws {}
-    func deleteLecture(lecture: Lecture) async throws {}
+    func updateLecture(oldLecture _: Lecture, newLecture _: Lecture) async throws {}
+    func addLecture(lecture _: Lecture) async throws {}
+    func deleteLecture(lecture _: Lecture) async throws {}
 }

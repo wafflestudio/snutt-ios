@@ -11,7 +11,7 @@ struct MenuSection<Content>: View where Content: View {
     let quarter: Quarter
     @State var isExpanded: Bool = true
     var content: () -> Content
-    
+
     var body: some View {
         VStack {
             Button {
@@ -22,7 +22,7 @@ struct MenuSection<Content>: View where Content: View {
                 HStack(spacing: 5) {
                     Text(quarter.longString())
                         .font(.system(size: 16, weight: .semibold))
-                    
+
                     Image("chevron.right")
                         .resizable()
                         .scaledToFit()
@@ -32,7 +32,7 @@ struct MenuSection<Content>: View where Content: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             .buttonStyle(.plain)
-            
+
             if isExpanded {
                 VStack(spacing: 10) {
                     content()
@@ -51,7 +51,7 @@ struct MenuSectionRow: View {
     let isSelected: Bool
     let selectTimetable: ((String) async -> Void)?
 //    let duplicateTimetable: () -> Void
-    
+
     var body: some View {
         HStack(spacing: 0) {
             Image("checkmark.circle.tick")
@@ -61,7 +61,7 @@ struct MenuSectionRow: View {
                 .padding(.leading, 10)
                 .padding(.trailing, 8)
                 .opacity(isSelected ? 1 : 0)
-            
+
             Button {
                 Task {
                     await selectTimetable?(timetableMetadata.id)
@@ -71,7 +71,7 @@ struct MenuSectionRow: View {
                     Text(timetableMetadata.title)
                         .font(.system(size: 15))
                         .lineLimit(1)
-                    
+
                     Text("(\(timetableMetadata.totalCredit)학점)")
                         .font(.system(size: 14))
                         .foregroundColor(Color(uiColor: .secondaryLabel))
@@ -80,29 +80,23 @@ struct MenuSectionRow: View {
                 .contentShape(Rectangle())
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
-            
-            
+
             Spacer()
-            
-            Button {
-                
-            } label: {
+
+            Button {} label: {
                 Image("menu.duplicate")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 35)
                     .opacity(0.5)
             }
-            Button {
-                
-            } label: {
+            Button {} label: {
                 Image("menu.ellipsis")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 35)
                     .opacity(0.5)
             }
-
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -117,6 +111,5 @@ struct MenuSection_Previews: PreviewProvider {
                 }
             }
         }
-
     }
 }

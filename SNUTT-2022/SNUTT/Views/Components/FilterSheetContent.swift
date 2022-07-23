@@ -16,7 +16,7 @@ struct FilterSheetContent: View {
         self.viewModel = viewModel
         searchState = self.viewModel.searchState
     }
-    
+
     var body: some View {
         VStack {
             HStack(spacing: 0) {
@@ -34,15 +34,14 @@ struct FilterSheetContent: View {
                                 .foregroundColor(isSelected ? Color(uiColor: .label) : Color(uiColor: .label.withAlphaComponent(0.5)))
                         }
                         .buttonStyle(.plain)
-                        
                     }
                 }
                 .frame(maxWidth: 110, maxHeight: .infinity, alignment: .topLeading)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 5)
-                
+
                 Divider()
-                
+
                 ScrollView {
                     LazyVStack {
                         Group {
@@ -96,8 +95,6 @@ struct FilterSheetContent: View {
             .controlSize(.large)
             .padding(.horizontal)
             .tint(STColor.cyan)
-            
-            
         }
     }
 }
@@ -107,4 +104,3 @@ struct FilterSheetContent_Previews: PreviewProvider {
         FilterSheetContent(viewModel: .init(container: .preview))
     }
 }
-

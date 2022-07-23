@@ -21,32 +21,32 @@ struct SearchTagList {
 
 extension SearchTagList {
     init(from dto: SearchTagListDto) {
-        let dtoDict = dto.asDictionary()!  // TODO: remove force unwrapping
+        let dtoDict = dto.asDictionary()! // TODO: remove force unwrapping
         var searchTags: [SearchTag] = []
         for (key, value) in dtoDict {
             guard let tagStrings = value as? [String],
                   let tagType = SearchTagType(rawValue: key) else { continue }
-            searchTags.append(contentsOf: tagStrings.map { SearchTag(type: tagType, text: $0)})
+            searchTags.append(contentsOf: tagStrings.map { SearchTag(type: tagType, text: $0) })
         }
-        
+
         // 기타 태그는 직접 추가해주어야 한다.
         searchTags.append(.init(type: .etc, text: EtcType.empty.rawValue))
         searchTags.append(.init(type: .etc, text: EtcType.english.rawValue))
         searchTags.append(.init(type: .etc, text: EtcType.army.rawValue))
-        
+
         tagList = searchTags
         updatedAt = dto.updated_at
     }
 }
 
 enum SearchTagType: String, CaseIterable {
-    case classification = "classification"
-    case department = "department"
+    case classification
+    case department
     case academicYear = "academic_year"
-    case credit = "credit"
-    case instructor = "instructor"
-    case category = "category"
-    case etc = "etc"
+    case credit
+    case instructor
+    case category
+    case etc
 
     var tagColor: Color {
         switch self {
@@ -93,7 +93,7 @@ enum EtcType: String {
     var code: String? {
         switch self {
         case .empty:
-            return nil  // should not be included in parameters; use timeMasks instead
+            return nil // should not be included in parameters; use timeMasks instead
         case .english:
             return "E"
         case .army:

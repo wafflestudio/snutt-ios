@@ -54,7 +54,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
             }
         }
     }
-    
+
     func fetchTimetableList() async {
         do {
             try await timetableService.fetchTimetableList()

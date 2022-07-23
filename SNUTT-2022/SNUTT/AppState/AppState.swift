@@ -12,7 +12,7 @@ class AppState {
     var currentUser = User()
     var setting = Setting()
     var system = System()
-    
+
     var search = SearchState()
     var timetable = TimetableState()
 }

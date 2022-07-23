@@ -22,17 +22,17 @@ struct Timetable {
     var totalCredit: Int {
         lectures.reduce(0) { $0 + $1.credit }
     }
-    
+
     var quarter: Quarter {
         Quarter(year: year, semester: .init(rawValue: semester) ?? .first)
     }
-    
+
     var aggregatedTimeMasks: [Int] {
         lectures.reduce([0, 0, 0, 0, 0, 0, 0]) { mask, lecture in
             zip(mask, lecture.timeMasks).map { $0 | $1 }
         }
     }
-    
+
     var reversedTimeMasks: [Int] {
         aggregatedTimeMasks.map { 0x3FFF_FFFF ^ $0 }
     }
@@ -77,7 +77,7 @@ struct TimetableMetadata: Codable {
     let title: String
     let updatedAt: String
     let totalCredit: Int
-    
+
     var quarter: Quarter {
         Quarter(year: year, semester: .init(rawValue: semester) ?? .first)
     }
@@ -93,5 +93,3 @@ extension TimetableMetadata {
         totalCredit = dto.total_credit
     }
 }
-
-

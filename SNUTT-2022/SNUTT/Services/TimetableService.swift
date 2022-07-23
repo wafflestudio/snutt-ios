@@ -25,7 +25,7 @@ struct TimetableService: TimetableServiceProtocol {
         self.appState = appState
         self.webRepositories = webRepositories
     }
-    
+
     func fetchTimetable(timetableId: String) async throws {
         if appState.timetable.current?.id == timetableId {
             // skip fetching
@@ -49,14 +49,14 @@ struct TimetableService: TimetableServiceProtocol {
             appState.timetable.current = timetable
         }
     }
-    
+
     func fetchTimetableList() async throws {
         if let _ = appState.timetable.metadataList {
             // skip fetching
             return
         }
         let dtos = try await timetableRepository.fetchTimetableList()
-        let timetables = dtos.map { TimetableMetadata(from: $0)}
+        let timetables = dtos.map { TimetableMetadata(from: $0) }
         DispatchQueue.main.async {
             appState.timetable.metadataList = timetables
         }
@@ -66,5 +66,5 @@ struct TimetableService: TimetableServiceProtocol {
 struct FakeTimetableService: TimetableServiceProtocol {
     func fetchRecentTimetable() {}
     func fetchTimetableList() {}
-    func fetchTimetable(timetableId: String) {}
+    func fetchTimetable(timetableId _: String) {}
 }

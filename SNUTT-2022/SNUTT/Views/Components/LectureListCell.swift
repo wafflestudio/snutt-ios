@@ -14,7 +14,7 @@ struct LectureListCell: View {
         VStack(spacing: 8) {
             // title
             LectureHeaderRow(lecture: lecture)
-            
+
             // details
             if lecture.isCustom {
                 LectureDetailRow(imageName: "tag.black", text: "(없음)")
@@ -22,7 +22,7 @@ struct LectureListCell: View {
                 LectureDetailRow(imageName: "tag.black", text: "\(lecture.department), \(lecture.academicYear)")
             }
             LectureDetailRow(imageName: "clock.black", text: lecture.timeString.isEmpty ? "(없음)" : lecture.timeString)
-            LectureDetailRow(imageName: "map.black", text: lecture.timePlaces.isEmpty ? "(없음)" : lecture.timePlaces.map { $0.place}.joined(separator: "/"))
+            LectureDetailRow(imageName: "map.black", text: lecture.timePlaces.isEmpty ? "(없음)" : lecture.timePlaces.map { $0.place }.joined(separator: "/"))
         }
         .padding(.vertical, 5)
 
@@ -48,14 +48,14 @@ struct LectureHeaderRow: View {
 struct LectureDetailRow: View {
     let imageName: String
     let text: String
-    
+
     var body: some View {
         HStack {
-                Image(imageName)
-                Text(text)
-                    .font(STFont.details)
-                Spacer()
-            }
+            Image(imageName)
+            Text(text)
+                .font(STFont.details)
+            Spacer()
+        }
     }
 }
 

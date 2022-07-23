@@ -28,7 +28,7 @@ extension LectureDetailScene {
             }
             return true
         }
-        
+
         func deleteLecture(lecture: Lecture) async {
             do {
                 try await lectureService.deleteLecture(lecture: lecture)

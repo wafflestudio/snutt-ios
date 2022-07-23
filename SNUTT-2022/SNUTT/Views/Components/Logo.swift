@@ -9,11 +9,11 @@ import SwiftUI
 
 struct Logo: View {
     let orientation: Orientation
-    
+
     enum Orientation {
         case vertical, horizontal
     }
-    
+
     var body: some View {
         switch orientation {
         case .vertical:
@@ -32,7 +32,7 @@ struct Logo: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20)
-                    
+
                     Text("SNUTT")
                         .font(.system(size: 22, weight: .bold))
                 }

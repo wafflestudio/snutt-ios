@@ -11,12 +11,12 @@ struct TimetableScene: View {
     @State private var pushToListScene = false
     @ObservedObject var viewModel: TimetableViewModel
     @ObservedObject var timetableState: TimetableState
-    
+
     init(viewModel: TimetableViewModel) {
         self.viewModel = viewModel
         timetableState = viewModel.timetableState
     }
-    
+
     var body: some View {
         TimetableZStack(current: viewModel.timetableState.current, config: viewModel.timetableState.configuration)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work

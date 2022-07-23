@@ -15,7 +15,7 @@ class SearchState: ObservableObject {
     @Published var searchText = ""
     @Published var isLoading = false
     @Published var selectedLecture: Lecture?
-    
+
     let perPage: Int = 20
     var pageNum: Int = 0
 }

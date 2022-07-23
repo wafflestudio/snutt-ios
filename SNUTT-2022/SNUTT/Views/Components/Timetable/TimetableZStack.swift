@@ -10,7 +10,7 @@ import SwiftUI
 struct TimetableZStack: View {
     let current: Timetable?
     let config: TimetableConfiguration
-    
+
     var body: some View {
         ZStack {
             TimetableGridLayer(config: config)
@@ -22,11 +22,10 @@ struct TimetableZStack: View {
     }
 }
 
-
-//struct TimetableStack_Previews: PreviewProvider {
+// struct TimetableStack_Previews: PreviewProvider {
 //    static var previews: some View {
 //        let viewModel = TimetableViewModel(container: .preview)
 //        TimetableZStack(viewModel: .init(container: viewModel.container))
 //            .environmentObject(viewModel.timetableState)
 //    }
-//}
+// }

@@ -26,7 +26,7 @@ class SearchRepository: SearchRepositoryProtocol {
             .serializingDecodable(SearchTagListDto.self)
             .handlingError()
     }
-    
+
     func fetchSearchResult(query: String, quarter: Quarter, tagList: [SearchTag], mask: [Int]?, offset: Int, limit: Int) async throws -> [LectureDto] {
         return try await session
             .request(SearchRouter.search(query: query, quarter: quarter, tagList: tagList, mask: mask, offset: offset, limit: limit))

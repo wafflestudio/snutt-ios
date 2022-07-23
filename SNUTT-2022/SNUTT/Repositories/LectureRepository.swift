@@ -20,14 +20,14 @@ class LectureRepository: LectureRepositoryProtocol {
     init(session: Session) {
         self.session = session
     }
-    
+
     func addLecture(timetableId: String, lectureId: String) async throws -> TimetableDto {
         return try await session
             .request(LectureRouter.addLecture(timetableId: timetableId, lectureId: lectureId))
             .serializingDecodable(TimetableDto.self)
             .handlingError()
     }
-    
+
     func deleteLecture(timetableId: String, lectureId: String) async throws -> TimetableDto {
         return try await session
             .request(LectureRouter.deleteLecture(timetableId: timetableId, lectureId: lectureId))

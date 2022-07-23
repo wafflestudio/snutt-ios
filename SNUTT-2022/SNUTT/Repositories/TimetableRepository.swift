@@ -25,7 +25,7 @@ class TimetableRepository: TimetableRepositoryProtocol {
     init(session: Session) {
         self.session = session
     }
-    
+
     func fetchTimetable(timetableId: String) async throws -> TimetableDto {
         return try await session
             .request(TimetableRouter.getTimetable(id: timetableId))

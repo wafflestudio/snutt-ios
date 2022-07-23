@@ -10,14 +10,14 @@ import SwiftUI
 struct SearchLectureScene: View {
     let viewModel: SearchSceneViewModel
     @ObservedObject var searchState: SearchState
-    
+
     @State var previousCount: Int = 0
 
     init(viewModel: SearchSceneViewModel) {
         self.viewModel = viewModel
         searchState = viewModel.searchState
     }
-    
+
     var body: some View {
         // TODO: Split components
         ZStack {
@@ -31,14 +31,14 @@ struct SearchLectureScene: View {
                 STColor.searchListBackground
             }
             .ignoresSafeArea([.keyboard])
-            
+
             VStack(spacing: 0) {
                 SearchBar(text: $searchState.searchText, isFilterOpen: $searchState.isFilterOpen) {
                     Task {
                         await viewModel.fetchInitialSearchResult()
                     }
                 }
-                
+
                 if viewModel.selectedTagList.count > 0 {
                     ScrollViewReader { reader in
                         ScrollView(.horizontal, showsIndicators: false) {
@@ -81,12 +81,12 @@ struct SearchLectureScene: View {
                         })
                     }
                 }
-                
+
                 if viewModel.isLoading {
                     ProgressView()
                         .frame(maxHeight: .infinity, alignment: .center)
                 } else {
-                    SearchLectureList(viewModel: .init(container: viewModel.container) ,data: viewModel.searchResult, fetchMore: viewModel.fetchMoreSearchResult, selected: $searchState.selectedLecture)
+                    SearchLectureList(viewModel: .init(container: viewModel.container), data: viewModel.searchResult, fetchMore: viewModel.fetchMoreSearchResult, selected: $searchState.selectedLecture)
                 }
             }
         }
@@ -115,12 +115,12 @@ struct SearchLectureList: View {
     let data: [Lecture]
     let fetchMore: () async -> Void
     @Binding var selected: Lecture?
-    
+
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
                 ForEach(data) { lecture in
-                    SearchLectureCell(viewModel: .init(container: viewModel.container),lecture: lecture, selected: selected?.id == lecture.id)
+                    SearchLectureCell(viewModel: .init(container: viewModel.container), lecture: lecture, selected: selected?.id == lecture.id)
                         .task {
                             if lecture.id == data.last?.id {
                                 await fetchMore()
@@ -138,16 +138,14 @@ struct SearchLectureList: View {
             }
             .padding(.vertical, 5)
         }
-        
+
         let _ = debugChanges()
     }
 }
 
 extension SearchLectureList {
-    class ViewModel: BaseViewModel {
-    }
+    class ViewModel: BaseViewModel {}
 }
-
 
 struct SearchLectureScene_Previews: PreviewProvider {
     static var previews: some View {

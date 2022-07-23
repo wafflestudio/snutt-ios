@@ -10,7 +10,7 @@ import WidgetKit
 
 struct TimetableWidget: Widget {
     let kind: String = "TimetableWidget"
-    
+
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: TimetableWidgetProvider()) { entry in
             TimetableWidgetEntryView(entry: entry)
@@ -25,8 +25,8 @@ struct TimetableEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
     let currentTimetable: Timetable?
-    
-    init(date:Date, configuration: ConfigurationIntent, currentTimetable: Timetable? = nil) {
+
+    init(date: Date, configuration: ConfigurationIntent, currentTimetable: Timetable? = nil) {
         self.date = date
         self.configuration = configuration
         self.currentTimetable = currentTimetable
@@ -35,19 +35,19 @@ struct TimetableEntry: TimelineEntry {
 
 struct TimetableWidgetProvider: IntentTimelineProvider {
     typealias Entry = TimetableEntry
-    
-    func placeholder(in context: Context) -> Entry {
+
+    func placeholder(in _: Context) -> Entry {
         Entry(date: Date(), configuration: ConfigurationIntent(), currentTimetable: getCurrentTimetable())
     }
-    
-    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Entry) -> ()) {
+
+    func getSnapshot(for configuration: ConfigurationIntent, in _: Context, completion: @escaping (Entry) -> Void) {
         let entry = Entry(date: Date(), configuration: configuration, currentTimetable: getCurrentTimetable())
         completion(entry)
     }
-    
-    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+
+    func getTimeline(for configuration: ConfigurationIntent, in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         var entries: [Entry] = []
-        
+
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
@@ -55,11 +55,11 @@ struct TimetableWidgetProvider: IntentTimelineProvider {
             let entry = Entry(date: entryDate, configuration: configuration, currentTimetable: getCurrentTimetable())
             entries.append(entry)
         }
-        
+
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
-    
+
     func getCurrentTimetable() -> Timetable? {
         guard let userDefaults = UserDefaults(suiteName: "group.com.wafflestudio.snutt-2022") else { return nil }
         guard let data = userDefaults.data(forKey: "currentTimetable") else { return nil }

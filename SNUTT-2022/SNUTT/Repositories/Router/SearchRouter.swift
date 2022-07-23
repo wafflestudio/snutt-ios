@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2022/07/20.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 enum SearchRouter: Router {
     var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/search_query")! }
@@ -43,11 +43,11 @@ enum SearchRouter: Router {
                 "etc": [],
                 "department": [],
                 "instructor": [],
-                "academic_year": []
+                "academic_year": [],
             ]
-            
+
             let tagParams: [String: Any] = Dictionary
-                .init(grouping: tagList, by: { $0.type.rawValue })
+            (grouping: tagList, by: { $0.type.rawValue })
                 .mapValues { tags in
                     switch tags[0].type {
                     case .credit:
@@ -58,18 +58,18 @@ enum SearchRouter: Router {
                         return tags.map { $0.text }
                     }
                 }
-            
+
             var parameters = defaultParams.merging(tagParams, uniquingKeysWith: { $1 })
-            
+
             if mask != nil {
                 parameters["time_mask"] = mask
             }
-            
+
             // the server refuses empty list of `etc`.
             if let etc = parameters["etc"] as? [String], etc.isEmpty {
                 parameters.removeValue(forKey: "etc")
             }
-            
+
             return parameters
         }
     }
