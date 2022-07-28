@@ -76,7 +76,7 @@ struct STPopupManager {
                 totalPopupList.append(popup)
             }
             then()
-            
+
             loadData()
             saveData()
         } failure: {

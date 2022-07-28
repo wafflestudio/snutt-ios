@@ -472,7 +472,7 @@ extension STTimetableTabViewController {
                 }
             }
             setNewCurrentPopup()
-            
+
             STPopupManager.hasShownPopup = true
         }
     }
