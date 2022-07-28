@@ -59,7 +59,9 @@ class STTimetableTabViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        STPopupManager.initialize()
+        STPopupManager.initialize {
+            self.loadPopUpView()
+        }
 
         fetchCurrentTimetable()
 
@@ -145,10 +147,6 @@ class STTimetableTabViewController: UIViewController {
 
     override func viewDidAppear(_: Bool) {
         setNotiBadge(STDefaults[.shouldShowBadge])
-        if !STPopupManager.hasShownPopup {
-            loadPopUpView()
-            STPopupManager.hasShownPopup = true
-        }
     }
 
     deinit {
@@ -463,16 +461,20 @@ extension STTimetableTabViewController {
     }
 
     private func loadPopUpView() {
-        for popup in currentPopupList {
-            let popupViewController = PopupViewController()
-            becomeDelegate(of: popupViewController)
-            popupViewController.presentIfNeeded(popup: popup, at: popupViewController)
-            popupViewController.popup = popup
-            if currentPopupList.last != popup {
-                popupViewController.popupView.isHidden = true
+        if !STPopupManager.hasShownPopup {
+            for popup in currentPopupList {
+                let popupViewController = PopupViewController()
+                becomeDelegate(of: popupViewController)
+                popupViewController.presentIfNeeded(popup: popup, at: popupViewController)
+                popupViewController.popup = popup
+                if currentPopupList.last != popup {
+                    popupViewController.popupView.isHidden = true
+                }
             }
+            setNewCurrentPopup()
+            
+            STPopupManager.hasShownPopup = true
         }
-        setNewCurrentPopup()
     }
 
     private func changeBackgroundColor() {
