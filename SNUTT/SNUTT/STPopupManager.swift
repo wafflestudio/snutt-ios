@@ -24,9 +24,9 @@ struct STPopupManager {
     static var hasShownPopup: Bool = false
 
     /// STPopupManager을 초기화합니다.
-    static func initialize() {
+    static func initialize(then: @escaping () -> Void) {
         STPopupManager.hasShownPopup = false
-        STPopupManager.getRecentPopup(then: loadData)
+        STPopupManager.getRecentPopup(then: then)
     }
 
     /// 현재 popupList를 UserDefaults에 저장합니다.
@@ -76,8 +76,12 @@ struct STPopupManager {
                 totalPopupList.append(popup)
             }
             then()
+
+            loadData()
             saveData()
-        } failure: {}
+        } failure: {
+            saveData()
+        }
     }
 
     /// 유저에게 보여야 하는 팝업만 남겨 반환합니다.
