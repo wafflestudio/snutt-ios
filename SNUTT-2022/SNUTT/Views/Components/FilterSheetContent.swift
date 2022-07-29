@@ -16,7 +16,7 @@ struct FilterSheetContent: View {
         self.viewModel = viewModel
         searchState = self.viewModel.searchState
     }
-    
+
     struct FilterButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label

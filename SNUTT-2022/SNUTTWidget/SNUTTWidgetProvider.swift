@@ -7,7 +7,6 @@
 
 import WidgetKit
 
-
 struct SNUTTWidgetProvider: IntentTimelineProvider {
     typealias Entry = TimetableEntry
 
@@ -43,7 +42,6 @@ struct SNUTTWidgetProvider: IntentTimelineProvider {
         return Timetable(from: dto)
     }
 }
-
 
 struct TimetableEntry: TimelineEntry {
     let date: Date
