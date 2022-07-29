@@ -16,6 +16,14 @@ struct FilterSheetContent: View {
         self.viewModel = viewModel
         searchState = self.viewModel.searchState
     }
+    
+    struct FilterButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .contentShape(Rectangle())
+                .background(configuration.isPressed ? STColor.cyan.opacity(0.8) : STColor.cyan)
+        }
+    }
 
     var body: some View {
         VStack {
@@ -90,11 +98,11 @@ struct FilterSheetContent: View {
                 Text("필터 적용")
                     .font(.system(size: 17, weight: .bold))
                     .frame(maxWidth: .infinity)
+                    .padding(.top, 20)
+                    .padding(.bottom, 30)
             }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-            .padding(.horizontal)
-            .tint(STColor.cyan)
+            .buttonStyle(FilterButtonStyle())
+            .padding(.top, 10)
         }
     }
 }
