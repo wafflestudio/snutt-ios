@@ -9,7 +9,7 @@ import SwiftUI
 import WidgetKit
 
 struct TimetableWidgetEntryView: View {
-    var entry: TimetableWidgetProvider.Entry
+    var entry: SNUTTWidgetProvider.Entry
 
     var config: TimetableConfiguration = {
         var config = TimetableConfiguration()
@@ -18,13 +18,16 @@ struct TimetableWidgetEntryView: View {
     }()
 
     var body: some View {
-        TimetableZStack(current: entry.currentTimetable, config: config)
+        ZStack {
+            STColor.systemBackground
+            TimetableZStack(current: entry.currentTimetable, config: config)
+        }
     }
 }
 
 struct TimetableWidgetEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        TimetableWidgetEntryView(entry: TimetableEntry(date: Date(), configuration: ConfigurationIntent()))
+        TimetableWidgetEntryView(entry: TimetableEntry(date: Date(), configuration: ConfigurationIntent(), currentTimetable: .preview))
             .previewContext(WidgetPreviewContext(family: .systemLarge))
     }
 }

@@ -60,6 +60,7 @@
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
 		BE804BEA288B9EF700782F16 /* TimetableConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */; };
 		BE804BEB288B9EFE00782F16 /* TimetableConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */; };
+		BE804C062894157500782F16 /* SNUTTWidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE804C052894157500782F16 /* SNUTTWidgetProvider.swift */; };
 		BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */; };
 		BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AE285D77D000070A66 /* SearchBar.swift */; };
 		BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */; };
@@ -201,6 +202,7 @@
 		BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableConfiguration.swift; sourceTree = "<group>"; };
 		BE804BEC288BA3DF00782F16 /* SNUTT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTT.entitlements; sourceTree = "<group>"; };
 		BE804BED288BA45300782F16 /* SNUTTWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTWidgetExtension.entitlements; sourceTree = "<group>"; };
+		BE804C052894157500782F16 /* SNUTTWidgetProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNUTTWidgetProvider.swift; sourceTree = "<group>"; };
 		BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLectureScene.swift; sourceTree = "<group>"; };
 		BE8BB3AE285D77D000070A66 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetScene.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 			isa = PBXGroup;
 			children = (
 				BE98A068288AFC1500C2CE95 /* SNUTTWidgetBundle.swift */,
+				BE804C052894157500782F16 /* SNUTTWidgetProvider.swift */,
 				BE98A07C288B02F500C2CE95 /* DailyWidget */,
 				BE98A079288B029000C2CE95 /* TimetableWidget */,
 				BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */,
@@ -752,6 +755,7 @@
 				BE419B91288B8F9C00FA9590 /* TimetableZStack.swift in Sources */,
 				BE419B94288B8FA600FA9590 /* TimetableGridLayer.swift in Sources */,
 				BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */,
+				BE804C062894157500782F16 /* SNUTTWidgetProvider.swift in Sources */,
 				BE419B85288B8B8F00FA9590 /* Lecture.swift in Sources */,
 				BE98A06E288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
 				BE419B98288B8FDC00FA9590 /* STFont.swift in Sources */,

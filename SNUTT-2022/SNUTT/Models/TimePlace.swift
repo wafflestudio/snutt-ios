@@ -25,10 +25,9 @@ struct TimePlace: Identifiable {
 
     /// 단위: 교시
     ///
-    /// 정규 강좌의 경우(`isCustom == false`), 7.5교시는 오후 15시 30분을 의미한다.
-    /// 그러나 커스텀 강좌의 경우(`isCustom == true`), 7.5교시는 오전 7시 30분을 의미한다.
+    /// 7.5교시는 오후 15시 30분을 의미한다.
     var startTime: Double {
-        isCustom ? start : start + 8
+        start + 8
     }
 
     var endTime: Double {

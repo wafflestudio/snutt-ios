@@ -17,11 +17,16 @@ struct STColor {
     static let tabBackground: Color = .init("tab.background")
 
     static let groupForeground: Color = .init("group.foreground")
-    static let systemBackground: Color = .init("system.background")
     static let searchBarBackground: Color = .init("searchbar.background")
     static let searchListBackground: Color = .init("searchlist.background")
     static let searchListForeground: Color = .init("searchlist.foreground")
     static let sheetBackground: Color = .init("sheet.background")
+    
+    #if WIDGET
+    static let systemBackground: Color = .init("WidgetBackground")
+    #else
+    static let systemBackground: Color = .init("system.background")
+    #endif
 }
 
 extension Color {
