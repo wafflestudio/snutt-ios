@@ -9,14 +9,7 @@
 import UIKit
 
 class PopupView: UIView {
-    var popup: STPopup! {
-        didSet {
-            dismissForNdaysButton = createDismissButton(text: { () -> String in
-                "당분간 보지 않기"
-            }())
-            setDismissForNdaysButton()
-        }
-    }
+    var popup: STPopup!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,19 +27,20 @@ class PopupView: UIView {
 
         addSubview(imageView)
         addSubview(dismissOnceButton)
+        addSubview(dismissForNdaysButton)
         addSubview(divider)
 
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalTo: widthAnchor, constant: -145),
-            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 4 / 3), // 4:3 image ratio, scale to fill
+            imageView.widthAnchor.constraint(equalToConstant: 230),
+            imageView.heightAnchor.constraint(equalToConstant: 280),
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
 
         NSLayoutConstraint.activate([
             dismissOnceButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -16),
-            dismissOnceButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-            dismissOnceButton.widthAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 6 / 23),
+            dismissOnceButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
+            dismissOnceButton.widthAnchor.constraint(equalToConstant: 60),
         ])
 
         NSLayoutConstraint.activate([
@@ -55,18 +49,19 @@ class PopupView: UIView {
             divider.trailingAnchor.constraint(equalTo: dismissOnceButton.leadingAnchor, constant: -16),
             divider.centerYAnchor.constraint(equalTo: dismissOnceButton.centerYAnchor),
         ])
-    }
-
-    private func setDismissForNdaysButton() {
-        addSubview(dismissForNdaysButton!)
+        
         NSLayoutConstraint.activate([
-            dismissForNdaysButton!.trailingAnchor.constraint(equalTo: divider.leadingAnchor, constant: -16),
-            dismissForNdaysButton!.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 16),
-            dismissForNdaysButton!.centerYAnchor.constraint(equalTo: divider.centerYAnchor),
+            dismissForNdaysButton.trailingAnchor.constraint(equalTo: divider.leadingAnchor, constant: -16),
+            dismissForNdaysButton.widthAnchor.constraint(equalToConstant: 105),
+            dismissForNdaysButton.centerYAnchor.constraint(equalTo: divider.centerYAnchor),
         ])
     }
 
     // MARK: View Components
+    
+    lazy var dismissOnceButton: UIButton = createDismissButton(text: "닫기")
+    
+    lazy var dismissForNdaysButton: UIButton = createDismissButton(text: "당분간 보지 않기")
 
     lazy var divider: UIView = {
         let view = UIView()
@@ -86,15 +81,10 @@ class PopupView: UIView {
 
     private func createDismissButton(text: String) -> UIButton {
         let button = UIButton()
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(text, for: .normal)
         button.setTitleColor(.white.withAlphaComponent(0.7), for: .highlighted)
         return button
     }
-
-    lazy var dismissOnceButton: UIButton = createDismissButton(text: "닫기")
-
-    var dismissForNdaysButton: UIButton?
 }
