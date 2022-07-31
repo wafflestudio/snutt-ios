@@ -49,7 +49,7 @@ class PopupView: UIView {
             divider.trailingAnchor.constraint(equalTo: dismissOnceButton.leadingAnchor, constant: -16),
             divider.centerYAnchor.constraint(equalTo: dismissOnceButton.centerYAnchor),
         ])
-        
+
         NSLayoutConstraint.activate([
             dismissForNdaysButton.trailingAnchor.constraint(equalTo: divider.leadingAnchor, constant: -16),
             dismissForNdaysButton.widthAnchor.constraint(equalToConstant: 105),
@@ -58,9 +58,9 @@ class PopupView: UIView {
     }
 
     // MARK: View Components
-    
+
     lazy var dismissOnceButton: UIButton = createDismissButton(text: "닫기")
-    
+
     lazy var dismissForNdaysButton: UIButton = createDismissButton(text: "당분간 보지 않기")
 
     lazy var divider: UIView = {
