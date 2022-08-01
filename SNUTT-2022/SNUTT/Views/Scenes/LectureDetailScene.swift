@@ -245,6 +245,8 @@ struct EditableTextField: View {
 
 extension EditableTextField {
     /// Custom initializer to support editing `place` of a `Lecture`.
+    ///
+    /// 주어진 `timePlace`의 인자와 id가 같은 `TimePlace` 객체의 `place` 속성만 수정되도록 Binding을 재정의한다.
     init(lecture: Binding<Lecture>, timePlace: TimePlace) {
         _text = Binding(get: {
             guard let firstItem = lecture.wrappedValue.timePlaces.first(where: { $0.id == timePlace.id }) else { return "" }
