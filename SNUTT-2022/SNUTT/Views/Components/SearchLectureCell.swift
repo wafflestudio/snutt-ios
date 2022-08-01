@@ -31,7 +31,7 @@ struct SearchLectureCell: View {
                 } else {
                     LectureDetailRow(imageName: "tag.white", text: "\(lecture.department), \(lecture.academicYear)")
                 }
-                LectureDetailRow(imageName: "clock.white", text: lecture.timeString.isEmpty ? "(없음)" : lecture.timeString)
+                LectureDetailRow(imageName: "clock.white", text: lecture.startDateTimeString.isEmpty ? "(없음)" : lecture.startDateTimeString)
 
                 LectureDetailRow(imageName: "map.white", text: lecture.timePlaces.isEmpty ? "(없음)" : lecture.timePlaces.map { $0.place }.joined(separator: "/"))
 

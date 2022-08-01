@@ -41,6 +41,11 @@ struct TimePlace: Identifiable {
     var endTimeString: String {
         getString(from: endTime)
     }
+    
+    /// `월7`(월요일 7교시)과 같이 표기한다.
+    var startDateTimeString:String {
+        "\(day.shortSymbol)\(Int(start))"
+    }
 
     /// `time: Double`을 분 단위로 정확하게 60진법 수로 환산한다.
     /// ex) 15.3 -> 15시 18분(`0.3 * 60 == 18`)

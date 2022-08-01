@@ -45,6 +45,10 @@ struct Lecture: Identifiable {
         color = .init(fg: .white, bg: .gray)
         return self
     }
+    
+    var startDateTimeString: String {
+        timePlaces.map { $0.startDateTimeString }.joined(separator: "/")
+    }
 }
 
 struct LectureColor {
