@@ -134,7 +134,7 @@ struct LectureDetailScene: View {
             }
             .padding(.vertical, 20)
         }
-        .background(STColor.systemBackground)
+        .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(editMode.isEditing)
         .toolbar {
@@ -329,9 +329,9 @@ struct DetailButton: View {
             Text(text)
                 .frame(maxWidth: .infinity)
                 .padding()
+                .contentShape(Rectangle())
                 .foregroundColor(role == .destructive ? .red : Color(uiColor: .label))
         }
-        .buttonStyle(DetailButtonStyle())
     }
 }
 

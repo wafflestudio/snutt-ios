@@ -17,6 +17,7 @@ struct STColor {
     static let tabBackground: Color = .init("tab.background")
 
     static let groupForeground: Color = .init("group.foreground")
+    static let groupBackground: Color = .init("group.background")
     static let searchBarBackground: Color = .init("searchbar.background")
     static let searchListBackground: Color = .init("searchlist.background")
     static let searchListForeground: Color = .init("searchlist.foreground")
