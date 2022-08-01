@@ -41,9 +41,9 @@ struct TimePlace: Identifiable {
     var endTimeString: String {
         getString(from: endTime)
     }
-    
+
     /// `월7`(월요일 7교시)과 같이 표기한다.
-    var startDateTimeString:String {
+    var startDateTimeString: String {
         "\(day.shortSymbol)\(Int(start))"
     }
 
