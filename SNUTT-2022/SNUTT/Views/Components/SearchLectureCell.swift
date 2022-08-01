@@ -18,7 +18,6 @@ struct SearchLectureCell: View {
         ZStack {
             if selected {
                 STColor.searchListForeground
-                    .background(.ultraThinMaterial)
             }
 
             VStack(spacing: 8) {
