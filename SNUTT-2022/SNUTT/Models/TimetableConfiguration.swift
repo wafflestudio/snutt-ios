@@ -17,7 +17,7 @@ struct TimetableConfiguration {
     var weekCount: Int {
         visibleWeeks.count
     }
-    
+
     func withAutoFitEnabled() -> Self {
         var this = self
         this.autoFit = true

@@ -11,7 +11,7 @@ struct TimePlace: Identifiable {
     let id: String
 
     let day: Weekday
-    
+
     /// 단위: 교시
     var start: Double
 

@@ -23,7 +23,7 @@ struct TimetablePainter {
     static func getHourHeight(in containerSize: CGSize, hourCount: Int) -> CGFloat {
         return max((containerSize.height - weekdayHeight) / CGFloat(hourCount), 0)
     }
-    
+
     /// `autoFit`을 고려한 시간표의 시작 시각. 빈 시간표일 때에는 설정 값을 따른다.
     static func getStartingHour(current: Timetable?, config: TimetableConfiguration) -> Int {
         if !config.autoFit {
@@ -34,7 +34,7 @@ struct TimetablePainter {
         }
         return Int(startTime)
     }
-    
+
     /// `autoFit`을 고려한 시간표의 종료 시각. 빈 시간표일 때에는 설정 값을 따른다.
     static func getEndingHour(current: Timetable?, config: TimetableConfiguration) -> Int {
         if !config.autoFit {
@@ -45,7 +45,7 @@ struct TimetablePainter {
         }
         return Int((endTime - 1).rounded(.up))
     }
-    
+
     /// `autoFit`을 고려한 시간표의 세로 칸 수
     static func getHourCount(current: Timetable?, config: TimetableConfiguration) -> Int {
         let start = getStartingHour(current: current, config: config)
@@ -60,7 +60,7 @@ struct TimetablePainter {
         if containerSize == .zero {
             return nil
         }
-        
+
         let minHour = getStartingHour(current: current, config: config)
         let hourIndex = timePlace.startTime - Double(minHour)
         guard let weekdayIndex = config.visibleWeeks.firstIndex(of: timePlace.day) else { return nil }

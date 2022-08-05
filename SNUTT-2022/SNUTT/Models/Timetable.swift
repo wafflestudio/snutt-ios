@@ -18,7 +18,7 @@ struct Timetable {
     let year: Int
     let semester: Int
     let updatedAt: String
-    
+
     /// 강의를 검색하는 동안 추가할 강의를 선택했을 때 임시로 나타나는 강의
     var selectedLecture: Lecture?
 
@@ -35,12 +35,12 @@ struct Timetable {
             zip(mask, lecture.timeMasks).map { $0 | $1 }
         }
     }
-    
+
     /// 빈 시간대 찾기에 사용되는 마스크
     var reversedTimeMasks: [Int] {
         aggregatedTimeMasks.map { 0x3FFF_FFFF ^ $0 }
     }
-    
+
     private var aggregatedTimePlaces: [TimePlace] {
         (lectures + [selectedLecture])
             .compactMap { $0 }
@@ -48,15 +48,15 @@ struct Timetable {
                 partialResult.append(contentsOf: lecture.timePlaces)
             }
     }
-    
+
     var earliestStartTime: Double? {
         aggregatedTimePlaces.min(by: { $0.startTime < $1.startTime })?.startTime
     }
-    
+
     var lastEndTime: Double? {
         aggregatedTimePlaces.max(by: { $0.endTime < $1.endTime })?.endTime
     }
-    
+
     func withSelectedLecture(_ lecture: Lecture?) -> Self {
         var this = self
         this.selectedLecture = lecture
