@@ -33,6 +33,7 @@ struct FilterSheetScene: View {
                 FilterSheetContent(viewModel: viewModel)
                 Spacer()
             }
+            .edgesIgnoringSafeArea(.bottom)
         }
     }
 }

@@ -12,6 +12,7 @@ protocol TimetableServiceProtocol {
     func fetchRecentTimetable() async throws
     func fetchTimetableList() async throws
     func fetchTimetable(timetableId: String) async throws
+    func copyTimetable(timetableId: String) async throws
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -30,7 +31,9 @@ struct TimetableService: TimetableServiceProtocol {
         let dto = try await timetableRepository.fetchTimetable(timetableId: timetableId)
         let timetable = Timetable(from: dto)
         DispatchQueue.main.async {
-            appState.timetable.current = timetable
+            withAnimation(.customSpring) {
+                appState.timetable.current = timetable
+            }
         }
     }
 
@@ -54,7 +57,9 @@ struct TimetableService: TimetableServiceProtocol {
         let dtos = try await timetableRepository.fetchTimetableList()
         let timetables = dtos.map { TimetableMetadata(from: $0) }
         DispatchQueue.main.async {
-            appState.timetable.metadataList = timetables
+            withAnimation(.customSpring) {
+                appState.timetable.metadataList = timetables
+            }
         }
     }
     
@@ -62,7 +67,9 @@ struct TimetableService: TimetableServiceProtocol {
         let dtos = try await timetableRepository.copyTimetable(withTimetableId: timetableId)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
         DispatchQueue.main.async {
-            appState.timetable.metadataList = timetables
+            withAnimation(.customSpring) {
+                appState.timetable.metadataList = timetables
+            }
         }
     }
 }
@@ -71,4 +78,5 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func fetchRecentTimetable() {}
     func fetchTimetableList() {}
     func fetchTimetable(timetableId _: String) {}
+    func copyTimetable(timetableId: String) {}
 }

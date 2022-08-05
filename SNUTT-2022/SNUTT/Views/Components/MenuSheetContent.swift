@@ -20,14 +20,14 @@ struct MenuSheetContent: View {
         ScrollView {
             LazyVStack(spacing: 15) {
                 let timetablesByQuarter = viewModel.timetablesByQuarter
-
                 ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
-
                     MenuSection(quarter: quarter, isExpanded: quarter.year == 2022) {
                         ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { data in
                             MenuSectionRow(timetableMetadata: data,
                                            isSelected: viewModel.currentTimetable?.id == data.id,
-                                           selectTimetable: viewModel.selectTimetable)
+                                           selectTimetable: viewModel.selectTimetable,
+                                           duplicateTimetable: viewModel.duplicateTimetable
+                            )
                         }
                     }
                 }
@@ -54,6 +54,14 @@ extension MenuSheetContent {
             do {
                 await services.searchService.initializeSearchState()
                 try await services.timetableService.fetchTimetable(timetableId: timetableId)
+            } catch {
+                // TODO: handle error
+            }
+        }
+        
+        func duplicateTimetable(timetableId: String) async {
+            do {
+                try await services.timetableService.copyTimetable(timetableId: timetableId)
             } catch {
                 // TODO: handle error
             }

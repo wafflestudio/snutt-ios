@@ -53,7 +53,6 @@ struct Sheet<Content>: View where Content: View {
             .offset(orientation.getOffset(isOpen: isOpen, translation: translation, reader: reader))
             .animation(.customSpring, value: isOpen)
         }
-        .edgesIgnoringSafeArea(.bottom)
         .highPriorityGesture(
             dragGesture
         )

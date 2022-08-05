@@ -50,7 +50,7 @@ struct MenuSectionRow: View {
     let timetableMetadata: TimetableMetadata
     let isSelected: Bool
     let selectTimetable: ((String) async -> Void)?
-//    let duplicateTimetable: () -> Void
+    let duplicateTimetable: ((String) async -> Void)?
 
     var body: some View {
         HStack(spacing: 0) {
@@ -84,7 +84,11 @@ struct MenuSectionRow: View {
 
             Spacer()
 
-            Button {} label: {
+            Button {
+                Task {
+                    await duplicateTimetable?(timetableMetadata.id)
+                }
+            } label: {
                 Image("menu.duplicate")
                     .resizable()
                     .scaledToFit()
@@ -108,7 +112,7 @@ struct MenuSection_Previews: PreviewProvider {
         ScrollView {
             LazyVStack {
                 MenuSection(quarter: .init(year: 2022, semester: Semester(rawValue: 1)!)) {
-                    MenuSectionRow(timetableMetadata: .init(id: "434", year: 2022, semester: 2, title: "나의 시간표", updatedAt: "344343", totalCredit: 4), isSelected: false, selectTimetable: nil)
+                    MenuSectionRow(timetableMetadata: .init(id: "434", year: 2022, semester: 2, title: "나의 시간표", updatedAt: "344343", totalCredit: 4), isSelected: false, selectTimetable: nil, duplicateTimetable: nil)
                 }
             }
         }
