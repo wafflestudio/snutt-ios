@@ -6,7 +6,11 @@
 //
 
 class MenuSheetViewModel: BaseViewModel {
-    var menuSheetSetting: MenuSheetSetting {
-        appState.setting.menuSheetSetting
+    var menuState: MenuState {
+        appState.menu
+    }
+    
+    func toggleMenuSheet() {
+        services.appService.toggleMenuSheet()
     }
 }

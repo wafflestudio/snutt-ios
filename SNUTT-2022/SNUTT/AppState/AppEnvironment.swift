@@ -19,6 +19,7 @@ extension AppEnvironment {
         let userService: UserServiceProtocol
         let lectureService: LectureServiceProtocol
         let searchService: SearchServiceProtocol
+        let appService: AppServiceProtocol
     }
 }
 
@@ -72,10 +73,13 @@ extension AppEnvironment {
         let userService = UserService(appState: appState, webRepositories: webRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
+        let appService = AppService(appState: appState)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
-                     searchService: searchService)
+                     searchService: searchService,
+                     appService: appService
+        )
     }
 }
 
@@ -92,11 +96,13 @@ extension EnvironmentValues {
 
 #if DEBUG
     extension AppEnvironment.Services {
-        static var preview: Self {
+        static func preview(appState: AppState) -> Self {
             .init(timetableService: FakeTimetableService(),
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
-                  searchService: FakeSearchService())
+                  searchService: FakeSearchService(),
+                  appService: AppService(appState: appState)
+            )
         }
     }
 #endif

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol TimetableServiceProtocol {
     func fetchRecentTimetable() async throws
@@ -19,11 +20,6 @@ struct TimetableService: TimetableServiceProtocol {
 
     var timetableRepository: TimetableRepositoryProtocol {
         webRepositories.timetableRepository
-    }
-
-    init(appState: AppState, webRepositories: AppEnvironment.WebRepositories) {
-        self.appState = appState
-        self.webRepositories = webRepositories
     }
 
     func fetchTimetable(timetableId: String) async throws {
@@ -56,6 +52,14 @@ struct TimetableService: TimetableServiceProtocol {
             return
         }
         let dtos = try await timetableRepository.fetchTimetableList()
+        let timetables = dtos.map { TimetableMetadata(from: $0) }
+        DispatchQueue.main.async {
+            appState.timetable.metadataList = timetables
+        }
+    }
+    
+    func copyTimetable(timetableId: String) async throws {
+        let dtos = try await timetableRepository.copyTimetable(withTimetableId: timetableId)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
         DispatchQueue.main.async {
             appState.timetable.metadataList = timetables

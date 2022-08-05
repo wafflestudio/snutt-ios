@@ -15,6 +15,7 @@ class AppState {
 
     var search = SearchState()
     var timetable = TimetableState()
+    var menu = MenuState()
 }
 
 #if DEBUG

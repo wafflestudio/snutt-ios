@@ -22,11 +22,6 @@ struct LectureService: LectureServiceProtocol {
         webRepositories.lectureRepository
     }
 
-    init(appState: AppState, webRepositories: AppEnvironment.WebRepositories) {
-        self.appState = appState
-        self.webRepositories = webRepositories
-    }
-
     func addLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
