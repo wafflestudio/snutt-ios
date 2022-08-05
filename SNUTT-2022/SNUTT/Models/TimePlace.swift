@@ -11,7 +11,8 @@ struct TimePlace: Identifiable {
     let id: String
 
     let day: Weekday
-
+    
+    /// 단위: 교시
     var start: Double
 
     /// 단위: 시간
@@ -23,7 +24,7 @@ struct TimePlace: Identifiable {
 
     let isCustom: Bool
 
-    /// 단위: 교시
+    /// 단위: 시각
     ///
     /// 7.5교시는 오후 15시 30분을 의미한다.
     var startTime: Double {

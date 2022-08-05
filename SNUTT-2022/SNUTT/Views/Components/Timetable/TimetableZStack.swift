@@ -13,7 +13,7 @@ struct TimetableZStack: View {
 
     var body: some View {
         ZStack {
-            TimetableGridLayer(config: config)
+            TimetableGridLayer(current: current, config: config)
             TimetableBlocksLayer(current: current, config: config)
         }
         .background(STColor.systemBackground)

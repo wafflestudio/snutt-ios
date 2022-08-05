@@ -11,24 +11,18 @@ struct TimetableBlocksLayer: View {
     let current: Timetable?
     let config: TimetableConfiguration
 
-    #if !WIDGET
-        @Environment(\.selectedLecture) var selectedLecture: Lecture?
-    #endif
-
     var currentTheme: Theme {
         current?.theme ?? .snutt
     }
 
     var body: some View {
         ForEach(current?.lectures ?? []) { lecture in
-            LectureBlocks(lecture: lecture, theme: currentTheme, config: config)
+            LectureBlocks(current: current, lecture: lecture, theme: currentTheme, config: config)
         }
 
-        #if !WIDGET
-            if var selectedLecture = selectedLecture {
-                LectureBlocks(lecture: selectedLecture.withTemporaryColor(), theme: currentTheme, config: config)
-            }
-        #endif
+        if var selectedLecture = current?.selectedLecture {
+            LectureBlocks(current: current, lecture: selectedLecture.withTemporaryColor(), theme: currentTheme, config: config)
+        }
 
         let _ = debugChanges()
     }

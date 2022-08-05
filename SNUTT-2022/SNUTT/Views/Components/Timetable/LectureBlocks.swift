@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LectureBlocks: View {
     typealias Painter = TimetablePainter
+    let current: Timetable?
     let lecture: Lecture
     let theme: Theme
     let config: TimetableConfiguration
@@ -22,7 +23,8 @@ struct LectureBlocks: View {
             ForEach(lecture.timePlaces) { timePlace in
                 if let offsetPoint = Painter.getOffset(of: timePlace,
                                                        in: reader.size,
-                                                       timetableState: config)
+                                                       current: current,
+                                                       config: config)
                 {
                     Group {
                         #if WIDGET
@@ -40,7 +42,9 @@ struct LectureBlocks: View {
                             }
                         #endif
                     }
-                    .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: config.weekCount), height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: config.hourCount), alignment: .center)
+                    .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: config.weekCount),
+                           height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: Painter.getHourCount(current: current, config: config)),
+                           alignment: .center)
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
                 }
             }
