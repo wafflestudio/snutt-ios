@@ -43,7 +43,9 @@ struct TimetablePainter {
         guard let endTime = current?.lastEndTime else {
             return config.maxHour
         }
-        return Int((endTime - 1).rounded(.up))
+        
+        let startTime = getStartingHour(current: current, config: config)
+        return max(Int((endTime - 1).rounded(.up)), startTime + 7)  // autofit을 사용하더라도 최소 7시간의 간격은 유지한다.
     }
 
     /// `autoFit`을 고려한 시간표의 세로 칸 수

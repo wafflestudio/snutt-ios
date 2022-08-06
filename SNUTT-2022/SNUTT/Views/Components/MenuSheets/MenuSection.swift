@@ -78,10 +78,9 @@ struct MenuSectionRow: View {
                         .foregroundColor(Color(uiColor: .secondaryLabel))
                         .lineLimit(1)
                 }
-                .contentShape(Rectangle())
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
             }
-            .buttonStyle(.plain)
 
             Spacer()
 

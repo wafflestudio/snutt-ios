@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TimetableScene: View {
     @State private var pushToListScene = false
-    @ObservedObject var viewModel: TimetableViewModel
+    var viewModel: TimetableViewModel
     @ObservedObject var timetableState: TimetableState
 
     init(viewModel: TimetableViewModel) {
@@ -93,10 +93,10 @@ extension View {
     }
 }
 
-struct MyTimetableScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TimetableScene(viewModel: .init(container: .preview))
-        }
-    }
-}
+//struct MyTimetableScene_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationView {
+//            TimetableScene(viewModel: .init(container: .preview))
+//        }
+//    }
+//}

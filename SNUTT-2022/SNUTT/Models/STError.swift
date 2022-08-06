@@ -177,7 +177,7 @@ public enum STError: Int, Error {
         case .DUPLICATE_TIMETABLE_TITLE:
             return "이미 존재하는 시간표 이름입니다."
         case .DUPLICATE_LECTURE:
-            return "이미 넣은 강좌입니다."
+            return "이미 추가된 강좌입니다."
         case .ALREADY_LOCAL_ACCOUNT:
             return "이미 ID와 비번이 등록되어있습니다."
         case .ALREADY_FB_ACCOUNT:

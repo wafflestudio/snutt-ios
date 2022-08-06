@@ -27,8 +27,8 @@ struct LectureService: LectureServiceProtocol {
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
         let timetable = Timetable(from: dto)
         DispatchQueue.main.async {
-            appState.search.selectedLecture = nil
             appState.timetable.current = timetable
+            appState.search.selectedLecture = nil
         }
     }
 

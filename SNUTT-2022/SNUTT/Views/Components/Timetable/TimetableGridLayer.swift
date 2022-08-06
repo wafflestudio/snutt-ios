@@ -11,7 +11,7 @@ struct TimetableGridLayer: View {
     typealias Painter = TimetablePainter
     let current: Timetable?
     let config: TimetableConfiguration
-
+    
     var body: some View {
         GeometryReader { reader in
             weeksHStack
@@ -21,7 +21,7 @@ struct TimetableGridLayer: View {
             horizontalHourlyPaths(in: reader.size)
                 .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(0.1)))
             horizontalHalfHourlyPaths(in: reader.size)
-                .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(0.05)))
+                .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(config.isWidget ? 0.02 : 0.05)))
         }
 
         let _ = debugChanges()

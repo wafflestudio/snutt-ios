@@ -10,21 +10,18 @@ import SwiftUI
 import UIKit
 
 class TimetableViewModel: BaseViewModel, ObservableObject {
-    @Published var totalCredit: Int = 0
-    @Published var timetableTitle: String = ""
-
     private var bag = Set<AnyCancellable>()
 
     override init(container: DIContainer) {
         super.init(container: container)
-
-        timetableState.$current
-            .map { $0?.totalCredit ?? 0 }
-            .assign(to: &$totalCredit)
-
-        timetableState.$current
-            .map { $0?.title ?? "" }
-            .assign(to: &$timetableTitle)
+    }
+    
+    var totalCredit: Int {
+        timetableState.current?.totalCredit ?? 0
+    }
+    
+    var timetableTitle: String {
+        timetableState.current?.title ?? ""
     }
 
     private var timetableService: TimetableServiceProtocol {

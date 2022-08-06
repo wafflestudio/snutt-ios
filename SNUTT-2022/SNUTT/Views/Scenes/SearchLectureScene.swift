@@ -27,10 +27,11 @@ struct SearchLectureScene: View {
                         .frame(height: 44)
                     TimetableZStack(current: viewModel.timetableState.current?.withSelectedLecture(searchState.selectedLecture),
                                     config: viewModel.timetableState.configuration.withAutoFitEnabled())
+                    .animation(.customSpring, value: searchState.selectedLecture?.id)
                 }
                 STColor.searchListBackground
             }
-            .ignoresSafeArea([.keyboard])
+            .ignoresSafeArea(.keyboard)
 
             VStack(spacing: 0) {
                 SearchBar(text: $searchState.searchText, isFilterOpen: $searchState.isFilterOpen) {
@@ -87,6 +88,7 @@ struct SearchLectureScene: View {
                         .frame(maxHeight: .infinity, alignment: .center)
                 } else {
                     SearchLectureList(viewModel: .init(container: viewModel.container), data: viewModel.searchResult, fetchMore: viewModel.fetchMoreSearchResult, selected: $searchState.selectedLecture)
+                        .animation(.customSpring, value: searchState.selectedLecture?.id)
                 }
             }
         }
@@ -129,9 +131,7 @@ struct SearchLectureList: View {
                         .contentShape(Rectangle())
                         .onTapGesture {
                             if selected?.id != lecture.id {
-                                withAnimation(.customSpring) {
                                     selected = lecture
-                                }
                             }
                         }
                 }
