@@ -81,6 +81,9 @@ struct TimetableService: TimetableServiceProtocol {
         DispatchQueue.main.async {
             withAnimation(.customSpring) {
                 appState.timetable.metadataList = timetables
+                if appState.timetable.current?.id == timetableId {
+                    appState.timetable.current?.title = withTitle
+                }
             }
         }
     }

@@ -11,9 +11,9 @@ import SwiftUI
 
 struct Timetable {
     let id: String
-    let title: String
+    var title: String
     let lectures: [Lecture]
-    let theme: Theme
+    var theme: Theme
     let userId: String
     let year: Int
     let semester: Int
