@@ -10,7 +10,13 @@ import SwiftUI
 struct SNUTTView: View {
     @State var selectedTab: TabType = .timetable
     let container: DIContainer
-
+    @ObservedObject var system: SystemState
+    
+    init(container: DIContainer) {
+        self.container = container
+        system = container.appState.system
+    }
+    
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
@@ -32,10 +38,14 @@ struct SNUTTView: View {
             FilterSheetScene(viewModel: .init(container: container))
         }
         .accentColor(Color(UIColor.label))
+        .alert(system.errorContent?.errorTitle ?? "", isPresented: $system.isErrorAlertPresented, actions: {}) {
+            Text(system.errorContent?.errorMessage ?? "")
+        }
         .onAppear {
             setTabBarStyle()
             setNavBarStyle()
         }
+        
         let _ = debugChanges()
     }
 

@@ -10,7 +10,6 @@ import SwiftUI
 import UIKit
 
 class TimetableViewModel: BaseViewModel, ObservableObject {
-    @Published var showAlert: Bool = false
     @Published var totalCredit: Int = 0
     @Published var timetableTitle: String = ""
 
@@ -48,10 +47,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await timetableService.fetchRecentTimetable()
         } catch {
-            // TODO: handle error
-            DispatchQueue.main.async {
-                self.showAlert = true
-            }
+            services.appService.presentErrorAlert(error: error.asSTError)
         }
     }
 
@@ -59,7 +55,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await timetableService.fetchTimetableList()
         } catch {
-            // TODO: handle error
+            services.appService.presentErrorAlert(error: error.asSTError)
         }
     }
 }

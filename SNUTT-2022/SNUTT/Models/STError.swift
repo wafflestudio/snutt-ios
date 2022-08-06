@@ -59,13 +59,16 @@ public enum STError: Int, Error {
     case REF_LECTURE_NOT_FOUND = 0x4003
     case USER_NOT_FOUND = 0x4004
     case COLORLIST_NOT_FOUND = 0x4005
+    
+    /* Client-side Errors */
+    case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
 
     var errorTitle: String {
         switch self {
         case .SERVER_FAULT:
-            return "서버 문제"
+            return "서버 오류"
         case .NO_NETWORK:
-            return "네트워킹 문제"
+            return "네트워크 오류"
         case .NO_FB_ID_OR_TOKEN,
              .NO_YEAR_OR_SEMESTER,
              .NOT_ENOUGH_TO_CREATE_TIMETABLE,
@@ -103,7 +106,9 @@ public enum STError: Int, Error {
              .NOT_CUSTOM_LECTURE,
              .LECTURE_TIME_OVERLAP,
              .IS_CUSTOM_LECTURE,
-             .USER_HAS_NO_FCM_KEY:
+             .USER_HAS_NO_FCM_KEY,
+             .CANT_DELETE_CURRENT_TIMETABLE
+            :
             return "잘못된 요청"
         case .TAG_NOT_FOUND,
              .TIMETABLE_NOT_FOUND,
@@ -201,6 +206,8 @@ public enum STError: Int, Error {
             return "유저를 찾을 수 없습니다."
         case .COLORLIST_NOT_FOUND:
             return "색상 목록을 찾을 수 없습니다."
+        case .CANT_DELETE_CURRENT_TIMETABLE:
+            return "현재 시간표는 삭제할 수 없습니다."
         }
     }
 }

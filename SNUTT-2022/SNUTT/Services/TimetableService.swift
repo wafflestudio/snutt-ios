@@ -13,6 +13,8 @@ protocol TimetableServiceProtocol {
     func fetchTimetableList() async throws
     func fetchTimetable(timetableId: String) async throws
     func copyTimetable(timetableId: String) async throws
+    func updateTimetableTitle(timetableId: String, withTitle: String) async throws
+    func deleteTimetable(timetableId: String) async throws
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -72,6 +74,30 @@ struct TimetableService: TimetableServiceProtocol {
             }
         }
     }
+    
+    func updateTimetableTitle(timetableId: String, withTitle: String) async throws {
+        let dtos = try await timetableRepository.updateTimetableTitle(withTimetableId: timetableId, withTitle: withTitle)
+        let timetables = dtos.map { TimetableMetadata(from: $0) }
+        DispatchQueue.main.async {
+            withAnimation(.customSpring) {
+                appState.timetable.metadataList = timetables
+            }
+        }
+    }
+    
+    func deleteTimetable(timetableId: String) async throws {
+        if appState.timetable.current?.id == timetableId {
+            throw STError.CANT_DELETE_CURRENT_TIMETABLE
+        }
+        let dtos = try await timetableRepository.deleteTimetable(withTimetableId: timetableId)
+        let timetables = dtos.map { TimetableMetadata(from: $0) }
+        DispatchQueue.main.async {
+            withAnimation(.customSpring) {
+                appState.timetable.metadataList = timetables
+            }
+        }
+    }
+    
 }
 
 struct FakeTimetableService: TimetableServiceProtocol {
@@ -79,4 +105,6 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func fetchTimetableList() {}
     func fetchTimetable(timetableId _: String) {}
     func copyTimetable(timetableId: String) {}
+    func updateTimetableTitle(timetableId: String, withTitle: String) {}
+    func deleteTimetable(timetableId: String) async throws {}
 }

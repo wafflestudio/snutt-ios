@@ -26,12 +26,14 @@ struct MenuSheetContent: View {
                             MenuSectionRow(timetableMetadata: data,
                                            isSelected: viewModel.currentTimetable?.id == data.id,
                                            selectTimetable: viewModel.selectTimetable,
-                                           duplicateTimetable: viewModel.duplicateTimetable
+                                           duplicateTimetable: viewModel.duplicateTimetable,
+                                           openEllipsis: viewModel.openEllipsis
                             )
                         }
                     }
                 }
             }
+            .padding(.top, 20)
         }
     }
 }
@@ -55,7 +57,7 @@ extension MenuSheetContent {
                 await services.searchService.initializeSearchState()
                 try await services.timetableService.fetchTimetable(timetableId: timetableId)
             } catch {
-                // TODO: handle error
+                services.appService.presentErrorAlert(error: error.asSTError)
             }
         }
         
@@ -63,8 +65,12 @@ extension MenuSheetContent {
             do {
                 try await services.timetableService.copyTimetable(timetableId: timetableId)
             } catch {
-                // TODO: handle error
+                services.appService.presentErrorAlert(error: error.asSTError)
             }
+        }
+        
+        func openEllipsis(for timetable: TimetableMetadata) {
+            services.appService.openEllipsis(for: timetable)
         }
     }
 }

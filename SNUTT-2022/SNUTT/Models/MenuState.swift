@@ -9,4 +9,12 @@ import SwiftUI
 
 class MenuState: ObservableObject {
     @Published var isOpen = false
+    
+    @Published var isEllipsisOpen = false
+    @Published var ellipsisTarget: TimetableMetadata? = nil
+    @Published var isThemePaletteOpen = false
+    
+    
+    @Published var isTitleTextFieldOpen = false
+    @Published var titleText: String = ""
 }

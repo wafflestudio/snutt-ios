@@ -51,6 +51,7 @@ struct MenuSectionRow: View {
     let isSelected: Bool
     let selectTimetable: ((String) async -> Void)?
     let duplicateTimetable: ((String) async -> Void)?
+    let openEllipsis: ((TimetableMetadata) -> Void)?
 
     var body: some View {
         HStack(spacing: 0) {
@@ -95,7 +96,9 @@ struct MenuSectionRow: View {
                     .frame(width: 35)
                     .opacity(0.5)
             }
-            Button {} label: {
+            Button {
+                openEllipsis?(timetableMetadata)
+            } label: {
                 Image("menu.ellipsis")
                     .resizable()
                     .scaledToFit()
@@ -112,7 +115,7 @@ struct MenuSection_Previews: PreviewProvider {
         ScrollView {
             LazyVStack {
                 MenuSection(quarter: .init(year: 2022, semester: Semester(rawValue: 1)!)) {
-                    MenuSectionRow(timetableMetadata: .init(id: "434", year: 2022, semester: 2, title: "나의 시간표", updatedAt: "344343", totalCredit: 4), isSelected: false, selectTimetable: nil, duplicateTimetable: nil)
+                    MenuSectionRow(timetableMetadata: .init(id: "434", year: 2022, semester: 2, title: "나의 시간표", updatedAt: "344343", totalCredit: 4), isSelected: false, selectTimetable: nil, duplicateTimetable: nil, openEllipsis: nil)
                 }
             }
         }

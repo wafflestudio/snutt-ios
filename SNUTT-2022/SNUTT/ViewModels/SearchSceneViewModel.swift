@@ -40,7 +40,7 @@ class SearchSceneViewModel: BaseViewModel {
         do {
             try await services.searchService.fetchTags(quarter: currentTimetable.quarter)
         } catch {
-            // TODO: handle error
+            services.appService.presentErrorAlert(error: error.asSTError)
         }
     }
 
@@ -48,7 +48,7 @@ class SearchSceneViewModel: BaseViewModel {
         do {
             try await services.searchService.fetchInitialSearchResult()
         } catch {
-            // TODO: handle error
+            services.appService.presentErrorAlert(error: error.asSTError)
         }
     }
 
@@ -56,7 +56,7 @@ class SearchSceneViewModel: BaseViewModel {
         do {
             try await services.searchService.fetchMoreSearchResult()
         } catch {
-            // TODO: handle error
+            services.appService.presentErrorAlert(error: error.asSTError)
         }
     }
 
