@@ -13,14 +13,14 @@ struct MenuEllipsisSheet: View {
     var deleteTimetable: () async -> Void
     var openPalette: () -> Void
     @State private var isDeleteAlertPresented = false
-    
+
     var body: some View {
         Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 180)) {
             VStack(spacing: 0) {
                 EllipsisSheetButton(imageName: "pen", text: "이름 변경") {
                     openTitleTextField()
                 }
-                
+
                 EllipsisSheetButton(imageName: "trash", text: "시간표 삭제") {
                     isDeleteAlertPresented = true
                 }
@@ -32,7 +32,7 @@ struct MenuEllipsisSheet: View {
                         }
                     }
                 }
-                
+
                 EllipsisSheetButton(imageName: "palette", text: "시간표 테마 설정") {
                     openPalette()
                 }

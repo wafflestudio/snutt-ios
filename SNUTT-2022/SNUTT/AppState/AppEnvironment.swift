@@ -78,8 +78,7 @@ extension AppEnvironment {
                      userService: userService,
                      lectureService: lectureService,
                      searchService: searchService,
-                     appService: appService
-        )
+                     appService: appService)
     }
 }
 
@@ -101,8 +100,7 @@ extension EnvironmentValues {
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
                   searchService: FakeSearchService(),
-                  appService: AppService(appState: appState)
-            )
+                  appService: AppService(appState: appState))
         }
     }
 #endif

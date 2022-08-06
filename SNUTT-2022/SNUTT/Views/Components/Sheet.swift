@@ -16,10 +16,10 @@ struct Sheet<Content>: View where Content: View {
     var disableBackgroundTap: Bool = false
     var disableDragGesture: Bool = false
     @ViewBuilder var content: () -> Content
-    
+
     @GestureState private var translation: CGFloat = 0
     @State private var backgroundOpacity: CGFloat = 0
-    
+
     private var dragGesture: some Gesture {
         DragGesture().updating(self.$translation) { value, state, _ in
             if !disableDragGesture {
@@ -37,7 +37,7 @@ struct Sheet<Content>: View where Content: View {
             }
         }
     }
-    
+
     var body: some View {
         GeometryReader { reader in
             Color.black.opacity(0.3)
@@ -51,7 +51,7 @@ struct Sheet<Content>: View where Content: View {
                         }
                     }
                 }
-            
+
             ZStack {
                 sheetColor.opacity(sheetOpacity)
                     .background(.thinMaterial)
@@ -83,7 +83,7 @@ extension Animation {
 enum SheetOrientation {
     case left(maxWidth: CGFloat)
     case bottom(maxHeight: CGFloat)
-    
+
     func getTranslation(from value: DragGesture.Value) -> CGFloat {
         switch self {
         case .left:
@@ -92,7 +92,7 @@ enum SheetOrientation {
             return value.translation.height
         }
     }
-    
+
     func getIsOpen(from value: DragGesture.Value) -> Bool {
         switch self {
         case .left:
@@ -101,7 +101,7 @@ enum SheetOrientation {
             return value.translation.height < 0
         }
     }
-    
+
     func getOpacity(from value: DragGesture.Value) -> CGFloat {
         let translation = getTranslation(from: value)
         switch self {
@@ -111,7 +111,7 @@ enum SheetOrientation {
             return translation < 0 ? 1 : 1 - translation / maxHeight
         }
     }
-    
+
     func getOffset(isOpen: Bool, translation: CGFloat, reader: GeometryProxy) -> CGSize {
         switch self {
         case let .left(maxWidth):
@@ -121,7 +121,7 @@ enum SheetOrientation {
             return .init(width: 0, height: isOpen ? max(maxOffset + translation, maxOffset) : reader.size.height + 40) // TODO: fix this "+ 40"
         }
     }
-    
+
     func getFrame(reader: GeometryProxy) -> (width: CGFloat, height: CGFloat) {
         switch self {
         case let .left(maxWidth):

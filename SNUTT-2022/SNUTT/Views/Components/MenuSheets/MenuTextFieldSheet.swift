@@ -10,10 +10,10 @@ import SwiftUI
 struct MenuTextFieldSheet: View {
     @Binding var isOpen: Bool
     @Binding var titleText: String
-    
+
     var cancel: () -> Void
     var confirm: () async -> Void
-    
+
     @FocusState private var titleTextFieldFocus: Bool
     var body: some View {
         Sheet(isOpen: $isOpen,
@@ -29,7 +29,7 @@ struct MenuTextFieldSheet: View {
                     }
 
                     Spacer()
-                    
+
                     Button {
                         Task {
                             await confirm()
@@ -40,30 +40,30 @@ struct MenuTextFieldSheet: View {
                     .disabled(titleText.isEmpty)
                 }
                 .padding(.vertical)
-                
+
                 Spacer()
                     .frame(height: 20)
-                
+
                 Text("시간표 제목")
                     .font(STFont.detailLabel)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 TextField("입력하세요", text: $titleText)
                     .focused($titleTextFieldFocus)
-                
+
                 ZStack(alignment: .leading) {
                     Rectangle()
-                        .frame(height:2)
+                        .frame(height: 2)
                         .foregroundColor(Color(uiColor: .opaqueSeparator))
-                    
+
                     Rectangle()
                         .frame(maxWidth: titleText.isEmpty ? 0 : .infinity, alignment: .leading)
                         .frame(height: 2)
                         .foregroundColor(STColor.cyan)
                         .animation(.customSpring, value: titleText.isEmpty)
                 }
-                
+
                 Spacer()
             }
             .padding(.horizontal, 20)
@@ -73,4 +73,3 @@ struct MenuTextFieldSheet: View {
         }
     }
 }
-

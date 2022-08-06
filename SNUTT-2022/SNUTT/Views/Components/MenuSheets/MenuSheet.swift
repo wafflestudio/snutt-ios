@@ -32,10 +32,10 @@ struct MenuSheet: View {
                     }
                 }
                 .padding(.horizontal, 20)
-                
+
                 Divider()
                     .padding(.horizontal, 10)
-                
+
                 ScrollView {
                     LazyVStack(spacing: 15) {
                         let timetablesByQuarter = viewModel.timetablesByQuarter
@@ -46,8 +46,7 @@ struct MenuSheet: View {
                                                    isSelected: viewModel.currentTimetable?.id == data.id,
                                                    selectTimetable: viewModel.selectTimetable,
                                                    duplicateTimetable: viewModel.duplicateTimetable,
-                                                   openEllipsis: viewModel.openEllipsis
-                                    )
+                                                   openEllipsis: viewModel.openEllipsis)
                                 }
                             }
                         }
@@ -56,7 +55,6 @@ struct MenuSheet: View {
                 }
             }
         }
-        
     }
 }
 
@@ -65,7 +63,7 @@ extension MenuSheet {
         var timetableState: TimetableState {
             appState.timetable
         }
-        
+
         func toggleMenuSheet() {
             services.appService.toggleMenuSheet()
         }
@@ -86,7 +84,7 @@ extension MenuSheet {
                 services.appService.presentErrorAlert(error: error.asSTError)
             }
         }
-        
+
         func duplicateTimetable(timetableId: String) async {
             do {
                 try await services.timetableService.copyTimetable(timetableId: timetableId)
@@ -94,7 +92,7 @@ extension MenuSheet {
                 services.appService.presentErrorAlert(error: error.asSTError)
             }
         }
-        
+
         func openEllipsis(for timetable: TimetableMetadata) {
             services.appService.openEllipsis(for: timetable)
         }

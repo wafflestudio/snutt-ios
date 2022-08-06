@@ -17,7 +17,6 @@ protocol TimetableServiceProtocol {
     func updateTimetableTheme(timetableId: String) async throws
     func deleteTimetable(timetableId: String) async throws
     func selectTimetableTheme(theme: Theme)
-    
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -67,7 +66,7 @@ struct TimetableService: TimetableServiceProtocol {
             }
         }
     }
-    
+
     func copyTimetable(timetableId: String) async throws {
         let dtos = try await timetableRepository.copyTimetable(withTimetableId: timetableId)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
@@ -77,7 +76,7 @@ struct TimetableService: TimetableServiceProtocol {
             }
         }
     }
-    
+
     func updateTimetableTitle(timetableId: String, title: String) async throws {
         let dtos = try await timetableRepository.updateTimetableTitle(withTimetableId: timetableId, withTitle: title)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
@@ -90,7 +89,7 @@ struct TimetableService: TimetableServiceProtocol {
             }
         }
     }
-    
+
     func updateTimetableTheme(timetableId: String) async throws {
         guard let theme = appState.timetable.current?.selectedTheme else { return }
         let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: theme.rawValue)
@@ -103,7 +102,7 @@ struct TimetableService: TimetableServiceProtocol {
             }
         }
     }
-    
+
     func deleteTimetable(timetableId: String) async throws {
         if appState.timetable.current?.id == timetableId {
             throw STError.CANT_DELETE_CURRENT_TIMETABLE
@@ -116,22 +115,21 @@ struct TimetableService: TimetableServiceProtocol {
             }
         }
     }
-    
+
     func selectTimetableTheme(theme: Theme) {
         withAnimation(.customSpring) {
             appState.timetable.current?.selectedTheme = theme
         }
     }
-    
 }
 
 struct FakeTimetableService: TimetableServiceProtocol {
     func fetchRecentTimetable() {}
     func fetchTimetableList() {}
     func fetchTimetable(timetableId _: String) {}
-    func copyTimetable(timetableId: String) {}
-    func updateTimetableTitle(timetableId: String, title: String) {}
-    func updateTimetableTheme(timetableId: String) async throws {}
-    func deleteTimetable(timetableId: String) async throws {}
-    func selectTimetableTheme(theme: Theme) {}
+    func copyTimetable(timetableId _: String) {}
+    func updateTimetableTitle(timetableId _: String, title _: String) {}
+    func updateTimetableTheme(timetableId _: String) async throws {}
+    func deleteTimetable(timetableId _: String) async throws {}
+    func selectTimetableTheme(theme _: Theme) {}
 }

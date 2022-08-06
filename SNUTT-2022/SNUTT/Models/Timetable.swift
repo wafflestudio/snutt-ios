@@ -21,7 +21,7 @@ struct Timetable {
 
     /// 강의를 검색하는 동안 추가할 강의를 선택했을 때 임시로 나타나는 강의
     var selectedLecture: Lecture?
-    
+
     /// 테마를 선택했을 때 임시로 사용할 테마
     var selectedTheme: Theme?
 

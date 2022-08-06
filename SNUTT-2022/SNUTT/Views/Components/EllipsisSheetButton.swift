@@ -27,6 +27,7 @@ struct EllipsisSheetButton: View {
         .buttonStyle(RectangleButtonStyle())
     }
 }
+
 struct EllipsisSheetButton_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 0) {

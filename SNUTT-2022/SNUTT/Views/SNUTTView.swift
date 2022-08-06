@@ -11,12 +11,12 @@ struct SNUTTView: View {
     @State var selectedTab: TabType = .timetable
     let container: DIContainer
     @ObservedObject var system: SystemState
-    
+
     init(container: DIContainer) {
         self.container = container
         system = container.appState.system
     }
-    
+
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
@@ -45,7 +45,7 @@ struct SNUTTView: View {
             setTabBarStyle()
             setNavBarStyle()
         }
-        
+
         let _ = debugChanges()
     }
 

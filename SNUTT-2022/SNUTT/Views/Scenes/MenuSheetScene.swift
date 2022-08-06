@@ -17,30 +17,27 @@ struct MenuSheetScene: View {
         menuState = self.viewModel.menuState
         timetableState = self.viewModel.timetableState
     }
-    
+
     var body: some View {
         ZStack {
             MenuSheet(viewModel: .init(container: viewModel.container),
-                             isOpen: $menuState.isOpen)
-            
+                      isOpen: $menuState.isOpen)
+
             MenuEllipsisSheet(isOpen: $menuState.isEllipsisOpen,
                               openTitleTextField: viewModel.openTitleTextField,
                               deleteTimetable: viewModel.deleteTimetable,
                               openPalette: viewModel.openPalette)
-            
-            
+
             MenuThemeSheet(isOpen: $menuState.isThemePaletteOpen,
                            selectedTheme: viewModel.selectedTheme,
                            cancel: viewModel.cancelThemeChange,
                            confirm: viewModel.applyThemeChange,
                            select: viewModel.selectTheme)
-            
+
             MenuTextFieldSheet(isOpen: $menuState.isTitleTextFieldOpen,
                                titleText: $menuState.titleText,
                                cancel: viewModel.cancelTitleTextField,
-                               confirm: viewModel.applyTitleTextField
-            )
-            
+                               confirm: viewModel.applyTitleTextField)
         }
     }
 }

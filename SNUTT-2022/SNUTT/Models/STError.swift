@@ -59,7 +59,7 @@ public enum STError: Int, Error {
     case REF_LECTURE_NOT_FOUND = 0x4003
     case USER_NOT_FOUND = 0x4004
     case COLORLIST_NOT_FOUND = 0x4005
-    
+
     /* Client-side Errors */
     case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
     case CANT_CHANGE_OTHERS_THEME = 0x5001
@@ -82,8 +82,8 @@ public enum STError: Int, Error {
              .INVALID_COLOR,
              .NO_LECTURE_TITLE,
              .CANT_CHANGE_OTHERS_THEME
-            :
-            
+             :
+
             return "요청 실패"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,
@@ -112,7 +112,7 @@ public enum STError: Int, Error {
              .IS_CUSTOM_LECTURE,
              .USER_HAS_NO_FCM_KEY,
              .CANT_DELETE_CURRENT_TIMETABLE
-            :
+             :
             return "잘못된 요청"
         case .TAG_NOT_FOUND,
              .TIMETABLE_NOT_FOUND,
@@ -215,7 +215,6 @@ public enum STError: Int, Error {
         case .CANT_CHANGE_OTHERS_THEME:
             return "현재 시간표의 테마만 변경할 수 있습니다."
         }
-    
     }
 }
 
