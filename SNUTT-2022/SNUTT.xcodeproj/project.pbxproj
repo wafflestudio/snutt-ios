@@ -96,6 +96,8 @@
 		BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507427F4289B00CDCC13 /* Lecture.swift */; };
 		BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507627F42D1100CDCC13 /* STFont.swift */; };
 		BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507827F42D7500CDCC13 /* STColor.swift */; };
+		BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE86516289E274D00D3D0E4 /* MenuEllipsisSheet.swift */; };
+		BEE86519289E287400D3D0E4 /* MenuTextFieldSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE86518289E287400D3D0E4 /* MenuTextFieldSheet.swift */; };
 		BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */; };
 		BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */; };
 		BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */; };
@@ -239,6 +241,8 @@
 		BEDF507427F4289B00CDCC13 /* Lecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lecture.swift; sourceTree = "<group>"; };
 		BEDF507627F42D1100CDCC13 /* STFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STFont.swift; sourceTree = "<group>"; };
 		BEDF507827F42D7500CDCC13 /* STColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STColor.swift; sourceTree = "<group>"; };
+		BEE86516289E274D00D3D0E4 /* MenuEllipsisSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuEllipsisSheet.swift; sourceTree = "<group>"; };
+		BEE86518289E287400D3D0E4 /* MenuTextFieldSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTextFieldSheet.swift; sourceTree = "<group>"; };
 		BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetContent.swift; sourceTree = "<group>"; };
 		BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTView.swift; sourceTree = "<group>"; };
 		BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabScene.swift; sourceTree = "<group>"; };
@@ -369,6 +373,8 @@
 			isa = PBXGroup;
 			children = (
 				BE98A00D288AA3D200C2CE95 /* MenuSheetContent.swift */,
+				BEE86516289E274D00D3D0E4 /* MenuEllipsisSheet.swift */,
+				BEE86518289E287400D3D0E4 /* MenuTextFieldSheet.swift */,
 				BE98A00B288A9E2A00C2CE95 /* MenuSection.swift */,
 			);
 			path = MenuSheets;
@@ -791,6 +797,7 @@
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
 				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */,
+				BEE86519289E287400D3D0E4 /* MenuTextFieldSheet.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
 				BE682BF128872315009EBCB7 /* STError.swift in Sources */,
@@ -803,6 +810,7 @@
 				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
+				BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */,
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
 				DC2915A32866958100FE5F9A /* User.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,

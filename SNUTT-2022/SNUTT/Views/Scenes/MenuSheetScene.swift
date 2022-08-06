@@ -10,8 +10,6 @@ import SwiftUI
 struct MenuSheetScene: View {
     let viewModel: MenuSheetViewModel
     @ObservedObject var menuState: MenuState
-    @FocusState private var titleTextFieldFocus: Bool
-    @State private var isDeleteAlertPresented = false
 
     init(viewModel: MenuSheetViewModel) {
         self.viewModel = viewModel
@@ -41,62 +39,21 @@ struct MenuSheetScene: View {
                 }
             }
             
-            Sheet(isOpen: $menuState.isEllipsisOpen, orientation: .bottom(maxHeight: 180)) {
-                VStack(spacing: 0) {
-                    EllipsisSheetButton(imageName: "pen", text: "이름 변경") {
-                        viewModel.openTitleTextField()
-                    }
-                    
-                    EllipsisSheetButton(imageName: "trash", text: "시간표 삭제") {
-                        isDeleteAlertPresented = true
-                    }
-                    .alert("시간표를 삭제하시겠습니까?", isPresented: $isDeleteAlertPresented) {
-                        Button("취소", role: .cancel, action: {})
-                        Button("삭제", role: .destructive) {
-                            Task {
-                                await viewModel.deleteTimetable()
-                            }
-                        }
-                    }
-                    
-                    EllipsisSheetButton(imageName: "palette", text: "시간표 테마 설정") {
-                        viewModel.openPalette()
-                    }
-                }
-            }
+            MenuEllipsisSheet(isOpen: $menuState.isEllipsisOpen,
+                              openTitleTextField: viewModel.openTitleTextField,
+                              deleteTimetable: viewModel.deleteTimetable,
+                              openPalette: viewModel.openPalette)
             
             Sheet(isOpen: $menuState.isThemePaletteOpen, orientation: .bottom(maxHeight: 100)) {
                 Text("테마 선택")
             }
             
-            Sheet(isOpen: $menuState.isTitleTextFieldOpen, orientation: .bottom(maxHeight: 200), disableBackgroundTap: false, disableDragGesture: false) {
-                VStack {
-                    HStack {
-                        Button {
-                            viewModel.cancelTitleTextField()
-                        } label: {
-                            Text("취소")
-                        }
-
-                        Spacer()
-                        
-                        Button {
-                            Task {
-                                await viewModel.applyTitleTextField()
-                            }
-                        } label: {
-                            Text("적용")
-                        }
-                        
-
-                    }
-                    TextField("입력하세요", text: $menuState.titleText)
-                        .focused($titleTextFieldFocus)
-                }
-            }
-            .onChange(of: menuState.isTitleTextFieldOpen) { newValue in
-                titleTextFieldFocus = newValue
-            }
+            MenuTextFieldSheet(isOpen: $menuState.isTitleTextFieldOpen,
+                               titleText: $menuState.titleText,
+                               cancel: viewModel.cancelTitleTextField,
+                               confirm: viewModel.applyTitleTextField
+            )
+            
         }
     }
 }

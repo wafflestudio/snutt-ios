@@ -58,8 +58,7 @@ struct AppService: AppServiceProtocol {
     
     func closeTitleTextField() {
         DispatchQueue.main.async {
-        appState.menu.titleText = ""
-        appState.menu.isTitleTextFieldOpen = false
+            appState.menu.isTitleTextFieldOpen = false
         }
     }
     
