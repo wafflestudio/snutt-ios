@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol AppServiceProtocol {
     func toggleMenuSheet()
     func openEllipsis(for timetable: TimetableMetadata)
     func closeEllipsis()
     func openThemePalette()
+    func closeThemePalette()
     func openTitleTextField()
     func closeTitleTextField()
     func presentErrorAlert(error: STError?)
@@ -45,6 +47,15 @@ struct AppService: AppServiceProtocol {
         appState.menu.isOpen = false
         appState.menu.isEllipsisOpen = false
         appState.menu.isThemePaletteOpen = true
+        }
+    }
+    
+    func closeThemePalette() {
+        DispatchQueue.main.async {
+            appState.menu.isThemePaletteOpen = false
+            withAnimation(.customSpring) {
+                appState.timetable.current?.selectedTheme = nil
+            }
         }
     }
     

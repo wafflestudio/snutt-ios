@@ -62,6 +62,7 @@ public enum STError: Int, Error {
     
     /* Client-side Errors */
     case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
+    case CANT_CHANGE_OTHERS_THEME = 0x5001
 
     var errorTitle: String {
         switch self {
@@ -79,7 +80,10 @@ public enum STError: Int, Error {
              .NO_REGISTRATION_ID,
              .INVALID_TIMEMASK,
              .INVALID_COLOR,
-             .NO_LECTURE_TITLE:
+             .NO_LECTURE_TITLE,
+             .CANT_CHANGE_OTHERS_THEME
+            :
+            
             return "요청 실패"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,
@@ -208,7 +212,10 @@ public enum STError: Int, Error {
             return "색상 목록을 찾을 수 없습니다."
         case .CANT_DELETE_CURRENT_TIMETABLE:
             return "현재 시간표는 삭제할 수 없습니다."
+        case .CANT_CHANGE_OTHERS_THEME:
+            return "현재 시간표의 테마만 변경할 수 있습니다."
         }
+    
     }
 }
 

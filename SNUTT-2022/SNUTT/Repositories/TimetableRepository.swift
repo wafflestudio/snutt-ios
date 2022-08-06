@@ -16,7 +16,7 @@ protocol TimetableRepositoryProtocol {
     func updateTimetableTitle(withTimetableId id: String, withTitle title: String) async throws -> [TimetableMetadataDto]
     func deleteTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
     func copyTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
-    func updateTimetableTheme(withTimetableId id: String, withTheme theme: Int) async throws -> [TimetableMetadataDto]
+    func updateTimetableTheme(withTimetableId id: String, withTheme theme: Int) async throws -> TimetableDto
 }
 
 class TimetableRepository: TimetableRepositoryProtocol {
@@ -87,11 +87,11 @@ class TimetableRepository: TimetableRepositoryProtocol {
         return data
     }
 
-    func updateTimetableTheme(withTimetableId id: String, withTheme theme: Int) async throws -> [TimetableMetadataDto] {
+    func updateTimetableTheme(withTimetableId id: String, withTheme theme: Int) async throws -> TimetableDto {
         let data = try await session
             .request(TimetableRouter.updateTheme(id: id, theme: theme))
             .validate()
-            .serializingDecodable([TimetableMetadataDto].self)
+            .serializingDecodable(TimetableDto.self)
             .handlingError()
 
         return data

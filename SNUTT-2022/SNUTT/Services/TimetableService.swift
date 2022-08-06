@@ -13,8 +13,11 @@ protocol TimetableServiceProtocol {
     func fetchTimetableList() async throws
     func fetchTimetable(timetableId: String) async throws
     func copyTimetable(timetableId: String) async throws
-    func updateTimetableTitle(timetableId: String, withTitle: String) async throws
+    func updateTimetableTitle(timetableId: String, title: String) async throws
+    func updateTimetableTheme(timetableId: String) async throws
     func deleteTimetable(timetableId: String) async throws
+    func selectTimetableTheme(theme: Theme)
+    
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -75,14 +78,27 @@ struct TimetableService: TimetableServiceProtocol {
         }
     }
     
-    func updateTimetableTitle(timetableId: String, withTitle: String) async throws {
-        let dtos = try await timetableRepository.updateTimetableTitle(withTimetableId: timetableId, withTitle: withTitle)
+    func updateTimetableTitle(timetableId: String, title: String) async throws {
+        let dtos = try await timetableRepository.updateTimetableTitle(withTimetableId: timetableId, withTitle: title)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
         DispatchQueue.main.async {
             withAnimation(.customSpring) {
                 appState.timetable.metadataList = timetables
                 if appState.timetable.current?.id == timetableId {
-                    appState.timetable.current?.title = withTitle
+                    appState.timetable.current?.title = title
+                }
+            }
+        }
+    }
+    
+    func updateTimetableTheme(timetableId: String) async throws {
+        guard let theme = appState.timetable.current?.selectedTheme else { return }
+        let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: theme.rawValue)
+        let timetable = Timetable(from: dto)
+        DispatchQueue.main.async {
+            withAnimation(.customSpring) {
+                if appState.timetable.current?.id == timetableId {
+                    appState.timetable.current = timetable
                 }
             }
         }
@@ -101,6 +117,12 @@ struct TimetableService: TimetableServiceProtocol {
         }
     }
     
+    func selectTimetableTheme(theme: Theme) {
+        withAnimation(.customSpring) {
+            appState.timetable.current?.selectedTheme = theme
+        }
+    }
+    
 }
 
 struct FakeTimetableService: TimetableServiceProtocol {
@@ -108,6 +130,8 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func fetchTimetableList() {}
     func fetchTimetable(timetableId _: String) {}
     func copyTimetable(timetableId: String) {}
-    func updateTimetableTitle(timetableId: String, withTitle: String) {}
+    func updateTimetableTitle(timetableId: String, title: String) {}
+    func updateTimetableTheme(timetableId: String) async throws {}
     func deleteTimetable(timetableId: String) async throws {}
+    func selectTimetableTheme(theme: Theme) {}
 }

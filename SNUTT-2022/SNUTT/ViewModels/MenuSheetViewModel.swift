@@ -12,11 +12,16 @@ class MenuSheetViewModel: BaseViewModel {
         appState.menu
     }
     
-    func toggleMenuSheet() {
-        services.appService.toggleMenuSheet()
+    var timetableState: TimetableState {
+        appState.timetable
     }
     
+    
     func openPalette() {
+        if menuState.ellipsisTarget?.id != appState.timetable.current?.id {
+            services.appService.presentErrorAlert(error: .CANT_CHANGE_OTHERS_THEME)
+            return
+        }
         services.appService.openThemePalette()
     }
     
@@ -31,7 +36,7 @@ class MenuSheetViewModel: BaseViewModel {
     func applyTitleTextField() async {
         guard let timetableId = menuState.ellipsisTarget?.id else { return }
         do {
-            try await services.timetableService.updateTimetableTitle(timetableId: timetableId, withTitle: menuState.titleText)
+            try await services.timetableService.updateTimetableTitle(timetableId: timetableId, title: menuState.titleText)
             services.appService.closeTitleTextField()
         } catch {
             services.appService.presentErrorAlert(error: error.asSTError)
@@ -42,9 +47,33 @@ class MenuSheetViewModel: BaseViewModel {
         guard let timetableId = menuState.ellipsisTarget?.id else { return }
         do {
             try await services.timetableService.deleteTimetable(timetableId: timetableId)
-                services.appService.closeEllipsis()
+            services.appService.closeEllipsis()
         } catch {
             services.appService.presentErrorAlert(error: error.asSTError)
         }
+    }
+    
+    func cancelThemeChange() {
+        services.appService.closeThemePalette()
+    }
+    
+    func applyThemeChange() async {
+        guard let timetableId = menuState.ellipsisTarget?.id else { return }
+        
+        do {
+            try await services.timetableService.updateTimetableTheme(timetableId: timetableId)
+            services.appService.closeThemePalette()
+        } catch {
+            services.appService.presentErrorAlert(error: error.asSTError)
+        }
+    }
+    
+    func selectTheme(theme: Theme) {
+        services.timetableService.selectTimetableTheme(theme: theme)
+    }
+    
+    var selectedTheme: Theme {
+        guard let current = appState.timetable.current else { return .snutt }
+        return current.selectedTheme ?? current.theme
     }
 }

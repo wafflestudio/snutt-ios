@@ -34,24 +34,24 @@ enum Theme: Int, CaseIterable {
         return getColorList()[colorIndex]
     }
 
-    func getImageName() -> String {
+    var imageName: String {
         switch self {
         case .snutt:
-            return "SNUTTTheme"
+            return "theme.snutt"
         case .fall:
-            return "FallTheme"
+            return "theme.fall"
         case .modern:
-            return "ModernTheme"
+            return "theme.modern"
         case .cherryBlossom:
-            return "CherryBlossomTheme"
+            return "theme.cherryblossom"
         case .ice:
-            return "IceTheme"
+            return "theme.ice"
         case .lawn:
-            return "LawnTheme"
+            return "theme.lawn"
         }
     }
 
-    func getName() -> String {
+    var name: String {
         switch self {
         case .snutt:
             return "SNUTT"

@@ -10,43 +10,30 @@ import SwiftUI
 struct MenuSheetScene: View {
     let viewModel: MenuSheetViewModel
     @ObservedObject var menuState: MenuState
+    @ObservedObject var timetableState: TimetableState
 
     init(viewModel: MenuSheetViewModel) {
         self.viewModel = viewModel
         menuState = self.viewModel.menuState
+        timetableState = self.viewModel.timetableState
     }
     
     var body: some View {
         ZStack {
-            Sheet(isOpen: $menuState.isOpen, orientation: .left(maxWidth: 320), cornerRadius: 0, sheetOpacity: 0.7) {
-                VStack(spacing: 0) {
-                    HStack {
-                        Logo(orientation: .horizontal)
-                            .padding(.vertical)
-                        Spacer()
-                        Button {
-                            viewModel.toggleMenuSheet()
-                        } label: {
-                            Image("xmark.black")
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    
-                    Divider()
-                        .padding(.horizontal, 10)
-                    
-                    MenuSheetContent(viewModel: .init(container: viewModel.container))
-                }
-            }
+            MenuSheet(viewModel: .init(container: viewModel.container),
+                             isOpen: $menuState.isOpen)
             
             MenuEllipsisSheet(isOpen: $menuState.isEllipsisOpen,
                               openTitleTextField: viewModel.openTitleTextField,
                               deleteTimetable: viewModel.deleteTimetable,
                               openPalette: viewModel.openPalette)
             
-            Sheet(isOpen: $menuState.isThemePaletteOpen, orientation: .bottom(maxHeight: 100)) {
-                Text("테마 선택")
-            }
+            
+            MenuThemeSheet(isOpen: $menuState.isThemePaletteOpen,
+                           selectedTheme: viewModel.selectedTheme,
+                           cancel: viewModel.cancelThemeChange,
+                           confirm: viewModel.applyThemeChange,
+                           select: viewModel.selectTheme)
             
             MenuTextFieldSheet(isOpen: $menuState.isTitleTextFieldOpen,
                                titleText: $menuState.titleText,
