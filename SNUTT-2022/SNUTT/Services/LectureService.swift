@@ -27,9 +27,7 @@ struct LectureService: LectureServiceProtocol {
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
         let timetable = Timetable(from: dto)
         DispatchQueue.main.async {
-            withAnimation(.customSpring) {
-                appState.search.selectedLecture = nil
-            }
+            appState.search.selectedLecture = nil
             appState.timetable.current = timetable
         }
     }
