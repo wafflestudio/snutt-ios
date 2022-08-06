@@ -35,6 +35,7 @@ struct FilterSheetScene: View {
             }
             .edgesIgnoringSafeArea(.bottom)
         }
+        .ignoresSafeArea(.keyboard)
     }
 }
 

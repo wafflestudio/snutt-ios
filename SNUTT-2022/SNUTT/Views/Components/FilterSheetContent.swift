@@ -96,6 +96,7 @@ struct FilterSheetContent: View {
                 }
             } label: {
                 Text("필터 적용")
+                    .foregroundColor(.white)
                     .font(.system(size: 17, weight: .bold))
                     .frame(maxWidth: .infinity)
                     .padding(.top, 20)
