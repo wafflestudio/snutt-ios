@@ -23,12 +23,12 @@ struct TimetableConfiguration {
         this.autoFit = true
         return this
     }
-    
+
     var isWidget: Bool {
         #if WIDGET
-        true
+            true
         #else
-        false
+            false
         #endif
     }
 }

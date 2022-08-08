@@ -15,11 +15,11 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     override init(container: DIContainer) {
         super.init(container: container)
     }
-    
+
     var totalCredit: Int {
         timetableState.current?.totalCredit ?? 0
     }
-    
+
     var timetableTitle: String {
         timetableState.current?.title ?? ""
     }

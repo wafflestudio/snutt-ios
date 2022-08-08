@@ -27,7 +27,7 @@ struct SearchLectureScene: View {
                         .frame(height: 44)
                     TimetableZStack(current: viewModel.timetableState.current?.withSelectedLecture(searchState.selectedLecture),
                                     config: viewModel.timetableState.configuration.withAutoFitEnabled())
-                    .animation(.customSpring, value: searchState.selectedLecture?.id)
+                        .animation(.customSpring, value: searchState.selectedLecture?.id)
                 }
                 STColor.searchListBackground
             }
@@ -131,7 +131,7 @@ struct SearchLectureList: View {
                         .contentShape(Rectangle())
                         .onTapGesture {
                             if selected?.id != lecture.id {
-                                    selected = lecture
+                                selected = lecture
                             }
                         }
                 }

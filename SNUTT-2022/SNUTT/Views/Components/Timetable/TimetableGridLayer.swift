@@ -11,7 +11,7 @@ struct TimetableGridLayer: View {
     typealias Painter = TimetablePainter
     let current: Timetable?
     let config: TimetableConfiguration
-    
+
     var body: some View {
         GeometryReader { reader in
             weeksHStack
