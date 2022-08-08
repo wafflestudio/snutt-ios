@@ -40,7 +40,8 @@ struct MenuSheet: View {
                     LazyVStack(spacing: 15) {
                         let timetablesByQuarter = viewModel.timetablesByQuarter
                         ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
-                            MenuSection(quarter: quarter, isExpanded: quarter.year == 2022) {
+                            let _ = print(quarter == timetableState.current?.quarter)
+                            MenuSection(quarter: quarter, isExpanded: quarter == timetableState.current?.quarter) {
                                 ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { data in
                                     MenuSectionRow(timetableMetadata: data,
                                                    isSelected: viewModel.currentTimetable?.id == data.id,
@@ -96,6 +97,7 @@ extension MenuSheet {
         func openEllipsis(for timetable: TimetableMetadata) {
             services.appService.openEllipsis(for: timetable)
         }
+        
     }
 }
 

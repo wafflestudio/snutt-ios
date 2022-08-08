@@ -105,7 +105,7 @@ struct TimetableMetadata: Codable {
     let semester: Int
     let title: String
     let updatedAt: String
-    let totalCredit: Int
+    var totalCredit: Int
 
     var quarter: Quarter {
         Quarter(year: year, semester: .init(rawValue: semester) ?? .first)
