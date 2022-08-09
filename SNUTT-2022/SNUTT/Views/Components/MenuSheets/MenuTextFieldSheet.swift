@@ -49,7 +49,7 @@ struct MenuTextFieldSheet: View {
                     .foregroundColor(Color(uiColor: .secondaryLabel))
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                TextField("입력하세요", text: $titleText)
+                TextField("시간표 제목을 입력하세요", text: $titleText)
                     .focused($titleTextFieldFocus)
 
                 ZStack(alignment: .leading) {

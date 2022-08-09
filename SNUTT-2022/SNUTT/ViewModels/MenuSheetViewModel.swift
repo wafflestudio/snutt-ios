@@ -19,6 +19,7 @@ class MenuSheetViewModel: BaseViewModel {
     func openPalette() {
         if menuState.ellipsisTarget?.id != appState.timetable.current?.id {
             services.appService.presentErrorAlert(error: .CANT_CHANGE_OTHERS_THEME)
+            services.appService.closeEllipsis()
             return
         }
         services.appService.openThemePalette()

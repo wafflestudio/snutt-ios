@@ -11,7 +11,7 @@ struct MenuSection<Content>: View where Content: View {
     let quarter: Quarter
     @State var isExpanded: Bool = true
     var content: () -> Content
-
+    
     var body: some View {
         VStack {
             Button {
@@ -22,7 +22,7 @@ struct MenuSection<Content>: View where Content: View {
                 HStack(spacing: 5) {
                     Text(quarter.longString())
                         .font(.system(size: 16, weight: .semibold))
-
+                    
                     Image("chevron.right")
                         .resizable()
                         .scaledToFit()
@@ -30,9 +30,10 @@ struct MenuSection<Content>: View where Content: View {
                         .rotationEffect(.degrees(isExpanded ? 90 : 0), anchor: .init(x: 0.75, y: 0.5))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-
+            
             if isExpanded {
                 VStack(spacing: 10) {
                     content()
@@ -48,31 +49,43 @@ struct MenuSection<Content>: View where Content: View {
 
 struct MenuSectionRow: View {
     let timetableMetadata: TimetableMetadata
-    let isSelected: Bool
+    var isSelected: Bool
     let selectTimetable: ((String) async -> Void)?
     let duplicateTimetable: ((String) async -> Void)?
     let openEllipsis: ((TimetableMetadata) -> Void)?
-
+    @State var isLoading: Bool = false
+    
     var body: some View {
         HStack(spacing: 0) {
-            Image("checkmark.circle.tick")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 15)
-                .padding(.leading, 10)
-                .padding(.trailing, 8)
-                .opacity(isSelected ? 1 : 0)
-
+            Group {
+                if isLoading {
+                    ProgressView()
+                        .scaleEffect(0.7)
+                } else {
+                    Image("checkmark.circle.tick")
+                        .resizable()
+                        .scaledToFit()
+                        .opacity(isSelected ? 1 : 0)
+                }
+            }
+            .frame(width: 15, height: 15)
+            .padding(.leading, 10)
+            .padding(.trailing, 8)
+            
+            
+            
             Button {
                 Task {
+                    isLoading = true
                     await selectTimetable?(timetableMetadata.id)
+                    isLoading = false
                 }
             } label: {
                 HStack(spacing: 5) {
                     Text(timetableMetadata.title)
                         .font(.system(size: 15))
                         .lineLimit(1)
-
+                    
                     Text("(\(timetableMetadata.totalCredit)학점)")
                         .font(.system(size: 14))
                         .foregroundColor(Color(uiColor: .secondaryLabel))
@@ -81,9 +94,9 @@ struct MenuSectionRow: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
             }
-
+            
             Spacer()
-
+            
             Button {
                 Task {
                     await duplicateTimetable?(timetableMetadata.id)
