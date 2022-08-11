@@ -7,11 +7,12 @@
 
 import Foundation
 
-struct TimetableConfiguration {
+struct TimetableConfiguration: Codable {
     var minHour: Int = 8
     var maxHour: Int = 19
+    var autoFit: Bool = true
 
-    var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri, .sat]
+    var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
 
     var hourCount: Int {
         maxHour - minHour + 1

@@ -35,8 +35,7 @@ struct SNUTTWidgetProvider: IntentTimelineProvider {
     }
 
     func getCurrentTimetable() -> Timetable? {
-        guard let userDefaults = UserDefaults(suiteName: "group.com.wafflestudio.snutt-2022") else { return nil }
-        guard let data = userDefaults.data(forKey: "currentTimetable") else { return nil }
+        guard let data = UserDefaults.shared.object(forKey: "currentTimetable") as? Data else { return nil }
         guard let dto = try? JSONDecoder().decode(TimetableDto.self, from: data) else { return nil }
         print(dto)
         return Timetable(from: dto)

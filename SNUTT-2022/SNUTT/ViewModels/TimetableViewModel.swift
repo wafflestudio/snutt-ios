@@ -26,6 +26,8 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         timetableState.$current
             .map { $0?.title ?? "" }
             .assign(to: &$timetableTitle)
+
+        loadConfiguration()
     }
 
     private var timetableService: TimetableServiceProtocol {
@@ -61,5 +63,9 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         } catch {
             // TODO: handle error
         }
+    }
+
+    func loadConfiguration() {
+        timetableState.configuration = timetableService.loadConfiguration()
     }
 }

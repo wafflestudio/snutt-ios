@@ -9,28 +9,50 @@ import Alamofire
 import Foundation
 
 protocol TimetableRepositoryProtocol {
-    func fetchTimetable(timetableId: String) async throws -> TimetableDto
+    func fetchTimetable(withTimetableId: String) async throws -> TimetableDto
     func fetchRecentTimetable() async throws -> TimetableDto
     func fetchTimetableList() async throws -> [TimetableMetadataDto]
-    func fetchTimetable(withTimetableId id: String) async throws -> TimetableDto
     func updateTimetableTitle(withTimetableId id: String, withTitle title: String) async throws -> [TimetableMetadataDto]
     func deleteTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
     func copyTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
     func updateTimetableTheme(withTimetableId id: String, withTheme theme: Int) async throws -> [TimetableMetadataDto]
+    func loadTimetable() -> TimetableDto?
+    func loadConfiguration() -> TimetableConfiguration
+    func cache(timetable: TimetableDto)
+    func cache(configuration: TimetableConfiguration)
 }
 
-class TimetableRepository: TimetableRepositoryProtocol {
+class TimetableRepository: TimetableRepositoryProtocol, LocalCachable {
     private let session: Session
+
+    var local = SNUTTDefaultsContainer()
 
     init(session: Session) {
         self.session = session
     }
 
-    func fetchTimetable(timetableId: String) async throws -> TimetableDto {
-        return try await session
-            .request(TimetableRouter.getTimetable(id: timetableId))
+    func loadTimetable() -> TimetableDto? {
+        return local.currentTimetable
+    }
+
+    func loadConfiguration() -> TimetableConfiguration {
+        return local.timetableConfig
+    }
+
+    func cache(timetable: TimetableDto) {
+        local.currentTimetable = timetable
+    }
+
+    func cache(configuration: TimetableConfiguration) {
+        local.timetableConfig = configuration
+    }
+
+    func fetchTimetable(withTimetableId: String) async throws -> TimetableDto {
+        let data = try await session
+            .request(TimetableRouter.getTimetable(id: withTimetableId))
             .serializingDecodable(TimetableDto.self)
             .handlingError()
+        return data
     }
 
     func fetchRecentTimetable() async throws -> TimetableDto {
@@ -38,7 +60,6 @@ class TimetableRepository: TimetableRepositoryProtocol {
             .request(TimetableRouter.getRecentTimetable)
             .serializingDecodable(TimetableDto.self)
             .handlingError()
-
         return data
     }
 
@@ -46,15 +67,6 @@ class TimetableRepository: TimetableRepositoryProtocol {
         let data = try await session
             .request(TimetableRouter.getTimetableList)
             .serializingDecodable([TimetableMetadataDto].self)
-            .handlingError()
-
-        return data
-    }
-
-    func fetchTimetable(withTimetableId id: String) async throws -> TimetableDto {
-        let data = try await session
-            .request(TimetableRouter.getTimetable(id: id))
-            .serializingDecodable(TimetableDto.self)
             .handlingError()
 
         return data
