@@ -19,6 +19,8 @@ extension AppEnvironment {
         let userService: UserServiceProtocol
         let lectureService: LectureServiceProtocol
         let searchService: SearchServiceProtocol
+        let validationService: ValidationServiceProtocol
+        let settingsService: SettingsServiceProtocol
     }
 }
 
@@ -74,10 +76,14 @@ extension AppEnvironment {
         let userService = UserService(appState: appState, webRepositories: webRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
+        let validationService = ValidationService(appState: appState, webRepositories: webRepositories)
+        let settingsService = SettingsService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
-                     searchService: searchService)
+                     searchService: searchService,
+                     validationService: validationService,
+                     settingsService: settingsService)
     }
 }
 
@@ -98,7 +104,9 @@ extension EnvironmentValues {
             .init(timetableService: FakeTimetableService(),
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
-                  searchService: FakeSearchService())
+                  searchService: FakeSearchService(),
+                  validationService: FakeValidationService(),
+                  settingsService: FakeSettingsService())
         }
     }
 #endif

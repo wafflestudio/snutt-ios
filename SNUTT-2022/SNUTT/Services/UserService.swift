@@ -7,16 +7,44 @@
 
 import Foundation
 
-protocol UserServiceProtocol {}
+protocol UserServiceProtocol {
+//    var accountSettingTitles: [[MenuType]] { get }
+//    var mainSettingTitles: [[MenuType]] { get }
+    var userLocalId: String? { get }
+    var token: String? { get }
+    var fbName: String? { get }
+}
 
-class UserService: UserServiceProtocol {
+struct UserService: UserServiceProtocol {
     let appState: AppState
     let webRepositories: AppEnvironment.WebRepositories
+    
+    var userServiceRepository: UserRepositoryProtocol {
+        webRepositories.userRepository
+    }
 
     init(appState: AppState, webRepositories: AppEnvironment.WebRepositories) {
         self.appState = appState
         self.webRepositories = webRepositories
     }
+
+    var userLocalId: String? {
+        userServiceRepository.userLocalId
+    }
+    
+    var token: String? {
+        userServiceRepository.token
+    }
+
+    var fbName: String? {
+        userServiceRepository.fbName
+    }
 }
 
-class FakeUserService: UserServiceProtocol {}
+class FakeUserService: UserServiceProtocol {
+//    var accountSettingTitles: [[MenuType]] = []
+//    var mainSettingTitles: [[MenuType]] = []
+    var userLocalId: String?
+    var token: String?
+    var fbName: String?
+}

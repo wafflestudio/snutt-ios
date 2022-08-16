@@ -12,21 +12,60 @@ class SettingViewModel {
     var container: DIContainer
     
     var menuList: [[Menu]] {
-        return [
-            [Menu("계정 관리", AnyView(TimetableSettingScene())),
-             Menu("시간표 설정", AnyView(TimetableSettingScene()))],
-            [Menu("버전 정보")],
-            [Menu("개발자 정보", AnyView(DeveloperInfoScene())),
-             Menu("개발자 괴롭히기", AnyView(DeveloperInfoScene()))],
-            [Menu("라이센스 정보", AnyView(LicenseScene())),
-             Menu("서비스 약관", AnyView(TermsOfServiceScene())),
-             Menu("개인정보처리방침", AnyView(PrivacyPolicyScene()))],
-            [Menu("로그아웃", AnyView(TermsOfServiceScene()))]
-        ]
+        var menuList: [[Menu]] = []
+        for section in menuTitles {
+            var temp: [Menu] = []
+            for title in section {
+                temp.append(makeMenu(with: title))
+            }
+            menuList.append(temp)
+        }
+        return menuList
+    }
+    
+    func makeMenu(with type: MenuType) -> Menu {
+        if case .accountSetting = type {
+            return Menu(.accountSetting) {
+                AccountSettingScene(viewModel: AccountSettingViewModel(container: container))
+            }
+        } else if case .timetableSetting = type {
+            return Menu(.timetableSetting) {
+                TimetableSettingScene()
+            }
+        } else if case .showVersionInfo = type {
+            return Menu(.showVersionInfo)
+        } else if case .developerInfo = type {
+            return Menu(.developerInfo) {
+                DeveloperInfoScene()
+            }
+        } else if case .userSupport = type {
+            return Menu(.userSupport) {
+                DeveloperInfoScene()
+            }
+        } else if case .licenseInfo = type {
+            return Menu(.licenseInfo) {
+                LicenseScene()
+            }
+        } else if case .termsOfService = type {
+            return Menu(.termsOfService) {
+                TermsOfServiceScene()
+            }
+        } else if case .privacyPolicy = type {
+            return Menu(.privacyPolicy) {
+                PrivacyPolicyScene()
+            }
+        } else if case .logout = type {
+            return Menu(.logout)
+        }
+        return Menu(.timetableSetting)
+    }
+    
+    var menuTitles: [[MenuType]] {
+        container.services.settingsService.mainSettingTitles
     }
     
     var appVersion: String {
-        //appState.setting.appVersion ==
+        // WIP
         return ""
     }
 
@@ -37,6 +76,10 @@ class SettingViewModel {
     private var appState: AppState {
         container.appState
     }
+    
+    private var userService: UserServiceProtocol {
+        container.services.userService
+    }
 
     var currentUser: User {
         appState.currentUser
@@ -45,21 +88,4 @@ class SettingViewModel {
     func updateCurrentUser(user: User) {
         appState.currentUser = user
     }
-    
-    #if DEBUG
-    // for test (will be removed)
-    
-    let sampleAppState: AppState = .preview
-    
-    func setRandomLecture() {
-        let sampleLectures = sampleAppState.currentTimetable.lectures
-        
-        appState.setting.exampleLecture = sampleLectures[Int.random(in: 0..<sampleLectures.count)].title
-        print("\(appState.setting.exampleLecture)(으)로 값 변경")
-    }
-    
-    func printSavedLecture() {
-        print(appState.setting.exampleLecture)
-    }
-    #endif
 }

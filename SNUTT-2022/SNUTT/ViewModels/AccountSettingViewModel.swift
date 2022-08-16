@@ -11,14 +11,51 @@ import SwiftUI
 class AccountSettingViewModel {
     var container: DIContainer
     
+    var menuTitles: [[MenuType]] {
+        settingsService.accountSettingTitles
+    }
+    
     var menuList: [[Menu]] {
-        return [
-            [Menu("아이디 비번 추가", AnyView(DeveloperInfoScene()))],
-            [Menu("페이스북 이름", currentUser.facebookName ?? "(없음)"),
-             Menu("페이스북 연동 취소", AnyView(DeveloperInfoScene()))],
-            [Menu("이메일", currentUser.email ?? "(없음)")],
-            [Menu("회원탈퇴", AnyView(TermsOfServiceScene()))]
-        ]
+        var menuList: [[Menu]] = []
+        for section in menuTitles {
+            var temp: [Menu] = []
+            for title in section {
+                temp.append(makeMenu(with: title))
+            }
+            menuList.append(temp)
+        }
+        return menuList
+    }
+    
+    func makeMenu(with type: MenuType) -> Menu {
+        if case .addLocalId = type {
+            return Menu(.addLocalId) {
+                AddLocalIdScene(viewModel: AddLocalIdViewModel(container: container))
+            }
+        } else if case .showLocalId = type {
+            return Menu(.showLocalId)
+        } else if case .changePassword = type {
+            return Menu(.timetableSetting) {
+                TimetableSettingScene()
+            }
+        } else if case .makeFbConnection = type {
+            return Menu(.timetableSetting) {
+                TimetableSettingScene()
+            }
+        } else if case .showFbName = type {
+            return Menu(.showFbName)
+        } else if case .deleteFbConnection = type {
+            return Menu(.timetableSetting) {
+                TimetableSettingScene()
+            }
+        } else if case .showEmail = type {
+            return Menu(.showEmail)
+        } else if case .deleteAccount = type {
+            return Menu(.timetableSetting) {
+                TimetableSettingScene()
+            }
+        }
+        return Menu(.timetableSetting)
     }
     
     init(container: DIContainer) {
@@ -28,9 +65,16 @@ class AccountSettingViewModel {
     private var appState: AppState {
         container.appState
     }
+    
+    private var userService: UserServiceProtocol {
+        container.services.userService
+    }
+    
+    private var settingsService: SettingsServiceProtocol {
+        container.services.settingsService
+    }
 
     var currentUser: User {
         appState.currentUser
     }
-
 }

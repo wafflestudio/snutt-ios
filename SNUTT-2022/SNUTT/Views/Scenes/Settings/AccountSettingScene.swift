@@ -15,21 +15,10 @@ struct AccountSettingScene: View {
     }
     
     var body: some View {
-        List(menuList, id: \.self) { menu in
+        List(menuList, id: \.self) { section in
             Section {
-                ForEach(menu, id: \.self) { content in
-                    if content.showOnly {
-                        HStack {
-                            Text(content.title)
-                            Spacer()
-                            Text(content.content ?? "")
-                                .foregroundColor(Color.gray)
-                        }
-                    } else {
-                        NavigationLink(destination: content.view) {
-                            Text(content.title)
-                        }
-                    }
+                ForEach(section, id: \.self) { menu in
+                    menu.show()
                 }
             }
         }
@@ -39,8 +28,8 @@ struct AccountSettingScene: View {
     }
 }
 
-//struct AccountSettingScene_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AccountSettingScene(viewModel: AccountSettingViewModel())
-//    }
-//}
+struct AccountSettingScene_Previews: PreviewProvider {
+    static var previews: some View {
+        AccountSettingScene(viewModel: .init(container: .preview))
+    }
+}

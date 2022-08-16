@@ -8,6 +8,7 @@
 import SwiftUI
 
 class User: ObservableObject {
+    var token: String?
     var localId: String?
     var fbName: String?
     var email: String?
