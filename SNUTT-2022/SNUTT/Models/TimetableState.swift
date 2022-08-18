@@ -30,13 +30,12 @@ class TimetableState: ObservableObject {
                 }
             }
             .store(in: &bag)
-        
-        
+
         // sync between current timetable and timetable metadata
         $current
             .compactMap { $0 }
             .sink { [weak self] timetable in
-                guard let currentMetaIndex = self?.metadataList?.firstIndex(where: { $0.id == timetable.id}) else { return }
+                guard let currentMetaIndex = self?.metadataList?.firstIndex(where: { $0.id == timetable.id }) else { return }
                 self?.metadataList?[currentMetaIndex].totalCredit = timetable.totalCredit
             }
             .store(in: &bag)

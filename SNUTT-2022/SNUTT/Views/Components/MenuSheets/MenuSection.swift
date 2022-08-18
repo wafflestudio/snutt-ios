@@ -11,7 +11,7 @@ struct MenuSection<Content>: View where Content: View {
     let quarter: Quarter
     @State var isExpanded: Bool = true
     var content: () -> Content
-    
+
     var body: some View {
         VStack {
             Button {
@@ -22,7 +22,7 @@ struct MenuSection<Content>: View where Content: View {
                 HStack(spacing: 5) {
                     Text(quarter.longString())
                         .font(.system(size: 16, weight: .semibold))
-                    
+
                     Image("chevron.right")
                         .resizable()
                         .scaledToFit()
@@ -33,7 +33,7 @@ struct MenuSection<Content>: View where Content: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            
+
             if isExpanded {
                 VStack(spacing: 10) {
                     content()
@@ -54,7 +54,7 @@ struct MenuSectionRow: View {
     let duplicateTimetable: ((String) async -> Void)?
     let openEllipsis: ((TimetableMetadata) -> Void)?
     @State var isLoading: Bool = false
-    
+
     var body: some View {
         HStack(spacing: 0) {
             Group {
@@ -71,9 +71,7 @@ struct MenuSectionRow: View {
             .frame(width: 15, height: 15)
             .padding(.leading, 10)
             .padding(.trailing, 8)
-            
-            
-            
+
             Button {
                 Task {
                     isLoading = true
@@ -85,7 +83,7 @@ struct MenuSectionRow: View {
                     Text(timetableMetadata.title)
                         .font(.system(size: 15))
                         .lineLimit(1)
-                    
+
                     Text("(\(timetableMetadata.totalCredit)학점)")
                         .font(.system(size: 14))
                         .foregroundColor(Color(uiColor: .secondaryLabel))
@@ -94,9 +92,9 @@ struct MenuSectionRow: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
             }
-            
+
             Spacer()
-            
+
             Button {
                 Task {
                     await duplicateTimetable?(timetableMetadata.id)
