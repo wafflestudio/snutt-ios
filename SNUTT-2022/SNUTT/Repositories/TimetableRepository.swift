@@ -16,35 +16,13 @@ protocol TimetableRepositoryProtocol {
     func deleteTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
     func copyTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
     func updateTimetableTheme(withTimetableId id: String, withTheme theme: Int) async throws -> [TimetableMetadataDto]
-    func loadTimetable() -> TimetableDto?
-    func loadConfiguration() -> TimetableConfiguration
-    func cache(timetable: TimetableDto)
-    func cache(configuration: TimetableConfiguration)
 }
 
-class TimetableRepository: TimetableRepositoryProtocol, LocalCachable {
+class TimetableRepository: TimetableRepositoryProtocol {
     private let session: Session
-
-    var local = SNUTTDefaultsContainer()
 
     init(session: Session) {
         self.session = session
-    }
-
-    func loadTimetable() -> TimetableDto? {
-        return local.currentTimetable
-    }
-
-    func loadConfiguration() -> TimetableConfiguration {
-        return local.timetableConfig
-    }
-
-    func cache(timetable: TimetableDto) {
-        local.currentTimetable = timetable
-    }
-
-    func cache(configuration: TimetableConfiguration) {
-        local.timetableConfig = configuration
     }
 
     func fetchTimetable(withTimetableId: String) async throws -> TimetableDto {

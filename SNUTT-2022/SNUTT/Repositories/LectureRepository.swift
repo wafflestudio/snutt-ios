@@ -12,20 +12,13 @@ protocol LectureRepositoryProtocol {
     func addLecture(timetableId: String, lectureId: String) async throws -> TimetableDto
     func updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto) async throws -> TimetableDto
     func deleteLecture(timetableId: String, lectureId: String) async throws -> TimetableDto
-    func cache(timetable: TimetableDto)
 }
 
-class LectureRepository: LectureRepositoryProtocol, LocalCachable {
+class LectureRepository: LectureRepositoryProtocol {
     private let session: Session
-
-    var local = SNUTTDefaultsContainer()
 
     init(session: Session) {
         self.session = session
-    }
-
-    func cache(timetable: TimetableDto) {
-        local.currentTimetable = timetable
     }
 
     func addLecture(timetableId: String, lectureId: String) async throws -> TimetableDto {

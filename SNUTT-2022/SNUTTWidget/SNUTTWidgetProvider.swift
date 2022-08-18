@@ -9,6 +9,10 @@ import WidgetKit
 
 struct SNUTTWidgetProvider: IntentTimelineProvider {
     typealias Entry = TimetableEntry
+    
+    var userDefaultsRepository: UserDefaultsRepositoryProtocol = {
+        return UserDefaultsRepository(storage: .shared)
+    }()
 
     func placeholder(in _: Context) -> Entry {
         Entry(date: Date(), configuration: ConfigurationIntent(), currentTimetable: getCurrentTimetable())
@@ -35,9 +39,7 @@ struct SNUTTWidgetProvider: IntentTimelineProvider {
     }
 
     func getCurrentTimetable() -> Timetable? {
-        guard let data = UserDefaults.shared.object(forKey: "currentTimetable") as? Data else { return nil }
-        guard let dto = try? JSONDecoder().decode(TimetableDto.self, from: data) else { return nil }
-        print(dto)
+        guard let dto = userDefaultsRepository.get(TimetableDto.self, key: .currentTimetable) else { return nil }
         return Timetable(from: dto)
     }
 }

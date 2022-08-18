@@ -30,7 +30,9 @@ extension AppEnvironment {
         let searchRepository: SearchRepositoryProtocol
     }
 
-    struct DBRepositories {}
+    struct LocalRepositories {
+        let userDefaultsRepository: UserDefaultsRepositoryProtocol
+    }
 }
 
 extension AppEnvironment {
@@ -39,7 +41,7 @@ extension AppEnvironment {
         let session = configuredSession()
         let webRepos = configuredWebRepositories(session: session)
         let dbRepos = configuredDBRepositories(appState: appState)
-        let services = configuredServices(appState: appState, webRepositories: webRepos, dbRepositories: dbRepos)
+        let services = configuredServices(appState: appState, webRepositories: webRepos, localRepositories: dbRepos)
         let container = DIContainer(appState: appState, services: services)
         return .init(container: container)
     }
@@ -62,15 +64,15 @@ extension AppEnvironment {
                      searchRepository: searchRepository)
     }
 
-    // unused for now
-    private static func configuredDBRepositories(appState _: AppState) -> DBRepositories {
-        return .init()
+    private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
+        let userDefaultsRepository = UserDefaultsRepository(storage: .shared)
+        return .init(userDefaultsRepository: userDefaultsRepository)
     }
 
-    private static func configuredServices(appState: AppState, webRepositories: WebRepositories, dbRepositories _: DBRepositories) -> Services {
-        let timetableService = TimetableService(appState: appState, webRepositories: webRepositories)
+    private static func configuredServices(appState: AppState, webRepositories: WebRepositories, localRepositories: LocalRepositories) -> Services {
+        let timetableService = TimetableService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let userService = UserService(appState: appState, webRepositories: webRepositories)
-        let lectureService = LectureService(appState: appState, webRepositories: webRepositories)
+        let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
