@@ -22,7 +22,7 @@ struct TimetableService: TimetableServiceProtocol {
     var timetableRepository: TimetableRepositoryProtocol {
         webRepositories.timetableRepository
     }
-    
+
     var userDefaultsRepository: UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
     }
@@ -49,13 +49,13 @@ struct TimetableService: TimetableServiceProtocol {
             appState.timetable.metadataList = timetables
         }
     }
-    
+
     func loadTimetableConfig() {
         DispatchQueue.main.async {
             appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
         }
     }
-    
+
     // TODO: to be refactored
     @MainActor
     private func updateState(to currentTimetable: Timetable) {

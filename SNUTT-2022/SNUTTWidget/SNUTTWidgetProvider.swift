@@ -9,10 +9,8 @@ import WidgetKit
 
 struct SNUTTWidgetProvider: IntentTimelineProvider {
     typealias Entry = TimetableEntry
-    
-    var userDefaultsRepository: UserDefaultsRepositoryProtocol = {
-        return UserDefaultsRepository(storage: .shared)
-    }()
+
+    var userDefaultsRepository: UserDefaultsRepositoryProtocol = UserDefaultsRepository(storage: .shared)
 
     func placeholder(in _: Context) -> Entry {
         Entry(date: Date(), configuration: ConfigurationIntent(), currentTimetable: getCurrentTimetable())

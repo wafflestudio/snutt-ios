@@ -5,8 +5,8 @@
 //  Created by 최유림 on 2022/08/04.
 //
 
-//import Foundation
-//import SwiftUI
+// import Foundation
+// import SwiftUI
 //
 ///// PropertyWrapper for easier use of UserDefaults
 /////
@@ -14,8 +14,8 @@
 ///// ```
 ///// @SNUTTDefaults(SNUTTDefaultsContainer.DataType.example, value: 1) var exampleInt: Int?
 ///// ```
-//@propertyWrapper
-//struct SNUTTDefaults<Value: Codable> {
+// @propertyWrapper
+// struct SNUTTDefaults<Value: Codable> {
 //    var key: String
 //    var value: Value
 //    private let storage: UserDefaults = .shared
@@ -38,4 +38,4 @@
 //            storage.set(encodedData, forKey: key)
 //        }
 //    }
-//}
+// }

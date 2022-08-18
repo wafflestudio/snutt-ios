@@ -26,21 +26,21 @@ class UserDefaultsRepository: UserDefaultsRepositoryProtocol {
     init(storage: UserDefaults) {
         self.storage = storage
     }
-    
-    func set<T: Codable>(_ type: T.Type, key: STDefaultsKey, value: T?) {
+
+    func set<T: Codable>(_: T.Type, key: STDefaultsKey, value: T?) {
         let encodedData = try? JSONEncoder().encode(value)
         storage.set(encodedData, forKey: key.rawValue)
     }
-    
-    func get<T: Codable>(_ type: T.Type, key: STDefaultsKey) -> T? {
+
+    func get<T: Codable>(_: T.Type, key: STDefaultsKey) -> T? {
         guard let existing = storage.object(forKey: key.rawValue) as? Data else {
             return nil
         }
         let decodedData = try? JSONDecoder().decode(T.self, from: existing)
         return decodedData
     }
-    
-    func get<T: Codable>(_ type: T.Type, key: STDefaultsKey, defaultValue: T) -> T {
+
+    func get<T: Codable>(_: T.Type, key: STDefaultsKey, defaultValue: T) -> T {
         guard let existing = storage.object(forKey: key.rawValue) as? Data else {
             return defaultValue
         }

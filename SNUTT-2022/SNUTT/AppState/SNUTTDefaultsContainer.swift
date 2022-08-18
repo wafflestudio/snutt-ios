@@ -7,8 +7,7 @@
 
 import Foundation
 
-
-//struct SNUTTDefaultsContainer {
+// struct SNUTTDefaultsContainer {
 //    enum DataType {
 //        case token
 //        case userId
@@ -56,4 +55,4 @@ import Foundation
 //
 //    @SNUTTDefaults(.shouldShowBadge, value: false) var shouldShowBadge: Bool
 //    @SNUTTDefaults(.shouldDeleteFCMInfos, value: "") var shouldDeleteFCMInfos: String? // STFCMInfoList
-//}
+// }

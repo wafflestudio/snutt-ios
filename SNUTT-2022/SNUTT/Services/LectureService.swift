@@ -22,7 +22,7 @@ struct LectureService: LectureServiceProtocol {
     var lectureRepository: LectureRepositoryProtocol {
         webRepositories.lectureRepository
     }
-    
+
     var userDefaultsRepository: UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
     }
