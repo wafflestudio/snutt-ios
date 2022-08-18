@@ -40,7 +40,6 @@ struct MenuSheet: View {
                     LazyVStack(spacing: 15) {
                         let timetablesByQuarter = viewModel.timetablesByQuarter
                         ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
-                            _ = print(quarter == timetableState.current?.quarter)
                             MenuSection(quarter: quarter, isExpanded: quarter == timetableState.current?.quarter) {
                                 ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { data in
                                     MenuSectionRow(timetableMetadata: data,
@@ -82,7 +81,7 @@ extension MenuSheet {
                 await services.searchService.initializeSearchState()
                 try await services.timetableService.fetchTimetable(timetableId: timetableId)
             } catch {
-                services.appService.presentErrorAlert(error: error.asSTError)
+                services.appService.presentErrorAlert(error: error)
             }
         }
 
@@ -90,7 +89,7 @@ extension MenuSheet {
             do {
                 try await services.timetableService.copyTimetable(timetableId: timetableId)
             } catch {
-                services.appService.presentErrorAlert(error: error.asSTError)
+                services.appService.presentErrorAlert(error: error)
             }
         }
 

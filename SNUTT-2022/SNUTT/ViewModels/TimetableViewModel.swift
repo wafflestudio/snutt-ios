@@ -44,7 +44,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await timetableService.fetchRecentTimetable()
         } catch {
-            services.appService.presentErrorAlert(error: error.asSTError)
+            services.appService.presentErrorAlert(error: error)
         }
     }
 
@@ -52,7 +52,15 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await timetableService.fetchTimetableList()
         } catch {
-            services.appService.presentErrorAlert(error: error.asSTError)
+            services.appService.presentErrorAlert(error: error)
+        }
+    }
+    
+    func fetchCourseBookList() async {
+        do {
+            try await services.courseBookService.fetchCourseBookList()
+        } catch {
+            services.appService.presentErrorAlert(error: error)
         }
     }
 }

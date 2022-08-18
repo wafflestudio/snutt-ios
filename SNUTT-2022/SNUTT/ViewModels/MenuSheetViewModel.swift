@@ -39,7 +39,7 @@ class MenuSheetViewModel: BaseViewModel {
             try await services.timetableService.updateTimetableTitle(timetableId: timetableId, title: menuState.titleText)
             services.appService.closeTitleTextField()
         } catch {
-            services.appService.presentErrorAlert(error: error.asSTError)
+            services.appService.presentErrorAlert(error: error)
         }
     }
 
@@ -49,7 +49,7 @@ class MenuSheetViewModel: BaseViewModel {
             try await services.timetableService.deleteTimetable(timetableId: timetableId)
             services.appService.closeEllipsis()
         } catch {
-            services.appService.presentErrorAlert(error: error.asSTError)
+            services.appService.presentErrorAlert(error: error)
         }
     }
 
@@ -64,7 +64,7 @@ class MenuSheetViewModel: BaseViewModel {
             try await services.timetableService.updateTimetableTheme(timetableId: timetableId)
             services.appService.closeThemePalette()
         } catch {
-            services.appService.presentErrorAlert(error: error.asSTError)
+            services.appService.presentErrorAlert(error: error)
         }
     }
 

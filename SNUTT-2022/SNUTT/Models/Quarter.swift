@@ -10,6 +10,7 @@ import Foundation
 struct Quarter: Hashable {
     var year: Int
     var semester: Semester
+    var updatedAt: String?
 
     func shortString() -> String {
         return String(year) + semester.shortString()
@@ -23,6 +24,14 @@ struct Quarter: Hashable {
 extension Quarter: Comparable {
     static func < (lhs: Quarter, rhs: Quarter) -> Bool {
         return (lhs.year, lhs.semester.rawValue) < (rhs.year, rhs.semester.rawValue)
+    }
+}
+
+extension Quarter {
+    init(from dto: CourseBookDto) {
+        year = dto.year
+        semester = Semester(rawValue: dto.semester) ?? .first
+        updatedAt = dto.updated_at
     }
 }
 

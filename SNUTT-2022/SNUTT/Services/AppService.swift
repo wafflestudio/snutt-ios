@@ -17,6 +17,7 @@ protocol AppServiceProtocol {
     func openTitleTextField()
     func closeTitleTextField()
     func presentErrorAlert(error: STError?)
+    func presentErrorAlert(error: Error)
 }
 
 /// A service that modifies miscellaneous global states.
@@ -75,6 +76,10 @@ struct AppService: AppServiceProtocol {
     }
 
     // MARK: error handling
+    
+    func presentErrorAlert(error: Error) {
+        presentErrorAlert(error: error.asSTError)
+    }
 
     func presentErrorAlert(error: STError?) {
         guard let error = error else {

@@ -58,10 +58,17 @@ struct TimetableScene: View {
                 }
             }
             .onLoad {
-                await viewModel.fetchRecentTimetable()
-            }
-            .onLoad {
-                await viewModel.fetchTimetableList()
+                await withTaskGroup(of: Void.self, body: { group in
+                    group.addTask {
+                        await viewModel.fetchTimetableList()
+                    }
+                    group.addTask {
+                        await viewModel.fetchRecentTimetable()
+                    }
+                    group.addTask {
+                        await viewModel.fetchCourseBookList()
+                    }
+                })
             }
 
         let _ = debugChanges()

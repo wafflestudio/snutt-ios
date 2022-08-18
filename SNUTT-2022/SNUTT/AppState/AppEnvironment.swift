@@ -20,6 +20,7 @@ extension AppEnvironment {
         let lectureService: LectureServiceProtocol
         let searchService: SearchServiceProtocol
         let appService: AppServiceProtocol
+        let courseBookService: CourseBookServiceProtocol
     }
 }
 
@@ -29,6 +30,7 @@ extension AppEnvironment {
         let userRepository: UserRepositoryProtocol
         let lectureRepository: LectureRepositoryProtocol
         let searchRepository: SearchRepositoryProtocol
+        let courseBookRepository: CourseBookRepositoryProtocol
     }
 
     struct DBRepositories {}
@@ -57,10 +59,12 @@ extension AppEnvironment {
         let userRepository = UserRepository(session: session)
         let lectureRepository = LectureRepository(session: session)
         let searchRepository = SearchRepository(session: session)
+        let courseBookRepository = CourseBookRepository(session: session)
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
                      lectureRepository: lectureRepository,
-                     searchRepository: searchRepository)
+                     searchRepository: searchRepository,
+                     courseBookRepository: courseBookRepository)
     }
 
     // unused for now
@@ -74,11 +78,14 @@ extension AppEnvironment {
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
         let appService = AppService(appState: appState)
+        let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
                      searchService: searchService,
-                     appService: appService)
+                     appService: appService,
+                     courseBookService: courseBookService
+        )
     }
 }
 
@@ -100,7 +107,9 @@ extension EnvironmentValues {
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
                   searchService: FakeSearchService(),
-                  appService: AppService(appState: appState))
+                  appService: AppService(appState: appState),
+                  courseBookService: FakeCourseBookService()
+            )
         }
     }
 #endif

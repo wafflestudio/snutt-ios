@@ -12,6 +12,7 @@ import WidgetKit
 class TimetableState: ObservableObject {
     @Published var current: Timetable?
     @Published var metadataList: [TimetableMetadata]?
+    @Published var courseBookList: [Quarter]?
     @Published var configuration: TimetableConfiguration = .init()
 
     private var bag = Set<AnyCancellable>()
