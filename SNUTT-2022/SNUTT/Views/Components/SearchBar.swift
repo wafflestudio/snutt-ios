@@ -59,24 +59,22 @@ struct SearchBar: View {
                     }
                 }
             )
-            .animation(.easeOut(duration: 0.2), value: isEditing)
 
             Group {
                 if isEditing {
                     Button(action: {
-                        text = ""
-                        isEditing = false
                         isFocused = false
+                        text = ""
                     }) {
                         Text("취소")
                     }
                 }
             }
             .transition(.move(edge: .trailing).combined(with: .opacity))
-            .animation(.easeOut(duration: 0.2), value: isEditing)
         }
         .padding(10)
-        .background(Color.white)
+        .background(STColor.searchBarBackground)
+        .animation(.easeOut(duration: 0.2), value: isEditing)
     }
 }
 

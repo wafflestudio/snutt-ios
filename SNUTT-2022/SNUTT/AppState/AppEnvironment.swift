@@ -16,6 +16,7 @@ extension AppEnvironment {
     struct Services {
         let timetableService: TimetableServiceProtocol
         let userService: UserServiceProtocol
+        let lectureService: LectureServiceProtocol
     }
 }
 
@@ -23,6 +24,7 @@ extension AppEnvironment {
     struct WebRepositories {
         let timetableRepository: TimetableRepositoryProtocol
         let userRepository: UserRepositoryProtocol
+        let lectureRepository: LectureRepositoryProtocol
     }
 
     struct DBRepositories {}
@@ -40,13 +42,17 @@ extension AppEnvironment {
     }
 
     private static func configuredSession() -> Session {
-        return Session(interceptor: Interceptor(authStorage: Storage()), eventMonitors: [Logger()])
+        let storage = Storage()
+        storage.accessToken = "c7f446a2..."
+        storage.apiKey = "eyJ0eXAiO..."
+        return Session(interceptor: Interceptor(authStorage: storage), eventMonitors: [Logger()])
     }
 
     private static func configuredWebRepositories(session: Session) -> WebRepositories {
         let timetableRepository = TimetableRepository(session: session)
         let userRepository = UserRepository(session: session)
-        return .init(timetableRepository: timetableRepository, userRepository: userRepository)
+        let lectureRepository = LectureRepository(session: session)
+        return .init(timetableRepository: timetableRepository, userRepository: userRepository, lectureRepository: lectureRepository)
     }
 
     // unused for now
@@ -57,14 +63,15 @@ extension AppEnvironment {
     private static func configuredServices(appState: AppState, webRepositories: WebRepositories, dbRepositories _: DBRepositories) -> Services {
         let timetableService = TimetableService(appState: appState, webRepositories: webRepositories)
         let userService = UserService(appState: appState, webRepositories: webRepositories)
-        return .init(timetableService: timetableService, userService: userService)
+        let lectureService = LectureService(appState: appState, webRepositories: webRepositories)
+        return .init(timetableService: timetableService, userService: userService, lectureService: lectureService)
     }
 }
 
 #if DEBUG
     extension AppEnvironment.Services {
         static var preview: Self {
-            .init(timetableService: FakeTimetableService(), userService: FakeUserService())
+            .init(timetableService: FakeTimetableService(), userService: FakeUserService(), lectureService: FakeLectureService())
         }
     }
 #endif

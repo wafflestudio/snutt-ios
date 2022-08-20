@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct LectureList: View {
+    let viewModel: ViewModel
     let lectures: [Lecture]
 
     var body: some View {
         List(lectures) { lecture in
             ZStack {
                 NavigationLink {
-                    LectureDetails()
+                    LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture)
                 } label: {
                     EmptyView()
                 }
@@ -29,10 +30,14 @@ struct LectureList: View {
     }
 }
 
+extension LectureList {
+    class ViewModel: BaseViewModel {}
+}
+
 struct TimetableList_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            LectureList(lectures: [.preview, .preview, .preview])
+            LectureList(viewModel: .init(container: .preview), lectures: [.preview, .preview, .preview])
         }
     }
 }

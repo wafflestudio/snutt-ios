@@ -25,8 +25,7 @@ struct SearchLectureScene: View {
                 VStack {
                     Spacer()
                         .frame(height: 44)
-                    TimetableZStack()
-                        .environmentObject(viewModel.currentTimetable)
+                    TimetableZStack(viewModel: .init(container: viewModel.container))
                         .environmentObject(viewModel.timetableSetting)
                 }
                 Color.black.opacity(0.3)

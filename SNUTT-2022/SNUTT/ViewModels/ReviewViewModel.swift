@@ -18,12 +18,4 @@ class ReviewViewModel {
     private var appState: AppState {
         container.appState
     }
-
-    var currentTimetable: Timetable {
-        appState.currentTimetable
-    }
-
-    func updateTimetable(timeTable _: Timetable) {
-        appState.currentTimetable.lectures = []
-    }
 }

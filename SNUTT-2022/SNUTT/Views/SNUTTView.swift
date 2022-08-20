@@ -15,7 +15,7 @@ struct SNUTTView: View {
         ZStack {
             TabView(selection: $selectedTab) {
                 TabScene(tabType: .timetable) {
-                    MyTimetableScene(viewModel: .init(container: container))
+                    TimetableScene(viewModel: .init(container: container))
                 }
                 TabScene(tabType: .search) {
                     SearchLectureScene(viewModel: .init(container: container))
@@ -39,24 +39,20 @@ struct SNUTTView: View {
         let _ = debugChanges()
     }
 
-    /// Globally set the background color of the tab bar to white.
-    private func setTabBarStyle() {
-        let appearance = UITabBarAppearance()
-        appearance.backgroundColor = .white
-        UITabBar.appearance().standardAppearance = appearance
-        if #available(iOS 15.0, *) {
-            UITabBar.appearance().scrollEdgeAppearance = appearance
-        }
-    }
-
     /// Globally set the background color of the nav bar to white.
     private func setNavBarStyle() {
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .white
+        appearance.backgroundColor = UIColor(STColor.navBackground)
         UINavigationBar.appearance().standardAppearance = appearance
-        if #available(iOS 15.0, *) {
-            UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        }
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
+
+    /// Globally set the background color of the tab bar to white.
+    private func setTabBarStyle() {
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor = UIColor(STColor.tabBackground)
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 }
 

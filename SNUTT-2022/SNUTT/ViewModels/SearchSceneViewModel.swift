@@ -24,10 +24,6 @@ class SearchSceneViewModel: ObservableObject {
         appState.setting.filterSheetSetting
     }
 
-    var currentTimetable: Timetable {
-        appState.currentTimetable
-    }
-
     var timetableSetting: TimetableSetting {
         appState.setting.timetableSetting
     }

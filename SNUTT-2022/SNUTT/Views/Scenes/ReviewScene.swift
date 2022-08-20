@@ -13,7 +13,7 @@ struct ReviewScene: View {
 
     var body: some View {
         Button {
-            viewModel.updateTimetable(timeTable: Timetable(lectures: []))
+//            viewModel.updateTimetable(timeTable: Timetable(lectures: []))
         } label: {
             Text("Change current timetable")
         }

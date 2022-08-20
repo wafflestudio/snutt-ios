@@ -5,34 +5,56 @@
 //  Created by Jinsup Keum on 2022/03/19.
 //
 
+import Combine
 import SwiftUI
 import UIKit
 
-class TimetableViewModel {
-    var container: DIContainer
+class TimetableViewModel: BaseViewModel, ObservableObject {
+    @Published var showAlert: Bool = false
+    @Published var totalCredit: Int = 0
+    @Published var timetableTitle: String = ""
 
-    init(container: DIContainer) {
-        self.container = container
+    private var bag = Set<AnyCancellable>()
+
+    override init(container: DIContainer) {
+        super.init(container: container)
+
+        timetableSetting.$current
+            .map { $0?.totalCredit ?? 0 }
+            .assign(to: &$totalCredit)
+
+        timetableSetting.$current
+            .map { $0?.title ?? "" }
+            .assign(to: &$timetableTitle)
     }
 
-    private var appState: AppState {
-        container.appState
+    private var timetableService: TimetableServiceProtocol {
+        services.timetableService
     }
 
-    var currentTimetable: Timetable {
-        appState.currentTimetable
+    private var currentTimetable: Timetable? {
+        appState.setting.timetableSetting.current
     }
 
     var timetableSetting: TimetableSetting {
         appState.setting.timetableSetting
     }
 
-    func updateTimetable(timeTable: Timetable) {
-        appState.currentTimetable = timeTable
-    }
-
     func toggleMenuSheet() {
         appState.setting.menuSheetSetting.isOpen.toggle()
+    }
+
+    func fetchRecentTimetable() async {
+        if currentTimetable != nil {
+            return
+        }
+        do {
+            try await timetableService.fetchRecentTimetable()
+        } catch {
+            DispatchQueue.main.async {
+                self.showAlert = true
+            }
+        }
     }
 
     struct TimetablePainter {

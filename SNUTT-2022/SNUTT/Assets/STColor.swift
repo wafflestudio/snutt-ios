@@ -10,10 +10,19 @@ import SwiftUI
 
 struct STColor {
     static let cyan: Color = .init(hex: 0x1BD0C8)
+
+    static let disabled: Color = .init(uiColor: .label.withAlphaComponent(0.6))
+
+    static let navBackground: Color = .init("nav.background")
+    static let tabBackground: Color = .init("tab.background")
+
+    static let groupForeground: Color = .init("group.foreground")
+    static let systemBackground: Color = .init("system.background")
+    static let searchBarBackground: Color = .init("searchbar.background")
 }
 
 extension Color {
-    init(hex: UInt, alpha: Double = 1) {
+    init(hex: UInt64, alpha: Double = 1) {
         self.init(
             .sRGB,
             red: Double((hex >> 16) & 0xFF) / 255,
@@ -21,5 +30,22 @@ extension Color {
             blue: Double((hex >> 00) & 0xFF) / 255,
             opacity: alpha
         )
+    }
+
+    init(hex: String, alpha: Double = 1) {
+        var str: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+        str = str.replacingOccurrences(of: "#", with: "")
+        str = str.replacingOccurrences(of: "0X", with: "")
+
+        if str.count != 6 {
+            self.init(uiColor: .gray)
+            return
+        }
+
+        var rgbValue: UInt64 = 0
+        Scanner(string: str).scanHexInt64(&rgbValue)
+
+        self.init(hex: rgbValue, alpha: alpha)
     }
 }

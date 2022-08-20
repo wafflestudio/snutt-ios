@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class MyLectureListViewModel {
+class LectureListViewModel {
     var container: DIContainer
 
     init(container: DIContainer) {
@@ -19,11 +19,7 @@ class MyLectureListViewModel {
         container.appState
     }
 
-    var currentTimetable: Timetable {
-        appState.currentTimetable
-    }
-
-    func updateTimetable(timeTable: Timetable) {
-        appState.currentTimetable = timeTable
+    var currentTimetable: Timetable? {
+        appState.setting.timetableSetting.current
     }
 }

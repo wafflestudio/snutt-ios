@@ -7,17 +7,16 @@
 
 import SwiftUI
 
-struct MyTimetableScene: View {
+struct TimetableScene: View {
     @State private var pushToListScene = false
-    let viewModel: TimetableViewModel
+    @StateObject var viewModel: TimetableViewModel
 
     var body: some View {
-        TimetableZStack()
-            .environmentObject(viewModel.currentTimetable)
+        TimetableZStack(viewModel: .init(container: viewModel.container))
             .environmentObject(viewModel.timetableSetting)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
-                NavigationLink(destination: MyLectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) {
+                NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) {
                     EmptyView()
                 }
             )
@@ -29,8 +28,11 @@ struct MyTimetableScene: View {
                             viewModel.toggleMenuSheet()
                         }
 
-                        Text("나의 시간표").font(STFont.title)
-                        Text("(18 학점)")
+                        Text(viewModel.timetableTitle)
+                            .font(STFont.title)
+                            .minimumScaleFactor(0.9)
+                            .lineLimit(1)
+                        Text("(\(viewModel.totalCredit) 학점)")
                             .font(STFont.details)
                             .foregroundColor(Color(UIColor.secondaryLabel))
 
@@ -50,6 +52,12 @@ struct MyTimetableScene: View {
                     }
                 }
             }
+            .task {
+                await viewModel.fetchRecentTimetable()
+            }
+            .alert(isPresented: $viewModel.showAlert) {
+                Alert(title: Text("API 에러"), message: Text("API 에러가 발생했습니다. 이 알러트는 테스트용입니다. 나중에 바꿔주세요."), dismissButton: .default(Text("취소")))
+            }
 
         let _ = debugChanges()
     }
@@ -58,7 +66,7 @@ struct MyTimetableScene: View {
 struct MyTimetableScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            MyTimetableScene(viewModel: .init(container: .preview))
+            TimetableScene(viewModel: .init(container: .preview))
         }
     }
 }

@@ -12,14 +12,13 @@ class AppState {
     var currentUser = User()
     var setting = Setting()
     var system = System()
-    var currentTimetable = Timetable(lectures: [])
 }
 
 #if DEBUG
     extension AppState {
         static var preview: AppState {
             let state = AppState()
-            state.currentTimetable = .preview
+            state.setting.timetableSetting.current = .preview
             return state
         }
     }
