@@ -38,7 +38,9 @@ class BaseSettingViewModel: BaseViewModel {
         case .showVersionInfo:
             return Menu(.showVersionInfo)
         case .developerInfo:
-            return Menu(.developerInfo)
+            return Menu(.developerInfo) {
+                DeveloperInfoScene()
+            }
         case .userSupport:
             return Menu(.userSupport) {
                 UserSupportScene()

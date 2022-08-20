@@ -9,7 +9,8 @@ import SwiftUI
 
 struct DeveloperInfoScene: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        SingleWebView(request: URLRequest(url: SNUTTWebView.developerInfo.url))
+            .navigationTitle("개발자 정보")
     }
 }
 

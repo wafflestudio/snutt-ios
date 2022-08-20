@@ -9,7 +9,8 @@ import SwiftUI
 
 struct PrivacyPolicyScene: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        SingleWebView(request: URLRequest(url: SNUTTWebView.privacyPolicy.url))
+            .navigationTitle("개인정보처리방침")
     }
 }
 

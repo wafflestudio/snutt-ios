@@ -9,7 +9,8 @@ import SwiftUI
 
 struct TermsOfServiceScene: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        SingleWebView(request: URLRequest(url: SNUTTWebView.termsOfService.url))
+            .navigationTitle("서비스 약관")
     }
 }
 
