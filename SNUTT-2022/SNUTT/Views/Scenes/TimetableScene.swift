@@ -58,6 +58,7 @@ struct TimetableScene: View {
                 }
             }
             .onLoad {
+                // make the following three api calls execute concurrently
                 await withTaskGroup(of: Void.self, body: { group in
                     group.addTask {
                         await viewModel.fetchTimetableList()

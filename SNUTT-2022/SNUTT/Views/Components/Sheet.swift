@@ -74,11 +74,6 @@ struct Sheet<Content>: View where Content: View {
     }
 }
 
-extension Animation {
-    static var customSpring: Animation {
-        spring(response: 0.2, dampingFraction: 1, blendDuration: 0)
-    }
-}
 
 enum SheetOrientation {
     case left(maxWidth: CGFloat)

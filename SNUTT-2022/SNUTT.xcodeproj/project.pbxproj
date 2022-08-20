@@ -63,6 +63,10 @@
 		BE77D0A428AEAD4D0067A9D8 /* CourseBookDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */; };
 		BE77D0A528AEADE30067A9D8 /* CourseBookDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */; };
 		BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D0A628AEB0650067A9D8 /* CourseBookService.swift */; };
+		BE77D0AC28B1384D0067A9D8 /* MenuSheetTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D0AB28B1384D0067A9D8 /* MenuSheetTopBar.swift */; };
+		BE77D0AE28B13A920067A9D8 /* MenuCreateSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D0AD28B13A920067A9D8 /* MenuCreateSheet.swift */; };
+		BE77D0B028B14F6A0067A9D8 /* Animation+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D0AF28B14F6A0067A9D8 /* Animation+Custom.swift */; };
+		BE77D0B128B14F7A0067A9D8 /* Animation+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D0AF28B14F6A0067A9D8 /* Animation+Custom.swift */; };
 		BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230027FF20EE004DC202 /* TimetableScene.swift */; };
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
 		BE804BEA288B9EF700782F16 /* TimetableConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */; };
@@ -103,7 +107,7 @@
 		BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507827F42D7500CDCC13 /* STColor.swift */; };
 		BEE5CE10289E738900CF5ED3 /* MenuThemeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE5CE0F289E738900CF5ED3 /* MenuThemeSheet.swift */; };
 		BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE86516289E274D00D3D0E4 /* MenuEllipsisSheet.swift */; };
-		BEE86519289E287400D3D0E4 /* MenuTextFieldSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE86518289E287400D3D0E4 /* MenuTextFieldSheet.swift */; };
+		BEE86519289E287400D3D0E4 /* MenuRenameSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE86518289E287400D3D0E4 /* MenuRenameSheet.swift */; };
 		BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */; };
 		BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */; };
 		BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */; };
@@ -213,6 +217,9 @@
 		BE77D09F28AEAB920067A9D8 /* CourseBookRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookRepository.swift; sourceTree = "<group>"; };
 		BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookDto.swift; sourceTree = "<group>"; };
 		BE77D0A628AEB0650067A9D8 /* CourseBookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookService.swift; sourceTree = "<group>"; };
+		BE77D0AB28B1384D0067A9D8 /* MenuSheetTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetTopBar.swift; sourceTree = "<group>"; };
+		BE77D0AD28B13A920067A9D8 /* MenuCreateSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCreateSheet.swift; sourceTree = "<group>"; };
+		BE77D0AF28B14F6A0067A9D8 /* Animation+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Custom.swift"; sourceTree = "<group>"; };
 		BE7E230027FF20EE004DC202 /* TimetableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableScene.swift; sourceTree = "<group>"; };
 		BE7E230227FF3C38004DC202 /* NavBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarButton.swift; sourceTree = "<group>"; };
 		BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableConfiguration.swift; sourceTree = "<group>"; };
@@ -253,7 +260,7 @@
 		BEDF507827F42D7500CDCC13 /* STColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STColor.swift; sourceTree = "<group>"; };
 		BEE5CE0F289E738900CF5ED3 /* MenuThemeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuThemeSheet.swift; sourceTree = "<group>"; };
 		BEE86516289E274D00D3D0E4 /* MenuEllipsisSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuEllipsisSheet.swift; sourceTree = "<group>"; };
-		BEE86518289E287400D3D0E4 /* MenuTextFieldSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTextFieldSheet.swift; sourceTree = "<group>"; };
+		BEE86518289E287400D3D0E4 /* MenuRenameSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRenameSheet.swift; sourceTree = "<group>"; };
 		BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetContent.swift; sourceTree = "<group>"; };
 		BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTView.swift; sourceTree = "<group>"; };
 		BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabScene.swift; sourceTree = "<group>"; };
@@ -337,6 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				BE419B8C288B8C5A00FA9590 /* View+Debug.swift */,
+				BE77D0AF28B14F6A0067A9D8 /* Animation+Custom.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -386,7 +394,10 @@
 				BE98A00D288AA3D200C2CE95 /* MenuSheet.swift */,
 				BEE86516289E274D00D3D0E4 /* MenuEllipsisSheet.swift */,
 				BEE5CE0F289E738900CF5ED3 /* MenuThemeSheet.swift */,
-				BEE86518289E287400D3D0E4 /* MenuTextFieldSheet.swift */,
+				BE77D0AD28B13A920067A9D8 /* MenuCreateSheet.swift */,
+				BEE86518289E287400D3D0E4 /* MenuRenameSheet.swift */,
+				BE1B610D289E000B00401361 /* EllipsisSheetButton.swift */,
+				BE77D0AB28B1384D0067A9D8 /* MenuSheetTopBar.swift */,
 				BE98A00B288A9E2A00C2CE95 /* MenuSection.swift */,
 			);
 			path = MenuSheets;
@@ -560,7 +571,6 @@
 				BEDF506C27EB740E00CDCC13 /* LectureList.swift */,
 				BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */,
 				BE7E230227FF3C38004DC202 /* NavBarButton.swift */,
-				BE1B610D289E000B00401361 /* EllipsisSheetButton.swift */,
 				BE8BB3AE285D77D000070A66 /* SearchBar.swift */,
 				BEDE34C928754F3100525014 /* Sheet.swift */,
 				BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */,
@@ -789,6 +799,7 @@
 				BE419B8E288B8C6800FA9590 /* View+Debug.swift in Sources */,
 				BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */,
 				BE419B91288B8F9C00FA9590 /* TimetableZStack.swift in Sources */,
+				BE77D0B128B14F7A0067A9D8 /* Animation+Custom.swift in Sources */,
 				BE419B94288B8FA600FA9590 /* TimetableGridLayer.swift in Sources */,
 				BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */,
 				BE804C062894157500782F16 /* SNUTTWidgetProvider.swift in Sources */,
@@ -815,7 +826,7 @@
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
 				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */,
-				BEE86519289E287400D3D0E4 /* MenuTextFieldSheet.swift in Sources */,
+				BEE86519289E287400D3D0E4 /* MenuRenameSheet.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
 				BE682BF128872315009EBCB7 /* STError.swift in Sources */,
@@ -826,6 +837,7 @@
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
 				BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */,
 				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
+				BE77D0AC28B1384D0067A9D8 /* MenuSheetTopBar.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
 				BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */,
@@ -850,6 +862,7 @@
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
 				BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */,
 				BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */,
+				BE77D0B028B14F6A0067A9D8 /* Animation+Custom.swift in Sources */,
 				BE98A00A288A90C000C2CE95 /* Logo.swift in Sources */,
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
@@ -873,6 +886,7 @@
 				BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */,
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,
 				BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */,
+				BE77D0AE28B13A920067A9D8 /* MenuCreateSheet.swift in Sources */,
 				BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */,
 				BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */,
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,

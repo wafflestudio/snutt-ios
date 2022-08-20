@@ -17,6 +17,7 @@ protocol TimetableRepositoryProtocol {
     func deleteTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
     func copyTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
     func updateTimetableTheme(withTimetableId id: String, withTheme theme: Int) async throws -> TimetableDto
+    func createTimetable(title: String, year: Int, semester: Int) async throws -> [TimetableMetadataDto]
 }
 
 class TimetableRepository: TimetableRepositoryProtocol {
@@ -34,66 +35,59 @@ class TimetableRepository: TimetableRepositoryProtocol {
     }
 
     func fetchRecentTimetable() async throws -> TimetableDto {
-        let data = try await session
+        return try await session
             .request(TimetableRouter.getRecentTimetable)
             .serializingDecodable(TimetableDto.self)
             .handlingError()
-
-        return data
     }
 
     func fetchTimetableList() async throws -> [TimetableMetadataDto] {
-        let data = try await session
+        return try await session
             .request(TimetableRouter.getTimetableList)
             .serializingDecodable([TimetableMetadataDto].self)
             .handlingError()
-
-        return data
     }
 
     func fetchTimetable(withTimetableId id: String) async throws -> TimetableDto {
-        let data = try await session
+        return try await session
             .request(TimetableRouter.getTimetable(id: id))
             .serializingDecodable(TimetableDto.self)
             .handlingError()
-
-        return data
+    }
+    
+    func createTimetable(title: String, year: Int, semester: Int) async throws -> [TimetableMetadataDto] {
+        return try await session
+            .request(TimetableRouter.createTimetable(title: title, year: year, semester: semester))
+            .serializingDecodable([TimetableMetadataDto].self)
+            .handlingError()
     }
 
     func updateTimetableTitle(withTimetableId id: String, withTitle title: String) async throws -> [TimetableMetadataDto] {
-        let data = try await session
+        return try await session
             .request(TimetableRouter.updateTimetable(id: id, title: title))
             .serializingDecodable([TimetableMetadataDto].self)
             .handlingError()
-
-        return data
     }
 
     func deleteTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto] {
-        let data = try await session
+        return try await session
             .request(TimetableRouter.deleteTimetable(id: id))
             .serializingDecodable([TimetableMetadataDto].self)
             .handlingError()
-
-        return data
     }
 
     func copyTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto] {
-        let data = try await session
+        return try await session
             .request(TimetableRouter.copyTimetable(id: id))
             .serializingDecodable([TimetableMetadataDto].self)
             .handlingError()
-
-        return data
     }
 
     func updateTimetableTheme(withTimetableId id: String, withTheme theme: Int) async throws -> TimetableDto {
-        let data = try await session
+        return try await session
             .request(TimetableRouter.updateTheme(id: id, theme: theme))
             .validate()
             .serializingDecodable(TimetableDto.self)
             .handlingError()
-
-        return data
     }
 }

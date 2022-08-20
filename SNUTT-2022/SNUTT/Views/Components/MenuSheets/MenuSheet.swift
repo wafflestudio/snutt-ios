@@ -39,8 +39,22 @@ struct MenuSheet: View {
                 ScrollView {
                     LazyVStack(spacing: 15) {
                         let timetablesByQuarter = viewModel.timetablesByQuarter
+                        
+                        if viewModel.services.timetableService.isNewCourseBookAvailable() {
+                            // 새로운 수강편람이 나와 있음을 알린다.
+                        }
+                        
+                        Button {
+                            Task {
+                                await viewModel.createTimetable()
+                            }
+                        } label: {
+                            Text("새로운 시간표 생성")
+                        }
+
+                        
                         ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
-                            MenuSection(quarter: quarter, isExpanded: quarter == timetableState.current?.quarter) {
+                            MenuSection(quarter: quarter, current: timetableState.current) {
                                 ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { data in
                                     MenuSectionRow(timetableMetadata: data,
                                                    isSelected: viewModel.currentTimetable?.id == data.id,
@@ -54,6 +68,7 @@ struct MenuSheet: View {
                     .padding(.top, 20)
                 }
             }
+            .animation(.customSpring, value: timetableState.metadataList)
         }
     }
 }
@@ -88,6 +103,15 @@ extension MenuSheet {
         func duplicateTimetable(timetableId: String) async {
             do {
                 try await services.timetableService.copyTimetable(timetableId: timetableId)
+            } catch {
+                services.appService.presentErrorAlert(error: error)
+            }
+        }
+        
+        func createTimetable() async {
+            do {
+                try await services.timetableService.createTimetable(title: "12345", quarter: .init(year: 2022, semester: Semester.second))
+                try await services.timetableService.fetchRecentTimetable()
             } catch {
                 services.appService.presentErrorAlert(error: error)
             }

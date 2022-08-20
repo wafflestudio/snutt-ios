@@ -34,7 +34,7 @@ struct MenuSheetScene: View {
                            confirm: viewModel.applyThemeChange,
                            select: viewModel.selectTheme)
 
-            MenuTextFieldSheet(isOpen: $menuState.isTitleTextFieldOpen,
+            MenuRenameSheet(isOpen: $menuState.isTitleTextFieldOpen,
                                titleText: $menuState.titleText,
                                cancel: viewModel.cancelTitleTextField,
                                confirm: viewModel.applyTitleTextField)

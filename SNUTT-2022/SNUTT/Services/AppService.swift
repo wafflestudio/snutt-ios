@@ -55,9 +55,7 @@ struct AppService: AppServiceProtocol {
     func closeThemePalette() {
         DispatchQueue.main.async {
             appState.menu.isThemePaletteOpen = false
-            withAnimation(.customSpring) {
-                appState.timetable.current?.selectedTheme = nil
-            }
+            appState.timetable.current?.selectedTheme = nil
         }
     }
 
