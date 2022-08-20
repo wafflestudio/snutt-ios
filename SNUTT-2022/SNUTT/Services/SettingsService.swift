@@ -10,20 +10,20 @@ import Foundation
 protocol SettingsServiceProtocol {
     var accountSettingTitles: [[MenuType]] { get }
     var mainSettingTitles: [[MenuType]] { get }
+    func setMenuList()
 }
 
 struct SettingsService: SettingsServiceProtocol {
     let appState: AppState
     let webRepositories: AppEnvironment.WebRepositories
     
-    var userServiceRepository: UserRepositoryProtocol {
+    var userRepository: UserRepositoryProtocol {
         webRepositories.userRepository
     }
     
     init(appState: AppState, webRepositories: AppEnvironment.WebRepositories) {
         self.appState = appState
         self.webRepositories = webRepositories
-        
         setMenuList()
     }
     
@@ -50,23 +50,27 @@ struct SettingsService: SettingsServiceProtocol {
     }
     
     var userLocalId: String? {
-        userServiceRepository.userLocalId
+        userRepository.userLocalId
     }
     
     var token: String? {
-        userServiceRepository.token
+        userRepository.token
     }
 
     var fbName: String? {
-        userServiceRepository.fbName
+        userRepository.fbName
     }
     
     func setMenuList() {
-        appState.setting.menuList = accountSettingTitles
+        DispatchQueue.main.async {
+            appState.setting.mainMenuList = mainSettingTitles
+            appState.setting.accountMenuList = accountSettingTitles
+        }
     }
 }
 
 class FakeSettingsService: SettingsServiceProtocol {
     var accountSettingTitles: [[MenuType]] = []
     var mainSettingTitles: [[MenuType]] = []
+    func setMenuList() {}
 }

@@ -16,6 +16,10 @@
 		B88D16F128ABBE8000E2D652 /* ValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16F028ABBE8000E2D652 /* ValidationService.swift */; };
 		B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16F228ABC5DD00E2D652 /* String+ext.swift */; };
 		B88D16F728AC075E00E2D652 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16F628AC075E00E2D652 /* SettingsService.swift */; };
+		B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FA28AE2BB900E2D652 /* UserRouter.swift */; };
+		B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FC28AE2E1E00E2D652 /* User.swift */; };
+		B88D16FF28AF62D200E2D652 /* BaseSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FE28AF62D200E2D652 /* BaseSettingViewModel.swift */; };
+		B88D170128AF71E300E2D652 /* UserSupportScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170028AF71E300E2D652 /* UserSupportScene.swift */; };
 		B8E215C828A4E0B4003FD933 /* LocalCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E215C728A4E0B3003FD933 /* LocalCachable.swift */; };
 		B8F40EA9289809C60021A2A9 /* LicenseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EA8289809C60021A2A9 /* LicenseScene.swift */; };
 		B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */; };
@@ -137,7 +141,7 @@
 		DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */; };
 		DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159E28660F7800FE5F9A /* ReviewScene.swift */; };
 		DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */; };
-		DC2915A32866958100FE5F9A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A22866958100FE5F9A /* User.swift */; };
+		DC2915A32866958100FE5F9A /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A22866958100FE5F9A /* UserState.swift */; };
 		DC2915A52866980B00FE5F9A /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A42866980B00FE5F9A /* Setting.swift */; };
 		DC2915A72866984000FE5F9A /* TimetableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A62866984000FE5F9A /* TimetableState.swift */; };
 		DC2915A92866986600FE5F9A /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A82866986600FE5F9A /* System.swift */; };
@@ -203,6 +207,10 @@
 		B88D16F028ABBE8000E2D652 /* ValidationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationService.swift; sourceTree = "<group>"; };
 		B88D16F228ABC5DD00E2D652 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
 		B88D16F628AC075E00E2D652 /* SettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
+		B88D16FA28AE2BB900E2D652 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
+		B88D16FC28AE2E1E00E2D652 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B88D16FE28AF62D200E2D652 /* BaseSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingViewModel.swift; sourceTree = "<group>"; };
+		B88D170028AF71E300E2D652 /* UserSupportScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSupportScene.swift; sourceTree = "<group>"; };
 		B8E215C728A4E0B3003FD933 /* LocalCachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCachable.swift; sourceTree = "<group>"; };
 		B8F40EA8289809C60021A2A9 /* LicenseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseScene.swift; sourceTree = "<group>"; };
 		B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingScene.swift; sourceTree = "<group>"; };
@@ -293,7 +301,7 @@
 		DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		DC29159E28660F7800FE5F9A /* ReviewScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewScene.swift; sourceTree = "<group>"; };
 		DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
-		DC2915A22866958100FE5F9A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DC2915A22866958100FE5F9A /* UserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
 		DC2915A42866980B00FE5F9A /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		DC2915A62866984000FE5F9A /* TimetableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableState.swift; sourceTree = "<group>"; };
 		DC2915A82866986600FE5F9A /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
@@ -355,6 +363,7 @@
 				B8F40EB028980DE00021A2A9 /* TermsOfServiceScene.swift */,
 				B8F40EB228980DFF0021A2A9 /* PrivacyPolicyScene.swift */,
 				B87E0A3428A688FF00D2EA95 /* AddLocalIdScene.swift */,
+				B88D170028AF71E300E2D652 /* UserSupportScene.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -429,6 +438,7 @@
 				BE682BD028864CA8009EBCB7 /* LectureRouter.swift */,
 				BE682BF82887FB59009EBCB7 /* SearchRouter.swift */,
 				BE682C002888173B009EBCB7 /* TagRouter.swift */,
+				B88D16FA28AE2BB900E2D652 /* UserRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -516,12 +526,13 @@
 				DC2915A82866986600FE5F9A /* System.swift */,
 				DC2915A42866980B00FE5F9A /* Setting.swift */,
 				BE682BF028872315009EBCB7 /* STError.swift */,
-				DC2915A22866958100FE5F9A /* User.swift */,
+				DC2915A22866958100FE5F9A /* UserState.swift */,
 				BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */,
 				DC2915A62866984000FE5F9A /* TimetableState.swift */,
 				BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */,
 				BE4B0EBB2873BC2B005FE164 /* SearchState.swift */,
 				B87E0A3828A91C8B00D2EA95 /* Menu.swift */,
+				B88D16FC28AE2E1E00E2D652 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -615,6 +626,7 @@
 				BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */,
 				B8F40EB628980E7A0021A2A9 /* AccountSettingViewModel.swift */,
 				B87E0A3628A68A6900D2EA95 /* AddLocalIdViewModel.swift */,
+				B88D16FE28AF62D200E2D652 /* BaseSettingViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -856,6 +868,7 @@
 				DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */,
 				DC1E0ED12877381F005632A3 /* Router.swift in Sources */,
 				DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */,
+				B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */,
 				B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
 				BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */,
@@ -863,9 +876,11 @@
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
 				B87E0A3928A91C8B00D2EA95 /* Menu.swift in Sources */,
+				B88D170128AF71E300E2D652 /* UserSupportScene.swift in Sources */,
+				B88D16FF28AF62D200E2D652 /* BaseSettingViewModel.swift in Sources */,
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
 				B8F40EB128980DE00021A2A9 /* TermsOfServiceScene.swift in Sources */,
-				DC2915A32866958100FE5F9A /* User.swift in Sources */,
+				DC2915A32866958100FE5F9A /* UserState.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
 				BE4B0EBC2873BC2B005FE164 /* SearchState.swift in Sources */,
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
@@ -883,6 +898,7 @@
 				BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */,
 				B8F570A6289E1221005C199F /* UserDefaults+ext.swift in Sources */,
 				B827A8FF289AEC6F00ABAE39 /* SNUTTDefaults.swift in Sources */,
+				B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,

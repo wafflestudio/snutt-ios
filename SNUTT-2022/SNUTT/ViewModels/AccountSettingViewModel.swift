@@ -5,76 +5,54 @@
 //  Created by 최유림 on 2022/08/01.
 //
 
-import Foundation
 import SwiftUI
+import Combine
 
-class AccountSettingViewModel {
-    var container: DIContainer
+class AccountSettingViewModel: BaseSettingViewModel, ObservableObject {
+
+    private var bag = Set<AnyCancellable>()
     
-    var menuTitles: [[MenuType]] {
-        settingsService.accountSettingTitles
-    }
+    @Published var menuList: [[Menu]] = []
     
-    var menuList: [[Menu]] {
-        var menuList: [[Menu]] = []
-        for section in menuTitles {
-            var temp: [Menu] = []
-            for title in section {
-                temp.append(makeMenu(with: title))
+    override init(container: DIContainer) {
+        super.init(container: container)
+        
+        userState.$current
+            .sink { user in
+                self.settingsService.setMenuList()
             }
-            menuList.append(temp)
-        }
-        return menuList
-    }
-    
-    func makeMenu(with type: MenuType) -> Menu {
-        if case .addLocalId = type {
-            return Menu(.addLocalId) {
-                AddLocalIdScene(viewModel: AddLocalIdViewModel(container: container))
+            .store(in: &bag)
+
+        setting.$accountMenuList
+            .sink { menus in
+                DispatchQueue.main.async {
+                    self.menuList = self.makeMenuList(menus: menus)
+                }
             }
-        } else if case .showLocalId = type {
-            return Menu(.showLocalId)
-        } else if case .changePassword = type {
-            return Menu(.timetableSetting) {
-                TimetableSettingScene()
-            }
-        } else if case .makeFbConnection = type {
-            return Menu(.timetableSetting) {
-                TimetableSettingScene()
-            }
-        } else if case .showFbName = type {
-            return Menu(.showFbName)
-        } else if case .deleteFbConnection = type {
-            return Menu(.timetableSetting) {
-                TimetableSettingScene()
-            }
-        } else if case .showEmail = type {
-            return Menu(.showEmail)
-        } else if case .deleteAccount = type {
-            return Menu(.timetableSetting) {
-                TimetableSettingScene()
-            }
-        }
-        return Menu(.timetableSetting)
-    }
-    
-    init(container: DIContainer) {
-        self.container = container
+            .store(in: &bag)
     }
 
-    private var appState: AppState {
-        container.appState
-    }
-    
     private var userService: UserServiceProtocol {
-        container.services.userService
+        services.userService
     }
     
     private var settingsService: SettingsServiceProtocol {
         container.services.settingsService
     }
 
-    var currentUser: User {
-        appState.currentUser
+    private var userState: UserState {
+        appState.user
+    }
+    
+    private var setting: Setting {
+        appState.setting
+    }
+    
+    func fetchUser() async {
+        do {
+            try await userService.fetchUser()
+        } catch {
+            print("user error")
+        }
     }
 }

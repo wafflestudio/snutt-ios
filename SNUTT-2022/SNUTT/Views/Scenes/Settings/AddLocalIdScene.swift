@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// WIP
 struct AddLocalIdScene: View {
     
     private enum Field {
@@ -45,6 +46,9 @@ struct AddLocalIdScene: View {
                     Text("위 버튼을 누르시면 **일반 이용 약관**에 동의하시게 됩니다.".markdown)
                         .font(.caption)
                         .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.5)))
+                        .onTapGesture {
+                            // WIP: 일반 이용 약관
+                        }
                 }
                 Spacer()
             }

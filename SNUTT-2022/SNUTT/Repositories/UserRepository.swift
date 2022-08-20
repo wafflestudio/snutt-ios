@@ -13,8 +13,8 @@ protocol UserRepositoryProtocol {
     var token: String? { get }
     var fbName: String? { get }
     func cache(token: String)
-    func cache(localId: String)
-    func cache(fbName: String)
+    func cache(user: UserDto)
+    func getUser() async throws -> UserDto
 }
 
 class UserRepository: UserRepositoryProtocol {
@@ -40,11 +40,16 @@ class UserRepository: UserRepositoryProtocol {
         local.token = token
     }
     
-    func cache(localId: String) {
-        local.userLocalId = localId
+    func cache(user: UserDto) {
+        local.userLocalId = user.local_id
+        local.userFBName = user.fb_name
     }
     
-    func cache(fbName: String) {
-        local.userFBName = fbName
+    func getUser() async throws -> UserDto {
+        let data = try await session
+            .request(UserRouter.getUser)
+            .serializingDecodable(UserDto.self)
+            .handlingError()
+        return data
     }
 }

@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 
 class AppState {
-    var currentUser = User()
+    var user = UserState()
     var setting = Setting()
     var system = System()
 

@@ -11,14 +11,14 @@ struct SettingScene: View {
     let viewModel: SettingViewModel
     
     var menuList: [[Menu]] {
-        return viewModel.menuList
+        viewModel.menuList
     }
 
     var body: some View {
         List(menuList, id: \.self) { section in
             Section {
                 ForEach(section, id: \.self) { menu in
-                    menu.show()
+                    menu.view
                 }
             }
         }

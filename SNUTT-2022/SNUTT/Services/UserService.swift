@@ -8,18 +8,20 @@
 import Foundation
 
 protocol UserServiceProtocol {
-//    var accountSettingTitles: [[MenuType]] { get }
-//    var mainSettingTitles: [[MenuType]] { get }
     var userLocalId: String? { get }
     var token: String? { get }
     var fbName: String? { get }
+    func fetchUser() async throws
+    func cache(user: UserDto)
 }
 
-struct UserService: UserServiceProtocol {
+struct UserService: UserServiceProtocol, LocalCachable {
+    var local: SNUTTDefaultsContainer = SNUTTDefaultsContainer()
+    
     let appState: AppState
     let webRepositories: AppEnvironment.WebRepositories
     
-    var userServiceRepository: UserRepositoryProtocol {
+    var userRepository: UserRepositoryProtocol {
         webRepositories.userRepository
     }
 
@@ -29,22 +31,40 @@ struct UserService: UserServiceProtocol {
     }
 
     var userLocalId: String? {
-        userServiceRepository.userLocalId
+        userRepository.userLocalId
     }
     
     var token: String? {
-        userServiceRepository.token
+        userRepository.token
     }
 
     var fbName: String? {
-        userServiceRepository.fbName
+        userRepository.fbName
+    }
+    
+    func fetchUser() async throws {
+        let userDto = try await userRepository.getUser()
+        let user = User(from: userDto)
+        cache(user: userDto)
+        updateState(to: user)
+        
+    }
+    
+    func cache(user: UserDto) {
+        userRepository.cache(user: user)
+    }
+    
+    private func updateState(to user: User) {
+        DispatchQueue.main.async {
+            appState.user.current = user
+        }
     }
 }
 
 class FakeUserService: UserServiceProtocol {
-//    var accountSettingTitles: [[MenuType]] = []
-//    var mainSettingTitles: [[MenuType]] = []
     var userLocalId: String?
     var token: String?
     var fbName: String?
+    func fetchUser() {}
+    func cache(user: UserDto) {}
 }

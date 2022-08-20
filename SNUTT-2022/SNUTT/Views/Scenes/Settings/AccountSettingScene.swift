@@ -8,19 +8,26 @@
 import SwiftUI
 
 struct AccountSettingScene: View {
-    let viewModel: AccountSettingViewModel
-    
+    @ObservedObject var viewModel: AccountSettingViewModel
+
     var menuList: [[Menu]] {
-        return viewModel.menuList
+        viewModel.menuList
+    }
+    
+    init(viewModel: AccountSettingViewModel) {
+        self.viewModel = viewModel
     }
     
     var body: some View {
         List(menuList, id: \.self) { section in
             Section {
                 ForEach(section, id: \.self) { menu in
-                    menu.show()
+                    menu.view
                 }
             }
+        }
+        .onLoad {
+            await viewModel.fetchUser()
         }
         .listStyle(.grouped)
         .navigationTitle("계정 관리")

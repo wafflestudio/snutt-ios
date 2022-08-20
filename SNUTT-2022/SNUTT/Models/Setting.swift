@@ -6,8 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 class Setting: ObservableObject {
+    
+    @Published var mainMenuList: [[MenuType]] = []
+    @Published var accountMenuList: [[MenuType]] = []
+    
     var colorList: String? // STColorList
     var snuevWebUrl: String?
 

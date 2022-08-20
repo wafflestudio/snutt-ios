@@ -8,84 +8,40 @@
 import Foundation
 import SwiftUI
 
-class SettingViewModel {
-    var container: DIContainer
-    
+class SettingViewModel: BaseSettingViewModel {
     var menuList: [[Menu]] {
         var menuList: [[Menu]] = []
         for section in menuTitles {
-            var temp: [Menu] = []
+            var rows: [Menu] = []
             for title in section {
-                temp.append(makeMenu(with: title))
+                rows.append(makeMenu(from: title))
             }
-            menuList.append(temp)
+            menuList.append(rows)
         }
         return menuList
     }
     
-    func makeMenu(with type: MenuType) -> Menu {
-        if case .accountSetting = type {
-            return Menu(.accountSetting) {
-                AccountSettingScene(viewModel: AccountSettingViewModel(container: container))
-            }
-        } else if case .timetableSetting = type {
-            return Menu(.timetableSetting) {
-                TimetableSettingScene()
-            }
-        } else if case .showVersionInfo = type {
-            return Menu(.showVersionInfo)
-        } else if case .developerInfo = type {
-            return Menu(.developerInfo) {
-                DeveloperInfoScene()
-            }
-        } else if case .userSupport = type {
-            return Menu(.userSupport) {
-                DeveloperInfoScene()
-            }
-        } else if case .licenseInfo = type {
-            return Menu(.licenseInfo) {
-                LicenseScene()
-            }
-        } else if case .termsOfService = type {
-            return Menu(.termsOfService) {
-                TermsOfServiceScene()
-            }
-        } else if case .privacyPolicy = type {
-            return Menu(.privacyPolicy) {
-                PrivacyPolicyScene()
-            }
-        } else if case .logout = type {
-            return Menu(.logout)
-        }
-        return Menu(.timetableSetting)
-    }
-    
     var menuTitles: [[MenuType]] {
-        container.services.settingsService.mainSettingTitles
+        setting.mainMenuList
     }
     
-    var appVersion: String {
-        // WIP
-        return ""
+    override init(container: DIContainer) {
+        super.init(container: container)
     }
-
-    init(container: DIContainer) {
-        self.container = container
-    }
-
-    private var appState: AppState {
-        container.appState
+    
+    private var setting: Setting {
+        appState.setting
     }
     
     private var userService: UserServiceProtocol {
         container.services.userService
     }
-
-    var currentUser: User {
-        appState.currentUser
-    }
-
-    func updateCurrentUser(user: User) {
-        appState.currentUser = user
+    
+    func fetchUser() async {
+        do {
+            try await userService.fetchUser()
+        } catch {
+            print("error")
+        }
     }
 }
