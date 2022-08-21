@@ -12,30 +12,24 @@ protocol LectureServiceProtocol {
     func updateLecture(oldLecture: Lecture, newLecture: Lecture) async throws
     func addLecture(lecture: Lecture) async throws
     func deleteLecture(lecture: Lecture) async throws
-    func cache(timetable: TimetableDto)
 }
 
 struct LectureService: LectureServiceProtocol {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
+    var localRepositories: AppEnvironment.LocalRepositories
 
     var lectureRepository: LectureRepositoryProtocol {
         webRepositories.lectureRepository
     }
 
-    init(appState: AppState, webRepositories: AppEnvironment.WebRepositories) {
-        self.appState = appState
-        self.webRepositories = webRepositories
-    }
-
-    func cache(timetable: TimetableDto) {
-        lectureRepository.cache(timetable: timetable)
+    var userDefaultsRepository: UserDefaultsRepositoryProtocol {
+        localRepositories.userDefaultsRepository
     }
 
     func addLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
-        cache(timetable: dto)
         let timetable = Timetable(from: dto)
         DispatchQueue.main.async {
             withAnimation(.customSpring) {
@@ -43,31 +37,31 @@ struct LectureService: LectureServiceProtocol {
             }
             appState.timetable.current = timetable
         }
+        userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
     func updateLecture(oldLecture: Lecture, newLecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture))
-        cache(timetable: dto)
         let timetable = Timetable(from: dto)
         DispatchQueue.main.async {
             appState.timetable.current = timetable
         }
+        userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
     func deleteLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.deleteLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
-        cache(timetable: dto)
         let timetable = Timetable(from: dto)
         DispatchQueue.main.async {
             appState.timetable.current = timetable
         }
+        userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 }
 
 class FakeLectureService: LectureServiceProtocol {
-    func cache(timetable _: TimetableDto) {}
     func updateLecture(oldLecture _: Lecture, newLecture _: Lecture) async throws {}
     func addLecture(lecture _: Lecture) async throws {}
     func deleteLecture(lecture _: Lecture) async throws {}

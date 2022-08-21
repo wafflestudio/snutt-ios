@@ -10,9 +10,10 @@
 		B827A8FF289AEC6F00ABAE39 /* SNUTTDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827A8FE289AEC6F00ABAE39 /* SNUTTDefaults.swift */; };
 		B827A903289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827A902289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift */; };
 		B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* BaseViewModel.swift */; };
-		B8E215C828A4E0B4003FD933 /* LocalCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E215C728A4E0B3003FD933 /* LocalCachable.swift */; };
 		B8F570A6289E1221005C199F /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F570A5289E1221005C199F /* UserDefaults.swift */; };
 		B8F570A7289E1233005C199F /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F570A5289E1221005C199F /* UserDefaults.swift */; };
+		BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */; };
+		BE13C5B628AE636D0081D0AB /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */; };
 		BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
 		BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
 		BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
@@ -175,8 +176,8 @@
 		B827A8FE289AEC6F00ABAE39 /* SNUTTDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTDefaults.swift; sourceTree = "<group>"; };
 		B827A902289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTDefaultsContainer.swift; sourceTree = "<group>"; };
 		B87431CA283B5A7300D78C59 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
-		B8E215C728A4E0B3003FD933 /* LocalCachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCachable.swift; sourceTree = "<group>"; };
 		B8F570A5289E1221005C199F /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepository.swift; sourceTree = "<group>"; };
 		BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableGridLayer.swift; sourceTree = "<group>"; };
 		BE1D2B3928014527008F9134 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
 		BE419B8C288B8C5A00FA9590 /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
@@ -491,11 +492,11 @@
 			children = (
 				DC9C2CA928780589009EC3BC /* Dto */,
 				DC1E0ED2287738DF005632A3 /* Router */,
-				B8E215C728A4E0B3003FD933 /* LocalCachable.swift */,
 				DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */,
 				BE682BD828870718009EBCB7 /* LectureRepository.swift */,
 				BEDE34D92879AA0B00525014 /* UserRepository.swift */,
 				BE682C02288817C8009EBCB7 /* SearchRepository.swift */,
+				BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */,
 				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
 			);
 			path = Repositories;
@@ -757,6 +758,7 @@
 				BE804BEB288B9EFE00782F16 /* TimetableConfiguration.swift in Sources */,
 				BE419B8A288B8BB600FA9590 /* STColor.swift in Sources */,
 				BE419B89288B8BAD00FA9590 /* TimetableDto.swift in Sources */,
+				BE13C5B628AE636D0081D0AB /* UserDefaultsRepository.swift in Sources */,
 				BE419B86288B8B8F00FA9590 /* Theme.swift in Sources */,
 				BE419B87288B8B8F00FA9590 /* Weekday.swift in Sources */,
 				BE419B92288B8F9F00FA9590 /* TimetableBlock.swift in Sources */,
@@ -809,8 +811,8 @@
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
-				B8E215C828A4E0B4003FD933 /* LocalCachable.swift in Sources */,
 				DC2915A92866986600FE5F9A /* System.swift in Sources */,
+				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
 				BE98A00E288AA3D200C2CE95 /* MenuSheetContent.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				BE4B0EB828735052005FE164 /* MenuSheetSetting.swift in Sources */,
@@ -935,7 +937,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG WIDGET";
@@ -965,7 +967,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
@@ -1115,7 +1117,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1148,7 +1150,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

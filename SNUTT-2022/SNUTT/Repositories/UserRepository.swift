@@ -10,10 +10,8 @@ import Foundation
 
 protocol UserRepositoryProtocol {}
 
-class UserRepository: UserRepositoryProtocol, LocalCachable {
+class UserRepository: UserRepositoryProtocol {
     private let session: Session
-
-    var local = SNUTTDefaultsContainer()
 
     init(session: Session) {
         self.session = session
