@@ -73,11 +73,11 @@ extension AppEnvironment {
 
     private static func configuredServices(appState: AppState, webRepositories: WebRepositories, localRepositories: LocalRepositories) -> Services {
         let timetableService = TimetableService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
-        let userService = UserService(appState: appState, webRepositories: webRepositories)
+        let userService = UserService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
         let validationService = ValidationService(appState: appState, webRepositories: webRepositories)
-        let settingsService = SettingsService(appState: appState, webRepositories: webRepositories)
+        let settingsService = SettingsService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,

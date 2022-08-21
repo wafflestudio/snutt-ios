@@ -16,13 +16,14 @@ struct SettingsService: SettingsServiceProtocol {
     let appState: AppState
     let webRepositories: AppEnvironment.WebRepositories
     
+    var localRepositories: AppEnvironment.LocalRepositories
+    
     var userRepository: UserRepositoryProtocol {
         webRepositories.userRepository
     }
     
-    init(appState: AppState, webRepositories: AppEnvironment.WebRepositories) {
-        self.appState = appState
-        self.webRepositories = webRepositories
+    var userDefaultsRepository: UserDefaultsRepositoryProtocol {
+        localRepositories.userDefaultsRepository
     }
     
     /// 환경설정 > 계정 관리에서 보여줄 메뉴 목록입니다.
@@ -40,15 +41,15 @@ struct SettingsService: SettingsServiceProtocol {
     }
     
     var userLocalId: String? {
-        userRepository.userLocalId
+        userDefaultsRepository.get(String.self, key: .userLocalId)
     }
     
     var token: String? {
-        userRepository.token
+        userDefaultsRepository.get(String.self, key: .token)
     }
 
     var fbName: String? {
-        userRepository.fbName
+        userDefaultsRepository.get(String.self, key: .userFBName)
     }
     
     func updateAccountMenuList() {

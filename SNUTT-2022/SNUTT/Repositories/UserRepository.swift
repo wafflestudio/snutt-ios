@@ -9,12 +9,7 @@ import Alamofire
 import Foundation
 
 protocol UserRepositoryProtocol {
-    var userLocalId: String? { get }
-    var token: String? { get }
-    var fbName: String? { get }
-    func cache(token: String)
-    func cache(user: UserDto)
-    func getUser() async throws -> UserDto
+    func fetchUser() async throws -> UserDto
 }
 
 class UserRepository: UserRepositoryProtocol {
@@ -24,28 +19,7 @@ class UserRepository: UserRepositoryProtocol {
         self.session = session
     }
     
-    var userLocalId: String? {
-        local.userLocalId
-    }
-    
-    var token: String? {
-        local.token
-    }
-
-    var fbName: String? {
-        local.userFBName
-    }
-    
-    func cache(token: String) {
-        local.token = token
-    }
-    
-    func cache(user: UserDto) {
-        local.userLocalId = user.local_id
-        local.userFBName = user.fb_name
-    }
-    
-    func getUser() async throws -> UserDto {
+    func fetchUser() async throws -> UserDto {
         let data = try await session
             .request(UserRouter.getUser)
             .serializingDecodable(UserDto.self)

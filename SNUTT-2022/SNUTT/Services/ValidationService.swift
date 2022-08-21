@@ -7,6 +7,7 @@
 
 import Foundation
 
+// WIP
 protocol ValidationServiceProtocol {
     func isValid(id: String) -> Bool
     func isValid(password: String) -> Bool
