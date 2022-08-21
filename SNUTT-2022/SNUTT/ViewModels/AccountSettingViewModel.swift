@@ -5,20 +5,19 @@
 //  Created by 최유림 on 2022/08/01.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 class AccountSettingViewModel: BaseViewModel, ObservableObject {
-
     private var bag = Set<AnyCancellable>()
-    
+
     @Published var menuList: [[Menu]] = []
-    
+
     override init(container: DIContainer) {
         super.init(container: container)
 
         userState.$current
-            .sink { user in
+            .sink { _ in
                 self.settingsService.updateAccountMenuList()
             }
             .store(in: &bag)
@@ -31,7 +30,7 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
             }
             .store(in: &bag)
     }
-    
+
     private func setMenuList(_ titles: [[AccountSettings]]) -> [[Menu]] {
         var menuList: [[Menu]] = []
         for section in titles {
@@ -43,9 +42,9 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
         }
         return menuList
     }
-    
+
     private func makeMenu(_ type: AccountSettings) -> Menu {
-        switch(type) {
+        switch type {
         case .addLocalId:
             return Menu(AccountSettings.addLocalId) {
                 AddLocalIdScene(viewModel: AddLocalIdViewModel(container: container))
@@ -61,7 +60,7 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
         case .deleteFbConnection:
             return Menu(AccountSettings.deleteFbConnection)
         case .showEmail:
-            return Menu(AccountSettings.showEmail, self.appState.user.current?.email ?? "(없음)")
+            return Menu(AccountSettings.showEmail, appState.user.current?.email ?? "(없음)")
         case .deleteAccount:
             return Menu(AccountSettings.deleteAccount, destructive: true)
         }
@@ -70,7 +69,7 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
     private var userService: UserServiceProtocol {
         services.userService
     }
-    
+
     private var settingsService: SettingsServiceProtocol {
         container.services.settingsService
     }
@@ -78,11 +77,11 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
     private var userState: UserState {
         appState.user
     }
-    
+
     private var setting: Setting {
         appState.setting
     }
-    
+
     func fetchUser() async {
         do {
             try await userService.fetchUser()
@@ -91,4 +90,3 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
         }
     }
 }
-

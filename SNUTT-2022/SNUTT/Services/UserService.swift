@@ -14,13 +14,13 @@ protocol UserServiceProtocol {
 struct UserService: UserServiceProtocol {
     let appState: AppState
     let webRepositories: AppEnvironment.WebRepositories
-    
+
     var localRepositories: AppEnvironment.LocalRepositories
-    
+
     var userRepository: UserRepositoryProtocol {
         webRepositories.userRepository
     }
-    
+
     var userDefaultsRepository: UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
     }
@@ -32,7 +32,7 @@ struct UserService: UserServiceProtocol {
         userDefaultsRepository.set(String.self, key: .userFBName, value: user.fbName)
         updateState(to: user)
     }
-    
+
     private func updateState(to user: User) {
         DispatchQueue.main.async {
             appState.user.current = user

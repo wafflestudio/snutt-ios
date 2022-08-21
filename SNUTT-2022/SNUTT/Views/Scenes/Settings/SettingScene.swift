@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingScene: View {
     let viewModel: SettingViewModel
-    
+
     var body: some View {
         List {
             Section {

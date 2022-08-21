@@ -9,18 +9,17 @@ import SwiftUI
 
 // WIP
 struct AddLocalIdScene: View {
-    
     private enum Field {
         case id, password, passwordCheck
     }
-    
+
     let viewModel: AddLocalIdViewModel
 
     @State var id: String = ""
     @State var password: String = ""
     @State var passwordCheck: String = ""
     @FocusState private var focusedTextField: Field?
-    
+
     var body: some View {
         ZStack {
             VStack(spacing: 72) {
@@ -42,7 +41,7 @@ struct AddLocalIdScene: View {
                     .frame(height: 44)
                     .frame(maxWidth: .infinity)
                     .border(Color(uiColor: .label.withAlphaComponent(0.25)), width: 1)
-                    
+
                     Text("위 버튼을 누르시면 **일반 이용 약관**에 동의하시게 됩니다.".markdown)
                         .font(.caption)
                         .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.5)))
@@ -66,7 +65,7 @@ struct AddLocalIdScene: View {
 struct UnderlinedTextField: View {
     @State var placeholder: String
     @Binding var text: String
-    
+
     var body: some View {
         VStack {
             TextField(placeholder, text: $text)

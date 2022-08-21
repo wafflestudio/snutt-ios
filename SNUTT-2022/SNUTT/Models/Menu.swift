@@ -12,25 +12,25 @@ struct Menu: View {
     var destination: AnyView?
     var content: String?
     var destructive: Bool = false
-    var action: (() -> ())?
+    var action: (() -> Void)?
     var shouldNavigate: Bool {
         return destination != nil
     }
-    
+
     /// 탭하면 다른 화면으로 이동하는 메뉴입니다.
     init<Content>(_ menu: MenuType, _ destination: () -> Content) where Content: View {
-        self.title = menu.title
+        title = menu.title
         self.destination = AnyView(destination())
     }
 
     /// 다른 화면으로 이동하지 않고 정보만 보여주거나 탭할 시 Navigation 외의 액션을 하는 메뉴입니다.
-    init(_ menu: MenuType, _ content: String? = "", destructive: Bool = false, action: (() -> ())? = nil) {
-        self.title = menu.title
+    init(_ menu: MenuType, _ content: String? = "", destructive: Bool = false, action: (() -> Void)? = nil) {
+        title = menu.title
         self.content = content
         self.destructive = destructive
         self.action = action
     }
-    
+
     var body: some View {
         if shouldNavigate {
             NavigationLink(destination: destination) {
@@ -38,13 +38,13 @@ struct Menu: View {
             }
         } else {
             bodyView
-            .contentShape(Rectangle())
-            .onTapGesture {
-                (action ?? {})()
-            }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    (action ?? {})()
+                }
         }
     }
-    
+
     @ViewBuilder private var bodyView: some View {
         HStack {
             Text(title)
@@ -62,7 +62,7 @@ extension Menu: Hashable {
         hasher.combine(content)
         hasher.combine(shouldNavigate)
     }
-    
+
     static func == (lhs: Menu, rhs: Menu) -> Bool {
         return lhs.title == rhs.title && lhs.shouldNavigate == rhs.shouldNavigate && lhs.content == rhs.content
     }
@@ -83,9 +83,9 @@ enum Settings: MenuType {
     case termsOfService
     case privacyPolicy
     case logout
-    
+
     var title: String {
-        switch(self) {
+        switch self {
         case .accountSetting: return "계정 관리"
         case .timetableSetting: return "시간표 설정"
         case .showVersionInfo: return "버전 정보"
@@ -108,9 +108,9 @@ enum AccountSettings: MenuType {
     case deleteFbConnection
     case showEmail
     case deleteAccount
-    
+
     var title: String {
-        switch(self) {
+        switch self {
         case .addLocalId: return "아이디 비번 추가"
         case .showLocalId: return "아이디"
         case .changePassword: return "비밀번호 변경"

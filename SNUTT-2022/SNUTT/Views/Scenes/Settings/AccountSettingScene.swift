@@ -13,11 +13,11 @@ struct AccountSettingScene: View {
     var menuList: [[Menu]] {
         viewModel.menuList
     }
-    
+
     init(viewModel: AccountSettingViewModel) {
         self.viewModel = viewModel
     }
-    
+
     var body: some View {
         List(menuList, id: \.self) { section in
             Section {

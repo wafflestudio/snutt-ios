@@ -12,11 +12,11 @@ class SettingViewModel: BaseViewModel {
     override init(container: DIContainer) {
         super.init(container: container)
     }
-    
+
     private var setting: Setting {
         appState.setting
     }
-    
+
     private var userService: UserServiceProtocol {
         container.services.userService
     }

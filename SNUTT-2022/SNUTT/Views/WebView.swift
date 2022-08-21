@@ -17,12 +17,12 @@ protocol WebView: UIViewRepresentable {
 
 struct SingleWebView: WebView {
     var request: URLRequest
-    
-    func makeUIView(context: Context) -> WKWebView {
+
+    func makeUIView(context _: Context) -> WKWebView {
         return WKWebView()
     }
-    
-    func updateUIView(_ uiView: WKWebView, context: Context) {
+
+    func updateUIView(_ uiView: WKWebView, context _: Context) {
         uiView.load(request)
     }
 }
@@ -33,13 +33,13 @@ enum SNUTTWebView {
     case termsOfService
     case privacyPolicy
     // TODO: add Review View
-    
+
     private var baseURL: String {
         "https://snutt-api-dev.wafflestudio.com"
     }
-    
+
     private var path: String {
-        switch(self) {
+        switch self {
         case .developerInfo:
             return "/member"
         case .termsOfService:
@@ -48,7 +48,7 @@ enum SNUTTWebView {
             return "/privacy_policy"
         }
     }
-    
+
     var url: URL {
         URL(string: baseURL + path)!
     }

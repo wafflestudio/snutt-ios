@@ -18,7 +18,7 @@ class UserRepository: UserRepositoryProtocol {
     init(session: Session) {
         self.session = session
     }
-    
+
     func fetchUser() async throws -> UserDto {
         let data = try await session
             .request(UserRouter.getUser)

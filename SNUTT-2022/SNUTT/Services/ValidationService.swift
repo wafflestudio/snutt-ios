@@ -19,7 +19,7 @@ protocol ValidationServiceProtocol {
 struct ValidationService: ValidationServiceProtocol {
     let appState: AppState
     let webRepositories: AppEnvironment.WebRepositories
-    
+
     var userServiceRepository: UserRepositoryProtocol {
         webRepositories.userRepository
     }
@@ -28,41 +28,41 @@ struct ValidationService: ValidationServiceProtocol {
         self.appState = appState
         self.webRepositories = webRepositories
     }
-    
+
     func isValid(id: String) -> Bool {
         guard let _ = id.range(of: "^[a-z0-9]{4,32}$", options: [.regularExpression, .caseInsensitive]) else {
             return false
         }
         return true
     }
-    
+
     func isValid(password: String) -> Bool {
         guard let _ = password.range(of: "^(?=.*\\d)(?=.*[a-z])\\S{6,20}$", options: [.regularExpression, .caseInsensitive]) else {
             return false
         }
         return true
     }
-    
+
     func isValid(email: String) -> Bool {
         guard let _ = email.range(of: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}", options: [.regularExpression, .caseInsensitive]) else {
             return false
         }
         return true
     }
-    
-    func isValid(id: String, password: String, check: String) -> Bool {
+
+    func isValid(id _: String, password _: String, check _: String) -> Bool {
         return true
     }
-    
+
     func isValid(password: String, check: String) -> Bool {
         return password == check
     }
 }
 
 class FakeValidationService: ValidationServiceProtocol {
-    func isValid(id: String) -> Bool { return true }
-    func isValid(password: String) -> Bool { return true }
-    func isValid(email: String) -> Bool { return true }
-    func isValid(id: String, password: String, check: String) -> Bool { return true }
-    func isValid(password: String, check: String) -> Bool { return true }
+    func isValid(id _: String) -> Bool { return true }
+    func isValid(password _: String) -> Bool { return true }
+    func isValid(email _: String) -> Bool { return true }
+    func isValid(id _: String, password _: String, check _: String) -> Bool { return true }
+    func isValid(password _: String, check _: String) -> Bool { return true }
 }
