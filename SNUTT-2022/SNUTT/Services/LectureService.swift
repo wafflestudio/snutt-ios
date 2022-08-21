@@ -17,14 +17,14 @@ protocol LectureServiceProtocol {
 struct LectureService: LectureServiceProtocol {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
+    var localRepositories: AppEnvironment.LocalRepositories
 
     var lectureRepository: LectureRepositoryProtocol {
         webRepositories.lectureRepository
     }
 
-    init(appState: AppState, webRepositories: AppEnvironment.WebRepositories) {
-        self.appState = appState
-        self.webRepositories = webRepositories
+    var userDefaultsRepository: UserDefaultsRepositoryProtocol {
+        localRepositories.userDefaultsRepository
     }
 
     func addLecture(lecture: Lecture) async throws {
@@ -37,6 +37,7 @@ struct LectureService: LectureServiceProtocol {
             }
             appState.timetable.current = timetable
         }
+        userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
     func updateLecture(oldLecture: Lecture, newLecture: Lecture) async throws {
@@ -46,6 +47,7 @@ struct LectureService: LectureServiceProtocol {
         DispatchQueue.main.async {
             appState.timetable.current = timetable
         }
+        userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
     func deleteLecture(lecture: Lecture) async throws {
@@ -55,6 +57,7 @@ struct LectureService: LectureServiceProtocol {
         DispatchQueue.main.async {
             appState.timetable.current = timetable
         }
+        userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 }
 

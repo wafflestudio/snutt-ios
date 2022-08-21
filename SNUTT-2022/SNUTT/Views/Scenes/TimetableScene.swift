@@ -63,6 +63,9 @@ struct TimetableScene: View {
             .onLoad {
                 await viewModel.fetchTimetableList()
             }
+            .onLoad {
+                viewModel.loadTimetableConfig()
+            }
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(title: Text("API 에러"), message: Text("API 에러가 발생했습니다. 이 알러트는 테스트용입니다. 나중에 바꿔주세요."), dismissButton: .default(Text("취소")))
             }
