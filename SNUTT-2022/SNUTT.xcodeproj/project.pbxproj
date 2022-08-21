@@ -18,7 +18,6 @@
 		B88D16F728AC075E00E2D652 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16F628AC075E00E2D652 /* SettingsService.swift */; };
 		B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FA28AE2BB900E2D652 /* UserRouter.swift */; };
 		B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FC28AE2E1E00E2D652 /* User.swift */; };
-		B88D16FF28AF62D200E2D652 /* BaseSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FE28AF62D200E2D652 /* BaseSettingViewModel.swift */; };
 		B88D170128AF71E300E2D652 /* UserSupportScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170028AF71E300E2D652 /* UserSupportScene.swift */; };
 		B88D170328B1501F00E2D652 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170228B1501F00E2D652 /* WebView.swift */; };
 		B8E215C828A4E0B4003FD933 /* LocalCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E215C728A4E0B3003FD933 /* LocalCachable.swift */; };
@@ -210,7 +209,6 @@
 		B88D16F628AC075E00E2D652 /* SettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
 		B88D16FA28AE2BB900E2D652 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		B88D16FC28AE2E1E00E2D652 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		B88D16FE28AF62D200E2D652 /* BaseSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingViewModel.swift; sourceTree = "<group>"; };
 		B88D170028AF71E300E2D652 /* UserSupportScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSupportScene.swift; sourceTree = "<group>"; };
 		B88D170228B1501F00E2D652 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		B8E215C728A4E0B3003FD933 /* LocalCachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCachable.swift; sourceTree = "<group>"; };
@@ -629,7 +627,6 @@
 				BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */,
 				B8F40EB628980E7A0021A2A9 /* AccountSettingViewModel.swift */,
 				B87E0A3628A68A6900D2EA95 /* AddLocalIdViewModel.swift */,
-				B88D16FE28AF62D200E2D652 /* BaseSettingViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -881,7 +878,6 @@
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
 				B87E0A3928A91C8B00D2EA95 /* Menu.swift in Sources */,
 				B88D170128AF71E300E2D652 /* UserSupportScene.swift in Sources */,
-				B88D16FF28AF62D200E2D652 /* BaseSettingViewModel.swift in Sources */,
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
 				B8F40EB128980DE00021A2A9 /* TermsOfServiceScene.swift in Sources */,
 				DC2915A32866958100FE5F9A /* UserState.swift in Sources */,

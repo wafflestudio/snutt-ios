@@ -22,7 +22,7 @@ struct AccountSettingScene: View {
         List(menuList, id: \.self) { section in
             Section {
                 ForEach(section, id: \.self) { menu in
-                    menu.view
+                    menu
                 }
             }
         }

@@ -8,23 +8,7 @@
 import Foundation
 import SwiftUI
 
-class SettingViewModel: BaseSettingViewModel {
-    var menuList: [[Menu]] {
-        var menuList: [[Menu]] = []
-        for section in menuTitles {
-            var rows: [Menu] = []
-            for title in section {
-                rows.append(makeMenu(from: title))
-            }
-            menuList.append(rows)
-        }
-        return menuList
-    }
-    
-    var menuTitles: [[MenuType]] {
-        setting.mainMenuList
-    }
-    
+class SettingViewModel: BaseViewModel {
     override init(container: DIContainer) {
         super.init(container: container)
     }
@@ -35,13 +19,5 @@ class SettingViewModel: BaseSettingViewModel {
     
     private var userService: UserServiceProtocol {
         container.services.userService
-    }
-    
-    func fetchUser() async {
-        do {
-            try await userService.fetchUser()
-        } catch {
-            print("error")
-        }
     }
 }

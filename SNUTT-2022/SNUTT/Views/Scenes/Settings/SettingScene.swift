@@ -10,16 +10,40 @@ import SwiftUI
 struct SettingScene: View {
     let viewModel: SettingViewModel
     
-    var menuList: [[Menu]] {
-        viewModel.menuList
-    }
-
     var body: some View {
-        List(menuList, id: \.self) { section in
+        List {
             Section {
-                ForEach(section, id: \.self) { menu in
-                    menu.view
+                Menu(Settings.accountSetting) {
+                    AccountSettingScene(viewModel: AccountSettingViewModel(container: viewModel.container))
                 }
+                Menu(Settings.timetableSetting) {
+                    TimetableSettingScene()
+                }
+            }
+            Section {
+                Menu(Settings.showVersionInfo)
+            }
+            Section {
+                Menu(Settings.developerInfo) {
+                    DeveloperInfoScene()
+                }
+                Menu(Settings.userSupport) {
+                    UserSupportScene()
+                }
+            }
+            Section {
+                Menu(Settings.licenseInfo) {
+                    LicenseScene()
+                }
+                Menu(Settings.termsOfService) {
+                    TermsOfServiceScene()
+                }
+                Menu(Settings.privacyPolicy) {
+                    PrivacyPolicyScene()
+                }
+            }
+            Section {
+                Menu(Settings.logout, destructive: true)
             }
         }
         .listStyle(.grouped)

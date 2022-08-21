@@ -8,9 +8,8 @@
 import Foundation
 
 protocol SettingsServiceProtocol {
-    var accountSettingTitles: [[MenuType]] { get }
-    var mainSettingTitles: [[MenuType]] { get }
-    func setMenuList()
+    var accountMenuList: [[AccountSettings]] { get }
+    func updateAccountMenuList()
 }
 
 struct SettingsService: SettingsServiceProtocol {
@@ -24,20 +23,11 @@ struct SettingsService: SettingsServiceProtocol {
     init(appState: AppState, webRepositories: AppEnvironment.WebRepositories) {
         self.appState = appState
         self.webRepositories = webRepositories
-        setMenuList()
     }
     
-    /// 환경설정에서 보여줄 메뉴 목록입니다.
-    var mainSettingTitles: [[MenuType]] =
-        [[.accountSetting, .timetableSetting],
-                [.showVersionInfo],
-                [.developerInfo, .userSupport],
-                [.licenseInfo, .termsOfService, .privacyPolicy],
-                [.logout]]
-    
     /// 환경설정 > 계정 관리에서 보여줄 메뉴 목록입니다.
-    var accountSettingTitles: [[MenuType]] {
-        var menu: [[MenuType]] = []
+    var accountMenuList: [[AccountSettings]] {
+        var menu: [[AccountSettings]] = []
         menu.append(userLocalId == nil
                     ? [.addLocalId]
                     : [.showLocalId, .changePassword])
@@ -61,16 +51,14 @@ struct SettingsService: SettingsServiceProtocol {
         userRepository.fbName
     }
     
-    func setMenuList() {
+    func updateAccountMenuList() {
         DispatchQueue.main.async {
-            appState.setting.mainMenuList = mainSettingTitles
-            appState.setting.accountMenuList = accountSettingTitles
+            appState.setting.accountMenuList = accountMenuList
         }
     }
 }
 
 class FakeSettingsService: SettingsServiceProtocol {
-    var accountSettingTitles: [[MenuType]] = []
-    var mainSettingTitles: [[MenuType]] = []
-    func setMenuList() {}
+    var accountMenuList: [[AccountSettings]] = []
+    func updateAccountMenuList() {}
 }

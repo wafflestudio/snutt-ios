@@ -10,8 +10,7 @@ import Combine
 
 class Setting: ObservableObject {
     
-    @Published var mainMenuList: [[MenuType]] = []
-    @Published var accountMenuList: [[MenuType]] = []
+    @Published var accountMenuList: [[AccountSettings]] = []
     
     var colorList: String? // STColorList
     var snuevWebUrl: String?
