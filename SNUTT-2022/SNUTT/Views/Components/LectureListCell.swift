@@ -10,39 +10,52 @@ import SwiftUI
 struct LectureListCell: View {
     let lecture: Lecture
 
-    @ViewBuilder
-    func detailRow(imageName: String, text: String) -> some View {
-        HStack {
-            Image(imageName)
-            Text(text)
-                .font(STFont.details)
-            Spacer()
-        }
-    }
-
     var body: some View {
         VStack(spacing: 8) {
             // title
-            HStack {
+            LectureHeaderRow(lecture: lecture)
+
+            // details
+            if lecture.isCustom {
+                LectureDetailRow(imageName: "tag.black", text: "(없음)")
+            } else {
+                LectureDetailRow(imageName: "tag.black", text: "\(lecture.department), \(lecture.academicYear)")
+            }
+            LectureDetailRow(imageName: "clock.black", text: lecture.timeString.isEmpty ? "(없음)" : lecture.timeString)
+            LectureDetailRow(imageName: "map.black", text: lecture.timePlaces.isEmpty ? "(없음)" : lecture.timePlaces.map { $0.place }.joined(separator: "/"))
+        }
+        .padding(.vertical, 5)
+
+        let _ = debugChanges()
+    }
+}
+
+struct LectureHeaderRow: View {
+    let lecture: Lecture
+    var body: some View {
+        HStack {
+            Group {
                 Text(lecture.title)
                     .font(STFont.subheading)
                 Spacer()
                 Text("\(lecture.instructor) / \(lecture.credit)학점")
                     .font(STFont.details)
             }
-
-            // details
-            if lecture.isCustom {
-                detailRow(imageName: "tag.black", text: "(없음)")
-            } else {
-                detailRow(imageName: "tag.black", text: "\(lecture.department), \(lecture.academicYear)")
-            }
-            detailRow(imageName: "clock.black", text: "목2")
-            detailRow(imageName: "map.black", text: "049-215")
         }
-        .padding(.vertical, 5)
+    }
+}
 
-        let _ = debugChanges()
+struct LectureDetailRow: View {
+    let imageName: String
+    let text: String
+
+    var body: some View {
+        HStack {
+            Image(imageName)
+            Text(text)
+                .font(STFont.details)
+            Spacer()
+        }
     }
 }
 

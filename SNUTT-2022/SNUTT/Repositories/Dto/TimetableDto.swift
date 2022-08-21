@@ -34,10 +34,15 @@ struct LectureDto: Codable {
     let category: String?
     let course_number: String?
     let lecture_number: String?
-    let created_at: String
-    let updated_at: String
-    let color: [String: String]
-    let colorIndex: Int
+    let created_at: String?
+    let updated_at: String?
+    let color: LectureColorDto?
+    let colorIndex: Int?
+}
+
+struct LectureColorDto: Codable {
+    let fg: String?
+    let bg: String?
 }
 
 struct TimePlaceDto: Codable {
@@ -48,6 +53,7 @@ struct TimePlaceDto: Codable {
     let place: String
 }
 
+// TODO: when is this used?
 struct TimetableListDto: Codable {
     let _id: String
     let user_id: String
@@ -66,6 +72,19 @@ struct TimetableMetadataDto: Codable {
     let title: String
     let updated_at: String
     let total_credit: Int
+}
+
+extension TimetableDto {
+    init(from model: Timetable) {
+        _id = model.id
+        user_id = model.userId
+        year = model.year
+        semester = model.semester
+        title = model.title
+        lecture_list = model.lectures.map { LectureDto(from: $0) }
+        theme = model.theme.rawValue
+        updated_at = model.updatedAt
+    }
 }
 
 extension TimePlaceDto {
@@ -98,7 +117,7 @@ extension LectureDto {
         lecture_number = model.lectureNumber
         created_at = model.createdAt
         updated_at = model.updatedAt
-        color = model.color
         colorIndex = model.colorIndex
+        color = .init(fg: model.color?.fg.toHex(), bg: model.color?.bg.toHex())
     }
 }

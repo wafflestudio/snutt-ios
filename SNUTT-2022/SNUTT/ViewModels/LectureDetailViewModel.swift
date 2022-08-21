@@ -15,19 +15,26 @@ extension LectureDetailScene {
         }
 
         var currentTimetable: Timetable? {
-            appState.setting.timetableSetting.current
+            appState.timetable.current
         }
 
         func updateLecture(oldLecture: Lecture, newLecture: Lecture) async -> Bool {
-            guard let timetableId = currentTimetable?.id else { return false }
             do {
-                try await lectureService.updateLecture(timetableId: timetableId, oldLecture: oldLecture, newLecture: newLecture)
+                try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture)
             } catch {
-                // TODO: show Error message
+                // TODO: handle error
                 print(error.asSTError?.errorMessage)
                 return false
             }
             return true
+        }
+
+        func deleteLecture(lecture: Lecture) async {
+            do {
+                try await lectureService.deleteLecture(lecture: lecture)
+            } catch {
+                // TODO: handle error
+            }
         }
     }
 }

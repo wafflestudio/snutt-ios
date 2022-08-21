@@ -14,6 +14,10 @@ struct LectureDetailScene: View {
     @State private var editMode: EditMode = .inactive
     @State private var tempLecture: Lecture = .preview
 
+    // for modal presentation
+    var isPresentedModally: Bool = false
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -117,21 +121,32 @@ struct LectureDetailScene: View {
                         print("tap")
                     }
 
-                    DetailButton(text: "삭제") {
-                        print("tap")
+                    if !isPresentedModally {
+                        DetailButton(text: "삭제", role: .destructive) {
+                            // TODO: check alert
+                            Task {
+                                await viewModel.deleteLecture(lecture: lecture)
+                            }
+                        }
                     }
-                    .foregroundColor(.red)
                 }
                 .background(STColor.groupForeground)
             }
             .padding(.vertical, 20)
         }
-        .background(Color(uiColor: .systemGroupedBackground))
+        .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(editMode.isEditing)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                if editMode.isEditing {
+                if isPresentedModally {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("취소")
+                            .foregroundColor(Color(uiColor: .label))
+                    }
+                } else if editMode.isEditing {
                     Button {
                         // cancel
                         lecture = tempLecture
@@ -143,28 +158,28 @@ struct LectureDetailScene: View {
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    if editMode.isEditing {
-                        // save
-                        Task {
-                            let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
-                            if !success {
-                                lecture = tempLecture
+                if !isPresentedModally {
+                    Button {
+                        if editMode.isEditing {
+                            // save
+                            Task {
+                                let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
+                                if !success {
+                                    lecture = tempLecture
+                                }
                             }
+                            editMode = .inactive
+                            resignFirstResponder()
+                        } else {
+                            // edit
+                            tempLecture = lecture
+                            editMode = .active
+                            resignFirstResponder()
                         }
-                        editMode = .inactive
-                        resignFirstResponder()
-                    } else {
-                        // edit
-                        tempLecture = lecture
-                        editMode = .active
-                        resignFirstResponder()
+                    } label: {
+                        Text(editMode.isEditing ? "저장" : "편집")
                     }
-                } label: {
-                    Text(editMode.isEditing ? "저장" : "편집")
                 }
-
-                EditButton()
             }
         }
         .environment(\.editMode, $editMode)
@@ -230,6 +245,8 @@ struct EditableTextField: View {
 
 extension EditableTextField {
     /// Custom initializer to support editing `place` of a `Lecture`.
+    ///
+    /// 주어진 `timePlace`의 인자와 id가 같은 `TimePlace` 객체의 `place` 속성만 수정되도록 Binding을 재정의한다.
     init(lecture: Binding<Lecture>, timePlace: TimePlace) {
         _text = Binding(get: {
             guard let firstItem = lecture.wrappedValue.timePlaces.first(where: { $0.id == timePlace.id }) else { return "" }
@@ -244,6 +261,7 @@ extension EditableTextField {
 struct EditableNumberField: View {
     @Binding var value: Int
     @Environment(\.editMode) private var editMode
+    var readOnly: Bool = false
 
     var isEditing: Bool {
         editMode?.wrappedValue.isEditing ?? false
@@ -251,7 +269,8 @@ struct EditableNumberField: View {
 
     var body: some View {
         TextField("(없음)", value: $value, formatter: NumberFormatter())
-            .disabled(!isEditing)
+            .disabled(!isEditing || readOnly)
+            .foregroundColor(readOnly ? STColor.disabled : Color(uiColor: .label))
             .keyboardType(.numberPad)
             .onReceive(Just(value)) { newValue in
                 let inputString = String(newValue)
@@ -292,13 +311,14 @@ struct EditableTimeField: View {
 
 struct DetailButton: View {
     let text: String
+    let role: ButtonRole?
     let action: () -> Void
 
     struct DetailButtonStyle: ButtonStyle {
         func makeBody(configuration: Self.Configuration) -> some View {
             configuration.label
-                .frame(maxWidth: .infinity)
-                .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : STColor.groupForeground)
+                .contentShape(Rectangle())
+                .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : .clear)
         }
     }
 
@@ -307,9 +327,19 @@ struct DetailButton: View {
             action()
         } label: {
             Text(text)
+                .frame(maxWidth: .infinity)
                 .padding()
+                .contentShape(Rectangle())
+                .foregroundColor(role == .destructive ? .red : Color(uiColor: .label))
         }
-        .buttonStyle(DetailButtonStyle())
+    }
+}
+
+extension DetailButton {
+    init(text: String, action: @escaping () -> Void) {
+        self.text = text
+        role = nil
+        self.action = action
     }
 }
 

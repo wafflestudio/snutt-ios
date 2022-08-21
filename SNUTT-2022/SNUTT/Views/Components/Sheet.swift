@@ -11,6 +11,8 @@ struct Sheet<Content>: View where Content: View {
     @Binding var isOpen: Bool
     let orientation: SheetOrientation
     var cornerRadius: CGFloat = 20
+    var sheetColor: Color = STColor.sheetBackground
+    var sheetOpacity: CGFloat = 1
     @ViewBuilder var content: () -> Content
 
     @GestureState private var translation: CGFloat = 0
@@ -41,16 +43,17 @@ struct Sheet<Content>: View where Content: View {
                 }
 
             ZStack {
-                Color(UIColor.systemBackground)
+                sheetColor.opacity(sheetOpacity)
+                    .background(.thinMaterial)
                     .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                    .edgesIgnoringSafeArea(.all)
+                    .ignoresSafeArea()
                 self.content()
             }
             .frame(width: orientation.getFrame(reader: reader).width, height: orientation.getFrame(reader: reader).height)
             .offset(orientation.getOffset(isOpen: isOpen, translation: translation, reader: reader))
             .animation(.customSpring, value: isOpen)
         }
-        .ignoresSafeArea()
+        .edgesIgnoringSafeArea(.bottom)
         .highPriorityGesture(
             dragGesture
         )
@@ -106,7 +109,7 @@ enum SheetOrientation {
             return .init(width: min(-(isOpen ? 0 : maxWidth) + translation, 0), height: 0)
         case let .bottom(maxHeight):
             let maxOffset = reader.size.height - maxHeight
-            return .init(width: 0, height: isOpen ? max(maxOffset + translation, maxOffset) : reader.size.height + 10)
+            return .init(width: 0, height: isOpen ? max(maxOffset + translation, maxOffset) : reader.size.height + 40) // TODO: fix this "+ 40"
         }
     }
 

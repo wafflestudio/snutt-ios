@@ -25,10 +25,9 @@ struct TimePlace: Identifiable {
 
     /// 단위: 교시
     ///
-    /// 정규 강좌의 경우(`isCustom == false`), 7.5교시는 오후 15시 30분을 의미한다.
-    /// 그러나 커스텀 강좌의 경우(`isCustom == true`), 7.5교시는 오전 7시 30분을 의미한다.
+    /// 7.5교시는 오후 15시 30분을 의미한다.
     var startTime: Double {
-        isCustom ? start : start + 8
+        start + 8
     }
 
     var endTime: Double {
@@ -41,6 +40,11 @@ struct TimePlace: Identifiable {
 
     var endTimeString: String {
         getString(from: endTime)
+    }
+
+    /// `월7`(월요일 7교시)과 같이 표기한다.
+    var startDateTimeString: String {
+        "\(day.shortSymbol)\(Int(start))"
     }
 
     /// `time: Double`을 분 단위로 정확하게 60진법 수로 환산한다.

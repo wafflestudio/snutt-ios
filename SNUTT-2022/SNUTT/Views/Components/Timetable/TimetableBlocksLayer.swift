@@ -8,28 +8,38 @@
 import SwiftUI
 
 struct TimetableBlocksLayer: View {
-    let viewModel: ViewModel
-    @EnvironmentObject var timetableSetting: TimetableSetting
+    let current: Timetable?
+    let config: TimetableConfiguration
+
+    #if !WIDGET
+        @Environment(\.selectedLecture) var selectedLecture: Lecture?
+    #endif
+
+    var currentTheme: Theme {
+        current?.theme ?? .snutt
+    }
 
     var body: some View {
-        ForEach(timetableSetting.current?.lectures ?? []) { lecture in
-            LectureBlocks(viewModel: .init(container: viewModel.container), lecture: lecture)
+        ForEach(current?.lectures ?? []) { lecture in
+            LectureBlocks(lecture: lecture, theme: currentTheme, config: config)
         }
+
+        #if !WIDGET
+            if var selectedLecture = selectedLecture {
+                LectureBlocks(lecture: selectedLecture.withTemporaryColor(), theme: currentTheme, config: config)
+            }
+        #endif
 
         let _ = debugChanges()
     }
 }
 
-extension TimetableBlocksLayer {
-    class ViewModel: BaseViewModel {}
-}
-
-struct TimetableBlocks_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            let viewModel = TimetableViewModel(container: .preview)
-            TimetableBlocksLayer(viewModel: .init(container: .preview))
-                .environmentObject(viewModel.timetableSetting)
-        }
-    }
-}
+// struct TimetableBlocks_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ZStack {
+//            let viewModel = TimetableViewModel(container: .preview)
+//            TimetableBlocksLayer(viewModel: .init(container: .preview))
+//                .environmentObject(viewModel.timetableState)
+//        }
+//    }
+// }

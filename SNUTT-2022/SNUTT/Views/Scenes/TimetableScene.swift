@@ -9,11 +9,16 @@ import SwiftUI
 
 struct TimetableScene: View {
     @State private var pushToListScene = false
-    @StateObject var viewModel: TimetableViewModel
+    @ObservedObject var viewModel: TimetableViewModel
+    @ObservedObject var timetableState: TimetableState
+
+    init(viewModel: TimetableViewModel) {
+        self.viewModel = viewModel
+        timetableState = viewModel.timetableState
+    }
 
     var body: some View {
-        TimetableZStack(viewModel: .init(container: viewModel.container))
-            .environmentObject(viewModel.timetableSetting)
+        TimetableZStack(current: viewModel.timetableState.current, config: viewModel.timetableState.configuration)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
                 NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) {
@@ -52,14 +57,42 @@ struct TimetableScene: View {
                     }
                 }
             }
-            .task {
+            .onLoad {
                 await viewModel.fetchRecentTimetable()
+            }
+            .onLoad {
+                await viewModel.fetchTimetableList()
             }
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(title: Text("API 에러"), message: Text("API 에러가 발생했습니다. 이 알러트는 테스트용입니다. 나중에 바꿔주세요."), dismissButton: .default(Text("취소")))
             }
 
         let _ = debugChanges()
+    }
+}
+
+struct ViewDidLoadModifier: ViewModifier {
+    @State private var didLoad = false
+    private let action: (() async -> Void)?
+
+    init(perform action: (() async -> Void)? = nil) {
+        self.action = action
+    }
+
+    func body(content: Content) -> some View {
+        content.task {
+            if didLoad == false {
+                didLoad = true
+                await action?()
+            }
+        }
+    }
+}
+
+extension View {
+    /// Adds an (asynchronous) action to perform when this view is loaded.
+    func onLoad(perform action: (() async -> Void)? = nil) -> some View {
+        modifier(ViewDidLoadModifier(perform: action))
     }
 }
 

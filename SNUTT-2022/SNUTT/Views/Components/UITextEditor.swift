@@ -65,6 +65,8 @@ struct UITextEditor: UIViewRepresentable {
 
     func updateUIView(_ uiView: UITextView, context _: Context) {
         DispatchQueue.main.async {
+            uiView.text = text
+            self.placeholderView.isHidden = !text.isEmpty
             self.textDidChange(uiView)
         }
     }

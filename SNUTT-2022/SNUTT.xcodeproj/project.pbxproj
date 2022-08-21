@@ -10,9 +10,27 @@
 		B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* BaseViewModel.swift */; };
 		BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
 		BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
+		BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
+		BE419B84288B8B8F00FA9590 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
+		BE419B85288B8B8F00FA9590 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507427F4289B00CDCC13 /* Lecture.swift */; };
+		BE419B86288B8B8F00FA9590 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BB5287C40AF009EBCB7 /* Theme.swift */; };
+		BE419B87288B8B8F00FA9590 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
+		BE419B88288B8B8F00FA9590 /* Quarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFE2888056C009EBCB7 /* Quarter.swift */; };
+		BE419B89288B8BAD00FA9590 /* TimetableDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */; };
+		BE419B8A288B8BB600FA9590 /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507827F42D7500CDCC13 /* STColor.swift */; };
+		BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE419B8C288B8C5A00FA9590 /* View+Debug.swift */; };
+		BE419B8E288B8C6800FA9590 /* View+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE419B8C288B8C5A00FA9590 /* View+Debug.swift */; };
+		BE419B91288B8F9C00FA9590 /* TimetableZStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBF281D762F005F71E6 /* TimetableZStack.swift */; };
+		BE419B92288B8F9F00FA9590 /* TimetableBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBD281D6244005F71E6 /* TimetableBlock.swift */; };
+		BE419B93288B8FA600FA9590 /* TimetableBlocksLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */; };
+		BE419B94288B8FA600FA9590 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
+		BE419B95288B8FA600FA9590 /* LectureBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */; };
+		BE419B98288B8FDC00FA9590 /* STFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507627F42D1100CDCC13 /* STFont.swift */; };
+		BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE419B99288B915800FA9590 /* TimetableUtils.swift */; };
+		BE419B9B288B917A00FA9590 /* TimetableUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE419B99288B915800FA9590 /* TimetableUtils.swift */; };
 		BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */; };
 		BE4B0EB828735052005FE164 /* MenuSheetSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */; };
-		BE4B0EBC2873BC2B005FE164 /* FilterSheetSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBB2873BC2B005FE164 /* FilterSheetSetting.swift */; };
+		BE4B0EBC2873BC2B005FE164 /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBB2873BC2B005FE164 /* SearchState.swift */; };
 		BE4B0EBE2873BC84005FE164 /* FilterSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBD2873BC84005FE164 /* FilterSheetViewModel.swift */; };
 		BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */; };
 		BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BB5287C40AF009EBCB7 /* Theme.swift */; };
@@ -30,8 +48,19 @@
 		BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */; };
 		BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BEE288722A5009EBCB7 /* ErrorDto.swift */; };
 		BE682BF128872315009EBCB7 /* STError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BF028872315009EBCB7 /* STError.swift */; };
+		BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BF82887FB59009EBCB7 /* SearchRouter.swift */; };
+		BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */; };
+		BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFC2887FC78009EBCB7 /* SearchTag.swift */; };
+		BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFE2888056C009EBCB7 /* Quarter.swift */; };
+		BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C002888173B009EBCB7 /* TagRouter.swift */; };
+		BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C02288817C8009EBCB7 /* SearchRepository.swift */; };
+		BE682C0528881852009EBCB7 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C0428881852009EBCB7 /* SearchService.swift */; };
+		BE682C092889ADD7009EBCB7 /* SearchLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C082889ADD7009EBCB7 /* SearchLectureCell.swift */; };
 		BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230027FF20EE004DC202 /* TimetableScene.swift */; };
 		BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E230227FF3C38004DC202 /* NavBarButton.swift */; };
+		BE804BEA288B9EF700782F16 /* TimetableConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */; };
+		BE804BEB288B9EFE00782F16 /* TimetableConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */; };
+		BE804C062894157500782F16 /* SNUTTWidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE804C052894157500782F16 /* SNUTTWidgetProvider.swift */; };
 		BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */; };
 		BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AE285D77D000070A66 /* SearchBar.swift */; };
 		BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */; };
@@ -39,6 +68,18 @@
 		BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
 		BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBD281D6244005F71E6 /* TimetableBlock.swift */; };
 		BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBF281D762F005F71E6 /* TimetableZStack.swift */; };
+		BE98A00A288A90C000C2CE95 /* Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A009288A90C000C2CE95 /* Logo.swift */; };
+		BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A00B288A9E2A00C2CE95 /* MenuSection.swift */; };
+		BE98A00E288AA3D200C2CE95 /* MenuSheetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A00D288AA3D200C2CE95 /* MenuSheetContent.swift */; };
+		BE98A064288AFC1500C2CE95 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE98A063288AFC1500C2CE95 /* WidgetKit.framework */; };
+		BE98A066288AFC1500C2CE95 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE98A065288AFC1500C2CE95 /* SwiftUI.framework */; };
+		BE98A069288AFC1600C2CE95 /* SNUTTWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A068288AFC1500C2CE95 /* SNUTTWidgetBundle.swift */; };
+		BE98A06C288AFC1600C2CE95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE98A06B288AFC1600C2CE95 /* Assets.xcassets */; };
+		BE98A06E288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */; };
+		BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */; };
+		BE98A072288AFC1600C2CE95 /* SNUTTWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BE98A061288AFC1500C2CE95 /* SNUTTWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BE98A07F288B046400C2CE95 /* TimetableWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A07D288B032600C2CE95 /* TimetableWidget.swift */; };
+		BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */; };
 		BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */; };
 		BEDE34CA28754F3100525014 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34C928754F3100525014 /* Sheet.swift */; };
 		BEDE34D42879A59B00525014 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BEDE34D32879A59B00525014 /* Alamofire */; };
@@ -73,7 +114,7 @@
 		DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */; };
 		DC2915A32866958100FE5F9A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A22866958100FE5F9A /* User.swift */; };
 		DC2915A52866980B00FE5F9A /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A42866980B00FE5F9A /* Setting.swift */; };
-		DC2915A72866984000FE5F9A /* TimetableSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A62866984000FE5F9A /* TimetableSetting.swift */; };
+		DC2915A72866984000FE5F9A /* TimetableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A62866984000FE5F9A /* TimetableState.swift */; };
 		DC2915A92866986600FE5F9A /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A82866986600FE5F9A /* System.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4C27E5C87F0068C94B /* Assets.xcassets */; };
@@ -88,6 +129,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BE98A070288AFC1600C2CE95 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC860F3D27E5C87D0068C94B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BE98A060288AFC1500C2CE95;
+			remoteInfo = SNUTTWidgetExtension;
+		};
 		DC860F5627E5C87F0068C94B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DC860F3D27E5C87D0068C94B /* Project object */;
@@ -104,13 +152,29 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BE98A073288AFC1600C2CE95 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BE98A072288AFC1600C2CE95 /* SNUTTWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B87431CA283B5A7300D78C59 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableGridLayer.swift; sourceTree = "<group>"; };
 		BE1D2B3928014527008F9134 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
+		BE419B8C288B8C5A00FA9590 /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
+		BE419B99288B915800FA9590 /* TimetableUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableUtils.swift; sourceTree = "<group>"; };
 		BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetViewModel.swift; sourceTree = "<group>"; };
 		BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetSetting.swift; sourceTree = "<group>"; };
-		BE4B0EBB2873BC2B005FE164 /* FilterSheetSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetSetting.swift; sourceTree = "<group>"; };
+		BE4B0EBB2873BC2B005FE164 /* SearchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
 		BE4B0EBD2873BC84005FE164 /* FilterSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetViewModel.swift; sourceTree = "<group>"; };
 		BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSceneViewModel.swift; sourceTree = "<group>"; };
 		BE682BB22879E24D009EBCB7 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,8 +189,20 @@
 		BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetailViewModel.swift; sourceTree = "<group>"; };
 		BE682BEE288722A5009EBCB7 /* ErrorDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDto.swift; sourceTree = "<group>"; };
 		BE682BF028872315009EBCB7 /* STError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STError.swift; sourceTree = "<group>"; };
+		BE682BF82887FB59009EBCB7 /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
+		BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagDto.swift; sourceTree = "<group>"; };
+		BE682BFC2887FC78009EBCB7 /* SearchTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTag.swift; sourceTree = "<group>"; };
+		BE682BFE2888056C009EBCB7 /* Quarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quarter.swift; sourceTree = "<group>"; };
+		BE682C002888173B009EBCB7 /* TagRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagRouter.swift; sourceTree = "<group>"; };
+		BE682C02288817C8009EBCB7 /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
+		BE682C0428881852009EBCB7 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		BE682C082889ADD7009EBCB7 /* SearchLectureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLectureCell.swift; sourceTree = "<group>"; };
 		BE7E230027FF20EE004DC202 /* TimetableScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableScene.swift; sourceTree = "<group>"; };
 		BE7E230227FF3C38004DC202 /* NavBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarButton.swift; sourceTree = "<group>"; };
+		BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableConfiguration.swift; sourceTree = "<group>"; };
+		BE804BEC288BA3DF00782F16 /* SNUTT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTT.entitlements; sourceTree = "<group>"; };
+		BE804BED288BA45300782F16 /* SNUTTWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SNUTTWidgetExtension.entitlements; sourceTree = "<group>"; };
+		BE804C052894157500782F16 /* SNUTTWidgetProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNUTTWidgetProvider.swift; sourceTree = "<group>"; };
 		BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLectureScene.swift; sourceTree = "<group>"; };
 		BE8BB3AE285D77D000070A66 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetScene.swift; sourceTree = "<group>"; };
@@ -134,6 +210,18 @@
 		BE982FBB281D5227005F71E6 /* TimePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePlace.swift; sourceTree = "<group>"; };
 		BE982FBD281D6244005F71E6 /* TimetableBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBlock.swift; sourceTree = "<group>"; };
 		BE982FBF281D762F005F71E6 /* TimetableZStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableZStack.swift; sourceTree = "<group>"; };
+		BE98A009288A90C000C2CE95 /* Logo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo.swift; sourceTree = "<group>"; };
+		BE98A00B288A9E2A00C2CE95 /* MenuSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSection.swift; sourceTree = "<group>"; };
+		BE98A00D288AA3D200C2CE95 /* MenuSheetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetContent.swift; sourceTree = "<group>"; };
+		BE98A061288AFC1500C2CE95 /* SNUTTWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SNUTTWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE98A063288AFC1500C2CE95 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		BE98A065288AFC1500C2CE95 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		BE98A068288AFC1500C2CE95 /* SNUTTWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTWidgetBundle.swift; sourceTree = "<group>"; };
+		BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = SNUTTWidget.intentdefinition; sourceTree = "<group>"; };
+		BE98A06B288AFC1600C2CE95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BE98A06D288AFC1600C2CE95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidgetEntryView.swift; sourceTree = "<group>"; };
+		BE98A07D288B032600C2CE95 /* TimetableWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidget.swift; sourceTree = "<group>"; };
 		BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetScene.swift; sourceTree = "<group>"; };
 		BEDE34C928754F3100525014 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		BEDE34D52879A7B800525014 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
@@ -163,7 +251,7 @@
 		DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
 		DC2915A22866958100FE5F9A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DC2915A42866980B00FE5F9A /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
-		DC2915A62866984000FE5F9A /* TimetableSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSetting.swift; sourceTree = "<group>"; };
+		DC2915A62866984000FE5F9A /* TimetableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableState.swift; sourceTree = "<group>"; };
 		DC2915A82866986600FE5F9A /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
 		DC860F4C27E5C87F0068C94B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -179,6 +267,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		BE98A05E288AFC1500C2CE95 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE98A066288AFC1500C2CE95 /* SwiftUI.framework in Frameworks */,
+				BE98A064288AFC1500C2CE95 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC860F4227E5C87D0068C94B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -212,8 +309,56 @@
 				BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */,
 				BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */,
 				BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */,
+				BE419B99288B915800FA9590 /* TimetableUtils.swift */,
 			);
 			path = Timetable;
+			sourceTree = "<group>";
+		};
+		BE419B8B288B8C4900FA9590 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BE419B8C288B8C5A00FA9590 /* View+Debug.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		BE98A062288AFC1500C2CE95 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BE98A063288AFC1500C2CE95 /* WidgetKit.framework */,
+				BE98A065288AFC1500C2CE95 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BE98A067288AFC1500C2CE95 /* SNUTTWidget */ = {
+			isa = PBXGroup;
+			children = (
+				BE98A068288AFC1500C2CE95 /* SNUTTWidgetBundle.swift */,
+				BE804C052894157500782F16 /* SNUTTWidgetProvider.swift */,
+				BE98A07C288B02F500C2CE95 /* DailyWidget */,
+				BE98A079288B029000C2CE95 /* TimetableWidget */,
+				BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */,
+				BE98A06B288AFC1600C2CE95 /* Assets.xcassets */,
+				BE98A06D288AFC1600C2CE95 /* Info.plist */,
+			);
+			path = SNUTTWidget;
+			sourceTree = "<group>";
+		};
+		BE98A079288B029000C2CE95 /* TimetableWidget */ = {
+			isa = PBXGroup;
+			children = (
+				BE98A07D288B032600C2CE95 /* TimetableWidget.swift */,
+				BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */,
+			);
+			path = TimetableWidget;
+			sourceTree = "<group>";
+		};
+		BE98A07C288B02F500C2CE95 /* DailyWidget */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DailyWidget;
 			sourceTree = "<group>";
 		};
 		DC1E0ED2287738DF005632A3 /* Router */ = {
@@ -222,6 +367,8 @@
 				DC1E0ED02877381F005632A3 /* Router.swift */,
 				DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */,
 				BE682BD028864CA8009EBCB7 /* LectureRouter.swift */,
+				BE682BF82887FB59009EBCB7 /* SearchRouter.swift */,
+				BE682C002888173B009EBCB7 /* TagRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -229,18 +376,24 @@
 		DC860F3C27E5C87D0068C94B = {
 			isa = PBXGroup;
 			children = (
+				BE804BED288BA45300782F16 /* SNUTTWidgetExtension.entitlements */,
 				DC860F4727E5C87D0068C94B /* SNUTT */,
 				DC860F5827E5C87F0068C94B /* SNUTTTests */,
 				DC860F6227E5C87F0068C94B /* SNUTTUITests */,
+				BE98A067288AFC1500C2CE95 /* SNUTTWidget */,
 				BE682BB22879E24D009EBCB7 /* SNUTT.app */,
 				BE682BB32879E24D009EBCB7 /* SNUTTTests.xctest */,
 				BE682BB42879E24D009EBCB7 /* SNUTTUITests.xctest */,
+				BE98A061288AFC1500C2CE95 /* SNUTTWidgetExtension.appex */,
+				BE98A062288AFC1500C2CE95 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		DC860F4727E5C87D0068C94B /* SNUTT */ = {
 			isa = PBXGroup;
 			children = (
+				BE804BEC288BA3DF00782F16 /* SNUTT.entitlements */,
+				BE419B8B288B8C4900FA9590 /* Extensions */,
 				DCD41A7627E5CED100CF380E /* Assets */,
 				DCD41A7327E5CE5F00CF380E /* AppState */,
 				DCD41A7027E5CE0800CF380E /* ViewModels */,
@@ -284,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */,
+				BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */,
 				BE682BEE288722A5009EBCB7 /* ErrorDto.swift */,
 			);
 			path = Dto;
@@ -296,14 +450,17 @@
 				BE982FBB281D5227005F71E6 /* TimePlace.swift */,
 				BEDF507427F4289B00CDCC13 /* Lecture.swift */,
 				BE682BB5287C40AF009EBCB7 /* Theme.swift */,
+				BE682BFE2888056C009EBCB7 /* Quarter.swift */,
 				BE1D2B3928014527008F9134 /* Weekday.swift */,
+				BE682BFC2887FC78009EBCB7 /* SearchTag.swift */,
 				DC2915A22866958100FE5F9A /* User.swift */,
 				DC2915A82866986600FE5F9A /* System.swift */,
 				DC2915A42866980B00FE5F9A /* Setting.swift */,
 				BE682BF028872315009EBCB7 /* STError.swift */,
-				DC2915A62866984000FE5F9A /* TimetableSetting.swift */,
 				BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */,
-				BE4B0EBB2873BC2B005FE164 /* FilterSheetSetting.swift */,
+				DC2915A62866984000FE5F9A /* TimetableState.swift */,
+				BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */,
+				BE4B0EBB2873BC2B005FE164 /* SearchState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -314,6 +471,7 @@
 				DCD41A6227E5CCD500CF380E /* TimetableService.swift */,
 				BEDE34D72879A9DC00525014 /* UserService.swift */,
 				BE682BDA28870872009EBCB7 /* LectureService.swift */,
+				BE682C0428881852009EBCB7 /* SearchService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -326,6 +484,7 @@
 				DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */,
 				BE682BD828870718009EBCB7 /* LectureRepository.swift */,
 				BEDE34D92879AA0B00525014 /* UserRepository.swift */,
+				BE682C02288817C8009EBCB7 /* SearchRepository.swift */,
 				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
 			);
 			path = Repositories;
@@ -361,12 +520,16 @@
 		DCD41A6D27E5CDCA00CF380E /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				BE98A009288A90C000C2CE95 /* Logo.swift */,
 				BEDF506C27EB740E00CDCC13 /* LectureList.swift */,
 				BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */,
 				BE7E230227FF3C38004DC202 /* NavBarButton.swift */,
 				BE8BB3AE285D77D000070A66 /* SearchBar.swift */,
 				BEDE34C928754F3100525014 /* Sheet.swift */,
 				BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */,
+				BE98A00B288A9E2A00C2CE95 /* MenuSection.swift */,
+				BE98A00D288AA3D200C2CE95 /* MenuSheetContent.swift */,
+				BE682C082889ADD7009EBCB7 /* SearchLectureCell.swift */,
 				BE1D2B3228012059008F9134 /* Timetable */,
 				BE682BC528845CDB009EBCB7 /* UITextEditor.swift */,
 			);
@@ -412,6 +575,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		BE98A060288AFC1500C2CE95 /* SNUTTWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE98A076288AFC1600C2CE95 /* Build configuration list for PBXNativeTarget "SNUTTWidgetExtension" */;
+			buildPhases = (
+				BE98A05D288AFC1500C2CE95 /* Sources */,
+				BE98A05E288AFC1500C2CE95 /* Frameworks */,
+				BE98A05F288AFC1500C2CE95 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SNUTTWidgetExtension;
+			productName = SNUTTWidgetExtension;
+			productReference = BE98A061288AFC1500C2CE95 /* SNUTTWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		DC860F4427E5C87D0068C94B /* SNUTT */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC860F6927E5C87F0068C94B /* Build configuration list for PBXNativeTarget "SNUTT" */;
@@ -419,10 +599,12 @@
 				DC860F4127E5C87D0068C94B /* Sources */,
 				DC860F4227E5C87D0068C94B /* Frameworks */,
 				DC860F4327E5C87D0068C94B /* Resources */,
+				BE98A073288AFC1600C2CE95 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BE98A071288AFC1600C2CE95 /* PBXTargetDependency */,
 			);
 			name = SNUTT;
 			packageProductDependencies = (
@@ -475,9 +657,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					BE98A060288AFC1500C2CE95 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
 					DC860F4427E5C87D0068C94B = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -510,11 +695,20 @@
 				DC860F4427E5C87D0068C94B /* SNUTT */,
 				DC860F5427E5C87F0068C94B /* SNUTTTests */,
 				DC860F5E27E5C87F0068C94B /* SNUTTUITests */,
+				BE98A060288AFC1500C2CE95 /* SNUTTWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		BE98A05F288AFC1500C2CE95 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE98A06C288AFC1600C2CE95 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC860F4327E5C87D0068C94B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -540,14 +734,47 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		BE98A05D288AFC1500C2CE95 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE419B95288B8FA600FA9590 /* LectureBlocks.swift in Sources */,
+				BE419B88288B8B8F00FA9590 /* Quarter.swift in Sources */,
+				BE419B84288B8B8F00FA9590 /* TimePlace.swift in Sources */,
+				BE804BEB288B9EFE00782F16 /* TimetableConfiguration.swift in Sources */,
+				BE419B8A288B8BB600FA9590 /* STColor.swift in Sources */,
+				BE419B89288B8BAD00FA9590 /* TimetableDto.swift in Sources */,
+				BE419B86288B8B8F00FA9590 /* Theme.swift in Sources */,
+				BE419B87288B8B8F00FA9590 /* Weekday.swift in Sources */,
+				BE419B92288B8F9F00FA9590 /* TimetableBlock.swift in Sources */,
+				BE419B93288B8FA600FA9590 /* TimetableBlocksLayer.swift in Sources */,
+				BE98A069288AFC1600C2CE95 /* SNUTTWidgetBundle.swift in Sources */,
+				BE419B9B288B917A00FA9590 /* TimetableUtils.swift in Sources */,
+				BE419B8E288B8C6800FA9590 /* View+Debug.swift in Sources */,
+				BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */,
+				BE419B91288B8F9C00FA9590 /* TimetableZStack.swift in Sources */,
+				BE419B94288B8FA600FA9590 /* TimetableGridLayer.swift in Sources */,
+				BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */,
+				BE804C062894157500782F16 /* SNUTTWidgetProvider.swift in Sources */,
+				BE419B85288B8B8F00FA9590 /* Lecture.swift in Sources */,
+				BE98A06E288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
+				BE419B98288B8FDC00FA9590 /* STFont.swift in Sources */,
+				BE98A07F288B046400C2CE95 /* TimetableWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC860F4127E5C87D0068C94B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */,
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
 				DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */,
+				BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */,
+				BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */,
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
+				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
@@ -560,23 +787,28 @@
 				BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */,
 				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
+				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
+				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
 				DC2915A32866958100FE5F9A /* User.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
-				BE4B0EBC2873BC2B005FE164 /* FilterSheetSetting.swift in Sources */,
+				BE4B0EBC2873BC2B005FE164 /* SearchState.swift in Sources */,
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
 				DC2915A92866986600FE5F9A /* System.swift in Sources */,
+				BE98A00E288AA3D200C2CE95 /* MenuSheetContent.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				BE4B0EB828735052005FE164 /* MenuSheetSetting.swift in Sources */,
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
 				DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */,
+				BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
 				BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */,
 				BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */,
+				BE98A00A288A90C000C2CE95 /* Logo.swift in Sources */,
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
@@ -589,20 +821,26 @@
 				DC2915992865D69700FE5F9A /* LectureListViewModel.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
+				BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */,
+				BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
 				BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */,
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,
 				BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */,
 				BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */,
+				BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */,
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
+				BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */,
+				BE682C092889ADD7009EBCB7 /* SearchLectureCell.swift in Sources */,
 				BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */,
+				BE804BEA288B9EF700782F16 /* TimetableConfiguration.swift in Sources */,
 				BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				BE682BDB28870872009EBCB7 /* LectureService.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
 				BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */,
-				DC2915A72866984000FE5F9A /* TimetableSetting.swift in Sources */,
+				DC2915A72866984000FE5F9A /* TimetableState.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
 				BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */,
 			);
@@ -640,6 +878,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		BE98A071288AFC1600C2CE95 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BE98A060288AFC1500C2CE95 /* SNUTTWidgetExtension */;
+			targetProxy = BE98A070288AFC1600C2CE95 /* PBXContainerItemProxy */;
+		};
 		DC860F5727E5C87F0068C94B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DC860F4427E5C87D0068C94B /* SNUTT */;
@@ -653,6 +896,67 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		BE98A074288AFC1600C2CE95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GB5CDMBZQB;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SNUTTWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SNUTTWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG WIDGET";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BE98A075288AFC1600C2CE95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GB5CDMBZQB;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SNUTTWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SNUTTWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		DC860F6727E5C87F0068C94B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -772,12 +1076,14 @@
 		DC860F6A27E5C87F0068C94B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = GB5CDMBZQB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -791,23 +1097,26 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		DC860F6B27E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = GB5CDMBZQB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -821,11 +1130,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -906,6 +1215,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BE98A076288AFC1600C2CE95 /* Build configuration list for PBXNativeTarget "SNUTTWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE98A074288AFC1600C2CE95 /* Debug */,
+				BE98A075288AFC1600C2CE95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DC860F4027E5C87D0068C94B /* Build configuration list for PBXProject "SNUTT" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

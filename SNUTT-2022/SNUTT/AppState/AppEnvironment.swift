@@ -7,6 +7,7 @@
 
 import Alamofire
 import Foundation
+import SwiftUI
 
 struct AppEnvironment {
     let container: DIContainer
@@ -17,6 +18,7 @@ extension AppEnvironment {
         let timetableService: TimetableServiceProtocol
         let userService: UserServiceProtocol
         let lectureService: LectureServiceProtocol
+        let searchService: SearchServiceProtocol
     }
 }
 
@@ -25,6 +27,7 @@ extension AppEnvironment {
         let timetableRepository: TimetableRepositoryProtocol
         let userRepository: UserRepositoryProtocol
         let lectureRepository: LectureRepositoryProtocol
+        let searchRepository: SearchRepositoryProtocol
     }
 
     struct DBRepositories {}
@@ -52,7 +55,11 @@ extension AppEnvironment {
         let timetableRepository = TimetableRepository(session: session)
         let userRepository = UserRepository(session: session)
         let lectureRepository = LectureRepository(session: session)
-        return .init(timetableRepository: timetableRepository, userRepository: userRepository, lectureRepository: lectureRepository)
+        let searchRepository = SearchRepository(session: session)
+        return .init(timetableRepository: timetableRepository,
+                     userRepository: userRepository,
+                     lectureRepository: lectureRepository,
+                     searchRepository: searchRepository)
     }
 
     // unused for now
@@ -64,14 +71,32 @@ extension AppEnvironment {
         let timetableService = TimetableService(appState: appState, webRepositories: webRepositories)
         let userService = UserService(appState: appState, webRepositories: webRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories)
-        return .init(timetableService: timetableService, userService: userService, lectureService: lectureService)
+        let searchService = SearchService(appState: appState, webRepositories: webRepositories)
+        return .init(timetableService: timetableService,
+                     userService: userService,
+                     lectureService: lectureService,
+                     searchService: searchService)
+    }
+}
+
+private struct AppEnvironmentKey: EnvironmentKey {
+    static let defaultValue: DIContainer? = nil
+}
+
+extension EnvironmentValues {
+    var dependencyContainer: DIContainer? {
+        get { self[AppEnvironmentKey.self] }
+        set { self[AppEnvironmentKey.self] = newValue }
     }
 }
 
 #if DEBUG
     extension AppEnvironment.Services {
         static var preview: Self {
-            .init(timetableService: FakeTimetableService(), userService: FakeUserService(), lectureService: FakeLectureService())
+            .init(timetableService: FakeTimetableService(),
+                  userService: FakeUserService(),
+                  lectureService: FakeLectureService(),
+                  searchService: FakeSearchService())
         }
     }
 #endif

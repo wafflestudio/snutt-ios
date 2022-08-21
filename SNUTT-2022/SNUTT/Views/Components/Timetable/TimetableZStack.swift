@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct TimetableZStack: View {
-    let viewModel: ViewModel
+    let current: Timetable?
+    let config: TimetableConfiguration
+
     var body: some View {
         ZStack {
-            TimetableGridLayer()
-            TimetableBlocksLayer(viewModel: .init(container: viewModel.container))
+            TimetableGridLayer(config: config)
+            TimetableBlocksLayer(current: current, config: config)
         }
         .background(STColor.systemBackground)
 
@@ -20,14 +22,10 @@ struct TimetableZStack: View {
     }
 }
 
-extension TimetableZStack {
-    class ViewModel: BaseViewModel {}
-}
-
-struct TimetableStack_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewModel = TimetableViewModel(container: .preview)
-        TimetableZStack(viewModel: .init(container: viewModel.container))
-            .environmentObject(viewModel.timetableSetting)
-    }
-}
+// struct TimetableStack_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let viewModel = TimetableViewModel(container: .preview)
+//        TimetableZStack(viewModel: .init(container: viewModel.container))
+//            .environmentObject(viewModel.timetableState)
+//    }
+// }

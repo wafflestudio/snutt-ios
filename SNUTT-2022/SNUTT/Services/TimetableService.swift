@@ -9,6 +9,8 @@ import Foundation
 
 protocol TimetableServiceProtocol {
     func fetchRecentTimetable() async throws
+    func fetchTimetableList() async throws
+    func fetchTimetable(timetableId: String) async throws
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -24,15 +26,45 @@ struct TimetableService: TimetableServiceProtocol {
         self.webRepositories = webRepositories
     }
 
+    func fetchTimetable(timetableId: String) async throws {
+        if appState.timetable.current?.id == timetableId {
+            // skip fetching
+            return
+        }
+        let dto = try await timetableRepository.fetchTimetable(timetableId: timetableId)
+        let timetable = Timetable(from: dto)
+        DispatchQueue.main.async {
+            appState.timetable.current = timetable
+        }
+    }
+
     func fetchRecentTimetable() async throws {
+        if let _ = appState.timetable.current {
+            // skip fetching
+            return
+        }
         let dto = try await timetableRepository.fetchRecentTimetable()
         let timetable = Timetable(from: dto)
         DispatchQueue.main.async {
-            appState.setting.timetableSetting.current = timetable
+            appState.timetable.current = timetable
+        }
+    }
+
+    func fetchTimetableList() async throws {
+        if let _ = appState.timetable.metadataList {
+            // skip fetching
+            return
+        }
+        let dtos = try await timetableRepository.fetchTimetableList()
+        let timetables = dtos.map { TimetableMetadata(from: $0) }
+        DispatchQueue.main.async {
+            appState.timetable.metadataList = timetables
         }
     }
 }
 
 struct FakeTimetableService: TimetableServiceProtocol {
     func fetchRecentTimetable() {}
+    func fetchTimetableList() {}
+    func fetchTimetable(timetableId _: String) {}
 }

@@ -9,6 +9,7 @@ import Alamofire
 import Foundation
 
 protocol TimetableRepositoryProtocol {
+    func fetchTimetable(timetableId: String) async throws -> TimetableDto
     func fetchRecentTimetable() async throws -> TimetableDto
     func fetchTimetableList() async throws -> [TimetableMetadataDto]
     func fetchTimetable(withTimetableId id: String) async throws -> TimetableDto
@@ -23,6 +24,13 @@ class TimetableRepository: TimetableRepositoryProtocol {
 
     init(session: Session) {
         self.session = session
+    }
+
+    func fetchTimetable(timetableId: String) async throws -> TimetableDto {
+        return try await session
+            .request(TimetableRouter.getTimetable(id: timetableId))
+            .serializingDecodable(TimetableDto.self)
+            .handlingError()
     }
 
     func fetchRecentTimetable() async throws -> TimetableDto {

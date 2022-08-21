@@ -8,38 +8,143 @@
 import SwiftUI
 
 struct SearchLectureScene: View {
-    @State var searchBarHeight: CGFloat = .zero
-    @State var isVisibleRate: CGFloat = 0
+    let viewModel: SearchSceneViewModel
+    @ObservedObject var searchState: SearchState
 
-    @ObservedObject var viewModel: SearchSceneViewModel
-    @ObservedObject var filterSheetSetting: FilterSheetSetting
+    @State var previousCount: Int = 0
 
     init(viewModel: SearchSceneViewModel) {
         self.viewModel = viewModel
-        filterSheetSetting = viewModel.filterSheetSetting
+        searchState = viewModel.searchState
     }
 
     var body: some View {
+        // TODO: Split components
         ZStack {
             Group {
                 VStack {
                     Spacer()
                         .frame(height: 44)
-                    TimetableZStack(viewModel: .init(container: viewModel.container))
-                        .environmentObject(viewModel.timetableSetting)
+                    TimetableZStack(current: viewModel.timetableState.current, config: viewModel.timetableState.configuration)
+                        .environment(\.selectedLecture, searchState.selectedLecture)
                 }
-                Color.black.opacity(0.3)
+                STColor.searchListBackground
             }
             .ignoresSafeArea([.keyboard])
-            VStack {
-                SearchBar(text: $viewModel.searchText, isFilterOpen: $filterSheetSetting.isOpen)
-                Spacer()
+
+            VStack(spacing: 0) {
+                SearchBar(text: $searchState.searchText, isFilterOpen: $searchState.isFilterOpen) {
+                    Task {
+                        await viewModel.fetchInitialSearchResult()
+                    }
+                }
+
+                if viewModel.selectedTagList.count > 0 {
+                    ScrollViewReader { reader in
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack {
+                                ForEach(viewModel.selectedTagList) { tag in
+                                    Button(action: {
+                                        withAnimation(.customSpring) {
+                                            viewModel.toggle(tag)
+                                        }
+                                    }, label: {
+                                        HStack {
+                                            Text(tag.text)
+                                                .font(.system(size: 14))
+                                            Image("xmark.white")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 10)
+                                        }
+                                    })
+                                    .buttonStyle(.borderedProminent)
+                                    .buttonBorderShape(.capsule)
+                                    .tint(tag.type.tagLightColor)
+                                    .id(tag.id)
+                                }
+                            }
+                            .padding(.horizontal, 10)
+                        }
+                        .padding(.top, 10)
+                        .padding(.bottom, 5)
+                        .onChange(of: viewModel.selectedTagList.count, perform: { newValue in
+                            if newValue <= previousCount {
+                                // no need to scroll when deselecting
+                                previousCount = newValue
+                                return
+                            }
+                            withAnimation(.customSpring) {
+                                reader.scrollTo(viewModel.selectedTagList.last?.id, anchor: .trailing)
+                            }
+                            previousCount = newValue
+                        })
+                    }
+                }
+
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxHeight: .infinity, alignment: .center)
+                } else {
+                    SearchLectureList(viewModel: .init(container: viewModel.container), data: viewModel.searchResult, fetchMore: viewModel.fetchMoreSearchResult, selected: $searchState.selectedLecture)
+                }
             }
+        }
+        .task {
+            await viewModel.fetchTags()
         }
         .navigationBarHidden(true)
 
         let _ = debugChanges()
     }
+}
+
+private struct SelectedLectureKey: EnvironmentKey {
+    static let defaultValue: Lecture? = nil
+}
+
+extension EnvironmentValues {
+    var selectedLecture: Lecture? {
+        get { self[SelectedLectureKey.self] }
+        set { self[SelectedLectureKey.self] = newValue }
+    }
+}
+
+struct SearchLectureList: View {
+    let viewModel: ViewModel
+    let data: [Lecture]
+    let fetchMore: () async -> Void
+    @Binding var selected: Lecture?
+
+    var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 0) {
+                ForEach(data) { lecture in
+                    SearchLectureCell(viewModel: .init(container: viewModel.container), lecture: lecture, selected: selected?.id == lecture.id)
+                        .task {
+                            if lecture.id == data.last?.id {
+                                await fetchMore()
+                            }
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            if selected?.id != lecture.id {
+                                withAnimation(.customSpring) {
+                                    selected = lecture
+                                }
+                            }
+                        }
+                }
+            }
+            .padding(.vertical, 5)
+        }
+
+        let _ = debugChanges()
+    }
+}
+
+extension SearchLectureList {
+    class ViewModel: BaseViewModel {}
 }
 
 struct SearchLectureScene_Previews: PreviewProvider {

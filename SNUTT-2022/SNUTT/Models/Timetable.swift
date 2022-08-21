@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: Timetable
+
 struct Timetable {
     let id: String
     let title: String
@@ -19,6 +21,20 @@ struct Timetable {
 
     var totalCredit: Int {
         lectures.reduce(0) { $0 + $1.credit }
+    }
+
+    var quarter: Quarter {
+        Quarter(year: year, semester: .init(rawValue: semester) ?? .first)
+    }
+
+    var aggregatedTimeMasks: [Int] {
+        lectures.reduce([0, 0, 0, 0, 0, 0, 0]) { mask, lecture in
+            zip(mask, lecture.timeMasks).map { $0 | $1 }
+        }
+    }
+
+    var reversedTimeMasks: [Int] {
+        aggregatedTimeMasks.map { 0x3FFF_FFFF ^ $0 }
     }
 }
 
@@ -51,3 +67,29 @@ extension Timetable {
         }
     }
 #endif
+
+// MARK: TimetableMetadata
+
+struct TimetableMetadata: Codable {
+    let id: String
+    let year: Int
+    let semester: Int
+    let title: String
+    let updatedAt: String
+    let totalCredit: Int
+
+    var quarter: Quarter {
+        Quarter(year: year, semester: .init(rawValue: semester) ?? .first)
+    }
+}
+
+extension TimetableMetadata {
+    init(from dto: TimetableMetadataDto) {
+        id = dto._id
+        year = dto.year
+        semester = dto.semester
+        title = dto.title
+        updatedAt = dto.updated_at
+        totalCredit = dto.total_credit
+    }
+}

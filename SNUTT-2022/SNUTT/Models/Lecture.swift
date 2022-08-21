@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Lecture: Identifiable {
     let id: String
@@ -24,10 +25,35 @@ struct Lecture: Identifiable {
     var category: String
     var remark: String
     var isCustom: Bool
-    var color: [String: String]
+    var color: LectureColor?
     var quota: Int
     var createdAt: String
     var updatedAt: String
+
+    func getColor(with theme: Theme) -> LectureColor {
+        // custom color
+        if let color = color {
+            return color
+        }
+
+        // theme color
+        let bgColor = theme.getColor(at: colorIndex)
+        return LectureColor(fg: .white, bg: Color(hex: bgColor))
+    }
+
+    mutating func withTemporaryColor() -> Self {
+        color = .init(fg: .white, bg: .gray)
+        return self
+    }
+
+    var startDateTimeString: String {
+        timePlaces.map { $0.startDateTimeString }.joined(separator: "/")
+    }
+}
+
+struct LectureColor {
+    let fg: Color
+    let bg: Color
 }
 
 extension Lecture {
@@ -44,14 +70,16 @@ extension Lecture {
         credit = dto.credit
         department = dto.department ?? ""
         academicYear = dto.academic_year ?? ""
-        colorIndex = dto.colorIndex
+        colorIndex = dto.colorIndex ?? 1
         classification = dto.classification ?? ""
         category = dto.category ?? ""
         remark = dto.remark ?? ""
-        color = dto.color
         quota = dto.quota ?? 0
-        createdAt = dto.created_at
-        updatedAt = dto.updated_at
+        createdAt = dto.created_at ?? ""
+        updatedAt = dto.updated_at ?? ""
+        if let colorDto = dto.color, let fg = colorDto.fg, let bg = colorDto.bg {
+            color = .init(fg: .init(hex: fg), bg: .init(hex: bg))
+        }
     }
 }
 
@@ -78,7 +106,7 @@ extension Lecture {
                            category: "체육",
                            remark: "영어강의, 복부전생수강불가, 주전공생수강불가, 어쩌구 저쩌구",
                            isCustom: false,
-                           color: [:],
+                           color: nil,
                            quota: 40,
                            createdAt: "2022-04-02T16:35:53.652Z",
                            updatedAt: "2022-04-02T16:35:53.652Z")

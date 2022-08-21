@@ -8,39 +8,51 @@
 import SwiftUI
 
 struct LectureBlocks: View {
-    let viewModel: ViewModel
-    typealias Painter = TimetableViewModel.TimetablePainter
-
+    typealias Painter = TimetablePainter
     let lecture: Lecture
-    @EnvironmentObject var timetableSetting: TimetableSetting
+    let theme: Theme
+    let config: TimetableConfiguration
+
+    #if !WIDGET
+        @Environment(\.dependencyContainer) var container: DIContainer?
+    #endif
 
     var body: some View {
         GeometryReader { reader in
             ForEach(lecture.timePlaces) { timePlace in
                 if let offsetPoint = Painter.getOffset(of: timePlace,
                                                        in: reader.size,
-                                                       timetableSetting: timetableSetting)
+                                                       timetableState: config)
                 {
-                    TimetableBlock(viewModel: .init(container: viewModel.container),
-                                   lecture: lecture,
-                                   timePlace: timePlace,
-                                   theme: timetableSetting.current?.theme ?? .snutt)
-                        .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: timetableSetting.weekCount), height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: timetableSetting.hourCount), alignment: .center)
-                        .offset(x: offsetPoint.x, y: offsetPoint.y)
+                    Group {
+                        #if WIDGET
+                            TimetableBlock(lecture: lecture,
+                                           timePlace: timePlace,
+                                           theme: theme)
+                        #else
+                            if let container = container {
+                                NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture)) {
+                                    TimetableBlock(lecture: lecture,
+                                                   timePlace: timePlace,
+                                                   theme: theme)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        #endif
+                    }
+                    .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: config.weekCount), height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: config.hourCount), alignment: .center)
+                    .offset(x: offsetPoint.x, y: offsetPoint.y)
                 }
             }
         }
+        let _ = debugChanges()
     }
 }
 
-extension LectureBlocks {
-    class ViewModel: BaseViewModel {}
-}
-
-struct LectureBlocks_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewModel = TimetableViewModel(container: .preview)
-        LectureBlocks(viewModel: .init(container: .preview), lecture: .preview)
-            .environmentObject(viewModel.timetableSetting)
-    }
-}
+// struct LectureBlocks_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let viewModel = TimetableViewModel(container: .preview)
+//        LectureBlocks(viewModel: .init(container: .preview), lecture: .preview)
+//            .environmentObject(viewModel.timetableState)
+//    }
+// }

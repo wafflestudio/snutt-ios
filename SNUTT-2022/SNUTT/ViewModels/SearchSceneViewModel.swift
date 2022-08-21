@@ -6,29 +6,69 @@
 //
 
 import Combine
+import SwiftUI
 
-class SearchSceneViewModel: ObservableObject {
-    var container: DIContainer
-
-    init(container: DIContainer) {
-        self.container = container
+class SearchSceneViewModel: BaseViewModel {
+    var searchState: SearchState {
+        appState.search
     }
 
-    private var appState: AppState {
-        container.appState
+    var timetableState: TimetableState {
+        appState.timetable
     }
 
-    @Published var searchText = ""
-
-    var filterSheetSetting: FilterSheetSetting {
-        appState.setting.filterSheetSetting
+    var searchResult: [Lecture] {
+        searchState.searchResult
     }
 
-    var timetableSetting: TimetableSetting {
-        appState.setting.timetableSetting
+    var isLoading: Bool {
+        searchState.isLoading
     }
 
     func toggleFilterSheet() {
-        appState.setting.filterSheetSetting.isOpen.toggle()
+        if appState.search.searchTagList == nil {
+            return
+        }
+        services.searchService.toggleFilterSheet()
+    }
+
+    func fetchTags() async {
+        if appState.search.searchTagList != nil {
+            return
+        }
+        guard let currentTimetable = timetableState.current else { return }
+        do {
+            try await services.searchService.fetchTags(quarter: currentTimetable.quarter)
+        } catch {
+            // TODO: handle error
+        }
+    }
+
+    func fetchInitialSearchResult() async {
+        do {
+            try await services.searchService.fetchInitialSearchResult()
+        } catch {
+            // TODO: handle error
+        }
+    }
+
+    func fetchMoreSearchResult() async {
+        do {
+            try await services.searchService.fetchMoreSearchResult()
+        } catch {
+            // TODO: handle error
+        }
+    }
+
+    var selectedTagList: [SearchTag] {
+        searchState.selectedTagList
+    }
+
+    var selectedLecture: Published<Lecture?>.Publisher {
+        searchState.$selectedLecture
+    }
+
+    func toggle(_ tag: SearchTag) {
+        services.searchService.toggle(tag)
     }
 }

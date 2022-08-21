@@ -15,24 +15,16 @@ class Storage: AuthStorage {
 
 @main
 struct SNUTTApp: App {
-    let container: DIContainer
+    let appEnvironment: AppEnvironment
 
     init() {
-        let appEnvironment = AppEnvironment.bootstrap()
-        container = appEnvironment.container
+        appEnvironment = AppEnvironment.bootstrap()
     }
 
     var body: some Scene {
         WindowGroup {
-            SNUTTView(container: container)
-        }
-    }
-}
-
-extension View {
-    func debugChanges() {
-        if #available(iOS 15.0, *) {
-            Self._printChanges()
+            SNUTTView(container: appEnvironment.container)
+                .environment(\.dependencyContainer, appEnvironment.container)
         }
     }
 }

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct TimetableGridLayer: View {
-    typealias Painter = TimetableViewModel.TimetablePainter
-    @EnvironmentObject var timetableSetting: TimetableSetting
+    typealias Painter = TimetablePainter
+    let config: TimetableConfiguration
 
     var body: some View {
         GeometryReader { reader in
@@ -30,9 +30,9 @@ struct TimetableGridLayer: View {
 
     /// 하루 간격의 수직선
     func verticalPaths(in containerSize: CGSize) -> Path {
-        let weekWidth = Painter.getWeekWidth(in: containerSize, weekCount: timetableSetting.weekCount)
+        let weekWidth = Painter.getWeekWidth(in: containerSize, weekCount: config.weekCount)
         return Path { path in
-            for i in 0 ..< timetableSetting.weekCount {
+            for i in 0 ..< config.weekCount {
                 let x = Painter.hourWidth + CGFloat(i) * weekWidth
                 path.move(to: CGPoint(x: x, y: 0))
                 path.addLine(to: CGPoint(x: x, y: containerSize.height))
@@ -42,9 +42,9 @@ struct TimetableGridLayer: View {
 
     /// 한 시간 간격의 수평선
     func horizontalHourlyPaths(in containerSize: CGSize) -> Path {
-        let hourHeight = Painter.getHourHeight(in: containerSize, hourCount: timetableSetting.hourCount)
+        let hourHeight = Painter.getHourHeight(in: containerSize, hourCount: config.hourCount)
         return Path { path in
-            for i in 0 ..< timetableSetting.hourCount {
+            for i in 0 ..< config.hourCount {
                 let y = Painter.weekdayHeight + CGFloat(i) * hourHeight
                 path.move(to: CGPoint(x: 0, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))
@@ -54,9 +54,9 @@ struct TimetableGridLayer: View {
 
     /// 30분 간격의 수평선
     func horizontalHalfHourlyPaths(in containerSize: CGSize) -> Path {
-        let hourHeight = Painter.getHourHeight(in: containerSize, hourCount: timetableSetting.hourCount)
+        let hourHeight = Painter.getHourHeight(in: containerSize, hourCount: config.hourCount)
         return Path { path in
-            for i in 0 ..< timetableSetting.hourCount {
+            for i in 0 ..< config.hourCount {
                 let y = Painter.weekdayHeight + CGFloat(i) * hourHeight + hourHeight / 2
                 path.move(to: CGPoint(x: 0 + Painter.hourWidth, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))
@@ -69,7 +69,7 @@ struct TimetableGridLayer: View {
     /// 시간표 맨 위쪽, 날짜를 나타내는 행
     var weeksHStack: some View {
         HStack(spacing: 0) {
-            ForEach(timetableSetting.visibleWeeks) { week in
+            ForEach(config.visibleWeeks) { week in
                 Text(week.shortSymbol)
                     .font(STFont.details)
                     .foregroundColor(Color(UIColor.secondaryLabel))
@@ -83,7 +83,7 @@ struct TimetableGridLayer: View {
     /// 시간표 맨 왼쪽, 시간들을 나타내는 행
     var hoursVStack: some View {
         VStack(spacing: 0) {
-            ForEach(timetableSetting.minHour ... timetableSetting.maxHour, id: \.self) { hour in
+            ForEach(config.minHour ... config.maxHour, id: \.self) { hour in
                 Text(String(hour))
                     .font(STFont.details)
                     .foregroundColor(Color(UIColor.secondaryLabel))
@@ -96,10 +96,10 @@ struct TimetableGridLayer: View {
     }
 }
 
-struct TimetableGrid_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewModel = TimetableViewModel(container: .preview)
-        TimetableGridLayer()
-            .environmentObject(viewModel.timetableSetting)
-    }
-}
+// struct TimetableGrid_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let viewModel = TimetableViewModel(container: .preview)
+//        TimetableGridLayer()
+//            .environmentObject(viewModel.timetableState)
+//    }
+// }
