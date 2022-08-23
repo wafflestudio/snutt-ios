@@ -18,7 +18,7 @@ protocol TimetableServiceProtocol {
     func deleteTimetable(timetableId: String) async throws
     func selectTimetableTheme(theme: Theme)
     func createTimetable(title: String, quarter: Quarter) async throws
-    
+
     /// 새로운 학기의 수강편람이 나와 있지만 유저가 해당 학기 시간표를 아직 만들지 않았다면 `true`를 리턴한다.
     func isNewCourseBookAvailable() -> Bool
 }
@@ -26,11 +26,11 @@ protocol TimetableServiceProtocol {
 struct TimetableService: TimetableServiceProtocol {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
-    
+
     var timetableRepository: TimetableRepositoryProtocol {
         webRepositories.timetableRepository
     }
-    
+
     func fetchTimetable(timetableId: String) async throws {
         if appState.timetable.current?.id == timetableId {
             // skip fetching
@@ -42,7 +42,7 @@ struct TimetableService: TimetableServiceProtocol {
             appState.timetable.current = timetable
         }
     }
-    
+
     func fetchRecentTimetable() async throws {
         let dto = try await timetableRepository.fetchRecentTimetable()
         let timetable = Timetable(from: dto)
@@ -50,7 +50,7 @@ struct TimetableService: TimetableServiceProtocol {
             appState.timetable.current = timetable
         }
     }
-    
+
     func fetchTimetableList() async throws {
         if let _ = appState.timetable.metadataList {
             // skip fetching
@@ -62,7 +62,7 @@ struct TimetableService: TimetableServiceProtocol {
             appState.timetable.metadataList = timetables
         }
     }
-    
+
     func createTimetable(title: String, quarter: Quarter) async throws {
         let dtos = try await timetableRepository.createTimetable(title: title, year: quarter.year, semester: quarter.semester.rawValue)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
@@ -70,7 +70,7 @@ struct TimetableService: TimetableServiceProtocol {
             appState.timetable.metadataList = timetables
         }
     }
-    
+
     func copyTimetable(timetableId: String) async throws {
         let dtos = try await timetableRepository.copyTimetable(withTimetableId: timetableId)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
@@ -78,7 +78,7 @@ struct TimetableService: TimetableServiceProtocol {
             appState.timetable.metadataList = timetables
         }
     }
-    
+
     func updateTimetableTitle(timetableId: String, title: String) async throws {
         let dtos = try await timetableRepository.updateTimetableTitle(withTimetableId: timetableId, withTitle: title)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
@@ -89,7 +89,7 @@ struct TimetableService: TimetableServiceProtocol {
             }
         }
     }
-    
+
     func updateTimetableTheme(timetableId: String) async throws {
         guard let theme = appState.timetable.current?.selectedTheme else { return }
         let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: theme.rawValue)
@@ -100,7 +100,7 @@ struct TimetableService: TimetableServiceProtocol {
             }
         }
     }
-    
+
     func deleteTimetable(timetableId: String) async throws {
         if appState.timetable.current?.id == timetableId {
             throw STError.CANT_DELETE_CURRENT_TIMETABLE
@@ -111,11 +111,11 @@ struct TimetableService: TimetableServiceProtocol {
             appState.timetable.metadataList = timetables
         }
     }
-    
+
     func selectTimetableTheme(theme: Theme) {
         appState.timetable.current?.selectedTheme = theme
     }
-    
+
     func isNewCourseBookAvailable() -> Bool {
         let myLatestQuarter = appState.timetable.metadataList?.map { $0.quarter }.sorted().last
         let latestCourseBook = appState.timetable.courseBookList?.sorted().last
@@ -133,5 +133,5 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func deleteTimetable(timetableId _: String) async throws {}
     func selectTimetableTheme(theme _: Theme) {}
     func isNewCourseBookAvailable() -> Bool { return true }
-    func createTimetable(title: String, quarter: Quarter) async throws {}
+    func createTimetable(title _: String, quarter _: Quarter) async throws {}
 }

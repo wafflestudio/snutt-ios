@@ -21,7 +21,7 @@ struct MenuRenameSheet: View {
               disableDragGesture: true) {
             VStack {
                 MenuSheetTopBar(cancel: cancel, confirm: confirm, confirmDisabled: titleText.isEmpty)
-                
+
                 TitleTextField(titleText: $titleText, isSheetOpen: isOpen)
 
                 Spacer()
@@ -30,5 +30,3 @@ struct MenuRenameSheet: View {
         }
     }
 }
-
-

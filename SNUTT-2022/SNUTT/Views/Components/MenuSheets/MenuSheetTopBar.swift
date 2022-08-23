@@ -11,7 +11,7 @@ struct MenuSheetTopBar: View {
     var cancel: () -> Void
     var confirm: () async -> Void
     var confirmDisabled: Bool = false
-    
+
     var body: some View {
         HStack {
             Button {
@@ -37,4 +37,3 @@ struct MenuSheetTopBar: View {
             .frame(maxHeight: 20)
     }
 }
-

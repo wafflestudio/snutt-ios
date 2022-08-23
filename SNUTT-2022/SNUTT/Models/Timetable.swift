@@ -113,7 +113,7 @@ struct TimetableMetadata: Codable {
 }
 
 extension TimetableMetadata: Equatable {
-    static func ==(lhs: TimetableMetadata, rhs: TimetableMetadata) -> Bool {
+    static func == (lhs: TimetableMetadata, rhs: TimetableMetadata) -> Bool {
         return lhs.id == rhs.id && lhs.title == rhs.title && lhs.totalCredit == rhs.totalCredit
     }
 }

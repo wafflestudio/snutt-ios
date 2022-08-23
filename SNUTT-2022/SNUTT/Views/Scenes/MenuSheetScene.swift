@@ -35,10 +35,10 @@ struct MenuSheetScene: View {
                            select: viewModel.selectTheme)
 
             MenuRenameSheet(isOpen: $menuState.isRenameSheetOpen,
-                               titleText: $menuState.renameTitle,
-                               cancel: viewModel.closeRenameSheet,
-                               confirm: viewModel.applyRenameSheet)
-            
+                            titleText: $menuState.renameTitle,
+                            cancel: viewModel.closeRenameSheet,
+                            confirm: viewModel.applyRenameSheet)
+
             MenuCreateSheet(isOpen: $menuState.isCreateSheetOpen,
                             titleText: $menuState.createTitle,
                             selectedQuarter: $menuState.createQuarter,

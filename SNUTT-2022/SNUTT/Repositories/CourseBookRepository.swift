@@ -20,21 +20,21 @@ class CourseBookRepository: CourseBookRepositoryProtocol {
     init(session: Session) {
         self.session = session
     }
-    
+
     func fetchAllCourseBookList() async throws -> [CourseBookDto] {
         return try await session
             .request(CourseBookRouter.getCourseBookList)
             .serializingDecodable([CourseBookDto].self)
             .handlingError()
     }
-    
+
     func fetchRecentCourseBook() async throws -> CourseBookDto {
         return try await session
             .request(CourseBookRouter.getRecentCourseBook)
             .serializingDecodable(CourseBookDto.self)
             .handlingError()
     }
-    
+
     func fetchSyllabusUrl(year: Int, semester: Int, lecture: LectureDto) async throws -> SyllabusDto {
         return try await session
             .request(CourseBookRouter.getSyllabusUrl(year: year, semester: semester, lecture: lecture))

@@ -84,8 +84,7 @@ extension AppEnvironment {
                      lectureService: lectureService,
                      searchService: searchService,
                      appService: appService,
-                     courseBookService: courseBookService
-        )
+                     courseBookService: courseBookService)
     }
 }
 
@@ -108,8 +107,7 @@ extension EnvironmentValues {
                   lectureService: FakeLectureService(),
                   searchService: FakeSearchService(),
                   appService: AppService(appState: appState),
-                  courseBookService: FakeCourseBookService()
-            )
+                  courseBookService: FakeCourseBookService())
         }
     }
 #endif

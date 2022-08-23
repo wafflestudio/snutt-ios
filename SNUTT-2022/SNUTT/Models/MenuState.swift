@@ -12,17 +12,17 @@ class MenuState: ObservableObject {
 
     /// The target timetable that the ellipsis sheet is open for.
     @Published var ellipsisTarget: TimetableMetadata? = nil
-    
+
     @Published var isEllipsisSheetOpen = false
     @Published var isThemeSheetOpen = false
-    
+
     // MARK: Rename Timetable
-    
+
     @Published var isRenameSheetOpen = false
     @Published var renameTitle: String = ""
-    
+
     // MARK: Create Timetable
-    
+
     @Published var isCreateSheetOpen = false
     @Published var createTitle: String = ""
     @Published var createQuarter: Quarter? = nil

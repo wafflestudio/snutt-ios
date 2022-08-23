@@ -55,7 +55,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
             services.appService.presentErrorAlert(error: error)
         }
     }
-    
+
     func fetchCourseBookList() async {
         do {
             try await services.courseBookService.fetchCourseBookList()

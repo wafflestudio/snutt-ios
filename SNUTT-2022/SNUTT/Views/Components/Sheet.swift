@@ -74,7 +74,6 @@ struct Sheet<Content>: View where Content: View {
     }
 }
 
-
 enum SheetOrientation {
     case left(maxWidth: CGFloat)
     case bottom(maxHeight: CGFloat)

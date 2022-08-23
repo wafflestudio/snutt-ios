@@ -10,19 +10,19 @@ import SwiftUI
 
 protocol AppServiceProtocol {
     func toggleMenuSheet()
-    
+
     func openEllipsis(for timetable: TimetableMetadata)
     func closeEllipsis()
-    
+
     func openThemeSheet()
     func closeThemeSheet()
-    
+
     func openRenameSheet()
     func closeRenameSheet()
-    
+
     func openCreateSheet()
     func closeCreateSheet()
-    
+
     func presentErrorAlert(error: STError?)
     func presentErrorAlert(error: Error)
 }
@@ -79,7 +79,7 @@ struct AppService: AppServiceProtocol {
             appState.menu.isRenameSheetOpen = false
         }
     }
-    
+
     func openCreateSheet() {
         DispatchQueue.main.async {
             appState.menu.createTitle = ""
@@ -87,7 +87,7 @@ struct AppService: AppServiceProtocol {
             appState.menu.isCreateSheetOpen = true
         }
     }
-    
+
     func closeCreateSheet() {
         DispatchQueue.main.async {
             appState.menu.isCreateSheetOpen = false
@@ -95,7 +95,7 @@ struct AppService: AppServiceProtocol {
     }
 
     // MARK: error handling
-    
+
     func presentErrorAlert(error: Error) {
         presentErrorAlert(error: error.asSTError)
     }

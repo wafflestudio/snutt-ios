@@ -11,7 +11,7 @@ struct MenuSection<Content>: View where Content: View {
     let quarter: Quarter
     let current: Timetable?
     var content: () -> Content
-    
+
     @State var isExpanded: Bool = false
 
     var body: some View {
@@ -133,7 +133,7 @@ struct MenuSectionRow: View {
     }
 }
 
-//struct MenuSection_Previews: PreviewProvider {
+// struct MenuSection_Previews: PreviewProvider {
 //    static var previews: some View {
 //        ScrollView {
 //            LazyVStack {
@@ -143,4 +143,4 @@ struct MenuSectionRow: View {
 //            }
 //        }
 //    }
-//}
+// }

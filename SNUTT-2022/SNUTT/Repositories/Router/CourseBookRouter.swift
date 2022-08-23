@@ -11,11 +11,11 @@ import Foundation
 enum CourseBookRouter: Router {
     var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/course_books")! }
     static let shouldAddToken: Bool = true
-    
+
     case getCourseBookList
     case getRecentCourseBook
     case getSyllabusUrl(year: Int, semester: Int, lecture: LectureDto)
-    
+
     var method: HTTPMethod {
         switch self {
         case .getCourseBookList, .getSyllabusUrl:
@@ -24,7 +24,7 @@ enum CourseBookRouter: Router {
             return .get
         }
     }
-    
+
     var path: String {
         switch self {
         case .getCourseBookList:
@@ -35,7 +35,7 @@ enum CourseBookRouter: Router {
             return "/official"
         }
     }
-    
+
     var parameters: [String: Any]? {
         switch self {
         case .getCourseBookList:
@@ -49,7 +49,7 @@ enum CourseBookRouter: Router {
                 "year": year,
                 "semester": semester,
                 "course_number": courseNumber,
-                "lecture_number": lectureNumber
+                "lecture_number": lectureNumber,
             ]
         }
     }

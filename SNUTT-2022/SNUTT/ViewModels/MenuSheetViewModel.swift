@@ -67,11 +67,11 @@ class MenuSheetViewModel: BaseViewModel {
             services.appService.presentErrorAlert(error: error)
         }
     }
-    
+
     func closeCreateSheet() {
         services.appService.closeCreateSheet()
     }
-    
+
     func applyCreateSheet() async {
         guard let quarter = menuState.createQuarter else { return }
         do {
@@ -91,7 +91,7 @@ class MenuSheetViewModel: BaseViewModel {
         guard let current = appState.timetable.current else { return .snutt }
         return current.selectedTheme ?? current.theme
     }
-    
+
     var availableCourseBooks: [Quarter] {
         appState.timetable.courseBookList ?? []
     }
