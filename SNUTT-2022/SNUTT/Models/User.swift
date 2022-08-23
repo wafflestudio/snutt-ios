@@ -14,10 +14,10 @@ struct User {
 }
 
 extension User {
-    init(from data: UserDto) {
-        localId = data.local_id
-        fbName = data.fb_name
-        email = data.email
+    init(from dto: UserDto) {
+        localId = dto.local_id
+        fbName = dto.fb_name
+        email = dto.email
     }
 }
 

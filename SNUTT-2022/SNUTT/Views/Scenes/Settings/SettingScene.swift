@@ -13,37 +13,37 @@ struct SettingScene: View {
     var body: some View {
         List {
             Section {
-                Menu(Settings.accountSetting) {
+                SettingsMenu(Settings.accountSetting) {
                     AccountSettingScene(viewModel: AccountSettingViewModel(container: viewModel.container))
                 }
-                Menu(Settings.timetableSetting) {
+                SettingsMenu(Settings.timetableSetting) {
                     TimetableSettingScene()
                 }
             }
             Section {
-                Menu(Settings.showVersionInfo)
+                SettingsMenu(Settings.showVersionInfo)
             }
             Section {
-                Menu(Settings.developerInfo) {
-                    DeveloperInfoScene()
+                SettingsMenu(Settings.developerInfo) {
+                    DeveloperInfoView()
                 }
-                Menu(Settings.userSupport) {
+                SettingsMenu(Settings.userSupport) {
                     UserSupportScene()
                 }
             }
             Section {
-                Menu(Settings.licenseInfo) {
-                    LicenseScene()
+                SettingsMenu(Settings.licenseInfo) {
+                    LicenseView()
                 }
-                Menu(Settings.termsOfService) {
-                    TermsOfServiceScene()
+                SettingsMenu(Settings.termsOfService) {
+                    TermsOfServiceView()
                 }
-                Menu(Settings.privacyPolicy) {
-                    PrivacyPolicyScene()
+                SettingsMenu(Settings.privacyPolicy) {
+                    PrivacyPolicyView()
                 }
             }
             Section {
-                Menu(Settings.logout, destructive: true)
+                SettingsMenu(Settings.logout, destructive: true)
             }
         }
         .listStyle(.grouped)

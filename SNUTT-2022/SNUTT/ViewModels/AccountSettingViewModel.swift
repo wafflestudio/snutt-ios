@@ -11,7 +11,7 @@ import SwiftUI
 class AccountSettingViewModel: BaseViewModel, ObservableObject {
     private var bag = Set<AnyCancellable>()
 
-    @Published var menuList: [[Menu]] = []
+    @Published var menuList: [[SettingsMenu]] = []
 
     override init(container: DIContainer) {
         super.init(container: container)
@@ -31,10 +31,10 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
             .store(in: &bag)
     }
 
-    private func setMenuList(_ titles: [[AccountSettings]]) -> [[Menu]] {
-        var menuList: [[Menu]] = []
+    private func setMenuList(_ titles: [[AccountSettings]]) -> [[SettingsMenu]] {
+        var menuList: [[SettingsMenu]] = []
         for section in titles {
-            var rows: [Menu] = []
+            var rows: [SettingsMenu] = []
             for title in section {
                 rows.append(makeMenu(title))
             }
@@ -43,26 +43,26 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
         return menuList
     }
 
-    private func makeMenu(_ type: AccountSettings) -> Menu {
+    private func makeMenu(_ type: AccountSettings) -> SettingsMenu {
         switch type {
         case .addLocalId:
-            return Menu(AccountSettings.addLocalId) {
+            return SettingsMenu(AccountSettings.addLocalId) {
                 AddLocalIdScene(viewModel: AddLocalIdViewModel(container: container))
             }
         case .showLocalId:
-            return Menu(AccountSettings.showLocalId, userState.current?.localId ?? "(없음)")
+            return SettingsMenu(AccountSettings.showLocalId, userState.current?.localId ?? "(없음)")
         case .changePassword:
-            return Menu(AccountSettings.changePassword)
+            return SettingsMenu(AccountSettings.changePassword)
         case .makeFbConnection:
-            return Menu(AccountSettings.makeFbConnection)
+            return SettingsMenu(AccountSettings.makeFbConnection)
         case .showFbName:
-            return Menu(AccountSettings.showFbName, userState.current?.fbName ?? "(없음)")
+            return SettingsMenu(AccountSettings.showFbName, userState.current?.fbName ?? "(없음)")
         case .deleteFbConnection:
-            return Menu(AccountSettings.deleteFbConnection)
+            return SettingsMenu(AccountSettings.deleteFbConnection)
         case .showEmail:
-            return Menu(AccountSettings.showEmail, appState.user.current?.email ?? "(없음)")
+            return SettingsMenu(AccountSettings.showEmail, appState.user.current?.email ?? "(없음)")
         case .deleteAccount:
-            return Menu(AccountSettings.deleteAccount, destructive: true)
+            return SettingsMenu(AccountSettings.deleteAccount, destructive: true)
         }
     }
 

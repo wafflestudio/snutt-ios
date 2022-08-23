@@ -10,7 +10,7 @@ import SwiftUI
 struct AccountSettingScene: View {
     @ObservedObject var viewModel: AccountSettingViewModel
 
-    var menuList: [[Menu]] {
+    var menuList: [[SettingsMenu]] {
         viewModel.menuList
     }
 
