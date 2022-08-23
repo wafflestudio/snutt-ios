@@ -40,16 +40,25 @@ struct MenuSheet: View {
                     LazyVStack(spacing: 15) {
                         let timetablesByQuarter = viewModel.timetablesByQuarter
                         
-                        if viewModel.services.timetableService.isNewCourseBookAvailable() {
-                            // 새로운 수강편람이 나와 있음을 알린다.
-                        }
                         
-                        Button {
-                            viewModel.openCreateSheet()
-                        } label: {
-                            Text("새로운 시간표 생성")
+                        HStack {
+                            if viewModel.services.timetableService.isNewCourseBookAvailable() {
+                                // 새로운 수강편람이 나와 있음을 알린다.
+                                Circle()
+                                    .frame(width: 7, height: 7)
+                                    .foregroundColor(.red)
+                            }
+                            
+                            Spacer()
+                            
+                            Button {
+                                viewModel.openCreateSheet()
+                            } label: {
+                                Text("+ 시간표 추가하기")
+                                    .font(.system(size: 15, weight: .semibold))
+                            }
                         }
-
+                        .padding(.horizontal, 15)
                         
                         ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
                             MenuSection(quarter: quarter, current: timetableState.current) {

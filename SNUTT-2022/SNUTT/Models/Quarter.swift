@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Quarter: Hashable {
+struct Quarter {
     var year: Int
     var semester: Semester
     var updatedAt: String?
@@ -19,6 +19,19 @@ struct Quarter: Hashable {
     /// 예: "2022년 겨울학기"
     func longString() -> String {
         return "\(year)년 \(semester.longString())"
+    }
+}
+
+extension Quarter: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(year)
+        hasher.combine(semester)
+    }
+}
+
+extension Quarter: Equatable {
+    static func ==(lhs: Quarter, rhs: Quarter) -> Bool {
+        return lhs.year == rhs.year && lhs.semester == rhs.semester
     }
 }
 
