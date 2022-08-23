@@ -18,7 +18,7 @@ struct MenuRenameSheet: View {
         Sheet(isOpen: $isOpen,
               orientation: .bottom(maxHeight: 180),
               disableBackgroundTap: false,
-              disableDragGesture: false) {
+              disableDragGesture: true) {
             VStack {
                 MenuSheetTopBar(cancel: cancel, confirm: confirm, confirmDisabled: titleText.isEmpty)
                 

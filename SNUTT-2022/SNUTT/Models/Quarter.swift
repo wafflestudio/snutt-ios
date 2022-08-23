@@ -11,11 +11,12 @@ struct Quarter: Hashable {
     var year: Int
     var semester: Semester
     var updatedAt: String?
-
+    
     func shortString() -> String {
         return String(year) + semester.shortString()
     }
-
+    
+    /// 예: "2022년 겨울학기"
     func longString() -> String {
         return "\(year)년 \(semester.longString())"
     }

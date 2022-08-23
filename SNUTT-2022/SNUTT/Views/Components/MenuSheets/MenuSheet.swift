@@ -45,9 +45,7 @@ struct MenuSheet: View {
                         }
                         
                         Button {
-                            Task {
-                                await viewModel.createTimetable()
-                            }
+                            viewModel.openCreateSheet()
                         } label: {
                             Text("새로운 시간표 생성")
                         }
@@ -108,13 +106,8 @@ extension MenuSheet {
             }
         }
         
-        func createTimetable() async {
-            do {
-                try await services.timetableService.createTimetable(title: "12345", quarter: .init(year: 2022, semester: Semester.second))
-                try await services.timetableService.fetchRecentTimetable()
-            } catch {
-                services.appService.presentErrorAlert(error: error)
-            }
+        func openCreateSheet() {
+            services.appService.openCreateSheet()
         }
 
         func openEllipsis(for timetable: TimetableMetadata) {

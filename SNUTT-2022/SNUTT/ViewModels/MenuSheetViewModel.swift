@@ -16,28 +16,28 @@ class MenuSheetViewModel: BaseViewModel {
         appState.timetable
     }
 
-    func openPalette() {
+    func openThemeSheet() {
         if menuState.ellipsisTarget?.id != appState.timetable.current?.id {
             services.appService.presentErrorAlert(error: .CANT_CHANGE_OTHERS_THEME)
             services.appService.closeEllipsis()
             return
         }
-        services.appService.openThemePalette()
+        services.appService.openThemeSheet()
     }
 
-    func openTitleTextField() {
-        services.appService.openTitleTextField()
+    func openRenameSheet() {
+        services.appService.openRenameSheet()
     }
 
-    func cancelTitleTextField() {
-        services.appService.closeTitleTextField()
+    func closeRenameSheet() {
+        services.appService.closeRenameSheet()
     }
 
-    func applyTitleTextField() async {
+    func applyRenameSheet() async {
         guard let timetableId = menuState.ellipsisTarget?.id else { return }
         do {
-            try await services.timetableService.updateTimetableTitle(timetableId: timetableId, title: menuState.titleText)
-            services.appService.closeTitleTextField()
+            try await services.timetableService.updateTimetableTitle(timetableId: timetableId, title: menuState.renameTitle)
+            services.appService.closeRenameSheet()
         } catch {
             services.appService.presentErrorAlert(error: error)
         }
@@ -53,16 +53,31 @@ class MenuSheetViewModel: BaseViewModel {
         }
     }
 
-    func cancelThemeChange() {
-        services.appService.closeThemePalette()
+    func closeThemeSheet() {
+        services.appService.closeThemeSheet()
     }
 
-    func applyThemeChange() async {
+    func applyThemeSheet() async {
         guard let timetableId = menuState.ellipsisTarget?.id else { return }
 
         do {
             try await services.timetableService.updateTimetableTheme(timetableId: timetableId)
-            services.appService.closeThemePalette()
+            services.appService.closeThemeSheet()
+        } catch {
+            services.appService.presentErrorAlert(error: error)
+        }
+    }
+    
+    func closeCreateSheet() {
+        services.appService.closeCreateSheet()
+    }
+    
+    func applyCreateSheet() async {
+        guard let quarter = menuState.createQuarter else { return }
+        do {
+            try await services.timetableService.createTimetable(title: menuState.createTitle, quarter: quarter)
+            try await services.timetableService.fetchRecentTimetable()
+            services.appService.closeCreateSheet()
         } catch {
             services.appService.presentErrorAlert(error: error)
         }
@@ -75,5 +90,9 @@ class MenuSheetViewModel: BaseViewModel {
     var selectedTheme: Theme {
         guard let current = appState.timetable.current else { return .snutt }
         return current.selectedTheme ?? current.theme
+    }
+    
+    var availableCourseBooks: [Quarter] {
+        appState.timetable.courseBookList ?? []
     }
 }

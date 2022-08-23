@@ -10,12 +10,19 @@ import SwiftUI
 
 protocol AppServiceProtocol {
     func toggleMenuSheet()
+    
     func openEllipsis(for timetable: TimetableMetadata)
     func closeEllipsis()
-    func openThemePalette()
-    func closeThemePalette()
-    func openTitleTextField()
-    func closeTitleTextField()
+    
+    func openThemeSheet()
+    func closeThemeSheet()
+    
+    func openRenameSheet()
+    func closeRenameSheet()
+    
+    func openCreateSheet()
+    func closeCreateSheet()
+    
     func presentErrorAlert(error: STError?)
     func presentErrorAlert(error: Error)
 }
@@ -32,44 +39,58 @@ struct AppService: AppServiceProtocol {
 
     func openEllipsis(for timetable: TimetableMetadata) {
         DispatchQueue.main.async {
-            appState.menu.isEllipsisOpen = true
+            appState.menu.isEllipsisSheetOpen = true
             appState.menu.ellipsisTarget = timetable
         }
     }
 
     func closeEllipsis() {
         DispatchQueue.main.async {
-            appState.menu.isEllipsisOpen = false
+            appState.menu.isEllipsisSheetOpen = false
             appState.menu.ellipsisTarget = nil
         }
     }
 
-    func openThemePalette() {
+    func openThemeSheet() {
         DispatchQueue.main.async {
             appState.menu.isOpen = false
-            appState.menu.isEllipsisOpen = false
-            appState.menu.isThemePaletteOpen = true
+            appState.menu.isEllipsisSheetOpen = false
+            appState.menu.isThemeSheetOpen = true
         }
     }
 
-    func closeThemePalette() {
+    func closeThemeSheet() {
         DispatchQueue.main.async {
-            appState.menu.isThemePaletteOpen = false
+            appState.menu.isThemeSheetOpen = false
             appState.timetable.current?.selectedTheme = nil
         }
     }
 
-    func openTitleTextField() {
+    func openRenameSheet() {
         DispatchQueue.main.async {
-            appState.menu.titleText = appState.menu.ellipsisTarget?.title ?? ""
-            appState.menu.isEllipsisOpen = false
-            appState.menu.isTitleTextFieldOpen = true
+            appState.menu.renameTitle = appState.menu.ellipsisTarget?.title ?? ""
+            appState.menu.isEllipsisSheetOpen = false
+            appState.menu.isRenameSheetOpen = true
         }
     }
 
-    func closeTitleTextField() {
+    func closeRenameSheet() {
         DispatchQueue.main.async {
-            appState.menu.isTitleTextFieldOpen = false
+            appState.menu.isRenameSheetOpen = false
+        }
+    }
+    
+    func openCreateSheet() {
+        DispatchQueue.main.async {
+            appState.menu.createTitle = ""
+            appState.menu.createQuarter = appState.timetable.courseBookList?.first
+            appState.menu.isCreateSheetOpen = true
+        }
+    }
+    
+    func closeCreateSheet() {
+        DispatchQueue.main.async {
+            appState.menu.isCreateSheetOpen = false
         }
     }
 
