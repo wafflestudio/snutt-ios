@@ -18,7 +18,6 @@ struct TimetableZStack: View {
         }
         .background(STColor.systemBackground)
         .ignoresSafeArea(.keyboard)
-        .animation(.customSpring, value: current?.id)
 
         let _ = debugChanges()
     }

@@ -19,6 +19,7 @@ struct TimetableScene: View {
 
     var body: some View {
         TimetableZStack(current: viewModel.timetableState.current, config: viewModel.timetableState.configuration)
+            .animation(.customSpring, value: viewModel.timetableState.current?.id)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
                 NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) {

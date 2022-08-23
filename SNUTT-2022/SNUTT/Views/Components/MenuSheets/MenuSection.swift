@@ -47,13 +47,13 @@ struct MenuSection<Content>: View where Content: View {
         .padding(.horizontal, 15)
         .frame(maxHeight: .infinity)
         .onAppear {
-            isExpanded = quarter == current?.quarter
+            isExpanded = (quarter == current?.quarter)
         }
-        .onChange(of: current, perform: { newValue in
+        .onChange(of: current?.quarter, perform: { newValue in
             if !isExpanded {
                 // 현재 시간표가 속한 학기는 처음부터 확장되어 있도록 한다.
                 withAnimation(.customSpring) {
-                    isExpanded = quarter == current?.quarter
+                    isExpanded = quarter == newValue
                 }
             }
         })
