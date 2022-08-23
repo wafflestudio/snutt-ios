@@ -49,11 +49,11 @@ struct MenuSection<Content>: View where Content: View {
         .onAppear {
             isExpanded = quarter == current?.quarter
         }
-        .onChange(of: quarter == current?.quarter, perform: { newValue in
+        .onChange(of: current, perform: { newValue in
             if !isExpanded {
                 // 현재 시간표가 속한 학기는 처음부터 확장되어 있도록 한다.
                 withAnimation(.customSpring) {
-                    isExpanded = newValue
+                    isExpanded = quarter == current?.quarter
                 }
             }
         })

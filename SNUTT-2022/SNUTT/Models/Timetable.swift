@@ -80,6 +80,15 @@ extension Timetable {
     }
 }
 
+extension Timetable: Equatable {
+    /// 아래 속성 중 하나라도 변하면 `onChange` 콜백을 트리거한다.
+    static func ==(lhs: Timetable, rhs: Timetable) -> Bool {
+        return lhs.id == rhs.id
+        && lhs.title == rhs.title
+        && lhs.theme == rhs.theme
+    }
+}
+
 #if DEBUG
     extension Timetable {
         static var preview: Timetable {
