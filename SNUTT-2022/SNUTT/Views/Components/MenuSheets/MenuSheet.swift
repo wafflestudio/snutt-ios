@@ -40,7 +40,6 @@ struct MenuSheet: View {
                     LazyVStack(spacing: 15) {
                         let timetablesByQuarter = viewModel.timetablesByQuarter
                         ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
-                            _ = print(quarter == timetableState.current?.quarter)
                             MenuSection(quarter: quarter, isExpanded: quarter == timetableState.current?.quarter) {
                                 ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { data in
                                     MenuSectionRow(timetableMetadata: data,
