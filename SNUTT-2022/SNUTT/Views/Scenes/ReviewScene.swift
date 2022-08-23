@@ -9,15 +9,17 @@ import SwiftUI
 
 struct ReviewScene: View {
     // for test
-    let viewModel: ReviewViewModel
+    @ObservedObject var viewModel: ReviewViewModel
 
     var body: some View {
+        ReviewWebView(request: URLRequest(url: SNUTTWebView.review.url), viewModel: viewModel)
+            .navigationBarHidden(true)
         let _ = debugChanges()
     }
 }
 
-struct ReviewScene_Previews: PreviewProvider {
-    static var previews: some View {
-        ReviewScene(viewModel: .init(container: .preview))
-    }
-}
+//struct ReviewScene_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ReviewScene()
+//    }
+//}
