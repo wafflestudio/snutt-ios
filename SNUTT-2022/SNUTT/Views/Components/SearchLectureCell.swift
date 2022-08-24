@@ -34,21 +34,10 @@ struct SearchLectureCell: View {
 
                 LectureDetailRow(imageName: "map.white", text: lecture.timePlaces.isEmpty ? "(없음)" : lecture.timePlaces.map { $0.place }.joined(separator: "/"))
 
-                if !lecture.remark.isEmpty {
-                    HStack {
-                        Image("tag.white")
-                            .resizable()
-                            .frame(width: 15, height: 15)
-                        Text(lecture.remark)
-                            .font(STFont.details)
-                            .lineLimit(selected ? nil : 1)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Spacer()
-                    }
-                }
+                LectureDetailRow(imageName: "ellipsis.white", text: lecture.remark.isEmpty ? "(없음)" : lecture.remark)
 
                 if selected {
-                    Divider().padding(.top, 10)
+                    Spacer().frame(height: 5)
 
                     HStack {
                         Button {

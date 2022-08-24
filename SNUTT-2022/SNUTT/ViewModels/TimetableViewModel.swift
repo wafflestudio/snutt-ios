@@ -55,4 +55,8 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
             services.appService.presentErrorAlert(error: error.asSTError)
         }
     }
+
+    func loadTimetableConfig() {
+        timetableService.loadTimetableConfig()
+    }
 }
