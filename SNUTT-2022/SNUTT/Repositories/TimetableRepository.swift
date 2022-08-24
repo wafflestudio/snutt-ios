@@ -48,7 +48,6 @@ class TimetableRepository: TimetableRepositoryProtocol {
             .handlingError()
     }
 
-
     func createTimetable(title: String, year: Int, semester: Int) async throws -> [TimetableMetadataDto] {
         return try await session
             .request(TimetableRouter.createTimetable(title: title, year: year, semester: semester))
