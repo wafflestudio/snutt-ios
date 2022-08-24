@@ -5,8 +5,8 @@
 //  Created by Jinsup Keum on 2022/06/25.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 typealias ConnectionState = System.State
 
@@ -15,7 +15,7 @@ class System: ObservableObject {
         case error
         case success
     }
-    
+
     @Published var shouldReloadWebView: Bool = false
     @Published var connectionState: State = .success
 

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WebErrorView: View {
     let viewModel: ReviewViewModel
-    
+
     var body: some View {
         VStack {
             Image("warning.cat")
@@ -32,8 +32,8 @@ struct WebErrorView: View {
     }
 }
 
-//struct WebErrorView_Previews: PreviewProvider {
+// struct WebErrorView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        WebErrorView()
 //    }
-//}
+// }

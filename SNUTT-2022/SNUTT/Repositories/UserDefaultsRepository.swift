@@ -22,13 +22,13 @@ enum STDefaultsKey: String {
 
     case currentTimetable
     case timetableConfig
-    
+
     case registeredFCMToken
     case appVersion
 
     case shouldShowBadge
     case shouldDeleteFCMInfos
-    
+
     case snuevWebUrl
 }
 

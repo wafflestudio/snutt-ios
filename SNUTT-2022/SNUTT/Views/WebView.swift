@@ -5,10 +5,10 @@
 //  Created by 최유림 on 2022/08/21.
 //
 
+import Combine
+import Foundation
 import SwiftUI
 import WebKit
-import Foundation
-import Combine
 
 protocol WebView: UIViewRepresentable {
     var request: URLRequest { get set }
@@ -31,17 +31,17 @@ struct SingleWebView: WebView {
 
 // TODO: move to appropriate directory
 struct ReviewWebView: WebView {
-    
     var request: URLRequest
 
     @ObservedObject var viewModel: ReviewViewModel
-    
+
     func makeUIView(context: Context) -> WKWebView {
         guard let cookies = cookiesFromUserDefaults(),
-              !cookies.isEmpty else {
+              !cookies.isEmpty
+        else {
             return WKWebView()
         }
-        
+
         let webView = WKWebView.attach(cookies: cookies)
         webView.navigationDelegate = context.coordinator
         webView.allowsBackForwardNavigationGestures = true
@@ -60,22 +60,22 @@ struct ReviewWebView: WebView {
             }
         }
     }
-    
+
     func makeCoordinator() -> ReviewWebView.Coordinator {
         Coordinator(self)
     }
-    
+
     func cookiesFromUserDefaults() -> [HTTPCookie]? {
         guard let apiUri = request.url?.absoluteString else {
             return nil
         }
-        
+
         // TODO: uncomment this
 //        guard let apiKey = viewModel.apiKey,
 //              let token = viewModel.token else {
 //            return nil
 //        }
-        
+
         let apiKey = "eyJ0eXA..."
         let token = "74280a4..."
 
@@ -99,7 +99,7 @@ struct ReviewWebView: WebView {
 
         return [apiKeyCookie, tokenCookie]
     }
-    
+
     class Coordinator: NSObject, WKNavigationDelegate {
         let parent: ReviewWebView
         var webView: WKWebView?
@@ -110,18 +110,18 @@ struct ReviewWebView: WebView {
         init(_ parent: ReviewWebView) {
             self.parent = parent
         }
-        
+
         // TODO: implement below
 
-        func webView(_ webView: WKWebView, didFailProvisionalNavigation: WKNavigation!, withError: Error) {
+        func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
             viewModel.fail()
         }
 
-        func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
             print("didFail")
         }
-        
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+
+        func webView(_: WKWebView, didFinish _: WKNavigation!) {
             viewModel.success()
         }
     }

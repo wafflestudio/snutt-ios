@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct ReviewScene: View {
-
     @ObservedObject var viewModel: ReviewViewModel
-    
+
     var state: ConnectionState {
         viewModel.state
     }
