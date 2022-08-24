@@ -19,7 +19,8 @@ struct MenuThemeSheet: View {
         Sheet(isOpen: $isOpen,
               orientation: .bottom(maxHeight: 200),
               disableBackgroundTap: false,
-              disableDragGesture: true) {
+              disableDragGesture: true,
+              onBackgroundTap: cancel) {
             VStack {
                 MenuSheetTopBar(cancel: cancel, confirm: confirm)
                     .padding(.horizontal, 20)
