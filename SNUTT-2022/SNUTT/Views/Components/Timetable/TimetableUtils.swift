@@ -49,9 +49,9 @@ struct TimetablePainter {
     static func getHeight(of timePlace: TimePlace, in containerSize: CGSize, hourCount: Int) -> CGFloat {
         return timePlace.len * getHourHeight(in: containerSize, hourCount: hourCount)
     }
-    
+
     // MARK: Auto Fit
-    
+
     /// `autoFit`을 고려한 시간표의 시작 시각. 빈 시간표일 때에는 설정 값을 따른다.
     static func getStartingHour(current: Timetable?, config: TimetableConfiguration) -> Int {
         if !config.autoFit {
