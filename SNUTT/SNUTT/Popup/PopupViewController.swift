@@ -39,7 +39,7 @@ class PopupViewController: UIViewController {
 
     private func setButtonActions() {
         popupView.dismissOnceButton.addTarget(self, action: #selector(dismissOnce), for: .touchUpInside)
-        popupView.dismissForNdaysButton?.addTarget(self, action: #selector(dismissForNdays), for: .touchUpInside)
+        popupView.dismissForNdaysButton.addTarget(self, action: #selector(dismissForNdays), for: .touchUpInside)
     }
 
     @objc func dismissOnce() {

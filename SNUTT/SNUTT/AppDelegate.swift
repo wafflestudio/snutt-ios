@@ -110,8 +110,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }, failure: nil)
         }
 
-        STPopupManager.initialize()
-
         return true
     }
 

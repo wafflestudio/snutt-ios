@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B827A8FF289AEC6F00ABAE39 /* SNUTTDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827A8FE289AEC6F00ABAE39 /* SNUTTDefaults.swift */; };
+		B827A903289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827A902289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift */; };
 		B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* BaseViewModel.swift */; };
+		B8F570A6289E1221005C199F /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F570A5289E1221005C199F /* UserDefaults.swift */; };
+		B8F570A7289E1233005C199F /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F570A5289E1221005C199F /* UserDefaults.swift */; };
+		BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */; };
+		BE13C5B628AE636D0081D0AB /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */; };
 		BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
 		BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
 		BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
@@ -167,7 +173,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B827A8FE289AEC6F00ABAE39 /* SNUTTDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTDefaults.swift; sourceTree = "<group>"; };
+		B827A902289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTDefaultsContainer.swift; sourceTree = "<group>"; };
 		B87431CA283B5A7300D78C59 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		B8F570A5289E1221005C199F /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepository.swift; sourceTree = "<group>"; };
 		BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableGridLayer.swift; sourceTree = "<group>"; };
 		BE1D2B3928014527008F9134 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
 		BE419B8C288B8C5A00FA9590 /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
@@ -318,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				BE419B8C288B8C5A00FA9590 /* View+Debug.swift */,
+				B8F570A5289E1221005C199F /* UserDefaults.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -485,6 +496,7 @@
 				BE682BD828870718009EBCB7 /* LectureRepository.swift */,
 				BEDE34D92879AA0B00525014 /* UserRepository.swift */,
 				BE682C02288817C8009EBCB7 /* SearchRepository.swift */,
+				BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */,
 				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
 			);
 			path = Repositories;
@@ -558,6 +570,8 @@
 				BEDE34DB2879B40100525014 /* AppEnvironment.swift */,
 				DCD41A7427E5CEA500CF380E /* AppState.swift */,
 				BEDE34D52879A7B800525014 /* DIContainer.swift */,
+				B827A8FE289AEC6F00ABAE39 /* SNUTTDefaults.swift */,
+				B827A902289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift */,
 			);
 			path = AppState;
 			sourceTree = "<group>";
@@ -744,6 +758,7 @@
 				BE804BEB288B9EFE00782F16 /* TimetableConfiguration.swift in Sources */,
 				BE419B8A288B8BB600FA9590 /* STColor.swift in Sources */,
 				BE419B89288B8BAD00FA9590 /* TimetableDto.swift in Sources */,
+				BE13C5B628AE636D0081D0AB /* UserDefaultsRepository.swift in Sources */,
 				BE419B86288B8B8F00FA9590 /* Theme.swift in Sources */,
 				BE419B87288B8B8F00FA9590 /* Weekday.swift in Sources */,
 				BE419B92288B8F9F00FA9590 /* TimetableBlock.swift in Sources */,
@@ -752,6 +767,7 @@
 				BE419B9B288B917A00FA9590 /* TimetableUtils.swift in Sources */,
 				BE419B8E288B8C6800FA9590 /* View+Debug.swift in Sources */,
 				BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */,
+				B8F570A7289E1233005C199F /* UserDefaults.swift in Sources */,
 				BE419B91288B8F9C00FA9590 /* TimetableZStack.swift in Sources */,
 				BE419B94288B8FA600FA9590 /* TimetableGridLayer.swift in Sources */,
 				BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */,
@@ -796,6 +812,7 @@
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
 				DC2915A92866986600FE5F9A /* System.swift in Sources */,
+				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
 				BE98A00E288AA3D200C2CE95 /* MenuSheetContent.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				BE4B0EB828735052005FE164 /* MenuSheetSetting.swift in Sources */,
@@ -803,6 +820,8 @@
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
 				DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */,
 				BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */,
+				B8F570A6289E1221005C199F /* UserDefaults.swift in Sources */,
+				B827A8FF289AEC6F00ABAE39 /* SNUTTDefaults.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
@@ -836,6 +855,7 @@
 				BE804BEA288B9EF700782F16 /* TimetableConfiguration.swift in Sources */,
 				BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
+				B827A903289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift in Sources */,
 				BE682BDB28870872009EBCB7 /* LectureService.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
@@ -917,7 +937,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG WIDGET";
@@ -947,7 +967,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
@@ -1097,7 +1117,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1130,7 +1150,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

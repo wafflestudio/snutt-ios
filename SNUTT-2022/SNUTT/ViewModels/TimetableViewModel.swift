@@ -62,4 +62,8 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
             // TODO: handle error
         }
     }
+
+    func loadTimetableConfig() {
+        timetableService.loadTimetableConfig()
+    }
 }

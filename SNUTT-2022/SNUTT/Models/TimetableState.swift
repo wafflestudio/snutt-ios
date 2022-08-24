@@ -20,13 +20,8 @@ class TimetableState: ObservableObject {
         // TODO: refactor this
         $current
             .compactMap { $0 }
-            .sink { timetable in
-                let dto = TimetableDto(from: timetable)
-                let data = dto.asJSONData()
-                if let userDefaults = UserDefaults(suiteName: "group.com.wafflestudio.snutt-2022") {
-                    userDefaults.set(data, forKey: "currentTimetable")
-                    WidgetCenter.shared.reloadTimelines(ofKind: "TimetableWidget")
-                }
+            .sink { _ in
+                WidgetCenter.shared.reloadTimelines(ofKind: "TimetableWidget")
             }
             .store(in: &bag)
     }
