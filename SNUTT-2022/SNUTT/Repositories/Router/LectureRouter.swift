@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 enum LectureRouter: Router {
-    var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/tables")! }
+    var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/tables")! }
     static let shouldAddToken: Bool = true
 
     case addCustomLecture(timetableId: String, lecture: LectureDto)

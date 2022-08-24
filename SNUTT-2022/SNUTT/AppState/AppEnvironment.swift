@@ -50,8 +50,8 @@ extension AppEnvironment {
 
     private static func configuredSession() -> Session {
         let storage = Storage()
-        storage.accessToken = "c7f446a2..."
-        storage.apiKey = "eyJ0eXAiO..."
+        storage.apiKey = Bundle.main.infoDictionary?["API_KEY"] as! String
+        storage.accessToken = "74280a42...."
         return Session(interceptor: Interceptor(authStorage: storage), eventMonitors: [Logger()])
     }
 

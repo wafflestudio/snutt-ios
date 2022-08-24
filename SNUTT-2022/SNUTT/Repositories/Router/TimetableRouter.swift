@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 enum TimetableRouter: Router {
-    var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/tables")! } // For test
+    var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/tables")! }
 
     case getTimetableList
     case getTimetable(id: String)

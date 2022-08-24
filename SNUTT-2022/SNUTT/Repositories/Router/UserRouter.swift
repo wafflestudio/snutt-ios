@@ -9,8 +9,7 @@ import Alamofire
 import Foundation
 
 enum UserRouter: Router {
-    // TODO: replace with config
-    var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/user")! }
+    var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/user")! }
 
     static let shouldAddToken: Bool = true
 

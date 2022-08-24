@@ -21,6 +21,7 @@ struct SingleWebView: WebView {
     var request: URLRequest
 
     func makeUIView(context _: Context) -> WKWebView {
+        print(request.url)
         return WKWebView()
     }
 
@@ -35,36 +36,19 @@ struct ReviewWebView: WebView {
 
     var viewModel: ReviewViewModel
 
-    func attachCookies(cookies: [HTTPCookie]) -> WKWebView {
-        let dataStore = WKWebsiteDataStore.nonPersistent()
-        let configuration = WKWebViewConfiguration()
-        for cookie in cookies {
-            dataStore.httpCookieStore.setCookie(cookie)
-        }
-        configuration.websiteDataStore = dataStore
-        let webView = WKWebView(frame: .zero, configuration: configuration)
-        return webView
-    }
-    
     func makeUIView(context: Context) -> WKWebView {
-        guard let cookies = getCookiesFromUserDefaults() else {
+        guard let cookies = cookiesFromUserDefaults(),
+              !cookies.isEmpty else {
             return WKWebView()
         }
-        
-        var webView: WKWebView
 
-        if cookies.count > 0 {
-            webView = attachCookies(cookies: cookies)
-        } else {
-            webView = WKWebView()
-        }
+        let webView = WKWebView.attach(cookies: cookies)
         webView.navigationDelegate = context.coordinator
         webView.allowsBackForwardNavigationGestures = true
-        
-        webView.scrollView.delegate = context.coordinator
         webView.scrollView.bounces = false
+        webView.scrollView.delegate = context.coordinator
         context.coordinator.webView = webView
-        
+
         return webView
     }
 
@@ -74,17 +58,22 @@ struct ReviewWebView: WebView {
     }
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(self)
+        return Coordinator()
     }
     
-    func getCookiesFromUserDefaults() -> [HTTPCookie]? {
-        // TODO: replace with config
-        let apiUri = "https://snutt-ev-web-dev.wafflestudio.com"
-        
-        guard let apiKey = viewModel.apiKey,
-              let token = viewModel.token else {
+    func cookiesFromUserDefaults() -> [HTTPCookie]? {
+        guard let apiUri = request.url?.absoluteString else {
             return nil
         }
+        
+        // TODO: uncomment this
+//        guard let apiKey = viewModel.apiKey,
+//              let token = viewModel.token else {
+//            return nil
+//        }
+        
+        let apiKey = "eyJ0eXAi...."
+        let token = "74280a4...."
 
         guard let apiKeyCookie = HTTPCookie(properties: [
             .domain: apiUri.replacingOccurrences(of: "https://", with: ""),
@@ -108,14 +97,8 @@ struct ReviewWebView: WebView {
     }
     
     class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, UIScrollViewDelegate {
-        let parent: ReviewWebView
-
         var webView: WKWebView?
 
-        init(_ parent: ReviewWebView) {
-            self.parent = parent
-        }
-        
         func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
             print("didStartProvisionalNavigation")
         }
@@ -135,6 +118,18 @@ struct ReviewWebView: WebView {
     }
 }
 
+extension WKWebView {
+    static func attach(cookies: [HTTPCookie]) -> Self {
+        let dataStore = WKWebsiteDataStore.nonPersistent()
+        let configuration = WKWebViewConfiguration()
+        for cookie in cookies {
+            dataStore.httpCookieStore.setCookie(cookie)
+        }
+        configuration.websiteDataStore = dataStore
+        return .init(frame: .zero, configuration: configuration)
+    }
+}
+
 // TODO: move to appropriate directory
 enum SNUTTWebView {
     case developerInfo
@@ -145,9 +140,9 @@ enum SNUTTWebView {
     var baseURL: String {
         switch self {
         case .review:
-            return "https://snutt-ev-web-dev.wafflestudio.com"
+            return NetworkConfiguration.snuevBaseURL
         default:
-            return "https://snutt-api-dev.wafflestudio.com"
+            return NetworkConfiguration.serverBaseURL
         }
     }
 
