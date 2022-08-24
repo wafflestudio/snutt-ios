@@ -24,18 +24,18 @@ class ReviewViewModel: ObservableObject {
         system.$connectionState
             .assign(to: &$state)
     }
-    
+
     func changeConnectionState(to state: ConnectionState) {
         system.connectionState = state
     }
-    
+
     func shouldReloadWebView(_ reload: Bool) {
         if reload {
             changeConnectionState(to: .success)
         }
         system.shouldReloadWebView = reload
     }
-    
+
     var apiKey: String? {
         appState.user.apiKey
     }

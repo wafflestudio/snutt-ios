@@ -110,11 +110,11 @@ struct ReviewWebView: WebView {
             self.parent = parent
         }
 
-        func webView(_ webView: WKWebView, didFailProvisionalNavigation: WKNavigation!, withError: Error) {
+        func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
             viewModel.changeConnectionState(to: .error)
         }
-        
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+
+        func webView(_: WKWebView, didFinish _: WKNavigation!) {
             viewModel.changeConnectionState(to: .success)
         }
     }
