@@ -20,7 +20,6 @@ struct SingleWebView: WebView {
     var request: URLRequest
 
     func makeUIView(context _: Context) -> WKWebView {
-        print(request.url!)
         return WKWebView()
     }
 
@@ -56,7 +55,7 @@ struct ReviewWebView: WebView {
         if viewModel.reload {
             uiView.load(request)
             DispatchQueue.main.async {
-                viewModel.reloadDone()
+                viewModel.shouldReloadWebView(false)
             }
         }
     }
@@ -111,18 +110,12 @@ struct ReviewWebView: WebView {
             self.parent = parent
         }
 
-        // TODO: implement below
-
-        func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
-            viewModel.fail()
+        func webView(_ webView: WKWebView, didFailProvisionalNavigation: WKNavigation!, withError: Error) {
+            viewModel.changeConnectionState(to: .error)
         }
-
-        func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
-            print("didFail")
-        }
-
-        func webView(_: WKWebView, didFinish _: WKNavigation!) {
-            viewModel.success()
+        
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            viewModel.changeConnectionState(to: .success)
         }
     }
 }
