@@ -8,17 +8,19 @@
 import Foundation
 
 struct TimetableConfiguration: Codable {
-    var minHour: Int = 8
-    var maxHour: Int = 19
+    var minHour: Int = 9
+    var maxHour: Int = 18
     var autoFit: Bool = true
 
     var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
 
-    var hourCount: Int {
-        maxHour - minHour + 1
-    }
-
     var weekCount: Int {
         visibleWeeks.count
+    }
+
+    func withAutoFitEnabled() -> Self {
+        var this = self
+        this.autoFit = true
+        return this
     }
 }

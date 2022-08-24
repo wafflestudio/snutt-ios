@@ -37,7 +37,6 @@ struct SearchLectureCell: View {
                 LectureDetailRow(imageName: "ellipsis.white", text: lecture.remark.isEmpty ? "(없음)" : lecture.remark)
 
                 if selected {
-//                    Divider().padding(.top, 10)
                     Spacer().frame(height: 5)
 
                     HStack {

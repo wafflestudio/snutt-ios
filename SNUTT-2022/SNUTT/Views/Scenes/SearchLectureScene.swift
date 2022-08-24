@@ -25,8 +25,8 @@ struct SearchLectureScene: View {
                 VStack {
                     Spacer()
                         .frame(height: 44)
-                    TimetableZStack(current: viewModel.timetableState.current, config: viewModel.timetableState.configuration)
-                        .environment(\.selectedLecture, searchState.selectedLecture)
+                    TimetableZStack(current: viewModel.timetableState.current?.withSelectedLecture(searchState.selectedLecture),
+                                    config: viewModel.timetableState.configuration.withAutoFitEnabled())
                 }
                 STColor.searchListBackground
             }

@@ -17,6 +17,7 @@ class TimetableState: ObservableObject {
     private var bag = Set<AnyCancellable>()
 
     init() {
+        // TODO: refactor this
         $current
             .compactMap { $0 }
             .sink { _ in
