@@ -12,6 +12,7 @@ protocol TimetableServiceProtocol {
     func fetchRecentTimetable() async throws
     func fetchTimetableList() async throws
     func fetchTimetable(timetableId: String) async throws
+    func loadTimetableConfig()
     func copyTimetable(timetableId: String) async throws
     func updateTimetableTitle(timetableId: String, title: String) async throws
     func updateTimetableTheme(timetableId: String) async throws
@@ -26,36 +27,32 @@ protocol TimetableServiceProtocol {
 struct TimetableService: TimetableServiceProtocol {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
+    var localRepositories: AppEnvironment.LocalRepositories
 
     var timetableRepository: TimetableRepositoryProtocol {
         webRepositories.timetableRepository
     }
 
+    var userDefaultsRepository: UserDefaultsRepositoryProtocol {
+        localRepositories.userDefaultsRepository
+    }
+
     func fetchTimetable(timetableId: String) async throws {
-        if appState.timetable.current?.id == timetableId {
-            // skip fetching
-            return
-        }
-        let dto = try await timetableRepository.fetchTimetable(timetableId: timetableId)
-        let timetable = Timetable(from: dto)
-        DispatchQueue.main.async {
-            appState.timetable.current = timetable
-        }
+        let dto = try await timetableRepository.fetchTimetable(withTimetableId: timetableId)
+        userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
+        await updateState(to: Timetable(from: dto))
     }
 
     func fetchRecentTimetable() async throws {
-        let dto = try await timetableRepository.fetchRecentTimetable()
-        let timetable = Timetable(from: dto)
-        DispatchQueue.main.async {
-            appState.timetable.current = timetable
+        if let cachedData = userDefaultsRepository.get(TimetableDto.self, key: .currentTimetable) {
+            await updateState(to: Timetable(from: cachedData))
         }
+        let dto = try await timetableRepository.fetchRecentTimetable()
+        userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
+        await updateState(to: Timetable(from: dto))
     }
 
     func fetchTimetableList() async throws {
-        if let _ = appState.timetable.metadataList {
-            // skip fetching
-            return
-        }
         let dtos = try await timetableRepository.fetchTimetableList()
         let timetables = dtos.map { TimetableMetadata(from: $0) }
         DispatchQueue.main.async {
@@ -121,12 +118,25 @@ struct TimetableService: TimetableServiceProtocol {
         let latestCourseBook = appState.timetable.courseBookList?.sorted().last
         return myLatestQuarter != latestCourseBook
     }
+
+    func loadTimetableConfig() {
+        DispatchQueue.main.async {
+            appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
+        }
+    }
+
+    // TODO: to be refactored
+    @MainActor
+    private func updateState(to currentTimetable: Timetable) {
+        appState.timetable.current = currentTimetable
+    }
 }
 
 struct FakeTimetableService: TimetableServiceProtocol {
     func fetchRecentTimetable() async throws {}
     func fetchTimetableList() {}
     func fetchTimetable(timetableId _: String) {}
+    func loadTimetableConfig() {}
     func copyTimetable(timetableId _: String) {}
     func updateTimetableTitle(timetableId _: String, title _: String) {}
     func updateTimetableTheme(timetableId _: String) async throws {}

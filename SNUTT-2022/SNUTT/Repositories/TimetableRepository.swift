@@ -9,10 +9,9 @@ import Alamofire
 import Foundation
 
 protocol TimetableRepositoryProtocol {
-    func fetchTimetable(timetableId: String) async throws -> TimetableDto
+    func fetchTimetable(withTimetableId: String) async throws -> TimetableDto
     func fetchRecentTimetable() async throws -> TimetableDto
     func fetchTimetableList() async throws -> [TimetableMetadataDto]
-    func fetchTimetable(withTimetableId id: String) async throws -> TimetableDto
     func updateTimetableTitle(withTimetableId id: String, withTitle title: String) async throws -> [TimetableMetadataDto]
     func deleteTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
     func copyTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
@@ -27,11 +26,12 @@ class TimetableRepository: TimetableRepositoryProtocol {
         self.session = session
     }
 
-    func fetchTimetable(timetableId: String) async throws -> TimetableDto {
-        return try await session
-            .request(TimetableRouter.getTimetable(id: timetableId))
+    func fetchTimetable(withTimetableId: String) async throws -> TimetableDto {
+        let data = try await session
+            .request(TimetableRouter.getTimetable(id: withTimetableId))
             .serializingDecodable(TimetableDto.self)
             .handlingError()
+        return data
     }
 
     func fetchRecentTimetable() async throws -> TimetableDto {
@@ -48,12 +48,6 @@ class TimetableRepository: TimetableRepositoryProtocol {
             .handlingError()
     }
 
-    func fetchTimetable(withTimetableId id: String) async throws -> TimetableDto {
-        return try await session
-            .request(TimetableRouter.getTimetable(id: id))
-            .serializingDecodable(TimetableDto.self)
-            .handlingError()
-    }
 
     func createTimetable(title: String, year: Int, semester: Int) async throws -> [TimetableMetadataDto] {
         return try await session

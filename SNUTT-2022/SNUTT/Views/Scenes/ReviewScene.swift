@@ -12,12 +12,6 @@ struct ReviewScene: View {
     let viewModel: ReviewViewModel
 
     var body: some View {
-        Button {
-//            viewModel.updateTimetable(timeTable: Timetable(lectures: []))
-        } label: {
-            Text("Change current timetable")
-        }
-
         let _ = debugChanges()
     }
 }

@@ -96,8 +96,6 @@ class STUser {
         }, failure: {
             openController()
         })
-
-        STPopupManager.initialize()
     }
 
     static func tryFBLogin(controller: UIViewController) {

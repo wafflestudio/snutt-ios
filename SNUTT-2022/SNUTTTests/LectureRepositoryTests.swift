@@ -10,8 +10,8 @@ import XCTest
 
 class LectureRepositoryTests: XCTestCase {
     class Storage: AuthStorage {
-        var apiKey: ApiKey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdHJpbmciOiJpb3MiLCJrZXlfdmVyc2lvbiI6IjAiLCJpYXQiOjE1MDc3MjM3MDd9.wlhtBwB2e9A4qzA7PdjR-NdER2O_jajPCzlMhcREpig"
-        var accessToken: AccessToken = "c7f446a24b74178c583dd915b449a4285197d355dce5e4426605a64eb2133fbd"
+        var apiKey: ApiKey = "eyJ0eX..."
+        var accessToken: AccessToken = "c7f446..."
     }
 
     func testExtractModifiedMethod() {
