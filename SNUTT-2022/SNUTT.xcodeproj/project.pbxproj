@@ -14,7 +14,7 @@
 		B8F570A7289E1233005C199F /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F570A5289E1221005C199F /* UserDefaults.swift */; };
 		BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */; };
 		BE13C5B628AE636D0081D0AB /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */; };
-		BE1B610C289D7C2500401361 /* GlobalUiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1B610B289D7C2500401361 /* GlobalUiService.swift */; };
+		BE1B610C289D7C2500401361 /* GlobalUIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1B610B289D7C2500401361 /* GlobalUIService.swift */; };
 		BE1B610E289E000B00401361 /* EllipsisSheetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1B610D289E000B00401361 /* EllipsisSheetButton.swift */; };
 		BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
 		BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
@@ -192,7 +192,7 @@
 		B87431CA283B5A7300D78C59 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		B8F570A5289E1221005C199F /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepository.swift; sourceTree = "<group>"; };
-		BE1B610B289D7C2500401361 /* GlobalUiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalUiService.swift; sourceTree = "<group>"; };
+		BE1B610B289D7C2500401361 /* GlobalUIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalUIService.swift; sourceTree = "<group>"; };
 		BE1B610D289E000B00401361 /* EllipsisSheetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipsisSheetButton.swift; sourceTree = "<group>"; };
 		BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableGridLayer.swift; sourceTree = "<group>"; };
 		BE1D2B3928014527008F9134 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
@@ -527,7 +527,7 @@
 				BEDE34D72879A9DC00525014 /* UserService.swift */,
 				BE682BDA28870872009EBCB7 /* LectureService.swift */,
 				BE77D0A628AEB0650067A9D8 /* CourseBookService.swift */,
-				BE1B610B289D7C2500401361 /* GlobalUiService.swift */,
+				BE1B610B289D7C2500401361 /* GlobalUIService.swift */,
 				BE682C0428881852009EBCB7 /* SearchService.swift */,
 			);
 			path = Services;
@@ -896,7 +896,7 @@
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
 				BE4B0EBE2873BC84005FE164 /* FilterSheetViewModel.swift in Sources */,
-				BE1B610C289D7C2500401361 /* GlobalUiService.swift in Sources */,
+				BE1B610C289D7C2500401361 /* GlobalUIService.swift in Sources */,
 				DC2915992865D69700FE5F9A /* LectureListViewModel.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,

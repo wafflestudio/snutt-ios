@@ -22,7 +22,7 @@ extension LectureDetailScene {
             do {
                 try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture)
             } catch {
-                services.globalUiService.presentErrorAlert(error: error)
+                services.globalUIService.presentErrorAlert(error: error)
                 return false
             }
             return true
@@ -32,7 +32,7 @@ extension LectureDetailScene {
             do {
                 try await lectureService.deleteLecture(lecture: lecture)
             } catch {
-                services.globalUiService.presentErrorAlert(error: error)
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
     }

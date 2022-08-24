@@ -1,5 +1,5 @@
 //
-//  GlobalUiService.swift
+//  GlobalUIService.swift
 //  SNUTT
 //
 //  Created by 박신홍 on 2022/08/06.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-protocol GlobalUiServiceProtocol {
+protocol GlobalUIServiceProtocol {
     func toggleMenuSheet()
 
     func openEllipsis(for timetable: TimetableMetadata)
@@ -28,7 +28,7 @@ protocol GlobalUiServiceProtocol {
 }
 
 /// A service that modifies miscellaneous global states.
-struct GlobalUiService: GlobalUiServiceProtocol {
+struct GlobalUIService: GlobalUIServiceProtocol {
     var appState: AppState
 
     func toggleMenuSheet() {

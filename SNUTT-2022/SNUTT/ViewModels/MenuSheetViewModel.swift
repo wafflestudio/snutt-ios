@@ -18,28 +18,28 @@ class MenuSheetViewModel: BaseViewModel {
 
     func openThemeSheet() {
         if menuState.ellipsisTarget?.id != appState.timetable.current?.id {
-            services.globalUiService.presentErrorAlert(error: .CANT_CHANGE_OTHERS_THEME)
-            services.globalUiService.closeEllipsis()
+            services.globalUIService.presentErrorAlert(error: .CANT_CHANGE_OTHERS_THEME)
+            services.globalUIService.closeEllipsis()
             return
         }
-        services.globalUiService.openThemeSheet()
+        services.globalUIService.openThemeSheet()
     }
 
     func openRenameSheet() {
-        services.globalUiService.openRenameSheet()
+        services.globalUIService.openRenameSheet()
     }
 
     func closeRenameSheet() {
-        services.globalUiService.closeRenameSheet()
+        services.globalUIService.closeRenameSheet()
     }
 
     func applyRenameSheet() async {
         guard let timetableId = menuState.ellipsisTarget?.id else { return }
         do {
             try await services.timetableService.updateTimetableTitle(timetableId: timetableId, title: menuState.renameTitle)
-            services.globalUiService.closeRenameSheet()
+            services.globalUIService.closeRenameSheet()
         } catch {
-            services.globalUiService.presentErrorAlert(error: error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -47,14 +47,14 @@ class MenuSheetViewModel: BaseViewModel {
         guard let timetableId = menuState.ellipsisTarget?.id else { return }
         do {
             try await services.timetableService.deleteTimetable(timetableId: timetableId)
-            services.globalUiService.closeEllipsis()
+            services.globalUIService.closeEllipsis()
         } catch {
-            services.globalUiService.presentErrorAlert(error: error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
     func closeThemeSheet() {
-        services.globalUiService.closeThemeSheet()
+        services.globalUIService.closeThemeSheet()
     }
 
     func applyThemeSheet() async {
@@ -62,14 +62,14 @@ class MenuSheetViewModel: BaseViewModel {
 
         do {
             try await services.timetableService.updateTimetableTheme(timetableId: timetableId)
-            services.globalUiService.closeThemeSheet()
+            services.globalUIService.closeThemeSheet()
         } catch {
-            services.globalUiService.presentErrorAlert(error: error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
     func closeCreateSheet() {
-        services.globalUiService.closeCreateSheet()
+        services.globalUIService.closeCreateSheet()
     }
 
     func applyCreateSheet() async {
@@ -77,9 +77,9 @@ class MenuSheetViewModel: BaseViewModel {
         do {
             try await services.timetableService.createTimetable(title: menuState.createTitle, quarter: quarter)
             try await services.timetableService.fetchRecentTimetable()
-            services.globalUiService.closeCreateSheet()
+            services.globalUIService.closeCreateSheet()
         } catch {
-            services.globalUiService.presentErrorAlert(error: error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 

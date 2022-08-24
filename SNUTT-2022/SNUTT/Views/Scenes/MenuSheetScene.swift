@@ -62,10 +62,10 @@ struct MenuSheetWrapper: View {
         ZStack {
             HStack {
                 NavBarButton(imageName: "nav.menu") {
-                    container.services.globalUiService.toggleMenuSheet()
+                    container.services.globalUIService.toggleMenuSheet()
                 }
                 NavBarButton(imageName: "menu.ellipsis") {
-                    container.services.globalUiService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", updatedAt: "3232", totalCredit: 3))
+                    container.services.globalUIService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", updatedAt: "3232", totalCredit: 3))
                 }
             }
             MenuSheetScene(viewModel: .init(container: container))

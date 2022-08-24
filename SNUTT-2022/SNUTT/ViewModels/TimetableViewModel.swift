@@ -37,14 +37,14 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     }
 
     func toggleMenuSheet() {
-        services.globalUiService.toggleMenuSheet()
+        services.globalUIService.toggleMenuSheet()
     }
 
     func fetchRecentTimetable() async {
         do {
             try await timetableService.fetchRecentTimetable()
         } catch {
-            services.globalUiService.presentErrorAlert(error: error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -52,7 +52,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await timetableService.fetchTimetableList()
         } catch {
-            services.globalUiService.presentErrorAlert(error: error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -60,7 +60,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.courseBookService.fetchCourseBookList()
         } catch {
-            services.globalUiService.presentErrorAlert(error: error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 

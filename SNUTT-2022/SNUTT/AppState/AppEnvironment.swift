@@ -19,7 +19,7 @@ extension AppEnvironment {
         let userService: UserServiceProtocol
         let lectureService: LectureServiceProtocol
         let searchService: SearchServiceProtocol
-        let globalUiService: GlobalUiServiceProtocol
+        let globalUIService: GlobalUIServiceProtocol
         let courseBookService: CourseBookServiceProtocol
     }
 }
@@ -79,13 +79,13 @@ extension AppEnvironment {
         let userService = UserService(appState: appState, webRepositories: webRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
-        let globalUiService = GlobalUiService(appState: appState)
+        let globalUIService = GlobalUIService(appState: appState)
         let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
                      searchService: searchService,
-                     globalUiService: globalUiService,
+                     globalUIService: globalUIService,
                      courseBookService: courseBookService)
     }
 }
@@ -108,7 +108,7 @@ extension EnvironmentValues {
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
                   searchService: FakeSearchService(),
-                  globalUiService: GlobalUiService(appState: appState),
+                  globalUIService: GlobalUIService(appState: appState),
                   courseBookService: FakeCourseBookService())
         }
     }

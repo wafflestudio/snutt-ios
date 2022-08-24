@@ -27,7 +27,7 @@ class FilterSheetViewModel: BaseViewModel {
         do {
             try await services.searchService.fetchInitialSearchResult()
         } catch {
-            services.globalUiService.presentErrorAlert(error: error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 

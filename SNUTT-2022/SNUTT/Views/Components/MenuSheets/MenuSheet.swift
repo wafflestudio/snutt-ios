@@ -101,7 +101,7 @@ extension MenuSheet {
         }
 
         func toggleMenuSheet() {
-            services.globalUiService.toggleMenuSheet()
+            services.globalUIService.toggleMenuSheet()
         }
 
         var timetablesByQuarter: [Quarter: [TimetableMetadata]] {
@@ -117,7 +117,7 @@ extension MenuSheet {
                 await services.searchService.initializeSearchState()
                 try await services.timetableService.fetchTimetable(timetableId: timetableId)
             } catch {
-                services.globalUiService.presentErrorAlert(error: error)
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
@@ -125,16 +125,16 @@ extension MenuSheet {
             do {
                 try await services.timetableService.copyTimetable(timetableId: timetableId)
             } catch {
-                services.globalUiService.presentErrorAlert(error: error)
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
         func openCreateSheet() {
-            services.globalUiService.openCreateSheet()
+            services.globalUIService.openCreateSheet()
         }
 
         func openEllipsis(for timetable: TimetableMetadata) {
-            services.globalUiService.openEllipsis(for: timetable)
+            services.globalUIService.openEllipsis(for: timetable)
         }
     }
 }
