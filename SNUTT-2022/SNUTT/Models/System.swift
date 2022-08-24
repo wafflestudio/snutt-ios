@@ -6,12 +6,18 @@
 //
 
 import Foundation
+import Combine
 
-struct System {
+typealias ConnectionState = System.State
+
+class System: ObservableObject {
     enum State {
         case error
         case success
     }
+    
+    @Published var shouldReloadWebView: Bool = false
+    @Published var connectionState: State = .success
 
     var showActivityIndicator = false
     var state: State = .success

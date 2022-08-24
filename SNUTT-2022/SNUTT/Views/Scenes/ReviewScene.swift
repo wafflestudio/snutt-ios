@@ -8,18 +8,22 @@
 import SwiftUI
 
 struct ReviewScene: View {
-    // for test
+
     @ObservedObject var viewModel: ReviewViewModel
+    
+    var state: ConnectionState {
+        viewModel.state
+    }
 
     var body: some View {
-        ReviewWebView(request: URLRequest(url: SNUTTWebView.review.url), viewModel: viewModel)
-            .navigationBarHidden(true)
+        if case .success = state {
+            ReviewWebView(request: URLRequest(url: SNUTTWebView.review.url), viewModel: viewModel)
+                .navigationBarHidden(true)
+        } else {
+            WebErrorView(viewModel: viewModel)
+                .navigationTitle("강의평")
+                .navigationBarTitleDisplayMode(.inline)
+        }
         let _ = debugChanges()
     }
 }
-
-//struct ReviewScene_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReviewScene()
-//    }
-//}

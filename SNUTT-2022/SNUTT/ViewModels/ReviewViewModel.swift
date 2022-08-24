@@ -12,8 +12,34 @@ import Combine
 class ReviewViewModel: ObservableObject {
     var container: DIContainer
 
+    @Published var state: ConnectionState = .success
+    @Published var reload: Bool = false
+    
     init(container: DIContainer) {
         self.container = container
+        
+        system.$shouldReloadWebView
+            .assign(to: &$reload)
+        
+        system.$connectionState
+            .assign(to: &$state)
+    }
+    
+    func fail() {
+        system.connectionState = .error
+    }
+    
+    func success() {
+        system.connectionState = .success
+    }
+    
+    func shouldReload() {
+        success()
+        system.shouldReloadWebView = true
+    }
+    
+    func reloadDone() {
+        system.shouldReloadWebView = false
     }
     
     var apiKey: String? {
@@ -32,7 +58,7 @@ class ReviewViewModel: ObservableObject {
         container.appState
     }
     
-    private var currentUser: User? {
-        appState.user.current
+    private var system: System {
+        appState.system
     }
 }

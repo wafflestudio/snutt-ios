@@ -10,7 +10,6 @@ import WebKit
 import Foundation
 import Combine
 
-// TODO: 강의평 웹뷰를 위한 non-single webview
 protocol WebView: UIViewRepresentable {
     var request: URLRequest { get set }
     func makeUIView(context: Context) -> WKWebView
@@ -21,7 +20,7 @@ struct SingleWebView: WebView {
     var request: URLRequest
 
     func makeUIView(context _: Context) -> WKWebView {
-        print(request.url)
+        print(request.url!)
         return WKWebView()
     }
 
@@ -30,35 +29,40 @@ struct SingleWebView: WebView {
     }
 }
 
+// TODO: move to appropriate directory
 struct ReviewWebView: WebView {
     
     var request: URLRequest
 
-    var viewModel: ReviewViewModel
-
+    @ObservedObject var viewModel: ReviewViewModel
+    
     func makeUIView(context: Context) -> WKWebView {
         guard let cookies = cookiesFromUserDefaults(),
               !cookies.isEmpty else {
             return WKWebView()
         }
-
+        
         let webView = WKWebView.attach(cookies: cookies)
         webView.navigationDelegate = context.coordinator
         webView.allowsBackForwardNavigationGestures = true
         webView.scrollView.bounces = false
-        webView.scrollView.delegate = context.coordinator
         context.coordinator.webView = webView
+        webView.load(request)
 
         return webView
     }
 
     func updateUIView(_ uiView: WKWebView, context _: Context) {
-        print("updateUIView")
-        uiView.load(request)
+        if viewModel.reload {
+            uiView.load(request)
+            DispatchQueue.main.async {
+                viewModel.reloadDone()
+            }
+        }
     }
     
-    func makeCoordinator() -> Coordinator {
-        return Coordinator()
+    func makeCoordinator() -> ReviewWebView.Coordinator {
+        Coordinator(self)
     }
     
     func cookiesFromUserDefaults() -> [HTTPCookie]? {
@@ -72,8 +76,8 @@ struct ReviewWebView: WebView {
 //            return nil
 //        }
         
-        let apiKey = "eyJ0eXAi...."
-        let token = "74280a4...."
+        let apiKey = "eyJ0eXA..."
+        let token = "74280a4..."
 
         guard let apiKeyCookie = HTTPCookie(properties: [
             .domain: apiUri.replacingOccurrences(of: "https://", with: ""),
@@ -96,24 +100,29 @@ struct ReviewWebView: WebView {
         return [apiKeyCookie, tokenCookie]
     }
     
-    class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, UIScrollViewDelegate {
+    class Coordinator: NSObject, WKNavigationDelegate {
+        let parent: ReviewWebView
         var webView: WKWebView?
-
-        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-            print("didStartProvisionalNavigation")
+        var viewModel: ReviewViewModel {
+            parent.viewModel
         }
 
-        func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-            print("didCommit");
+        init(_ parent: ReviewWebView) {
+            self.parent = parent
         }
+        
+        // TODO: implement below
 
-        // TODO: implement with ErrorView
         func webView(_ webView: WKWebView, didFailProvisionalNavigation: WKNavigation!, withError: Error) {
-            print("didFailProvisionalNavigation")
+            viewModel.fail()
         }
 
         func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
             print("didFail")
+        }
+        
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            viewModel.success()
         }
     }
 }

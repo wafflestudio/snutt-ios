@@ -21,6 +21,7 @@
 		B88D170128AF71E300E2D652 /* UserSupportScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170028AF71E300E2D652 /* UserSupportScene.swift */; };
 		B88D170328B1501F00E2D652 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170228B1501F00E2D652 /* WebView.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
+		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8F40EA9289809C60021A2A9 /* LicenseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EA8289809C60021A2A9 /* LicenseScene.swift */; };
 		B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */; };
 		B8F40EAD28980D840021A2A9 /* TimetableSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */; };
@@ -209,6 +210,7 @@
 		B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ProductionConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5F28B549660065248E /* StagingConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StagingConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
+		B8E51E6728B615140065248E /* WebErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebErrorView.swift; sourceTree = "<group>"; };
 		B8F40EA8289809C60021A2A9 /* LicenseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseScene.swift; sourceTree = "<group>"; };
 		B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingScene.swift; sourceTree = "<group>"; };
 		B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSettingScene.swift; sourceTree = "<group>"; };
@@ -574,6 +576,7 @@
 				DC860F4827E5C87D0068C94B /* SNUTTApp.swift */,
 				BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */,
 				B88D170228B1501F00E2D652 /* WebView.swift */,
+				B8E51E6728B615140065248E /* WebErrorView.swift */,
 				DCD41A6D27E5CDCA00CF380E /* Components */,
 				DCD41A6C27E5CDBE00CF380E /* Scenes */,
 			);
@@ -905,6 +908,7 @@
 				B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
+				B8E51E6828B615140065248E /* WebErrorView.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
 				BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */,
 				BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */,
