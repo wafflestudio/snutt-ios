@@ -10,15 +10,13 @@ import SwiftUI
 struct ReviewScene: View {
     @ObservedObject var viewModel: ReviewViewModel
 
-    var state: ConnectionState {
-        viewModel.state
-    }
-
     var body: some View {
-        if case .success = state {
+        switch viewModel.state {
+        case .success:
             ReviewWebView(request: URLRequest(url: SNUTTWebView.review.url), viewModel: viewModel)
                 .navigationBarHidden(true)
-        } else {
+                .ignoresSafeArea(.keyboard)
+        case .error:
             WebErrorView(viewModel: viewModel)
                 .navigationTitle("강의평")
                 .navigationBarTitleDisplayMode(.inline)

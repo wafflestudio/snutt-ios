@@ -32,7 +32,7 @@ struct SingleWebView: WebView {
 struct ReviewWebView: WebView {
     var request: URLRequest
 
-    @ObservedObject var viewModel: ReviewViewModel
+    let viewModel: ReviewViewModel
 
     func makeUIView(context: Context) -> WKWebView {
         guard let cookies = cookiesFromUserDefaults(),
@@ -41,7 +41,7 @@ struct ReviewWebView: WebView {
             return WKWebView()
         }
 
-        let webView = WKWebView.attach(cookies: cookies)
+        let webView = WKWebView(cookies: cookies)
         webView.navigationDelegate = context.coordinator
         webView.allowsBackForwardNavigationGestures = true
         webView.scrollView.bounces = false
@@ -121,14 +121,14 @@ struct ReviewWebView: WebView {
 }
 
 extension WKWebView {
-    static func attach(cookies: [HTTPCookie]) -> Self {
+    convenience init(cookies: [HTTPCookie]) {
         let dataStore = WKWebsiteDataStore.nonPersistent()
         let configuration = WKWebViewConfiguration()
         for cookie in cookies {
             dataStore.httpCookieStore.setCookie(cookie)
         }
         configuration.websiteDataStore = dataStore
-        return .init(frame: .zero, configuration: configuration)
+        self.init(frame: .zero, configuration: configuration)
     }
 }
 

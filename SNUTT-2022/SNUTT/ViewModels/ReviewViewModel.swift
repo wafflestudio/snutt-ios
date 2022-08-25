@@ -12,28 +12,28 @@ import SwiftUI
 class ReviewViewModel: ObservableObject {
     var container: DIContainer
 
-    @Published var state: ConnectionState = .success
+    @Published var state: WebViewState.Connection = .success
     @Published var reload: Bool = false
 
     init(container: DIContainer) {
         self.container = container
 
-        system.$shouldReloadWebView
+        webViewState.$shouldReloadWebView
             .assign(to: &$reload)
 
-        system.$connectionState
+        webViewState.$connection
             .assign(to: &$state)
     }
 
-    func changeConnectionState(to state: ConnectionState) {
-        system.connectionState = state
+    func changeConnectionState(to state: WebViewState.Connection) {
+        webViewState.connection = state
     }
 
     func shouldReloadWebView(_ reload: Bool) {
         if reload {
             changeConnectionState(to: .success)
         }
-        system.shouldReloadWebView = reload
+        webViewState.shouldReloadWebView = reload
     }
 
     var apiKey: String? {
@@ -52,7 +52,7 @@ class ReviewViewModel: ObservableObject {
         container.appState
     }
 
-    private var system: System {
-        appState.system
+    private var webViewState: WebViewState {
+        appState.webView
     }
 }
