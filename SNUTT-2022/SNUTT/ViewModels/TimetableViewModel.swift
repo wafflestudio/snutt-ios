@@ -13,11 +13,10 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     private var bag = Set<AnyCancellable>()
     @Published var currentTimetable: Timetable?
     @Published var configuration: TimetableConfiguration = .init()
-    
 
     override init(container: DIContainer) {
         super.init(container: container)
-        
+
         appState.timetable.$current.assign(to: &$currentTimetable)
         appState.timetable.$configuration.assign(to: &$configuration)
     }
@@ -37,7 +36,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     var timetableState: TimetableState {
         appState.timetable
     }
-    
+
     func setIsMenuOpen(_ val: Bool) {
         services.globalUIService.setIsMenuOpen(val)
     }

@@ -9,8 +9,7 @@ import SwiftUI
 
 struct FilterSheetScene: View {
     @ObservedObject var viewModel: FilterSheetViewModel
-    
-    
+
     var body: some View {
         Sheet(isOpen: $viewModel.isFilterOpen,
               orientation: .bottom(maxHeight: 450),

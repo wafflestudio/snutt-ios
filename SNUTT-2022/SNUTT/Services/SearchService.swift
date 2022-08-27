@@ -105,15 +105,15 @@ struct SearchService: SearchServiceProtocol {
     func toggleFilterSheet() {
         searchState.isFilterOpen.toggle()
     }
-    
+
     func setIsFilterOpen(_ val: Bool) {
         searchState.isFilterOpen = val
     }
-    
+
     func setSelectedLecture(_ val: Lecture?) {
         searchState.selectedLecture = val
     }
-    
+
     func setSearchText(_ val: String) {
         searchState.searchText = val
     }
@@ -125,8 +125,8 @@ class FakeSearchService: SearchServiceProtocol {
     func fetchInitialSearchResult() async throws {}
     func fetchMoreSearchResult() async throws {}
     func initializeSearchState() async {}
-    func setIsFilterOpen(_ val: Bool) {}
+    func setIsFilterOpen(_: Bool) {}
     func toggleFilterSheet() {}
-    func setSearchText(_ val: String) {}
-    func setSelectedLecture(_ val: Lecture?) {}
+    func setSearchText(_: String) {}
+    func setSelectedLecture(_: Lecture?) {}
 }

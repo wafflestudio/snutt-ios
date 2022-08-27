@@ -21,8 +21,7 @@ struct MenuSheetScene: View {
                       timetablesByQuarter: viewModel.timetablesByQuarter,
                       selectTimetable: viewModel.selectTimetable,
                       duplicateTimetable: viewModel.duplicateTimetable,
-                      openEllipsis: viewModel.openEllipsis
-            )
+                      openEllipsis: viewModel.openEllipsis)
 
             MenuEllipsisSheet(isOpen: $viewModel.isEllipsisSheetOpen,
                               openRenameSheet: viewModel.openRenameSheet,

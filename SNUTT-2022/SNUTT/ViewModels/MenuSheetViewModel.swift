@@ -8,7 +8,6 @@
 import Foundation
 
 class MenuSheetViewModel: BaseViewModel, ObservableObject {
-    
     @Published var currentTimetable: Timetable?
     @Published var metadataList: [TimetableMetadata]?
     @Published var isMenuSheetOpen: Bool = false
@@ -16,29 +15,28 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published var isThemeSheetOpen: Bool = false
     @Published var isRenameSheetOpen: Bool = false
     @Published var isCreateSheetOpen: Bool = false
-    
+
     @Published private var _renameTitle: String = ""
     var renameTitle: String {
         get { _renameTitle }
         set { services.globalUIService.setRenameTitle(newValue) }
     }
-    
+
     @Published private var _createTitle: String = ""
     var createTitle: String {
         get { _createTitle }
         set { services.globalUIService.setCreateTitle(newValue) }
     }
-    
+
     @Published private var _createQuarter: Quarter?
     var createQuarter: Quarter? {
         get { _createQuarter }
         set { services.globalUIService.setCreateQuarter(newValue) }
     }
-    
-    
+
     override init(container: DIContainer) {
         super.init(container: container)
-        
+
         appState.timetable.$current.assign(to: &$currentTimetable)
         appState.timetable.$metadataList.assign(to: &$metadataList)
         appState.menu.$isOpen.assign(to: &$isMenuSheetOpen)
@@ -50,7 +48,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         appState.menu.$createTitle.assign(to: &$_createTitle)
         appState.menu.$createQuarter.assign(to: &$_createQuarter)
     }
-    
+
     var menuState: MenuState {
         appState.menu
     }
@@ -58,11 +56,11 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     var timetableState: TimetableState {
         appState.timetable
     }
-    
+
     var isNewCourseBookAvailable: Bool {
         services.timetableService.isNewCourseBookAvailable()
     }
-    
+
     var timetablesByQuarter: [Quarter: [TimetableMetadata]] {
         return Dictionary(grouping: timetableState.metadataList ?? [], by: { $0.quarter })
     }
@@ -83,11 +81,11 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     func closeRenameSheet() {
         services.globalUIService.closeRenameSheet()
     }
-    
+
     func openCreateSheet() {
         services.globalUIService.openCreateSheet()
     }
-    
+
     func selectTimetable(timetableId: String) async {
         do {
             await services.searchService.initializeSearchState()

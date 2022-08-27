@@ -20,24 +20,22 @@ struct SearchLectureScene: View {
                         .frame(height: 44)
                     TimetableZStack(current: viewModel.currentTimetableWithSelection,
                                     config: viewModel.timetableConfigWithAutoFit)
-                    .animation(.customSpring, value: viewModel.selectedLecture?.id)
+                        .animation(.customSpring, value: viewModel.selectedLecture?.id)
                 }
                 STColor.searchListBackground
             }
             .ignoresSafeArea(.keyboard)
-            
 
             VStack(spacing: 0) {
-                
                 // MARK: 검색창
-                
+
                 SearchBar(text: $viewModel.searchText,
                           isFilterOpen: $viewModel.isFilterOpen) {
                     Task {
                         await viewModel.fetchInitialSearchResult()
                     }
                 }
-                
+
                 // MARK: 검색 태그
 
                 if viewModel.selectedTagList.count > 0 {
@@ -82,7 +80,7 @@ struct SearchLectureScene: View {
                         })
                     }
                 }
-                
+
                 // MARK: 검색 결과
 
                 if viewModel.isLoading {
@@ -93,7 +91,7 @@ struct SearchLectureScene: View {
                                       data: viewModel.searchResult,
                                       fetchMore: viewModel.fetchMoreSearchResult,
                                       selected: $viewModel.selectedLecture)
-                    .animation(.customSpring, value: viewModel.selectedLecture?.id)
+                        .animation(.customSpring, value: viewModel.selectedLecture?.id)
                 }
             }
         }

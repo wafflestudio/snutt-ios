@@ -10,7 +10,7 @@ import SwiftUI
 struct SNUTTView: View {
     @State private var selectedTab: TabType = .timetable
     @ObservedObject var viewModel: ViewModel
-    
+
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
@@ -64,17 +64,17 @@ extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var errorContent: STError? = nil
-        
+
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$errorContent.assign(to: &$errorContent)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
         }
-        
+
         var errorTitle: String {
             appState.system.errorContent?.errorTitle ?? ""
         }
-        
+
         var errorMessage: String {
             appState.system.errorContent?.errorMessage ?? ""
         }

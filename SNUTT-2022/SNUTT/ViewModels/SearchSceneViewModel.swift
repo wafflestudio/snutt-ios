@@ -17,7 +17,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var searchResult: [Lecture] = []
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
-    
+
     var searchText: String {
         get { _searchText }
         set { setSearchText(newValue) }
@@ -27,23 +27,23 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         get { _isFilterOpen }
         set { setIsFilterOpen(newValue) }
     }
-    
+
     var selectedLecture: Lecture? {
         get { _selectedLecture }
         set { setSelectedLecture(newValue) }
     }
-    
+
     var currentTimetableWithSelection: Timetable? {
         _currentTimetable?.withSelectedLecture(_selectedLecture)
     }
-    
+
     var timetableConfigWithAutoFit: TimetableConfiguration {
         _timetableConfig.withAutoFitEnabled()
     }
-    
+
     override init(container: DIContainer) {
         super.init(container: container)
-        
+
         appState.timetable.$current.assign(to: &$_currentTimetable)
         appState.timetable.$configuration.assign(to: &$_timetableConfig)
         appState.search.$selectedLecture.assign(to: &$_selectedLecture)
@@ -53,7 +53,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$isLoading.assign(to: &$isLoading)
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
     }
-    
+
     private var searchState: SearchState {
         appState.search
     }
@@ -96,15 +96,15 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func setSearchText(_ val: String) {
         services.searchService.setSearchText(val)
     }
-    
+
     func setIsFilterOpen(_ val: Bool) {
         services.searchService.setIsFilterOpen(val)
     }
-    
+
     func setSelectedLecture(_ val: Lecture?) {
         services.searchService.setSelectedLecture(val)
     }

@@ -22,7 +22,7 @@ protocol GlobalUIServiceProtocol {
 
     func openCreateSheet()
     func closeCreateSheet()
-    
+
     func setRenameTitle(_ val: String)
     func setCreateTitle(_ val: String)
     func setCreateQuarter(_ val: Quarter?)
@@ -97,15 +97,15 @@ struct GlobalUIService: GlobalUIServiceProtocol {
             appState.menu.isCreateSheetOpen = false
         }
     }
-    
+
     func setRenameTitle(_ val: String) {
         appState.menu.renameTitle = val
     }
-    
+
     func setCreateTitle(_ val: String) {
         appState.menu.createTitle = val
     }
-    
+
     func setCreateQuarter(_ val: Quarter?) {
         appState.menu.createQuarter = val
     }

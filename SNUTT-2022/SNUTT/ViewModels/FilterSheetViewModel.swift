@@ -8,24 +8,23 @@
 import SwiftUI
 
 class FilterSheetViewModel: BaseViewModel, ObservableObject {
-    
     @Published var selectedTagList: [SearchTag] = []
     @Published var searchTagList: SearchTagList?
     @Published private var _isFilterOpen: Bool = false
-    
+
     var isFilterOpen: Bool {
         get { _isFilterOpen }
         set { setIsFilterOpen(newValue) }
     }
-    
+
     override init(container: DIContainer) {
         super.init(container: container)
-        
+
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
         appState.search.$searchTagList.assign(to: &$searchTagList)
         appState.search.$isFilterOpen.assign(to: &$_isFilterOpen)
     }
-    
+
     func filterTags(with type: SearchTagType) -> [SearchTag] {
         guard let tagList = searchTagList?.tagList else { return [] }
         return tagList.filter { $0.type == type }
@@ -46,7 +45,7 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
     func toggleFilterSheet() {
         services.searchService.toggleFilterSheet()
     }
-    
+
     func setIsFilterOpen(_ val: Bool) {
         services.searchService.setIsFilterOpen(val)
     }
