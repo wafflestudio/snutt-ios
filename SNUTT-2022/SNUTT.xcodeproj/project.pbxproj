@@ -22,6 +22,8 @@
 		B88D170328B1501F00E2D652 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170228B1501F00E2D652 /* WebView.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
+		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
+		B8E51E6F28B7FF8F0065248E /* WebViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6E28B7FF8F0065248E /* WebViewService.swift */; };
 		B8F40EA9289809C60021A2A9 /* LicenseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EA8289809C60021A2A9 /* LicenseScene.swift */; };
 		B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */; };
 		B8F40EAD28980D840021A2A9 /* TimetableSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */; };
@@ -211,6 +213,8 @@
 		B8E51E5F28B549660065248E /* StagingConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StagingConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
 		B8E51E6728B615140065248E /* WebErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebErrorView.swift; sourceTree = "<group>"; };
+		B8E51E6A28B769680065248E /* ReviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRouter.swift; sourceTree = "<group>"; };
+		B8E51E6E28B7FF8F0065248E /* WebViewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewService.swift; sourceTree = "<group>"; };
 		B8F40EA8289809C60021A2A9 /* LicenseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseScene.swift; sourceTree = "<group>"; };
 		B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingScene.swift; sourceTree = "<group>"; };
 		B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSettingScene.swift; sourceTree = "<group>"; };
@@ -451,6 +455,7 @@
 				BE682BF82887FB59009EBCB7 /* SearchRouter.swift */,
 				BE682C002888173B009EBCB7 /* TagRouter.swift */,
 				B88D16FA28AE2BB900E2D652 /* UserRouter.swift */,
+				B8E51E6A28B769680065248E /* ReviewRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -557,6 +562,7 @@
 				BE682C0428881852009EBCB7 /* SearchService.swift */,
 				B88D16F028ABBE8000E2D652 /* ValidationService.swift */,
 				B88D16F628AC075E00E2D652 /* SettingsService.swift */,
+				B8E51E6E28B7FF8F0065248E /* WebViewService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -925,6 +931,7 @@
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
+				B8E51E6F28B7FF8F0065248E /* WebViewService.swift in Sources */,
 				DC2915A52866980B00FE5F9A /* Setting.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
@@ -948,6 +955,7 @@
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
 				BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */,
 				BE682C092889ADD7009EBCB7 /* SearchLectureCell.swift in Sources */,
+				B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */,
 				BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */,
 				B8F40EB328980DFF0021A2A9 /* PrivacyPolicyScene.swift in Sources */,
 				B8F40EB728980E7A0021A2A9 /* AccountSettingViewModel.swift in Sources */,

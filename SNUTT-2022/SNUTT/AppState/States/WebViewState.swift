@@ -16,4 +16,5 @@ class WebViewState: ObservableObject {
 
     @Published var shouldReloadWebView: Bool = false
     @Published var connection: Connection = .success
+    @Published var detailLectureId: String = ""
 }
