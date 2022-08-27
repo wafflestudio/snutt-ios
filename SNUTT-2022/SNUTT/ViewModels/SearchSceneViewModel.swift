@@ -8,21 +8,35 @@
 import Combine
 import SwiftUI
 
-class SearchSceneViewModel: BaseViewModel {
-    var searchState: SearchState {
+class SearchSceneViewModel: BaseViewModel, ObservableObject {
+    @Published var currentTimetable: Timetable?
+    @Published var timetableConfig: TimetableConfiguration = .init()
+    @Published var selectedLecture: Lecture?
+    @Published var searchText: String = ""
+    @Published var isFilterOpen: Bool = false
+    @Published var searchResult: [Lecture] = []
+    @Published var selectedTagList: [SearchTag] = []
+    @Published var isLoading: Bool = false
+    
+    override init(container: DIContainer) {
+        super.init(container: container)
+        
+        appState.timetable.$current.assign(to: &$currentTimetable)
+        appState.timetable.$configuration.assign(to: &$timetableConfig)
+        appState.search.$selectedLecture.assign(to: &$selectedLecture)
+        appState.search.$searchText.assign(to: &$searchText)
+        appState.search.$isFilterOpen.assign(to: &$isFilterOpen)
+        appState.search.$searchResult.assign(to: &$searchResult)
+        appState.search.$isLoading.assign(to: &$isLoading)
+        appState.search.$selectedTagList.assign(to: &$selectedTagList)
+    }
+    
+    private var searchState: SearchState {
         appState.search
     }
 
-    var timetableState: TimetableState {
+    private var timetableState: TimetableState {
         appState.timetable
-    }
-
-    var searchResult: [Lecture] {
-        searchState.searchResult
-    }
-
-    var isLoading: Bool {
-        searchState.isLoading
     }
 
     func toggleFilterSheet() {
@@ -59,13 +73,17 @@ class SearchSceneViewModel: BaseViewModel {
             services.appService.presentErrorAlert(error: error.asSTError)
         }
     }
-
-    var selectedTagList: [SearchTag] {
-        searchState.selectedTagList
+    
+    func setSearchText(_ val: String) {
+        services.searchService.setSearchText(val)
     }
-
-    var selectedLecture: Published<Lecture?>.Publisher {
-        searchState.$selectedLecture
+    
+    func setIsFilterOpen(_ val: Bool) {
+        services.searchService.setIsFilterOpen(val)
+    }
+    
+    func setSelectedLecture(_ val: Lecture?) {
+        services.searchService.setSelectedLecture(val)
     }
 
     func toggle(_ tag: SearchTag) {

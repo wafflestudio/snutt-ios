@@ -10,11 +10,14 @@ import SwiftUI
 
 protocol SearchServiceProtocol {
     func toggle(_ tag: SearchTag)
-    func toggleFilterSheet()
     func fetchTags(quarter: Quarter) async throws
     func fetchInitialSearchResult() async throws
     func fetchMoreSearchResult() async throws
     func initializeSearchState() async
+    func setIsFilterOpen(_ val: Bool)
+    func toggleFilterSheet()
+    func setSearchText(_ val: String)
+    func setSelectedLecture(_ val: Lecture?)
 }
 
 struct SearchService: SearchServiceProtocol {
@@ -100,15 +103,30 @@ struct SearchService: SearchServiceProtocol {
     }
 
     func toggleFilterSheet() {
-        appState.search.isFilterOpen.toggle()
+        searchState.isFilterOpen.toggle()
+    }
+    
+    func setIsFilterOpen(_ val: Bool) {
+        searchState.isFilterOpen = val
+    }
+    
+    func setSelectedLecture(_ val: Lecture?) {
+        searchState.selectedLecture = val
+    }
+    
+    func setSearchText(_ val: String) {
+        searchState.searchText = val
     }
 }
 
 class FakeSearchService: SearchServiceProtocol {
     func fetchTags(quarter _: Quarter) async throws {}
     func toggle(_: SearchTag) {}
-    func toggleFilterSheet() {}
     func fetchInitialSearchResult() async throws {}
     func fetchMoreSearchResult() async throws {}
     func initializeSearchState() async {}
+    func setIsFilterOpen(_ val: Bool) {}
+    func toggleFilterSheet() {}
+    func setSearchText(_ val: String) {}
+    func setSelectedLecture(_ val: Lecture?) {}
 }
