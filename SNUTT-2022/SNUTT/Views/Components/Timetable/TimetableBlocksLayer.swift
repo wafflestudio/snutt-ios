@@ -19,6 +19,7 @@ struct TimetableBlocksLayer: View {
         ForEach(current?.lectures ?? []) { lecture in
             LectureBlocks(current: current, lecture: lecture, theme: displayedTheme, config: config)
         }
+        .animation(.customSpring, value: displayedTheme)
 
         if var selectedLecture = current?.selectedLecture {
             LectureBlocks(current: current, lecture: selectedLecture.withTemporaryColor(), theme: displayedTheme, config: config)

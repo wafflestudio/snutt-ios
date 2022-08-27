@@ -7,22 +7,45 @@
 
 import Foundation
 
-struct Quarter: Hashable {
+struct Quarter {
     var year: Int
     var semester: Semester
+    var updatedAt: String?
 
     func shortString() -> String {
         return String(year) + semester.shortString()
     }
 
+    /// 예: "2022년 겨울학기"
     func longString() -> String {
         return "\(year)년 \(semester.longString())"
+    }
+}
+
+extension Quarter: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(year)
+        hasher.combine(semester)
+    }
+}
+
+extension Quarter: Equatable {
+    static func == (lhs: Quarter, rhs: Quarter) -> Bool {
+        return lhs.year == rhs.year && lhs.semester == rhs.semester
     }
 }
 
 extension Quarter: Comparable {
     static func < (lhs: Quarter, rhs: Quarter) -> Bool {
         return (lhs.year, lhs.semester.rawValue) < (rhs.year, rhs.semester.rawValue)
+    }
+}
+
+extension Quarter {
+    init(from dto: CourseBookDto) {
+        year = dto.year
+        semester = Semester(rawValue: dto.semester) ?? .first
+        updatedAt = dto.updated_at
     }
 }
 

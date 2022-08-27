@@ -19,6 +19,7 @@ struct TimetableScene: View {
 
     var body: some View {
         TimetableZStack(current: viewModel.timetableState.current, config: viewModel.timetableState.configuration)
+            .animation(.customSpring, value: viewModel.timetableState.current?.id)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
                 NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) {
@@ -58,10 +59,18 @@ struct TimetableScene: View {
                 }
             }
             .onLoad {
-                await viewModel.fetchRecentTimetable()
-            }
-            .onLoad {
-                await viewModel.fetchTimetableList()
+                // make the following three api calls execute concurrently
+                await withTaskGroup(of: Void.self, body: { group in
+                    group.addTask {
+                        await viewModel.fetchTimetableList()
+                    }
+                    group.addTask {
+                        await viewModel.fetchRecentTimetable()
+                    }
+                    group.addTask {
+                        await viewModel.fetchCourseBookList()
+                    }
+                })
             }
 
         let _ = debugChanges()

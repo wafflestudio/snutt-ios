@@ -9,8 +9,10 @@ import SwiftUI
 
 struct MenuSection<Content>: View where Content: View {
     let quarter: Quarter
-    @State var isExpanded: Bool = true
+    let current: Timetable?
     var content: () -> Content
+
+    @State var isExpanded: Bool = false
 
     var body: some View {
         VStack {
@@ -44,6 +46,17 @@ struct MenuSection<Content>: View where Content: View {
         }
         .padding(.horizontal, 15)
         .frame(maxHeight: .infinity)
+        .onAppear {
+            isExpanded = (quarter == current?.quarter)
+        }
+        .onChange(of: current?.quarter, perform: { newValue in
+            if !isExpanded {
+                // 현재 시간표가 속한 학기는 처음부터 확장되어 있도록 한다.
+                withAnimation(.customSpring) {
+                    isExpanded = quarter == newValue
+                }
+            }
+        })
     }
 }
 
@@ -120,14 +133,14 @@ struct MenuSectionRow: View {
     }
 }
 
-struct MenuSection_Previews: PreviewProvider {
-    static var previews: some View {
-        ScrollView {
-            LazyVStack {
-                MenuSection(quarter: .init(year: 2022, semester: Semester(rawValue: 1)!)) {
-                    MenuSectionRow(timetableMetadata: .init(id: "434", year: 2022, semester: 2, title: "나의 시간표", updatedAt: "344343", totalCredit: 4), isSelected: false, selectTimetable: nil, duplicateTimetable: nil, openEllipsis: nil)
-                }
-            }
-        }
-    }
-}
+// struct MenuSection_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ScrollView {
+//            LazyVStack {
+//                MenuSection(quarter: .init(year: 2022, semester: Semester(rawValue: 1)!)) {
+//                    MenuSectionRow(timetableMetadata: .init(id: "434", year: 2022, semester: 2, title: "나의 시간표", updatedAt: "344343", totalCredit: 4), isSelected: false, selectTimetable: nil, duplicateTimetable: nil, openEllipsis: nil)
+//                }
+//            }
+//        }
+//    }
+// }
