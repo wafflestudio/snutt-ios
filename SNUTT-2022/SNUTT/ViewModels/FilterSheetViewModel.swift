@@ -5,23 +5,26 @@
 //  Created by 박신홍 on 2022/07/05.
 //
 
-import Foundation
+import SwiftUI
 
 class FilterSheetViewModel: BaseViewModel, ObservableObject {
     
     @Published var selectedTagList: [SearchTag] = []
     @Published var searchTagList: SearchTagList?
-    @Published var isFilterOpen: Bool = false
+    @Published private var _isFilterOpen: Bool = false
+    
+    var isFilterOpen: Binding<Bool> {
+        _isFilterOpen.asBinding(setter: setIsFilterOpen)
+    }
     
     override init(container: DIContainer) {
         super.init(container: container)
         
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
         appState.search.$searchTagList.assign(to: &$searchTagList)
-        appState.search.$isFilterOpen.assign(to: &$isFilterOpen)
+        appState.search.$isFilterOpen.assign(to: &$_isFilterOpen)
     }
     
-
     func filterTags(with type: SearchTagType) -> [SearchTag] {
         guard let tagList = searchTagList?.tagList else { return [] }
         return tagList.filter { $0.type == type }

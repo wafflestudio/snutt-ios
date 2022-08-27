@@ -10,8 +10,9 @@ import SwiftUI
 struct FilterSheetScene: View {
     @ObservedObject var viewModel: FilterSheetViewModel
     
+    
     var body: some View {
-        Sheet(isOpen: .init(get: { viewModel.isFilterOpen }, set: { viewModel.setIsFilterOpen($0) }),
+        Sheet(isOpen: viewModel.isFilterOpen,
               orientation: .bottom(maxHeight: 450),
               sheetOpacity: 1) {
             VStack {

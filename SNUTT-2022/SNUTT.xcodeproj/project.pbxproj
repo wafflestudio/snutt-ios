@@ -90,6 +90,7 @@
 		BE98A072288AFC1600C2CE95 /* SNUTTWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BE98A061288AFC1500C2CE95 /* SNUTTWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BE98A07F288B046400C2CE95 /* TimetableWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A07D288B032600C2CE95 /* TimetableWidget.swift */; };
 		BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */; };
+		BEB57C2628BA386300279EFF /* Published+asBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2528BA386300279EFF /* Published+asBinding.swift */; };
 		BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */; };
 		BEDE34CA28754F3100525014 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34C928754F3100525014 /* Sheet.swift */; };
 		BEDE34D42879A59B00525014 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BEDE34D32879A59B00525014 /* Alamofire */; };
@@ -242,6 +243,7 @@
 		BE98A06D288AFC1600C2CE95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidgetEntryView.swift; sourceTree = "<group>"; };
 		BE98A07D288B032600C2CE95 /* TimetableWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidget.swift; sourceTree = "<group>"; };
+		BEB57C2528BA386300279EFF /* Published+asBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Published+asBinding.swift"; sourceTree = "<group>"; };
 		BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetScene.swift; sourceTree = "<group>"; };
 		BEDE34C928754F3100525014 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		BEDE34D52879A7B800525014 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				BE419B8C288B8C5A00FA9590 /* View+Debug.swift */,
 				B8F570A5289E1221005C199F /* UserDefaults.swift */,
 				BE6ACAFB28B483DA00D4AD6F /* Animation+Custom.swift */,
+				BEB57C2528BA386300279EFF /* Published+asBinding.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -843,9 +846,9 @@
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
-				DC2915A92866986600FE5F9A /* System.swift in Sources */,
+				DC2915A92866986600FE5F9A /* SystemState.swift in Sources */,
 				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
-				BE98A00E288AA3D200C2CE95 /* MenuSheetContent.swift in Sources */,
+				BE98A00E288AA3D200C2CE95 /* MenuSheet.swift in Sources */,
 				DC2915A92866986600FE5F9A /* SystemState.swift in Sources */,
 				BE98A00E288AA3D200C2CE95 /* MenuSheet.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
@@ -878,6 +881,7 @@
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
 				BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */,
 				BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */,
+				BEB57C2628BA386300279EFF /* Published+asBinding.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
 				BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */,
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,

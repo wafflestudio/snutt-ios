@@ -9,23 +9,43 @@ import Combine
 import SwiftUI
 
 class SearchSceneViewModel: BaseViewModel, ObservableObject {
-    @Published var currentTimetable: Timetable?
-    @Published var timetableConfig: TimetableConfiguration = .init()
-    @Published var selectedLecture: Lecture?
-    @Published var searchText: String = ""
-    @Published var isFilterOpen: Bool = false
+    @Published private var _currentTimetable: Timetable?
+    @Published private var _timetableConfig: TimetableConfiguration = .init()
+    @Published private var _selectedLecture: Lecture?
+    @Published private var _searchText: String = ""
+    @Published private var _isFilterOpen: Bool = false
     @Published var searchResult: [Lecture] = []
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
     
+    var searchText: Binding<String> {
+        _searchText.asBinding(setter: setSearchText)
+    }
+    
+    var isFilterOpen: Binding<Bool> {
+        _isFilterOpen.asBinding(setter: setIsFilterOpen)
+    }
+    
+    var selectedLecture: Binding<Lecture?> {
+        .init(get: { self._selectedLecture }, set: { self.setSelectedLecture($0) })
+    }
+    
+    var currentTimetableWithSelection: Timetable? {
+        _currentTimetable?.withSelectedLecture(_selectedLecture)
+    }
+    
+    var timetableConfigWithAutoFit: TimetableConfiguration {
+        _timetableConfig.withAutoFitEnabled()
+    }
+    
     override init(container: DIContainer) {
         super.init(container: container)
         
-        appState.timetable.$current.assign(to: &$currentTimetable)
-        appState.timetable.$configuration.assign(to: &$timetableConfig)
-        appState.search.$selectedLecture.assign(to: &$selectedLecture)
-        appState.search.$searchText.assign(to: &$searchText)
-        appState.search.$isFilterOpen.assign(to: &$isFilterOpen)
+        appState.timetable.$current.assign(to: &$_currentTimetable)
+        appState.timetable.$configuration.assign(to: &$_timetableConfig)
+        appState.search.$selectedLecture.assign(to: &$_selectedLecture)
+        appState.search.$searchText.assign(to: &$_searchText)
+        appState.search.$isFilterOpen.assign(to: &$_isFilterOpen)
         appState.search.$searchResult.assign(to: &$searchResult)
         appState.search.$isLoading.assign(to: &$isLoading)
         appState.search.$selectedTagList.assign(to: &$selectedTagList)

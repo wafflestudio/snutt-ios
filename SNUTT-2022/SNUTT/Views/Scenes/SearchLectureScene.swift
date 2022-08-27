@@ -18,9 +18,9 @@ struct SearchLectureScene: View {
                 VStack {
                     Spacer()
                         .frame(height: 44)
-                    TimetableZStack(current: viewModel.currentTimetable?.withSelectedLecture(viewModel.selectedLecture),
-                                    config: viewModel.timetableConfig.withAutoFitEnabled())
-                    .animation(.customSpring, value: viewModel.selectedLecture?.id)
+                    TimetableZStack(current: viewModel.currentTimetableWithSelection,
+                                    config: viewModel.timetableConfigWithAutoFit)
+                    .animation(.customSpring, value: viewModel.selectedLecture.wrappedValue?.id)
                 }
                 STColor.searchListBackground
             }
@@ -31,8 +31,8 @@ struct SearchLectureScene: View {
                 
                 // MARK: 검색창
                 
-                SearchBar(text: .init(get: { viewModel.searchText }, set: { viewModel.setSearchText($0) }),
-                          isFilterOpen: .init(get: { viewModel.isFilterOpen }, set: { viewModel.setIsFilterOpen($0) })) {
+                SearchBar(text: viewModel.searchText,
+                          isFilterOpen: viewModel.isFilterOpen) {
                     Task {
                         await viewModel.fetchInitialSearchResult()
                     }
@@ -92,8 +92,8 @@ struct SearchLectureScene: View {
                     SearchLectureList(viewModel: .init(container: viewModel.container),
                                       data: viewModel.searchResult,
                                       fetchMore: viewModel.fetchMoreSearchResult,
-                                      selected: .init(get: { viewModel.selectedLecture }, set: { viewModel.setSelectedLecture($0) }))
-                        .animation(.customSpring, value: viewModel.selectedLecture?.id)
+                                      selected: viewModel.selectedLecture)
+                    .animation(.customSpring, value: viewModel.selectedLecture.wrappedValue?.id)
                 }
             }
         }
