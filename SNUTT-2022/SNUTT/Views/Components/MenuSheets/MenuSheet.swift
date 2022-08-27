@@ -9,17 +9,17 @@ import SwiftUI
 
 struct MenuSheet: View {
     let viewModel: ViewModel
-    var isOpen: Binding<Bool>
+    @Binding var isOpen: Bool
     @ObservedObject var timetableState: TimetableState
 
     init(viewModel: ViewModel, isOpen: Binding<Bool>) {
         self.viewModel = viewModel
-        self.isOpen = isOpen
+        self._isOpen = isOpen
         timetableState = self.viewModel.timetableState
     }
 
     var body: some View {
-        Sheet(isOpen: isOpen, orientation: .left(maxWidth: 320), cornerRadius: 0, sheetOpacity: 0.7) {
+        Sheet(isOpen: $isOpen, orientation: .left(maxWidth: 320), cornerRadius: 0, sheetOpacity: 0.7) {
             VStack(spacing: 0) {
                 HStack {
                     Logo(orientation: .horizontal)

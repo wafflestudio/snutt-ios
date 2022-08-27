@@ -12,7 +12,7 @@ struct FilterSheetScene: View {
     
     
     var body: some View {
-        Sheet(isOpen: viewModel.isFilterOpen,
+        Sheet(isOpen: $viewModel.isFilterOpen,
               orientation: .bottom(maxHeight: 450),
               sheetOpacity: 1) {
             VStack {

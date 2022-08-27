@@ -18,16 +18,19 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
     
-    var searchText: Binding<String> {
-        _searchText.asBinding(setter: setSearchText)
+    var searchText: String {
+        get { _searchText }
+        set { setSearchText(newValue) }
+    }
+
+    var isFilterOpen: Bool {
+        get { _isFilterOpen }
+        set { setIsFilterOpen(newValue) }
     }
     
-    var isFilterOpen: Binding<Bool> {
-        _isFilterOpen.asBinding(setter: setIsFilterOpen)
-    }
-    
-    var selectedLecture: Binding<Lecture?> {
-        .init(get: { self._selectedLecture }, set: { self.setSelectedLecture($0) })
+    var selectedLecture: Lecture? {
+        get { _selectedLecture }
+        set { setSelectedLecture(newValue) }
     }
     
     var currentTimetableWithSelection: Timetable? {

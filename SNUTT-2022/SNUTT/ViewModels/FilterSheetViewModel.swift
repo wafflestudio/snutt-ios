@@ -13,8 +13,9 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
     @Published var searchTagList: SearchTagList?
     @Published private var _isFilterOpen: Bool = false
     
-    var isFilterOpen: Binding<Bool> {
-        _isFilterOpen.asBinding(setter: setIsFilterOpen)
+    var isFilterOpen: Bool {
+        get { _isFilterOpen }
+        set { setIsFilterOpen(newValue) }
     }
     
     override init(container: DIContainer) {

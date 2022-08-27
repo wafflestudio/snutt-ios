@@ -11,7 +11,7 @@ struct MenuSheetScene: View {
     let viewModel: MenuSheetViewModel
     @ObservedObject var menuState: MenuState
     @ObservedObject var timetableState: TimetableState
-
+    
     init(viewModel: MenuSheetViewModel) {
         self.viewModel = viewModel
         menuState = self.viewModel.menuState

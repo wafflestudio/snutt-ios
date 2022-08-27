@@ -20,7 +20,7 @@ struct SearchLectureScene: View {
                         .frame(height: 44)
                     TimetableZStack(current: viewModel.currentTimetableWithSelection,
                                     config: viewModel.timetableConfigWithAutoFit)
-                    .animation(.customSpring, value: viewModel.selectedLecture.wrappedValue?.id)
+                    .animation(.customSpring, value: viewModel.selectedLecture?.id)
                 }
                 STColor.searchListBackground
             }
@@ -31,8 +31,8 @@ struct SearchLectureScene: View {
                 
                 // MARK: 검색창
                 
-                SearchBar(text: viewModel.searchText,
-                          isFilterOpen: viewModel.isFilterOpen) {
+                SearchBar(text: $viewModel.searchText,
+                          isFilterOpen: $viewModel.isFilterOpen) {
                     Task {
                         await viewModel.fetchInitialSearchResult()
                     }
@@ -92,8 +92,8 @@ struct SearchLectureScene: View {
                     SearchLectureList(viewModel: .init(container: viewModel.container),
                                       data: viewModel.searchResult,
                                       fetchMore: viewModel.fetchMoreSearchResult,
-                                      selected: viewModel.selectedLecture)
-                    .animation(.customSpring, value: viewModel.selectedLecture.wrappedValue?.id)
+                                      selected: $viewModel.selectedLecture)
+                    .animation(.customSpring, value: viewModel.selectedLecture?.id)
                 }
             }
         }
