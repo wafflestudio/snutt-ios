@@ -11,25 +11,27 @@ import UIKit
 
 class TimetableViewModel: BaseViewModel, ObservableObject {
     private var bag = Set<AnyCancellable>()
+    @Published var currentTimetable: Timetable?
+    @Published var configuration: TimetableConfiguration = .init()
+    
 
     override init(container: DIContainer) {
         super.init(container: container)
+        
+        appState.timetable.$current.assign(to: &$currentTimetable)
+        appState.timetable.$configuration.assign(to: &$configuration)
     }
 
     var totalCredit: Int {
-        timetableState.current?.totalCredit ?? 0
+        currentTimetable?.totalCredit ?? 0
     }
 
     var timetableTitle: String {
-        timetableState.current?.title ?? ""
+        currentTimetable?.title ?? ""
     }
 
     private var timetableService: TimetableServiceProtocol {
         services.timetableService
-    }
-
-    private var currentTimetable: Timetable? {
-        appState.timetable.current
     }
 
     var timetableState: TimetableState {
