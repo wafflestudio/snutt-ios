@@ -9,33 +9,35 @@ import SwiftUI
 
 struct MenuSheetScene: View {
     let viewModel: MenuSheetViewModel
-    @ObservedObject var menuSheetSetting: MenuSheetSetting
+    @ObservedObject var menuState: MenuState
+    @ObservedObject var timetableState: TimetableState
 
     init(viewModel: MenuSheetViewModel) {
         self.viewModel = viewModel
-        menuSheetSetting = self.viewModel.menuSheetSetting
+        menuState = self.viewModel.menuState
+        timetableState = self.viewModel.timetableState
     }
 
     var body: some View {
-        Sheet(isOpen: $menuSheetSetting.isOpen, orientation: .left(maxWidth: 320), cornerRadius: 0, sheetOpacity: 0.7) {
-            VStack {
-                HStack {
-                    Logo(orientation: .horizontal)
-                        .padding(.vertical)
-                    Spacer()
-                    Button {
-                        menuSheetSetting.isOpen.toggle()
-                    } label: {
-                        Image("xmark.black")
-                    }
-                }
-                .padding(.horizontal, 20)
+        ZStack {
+            MenuSheet(viewModel: .init(container: viewModel.container),
+                      isOpen: $menuState.isOpen)
 
-                Divider()
-                    .padding([.horizontal, .bottom], 10)
+            MenuEllipsisSheet(isOpen: $menuState.isEllipsisOpen,
+                              openTitleTextField: viewModel.openTitleTextField,
+                              deleteTimetable: viewModel.deleteTimetable,
+                              openPalette: viewModel.openPalette)
 
-                MenuSheetContent(viewModel: .init(container: viewModel.container))
-            }
+            MenuThemeSheet(isOpen: $menuState.isThemePaletteOpen,
+                           selectedTheme: viewModel.selectedTheme,
+                           cancel: viewModel.cancelThemeChange,
+                           confirm: viewModel.applyThemeChange,
+                           select: viewModel.selectTheme)
+
+            MenuTextFieldSheet(isOpen: $menuState.isTitleTextFieldOpen,
+                               titleText: $menuState.titleText,
+                               cancel: viewModel.cancelTitleTextField,
+                               confirm: viewModel.applyTitleTextField)
         }
     }
 }
@@ -45,13 +47,19 @@ struct MenuSheetWrapper: View {
     let container = DIContainer.preview
 
     init() {
-        container.appState.setting.menuSheetSetting.isOpen = true
+        container.appState.menu.isOpen = true
+        container.appState.menu.isEllipsisOpen = true
     }
 
     var body: some View {
         ZStack {
-            NavBarButton(imageName: "nav.menu") {
-                container.appState.setting.menuSheetSetting.isOpen.toggle()
+            HStack {
+                NavBarButton(imageName: "nav.menu") {
+                    container.services.appService.toggleMenuSheet()
+                }
+                NavBarButton(imageName: "menu.ellipsis") {
+                    container.services.appService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", updatedAt: "3232", totalCredit: 3))
+                }
             }
             MenuSheetScene(viewModel: .init(container: container))
         }

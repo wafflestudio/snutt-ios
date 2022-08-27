@@ -22,8 +22,7 @@ extension LectureDetailScene {
             do {
                 try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture)
             } catch {
-                // TODO: handle error
-                print(error.asSTError?.errorMessage)
+                services.appService.presentErrorAlert(error: error.asSTError)
                 return false
             }
             return true
@@ -33,7 +32,7 @@ extension LectureDetailScene {
             do {
                 try await lectureService.deleteLecture(lecture: lecture)
             } catch {
-                // TODO: handle error
+                services.appService.presentErrorAlert(error: error.asSTError)
             }
         }
     }

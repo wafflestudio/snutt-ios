@@ -17,6 +17,7 @@ struct TimetableZStack: View {
             TimetableBlocksLayer(current: current, config: config)
         }
         .background(STColor.systemBackground)
+        .ignoresSafeArea(.keyboard)
 
         let _ = debugChanges()
     }

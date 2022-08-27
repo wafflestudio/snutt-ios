@@ -31,9 +31,10 @@ struct FilterSheetScene: View {
                 .padding(10)
                 Spacer()
                 FilterSheetContent(viewModel: viewModel)
-                Spacer()
             }
+            .edgesIgnoringSafeArea(.bottom)
         }
+        .ignoresSafeArea(.keyboard)
     }
 }
 

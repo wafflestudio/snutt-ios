@@ -11,10 +11,11 @@ import SwiftUI
 class AppState {
     var currentUser = User()
     var setting = Setting()
-    var system = System()
 
+    var system = SystemState()
     var search = SearchState()
     var timetable = TimetableState()
+    var menu = MenuState()
 }
 
 #if DEBUG

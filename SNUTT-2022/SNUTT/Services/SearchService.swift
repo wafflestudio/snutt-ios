@@ -33,11 +33,6 @@ struct SearchService: SearchServiceProtocol {
         appState.timetable
     }
 
-    init(appState: AppState, webRepositories: AppEnvironment.WebRepositories) {
-        self.appState = appState
-        self.webRepositories = webRepositories
-    }
-
     func setLoading(_ value: Bool) {
         DispatchQueue.main.async {
             searchState.isLoading = value

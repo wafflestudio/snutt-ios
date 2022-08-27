@@ -8,13 +8,8 @@
 import SwiftUI
 
 struct NavBarButton: View {
-    private let imageName: String
-    private let action: () -> Void
-
-    init(imageName: String, action: @escaping () -> Void) {
-        self.imageName = imageName
-        self.action = action
-    }
+    let imageName: String
+    let action: () -> Void
 
     var body: some View {
         Button {

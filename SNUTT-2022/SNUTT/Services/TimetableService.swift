@@ -6,12 +6,18 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol TimetableServiceProtocol {
     func fetchRecentTimetable() async throws
     func fetchTimetableList() async throws
     func fetchTimetable(timetableId: String) async throws
     func loadTimetableConfig()
+    func copyTimetable(timetableId: String) async throws
+    func updateTimetableTitle(timetableId: String, title: String) async throws
+    func updateTimetableTheme(timetableId: String) async throws
+    func deleteTimetable(timetableId: String) async throws
+    func selectTimetableTheme(theme: Theme)
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -46,7 +52,64 @@ struct TimetableService: TimetableServiceProtocol {
         let dtos = try await timetableRepository.fetchTimetableList()
         let timetables = dtos.map { TimetableMetadata(from: $0) }
         DispatchQueue.main.async {
-            appState.timetable.metadataList = timetables
+            withAnimation(.customSpring) {
+                appState.timetable.metadataList = timetables
+            }
+        }
+    }
+
+    func copyTimetable(timetableId: String) async throws {
+        let dtos = try await timetableRepository.copyTimetable(withTimetableId: timetableId)
+        let timetables = dtos.map { TimetableMetadata(from: $0) }
+        DispatchQueue.main.async {
+            withAnimation(.customSpring) {
+                appState.timetable.metadataList = timetables
+            }
+        }
+    }
+
+    func updateTimetableTitle(timetableId: String, title: String) async throws {
+        let dtos = try await timetableRepository.updateTimetableTitle(withTimetableId: timetableId, withTitle: title)
+        let timetables = dtos.map { TimetableMetadata(from: $0) }
+        DispatchQueue.main.async {
+            withAnimation(.customSpring) {
+                appState.timetable.metadataList = timetables
+                if appState.timetable.current?.id == timetableId {
+                    appState.timetable.current?.title = title
+                }
+            }
+        }
+    }
+
+    func updateTimetableTheme(timetableId: String) async throws {
+        guard let theme = appState.timetable.current?.selectedTheme else { return }
+        let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: theme.rawValue)
+        let timetable = Timetable(from: dto)
+        DispatchQueue.main.async {
+            withAnimation(.customSpring) {
+                if appState.timetable.current?.id == timetableId {
+                    appState.timetable.current = timetable
+                }
+            }
+        }
+    }
+
+    func deleteTimetable(timetableId: String) async throws {
+        if appState.timetable.current?.id == timetableId {
+            throw STError.CANT_DELETE_CURRENT_TIMETABLE
+        }
+        let dtos = try await timetableRepository.deleteTimetable(withTimetableId: timetableId)
+        let timetables = dtos.map { TimetableMetadata(from: $0) }
+        DispatchQueue.main.async {
+            withAnimation(.customSpring) {
+                appState.timetable.metadataList = timetables
+            }
+        }
+    }
+
+    func selectTimetableTheme(theme: Theme) {
+        withAnimation(.customSpring) {
+            appState.timetable.current?.selectedTheme = theme
         }
     }
 
@@ -68,4 +131,9 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func fetchTimetableList() {}
     func fetchTimetable(timetableId _: String) {}
     func loadTimetableConfig() {}
+    func copyTimetable(timetableId _: String) {}
+    func updateTimetableTitle(timetableId _: String, title _: String) {}
+    func updateTimetableTheme(timetableId _: String) async throws {}
+    func deleteTimetable(timetableId _: String) async throws {}
+    func selectTimetableTheme(theme _: Theme) {}
 }

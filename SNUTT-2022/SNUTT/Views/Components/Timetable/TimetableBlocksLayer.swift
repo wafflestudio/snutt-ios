@@ -11,17 +11,17 @@ struct TimetableBlocksLayer: View {
     let current: Timetable?
     let config: TimetableConfiguration
 
-    var currentTheme: Theme {
-        current?.theme ?? .snutt
+    var displayedTheme: Theme {
+        current?.selectedTheme ?? (current?.theme ?? .snutt)
     }
 
     var body: some View {
         ForEach(current?.lectures ?? []) { lecture in
-            LectureBlocks(current: current, lecture: lecture, theme: currentTheme, config: config)
+            LectureBlocks(current: current, lecture: lecture, theme: displayedTheme, config: config)
         }
 
         if var selectedLecture = current?.selectedLecture {
-            LectureBlocks(current: current, lecture: selectedLecture.withTemporaryColor(), theme: currentTheme, config: config)
+            LectureBlocks(current: current, lecture: selectedLecture.withTemporaryColor(), theme: displayedTheme, config: config)
         }
 
         let _ = debugChanges()

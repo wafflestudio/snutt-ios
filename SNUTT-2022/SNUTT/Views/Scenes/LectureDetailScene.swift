@@ -79,6 +79,10 @@ struct LectureDetailScene: View {
                                     EditableTextField(text: $lecture.lectureNumber, readOnly: true)
                                 }
                                 HStack {
+                                    DetailLabel(text: "정원")
+                                    EditableNumberField(value: $lecture.quota, readOnly: true)
+                                }
+                                HStack {
                                     DetailLabel(text: "비고")
                                     EditableTextField(text: $lecture.remark, multiLine: true)
                                 }
@@ -309,18 +313,18 @@ struct EditableTimeField: View {
     }
 }
 
+struct RectangleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .contentShape(Rectangle())
+            .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : .clear)
+    }
+}
+
 struct DetailButton: View {
     let text: String
     let role: ButtonRole?
     let action: () -> Void
-
-    struct DetailButtonStyle: ButtonStyle {
-        func makeBody(configuration: Self.Configuration) -> some View {
-            configuration.label
-                .contentShape(Rectangle())
-                .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : .clear)
-        }
-    }
 
     var body: some View {
         Button {

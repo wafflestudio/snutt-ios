@@ -10,22 +10,18 @@ import SwiftUI
 import UIKit
 
 class TimetableViewModel: BaseViewModel, ObservableObject {
-    @Published var showAlert: Bool = false
-    @Published var totalCredit: Int = 0
-    @Published var timetableTitle: String = ""
-
     private var bag = Set<AnyCancellable>()
 
     override init(container: DIContainer) {
         super.init(container: container)
+    }
 
-        timetableState.$current
-            .map { $0?.totalCredit ?? 0 }
-            .assign(to: &$totalCredit)
+    var totalCredit: Int {
+        timetableState.current?.totalCredit ?? 0
+    }
 
-        timetableState.$current
-            .map { $0?.title ?? "" }
-            .assign(to: &$timetableTitle)
+    var timetableTitle: String {
+        timetableState.current?.title ?? ""
     }
 
     private var timetableService: TimetableServiceProtocol {
@@ -41,17 +37,14 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     }
 
     func toggleMenuSheet() {
-        appState.setting.menuSheetSetting.isOpen.toggle()
+        services.appService.toggleMenuSheet()
     }
 
     func fetchRecentTimetable() async {
         do {
             try await timetableService.fetchRecentTimetable()
         } catch {
-            // TODO: handle error
-            DispatchQueue.main.async {
-                self.showAlert = true
-            }
+            services.appService.presentErrorAlert(error: error.asSTError)
         }
     }
 
@@ -59,7 +52,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await timetableService.fetchTimetableList()
         } catch {
-            // TODO: handle error
+            services.appService.presentErrorAlert(error: error.asSTError)
         }
     }
 

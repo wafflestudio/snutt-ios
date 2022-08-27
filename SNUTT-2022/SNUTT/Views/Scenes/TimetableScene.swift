@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TimetableScene: View {
     @State private var pushToListScene = false
-    @ObservedObject var viewModel: TimetableViewModel
+    var viewModel: TimetableViewModel
     @ObservedObject var timetableState: TimetableState
 
     init(viewModel: TimetableViewModel) {
@@ -63,12 +63,6 @@ struct TimetableScene: View {
             .onLoad {
                 await viewModel.fetchTimetableList()
             }
-            .onLoad {
-                viewModel.loadTimetableConfig()
-            }
-            .alert(isPresented: $viewModel.showAlert) {
-                Alert(title: Text("API 에러"), message: Text("API 에러가 발생했습니다. 이 알러트는 테스트용입니다. 나중에 바꿔주세요."), dismissButton: .default(Text("취소")))
-            }
 
         let _ = debugChanges()
     }
@@ -99,10 +93,10 @@ extension View {
     }
 }
 
-struct MyTimetableScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TimetableScene(viewModel: .init(container: .preview))
-        }
-    }
-}
+// struct MyTimetableScene_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationView {
+//            TimetableScene(viewModel: .init(container: .preview))
+//        }
+//    }
+// }
