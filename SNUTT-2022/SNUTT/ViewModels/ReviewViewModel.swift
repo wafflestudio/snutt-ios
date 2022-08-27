@@ -15,11 +15,11 @@ class ReviewViewModel: ObservableObject {
     init(container: DIContainer) {
         self.container = container
     }
-    
+
     var state: WebViewState.Connection {
         webViewState.connection
     }
-    
+
     var reload: Bool {
         webViewState.shouldReloadWebView
     }
@@ -31,7 +31,7 @@ class ReviewViewModel: ObservableObject {
     func shouldReloadWebView(_ reload: Bool) {
         webViewService.shouldReloadWebView(reload)
     }
-    
+
     func getDetail(lectureId: String) {
         container.services.webViewService.getDetail(lectureId: lectureId)
     }
@@ -55,7 +55,7 @@ class ReviewViewModel: ObservableObject {
     private var webViewState: WebViewState {
         appState.webView
     }
-    
+
     private var webViewService: WebViewServiceProtocol {
         container.services.webViewService
     }

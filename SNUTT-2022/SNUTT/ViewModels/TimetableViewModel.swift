@@ -27,11 +27,11 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
             .map { $0?.title ?? "" }
             .assign(to: &$timetableTitle)
     }
-    
+
     var currentTimetable: Timetable? {
         timetableState.current
     }
-    
+
     var currentConfiguration: TimetableConfiguration {
         timetableState.configuration
     }
@@ -62,7 +62,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     func loadTimetableConfig() {
         timetableService.loadTimetableConfig()
     }
-    
+
     private var timetableService: TimetableServiceProtocol {
         services.timetableService
     }
