@@ -25,7 +25,7 @@ struct TimetableScene: View {
                 ToolbarItem(placement: .principal) {
                     HStack {
                         NavBarButton(imageName: "nav.menu") {
-                            viewModel.toggleMenuSheet()
+                            viewModel.setIsMenuOpen(true)
                         }
 
                         Text(viewModel.timetableTitle)

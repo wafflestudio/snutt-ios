@@ -8,40 +8,41 @@
 import SwiftUI
 
 struct MenuSheetScene: View {
-    let viewModel: MenuSheetViewModel
-    @ObservedObject var menuState: MenuState
-    @ObservedObject var timetableState: TimetableState
-    
-    init(viewModel: MenuSheetViewModel) {
-        self.viewModel = viewModel
-        menuState = self.viewModel.menuState
-        timetableState = self.viewModel.timetableState
-    }
+    @ObservedObject var viewModel: MenuSheetViewModel
 
     var body: some View {
         ZStack {
-            MenuSheet(viewModel: .init(container: viewModel.container),
-                      isOpen: $menuState.isOpen)
+            // TODO: Split these
+            MenuSheet(isOpen: $viewModel.isMenuSheetOpen,
+                      isNewCourseBookAvailable: viewModel.isNewCourseBookAvailable,
+                      openCreateSheet: viewModel.openCreateSheet,
+                      current: viewModel.currentTimetable,
+                      metadataList: viewModel.metadataList,
+                      timetablesByQuarter: viewModel.timetablesByQuarter,
+                      selectTimetable: viewModel.selectTimetable,
+                      duplicateTimetable: viewModel.duplicateTimetable,
+                      openEllipsis: viewModel.openEllipsis
+            )
 
-            MenuEllipsisSheet(isOpen: $menuState.isEllipsisSheetOpen,
+            MenuEllipsisSheet(isOpen: $viewModel.isEllipsisSheetOpen,
                               openRenameSheet: viewModel.openRenameSheet,
                               deleteTimetable: viewModel.deleteTimetable,
                               openThemeSheet: viewModel.openThemeSheet)
 
-            MenuThemeSheet(isOpen: $menuState.isThemeSheetOpen,
+            MenuThemeSheet(isOpen: $viewModel.isThemeSheetOpen,
                            selectedTheme: viewModel.selectedTheme,
                            cancel: viewModel.closeThemeSheet,
                            confirm: viewModel.applyThemeSheet,
                            select: viewModel.selectTheme)
 
-            MenuRenameSheet(isOpen: $menuState.isRenameSheetOpen,
-                            titleText: $menuState.renameTitle,
+            MenuRenameSheet(isOpen: $viewModel.isRenameSheetOpen,
+                            titleText: $viewModel.renameTitle,
                             cancel: viewModel.closeRenameSheet,
                             confirm: viewModel.applyRenameSheet)
 
-            MenuCreateSheet(isOpen: $menuState.isCreateSheetOpen,
-                            titleText: $menuState.createTitle,
-                            selectedQuarter: $menuState.createQuarter,
+            MenuCreateSheet(isOpen: $viewModel.isCreateSheetOpen,
+                            titleText: $viewModel.createTitle,
+                            selectedQuarter: $viewModel.createQuarter,
                             quarterChoices: viewModel.availableCourseBooks,
                             cancel: viewModel.closeCreateSheet,
                             confirm: viewModel.applyCreateSheet)
@@ -62,7 +63,7 @@ struct MenuSheetWrapper: View {
         ZStack {
             HStack {
                 NavBarButton(imageName: "nav.menu") {
-                    container.services.globalUIService.toggleMenuSheet()
+                    container.appState.menu.isOpen.toggle()
                 }
                 NavBarButton(imageName: "menu.ellipsis") {
                     container.services.globalUIService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", updatedAt: "3232", totalCredit: 3))

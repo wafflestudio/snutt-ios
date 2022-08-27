@@ -37,9 +37,9 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     var timetableState: TimetableState {
         appState.timetable
     }
-
-    func toggleMenuSheet() {
-        services.globalUIService.toggleMenuSheet()
+    
+    func setIsMenuOpen(_ val: Bool) {
+        services.globalUIService.setIsMenuOpen(val)
     }
 
     func fetchRecentTimetable() async {
