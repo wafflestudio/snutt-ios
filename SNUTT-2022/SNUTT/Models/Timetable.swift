@@ -112,6 +112,12 @@ struct TimetableMetadata: Codable {
     }
 }
 
+extension TimetableMetadata: Equatable {
+    static func == (lhs: TimetableMetadata, rhs: TimetableMetadata) -> Bool {
+        return lhs.id == rhs.id && lhs.title == rhs.title && lhs.totalCredit == rhs.totalCredit
+    }
+}
+
 extension TimetableMetadata {
     init(from dto: TimetableMetadataDto) {
         id = dto._id

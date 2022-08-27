@@ -77,7 +77,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.searchService.fetchTags(quarter: currentTimetable.quarter)
         } catch {
-            services.appService.presentErrorAlert(error: error.asSTError)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -85,7 +85,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.searchService.fetchInitialSearchResult()
         } catch {
-            services.appService.presentErrorAlert(error: error.asSTError)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -93,7 +93,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.searchService.fetchMoreSearchResult()
         } catch {
-            services.appService.presentErrorAlert(error: error.asSTError)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
     

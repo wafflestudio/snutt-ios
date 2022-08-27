@@ -16,29 +16,14 @@ struct MenuThemeSheet: View {
     var select: (Theme) -> Void
 
     var body: some View {
-        Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 200), disableBackgroundTap: true, disableDragGesture: true) {
+        Sheet(isOpen: $isOpen,
+              orientation: .bottom(maxHeight: 200),
+              disableBackgroundTap: false,
+              disableDragGesture: true,
+              onBackgroundTap: cancel) {
             VStack {
-                HStack {
-                    Button {
-                        cancel()
-                    } label: {
-                        Text("취소")
-                    }
-
-                    Spacer()
-
-                    Button {
-                        Task {
-                            await confirm()
-                        }
-                    } label: {
-                        Text("적용")
-                    }
-                }
-                .padding(.vertical)
-                .padding(.horizontal, 20)
-
-                Spacer()
+                MenuSheetTopBar(cancel: cancel, confirm: confirm)
+                    .padding(.horizontal, 20)
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {

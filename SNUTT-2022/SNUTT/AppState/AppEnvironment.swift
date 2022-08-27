@@ -19,7 +19,8 @@ extension AppEnvironment {
         let userService: UserServiceProtocol
         let lectureService: LectureServiceProtocol
         let searchService: SearchServiceProtocol
-        let appService: AppServiceProtocol
+        let globalUIService: GlobalUIServiceProtocol
+        let courseBookService: CourseBookServiceProtocol
     }
 }
 
@@ -29,6 +30,7 @@ extension AppEnvironment {
         let userRepository: UserRepositoryProtocol
         let lectureRepository: LectureRepositoryProtocol
         let searchRepository: SearchRepositoryProtocol
+        let courseBookRepository: CourseBookRepositoryProtocol
     }
 
     struct LocalRepositories {
@@ -59,10 +61,12 @@ extension AppEnvironment {
         let userRepository = UserRepository(session: session)
         let lectureRepository = LectureRepository(session: session)
         let searchRepository = SearchRepository(session: session)
+        let courseBookRepository = CourseBookRepository(session: session)
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
                      lectureRepository: lectureRepository,
-                     searchRepository: searchRepository)
+                     searchRepository: searchRepository,
+                     courseBookRepository: courseBookRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -75,12 +79,14 @@ extension AppEnvironment {
         let userService = UserService(appState: appState, webRepositories: webRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
-        let appService = AppService(appState: appState)
+        let globalUIService = GlobalUIService(appState: appState)
+        let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
                      searchService: searchService,
-                     appService: appService)
+                     globalUIService: globalUIService,
+                     courseBookService: courseBookService)
     }
 }
 
@@ -102,7 +108,8 @@ extension EnvironmentValues {
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
                   searchService: FakeSearchService(),
-                  appService: AppService(appState: appState))
+                  globalUIService: GlobalUIService(appState: appState),
+                  courseBookService: FakeCourseBookService())
         }
     }
 #endif

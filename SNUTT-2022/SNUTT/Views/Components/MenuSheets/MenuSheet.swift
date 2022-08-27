@@ -36,22 +36,54 @@ struct MenuSheet: View {
                 Divider()
                     .padding(.horizontal, 10)
 
-                ScrollView {
-                    LazyVStack(spacing: 15) {
-                        let timetablesByQuarter = viewModel.timetablesByQuarter
-                        ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
-                            MenuSection(quarter: quarter, isExpanded: quarter == timetableState.current?.quarter) {
-                                ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { data in
-                                    MenuSectionRow(timetableMetadata: data,
-                                                   isSelected: viewModel.currentTimetable?.id == data.id,
-                                                   selectTimetable: viewModel.selectTimetable,
-                                                   duplicateTimetable: viewModel.duplicateTimetable,
-                                                   openEllipsis: viewModel.openEllipsis)
+                ScrollViewReader { _ in
+                    ScrollView {
+                        VStack(spacing: 15) {
+                            let timetablesByQuarter = viewModel.timetablesByQuarter
+
+                            HStack {
+                                if viewModel.services.timetableService.isNewCourseBookAvailable() {
+                                    // 새로운 수강편람이 나와 있음을 알린다.
+                                    Circle()
+                                        .frame(width: 7, height: 7)
+                                        .foregroundColor(.red)
+                                }
+
+                                Spacer()
+
+                                Button {
+                                    viewModel.openCreateSheet()
+                                } label: {
+                                    Text("+ 시간표 추가하기")
+                                        .font(.system(size: 15, weight: .semibold))
                                 }
                             }
+                            .padding(.horizontal, 15)
+
+                            ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
+                                MenuSection(quarter: quarter, current: timetableState.current) {
+                                    ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { timetable in
+                                        MenuSectionRow(timetableMetadata: timetable,
+                                                       isSelected: viewModel.currentTimetable?.id == timetable.id,
+                                                       selectTimetable: viewModel.selectTimetable,
+                                                       duplicateTimetable: viewModel.duplicateTimetable,
+                                                       openEllipsis: viewModel.openEllipsis)
+                                    }
+                                }
+                                // in extreme cases, there might be hash collision
+                                .id(quarter.hashValue)
+                            }
                         }
+                        .padding(.top, 20)
+                        .animation(.customSpring, value: timetableState.metadataList)
                     }
-                    .padding(.top, 20)
+                    // TODO: 새로운 시간표 생성했을 때 해당 위치로 스크롤하기
+//                    .onChange(of: menuState.onCreateToggle) { _ in
+//                        // due to Apple's bug, customSpring animation doesn't work for now
+//                        withAnimation(.customSpring) {
+//                            reader.scrollTo(timetableState.current?.quarter.hashValue, anchor: .bottom)
+//                        }
+//                    }
                 }
             }
         }
@@ -64,8 +96,12 @@ extension MenuSheet {
             appState.timetable
         }
 
+        var menuState: MenuState {
+            appState.menu
+        }
+
         func toggleMenuSheet() {
-            services.appService.toggleMenuSheet()
+            services.globalUIService.toggleMenuSheet()
         }
 
         var timetablesByQuarter: [Quarter: [TimetableMetadata]] {
@@ -81,7 +117,7 @@ extension MenuSheet {
                 await services.searchService.initializeSearchState()
                 try await services.timetableService.fetchTimetable(timetableId: timetableId)
             } catch {
-                services.appService.presentErrorAlert(error: error.asSTError)
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
@@ -89,12 +125,16 @@ extension MenuSheet {
             do {
                 try await services.timetableService.copyTimetable(timetableId: timetableId)
             } catch {
-                services.appService.presentErrorAlert(error: error.asSTError)
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
+        func openCreateSheet() {
+            services.globalUIService.openCreateSheet()
+        }
+
         func openEllipsis(for timetable: TimetableMetadata) {
-            services.appService.openEllipsis(for: timetable)
+            services.globalUIService.openEllipsis(for: timetable)
         }
     }
 }

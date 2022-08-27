@@ -2,7 +2,7 @@
 //  Animation+Custom.swift
 //  SNUTT
 //
-//  Created by 박신홍 on 2022/08/23.
+//  Created by 박신홍 on 2022/08/21.
 //
 
 import SwiftUI

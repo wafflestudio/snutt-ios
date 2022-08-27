@@ -23,21 +23,28 @@ struct MenuSheetScene: View {
             MenuSheet(viewModel: .init(container: viewModel.container),
                       isOpen: $menuState.isOpen)
 
-            MenuEllipsisSheet(isOpen: $menuState.isEllipsisOpen,
-                              openTitleTextField: viewModel.openTitleTextField,
+            MenuEllipsisSheet(isOpen: $menuState.isEllipsisSheetOpen,
+                              openRenameSheet: viewModel.openRenameSheet,
                               deleteTimetable: viewModel.deleteTimetable,
-                              openPalette: viewModel.openPalette)
+                              openThemeSheet: viewModel.openThemeSheet)
 
-            MenuThemeSheet(isOpen: $menuState.isThemePaletteOpen,
+            MenuThemeSheet(isOpen: $menuState.isThemeSheetOpen,
                            selectedTheme: viewModel.selectedTheme,
-                           cancel: viewModel.cancelThemeChange,
-                           confirm: viewModel.applyThemeChange,
+                           cancel: viewModel.closeThemeSheet,
+                           confirm: viewModel.applyThemeSheet,
                            select: viewModel.selectTheme)
 
-            MenuTextFieldSheet(isOpen: $menuState.isTitleTextFieldOpen,
-                               titleText: $menuState.titleText,
-                               cancel: viewModel.cancelTitleTextField,
-                               confirm: viewModel.applyTitleTextField)
+            MenuRenameSheet(isOpen: $menuState.isRenameSheetOpen,
+                            titleText: $menuState.renameTitle,
+                            cancel: viewModel.closeRenameSheet,
+                            confirm: viewModel.applyRenameSheet)
+
+            MenuCreateSheet(isOpen: $menuState.isCreateSheetOpen,
+                            titleText: $menuState.createTitle,
+                            selectedQuarter: $menuState.createQuarter,
+                            quarterChoices: viewModel.availableCourseBooks,
+                            cancel: viewModel.closeCreateSheet,
+                            confirm: viewModel.applyCreateSheet)
         }
     }
 }
@@ -48,17 +55,17 @@ struct MenuSheetWrapper: View {
 
     init() {
         container.appState.menu.isOpen = true
-        container.appState.menu.isEllipsisOpen = true
+        container.appState.menu.isEllipsisSheetOpen = true
     }
 
     var body: some View {
         ZStack {
             HStack {
                 NavBarButton(imageName: "nav.menu") {
-                    container.services.appService.toggleMenuSheet()
+                    container.services.globalUIService.toggleMenuSheet()
                 }
                 NavBarButton(imageName: "menu.ellipsis") {
-                    container.services.appService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", updatedAt: "3232", totalCredit: 3))
+                    container.services.globalUIService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", updatedAt: "3232", totalCredit: 3))
                 }
             }
             MenuSheetScene(viewModel: .init(container: container))

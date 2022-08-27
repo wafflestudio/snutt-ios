@@ -86,7 +86,7 @@ extension SearchLectureCell {
             do {
                 try await services.lectureService.addLecture(lecture: lecture)
             } catch {
-                services.appService.presentErrorAlert(error: error.asSTError)
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
     }
