@@ -62,13 +62,6 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         appState.timetable
     }
 
-    func toggleFilterSheet() {
-        if appState.search.searchTagList == nil {
-            return
-        }
-        services.searchService.toggleFilterSheet()
-    }
-
     func fetchTags() async {
         if appState.search.searchTagList != nil {
             return

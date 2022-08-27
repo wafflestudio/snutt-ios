@@ -42,10 +42,6 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func toggleFilterSheet() {
-        services.searchService.toggleFilterSheet()
-    }
-
     func setIsFilterOpen(_ val: Bool) {
         services.searchService.setIsFilterOpen(val)
     }
