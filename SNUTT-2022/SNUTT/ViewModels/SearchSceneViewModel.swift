@@ -90,16 +90,16 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func setSearchText(_ val: String) {
-        services.searchService.setSearchText(val)
+    func setSearchText(_ value: String) {
+        services.searchService.setSearchText(value)
     }
 
-    func setIsFilterOpen(_ val: Bool) {
-        services.searchService.setIsFilterOpen(val)
+    func setIsFilterOpen(_ value: Bool) {
+        services.searchService.setIsFilterOpen(value)
     }
 
-    func setSelectedLecture(_ val: Lecture?) {
-        services.searchService.setSelectedLecture(val)
+    func setSelectedLecture(_ value: Lecture?) {
+        services.searchService.setSelectedLecture(value)
     }
 
     func toggle(_ tag: SearchTag) {

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 protocol GlobalUIServiceProtocol {
-    func setIsMenuOpen(_ val: Bool)
+    func setIsMenuOpen(_ value: Bool)
 
     func openEllipsis(for timetable: TimetableMetadata)
     func closeEllipsis()
@@ -23,9 +23,9 @@ protocol GlobalUIServiceProtocol {
     func openCreateSheet()
     func closeCreateSheet()
 
-    func setRenameTitle(_ val: String)
-    func setCreateTitle(_ val: String)
-    func setCreateQuarter(_ val: Quarter?)
+    func setRenameTitle(_ value: String)
+    func setCreateTitle(_ value: String)
+    func setCreateQuarter(_ value: Quarter?)
 
     func presentErrorAlert(error: STError?)
     func presentErrorAlert(error: Error)
@@ -35,9 +35,9 @@ protocol GlobalUIServiceProtocol {
 struct GlobalUIService: GlobalUIServiceProtocol {
     var appState: AppState
 
-    func setIsMenuOpen(_ val: Bool) {
+    func setIsMenuOpen(_ value: Bool) {
         DispatchQueue.main.async {
-            appState.menu.isOpen = val
+            appState.menu.isOpen = value
         }
     }
 
@@ -98,16 +98,16 @@ struct GlobalUIService: GlobalUIServiceProtocol {
         }
     }
 
-    func setRenameTitle(_ val: String) {
-        appState.menu.renameTitle = val
+    func setRenameTitle(_ value: String) {
+        appState.menu.renameTitle = value
     }
 
-    func setCreateTitle(_ val: String) {
-        appState.menu.createTitle = val
+    func setCreateTitle(_ value: String) {
+        appState.menu.createTitle = value
     }
 
-    func setCreateQuarter(_ val: Quarter?) {
-        appState.menu.createQuarter = val
+    func setCreateQuarter(_ value: Quarter?) {
+        appState.menu.createQuarter = value
     }
 
     // MARK: error handling

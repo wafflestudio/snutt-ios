@@ -42,8 +42,8 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func setIsFilterOpen(_ val: Bool) {
-        services.searchService.setIsFilterOpen(val)
+    func setIsFilterOpen(_ value: Bool) {
+        services.searchService.setIsFilterOpen(value)
     }
 
     func isSelected(tag: SearchTag) -> Bool {

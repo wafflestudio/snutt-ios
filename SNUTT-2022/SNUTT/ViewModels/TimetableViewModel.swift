@@ -37,8 +37,8 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         appState.timetable
     }
 
-    func setIsMenuOpen(_ val: Bool) {
-        services.globalUIService.setIsMenuOpen(val)
+    func setIsMenuOpen(_ value: Bool) {
+        services.globalUIService.setIsMenuOpen(value)
     }
 
     func fetchRecentTimetable() async {

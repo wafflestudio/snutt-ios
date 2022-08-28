@@ -14,9 +14,9 @@ protocol SearchServiceProtocol {
     func fetchInitialSearchResult() async throws
     func fetchMoreSearchResult() async throws
     func initializeSearchState() async
-    func setIsFilterOpen(_ val: Bool)
-    func setSearchText(_ val: String)
-    func setSelectedLecture(_ val: Lecture?)
+    func setIsFilterOpen(_ value: Bool)
+    func setSearchText(_ value: String)
+    func setSelectedLecture(_ value: Lecture?)
 }
 
 struct SearchService: SearchServiceProtocol {
@@ -101,16 +101,16 @@ struct SearchService: SearchServiceProtocol {
         searchState.selectedTagList.append(tag)
     }
 
-    func setIsFilterOpen(_ val: Bool) {
-        searchState.isFilterOpen = val
+    func setIsFilterOpen(_ value: Bool) {
+        searchState.isFilterOpen = value
     }
 
-    func setSelectedLecture(_ val: Lecture?) {
-        searchState.selectedLecture = val
+    func setSelectedLecture(_ value: Lecture?) {
+        searchState.selectedLecture = value
     }
 
-    func setSearchText(_ val: String) {
-        searchState.searchText = val
+    func setSearchText(_ value: String) {
+        searchState.searchText = value
     }
 }
 
