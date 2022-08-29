@@ -42,7 +42,7 @@ struct LectureDetailScene: View {
                                     EditableTextField(text: $lecture.remark, multiLine: true)
                                 }
                             }
-                            
+
                             HStack {
                                 DetailLabel(text: "색")
                                 NavigationLink {
@@ -58,10 +58,8 @@ struct LectureDetailScene: View {
                                     }
                                 }
                                 .disabled(!editMode.isEditing)
-                                
                             }
                             .animation(.customSpring, value: editMode.isEditing)
-
                         }
                         .padding(.vertical, 5)
                     }

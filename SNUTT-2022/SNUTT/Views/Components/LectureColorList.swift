@@ -9,34 +9,34 @@ import SwiftUI
 
 struct LectureColorList: View {
     var theme: Theme
-    
+
     /// `colorIndex`의 값이 `0`이면 `customColor`를 사용하고, 그렇지 않으면 `colorList[colorIndex]`를 사용한다.
     @Binding var colorIndex: Int
     @Binding var customColor: LectureColor?
-    
+
     @Binding private var selectionFg: Color
     @Binding private var selectionBg: Color
-    
+
     init(theme: Theme, colorIndex: Binding<Int>, customColor: Binding<LectureColor?>) {
         self.theme = theme
-        self._colorIndex = colorIndex
-        self._customColor = customColor
-        self._selectionBg = .init(get: {
+        _colorIndex = colorIndex
+        _customColor = customColor
+        _selectionBg = .init(get: {
             customColor.wrappedValue?.bg ?? LectureColor.temporary.bg
         }, set: { color in
             customColor.wrappedValue = .init(fg: customColor.wrappedValue?.fg ?? LectureColor.temporary.fg, bg: color)
         })
-        self._selectionFg = .init(get: {
+        _selectionFg = .init(get: {
             customColor.wrappedValue?.fg ?? LectureColor.temporary.fg
         }, set: { color in
             customColor.wrappedValue = .init(fg: color, bg: customColor.wrappedValue?.bg ?? LectureColor.temporary.bg)
         })
     }
-    
+
     private var colorList: [LectureColor] {
         theme.getLectureColorList()
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
@@ -46,21 +46,19 @@ struct LectureColorList: View {
                                      title: "\(theme.name) \(index)") {
                         colorIndex = index
                     }
-                    
-                    
+
                     Divider()
                         .frame(height: 1)
                         .padding(.leading, 20)
                 }
-                
+
                 VStack(spacing: 0) {
-                    
                     makePickerButton(lectureColor: customColor ?? .temporary,
                                      displayTick: colorIndex == 0,
                                      title: "직접 선택하기") {
                         colorIndex = 0
                     }
-                    
+
                     if colorIndex == 0 {
                         Divider()
                             .frame(height: 1)
@@ -75,7 +73,6 @@ struct LectureColorList: View {
                         .padding(.vertical, 10)
                         .transition(.move(edge: .top).combined(with: .opacity))
                     }
-                    
                 }
             }
             .background(STColor.groupForeground)
@@ -87,9 +84,9 @@ struct LectureColorList: View {
         .navigationTitle("색상 선택")
         .navigationBarTitleDisplayMode(.inline)
     }
-    
+
     @ViewBuilder
-    func makePickerButton(lectureColor: LectureColor, displayTick: Bool ,title: String, action: @escaping () -> Void) -> some View {
+    func makePickerButton(lectureColor: LectureColor, displayTick: Bool, title: String, action: @escaping () -> Void) -> some View {
         Button {
             withAnimation(.customSpring) {
                 action()
@@ -98,15 +95,14 @@ struct LectureColorList: View {
             HStack(alignment: .center) {
                 LectureColorPreview(lectureColor: lectureColor)
                     .frame(height: 25)
-                
+
                 Text(title)
                     .font(.system(size: 16))
                     .padding(.leading, 10)
-                
+
                 Spacer()
-                
-                if displayTick
-                {
+
+                if displayTick {
                     Image(systemName: "checkmark")
                 }
             }
@@ -118,9 +114,7 @@ struct LectureColorList: View {
     }
 }
 
-
 struct LectureColorList_Previews: PreviewProvider {
-    
     struct Wrapper: View {
         @State var lecture: Lecture = .preview
         var body: some View {
@@ -129,9 +123,8 @@ struct LectureColorList_Previews: PreviewProvider {
             }
         }
     }
-    
+
     static var previews: some View {
         Wrapper()
-        
     }
 }

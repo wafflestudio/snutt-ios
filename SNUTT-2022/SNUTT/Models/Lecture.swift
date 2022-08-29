@@ -29,10 +29,10 @@ struct Lecture: Identifiable {
     var quota: Int
     var createdAt: String
     var updatedAt: String
-    
+
     /// A property is populated by the client.
     var theme: Theme?
-    
+
     func withTheme(theme: Theme) -> Self {
         var lecture = self
         lecture.theme = theme
@@ -49,12 +49,12 @@ struct Lecture: Identifiable {
         if let color = theme?.getColor(at: colorIndex) {
             return color
         }
-        
+
         // use the theme colors of `self`
         if let color = self.theme?.getColor(at: colorIndex) {
             return color
         }
-        
+
         // fallback
         return .temporary
     }
@@ -73,7 +73,7 @@ struct Lecture: Identifiable {
 struct LectureColor: Hashable {
     var fg: Color
     var bg: Color
-    
+
     static var temporary: Self = .init(fg: .white, bg: .gray)
 }
 
@@ -131,8 +131,7 @@ extension Lecture {
                            quota: 40,
                            createdAt: "2022-04-02T16:35:53.652Z",
                            updatedAt: "2022-04-02T16:35:53.652Z",
-                           theme: .snutt
-            )
+                           theme: .snutt)
         }
     }
 #endif

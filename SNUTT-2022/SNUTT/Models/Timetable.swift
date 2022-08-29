@@ -75,7 +75,7 @@ extension Timetable {
         year = dto.year
         semester = dto.semester
         updatedAt = dto.updated_at
-        
+
         let theme: Theme = .init(rawValue: dto.theme) ?? .snutt
         self.theme = theme
         lectures = dto.lecture_list.map { .init(from: $0).withTheme(theme: theme) }

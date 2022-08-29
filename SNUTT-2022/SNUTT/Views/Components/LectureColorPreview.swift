@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LectureColorPreview: View {
     let lectureColor: LectureColor
-    
+
     var body: some View {
         HStack(spacing: 0) {
             Rectangle()
