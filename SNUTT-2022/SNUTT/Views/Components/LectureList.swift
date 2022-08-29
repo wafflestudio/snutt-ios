@@ -34,6 +34,7 @@ struct LectureList: View {
                     .padding(.leading, 20)
             }
         }
+        .background(STColor.systemBackground)
 
         let _ = debugChanges()
     }

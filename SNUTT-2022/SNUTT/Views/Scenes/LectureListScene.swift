@@ -22,8 +22,6 @@ struct LectureListScene: View {
                 }
             }
 
-            .background(STColor.systemBackground)
-
         let _ = debugChanges()
     }
 }

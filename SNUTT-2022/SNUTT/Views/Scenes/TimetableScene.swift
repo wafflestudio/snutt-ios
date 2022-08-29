@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TimetableScene: View {
     @State private var pushToListScene = false
+    @State private var pushToNotiScene = false
     @ObservedObject var viewModel: TimetableViewModel
 
     var body: some View {
@@ -16,8 +17,11 @@ struct TimetableScene: View {
             .animation(.customSpring, value: viewModel.timetableState.current?.id)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
-                NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) {
-                    EmptyView()
+                Group {
+                    NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
+                    NavigationLink(destination: NotificationList(notifications: viewModel.notifications,
+                                                                 initialFetch: viewModel.fetchInitialNotifications,
+                                                                 fetchMore: viewModel.fetchMoreNotifications), isActive: $pushToNotiScene) { EmptyView() }
                 }
             )
             .navigationBarTitleDisplayMode(.inline)
@@ -48,7 +52,7 @@ struct TimetableScene: View {
                         }
 
                         NavBarButton(imageName: "nav.alarm.off") {
-                            print("alarm tapped")
+                            pushToNotiScene = true
                         }
                         .circleBadge(condition: true)
                     }
@@ -65,6 +69,12 @@ struct TimetableScene: View {
                     }
                     group.addTask {
                         await viewModel.fetchCourseBookList()
+                    }
+                    group.addTask {
+                        await viewModel.fetchInitialNotifications()
+                    }
+                    group.addTask {
+                        await viewModel.fetchNotificationsCount()
                     }
                 })
             }
