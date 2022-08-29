@@ -24,7 +24,7 @@ struct STColor {
     static let sheetBackground: Color = .init("sheet.background")
 
     #if WIDGET
-        static let systemBackground: Color = .init("WidgetBackground")
+        static let systemBackground: Color = .init("widget.background")
     #else
         static let systemBackground: Color = .init("system.background")
     #endif
