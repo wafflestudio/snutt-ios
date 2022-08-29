@@ -10,38 +10,36 @@ import Foundation
 class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published var currentTimetable: Timetable?
     @Published var metadataList: [TimetableMetadata]?
-    
+
     @Published private var _isMenuSheetOpen: Bool = false
     var isMenuSheetOpen: Bool {
         get { _isMenuSheetOpen }
         set { services.globalUIService.setIsMenuOpen(newValue) }
     }
-    
+
     @Published private var _isEllipsisSheetOpen: Bool = false
     var isEllipsisSheetOpen: Bool {
         get { _isEllipsisSheetOpen }
-        set { services.globalUIService.closeEllipsis() }  // close-only;
+        set { services.globalUIService.closeEllipsis() } // close-only;
     }
-    
+
     @Published private var _isThemeSheetOpen: Bool = false
     var isThemeSheetOpen: Bool {
         get { _isThemeSheetOpen }
         set { newValue ? services.globalUIService.openThemeSheet() : services.globalUIService.closeThemeSheet() }
     }
-    
+
     @Published private var _isRenameSheetOpen: Bool = false
     var isRenameSheetOpen: Bool {
         get { _isRenameSheetOpen }
         set { newValue ? services.globalUIService.openRenameSheet() : services.globalUIService.closeRenameSheet() }
     }
-    
+
     @Published private var _isCreateSheetOpen: Bool = false
     var isCreateSheetOpen: Bool {
         get { _isCreateSheetOpen }
         set { newValue ? services.globalUIService.openCreateSheet() : services.globalUIService.closeCreateSheet() }
     }
-    
-    
 
     @Published private var _renameTitle: String = ""
     var renameTitle: String {
