@@ -10,11 +10,38 @@ import Foundation
 class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published var currentTimetable: Timetable?
     @Published var metadataList: [TimetableMetadata]?
-    @Published var isMenuSheetOpen: Bool = false
-    @Published var isEllipsisSheetOpen: Bool = false
-    @Published var isThemeSheetOpen: Bool = false
-    @Published var isRenameSheetOpen: Bool = false
-    @Published var isCreateSheetOpen: Bool = false
+    
+    @Published private var _isMenuSheetOpen: Bool = false
+    var isMenuSheetOpen: Bool {
+        get { _isMenuSheetOpen }
+        set { services.globalUIService.setIsMenuOpen(newValue) }
+    }
+    
+    @Published private var _isEllipsisSheetOpen: Bool = false
+    var isEllipsisSheetOpen: Bool {
+        get { _isEllipsisSheetOpen }
+        set { services.globalUIService.closeEllipsis() }  // close-only;
+    }
+    
+    @Published private var _isThemeSheetOpen: Bool = false
+    var isThemeSheetOpen: Bool {
+        get { _isThemeSheetOpen }
+        set { newValue ? services.globalUIService.openThemeSheet() : services.globalUIService.closeThemeSheet() }
+    }
+    
+    @Published private var _isRenameSheetOpen: Bool = false
+    var isRenameSheetOpen: Bool {
+        get { _isRenameSheetOpen }
+        set { newValue ? services.globalUIService.openRenameSheet() : services.globalUIService.closeRenameSheet() }
+    }
+    
+    @Published private var _isCreateSheetOpen: Bool = false
+    var isCreateSheetOpen: Bool {
+        get { _isCreateSheetOpen }
+        set { newValue ? services.globalUIService.openCreateSheet() : services.globalUIService.closeCreateSheet() }
+    }
+    
+    
 
     @Published private var _renameTitle: String = ""
     var renameTitle: String {
@@ -39,11 +66,11 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
 
         appState.timetable.$current.assign(to: &$currentTimetable)
         appState.timetable.$metadataList.assign(to: &$metadataList)
-        appState.menu.$isOpen.assign(to: &$isMenuSheetOpen)
-        appState.menu.$isEllipsisSheetOpen.assign(to: &$isEllipsisSheetOpen)
-        appState.menu.$isThemeSheetOpen.assign(to: &$isThemeSheetOpen)
-        appState.menu.$isRenameSheetOpen.assign(to: &$isRenameSheetOpen)
-        appState.menu.$isCreateSheetOpen.assign(to: &$isCreateSheetOpen)
+        appState.menu.$isOpen.assign(to: &$_isMenuSheetOpen)
+        appState.menu.$isEllipsisSheetOpen.assign(to: &$_isEllipsisSheetOpen)
+        appState.menu.$isThemeSheetOpen.assign(to: &$_isThemeSheetOpen)
+        appState.menu.$isRenameSheetOpen.assign(to: &$_isRenameSheetOpen)
+        appState.menu.$isCreateSheetOpen.assign(to: &$_isCreateSheetOpen)
         appState.menu.$renameTitle.assign(to: &$_renameTitle)
         appState.menu.$createTitle.assign(to: &$_createTitle)
         appState.menu.$createQuarter.assign(to: &$_createQuarter)
