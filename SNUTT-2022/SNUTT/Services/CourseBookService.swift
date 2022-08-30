@@ -43,18 +43,18 @@ struct CourseBookService: CourseBookServiceProtocol {
                                                                   lecture: LectureDto(from: lecture))
         return dto.url
     }
-    
+
     func getLatestEmptyQuarter() -> Quarter? {
         let myLatestQuarter = appState.timetable.metadataList?.map { $0.quarter }.sorted().last
         let latestCourseBook = appState.timetable.courseBookList?.sorted().last
-        
+
         if myLatestQuarter != latestCourseBook {
             return latestCourseBook
         }
-        
+
         return nil
     }
-    
+
     func isNewCourseBookAvailable() -> Bool {
         getLatestEmptyQuarter() != nil
     }
@@ -68,7 +68,7 @@ struct FakeCourseBookService: CourseBookServiceProtocol {
     func fetchSyllabusUrl(quarter _: Quarter, lecture _: Lecture) async throws -> String {
         return "http://sugang.snu.ac.kr/sugang/cc/cc103.action?openSchyy=2017&openShtmFg=U000200001&openDetaShtmFg=U000300001&sbjtCd=4190.210&ltNo=001&sbjtSubhCd=000"
     }
-    
+
     func isNewCourseBookAvailable() -> Bool { return true }
     func getLatestEmptyQuarter() -> Quarter? { return nil }
 }

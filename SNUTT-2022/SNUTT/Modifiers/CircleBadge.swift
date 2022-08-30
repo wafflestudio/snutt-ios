@@ -7,24 +7,22 @@
 
 import SwiftUI
 
-
 struct CircleBadge: ViewModifier {
     let condition: Bool
     let color: Color
-    
+
     func body(content: Content) -> some View {
         ZStack(alignment: .topTrailing) {
             content
-            
+
             if condition {
-            Circle()
-                .fill(color)
-                .frame(width: 4, height: 4)
+                Circle()
+                    .fill(color)
+                    .frame(width: 4, height: 4)
             }
         }
     }
 }
-
 
 extension View {
     func circleBadge(condition: Bool, color: Color = .red) -> some View {

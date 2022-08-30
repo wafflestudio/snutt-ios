@@ -38,7 +38,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     var timetableState: TimetableState {
         appState.timetable
     }
-    
+
     var isNewCourseBookAvailable: Bool {
         services.courseBookService.isNewCourseBookAvailable()
     }

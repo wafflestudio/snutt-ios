@@ -10,7 +10,7 @@ import SwiftUI
 struct MenuSection<Content>: View where Content: View {
     let quarter: Quarter
     let current: Timetable?
-    
+
     let isEmptyQuarter: Bool
     var content: () -> Content
 
@@ -32,11 +32,10 @@ struct MenuSection<Content>: View where Content: View {
                         .scaledToFit()
                         .frame(width: 13)
                         .rotationEffect(.degrees(isExpanded ? 90 : 0), anchor: .init(x: 0.75, y: 0.5))
-                    
-                    
+
                     if isEmptyQuarter {
                         Circle()
-                            .frame(width:4, height: 4)
+                            .frame(width: 4, height: 4)
                             .foregroundColor(.red)
                             .padding(.leading, 8)
                     }

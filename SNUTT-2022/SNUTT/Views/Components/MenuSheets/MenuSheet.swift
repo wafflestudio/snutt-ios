@@ -42,9 +42,9 @@ struct MenuSheet: View {
                                 Text("나의 시간표")
                                     .font(.system(size: 14))
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
-                                
+
                                 Spacer()
-                                
+
                                 Button {
                                     openCreateSheet(true)
                                 } label: {
@@ -59,7 +59,6 @@ struct MenuSheet: View {
                                 let isEmptyQuarter = (timetablesByQuarter[quarter]?.count ?? 0) == 0
                                 MenuSection(quarter: quarter, current: current, isEmptyQuarter: isEmptyQuarter) {
                                     Group {
-                                        
                                         ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { timetable in
                                             MenuSectionRow(timetableMetadata: timetable,
                                                            isSelected: current?.id == timetable.id,
@@ -67,7 +66,7 @@ struct MenuSheet: View {
                                                            duplicateTimetable: duplicateTimetable,
                                                            openEllipsis: openEllipsis)
                                         }
-                                        
+
                                         if isEmptyQuarter {
                                             Button {
                                                 // open CreateSheet without pickers
@@ -79,7 +78,6 @@ struct MenuSheet: View {
                                                     .padding(.leading, 30)
                                                     .frame(maxWidth: .infinity, alignment: .leading)
                                             }
-                                            
                                         }
                                     }
                                 }

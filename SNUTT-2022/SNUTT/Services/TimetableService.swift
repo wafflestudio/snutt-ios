@@ -110,7 +110,6 @@ struct TimetableService: TimetableServiceProtocol {
         appState.timetable.current?.selectedTheme = theme
     }
 
-
     func loadTimetableConfig() {
         DispatchQueue.main.async {
             appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
