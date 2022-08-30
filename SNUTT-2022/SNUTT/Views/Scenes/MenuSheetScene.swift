@@ -14,7 +14,6 @@ struct MenuSheetScene: View {
         ZStack {
             // TODO: Split these
             MenuSheet(isOpen: $viewModel.isMenuSheetOpen,
-                      isNewCourseBookAvailable: viewModel.isNewCourseBookAvailable,
                       openCreateSheet: viewModel.openCreateSheet,
                       current: viewModel.currentTimetable,
                       metadataList: viewModel.metadataList,

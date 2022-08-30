@@ -25,5 +25,6 @@ class MenuState: ObservableObject {
 
     @Published var isCreateSheetOpen = false
     @Published var createTitle: String = ""
+    /// If `nil`, use the latest quarter available.
     @Published var createQuarter: Quarter? = nil
 }

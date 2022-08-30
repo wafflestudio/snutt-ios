@@ -9,8 +9,7 @@ import SwiftUI
 
 struct MenuSheet: View {
     @Binding var isOpen: Bool
-    var isNewCourseBookAvailable: Bool
-    var openCreateSheet: () -> Void
+    var openCreateSheet: (Bool) -> Void
     var current: Timetable?
     var metadataList: [TimetableMetadata]?
     var timetablesByQuarter: [Quarter: [TimetableMetadata]]
@@ -40,32 +39,48 @@ struct MenuSheet: View {
                     ScrollView {
                         VStack(spacing: 15) {
                             HStack {
-                                if isNewCourseBookAvailable {
-                                    // 새로운 수강편람이 나와 있음을 알린다.
-                                    Circle()
-                                        .frame(width: 7, height: 7)
-                                        .foregroundColor(.red)
-                                }
-
+                                Text("나의 시간표")
+                                    .font(.system(size: 14))
+                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                                
                                 Spacer()
-
+                                
                                 Button {
-                                    openCreateSheet()
+                                    openCreateSheet(true)
                                 } label: {
-                                    Text("+ 시간표 추가하기")
-                                        .font(.system(size: 15, weight: .semibold))
+                                    Image("nav.plus")
+                                        .resizable()
+                                        .frame(width: 25, height: 25)
                                 }
                             }
                             .padding(.horizontal, 15)
 
                             ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
-                                MenuSection(quarter: quarter, current: current) {
-                                    ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { timetable in
-                                        MenuSectionRow(timetableMetadata: timetable,
-                                                       isSelected: current?.id == timetable.id,
-                                                       selectTimetable: selectTimetable,
-                                                       duplicateTimetable: duplicateTimetable,
-                                                       openEllipsis: openEllipsis)
+                                let isEmptyQuarter = (timetablesByQuarter[quarter]?.count ?? 0) == 0
+                                MenuSection(quarter: quarter, current: current, isEmptyQuarter: isEmptyQuarter) {
+                                    Group {
+                                        
+                                        ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { timetable in
+                                            MenuSectionRow(timetableMetadata: timetable,
+                                                           isSelected: current?.id == timetable.id,
+                                                           selectTimetable: selectTimetable,
+                                                           duplicateTimetable: duplicateTimetable,
+                                                           openEllipsis: openEllipsis)
+                                        }
+                                        
+                                        if isEmptyQuarter {
+                                            Button {
+                                                // open CreateSheet without pickers
+                                                openCreateSheet(false)
+                                            } label: {
+                                                Text("+ 시간표 추가하기")
+                                                    .font(.system(size: 14))
+                                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                                                    .padding(.leading, 30)
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                            }
+                                            
+                                        }
                                     }
                                 }
                                 // in extreme cases, there might be hash collision

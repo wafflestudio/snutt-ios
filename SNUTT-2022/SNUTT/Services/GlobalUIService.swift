@@ -20,7 +20,7 @@ protocol GlobalUIServiceProtocol {
     func openRenameSheet()
     func closeRenameSheet()
 
-    func openCreateSheet()
+    func openCreateSheet(withPicker: Bool)
     func closeCreateSheet()
 
     func setRenameTitle(_ value: String)
@@ -84,10 +84,10 @@ struct GlobalUIService: GlobalUIServiceProtocol {
         }
     }
 
-    func openCreateSheet() {
+    func openCreateSheet(withPicker: Bool) {
         DispatchQueue.main.async {
             appState.menu.createTitle = ""
-            appState.menu.createQuarter = appState.timetable.courseBookList?.first
+            appState.menu.createQuarter = withPicker ? appState.timetable.courseBookList?.first : nil
             appState.menu.isCreateSheetOpen = true
         }
     }
