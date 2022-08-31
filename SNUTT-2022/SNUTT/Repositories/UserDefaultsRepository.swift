@@ -29,7 +29,7 @@ enum STDefaultsKey: String {
     case shouldShowBadge
     case shouldDeleteFCMInfos
 
-    case snuevWebUrl
+    case snuevWebURL
 }
 
 class UserDefaultsRepository: UserDefaultsRepositoryProtocol {

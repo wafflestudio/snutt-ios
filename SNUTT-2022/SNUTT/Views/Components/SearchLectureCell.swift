@@ -51,7 +51,11 @@ struct SearchLectureCell: View {
                             }
                         }
 
-                        Button {} label: {
+                        Button {
+                            Task {
+                                await viewModel.fetchReviewId(of: lecture)
+                            }
+                        } label: {
                             Text("강의평")
                                 .frame(maxWidth: .infinity)
                                 .font(STFont.details)
@@ -85,6 +89,14 @@ extension SearchLectureCell {
                 try await services.lectureService.addLecture(lecture: lecture)
             } catch {
                 // TODO: handle error
+            }
+        }
+        
+        func fetchReviewId(of lecture: Lecture) async {
+            do {
+                try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+            } catch {
+                // handle error
             }
         }
     }

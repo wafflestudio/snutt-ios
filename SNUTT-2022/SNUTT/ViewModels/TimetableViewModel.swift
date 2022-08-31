@@ -14,8 +14,6 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     @Published var totalCredit: Int = 0
     @Published var timetableTitle: String = ""
 
-    private var bag = Set<AnyCancellable>()
-
     override init(container: DIContainer) {
         super.init(container: container)
 

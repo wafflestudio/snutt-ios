@@ -23,6 +23,18 @@ class ReviewViewModel: ObservableObject {
     var reload: Bool {
         webViewState.shouldReloadWebView
     }
+    
+    var detailId: String {
+        webViewState.detailLectureId
+    }
+    
+    var request: URLRequest {
+        if detailId.isEmpty {
+            return URLRequest(url: SNUTTWebView.review.url)
+        } else {
+            return URLRequest(url: SNUTTWebView.reviewDetail(id: detailId).url)
+        }
+    }
 
     func changeConnectionState(to state: WebViewState.Connection) {
         webViewService.changeConnectionState(to: state)
@@ -44,8 +56,8 @@ class ReviewViewModel: ObservableObject {
         appState.user.token
     }
 
-    var snuevWebUrl: String? {
-        appState.setting.snuevWebUrl
+    var snuevWebURL: String {
+        appState.setting.snuevWebURL
     }
 
     private var appState: AppState {

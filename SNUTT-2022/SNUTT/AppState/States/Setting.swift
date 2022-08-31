@@ -12,7 +12,7 @@ class Setting: ObservableObject {
     @Published var accountMenuList: [[AccountSettings]] = []
 
     var colorList: String? // STColorList
-    var snuevWebUrl: String?
+    let snuevWebURL: String = NetworkConfiguration.snuevBaseURL
 
     var menuSheetSetting: MenuSheetSetting = .init()
 }

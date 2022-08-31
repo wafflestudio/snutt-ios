@@ -6,7 +6,6 @@
 //
 
 import Combine
-import Foundation
 import SwiftUI
 import WebKit
 
@@ -28,7 +27,6 @@ struct SingleWebView: WebView {
     }
 }
 
-// TODO: move to appropriate directory
 struct ReviewWebView: WebView {
     var request: URLRequest
 
@@ -65,9 +63,7 @@ struct ReviewWebView: WebView {
     }
 
     func cookiesFromUserDefaults() -> [HTTPCookie]? {
-        guard let apiUri = request.url?.absoluteString else {
-            return nil
-        }
+        let apiURI = viewModel.snuevWebURL
 
         // TODO: uncomment this
 //        guard let apiKey = viewModel.apiKey,
@@ -79,7 +75,7 @@ struct ReviewWebView: WebView {
         let token = "74280a4..."
 
         guard let apiKeyCookie = HTTPCookie(properties: [
-            .domain: apiUri.replacingOccurrences(of: "https://", with: ""),
+            .domain: apiURI.replacingOccurrences(of: "https://", with: ""),
             .path: "/",
             .name: "x-access-apikey",
             .value: apiKey,
@@ -88,7 +84,7 @@ struct ReviewWebView: WebView {
         }
 
         guard let tokenCookie = HTTPCookie(properties: [
-            .domain: apiUri.replacingOccurrences(of: "https://", with: ""),
+            .domain: apiURI.replacingOccurrences(of: "https://", with: ""),
             .path: "/",
             .name: "x-access-token",
             .value: token,
@@ -101,13 +97,12 @@ struct ReviewWebView: WebView {
 
     class Coordinator: NSObject, WKNavigationDelegate {
         let parent: ReviewWebView
+        let viewModel: ReviewViewModel
         var webView: WKWebView?
-        var viewModel: ReviewViewModel {
-            parent.viewModel
-        }
 
         init(_ parent: ReviewWebView) {
             self.parent = parent
+            self.viewModel = parent.viewModel
         }
 
         func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
@@ -138,10 +133,11 @@ enum SNUTTWebView {
     case termsOfService
     case privacyPolicy
     case review
+    case reviewDetail(id: String)
 
     var baseURL: String {
         switch self {
-        case .review:
+        case .review, .reviewDetail:
             return NetworkConfiguration.snuevBaseURL
         default:
             return NetworkConfiguration.serverBaseURL
@@ -158,6 +154,8 @@ enum SNUTTWebView {
             return "/privacy_policy"
         case .review:
             return ""
+        case .reviewDetail(let id):
+            return "/detail/?id=\(id)"
         }
     }
 

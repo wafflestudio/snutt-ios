@@ -8,12 +8,17 @@
 import SwiftUI
 
 struct SNUTTView: View {
-    @State var selectedTab: TabType = .timetable
     let container: DIContainer
+    @ObservedObject var tabState: TabState
+    
+    init(container: DIContainer) {
+        self.container = container
+        self.tabState = container.appState.tab
+    }
 
     var body: some View {
         ZStack {
-            TabView(selection: $selectedTab) {
+            TabView(selection: $tabState.selected) {
                 TabScene(tabType: .timetable) {
                     TimetableScene(viewModel: .init(container: container))
                 }

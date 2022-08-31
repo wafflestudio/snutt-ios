@@ -20,6 +20,8 @@
 		B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FC28AE2E1E00E2D652 /* User.swift */; };
 		B88D170128AF71E300E2D652 /* UserSupportScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170028AF71E300E2D652 /* UserSupportScene.swift */; };
 		B88D170328B1501F00E2D652 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170228B1501F00E2D652 /* WebView.swift */; };
+		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
+		B8BC0C9228BE3326007A1CA8 /* TabState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C9128BE3326007A1CA8 /* TabState.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
@@ -208,6 +210,8 @@
 		B88D170028AF71E300E2D652 /* UserSupportScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSupportScene.swift; sourceTree = "<group>"; };
 		B88D170228B1501F00E2D652 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		B88D170728B361DC00E2D652 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
+		B8BC0C9128BE3326007A1CA8 /* TabState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabState.swift; sourceTree = "<group>"; };
 		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ProductionConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5F28B549660065248E /* StagingConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StagingConfig.xcconfig; sourceTree = "<group>"; };
@@ -360,6 +364,7 @@
 		B8E51E6928B75E9E0065248E /* States */ = {
 			isa = PBXGroup;
 			children = (
+				B8BC0C9128BE3326007A1CA8 /* TabState.swift */,
 				DC2915A62866984000FE5F9A /* TimetableState.swift */,
 				DC2915A22866958100FE5F9A /* UserState.swift */,
 				BE4B0EBB2873BC2B005FE164 /* SearchState.swift */,
@@ -577,6 +582,7 @@
 				BEDE34D92879AA0B00525014 /* UserRepository.swift */,
 				BE682C02288817C8009EBCB7 /* SearchRepository.swift */,
 				BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */,
+				B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */,
 				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
 				B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */,
 			);
@@ -931,6 +937,7 @@
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
+				B8BC0C9228BE3326007A1CA8 /* TabState.swift in Sources */,
 				B8E51E6F28B7FF8F0065248E /* WebViewService.swift in Sources */,
 				DC2915A52866980B00FE5F9A /* Setting.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
@@ -969,6 +976,7 @@
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
 				BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */,
 				DC2915A72866984000FE5F9A /* TimetableState.swift in Sources */,
+				B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
 				BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */,
 			);
@@ -1106,7 +1114,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng-u-0807.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1175,7 +1183,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng-u-0807.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
@@ -1207,7 +1215,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng-u-0807.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG WIDGET";
@@ -1238,7 +1246,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng-u-0807.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
@@ -1392,7 +1400,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng-u-0807.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1427,7 +1435,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng-u-0807.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

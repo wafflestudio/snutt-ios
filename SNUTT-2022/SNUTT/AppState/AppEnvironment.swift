@@ -31,6 +31,7 @@ extension AppEnvironment {
         let userRepository: UserRepositoryProtocol
         let lectureRepository: LectureRepositoryProtocol
         let searchRepository: SearchRepositoryProtocol
+        let reviewRepository: ReviewRepositoryProtocol
     }
 
     struct LocalRepositories {
@@ -61,10 +62,12 @@ extension AppEnvironment {
         let userRepository = UserRepository(session: session)
         let lectureRepository = LectureRepository(session: session)
         let searchRepository = SearchRepository(session: session)
+        let reviewRepository = ReviewRepository(session: session)
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
                      lectureRepository: lectureRepository,
-                     searchRepository: searchRepository)
+                     searchRepository: searchRepository
+                     ,reviewRepository: reviewRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {

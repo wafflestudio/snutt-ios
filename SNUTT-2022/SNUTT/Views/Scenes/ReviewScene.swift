@@ -13,7 +13,7 @@ struct ReviewScene: View {
     var body: some View {
         switch viewModel.state {
         case .success:
-            ReviewWebView(request: URLRequest(url: SNUTTWebView.review.url), viewModel: viewModel)
+            ReviewWebView(request: viewModel.request, viewModel: viewModel)
                 .navigationBarHidden(true)
                 .ignoresSafeArea(.keyboard)
         case .error:

@@ -36,5 +36,13 @@ extension LectureDetailScene {
                 // TODO: handle error
             }
         }
+        
+        func fetchReviewId(of lecture: Lecture) async {
+            do {
+                try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+            } catch {
+                // handle error
+            }
+        }
     }
 }
