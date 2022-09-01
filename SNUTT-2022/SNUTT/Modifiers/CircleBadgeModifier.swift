@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CircleBadge: View {
     let color: Color
-    
+
     var body: some View {
         Circle()
             .fill(color)
