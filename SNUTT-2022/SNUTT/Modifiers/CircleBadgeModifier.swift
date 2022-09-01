@@ -1,5 +1,5 @@
 //
-//  CircleBadge.swift
+//  CircleBadgeModifier.swift
 //  SNUTT
 //
 //  Created by 박신홍 on 2022/08/31.
@@ -7,7 +7,17 @@
 
 import SwiftUI
 
-struct CircleBadge: ViewModifier {
+struct CircleBadge: View {
+    let color: Color
+    
+    var body: some View {
+        Circle()
+            .fill(color)
+            .frame(width: 4, height: 4)
+    }
+}
+
+struct CircleBadgeModifier: ViewModifier {
     let condition: Bool
     let color: Color
 
@@ -16,9 +26,7 @@ struct CircleBadge: ViewModifier {
             content
 
             if condition {
-                Circle()
-                    .fill(color)
-                    .frame(width: 4, height: 4)
+                CircleBadge(color: .red)
             }
         }
     }
@@ -26,6 +34,6 @@ struct CircleBadge: ViewModifier {
 
 extension View {
     func circleBadge(condition: Bool, color: Color = .red) -> some View {
-        modifier(CircleBadge(condition: condition, color: color))
+        modifier(CircleBadgeModifier(condition: condition, color: color))
     }
 }

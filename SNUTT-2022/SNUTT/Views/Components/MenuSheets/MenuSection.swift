@@ -34,9 +34,7 @@ struct MenuSection<Content>: View where Content: View {
                         .rotationEffect(.degrees(isExpanded ? 90 : 0), anchor: .init(x: 0.75, y: 0.5))
 
                     if isEmptyQuarter {
-                        Circle()
-                            .frame(width: 4, height: 4)
-                            .foregroundColor(.red)
+                        CircleBadge(color: .red)
                             .padding(.leading, 8)
                     }
                 }
