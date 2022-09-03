@@ -18,11 +18,15 @@ class SearchSceneViewModel: BaseViewModel {
     }
 
     var searchResult: [Lecture] {
-        searchState.searchResult
+        searchState.searchResult ?? []
     }
 
     var isLoading: Bool {
         searchState.isLoading
+    }
+    
+    func initializeSearchState() {
+        services.searchService.initializeSearchState()
     }
 
     func toggleFilterSheet() {

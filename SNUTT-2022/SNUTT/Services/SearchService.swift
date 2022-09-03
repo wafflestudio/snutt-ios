@@ -14,7 +14,7 @@ protocol SearchServiceProtocol {
     func fetchTags(quarter: Quarter) async throws
     func fetchInitialSearchResult() async throws
     func fetchMoreSearchResult() async throws
-    func initializeSearchState() async
+    func initializeSearchState()
 }
 
 struct SearchService: SearchServiceProtocol {
@@ -38,14 +38,14 @@ struct SearchService: SearchServiceProtocol {
             searchState.isLoading = value
         }
     }
-
-    @MainActor
-    func initializeSearchState() async {
-        searchState.searchTagList = nil
-        searchState.selectedLecture = nil
-        searchState.selectedTagList = []
-        searchState.searchResult = []
-        searchState.searchText = ""
+    
+    func initializeSearchState() {
+        DispatchQueue.main.async {
+            searchState.selectedLecture = nil
+            searchState.selectedTagList = []
+            searchState.searchResult = nil
+            searchState.searchText = ""
+        }
     }
 
     func fetchTags(quarter: Quarter) async throws {
@@ -73,7 +73,7 @@ struct SearchService: SearchServiceProtocol {
                                                                 limit: searchState.perPage)
         let models: [Lecture] = dtos.map { Lecture(from: $0) }
         await MainActor.run {
-            self.searchState.searchResult = offset == 0 ? models : self.searchState.searchResult + models
+            self.searchState.searchResult = offset == 0 ? models : (self.searchState.searchResult ?? []) + models
         }
     }
 
@@ -110,5 +110,5 @@ class FakeSearchService: SearchServiceProtocol {
     func toggleFilterSheet() {}
     func fetchInitialSearchResult() async throws {}
     func fetchMoreSearchResult() async throws {}
-    func initializeSearchState() async {}
+    func initializeSearchState() {}
 }

@@ -11,7 +11,9 @@ import UIKit
 struct SearchBar: View {
     @Binding var text: String
     @Binding var isFilterOpen: Bool
-    var action: () -> Void
+    @State var shouldShowCancelButton: Bool
+    var action: () async -> Void
+    var cancel: () -> Void
 
     @State private var isEditing = false
     @FocusState private var isFocused: Bool
@@ -20,11 +22,14 @@ struct SearchBar: View {
         HStack {
             TextField("검색어를 입력하세요", text: $text) { startedEditing in
                 isEditing = startedEditing
-                if isEditing {
-                    isFilterOpen = false
+            }
+            .onSubmit {
+                shouldShowCancelButton = true
+                Task {
+                    await action()
                 }
             }
-            .onSubmit(action)
+            .submitLabel(.search)
             .focused($isFocused)
             .frame(maxHeight: 22)
             .padding(7)
@@ -39,17 +44,17 @@ struct SearchBar: View {
 
                     Spacer()
 
-                    if isEditing && !text.isEmpty {
+                    if !text.isEmpty {
                         Button(action: {
-                            self.text = ""
+                            isFocused = true
+                            text = ""
                         }) {
                             Image(systemName: "multiply.circle.fill")
                                 .foregroundColor(.gray)
-                                .padding(.trailing, 8)
                         }
                     }
 
-                    if !isEditing || text.isEmpty {
+                    if true {
                         Button {
                             isFilterOpen.toggle()
                             if isFilterOpen {
@@ -64,10 +69,14 @@ struct SearchBar: View {
             )
 
             Group {
-                if isEditing {
+                if shouldShowCancelButton || isEditing {
                     Button(action: {
-                        isFocused = false
-                        text = ""
+                        withAnimation(.customSpring) {
+                            isFocused = false
+                            text = ""
+                            shouldShowCancelButton = false
+                            cancel()
+                        }
                     }) {
                         Text("취소")
                     }
@@ -78,11 +87,12 @@ struct SearchBar: View {
         .padding(10)
         .background(STColor.searchBarBackground)
         .animation(.easeOut(duration: 0.2), value: isEditing)
+        .animation(.easeOut(duration: 0.2), value: shouldShowCancelButton)
     }
 }
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBar(text: .constant("Constant String"), isFilterOpen: .constant(false), action: {})
+        SearchBar(text: .constant("Constant String"), isFilterOpen: .constant(false),shouldShowCancelButton: false, action: {}, cancel: {})
     }
 }

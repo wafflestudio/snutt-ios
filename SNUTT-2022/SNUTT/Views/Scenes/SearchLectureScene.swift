@@ -12,7 +12,9 @@ struct SearchLectureScene: View {
     @ObservedObject var searchState: SearchState
 
     @State var previousCount: Int = 0
-
+    
+    @State private var reloadSearchList: Int = 0
+    
     init(viewModel: SearchSceneViewModel) {
         self.viewModel = viewModel
         searchState = viewModel.searchState
@@ -32,14 +34,15 @@ struct SearchLectureScene: View {
                 STColor.searchListBackground
             }
             .ignoresSafeArea(.keyboard)
-
+            
             VStack(spacing: 0) {
-                SearchBar(text: $searchState.searchText, isFilterOpen: $searchState.isFilterOpen) {
-                    Task {
-                        await viewModel.fetchInitialSearchResult()
-                    }
-                }
-
+                SearchBar(text: $searchState.searchText,
+                          isFilterOpen: $searchState.isFilterOpen,
+                          shouldShowCancelButton: searchState.searchResult != nil,
+                          action: viewModel.fetchInitialSearchResult,
+                          cancel: viewModel.initializeSearchState
+                )
+                
                 if viewModel.selectedTagList.count > 0 {
                     ScrollViewReader { reader in
                         ScrollView(.horizontal, showsIndicators: false) {
@@ -82,13 +85,26 @@ struct SearchLectureScene: View {
                         })
                     }
                 }
-
+                
+                
                 if viewModel.isLoading {
                     ProgressView()
                         .frame(maxHeight: .infinity, alignment: .center)
+                } else if searchState.searchResult == nil {
+                    Spacer()
+                    Text("꿀팁!")
+                    Spacer()
+                } else if searchState.searchResult?.count == 0 {
+                    Spacer()
+                    Text("검색 결과가 존재하지 않아요.")
+                    Spacer()
                 } else {
-                    SearchLectureList(viewModel: .init(container: viewModel.container), data: viewModel.searchResult, fetchMore: viewModel.fetchMoreSearchResult, selected: $searchState.selectedLecture)
+                    SearchLectureList(viewModel: .init(container: viewModel.container),
+                                      data: viewModel.searchResult,
+                                      fetchMore: viewModel.fetchMoreSearchResult,
+                                      selected: $searchState.selectedLecture)
                         .animation(.customSpring, value: searchState.selectedLecture?.id)
+                        .id(reloadSearchList)
                 }
             }
         }
@@ -96,7 +112,15 @@ struct SearchLectureScene: View {
             await viewModel.fetchTags()
         }
         .navigationBarHidden(true)
-
+        .animation(.customSpring, value: searchState.searchResult?.count)
+        .animation(.customSpring, value: viewModel.isLoading)
+        .onChange(of: viewModel.isLoading) { _ in
+            withAnimation(.customSpring) {
+                reloadSearchList += 1
+                
+            }
+        }
+        
         let _ = debugChanges()
     }
 }
