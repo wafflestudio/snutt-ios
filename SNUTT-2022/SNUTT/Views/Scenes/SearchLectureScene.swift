@@ -19,7 +19,6 @@ struct SearchLectureScene: View {
     }
 
     var body: some View {
-        // TODO: Split components
         ZStack {
             Group {
                 VStack {
@@ -53,9 +52,9 @@ struct SearchLectureScene: View {
                 } else if searchState.searchResult?.count == 0 {
                     EmptySearchResult()
                 } else {
-                    SearchLectureList(viewModel: .init(container: viewModel.container),
-                                      data: viewModel.searchResult,
+                    SearchLectureList(data: viewModel.searchResult,
                                       fetchMore: viewModel.fetchMoreSearchResult,
+                                      addLecture: viewModel.addLecture,
                                       selected: $searchState.selectedLecture)
                         .animation(.customSpring, value: searchState.selectedLecture?.id)
                         .id(reloadSearchList)
@@ -71,7 +70,6 @@ struct SearchLectureScene: View {
         .onChange(of: viewModel.isLoading) { _ in
             withAnimation(.customSpring) {
                 reloadSearchList += 1
-                
             }
         }
         
@@ -88,41 +86,6 @@ extension EnvironmentValues {
         get { self[SelectedLectureKey.self] }
         set { self[SelectedLectureKey.self] = newValue }
     }
-}
-
-struct SearchLectureList: View {
-    let viewModel: ViewModel
-    let data: [Lecture]
-    let fetchMore: () async -> Void
-    @Binding var selected: Lecture?
-
-    var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
-                ForEach(data) { lecture in
-                    SearchLectureCell(viewModel: .init(container: viewModel.container), lecture: lecture, selected: selected?.id == lecture.id)
-                        .task {
-                            if lecture.id == data.last?.id {
-                                await fetchMore()
-                            }
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            if selected?.id != lecture.id {
-                                selected = lecture
-                            }
-                        }
-                }
-            }
-            .padding(.vertical, 5)
-        }
-
-        let _ = debugChanges()
-    }
-}
-
-extension SearchLectureList {
-    class ViewModel: BaseViewModel {}
 }
 
 struct SearchLectureScene_Previews: PreviewProvider {

@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct SearchLectureCell: View {
-    let viewModel: ViewModel
     let lecture: Lecture
-    var selected: Bool
+    let selected: Bool
+    let addLecture: (Lecture) async -> Void
 
     @State var showingDetailPage = false
+    
+    @Environment(\.dependencyContainer) var container: DIContainer?
+
 
     var body: some View {
         ZStack {
@@ -48,8 +51,10 @@ struct SearchLectureCell: View {
                                 .font(STFont.details)
                         }
                         .sheet(isPresented: $showingDetailPage) {
-                            NavigationView {
-                                LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture, isPresentedModally: true)
+                            if let container = container {
+                                NavigationView {
+                                    LectureDetailScene(viewModel: .init(container: container), lecture: lecture, isPresentedModally: true)
+                                }
                             }
                         }
 
@@ -61,7 +66,7 @@ struct SearchLectureCell: View {
 
                         Button {
                             Task {
-                                await viewModel.addLecture(lecture: lecture)
+                                await addLecture(lecture)
                             }
                         } label: {
                             Text("+ 추가하기")
@@ -80,14 +85,3 @@ struct SearchLectureCell: View {
     }
 }
 
-extension SearchLectureCell {
-    class ViewModel: BaseViewModel {
-        func addLecture(lecture: Lecture) async {
-            do {
-                try await services.lectureService.addLecture(lecture: lecture)
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
-        }
-    }
-}

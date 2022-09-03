@@ -75,4 +75,12 @@ class SearchSceneViewModel: BaseViewModel {
     func toggle(_ tag: SearchTag) {
         services.searchService.toggle(tag)
     }
+    
+    func addLecture(lecture: Lecture) async {
+        do {
+            try await services.lectureService.addLecture(lecture: lecture)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
 }
