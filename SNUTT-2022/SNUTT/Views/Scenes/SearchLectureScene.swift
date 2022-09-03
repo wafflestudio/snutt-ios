@@ -91,13 +91,9 @@ struct SearchLectureScene: View {
                     ProgressView()
                         .frame(maxHeight: .infinity, alignment: .center)
                 } else if searchState.searchResult == nil {
-                    Spacer()
-                    Text("꿀팁!")
-                    Spacer()
+                    SearchTips()
                 } else if searchState.searchResult?.count == 0 {
-                    Spacer()
-                    Text("검색 결과가 존재하지 않아요.")
-                    Spacer()
+                    EmptySearchResult()
                 } else {
                     SearchLectureList(viewModel: .init(container: viewModel.container),
                                       data: viewModel.searchResult,
