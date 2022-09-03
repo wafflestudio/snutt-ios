@@ -81,6 +81,7 @@
 		BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */; };
 		BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413D828C3AFA500171060 /* EmptySearchResult.swift */; };
 		BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DA28C3B33300171060 /* SearchTips.swift */; };
+		BE9413DD28C3B68F00171060 /* SearchTagsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */; };
 		BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */; };
 		BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
 		BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBD281D6244005F71E6 /* TimetableBlock.swift */; };
@@ -242,6 +243,7 @@
 		BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetScene.swift; sourceTree = "<group>"; };
 		BE9413D828C3AFA500171060 /* EmptySearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchResult.swift; sourceTree = "<group>"; };
 		BE9413DA28C3B33300171060 /* SearchTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTips.swift; sourceTree = "<group>"; };
+		BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagsScrollView.swift; sourceTree = "<group>"; };
 		BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBlocksLayer.swift; sourceTree = "<group>"; };
 		BE982FBB281D5227005F71E6 /* TimePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePlace.swift; sourceTree = "<group>"; };
 		BE982FBD281D6244005F71E6 /* TimetableBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBlock.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				BE682C082889ADD7009EBCB7 /* SearchLectureCell.swift */,
 				BE9413D828C3AFA500171060 /* EmptySearchResult.swift */,
 				BE9413DA28C3B33300171060 /* SearchTips.swift */,
+				BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -892,6 +895,7 @@
 				DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */,
 				BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */,
 				B8F570A6289E1221005C199F /* UserDefaults.swift in Sources */,
+				BE9413DD28C3B68F00171060 /* SearchTagsScrollView.swift in Sources */,
 				B827A8FF289AEC6F00ABAE39 /* SNUTTDefaults.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,

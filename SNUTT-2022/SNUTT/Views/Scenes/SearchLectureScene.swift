@@ -11,8 +11,6 @@ struct SearchLectureScene: View {
     let viewModel: SearchSceneViewModel
     @ObservedObject var searchState: SearchState
 
-    @State var previousCount: Int = 0
-    
     @State private var reloadSearchList: Int = 0
     
     init(viewModel: SearchSceneViewModel) {
@@ -44,48 +42,8 @@ struct SearchLectureScene: View {
                 )
                 
                 if viewModel.selectedTagList.count > 0 {
-                    ScrollViewReader { reader in
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                ForEach(viewModel.selectedTagList) { tag in
-                                    Button(action: {
-                                        withAnimation(.customSpring) {
-                                            viewModel.toggle(tag)
-                                        }
-                                    }, label: {
-                                        HStack {
-                                            Text(tag.text)
-                                                .font(.system(size: 14))
-                                            Image("xmark.white")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 10)
-                                        }
-                                    })
-                                    .buttonStyle(.borderedProminent)
-                                    .buttonBorderShape(.capsule)
-                                    .tint(tag.type.tagLightColor)
-                                    .id(tag.id)
-                                }
-                            }
-                            .padding(.horizontal, 10)
-                        }
-                        .padding(.top, 10)
-                        .padding(.bottom, 5)
-                        .onChange(of: viewModel.selectedTagList.count, perform: { newValue in
-                            if newValue <= previousCount {
-                                // no need to scroll when deselecting
-                                previousCount = newValue
-                                return
-                            }
-                            withAnimation(.customSpring) {
-                                reader.scrollTo(viewModel.selectedTagList.last?.id, anchor: .trailing)
-                            }
-                            previousCount = newValue
-                        })
-                    }
+                    SearchTagsScrollView(selectedTagList: viewModel.selectedTagList, deselect: viewModel.toggle)
                 }
-                
                 
                 if viewModel.isLoading {
                     ProgressView()
