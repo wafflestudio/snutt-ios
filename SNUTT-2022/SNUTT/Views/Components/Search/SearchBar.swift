@@ -11,12 +11,13 @@ import UIKit
 struct SearchBar: View {
     @Binding var text: String
     @Binding var isFilterOpen: Bool
-    @State var shouldShowCancelButton: Bool
+    var shouldShowCancelButton: Bool
     var action: () async -> Void
     var cancel: () -> Void
 
     @State private var isEditing = false
     @FocusState private var isFocused: Bool
+    @State private var showCancel: Bool = false
 
     var body: some View {
         HStack {
@@ -24,7 +25,7 @@ struct SearchBar: View {
                 isEditing = startedEditing
             }
             .onSubmit {
-                shouldShowCancelButton = true
+                showCancel = true
                 Task {
                     await action()
                 }
@@ -69,12 +70,12 @@ struct SearchBar: View {
             )
 
             Group {
-                if shouldShowCancelButton || isEditing {
+                if showCancel || isEditing {
                     Button(action: {
                         withAnimation(.customSpring) {
                             isFocused = false
                             text = ""
-                            shouldShowCancelButton = false
+                            showCancel = false
                             cancel()
                         }
                     }) {
@@ -87,12 +88,18 @@ struct SearchBar: View {
         .padding(10)
         .background(STColor.searchBarBackground)
         .animation(.easeOut(duration: 0.2), value: isEditing)
-        .animation(.easeOut(duration: 0.2), value: shouldShowCancelButton)
+        .animation(.easeOut(duration: 0.2), value: showCancel)
+        .onChange(of: shouldShowCancelButton) { newValue in
+            showCancel = newValue
+        }
     }
 }
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
+        ZStack {
+            Color.black
         SearchBar(text: .constant("Constant String"), isFilterOpen: .constant(false),shouldShowCancelButton: false, action: {}, cancel: {})
+        }
     }
 }
