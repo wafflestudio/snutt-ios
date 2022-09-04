@@ -35,6 +35,9 @@ struct SearchBar: View {
             .frame(maxHeight: 22)
             .padding(7)
             .padding(.horizontal, 25)
+            .onTapGesture {
+                isFocused = true
+            }
             .background(Color(.systemGray6))
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             .overlay(

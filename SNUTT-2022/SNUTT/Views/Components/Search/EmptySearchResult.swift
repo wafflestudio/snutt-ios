@@ -27,7 +27,6 @@ struct EmptySearchResult: View {
             
         }
         .foregroundColor(STColor.whiteTranslucent)
-        .ignoresSafeArea(.keyboard)
     }
 }
 

@@ -44,7 +44,6 @@ struct SearchTips: View {
             
         }
         .foregroundColor(STColor.whiteTranslucent)
-        .ignoresSafeArea(.keyboard)
     }
 }
 

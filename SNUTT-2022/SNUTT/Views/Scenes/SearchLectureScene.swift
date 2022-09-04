@@ -84,6 +84,7 @@ struct SearchLectureScene: View {
                     }
                 }
                 .edgesIgnoringSafeArea(.top)
+                .ignoresSafeArea(.keyboard)
                 
             }
         }
