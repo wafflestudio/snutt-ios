@@ -26,7 +26,7 @@ struct EmptySearchResult: View {
             Spacer()
             
         }
-        .foregroundColor(Color(uiColor: .secondaryLabel))
+        .foregroundColor(STColor.whiteTranslucent)
         .ignoresSafeArea(.keyboard)
     }
 }
