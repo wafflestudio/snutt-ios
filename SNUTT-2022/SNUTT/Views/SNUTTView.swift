@@ -22,6 +22,10 @@ struct SNUTTView: View {
             TabView(selection: $selectedTab) {
                 TabScene(tabType: .timetable) {
                     TimetableScene(viewModel: .init(container: container))
+                        // TODO: refactor this when #105 is merged
+                        .background(NavigationBarReader { navbar in
+                            system.navigationBarHeight = navbar.frame.height
+                        })
                 }
                 TabScene(tabType: .search) {
                     SearchLectureScene(viewModel: .init(container: container))
@@ -76,5 +80,29 @@ enum TabType: String {
 struct SNUTTView_Previews: PreviewProvider {
     static var previews: some View {
         SNUTTView(container: .preview)
+    }
+}
+
+// TODO: move elsewhere if needed
+struct NavigationBarReader: UIViewControllerRepresentable {
+    var callback: (UINavigationBar) -> Void
+    private let proxyController = ViewController()
+    
+    func makeUIViewController(context: UIViewControllerRepresentableContext<NavigationBarReader>) -> UIViewController {
+        proxyController.callback = callback
+        return proxyController
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<NavigationBarReader>) {}
+    
+    private class ViewController: UIViewController {
+        var callback: (UINavigationBar) -> Void = { _ in }
+        
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            if let navBar = self.navigationController {
+                self.callback(navBar.navigationBar)
+            }
+        }
     }
 }

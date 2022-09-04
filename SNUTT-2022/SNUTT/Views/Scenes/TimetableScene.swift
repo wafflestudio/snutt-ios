@@ -77,6 +77,7 @@ struct TimetableScene: View {
     }
 }
 
+// TODO: Move this to Modifiers folder.
 struct ViewDidLoadModifier: ViewModifier {
     @State private var didLoad = false
     private let action: (() async -> Void)?
