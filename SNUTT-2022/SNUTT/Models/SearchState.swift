@@ -11,7 +11,7 @@ class SearchState: ObservableObject {
     @Published var isFilterOpen = false
     @Published var searchTagList: SearchTagList?
     @Published var selectedTagList: [SearchTag] = []
-    
+
     /// If `nil`, the user had never started searching.
     /// If empty, the server returned an empty search result.
     @Published var searchResult: [Lecture]?

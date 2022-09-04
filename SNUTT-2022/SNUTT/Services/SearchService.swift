@@ -38,7 +38,7 @@ struct SearchService: SearchServiceProtocol {
             searchState.isLoading = value
         }
     }
-    
+
     func initializeSearchState() {
         DispatchQueue.main.async {
             searchState.selectedLecture = nil

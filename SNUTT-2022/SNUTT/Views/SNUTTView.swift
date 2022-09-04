@@ -87,21 +87,21 @@ struct SNUTTView_Previews: PreviewProvider {
 struct NavigationBarReader: UIViewControllerRepresentable {
     var callback: (UINavigationBar) -> Void
     private let proxyController = ViewController()
-    
-    func makeUIViewController(context: UIViewControllerRepresentableContext<NavigationBarReader>) -> UIViewController {
+
+    func makeUIViewController(context _: UIViewControllerRepresentableContext<NavigationBarReader>) -> UIViewController {
         proxyController.callback = callback
         return proxyController
     }
-    
-    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<NavigationBarReader>) {}
-    
+
+    func updateUIViewController(_: UIViewController, context _: UIViewControllerRepresentableContext<NavigationBarReader>) {}
+
     private class ViewController: UIViewController {
         var callback: (UINavigationBar) -> Void = { _ in }
-        
+
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
-            if let navBar = self.navigationController {
-                self.callback(navBar.navigationBar)
+            if let navBar = navigationController {
+                callback(navBar.navigationBar)
             }
         }
     }

@@ -12,7 +12,7 @@ struct SearchLectureList: View {
     let fetchMore: () async -> Void
     let addLecture: (Lecture) async -> Void
     @Binding var selected: Lecture?
-    
+
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
@@ -32,7 +32,7 @@ struct SearchLectureList: View {
                 }
             }
         }
-        
+
         let _ = debugChanges()
     }
 }

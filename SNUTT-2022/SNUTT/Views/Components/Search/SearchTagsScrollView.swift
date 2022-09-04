@@ -10,12 +10,12 @@ import SwiftUI
 struct SearchTagsScrollView: View {
     let selectedTagList: [SearchTag]
     let deselect: (SearchTag) -> Void
-    
+
     @State private var previousTagCount: Int = 0
-    
+
     var body: some View {
         ScrollViewReader { reader in
-            VStack (spacing: 0) {
+            VStack(spacing: 0) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(selectedTagList) { tag in
@@ -42,7 +42,6 @@ struct SearchTagsScrollView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 10)
-                    
                 }
                 Divider()
                     .frame(height: 1)

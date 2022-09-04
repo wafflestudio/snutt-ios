@@ -24,7 +24,7 @@ class SearchSceneViewModel: BaseViewModel {
     var isLoading: Bool {
         searchState.isLoading
     }
-    
+
     func initializeSearchState() {
         services.searchService.initializeSearchState()
     }
@@ -75,7 +75,7 @@ class SearchSceneViewModel: BaseViewModel {
     func toggle(_ tag: SearchTag) {
         services.searchService.toggle(tag)
     }
-    
+
     func addLecture(lecture: Lecture) async {
         do {
             try await services.lectureService.addLecture(lecture: lecture)

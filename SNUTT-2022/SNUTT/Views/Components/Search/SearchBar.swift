@@ -102,7 +102,7 @@ struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color.black
-        SearchBar(text: .constant("Constant String"), isFilterOpen: .constant(false),shouldShowCancelButton: false, action: {}, cancel: {})
+            SearchBar(text: .constant("Constant String"), isFilterOpen: .constant(false), shouldShowCancelButton: false, action: {}, cancel: {})
         }
     }
 }

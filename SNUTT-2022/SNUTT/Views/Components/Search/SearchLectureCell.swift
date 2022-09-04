@@ -13,9 +13,8 @@ struct SearchLectureCell: View {
     let addLecture: (Lecture) async -> Void
 
     @State var showingDetailPage = false
-    
-    @Environment(\.dependencyContainer) var container: DIContainer?
 
+    @Environment(\.dependencyContainer) var container: DIContainer?
 
     var body: some View {
         ZStack {
@@ -84,4 +83,3 @@ struct SearchLectureCell: View {
         let _ = debugChanges()
     }
 }
-
