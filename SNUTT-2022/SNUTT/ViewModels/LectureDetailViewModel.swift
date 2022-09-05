@@ -13,7 +13,7 @@ extension LectureDetailScene {
         var lectureService: LectureServiceProtocol {
             services.lectureService
         }
-        
+
         var reviewService: ReviewServiceProtocol {
             services.reviewService
         }
@@ -40,7 +40,7 @@ extension LectureDetailScene {
                 // TODO: handle error
             }
         }
-        
+
         func fetchReviewId(of lecture: Lecture) async {
             do {
                 let id = try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)

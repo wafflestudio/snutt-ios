@@ -66,8 +66,8 @@ extension AppEnvironment {
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
                      lectureRepository: lectureRepository,
-                     searchRepository: searchRepository
-                     ,reviewRepository: reviewRepository)
+                     searchRepository: searchRepository,
+                     reviewRepository: reviewRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {

@@ -21,11 +21,11 @@ class ReviewViewModel: BaseViewModel, ObservableObject {
     var reload: Bool {
         webViewState.reloadWebView
     }
-    
+
     var detailId: String {
         webViewState.detailLectureId
     }
-    
+
     var request: URLRequest {
         if detailId.isEmpty {
             return URLRequest(url: SNUTTWebView.review.url)
@@ -33,7 +33,7 @@ class ReviewViewModel: BaseViewModel, ObservableObject {
             return URLRequest(url: SNUTTWebView.reviewDetail(id: detailId).url)
         }
     }
-    
+
     func changeConnectionState(to state: WebViewState.Connection) {
         reviewService.changeConnectionState(to: state)
     }

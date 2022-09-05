@@ -102,7 +102,7 @@ struct ReviewWebView: WebView {
 
         init(_ parent: ReviewWebView) {
             self.parent = parent
-            self.viewModel = parent.viewModel
+            viewModel = parent.viewModel
         }
 
         func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
@@ -154,7 +154,7 @@ enum SNUTTWebView {
             return "/privacy_policy"
         case .review:
             return ""
-        case .reviewDetail(let id):
+        case let .reviewDetail(id):
             return "/detail/?id=\(id)"
         }
     }

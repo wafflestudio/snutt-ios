@@ -11,7 +11,7 @@ protocol ReviewServiceProtocol {
     func changeConnectionState(to state: WebViewState.Connection)
     func setDetailId(_ id: String)
     func shouldReloadWebView(_ reload: Bool)
-    
+
     // will be moved to GlobalUIService.swift
     func setSelectedTab(_ tab: TabType)
 }
@@ -26,7 +26,7 @@ struct ReviewService: ReviewServiceProtocol {
     func changeConnectionState(to state: WebViewState.Connection) {
         appState.webView.connection = state
     }
-    
+
     func setDetailId(_ id: String) {
         appState.webView.detailLectureId = id
         setSelectedTab(.review)
@@ -39,7 +39,7 @@ struct ReviewService: ReviewServiceProtocol {
         }
         appState.webView.reloadWebView = reload
     }
-    
+
     // will be moved to GlobalUIService.swift
     func setSelectedTab(_ tab: TabType) {
         appState.tab.selected = tab
@@ -48,8 +48,8 @@ struct ReviewService: ReviewServiceProtocol {
 
 class FakeReviewService: ReviewServiceProtocol {
     func changeConnectionState(to _: WebViewState.Connection) {}
-    func setDetailId(_ id: String) {}
+    func setDetailId(_: String) {}
     func shouldReloadWebView(_: Bool) {}
-    
-    func setSelectedTab(_ tab: TabType) {}
+
+    func setSelectedTab(_: TabType) {}
 }

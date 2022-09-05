@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2022/06/28.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct SNUTTView: View {
     let container: DIContainer
@@ -46,10 +46,10 @@ struct SNUTTView: View {
     }
 }
 
-fileprivate struct MainTabScene: View {
+private struct MainTabScene: View {
     let container: DIContainer
     @ObservedObject var viewModel: MainTabViewModel
-    
+
     var body: some View {
         let selected = Binding {
             viewModel.selected
@@ -60,7 +60,7 @@ fileprivate struct MainTabScene: View {
             }
             viewModel.selected = current
         }
-        
+
         TabView(selection: selected) {
             TabScene(tabType: .timetable) {
                 TimetableScene(viewModel: .init(container: container))
@@ -76,32 +76,32 @@ fileprivate struct MainTabScene: View {
             }
         }
     }
-    
+
     final class MainTabViewModel: BaseViewModel, ObservableObject {
         @Published var selectedTab: TabType = .timetable
         private var bag = Set<AnyCancellable>()
-        
+
         override init(container: DIContainer) {
             super.init(container: container)
-            
+
             // TODO: fix this
             container.appState.tab.$selected
                 .assign(to: &$selectedTab)
         }
-        
+
         var selected: TabType {
             get { selectedTab }
             set { setSelectedTab(newValue) }
         }
-        
+
         func resetDetailId() {
             reviewService.setDetailId("")
         }
-        
+
         func setSelectedTab(_ tab: TabType) {
             reviewService.setSelectedTab(tab)
         }
-        
+
         private var reviewService: ReviewServiceProtocol {
             services.reviewService
         }
