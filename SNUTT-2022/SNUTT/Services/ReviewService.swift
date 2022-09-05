@@ -42,7 +42,9 @@ struct ReviewService: ReviewServiceProtocol {
 
     // will be moved to GlobalUIService.swift
     func setSelectedTab(_ tab: TabType) {
-        appState.tab.selected = tab
+        DispatchQueue.main.async {
+            appState.tab.selected = tab
+        }
     }
 }
 
