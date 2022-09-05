@@ -63,7 +63,7 @@ struct ReviewWebView: WebView {
     }
 
     func cookiesFromUserDefaults() -> [HTTPCookie]? {
-        let apiURI = viewModel.snuevWebURL
+        let apiURI = NetworkConfiguration.snuevBaseURL
 
         // TODO: uncomment this
 //        guard let apiKey = viewModel.apiKey,

@@ -9,11 +9,9 @@ import Combine
 import Foundation
 import SwiftUI
 
-class ReviewViewModel: ObservableObject {
-    var container: DIContainer
-
-    init(container: DIContainer) {
-        self.container = container
+class ReviewViewModel: BaseViewModel, ObservableObject {
+    override init(container: DIContainer) {
+        super.init(container: container)
     }
 
     var state: WebViewState.Connection {
@@ -21,7 +19,7 @@ class ReviewViewModel: ObservableObject {
     }
 
     var reload: Bool {
-        webViewState.shouldReloadWebView
+        webViewState.reloadWebView
     }
     
     var detailId: String {
@@ -35,17 +33,13 @@ class ReviewViewModel: ObservableObject {
             return URLRequest(url: SNUTTWebView.reviewDetail(id: detailId).url)
         }
     }
-
+    
     func changeConnectionState(to state: WebViewState.Connection) {
-        webViewService.changeConnectionState(to: state)
+        reviewService.changeConnectionState(to: state)
     }
 
     func shouldReloadWebView(_ reload: Bool) {
-        webViewService.shouldReloadWebView(reload)
-    }
-
-    func getDetail(lectureId: String) {
-        container.services.webViewService.getDetail(lectureId: lectureId)
+        reviewService.shouldReloadWebView(reload)
     }
 
     var apiKey: String? {
@@ -56,19 +50,11 @@ class ReviewViewModel: ObservableObject {
         appState.user.token
     }
 
-    var snuevWebURL: String {
-        appState.setting.snuevWebURL
-    }
-
-    private var appState: AppState {
-        container.appState
-    }
-
     private var webViewState: WebViewState {
         appState.webView
     }
 
-    private var webViewService: WebViewServiceProtocol {
-        container.services.webViewService
+    private var reviewService: ReviewServiceProtocol {
+        container.services.reviewService
     }
 }

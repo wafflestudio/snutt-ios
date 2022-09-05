@@ -6,33 +6,18 @@
 //
 
 import SwiftUI
+import Combine
 
 struct SNUTTView: View {
     let container: DIContainer
-    @ObservedObject var tabState: TabState
-    
+
     init(container: DIContainer) {
         self.container = container
-        self.tabState = container.appState.tab
     }
 
     var body: some View {
         ZStack {
-            TabView(selection: $tabState.selected) {
-                TabScene(tabType: .timetable) {
-                    TimetableScene(viewModel: .init(container: container))
-                }
-                TabScene(tabType: .search) {
-                    SearchLectureScene(viewModel: .init(container: container))
-                }
-                TabScene(tabType: .review) {
-                    ReviewScene(viewModel: .init(container: container))
-                }
-                TabScene(tabType: .settings) {
-                    SettingScene(viewModel: .init(container: container))
-                }
-            }
-
+            MainTabScene(container: container, viewModel: .init(container: container))
             MenuSheetScene(viewModel: .init(container: container))
             FilterSheetScene(viewModel: .init(container: container))
         }
@@ -58,6 +43,68 @@ struct SNUTTView: View {
         appearance.backgroundColor = UIColor(STColor.tabBackground)
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
+}
+
+fileprivate struct MainTabScene: View {
+    let container: DIContainer
+    @ObservedObject var viewModel: MainTabViewModel
+    
+    var body: some View {
+        let selected = Binding {
+            viewModel.selected
+        } set: {
+            [previous = viewModel.selected] current in
+            if previous == .review && current == .review {
+                viewModel.resetDetailId()
+            }
+            viewModel.selected = current
+        }
+        
+        TabView(selection: selected) {
+            TabScene(tabType: .timetable) {
+                TimetableScene(viewModel: .init(container: container))
+            }
+            TabScene(tabType: .search) {
+                SearchLectureScene(viewModel: .init(container: container))
+            }
+            TabScene(tabType: .review) {
+                ReviewScene(viewModel: .init(container: container))
+            }
+            TabScene(tabType: .settings) {
+                SettingScene(viewModel: .init(container: container))
+            }
+        }
+    }
+    
+    final class MainTabViewModel: BaseViewModel, ObservableObject {
+        @Published var selectedTab: TabType = .timetable
+        private var bag = Set<AnyCancellable>()
+        
+        override init(container: DIContainer) {
+            super.init(container: container)
+            
+            // TODO: fix this
+            container.appState.tab.$selected
+                .assign(to: &$selectedTab)
+        }
+        
+        var selected: TabType {
+            get { selectedTab }
+            set { setSelectedTab(newValue) }
+        }
+        
+        func resetDetailId() {
+            reviewService.setDetailId("")
+        }
+        
+        func setSelectedTab(_ tab: TabType) {
+            reviewService.setSelectedTab(tab)
+        }
+        
+        private var reviewService: ReviewServiceProtocol {
+            services.reviewService
+        }
     }
 }
 

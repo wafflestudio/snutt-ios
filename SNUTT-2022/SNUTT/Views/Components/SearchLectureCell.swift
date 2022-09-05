@@ -94,7 +94,8 @@ extension SearchLectureCell {
         
         func fetchReviewId(of lecture: Lecture) async {
             do {
-                try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+                let id = try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+                services.reviewService.setDetailId(id)
             } catch {
                 // handle error
             }

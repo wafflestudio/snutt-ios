@@ -13,6 +13,10 @@ extension LectureDetailScene {
         var lectureService: LectureServiceProtocol {
             services.lectureService
         }
+        
+        var reviewService: ReviewServiceProtocol {
+            services.reviewService
+        }
 
         var currentTimetable: Timetable? {
             appState.timetable.current
@@ -39,7 +43,8 @@ extension LectureDetailScene {
         
         func fetchReviewId(of lecture: Lecture) async {
             do {
-                try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+                let id = try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+                reviewService.setDetailId(id)
             } catch {
                 // handle error
             }

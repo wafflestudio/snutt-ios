@@ -14,7 +14,7 @@ class WebViewState: ObservableObject {
         case success
     }
 
-    @Published var shouldReloadWebView: Bool = false
+    @Published var reloadWebView: Bool = false
     @Published var connection: Connection = .success
     @Published var detailLectureId: String = ""
 }

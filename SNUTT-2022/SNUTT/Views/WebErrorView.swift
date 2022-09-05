@@ -25,7 +25,7 @@ struct WebErrorView: View {
                     .font(.system(size: 15))
                     .foregroundColor(.white)
             }
-            .frame(width: 160, height: 44)
+            .frame(width: 130, height: 38)
             .background(STColor.cyan)
             .cornerRadius(8)
         }

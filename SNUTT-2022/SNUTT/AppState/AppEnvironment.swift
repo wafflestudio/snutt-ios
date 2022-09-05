@@ -21,7 +21,7 @@ extension AppEnvironment {
         let searchService: SearchServiceProtocol
         let validationService: ValidationServiceProtocol
         let settingsService: SettingsServiceProtocol
-        let webViewService: WebViewServiceProtocol
+        let reviewService: ReviewServiceProtocol
     }
 }
 
@@ -82,14 +82,14 @@ extension AppEnvironment {
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
         let validationService = ValidationService(appState: appState, webRepositories: webRepositories)
         let settingsService = SettingsService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
-        let webViewService = WebViewService(appState: appState)
+        let reviewService = ReviewService(appState: appState)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
                      searchService: searchService,
                      validationService: validationService,
                      settingsService: settingsService,
-                     webViewService: webViewService)
+                     reviewService: reviewService)
     }
 }
 
@@ -113,7 +113,7 @@ extension EnvironmentValues {
                   searchService: FakeSearchService(),
                   validationService: FakeValidationService(),
                   settingsService: FakeSettingsService(),
-                  webViewService: FakeWebViewService())
+                  reviewService: FakeReviewService())
         }
     }
 #endif
