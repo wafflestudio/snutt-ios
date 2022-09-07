@@ -9,17 +9,13 @@ import Foundation
 import SwiftUI
 
 class AddLocalIdViewModel: BaseViewModel {
-    private var userService: UserServiceProtocol {
-        services.userService
-    }
-
-    private var validationService: ValidationServiceProtocol {
-        services.validationService
-    }
-
     func addLocalId(id: String, password: String, passwordCheck: String) {
-        if validationService.isValid(id: id, password: password, check: passwordCheck) {
+        if Validation.check(id: id, password: password, check: passwordCheck) {
             // TODO: Alert 연결
         }
+    }
+    
+    private var userService: UserServiceProtocol {
+        services.userService
     }
 }

@@ -24,7 +24,7 @@ struct SettingsMenu: View {
     }
 
     /// 다른 화면으로 이동하지 않고 정보만 보여주거나 탭할 시 Navigation 외의 액션을 하는 메뉴입니다.
-    init(_ menu: SettingsMenuType, _ content: String? = "", destructive: Bool = false, action: (() -> Void)? = nil) {
+    init(_ menu: SettingsMenuType, content: String? = "", destructive: Bool = false, action: (() -> Void)? = nil) {
         title = menu.title
         self.content = content
         self.destructive = destructive

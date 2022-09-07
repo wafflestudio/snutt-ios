@@ -10,16 +10,8 @@ import SwiftUI
 struct AccountSettingScene: View {
     @ObservedObject var viewModel: AccountSettingViewModel
 
-    var menuList: [[SettingsMenu]] {
-        viewModel.menuList
-    }
-
-    init(viewModel: AccountSettingViewModel) {
-        self.viewModel = viewModel
-    }
-
     var body: some View {
-        List(menuList, id: \.self) { section in
+        List(viewModel.menuList, id: \.self) { section in
             Section {
                 ForEach(section, id: \.self) { menu in
                     menu
