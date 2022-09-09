@@ -72,11 +72,11 @@ extension SNUTTView {
         }
 
         var errorTitle: String {
-            appState.system.errorContent?.errorTitle ?? ""
+            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorTitle
         }
 
         var errorMessage: String {
-            appState.system.errorContent?.errorMessage ?? ""
+            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
         }
     }
 }
