@@ -20,17 +20,17 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
 
     var searchText: String {
         get { _searchText }
-        set { setSearchText(newValue) }
+        set { services.searchService.setSearchText(newValue) }
     }
 
     var isFilterOpen: Bool {
         get { _isFilterOpen }
-        set { setIsFilterOpen(newValue) }
+        set { services.searchService.setIsFilterOpen(newValue) }
     }
 
     var selectedLecture: Lecture? {
         get { _selectedLecture }
-        set { setSelectedLecture(newValue) }
+        set { services.searchService.setSelectedLecture(newValue) }
     }
 
     var currentTimetableWithSelection: Timetable? {
@@ -88,18 +88,6 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
-    }
-
-    func setSearchText(_ value: String) {
-        services.searchService.setSearchText(value)
-    }
-
-    func setIsFilterOpen(_ value: Bool) {
-        services.searchService.setIsFilterOpen(value)
-    }
-
-    func setSelectedLecture(_ value: Lecture?) {
-        services.searchService.setSelectedLecture(value)
     }
 
     func toggle(_ tag: SearchTag) {

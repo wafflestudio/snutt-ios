@@ -14,7 +14,7 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
 
     var isFilterOpen: Bool {
         get { _isFilterOpen }
-        set { setIsFilterOpen(newValue) }
+        set { services.searchService.setIsFilterOpen(newValue) }
     }
 
     override init(container: DIContainer) {
@@ -42,9 +42,6 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func setIsFilterOpen(_ value: Bool) {
-        services.searchService.setIsFilterOpen(value)
-    }
 
     func isSelected(tag: SearchTag) -> Bool {
         return appState.search.selectedTagList.contains(where: { $0.id == tag.id })

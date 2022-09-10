@@ -84,7 +84,7 @@ struct FilterSheetContent: View {
             }
 
             Button {
-                viewModel.setIsFilterOpen(false)
+                viewModel.isFilterOpen = false
                 Task {
                     await viewModel.fetchInitialSearchResult()
                 }

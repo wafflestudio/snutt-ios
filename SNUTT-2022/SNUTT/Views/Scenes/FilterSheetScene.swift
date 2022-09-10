@@ -18,7 +18,7 @@ struct FilterSheetScene: View {
                 HStack {
                     Spacer()
                     Button {
-                        viewModel.setIsFilterOpen(false)
+                        viewModel.isFilterOpen = false
                     } label: {
                         Image("xmark.black")
                             .padding([.horizontal, .top], 10)
