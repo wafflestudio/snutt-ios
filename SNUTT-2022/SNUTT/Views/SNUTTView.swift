@@ -30,6 +30,7 @@ struct SNUTTView: View {
 
             MenuSheetScene(viewModel: .init(container: viewModel.container))
             FilterSheetScene(viewModel: .init(container: viewModel.container))
+            LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
         }
         .accentColor(Color(UIColor.label))
         .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
