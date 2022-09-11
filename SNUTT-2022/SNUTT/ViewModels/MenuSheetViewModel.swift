@@ -20,7 +20,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published private var _isEllipsisSheetOpen: Bool = false
     var isEllipsisSheetOpen: Bool {
         get { _isEllipsisSheetOpen }
-        set { services.globalUIService.closeEllipsis() } // close-only;
+        set { services.globalUIService.closeEllipsis() } // close-only
     }
 
     @Published private var _isThemeSheetOpen: Bool = false

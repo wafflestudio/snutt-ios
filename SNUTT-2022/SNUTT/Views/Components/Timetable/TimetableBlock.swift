@@ -23,12 +23,14 @@ struct TimetableBlock: View {
                     Text(lecture.title)
                         .foregroundColor(lecture.getColor(with: theme).fg)
                         .font(STFont.details)
-
-                    Text(timePlace.place)
-                        .font(STFont.detailsSemibold)
-                        .padding(2)
-                        .minimumScaleFactor(0.5)
-                        .lineLimit(1)
+                    
+                    if !timePlace.place.isEmpty {
+                        Text(timePlace.place)
+                            .font(STFont.detailsSemibold)
+                            .padding(2)
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
+                    }
                 }
                 .multilineTextAlignment(.center)
                 .foregroundColor(lecture.getColor(with: theme).fg)

@@ -116,7 +116,7 @@ struct GlobalUIService: GlobalUIServiceProtocol {
         }
     }
 
-    // MARK: error handling
+    // MARK: Error Handling
 
     func presentErrorAlert(error: Error) {
         presentErrorAlert(error: error.asSTError)
