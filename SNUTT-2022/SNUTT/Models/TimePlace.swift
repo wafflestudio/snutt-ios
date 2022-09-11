@@ -10,7 +10,7 @@ import Foundation
 struct TimePlace: Identifiable {
     let id: String
 
-    let day: Weekday
+    var day: Weekday
 
     /// 단위: 교시
     var start: Double
@@ -28,7 +28,8 @@ struct TimePlace: Identifiable {
     ///
     /// 7.5교시는 오후 15시 30분을 의미한다.
     var startTime: Double {
-        start + 8
+        get { start + 8 }
+        set { start = newValue - 8}
     }
 
     var endTime: Double {
@@ -36,24 +37,16 @@ struct TimePlace: Identifiable {
     }
 
     var startTimeString: String {
-        getString(from: startTime)
+        TimeUtils.getPreciseHourMinuteString(from: startTime)
     }
 
     var endTimeString: String {
-        getString(from: endTime)
+        TimeUtils.getPreciseHourMinuteString(from: endTime)
     }
 
     /// `월7`(월요일 7교시)과 같이 표기한다.
     var startDateTimeString: String {
-        "\(day.shortSymbol)\(String(format: "%g", start))"
-    }
-
-    /// `time: Double`을 분 단위로 정확하게 60진법 수로 환산한다.
-    /// ex) 15.3 -> 15시 18분(`0.3 * 60 == 18`)
-    private func getString(from time: Double) -> String {
-        let hour = Int(time)
-        let minute: Double = (time.truncatingRemainder(dividingBy: 1) * 60).rounded() // schoolbook rounding
-        return "\(hour):\(String(format: "%02d", Int(minute)))"
+        TimeUtils.getStartDateTimeString(day: day, classPeriod: start)
     }
 }
 
