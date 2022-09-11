@@ -20,10 +20,12 @@ struct SNUTTView: View {
             MainTabScene(viewModel: .init(container: viewModel.container), navigationBarHeight: $navigationBarHeight)
             if selectedTab == .timetable {
                 MenuSheetScene(viewModel: .init(container: viewModel.container))
+				LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
             }
             if selectedTab == .search {
                 FilterSheetScene(viewModel: .init(container: viewModel.container))
             }
+
         }
         .accentColor(Color(UIColor.label))
         .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {

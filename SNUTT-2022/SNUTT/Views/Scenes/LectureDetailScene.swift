@@ -124,7 +124,10 @@ struct LectureDetailScene: View {
                             VStack {
                                 HStack {
                                     DetailLabel(text: "시간")
-                                    EditableTimeField(lecture: $lecture, timePlace: timePlace)
+                                    EditableTimeField(lecture: $lecture, timePlace: timePlace) {
+                                        viewModel.openLectureTimeSheet(lecture: $lecture, timePlace: timePlace)
+                                        resignFirstResponder()
+                                    }
                                 }
                                 Spacer()
                                     .frame(height: 5)
@@ -341,6 +344,8 @@ struct EditableNumberField: View {
 struct EditableTimeField: View {
     @Binding var lecture: Lecture
     var timePlace: TimePlace
+    var action: () -> Void
+    
     @Environment(\.editMode) private var editMode
 
     @ViewBuilder private func timeTextLabel(from timePlace: TimePlace) -> some View {
