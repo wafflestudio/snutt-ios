@@ -11,6 +11,7 @@ import Foundation
 public enum STError: Int, Error {
     case SERVER_FAULT = 0x0000
     case NO_NETWORK = 0x0001
+    case UNKNOWN_ERROR = 0x0002
 
     /* 401 - Request was invalid */
     case NO_FB_ID_OR_TOKEN = 0x1001
@@ -121,6 +122,8 @@ public enum STError: Int, Error {
              .USER_NOT_FOUND,
              .COLORLIST_NOT_FOUND:
             return "찾지 못함"
+        case .UNKNOWN_ERROR:
+            return "알 수 없는 오류"
         }
     }
 
@@ -214,6 +217,8 @@ public enum STError: Int, Error {
             return "현재 시간표는 삭제할 수 없습니다."
         case .CANT_CHANGE_OTHERS_THEME:
             return "현재 시간표의 테마만 변경할 수 있습니다."
+        case .UNKNOWN_ERROR:
+            return "알 수 없는 오류가 발생했습니다."
         }
     }
 }

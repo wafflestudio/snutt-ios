@@ -8,22 +8,10 @@
 import SwiftUI
 
 struct SearchLectureScene: View {
-    let viewModel: SearchSceneViewModel
-    @ObservedObject var searchState: SearchState
+    @ObservedObject var viewModel: SearchSceneViewModel
+    
     @State private var reloadSearchList: Int = 0
-
-    init(viewModel: SearchSceneViewModel) {
-        self.viewModel = viewModel
-        searchState = viewModel.searchState
-        systemState = viewModel.appState.system
-    }
-
-    // TODO: refactor this when #105 is merged
-    @ObservedObject var systemState: SystemState
-    var navbarHeight: CGFloat {
-        systemState.navigationBarHeight
-    }
-
+    
     var body: some View {
         ZStack {
             GeometryReader { reader in
@@ -33,10 +21,10 @@ struct SearchLectureScene: View {
                 Group {
                     VStack {
                         Spacer()
-                            .frame(height: navbarHeight)
-                        TimetableZStack(current: viewModel.timetableState.current?.withSelectedLecture(searchState.selectedLecture),
-                                        config: viewModel.timetableState.configuration.withAutoFitEnabled())
-                            .animation(.customSpring, value: searchState.selectedLecture?.id)
+                            .frame(height: viewModel.navigationBarHeight)
+                        TimetableZStack(current: viewModel.currentTimetableWithSelection,
+                                        config: viewModel.timetableConfigWithAutoFit)
+                            .animation(.customSpring, value: viewModel.selectedLecture?.id)
                     }
                     STColor.searchListBackground
                 }
@@ -47,14 +35,13 @@ struct SearchLectureScene: View {
 
                     VStack(spacing: 0) {
                         Spacer()
-                        SearchBar(text: $searchState.searchText,
-                                  isFilterOpen: $searchState.isFilterOpen,
-                                  shouldShowCancelButton: searchState.searchResult != nil,
+                        SearchBar(text: $viewModel.searchText,
+                                  isFilterOpen: $viewModel.isFilterOpen,
+                                  shouldShowCancelButton: viewModel.searchResult != nil,
                                   action: viewModel.fetchInitialSearchResult,
                                   cancel: viewModel.initializeSearchState)
                     }
-                    .background(.red)
-                    .frame(height: reader.safeAreaInsets.top + navbarHeight)
+                    .frame(height: reader.safeAreaInsets.top + viewModel.navigationBarHeight)
 
                     // MARK: Selected Filter Tags
 
@@ -67,16 +54,16 @@ struct SearchLectureScene: View {
                     if viewModel.isLoading {
                         ProgressView()
                             .frame(maxHeight: .infinity, alignment: .center)
-                    } else if searchState.searchResult == nil {
+                    } else if viewModel.searchResult == nil {
                         SearchTips()
-                    } else if searchState.searchResult?.count == 0 {
+                    } else if viewModel.searchResult?.count == 0 {
                         EmptySearchResult()
                     } else {
-                        SearchLectureList(data: viewModel.searchResult,
+                        SearchLectureList(data: viewModel.searchResult!,
                                           fetchMore: viewModel.fetchMoreSearchResult,
                                           addLecture: viewModel.addLecture,
-                                          selected: $searchState.selectedLecture)
-                            .animation(.customSpring, value: searchState.selectedLecture?.id)
+                                          selected: $viewModel.selectedLecture)
+                            .animation(.customSpring, value: viewModel.selectedLecture?.id)
                             .id(reloadSearchList) // reload everything when any of the search conditions changes
                     }
                 }
@@ -88,7 +75,7 @@ struct SearchLectureScene: View {
             await viewModel.fetchTags()
         }
         .navigationBarHidden(true)
-        .animation(.customSpring, value: searchState.searchResult?.count)
+        .animation(.customSpring, value: viewModel.searchResult?.count)
         .animation(.customSpring, value: viewModel.isLoading)
         .onChange(of: viewModel.isLoading) { _ in
             withAnimation(.customSpring) {

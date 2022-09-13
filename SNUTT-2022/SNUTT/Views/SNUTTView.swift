@@ -8,42 +8,35 @@
 import SwiftUI
 
 struct SNUTTView: View {
-    @State var selectedTab: TabType = .timetable
-    let container: DIContainer
-    @ObservedObject var system: SystemState
-
-    init(container: DIContainer) {
-        self.container = container
-        system = container.appState.system
-    }
+    @State private var selectedTab: TabType = .timetable
+    @ObservedObject var viewModel: ViewModel
 
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
                 TabScene(tabType: .timetable) {
-                    TimetableScene(viewModel: .init(container: container))
-                        // TODO: refactor this when #105 is merged
+                    TimetableScene(viewModel: .init(container: viewModel.container))
                         .background(NavigationBarReader { navbar in
-                            system.navigationBarHeight = navbar.frame.height
+                            viewModel.setNavigationBarHeight(navbar.frame.height)
                         })
                 }
                 TabScene(tabType: .search) {
-                    SearchLectureScene(viewModel: .init(container: container))
+                    SearchLectureScene(viewModel: .init(container: viewModel.container))
                 }
                 TabScene(tabType: .review) {
-                    ReviewScene(viewModel: .init(container: container))
+                    ReviewScene(viewModel: .init(container: viewModel.container))
                 }
                 TabScene(tabType: .settings) {
-                    SettingScene(viewModel: .init(container: container))
+                    SettingScene(viewModel: .init(container: viewModel.container))
                 }
             }
 
-            MenuSheetScene(viewModel: .init(container: container))
-            FilterSheetScene(viewModel: .init(container: container))
+            MenuSheetScene(viewModel: .init(container: viewModel.container))
+            FilterSheetScene(viewModel: .init(container: viewModel.container))
         }
         .accentColor(Color(UIColor.label))
-        .alert(system.errorContent?.errorTitle ?? "", isPresented: $system.isErrorAlertPresented, actions: {}) {
-            Text(system.errorContent?.errorMessage ?? "")
+        .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
+            Text(viewModel.errorMessage)
         }
         .onAppear {
             setTabBarStyle()
@@ -70,6 +63,31 @@ struct SNUTTView: View {
     }
 }
 
+extension SNUTTView {
+    class ViewModel: BaseViewModel, ObservableObject {
+        @Published var isErrorAlertPresented = false
+        @Published var errorContent: STError? = nil
+
+        override init(container: DIContainer) {
+            super.init(container: container)
+            appState.system.$errorContent.assign(to: &$errorContent)
+            appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
+        }
+
+        var errorTitle: String {
+            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorTitle
+        }
+
+        var errorMessage: String {
+            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
+        }
+        
+        func setNavigationBarHeight(_ value: CGFloat) {
+            services.globalUIService.setNavigationBarHeight(value)
+        }
+    }
+}
+
 enum TabType: String {
     case timetable
     case search
@@ -79,7 +97,7 @@ enum TabType: String {
 
 struct SNUTTView_Previews: PreviewProvider {
     static var previews: some View {
-        SNUTTView(container: .preview)
+        SNUTTView(viewModel: .init(container: .preview))
     }
 }
 

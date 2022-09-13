@@ -9,16 +9,10 @@ import SwiftUI
 
 struct TimetableScene: View {
     @State private var pushToListScene = false
-    var viewModel: TimetableViewModel
-    @ObservedObject var timetableState: TimetableState
-
-    init(viewModel: TimetableViewModel) {
-        self.viewModel = viewModel
-        timetableState = viewModel.timetableState
-    }
+    @ObservedObject var viewModel: TimetableViewModel
 
     var body: some View {
-        TimetableZStack(current: viewModel.timetableState.current, config: viewModel.timetableState.configuration)
+        TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
             .animation(.customSpring, value: viewModel.timetableState.current?.id)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
@@ -31,7 +25,7 @@ struct TimetableScene: View {
                 ToolbarItem(placement: .principal) {
                     HStack {
                         NavBarButton(imageName: "nav.menu") {
-                            viewModel.toggleMenuSheet()
+                            viewModel.setIsMenuOpen(true)
                         }
 
                         Text(viewModel.timetableTitle)

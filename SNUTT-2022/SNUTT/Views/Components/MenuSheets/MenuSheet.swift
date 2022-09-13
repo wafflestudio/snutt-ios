@@ -8,25 +8,25 @@
 import SwiftUI
 
 struct MenuSheet: View {
-    let viewModel: ViewModel
-    var isOpen: Binding<Bool>
-    @ObservedObject var timetableState: TimetableState
-
-    init(viewModel: ViewModel, isOpen: Binding<Bool>) {
-        self.viewModel = viewModel
-        self.isOpen = isOpen
-        timetableState = self.viewModel.timetableState
-    }
+    @Binding var isOpen: Bool
+    var isNewCourseBookAvailable: Bool
+    var openCreateSheet: () -> Void
+    var current: Timetable?
+    var metadataList: [TimetableMetadata]?
+    var timetablesByQuarter: [Quarter: [TimetableMetadata]]
+    let selectTimetable: (String) async -> Void
+    let duplicateTimetable: (String) async -> Void
+    let openEllipsis: (TimetableMetadata) -> Void
 
     var body: some View {
-        Sheet(isOpen: isOpen, orientation: .left(maxWidth: 320), cornerRadius: 0, sheetOpacity: 0.7) {
+        Sheet(isOpen: $isOpen, orientation: .left(maxWidth: 320), cornerRadius: 0, sheetOpacity: 0.7) {
             VStack(spacing: 0) {
                 HStack {
                     Logo(orientation: .horizontal)
                         .padding(.vertical)
                     Spacer()
                     Button {
-                        viewModel.toggleMenuSheet()
+                        isOpen = false
                     } label: {
                         Image("xmark.black")
                     }
@@ -39,10 +39,8 @@ struct MenuSheet: View {
                 ScrollViewReader { _ in
                     ScrollView {
                         VStack(spacing: 15) {
-                            let timetablesByQuarter = viewModel.timetablesByQuarter
-
                             HStack {
-                                if viewModel.services.timetableService.isNewCourseBookAvailable() {
+                                if isNewCourseBookAvailable {
                                     // 새로운 수강편람이 나와 있음을 알린다.
                                     Circle()
                                         .frame(width: 7, height: 7)
@@ -52,7 +50,7 @@ struct MenuSheet: View {
                                 Spacer()
 
                                 Button {
-                                    viewModel.openCreateSheet()
+                                    openCreateSheet()
                                 } label: {
                                     Text("+ 시간표 추가하기")
                                         .font(.system(size: 15, weight: .semibold))
@@ -61,13 +59,13 @@ struct MenuSheet: View {
                             .padding(.horizontal, 15)
 
                             ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
-                                MenuSection(quarter: quarter, current: timetableState.current) {
+                                MenuSection(quarter: quarter, current: current) {
                                     ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { timetable in
                                         MenuSectionRow(timetableMetadata: timetable,
-                                                       isSelected: viewModel.currentTimetable?.id == timetable.id,
-                                                       selectTimetable: viewModel.selectTimetable,
-                                                       duplicateTimetable: viewModel.duplicateTimetable,
-                                                       openEllipsis: viewModel.openEllipsis)
+                                                       isSelected: current?.id == timetable.id,
+                                                       selectTimetable: selectTimetable,
+                                                       duplicateTimetable: duplicateTimetable,
+                                                       openEllipsis: openEllipsis)
                                     }
                                 }
                                 // in extreme cases, there might be hash collision
@@ -75,7 +73,7 @@ struct MenuSheet: View {
                             }
                         }
                         .padding(.top, 20)
-                        .animation(.customSpring, value: timetableState.metadataList)
+                        .animation(.customSpring, value: metadataList)
                     }
                     // TODO: 새로운 시간표 생성했을 때 해당 위치로 스크롤하기
 //                    .onChange(of: menuState.onCreateToggle) { _ in
@@ -87,60 +85,5 @@ struct MenuSheet: View {
                 }
             }
         }
-    }
-}
-
-extension MenuSheet {
-    class ViewModel: BaseViewModel {
-        var timetableState: TimetableState {
-            appState.timetable
-        }
-
-        var menuState: MenuState {
-            appState.menu
-        }
-
-        func toggleMenuSheet() {
-            services.globalUIService.toggleMenuSheet()
-        }
-
-        var timetablesByQuarter: [Quarter: [TimetableMetadata]] {
-            return Dictionary(grouping: timetableState.metadataList ?? [], by: { $0.quarter })
-        }
-
-        var currentTimetable: Timetable? {
-            appState.timetable.current
-        }
-
-        func selectTimetable(timetableId: String) async {
-            do {
-                services.searchService.initializeSearchState()
-                try await services.timetableService.fetchTimetable(timetableId: timetableId)
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
-        }
-
-        func duplicateTimetable(timetableId: String) async {
-            do {
-                try await services.timetableService.copyTimetable(timetableId: timetableId)
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
-        }
-
-        func openCreateSheet() {
-            services.globalUIService.openCreateSheet()
-        }
-
-        func openEllipsis(for timetable: TimetableMetadata) {
-            services.globalUIService.openEllipsis(for: timetable)
-        }
-    }
-}
-
-struct MenuSheetContent_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuSheet(viewModel: .init(container: .preview), isOpen: .constant(true))
     }
 }

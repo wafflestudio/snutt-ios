@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 protocol GlobalUIServiceProtocol {
-    func toggleMenuSheet()
+    func setIsMenuOpen(_ value: Bool)
 
     func openEllipsis(for timetable: TimetableMetadata)
     func closeEllipsis()
@@ -23,17 +23,23 @@ protocol GlobalUIServiceProtocol {
     func openCreateSheet()
     func closeCreateSheet()
 
+    func setRenameTitle(_ value: String)
+    func setCreateTitle(_ value: String)
+    func setCreateQuarter(_ value: Quarter?)
+
     func presentErrorAlert(error: STError?)
     func presentErrorAlert(error: Error)
+    
+    func setNavigationBarHeight(_ value: CGFloat)
 }
 
 /// A service that modifies miscellaneous global states.
 struct GlobalUIService: GlobalUIServiceProtocol {
     var appState: AppState
 
-    func toggleMenuSheet() {
+    func setIsMenuOpen(_ value: Bool) {
         DispatchQueue.main.async {
-            appState.menu.isOpen.toggle()
+            appState.menu.isOpen = value
         }
     }
 
@@ -94,6 +100,24 @@ struct GlobalUIService: GlobalUIServiceProtocol {
         }
     }
 
+    func setRenameTitle(_ value: String) {
+        DispatchQueue.main.async {
+            appState.menu.renameTitle = value
+        }
+    }
+
+    func setCreateTitle(_ value: String) {
+        DispatchQueue.main.async {
+            appState.menu.createTitle = value
+        }
+    }
+
+    func setCreateQuarter(_ value: Quarter?) {
+        DispatchQueue.main.async {
+            appState.menu.createQuarter = value
+        }
+    }
+
     // MARK: error handling
 
     func presentErrorAlert(error: Error) {
@@ -107,6 +131,14 @@ struct GlobalUIService: GlobalUIServiceProtocol {
         DispatchQueue.main.async {
             appState.system.errorContent = error
             appState.system.isErrorAlertPresented = true
+        }
+    }
+    
+    // MARK: System UI
+    
+    func setNavigationBarHeight(_ value: CGFloat) {
+        DispatchQueue.main.async {
+            appState.system.navigationBarHeight = value
         }
     }
 }
