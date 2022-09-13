@@ -7,13 +7,87 @@
 
 import Foundation
 
-class MenuSheetViewModel: BaseViewModel {
+class MenuSheetViewModel: BaseViewModel, ObservableObject {
+    @Published var currentTimetable: Timetable?
+    @Published var metadataList: [TimetableMetadata]?
+
+    @Published private var _isMenuSheetOpen: Bool = false
+    var isMenuSheetOpen: Bool {
+        get { _isMenuSheetOpen }
+        set { services.globalUIService.setIsMenuOpen(newValue) }
+    }
+
+    @Published private var _isEllipsisSheetOpen: Bool = false
+    var isEllipsisSheetOpen: Bool {
+        get { _isEllipsisSheetOpen }
+        set { services.globalUIService.closeEllipsis() } // close-only;
+    }
+
+    @Published private var _isThemeSheetOpen: Bool = false
+    var isThemeSheetOpen: Bool {
+        get { _isThemeSheetOpen }
+        set { newValue ? services.globalUIService.openThemeSheet() : services.globalUIService.closeThemeSheet() }
+    }
+
+    @Published private var _isRenameSheetOpen: Bool = false
+    var isRenameSheetOpen: Bool {
+        get { _isRenameSheetOpen }
+        set { newValue ? services.globalUIService.openRenameSheet() : services.globalUIService.closeRenameSheet() }
+    }
+
+    @Published private var _isCreateSheetOpen: Bool = false
+    var isCreateSheetOpen: Bool {
+        get { _isCreateSheetOpen }
+        set { newValue ? services.globalUIService.openCreateSheet() : services.globalUIService.closeCreateSheet() }
+    }
+
+    @Published private var _renameTitle: String = ""
+    var renameTitle: String {
+        get { _renameTitle }
+        set { services.globalUIService.setRenameTitle(newValue) }
+    }
+
+    @Published private var _createTitle: String = ""
+    var createTitle: String {
+        get { _createTitle }
+        set { services.globalUIService.setCreateTitle(newValue) }
+    }
+
+    @Published private var _createQuarter: Quarter?
+    var createQuarter: Quarter? {
+        get { _createQuarter }
+        set { services.globalUIService.setCreateQuarter(newValue) }
+    }
+
+    override init(container: DIContainer) {
+        super.init(container: container)
+
+        appState.timetable.$current.assign(to: &$currentTimetable)
+        appState.timetable.$metadataList.assign(to: &$metadataList)
+        appState.menu.$isOpen.assign(to: &$_isMenuSheetOpen)
+        appState.menu.$isEllipsisSheetOpen.assign(to: &$_isEllipsisSheetOpen)
+        appState.menu.$isThemeSheetOpen.assign(to: &$_isThemeSheetOpen)
+        appState.menu.$isRenameSheetOpen.assign(to: &$_isRenameSheetOpen)
+        appState.menu.$isCreateSheetOpen.assign(to: &$_isCreateSheetOpen)
+        appState.menu.$renameTitle.assign(to: &$_renameTitle)
+        appState.menu.$createTitle.assign(to: &$_createTitle)
+        appState.menu.$createQuarter.assign(to: &$_createQuarter)
+    }
+
     var menuState: MenuState {
         appState.menu
     }
 
     var timetableState: TimetableState {
         appState.timetable
+    }
+
+    var isNewCourseBookAvailable: Bool {
+        services.timetableService.isNewCourseBookAvailable()
+    }
+
+    var timetablesByQuarter: [Quarter: [TimetableMetadata]] {
+        return Dictionary(grouping: timetableState.metadataList ?? [], by: { $0.quarter })
     }
 
     func openThemeSheet() {
@@ -31,6 +105,31 @@ class MenuSheetViewModel: BaseViewModel {
 
     func closeRenameSheet() {
         services.globalUIService.closeRenameSheet()
+    }
+
+    func openCreateSheet() {
+        services.globalUIService.openCreateSheet()
+    }
+
+    func selectTimetable(timetableId: String) async {
+        do {
+            await services.searchService.initializeSearchState()
+            try await services.timetableService.fetchTimetable(timetableId: timetableId)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+
+    func duplicateTimetable(timetableId: String) async {
+        do {
+            try await services.timetableService.copyTimetable(timetableId: timetableId)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+
+    func openEllipsis(for timetable: TimetableMetadata) {
+        services.globalUIService.openEllipsis(for: timetable)
     }
 
     func applyRenameSheet() async {

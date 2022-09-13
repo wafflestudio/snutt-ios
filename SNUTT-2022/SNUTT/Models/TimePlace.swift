@@ -45,7 +45,7 @@ struct TimePlace: Identifiable {
 
     /// `월7`(월요일 7교시)과 같이 표기한다.
     var startDateTimeString: String {
-        "\(day.shortSymbol)\(Int(start))"
+        "\(day.shortSymbol)\(String(format: "%g", start))"
     }
 
     /// `time: Double`을 분 단위로 정확하게 60진법 수로 환산한다.

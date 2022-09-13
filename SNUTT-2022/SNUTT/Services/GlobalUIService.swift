@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 protocol GlobalUIServiceProtocol {
-    func toggleMenuSheet()
+    func setIsMenuOpen(_ value: Bool)
 
     func openEllipsis(for timetable: TimetableMetadata)
     func closeEllipsis()
@@ -23,6 +23,10 @@ protocol GlobalUIServiceProtocol {
     func openCreateSheet()
     func closeCreateSheet()
 
+    func setRenameTitle(_ value: String)
+    func setCreateTitle(_ value: String)
+    func setCreateQuarter(_ value: Quarter?)
+
     func presentErrorAlert(error: STError?)
     func presentErrorAlert(error: Error)
 }
@@ -31,9 +35,9 @@ protocol GlobalUIServiceProtocol {
 struct GlobalUIService: GlobalUIServiceProtocol {
     var appState: AppState
 
-    func toggleMenuSheet() {
+    func setIsMenuOpen(_ value: Bool) {
         DispatchQueue.main.async {
-            appState.menu.isOpen.toggle()
+            appState.menu.isOpen = value
         }
     }
 
@@ -91,6 +95,24 @@ struct GlobalUIService: GlobalUIServiceProtocol {
     func closeCreateSheet() {
         DispatchQueue.main.async {
             appState.menu.isCreateSheetOpen = false
+        }
+    }
+
+    func setRenameTitle(_ value: String) {
+        DispatchQueue.main.async {
+            appState.menu.renameTitle = value
+        }
+    }
+
+    func setCreateTitle(_ value: String) {
+        DispatchQueue.main.async {
+            appState.menu.createTitle = value
+        }
+    }
+
+    func setCreateQuarter(_ value: Quarter?) {
+        DispatchQueue.main.async {
+            appState.menu.createQuarter = value
         }
     }
 
