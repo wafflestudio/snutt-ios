@@ -42,6 +42,24 @@ struct LectureDetailScene: View {
                                     EditableTextField(text: $lecture.remark, multiLine: true)
                                 }
                             }
+
+                            HStack {
+                                DetailLabel(text: "색")
+                                NavigationLink {
+                                    LectureColorList(theme: lecture.theme ?? .snutt, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
+                                } label: {
+                                    HStack {
+                                        LectureColorPreview(lectureColor: lecture.getColor())
+                                            .frame(height: 25)
+                                        Spacer()
+                                        if editMode.isEditing {
+                                            Image("chevron.right")
+                                        }
+                                    }
+                                }
+                                .disabled(!editMode.isEditing)
+                            }
+                            .animation(.customSpring, value: editMode.isEditing)
                         }
                         .padding(.vertical, 5)
                     }
@@ -314,10 +332,11 @@ struct EditableTimeField: View {
 }
 
 struct RectangleButtonStyle: ButtonStyle {
+    var color: Color? = nil
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .contentShape(Rectangle())
-            .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : .clear)
+            .background(configuration.isPressed ? STColor.buttonPressed : (color ?? .clear))
     }
 }
 
@@ -336,6 +355,7 @@ struct DetailButton: View {
                 .contentShape(Rectangle())
                 .foregroundColor(role == .destructive ? .red : Color(uiColor: .label))
         }
+        .buttonStyle(RectangleButtonStyle(color: STColor.groupForeground))
     }
 }
 

@@ -21,7 +21,7 @@ struct TimetableBlocksLayer: View {
         }
         .animation(.customSpring, value: displayedTheme)
 
-        if var selectedLecture = current?.selectedLecture {
+        if let selectedLecture = current?.selectedLecture {
             LectureBlocks(current: current, lecture: selectedLecture.withTemporaryColor(), theme: displayedTheme, config: config)
         }
 

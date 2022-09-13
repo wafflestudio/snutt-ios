@@ -101,6 +101,8 @@
 		BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */; };
 		BEB57C2128B6758200279EFF /* Animation+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2028B6758200279EFF /* Animation+Custom.swift */; };
 		BEB57C2228B6759000279EFF /* Animation+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2028B6758200279EFF /* Animation+Custom.swift */; };
+		BEB57C2828BC985900279EFF /* LectureColorPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2728BC985900279EFF /* LectureColorPreview.swift */; };
+		BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2928BCA7E400279EFF /* LectureColorList.swift */; };
 		BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */; };
 		BEDE34CA28754F3100525014 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34C928754F3100525014 /* Sheet.swift */; };
 		BEDE34D42879A59B00525014 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BEDE34D32879A59B00525014 /* Alamofire */; };
@@ -263,6 +265,8 @@
 		BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidgetEntryView.swift; sourceTree = "<group>"; };
 		BE98A07D288B032600C2CE95 /* TimetableWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidget.swift; sourceTree = "<group>"; };
 		BEB57C2028B6758200279EFF /* Animation+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Animation+Custom.swift"; sourceTree = "<group>"; };
+		BEB57C2728BC985900279EFF /* LectureColorPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureColorPreview.swift; sourceTree = "<group>"; };
+		BEB57C2928BCA7E400279EFF /* LectureColorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureColorList.swift; sourceTree = "<group>"; };
 		BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetScene.swift; sourceTree = "<group>"; };
 		BEDE34C928754F3100525014 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		BEDE34D52879A7B800525014 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
@@ -603,6 +607,8 @@
 				BE98A009288A90C000C2CE95 /* Logo.swift */,
 				BEDF506C27EB740E00CDCC13 /* LectureList.swift */,
 				BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */,
+				BEB57C2928BCA7E400279EFF /* LectureColorList.swift */,
+				BEB57C2728BC985900279EFF /* LectureColorPreview.swift */,
 				BE7E230227FF3C38004DC202 /* NavBarButton.swift */,
 				BEDE34C928754F3100525014 /* Sheet.swift */,
 				BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */,
@@ -851,6 +857,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */,
 				BEE5CE10289E738900CF5ED3 /* MenuThemeSheet.swift in Sources */,
 				BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */,
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
@@ -930,6 +937,7 @@
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
 				BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */,
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,
+				BEB57C2828BC985900279EFF /* LectureColorPreview.swift in Sources */,
 				BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */,
 				BE77D0AE28B13A920067A9D8 /* MenuCreateSheet.swift in Sources */,
 				BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */,

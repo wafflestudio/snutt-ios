@@ -71,12 +71,14 @@ extension Timetable {
     init(from dto: TimetableDto) {
         id = dto._id
         title = dto.title
-        lectures = dto.lecture_list.map { .init(from: $0) }
-        theme = .init(rawValue: dto.theme) ?? .snutt
         userId = dto.user_id
         year = dto.year
         semester = dto.semester
         updatedAt = dto.updated_at
+
+        let theme: Theme = .init(rawValue: dto.theme) ?? .snutt
+        self.theme = theme
+        lectures = dto.lecture_list.map { .init(from: $0).withTheme(theme: theme) }
     }
 }
 

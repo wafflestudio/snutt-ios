@@ -21,6 +21,7 @@ struct TimetableBlock: View {
             VStack(spacing: 0) {
                 Group {
                     Text(lecture.title)
+                        .foregroundColor(lecture.getColor(with: theme).fg)
                         .font(STFont.details)
 
                     Text(timePlace.place)
