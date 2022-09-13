@@ -42,7 +42,6 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-
     func isSelected(tag: SearchTag) -> Bool {
         return appState.search.selectedTagList.contains(where: { $0.id == tag.id })
     }
