@@ -99,15 +99,23 @@ struct GlobalUIService: GlobalUIServiceProtocol {
     }
 
     func setRenameTitle(_ value: String) {
-        appState.menu.renameTitle = value
+        DispatchQueue.main.async {
+            appState.menu.renameTitle = value
+        }
     }
 
     func setCreateTitle(_ value: String) {
+        DispatchQueue.main.async {
+            
         appState.menu.createTitle = value
+        }
     }
 
     func setCreateQuarter(_ value: Quarter?) {
+        DispatchQueue.main.async {
+            
         appState.menu.createQuarter = value
+        }
     }
 
     // MARK: error handling
