@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SearchLectureScene: View {
     @ObservedObject var viewModel: SearchSceneViewModel
-    
+
     @State private var reloadSearchList: Int = 0
-    
+
     var body: some View {
         ZStack {
             GeometryReader { reader in

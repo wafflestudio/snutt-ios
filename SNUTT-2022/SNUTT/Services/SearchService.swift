@@ -115,7 +115,6 @@ struct SearchService: SearchServiceProtocol {
 }
 
 class FakeSearchService: SearchServiceProtocol {
-    
     func fetchTags(quarter _: Quarter) async throws {}
     func toggle(_: SearchTag) {}
     func fetchInitialSearchResult() async throws {}

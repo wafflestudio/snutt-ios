@@ -81,7 +81,7 @@ extension SNUTTView {
         var errorMessage: String {
             (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
         }
-        
+
         func setNavigationBarHeight(_ value: CGFloat) {
             services.globalUIService.setNavigationBarHeight(value)
         }

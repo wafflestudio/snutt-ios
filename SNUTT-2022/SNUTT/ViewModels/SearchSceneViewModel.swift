@@ -75,7 +75,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func initializeSearchState() {
         services.searchService.initializeSearchState()
     }
