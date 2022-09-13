@@ -22,9 +22,10 @@ struct STColor {
     static let searchListBackground: Color = .init("searchlist.background")
     static let searchListForeground: Color = .init("searchlist.foreground")
     static let sheetBackground: Color = .init("sheet.background")
+    static let buttonPressed: Color = .init("button.pressed")
 
     #if WIDGET
-        static let systemBackground: Color = .init("WidgetBackground")
+        static let systemBackground: Color = .init("widget.background")
     #else
         static let systemBackground: Color = .init("system.background")
     #endif
