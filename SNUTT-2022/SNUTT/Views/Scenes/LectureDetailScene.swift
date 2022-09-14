@@ -134,13 +134,15 @@ struct LectureDetailScene: View {
                         }
                     }
                     .padding()
-
-                    DetailButton(text: "강의계획서") {
-                        print("tap")
-                    }
-
-                    DetailButton(text: "강의평") {
-                        print("tap")
+                    
+                    if !editMode.isEditing {
+                        DetailButton(text: "강의계획서") {
+                            print("tap")
+                        }
+                        
+                        DetailButton(text: "강의평") {
+                            print("tap")
+                        }
                     }
 
                     if !isPresentedModally {
@@ -154,6 +156,7 @@ struct LectureDetailScene: View {
                 }
                 .background(STColor.groupForeground)
             }
+            .animation(.customSpring, value: editMode.isEditing)
             .padding(.vertical, 20)
         }
         .background(STColor.groupBackground)
