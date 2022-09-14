@@ -46,7 +46,7 @@ struct SearchLectureScene: View {
                     // MARK: Selected Filter Tags
 
                     if viewModel.selectedTagList.count > 0 {
-                        SearchTagsScrollView(selectedTagList: viewModel.selectedTagList, deselect: viewModel.toggle)
+                        SearchTagsScrollView(selectedTagList: viewModel.selectedTagList, deselect: viewModel.deselectTag)
                     }
 
                     // MARK: Main Content
@@ -77,6 +77,7 @@ struct SearchLectureScene: View {
         .navigationBarHidden(true)
         .animation(.customSpring, value: viewModel.searchResult?.count)
         .animation(.customSpring, value: viewModel.isLoading)
+        .animation(.customSpring, value: viewModel.selectedTagList.count)
         .onChange(of: viewModel.isLoading) { _ in
             withAnimation(.customSpring) {
                 reloadSearchList += 1

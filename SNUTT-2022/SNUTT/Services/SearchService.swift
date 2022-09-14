@@ -10,6 +10,7 @@ import SwiftUI
 
 protocol SearchServiceProtocol {
     func toggle(_ tag: SearchTag)
+    func deselectTag(_ tag: SearchTag)
     func fetchTags(quarter: Quarter) async throws
     func fetchInitialSearchResult() async throws
     func fetchMoreSearchResult() async throws
@@ -94,29 +95,48 @@ struct SearchService: SearchServiceProtocol {
     }
 
     func toggle(_ tag: SearchTag) {
+        DispatchQueue.main.async {
+            if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
+                searchState.selectedTagList.remove(at: index)
+                return
+            }
+            searchState.selectedTagList.append(tag)
+        }
+    }
+    
+    /// We need a separate method that only deselects tags.
+    func deselectTag(_ tag: SearchTag) {
         if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
-            searchState.selectedTagList.remove(at: index)
+            DispatchQueue.main.async {
+                searchState.selectedTagList.remove(at: index)
+            }
             return
         }
-        searchState.selectedTagList.append(tag)
     }
 
     func setIsFilterOpen(_ value: Bool) {
-        searchState.isFilterOpen = value
+        DispatchQueue.main.async {
+            searchState.isFilterOpen = value
+        }
     }
 
     func setSelectedLecture(_ value: Lecture?) {
-        searchState.selectedLecture = value
+        DispatchQueue.main.async {
+            searchState.selectedLecture = value
+        }
     }
 
     func setSearchText(_ value: String) {
-        searchState.searchText = value
+        DispatchQueue.main.async {
+            searchState.searchText = value
+        }
     }
 }
 
 class FakeSearchService: SearchServiceProtocol {
+    func toggle(_ tag: SearchTag) {}
+    func deselectTag(_ tag: SearchTag) {}
     func fetchTags(quarter _: Quarter) async throws {}
-    func toggle(_: SearchTag) {}
     func fetchInitialSearchResult() async throws {}
     func fetchMoreSearchResult() async throws {}
     func setIsFilterOpen(_: Bool) {}

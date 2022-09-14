@@ -96,8 +96,8 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func toggle(_ tag: SearchTag) {
-        services.searchService.toggle(tag)
+    func deselectTag(_ tag: SearchTag) {
+        services.searchService.deselectTag(tag)
     }
 
     func addLecture(lecture: Lecture) async {
