@@ -11,7 +11,7 @@ import SwiftUI
 struct LectureDetailScene: View {
     @ObservedObject var viewModel: ViewModel
     @State var lecture: Lecture
-    
+
     @State private var editMode: EditMode = .inactive
     @State private var tempLecture: Lecture = .preview
     @State private var isDeleteAlertPresented = false
@@ -136,12 +136,12 @@ struct LectureDetailScene: View {
                         }
                     }
                     .padding()
-                    
+
                     if !editMode.isEditing {
                         DetailButton(text: "강의계획서") {
                             print("tap")
                         }
-                        
+
                         DetailButton(text: "강의평") {
                             print("tap")
                         }
