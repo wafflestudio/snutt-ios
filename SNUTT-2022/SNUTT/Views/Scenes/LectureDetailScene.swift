@@ -123,6 +123,7 @@ struct LectureDetailScene: View {
                                     DetailLabel(text: "시간")
                                     EditableTimeField(lecture: $lecture, timePlace: timePlace) {
                                         viewModel.openLectureTimeSheet(lecture: $lecture, timePlace: timePlace)
+                                        resignFirstResponder()
                                     }
                                 }
                                 Spacer()
