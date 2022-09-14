@@ -88,7 +88,9 @@ struct SearchBar: View {
             }
             .transition(.move(edge: .trailing).combined(with: .opacity))
         }
-        .padding(10)
+        .padding(.horizontal, 10)
+        .padding(.bottom, 8)
+        .padding(.top, 5)
         .background(STColor.searchBarBackground)
         .animation(.easeOut(duration: 0.2), value: isEditing)
         .animation(.easeOut(duration: 0.2), value: showCancel)
