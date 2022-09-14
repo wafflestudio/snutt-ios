@@ -103,7 +103,7 @@ struct SearchService: SearchServiceProtocol {
             searchState.selectedTagList.append(tag)
         }
     }
-    
+
     /// We need a separate method that only deselects tags.
     func deselectTag(_ tag: SearchTag) {
         if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
@@ -134,8 +134,8 @@ struct SearchService: SearchServiceProtocol {
 }
 
 class FakeSearchService: SearchServiceProtocol {
-    func toggle(_ tag: SearchTag) {}
-    func deselectTag(_ tag: SearchTag) {}
+    func toggle(_: SearchTag) {}
+    func deselectTag(_: SearchTag) {}
     func fetchTags(quarter _: Quarter) async throws {}
     func fetchInitialSearchResult() async throws {}
     func fetchMoreSearchResult() async throws {}
