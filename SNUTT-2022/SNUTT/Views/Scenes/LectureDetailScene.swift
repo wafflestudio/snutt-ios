@@ -11,8 +11,10 @@ import SwiftUI
 struct LectureDetailScene: View {
     @ObservedObject var viewModel: ViewModel
     @State var lecture: Lecture
+    
     @State private var editMode: EditMode = .inactive
     @State private var tempLecture: Lecture = .preview
+    @State private var isDeleteAlertPresented = false
 
     // for modal presentation
     var isPresentedModally: Bool = false
@@ -147,9 +149,14 @@ struct LectureDetailScene: View {
 
                     if !isPresentedModally {
                         DetailButton(text: "삭제", role: .destructive) {
-                            // TODO: check alert
-                            Task {
-                                await viewModel.deleteLecture(lecture: lecture)
+                            isDeleteAlertPresented = true
+                        }
+                        .alert("강의를 삭제하시겠습니까?", isPresented: $isDeleteAlertPresented) {
+                            Button("취소", role: .cancel, action: {})
+                            Button("삭제", role: .destructive) {
+                                Task {
+                                    await viewModel.deleteLecture(lecture: lecture)
+                                }
                             }
                         }
                     }
