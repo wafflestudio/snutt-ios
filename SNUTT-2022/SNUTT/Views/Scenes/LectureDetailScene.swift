@@ -14,6 +14,7 @@ struct LectureDetailScene: View {
 
     @State private var editMode: EditMode = .inactive
     @State private var tempLecture: Lecture = .preview
+    @State private var isResetAlertPresented = false
     @State private var isDeleteAlertPresented = false
 
     // for modal presentation
@@ -147,6 +148,27 @@ struct LectureDetailScene: View {
                         }
                     }
 
+                    if !isPresentedModally && editMode.isEditing {
+                        DetailButton(text: "초기화", role: .destructive) {
+                            isResetAlertPresented = true
+                        }
+                        .alert("강의를 초기화하시겠습니까?", isPresented: $isResetAlertPresented) {
+                            Button("취소", role: .cancel, action: {})
+                            Button("초기화", role: .destructive, action: {
+                                Task {
+                                    guard let originalLecture = await viewModel.resetLecture(lecture: lecture) else { return }
+                                    DispatchQueue.main.async {
+                                        lecture = originalLecture
+                                        editMode = .inactive
+                                        resignFirstResponder()
+                                    }
+                                }
+                            })
+                        } message: {
+                            Text("강의를 초기화하면 이 강의에 적용한 모든 수정 사항이 초기화됩니다.")
+                        }
+                    }
+
                     if !isPresentedModally {
                         DetailButton(text: "삭제", role: .destructive) {
                             isDeleteAlertPresented = true
@@ -271,6 +293,7 @@ struct EditableTextField: View {
                 .foregroundColor(readOnly ? STColor.disabled : Color(uiColor: .label))
                 .disabled(!isEditing || readOnly)
                 .font(.system(size: 16, weight: .regular))
+                .disableAutocorrection(true)
         }
     }
 }
