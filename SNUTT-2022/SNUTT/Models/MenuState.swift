@@ -12,7 +12,7 @@ class MenuState: ObservableObject {
     @Published var isOpen = false
 
     /// The target timetable that the ellipsis sheet is open for. There's no need to be `@Published` because no view updates on the change this property.
-    var ellipsisTarget: TimetableMetadata? = nil
+    var ellipsisTarget: TimetableMetadata?
 
     @Published var isEllipsisSheetOpen = false
     @Published var isThemeSheetOpen = false
@@ -27,12 +27,12 @@ class MenuState: ObservableObject {
     @Published var isCreateSheetOpen = false
     @Published var createTitle: String = ""
     @Published var createQuarter: Quarter? = nil
-    
+
     // MARK: Change Lecture Time
-    
+
     @Published var isLectureTimeSheetOpen = false
     @Published var timePlaceToModify: TimePlace? = nil
-    
-    /// Action to perform when `LectureTimeSheet` returns an object conforming to `Period`.
-    var lectureTimeSheetAction: ((TimePlace) -> Void)? = nil
+
+    /// Action to perform when `LectureTimeSheet` returns an object conforming to `TimePlace`.
+    var lectureTimeSheetAction: ((TimePlace) -> Void)?
 }

@@ -26,7 +26,7 @@ protocol GlobalUIServiceProtocol {
     func setRenameTitle(_ value: String)
     func setCreateTitle(_ value: String)
     func setCreateQuarter(_ value: Quarter?)
-    
+
     func setIsLectureTimeSheetOpen(_ value: Bool, modifying timePlace: TimePlace?, action: ((TimePlace) -> Void)?)
 
     func presentErrorAlert(error: STError?)
@@ -36,7 +36,7 @@ protocol GlobalUIServiceProtocol {
 /// A service that modifies miscellaneous global states.
 struct GlobalUIService: GlobalUIServiceProtocol {
     var appState: AppState
-    
+
     // MARK: Menu Sheet
 
     func setIsMenuOpen(_ value: Bool) {
@@ -119,9 +119,9 @@ struct GlobalUIService: GlobalUIServiceProtocol {
             appState.menu.createQuarter = value
         }
     }
-    
+
     // MARK: Lecture Time Sheet
-    
+
     func setIsLectureTimeSheetOpen(_ value: Bool, modifying timePlace: TimePlace?, action: ((TimePlace) -> Void)?) {
         DispatchQueue.main.async {
             appState.menu.timePlaceToModify = timePlace
