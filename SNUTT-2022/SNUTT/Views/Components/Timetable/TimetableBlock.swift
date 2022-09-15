@@ -23,7 +23,7 @@ struct TimetableBlock: View {
                     Text(lecture.title)
                         .foregroundColor(lecture.getColor(with: theme).fg)
                         .font(STFont.details)
-                    
+
                     if !timePlace.place.isEmpty {
                         Text(timePlace.place)
                             .font(STFont.detailsSemibold)

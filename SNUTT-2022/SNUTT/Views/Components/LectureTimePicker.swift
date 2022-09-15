@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct LectureTimePicker: View {
-    
     @Binding var weekday: Weekday
     @Binding var start: Date
     @Binding var end: Date
-    
+
     var endRange: ClosedRange<Date> {
         let calendar = Calendar.current
-        return calendar.date(byAdding: .minute, value: 5, to: start)!...calendar.date(from: .init(hour: 23, minute: 59))!
+        return calendar.date(byAdding: .minute, value: 5, to: start)! ... calendar.date(from: .init(hour: 23, minute: 59))!
     }
-    
+
     /// Starting from iOS 16, the `Picker` design has changed.
     private var usePadding: Bool {
         if #available(iOS 16.0, *) {
@@ -25,7 +24,7 @@ struct LectureTimePicker: View {
         }
         return true
     }
-    
+
     var body: some View {
         VStack(spacing: 10) {
             HStack {
@@ -40,18 +39,18 @@ struct LectureTimePicker: View {
                 .padding(.vertical, usePadding ? 3 : 0)
                 .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(uiColor: .tertiarySystemFill)))
             }
-            
+
             Divider()
             DatePicker("시작",
                        selection: $start,
                        displayedComponents: [.hourAndMinute])
-            .datePickerStyle(.compact)
+                .datePickerStyle(.compact)
             Divider()
             DatePicker("종료",
                        selection: $end,
                        in: endRange,
                        displayedComponents: [.hourAndMinute])
-            .datePickerStyle(.compact)
+                .datePickerStyle(.compact)
         }
         .padding()
         .onAppear {

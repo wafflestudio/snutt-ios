@@ -121,27 +121,26 @@ struct LectureDetailScene: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         ForEach(lecture.timePlaces) { timePlace in
-                            HStack() {
-                                
-                            VStack {
-                                HStack {
-                                    DetailLabel(text: "시간")
-                                    EditableTimeField(lecture: $lecture, timePlace: timePlace) {
-                                        viewModel.openLectureTimeSheet(lecture: $lecture, timePlace: timePlace)
-                                        resignFirstResponder()
+                            HStack {
+                                VStack {
+                                    HStack {
+                                        DetailLabel(text: "시간")
+                                        EditableTimeField(lecture: $lecture, timePlace: timePlace) {
+                                            viewModel.openLectureTimeSheet(lecture: $lecture, timePlace: timePlace)
+                                            resignFirstResponder()
+                                        }
+                                    }
+                                    Spacer()
+                                        .frame(height: 5)
+                                    HStack {
+                                        DetailLabel(text: "장소")
+                                        EditableTextField(lecture: $lecture, timePlace: timePlace)
                                     }
                                 }
+                                .padding(.vertical, 2)
+
                                 Spacer()
-                                    .frame(height: 5)
-                                HStack {
-                                    DetailLabel(text: "장소")
-                                    EditableTextField(lecture: $lecture, timePlace: timePlace)
-                                }
-                            }
-                            .padding(.vertical, 2)
-                                
-                                Spacer()
-                                
+
                                 if editMode.isEditing {
                                     Button {
                                         lecture = viewModel.getLecture(lecture: lecture, without: timePlace)
@@ -151,16 +150,15 @@ struct LectureDetailScene: View {
                                 }
                             }
                         }
-                        
+
                         if editMode.isEditing {
-                            
-                        Button {
-                            lecture = viewModel.getLectureWithNewTimePlace(lecture: lecture)
-                        } label: {
-                            Text("+ 시간 추가")
-                                .font(.system(size: 16))
-                        }
-                        .padding(.top, 5)
+                            Button {
+                                lecture = viewModel.getLectureWithNewTimePlace(lecture: lecture)
+                            } label: {
+                                Text("+ 시간 추가")
+                                    .font(.system(size: 16))
+                            }
+                            .padding(.top, 5)
                         }
                     }
                     .padding()
@@ -371,7 +369,7 @@ struct EditableTimeField: View {
     @Binding var lecture: Lecture
     var timePlace: TimePlace
     var action: () -> Void
-    
+
     @Environment(\.editMode) private var editMode
 
     @ViewBuilder private func timeTextLabel(from timePlace: TimePlace) -> some View {
