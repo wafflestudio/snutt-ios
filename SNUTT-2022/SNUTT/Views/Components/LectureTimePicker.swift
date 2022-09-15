@@ -15,7 +15,7 @@ struct LectureTimePicker: View {
     
     var endRange: ClosedRange<Date> {
         let calendar = Calendar.current
-        return start...calendar.date(from: .init(hour: 23, minute: 59))!
+        return calendar.date(byAdding: .minute, value: 5, to: start)!...calendar.date(from: .init(hour: 23, minute: 59))!
     }
     
     /// Starting from iOS 16, the `Picker` design has changed.
