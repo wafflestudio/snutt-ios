@@ -118,6 +118,8 @@ struct LectureDetailScene: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         ForEach(lecture.timePlaces) { timePlace in
+                            HStack() {
+                                
                             VStack {
                                 HStack {
                                     DetailLabel(text: "시간")
@@ -134,6 +136,28 @@ struct LectureDetailScene: View {
                                 }
                             }
                             .padding(.vertical, 2)
+                                
+                                Spacer()
+                                
+                                if editMode.isEditing {
+                                    Button {
+                                        lecture = viewModel.getLecture(lecture: lecture, without: timePlace)
+                                    } label: {
+                                        Image("xmark.black")
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if editMode.isEditing {
+                            
+                        Button {
+                            lecture = viewModel.getLectureWithNewTimePlace(lecture: lecture)
+                        } label: {
+                            Text("+ 시간 추가")
+                                .font(.system(size: 16))
+                        }
+                        .padding(.top, 5)
                         }
                     }
                     .padding()
@@ -157,6 +181,7 @@ struct LectureDetailScene: View {
                 }
                 .background(STColor.groupForeground)
             }
+            .animation(.customSpring, value: lecture.timePlaces.count)
             .padding(.vertical, 20)
         }
         .background(STColor.groupBackground)
@@ -188,10 +213,11 @@ struct LectureDetailScene: View {
                         if editMode.isEditing {
                             // save
                             Task {
-                                let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
-                                if !success {
+                                guard let updatedLecture = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) else {
                                     lecture = tempLecture
+                                    return
                                 }
+                                lecture = updatedLecture
                             }
                             editMode = .inactive
                             resignFirstResponder()
