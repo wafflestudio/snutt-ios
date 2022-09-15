@@ -46,7 +46,7 @@ struct LectureColorDto: Codable {
 }
 
 struct TimePlaceDto: Codable {
-    let _id: String
+    let _id: String?
     let day: Int
     let start: Double
     let len: Double
@@ -89,7 +89,7 @@ extension TimetableDto {
 
 extension TimePlaceDto {
     init(from model: TimePlace) {
-        _id = model.id
+        _id = model.isTemporary ? nil : model.id
         day = model.day.rawValue
         start = model.start
         len = model.len

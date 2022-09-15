@@ -23,6 +23,10 @@ struct TimePlace: Identifiable {
     var place: String
 
     let isCustom: Bool
+    
+    /// `true` if and only if this `TimePlace` object is created locally, but not committed to the server yet.
+    /// This flag is necessary in order to remove `_id` field for newly created objects, before comitting to the server.
+    var isTemporary: Bool = false
 
     /// 단위: 시각
     ///
@@ -52,7 +56,7 @@ struct TimePlace: Identifiable {
 
 extension TimePlace {
     init(from dto: TimePlaceDto, isCustom: Bool) {
-        id = dto._id
+        id = dto._id ?? UUID().description
         start = dto.start
         len = dto.len
         place = dto.place
