@@ -58,6 +58,7 @@
 		BE1B610E289E000B00401361 /* EllipsisSheetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1B610D289E000B00401361 /* EllipsisSheetButton.swift */; };
 		BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
 		BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
+		BE2EA7B128D479BE007C0998 /* Publisher+SinkWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */; };
 		BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
 		BE419B84288B8B8F00FA9590 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
 		BE419B85288B8B8F00FA9590 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507427F4289B00CDCC13 /* Lecture.swift */; };
@@ -281,6 +282,7 @@
 		BE1B610D289E000B00401361 /* EllipsisSheetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipsisSheetButton.swift; sourceTree = "<group>"; };
 		BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableGridLayer.swift; sourceTree = "<group>"; };
 		BE1D2B3928014527008F9134 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
+		BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+SinkWithAnimation.swift"; sourceTree = "<group>"; };
 		BE419B8C288B8C5A00FA9590 /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
 		BE419B99288B915800FA9590 /* TimetableUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableUtils.swift; sourceTree = "<group>"; };
 		BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetViewModel.swift; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 				B88D16F228ABC5DD00E2D652 /* String+ext.swift */,
 				B8F570A5289E1221005C199F /* UserDefaults+ext.swift */,
 				BEB57C2028B6758200279EFF /* Animation+Custom.swift */,
+				BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1046,6 +1049,10 @@
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
 				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
 				B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */,
+				BE98A00E288AA3D200C2CE95 /* MenuSheet.swift in Sources */,
+				DC2915A92866986600FE5F9A /* SystemState.swift in Sources */,
+				BE2EA7B128D479BE007C0998 /* Publisher+SinkWithAnimation.swift in Sources */,
+				BE98A00E288AA3D200C2CE95 /* MenuSheet.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
 				B87B316728D753A3005C170B /* SettingsMenu.swift in Sources */,
