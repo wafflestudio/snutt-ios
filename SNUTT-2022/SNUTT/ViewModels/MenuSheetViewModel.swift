@@ -5,13 +5,13 @@
 //  Created by 박신홍 on 2022/07/05.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published var currentTimetable: Timetable?
     @Published var metadataList: [TimetableMetadata]?
-    
+
     private var bag = Set<AnyCancellable>()
 
     @Published private var _isMenuSheetOpen: Bool = false
@@ -70,7 +70,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         appState.menu.$isThemeSheetOpen.sinkWithAnimation(receiveValue: { self._isThemeSheetOpen = $0 }).store(in: &bag)
         appState.menu.$isRenameSheetOpen.sinkWithAnimation(receiveValue: { self._isRenameSheetOpen = $0 }).store(in: &bag)
         appState.menu.$isCreateSheetOpen.sinkWithAnimation(receiveValue: { self._isCreateSheetOpen = $0 }).store(in: &bag)
-        
+
         appState.timetable.$current.assign(to: &$currentTimetable)
         appState.timetable.$metadataList.assign(to: &$metadataList)
         appState.menu.$renameTitle.assign(to: &$_renameTitle)
