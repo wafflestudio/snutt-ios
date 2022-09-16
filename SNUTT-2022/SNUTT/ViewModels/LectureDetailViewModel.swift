@@ -46,6 +46,8 @@ extension LectureDetailScene {
             services.globalUIService.setIsLectureTimeSheetOpen(true, modifying: timePlace) { modifiedTimePlace in
                 guard let firstIndex = lecture.timePlaces.firstIndex(where: { $0.id == timePlace.id }) else { return }
                 lecture.wrappedValue.timePlaces[firstIndex] = modifiedTimePlace
+            }
+        }
 
         func resetLecture(lecture: Lecture) async -> Lecture? {
             do {
@@ -77,7 +79,7 @@ extension LectureDetailScene {
 
         func getLectureWithNewTimePlace(lecture: Lecture) -> Lecture {
             var lecture = lecture
-            lecture.timePlaces.append(.init(id: "",
+            lecture.timePlaces.append(.init(id: UUID().description,
                                             day: .mon,
                                             start: 1,
                                             len: 1,
