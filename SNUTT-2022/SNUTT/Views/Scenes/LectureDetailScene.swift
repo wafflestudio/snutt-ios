@@ -112,13 +112,12 @@ struct LectureDetailScene: View {
 
                     VStack {
                         Text("시간 및 장소")
-                            .padding(.leading, 5)
                             .font(STFont.detailLabel)
                             .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         ForEach(lecture.timePlaces) { timePlace in
-                            HStack {
+                            HStack(alignment: .top) {
                                 VStack {
                                     HStack {
                                         DetailLabel(text: "시간")
@@ -144,6 +143,7 @@ struct LectureDetailScene: View {
                                     } label: {
                                         Image("xmark.black")
                                     }
+                                    .padding(.top, 5)
                                 }
                             }
                         }
@@ -154,6 +154,7 @@ struct LectureDetailScene: View {
                             } label: {
                                 Text("+ 시간 추가")
                                     .font(.system(size: 16))
+                                    .animation(.customSpring, value: lecture.timePlaces.count)
                             }
                             .padding(.top, 5)
                         }
@@ -177,6 +178,7 @@ struct LectureDetailScene: View {
                         }
                     }
                 }
+                .padding(.horizontal, 5)
                 .background(STColor.groupForeground)
             }
             .animation(.customSpring, value: lecture.timePlaces.count)
@@ -250,7 +252,6 @@ struct DetailLabel: View {
     var body: some View {
         VStack {
             Text(text)
-                .padding(.horizontal, 5)
                 .padding(.trailing, 10)
                 .padding(.top, 2.5)
                 .font(STFont.detailLabel)

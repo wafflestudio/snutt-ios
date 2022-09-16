@@ -50,7 +50,7 @@ extension LectureDetailScene {
 
         func getLectureWithNewTimePlace(lecture: Lecture) -> Lecture {
             var lecture = lecture
-            lecture.timePlaces.append(.init(id: "",
+            lecture.timePlaces.append(.init(id: UUID().description,
                                             day: .mon,
                                             start: 1,
                                             len: 1,
