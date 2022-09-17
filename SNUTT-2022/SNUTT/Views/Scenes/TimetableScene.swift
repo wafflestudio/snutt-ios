@@ -27,6 +27,7 @@ struct TimetableScene: View {
                         NavBarButton(imageName: "nav.menu") {
                             viewModel.setIsMenuOpen(true)
                         }
+                        .circleBadge(condition: viewModel.isNewCourseBookAvailable)
 
                         Text(viewModel.timetableTitle)
                             .font(STFont.title)
@@ -49,6 +50,7 @@ struct TimetableScene: View {
                         NavBarButton(imageName: "nav.alarm.off") {
                             print("alarm tapped")
                         }
+                        .circleBadge(condition: true)
                     }
                 }
             }

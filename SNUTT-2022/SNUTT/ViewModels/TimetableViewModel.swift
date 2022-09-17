@@ -13,12 +13,14 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     private var bag = Set<AnyCancellable>()
     @Published var currentTimetable: Timetable?
     @Published var configuration: TimetableConfiguration = .init()
+    @Published private var metadataList: [TimetableMetadata]?
 
     override init(container: DIContainer) {
         super.init(container: container)
 
         appState.timetable.$current.assign(to: &$currentTimetable)
         appState.timetable.$configuration.assign(to: &$configuration)
+        appState.timetable.$metadataList.assign(to: &$metadataList)
     }
 
     var totalCredit: Int {
@@ -35,6 +37,10 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
 
     var timetableState: TimetableState {
         appState.timetable
+    }
+
+    var isNewCourseBookAvailable: Bool {
+        services.courseBookService.isNewCourseBookAvailable()
     }
 
     func setIsMenuOpen(_ value: Bool) {
