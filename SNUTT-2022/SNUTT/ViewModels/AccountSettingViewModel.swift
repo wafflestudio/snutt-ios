@@ -9,84 +9,55 @@ import Combine
 import SwiftUI
 
 class AccountSettingViewModel: BaseViewModel, ObservableObject {
+    
+    @Published private var _currentUser: User?
     private var bag = Set<AnyCancellable>()
-
-    @Published var menuList: [[Menu]] = []
-
+    
     override init(container: DIContainer) {
         super.init(container: container)
-
-        userState.$current
-            .sink { _ in
-                self.settingsService.updateAccountMenuList()
-            }
-            .store(in: &bag)
-
-        setting.$accountMenuList
-            .sink { menuList in
-                DispatchQueue.main.async {
-                    self.menuList = self.setMenuList(menuList)
-                }
+        
+        // TODO: change this
+        appState.user.$current
+            .compactMap { $0 }
+            .sink { [weak self] user in
+                self?._currentUser = user
             }
             .store(in: &bag)
     }
-
-    private func setMenuList(_ titles: [[AccountSettings]]) -> [[Menu]] {
-        var menuList: [[Menu]] = []
-        for section in titles {
-            var rows: [Menu] = []
-            for title in section {
-                rows.append(makeMenu(title))
-            }
-            menuList.append(rows)
-        }
-        return menuList
+    
+    // TODO: implement destinations of each menu
+    var menuList: [[SettingsMenu]] {
+        var menu: [[SettingsMenu]] = []
+        menu.append(currentUser?.localId == nil
+                    ? [SettingsMenu(AccountSettings.addLocalId) {
+                        AddLocalIdScene(viewModel: AddLocalIdViewModel(container: container))}]
+                    : [SettingsMenu(AccountSettings.showLocalId,
+                                    content: currentUser?.localId ?? "(없음)"),
+                       SettingsMenu(AccountSettings.changePassword)])
+        menu.append(currentUser?.fbName == nil
+                    ? [SettingsMenu(AccountSettings.makeFbConnection)]
+                    : [SettingsMenu(AccountSettings.showFbName,
+                                    content: currentUser?.fbName ?? "(없음)"),
+                       SettingsMenu(AccountSettings.deleteFbConnection)])
+        menu.append([SettingsMenu(AccountSettings.showEmail,
+                                  content: currentUser?.email ?? "(없음)")])
+        menu.append([SettingsMenu(AccountSettings.deleteAccount, destructive: true)])
+        return menu
     }
-
-    private func makeMenu(_ type: AccountSettings) -> Menu {
-        switch type {
-        case .addLocalId:
-            return Menu(AccountSettings.addLocalId) {
-                AddLocalIdScene(viewModel: AddLocalIdViewModel(container: container))
-            }
-        case .showLocalId:
-            return Menu(AccountSettings.showLocalId, userState.current?.localId ?? "(없음)")
-        case .changePassword:
-            return Menu(AccountSettings.changePassword)
-        case .makeFbConnection:
-            return Menu(AccountSettings.makeFbConnection)
-        case .showFbName:
-            return Menu(AccountSettings.showFbName, userState.current?.fbName ?? "(없음)")
-        case .deleteFbConnection:
-            return Menu(AccountSettings.deleteFbConnection)
-        case .showEmail:
-            return Menu(AccountSettings.showEmail, appState.user.current?.email ?? "(없음)")
-        case .deleteAccount:
-            return Menu(AccountSettings.deleteAccount, destructive: true)
-        }
-    }
-
-    private var userService: UserServiceProtocol {
-        services.userService
-    }
-
-    private var settingsService: SettingsServiceProtocol {
-        container.services.settingsService
-    }
-
-    private var userState: UserState {
-        appState.user
-    }
-
-    private var setting: Setting {
-        appState.setting
-    }
-
+    
     func fetchUser() async {
         do {
             try await userService.fetchUser()
         } catch {
             print("user error")
         }
+    }
+    
+    private var currentUser: User? {
+        appState.user.current
+    }
+
+    private var userService: UserServiceProtocol {
+        services.userService
     }
 }

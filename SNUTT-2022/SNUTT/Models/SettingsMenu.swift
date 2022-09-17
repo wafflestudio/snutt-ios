@@ -1,5 +1,5 @@
 //
-//  Menu.swift
+//  SettingsMenu.swift
 //  SNUTT
 //
 //  Created by 최유림 on 2022/08/14.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Menu: View {
+struct SettingsMenu: View {
     var title: String
     var destination: AnyView?
     var content: String?
@@ -18,13 +18,13 @@ struct Menu: View {
     }
 
     /// 탭하면 다른 화면으로 이동하는 메뉴입니다.
-    init<Content>(_ menu: MenuType, _ destination: () -> Content) where Content: View {
+    init<Content>(_ menu: SettingsMenuType, _ destination: () -> Content) where Content: View {
         title = menu.title
         self.destination = AnyView(destination())
     }
 
     /// 다른 화면으로 이동하지 않고 정보만 보여주거나 탭할 시 Navigation 외의 액션을 하는 메뉴입니다.
-    init(_ menu: MenuType, _ content: String? = "", destructive: Bool = false, action: (() -> Void)? = nil) {
+    init(_ menu: SettingsMenuType, content: String? = "", destructive: Bool = false, action: (() -> Void)? = nil) {
         title = menu.title
         self.content = content
         self.destructive = destructive
@@ -56,24 +56,24 @@ struct Menu: View {
     }
 }
 
-extension Menu: Hashable {
+extension SettingsMenu: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(title)
         hasher.combine(content)
         hasher.combine(shouldNavigate)
     }
 
-    static func == (lhs: Menu, rhs: Menu) -> Bool {
+    static func == (lhs: SettingsMenu, rhs: SettingsMenu) -> Bool {
         return lhs.title == rhs.title && lhs.shouldNavigate == rhs.shouldNavigate && lhs.content == rhs.content
     }
 }
 
 // TODO: Move to appropriate directory
-protocol MenuType {
+protocol SettingsMenuType {
     var title: String { get }
 }
 
-enum Settings: MenuType {
+enum Settings: SettingsMenuType {
     case accountSetting
     case timetableSetting
     case showVersionInfo
@@ -99,7 +99,7 @@ enum Settings: MenuType {
     }
 }
 
-enum AccountSettings: MenuType {
+enum AccountSettings: SettingsMenuType {
     case addLocalId
     case showLocalId
     case changePassword
@@ -111,7 +111,7 @@ enum AccountSettings: MenuType {
 
     var title: String {
         switch self {
-        case .addLocalId: return "아이디 비번 추가"
+        case .addLocalId: return "아이디/비밀번호 추가"
         case .showLocalId: return "아이디"
         case .changePassword: return "비밀번호 변경"
         case .makeFbConnection: return "페이스북 연동"
