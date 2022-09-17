@@ -19,9 +19,9 @@ extension AppEnvironment {
         let userService: UserServiceProtocol
         let lectureService: LectureServiceProtocol
         let searchService: SearchServiceProtocol
-        let validationService: ValidationServiceProtocol
-        let settingsService: SettingsServiceProtocol
         let reviewService: ReviewServiceProtocol
+        let globalUIService: GlobalUIServiceProtocol
+        let courseBookService: CourseBookServiceProtocol
     }
 }
 
@@ -31,6 +31,7 @@ extension AppEnvironment {
         let userRepository: UserRepositoryProtocol
         let lectureRepository: LectureRepositoryProtocol
         let searchRepository: SearchRepositoryProtocol
+        let courseBookRepository: CourseBookRepositoryProtocol
         let reviewRepository: ReviewRepositoryProtocol
     }
 
@@ -63,10 +64,12 @@ extension AppEnvironment {
         let lectureRepository = LectureRepository(session: session)
         let searchRepository = SearchRepository(session: session)
         let reviewRepository = ReviewRepository(session: session)
+        let courseBookRepository = CourseBookRepository(session: session)
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
                      lectureRepository: lectureRepository,
                      searchRepository: searchRepository,
+                     courseBookRepository: courseBookRepository,
                      reviewRepository: reviewRepository)
     }
 
@@ -80,16 +83,16 @@ extension AppEnvironment {
         let userService = UserService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
-        let validationService = ValidationService(appState: appState, webRepositories: webRepositories)
-        let settingsService = SettingsService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let reviewService = ReviewService(appState: appState)
+        let globalUIService = GlobalUIService(appState: appState)
+        let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
                      searchService: searchService,
-                     validationService: validationService,
-                     settingsService: settingsService,
-                     reviewService: reviewService)
+                     reviewService: reviewService,
+                     globalUIService: globalUIService,
+                     courseBookService: courseBookService)
     }
 }
 
@@ -106,13 +109,13 @@ extension EnvironmentValues {
 
 #if DEBUG
     extension AppEnvironment.Services {
-        static var preview: Self {
+        static func preview(appState: AppState) -> Self {
             .init(timetableService: FakeTimetableService(),
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
                   searchService: FakeSearchService(),
-                  validationService: FakeValidationService(),
-                  settingsService: FakeSettingsService(),
+                  globalUIService: GlobalUIService(appState: appState),
+                  courseBookService: FakeCourseBookService(),
                   reviewService: FakeReviewService())
         }
     }

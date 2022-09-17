@@ -8,15 +8,8 @@
 import SwiftUI
 
 struct SearchLectureScene: View {
-    let viewModel: SearchSceneViewModel
-    @ObservedObject var searchState: SearchState
-
-    @State var previousCount: Int = 0
-
-    init(viewModel: SearchSceneViewModel) {
-        self.viewModel = viewModel
-        searchState = viewModel.searchState
-    }
+    @State private var previousCount: Int = 0
+    @ObservedObject var viewModel: SearchSceneViewModel
 
     var body: some View {
         // TODO: Split components
@@ -25,19 +18,25 @@ struct SearchLectureScene: View {
                 VStack {
                     Spacer()
                         .frame(height: 44)
-                    TimetableZStack(current: viewModel.timetableState.current, config: viewModel.timetableState.configuration)
-                        .environment(\.selectedLecture, searchState.selectedLecture)
+                    TimetableZStack(current: viewModel.currentTimetableWithSelection,
+                                    config: viewModel.timetableConfigWithAutoFit)
+                        .animation(.customSpring, value: viewModel.selectedLecture?.id)
                 }
                 STColor.searchListBackground
             }
-            .ignoresSafeArea([.keyboard])
+            .ignoresSafeArea(.keyboard)
 
             VStack(spacing: 0) {
-                SearchBar(text: $searchState.searchText, isFilterOpen: $searchState.isFilterOpen) {
+                // MARK: 검색창
+
+                SearchBar(text: $viewModel.searchText,
+                          isFilterOpen: $viewModel.isFilterOpen) {
                     Task {
                         await viewModel.fetchInitialSearchResult()
                     }
                 }
+
+                // MARK: 검색 태그
 
                 if viewModel.selectedTagList.count > 0 {
                     ScrollViewReader { reader in
@@ -82,11 +81,17 @@ struct SearchLectureScene: View {
                     }
                 }
 
+                // MARK: 검색 결과
+
                 if viewModel.isLoading {
                     ProgressView()
                         .frame(maxHeight: .infinity, alignment: .center)
                 } else {
-                    SearchLectureList(viewModel: .init(container: viewModel.container), data: viewModel.searchResult, fetchMore: viewModel.fetchMoreSearchResult, selected: $searchState.selectedLecture)
+                    SearchLectureList(viewModel: .init(container: viewModel.container),
+                                      data: viewModel.searchResult,
+                                      fetchMore: viewModel.fetchMoreSearchResult,
+                                      selected: $viewModel.selectedLecture)
+                        .animation(.customSpring, value: viewModel.selectedLecture?.id)
                 }
             }
         }
@@ -129,9 +134,7 @@ struct SearchLectureList: View {
                         .contentShape(Rectangle())
                         .onTapGesture {
                             if selected?.id != lecture.id {
-                                withAnimation(.customSpring) {
-                                    selected = lecture
-                                }
+                                selected = lecture
                             }
                         }
                 }

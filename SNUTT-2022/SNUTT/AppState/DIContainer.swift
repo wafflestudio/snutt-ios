@@ -22,7 +22,8 @@ struct DIContainer {
 #if DEBUG
     extension DIContainer {
         static var preview: Self {
-            .init(appState: .preview, services: .preview)
+            let appState: AppState = .preview
+            return .init(appState: appState, services: .preview(appState: appState))
         }
     }
 #endif

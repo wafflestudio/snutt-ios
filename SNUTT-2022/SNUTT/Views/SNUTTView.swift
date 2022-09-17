@@ -9,7 +9,8 @@ import Combine
 import SwiftUI
 
 struct SNUTTView: View {
-    let container: DIContainer
+    @State private var selectedTab: TabType = .timetable
+    @ObservedObject var viewModel: ViewModel
 
     init(container: DIContainer) {
         self.container = container
@@ -22,10 +23,14 @@ struct SNUTTView: View {
             FilterSheetScene(viewModel: .init(container: container))
         }
         .accentColor(Color(UIColor.label))
+        .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
+            Text(viewModel.errorMessage)
+        }
         .onAppear {
             setTabBarStyle()
             setNavBarStyle()
         }
+
         let _ = debugChanges()
     }
 
@@ -108,6 +113,27 @@ private struct MainTabScene: View {
     }
 }
 
+extension SNUTTView {
+    class ViewModel: BaseViewModel, ObservableObject {
+        @Published var isErrorAlertPresented = false
+        @Published var errorContent: STError? = nil
+
+        override init(container: DIContainer) {
+            super.init(container: container)
+            appState.system.$errorContent.assign(to: &$errorContent)
+            appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
+        }
+
+        var errorTitle: String {
+            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorTitle
+        }
+
+        var errorMessage: String {
+            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
+        }
+    }
+}
+
 enum TabType: String {
     case timetable
     case search
@@ -117,6 +143,6 @@ enum TabType: String {
 
 struct SNUTTView_Previews: PreviewProvider {
     static var previews: some View {
-        SNUTTView(container: .preview)
+        SNUTTView(viewModel: .init(container: .preview))
     }
 }

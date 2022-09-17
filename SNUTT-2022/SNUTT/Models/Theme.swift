@@ -13,7 +13,7 @@ enum Theme: Int, CaseIterable {
     case ice = 4
     case lawn = 5
 
-    func getColorList() -> [String] {
+    private func getColorList() -> [String] {
         switch self {
         case .snutt:
             return ["#ffffff", "#E54459", "#F58D3D", "#FAC42D", "#A6D930", "#2BC267", "#1BD0C8", "#1D99E8", "#4F48C4", "#AF56B3"]
@@ -30,28 +30,32 @@ enum Theme: Int, CaseIterable {
         }
     }
 
-    func getColor(at colorIndex: Int) -> String {
-        return getColorList()[colorIndex]
+    func getLectureColorList() -> [LectureColor] {
+        getColorList().map { .init(fg: .white, bg: .init(hex: $0)) }
     }
 
-    func getImageName() -> String {
+    func getColor(at colorIndex: Int) -> LectureColor {
+        return getLectureColorList()[colorIndex]
+    }
+
+    var imageName: String {
         switch self {
         case .snutt:
-            return "SNUTTTheme"
+            return "theme.snutt"
         case .fall:
-            return "FallTheme"
+            return "theme.fall"
         case .modern:
-            return "ModernTheme"
+            return "theme.modern"
         case .cherryBlossom:
-            return "CherryBlossomTheme"
+            return "theme.cherryblossom"
         case .ice:
-            return "IceTheme"
+            return "theme.ice"
         case .lawn:
-            return "LawnTheme"
+            return "theme.lawn"
         }
     }
 
-    func getName() -> String {
+    var name: String {
         switch self {
         case .snutt:
             return "SNUTT"

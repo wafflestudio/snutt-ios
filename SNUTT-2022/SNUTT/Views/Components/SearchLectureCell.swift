@@ -34,8 +34,10 @@ struct SearchLectureCell: View {
 
                 LectureDetailRow(imageName: "map.white", text: lecture.timePlaces.isEmpty ? "(없음)" : lecture.timePlaces.map { $0.place }.joined(separator: "/"))
 
+                LectureDetailRow(imageName: "ellipsis.white", text: lecture.remark.isEmpty ? "(없음)" : lecture.remark)
+
                 if selected {
-                    Divider().padding(.top, 10)
+                    Spacer().frame(height: 5)
 
                     HStack {
                         Button {
@@ -88,7 +90,7 @@ extension SearchLectureCell {
             do {
                 try await services.lectureService.addLecture(lecture: lecture)
             } catch {
-                // TODO: handle error
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
