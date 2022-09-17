@@ -136,14 +136,12 @@ struct LectureDetailScene: View {
                         }
                     }
                     .padding()
-
+                    
                     if !editMode.isEditing {
                         DetailButton(text: "강의계획서") {
-                            print("tap")
                         }
-
+                        
                         DetailButton(text: "강의평") {
-                            print("tap")
                         }
                     }
 
@@ -330,7 +328,6 @@ struct EditableTimeField: View {
 
     var body: some View {
         Button {
-            print("hi")
         } label: {
             timeTextLabel(from: timePlace)
                 .font(.system(size: 16, weight: .regular))
