@@ -14,6 +14,16 @@ extension LectureDetailScene {
         var lectureService: LectureServiceProtocol {
             services.lectureService
         }
+        
+        func addCustomLecture(lecture: Lecture) async -> Bool {
+            do {
+                try await lectureService.addCustomLecture(lecture: lecture)
+                return true
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+                return false
+            }
+        }
 
         func updateLecture(oldLecture: Lecture, newLecture: Lecture) async -> Lecture? {
             do {
