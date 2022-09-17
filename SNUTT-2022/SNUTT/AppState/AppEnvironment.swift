@@ -19,6 +19,9 @@ extension AppEnvironment {
         let userService: UserServiceProtocol
         let lectureService: LectureServiceProtocol
         let searchService: SearchServiceProtocol
+        let validationService: ValidationServiceProtocol
+        let settingsService: SettingsServiceProtocol
+        let reviewService: ReviewServiceProtocol
     }
 }
 
@@ -28,6 +31,7 @@ extension AppEnvironment {
         let userRepository: UserRepositoryProtocol
         let lectureRepository: LectureRepositoryProtocol
         let searchRepository: SearchRepositoryProtocol
+        let reviewRepository: ReviewRepositoryProtocol
     }
 
     struct LocalRepositories {
@@ -48,8 +52,8 @@ extension AppEnvironment {
 
     private static func configuredSession() -> Session {
         let storage = Storage()
-        storage.accessToken = "c7f446a2..."
-        storage.apiKey = "eyJ0eXAiO..."
+        storage.apiKey = Bundle.main.infoDictionary?["API_KEY"] as! String
+        storage.accessToken = "74280a42...."
         return Session(interceptor: Interceptor(authStorage: storage), eventMonitors: [Logger()])
     }
 
@@ -58,10 +62,12 @@ extension AppEnvironment {
         let userRepository = UserRepository(session: session)
         let lectureRepository = LectureRepository(session: session)
         let searchRepository = SearchRepository(session: session)
+        let reviewRepository = ReviewRepository(session: session)
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
                      lectureRepository: lectureRepository,
-                     searchRepository: searchRepository)
+                     searchRepository: searchRepository,
+                     reviewRepository: reviewRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -74,10 +80,16 @@ extension AppEnvironment {
         let userService = UserService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
+        let validationService = ValidationService(appState: appState, webRepositories: webRepositories)
+        let settingsService = SettingsService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
+        let reviewService = ReviewService(appState: appState)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
-                     searchService: searchService)
+                     searchService: searchService,
+                     validationService: validationService,
+                     settingsService: settingsService,
+                     reviewService: reviewService)
     }
 }
 
@@ -98,7 +110,10 @@ extension EnvironmentValues {
             .init(timetableService: FakeTimetableService(),
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
-                  searchService: FakeSearchService())
+                  searchService: FakeSearchService(),
+                  validationService: FakeValidationService(),
+                  settingsService: FakeSettingsService(),
+                  reviewService: FakeReviewService())
         }
     }
 #endif

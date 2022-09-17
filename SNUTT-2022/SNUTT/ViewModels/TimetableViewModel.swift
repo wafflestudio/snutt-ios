@@ -14,8 +14,6 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     @Published var totalCredit: Int = 0
     @Published var timetableTitle: String = ""
 
-    private var bag = Set<AnyCancellable>()
-
     override init(container: DIContainer) {
         super.init(container: container)
 
@@ -28,16 +26,12 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
             .assign(to: &$timetableTitle)
     }
 
-    private var timetableService: TimetableServiceProtocol {
-        services.timetableService
+    var currentTimetable: Timetable? {
+        timetableState.current
     }
 
-    private var currentTimetable: Timetable? {
-        appState.timetable.current
-    }
-
-    var timetableState: TimetableState {
-        appState.timetable
+    var currentConfiguration: TimetableConfiguration {
+        timetableState.configuration
     }
 
     func toggleMenuSheet() {
@@ -65,5 +59,13 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
 
     func loadTimetableConfig() {
         timetableService.loadTimetableConfig()
+    }
+
+    private var timetableService: TimetableServiceProtocol {
+        services.timetableService
+    }
+
+    private var timetableState: TimetableState {
+        appState.timetable
     }
 }

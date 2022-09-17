@@ -11,10 +11,12 @@ import SwiftUI
 class AppState {
     var user = UserState()
     var setting = Setting()
-    var system = System()
+    var webView = WebViewState()
 
     var search = SearchState()
     var timetable = TimetableState()
+
+    var tab = TabState()
 }
 
 #if DEBUG

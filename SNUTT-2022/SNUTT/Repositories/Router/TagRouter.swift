@@ -10,7 +10,7 @@ import Alamofire
 import Foundation
 
 enum TagRouter: Router {
-    var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/tags")! }
+    var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/tags")! }
     static let shouldAddToken: Bool = true
 
     case getLastUpdateTime(quarter: Quarter)

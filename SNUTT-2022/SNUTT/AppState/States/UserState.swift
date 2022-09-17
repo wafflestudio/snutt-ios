@@ -9,5 +9,6 @@ import SwiftUI
 
 class UserState: ObservableObject {
     var token: String?
+    var apiKey: String?
     @Published var current: User?
 }

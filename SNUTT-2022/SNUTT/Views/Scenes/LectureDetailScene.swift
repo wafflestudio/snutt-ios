@@ -118,7 +118,9 @@ struct LectureDetailScene: View {
                     }
 
                     DetailButton(text: "강의평") {
-                        print("tap")
+                        Task {
+                            await viewModel.fetchReviewId(of: lecture)
+                        }
                     }
 
                     if !isPresentedModally {

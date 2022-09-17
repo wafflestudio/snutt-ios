@@ -18,6 +18,12 @@
 		B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FC28AE2E1E00E2D652 /* User.swift */; };
 		B88D170128AF71E300E2D652 /* UserSupportScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170028AF71E300E2D652 /* UserSupportScene.swift */; };
 		B88D170328B1501F00E2D652 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170228B1501F00E2D652 /* WebView.swift */; };
+		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
+		B8BC0C9228BE3326007A1CA8 /* TabState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C9128BE3326007A1CA8 /* TabState.swift */; };
+		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
+		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
+		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
+		B8E51E6F28B7FF8F0065248E /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6E28B7FF8F0065248E /* ReviewService.swift */; };
 		B8AF8D3E28C72A880056DE62 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF8D3D28C72A880056DE62 /* Validation.swift */; };
 		B8F40EA9289809C60021A2A9 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EA8289809C60021A2A9 /* LicenseView.swift */; };
 		B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */; };
@@ -137,7 +143,7 @@
 		DC2915A32866958100FE5F9A /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A22866958100FE5F9A /* UserState.swift */; };
 		DC2915A52866980B00FE5F9A /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A42866980B00FE5F9A /* Setting.swift */; };
 		DC2915A72866984000FE5F9A /* TimetableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A62866984000FE5F9A /* TimetableState.swift */; };
-		DC2915A92866986600FE5F9A /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A82866986600FE5F9A /* System.swift */; };
+		DC2915A92866986600FE5F9A /* WebViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A82866986600FE5F9A /* WebViewState.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4C27E5C87F0068C94B /* Assets.xcassets */; };
 		DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F5927E5C87F0068C94B /* SNUTTTests.swift */; };
@@ -200,6 +206,16 @@
 		B88D16FC28AE2E1E00E2D652 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B88D170028AF71E300E2D652 /* UserSupportScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSupportScene.swift; sourceTree = "<group>"; };
 		B88D170228B1501F00E2D652 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		B88D170728B361DC00E2D652 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
+		B8BC0C9128BE3326007A1CA8 /* TabState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabState.swift; sourceTree = "<group>"; };
+		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
+		B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ProductionConfig.xcconfig; sourceTree = "<group>"; };
+		B8E51E5F28B549660065248E /* StagingConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StagingConfig.xcconfig; sourceTree = "<group>"; };
+		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
+		B8E51E6728B615140065248E /* WebErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebErrorView.swift; sourceTree = "<group>"; };
+		B8E51E6A28B769680065248E /* ReviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRouter.swift; sourceTree = "<group>"; };
+		B8E51E6E28B7FF8F0065248E /* ReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
 		B8AF8D3D28C72A880056DE62 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		B8F40EA8289809C60021A2A9 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingScene.swift; sourceTree = "<group>"; };
@@ -294,7 +310,7 @@
 		DC2915A22866958100FE5F9A /* UserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
 		DC2915A42866980B00FE5F9A /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		DC2915A62866984000FE5F9A /* TimetableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableState.swift; sourceTree = "<group>"; };
-		DC2915A82866986600FE5F9A /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
+		DC2915A82866986600FE5F9A /* WebViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewState.swift; sourceTree = "<group>"; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
 		DC860F4C27E5C87F0068C94B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC860F4F27E5C87F0068C94B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -343,6 +359,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B8E51E6928B75E9E0065248E /* States */ = {
+			isa = PBXGroup;
+			children = (
+				B8BC0C9128BE3326007A1CA8 /* TabState.swift */,
+				DC2915A62866984000FE5F9A /* TimetableState.swift */,
+				DC2915A22866958100FE5F9A /* UserState.swift */,
+				BE4B0EBB2873BC2B005FE164 /* SearchState.swift */,
+				DC2915A82866986600FE5F9A /* WebViewState.swift */,
+				DC2915A42866980B00FE5F9A /* Setting.swift */,
+			);
+			path = States;
+			sourceTree = "<group>";
+		};
 		B8F40EA7289809AD0021A2A9 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -430,6 +459,7 @@
 				BE682BF82887FB59009EBCB7 /* SearchRouter.swift */,
 				BE682C002888173B009EBCB7 /* TagRouter.swift */,
 				B88D16FA28AE2BB900E2D652 /* UserRouter.swift */,
+				B8E51E6A28B769680065248E /* ReviewRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -453,6 +483,7 @@
 		DC860F4727E5C87D0068C94B /* SNUTT */ = {
 			isa = PBXGroup;
 			children = (
+				B88D170728B361DC00E2D652 /* Info.plist */,
 				BE804BEC288BA3DF00782F16 /* SNUTT.entitlements */,
 				BE419B8B288B8C4900FA9590 /* Extensions */,
 				DCD41A7627E5CED100CF380E /* Assets */,
@@ -463,6 +494,9 @@
 				DCD41A6127E5CCB600CF380E /* Services */,
 				DCD41A5E27E5CC4700CF380E /* Models */,
 				DC860F4E27E5C87F0068C94B /* Preview Content */,
+				B8E51E5C28B546770065248E /* DebugConfig.xcconfig */,
+				B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */,
+				B8E51E5F28B549660065248E /* StagingConfig.xcconfig */,
 			);
 			path = SNUTT;
 			sourceTree = "<group>";
@@ -514,12 +548,8 @@
 				BE682BFE2888056C009EBCB7 /* Quarter.swift */,
 				BE1D2B3928014527008F9134 /* Weekday.swift */,
 				BE682BFC2887FC78009EBCB7 /* SearchTag.swift */,
-				DC2915A82866986600FE5F9A /* System.swift */,
-				DC2915A42866980B00FE5F9A /* Setting.swift */,
 				BE682BF028872315009EBCB7 /* STError.swift */,
-				DC2915A22866958100FE5F9A /* UserState.swift */,
 				BE4B0EB728735052005FE164 /* MenuSheetSetting.swift */,
-				DC2915A62866984000FE5F9A /* TimetableState.swift */,
 				BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */,
 				BE4B0EBB2873BC2B005FE164 /* SearchState.swift */,
 				B87E0A3828A91C8B00D2EA95 /* SettingsMenu.swift */,
@@ -536,6 +566,9 @@
 				BEDE34D72879A9DC00525014 /* UserService.swift */,
 				BE682BDA28870872009EBCB7 /* LectureService.swift */,
 				BE682C0428881852009EBCB7 /* SearchService.swift */,
+				B88D16F028ABBE8000E2D652 /* ValidationService.swift */,
+				B88D16F628AC075E00E2D652 /* SettingsService.swift */,
+				B8E51E6E28B7FF8F0065248E /* ReviewService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -550,7 +583,9 @@
 				BEDE34D92879AA0B00525014 /* UserRepository.swift */,
 				BE682C02288817C8009EBCB7 /* SearchRepository.swift */,
 				BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */,
+				B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */,
 				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
+				B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -561,6 +596,7 @@
 				DC860F4827E5C87D0068C94B /* SNUTTApp.swift */,
 				BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */,
 				B88D170228B1501F00E2D652 /* WebView.swift */,
+				B8E51E6728B615140065248E /* WebErrorView.swift */,
 				DCD41A6D27E5CDCA00CF380E /* Components */,
 				DCD41A6C27E5CDBE00CF380E /* Scenes */,
 			);
@@ -628,6 +664,7 @@
 				BEDE34D52879A7B800525014 /* DIContainer.swift */,
 				B827A8FE289AEC6F00ABAE39 /* SNUTTDefaults.swift */,
 				B827A902289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift */,
+				B8E51E6928B75E9E0065248E /* States */,
 			);
 			path = AppState;
 			sourceTree = "<group>";
@@ -876,9 +913,10 @@
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
-				DC2915A92866986600FE5F9A /* System.swift in Sources */,
+				DC2915A92866986600FE5F9A /* WebViewState.swift in Sources */,
 				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
 				BE98A00E288AA3D200C2CE95 /* MenuSheetContent.swift in Sources */,
+				B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				BE4B0EB828735052005FE164 /* MenuSheetSetting.swift in Sources */,
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
@@ -890,6 +928,7 @@
 				B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
+				B8E51E6828B615140065248E /* WebErrorView.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
 				BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */,
 				BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */,
@@ -898,6 +937,8 @@
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
+				B8BC0C9228BE3326007A1CA8 /* TabState.swift in Sources */,
+				B8E51E6F28B7FF8F0065248E /* ReviewService.swift in Sources */,
 				DC2915A52866980B00FE5F9A /* Setting.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
@@ -920,6 +961,7 @@
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
 				BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */,
 				BE682C092889ADD7009EBCB7 /* SearchLectureCell.swift in Sources */,
+				B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */,
 				BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */,
 				B8F40EB328980DFF0021A2A9 /* PrivacyPolicyView.swift in Sources */,
 				B8F40EB728980E7A0021A2A9 /* AccountSettingViewModel.swift in Sources */,
@@ -933,6 +975,7 @@
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
 				BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */,
 				DC2915A72866984000FE5F9A /* TimetableState.swift in Sources */,
+				B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
 				BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */,
 			);
@@ -988,15 +1031,177 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		BE98A074288AFC1600C2CE95 /* Debug */ = {
+		B8E51E6028B549700065248E /* Staging */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5F28B549660065248E /* StagingConfig.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Staging;
+		};
+		B8E51E6128B549700065248E /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5F28B549660065248E /* StagingConfig.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
+				DEVELOPMENT_TEAM = H3J2ZWWZQV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SNUTT/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Staging;
+		};
+		B8E51E6228B549700065248E /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5F28B549660065248E /* StagingConfig.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTTTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SNUTT.app/SNUTT";
+			};
+			name = Staging;
+		};
+		B8E51E6328B549700065248E /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5F28B549660065248E /* StagingConfig.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTTUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SNUTT;
+			};
+			name = Staging;
+		};
+		B8E51E6428B549700065248E /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5F28B549660065248E /* StagingConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GB5CDMBZQB;
+				DEVELOPMENT_TEAM = H3J2ZWWZQV;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SNUTTWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SNUTTWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Staging;
+		};
+		BE98A074288AFC1600C2CE95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5C28B546770065248E /* DebugConfig.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H3J2ZWWZQV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTTWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SNUTTWidget;
@@ -1009,7 +1214,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG WIDGET";
@@ -1021,13 +1226,14 @@
 		};
 		BE98A075288AFC1600C2CE95 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GB5CDMBZQB;
+				DEVELOPMENT_TEAM = H3J2ZWWZQV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTTWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SNUTTWidget;
@@ -1039,7 +1245,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
@@ -1051,6 +1257,7 @@
 		};
 		DC860F6727E5C87F0068C94B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5C28B546770065248E /* DebugConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1112,6 +1319,7 @@
 		};
 		DC860F6827E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1167,6 +1375,7 @@
 		};
 		DC860F6A27E5C87F0068C94B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5C28B546770065248E /* DebugConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1175,9 +1384,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = GB5CDMBZQB;
+				DEVELOPMENT_TEAM = H3J2ZWWZQV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SNUTT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1189,7 +1399,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1200,6 +1410,7 @@
 		};
 		DC860F6B27E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1208,9 +1419,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = GB5CDMBZQB;
+				DEVELOPMENT_TEAM = H3J2ZWWZQV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SNUTT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1222,7 +1434,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shp7724-1.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1232,6 +1444,7 @@
 		};
 		DC860F6D27E5C87F0068C94B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5C28B546770065248E /* DebugConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1251,6 +1464,7 @@
 		};
 		DC860F6E27E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1272,6 +1486,7 @@
 		};
 		DC860F7027E5C87F0068C94B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5C28B546770065248E /* DebugConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1289,6 +1504,7 @@
 		};
 		DC860F7127E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1312,6 +1528,7 @@
 			buildConfigurations = (
 				BE98A074288AFC1600C2CE95 /* Debug */,
 				BE98A075288AFC1600C2CE95 /* Release */,
+				B8E51E6428B549700065248E /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1321,6 +1538,7 @@
 			buildConfigurations = (
 				DC860F6727E5C87F0068C94B /* Debug */,
 				DC860F6827E5C87F0068C94B /* Release */,
+				B8E51E6028B549700065248E /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1330,6 +1548,7 @@
 			buildConfigurations = (
 				DC860F6A27E5C87F0068C94B /* Debug */,
 				DC860F6B27E5C87F0068C94B /* Release */,
+				B8E51E6128B549700065248E /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1339,6 +1558,7 @@
 			buildConfigurations = (
 				DC860F6D27E5C87F0068C94B /* Debug */,
 				DC860F6E27E5C87F0068C94B /* Release */,
+				B8E51E6228B549700065248E /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1348,6 +1568,7 @@
 			buildConfigurations = (
 				DC860F7027E5C87F0068C94B /* Debug */,
 				DC860F7127E5C87F0068C94B /* Release */,
+				B8E51E6328B549700065248E /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
