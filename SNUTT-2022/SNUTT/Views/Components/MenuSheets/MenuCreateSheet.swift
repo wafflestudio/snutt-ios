@@ -17,11 +17,15 @@ struct MenuCreateSheet: View {
     var cancel: () -> Void
     var confirm: () async -> Void
 
+    var showPicker: Bool {
+        selectedQuarter != nil
+    }
+
     @State private var selectedIndex: Int = 0
 
     var body: some View {
         Sheet(isOpen: $isOpen,
-              orientation: .bottom(maxHeight: 370),
+              orientation: .bottom(maxHeight: showPicker ? 370 : 180),
               disableBackgroundTap: false,
               disableDragGesture: true) {
             VStack {
@@ -29,15 +33,17 @@ struct MenuCreateSheet: View {
 
                 TitleTextField(titleText: $titleText, isSheetOpen: isOpen)
 
-                Picker("학기 선택", selection: $selectedIndex) {
-                    ForEach(quarterChoices.indices, id: \.self) { index in
-                        let quarter = quarterChoices[index]
-                        Text(quarter.longString()).tag(quarter)
+                if showPicker {
+                    Picker("학기 선택", selection: $selectedIndex) {
+                        ForEach(quarterChoices.indices, id: \.self) { index in
+                            let quarter = quarterChoices[index]
+                            Text(quarter.longString()).tag(quarter)
+                        }
                     }
-                }
-                .pickerStyle(.wheel)
-                .onChange(of: selectedIndex) { newValue in
-                    selectedQuarter = quarterChoices[newValue]
+                    .pickerStyle(.wheel)
+                    .onChange(of: selectedIndex) { newValue in
+                        selectedQuarter = quarterChoices[newValue]
+                    }
                 }
 
                 Spacer()

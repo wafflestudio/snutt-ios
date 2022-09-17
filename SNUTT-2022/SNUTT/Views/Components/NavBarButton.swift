@@ -17,7 +17,7 @@ struct NavBarButton: View {
         } label: {
             Image(imageName)
         }
-        .frame(width: 30, height: 45)
+        .frame(width: 30, height: 30)
     }
 }
 

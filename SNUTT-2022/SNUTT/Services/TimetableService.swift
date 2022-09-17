@@ -19,9 +19,6 @@ protocol TimetableServiceProtocol {
     func deleteTimetable(timetableId: String) async throws
     func selectTimetableTheme(theme: Theme)
     func createTimetable(title: String, quarter: Quarter) async throws
-
-    /// 새로운 학기의 수강편람이 나와 있지만 유저가 해당 학기 시간표를 아직 만들지 않았다면 `true`를 리턴한다.
-    func isNewCourseBookAvailable() -> Bool
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -113,12 +110,6 @@ struct TimetableService: TimetableServiceProtocol {
         appState.timetable.current?.selectedTheme = theme
     }
 
-    func isNewCourseBookAvailable() -> Bool {
-        let myLatestQuarter = appState.timetable.metadataList?.map { $0.quarter }.sorted().last
-        let latestCourseBook = appState.timetable.courseBookList?.sorted().last
-        return myLatestQuarter != latestCourseBook
-    }
-
     func loadTimetableConfig() {
         DispatchQueue.main.async {
             appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
@@ -142,6 +133,5 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func updateTimetableTheme(timetableId _: String) async throws {}
     func deleteTimetable(timetableId _: String) async throws {}
     func selectTimetableTheme(theme _: Theme) {}
-    func isNewCourseBookAvailable() -> Bool { return true }
     func createTimetable(title _: String, quarter _: Quarter) async throws {}
 }

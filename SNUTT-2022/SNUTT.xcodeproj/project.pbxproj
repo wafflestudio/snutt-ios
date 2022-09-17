@@ -79,6 +79,7 @@
 		BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */; };
 		BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AE285D77D000070A66 /* SearchBar.swift */; };
 		BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */; };
+		BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */; };
 		BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413D828C3AFA500171060 /* EmptySearchResult.swift */; };
 		BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DA28C3B33300171060 /* SearchTips.swift */; };
 		BE9413DD28C3B68F00171060 /* SearchTagsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */; };
@@ -244,6 +245,7 @@
 		BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLectureScene.swift; sourceTree = "<group>"; };
 		BE8BB3AE285D77D000070A66 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetScene.swift; sourceTree = "<group>"; };
+		BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleBadgeModifier.swift; sourceTree = "<group>"; };
 		BE9413D828C3AFA500171060 /* EmptySearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchResult.swift; sourceTree = "<group>"; };
 		BE9413DA28C3B33300171060 /* SearchTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTips.swift; sourceTree = "<group>"; };
 		BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagsScrollView.swift; sourceTree = "<group>"; };
@@ -372,6 +374,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		BE9413B528BE89D000171060 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
 		BE9413D728C3AF8300171060 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -472,6 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				BE804BEC288BA3DF00782F16 /* SNUTT.entitlements */,
+				BE9413B528BE89D000171060 /* Modifiers */,
 				BE419B8B288B8C4900FA9590 /* Extensions */,
 				DCD41A7627E5CED100CF380E /* Assets */,
 				DCD41A7327E5CE5F00CF380E /* AppState */,
@@ -917,6 +928,7 @@
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */,
+				BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */,
 				BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
