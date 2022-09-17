@@ -10,7 +10,7 @@ import SwiftUI
 struct SNUTTView: View {
     @ObservedObject var viewModel: ViewModel
     @State private var selectedTab: TabType = .timetable
-    
+
     /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
     @State private var navigationBarHeight: CGFloat = 80
 
