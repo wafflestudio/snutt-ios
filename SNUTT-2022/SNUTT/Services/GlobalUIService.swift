@@ -29,8 +29,6 @@ protocol GlobalUIServiceProtocol {
 
     func presentErrorAlert(error: STError?)
     func presentErrorAlert(error: Error)
-
-    func setNavigationBarHeight(_ value: CGFloat)
 }
 
 /// A service that modifies miscellaneous global states.
@@ -131,14 +129,6 @@ struct GlobalUIService: GlobalUIServiceProtocol {
         DispatchQueue.main.async {
             appState.system.errorContent = error
             appState.system.isErrorAlertPresented = true
-        }
-    }
-
-    // MARK: System UI
-
-    func setNavigationBarHeight(_ value: CGFloat) {
-        DispatchQueue.main.async {
-            appState.system.navigationBarHeight = value
         }
     }
 }

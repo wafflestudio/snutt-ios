@@ -17,7 +17,6 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var searchResult: [Lecture]? = nil
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
-    @Published var navigationBarHeight: CGFloat = 80
 
     var searchText: String {
         get { _searchText }
@@ -53,7 +52,6 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$searchResult.assign(to: &$searchResult)
         appState.search.$isLoading.assign(to: &$isLoading)
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
-        appState.system.$navigationBarHeight.assign(to: &$navigationBarHeight)
     }
 
     private var searchState: SearchState {

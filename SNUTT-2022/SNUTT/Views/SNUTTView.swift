@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct SNUTTView: View {
-    @State private var selectedTab: TabType = .timetable
     @ObservedObject var viewModel: ViewModel
+    @State private var selectedTab: TabType = .timetable
+    
+    /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
+    @State private var navigationBarHeight: CGFloat = 80
 
     var body: some View {
         ZStack {
@@ -17,11 +20,11 @@ struct SNUTTView: View {
                 TabScene(tabType: .timetable) {
                     TimetableScene(viewModel: .init(container: viewModel.container))
                         .background(NavigationBarReader { navbar in
-                            viewModel.setNavigationBarHeight(navbar.frame.height)
+                            navigationBarHeight = navbar.frame.height
                         })
                 }
                 TabScene(tabType: .search) {
-                    SearchLectureScene(viewModel: .init(container: viewModel.container))
+                    SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
                 }
                 TabScene(tabType: .review) {
                     ReviewScene(viewModel: .init(container: viewModel.container))
@@ -83,10 +86,6 @@ extension SNUTTView {
 
         var errorMessage: String {
             (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
-        }
-
-        func setNavigationBarHeight(_ value: CGFloat) {
-            services.globalUIService.setNavigationBarHeight(value)
         }
     }
 }

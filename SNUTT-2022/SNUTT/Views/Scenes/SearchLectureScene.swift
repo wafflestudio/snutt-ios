@@ -9,9 +9,10 @@ import SwiftUI
 
 struct SearchLectureScene: View {
     @ObservedObject var viewModel: SearchSceneViewModel
-
+    var navigationBarHeight: CGFloat
+    
     @State private var reloadSearchList: Int = 0
-
+    
     var body: some View {
         ZStack {
             GeometryReader { reader in
@@ -21,7 +22,7 @@ struct SearchLectureScene: View {
                 Group {
                     VStack {
                         Spacer()
-                            .frame(height: viewModel.navigationBarHeight)
+                            .frame(height: navigationBarHeight)
                         TimetableZStack(current: viewModel.currentTimetableWithSelection,
                                         config: viewModel.timetableConfigWithAutoFit)
                             .animation(.customSpring, value: viewModel.selectedLecture?.id)
@@ -41,7 +42,7 @@ struct SearchLectureScene: View {
                                   action: viewModel.fetchInitialSearchResult,
                                   cancel: viewModel.initializeSearchState)
                     }
-                    .frame(height: reader.safeAreaInsets.top + viewModel.navigationBarHeight)
+                    .frame(height: reader.safeAreaInsets.top + navigationBarHeight)
 
                     // MARK: Selected Filter Tags
 
@@ -102,7 +103,7 @@ extension EnvironmentValues {
 struct SearchLectureScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SearchLectureScene(viewModel: .init(container: .preview))
+            SearchLectureScene(viewModel: .init(container: .preview), navigationBarHeight: 80)
         }
     }
 }
