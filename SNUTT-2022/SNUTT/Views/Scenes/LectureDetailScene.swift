@@ -11,8 +11,10 @@ import SwiftUI
 struct LectureDetailScene: View {
     @ObservedObject var viewModel: ViewModel
     @State var lecture: Lecture
+
     @State private var editMode: EditMode = .inactive
     @State private var tempLecture: Lecture = .preview
+    @State private var isDeleteAlertPresented = false
 
     // for modal presentation
     var isPresentedModally: Bool = false
@@ -134,26 +136,32 @@ struct LectureDetailScene: View {
                         }
                     }
                     .padding()
-
-                    DetailButton(text: "강의계획서") {
-                        print("tap")
-                    }
-
-                    DetailButton(text: "강의평") {
-                        print("tap")
+                    
+                    if !editMode.isEditing {
+                        DetailButton(text: "강의계획서") {
+                        }
+                        
+                        DetailButton(text: "강의평") {
+                        }
                     }
 
                     if !isPresentedModally {
                         DetailButton(text: "삭제", role: .destructive) {
-                            // TODO: check alert
-                            Task {
-                                await viewModel.deleteLecture(lecture: lecture)
+                            isDeleteAlertPresented = true
+                        }
+                        .alert("강의를 삭제하시겠습니까?", isPresented: $isDeleteAlertPresented) {
+                            Button("취소", role: .cancel, action: {})
+                            Button("삭제", role: .destructive) {
+                                Task {
+                                    await viewModel.deleteLecture(lecture: lecture)
+                                }
                             }
                         }
                     }
                 }
                 .background(STColor.groupForeground)
             }
+            .animation(.customSpring, value: editMode.isEditing)
             .padding(.vertical, 20)
         }
         .background(STColor.groupBackground)
@@ -320,7 +328,6 @@ struct EditableTimeField: View {
 
     var body: some View {
         Button {
-            print("hi")
         } label: {
             timeTextLabel(from: timePlace)
                 .font(.system(size: 16, weight: .regular))
