@@ -49,9 +49,7 @@ struct FilterSheetContent: View {
                         Group {
                             ForEach(viewModel.filterTags(with: selectedCategory)) { tag in
                                 Button {
-                                    withAnimation(.customSpring) {
-                                        viewModel.toggle(tag)
-                                    }
+                                    viewModel.toggle(tag)
                                 } label: {
                                     HStack {
                                         Image("checkmark.circle.\(viewModel.isSelected(tag: tag) ? "tick" : "untick")")

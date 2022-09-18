@@ -14,7 +14,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published private var _selectedLecture: Lecture?
     @Published private var _searchText: String = ""
     @Published private var _isFilterOpen: Bool = false
-    @Published var searchResult: [Lecture] = []
+    @Published var searchResult: [Lecture]? = nil
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
 
@@ -74,6 +74,10 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         }
     }
 
+    func initializeSearchState() {
+        services.searchService.initializeSearchState()
+    }
+
     func fetchInitialSearchResult() async {
         do {
             try await services.searchService.fetchInitialSearchResult()
@@ -90,7 +94,15 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func toggle(_ tag: SearchTag) {
-        services.searchService.toggle(tag)
+    func deselectTag(_ tag: SearchTag) {
+        services.searchService.deselectTag(tag)
+    }
+
+    func addLecture(lecture: Lecture) async {
+        do {
+            try await services.lectureService.addLecture(lecture: lecture)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
     }
 }

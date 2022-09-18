@@ -80,6 +80,10 @@
 		BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AE285D77D000070A66 /* SearchBar.swift */; };
 		BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */; };
 		BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */; };
+		BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413D828C3AFA500171060 /* EmptySearchResult.swift */; };
+		BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DA28C3B33300171060 /* SearchTips.swift */; };
+		BE9413DD28C3B68F00171060 /* SearchTagsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */; };
+		BE9413DF28C3BDF600171060 /* SearchLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DE28C3BDF600171060 /* SearchLectureList.swift */; };
 		BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */; };
 		BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
 		BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBD281D6244005F71E6 /* TimetableBlock.swift */; };
@@ -242,6 +246,10 @@
 		BE8BB3AE285D77D000070A66 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetScene.swift; sourceTree = "<group>"; };
 		BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleBadgeModifier.swift; sourceTree = "<group>"; };
+		BE9413D828C3AFA500171060 /* EmptySearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchResult.swift; sourceTree = "<group>"; };
+		BE9413DA28C3B33300171060 /* SearchTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTips.swift; sourceTree = "<group>"; };
+		BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagsScrollView.swift; sourceTree = "<group>"; };
+		BE9413DE28C3BDF600171060 /* SearchLectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLectureList.swift; sourceTree = "<group>"; };
 		BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBlocksLayer.swift; sourceTree = "<group>"; };
 		BE982FBB281D5227005F71E6 /* TimePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePlace.swift; sourceTree = "<group>"; };
 		BE982FBD281D6244005F71E6 /* TimetableBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBlock.swift; sourceTree = "<group>"; };
@@ -372,6 +380,19 @@
 				BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */,
 			);
 			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		BE9413D728C3AF8300171060 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				BE8BB3AE285D77D000070A66 /* SearchBar.swift */,
+				BE682C082889ADD7009EBCB7 /* SearchLectureCell.swift */,
+				BE9413D828C3AFA500171060 /* EmptySearchResult.swift */,
+				BE9413DA28C3B33300171060 /* SearchTips.swift */,
+				BE9413DE28C3BDF600171060 /* SearchLectureList.swift */,
+				BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		BE98A062288AFC1500C2CE95 /* Frameworks */ = {
@@ -600,10 +621,9 @@
 				BEB57C2928BCA7E400279EFF /* LectureColorList.swift */,
 				BEB57C2728BC985900279EFF /* LectureColorPreview.swift */,
 				BE7E230227FF3C38004DC202 /* NavBarButton.swift */,
-				BE8BB3AE285D77D000070A66 /* SearchBar.swift */,
 				BEDE34C928754F3100525014 /* Sheet.swift */,
 				BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */,
-				BE682C082889ADD7009EBCB7 /* SearchLectureCell.swift */,
+				BE9413D728C3AF8300171060 /* Search */,
 				BEE86515289E212D00D3D0E4 /* MenuSheets */,
 				BE1D2B3228012059008F9134 /* Timetable */,
 				BE682BC528845CDB009EBCB7 /* UITextEditor.swift */,
@@ -875,6 +895,7 @@
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
 				BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */,
+				BE9413DF28C3BDF600171060 /* SearchLectureList.swift in Sources */,
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
 				DC2915A32866958100FE5F9A /* User.swift in Sources */,
@@ -882,6 +903,7 @@
 				BE4B0EBC2873BC2B005FE164 /* SearchState.swift in Sources */,
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
+				BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
 				DC2915A92866986600FE5F9A /* SystemState.swift in Sources */,
 				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
@@ -895,6 +917,7 @@
 				DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */,
 				BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */,
 				B8F570A6289E1221005C199F /* UserDefaults.swift in Sources */,
+				BE9413DD28C3B68F00171060 /* SearchTagsScrollView.swift in Sources */,
 				B827A8FF289AEC6F00ABAE39 /* SNUTTDefaults.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
@@ -918,6 +941,7 @@
 				BE1B610C289D7C2500401361 /* GlobalUIService.swift in Sources */,
 				DC2915992865D69700FE5F9A /* LectureListViewModel.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
+				BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */,
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
 				BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */,
 				BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */,
