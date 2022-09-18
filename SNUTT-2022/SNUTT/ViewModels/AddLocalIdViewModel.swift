@@ -14,7 +14,7 @@ class AddLocalIdViewModel: BaseViewModel {
             // TODO: Alert 연결
         }
     }
-    
+
     private var userService: UserServiceProtocol {
         services.userService
     }
