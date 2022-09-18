@@ -11,6 +11,14 @@ struct LectureList: View {
     let viewModel: ViewModel
     let lectures: [Lecture]
 
+    struct NavigationButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .contentShape(Rectangle())
+                .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : .clear)
+        }
+    }
+
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
@@ -27,7 +35,7 @@ struct LectureList: View {
                         }
                         .padding(.leading, 20)
                     }
-                    .buttonStyle(RectangleButtonStyle())
+                    .buttonStyle(NavigationButtonStyle())
                 }
                 Divider()
                     .frame(height: 1)

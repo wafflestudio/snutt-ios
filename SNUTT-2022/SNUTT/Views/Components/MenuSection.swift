@@ -9,12 +9,8 @@ import SwiftUI
 
 struct MenuSection<Content>: View where Content: View {
     let quarter: Quarter
-    let current: Timetable?
-
-    let isEmptyQuarter: Bool
+    @State var isExpanded: Bool = true
     var content: () -> Content
-
-    @State var isExpanded: Bool = false
 
     var body: some View {
         VStack {
@@ -32,14 +28,8 @@ struct MenuSection<Content>: View where Content: View {
                         .scaledToFit()
                         .frame(width: 13)
                         .rotationEffect(.degrees(isExpanded ? 90 : 0), anchor: .init(x: 0.75, y: 0.5))
-
-                    if isEmptyQuarter {
-                        CircleBadge(color: .red)
-                            .padding(.leading, 8)
-                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
 
@@ -53,51 +43,28 @@ struct MenuSection<Content>: View where Content: View {
         }
         .padding(.horizontal, 15)
         .frame(maxHeight: .infinity)
-        .onAppear {
-            // 새로운 학기와 현재 시간표가 속한 학기는 처음부터 확장되어 있도록 한다.
-            isExpanded = (quarter == current?.quarter) || isEmptyQuarter
-        }
-        .onChange(of: current?.quarter, perform: { newValue in
-            // 현재 시간표가 속한 학기는 처음부터 확장되어 있도록 한다.
-            if !isExpanded {
-                withAnimation(.customSpring) {
-                    isExpanded = quarter == newValue
-                }
-            }
-        })
     }
 }
 
 struct MenuSectionRow: View {
     let timetableMetadata: TimetableMetadata
-    var isSelected: Bool
+    let isSelected: Bool
     let selectTimetable: ((String) async -> Void)?
-    let duplicateTimetable: ((String) async -> Void)?
-    let openEllipsis: ((TimetableMetadata) -> Void)?
-    @State var isLoading: Bool = false
+//    let duplicateTimetable: () -> Void
 
     var body: some View {
         HStack(spacing: 0) {
-            Group {
-                if isLoading {
-                    ProgressView()
-                        .scaleEffect(0.7)
-                } else {
-                    Image("checkmark.circle.tick")
-                        .resizable()
-                        .scaledToFit()
-                        .opacity(isSelected ? 1 : 0)
-                }
-            }
-            .frame(width: 15, height: 15)
-            .padding(.leading, 10)
-            .padding(.trailing, 8)
+            Image("checkmark.circle.tick")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 15)
+                .padding(.leading, 10)
+                .padding(.trailing, 8)
+                .opacity(isSelected ? 1 : 0)
 
             Button {
                 Task {
-                    isLoading = true
                     await selectTimetable?(timetableMetadata.id)
-                    isLoading = false
                 }
             } label: {
                 HStack(spacing: 5) {
@@ -110,26 +77,21 @@ struct MenuSectionRow: View {
                         .foregroundColor(Color(uiColor: .secondaryLabel))
                         .lineLimit(1)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .buttonStyle(.plain)
 
             Spacer()
 
-            Button {
-                Task {
-                    await duplicateTimetable?(timetableMetadata.id)
-                }
-            } label: {
+            Button {} label: {
                 Image("menu.duplicate")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 35)
                     .opacity(0.5)
             }
-            Button {
-                openEllipsis?(timetableMetadata)
-            } label: {
+            Button {} label: {
                 Image("menu.ellipsis")
                     .resizable()
                     .scaledToFit()
@@ -141,14 +103,14 @@ struct MenuSectionRow: View {
     }
 }
 
-// struct MenuSection_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ScrollView {
-//            LazyVStack {
-//                MenuSection(quarter: .init(year: 2022, semester: Semester(rawValue: 1)!)) {
-//                    MenuSectionRow(timetableMetadata: .init(id: "434", year: 2022, semester: 2, title: "나의 시간표", updatedAt: "344343", totalCredit: 4), isSelected: false, selectTimetable: nil, duplicateTimetable: nil, openEllipsis: nil)
-//                }
-//            }
-//        }
-//    }
-// }
+struct MenuSection_Previews: PreviewProvider {
+    static var previews: some View {
+        ScrollView {
+            LazyVStack {
+                MenuSection(quarter: .init(year: 2022, semester: Semester(rawValue: 1)!)) {
+                    MenuSectionRow(timetableMetadata: .init(id: "434", year: 2022, semester: 2, title: "나의 시간표", updatedAt: "344343", totalCredit: 4), isSelected: false, selectTimetable: nil)
+                }
+            }
+        }
+    }
+}

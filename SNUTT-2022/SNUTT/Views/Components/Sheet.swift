@@ -13,9 +13,6 @@ struct Sheet<Content>: View where Content: View {
     var cornerRadius: CGFloat = 20
     var sheetColor: Color = STColor.sheetBackground
     var sheetOpacity: CGFloat = 1
-    var disableBackgroundTap: Bool = false
-    var disableDragGesture: Bool = false
-    var onBackgroundTap: (() -> Void)?
     @ViewBuilder var content: () -> Content
 
     @GestureState private var translation: CGFloat = 0
@@ -23,19 +20,13 @@ struct Sheet<Content>: View where Content: View {
 
     private var dragGesture: some Gesture {
         DragGesture().updating(self.$translation) { value, state, _ in
-            if !disableDragGesture {
-                state = orientation.getTranslation(from: value)
-            }
+            state = orientation.getTranslation(from: value)
         }
         .onChanged { value in
-            if !disableDragGesture {
-                backgroundOpacity = orientation.getOpacity(from: value)
-            }
+            backgroundOpacity = orientation.getOpacity(from: value)
         }
         .onEnded { value in
-            if !disableDragGesture {
-                self.isOpen = orientation.getIsOpen(from: value)
-            }
+            self.isOpen = orientation.getIsOpen(from: value)
         }
     }
 
@@ -46,11 +37,8 @@ struct Sheet<Content>: View where Content: View {
                 .edgesIgnoringSafeArea(.all)
                 .disabled(!isOpen)
                 .onTapGesture {
-                    if !disableBackgroundTap {
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            self.isOpen = false
-                        }
-                        onBackgroundTap?()
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        self.isOpen = false
                     }
                 }
 
@@ -65,6 +53,7 @@ struct Sheet<Content>: View where Content: View {
             .offset(orientation.getOffset(isOpen: isOpen, translation: translation, reader: reader))
             .animation(.customSpring, value: isOpen)
         }
+        .edgesIgnoringSafeArea(.bottom)
         .highPriorityGesture(
             dragGesture
         )
@@ -73,6 +62,12 @@ struct Sheet<Content>: View where Content: View {
                 backgroundOpacity = newValue ? 1 : 0
             }
         })
+    }
+}
+
+extension Animation {
+    static var customSpring: Animation {
+        spring(response: 0.2, dampingFraction: 1, blendDuration: 0)
     }
 }
 

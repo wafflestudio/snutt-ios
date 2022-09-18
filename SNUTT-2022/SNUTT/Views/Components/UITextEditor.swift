@@ -65,10 +65,7 @@ struct UITextEditor: UIViewRepresentable {
 
     func updateUIView(_ uiView: UITextView, context _: Context) {
         DispatchQueue.main.async {
-            if !uiView.isFirstResponder {
-                // prevent UI update if textView had already resigned first responder
-                uiView.text = text
-            }
+            uiView.text = text
             self.placeholderView.isHidden = !text.isEmpty
             self.textDidChange(uiView)
         }

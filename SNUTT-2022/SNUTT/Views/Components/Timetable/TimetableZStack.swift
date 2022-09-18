@@ -13,11 +13,10 @@ struct TimetableZStack: View {
 
     var body: some View {
         ZStack {
-            TimetableGridLayer(current: current, config: config)
+            TimetableGridLayer(config: config)
             TimetableBlocksLayer(current: current, config: config)
         }
         .background(STColor.systemBackground)
-        .ignoresSafeArea(.keyboard)
 
         let _ = debugChanges()
     }

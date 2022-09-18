@@ -27,20 +27,18 @@ struct TimetablePainter {
     /// 주어진 `TimePlace` 블록의 좌표(오프셋)를 구한다.
     ///
     /// 주어진 `TimePlace`를 시간표에 표시할 수 없는 경우(e.g. 시간이나 요일 범위에서 벗어난 경우 등)에는 `nil`을 리턴한다.
-    static func getOffset(of timePlace: TimePlace, in containerSize: CGSize, current: Timetable?, config: TimetableConfiguration) -> CGPoint? {
+    static func getOffset(of timePlace: TimePlace, in containerSize: CGSize, timetableState: TimetableConfiguration) -> CGPoint? {
         if containerSize == .zero {
             return nil
         }
-
-        let minHour = getStartingHour(current: current, config: config)
-        let hourIndex = timePlace.startTime - Double(minHour)
-        guard let weekdayIndex = config.visibleWeeks.firstIndex(of: timePlace.day) else { return nil }
+        let hourIndex = timePlace.startTime - Double(timetableState.minHour)
+        guard let weekdayIndex = timetableState.visibleWeeks.firstIndex(of: timePlace.day) else { return nil }
         if hourIndex < 0 {
             return nil
         }
 
-        let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: config.weekCount)
-        let y = weekdayHeight + CGFloat(hourIndex) * getHourHeight(in: containerSize, hourCount: getHourCount(current: current, config: config))
+        let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: timetableState.weekCount)
+        let y = weekdayHeight + CGFloat(hourIndex) * getHourHeight(in: containerSize, hourCount: timetableState.hourCount)
 
         return CGPoint(x: x, y: y)
     }
@@ -48,38 +46,5 @@ struct TimetablePainter {
     /// 주어진 `TimePlace`블록의 높이를 구한다.
     static func getHeight(of timePlace: TimePlace, in containerSize: CGSize, hourCount: Int) -> CGFloat {
         return timePlace.len * getHourHeight(in: containerSize, hourCount: hourCount)
-    }
-
-    // MARK: Auto Fit
-
-    /// `autoFit`을 고려한 시간표의 시작 시각. 빈 시간표일 때에는 설정 값을 따른다.
-    static func getStartingHour(current: Timetable?, config: TimetableConfiguration) -> Int {
-        if !config.autoFit {
-            return config.minHour
-        }
-        guard let startTime = current?.earliestStartTime else {
-            return config.minHour
-        }
-        return min(Int(startTime), config.minHour)
-    }
-
-    /// `autoFit`을 고려한 시간표의 종료 시각. 빈 시간표일 때에는 설정 값을 따른다.
-    static func getEndingHour(current: Timetable?, config: TimetableConfiguration) -> Int {
-        if !config.autoFit {
-            return config.maxHour
-        }
-        guard let endTime = current?.lastEndTime else {
-            return config.maxHour
-        }
-
-        let startTime = getStartingHour(current: current, config: config)
-        return max(Int((endTime - 1).rounded(.up)), startTime + 7) // autofit을 사용하더라도 최소 7시간의 간격은 유지한다.
-    }
-
-    /// `autoFit`을 고려한 시간표의 세로 칸 수
-    static func getHourCount(current: Timetable?, config: TimetableConfiguration) -> Int {
-        let start = getStartingHour(current: current, config: config)
-        let end = getEndingHour(current: current, config: config)
-        return end - start + 1
     }
 }

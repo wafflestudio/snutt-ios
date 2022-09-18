@@ -30,39 +30,20 @@ struct Lecture: Identifiable {
     var createdAt: String
     var updatedAt: String
 
-    /// A property is populated by the client.
-    var theme: Theme?
+    func getColor(with theme: Theme) -> LectureColor {
+        // custom color
+        if let color = color {
+            return color
+        }
 
-    func withTheme(theme: Theme) -> Self {
-        var lecture = self
-        lecture.theme = theme
-        return lecture
+        // theme color
+        let bgColor = theme.getColor(at: colorIndex)
+        return LectureColor(fg: .white, bg: Color(hex: bgColor))
     }
 
-    func getColor(with theme: Theme? = nil) -> LectureColor {
-        // use custom color if colorIndex is zero
-        if colorIndex == 0, let color = color {
-            return color
-        }
-
-        // use color specified by colorIndex, where theme is given by parameter
-        if let color = theme?.getColor(at: colorIndex) {
-            return color
-        }
-
-        // use the theme colors of `self`
-        if let color = self.theme?.getColor(at: colorIndex) {
-            return color
-        }
-
-        // fallback
-        return .temporary
-    }
-
-    func withTemporaryColor() -> Self {
-        var lecture = self
-        lecture.color = .temporary
-        return lecture
+    mutating func withTemporaryColor() -> Self {
+        color = .init(fg: .white, bg: .gray)
+        return self
     }
 
     var startDateTimeString: String {
@@ -70,11 +51,9 @@ struct Lecture: Identifiable {
     }
 }
 
-struct LectureColor: Hashable {
-    var fg: Color
-    var bg: Color
-
-    static var temporary: Self = .init(fg: .white, bg: .gray)
+struct LectureColor {
+    let fg: Color
+    let bg: Color
 }
 
 extension Lecture {
@@ -130,8 +109,7 @@ extension Lecture {
                            color: nil,
                            quota: 40,
                            createdAt: "2022-04-02T16:35:53.652Z",
-                           updatedAt: "2022-04-02T16:35:53.652Z",
-                           theme: .snutt)
+                           updatedAt: "2022-04-02T16:35:53.652Z")
         }
     }
 #endif

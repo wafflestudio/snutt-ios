@@ -6,19 +6,12 @@
 //
 
 import Foundation
-import SwiftUI
 
 protocol TimetableServiceProtocol {
     func fetchRecentTimetable() async throws
     func fetchTimetableList() async throws
     func fetchTimetable(timetableId: String) async throws
     func loadTimetableConfig()
-    func copyTimetable(timetableId: String) async throws
-    func updateTimetableTitle(timetableId: String, title: String) async throws
-    func updateTimetableTheme(timetableId: String) async throws
-    func deleteTimetable(timetableId: String) async throws
-    func selectTimetableTheme(theme: Theme)
-    func createTimetable(title: String, quarter: Quarter) async throws
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -57,59 +50,6 @@ struct TimetableService: TimetableServiceProtocol {
         }
     }
 
-    func createTimetable(title: String, quarter: Quarter) async throws {
-        let dtos = try await timetableRepository.createTimetable(title: title, year: quarter.year, semester: quarter.semester.rawValue)
-        let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
-            appState.timetable.metadataList = timetables
-        }
-    }
-
-    func copyTimetable(timetableId: String) async throws {
-        let dtos = try await timetableRepository.copyTimetable(withTimetableId: timetableId)
-        let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
-            appState.timetable.metadataList = timetables
-        }
-    }
-
-    func updateTimetableTitle(timetableId: String, title: String) async throws {
-        let dtos = try await timetableRepository.updateTimetableTitle(withTimetableId: timetableId, withTitle: title)
-        let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
-            appState.timetable.metadataList = timetables
-            if appState.timetable.current?.id == timetableId {
-                appState.timetable.current?.title = title
-            }
-        }
-    }
-
-    func updateTimetableTheme(timetableId: String) async throws {
-        guard let theme = appState.timetable.current?.selectedTheme else { return }
-        let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: theme.rawValue)
-        let timetable = Timetable(from: dto)
-        DispatchQueue.main.async {
-            if appState.timetable.current?.id == timetableId {
-                appState.timetable.current = timetable
-            }
-        }
-    }
-
-    func deleteTimetable(timetableId: String) async throws {
-        if appState.timetable.current?.id == timetableId {
-            throw STError.CANT_DELETE_CURRENT_TIMETABLE
-        }
-        let dtos = try await timetableRepository.deleteTimetable(withTimetableId: timetableId)
-        let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
-            appState.timetable.metadataList = timetables
-        }
-    }
-
-    func selectTimetableTheme(theme: Theme) {
-        appState.timetable.current?.selectedTheme = theme
-    }
-
     func loadTimetableConfig() {
         DispatchQueue.main.async {
             appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
@@ -124,14 +64,8 @@ struct TimetableService: TimetableServiceProtocol {
 }
 
 struct FakeTimetableService: TimetableServiceProtocol {
-    func fetchRecentTimetable() async throws {}
+    func fetchRecentTimetable() {}
     func fetchTimetableList() {}
     func fetchTimetable(timetableId _: String) {}
     func loadTimetableConfig() {}
-    func copyTimetable(timetableId _: String) {}
-    func updateTimetableTitle(timetableId _: String, title _: String) {}
-    func updateTimetableTheme(timetableId _: String) async throws {}
-    func deleteTimetable(timetableId _: String) async throws {}
-    func selectTimetableTheme(theme _: Theme) {}
-    func createTimetable(title _: String, quarter _: Quarter) async throws {}
 }

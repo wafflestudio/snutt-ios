@@ -23,7 +23,7 @@ struct SNUTTApp: App {
 
     var body: some Scene {
         WindowGroup {
-            SNUTTView(viewModel: .init(container: appEnvironment.container))
+            SNUTTView(container: appEnvironment.container)
                 .environment(\.dependencyContainer, appEnvironment.container)
         }
     }

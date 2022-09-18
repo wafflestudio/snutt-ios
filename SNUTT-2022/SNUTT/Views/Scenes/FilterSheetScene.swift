@@ -8,17 +8,21 @@
 import SwiftUI
 
 struct FilterSheetScene: View {
-    @ObservedObject var viewModel: FilterSheetViewModel
+    let viewModel: FilterSheetViewModel
+    @ObservedObject var searchState: SearchState
+
+    init(viewModel: FilterSheetViewModel) {
+        self.viewModel = viewModel
+        searchState = self.viewModel.searchState
+    }
 
     var body: some View {
-        Sheet(isOpen: $viewModel.isFilterOpen,
-              orientation: .bottom(maxHeight: 450),
-              sheetOpacity: 1) {
+        Sheet(isOpen: $searchState.isFilterOpen, orientation: .bottom(maxHeight: 450), sheetOpacity: 1) {
             VStack {
                 HStack {
                     Spacer()
                     Button {
-                        viewModel.isFilterOpen = false
+                        searchState.isFilterOpen.toggle()
                     } label: {
                         Image("xmark.black")
                             .padding([.horizontal, .top], 10)
@@ -27,10 +31,9 @@ struct FilterSheetScene: View {
                 .padding(10)
                 Spacer()
                 FilterSheetContent(viewModel: viewModel)
+                Spacer()
             }
-            .edgesIgnoringSafeArea(.bottom)
         }
-        .ignoresSafeArea(.keyboard)
     }
 }
 

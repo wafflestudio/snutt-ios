@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TimetableGridLayer: View {
     typealias Painter = TimetablePainter
-    let current: Timetable?
     let config: TimetableConfiguration
 
     var body: some View {
@@ -21,7 +20,7 @@ struct TimetableGridLayer: View {
             horizontalHourlyPaths(in: reader.size)
                 .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(0.1)))
             horizontalHalfHourlyPaths(in: reader.size)
-                .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(config.isWidget ? 0.02 : 0.05)))
+                .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(0.05)))
         }
 
         let _ = debugChanges()
@@ -43,10 +42,9 @@ struct TimetableGridLayer: View {
 
     /// 한 시간 간격의 수평선
     func horizontalHourlyPaths(in containerSize: CGSize) -> Path {
-        let hourCount = Painter.getHourCount(current: current, config: config)
-        let hourHeight = Painter.getHourHeight(in: containerSize, hourCount: hourCount)
+        let hourHeight = Painter.getHourHeight(in: containerSize, hourCount: config.hourCount)
         return Path { path in
-            for i in 0 ..< hourCount {
+            for i in 0 ..< config.hourCount {
                 let y = Painter.weekdayHeight + CGFloat(i) * hourHeight
                 path.move(to: CGPoint(x: 0, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))
@@ -56,10 +54,9 @@ struct TimetableGridLayer: View {
 
     /// 30분 간격의 수평선
     func horizontalHalfHourlyPaths(in containerSize: CGSize) -> Path {
-        let hourCount = Painter.getHourCount(current: current, config: config)
-        let hourHeight = Painter.getHourHeight(in: containerSize, hourCount: hourCount)
+        let hourHeight = Painter.getHourHeight(in: containerSize, hourCount: config.hourCount)
         return Path { path in
-            for i in 0 ..< hourCount {
+            for i in 0 ..< config.hourCount {
                 let y = Painter.weekdayHeight + CGFloat(i) * hourHeight + hourHeight / 2
                 path.move(to: CGPoint(x: 0 + Painter.hourWidth, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))
@@ -85,10 +82,8 @@ struct TimetableGridLayer: View {
 
     /// 시간표 맨 왼쪽, 시간들을 나타내는 행
     var hoursVStack: some View {
-        let minHour = Painter.getStartingHour(current: current, config: config)
-        let maxHour = Painter.getEndingHour(current: current, config: config)
-        return VStack(spacing: 0) {
-            ForEach(minHour ... maxHour, id: \.self) { hour in
+        VStack(spacing: 0) {
+            ForEach(config.minHour ... config.maxHour, id: \.self) { hour in
                 Text(String(hour))
                     .font(STFont.details)
                     .foregroundColor(Color(UIColor.secondaryLabel))

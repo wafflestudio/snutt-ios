@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct FilterSheetContent: View {
-    @ObservedObject var viewModel: FilterSheetViewModel
-    @State private var selectedCategory: SearchTagType = .classification
+    let viewModel: FilterSheetViewModel
+    @State var selectedCategory: SearchTagType = .classification
+    @ObservedObject var searchState: SearchState
+
+    init(viewModel: FilterSheetViewModel) {
+        self.viewModel = viewModel
+        searchState = self.viewModel.searchState
+    }
 
     struct FilterButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
@@ -84,16 +90,16 @@ struct FilterSheetContent: View {
             }
 
             Button {
-                viewModel.isFilterOpen = false
+                viewModel.toggleFilterSheet()
                 Task {
                     await viewModel.fetchInitialSearchResult()
                 }
             } label: {
                 Text("필터 적용")
-                    .foregroundColor(.white)
                     .font(.system(size: 17, weight: .bold))
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 30)
             }
             .buttonStyle(FilterButtonStyle())
             .padding(.top, 10)

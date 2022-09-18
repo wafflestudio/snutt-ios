@@ -42,24 +42,6 @@ struct LectureDetailScene: View {
                                     EditableTextField(text: $lecture.remark, multiLine: true)
                                 }
                             }
-
-                            HStack {
-                                DetailLabel(text: "색")
-                                NavigationLink {
-                                    LectureColorList(theme: lecture.theme ?? .snutt, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
-                                } label: {
-                                    HStack {
-                                        LectureColorPreview(lectureColor: lecture.getColor())
-                                            .frame(height: 25)
-                                        Spacer()
-                                        if editMode.isEditing {
-                                            Image("chevron.right")
-                                        }
-                                    }
-                                }
-                                .disabled(!editMode.isEditing)
-                            }
-                            .animation(.customSpring, value: editMode.isEditing)
                         }
                         .padding(.vertical, 5)
                     }
@@ -95,10 +77,6 @@ struct LectureDetailScene: View {
                                 HStack {
                                     DetailLabel(text: "분반번호")
                                     EditableTextField(text: $lecture.lectureNumber, readOnly: true)
-                                }
-                                HStack {
-                                    DetailLabel(text: "정원")
-                                    EditableNumberField(value: $lecture.quota, readOnly: true)
                                 }
                                 HStack {
                                     DetailLabel(text: "비고")
@@ -333,19 +311,18 @@ struct EditableTimeField: View {
     }
 }
 
-struct RectangleButtonStyle: ButtonStyle {
-    var color: Color? = nil
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .contentShape(Rectangle())
-            .background(configuration.isPressed ? STColor.buttonPressed : (color ?? .clear))
-    }
-}
-
 struct DetailButton: View {
     let text: String
     let role: ButtonRole?
     let action: () -> Void
+
+    struct DetailButtonStyle: ButtonStyle {
+        func makeBody(configuration: Self.Configuration) -> some View {
+            configuration.label
+                .contentShape(Rectangle())
+                .background(configuration.isPressed ? Color(uiColor: .opaqueSeparator) : .clear)
+        }
+    }
 
     var body: some View {
         Button {
@@ -357,7 +334,6 @@ struct DetailButton: View {
                 .contentShape(Rectangle())
                 .foregroundColor(role == .destructive ? .red : Color(uiColor: .label))
         }
-        .buttonStyle(RectangleButtonStyle(color: STColor.groupForeground))
     }
 }
 

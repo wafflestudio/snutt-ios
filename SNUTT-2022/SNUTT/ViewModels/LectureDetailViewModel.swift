@@ -26,7 +26,8 @@ extension LectureDetailScene {
             do {
                 try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture)
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                // TODO: handle error
+                print(error.asSTError?.errorMessage)
                 return false
             }
             return true
@@ -36,7 +37,7 @@ extension LectureDetailScene {
             do {
                 try await lectureService.deleteLecture(lecture: lecture)
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                // TODO: handle error
             }
         }
 

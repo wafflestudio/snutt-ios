@@ -10,48 +10,42 @@ import SwiftUI
 import UIKit
 
 class TimetableViewModel: BaseViewModel, ObservableObject {
-    private var bag = Set<AnyCancellable>()
-    @Published var currentTimetable: Timetable?
-    @Published var configuration: TimetableConfiguration = .init()
-    @Published private var metadataList: [TimetableMetadata]?
+    @Published var showAlert: Bool = false
+    @Published var totalCredit: Int = 0
+    @Published var timetableTitle: String = ""
 
     override init(container: DIContainer) {
         super.init(container: container)
 
-        appState.timetable.$current.assign(to: &$currentTimetable)
-        appState.timetable.$configuration.assign(to: &$configuration)
-        appState.timetable.$metadataList.assign(to: &$metadataList)
+        timetableState.$current
+            .map { $0?.totalCredit ?? 0 }
+            .assign(to: &$totalCredit)
+
+        timetableState.$current
+            .map { $0?.title ?? "" }
+            .assign(to: &$timetableTitle)
     }
 
-    var totalCredit: Int {
-        currentTimetable?.totalCredit ?? 0
+    var currentTimetable: Timetable? {
+        timetableState.current
     }
 
-    var timetableTitle: String {
-        currentTimetable?.title ?? ""
+    var currentConfiguration: TimetableConfiguration {
+        timetableState.configuration
     }
 
-    private var timetableService: TimetableServiceProtocol {
-        services.timetableService
-    }
-
-    var timetableState: TimetableState {
-        appState.timetable
-    }
-
-    var isNewCourseBookAvailable: Bool {
-        services.courseBookService.isNewCourseBookAvailable()
-    }
-
-    func setIsMenuOpen(_ value: Bool) {
-        services.globalUIService.setIsMenuOpen(value)
+    func toggleMenuSheet() {
+        appState.setting.menuSheetSetting.isOpen.toggle()
     }
 
     func fetchRecentTimetable() async {
         do {
             try await timetableService.fetchRecentTimetable()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            // TODO: handle error
+            DispatchQueue.main.async {
+                self.showAlert = true
+            }
         }
     }
 
@@ -59,15 +53,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await timetableService.fetchTimetableList()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-    }
-
-    func fetchCourseBookList() async {
-        do {
-            try await services.courseBookService.fetchCourseBookList()
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            // TODO: handle error
         }
     }
 

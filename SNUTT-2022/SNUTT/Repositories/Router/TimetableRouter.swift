@@ -13,7 +13,7 @@ enum TimetableRouter: Router {
 
     case getTimetableList
     case getTimetable(id: String)
-    case createTimetable(title: String, year: Int, semester: Int)
+    //    case createTimetable(title: String, courseBook: STCourseBook)
     case updateTimetable(id: String, title: String)
     case deleteTimetable(id: String)
     case getRecentTimetable
@@ -26,8 +26,8 @@ enum TimetableRouter: Router {
             return .get
         case .getTimetable:
             return .get
-        case .createTimetable:
-            return .post
+//        case .createTimetable:
+//            return .post
         case .updateTimetable:
             return .put
         case .deleteTimetable:
@@ -44,11 +44,11 @@ enum TimetableRouter: Router {
     var path: String {
         switch self {
         case .getTimetableList:
-            return "/"
+            return ""
         case let .getTimetable(id):
             return "/\(id)"
-        case .createTimetable:
-            return "/"
+//        case .createTimetable:
+//            return ""
         case let .updateTimetable(id, _):
             return "/\(id)"
         case let .deleteTimetable(id):
@@ -68,8 +68,8 @@ enum TimetableRouter: Router {
             return nil
         case .getTimetable:
             return nil
-        case let .createTimetable(title, year, semester):
-            return ["title": title, "year": year, "semester": semester]
+//        case let .createTimetable(title, courseBook):
+//            return ["title": title, "year": courseBook.quarter.year, "semester": courseBook.quarter.semester.rawValue]
         case let .updateTimetable(_, title):
             return ["title": title]
         case .deleteTimetable:

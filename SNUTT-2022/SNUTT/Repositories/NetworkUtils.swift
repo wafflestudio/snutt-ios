@@ -65,9 +65,7 @@ extension DataTask {
             if let requestBody = (await response.request?.httpBody) {
                 debugPrint("Error Request Body: \(String(data: requestBody, encoding: .utf8) ?? "")")
             }
-            if let responseBody = (await response.data) {
-                debugPrint("Error Raw Response: \(String(describing: String(data: responseBody, encoding: .utf8)))")
-            }
+            debugPrint("Error Raw Response: \(String(describing: String(data: await response.data!, encoding: .utf8)))")
         #endif
         if let data = await response.data, let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data) {
             throw STError(rawValue: errDto.errcode) ?? .SERVER_FAULT

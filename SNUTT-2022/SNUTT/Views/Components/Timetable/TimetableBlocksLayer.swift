@@ -11,19 +11,24 @@ struct TimetableBlocksLayer: View {
     let current: Timetable?
     let config: TimetableConfiguration
 
-    var displayedTheme: Theme {
-        current?.selectedTheme ?? (current?.theme ?? .snutt)
+    #if !WIDGET
+        @Environment(\.selectedLecture) var selectedLecture: Lecture?
+    #endif
+
+    var currentTheme: Theme {
+        current?.theme ?? .snutt
     }
 
     var body: some View {
         ForEach(current?.lectures ?? []) { lecture in
-            LectureBlocks(current: current, lecture: lecture, theme: displayedTheme, config: config)
+            LectureBlocks(lecture: lecture, theme: currentTheme, config: config)
         }
-        .animation(.customSpring, value: displayedTheme)
 
-        if let selectedLecture = current?.selectedLecture {
-            LectureBlocks(current: current, lecture: selectedLecture.withTemporaryColor(), theme: displayedTheme, config: config)
-        }
+        #if !WIDGET
+            if var selectedLecture = selectedLecture {
+                LectureBlocks(lecture: selectedLecture.withTemporaryColor(), theme: currentTheme, config: config)
+            }
+        #endif
 
         let _ = debugChanges()
     }
