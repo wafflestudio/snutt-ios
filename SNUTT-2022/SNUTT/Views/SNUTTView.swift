@@ -9,23 +9,24 @@ import Combine
 import SwiftUI
 
 struct SNUTTView: View {
-    let container: DIContainer
-
-    init(container: DIContainer) {
-        self.container = container
-    }
+    @State private var selectedTab: TabType = .timetable
+    @ObservedObject var viewModel: ViewModel
 
     var body: some View {
         ZStack {
-            MainTabScene(container: container, viewModel: .init(container: container))
-            MenuSheetScene(viewModel: .init(container: container))
-            FilterSheetScene(viewModel: .init(container: container))
+            MainTabScene(viewModel: .init(container: viewModel.container))
+            MenuSheetScene(viewModel: .init(container: viewModel.container))
+            FilterSheetScene(viewModel: .init(container: viewModel.container))
         }
         .accentColor(Color(UIColor.label))
+        .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
+            Text(viewModel.errorMessage)
+        }
         .onAppear {
             setTabBarStyle()
             setNavBarStyle()
         }
+
         let _ = debugChanges()
     }
 
@@ -46,8 +47,28 @@ struct SNUTTView: View {
     }
 }
 
+extension SNUTTView {
+    class ViewModel: BaseViewModel, ObservableObject {
+        @Published var isErrorAlertPresented = false
+        @Published var errorContent: STError? = nil
+
+        override init(container: DIContainer) {
+            super.init(container: container)
+            appState.system.$errorContent.assign(to: &$errorContent)
+            appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
+        }
+
+        var errorTitle: String {
+            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorTitle
+        }
+
+        var errorMessage: String {
+            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
+        }
+    }
+}
+
 private struct MainTabScene: View {
-    let container: DIContainer
     @ObservedObject var viewModel: MainTabViewModel
 
     var body: some View {
@@ -63,16 +84,16 @@ private struct MainTabScene: View {
 
         TabView(selection: selected) {
             TabScene(tabType: .timetable) {
-                TimetableScene(viewModel: .init(container: container))
+                TimetableScene(viewModel: .init(container: viewModel.container))
             }
             TabScene(tabType: .search) {
-                SearchLectureScene(viewModel: .init(container: container))
+                SearchLectureScene(viewModel: .init(container: viewModel.container))
             }
             TabScene(tabType: .review) {
-                ReviewScene(viewModel: .init(container: container))
+                ReviewScene(viewModel: .init(container: viewModel.container))
             }
             TabScene(tabType: .settings) {
-                SettingScene(viewModel: .init(container: container))
+                SettingScene(viewModel: .init(container: viewModel.container))
             }
         }
     }
@@ -117,6 +138,6 @@ enum TabType: String {
 
 struct SNUTTView_Previews: PreviewProvider {
     static var previews: some View {
-        SNUTTView(container: .preview)
+        SNUTTView(viewModel: .init(container: .preview))
     }
 }

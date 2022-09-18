@@ -52,8 +52,11 @@ struct LectureDetailRow: View {
     var body: some View {
         HStack {
             Image(imageName)
+                .resizable()
+                .frame(width: 15, height: 15)
             Text(text)
                 .font(STFont.details)
+                .lineLimit(1)
             Spacer()
         }
     }

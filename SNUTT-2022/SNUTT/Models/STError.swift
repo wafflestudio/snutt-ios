@@ -11,6 +11,7 @@ import Foundation
 public enum STError: Int, Error {
     case SERVER_FAULT = 0x0000
     case NO_NETWORK = 0x0001
+    case UNKNOWN_ERROR = 0x0002
 
     /* 401 - Request was invalid */
     case NO_FB_ID_OR_TOKEN = 0x1001
@@ -60,12 +61,16 @@ public enum STError: Int, Error {
     case USER_NOT_FOUND = 0x4004
     case COLORLIST_NOT_FOUND = 0x4005
 
+    /* Client-side Errors */
+    case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
+    case CANT_CHANGE_OTHERS_THEME = 0x5001
+
     var errorTitle: String {
         switch self {
         case .SERVER_FAULT:
-            return "서버 문제"
+            return "서버 오류"
         case .NO_NETWORK:
-            return "네트워킹 문제"
+            return "네트워크 오류"
         case .NO_FB_ID_OR_TOKEN,
              .NO_YEAR_OR_SEMESTER,
              .NOT_ENOUGH_TO_CREATE_TIMETABLE,
@@ -76,7 +81,10 @@ public enum STError: Int, Error {
              .NO_REGISTRATION_ID,
              .INVALID_TIMEMASK,
              .INVALID_COLOR,
-             .NO_LECTURE_TITLE:
+             .NO_LECTURE_TITLE,
+             .CANT_CHANGE_OTHERS_THEME
+             :
+
             return "요청 실패"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,
@@ -103,7 +111,9 @@ public enum STError: Int, Error {
              .NOT_CUSTOM_LECTURE,
              .LECTURE_TIME_OVERLAP,
              .IS_CUSTOM_LECTURE,
-             .USER_HAS_NO_FCM_KEY:
+             .USER_HAS_NO_FCM_KEY,
+             .CANT_DELETE_CURRENT_TIMETABLE
+             :
             return "잘못된 요청"
         case .TAG_NOT_FOUND,
              .TIMETABLE_NOT_FOUND,
@@ -112,6 +122,8 @@ public enum STError: Int, Error {
              .USER_NOT_FOUND,
              .COLORLIST_NOT_FOUND:
             return "찾지 못함"
+        case .UNKNOWN_ERROR:
+            return "알 수 없는 오류"
         }
     }
 
@@ -168,7 +180,7 @@ public enum STError: Int, Error {
         case .DUPLICATE_TIMETABLE_TITLE:
             return "이미 존재하는 시간표 이름입니다."
         case .DUPLICATE_LECTURE:
-            return "이미 넣은 강좌입니다."
+            return "이미 추가된 강좌입니다."
         case .ALREADY_LOCAL_ACCOUNT:
             return "이미 ID와 비번이 등록되어있습니다."
         case .ALREADY_FB_ACCOUNT:
@@ -201,6 +213,12 @@ public enum STError: Int, Error {
             return "유저를 찾을 수 없습니다."
         case .COLORLIST_NOT_FOUND:
             return "색상 목록을 찾을 수 없습니다."
+        case .CANT_DELETE_CURRENT_TIMETABLE:
+            return "현재 시간표는 삭제할 수 없습니다."
+        case .CANT_CHANGE_OTHERS_THEME:
+            return "현재 시간표의 테마만 변경할 수 있습니다."
+        case .UNKNOWN_ERROR:
+            return "알 수 없는 오류가 발생했습니다."
         }
     }
 }

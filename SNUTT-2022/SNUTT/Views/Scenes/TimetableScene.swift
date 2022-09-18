@@ -12,7 +12,8 @@ struct TimetableScene: View {
     @ObservedObject var viewModel: TimetableViewModel
 
     var body: some View {
-        TimetableZStack(current: viewModel.currentTimetable, config: viewModel.currentConfiguration)
+        TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
+            .animation(.customSpring, value: viewModel.timetableState.current?.id)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
                 NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) {
@@ -24,8 +25,9 @@ struct TimetableScene: View {
                 ToolbarItem(placement: .principal) {
                     HStack {
                         NavBarButton(imageName: "nav.menu") {
-                            viewModel.toggleMenuSheet()
+                            viewModel.setIsMenuOpen(true)
                         }
+                        .circleBadge(condition: viewModel.isNewCourseBookAvailable)
 
                         Text(viewModel.timetableTitle)
                             .font(STFont.title)
@@ -48,20 +50,23 @@ struct TimetableScene: View {
                         NavBarButton(imageName: "nav.alarm.off") {
                             print("alarm tapped")
                         }
+                        .circleBadge(condition: true)
                     }
                 }
             }
             .onLoad {
-                await viewModel.fetchRecentTimetable()
-            }
-            .onLoad {
-                await viewModel.fetchTimetableList()
-            }
-            .onLoad {
-                viewModel.loadTimetableConfig()
-            }
-            .alert(isPresented: $viewModel.showAlert) {
-                Alert(title: Text("API 에러"), message: Text("API 에러가 발생했습니다. 이 알러트는 테스트용입니다. 나중에 바꿔주세요."), dismissButton: .default(Text("취소")))
+                // make the following three api calls execute concurrently
+                await withTaskGroup(of: Void.self, body: { group in
+                    group.addTask {
+                        await viewModel.fetchTimetableList()
+                    }
+                    group.addTask {
+                        await viewModel.fetchRecentTimetable()
+                    }
+                    group.addTask {
+                        await viewModel.fetchCourseBookList()
+                    }
+                })
             }
 
         let _ = debugChanges()
@@ -93,10 +98,10 @@ extension View {
     }
 }
 
-struct MyTimetableScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TimetableScene(viewModel: .init(container: .preview))
-        }
-    }
-}
+// struct MyTimetableScene_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationView {
+//            TimetableScene(viewModel: .init(container: .preview))
+//        }
+//    }
+// }

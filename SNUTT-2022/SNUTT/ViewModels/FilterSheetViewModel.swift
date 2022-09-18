@@ -5,17 +5,28 @@
 //  Created by 박신홍 on 2022/07/05.
 //
 
-class FilterSheetViewModel: BaseViewModel {
-    var searchState: SearchState {
-        appState.search
+import SwiftUI
+
+class FilterSheetViewModel: BaseViewModel, ObservableObject {
+    @Published var selectedTagList: [SearchTag] = []
+    @Published var searchTagList: SearchTagList?
+    @Published private var _isFilterOpen: Bool = false
+
+    var isFilterOpen: Bool {
+        get { _isFilterOpen }
+        set { services.searchService.setIsFilterOpen(newValue) }
     }
 
-    var timetableState: TimetableState {
-        appState.timetable
+    override init(container: DIContainer) {
+        super.init(container: container)
+
+        appState.search.$selectedTagList.assign(to: &$selectedTagList)
+        appState.search.$searchTagList.assign(to: &$searchTagList)
+        appState.search.$isFilterOpen.assign(to: &$_isFilterOpen)
     }
 
     func filterTags(with type: SearchTagType) -> [SearchTag] {
-        guard let tagList = searchState.searchTagList?.tagList else { return [] }
+        guard let tagList = searchTagList?.tagList else { return [] }
         return tagList.filter { $0.type == type }
     }
 
@@ -27,15 +38,11 @@ class FilterSheetViewModel: BaseViewModel {
         do {
             try await services.searchService.fetchInitialSearchResult()
         } catch {
-            // TODO: handle error
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
-    func toggleFilterSheet() {
-        searchState.isFilterOpen.toggle()
-    }
-
     func isSelected(tag: SearchTag) -> Bool {
-        return searchState.selectedTagList.contains(where: { $0.id == tag.id })
+        return appState.search.selectedTagList.contains(where: { $0.id == tag.id })
     }
 }

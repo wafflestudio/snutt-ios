@@ -12,5 +12,5 @@ class Setting: ObservableObject {
     @Published var accountMenuList: [[AccountSettings]] = []
 
     var colorList: String? // STColorList
-    var menuSheetSetting: MenuSheetSetting = .init()
+    var snuevWebUrl: String?
 }

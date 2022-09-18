@@ -13,10 +13,12 @@ class AppState {
     var setting = Setting()
     var webView = WebViewState()
 
+    var system = SystemState()
     var search = SearchState()
     var timetable = TimetableState()
 
     var tab = TabState()
+    var menu = MenuState()
 }
 
 #if DEBUG
