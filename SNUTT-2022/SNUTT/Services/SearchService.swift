@@ -10,13 +10,14 @@ import SwiftUI
 
 protocol SearchServiceProtocol {
     func toggle(_ tag: SearchTag)
+    func deselectTag(_ tag: SearchTag)
     func fetchTags(quarter: Quarter) async throws
     func fetchInitialSearchResult() async throws
     func fetchMoreSearchResult() async throws
-    func initializeSearchState() async
     func setIsFilterOpen(_ value: Bool)
     func setSearchText(_ value: String)
     func setSelectedLecture(_ value: Lecture?)
+    func initializeSearchState()
 }
 
 struct SearchService: SearchServiceProtocol {
@@ -41,13 +42,13 @@ struct SearchService: SearchServiceProtocol {
         }
     }
 
-    @MainActor
-    func initializeSearchState() async {
-        searchState.searchTagList = nil
-        searchState.selectedLecture = nil
-        searchState.selectedTagList = []
-        searchState.searchResult = []
-        searchState.searchText = ""
+    func initializeSearchState() {
+        DispatchQueue.main.async {
+            searchState.selectedLecture = nil
+            searchState.selectedTagList = []
+            searchState.searchResult = nil
+            searchState.searchText = ""
+        }
     }
 
     func fetchTags(quarter: Quarter) async throws {
@@ -75,7 +76,7 @@ struct SearchService: SearchServiceProtocol {
                                                                 limit: searchState.perPage)
         let models: [Lecture] = dtos.map { Lecture(from: $0) }
         await MainActor.run {
-            self.searchState.searchResult = offset == 0 ? models : self.searchState.searchResult + models
+            self.searchState.searchResult = offset == 0 ? models : (self.searchState.searchResult ?? []) + models
         }
     }
 
@@ -94,34 +95,53 @@ struct SearchService: SearchServiceProtocol {
     }
 
     func toggle(_ tag: SearchTag) {
+        DispatchQueue.main.async {
+            if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
+                searchState.selectedTagList.remove(at: index)
+                return
+            }
+            searchState.selectedTagList.append(tag)
+        }
+    }
+
+    /// We need a separate method that only deselects tags.
+    func deselectTag(_ tag: SearchTag) {
         if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
-            searchState.selectedTagList.remove(at: index)
+            DispatchQueue.main.async {
+                searchState.selectedTagList.remove(at: index)
+            }
             return
         }
-        searchState.selectedTagList.append(tag)
     }
 
     func setIsFilterOpen(_ value: Bool) {
-        searchState.isFilterOpen = value
+        DispatchQueue.main.async {
+            searchState.isFilterOpen = value
+        }
     }
 
     func setSelectedLecture(_ value: Lecture?) {
-        searchState.selectedLecture = value
+        DispatchQueue.main.async {
+            searchState.selectedLecture = value
+        }
     }
 
     func setSearchText(_ value: String) {
-        searchState.searchText = value
+        DispatchQueue.main.async {
+            searchState.searchText = value
+        }
     }
 }
 
 class FakeSearchService: SearchServiceProtocol {
-    func fetchTags(quarter _: Quarter) async throws {}
     func toggle(_: SearchTag) {}
+    func deselectTag(_: SearchTag) {}
+    func fetchTags(quarter _: Quarter) async throws {}
     func fetchInitialSearchResult() async throws {}
     func fetchMoreSearchResult() async throws {}
-    func initializeSearchState() async {}
     func setIsFilterOpen(_: Bool) {}
     func toggleFilterSheet() {}
     func setSearchText(_: String) {}
     func setSelectedLecture(_: Lecture?) {}
+    func initializeSearchState() {}
 }

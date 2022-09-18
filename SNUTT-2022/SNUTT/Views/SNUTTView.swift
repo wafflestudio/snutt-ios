@@ -9,8 +9,11 @@ import Combine
 import SwiftUI
 
 struct SNUTTView: View {
-    @State private var selectedTab: TabType = .timetable
     @ObservedObject var viewModel: ViewModel
+    @State private var selectedTab: TabType = .timetable
+
+    /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
+    @State private var navigationBarHeight: CGFloat = 80
 
     var body: some View {
         ZStack {
@@ -139,5 +142,29 @@ enum TabType: String {
 struct SNUTTView_Previews: PreviewProvider {
     static var previews: some View {
         SNUTTView(viewModel: .init(container: .preview))
+    }
+}
+
+// TODO: move elsewhere if needed
+struct NavigationBarReader: UIViewControllerRepresentable {
+    var callback: (UINavigationBar) -> Void
+    private let proxyController = ViewController()
+
+    func makeUIViewController(context _: UIViewControllerRepresentableContext<NavigationBarReader>) -> UIViewController {
+        proxyController.callback = callback
+        return proxyController
+    }
+
+    func updateUIViewController(_: UIViewController, context _: UIViewControllerRepresentableContext<NavigationBarReader>) {}
+
+    private class ViewController: UIViewController {
+        var callback: (UINavigationBar) -> Void = { _ in }
+
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            if let navBar = navigationController {
+                callback(navBar.navigationBar)
+            }
+        }
     }
 }

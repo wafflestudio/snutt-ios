@@ -117,7 +117,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
 
     func selectTimetable(timetableId: String) async {
         do {
-            await services.searchService.initializeSearchState()
+            services.searchService.initializeSearchState()
             try await services.timetableService.fetchTimetable(timetableId: timetableId)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
