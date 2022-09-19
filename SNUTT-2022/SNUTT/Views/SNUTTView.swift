@@ -13,7 +13,7 @@ struct SNUTTView: View {
     @State private var selectedTab: TabType = .timetable
 
     /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
-    @State private var navigationBarHeight: CGFloat = 80
+    @State private var navigationBarHeight: CGFloat = 44
 
     var body: some View {
         ZStack {
@@ -101,7 +101,9 @@ private struct MainTabScene: View {
             }
         }
     }
+}
 
+extension MainTabScene {
     final class MainTabViewModel: BaseViewModel, ObservableObject {
         @Published var selectedTab: TabType = .timetable
         private var bag = Set<AnyCancellable>()
