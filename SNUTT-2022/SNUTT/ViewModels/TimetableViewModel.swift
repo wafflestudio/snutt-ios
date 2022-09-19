@@ -31,14 +31,6 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         currentTimetable?.title ?? ""
     }
 
-    private var timetableService: TimetableServiceProtocol {
-        services.timetableService
-    }
-
-    var timetableState: TimetableState {
-        appState.timetable
-    }
-
     var isNewCourseBookAvailable: Bool {
         services.courseBookService.isNewCourseBookAvailable()
     }
@@ -73,5 +65,13 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
 
     func loadTimetableConfig() {
         timetableService.loadTimetableConfig()
+    }
+
+    private var timetableService: TimetableServiceProtocol {
+        services.timetableService
+    }
+
+    var timetableState: TimetableState {
+        appState.timetable
     }
 }

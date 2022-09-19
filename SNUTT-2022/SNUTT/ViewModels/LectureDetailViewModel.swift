@@ -14,6 +14,10 @@ extension LectureDetailScene {
             services.lectureService
         }
 
+        var reviewService: ReviewServiceProtocol {
+            services.reviewService
+        }
+
         var currentTimetable: Timetable? {
             appState.timetable.current
         }
@@ -31,6 +35,16 @@ extension LectureDetailScene {
         func deleteLecture(lecture: Lecture) async {
             do {
                 try await lectureService.deleteLecture(lecture: lecture)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+
+        func fetchReviewId(of lecture: Lecture) async {
+            do {
+                let id = try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+                reviewService.setDetailId(id)
+                services.globalUIService.setSelectedTab(.review)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }

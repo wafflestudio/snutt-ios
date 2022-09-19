@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 protocol GlobalUIServiceProtocol {
+    func setSelectedTab(_ tab: TabType)
+
     func setIsMenuOpen(_ value: Bool)
 
     func openEllipsis(for timetable: TimetableMetadata)
@@ -31,9 +33,14 @@ protocol GlobalUIServiceProtocol {
     func presentErrorAlert(error: Error)
 }
 
-/// A service that modifies miscellaneous global states.
 struct GlobalUIService: GlobalUIServiceProtocol {
     var appState: AppState
+
+    func setSelectedTab(_ tab: TabType) {
+        DispatchQueue.main.async {
+            appState.tab.selected = tab
+        }
+    }
 
     func setIsMenuOpen(_ value: Bool) {
         DispatchQueue.main.async {

@@ -9,12 +9,15 @@ import Combine
 import SwiftUI
 
 class AppState {
-    var currentUser = User()
+    var user = UserState()
     var setting = Setting()
+    var webView = WebViewState()
 
     var system = SystemState()
     var search = SearchState()
     var timetable = TimetableState()
+
+    var tab = TabState()
     var menu = MenuState()
 }
 

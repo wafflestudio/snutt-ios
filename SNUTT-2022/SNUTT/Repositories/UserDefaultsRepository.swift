@@ -15,9 +15,21 @@ protocol UserDefaultsRepositoryProtocol {
 
 enum STDefaultsKey: String {
     case token
+    case apiKey
     case userId
+    case userLocalId
+    case userFBName
+
     case currentTimetable
     case timetableConfig
+
+    case registeredFCMToken
+    case appVersion
+
+    case shouldShowBadge
+    case shouldDeleteFCMInfos
+
+    case snuevWebURL
 }
 
 class UserDefaultsRepository: UserDefaultsRepositoryProtocol {

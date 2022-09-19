@@ -5,6 +5,7 @@
 //  Created by 박신홍 on 2022/06/28.
 //
 
+import Combine
 import SwiftUI
 
 struct SNUTTView: View {
@@ -16,29 +17,9 @@ struct SNUTTView: View {
 
     var body: some View {
         ZStack {
-            TabView(selection: $selectedTab) {
-                TabScene(tabType: .timetable) {
-                    TimetableScene(viewModel: .init(container: viewModel.container))
-                        .background(NavigationBarReader { navbar in
-                            navigationBarHeight = navbar.frame.height
-                        })
-                }
-                TabScene(tabType: .search) {
-                    SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
-                }
-                TabScene(tabType: .review) {
-                    ReviewScene(viewModel: .init(container: viewModel.container))
-                }
-                TabScene(tabType: .settings) {
-                    SettingScene(viewModel: .init(container: viewModel.container))
-                }
-            }
-            if selectedTab == .timetable {
-                MenuSheetScene(viewModel: .init(container: viewModel.container))
-            }
-            if selectedTab == .search {
-                FilterSheetScene(viewModel: .init(container: viewModel.container))
-            }
+            MainTabScene(viewModel: .init(container: viewModel.container), navigationBarHeight: $navigationBarHeight)
+            MenuSheetScene(viewModel: .init(container: viewModel.container))
+            FilterSheetScene(viewModel: .init(container: viewModel.container))
         }
         .accentColor(Color(UIColor.label))
         .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
@@ -86,6 +67,64 @@ extension SNUTTView {
 
         var errorMessage: String {
             (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
+        }
+    }
+}
+
+private struct MainTabScene: View {
+    @ObservedObject var viewModel: MainTabViewModel
+    @Binding var navigationBarHeight: CGFloat
+
+    var body: some View {
+        let selected = Binding {
+            viewModel.selected
+        } set: {
+            [previous = viewModel.selected] current in
+            if previous == .review && current == .review {
+                viewModel.resetDetailId()
+            }
+            viewModel.selected = current
+        }
+
+        TabView(selection: selected) {
+            TabScene(tabType: .timetable) {
+                TimetableScene(viewModel: .init(container: viewModel.container))
+            }
+            TabScene(tabType: .search) {
+                SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
+            }
+            TabScene(tabType: .review) {
+                ReviewScene(viewModel: .init(container: viewModel.container))
+            }
+            TabScene(tabType: .settings) {
+                SettingScene(viewModel: .init(container: viewModel.container))
+            }
+        }
+    }
+
+    final class MainTabViewModel: BaseViewModel, ObservableObject {
+        @Published var selectedTab: TabType = .timetable
+        private var bag = Set<AnyCancellable>()
+
+        override init(container: DIContainer) {
+            super.init(container: container)
+
+            // TODO: fix this
+            container.appState.tab.$selected
+                .assign(to: &$selectedTab)
+        }
+
+        var selected: TabType {
+            get { selectedTab }
+            set { setSelectedTab(newValue) }
+        }
+
+        func resetDetailId() {
+            services.reviewService.setDetailId("")
+        }
+
+        func setSelectedTab(_ tab: TabType) {
+            services.globalUIService.setSelectedTab(tab)
         }
     }
 }
