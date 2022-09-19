@@ -16,8 +16,8 @@ struct SearchLectureScene: View {
     var body: some View {
         GeometryReader { reader in
             ZStack {
-                
                 // MARK: Background Timetable
+
                 Group {
                     VStack {
                         Spacer()
@@ -33,7 +33,7 @@ struct SearchLectureScene: View {
                 VStack(spacing: 0) {
                     // MARK: SearchBar with padding
 
-                    VStack() {
+                    VStack {
                         Spacer()
                         SearchBar(text: $viewModel.searchText,
                                   isFilterOpen: $viewModel.isFilterOpen,
