@@ -11,7 +11,7 @@ struct ReviewScene: View {
     @ObservedObject var viewModel: ReviewViewModel
 
     var body: some View {
-        switch viewModel.state {
+        switch viewModel.connectionState {
         case .success:
             ReviewWebView(request: viewModel.request, viewModel: viewModel)
                 .navigationBarHidden(true)

@@ -31,7 +31,6 @@
 		B88D170328B1501F00E2D652 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170228B1501F00E2D652 /* WebView.swift */; };
 		B8AF8D3E28C72A880056DE62 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF8D3D28C72A880056DE62 /* Validation.swift */; };
 		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
-		B8BC0C9228BE3326007A1CA8 /* TabState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C9128BE3326007A1CA8 /* TabState.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
@@ -244,7 +243,6 @@
 		B88D170728B361DC00E2D652 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B8AF8D3D28C72A880056DE62 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
-		B8BC0C9128BE3326007A1CA8 /* TabState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabState.swift; sourceTree = "<group>"; };
 		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ProductionConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5F28B549660065248E /* StagingConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StagingConfig.xcconfig; sourceTree = "<group>"; };
@@ -417,7 +415,6 @@
 				B87B315A28D5A70F005C170B /* TimetableState.swift */,
 				B87B315828D5A70F005C170B /* UserState.swift */,
 				B87B315C28D5A70F005C170B /* WebViewState.swift */,
-				B8BC0C9128BE3326007A1CA8 /* TabState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -1047,7 +1044,6 @@
 				BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
-				B8BC0C9228BE3326007A1CA8 /* TabState.swift in Sources */,
 				B8E51E6F28B7FF8F0065248E /* ReviewService.swift in Sources */,
 				B87B316028D5A70F005C170B /* Setting.swift in Sources */,
 				BE77D0A428AEAD4D0067A9D8 /* CourseBookDto.swift in Sources */,

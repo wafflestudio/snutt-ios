@@ -52,9 +52,7 @@ struct ReviewWebView: WebView {
     func updateUIView(_ uiView: WKWebView, context _: Context) {
         if viewModel.reload {
             uiView.load(request)
-            DispatchQueue.main.async {
-                viewModel.shouldReloadWebView(false)
-            }
+            viewModel.reload = false
         }
     }
 
@@ -106,11 +104,11 @@ struct ReviewWebView: WebView {
         }
 
         func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
-            viewModel.changeConnectionState(to: .error)
+            viewModel.connectionState = .error
         }
 
         func webView(_: WKWebView, didFinish _: WKNavigation!) {
-            viewModel.changeConnectionState(to: .success)
+            viewModel.connectionState = .success
         }
     }
 }

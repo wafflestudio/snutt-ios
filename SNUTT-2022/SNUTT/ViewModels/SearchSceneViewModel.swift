@@ -108,11 +108,13 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
 
     func fetchReviewId(of lecture: Lecture) async {
         do {
-            let id = try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
-            services.reviewService.setDetailId(id)
-            services.globalUIService.setSelectedTab(.review)
+            try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+    }
+    
+    func resetReviewId() {
+        services.reviewService.resetReviewId()
     }
 }

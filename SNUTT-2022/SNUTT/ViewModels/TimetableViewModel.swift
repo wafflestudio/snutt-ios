@@ -6,8 +6,7 @@
 //
 
 import Combine
-import SwiftUI
-import UIKit
+import Foundation
 
 class TimetableViewModel: BaseViewModel, ObservableObject {
     private var bag = Set<AnyCancellable>()

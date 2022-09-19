@@ -18,7 +18,7 @@ struct WebErrorView: View {
                 .font(.system(size: 17))
             Spacer().frame(height: 28)
             Button {
-                viewModel.shouldReloadWebView(true)
+                viewModel.reload = true
             } label: {
                 Text("다시 불러오기")
                     .bold()

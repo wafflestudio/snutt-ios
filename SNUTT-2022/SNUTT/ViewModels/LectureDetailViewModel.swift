@@ -5,7 +5,6 @@
 //  Created by 박신홍 on 2022/07/20.
 //
 
-import Alamofire
 import Foundation
 
 extension LectureDetailScene {
@@ -42,12 +41,14 @@ extension LectureDetailScene {
 
         func fetchReviewId(of lecture: Lecture) async {
             do {
-                let id = try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
-                reviewService.setDetailId(id)
-                services.globalUIService.setSelectedTab(.review)
+                try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
+        }
+        
+        func resetReviewId() {
+            services.reviewService.resetReviewId()
         }
     }
 }

@@ -17,7 +17,6 @@ class AppState {
     var search = SearchState()
     var timetable = TimetableState()
 
-    var tab = TabState()
     var menu = MenuState()
 }
 

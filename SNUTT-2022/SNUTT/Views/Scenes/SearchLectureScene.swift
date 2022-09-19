@@ -64,6 +64,7 @@ struct SearchLectureScene: View {
                                           fetchMore: viewModel.fetchMoreSearchResult,
                                           addLecture: viewModel.addLecture,
                                           fetchReviewId: viewModel.fetchReviewId(of:),
+                                          resetReviewId: viewModel.resetReviewId,
                                           selected: $viewModel.selectedLecture)
                             .animation(.customSpring, value: viewModel.selectedLecture?.id)
                             .id(reloadSearchList) // reload everything when any of the search conditions changes
