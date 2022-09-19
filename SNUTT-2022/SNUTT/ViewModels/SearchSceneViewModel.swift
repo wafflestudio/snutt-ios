@@ -105,7 +105,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func fetchReviewId(of lecture: Lecture) async {
         do {
             let id = try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)

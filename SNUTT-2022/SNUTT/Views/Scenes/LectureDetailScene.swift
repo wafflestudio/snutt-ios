@@ -138,10 +138,8 @@ struct LectureDetailScene: View {
                     .padding()
 
                     if !editMode.isEditing {
-                        DetailButton(text: "강의계획서") {
-                            
-                        }
-                        
+                        DetailButton(text: "강의계획서") {}
+
                         DetailButton(text: "강의평") {
                             Task {
                                 await viewModel.fetchReviewId(of: lecture)

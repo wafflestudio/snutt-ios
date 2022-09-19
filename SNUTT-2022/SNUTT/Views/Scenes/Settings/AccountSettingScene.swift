@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AccountSettingScene: View {
     @ObservedObject var viewModel: AccountSettingViewModel
-    
+
     private var menuList: [[SettingsMenu]] {
         viewModel.menuList.map { $0.map { convertToView(menu: $0) }}
     }

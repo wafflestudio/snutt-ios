@@ -23,15 +23,15 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
             }
             .store(in: &bag)
     }
-    
+
     var menuList: [[AccountSettings]] {
         var menu: [[AccountSettings]] = []
         menu.append(currentUser?.localId == nil
-                    ? [.addLocalId]
-                    : [.showLocalId, .changePassword])
+            ? [.addLocalId]
+            : [.showLocalId, .changePassword])
         menu.append(currentUser?.fbName == nil
-                    ? [.makeFbConnection]
-                    : [.showFbName, .deleteFbConnection])
+            ? [.makeFbConnection]
+            : [.showFbName, .deleteFbConnection])
         menu.append([.showEmail])
         menu.append([.deleteAccount])
         return menu
@@ -40,7 +40,7 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
     var currentUser: User? {
         appState.user.current
     }
-    
+
     func fetchUser() async {
         do {
             try await services.userService.fetchUser()
@@ -48,7 +48,7 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func deleteUser() {
         // TODO: implement
     }
