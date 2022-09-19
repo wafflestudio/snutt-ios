@@ -20,17 +20,3 @@ extension User {
         email = dto.email
     }
 }
-
-struct UserDto: Codable {
-    var local_id: String?
-    var fb_name: String?
-    var email: String?
-}
-
-extension UserDto {
-    init(with model: User) {
-        local_id = model.localId
-        fb_name = model.fbName
-        email = model.email
-    }
-}

@@ -62,7 +62,7 @@ struct ReviewWebView: WebView {
         Coordinator(self)
     }
 
-    func cookiesFromUserDefaults() -> [HTTPCookie]? {
+    private func cookiesFromUserDefaults() -> [HTTPCookie]? {
         let apiURI = NetworkConfiguration.snuevBaseURL
 
         // TODO: uncomment this

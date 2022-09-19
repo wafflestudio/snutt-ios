@@ -18,6 +18,10 @@
 		B87B316728D753A3005C170B /* SettingsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316628D753A3005C170B /* SettingsMenu.swift */; };
 		B87B316C28D755B6005C170B /* SystemState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316A28D755B6005C170B /* SystemState.swift */; };
 		B87B316D28D755B6005C170B /* MenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316B28D755B6005C170B /* MenuState.swift */; };
+		B87B317028D813EB005C170B /* CourseBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316E28D813EB005C170B /* CourseBook.swift */; };
+		B87B317128D813EB005C170B /* SearchResultDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316F28D813EB005C170B /* SearchResultDto.swift */; };
+		B87B317328D81447005C170B /* UserDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B317228D81447005C170B /* UserDto.swift */; };
+		B87B317428D816E1005C170B /* MenuSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A00D288AA3D200C2CE95 /* MenuSheet.swift */; };
 		B87E0A3528A688FF00D2EA95 /* AddLocalIdScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87E0A3428A688FF00D2EA95 /* AddLocalIdScene.swift */; };
 		B87E0A3728A68A6900D2EA95 /* AddLocalIdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87E0A3628A68A6900D2EA95 /* AddLocalIdViewModel.swift */; };
 		B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16F228ABC5DD00E2D652 /* String+ext.swift */; };
@@ -117,7 +121,6 @@
 		BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBF281D762F005F71E6 /* TimetableZStack.swift */; };
 		BE98A00A288A90C000C2CE95 /* Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A009288A90C000C2CE95 /* Logo.swift */; };
 		BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A00B288A9E2A00C2CE95 /* MenuSection.swift */; };
-		BE98A00E288AA3D200C2CE95 /* MenuSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A00D288AA3D200C2CE95 /* MenuSheet.swift */; };
 		BE98A064288AFC1500C2CE95 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE98A063288AFC1500C2CE95 /* WidgetKit.framework */; };
 		BE98A066288AFC1500C2CE95 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE98A065288AFC1500C2CE95 /* SwiftUI.framework */; };
 		BE98A069288AFC1600C2CE95 /* SNUTTWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A068288AFC1500C2CE95 /* SNUTTWidgetBundle.swift */; };
@@ -228,6 +231,9 @@
 		B87B316628D753A3005C170B /* SettingsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMenu.swift; sourceTree = "<group>"; };
 		B87B316A28D755B6005C170B /* SystemState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemState.swift; sourceTree = "<group>"; };
 		B87B316B28D755B6005C170B /* MenuState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuState.swift; sourceTree = "<group>"; };
+		B87B316E28D813EB005C170B /* CourseBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseBook.swift; sourceTree = "<group>"; };
+		B87B316F28D813EB005C170B /* SearchResultDto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultDto.swift; sourceTree = "<group>"; };
+		B87B317228D81447005C170B /* UserDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDto.swift; sourceTree = "<group>"; };
 		B87E0A3428A688FF00D2EA95 /* AddLocalIdScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocalIdScene.swift; sourceTree = "<group>"; };
 		B87E0A3628A68A6900D2EA95 /* AddLocalIdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocalIdViewModel.swift; sourceTree = "<group>"; };
 		B88D16F228ABC5DD00E2D652 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
@@ -614,10 +620,13 @@
 		DC9C2CA928780589009EC3BC /* Dto */ = {
 			isa = PBXGroup;
 			children = (
+				B87B316E28D813EB005C170B /* CourseBook.swift */,
+				B87B316F28D813EB005C170B /* SearchResultDto.swift */,
 				DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */,
 				BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */,
 				BE682BEE288722A5009EBCB7 /* ErrorDto.swift */,
 				BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */,
+				B87B317228D81447005C170B /* UserDto.swift */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
@@ -961,8 +970,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B87B317428D816E1005C170B /* MenuSheet.swift in Sources */,
 				BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */,
 				BEE5CE10289E738900CF5ED3 /* MenuThemeSheet.swift in Sources */,
+				B87B317328D81447005C170B /* UserDto.swift in Sources */,
 				BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */,
 				B8F40EA9289809C60021A2A9 /* LicenseView.swift in Sources */,
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
@@ -996,6 +1007,7 @@
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
 				B88D170328B1501F00E2D652 /* WebView.swift in Sources */,
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
+				B87B317028D813EB005C170B /* CourseBook.swift in Sources */,
 				BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */,
 				BE9413DF28C3BDF600171060 /* SearchLectureList.swift in Sources */,
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
@@ -1008,9 +1020,6 @@
 				BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
 				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
-				BE98A00E288AA3D200C2CE95 /* MenuSheet.swift in Sources */,
-				BE98A00E288AA3D200C2CE95 /* MenuSheet.swift in Sources */,
-				BE98A00E288AA3D200C2CE95 /* MenuSheet.swift in Sources */,
 				B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
@@ -1032,6 +1041,7 @@
 				BE98A00A288A90C000C2CE95 /* Logo.swift in Sources */,
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
+				B87B317128D813EB005C170B /* SearchResultDto.swift in Sources */,
 				BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */,
 				BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */,
 				BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */,
@@ -1205,7 +1215,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = H3J2ZWWZQV;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTT/Info.plist;
@@ -1220,7 +1230,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1273,11 +1283,11 @@
 			baseConfigurationReference = B8E51E5F28B549660065248E /* StagingConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
 				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H3J2ZWWZQV;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTTWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SNUTTWidget;
@@ -1289,7 +1299,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
@@ -1304,11 +1314,11 @@
 			baseConfigurationReference = B8E51E5C28B546770065248E /* DebugConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
 				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H3J2ZWWZQV;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTTWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SNUTTWidget;
@@ -1321,7 +1331,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG WIDGET";
@@ -1336,11 +1346,11 @@
 			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
 				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H3J2ZWWZQV;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTTWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SNUTTWidget;
@@ -1352,7 +1362,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT.SNUTTWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTT.SNUTTWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
@@ -1491,7 +1501,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = H3J2ZWWZQV;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTT/Info.plist;
@@ -1506,7 +1516,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1526,7 +1536,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = H3J2ZWWZQV;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTT/Info.plist;
@@ -1541,7 +1551,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.peng.snutt-2022.SNUTT";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

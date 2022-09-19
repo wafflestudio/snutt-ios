@@ -7,6 +7,7 @@
 
 import Foundation
 
+// WIP (later with AddLocalIdScene)
 struct Validation {
     static func check(id: String) -> Bool {
         guard let _ = id.range(of: "^[a-z0-9]{4,32}$", options: [.regularExpression, .caseInsensitive]) else {

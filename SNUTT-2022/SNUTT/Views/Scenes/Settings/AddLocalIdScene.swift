@@ -42,12 +42,13 @@ struct AddLocalIdScene: View {
                     .frame(maxWidth: .infinity)
                     .border(Color(uiColor: .label.withAlphaComponent(0.25)), width: 1)
 
-                    Text("위 버튼을 누르시면 **일반 이용 약관**에 동의하시게 됩니다.".markdown)
-                        .font(.caption)
-                        .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.5)))
-                        .onTapGesture {
-                            // WIP: 일반 이용 약관
-                        }
+                    NavigationLink {
+                        TermsOfServiceView()
+                    } label: {
+                        Text("위 버튼을 누르시면 **일반 이용 약관**에 동의하시게 됩니다.".markdown)
+                            .font(.caption)
+                            .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.5)))
+                    }
                 }
                 Spacer()
             }

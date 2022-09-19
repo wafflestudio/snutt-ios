@@ -11,13 +11,14 @@ struct SearchLectureList: View {
     let data: [Lecture]
     let fetchMore: () async -> Void
     let addLecture: (Lecture) async -> Void
+    let fetchReviewId: (Lecture) async -> Void
     @Binding var selected: Lecture?
 
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
                 ForEach(data) { lecture in
-                    SearchLectureCell(lecture: lecture, selected: selected?.id == lecture.id, addLecture: addLecture)
+                    SearchLectureCell(lecture: lecture, selected: selected?.id == lecture.id, addLecture: addLecture, fetchReviewId: fetchReviewId)
                         .task {
                             if lecture.id == data.last?.id {
                                 await fetchMore()

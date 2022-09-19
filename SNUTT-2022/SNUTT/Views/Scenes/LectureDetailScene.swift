@@ -139,15 +139,13 @@ struct LectureDetailScene: View {
                     
                     if !editMode.isEditing {
                         DetailButton(text: "강의계획서") {
+                            
                         }
                         
                         DetailButton(text: "강의평") {
-                        }
-                    }
-
-                    DetailButton(text: "강의평") {
-                        Task {
-                            await viewModel.fetchReviewId(of: lecture)
+                            Task {
+                                await viewModel.fetchReviewId(of: lecture)
+                            }
                         }
                     }
 

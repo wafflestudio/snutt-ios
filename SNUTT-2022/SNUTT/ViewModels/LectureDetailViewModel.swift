@@ -44,8 +44,9 @@ extension LectureDetailScene {
             do {
                 let id = try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
                 reviewService.setDetailId(id)
+                services.globalUIService.setSelectedTab(.review)
             } catch {
-                // handle error
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
     }

@@ -17,7 +17,7 @@ struct SNUTTView: View {
 
     var body: some View {
         ZStack {
-            MainTabScene(viewModel: .init(container: viewModel.container))
+            MainTabScene(viewModel: .init(container: viewModel.container), navigationBarHeight: $navigationBarHeight)
             MenuSheetScene(viewModel: .init(container: viewModel.container))
             FilterSheetScene(viewModel: .init(container: viewModel.container))
         }
@@ -73,6 +73,7 @@ extension SNUTTView {
 
 private struct MainTabScene: View {
     @ObservedObject var viewModel: MainTabViewModel
+    @Binding var navigationBarHeight: CGFloat
 
     var body: some View {
         let selected = Binding {
@@ -90,7 +91,7 @@ private struct MainTabScene: View {
                 TimetableScene(viewModel: .init(container: viewModel.container))
             }
             TabScene(tabType: .search) {
-                SearchLectureScene(viewModel: .init(container: viewModel.container))
+                SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
             }
             TabScene(tabType: .review) {
                 ReviewScene(viewModel: .init(container: viewModel.container))
@@ -119,15 +120,11 @@ private struct MainTabScene: View {
         }
 
         func resetDetailId() {
-            reviewService.setDetailId("")
+            services.reviewService.setDetailId("")
         }
 
         func setSelectedTab(_ tab: TabType) {
-            reviewService.setSelectedTab(tab)
-        }
-
-        private var reviewService: ReviewServiceProtocol {
-            services.reviewService
+            services.globalUIService.setSelectedTab(tab)
         }
     }
 }

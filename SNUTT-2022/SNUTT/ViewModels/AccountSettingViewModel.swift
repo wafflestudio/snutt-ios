@@ -23,41 +23,33 @@ class AccountSettingViewModel: BaseViewModel, ObservableObject {
             }
             .store(in: &bag)
     }
-
-    // TODO: implement destinations of each menu
-    var menuList: [[SettingsMenu]] {
-        var menu: [[SettingsMenu]] = []
+    
+    var menuList: [[AccountSettings]] {
+        var menu: [[AccountSettings]] = []
         menu.append(currentUser?.localId == nil
-            ? [SettingsMenu(AccountSettings.addLocalId) {
-                AddLocalIdScene(viewModel: AddLocalIdViewModel(container: container))
-            }]
-            : [SettingsMenu(AccountSettings.showLocalId,
-                            content: currentUser?.localId ?? "(없음)"),
-               SettingsMenu(AccountSettings.changePassword)])
+                    ? [.addLocalId]
+                    : [.showLocalId, .changePassword])
         menu.append(currentUser?.fbName == nil
-            ? [SettingsMenu(AccountSettings.makeFbConnection)]
-            : [SettingsMenu(AccountSettings.showFbName,
-                            content: currentUser?.fbName ?? "(없음)"),
-               SettingsMenu(AccountSettings.deleteFbConnection)])
-        menu.append([SettingsMenu(AccountSettings.showEmail,
-                                  content: currentUser?.email ?? "(없음)")])
-        menu.append([SettingsMenu(AccountSettings.deleteAccount, destructive: true)])
+                    ? [.makeFbConnection]
+                    : [.showFbName, .deleteFbConnection])
+        menu.append([.showEmail])
+        menu.append([.deleteAccount])
         return menu
     }
 
-    func fetchUser() async {
-        do {
-            try await userService.fetchUser()
-        } catch {
-            print("user error")
-        }
-    }
-
-    private var currentUser: User? {
+    var currentUser: User? {
         appState.user.current
     }
-
-    private var userService: UserServiceProtocol {
-        services.userService
+    
+    func fetchUser() async {
+        do {
+            try await services.userService.fetchUser()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+    
+    func deleteUser() {
+        // TODO: implement
     }
 }

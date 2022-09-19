@@ -11,6 +11,7 @@ struct SearchLectureCell: View {
     let lecture: Lecture
     let selected: Bool
     let addLecture: (Lecture) async -> Void
+    let fetchReviewId: (Lecture) async -> Void
 
     @State var showingDetailPage = false
 
@@ -59,7 +60,7 @@ struct SearchLectureCell: View {
 
                         Button {
                             Task {
-                                await viewModel.fetchReviewId(of: lecture)
+                                await fetchReviewId(lecture)
                             }
                         } label: {
                             Text("강의평")
@@ -85,26 +86,5 @@ struct SearchLectureCell: View {
         }
 
         let _ = debugChanges()
-    }
-}
-
-extension SearchLectureCell {
-    class ViewModel: BaseViewModel {
-        func addLecture(lecture: Lecture) async {
-            do {
-                try await services.lectureService.addLecture(lecture: lecture)
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
-        }
-
-        func fetchReviewId(of lecture: Lecture) async {
-            do {
-                let id = try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
-                services.reviewService.setDetailId(id)
-            } catch {
-                // handle error
-            }
-        }
     }
 }
