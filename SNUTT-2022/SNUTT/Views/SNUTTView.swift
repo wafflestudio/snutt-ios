@@ -16,11 +16,20 @@ struct SNUTTView: View {
     @State private var navigationBarHeight: CGFloat = 80
 
     var body: some View {
+        let selected = Binding {
+            selectedTab
+        } set: {
+            [previous = selectedTab] current in
+            if previous == current && current == .review {
+                viewModel.resetReviewId()
+            }
+            selectedTab = current
+        }
+        
         ZStack {
             MainTabScene(container: viewModel.container,
-                         resetReviewId: viewModel.resetReviewId,
                          navigationBarHeight: $navigationBarHeight,
-                         selectedTab: $selectedTab)
+                         selected: selected)
             MenuSheetScene(viewModel: .init(container: viewModel.container))
             FilterSheetScene(viewModel: .init(container: viewModel.container))
         }
@@ -57,11 +66,14 @@ extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var errorContent: STError? = nil
+        @Published private var _shouldReloadWebView = false
 
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$errorContent.assign(to: &$errorContent)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
+            appState.webView.$reloadWebView
+                .assign(to: &$_shouldReloadWebView)
         }
 
         var errorTitle: String {
@@ -80,22 +92,11 @@ extension SNUTTView {
 
 private struct MainTabScene: View {
     let container: DIContainer
-    let resetReviewId: () -> Void
     @Binding var navigationBarHeight: CGFloat
-    @Binding var selectedTab: TabType
+    @Binding var selected: TabType
 
     var body: some View {
-        let selected = Binding {
-            selectedTab
-        } set: {
-            [previous = selectedTab] current in
-            if previous == current && current == .review {
-                resetReviewId()
-            }
-            selectedTab = current
-        }
-
-        TabView(selection: selected) {
+        TabView(selection: $selected) {
             TabScene(tabType: .timetable) {
                 TimetableScene(viewModel: .init(container: container))
             }
