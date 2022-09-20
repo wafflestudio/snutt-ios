@@ -13,13 +13,17 @@ struct SNUTTView: View {
     @State private var selectedTab: TabType = .timetable
 
     /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
-    @State private var navigationBarHeight: CGFloat = 44
+    @State private var navigationBarHeight: CGFloat = 0
 
     var body: some View {
         ZStack {
             MainTabScene(viewModel: .init(container: viewModel.container), navigationBarHeight: $navigationBarHeight)
-            MenuSheetScene(viewModel: .init(container: viewModel.container))
-            FilterSheetScene(viewModel: .init(container: viewModel.container))
+            if selectedTab == .timetable {
+                MenuSheetScene(viewModel: .init(container: viewModel.container))
+            }
+            if selectedTab == .search {
+                FilterSheetScene(viewModel: .init(container: viewModel.container))
+            }
         }
         .accentColor(Color(UIColor.label))
         .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
@@ -89,6 +93,11 @@ private struct MainTabScene: View {
         TabView(selection: selected) {
             TabScene(tabType: .timetable) {
                 TimetableScene(viewModel: .init(container: viewModel.container))
+                    .background(NavigationBarReader { navbar in
+                        DispatchQueue.main.async {
+                            navigationBarHeight = navbar.frame.height
+                        }
+                    })
             }
             TabScene(tabType: .search) {
                 SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
