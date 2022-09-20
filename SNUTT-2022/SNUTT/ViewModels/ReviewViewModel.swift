@@ -28,9 +28,9 @@ class ReviewViewModel: BaseViewModel, ObservableObject {
 
     var request: URLRequest {
         if _reviewDetailId.isEmpty {
-            return URLRequest(url: SNUTTWebView.review.url)
+            return URLRequest(url: WebViewType.review.url)
         } else {
-            return URLRequest(url: SNUTTWebView.reviewDetail(id: _reviewDetailId).url)
+            return URLRequest(url: WebViewType.reviewDetail(id: _reviewDetailId).url)
         }
     }
 

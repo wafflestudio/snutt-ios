@@ -117,7 +117,7 @@ extension WKWebView {
 }
 
 // TODO: move to appropriate directory
-enum SNUTTWebView {
+enum WebViewType {
     case developerInfo
     case termsOfService
     case privacyPolicy
