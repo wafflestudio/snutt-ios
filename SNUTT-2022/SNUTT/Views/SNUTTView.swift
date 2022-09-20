@@ -14,9 +14,9 @@ struct SNUTTView: View {
 
     /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
     @State private var navigationBarHeight: CGFloat = 0
-
-    var body: some View {
-        let selected = Binding {
+    
+    private var selected: Binding<TabType> {
+        Binding<TabType> {
             selectedTab
         } set: {
             [previous = selectedTab] current in
@@ -25,7 +25,9 @@ struct SNUTTView: View {
             }
             selectedTab = current
         }
+    }
 
+    var body: some View {
         ZStack {
             TabView(selection: selected) {
                 TabScene(tabType: .timetable) {
