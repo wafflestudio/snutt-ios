@@ -102,7 +102,7 @@ private struct MainTabScene: View {
     var body: some View {
         TabView(selection: $selected) {
             TabScene(tabType: .timetable) {
-                TimetableScene(viewModel: .init(container: viewModel.container))
+                TimetableScene(viewModel: .init(container: container))
                     .background(NavigationBarReader { navbar in
                         DispatchQueue.main.async {
                             navigationBarHeight = navbar.frame.height
