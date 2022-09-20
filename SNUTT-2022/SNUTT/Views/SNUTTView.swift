@@ -13,7 +13,7 @@ struct SNUTTView: View {
     @State private var selectedTab: TabType = .timetable
 
     /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
-    @State private var navigationBarHeight: CGFloat = 80
+    @State private var navigationBarHeight: CGFloat = 0
 
     var body: some View {
         let selected = Binding {
@@ -30,8 +30,12 @@ struct SNUTTView: View {
             MainTabScene(container: viewModel.container,
                          navigationBarHeight: $navigationBarHeight,
                          selected: selected)
-            MenuSheetScene(viewModel: .init(container: viewModel.container))
-            FilterSheetScene(viewModel: .init(container: viewModel.container))
+            if selectedTab == .timetable {
+                MenuSheetScene(viewModel: .init(container: viewModel.container))
+            }
+            if selectedTab == .search {
+                FilterSheetScene(viewModel: .init(container: viewModel.container))
+            }
         }
         .accentColor(Color(UIColor.label))
         .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
@@ -98,7 +102,12 @@ private struct MainTabScene: View {
     var body: some View {
         TabView(selection: $selected) {
             TabScene(tabType: .timetable) {
-                TimetableScene(viewModel: .init(container: container))
+                TimetableScene(viewModel: .init(container: viewModel.container))
+                    .background(NavigationBarReader { navbar in
+                        DispatchQueue.main.async {
+                            navigationBarHeight = navbar.frame.height
+                        }
+                    })
             }
             TabScene(tabType: .search) {
                 SearchLectureScene(viewModel: .init(container: container), navigationBarHeight: navigationBarHeight)
