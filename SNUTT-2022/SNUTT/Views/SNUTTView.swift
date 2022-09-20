@@ -14,7 +14,7 @@ struct SNUTTView: View {
 
     /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
     @State private var navigationBarHeight: CGFloat = 0
-    
+
     var body: some View {
         let selected = Binding {
             selectedTab
