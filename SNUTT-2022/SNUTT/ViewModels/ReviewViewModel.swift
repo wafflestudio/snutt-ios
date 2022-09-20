@@ -9,7 +9,6 @@ import Combine
 import Foundation
 
 class ReviewViewModel: BaseViewModel, ObservableObject {
-    @Published private var _reload: Bool = false
     @Published private var _state: WebViewState.Connection = .success
     @Published private var _reviewDetailId: String = ""
 
@@ -18,7 +17,6 @@ class ReviewViewModel: BaseViewModel, ObservableObject {
     override init(container: DIContainer) {
         super.init(container: container)
 
-        appState.webView.$reloadWebView.assign(to: &$_reload)
         appState.webView.$connection.assign(to: &$_state)
         appState.webView.$detailLectureId.assign(to: &$_reviewDetailId)
     }
@@ -28,20 +26,11 @@ class ReviewViewModel: BaseViewModel, ObservableObject {
         set { services.reviewService.changeConnectionState(to: newValue) }
     }
 
-    var reload: Bool {
-        get { appState.webView.reloadWebView }
-        set { services.reviewService.shouldReloadWebView(newValue) }
-    }
-
-    var detailId: String {
-        _reviewDetailId
-    }
-
     var request: URLRequest {
-        if detailId.isEmpty {
+        if _reviewDetailId.isEmpty {
             return URLRequest(url: SNUTTWebView.review.url)
         } else {
-            return URLRequest(url: SNUTTWebView.reviewDetail(id: detailId).url)
+            return URLRequest(url: SNUTTWebView.reviewDetail(id: _reviewDetailId).url)
         }
     }
 

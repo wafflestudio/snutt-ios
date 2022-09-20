@@ -43,17 +43,13 @@ struct ReviewWebView: WebView {
         webView.navigationDelegate = context.coordinator
         webView.allowsBackForwardNavigationGestures = true
         webView.scrollView.bounces = false
-        context.coordinator.webView = webView
         webView.load(request)
 
         return webView
     }
 
     func updateUIView(_ uiView: WKWebView, context _: Context) {
-        if viewModel.reload {
-            uiView.load(request)
-            viewModel.reload = false
-        }
+        uiView.load(request)
     }
 
     func makeCoordinator() -> ReviewWebView.Coordinator {
@@ -96,7 +92,6 @@ struct ReviewWebView: WebView {
     class Coordinator: NSObject, WKNavigationDelegate {
         let parent: ReviewWebView
         let viewModel: ReviewViewModel
-        var webView: WKWebView?
 
         init(_ parent: ReviewWebView) {
             self.parent = parent
@@ -105,10 +100,6 @@ struct ReviewWebView: WebView {
 
         func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
             viewModel.connectionState = .error
-        }
-
-        func webView(_: WKWebView, didFinish _: WKNavigation!) {
-            viewModel.connectionState = .success
         }
     }
 }

@@ -14,7 +14,7 @@ struct SNUTTView: View {
 
     /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
     @State private var navigationBarHeight: CGFloat = 0
-
+    
     var body: some View {
         let selected = Binding {
             selectedTab
@@ -27,9 +27,25 @@ struct SNUTTView: View {
         }
 
         ZStack {
-            MainTabScene(container: viewModel.container,
-                         navigationBarHeight: $navigationBarHeight,
-                         selected: selected)
+            TabView(selection: selected) {
+                TabScene(tabType: .timetable) {
+                    TimetableScene(viewModel: .init(container: viewModel.container))
+                        .background(NavigationBarReader { navbar in
+                            DispatchQueue.main.async {
+                                navigationBarHeight = navbar.frame.height
+                            }
+                        })
+                }
+                TabScene(tabType: .search) {
+                    SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
+                }
+                TabScene(tabType: .review) {
+                    ReviewScene(viewModel: .init(container: viewModel.container))
+                }
+                TabScene(tabType: .settings) {
+                    SettingScene(viewModel: .init(container: viewModel.container))
+                }
+            }
             if selectedTab == .timetable {
                 MenuSheetScene(viewModel: .init(container: viewModel.container))
             }
@@ -70,14 +86,13 @@ extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var errorContent: STError? = nil
-        @Published private var _shouldReloadWebView = false
+        @Published private var _detailLectureId = ""
 
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$errorContent.assign(to: &$errorContent)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
-            appState.webView.$reloadWebView
-                .assign(to: &$_shouldReloadWebView)
+            appState.webView.$detailLectureId.assign(to: &$_detailLectureId)
         }
 
         var errorTitle: String {
@@ -90,34 +105,6 @@ extension SNUTTView {
 
         func resetReviewId() {
             services.reviewService.resetReviewId()
-        }
-    }
-}
-
-private struct MainTabScene: View {
-    let container: DIContainer
-    @Binding var navigationBarHeight: CGFloat
-    @Binding var selected: TabType
-
-    var body: some View {
-        TabView(selection: $selected) {
-            TabScene(tabType: .timetable) {
-                TimetableScene(viewModel: .init(container: container))
-                    .background(NavigationBarReader { navbar in
-                        DispatchQueue.main.async {
-                            navigationBarHeight = navbar.frame.height
-                        }
-                    })
-            }
-            TabScene(tabType: .search) {
-                SearchLectureScene(viewModel: .init(container: container), navigationBarHeight: navigationBarHeight)
-            }
-            TabScene(tabType: .review) {
-                ReviewScene(viewModel: .init(container: container))
-            }
-            TabScene(tabType: .settings) {
-                SettingScene(viewModel: .init(container: container))
-            }
         }
     }
 }

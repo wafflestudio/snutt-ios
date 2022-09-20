@@ -55,7 +55,6 @@ struct LectureService: LectureServiceProtocol {
         let id = try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
         DispatchQueue.main.async {
             appState.webView.detailLectureId = "\(id)"
-            appState.webView.reloadWebView = true
         }
     }
 
