@@ -14,9 +14,8 @@ struct SearchLectureScene: View {
     @State private var reloadSearchList: Int = 0
 
     var body: some View {
-        ZStack {
-            GeometryReader { reader in
-
+        GeometryReader { reader in
+            ZStack {
                 // MARK: Background Timetable
 
                 Group {
@@ -34,7 +33,7 @@ struct SearchLectureScene: View {
                 VStack(spacing: 0) {
                     // MARK: SearchBar with padding
 
-                    VStack(spacing: 0) {
+                    VStack {
                         Spacer()
                         SearchBar(text: $viewModel.searchText,
                                   isFilterOpen: $viewModel.isFilterOpen,
@@ -72,17 +71,17 @@ struct SearchLectureScene: View {
                 .edgesIgnoringSafeArea(.top)
                 .ignoresSafeArea(.keyboard)
             }
-        }
-        .task {
-            await viewModel.fetchTags()
-        }
-        .navigationBarHidden(true)
-        .animation(.customSpring, value: viewModel.searchResult?.count)
-        .animation(.customSpring, value: viewModel.isLoading)
-        .animation(.customSpring, value: viewModel.selectedTagList.count)
-        .onChange(of: viewModel.isLoading) { _ in
-            withAnimation(.customSpring) {
-                reloadSearchList += 1
+            .task {
+                await viewModel.fetchTags()
+            }
+            .navigationBarHidden(true)
+            .animation(.customSpring, value: viewModel.searchResult?.count)
+            .animation(.customSpring, value: viewModel.isLoading)
+            .animation(.customSpring, value: viewModel.selectedTagList.count)
+            .onChange(of: viewModel.isLoading) { _ in
+                withAnimation(.customSpring) {
+                    reloadSearchList += 1
+                }
             }
         }
 
