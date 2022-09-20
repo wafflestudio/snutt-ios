@@ -46,7 +46,7 @@ extension LectureDetailScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func resetReviewId() {
             services.reviewService.resetReviewId()
         }

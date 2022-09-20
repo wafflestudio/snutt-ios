@@ -25,7 +25,7 @@ struct SNUTTView: View {
             }
             selectedTab = current
         }
-        
+
         ZStack {
             MainTabScene(container: viewModel.container,
                          navigationBarHeight: $navigationBarHeight,
@@ -87,7 +87,7 @@ extension SNUTTView {
         var errorMessage: String {
             (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
         }
-        
+
         func resetReviewId() {
             services.reviewService.resetReviewId()
         }

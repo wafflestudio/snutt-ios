@@ -23,7 +23,7 @@ struct ReviewService: ReviewServiceProtocol {
     func changeConnectionState(to state: WebViewState.Connection) {
         appState.webView.connection = state
     }
-    
+
     func resetReviewId() {
         DispatchQueue.main.async {
             appState.webView.detailLectureId = ""

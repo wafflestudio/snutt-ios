@@ -113,7 +113,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func resetReviewId() {
         services.reviewService.resetReviewId()
     }

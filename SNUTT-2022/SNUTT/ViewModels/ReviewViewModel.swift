@@ -12,12 +12,12 @@ class ReviewViewModel: BaseViewModel, ObservableObject {
     @Published private var _reload: Bool = false
     @Published private var _state: WebViewState.Connection = .success
     @Published private var _reviewDetailId: String = ""
-    
+
     private var bag = Set<AnyCancellable>()
-    
+
     override init(container: DIContainer) {
         super.init(container: container)
-        
+
         appState.webView.$reloadWebView.assign(to: &$_reload)
         appState.webView.$connection.assign(to: &$_state)
         appState.webView.$detailLectureId.assign(to: &$_reviewDetailId)
@@ -32,7 +32,7 @@ class ReviewViewModel: BaseViewModel, ObservableObject {
         get { appState.webView.reloadWebView }
         set { services.reviewService.shouldReloadWebView(newValue) }
     }
-    
+
     var detailId: String {
         _reviewDetailId
     }
