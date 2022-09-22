@@ -1,4 +1,4 @@
-name: xcodebuild
+name: Xcode
 
 on:
   pull_request:
