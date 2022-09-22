@@ -73,5 +73,5 @@ class FakeLectureService: LectureServiceProtocol {
     func updateLecture(oldLecture _: Lecture, newLecture _: Lecture) async throws {}
     func addLecture(lecture _: Lecture) async throws {}
     func deleteLecture(lecture _: Lecture) async throws {}
-    func fetchReviewId(courseNumber _: String, instructor _: String, bind: Binding<String>) async throws {}
+    func fetchReviewId(courseNumber _: String, instructor _: String, bind _: Binding<String>) async throws {}
 }

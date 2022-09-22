@@ -14,13 +14,13 @@ struct SNUTTView: View {
 
     /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
     @State private var navigationBarHeight: CGFloat = 0
-    
+
     private var selected: Binding<TabType> {
         Binding<TabType> {
             selectedTab
         } set: {
             [previous = selectedTab] current in
-            if previous == current && current == .review {
+            if previous == current, current == .review {
                 viewModel.resetWebView()
             }
             selectedTab = current
@@ -103,7 +103,7 @@ extension SNUTTView {
         var errorMessage: String {
             (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
         }
-        
+
         func resetWebView() {
             reviewId = ""
         }
