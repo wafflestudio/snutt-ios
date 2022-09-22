@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2022/09/22.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 extension Session {
     static var test: Session {
@@ -22,6 +22,6 @@ class TestAuthStorage: AuthStorage {
 struct TestUtils {
     static func randomString(length: Int) -> String {
         let letters = "qwertyuiopasdfghjklzxcvbnm!@#$%^&*()_+"
-        return String((0..<length).map{ _ in letters.randomElement()! })
-      }
+        return String((0 ..< length).map { _ in letters.randomElement()! })
+    }
 }

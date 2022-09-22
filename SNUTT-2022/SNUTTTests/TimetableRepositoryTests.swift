@@ -10,19 +10,18 @@ import XCTest
 
 class TimetableRepositoryTests: XCTestCase {
     let repository = TimetableRepository(session: .test)
-    
+
     final let testTimetableName = "Timetable_\(TestUtils.randomString(length: 5))"
     var testTimetable: TimetableMetadataDto?
-    
-    
+
     override func setUp() async throws {
         let timetables = try await repository.createTimetable(title: testTimetableName, year: 2022, semester: 1)
-        testTimetable = timetables.first(where: {$0.title == testTimetableName})!
+        testTimetable = timetables.first(where: { $0.title == testTimetableName })!
     }
 
     override func tearDown() async throws {
         let f = try await repository.deleteTimetable(withTimetableId: testTimetable!._id)
-        print("tearing down!",testTimetable!._id, f)
+        print("tearing down!", testTimetable!._id, f)
     }
 
     func testUpdateTimetableTitle() async throws {
@@ -42,9 +41,9 @@ class TimetableRepositoryTests: XCTestCase {
         let oldList = try await repository.fetchTimetableList()
         var newList = try await repository.copyTimetable(withTimetableId: testTimetable!._id)
         XCTAssertEqual(oldList.count + 1, newList.count)
-        
+
         // cleanup
-        newList.removeAll(where: { new in oldList.contains(where: { old in new._id == old._id} )})
+        newList.removeAll(where: { new in oldList.contains(where: { old in new._id == old._id }) })
         let copiedTimetable = newList.first!
         let _ = try await repository.deleteTimetable(withTimetableId: copiedTimetable._id)
     }
