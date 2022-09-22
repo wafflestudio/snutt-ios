@@ -15,5 +15,4 @@ class WebViewState: ObservableObject {
     }
 
     @Published var connection: Connection = .success
-    @Published var detailLectureId: String = ""
 }

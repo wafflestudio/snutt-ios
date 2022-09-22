@@ -16,6 +16,7 @@ struct ReviewScene: View {
             ReviewWebView(request: viewModel.request, viewModel: viewModel)
                 .navigationBarHidden(true)
                 .ignoresSafeArea(.keyboard)
+                .ignoresSafeArea(.container, edges: .bottom)
         case .error:
             WebErrorView(viewModel: viewModel)
                 .navigationTitle("강의평")

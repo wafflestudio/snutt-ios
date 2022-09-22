@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension LectureDetailScene {
     class ViewModel: BaseViewModel, ObservableObject {
@@ -39,16 +40,12 @@ extension LectureDetailScene {
             }
         }
 
-        func fetchReviewId(of lecture: Lecture) async {
+        func fetchReviewId(of lecture: Lecture, bind: Binding<String>) async {
             do {
-                try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+                try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
-        }
-
-        func resetReviewId() {
-            services.reviewService.resetReviewId()
         }
     }
 }

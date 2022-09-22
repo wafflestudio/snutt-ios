@@ -11,11 +11,11 @@ struct SearchLectureCell: View {
     let lecture: Lecture
     let selected: Bool
     let addLecture: (Lecture) async -> Void
-    let fetchReviewId: (Lecture) async -> Void
-    let resetReviewId: () -> Void
+    let fetchReviewId: (Lecture, Binding<String>) async -> Void
 
     @State var showingDetailPage = false
     @State private var showReviewWebView: Bool = false
+    @State private var reviewId: String = ""
 
     @Environment(\.dependencyContainer) var container: DIContainer?
 
@@ -63,17 +63,15 @@ struct SearchLectureCell: View {
                         Button {
                             Task {
                                 showReviewWebView = true
-                                await fetchReviewId(lecture)
+                                await fetchReviewId(lecture, $reviewId)
                             }
                         } label: {
                             Text("강의평")
                                 .frame(maxWidth: .infinity)
                                 .font(STFont.details)
                         }.sheet(isPresented: $showReviewWebView) {
-                            resetReviewId()
-                        } content: {
                             if let container = container {
-                                ReviewScene(viewModel: .init(container: container))
+                                ReviewScene(viewModel: .init(container: container, reviewDetailId: reviewId))
                             }
                         }
 

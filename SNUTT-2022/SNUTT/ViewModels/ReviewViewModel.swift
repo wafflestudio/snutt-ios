@@ -10,15 +10,14 @@ import Foundation
 
 class ReviewViewModel: BaseViewModel, ObservableObject {
     @Published private var _state: WebViewState.Connection = .success
-    @Published private var _reviewDetailId: String = ""
 
-    private var bag = Set<AnyCancellable>()
+    private var reviewDetailId: String
 
-    override init(container: DIContainer) {
+    init(container: DIContainer, reviewDetailId: String) {
+        self.reviewDetailId = reviewDetailId
         super.init(container: container)
 
         appState.webView.$connection.assign(to: &$_state)
-        appState.webView.$detailLectureId.assign(to: &$_reviewDetailId)
     }
 
     var connectionState: WebViewState.Connection {
@@ -27,10 +26,10 @@ class ReviewViewModel: BaseViewModel, ObservableObject {
     }
 
     var request: URLRequest {
-        if _reviewDetailId.isEmpty {
+        if reviewDetailId.isEmpty {
             return URLRequest(url: WebViewType.review.url)
         } else {
-            return URLRequest(url: WebViewType.reviewDetail(id: _reviewDetailId).url)
+            return URLRequest(url: WebViewType.reviewDetail(id: reviewDetailId).url)
         }
     }
 

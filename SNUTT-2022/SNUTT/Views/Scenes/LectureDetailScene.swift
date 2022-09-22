@@ -16,6 +16,7 @@ struct LectureDetailScene: View {
     @State private var tempLecture: Lecture = .preview
     @State private var isDeleteAlertPresented = false
     @State private var showReviewWebView = false
+    @State private var reviewId: String = ""
 
     // for modal presentation
     var isPresentedModally: Bool = false
@@ -144,12 +145,10 @@ struct LectureDetailScene: View {
                         DetailButton(text: "강의평") {
                             showReviewWebView = true
                             Task {
-                                await viewModel.fetchReviewId(of: lecture)
+                                await viewModel.fetchReviewId(of: lecture, bind: $reviewId)
                             }
                         }.sheet(isPresented: $showReviewWebView) {
-                            viewModel.resetReviewId()
-                        } content: {
-                            ReviewScene(viewModel: .init(container: viewModel.container))
+                            ReviewScene(viewModel: .init(container: viewModel.container, reviewDetailId: reviewId))
                         }
                     }
 

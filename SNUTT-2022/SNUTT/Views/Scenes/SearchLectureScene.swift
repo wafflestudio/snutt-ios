@@ -12,6 +12,7 @@ struct SearchLectureScene: View {
     var navigationBarHeight: CGFloat
 
     @State private var reloadSearchList: Int = 0
+    @State private var reviewId: String = ""
 
     var body: some View {
         GeometryReader { reader in
@@ -62,8 +63,7 @@ struct SearchLectureScene: View {
                         SearchLectureList(data: viewModel.searchResult!,
                                           fetchMore: viewModel.fetchMoreSearchResult,
                                           addLecture: viewModel.addLecture,
-                                          fetchReviewId: viewModel.fetchReviewId(of:),
-                                          resetReviewId: viewModel.resetReviewId,
+                                          fetchReviewId: viewModel.fetchReviewId(of:bind:),
                                           selected: $viewModel.selectedLecture)
                             .animation(.customSpring, value: viewModel.selectedLecture?.id)
                             .id(reloadSearchList) // reload everything when any of the search conditions changes

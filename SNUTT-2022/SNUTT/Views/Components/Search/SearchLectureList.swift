@@ -11,8 +11,7 @@ struct SearchLectureList: View {
     let data: [Lecture]
     let fetchMore: () async -> Void
     let addLecture: (Lecture) async -> Void
-    let fetchReviewId: (Lecture) async -> Void
-    let resetReviewId: () -> Void
+    let fetchReviewId: (Lecture, Binding<String>) async -> Void
     @Binding var selected: Lecture?
 
     var body: some View {
@@ -22,8 +21,7 @@ struct SearchLectureList: View {
                     SearchLectureCell(lecture: lecture,
                                       selected: selected?.id == lecture.id,
                                       addLecture: addLecture,
-                                      fetchReviewId: fetchReviewId,
-                                      resetReviewId: resetReviewId)
+                                      fetchReviewId: fetchReviewId)
                         .task {
                             if lecture.id == data.last?.id {
                                 await fetchMore()

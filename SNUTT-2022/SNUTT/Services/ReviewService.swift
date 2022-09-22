@@ -9,7 +9,6 @@ import Foundation
 
 protocol ReviewServiceProtocol {
     func changeConnectionState(to state: WebViewState.Connection)
-    func resetReviewId()
 }
 
 struct ReviewService: ReviewServiceProtocol {
@@ -24,15 +23,8 @@ struct ReviewService: ReviewServiceProtocol {
             appState.webView.connection = state
         }
     }
-
-    func resetReviewId() {
-        DispatchQueue.main.async {
-            appState.webView.detailLectureId = ""
-        }
-    }
 }
 
 class FakeReviewService: ReviewServiceProtocol {
     func changeConnectionState(to _: WebViewState.Connection) {}
-    func resetReviewId() {}
 }

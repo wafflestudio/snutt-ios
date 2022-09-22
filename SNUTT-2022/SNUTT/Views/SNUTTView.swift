@@ -21,7 +21,7 @@ struct SNUTTView: View {
         } set: {
             [previous = selectedTab] current in
             if previous == current && current == .review {
-                viewModel.resetReviewId()
+                viewModel.resetWebView()
             }
             selectedTab = current
         }
@@ -42,7 +42,7 @@ struct SNUTTView: View {
                     SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
                 }
                 TabScene(tabType: .review) {
-                    ReviewScene(viewModel: .init(container: viewModel.container))
+                    ReviewScene(viewModel: .init(container: viewModel.container, reviewDetailId: viewModel.reviewId))
                 }
                 TabScene(tabType: .settings) {
                     SettingScene(viewModel: .init(container: viewModel.container))
@@ -88,13 +88,12 @@ extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var errorContent: STError? = nil
-        @Published private var _detailLectureId = ""
+        @Published var reviewId: String = ""
 
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$errorContent.assign(to: &$errorContent)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
-            appState.webView.$detailLectureId.assign(to: &$_detailLectureId)
         }
 
         var errorTitle: String {
@@ -104,9 +103,9 @@ extension SNUTTView {
         var errorMessage: String {
             (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
         }
-
-        func resetReviewId() {
-            services.reviewService.resetReviewId()
+        
+        func resetWebView() {
+            reviewId = ""
         }
     }
 }

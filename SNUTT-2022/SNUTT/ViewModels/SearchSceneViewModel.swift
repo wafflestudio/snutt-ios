@@ -106,15 +106,11 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func fetchReviewId(of lecture: Lecture) async {
+    func fetchReviewId(of lecture: Lecture, bind: Binding<String>) async {
         do {
-            try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+            try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
-    }
-
-    func resetReviewId() {
-        services.reviewService.resetReviewId()
     }
 }
