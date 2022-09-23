@@ -7,7 +7,7 @@
 
 import XCTest
 
-//class SNUTTUITestsLaunchTests: XCTestCase {
+// class SNUTTUITestsLaunchTests: XCTestCase {
 //    override class var runsForEachTargetApplicationUIConfiguration: Bool {
 //        true
 //    }
@@ -28,4 +28,4 @@ import XCTest
 //        attachment.lifetime = .keepAlways
 //        add(attachment)
 //    }
-//}
+// }
