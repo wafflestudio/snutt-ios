@@ -7,16 +7,25 @@
 
 import Alamofire
 import Foundation
+@testable import SNUTT
 
 extension Session {
     static var test: Session {
-        Session(interceptor: Interceptor(authStorage: TestAuthStorage()), eventMonitors: [Logger()])
+        Session(interceptor: Interceptor(userState: AppState.test.user), eventMonitors: [Logger()])
     }
 }
 
-class TestAuthStorage: AuthStorage {
-    var apiKey: ApiKey = Bundle.main.infoDictionary?["API_KEY"] as! String
-    var accessToken: AccessToken = Bundle.main.infoDictionary?["ACCESS_TOKEN_TEST"] as! String
+extension AppState {
+    static var test: AppState = {
+        let state = AppState()
+        state.user.accessToken = TestStorage.accessToken
+        return state
+    }()
+}
+
+struct TestStorage {
+    static var apiKey: String = Bundle.main.infoDictionary?["API_KEY"] as! String
+    static var accessToken: String = Bundle.main.infoDictionary?["ACCESS_TOKEN_TEST"] as! String
 }
 
 struct TestUtils {

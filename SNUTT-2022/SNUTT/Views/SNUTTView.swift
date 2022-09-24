@@ -17,15 +17,21 @@ struct SNUTTView: View {
 
     var body: some View {
         ZStack {
-            MainTabScene(viewModel: .init(container: viewModel.container), navigationBarHeight: $navigationBarHeight)
-            if selectedTab == .timetable {
-                MenuSheetScene(viewModel: .init(container: viewModel.container))
-            }
-            if selectedTab == .search {
-                FilterSheetScene(viewModel: .init(container: viewModel.container))
+            if viewModel.accessToken == nil {
+                LoginScene(viewModel: .init(container: viewModel.container))
+                    .transition(.move(edge: .bottom))
+            } else {
+                MainTabScene(viewModel: .init(container: viewModel.container), navigationBarHeight: $navigationBarHeight)
+                if selectedTab == .timetable {
+                    MenuSheetScene(viewModel: .init(container: viewModel.container))
+                }
+                if selectedTab == .search {
+                    FilterSheetScene(viewModel: .init(container: viewModel.container))
+                }
             }
             LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
         }
+        .animation(.easeOut, value: viewModel.accessToken)
         .accentColor(Color(UIColor.label))
         .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
             Text(viewModel.errorMessage)
@@ -59,11 +65,13 @@ extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var errorContent: STError? = nil
+        @Published var accessToken: String? = nil
 
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$errorContent.assign(to: &$errorContent)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
+            appState.user.$accessToken.assign(to: &$accessToken)
         }
 
         var errorTitle: String {
@@ -116,7 +124,6 @@ private struct MainTabScene: View {
 extension MainTabScene {
     final class MainTabViewModel: BaseViewModel, ObservableObject {
         @Published var selectedTab: TabType = .timetable
-        private var bag = Set<AnyCancellable>()
 
         override init(container: DIContainer) {
             super.init(container: container)

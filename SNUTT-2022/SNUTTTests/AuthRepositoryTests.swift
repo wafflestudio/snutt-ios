@@ -7,6 +7,7 @@
 
 import Alamofire
 import XCTest
+@testable import SNUTT
 
 class AuthRepositoryTests: XCTestCase {
     let repository = AuthRepository(session: .test)

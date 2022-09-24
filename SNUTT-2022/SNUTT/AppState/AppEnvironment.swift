@@ -22,6 +22,7 @@ extension AppEnvironment {
         let reviewService: ReviewServiceProtocol
         let globalUIService: GlobalUIServiceProtocol
         let courseBookService: CourseBookServiceProtocol
+        let authService: AuthServiceProtocol
         let notificationService: NotificationServiceProtocol
     }
 }
@@ -34,6 +35,7 @@ extension AppEnvironment {
         let searchRepository: SearchRepositoryProtocol
         let courseBookRepository: CourseBookRepositoryProtocol
         let reviewRepository: ReviewRepositoryProtocol
+        let authRepository: AuthRepositoryProtocol
         let notificationRepository: NotificationRepositoryProtocol
     }
 
@@ -45,19 +47,21 @@ extension AppEnvironment {
 extension AppEnvironment {
     static func bootstrap() -> Self {
         let appState = AppState()
-        let session = configuredSession()
+        let session = configuredSession(appState: appState)
         let webRepos = configuredWebRepositories(session: session)
         let dbRepos = configuredDBRepositories(appState: appState)
         let services = configuredServices(appState: appState, webRepositories: webRepos, localRepositories: dbRepos)
         let container = DIContainer(appState: appState, services: services)
+        
+        /// We need to load access token ASAP in order to determine which screen to show first.
+        /// Note that this should run synchronously on the main thread.
+        services.authService.loadAccessTokenDuringBootstrap()
+        
         return .init(container: container)
     }
 
-    private static func configuredSession() -> Session {
-        let storage = Storage()
-        storage.apiKey = Bundle.main.infoDictionary?["API_KEY"] as! String
-        storage.accessToken = "74280a42...."
-        return Session(interceptor: Interceptor(authStorage: storage), eventMonitors: [Logger()])
+    private static func configuredSession(appState: AppState) -> Session {
+        return Session(interceptor: Interceptor(userState: appState.user), eventMonitors: [Logger()])
     }
 
     private static func configuredWebRepositories(session: Session) -> WebRepositories {
@@ -67,6 +71,7 @@ extension AppEnvironment {
         let searchRepository = SearchRepository(session: session)
         let reviewRepository = ReviewRepository(session: session)
         let courseBookRepository = CourseBookRepository(session: session)
+        let authRepository = AuthRepository(session: session)
         let notificationRepository = NotificationRepository(session: session)
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
@@ -74,6 +79,7 @@ extension AppEnvironment {
                      searchRepository: searchRepository,
                      courseBookRepository: courseBookRepository,
                      reviewRepository: reviewRepository,
+                     authRepository: authRepository,
                      notificationRepository: notificationRepository)
     }
 
@@ -90,6 +96,7 @@ extension AppEnvironment {
         let reviewService = ReviewService(appState: appState)
         let globalUIService = GlobalUIService(appState: appState)
         let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
+        let authService = AuthService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let notificationService = NotificationService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
@@ -98,6 +105,7 @@ extension AppEnvironment {
                      reviewService: reviewService,
                      globalUIService: globalUIService,
                      courseBookService: courseBookService,
+                     authService: authService,
                      notificationService: notificationService)
     }
 }
@@ -123,7 +131,9 @@ extension EnvironmentValues {
                   reviewService: FakeReviewService(),
                   globalUIService: GlobalUIService(appState: appState),
                   courseBookService: FakeCourseBookService(),
-                  notificationService: FakeNotificationService())
+                  authService: FakeAuthService(),
+                  notificationService: FakeNotificationService()
+            )
         }
     }
 #endif
