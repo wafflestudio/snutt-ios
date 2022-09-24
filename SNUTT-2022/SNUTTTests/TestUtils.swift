@@ -20,8 +20,8 @@ class TestAuthStorage: AuthStorage {
 }
 
 struct TestUtils {
-    static func randomString(length: Int) -> String {
-        let letters = "qwertyuiopasdfghjklzxcvbnm!@#$%^&*()_+"
+    static func randomString(length: Int, asciiOnly: Bool = false) -> String {
+        let letters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890\(asciiOnly ? "" : "!@#$%^&*()_+")"
         return String((0 ..< length).map { _ in letters.randomElement()! })
     }
 }

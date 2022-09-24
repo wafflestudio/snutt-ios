@@ -126,6 +126,10 @@
 		BE9413DF28C3BDF600171060 /* SearchLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DE28C3BDF600171060 /* SearchLectureList.swift */; };
 		BE95D1F128DC22DB009C0C0B /* STError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BF028872315009EBCB7 /* STError.swift */; };
 		BE95D1F728DF2F44009C0C0B /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE95D1F628DF2F44009C0C0B /* AuthRepository.swift */; };
+		BE95D1F928DF32EC009C0C0B /* AuthRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE95D1F828DF32EC009C0C0B /* AuthRepositoryTests.swift */; };
+		BE95D1FB28DF348C009C0C0B /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE95D1F628DF2F44009C0C0B /* AuthRepository.swift */; };
+		BE95D1FC28DF3492009C0C0B /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BA28C20DC500171060 /* AuthDto.swift */; };
+		BE95D1FD28DF349D009C0C0B /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413B828C20A4000171060 /* AuthRouter.swift */; };
 		BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */; };
 		BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
 		BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBD281D6244005F71E6 /* TimetableBlock.swift */; };
@@ -325,6 +329,7 @@
 		BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagsScrollView.swift; sourceTree = "<group>"; };
 		BE9413DE28C3BDF600171060 /* SearchLectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLectureList.swift; sourceTree = "<group>"; };
 		BE95D1F628DF2F44009C0C0B /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		BE95D1F828DF32EC009C0C0B /* AuthRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryTests.swift; sourceTree = "<group>"; };
 		BE982FB7281D0B33005F71E6 /* TimetableBlocksLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBlocksLayer.swift; sourceTree = "<group>"; };
 		BE982FBB281D5227005F71E6 /* TimePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePlace.swift; sourceTree = "<group>"; };
 		BE982FBD281D6244005F71E6 /* TimetableBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableBlock.swift; sourceTree = "<group>"; };
@@ -620,6 +625,7 @@
 				DC860F5927E5C87F0068C94B /* SNUTTTests.swift */,
 				BE0743DC28DC08CE00999F86 /* TestUtils.swift */,
 				DC1E0ED52877E32D005632A3 /* TimetableRepositoryTests.swift */,
+				BE95D1F828DF32EC009C0C0B /* AuthRepositoryTests.swift */,
 				BE682BD2288676FA009EBCB7 /* LectureRepositoryTests.swift */,
 			);
 			path = SNUTTTests;
@@ -1135,14 +1141,18 @@
 				BE682BDF28870C69009EBCB7 /* Timetable.swift in Sources */,
 				BE95D1F128DC22DB009C0C0B /* STError.swift in Sources */,
 				BE0743E528DC0AC900999F86 /* CourseBookDto.swift in Sources */,
+				BE95D1FB28DF348C009C0C0B /* AuthRepository.swift in Sources */,
 				BE0743E628DC0AD100999F86 /* NetworkConfiguration.swift in Sources */,
 				DC1E0ED82877E3CC005632A3 /* Router.swift in Sources */,
 				BE682BE128870C71009EBCB7 /* Weekday.swift in Sources */,
 				DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */,
+				BE95D1F928DF32EC009C0C0B /* AuthRepositoryTests.swift in Sources */,
+				BE95D1FC28DF3492009C0C0B /* AuthDto.swift in Sources */,
 				BE682BE028870C6E009EBCB7 /* Theme.swift in Sources */,
 				DC1E0ECD28771B32005632A3 /* TimetableRepository.swift in Sources */,
 				BE0743E128DC0A6500999F86 /* STColor.swift in Sources */,
 				BE682BD3288676FA009EBCB7 /* LectureRepositoryTests.swift in Sources */,
+				BE95D1FD28DF349D009C0C0B /* AuthRouter.swift in Sources */,
 				BE0743E328DC0ABC00999F86 /* ErrorDto.swift in Sources */,
 				BE0743E228DC0A6700999F86 /* STFont.swift in Sources */,
 			);
