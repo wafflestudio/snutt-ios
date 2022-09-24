@@ -15,4 +15,3 @@ struct LoginResponseDto: Codable {
 struct LogoutResponseDto: Codable {
     let message: String // typically "ok"
 }
-
