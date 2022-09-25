@@ -66,7 +66,7 @@ extension SNUTTView {
         @Published var isErrorAlertPresented = false
         @Published var errorContent: STError? = nil
         @Published var accessToken: String? = nil
-        
+
         var isAuthenticated: Bool {
             guard let accessToken = accessToken else { return false }
             return !accessToken.isEmpty
