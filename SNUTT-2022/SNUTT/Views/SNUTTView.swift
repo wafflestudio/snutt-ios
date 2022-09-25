@@ -17,7 +17,7 @@ struct SNUTTView: View {
 
     var body: some View {
         ZStack {
-            if viewModel.accessToken == nil {
+            if !viewModel.isAuthenticated {
                 LoginScene(viewModel: .init(container: viewModel.container))
                     .transition(.move(edge: .bottom))
             } else {
@@ -66,6 +66,11 @@ extension SNUTTView {
         @Published var isErrorAlertPresented = false
         @Published var errorContent: STError? = nil
         @Published var accessToken: String? = nil
+
+        var isAuthenticated: Bool {
+            guard let accessToken = accessToken else { return false }
+            return !accessToken.isEmpty
+        }
 
         override init(container: DIContainer) {
             super.init(container: container)
