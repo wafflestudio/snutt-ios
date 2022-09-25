@@ -10,6 +10,7 @@ import Foundation
 protocol AuthServiceProtocol {
     func loadAccessTokenDuringBootstrap()
     func loginWithId(id: String, password: String) async throws
+    func loginWithApple(token: String) async throws
 }
 
 struct AuthService: AuthServiceProtocol {
@@ -28,23 +29,33 @@ struct AuthService: AuthServiceProtocol {
     var userDefaultsRepository: UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
     }
-
-    func loadAccessTokenDuringBootstrap() {
-        /// **DO NOT RUN THIS CODE ASYNCHRONOUSLY**. We need to show splash screen until the loading finishes.
-        appState.user.accessToken = userDefaultsRepository.get(String.self, key: .token)
-//        appState.user.accessToken = nil
-    }
-
-    func loginWithId(id: String, password: String) async throws {
-        let dto = try await authRepository.loginWithId(id: id, password: password)
+    
+    private func saveAccessTokenFromLoginResponse(dto: LoginResponseDto) {
         DispatchQueue.main.async {
             appState.user.accessToken = dto.token
         }
         userDefaultsRepository.set(String.self, key: .token, value: dto.token)
+    }
+
+    func loadAccessTokenDuringBootstrap() {
+        /// **DO NOT RUN THIS CODE ASYNCHRONOUSLY**. We need to show splash screen until the loading finishes.
+//        appState.user.accessToken = userDefaultsRepository.get(String.self, key: .token)
+        appState.user.accessToken = nil
+    }
+
+    func loginWithId(id: String, password: String) async throws {
+        let dto = try await authRepository.loginWithId(id: id, password: password)
+        saveAccessTokenFromLoginResponse(dto: dto)
+    }
+    
+    func loginWithApple(token: String) async throws {
+        let dto = try await authRepository.loginWithApple(token: token)
+        saveAccessTokenFromLoginResponse(dto: dto)
     }
 }
 
 class FakeAuthService: AuthServiceProtocol {
     func loadAccessTokenDuringBootstrap() {}
     func loginWithId(id _: String, password _: String) async throws {}
+    func loginWithApple(token: String) async throws {}
 }

@@ -36,6 +36,7 @@ public enum STError: Int, Error {
     case WRONG_PASSWORD = 0x2005
     case WRONG_FB_TOKEN = 0x2006
     case UNKNOWN_APP = 0x2007
+    case WRONG_APPLE_TOKEN = 0x2008
 
     /* 403 - Restrictions */
     case INVALID_ID = 0x3000
@@ -92,6 +93,7 @@ public enum STError: Int, Error {
             return "권한 문제"
         case .WRONG_ID,
              .WRONG_PASSWORD,
+             .WRONG_APPLE_TOKEN,
              .WRONG_FB_TOKEN:
             return "로그인 실패"
         case .UNKNOWN_APP:
@@ -220,6 +222,8 @@ public enum STError: Int, Error {
             return "현재 시간표의 테마만 변경할 수 있습니다."
         case .UNKNOWN_ERROR:
             return "알 수 없는 오류가 발생했습니다."
+        case .WRONG_APPLE_TOKEN:
+            return "애플 계정으로 로그인이 실패했습니다. 다른 로그인 방법을 시도해주세요."
         }
     }
 }
