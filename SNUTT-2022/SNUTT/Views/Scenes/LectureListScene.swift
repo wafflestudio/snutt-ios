@@ -41,6 +41,7 @@ struct LectureListScene: View {
     }
 }
 
+#if DEBUG
 struct MyTimetableListScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -50,3 +51,4 @@ struct MyTimetableListScene_Previews: PreviewProvider {
         }
     }
 }
+#endif

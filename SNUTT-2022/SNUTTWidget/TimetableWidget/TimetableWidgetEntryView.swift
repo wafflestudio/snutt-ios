@@ -25,9 +25,11 @@ struct TimetableWidgetEntryView: View {
     }
 }
 
+#if DEBUG
 struct TimetableWidgetEntryView_Previews: PreviewProvider {
     static var previews: some View {
         TimetableWidgetEntryView(entry: TimetableEntry(date: Date(), configuration: ConfigurationIntent(), currentTimetable: .preview))
             .previewContext(WidgetPreviewContext(family: .systemLarge))
     }
 }
+#endif

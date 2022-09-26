@@ -114,6 +114,7 @@ struct LectureColorList: View {
     }
 }
 
+#if DEBUG
 struct LectureColorList_Previews: PreviewProvider {
     struct Wrapper: View {
         @State var lecture: Lecture = .preview
@@ -128,3 +129,4 @@ struct LectureColorList_Previews: PreviewProvider {
         Wrapper()
     }
 }
+#endif

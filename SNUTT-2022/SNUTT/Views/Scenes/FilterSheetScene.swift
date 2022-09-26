@@ -33,6 +33,7 @@ struct FilterSheetScene: View {
     }
 }
 
+#if DEBUG
 ///// A simple wrapper that is used to preview `FilterSheet`.
 struct FilterSheetWrapper: View {
     let container: DIContainer = .preview
@@ -51,3 +52,4 @@ struct FilterSheetScene_Previews: PreviewProvider {
         FilterSheetWrapper()
     }
 }
+#endif

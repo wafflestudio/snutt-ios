@@ -45,6 +45,7 @@ extension LectureList {
     class ViewModel: BaseViewModel {}
 }
 
+#if DEBUG
 struct TimetableList_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -52,3 +53,4 @@ struct TimetableList_Previews: PreviewProvider {
         }
     }
 }
+#endif

@@ -48,6 +48,7 @@ struct MenuSheetScene: View {
     }
 }
 
+#if DEBUG
 ///// A simple wrapper that is used to preview `MenuSheet`.
 struct MenuSheetWrapper: View {
     let container = DIContainer.preview
@@ -77,3 +78,4 @@ struct MenuSheetScene_Previews: PreviewProvider {
         MenuSheetWrapper()
     }
 }
+#endif

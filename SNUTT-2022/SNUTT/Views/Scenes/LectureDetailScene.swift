@@ -259,6 +259,7 @@ struct LectureDetailScene: View {
                 case .normal:
                     Button {
                         if editMode.isEditing {
+                            guard let tempLecture = tempLecture else { return }
                             // save
                             Task {
                                 guard let updatedLecture = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) else {
@@ -326,3 +327,4 @@ struct LectureDetailList_Previews: PreviewProvider {
         }
     }
 }
+#endif

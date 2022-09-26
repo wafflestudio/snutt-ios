@@ -165,11 +165,13 @@ enum TabType: String {
     case settings
 }
 
+#if DEBUG
 struct SNUTTView_Previews: PreviewProvider {
     static var previews: some View {
         SNUTTView(viewModel: .init(container: .preview))
     }
 }
+#endif
 
 // TODO: move elsewhere if needed
 struct NavigationBarReader: UIViewControllerRepresentable {

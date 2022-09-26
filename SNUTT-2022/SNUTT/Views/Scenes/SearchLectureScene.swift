@@ -100,6 +100,7 @@ extension EnvironmentValues {
     }
 }
 
+#if DEBUG
 struct SearchLectureScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -107,3 +108,4 @@ struct SearchLectureScene_Previews: PreviewProvider {
         }
     }
 }
+#endif

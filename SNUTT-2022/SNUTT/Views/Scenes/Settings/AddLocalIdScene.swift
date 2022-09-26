@@ -77,8 +77,10 @@ struct UnderlinedTextField: View {
     }
 }
 
+#if DEBUG
 struct AddLocalIdScene_Previews: PreviewProvider {
     static var previews: some View {
         AddLocalIdScene(viewModel: AddLocalIdViewModel(container: .preview), id: "", password: "", passwordCheck: "")
     }
 }
+#endif
