@@ -141,7 +141,7 @@
 		BE98A06C288AFC1600C2CE95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE98A06B288AFC1600C2CE95 /* Assets.xcassets */; };
 		BE98A06E288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */; };
 		BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */; };
-		BE98A072288AFC1600C2CE95 /* SNUTTWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BE98A061288AFC1500C2CE95 /* SNUTTWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BE98A072288AFC1600C2CE95 /* SNUTTWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BE98A061288AFC1500C2CE95 /* SNUTTWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BE98A07F288B046400C2CE95 /* TimetableWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A07D288B032600C2CE95 /* TimetableWidget.swift */; };
 		BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */; };
 		BEB3B6A228CDB7A400E56062 /* LectureTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */; };
@@ -224,15 +224,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		BE98A073288AFC1600C2CE95 /* Embed App Extensions */ = {
+		BE98A073288AFC1600C2CE95 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				BE98A072288AFC1600C2CE95 /* SNUTTWidgetExtension.appex in Embed App Extensions */,
+				BE98A072288AFC1600C2CE95 /* SNUTTWidgetExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -882,7 +882,7 @@
 				DC860F4127E5C87D0068C94B /* Sources */,
 				DC860F4227E5C87D0068C94B /* Frameworks */,
 				DC860F4327E5C87D0068C94B /* Resources */,
-				BE98A073288AFC1600C2CE95 /* Embed App Extensions */,
+				BE98A073288AFC1600C2CE95 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -941,7 +941,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					BE98A060288AFC1500C2CE95 = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -1450,7 +1450,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
-				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtensionRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K9883YB4VR;
@@ -1465,7 +1465,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.snutt2022.SNUTTWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt2022.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
@@ -1635,7 +1635,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTTRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
@@ -1654,7 +1654,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.snutt2022;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt2022;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1696,7 +1696,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTTTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt2022.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -1728,11 +1728,13 @@
 			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wafflestudio.snutt-2022.SNUTTUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt2022.uitest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
