@@ -11,7 +11,7 @@ import XCTest
 class TimetableRepositoryTests: XCTestCase {
     let repository = TimetableRepository(session: .test)
 
-    final let testTimetableName = "Timetable_\(TestUtils.randomString(length: 5))"
+    let testTimetableName = "Timetable_\(TestUtils.randomString(length: 5))"
     var testTimetable: TimetableMetadataDto?
 
     override func setUp() async throws {
@@ -20,8 +20,7 @@ class TimetableRepositoryTests: XCTestCase {
     }
 
     override func tearDown() async throws {
-        let f = try await repository.deleteTimetable(withTimetableId: testTimetable!._id)
-        print("tearing down!", testTimetable!._id, f)
+        let _ = try await repository.deleteTimetable(withTimetableId: testTimetable!._id)
     }
 
     func testUpdateTimetableTitle() async throws {
