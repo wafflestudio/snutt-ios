@@ -29,7 +29,7 @@ struct AuthService: AuthServiceProtocol {
     var userDefaultsRepository: UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
     }
-    
+
     private func saveAccessTokenFromLoginResponse(dto: LoginResponseDto) {
         DispatchQueue.main.async {
             appState.user.accessToken = dto.token
