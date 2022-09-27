@@ -19,7 +19,6 @@ struct SNUTTView: View {
         ZStack {
             if !viewModel.isAuthenticated {
                 LoginScene(viewModel: .init(container: viewModel.container))
-                    .transition(.move(edge: .bottom))
             } else {
                 MainTabScene(viewModel: .init(container: viewModel.container), navigationBarHeight: $navigationBarHeight)
                 if selectedTab == .timetable {
