@@ -101,11 +101,11 @@ extension EnvironmentValues {
 }
 
 #if DEBUG
-struct SearchLectureScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            SearchLectureScene(viewModel: .init(container: .preview), navigationBarHeight: 80)
+    struct SearchLectureScene_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                SearchLectureScene(viewModel: .init(container: .preview), navigationBarHeight: 80)
+            }
         }
     }
-}
 #endif

@@ -55,13 +55,13 @@ struct SettingScene: View {
 }
 
 #if DEBUG
-struct SettingScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TabView {
-                SettingScene(viewModel: .init(container: .preview))
+    struct SettingScene_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                TabView {
+                    SettingScene(viewModel: .init(container: .preview))
+                }
             }
         }
     }
-}
 #endif

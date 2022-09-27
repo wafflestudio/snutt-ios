@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2022/09/24.
 //
 
-import SwiftUI
 import AuthenticationServices
+import SwiftUI
 
 struct LoginScene: View {
     @ObservedObject var viewModel: ViewModel
@@ -27,7 +27,7 @@ struct LoginScene: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(.blue)
-            
+
             SignInWithAppleButton { request in
                 request.requestedScopes = [.fullName, .email]
             } onCompletion: { result in
@@ -41,20 +41,20 @@ struct LoginScene: View {
 
 extension LoginScene {
     class ViewModel: BaseViewModel, ObservableObject {
-        
         func loginWithApple(result: Result<ASAuthorization, Error>) async {
             switch result {
-            case .success(let success):
+            case let .success(success):
                 await loginWithApple(successResult: success)
             case .failure:
                 services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
             }
         }
-        
+
         private func loginWithApple(successResult: ASAuthorization) async {
             guard let credentail = successResult.credential as? ASAuthorizationAppleIDCredential,
                   let tokenData = credentail.identityToken,
-                  let token = String(data: tokenData, encoding: .utf8) else {
+                  let token = String(data: tokenData, encoding: .utf8)
+            else {
                 services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
                 return
             }
@@ -64,7 +64,6 @@ extension LoginScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
     }
 }
 

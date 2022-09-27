@@ -34,22 +34,22 @@ struct FilterSheetScene: View {
 }
 
 #if DEBUG
-///// A simple wrapper that is used to preview `FilterSheet`.
-struct FilterSheetWrapper: View {
-    let container: DIContainer = .preview
-    var body: some View {
-        ZStack {
-            NavBarButton(imageName: "search.filter") {
-                container.appState.search.isFilterOpen.toggle()
+    ///// A simple wrapper that is used to preview `FilterSheet`.
+    struct FilterSheetWrapper: View {
+        let container: DIContainer = .preview
+        var body: some View {
+            ZStack {
+                NavBarButton(imageName: "search.filter") {
+                    container.appState.search.isFilterOpen.toggle()
+                }
+                FilterSheetScene(viewModel: .init(container: container))
             }
-            FilterSheetScene(viewModel: .init(container: container))
         }
     }
-}
 
-struct FilterSheetScene_Previews: PreviewProvider {
-    static var previews: some View {
-        FilterSheetWrapper()
+    struct FilterSheetScene_Previews: PreviewProvider {
+        static var previews: some View {
+            FilterSheetWrapper()
+        }
     }
-}
 #endif

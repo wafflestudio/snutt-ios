@@ -46,11 +46,11 @@ extension LectureList {
 }
 
 #if DEBUG
-struct TimetableList_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            LectureList(viewModel: .init(container: .preview), lectures: [.preview, .preview, .preview])
+    struct TimetableList_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                LectureList(viewModel: .init(container: .preview), lectures: [.preview, .preview, .preview])
+            }
         }
     }
-}
 #endif

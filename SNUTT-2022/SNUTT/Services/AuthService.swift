@@ -29,7 +29,7 @@ struct AuthService: AuthServiceProtocol {
     var userDefaultsRepository: UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
     }
-    
+
     private func saveAccessTokenFromLoginResponse(dto: LoginResponseDto) {
         DispatchQueue.main.async {
             appState.user.accessToken = dto.token
@@ -47,7 +47,7 @@ struct AuthService: AuthServiceProtocol {
         let dto = try await authRepository.loginWithId(id: id, password: password)
         saveAccessTokenFromLoginResponse(dto: dto)
     }
-    
+
     func loginWithApple(token: String) async throws {
         let dto = try await authRepository.loginWithApple(token: token)
         saveAccessTokenFromLoginResponse(dto: dto)
@@ -57,5 +57,5 @@ struct AuthService: AuthServiceProtocol {
 class FakeAuthService: AuthServiceProtocol {
     func loadAccessTokenDuringBootstrap() {}
     func loginWithId(id _: String, password _: String) async throws {}
-    func loginWithApple(token: String) async throws {}
+    func loginWithApple(token _: String) async throws {}
 }

@@ -115,18 +115,18 @@ struct LectureColorList: View {
 }
 
 #if DEBUG
-struct LectureColorList_Previews: PreviewProvider {
-    struct Wrapper: View {
-        @State var lecture: Lecture = .preview
-        var body: some View {
-            NavigationView {
-                LectureColorList(theme: lecture.theme ?? .snutt, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
+    struct LectureColorList_Previews: PreviewProvider {
+        struct Wrapper: View {
+            @State var lecture: Lecture = .preview
+            var body: some View {
+                NavigationView {
+                    LectureColorList(theme: lecture.theme ?? .snutt, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
+                }
             }
         }
-    }
 
-    static var previews: some View {
-        Wrapper()
+        static var previews: some View {
+            Wrapper()
+        }
     }
-}
 #endif

@@ -63,9 +63,9 @@ struct LectureDetailRow: View {
 }
 
 #if DEBUG
-struct TimetableListCell_Previews: PreviewProvider {
-    static var previews: some View {
-        LectureListCell(lecture: .preview)
+    struct TimetableListCell_Previews: PreviewProvider {
+        static var previews: some View {
+            LectureListCell(lecture: .preview)
+        }
     }
-}
 #endif

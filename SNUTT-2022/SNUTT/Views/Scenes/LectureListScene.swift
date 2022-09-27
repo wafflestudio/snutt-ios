@@ -42,13 +42,13 @@ struct LectureListScene: View {
 }
 
 #if DEBUG
-struct MyTimetableListScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TabView {
-                LectureListScene(viewModel: .init(container: .preview))
+    struct MyTimetableListScene_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                TabView {
+                    LectureListScene(viewModel: .init(container: .preview))
+                }
             }
         }
     }
-}
 #endif

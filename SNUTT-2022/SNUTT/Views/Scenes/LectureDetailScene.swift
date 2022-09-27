@@ -326,5 +326,4 @@ struct LectureDetailList_Previews: PreviewProvider {
                 .navigationBarTitleDisplayMode(.inline)
         }
     }
-}
 #endif
