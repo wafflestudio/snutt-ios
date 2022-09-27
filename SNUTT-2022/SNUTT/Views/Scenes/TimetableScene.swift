@@ -54,7 +54,7 @@ struct TimetableScene: View {
                         NavBarButton(imageName: "nav.alarm.off") {
                             pushToNotiScene = true
                         }
-                        .circleBadge(condition: true)
+                        .circleBadge(condition: viewModel.unreadCount > 0)
                     }
                 }
             }

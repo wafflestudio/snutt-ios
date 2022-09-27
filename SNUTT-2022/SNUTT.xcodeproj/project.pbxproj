@@ -118,6 +118,9 @@
 		BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */; };
 		BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3AE285D77D000070A66 /* SearchBar.swift */; };
 		BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */; };
+		BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */; };
+		BE9413B928C20A4000171060 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413B828C20A4000171060 /* AuthRouter.swift */; };
+		BE9413BB28C20DC500171060 /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BA28C20DC500171060 /* AuthDto.swift */; };
 		BE9413BD28C2119500171060 /* NotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BC28C2119500171060 /* NotificationRouter.swift */; };
 		BE9413BF28C2157600171060 /* NotificationDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BE28C2157600171060 /* NotificationDto.swift */; };
 		BE9413C128C219AD00171060 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C028C219AD00171060 /* Notification.swift */; };
@@ -127,9 +130,6 @@
 		BE9413CE28C2207D00171060 /* NotificationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413CD28C2207D00171060 /* NotificationState.swift */; };
 		BE9413D028C220C900171060 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413CF28C220C900171060 /* NotificationService.swift */; };
 		BE9413D228C2458A00171060 /* DateFormatter+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413D128C2458A00171060 /* DateFormatter+Parse.swift */; };
-		BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */; };
-		BE9413B928C20A4000171060 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413B828C20A4000171060 /* AuthRouter.swift */; };
-		BE9413BB28C20DC500171060 /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BA28C20DC500171060 /* AuthDto.swift */; };
 		BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413D828C3AFA500171060 /* EmptySearchResult.swift */; };
 		BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DA28C3B33300171060 /* SearchTips.swift */; };
 		BE9413DD28C3B68F00171060 /* SearchTagsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */; };
@@ -332,6 +332,9 @@
 		BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLectureScene.swift; sourceTree = "<group>"; };
 		BE8BB3AE285D77D000070A66 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetScene.swift; sourceTree = "<group>"; };
+		BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleBadgeModifier.swift; sourceTree = "<group>"; };
+		BE9413B828C20A4000171060 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
+		BE9413BA28C20DC500171060 /* AuthDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDto.swift; sourceTree = "<group>"; };
 		BE9413BC28C2119500171060 /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
 		BE9413BE28C2157600171060 /* NotificationDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDto.swift; sourceTree = "<group>"; };
 		BE9413C028C219AD00171060 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -341,9 +344,6 @@
 		BE9413CD28C2207D00171060 /* NotificationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationState.swift; sourceTree = "<group>"; };
 		BE9413CF28C220C900171060 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		BE9413D128C2458A00171060 /* DateFormatter+Parse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Parse.swift"; sourceTree = "<group>"; };
-		BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleBadgeModifier.swift; sourceTree = "<group>"; };
-		BE9413B828C20A4000171060 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
-		BE9413BA28C20DC500171060 /* AuthDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDto.swift; sourceTree = "<group>"; };
 		BE9413D828C3AFA500171060 /* EmptySearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchResult.swift; sourceTree = "<group>"; };
 		BE9413DA28C3B33300171060 /* SearchTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTips.swift; sourceTree = "<group>"; };
 		BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagsScrollView.swift; sourceTree = "<group>"; };
@@ -691,8 +691,6 @@
 				BE1D2B3928014527008F9134 /* Weekday.swift */,
 				BE682BFC2887FC78009EBCB7 /* SearchTag.swift */,
 				BE682BF028872315009EBCB7 /* STError.swift */,
-				BE4B0EB728735052005FE164 /* MenuState.swift */,
-				DC2915A62866984000FE5F9A /* TimetableState.swift */,
 				BE9413CD28C2207D00171060 /* NotificationState.swift */,
 				BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */,
 				B88D16FC28AE2E1E00E2D652 /* User.swift */,
