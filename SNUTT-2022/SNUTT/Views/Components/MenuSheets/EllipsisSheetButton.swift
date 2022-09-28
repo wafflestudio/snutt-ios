@@ -18,6 +18,8 @@ struct EllipsisSheetButton: View {
         } label: {
             HStack {
                 Image(imageName)
+                    .resizable()
+                    .frame(width: 30, height: 30)
                     .padding(.horizontal, 10)
                 Text(text)
                     .frame(maxWidth: .infinity, alignment: .leading)
