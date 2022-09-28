@@ -14,7 +14,7 @@ struct LectureDetailScene: View {
     var displayMode: DisplayMode
 
     @State private var editMode: EditMode
-    @State private var tempLecture: Lecture = .preview
+    @State private var tempLecture: Lecture?
 
     init(viewModel: ViewModel, lecture: Lecture, displayMode: DisplayMode) {
         self.viewModel = viewModel
@@ -238,7 +238,9 @@ struct LectureDetailScene: View {
                     if editMode.isEditing {
                         Button {
                             // cancel
-                            lecture = tempLecture
+                            if let tempLecture = tempLecture {
+                                lecture = tempLecture
+                            }
                             editMode = .inactive
                             resignFirstResponder()
                         } label: {
@@ -319,6 +321,7 @@ struct RectangleButtonStyle: ButtonStyle {
     }
 }
 
+#if DEBUG
 struct LectureDetailList_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -326,4 +329,5 @@ struct LectureDetailList_Previews: PreviewProvider {
                 .navigationBarTitleDisplayMode(.inline)
         }
     }
+}
 #endif

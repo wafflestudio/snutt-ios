@@ -71,11 +71,6 @@ extension SNUTTView {
             return !accessToken.isEmpty
         }
 
-        var isAuthenticated: Bool {
-            guard let accessToken = accessToken else { return false }
-            return !accessToken.isEmpty
-        }
-
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$errorContent.assign(to: &$errorContent)
