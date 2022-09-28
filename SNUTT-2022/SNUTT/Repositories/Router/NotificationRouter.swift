@@ -10,7 +10,7 @@ import Alamofire
 import Foundation
 
 enum NotificationRouter: Router {
-    var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/notification")! }
+    var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/notification")! }
     static let shouldAddToken: Bool = true
 
     case notificationList(limit: Int, offset: Int, explicit: Bool)
