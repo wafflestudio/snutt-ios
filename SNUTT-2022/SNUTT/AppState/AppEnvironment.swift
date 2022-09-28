@@ -22,6 +22,7 @@ extension AppEnvironment {
         let reviewService: ReviewServiceProtocol
         let globalUIService: GlobalUIServiceProtocol
         let courseBookService: CourseBookServiceProtocol
+        let notificationService: NotificationServiceProtocol
     }
 }
 
@@ -33,6 +34,7 @@ extension AppEnvironment {
         let searchRepository: SearchRepositoryProtocol
         let courseBookRepository: CourseBookRepositoryProtocol
         let reviewRepository: ReviewRepositoryProtocol
+        let notificationRepository: NotificationRepositoryProtocol
     }
 
     struct LocalRepositories {
@@ -65,12 +67,14 @@ extension AppEnvironment {
         let searchRepository = SearchRepository(session: session)
         let reviewRepository = ReviewRepository(session: session)
         let courseBookRepository = CourseBookRepository(session: session)
+        let notificationRepository = NotificationRepository(session: session)
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
                      lectureRepository: lectureRepository,
                      searchRepository: searchRepository,
                      courseBookRepository: courseBookRepository,
-                     reviewRepository: reviewRepository)
+                     reviewRepository: reviewRepository,
+                     notificationRepository: notificationRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -86,13 +90,15 @@ extension AppEnvironment {
         let reviewService = ReviewService(appState: appState)
         let globalUIService = GlobalUIService(appState: appState)
         let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
+        let notificationService = NotificationService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
                      searchService: searchService,
                      reviewService: reviewService,
                      globalUIService: globalUIService,
-                     courseBookService: courseBookService)
+                     courseBookService: courseBookService,
+                     notificationService: notificationService)
     }
 }
 
@@ -116,7 +122,8 @@ extension EnvironmentValues {
                   searchService: FakeSearchService(),
                   reviewService: FakeReviewService(),
                   globalUIService: GlobalUIService(appState: appState),
-                  courseBookService: FakeCourseBookService())
+                  courseBookService: FakeCourseBookService(),
+                  notificationService: FakeNotificationService())
         }
     }
 #endif

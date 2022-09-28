@@ -19,6 +19,7 @@ class AppState {
 
     var tab = TabState()
     var menu = MenuState()
+    var notification = NotificationState()
 }
 
 #if DEBUG

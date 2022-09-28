@@ -121,6 +121,15 @@
 		BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */; };
 		BE9413B928C20A4000171060 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413B828C20A4000171060 /* AuthRouter.swift */; };
 		BE9413BB28C20DC500171060 /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BA28C20DC500171060 /* AuthDto.swift */; };
+		BE9413BD28C2119500171060 /* NotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BC28C2119500171060 /* NotificationRouter.swift */; };
+		BE9413BF28C2157600171060 /* NotificationDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BE28C2157600171060 /* NotificationDto.swift */; };
+		BE9413C128C219AD00171060 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C028C219AD00171060 /* Notification.swift */; };
+		BE9413C328C21D1000171060 /* NotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C228C21D1000171060 /* NotificationRepository.swift */; };
+		BE9413CA28C21F1300171060 /* NotificationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C928C21F1300171060 /* NotificationList.swift */; };
+		BE9413CC28C21F1E00171060 /* NotificationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413CB28C21F1E00171060 /* NotificationListCell.swift */; };
+		BE9413CE28C2207D00171060 /* NotificationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413CD28C2207D00171060 /* NotificationState.swift */; };
+		BE9413D028C220C900171060 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413CF28C220C900171060 /* NotificationService.swift */; };
+		BE9413D228C2458A00171060 /* DateFormatter+Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413D128C2458A00171060 /* DateFormatter+Parse.swift */; };
 		BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413D828C3AFA500171060 /* EmptySearchResult.swift */; };
 		BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DA28C3B33300171060 /* SearchTips.swift */; };
 		BE9413DD28C3B68F00171060 /* SearchTagsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */; };
@@ -326,6 +335,15 @@
 		BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleBadgeModifier.swift; sourceTree = "<group>"; };
 		BE9413B828C20A4000171060 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		BE9413BA28C20DC500171060 /* AuthDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDto.swift; sourceTree = "<group>"; };
+		BE9413BC28C2119500171060 /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
+		BE9413BE28C2157600171060 /* NotificationDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDto.swift; sourceTree = "<group>"; };
+		BE9413C028C219AD00171060 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		BE9413C228C21D1000171060 /* NotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRepository.swift; sourceTree = "<group>"; };
+		BE9413C928C21F1300171060 /* NotificationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationList.swift; sourceTree = "<group>"; };
+		BE9413CB28C21F1E00171060 /* NotificationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListCell.swift; sourceTree = "<group>"; };
+		BE9413CD28C2207D00171060 /* NotificationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationState.swift; sourceTree = "<group>"; };
+		BE9413CF28C220C900171060 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		BE9413D128C2458A00171060 /* DateFormatter+Parse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Parse.swift"; sourceTree = "<group>"; };
 		BE9413D828C3AFA500171060 /* EmptySearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchResult.swift; sourceTree = "<group>"; };
 		BE9413DA28C3B33300171060 /* SearchTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTips.swift; sourceTree = "<group>"; };
 		BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagsScrollView.swift; sourceTree = "<group>"; };
@@ -480,6 +498,7 @@
 				B88D16F228ABC5DD00E2D652 /* String+ext.swift */,
 				B8F570A5289E1221005C199F /* UserDefaults+ext.swift */,
 				BEB57C2028B6758200279EFF /* Animation+Custom.swift */,
+				BE9413D128C2458A00171060 /* DateFormatter+Parse.swift */,
 				BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */,
 			);
 			path = Extensions;
@@ -568,6 +587,7 @@
 				DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */,
 				BE682BD028864CA8009EBCB7 /* LectureRouter.swift */,
 				BE682BF82887FB59009EBCB7 /* SearchRouter.swift */,
+				BE9413BC28C2119500171060 /* NotificationRouter.swift */,
 				BE682C002888173B009EBCB7 /* TagRouter.swift */,
 				B88D16FA28AE2BB900E2D652 /* UserRouter.swift */,
 				B8E51E6A28B769680065248E /* ReviewRouter.swift */,
@@ -652,6 +672,7 @@
 				BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */,
 				BE682BEE288722A5009EBCB7 /* ErrorDto.swift */,
 				BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */,
+				BE9413BE28C2157600171060 /* NotificationDto.swift */,
 				BE9413BA28C20DC500171060 /* AuthDto.swift */,
 				B87B317228D81447005C170B /* UserDto.swift */,
 			);
@@ -666,9 +687,11 @@
 				BEDF507427F4289B00CDCC13 /* Lecture.swift */,
 				BE682BB5287C40AF009EBCB7 /* Theme.swift */,
 				BE682BFE2888056C009EBCB7 /* Quarter.swift */,
+				BE9413C028C219AD00171060 /* Notification.swift */,
 				BE1D2B3928014527008F9134 /* Weekday.swift */,
 				BE682BFC2887FC78009EBCB7 /* SearchTag.swift */,
 				BE682BF028872315009EBCB7 /* STError.swift */,
+				BE9413CD28C2207D00171060 /* NotificationState.swift */,
 				BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */,
 				B88D16FC28AE2E1E00E2D652 /* User.swift */,
 				B8AF8D3D28C72A880056DE62 /* Validation.swift */,
@@ -683,6 +706,7 @@
 				BEDE34D72879A9DC00525014 /* UserService.swift */,
 				BE682BDA28870872009EBCB7 /* LectureService.swift */,
 				BE77D0A628AEB0650067A9D8 /* CourseBookService.swift */,
+				BE9413CF28C220C900171060 /* NotificationService.swift */,
 				BE1B610B289D7C2500401361 /* GlobalUIService.swift */,
 				BE682C0428881852009EBCB7 /* SearchService.swift */,
 				B8E51E6E28B7FF8F0065248E /* ReviewService.swift */,
@@ -699,6 +723,7 @@
 				BE682BD828870718009EBCB7 /* LectureRepository.swift */,
 				BE95D1F628DF2F44009C0C0B /* AuthRepository.swift */,
 				BE682C02288817C8009EBCB7 /* SearchRepository.swift */,
+				BE9413C228C21D1000171060 /* NotificationRepository.swift */,
 				BEDE34D92879AA0B00525014 /* UserRepository.swift */,
 				BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */,
 				BE77D09F28AEAB920067A9D8 /* CourseBookRepository.swift */,
@@ -745,6 +770,8 @@
 				BE98A009288A90C000C2CE95 /* Logo.swift */,
 				BEDF506C27EB740E00CDCC13 /* LectureList.swift */,
 				BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */,
+				BE9413C928C21F1300171060 /* NotificationList.swift */,
+				BE9413CB28C21F1E00171060 /* NotificationListCell.swift */,
 				BEB57C2928BCA7E400279EFF /* LectureColorList.swift */,
 				BEB57C2728BC985900279EFF /* LectureColorPreview.swift */,
 				BE7E230227FF3C38004DC202 /* NavBarButton.swift */,
@@ -1001,6 +1028,7 @@
 				B87B317428D816E1005C170B /* MenuSheet.swift in Sources */,
 				BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */,
 				BEE5CE10289E738900CF5ED3 /* MenuThemeSheet.swift in Sources */,
+				BE9413C128C219AD00171060 /* Notification.swift in Sources */,
 				B87B317328D81447005C170B /* UserDto.swift in Sources */,
 				BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */,
 				B8F40EA9289809C60021A2A9 /* LicenseView.swift in Sources */,
@@ -1029,6 +1057,7 @@
 				B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */,
 				B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
+				BE9413BD28C2119500171060 /* NotificationRouter.swift in Sources */,
 				BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */,
 				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
 				BE77D0AC28B1384D0067A9D8 /* MenuSheetTopBar.swift in Sources */,
@@ -1076,6 +1105,7 @@
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				B87B317128D813EB005C170B /* SearchResultDto.swift in Sources */,
 				BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */,
+				BE9413CA28C21F1300171060 /* NotificationList.swift in Sources */,
 				BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */,
 				BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
@@ -1084,6 +1114,7 @@
 				B8E51E6F28B7FF8F0065248E /* ReviewService.swift in Sources */,
 				B87B316028D5A70F005C170B /* Setting.swift in Sources */,
 				BE77D0A428AEAD4D0067A9D8 /* CourseBookDto.swift in Sources */,
+				BE9413BF28C2157600171060 /* NotificationDto.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
@@ -1097,6 +1128,8 @@
 				BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */,
 				B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */,
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
+				BE9413D228C2458A00171060 /* DateFormatter+Parse.swift in Sources */,
+				BE9413C328C21D1000171060 /* NotificationRepository.swift in Sources */,
 				B87B315E28D5A70F005C170B /* SearchState.swift in Sources */,
 				BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */,
 				BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */,
@@ -1110,6 +1143,7 @@
 				BE77D0AE28B13A920067A9D8 /* MenuCreateSheet.swift in Sources */,
 				BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */,
 				BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */,
+				BE9413CC28C21F1E00171060 /* NotificationListCell.swift in Sources */,
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
 				BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */,
 				BE682C092889ADD7009EBCB7 /* SearchLectureCell.swift in Sources */,
@@ -1118,10 +1152,12 @@
 				B8F40EB328980DFF0021A2A9 /* PrivacyPolicyView.swift in Sources */,
 				B8F40EB728980E7A0021A2A9 /* AccountSettingViewModel.swift in Sources */,
 				BE804BEA288B9EF700782F16 /* TimetableConfiguration.swift in Sources */,
+				BE9413CE28C2207D00171060 /* NotificationState.swift in Sources */,
 				BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */,
 				B8F40EAD28980D840021A2A9 /* TimetableSettingScene.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				B827A903289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift in Sources */,
+				BE9413D028C220C900171060 /* NotificationService.swift in Sources */,
 				BE9413B928C20A4000171060 /* AuthRouter.swift in Sources */,
 				BE682BDB28870872009EBCB7 /* LectureService.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */,
