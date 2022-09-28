@@ -7,6 +7,7 @@
 
 import AuthenticationServices
 import SwiftUI
+import FacebookLogin
 
 struct LoginScene: View {
     @ObservedObject var viewModel: ViewModel
@@ -35,6 +36,13 @@ struct LoginScene: View {
                     await viewModel.loginWithApple(result: result)
                 }
             }
+            
+            Button {
+                viewModel.loginWithFacebook()
+            } label: {
+                Text("페이스북으로 로그인")
+            }
+
         }
     }
 }
@@ -49,7 +57,44 @@ extension LoginScene {
                 services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
             }
         }
-
+        
+        func loginWithFacebook() {
+            LoginManager().logIn(permissions: [Permission.publicProfile.name], from: nil) { result, error in
+                
+                if error != nil {
+                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                    return
+                }
+                
+                guard let result = result else {
+                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                    return
+                }
+                
+                if result.isCancelled {
+                    return
+                }
+                
+                guard let fbUserId = result.token?.userID,
+                      let fbToken = result.token?.tokenString else {
+                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                    return
+                }
+                
+                Task {
+                    await self.loginWithFacebook(id: fbUserId, token: fbToken)
+                }
+            }
+        }
+        
+        private func loginWithFacebook(id:String,token:String) async {
+            do {
+                try await services.authService.loginWithFacebook(id: id, token: token)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+        
         private func loginWithApple(successResult: ASAuthorization) async {
             guard let credentail = successResult.credential as? ASAuthorizationAppleIDCredential,
                   let tokenData = credentail.identityToken,
@@ -64,6 +109,7 @@ extension LoginScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
+        
     }
 }
 

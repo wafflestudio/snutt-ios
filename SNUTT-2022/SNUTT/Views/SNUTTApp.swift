@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct SNUTTApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var fbAppDelegate
     let appEnvironment: AppEnvironment
 
     init() {

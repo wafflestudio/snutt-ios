@@ -95,7 +95,8 @@
 		BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C002888173B009EBCB7 /* TagRouter.swift */; };
 		BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C02288817C8009EBCB7 /* SearchRepository.swift */; };
 		BE682C0528881852009EBCB7 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C0428881852009EBCB7 /* SearchService.swift */; };
-		BE779B0428E313B7009960EB /* SearchLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE779B0328E313B7009960EB /* SearchLectureCell.swift */; };
+		BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = BE779B1728E3DD5B009960EB /* FacebookLogin */; };
+		BE779B1A28E3E28C009960EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE779B1928E3E28C009960EB /* AppDelegate.swift */; };
 		BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D09D28AEAA5A0067A9D8 /* CourseBookRouter.swift */; };
 		BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D09F28AEAB920067A9D8 /* CourseBookRepository.swift */; };
 		BE77D0A428AEAD4D0067A9D8 /* CourseBookDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */; };
@@ -311,7 +312,7 @@
 		BE682C002888173B009EBCB7 /* TagRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagRouter.swift; sourceTree = "<group>"; };
 		BE682C02288817C8009EBCB7 /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
 		BE682C0428881852009EBCB7 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
-		BE779B0328E313B7009960EB /* SearchLectureCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLectureCell.swift; sourceTree = "<group>"; };
+		BE779B1928E3E28C009960EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE77D09D28AEAA5A0067A9D8 /* CourseBookRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookRouter.swift; sourceTree = "<group>"; };
 		BE77D09F28AEAB920067A9D8 /* CourseBookRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookRepository.swift; sourceTree = "<group>"; };
 		BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookDto.swift; sourceTree = "<group>"; };
@@ -429,6 +430,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */,
 				BEDE34D42879A59B00525014 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -761,6 +763,7 @@
 		DCD41A6B27E5CDAF00CF380E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BE779B1928E3E28C009960EB /* AppDelegate.swift */,
 				DC860F4827E5C87D0068C94B /* SNUTTApp.swift */,
 				BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */,
 				B88D170228B1501F00E2D652 /* WebView.swift */,
@@ -892,6 +895,7 @@
 			name = SNUTT;
 			packageProductDependencies = (
 				BEDE34D32879A59B00525014 /* Alamofire */,
+				BE779B1728E3DD5B009960EB /* FacebookLogin */,
 			);
 			productName = SNUTT;
 			productReference = BE682BB22879E24D009EBCB7 /* SNUTT.app */;
@@ -970,6 +974,7 @@
 			mainGroup = DC860F3C27E5C87D0068C94B;
 			packageReferences = (
 				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = DC860F3C27E5C87D0068C94B;
 			projectDirPath = "";
@@ -1154,6 +1159,7 @@
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
 				BE779B0428E313B7009960EB /* SearchLectureCell.swift in Sources */,
 				B87B316128D5A70F005C170B /* WebViewState.swift in Sources */,
+				BE779B1A28E3E28C009960EB /* AppDelegate.swift in Sources */,
 				BE4B0EBE2873BC84005FE164 /* FilterSheetViewModel.swift in Sources */,
 				BE9413BB28C20DC500171060 /* AuthDto.swift in Sources */,
 				BE1B610C289D7C2500401361 /* GlobalUIService.swift in Sources */,
@@ -1808,6 +1814,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.1.0;
+			};
+		};
 		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -1819,6 +1833,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BE779B1728E3DD5B009960EB /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
 		BEDE34D32879A59B00525014 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */;

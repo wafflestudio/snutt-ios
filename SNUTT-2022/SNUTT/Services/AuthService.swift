@@ -11,6 +11,7 @@ protocol AuthServiceProtocol {
     func loadAccessTokenDuringBootstrap()
     func loginWithId(id: String, password: String) async throws
     func loginWithApple(token: String) async throws
+    func loginWithFacebook(id: String, token: String) async throws
 }
 
 struct AuthService: AuthServiceProtocol {
@@ -59,10 +60,16 @@ struct AuthService: AuthServiceProtocol {
         let dto = try await authRepository.loginWithApple(token: token)
         saveAccessTokenFromLoginResponse(dto: dto)
     }
+    
+    func loginWithFacebook(id: String, token: String) async throws {
+        let dto = try await authRepository.loginWithFacebook(id: id, token: token)
+        saveAccessTokenFromLoginResponse(dto: dto)
+    }
 }
 
 class FakeAuthService: AuthServiceProtocol {
     func loadAccessTokenDuringBootstrap() {}
     func loginWithId(id _: String, password _: String) async throws {}
     func loginWithApple(token _: String) async throws {}
+    func loginWithFacebook(id: String, token: String) async throws {}
 }
