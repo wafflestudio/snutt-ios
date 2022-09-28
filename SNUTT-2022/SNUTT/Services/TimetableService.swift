@@ -45,9 +45,9 @@ struct TimetableService: TimetableServiceProtocol {
             let localTimetable = Timetable(from: localData)
             if appState.user.current?.localId == localTimetable.userId {
                 await updateState(to: localTimetable) // 일단 저장된 시간표로 상태 업데이트
+                try await fetchTimetable(timetableId: localTimetable.id) // API 요청을 통해 시간표 최신화
+                return
             }
-            try await fetchTimetable(timetableId: localTimetable.id) // API 요청을 통해 시간표 최신화
-            return
         }
         let dto = try await timetableRepository.fetchRecentTimetable()
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
