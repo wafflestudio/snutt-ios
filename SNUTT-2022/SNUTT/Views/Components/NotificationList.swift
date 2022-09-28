@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NotificationList: View {
     let notifications: [Notification]
-    let initialFetch: () async -> Void
+    let initialFetch: (Bool) async -> Void
     let fetchMore: () async -> Void
     var body: some View {
         ScrollView {
@@ -27,7 +27,7 @@ struct NotificationList: View {
         }
         .background(STColor.systemBackground)
         .task {
-            await initialFetch()
+            await initialFetch(true)
         }
     }
 }

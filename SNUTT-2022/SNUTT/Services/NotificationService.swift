@@ -34,6 +34,10 @@ struct NotificationService: NotificationServiceProtocol {
         let models = dtos.map { Notification(from: $0) }
         await MainActor.run {
             notificationState.notifications = offset == 0 ? models : notificationState.notifications + models
+            if updateLastRead {
+                // no need to call api again; just update locally
+                appState.notification.unreadCount = 0
+            }
         }
     }
 

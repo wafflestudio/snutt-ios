@@ -67,9 +67,9 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func fetchInitialNotifications() async {
+    func fetchInitialNotifications(updateLastRead: Bool) async {
         do {
-            try await services.notificationService.fetchInitialNotifications(updateLastRead: false)
+            try await services.notificationService.fetchInitialNotifications(updateLastRead: updateLastRead)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
