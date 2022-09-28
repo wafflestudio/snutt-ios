@@ -152,7 +152,7 @@ struct LectureDetailScene: View {
                         DetailButton(text: "초기화", role: .destructive) {
                             isResetAlertPresented = true
                         }
-                        .alert("강의를 초기화하시겠습니까?", isPresented: $isResetAlertPresented) {
+                        .alert("강의 초기화", isPresented: $isResetAlertPresented) {
                             Button("취소", role: .cancel, action: {})
                             Button("초기화", role: .destructive, action: {
                                 Task {
@@ -165,7 +165,7 @@ struct LectureDetailScene: View {
                                 }
                             })
                         } message: {
-                            Text("강의를 초기화하면 이 강의에 적용한 모든 수정 사항이 초기화됩니다.")
+                            Text("이 강의에 적용한 수정 사항을 모두 초기화하시겠습니까?")
                         }
                     }
 
