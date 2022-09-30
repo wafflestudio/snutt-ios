@@ -97,6 +97,7 @@
 		BE682C0528881852009EBCB7 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C0428881852009EBCB7 /* SearchService.swift */; };
 		BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = BE779B1728E3DD5B009960EB /* FacebookLogin */; };
 		BE779B1A28E3E28C009960EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE779B1928E3E28C009960EB /* AppDelegate.swift */; };
+		BE779B1C28E72622009960EB /* AnimatedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE779B1B28E72622009960EB /* AnimatedTextField.swift */; };
 		BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D09D28AEAA5A0067A9D8 /* CourseBookRouter.swift */; };
 		BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D09F28AEAB920067A9D8 /* CourseBookRepository.swift */; };
 		BE77D0A428AEAD4D0067A9D8 /* CourseBookDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */; };
@@ -313,6 +314,7 @@
 		BE682C02288817C8009EBCB7 /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
 		BE682C0428881852009EBCB7 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		BE779B1928E3E28C009960EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BE779B1B28E72622009960EB /* AnimatedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedTextField.swift; sourceTree = "<group>"; };
 		BE77D09D28AEAA5A0067A9D8 /* CourseBookRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookRouter.swift; sourceTree = "<group>"; };
 		BE77D09F28AEAB920067A9D8 /* CourseBookRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookRepository.swift; sourceTree = "<group>"; };
 		BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookDto.swift; sourceTree = "<group>"; };
@@ -806,6 +808,7 @@
 				B87B316628D753A3005C170B /* SettingsMenu.swift */,
 				BE98A009288A90C000C2CE95 /* Logo.swift */,
 				BEDF506C27EB740E00CDCC13 /* LectureList.swift */,
+				BE779B1B28E72622009960EB /* AnimatedTextField.swift */,
 				BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */,
 				BE9413C928C21F1300171060 /* NotificationList.swift */,
 				BE9413CB28C21F1E00171060 /* NotificationListCell.swift */,
@@ -1211,6 +1214,7 @@
 				BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
 				BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */,
+				BE779B1C28E72622009960EB /* AnimatedTextField.swift in Sources */,
 				B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
 				BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */,

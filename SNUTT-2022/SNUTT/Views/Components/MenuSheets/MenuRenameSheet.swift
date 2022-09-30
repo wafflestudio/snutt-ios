@@ -21,7 +21,7 @@ struct MenuRenameSheet: View {
             VStack {
                 MenuSheetTopBar(cancel: cancel, confirm: confirm, confirmDisabled: titleText.isEmpty)
 
-                TitleTextField(titleText: $titleText, isSheetOpen: isOpen)
+                AnimatedTextField(label: "시간표 제목", placeholder: "시간표 제목을 입력하세요", text: $titleText, shouldFocusOn: isOpen)
 
                 Spacer()
             }
