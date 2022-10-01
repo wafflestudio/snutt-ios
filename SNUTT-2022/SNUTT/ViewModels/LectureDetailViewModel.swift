@@ -22,6 +22,7 @@ extension LectureDetailScene {
             appState.timetable.current
         }
 
+        // TODO: 새로운 Lecture 리턴해서 뷰를 업데이트해주어야 함 (resetLecture 참고)
         func updateLecture(oldLecture: Lecture, newLecture: Lecture) async -> Bool {
             do {
                 try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture)
@@ -38,6 +39,17 @@ extension LectureDetailScene {
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
+        }
+
+        func resetLecture(lecture: Lecture) async -> Lecture? {
+            do {
+                try await lectureService.resetLecture(lecture: lecture)
+                guard let current = appState.timetable.current else { return nil }
+                return current.lectures.first(where: { $0.id == lecture.id })
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+            return nil
         }
 
         func fetchReviewId(of lecture: Lecture) async {
