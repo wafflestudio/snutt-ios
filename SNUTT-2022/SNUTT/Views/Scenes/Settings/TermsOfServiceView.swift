@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TermsOfServiceView: View {
     var body: some View {
-        SingleWebView(request: URLRequest(url: WebViewType.termsOfService.url))
+        SingleWebView(url: WebViewType.termsOfService.url)
             .navigationTitle("서비스 약관")
     }
 }

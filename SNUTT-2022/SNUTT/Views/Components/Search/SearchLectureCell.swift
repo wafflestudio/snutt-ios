@@ -62,8 +62,8 @@ struct SearchLectureCell: View {
 
                         Button {
                             Task {
-                                showReviewWebView = true
                                 await fetchReviewId(lecture, $reviewId)
+                                showReviewWebView = true
                             }
                         } label: {
                             Text("강의평")
@@ -71,7 +71,7 @@ struct SearchLectureCell: View {
                                 .font(STFont.details)
                         }.sheet(isPresented: $showReviewWebView) {
                             if let container = container {
-                                ReviewScene(viewModel: .init(container: container, reviewDetailId: reviewId))
+                                ReviewScene(viewModel: .init(container: container), detailId: $reviewId)
                             }
                         }
 

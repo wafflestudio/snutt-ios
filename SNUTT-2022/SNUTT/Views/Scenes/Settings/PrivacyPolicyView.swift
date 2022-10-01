@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PrivacyPolicyView: View {
     var body: some View {
-        SingleWebView(request: URLRequest(url: WebViewType.privacyPolicy.url))
+        SingleWebView(url: WebViewType.privacyPolicy.url)
             .navigationTitle("개인정보처리방침")
     }
 }

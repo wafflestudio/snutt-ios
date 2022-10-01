@@ -14,10 +14,6 @@ extension LectureDetailScene {
             services.lectureService
         }
 
-        var reviewService: ReviewServiceProtocol {
-            services.reviewService
-        }
-
         var currentTimetable: Timetable? {
             appState.timetable.current
         }

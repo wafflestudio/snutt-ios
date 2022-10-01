@@ -6,22 +6,62 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ReviewScene: View {
-    @ObservedObject var viewModel: ReviewViewModel
-
+    @ObservedObject var viewModel: ViewModel
+    @Binding var detailId: String
+    var reloadSignal: PassthroughSubject<Void, Never>
+    
+    init(viewModel: ViewModel, detailId: Binding<String> = .constant(""), reloadSignal: PassthroughSubject<Void, Never>? = nil) {
+        self.viewModel = viewModel
+        self._detailId = detailId
+        self.reloadSignal = reloadSignal ?? .init()
+    }
+    
+    private var reviewUrl: URL {
+        if !detailId.isEmpty {
+            return WebViewType.reviewDetail(id: detailId).url
+        } else {
+            return WebViewType.review.url
+        }
+    }
+    
     var body: some View {
         switch viewModel.connectionState {
         case .success:
-            ReviewWebView(request: viewModel.request, viewModel: viewModel)
+            ReviewWebView(url: reviewUrl, accessToken: viewModel.accessToken, connectionState: $viewModel.connectionState, reloadSignal: reloadSignal)
                 .navigationBarHidden(true)
-                .ignoresSafeArea(.keyboard)
-                .ignoresSafeArea(.container, edges: .bottom)
+                .edgesIgnoringSafeArea(.bottom)
         case .error:
-            WebErrorView(viewModel: viewModel)
-                .navigationTitle("강의평")
-                .navigationBarTitleDisplayMode(.inline)
+            WebErrorView(refresh: {
+                reloadSignal.send()
+            })
+            .navigationTitle("강의평")
+            .navigationBarTitleDisplayMode(.inline)
         }
         let _ = debugChanges()
+    }
+}
+
+extension ReviewScene {
+    class ViewModel: BaseViewModel, ObservableObject {
+        @Published var accessToken: String = ""
+        @State var connectionState: WebViewConnectionState = .success
+        
+        private var bag = Set<AnyCancellable>()
+        
+        override init(container: DIContainer) {
+            super.init(container: container)
+            appState.user.$accessToken.sink { newValue in
+                if let token = newValue, !token.isEmpty {
+                    self.connectionState = .success
+                    self.accessToken = token
+                } else {
+                    self.connectionState = .error
+                    self.accessToken = ""
+                }
+            }.store(in: &bag)
+        }
     }
 }

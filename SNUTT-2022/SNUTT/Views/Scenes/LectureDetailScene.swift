@@ -180,12 +180,13 @@ struct LectureDetailScene: View {
                         DetailButton(text: "강의계획서") {}
 
                         DetailButton(text: "강의평") {
-                            showReviewWebView = true
                             Task {
                                 await viewModel.fetchReviewId(of: lecture, bind: $reviewId)
+                                showReviewWebView = true
                             }
-                        }.sheet(isPresented: $showReviewWebView) {
-                            ReviewScene(viewModel: .init(container: viewModel.container, reviewDetailId: reviewId))
+                        }
+                        .sheet(isPresented: $showReviewWebView) {
+                            ReviewScene(viewModel: .init(container: viewModel.container), detailId: $reviewId)
                         }
                     }
 

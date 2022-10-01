@@ -11,7 +11,6 @@ import SwiftUI
 class AppState {
     var user = UserState()
     var setting = Setting()
-    var webView = WebViewState()
 
     var system = SystemState()
     var search = SearchState()

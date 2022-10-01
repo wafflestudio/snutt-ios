@@ -14,7 +14,6 @@
 		B87B315E28D5A70F005C170B /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315928D5A70F005C170B /* SearchState.swift */; };
 		B87B315F28D5A70F005C170B /* TimetableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315A28D5A70F005C170B /* TimetableState.swift */; };
 		B87B316028D5A70F005C170B /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315B28D5A70F005C170B /* Setting.swift */; };
-		B87B316128D5A70F005C170B /* WebViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315C28D5A70F005C170B /* WebViewState.swift */; };
 		B87B316728D753A3005C170B /* SettingsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316628D753A3005C170B /* SettingsMenu.swift */; };
 		B87B316C28D755B6005C170B /* SystemState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316A28D755B6005C170B /* SystemState.swift */; };
 		B87B316D28D755B6005C170B /* MenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316B28D755B6005C170B /* MenuState.swift */; };
@@ -28,13 +27,11 @@
 		B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FA28AE2BB900E2D652 /* UserRouter.swift */; };
 		B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FC28AE2E1E00E2D652 /* User.swift */; };
 		B88D170128AF71E300E2D652 /* UserSupportScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170028AF71E300E2D652 /* UserSupportScene.swift */; };
-		B88D170328B1501F00E2D652 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170228B1501F00E2D652 /* WebView.swift */; };
 		B8AF8D3E28C72A880056DE62 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF8D3D28C72A880056DE62 /* Validation.swift */; };
 		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
-		B8E51E6F28B7FF8F0065248E /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6E28B7FF8F0065248E /* ReviewService.swift */; };
 		B8F40EA9289809C60021A2A9 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EA8289809C60021A2A9 /* LicenseView.swift */; };
 		B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */; };
 		B8F40EAD28980D840021A2A9 /* TimetableSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */; };
@@ -56,6 +53,10 @@
 		BE1B610E289E000B00401361 /* EllipsisSheetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1B610D289E000B00401361 /* EllipsisSheetButton.swift */; };
 		BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */; };
 		BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1D2B3928014527008F9134 /* Weekday.swift */; };
+		BE28036228E884F400B2B1AB /* ReviewWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE28036128E884F400B2B1AB /* ReviewWebView.swift */; };
+		BE28036428E8850E00B2B1AB /* WebViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE28036328E8850E00B2B1AB /* WebViewType.swift */; };
+		BE28036628E8854D00B2B1AB /* SingleWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE28036528E8854D00B2B1AB /* SingleWebView.swift */; };
+		BE28036828E8883700B2B1AB /* WebViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE28036728E8883700B2B1AB /* WebViewProtocol.swift */; };
 		BE2EA7B128D479BE007C0998 /* Publisher+SinkWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */; };
 		BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
 		BE419B84288B8B8F00FA9590 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
@@ -187,7 +188,6 @@
 		DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159A2865F95100FE5F9A /* SettingScene.swift */; };
 		DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */; };
 		DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29159E28660F7800FE5F9A /* ReviewScene.swift */; };
-		DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */; };
 		DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F4827E5C87D0068C94B /* SNUTTApp.swift */; };
 		DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC860F4C27E5C87F0068C94B /* Assets.xcassets */; };
 		DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC860F5927E5C87F0068C94B /* SNUTTTests.swift */; };
@@ -246,7 +246,6 @@
 		B87B315928D5A70F005C170B /* SearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
 		B87B315A28D5A70F005C170B /* TimetableState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableState.swift; sourceTree = "<group>"; };
 		B87B315B28D5A70F005C170B /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
-		B87B315C28D5A70F005C170B /* WebViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewState.swift; sourceTree = "<group>"; };
 		B87B316628D753A3005C170B /* SettingsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMenu.swift; sourceTree = "<group>"; };
 		B87B316A28D755B6005C170B /* SystemState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemState.swift; sourceTree = "<group>"; };
 		B87B316B28D755B6005C170B /* MenuState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuState.swift; sourceTree = "<group>"; };
@@ -259,7 +258,6 @@
 		B88D16FA28AE2BB900E2D652 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		B88D16FC28AE2E1E00E2D652 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B88D170028AF71E300E2D652 /* UserSupportScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSupportScene.swift; sourceTree = "<group>"; };
-		B88D170228B1501F00E2D652 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		B88D170728B361DC00E2D652 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8AF8D3D28C72A880056DE62 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
@@ -269,7 +267,6 @@
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
 		B8E51E6728B615140065248E /* WebErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebErrorView.swift; sourceTree = "<group>"; };
 		B8E51E6A28B769680065248E /* ReviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRouter.swift; sourceTree = "<group>"; };
-		B8E51E6E28B7FF8F0065248E /* ReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
 		B8F40EA8289809C60021A2A9 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingScene.swift; sourceTree = "<group>"; };
 		B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSettingScene.swift; sourceTree = "<group>"; };
@@ -286,6 +283,10 @@
 		BE1B610D289E000B00401361 /* EllipsisSheetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipsisSheetButton.swift; sourceTree = "<group>"; };
 		BE1D2B37280142EB008F9134 /* TimetableGridLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableGridLayer.swift; sourceTree = "<group>"; };
 		BE1D2B3928014527008F9134 /* Weekday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekday.swift; sourceTree = "<group>"; };
+		BE28036128E884F400B2B1AB /* ReviewWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWebView.swift; sourceTree = "<group>"; };
+		BE28036328E8850E00B2B1AB /* WebViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewType.swift; sourceTree = "<group>"; };
+		BE28036528E8854D00B2B1AB /* SingleWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleWebView.swift; sourceTree = "<group>"; };
+		BE28036728E8883700B2B1AB /* WebViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewProtocol.swift; sourceTree = "<group>"; };
 		BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+SinkWithAnimation.swift"; sourceTree = "<group>"; };
 		BE419B8C288B8C5A00FA9590 /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
 		BE419B99288B915800FA9590 /* TimetableUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableUtils.swift; sourceTree = "<group>"; };
@@ -402,7 +403,6 @@
 		DC29159A2865F95100FE5F9A /* SettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScene.swift; sourceTree = "<group>"; };
 		DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		DC29159E28660F7800FE5F9A /* ReviewScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewScene.swift; sourceTree = "<group>"; };
-		DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
 		DC860F4827E5C87D0068C94B /* SNUTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTApp.swift; sourceTree = "<group>"; };
 		DC860F4C27E5C87F0068C94B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC860F4F27E5C87F0068C94B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -461,7 +461,6 @@
 				B87B315B28D5A70F005C170B /* Setting.swift */,
 				B87B315A28D5A70F005C170B /* TimetableState.swift */,
 				B87B315828D5A70F005C170B /* UserState.swift */,
-				B87B315C28D5A70F005C170B /* WebViewState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -493,6 +492,18 @@
 				BE419B99288B915800FA9590 /* TimetableUtils.swift */,
 			);
 			path = Timetable;
+			sourceTree = "<group>";
+		};
+		BE28036028E884D300B2B1AB /* WebViews */ = {
+			isa = PBXGroup;
+			children = (
+				B8E51E6728B615140065248E /* WebErrorView.swift */,
+				BE28036728E8883700B2B1AB /* WebViewProtocol.swift */,
+				BE28036128E884F400B2B1AB /* ReviewWebView.swift */,
+				BE28036328E8850E00B2B1AB /* WebViewType.swift */,
+				BE28036528E8854D00B2B1AB /* SingleWebView.swift */,
+			);
+			path = WebViews;
 			sourceTree = "<group>";
 		};
 		BE419B8B288B8C4900FA9590 /* Extensions */ = {
@@ -734,7 +745,6 @@
 				BE9413CF28C220C900171060 /* NotificationService.swift */,
 				BE1B610B289D7C2500401361 /* GlobalUIService.swift */,
 				BE682C0428881852009EBCB7 /* SearchService.swift */,
-				B8E51E6E28B7FF8F0065248E /* ReviewService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -765,8 +775,6 @@
 				BE779B1928E3E28C009960EB /* AppDelegate.swift */,
 				DC860F4827E5C87D0068C94B /* SNUTTApp.swift */,
 				BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */,
-				B88D170228B1501F00E2D652 /* WebView.swift */,
-				B8E51E6728B615140065248E /* WebErrorView.swift */,
 				DCD41A6D27E5CDCA00CF380E /* Components */,
 				DCD41A6C27E5CDBE00CF380E /* Scenes */,
 			);
@@ -807,6 +815,7 @@
 				BEDE34C928754F3100525014 /* Sheet.swift */,
 				BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */,
 				BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */,
+				BE28036028E884D300B2B1AB /* WebViews */,
 				BE9413D728C3AF8300171060 /* Search */,
 				BEB3B6AB28D4D3DF00E56062 /* LectureDetail */,
 				BEE86515289E212D00D3D0E4 /* MenuSheets */,
@@ -824,7 +833,6 @@
 				DC2915982865D69700FE5F9A /* LectureListViewModel.swift */,
 				BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */,
 				DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */,
-				DC2915A028660FBB00FE5F9A /* ReviewViewModel.swift */,
 				BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */,
 				BE4B0EBD2873BC84005FE164 /* FilterSheetViewModel.swift */,
 				BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */,
@@ -1071,7 +1079,6 @@
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
 				BE1B610E289E000B00401361 /* EllipsisSheetButton.swift in Sources */,
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
-				DC2915A128660FBB00FE5F9A /* ReviewViewModel.swift in Sources */,
 				BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */,
 				BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */,
 				B8AF8D3E28C72A880056DE62 /* Validation.swift in Sources */,
@@ -1084,6 +1091,7 @@
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
 				BE682BF128872315009EBCB7 /* STError.swift in Sources */,
 				B87B315F28D5A70F005C170B /* TimetableState.swift in Sources */,
+				BE28036828E8883700B2B1AB /* WebViewProtocol.swift in Sources */,
 				BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */,
 				BEF9233828E84653004AFCB2 /* LectureTimeSheetScene.swift in Sources */,
 				DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */,
@@ -1095,12 +1103,12 @@
 				B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
 				BE9413BD28C2119500171060 /* NotificationRouter.swift in Sources */,
+				BE28036428E8850E00B2B1AB /* WebViewType.swift in Sources */,
 				BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */,
 				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
 				BEB3B6A228CDB7A400E56062 /* LectureTimePicker.swift in Sources */,
 				BE77D0AC28B1384D0067A9D8 /* MenuSheetTopBar.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
-				B88D170328B1501F00E2D652 /* WebView.swift in Sources */,
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
 				B87B317028D813EB005C170B /* CourseBook.swift in Sources */,
 				BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */,
@@ -1108,12 +1116,14 @@
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
 				B88D170128AF71E300E2D652 /* UserSupportScene.swift in Sources */,
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
+				BE28036228E884F400B2B1AB /* ReviewWebView.swift in Sources */,
 				BEB3B6A528CDE1FD00E56062 /* TimeUtils.swift in Sources */,
 				B8F40EB128980DE00021A2A9 /* TermsOfServiceView.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
 				BEB3B6B128D4D4D900E56062 /* View+ResignResponder.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
+				BE28036628E8854D00B2B1AB /* SingleWebView.swift in Sources */,
 				BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */,
 				BEB3B6AD28D4D40400E56062 /* EditableFields.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
@@ -1149,14 +1159,12 @@
 				BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
-				B8E51E6F28B7FF8F0065248E /* ReviewService.swift in Sources */,
 				B87B316028D5A70F005C170B /* Setting.swift in Sources */,
 				BE77D0A428AEAD4D0067A9D8 /* CourseBookDto.swift in Sources */,
 				BE9413BF28C2157600171060 /* NotificationDto.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
-				B87B316128D5A70F005C170B /* WebViewState.swift in Sources */,
 				BE779B1A28E3E28C009960EB /* AppDelegate.swift in Sources */,
 				BE4B0EBE2873BC84005FE164 /* FilterSheetViewModel.swift in Sources */,
 				BE9413BB28C20DC500171060 /* AuthDto.swift in Sources */,

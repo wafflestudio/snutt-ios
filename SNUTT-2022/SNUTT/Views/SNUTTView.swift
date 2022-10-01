@@ -21,7 +21,7 @@ struct SNUTTView: View {
         } set: {
             [previous = selectedTab] current in
             if previous == current, current == .review {
-                viewModel.resetWebView()
+                viewModel.reloadReviewWebView()
             }
             selectedTab = current
         }
@@ -45,7 +45,7 @@ struct SNUTTView: View {
                     SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
                 }
                 TabScene(tabType: .review) {
-                    ReviewScene(viewModel: .init(container: viewModel.container, reviewDetailId: viewModel.reviewId))
+                    ReviewScene(viewModel: .init(container: viewModel.container), reloadSignal: viewModel.reloadReviewSignal)
                 }
                 TabScene(tabType: .settings) {
                     SettingScene(viewModel: .init(container: viewModel.container))
@@ -95,8 +95,8 @@ extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var errorContent: STError? = nil
-        @Published var reviewId: String = ""
         @Published var accessToken: String? = nil
+        var reloadReviewSignal = PassthroughSubject<Void, Never>()
 
         var isAuthenticated: Bool {
             guard let accessToken = accessToken else { return false }
@@ -117,9 +117,9 @@ extension SNUTTView {
         var errorMessage: String {
             (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
         }
-
-        func resetWebView() {
-            reviewId = ""
+        
+        func reloadReviewWebView() {
+            reloadReviewSignal.send()
         }
     }
 }
