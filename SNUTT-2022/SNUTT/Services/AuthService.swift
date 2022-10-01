@@ -38,17 +38,10 @@ struct AuthService: AuthServiceProtocol {
         userDefaultsRepository.set(String.self, key: .token, value: dto.token)
     }
 
-    private func saveAccessTokenFromLoginResponse(dto: LoginResponseDto) {
-        DispatchQueue.main.async {
-            appState.user.accessToken = dto.token
-        }
-        userDefaultsRepository.set(String.self, key: .token, value: dto.token)
-    }
-
     func loadAccessTokenDuringBootstrap() {
         /// **DO NOT RUN THIS CODE ASYNCHRONOUSLY**. We need to show splash screen until the loading finishes.
-//        appState.user.accessToken = userDefaultsRepository.get(String.self, key: .token)
-        appState.user.accessToken = nil
+        appState.user.accessToken = userDefaultsRepository.get(String.self, key: .token)
+//        appState.user.accessToken = nil
     }
 
     func loginWithId(id: String, password: String) async throws {
