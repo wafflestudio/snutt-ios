@@ -6,6 +6,7 @@
 //
 
 import AuthenticationServices
+import FacebookLogin
 import SwiftUI
 
 struct LoginScene: View {
@@ -35,6 +36,12 @@ struct LoginScene: View {
                     await viewModel.loginWithApple(result: result)
                 }
             }
+
+            Button {
+                viewModel.loginWithFacebook()
+            } label: {
+                Text("페이스북으로 로그인")
+            }
         }
     }
 }
@@ -47,6 +54,44 @@ extension LoginScene {
                 await loginWithApple(successResult: success)
             case .failure:
                 services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
+            }
+        }
+
+        func loginWithFacebook() {
+            LoginManager().logIn(permissions: [Permission.publicProfile.name], from: nil) { result, error in
+
+                if error != nil {
+                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                    return
+                }
+
+                guard let result = result else {
+                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                    return
+                }
+
+                if result.isCancelled {
+                    return
+                }
+
+                guard let fbUserId = result.token?.userID,
+                      let fbToken = result.token?.tokenString
+                else {
+                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                    return
+                }
+
+                Task {
+                    await self.loginWithFacebook(id: fbUserId, token: fbToken)
+                }
+            }
+        }
+
+        private func loginWithFacebook(id: String, token: String) async {
+            do {
+                try await services.authService.loginWithFacebook(id: id, token: token)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
@@ -67,8 +112,10 @@ extension LoginScene {
     }
 }
 
-// struct LoginScene_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LoginScene()
-//    }
-// }
+#if DEBUG
+    struct LoginScene_Previews: PreviewProvider {
+        static var previews: some View {
+            LoginScene(viewModel: .init(container: .preview))
+        }
+    }
+#endif

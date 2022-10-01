@@ -95,7 +95,8 @@
 		BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C002888173B009EBCB7 /* TagRouter.swift */; };
 		BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C02288817C8009EBCB7 /* SearchRepository.swift */; };
 		BE682C0528881852009EBCB7 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C0428881852009EBCB7 /* SearchService.swift */; };
-		BE779B0428E313B7009960EB /* SearchLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE779B0328E313B7009960EB /* SearchLectureCell.swift */; };
+		BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = BE779B1728E3DD5B009960EB /* FacebookLogin */; };
+		BE779B1A28E3E28C009960EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE779B1928E3E28C009960EB /* AppDelegate.swift */; };
 		BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D09D28AEAA5A0067A9D8 /* CourseBookRouter.swift */; };
 		BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D09F28AEAB920067A9D8 /* CourseBookRepository.swift */; };
 		BE77D0A428AEAD4D0067A9D8 /* CourseBookDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */; };
@@ -177,6 +178,7 @@
 		BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */; };
 		BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */; };
 		BEF9233828E84653004AFCB2 /* LectureTimeSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233728E84653004AFCB2 /* LectureTimeSheetScene.swift */; };
+		BEF9233A28E84B62004AFCB2 /* SearchLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */; };
 		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
 		DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
 		DC1E0ED12877381F005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
@@ -311,7 +313,7 @@
 		BE682C002888173B009EBCB7 /* TagRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagRouter.swift; sourceTree = "<group>"; };
 		BE682C02288817C8009EBCB7 /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
 		BE682C0428881852009EBCB7 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
-		BE779B0328E313B7009960EB /* SearchLectureCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLectureCell.swift; sourceTree = "<group>"; };
+		BE779B1928E3E28C009960EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE77D09D28AEAA5A0067A9D8 /* CourseBookRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookRouter.swift; sourceTree = "<group>"; };
 		BE77D09F28AEAB920067A9D8 /* CourseBookRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookRepository.swift; sourceTree = "<group>"; };
 		BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookDto.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 		BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabScene.swift; sourceTree = "<group>"; };
 		BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureBlocks.swift; sourceTree = "<group>"; };
 		BEF9233728E84653004AFCB2 /* LectureTimeSheetScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureTimeSheetScene.swift; sourceTree = "<group>"; };
+		BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLectureCell.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
 		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
 		DC1E0ED02877381F005632A3 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -429,6 +432,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */,
 				BEDE34D42879A59B00525014 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,9 +525,9 @@
 			children = (
 				BE8BB3AE285D77D000070A66 /* SearchBar.swift */,
 				BE9413D828C3AFA500171060 /* EmptySearchResult.swift */,
+				BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */,
 				BE9413DA28C3B33300171060 /* SearchTips.swift */,
 				BE9413DE28C3BDF600171060 /* SearchLectureList.swift */,
-				BE779B0328E313B7009960EB /* SearchLectureCell.swift */,
 				BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */,
 			);
 			path = Search;
@@ -761,6 +765,7 @@
 		DCD41A6B27E5CDAF00CF380E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BE779B1928E3E28C009960EB /* AppDelegate.swift */,
 				DC860F4827E5C87D0068C94B /* SNUTTApp.swift */,
 				BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */,
 				B88D170228B1501F00E2D652 /* WebView.swift */,
@@ -892,6 +897,7 @@
 			name = SNUTT;
 			packageProductDependencies = (
 				BEDE34D32879A59B00525014 /* Alamofire */,
+				BE779B1728E3DD5B009960EB /* FacebookLogin */,
 			);
 			productName = SNUTT;
 			productReference = BE682BB22879E24D009EBCB7 /* SNUTT.app */;
@@ -970,6 +976,7 @@
 			mainGroup = DC860F3C27E5C87D0068C94B;
 			packageReferences = (
 				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = DC860F3C27E5C87D0068C94B;
 			projectDirPath = "";
@@ -1063,6 +1070,7 @@
 				BE060BD928DF4C1E00A2F1B9 /* LoginScene.swift in Sources */,
 				BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */,
 				B8F40EA9289809C60021A2A9 /* LicenseView.swift in Sources */,
+				BEF9233A28E84B62004AFCB2 /* SearchLectureCell.swift in Sources */,
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
 				BE1B610E289E000B00401361 /* EllipsisSheetButton.swift in Sources */,
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
@@ -1152,8 +1160,8 @@
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
-				BE779B0428E313B7009960EB /* SearchLectureCell.swift in Sources */,
 				B87B316128D5A70F005C170B /* WebViewState.swift in Sources */,
+				BE779B1A28E3E28C009960EB /* AppDelegate.swift in Sources */,
 				BE4B0EBE2873BC84005FE164 /* FilterSheetViewModel.swift in Sources */,
 				BE9413BB28C20DC500171060 /* AuthDto.swift in Sources */,
 				BE1B610C289D7C2500401361 /* GlobalUIService.swift in Sources */,
@@ -1404,7 +1412,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt3.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1436,7 +1444,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt3.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1455,7 +1463,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
-				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K9883YB4VR;
@@ -1469,7 +1476,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt3.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1642,7 +1649,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
@@ -1810,6 +1816,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.1.0;
+			};
+		};
 		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -1821,6 +1835,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BE779B1728E3DD5B009960EB /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
 		BEDE34D32879A59B00525014 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */;
