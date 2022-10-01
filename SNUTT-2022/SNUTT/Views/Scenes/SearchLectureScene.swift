@@ -100,10 +100,12 @@ extension EnvironmentValues {
     }
 }
 
-struct SearchLectureScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            SearchLectureScene(viewModel: .init(container: .preview), navigationBarHeight: 80)
+#if DEBUG
+    struct SearchLectureScene_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                SearchLectureScene(viewModel: .init(container: .preview), navigationBarHeight: 80)
+            }
         }
     }
-}
+#endif

@@ -14,7 +14,7 @@ struct LectureDetailScene: View {
     var displayMode: DisplayMode
 
     @State private var editMode: EditMode
-    @State private var tempLecture: Lecture = .preview
+    @State private var tempLecture: Lecture?
 
     init(viewModel: ViewModel, lecture: Lecture, displayMode: DisplayMode) {
         self.viewModel = viewModel
@@ -238,7 +238,9 @@ struct LectureDetailScene: View {
                     if editMode.isEditing {
                         Button {
                             // cancel
-                            lecture = tempLecture
+                            if let tempLecture = tempLecture {
+                                lecture = tempLecture
+                            }
                             editMode = .inactive
                             resignFirstResponder()
                         } label: {
@@ -259,6 +261,7 @@ struct LectureDetailScene: View {
                 case .normal:
                     Button {
                         if editMode.isEditing {
+                            guard let tempLecture = tempLecture else { return }
                             // save
                             Task {
                                 guard let updatedLecture = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) else {
@@ -318,11 +321,13 @@ struct RectangleButtonStyle: ButtonStyle {
     }
 }
 
-struct LectureDetailList_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview, displayMode: .normal)
-                .navigationBarTitleDisplayMode(.inline)
+#if DEBUG
+    struct LectureDetailList_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview, displayMode: .normal)
+                    .navigationBarTitleDisplayMode(.inline)
+            }
         }
     }
-}
+#endif

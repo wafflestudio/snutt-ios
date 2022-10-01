@@ -62,8 +62,10 @@ extension AccountSettingScene {
     }
 }
 
-struct AccountSettingScene_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountSettingScene(viewModel: .init(container: .preview))
+#if DEBUG
+    struct AccountSettingScene_Previews: PreviewProvider {
+        static var previews: some View {
+            AccountSettingScene(viewModel: .init(container: .preview))
+        }
     }
-}
+#endif

@@ -99,8 +99,10 @@ struct FilterSheetContent: View {
     }
 }
 
-struct FilterSheetContent_Previews: PreviewProvider {
-    static var previews: some View {
-        FilterSheetContent(viewModel: .init(container: .preview))
+#if DEBUG
+    struct FilterSheetContent_Previews: PreviewProvider {
+        static var previews: some View {
+            FilterSheetContent(viewModel: .init(container: .preview))
+        }
     }
-}
+#endif

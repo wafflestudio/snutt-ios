@@ -19,7 +19,6 @@ struct SNUTTView: View {
         ZStack {
             if !viewModel.isAuthenticated {
                 LoginScene(viewModel: .init(container: viewModel.container))
-                    .transition(.move(edge: .bottom))
             } else {
                 MainTabScene(viewModel: .init(container: viewModel.container), navigationBarHeight: $navigationBarHeight)
                 if selectedTab == .timetable {
@@ -160,11 +159,13 @@ enum TabType: String {
     case settings
 }
 
-struct SNUTTView_Previews: PreviewProvider {
-    static var previews: some View {
-        SNUTTView(viewModel: .init(container: .preview))
+#if DEBUG
+    struct SNUTTView_Previews: PreviewProvider {
+        static var previews: some View {
+            SNUTTView(viewModel: .init(container: .preview))
+        }
     }
-}
+#endif
 
 // TODO: move elsewhere if needed
 struct NavigationBarReader: UIViewControllerRepresentable {

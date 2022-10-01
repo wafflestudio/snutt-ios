@@ -62,8 +62,10 @@ struct LectureDetailRow: View {
     }
 }
 
-struct TimetableListCell_Previews: PreviewProvider {
-    static var previews: some View {
-        LectureListCell(lecture: .preview)
+#if DEBUG
+    struct TimetableListCell_Previews: PreviewProvider {
+        static var previews: some View {
+            LectureListCell(lecture: .preview)
+        }
     }
-}
+#endif
