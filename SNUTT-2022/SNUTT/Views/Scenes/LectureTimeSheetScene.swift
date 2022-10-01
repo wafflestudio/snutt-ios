@@ -77,13 +77,13 @@ extension LectureTimeSheetScene {
 }
 
 #if DEBUG
-struct LectureTimeSheetScene_Previews: PreviewProvider {
-    static var previews: some View {
-        let container: DIContainer = .preview
-        let _ = container.services.globalUIService.setIsLectureTimeSheetOpen(true, modifying: nil, action: nil)
+    struct LectureTimeSheetScene_Previews: PreviewProvider {
+        static var previews: some View {
+            let container: DIContainer = .preview
+            let _ = container.services.globalUIService.setIsLectureTimeSheetOpen(true, modifying: nil, action: nil)
 
-        LectureTimeSheetScene(viewModel: .init(container: container))
-            .background(.blue)
+            LectureTimeSheetScene(viewModel: .init(container: container))
+                .background(.blue)
+        }
     }
-}
 #endif

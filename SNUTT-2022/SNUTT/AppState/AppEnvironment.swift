@@ -52,11 +52,11 @@ extension AppEnvironment {
         let dbRepos = configuredDBRepositories(appState: appState)
         let services = configuredServices(appState: appState, webRepositories: webRepos, localRepositories: dbRepos)
         let container = DIContainer(appState: appState, services: services)
-        
+
         /// We need to load access token ASAP in order to determine which screen to show first.
         /// Note that this should run synchronously on the main thread.
         services.authService.loadAccessTokenDuringBootstrap()
-        
+
         return .init(container: container)
     }
 
@@ -132,8 +132,7 @@ extension EnvironmentValues {
                   globalUIService: GlobalUIService(appState: appState),
                   courseBookService: FakeCourseBookService(),
                   authService: FakeAuthService(),
-                  notificationService: FakeNotificationService()
-            )
+                  notificationService: FakeNotificationService())
         }
     }
 #endif

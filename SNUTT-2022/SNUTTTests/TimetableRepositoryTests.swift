@@ -8,7 +8,6 @@
 import Alamofire
 @testable import SNUTT
 import XCTest
-@testable import SNUTT
 
 class TimetableRepositoryTests: XCTestCase {
     let repository = TimetableRepository(session: .test)
