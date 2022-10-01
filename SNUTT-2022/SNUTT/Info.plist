@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ACCESS_TOKEN_TEST</key>
+	<string>$(ACCESS_TOKEN_TEST)</string>
+	<key>API_KEY</key>
+	<string>$(API_KEY)</string>
+	<key>API_SERVER_URL</key>
+	<string>https://${API_SERVER_URL}</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>SNUEV_WEB_URL</key>
+	<string>https://${SNUEV_WEB_URL}</string>
+</dict>
+</plist>

@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct ReviewScene: View {
-    // for test
-    let viewModel: ReviewViewModel
+    @ObservedObject var viewModel: ReviewViewModel
 
     var body: some View {
+        switch viewModel.state {
+        case .success:
+            ReviewWebView(request: viewModel.request, viewModel: viewModel)
+                .navigationBarHidden(true)
+                .ignoresSafeArea(.keyboard)
+        case .error:
+            WebErrorView(viewModel: viewModel)
+                .navigationTitle("강의평")
+                .navigationBarTitleDisplayMode(.inline)
+        }
         let _ = debugChanges()
-    }
-}
-
-struct ReviewScene_Previews: PreviewProvider {
-    static var previews: some View {
-        ReviewScene(viewModel: .init(container: .preview))
     }
 }

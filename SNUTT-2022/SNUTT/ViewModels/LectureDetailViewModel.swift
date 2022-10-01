@@ -14,8 +14,16 @@ extension LectureDetailScene {
         var lectureService: LectureServiceProtocol {
             services.lectureService
         }
-        
-        func addCustomLecture(lecture: Lecture) async -> Bool {
+
+        var reviewService: ReviewServiceProtocol {
+            services.reviewService
+        }
+
+        var currentTimetable: Timetable? {
+            appState.timetable.current
+        }
+
+		func addCustomLecture(lecture: Lecture) async -> Bool {
             do {
                 try await lectureService.addCustomLecture(lecture: lecture)
                 return true
@@ -48,6 +56,27 @@ extension LectureDetailScene {
             services.globalUIService.setIsLectureTimeSheetOpen(true, modifying: timePlace) { modifiedTimePlace in
                 guard let firstIndex = lecture.timePlaces.firstIndex(where: { $0.id == timePlace.id }) else { return }
                 lecture.wrappedValue.timePlaces[firstIndex] = modifiedTimePlace
+            }
+        }
+
+        func resetLecture(lecture: Lecture) async -> Lecture? {
+            do {
+                try await lectureService.resetLecture(lecture: lecture)
+                guard let current = appState.timetable.current else { return nil }
+                return current.lectures.first(where: { $0.id == lecture.id })
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+            return nil
+        }
+
+        func fetchReviewId(of lecture: Lecture) async {
+            do {
+                let id = try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+                reviewService.setDetailId(id)
+                services.globalUIService.setSelectedTab(.review)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
 

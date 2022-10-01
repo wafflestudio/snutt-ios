@@ -13,20 +13,14 @@ protocol LectureServiceProtocol {
     func updateLecture(oldLecture: Lecture, newLecture: Lecture) async throws
     func addLecture(lecture: Lecture) async throws
     func deleteLecture(lecture: Lecture) async throws
+    func resetLecture(lecture: Lecture) async throws
+    func fetchReviewId(courseNumber: String, instructor: String) async throws -> String
 }
 
 struct LectureService: LectureServiceProtocol {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
     var localRepositories: AppEnvironment.LocalRepositories
-
-    var lectureRepository: LectureRepositoryProtocol {
-        webRepositories.lectureRepository
-    }
-
-    var userDefaultsRepository: UserDefaultsRepositoryProtocol {
-        localRepositories.userDefaultsRepository
-    }
 
     func addLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
@@ -70,6 +64,33 @@ struct LectureService: LectureServiceProtocol {
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
+
+    func resetLecture(lecture: Lecture) async throws {
+        guard let currentTimetable = appState.timetable.current else { return }
+        let dto = try await lectureRepository.resetLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
+        let timetable = Timetable(from: dto)
+        DispatchQueue.main.async {
+            appState.timetable.current = timetable
+        }
+        userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
+    }
+
+    func fetchReviewId(courseNumber: String, instructor: String) async throws -> String {
+        let id = try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
+        return "\(id)"
+    }
+
+    private var lectureRepository: LectureRepositoryProtocol {
+        webRepositories.lectureRepository
+    }
+
+    private var userDefaultsRepository: UserDefaultsRepositoryProtocol {
+        localRepositories.userDefaultsRepository
+    }
+
+    private var reviewRepository: ReviewRepositoryProtocol {
+        webRepositories.reviewRepository
+    }
 }
 
 class FakeLectureService: LectureServiceProtocol {
@@ -77,4 +98,6 @@ class FakeLectureService: LectureServiceProtocol {
     func updateLecture(oldLecture _: Lecture, newLecture _: Lecture) async throws {}
     func addLecture(lecture _: Lecture) async throws {}
     func deleteLecture(lecture _: Lecture) async throws {}
+    func resetLecture(lecture _: Lecture) async throws {}
+    func fetchReviewId(courseNumber _: String, instructor _: String) async throws -> String { return "" }
 }

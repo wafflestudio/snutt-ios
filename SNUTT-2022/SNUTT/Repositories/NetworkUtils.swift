@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 /// 적절한 장소로 옮겨야
-protocol AuthStorage: AnyObject {
+protocol AuthStorage {
     typealias ApiKey = String
     typealias AccessToken = String
     var apiKey: ApiKey { get set }

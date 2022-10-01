@@ -19,8 +19,10 @@ extension AppEnvironment {
         let userService: UserServiceProtocol
         let lectureService: LectureServiceProtocol
         let searchService: SearchServiceProtocol
+        let reviewService: ReviewServiceProtocol
         let globalUIService: GlobalUIServiceProtocol
         let courseBookService: CourseBookServiceProtocol
+        let notificationService: NotificationServiceProtocol
     }
 }
 
@@ -31,6 +33,8 @@ extension AppEnvironment {
         let lectureRepository: LectureRepositoryProtocol
         let searchRepository: SearchRepositoryProtocol
         let courseBookRepository: CourseBookRepositoryProtocol
+        let reviewRepository: ReviewRepositoryProtocol
+        let notificationRepository: NotificationRepositoryProtocol
     }
 
     struct LocalRepositories {
@@ -51,8 +55,8 @@ extension AppEnvironment {
 
     private static func configuredSession() -> Session {
         let storage = Storage()
-        storage.accessToken = "c7f446a2..."
-        storage.apiKey = "eyJ0eXAiO..."
+        storage.apiKey = Bundle.main.infoDictionary?["API_KEY"] as! String
+        storage.accessToken = "74280a42...."
         return Session(interceptor: Interceptor(authStorage: storage), eventMonitors: [Logger()])
     }
 
@@ -61,12 +65,16 @@ extension AppEnvironment {
         let userRepository = UserRepository(session: session)
         let lectureRepository = LectureRepository(session: session)
         let searchRepository = SearchRepository(session: session)
+        let reviewRepository = ReviewRepository(session: session)
         let courseBookRepository = CourseBookRepository(session: session)
+        let notificationRepository = NotificationRepository(session: session)
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
                      lectureRepository: lectureRepository,
                      searchRepository: searchRepository,
-                     courseBookRepository: courseBookRepository)
+                     courseBookRepository: courseBookRepository,
+                     reviewRepository: reviewRepository,
+                     notificationRepository: notificationRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -76,17 +84,21 @@ extension AppEnvironment {
 
     private static func configuredServices(appState: AppState, webRepositories: WebRepositories, localRepositories: LocalRepositories) -> Services {
         let timetableService = TimetableService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
-        let userService = UserService(appState: appState, webRepositories: webRepositories)
+        let userService = UserService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
+        let reviewService = ReviewService(appState: appState)
         let globalUIService = GlobalUIService(appState: appState)
         let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
+        let notificationService = NotificationService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
                      searchService: searchService,
+                     reviewService: reviewService,
                      globalUIService: globalUIService,
-                     courseBookService: courseBookService)
+                     courseBookService: courseBookService,
+                     notificationService: notificationService)
     }
 }
 
@@ -108,8 +120,10 @@ extension EnvironmentValues {
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
                   searchService: FakeSearchService(),
+                  reviewService: FakeReviewService(),
                   globalUIService: GlobalUIService(appState: appState),
-                  courseBookService: FakeCourseBookService())
+                  courseBookService: FakeCourseBookService(),
+                  notificationService: FakeNotificationService())
         }
     }
 #endif

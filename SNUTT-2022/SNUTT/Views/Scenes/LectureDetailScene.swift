@@ -28,6 +28,8 @@ struct LectureDetailScene: View {
         case create
         case preview
     }
+    @State private var isResetAlertPresented = false
+    @State private var isDeleteAlertPresented = false
 
     @Environment(\.dismiss) var dismiss
 
@@ -170,22 +172,49 @@ struct LectureDetailScene: View {
                         }
                     }
                     .padding()
-                    
-                    if displayMode == .normal {
-                        if !lecture.isCustom {
-                            
-                        DetailButton(text: "강의계획서") {
-                            print("tap")
-                        }
-                        
+
+                    if displayMode == .normal && !editMode.isEditing {
+                        DetailButton(text: "강의계획서") {}
+
                         DetailButton(text: "강의평") {
-                            print("tap")
-                        }
-                        }
-                        DetailButton(text: "삭제", role: .destructive) {
-                            // TODO: check alert
                             Task {
                                 await viewModel.deleteLecture(lecture: lecture)
+                                await viewModel.fetchReviewId(of: lecture)
+                            }
+                        }
+                    }
+
+                    if displayMode == .normal && editMode.isEditing {
+                        DetailButton(text: "초기화", role: .destructive) {
+                            isResetAlertPresented = true
+                        }
+                        .alert("강의 초기화", isPresented: $isResetAlertPresented) {
+                            Button("취소", role: .cancel, action: {})
+                            Button("초기화", role: .destructive, action: {
+                                Task {
+                                    guard let originalLecture = await viewModel.resetLecture(lecture: lecture) else { return }
+                                    DispatchQueue.main.async {
+                                        lecture = originalLecture
+                                        editMode = .inactive
+                                        resignFirstResponder()
+                                    }
+                                }
+                            })
+                        } message: {
+                            Text("이 강의에 적용한 수정 사항을 모두 초기화하시겠습니까?")
+                        }
+                    }
+
+                    if displayMode == .normal {
+                        DetailButton(text: "삭제", role: .destructive) {
+                            isDeleteAlertPresented = true
+                        }
+                        .alert("강의를 삭제하시겠습니까?", isPresented: $isDeleteAlertPresented) {
+                            Button("취소", role: .cancel, action: {})
+                            Button("삭제", role: .destructive) {
+                                Task {
+                                    await viewModel.deleteLecture(lecture: lecture)
+                                }
                             }
                         }
                     }

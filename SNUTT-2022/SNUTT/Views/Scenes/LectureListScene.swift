@@ -39,8 +39,6 @@ struct LectureListScene: View {
                 .accentColor(Color(UIColor.label))
             })
 
-            .background(STColor.systemBackground)
-
         let _ = debugChanges()
     }
 }

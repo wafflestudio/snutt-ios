@@ -19,9 +19,6 @@ protocol TimetableServiceProtocol {
     func deleteTimetable(timetableId: String) async throws
     func selectTimetableTheme(theme: Theme)
     func createTimetable(title: String, quarter: Quarter) async throws
-
-    /// 새로운 학기의 수강편람이 나와 있지만 유저가 해당 학기 시간표를 아직 만들지 않았다면 `true`를 리턴한다.
-    func isNewCourseBookAvailable() -> Bool
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -44,8 +41,13 @@ struct TimetableService: TimetableServiceProtocol {
     }
 
     func fetchRecentTimetable() async throws {
-        if let cachedData = userDefaultsRepository.get(TimetableDto.self, key: .currentTimetable) {
-            await updateState(to: Timetable(from: cachedData))
+        if let localData = userDefaultsRepository.get(TimetableDto.self, key: .currentTimetable) {
+            let localTimetable = Timetable(from: localData)
+            if appState.user.current?.localId == localTimetable.userId {
+                await updateState(to: localTimetable) // 일단 저장된 시간표로 상태 업데이트
+            }
+            try await fetchTimetable(timetableId: localTimetable.id) // API 요청을 통해 시간표 최신화
+            return
         }
         let dto = try await timetableRepository.fetchRecentTimetable()
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
@@ -113,12 +115,6 @@ struct TimetableService: TimetableServiceProtocol {
         appState.timetable.current?.selectedTheme = theme
     }
 
-    func isNewCourseBookAvailable() -> Bool {
-        let myLatestQuarter = appState.timetable.metadataList?.map { $0.quarter }.sorted().last
-        let latestCourseBook = appState.timetable.courseBookList?.sorted().last
-        return myLatestQuarter != latestCourseBook
-    }
-
     func loadTimetableConfig() {
         DispatchQueue.main.async {
             appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
@@ -142,6 +138,5 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func updateTimetableTheme(timetableId _: String) async throws {}
     func deleteTimetable(timetableId _: String) async throws {}
     func selectTimetableTheme(theme _: Theme) {}
-    func isNewCourseBookAvailable() -> Bool { return true }
     func createTimetable(title _: String, quarter _: Quarter) async throws {}
 }

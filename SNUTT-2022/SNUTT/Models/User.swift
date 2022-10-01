@@ -2,13 +2,21 @@
 //  User.swift
 //  SNUTT
 //
-//  Created by Jinsup Keum on 2022/06/25.
+//  Created by 최유림 on 2022/08/18.
 //
 
-import SwiftUI
+import Foundation
 
-class User: ObservableObject {
+struct User {
     var localId: String?
     var fbName: String?
     var email: String?
+}
+
+extension User {
+    init(from dto: UserDto) {
+        localId = dto.local_id
+        fbName = dto.fb_name
+        email = dto.email
+    }
 }

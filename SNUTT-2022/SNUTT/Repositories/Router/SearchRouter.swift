@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 enum SearchRouter: Router {
-    var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/search_query")! }
+    var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/search_query")! }
     static let shouldAddToken: Bool = true
 
     case search(query: String, quarter: Quarter, tagList: [SearchTag], mask: [Int]?, offset: Int, limit: Int)

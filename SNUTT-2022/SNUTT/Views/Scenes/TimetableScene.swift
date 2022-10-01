@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TimetableScene: View {
     @State private var pushToListScene = false
+    @State private var pushToNotiScene = false
     @ObservedObject var viewModel: TimetableViewModel
 
     var body: some View {
@@ -16,8 +17,11 @@ struct TimetableScene: View {
             .animation(.customSpring, value: viewModel.timetableState.current?.id)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
-                NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) {
-                    EmptyView()
+                Group {
+                    NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
+                    NavigationLink(destination: NotificationList(notifications: viewModel.notifications,
+                                                                 initialFetch: viewModel.fetchInitialNotifications,
+                                                                 fetchMore: viewModel.fetchMoreNotifications), isActive: $pushToNotiScene) { EmptyView() }
                 }
             )
             .navigationBarTitleDisplayMode(.inline)
@@ -27,6 +31,7 @@ struct TimetableScene: View {
                         NavBarButton(imageName: "nav.menu") {
                             viewModel.setIsMenuOpen(true)
                         }
+                        .circleBadge(condition: viewModel.isNewCourseBookAvailable)
 
                         Text(viewModel.timetableTitle)
                             .font(STFont.title)
@@ -47,8 +52,9 @@ struct TimetableScene: View {
                         }
 
                         NavBarButton(imageName: "nav.alarm.off") {
-                            print("alarm tapped")
+                            pushToNotiScene = true
                         }
+                        .circleBadge(condition: viewModel.unreadCount > 0)
                     }
                 }
             }
@@ -64,13 +70,22 @@ struct TimetableScene: View {
                     group.addTask {
                         await viewModel.fetchCourseBookList()
                     }
+                    group.addTask {
+                        await viewModel.fetchInitialNotifications(updateLastRead: false)
+                    }
                 })
+            }
+            .onAppear {
+                Task {
+                    await viewModel.fetchNotificationsCount()
+                }
             }
 
         let _ = debugChanges()
     }
 }
 
+// TODO: Move this to Modifiers folder.
 struct ViewDidLoadModifier: ViewModifier {
     @State private var didLoad = false
     private let action: (() async -> Void)?

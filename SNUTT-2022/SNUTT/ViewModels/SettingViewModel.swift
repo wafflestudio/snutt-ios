@@ -8,22 +8,16 @@
 import Foundation
 import SwiftUI
 
-class SettingViewModel {
-    var container: DIContainer
-
-    init(container: DIContainer) {
-        self.container = container
+class SettingViewModel: BaseViewModel {
+    override init(container: DIContainer) {
+        super.init(container: container)
     }
 
-    private var appState: AppState {
-        container.appState
+    private var setting: Setting {
+        appState.setting
     }
 
-    var currentUser: User {
-        appState.currentUser
-    }
-
-    func updateCurrentUser(user: User) {
-        appState.currentUser = user
+    private var userService: UserServiceProtocol {
+        container.services.userService
     }
 }

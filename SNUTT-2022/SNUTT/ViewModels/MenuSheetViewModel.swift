@@ -5,11 +5,14 @@
 //  Created by 박신홍 on 2022/07/05.
 //
 
-import Foundation
+import Combine
+import SwiftUI
 
 class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published var currentTimetable: Timetable?
     @Published var metadataList: [TimetableMetadata]?
+
+    private var bag = Set<AnyCancellable>()
 
     @Published private var _isMenuSheetOpen: Bool = false
     var isMenuSheetOpen: Bool {
@@ -20,25 +23,25 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published private var _isEllipsisSheetOpen: Bool = false
     var isEllipsisSheetOpen: Bool {
         get { _isEllipsisSheetOpen }
-        set { services.globalUIService.closeEllipsis() } // close-only
+        set { services.globalUIService.closeEllipsis() } // close-only; the sheets can't open themselves
     }
 
     @Published private var _isThemeSheetOpen: Bool = false
     var isThemeSheetOpen: Bool {
         get { _isThemeSheetOpen }
-        set { newValue ? services.globalUIService.openThemeSheet() : services.globalUIService.closeThemeSheet() }
+        set { services.globalUIService.closeThemeSheet() } // close-only;
     }
 
     @Published private var _isRenameSheetOpen: Bool = false
     var isRenameSheetOpen: Bool {
         get { _isRenameSheetOpen }
-        set { newValue ? services.globalUIService.openRenameSheet() : services.globalUIService.closeRenameSheet() }
+        set { services.globalUIService.closeRenameSheet() } // close-only;
     }
 
     @Published private var _isCreateSheetOpen: Bool = false
     var isCreateSheetOpen: Bool {
         get { _isCreateSheetOpen }
-        set { newValue ? services.globalUIService.openCreateSheet() : services.globalUIService.closeCreateSheet() }
+        set { services.globalUIService.closeCreateSheet() } // close-only;
     }
 
     @Published private var _renameTitle: String = ""
@@ -62,13 +65,14 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     override init(container: DIContainer) {
         super.init(container: container)
 
+        appState.menu.$isOpen.sinkWithAnimation(receiveValue: { self._isMenuSheetOpen = $0 }).store(in: &bag)
+        appState.menu.$isEllipsisSheetOpen.sinkWithAnimation(receiveValue: { self._isEllipsisSheetOpen = $0 }).store(in: &bag)
+        appState.menu.$isThemeSheetOpen.sinkWithAnimation(receiveValue: { self._isThemeSheetOpen = $0 }).store(in: &bag)
+        appState.menu.$isRenameSheetOpen.sinkWithAnimation(receiveValue: { self._isRenameSheetOpen = $0 }).store(in: &bag)
+        appState.menu.$isCreateSheetOpen.sinkWithAnimation(receiveValue: { self._isCreateSheetOpen = $0 }).store(in: &bag)
+
         appState.timetable.$current.assign(to: &$currentTimetable)
         appState.timetable.$metadataList.assign(to: &$metadataList)
-        appState.menu.$isOpen.assign(to: &$_isMenuSheetOpen)
-        appState.menu.$isEllipsisSheetOpen.assign(to: &$_isEllipsisSheetOpen)
-        appState.menu.$isThemeSheetOpen.assign(to: &$_isThemeSheetOpen)
-        appState.menu.$isRenameSheetOpen.assign(to: &$_isRenameSheetOpen)
-        appState.menu.$isCreateSheetOpen.assign(to: &$_isCreateSheetOpen)
         appState.menu.$renameTitle.assign(to: &$_renameTitle)
         appState.menu.$createTitle.assign(to: &$_createTitle)
         appState.menu.$createQuarter.assign(to: &$_createQuarter)
@@ -82,12 +86,16 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         appState.timetable
     }
 
-    var isNewCourseBookAvailable: Bool {
-        services.timetableService.isNewCourseBookAvailable()
+    var latestEmptyQuarter: Quarter? {
+        services.courseBookService.getLatestEmptyQuarter()
     }
 
     var timetablesByQuarter: [Quarter: [TimetableMetadata]] {
-        return Dictionary(grouping: timetableState.metadataList ?? [], by: { $0.quarter })
+        var dict = Dictionary(grouping: timetableState.metadataList ?? [], by: { $0.quarter })
+        if let latestEmptyQuarter = latestEmptyQuarter {
+            dict[latestEmptyQuarter] = []
+        }
+        return dict
     }
 
     func openThemeSheet() {
@@ -107,13 +115,13 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         services.globalUIService.closeRenameSheet()
     }
 
-    func openCreateSheet() {
-        services.globalUIService.openCreateSheet()
+    func openCreateSheet(withPicker: Bool) {
+        services.globalUIService.openCreateSheet(withPicker: withPicker)
     }
 
     func selectTimetable(timetableId: String) async {
         do {
-            await services.searchService.initializeSearchState()
+            services.searchService.initializeSearchState()
             try await services.timetableService.fetchTimetable(timetableId: timetableId)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
@@ -172,10 +180,10 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     }
 
     func applyCreateSheet() async {
-        guard let quarter = menuState.createQuarter else { return }
+        guard let quarter = menuState.createQuarter ?? latestEmptyQuarter else { return }
         do {
             try await services.timetableService.createTimetable(title: menuState.createTitle, quarter: quarter)
-            try await services.timetableService.fetchRecentTimetable()
+            try await services.timetableService.fetchRecentTimetable() // change current timetable to newly created one
             services.globalUIService.closeCreateSheet()
         } catch {
             services.globalUIService.presentErrorAlert(error: error)

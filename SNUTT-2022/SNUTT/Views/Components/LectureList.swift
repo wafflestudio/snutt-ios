@@ -35,6 +35,7 @@ struct LectureList: View {
             }
             .animation(.customSpring, value: lectures.count)
         }
+        .background(STColor.systemBackground)
 
         let _ = debugChanges()
     }

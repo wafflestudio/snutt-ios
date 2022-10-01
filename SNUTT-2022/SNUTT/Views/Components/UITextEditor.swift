@@ -43,6 +43,7 @@ struct UITextEditor: UIViewRepresentable {
 
     func makeUIView(context: Context) -> UITextView {
         textView.text = text
+        textView.autocorrectionType = .no
         textView.delegate = context.coordinator
         configureView?(textView)
 
@@ -66,10 +67,11 @@ struct UITextEditor: UIViewRepresentable {
     func updateUIView(_ uiView: UITextView, context _: Context) {
         DispatchQueue.main.async {
             if !uiView.isFirstResponder {
-                // prevent UI update if textView had already resigned first responder
+                // When this uiView is the first responder, `uiView.delegate` takes care of all the view updates.
+                // When it's not, manually call delegate method to trigger ui update.
                 uiView.text = text
+                uiView.delegate?.textViewDidChange?(uiView)
             }
-            self.placeholderView.isHidden = !text.isEmpty
             self.textDidChange(uiView)
         }
     }

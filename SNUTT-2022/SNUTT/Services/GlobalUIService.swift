@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 protocol GlobalUIServiceProtocol {
+    func setSelectedTab(_ tab: TabType)
+
     func setIsMenuOpen(_ value: Bool)
 
     func openEllipsis(for timetable: TimetableMetadata)
@@ -20,7 +22,7 @@ protocol GlobalUIServiceProtocol {
     func openRenameSheet()
     func closeRenameSheet()
 
-    func openCreateSheet()
+    func openCreateSheet(withPicker: Bool)
     func closeCreateSheet()
 
     func setRenameTitle(_ value: String)
@@ -33,11 +35,16 @@ protocol GlobalUIServiceProtocol {
     func presentErrorAlert(error: Error)
 }
 
-/// A service that modifies miscellaneous global states.
 struct GlobalUIService: GlobalUIServiceProtocol {
     var appState: AppState
 
     // MARK: Menu Sheet
+
+    func setSelectedTab(_ tab: TabType) {
+        DispatchQueue.main.async {
+            appState.tab.selected = tab
+        }
+    }
 
     func setIsMenuOpen(_ value: Bool) {
         DispatchQueue.main.async {
@@ -88,10 +95,10 @@ struct GlobalUIService: GlobalUIServiceProtocol {
         }
     }
 
-    func openCreateSheet() {
+    func openCreateSheet(withPicker: Bool) {
         DispatchQueue.main.async {
             appState.menu.createTitle = ""
-            appState.menu.createQuarter = appState.timetable.courseBookList?.first
+            appState.menu.createQuarter = withPicker ? appState.timetable.courseBookList?.first : nil
             appState.menu.isCreateSheetOpen = true
         }
     }
