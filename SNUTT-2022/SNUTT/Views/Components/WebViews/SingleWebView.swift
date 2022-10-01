@@ -10,7 +10,7 @@ import WebKit
 
 struct SingleWebView: WebView {
     var url: URL
-    
+
     var urlRequest: URLRequest {
         URLRequest(url: url)
     }
@@ -21,8 +21,5 @@ struct SingleWebView: WebView {
         return webview
     }
 
-    func updateUIView(_ uiView: WKWebView, context _: Context) {
-    }
+    func updateUIView(_: WKWebView, context _: Context) {}
 }
-
-

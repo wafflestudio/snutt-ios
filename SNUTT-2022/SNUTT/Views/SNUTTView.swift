@@ -33,31 +33,30 @@ struct SNUTTView: View {
                 LoginScene(viewModel: .init(container: viewModel.container))
             } else {
                 TabView(selection: selected) {
-                TabScene(tabType: .timetable) {
-                    TimetableScene(viewModel: .init(container: viewModel.container))
-                        .background(NavigationBarReader { navbar in
-                            DispatchQueue.main.async {
-                                navigationBarHeight = navbar.frame.height
-                            }
-                        })
+                    TabScene(tabType: .timetable) {
+                        TimetableScene(viewModel: .init(container: viewModel.container))
+                            .background(NavigationBarReader { navbar in
+                                DispatchQueue.main.async {
+                                    navigationBarHeight = navbar.frame.height
+                                }
+                            })
+                    }
+                    TabScene(tabType: .search) {
+                        SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
+                    }
+                    TabScene(tabType: .review) {
+                        ReviewScene(viewModel: .init(container: viewModel.container), reloadSignal: viewModel.reloadReviewSignal)
+                    }
+                    TabScene(tabType: .settings) {
+                        SettingScene(viewModel: .init(container: viewModel.container))
+                    }
                 }
-                TabScene(tabType: .search) {
-                    SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
+                if selectedTab == .timetable {
+                    MenuSheetScene(viewModel: .init(container: viewModel.container))
                 }
-                TabScene(tabType: .review) {
-                    ReviewScene(viewModel: .init(container: viewModel.container), reloadSignal: viewModel.reloadReviewSignal)
+                if selectedTab == .search {
+                    FilterSheetScene(viewModel: .init(container: viewModel.container))
                 }
-                TabScene(tabType: .settings) {
-                    SettingScene(viewModel: .init(container: viewModel.container))
-                }
-            }
-            if selectedTab == .timetable {
-                MenuSheetScene(viewModel: .init(container: viewModel.container))
-            }
-            if selectedTab == .search {
-                FilterSheetScene(viewModel: .init(container: viewModel.container))
-            }
-
             }
             LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
         }
@@ -117,7 +116,7 @@ extension SNUTTView {
         var errorMessage: String {
             (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
         }
-        
+
         func reloadReviewWebView() {
             reloadReviewSignal.send()
         }

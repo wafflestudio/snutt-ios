@@ -22,8 +22,6 @@ extension WebView {
     }
 }
 
-
-
 extension WKWebView {
     convenience init(cookies: [HTTPCookie]) {
         let dataStore = WKWebsiteDataStore.nonPersistent()
