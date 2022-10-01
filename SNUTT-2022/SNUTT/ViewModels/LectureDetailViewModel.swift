@@ -23,6 +23,16 @@ extension LectureDetailScene {
             appState.timetable.current
         }
 
+        func addCustomLecture(lecture: Lecture) async -> Bool {
+            do {
+                try await lectureService.addCustomLecture(lecture: lecture)
+                return true
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+                return false
+            }
+        }
+
         func updateLecture(oldLecture: Lecture, newLecture: Lecture) async -> Lecture? {
             do {
                 try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture)

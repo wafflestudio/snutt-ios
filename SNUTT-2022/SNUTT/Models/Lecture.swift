@@ -84,8 +84,8 @@ extension Lecture {
         instructor = dto.instructor
         timeString = dto.class_time ?? ""
         timePlaces = dto.class_time_json.map { .init(from: $0, isCustom: dto.course_number == nil) }
-        timeMasks = dto.class_time_mask
-        isCustom = (dto.course_number == nil)
+        timeMasks = dto.class_time_mask ?? []
+        isCustom = (dto.course_number == nil || dto.course_number == "")
         courseNumber = dto.course_number ?? ""
         lectureNumber = dto.lecture_number ?? ""
         credit = dto.credit

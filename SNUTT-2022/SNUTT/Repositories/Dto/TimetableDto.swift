@@ -27,7 +27,7 @@ struct LectureDto: Codable {
     let credit: Int
     let class_time: String?
     let class_time_json: [TimePlaceDto]
-    let class_time_mask: [Int]
+    var class_time_mask: [Int]?
     let instructor: String
     let quota: Int?
     let remark: String?
@@ -106,7 +106,7 @@ extension LectureDto {
         academic_year = model.academicYear
         course_title = model.title
         credit = model.credit
-        class_time = model.timeString
+        class_time = nil
         class_time_json = model.timePlaces.map { .init(from: $0) }
         class_time_mask = model.timeMasks
         instructor = model.instructor

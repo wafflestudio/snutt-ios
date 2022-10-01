@@ -16,7 +16,7 @@ struct LectureList: View {
             LazyVStack(spacing: 0) {
                 ForEach(lectures) { lecture in
                     NavigationLink {
-                        LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture)
+                        LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture, displayMode: .normal)
                     } label: {
                         VStack(spacing: 0) {
                             Divider()
@@ -33,6 +33,7 @@ struct LectureList: View {
                     .frame(height: 1)
                     .padding(.leading, 20)
             }
+            .animation(.customSpring, value: lectures.count)
         }
         .background(STColor.systemBackground)
 

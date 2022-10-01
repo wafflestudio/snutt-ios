@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 protocol LectureServiceProtocol {
+    func addCustomLecture(lecture: Lecture) async throws
     func updateLecture(oldLecture: Lecture, newLecture: Lecture) async throws
     func addLecture(lecture: Lecture) async throws
     func deleteLecture(lecture: Lecture) async throws
@@ -28,6 +29,18 @@ struct LectureService: LectureServiceProtocol {
         DispatchQueue.main.async {
             appState.timetable.current = timetable
             appState.search.selectedLecture = nil
+        }
+        userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
+    }
+
+    func addCustomLecture(lecture: Lecture) async throws {
+        guard let currentTimetable = appState.timetable.current else { return }
+        var lectureDto = LectureDto(from: lecture)
+        lectureDto.class_time_mask = nil
+        let dto = try await lectureRepository.addCustomLecture(timetableId: currentTimetable.id, lecture: lectureDto)
+        let timetable = Timetable(from: dto)
+        DispatchQueue.main.async {
+            appState.timetable.current = timetable
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
@@ -81,6 +94,7 @@ struct LectureService: LectureServiceProtocol {
 }
 
 class FakeLectureService: LectureServiceProtocol {
+    func addCustomLecture(lecture _: Lecture) async throws {}
     func updateLecture(oldLecture _: Lecture, newLecture _: Lecture) async throws {}
     func addLecture(lecture _: Lecture) async throws {}
     func deleteLecture(lecture _: Lecture) async throws {}

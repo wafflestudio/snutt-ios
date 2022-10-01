@@ -160,6 +160,10 @@
 		BEB3B6A228CDB7A400E56062 /* LectureTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */; };
 		BEB3B6A528CDE1FD00E56062 /* TimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3B6A428CDE1FD00E56062 /* TimeUtils.swift */; };
 		BEB3B6A628CDE8AA00E56062 /* TimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3B6A428CDE1FD00E56062 /* TimeUtils.swift */; };
+		BEB3B6AD28D4D40400E56062 /* EditableFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3B6AC28D4D40400E56062 /* EditableFields.swift */; };
+		BEB3B6AF28D4D49A00E56062 /* DetailLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3B6AE28D4D49A00E56062 /* DetailLabel.swift */; };
+		BEB3B6B128D4D4D900E56062 /* View+ResignResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3B6B028D4D4D900E56062 /* View+ResignResponder.swift */; };
+		BEB3B6B328D4D4F500E56062 /* DetailButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3B6B228D4D4F500E56062 /* DetailButton.swift */; };
 		BEB57C2128B6758200279EFF /* Animation+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2028B6758200279EFF /* Animation+Custom.swift */; };
 		BEB57C2228B6759000279EFF /* Animation+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2028B6758200279EFF /* Animation+Custom.swift */; };
 		BEB57C2828BC985900279EFF /* LectureColorPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2728BC985900279EFF /* LectureColorPreview.swift */; };
@@ -374,6 +378,10 @@
 		BE98A07D288B032600C2CE95 /* TimetableWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidget.swift; sourceTree = "<group>"; };
 		BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureTimePicker.swift; sourceTree = "<group>"; };
 		BEB3B6A428CDE1FD00E56062 /* TimeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtils.swift; sourceTree = "<group>"; };
+		BEB3B6AC28D4D40400E56062 /* EditableFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableFields.swift; sourceTree = "<group>"; };
+		BEB3B6AE28D4D49A00E56062 /* DetailLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailLabel.swift; sourceTree = "<group>"; };
+		BEB3B6B028D4D4D900E56062 /* View+ResignResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ResignResponder.swift"; sourceTree = "<group>"; };
+		BEB3B6B228D4D4F500E56062 /* DetailButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailButton.swift; sourceTree = "<group>"; };
 		BEB57C2028B6758200279EFF /* Animation+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Animation+Custom.swift"; sourceTree = "<group>"; };
 		BEB57C2728BC985900279EFF /* LectureColorPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureColorPreview.swift; sourceTree = "<group>"; };
 		BEB57C2928BCA7E400279EFF /* LectureColorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureColorList.swift; sourceTree = "<group>"; };
@@ -505,6 +513,7 @@
 				BE419B8C288B8C5A00FA9590 /* View+Debug.swift */,
 				B88D16F228ABC5DD00E2D652 /* String+ext.swift */,
 				B8F570A5289E1221005C199F /* UserDefaults+ext.swift */,
+				BEB3B6B028D4D4D900E56062 /* View+ResignResponder.swift */,
 				BEB57C2028B6758200279EFF /* Animation+Custom.swift */,
 				BE9413D128C2458A00171060 /* DateFormatter+Parse.swift */,
 				BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */,
@@ -578,6 +587,16 @@
 				BEB3B6A428CDE1FD00E56062 /* TimeUtils.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		BEB3B6AB28D4D3DF00E56062 /* LectureDetail */ = {
+			isa = PBXGroup;
+			children = (
+				BEB3B6AC28D4D40400E56062 /* EditableFields.swift */,
+				BEB3B6AE28D4D49A00E56062 /* DetailLabel.swift */,
+				BEB3B6B228D4D4F500E56062 /* DetailButton.swift */,
+			);
+			path = LectureDetail;
 			sourceTree = "<group>";
 		};
 		BEE86515289E212D00D3D0E4 /* MenuSheets */ = {
@@ -797,6 +816,7 @@
 				BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */,
 				BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */,
 				BE9413D728C3AF8300171060 /* Search */,
+				BEB3B6AB28D4D3DF00E56062 /* LectureDetail */,
 				BEE86515289E212D00D3D0E4 /* MenuSheets */,
 				BE1D2B3228012059008F9134 /* Timetable */,
 				BE682BC528845CDB009EBCB7 /* UITextEditor.swift */,
@@ -1093,10 +1113,13 @@
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
 				BEB3B6A528CDE1FD00E56062 /* TimeUtils.swift in Sources */,
 				B8F40EB128980DE00021A2A9 /* TermsOfServiceView.swift in Sources */,
+				DC2915A32866958100FE5F9A /* User.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
+				BEB3B6B128D4D4D900E56062 /* View+ResignResponder.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */,
+				BEB3B6AD28D4D40400E56062 /* EditableFields.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
 				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
 				B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */,
@@ -1119,6 +1142,7 @@
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
 				B8E51E6828B615140065248E /* WebErrorView.swift in Sources */,
 				BE95D1F728DF2F44009C0C0B /* AuthRepository.swift in Sources */,
+				BEB3B6B328D4D4F500E56062 /* DetailButton.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
 				BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */,
 				BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */,
@@ -1173,6 +1197,7 @@
 				BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */,
 				B8F40EB328980DFF0021A2A9 /* PrivacyPolicyView.swift in Sources */,
 				B8F40EB728980E7A0021A2A9 /* AccountSettingViewModel.swift in Sources */,
+				BEB3B6AF28D4D49A00E56062 /* DetailLabel.swift in Sources */,
 				BE804BEA288B9EF700782F16 /* TimetableConfiguration.swift in Sources */,
 				BE9413CE28C2207D00171060 /* NotificationState.swift in Sources */,
 				BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */,

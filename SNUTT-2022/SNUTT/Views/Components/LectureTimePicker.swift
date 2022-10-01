@@ -53,6 +53,11 @@ struct LectureTimePicker: View {
                 .datePickerStyle(.compact)
         }
         .padding()
+        .onChange(of: start, perform: { _ in
+            if !endRange.contains(end) {
+                end = endRange.lowerBound
+            }
+        })
         .onAppear {
             UIDatePicker.appearance().minuteInterval = 5
         }

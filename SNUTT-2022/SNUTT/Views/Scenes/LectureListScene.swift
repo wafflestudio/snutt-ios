@@ -8,19 +8,34 @@
 import SwiftUI
 
 struct LectureListScene: View {
-    let viewModel: LectureListViewModel
+    @ObservedObject var viewModel: LectureListViewModel
+
+    @State private var showingCreatePage = false
 
     var body: some View {
         LectureList(viewModel: .init(container: viewModel.container),
-                    lectures: viewModel.currentTimetable?.lectures ?? [])
+                    lectures: viewModel.lectures)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavBarButton(imageName: "nav.plus") {
-                        print("menu tapped.")
+                        showingCreatePage = true
                     }
                 }
             }
+            .sheet(isPresented: $showingCreatePage, content: {
+                ZStack {
+                    NavigationView {
+                        LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: viewModel.getPlaceholderLecture(), displayMode: .create)
+                            .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
+                                Text(viewModel.errorMessage)
+                            }
+                    }
+                    // this view is duplicated on purpose (i.e. there are 2 instances of LectureTimeSheetScene)
+                    LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
+                }
+                .accentColor(Color(UIColor.label))
+            })
 
         let _ = debugChanges()
     }
