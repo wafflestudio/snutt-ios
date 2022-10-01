@@ -115,25 +115,51 @@ struct LectureDetailScene: View {
 
                     VStack {
                         Text("시간 및 장소")
-                            .padding(.leading, 5)
                             .font(STFont.detailLabel)
                             .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         ForEach(lecture.timePlaces) { timePlace in
-                            VStack {
-                                HStack {
-                                    DetailLabel(text: "시간")
-                                    EditableTimeField(lecture: $lecture, timePlace: timePlace)
+                            HStack(alignment: .top) {
+                                VStack {
+                                    HStack {
+                                        DetailLabel(text: "시간")
+                                        EditableTimeField(lecture: $lecture, timePlace: timePlace) {
+                                            viewModel.openLectureTimeSheet(lecture: $lecture, timePlace: timePlace)
+                                            resignFirstResponder()
+                                        }
+                                    }
+                                    Spacer()
+                                        .frame(height: 5)
+                                    HStack {
+                                        DetailLabel(text: "장소")
+                                        EditableTextField(lecture: $lecture, timePlace: timePlace)
+                                    }
                                 }
+                                .padding(.vertical, 2)
+
                                 Spacer()
-                                    .frame(height: 5)
-                                HStack {
-                                    DetailLabel(text: "장소")
-                                    EditableTextField(lecture: $lecture, timePlace: timePlace)
+
+                                if editMode.isEditing {
+                                    Button {
+                                        lecture = viewModel.getLecture(lecture: lecture, without: timePlace)
+                                    } label: {
+                                        Image("xmark.black")
+                                    }
+                                    .padding(.top, 5)
                                 }
                             }
-                            .padding(.vertical, 2)
+                        }
+
+                        if editMode.isEditing {
+                            Button {
+                                lecture = viewModel.getLectureWithNewTimePlace(lecture: lecture)
+                            } label: {
+                                Text("+ 시간 추가")
+                                    .font(.system(size: 16))
+                                    .animation(.customSpring, value: lecture.timePlaces.count)
+                            }
+                            .padding(.top, 5)
                         }
                     }
                     .padding()
@@ -183,9 +209,11 @@ struct LectureDetailScene: View {
                         }
                     }
                 }
+                .padding(.horizontal, 5)
                 .background(STColor.groupForeground)
             }
             .animation(.customSpring, value: editMode.isEditing)
+            .animation(.customSpring, value: lecture.timePlaces.count)
             .padding(.vertical, 20)
         }
         .background(STColor.groupBackground)
@@ -217,10 +245,11 @@ struct LectureDetailScene: View {
                         if editMode.isEditing {
                             // save
                             Task {
-                                let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
-                                if !success {
+                                guard let updatedLecture = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) else {
                                     lecture = tempLecture
+                                    return
                                 }
+                                lecture = updatedLecture
                             }
                             editMode = .inactive
                             resignFirstResponder()
@@ -255,7 +284,6 @@ struct DetailLabel: View {
     var body: some View {
         VStack {
             Text(text)
-                .padding(.horizontal, 5)
                 .padding(.trailing, 10)
                 .padding(.top, 2.5)
                 .font(STFont.detailLabel)
@@ -341,6 +369,8 @@ struct EditableNumberField: View {
 struct EditableTimeField: View {
     @Binding var lecture: Lecture
     var timePlace: TimePlace
+    var action: () -> Void
+
     @Environment(\.editMode) private var editMode
 
     @ViewBuilder private func timeTextLabel(from timePlace: TimePlace) -> some View {
@@ -352,7 +382,9 @@ struct EditableTimeField: View {
     }
 
     var body: some View {
-        Button {} label: {
+        Button {
+            action()
+        } label: {
             timeTextLabel(from: timePlace)
                 .font(.system(size: 16, weight: .regular))
                 .frame(maxWidth: .infinity, alignment: .leading)

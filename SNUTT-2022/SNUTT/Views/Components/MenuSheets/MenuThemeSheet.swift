@@ -18,7 +18,6 @@ struct MenuThemeSheet: View {
     var body: some View {
         Sheet(isOpen: $isOpen,
               orientation: .bottom(maxHeight: 200),
-              disableBackgroundTap: false,
               disableDragGesture: true,
               onBackgroundTap: cancel) {
             VStack {
