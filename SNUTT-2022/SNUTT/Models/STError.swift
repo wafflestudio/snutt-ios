@@ -25,6 +25,7 @@ public enum STError: Int, Error {
     case INVALID_TIMEMASK = 0x1009
     case INVALID_COLOR = 0x100A
     case NO_LECTURE_TITLE = 0x100B
+    case INVALID_TIMEJSON = 0x100C
 
     /* 403 - Authorization-related */
     case WRONG_API_KEY = 0x2000
@@ -35,6 +36,7 @@ public enum STError: Int, Error {
     case WRONG_PASSWORD = 0x2005
     case WRONG_FB_TOKEN = 0x2006
     case UNKNOWN_APP = 0x2007
+    case WRONG_APPLE_TOKEN = 0x2008
 
     /* 403 - Restrictions */
     case INVALID_ID = 0x3000
@@ -82,9 +84,7 @@ public enum STError: Int, Error {
              .INVALID_TIMEMASK,
              .INVALID_COLOR,
              .NO_LECTURE_TITLE,
-             .CANT_CHANGE_OTHERS_THEME
-             :
-
+             .CANT_CHANGE_OTHERS_THEME:
             return "요청 실패"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,
@@ -93,6 +93,7 @@ public enum STError: Int, Error {
             return "권한 문제"
         case .WRONG_ID,
              .WRONG_PASSWORD,
+             .WRONG_APPLE_TOKEN,
              .WRONG_FB_TOKEN:
             return "로그인 실패"
         case .UNKNOWN_APP:
@@ -112,8 +113,8 @@ public enum STError: Int, Error {
              .LECTURE_TIME_OVERLAP,
              .IS_CUSTOM_LECTURE,
              .USER_HAS_NO_FCM_KEY,
-             .CANT_DELETE_CURRENT_TIMETABLE
-             :
+             .INVALID_TIMEJSON,
+             .CANT_DELETE_CURRENT_TIMETABLE:
             return "잘못된 요청"
         case .TAG_NOT_FOUND,
              .TIMETABLE_NOT_FOUND,
@@ -173,6 +174,8 @@ public enum STError: Int, Error {
             return "앱 버전 정보를 가져오는 것을 실패했습니다."
         case .INVALID_ID:
             return "ID는 영문자와 숫자로 이루어진 4~32자여야 합니다."
+        case .INVALID_TIMEJSON:
+            return "강의 시간은 0보다 큰 숫자여야 합니다."
         case .INVALID_PASSWORD:
             return "비밀번호는 최소 하나의 숫자와 하나의 영문자를 포함하는 6~20자여야 합니다."
         case .DUPLICATE_ID:
@@ -219,6 +222,8 @@ public enum STError: Int, Error {
             return "현재 시간표의 테마만 변경할 수 있습니다."
         case .UNKNOWN_ERROR:
             return "알 수 없는 오류가 발생했습니다."
+        case .WRONG_APPLE_TOKEN:
+            return "애플 계정으로 로그인이 실패했습니다. 다른 로그인 방법을 시도해주세요."
         }
     }
 }

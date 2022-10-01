@@ -48,32 +48,34 @@ struct MenuSheetScene: View {
     }
 }
 
-///// A simple wrapper that is used to preview `MenuSheet`.
-struct MenuSheetWrapper: View {
-    let container = DIContainer.preview
+#if DEBUG
+    ///// A simple wrapper that is used to preview `MenuSheet`.
+    struct MenuSheetWrapper: View {
+        let container = DIContainer.preview
 
-    init() {
-        container.appState.menu.isOpen = true
-        container.appState.menu.isEllipsisSheetOpen = true
-    }
+        init() {
+            container.appState.menu.isOpen = true
+            container.appState.menu.isEllipsisSheetOpen = true
+        }
 
-    var body: some View {
-        ZStack {
-            HStack {
-                NavBarButton(imageName: "nav.menu") {
-                    container.appState.menu.isOpen.toggle()
+        var body: some View {
+            ZStack {
+                HStack {
+                    NavBarButton(imageName: "nav.menu") {
+                        container.appState.menu.isOpen.toggle()
+                    }
+                    NavBarButton(imageName: "menu.ellipsis") {
+                        container.services.globalUIService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", updatedAt: "3232", totalCredit: 3))
+                    }
                 }
-                NavBarButton(imageName: "menu.ellipsis") {
-                    container.services.globalUIService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", updatedAt: "3232", totalCredit: 3))
-                }
+                MenuSheetScene(viewModel: .init(container: container))
             }
-            MenuSheetScene(viewModel: .init(container: container))
         }
     }
-}
 
-struct MenuSheetScene_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuSheetWrapper()
+    struct MenuSheetScene_Previews: PreviewProvider {
+        static var previews: some View {
+            MenuSheetWrapper()
+        }
     }
-}
+#endif

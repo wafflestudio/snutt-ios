@@ -26,6 +26,8 @@ protocol GlobalUIServiceProtocol {
     func setCreateTitle(_ value: String)
     func setCreateQuarter(_ value: Quarter?)
 
+    func setIsLectureTimeSheetOpen(_ value: Bool, modifying timePlace: TimePlace?, action: ((TimePlace) -> Void)?)
+
     func presentErrorAlert(error: STError?)
     func presentErrorAlert(error: Error)
 }
@@ -114,7 +116,17 @@ struct GlobalUIService: GlobalUIServiceProtocol {
         }
     }
 
-    // MARK: error handling
+    // MARK: Lecture Time Sheet
+
+    func setIsLectureTimeSheetOpen(_ value: Bool, modifying timePlace: TimePlace?, action: ((TimePlace) -> Void)?) {
+        DispatchQueue.main.async {
+            appState.menu.timePlaceToModify = timePlace
+            appState.menu.lectureTimeSheetAction = action
+            appState.menu.isLectureTimeSheetOpen = value
+        }
+    }
+
+    // MARK: Error Handling
 
     func presentErrorAlert(error: Error) {
         presentErrorAlert(error: error.asSTError)

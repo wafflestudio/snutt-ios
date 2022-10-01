@@ -33,7 +33,7 @@ struct LectureBlocks: View {
                                            theme: theme)
                         #else
                             if let container = container {
-                                NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture)) {
+                                NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture, displayMode: .normal)) {
                                     TimetableBlock(lecture: lecture,
                                                    timePlace: timePlace,
                                                    theme: theme)
@@ -44,7 +44,7 @@ struct LectureBlocks: View {
                     }
                     .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: config.weekCount),
                            height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: Painter.getHourCount(current: current, config: config)),
-                           alignment: .center)
+                           alignment: .top)
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
                 }
             }

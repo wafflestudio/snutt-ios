@@ -38,6 +38,6 @@ class ReviewViewModel: BaseViewModel, ObservableObject {
     }
 
     var token: String? {
-        appState.user.token
+        appState.user.accessToken
     }
 }

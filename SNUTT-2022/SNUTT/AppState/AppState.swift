@@ -18,6 +18,7 @@ class AppState {
     var timetable = TimetableState()
 
     var menu = MenuState()
+    var notification = NotificationState()
 }
 
 #if DEBUG

@@ -27,7 +27,7 @@ struct LectureDto: Codable {
     let credit: Int
     let class_time: String?
     let class_time_json: [TimePlaceDto]
-    let class_time_mask: [Int]
+    var class_time_mask: [Int]?
     let instructor: String
     let quota: Int?
     let remark: String?
@@ -46,7 +46,7 @@ struct LectureColorDto: Codable {
 }
 
 struct TimePlaceDto: Codable {
-    let _id: String
+    let _id: String?
     let day: Int
     let start: Double
     let len: Double
@@ -89,7 +89,7 @@ extension TimetableDto {
 
 extension TimePlaceDto {
     init(from model: TimePlace) {
-        _id = model.id
+        _id = model.isTemporary ? nil : model.id
         day = model.day.rawValue
         start = model.start
         len = model.len
@@ -106,7 +106,7 @@ extension LectureDto {
         academic_year = model.academicYear
         course_title = model.title
         credit = model.credit
-        class_time = model.timeString
+        class_time = nil
         class_time_json = model.timePlaces.map { .init(from: $0) }
         class_time_mask = model.timeMasks
         instructor = model.instructor

@@ -29,7 +29,10 @@ struct SNUTTView: View {
 
     var body: some View {
         ZStack {
-            TabView(selection: selected) {
+            if !viewModel.isAuthenticated {
+                LoginScene(viewModel: .init(container: viewModel.container))
+            } else {
+                TabView(selection: selected) {
                 TabScene(tabType: .timetable) {
                     TimetableScene(viewModel: .init(container: viewModel.container))
                         .background(NavigationBarReader { navbar in
@@ -54,7 +57,11 @@ struct SNUTTView: View {
             if selectedTab == .search {
                 FilterSheetScene(viewModel: .init(container: viewModel.container))
             }
+
+            }
+            LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
         }
+        .animation(.easeOut, value: viewModel.accessToken)
         .accentColor(Color(UIColor.label))
         .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
             Text(viewModel.errorMessage)
@@ -89,11 +96,18 @@ extension SNUTTView {
         @Published var isErrorAlertPresented = false
         @Published var errorContent: STError? = nil
         @Published var reviewId: String = ""
+        @Published var accessToken: String? = nil
+
+        var isAuthenticated: Bool {
+            guard let accessToken = accessToken else { return false }
+            return !accessToken.isEmpty
+        }
 
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$errorContent.assign(to: &$errorContent)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
+            appState.user.$accessToken.assign(to: &$accessToken)
         }
 
         var errorTitle: String {
@@ -117,11 +131,13 @@ enum TabType: String {
     case settings
 }
 
-struct SNUTTView_Previews: PreviewProvider {
-    static var previews: some View {
-        SNUTTView(viewModel: .init(container: .preview))
+#if DEBUG
+    struct SNUTTView_Previews: PreviewProvider {
+        static var previews: some View {
+            SNUTTView(viewModel: .init(container: .preview))
+        }
     }
-}
+#endif
 
 // TODO: move elsewhere if needed
 struct NavigationBarReader: UIViewControllerRepresentable {

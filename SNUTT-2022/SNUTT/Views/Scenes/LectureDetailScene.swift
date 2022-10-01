@@ -11,135 +11,172 @@ import SwiftUI
 struct LectureDetailScene: View {
     @ObservedObject var viewModel: ViewModel
     @State var lecture: Lecture
+    var displayMode: DisplayMode
 
-    @State private var editMode: EditMode = .inactive
-    @State private var tempLecture: Lecture = .preview
+    @State private var editMode: EditMode
+    @State private var tempLecture: Lecture?
+
+    init(viewModel: ViewModel, lecture: Lecture, displayMode: DisplayMode) {
+        self.viewModel = viewModel
+        _lecture = State(initialValue: lecture)
+        _editMode = State(initialValue: displayMode == .create ? .active : .inactive)
+        self.displayMode = displayMode
+    }
+
+    enum DisplayMode {
+        case normal
+        case create
+        case preview
+    }
+
+    @State private var isResetAlertPresented = false
     @State private var isDeleteAlertPresented = false
     @State private var showReviewWebView = false
     @State private var reviewId: String = ""
 
-    // for modal presentation
-    var isPresentedModally: Bool = false
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 Group {
-                    VStack {
-                        Group {
+                    VStack(spacing: 20) {
+                        HStack {
+                            DetailLabel(text: "강의명")
+                            EditableTextField(text: $lecture.title)
+                        }
+                        HStack {
+                            DetailLabel(text: "교수")
+                            EditableTextField(text: $lecture.instructor)
+                        }
+                        if lecture.isCustom {
                             HStack {
-                                DetailLabel(text: "강의명")
-                                EditableTextField(text: $lecture.title)
+                                DetailLabel(text: "학점")
+                                EditableNumberField(value: $lecture.credit)
                             }
-                            HStack {
-                                DetailLabel(text: "교수")
-                                EditableTextField(text: $lecture.instructor)
-                            }
-                            if lecture.isCustom {
-                                HStack {
-                                    DetailLabel(text: "학점")
-                                    EditableNumberField(value: $lecture.credit)
-                                }
-                                HStack {
-                                    DetailLabel(text: "비고")
-                                    EditableTextField(text: $lecture.remark, multiLine: true)
-                                }
-                            }
+                        }
 
-                            HStack {
-                                DetailLabel(text: "색")
-                                NavigationLink {
-                                    LectureColorList(theme: lecture.theme ?? .snutt, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
-                                } label: {
-                                    HStack {
-                                        LectureColorPreview(lectureColor: lecture.getColor())
-                                            .frame(height: 25)
-                                        Spacer()
-                                        if editMode.isEditing {
-                                            Image("chevron.right")
-                                        }
+                        HStack {
+                            DetailLabel(text: "색")
+                            NavigationLink {
+                                LectureColorList(theme: lecture.theme ?? .snutt, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
+                            } label: {
+                                HStack {
+                                    LectureColorPreview(lectureColor: lecture.getColor())
+                                        .frame(height: 25)
+                                    Spacer()
+                                    if editMode.isEditing {
+                                        Image("chevron.right")
                                     }
                                 }
-                                .disabled(!editMode.isEditing)
                             }
-                            .animation(.customSpring, value: editMode.isEditing)
+                            .disabled(!editMode.isEditing)
                         }
-                        .padding(.vertical, 5)
                     }
                     .padding()
 
                     if !lecture.isCustom {
-                        VStack {
-                            Group {
-                                HStack {
-                                    DetailLabel(text: "학과")
-                                    EditableTextField(text: $lecture.department)
-                                }
-                                HStack {
-                                    DetailLabel(text: "학년")
-                                    EditableTextField(text: $lecture.academicYear)
-                                }
-                                HStack {
-                                    DetailLabel(text: "학점")
-                                    EditableNumberField(value: $lecture.credit)
-                                }
-                                HStack {
-                                    DetailLabel(text: "분류")
-                                    EditableTextField(text: $lecture.classification)
-                                }
-                                HStack {
-                                    DetailLabel(text: "구분")
-                                    EditableTextField(text: $lecture.category)
-                                }
-                                HStack {
-                                    DetailLabel(text: "강좌번호")
-                                    EditableTextField(text: $lecture.courseNumber, readOnly: true)
-                                }
-                                HStack {
-                                    DetailLabel(text: "분반번호")
-                                    EditableTextField(text: $lecture.lectureNumber, readOnly: true)
-                                }
-                                HStack {
-                                    DetailLabel(text: "정원")
-                                    EditableNumberField(value: $lecture.quota, readOnly: true)
-                                }
-                                HStack {
-                                    DetailLabel(text: "비고")
-                                    EditableTextField(text: $lecture.remark, multiLine: true)
-                                }
+                        VStack(spacing: 20) {
+                            HStack {
+                                DetailLabel(text: "학과")
+                                EditableTextField(text: $lecture.department)
                             }
-                            .padding(.vertical, 5)
+                            HStack {
+                                DetailLabel(text: "학년")
+                                EditableTextField(text: $lecture.academicYear)
+                            }
+                            HStack {
+                                DetailLabel(text: "학점")
+                                EditableNumberField(value: $lecture.credit)
+                            }
+                            HStack {
+                                DetailLabel(text: "분류")
+                                EditableTextField(text: $lecture.classification)
+                            }
+                            HStack {
+                                DetailLabel(text: "구분")
+                                EditableTextField(text: $lecture.category)
+                            }
+                            HStack {
+                                DetailLabel(text: "강좌번호")
+                                EditableTextField(text: $lecture.courseNumber, readOnly: true)
+                            }
+                            HStack {
+                                DetailLabel(text: "분반번호")
+                                EditableTextField(text: $lecture.lectureNumber, readOnly: true)
+                            }
+                            HStack {
+                                DetailLabel(text: "정원")
+                                EditableNumberField(value: $lecture.quota, readOnly: true)
+                            }
+                            HStack {
+                                DetailLabel(text: "비고")
+                                EditableTextField(text: $lecture.remark, multiLine: true)
+                            }
+                        }
+                        .padding()
+                    } else {
+                        VStack {
+                            HStack {
+                                DetailLabel(text: "비고")
+                                EditableTextField(text: $lecture.remark, multiLine: true)
+                            }
                         }
                         .padding()
                     }
 
                     VStack {
                         Text("시간 및 장소")
-                            .padding(.leading, 5)
                             .font(STFont.detailLabel)
                             .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         ForEach(lecture.timePlaces) { timePlace in
-                            VStack {
-                                HStack {
-                                    DetailLabel(text: "시간")
-                                    EditableTimeField(lecture: $lecture, timePlace: timePlace)
+                            HStack(alignment: .top) {
+                                VStack {
+                                    HStack {
+                                        DetailLabel(text: "시간")
+                                        EditableTimeField(lecture: $lecture, timePlace: timePlace) {
+                                            viewModel.openLectureTimeSheet(lecture: $lecture, timePlace: timePlace)
+                                            resignFirstResponder()
+                                        }
+                                    }
+                                    Spacer()
+                                        .frame(height: 5)
+                                    HStack {
+                                        DetailLabel(text: "장소")
+                                        EditableTextField(lecture: $lecture, timePlace: timePlace)
+                                    }
                                 }
+                                .padding(.vertical, 2)
+
                                 Spacer()
-                                    .frame(height: 5)
-                                HStack {
-                                    DetailLabel(text: "장소")
-                                    EditableTextField(lecture: $lecture, timePlace: timePlace)
+
+                                if editMode.isEditing {
+                                    Button {
+                                        lecture = viewModel.getLecture(lecture: lecture, without: timePlace)
+                                    } label: {
+                                        Image("xmark.black")
+                                    }
+                                    .padding(.top, 5)
                                 }
                             }
-                            .padding(.vertical, 2)
+                        }
+
+                        if editMode.isEditing {
+                            Button {
+                                lecture = viewModel.getLectureWithNewTimePlace(lecture: lecture)
+                            } label: {
+                                Text("+ 시간 추가")
+                                    .font(.system(size: 16))
+                                    .animation(.customSpring, value: lecture.timePlaces.count)
+                            }
+                            .padding(.top, 5)
                         }
                     }
                     .padding()
 
-                    if !editMode.isEditing {
+                    if displayMode == .normal && !editMode.isEditing {
                         DetailButton(text: "강의계획서") {}
 
                         DetailButton(text: "강의평") {
@@ -152,7 +189,28 @@ struct LectureDetailScene: View {
                         }
                     }
 
-                    if !isPresentedModally {
+                    if displayMode == .normal && editMode.isEditing {
+                        DetailButton(text: "초기화", role: .destructive) {
+                            isResetAlertPresented = true
+                        }
+                        .alert("강의 초기화", isPresented: $isResetAlertPresented) {
+                            Button("취소", role: .cancel, action: {})
+                            Button("초기화", role: .destructive, action: {
+                                Task {
+                                    guard let originalLecture = await viewModel.resetLecture(lecture: lecture) else { return }
+                                    DispatchQueue.main.async {
+                                        lecture = originalLecture
+                                        editMode = .inactive
+                                        resignFirstResponder()
+                                    }
+                                }
+                            })
+                        } message: {
+                            Text("이 강의에 적용한 수정 사항을 모두 초기화하시겠습니까?")
+                        }
+                    }
+
+                    if displayMode == .normal {
                         DetailButton(text: "삭제", role: .destructive) {
                             isDeleteAlertPresented = true
                         }
@@ -166,44 +224,55 @@ struct LectureDetailScene: View {
                         }
                     }
                 }
+                .padding(.horizontal, 5)
                 .background(STColor.groupForeground)
             }
+            .animation(.customSpring, value: lecture.timePlaces.count)
             .animation(.customSpring, value: editMode.isEditing)
             .padding(.vertical, 20)
         }
         .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(editMode.isEditing)
+        .navigationTitle("세부사항")
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                if isPresentedModally {
+                switch displayMode {
+                case .normal:
+                    if editMode.isEditing {
+                        Button {
+                            // cancel
+                            if let tempLecture = tempLecture {
+                                lecture = tempLecture
+                            }
+                            editMode = .inactive
+                            resignFirstResponder()
+                        } label: {
+                            Text("취소")
+                        }
+                    }
+                case .preview, .create:
                     Button {
                         dismiss()
                     } label: {
                         Text("취소")
                             .foregroundColor(Color(uiColor: .label))
                     }
-                } else if editMode.isEditing {
-                    Button {
-                        // cancel
-                        lecture = tempLecture
-                        editMode = .inactive
-                        resignFirstResponder()
-                    } label: {
-                        Text("취소")
-                    }
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                if !isPresentedModally {
+                switch displayMode {
+                case .normal:
                     Button {
                         if editMode.isEditing {
+                            guard let tempLecture = tempLecture else { return }
                             // save
                             Task {
-                                let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
-                                if !success {
+                                guard let updatedLecture = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) else {
                                     lecture = tempLecture
+                                    return
                                 }
+                                lecture = updatedLecture
                             }
                             editMode = .inactive
                             resignFirstResponder()
@@ -216,6 +285,19 @@ struct LectureDetailScene: View {
                     } label: {
                         Text(editMode.isEditing ? "저장" : "편집")
                     }
+                case .create:
+                    Button {
+                        Task {
+                            let success = await viewModel.addCustomLecture(lecture: lecture)
+                            if success {
+                                dismiss()
+                            }
+                        }
+                    } label: {
+                        Text("저장")
+                    }
+                case .preview:
+                    EmptyView()
                 }
             }
         }
@@ -223,124 +305,14 @@ struct LectureDetailScene: View {
     }
 }
 
-#if canImport(UIKit)
-    extension View {
-        func resignFirstResponder() {
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        }
-    }
-#endif
-
-// MARK: TODO - Move elsewhere if necessary
-
-struct DetailLabel: View {
-    let text: String
-    var body: some View {
-        VStack {
-            Text(text)
-                .padding(.horizontal, 5)
-                .padding(.trailing, 10)
-                .padding(.top, 2.5)
-                .font(STFont.detailLabel)
-                .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
-                .frame(maxWidth: 70, maxHeight: .infinity, alignment: .topLeading)
-        }
-    }
+private struct DisplayModeKey: EnvironmentKey {
+    static let defaultValue: LectureDetailScene.DisplayMode = .normal
 }
 
-struct EditableTextField: View {
-    @Binding var text: String
-    @State var height: CGFloat = 0
-    var readOnly: Bool = false
-    var multiLine: Bool = false
-    @Environment(\.editMode) private var editMode
-
-    var isEditing: Bool {
-        editMode?.wrappedValue.isEditing ?? false
-    }
-
-    var body: some View {
-        if multiLine {
-            UITextEditor("(없음)", text: $text) { textView in
-                textView.backgroundColor = .clear
-                textView.textContainerInset = .zero
-                textView.textContainer.lineFragmentPadding = 0
-                textView.font = .systemFont(ofSize: 16, weight: .regular)
-            } onChange: { textView in
-                height = textView.contentSize.height
-            }
-            .frame(height: height)
-            .disabled(!isEditing || readOnly)
-        } else {
-            TextField("(없음)", text: $text)
-                .foregroundColor(readOnly ? STColor.disabled : Color(uiColor: .label))
-                .disabled(!isEditing || readOnly)
-                .font(.system(size: 16, weight: .regular))
-        }
-    }
-}
-
-extension EditableTextField {
-    /// Custom initializer to support editing `place` of a `Lecture`.
-    ///
-    /// 주어진 `timePlace`의 인자와 id가 같은 `TimePlace` 객체의 `place` 속성만 수정되도록 Binding을 재정의한다.
-    init(lecture: Binding<Lecture>, timePlace: TimePlace) {
-        _text = Binding(get: {
-            guard let firstItem = lecture.wrappedValue.timePlaces.first(where: { $0.id == timePlace.id }) else { return "" }
-            return String(firstItem.place)
-        }, set: {
-            guard let firstIndex = lecture.wrappedValue.timePlaces.firstIndex(where: { $0.id == timePlace.id }) else { return }
-            lecture.wrappedValue.timePlaces[firstIndex].place = $0
-        })
-    }
-}
-
-struct EditableNumberField: View {
-    @Binding var value: Int
-    @Environment(\.editMode) private var editMode
-    var readOnly: Bool = false
-
-    var isEditing: Bool {
-        editMode?.wrappedValue.isEditing ?? false
-    }
-
-    var body: some View {
-        TextField("(없음)", value: $value, formatter: NumberFormatter())
-            .disabled(!isEditing || readOnly)
-            .foregroundColor(readOnly ? STColor.disabled : Color(uiColor: .label))
-            .keyboardType(.numberPad)
-            .onReceive(Just(value)) { newValue in
-                let inputString = String(newValue)
-                let filtered = inputString.filter { "0123456789".contains($0) }
-                if filtered != inputString {
-                    self.value = Int(filtered) ?? 0
-                }
-            }
-            .font(.system(size: 16, weight: .regular))
-    }
-}
-
-struct EditableTimeField: View {
-    @Binding var lecture: Lecture
-    var timePlace: TimePlace
-    @Environment(\.editMode) private var editMode
-
-    @ViewBuilder private func timeTextLabel(from timePlace: TimePlace) -> some View {
-        Text("\(timePlace.day.shortSymbol) \(timePlace.startTimeString) ~ \(timePlace.endTimeString)")
-    }
-
-    var isEditing: Bool {
-        editMode?.wrappedValue.isEditing ?? false
-    }
-
-    var body: some View {
-        Button {} label: {
-            timeTextLabel(from: timePlace)
-                .font(.system(size: 16, weight: .regular))
-                .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .disabled(!isEditing)
-        .foregroundColor(Color(uiColor: .label))
+extension EnvironmentValues {
+    var displayMode: LectureDetailScene.DisplayMode {
+        get { self[DisplayModeKey.self] }
+        set { self[DisplayModeKey.self] = newValue }
     }
 }
 
@@ -353,38 +325,13 @@ struct RectangleButtonStyle: ButtonStyle {
     }
 }
 
-struct DetailButton: View {
-    let text: String
-    let role: ButtonRole?
-    let action: () -> Void
-
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(text)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .contentShape(Rectangle())
-                .foregroundColor(role == .destructive ? .red : Color(uiColor: .label))
-        }
-        .buttonStyle(RectangleButtonStyle(color: STColor.groupForeground))
-    }
-}
-
-extension DetailButton {
-    init(text: String, action: @escaping () -> Void) {
-        self.text = text
-        role = nil
-        self.action = action
-    }
-}
-
-struct LectureDetailList_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview)
-                .navigationBarTitleDisplayMode(.inline)
+#if DEBUG
+    struct LectureDetailList_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview, displayMode: .normal)
+                    .navigationBarTitleDisplayMode(.inline)
+            }
         }
     }
-}
+#endif

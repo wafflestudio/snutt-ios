@@ -6,54 +6,54 @@
 //
 
 import Alamofire
+@testable import SNUTT
 import XCTest
 
 class TimetableRepositoryTests: XCTestCase {
-    class Storage: AuthStorage {
-        var apiKey: ApiKey = ""
-        var accessToken: AccessToken = ""
+    let repository = TimetableRepository(session: .test)
+
+    let testTimetableName = "Timetable_\(TestUtils.randomString(length: 5))"
+    var testTimetable: TimetableMetadataDto?
+
+    override func setUp() async throws {
+        let timetables = try await repository.createTimetable(title: testTimetableName, year: 2022, semester: 1)
+        testTimetable = timetables.first(where: { $0.title == testTimetableName })!
     }
 
-    let repository = TimetableRepository(session: Session(interceptor: Interceptor(authStorage: Storage()), eventMonitors: [Logger()]))
-
-    func testFetchRecentTimetable() async throws {
-        let _ = try await repository.fetchRecentTimetable()
-    }
-
-    func testFetchTimetableList() async throws {
-        let _ = try await repository.fetchTimetableList()
-    }
-
-    func testFetchTimetable() async throws {
-        let recentTimetable = try await repository.fetchRecentTimetable()
-        let timetableWithId = try await repository.fetchTimetable(withTimetableId: recentTimetable._id)
-
-        XCTAssertEqual(recentTimetable._id, timetableWithId._id)
+    override func tearDown() async throws {
+        let _ = try await repository.deleteTimetable(withTimetableId: testTimetable!._id)
     }
 
     func testUpdateTimetableTitle() async throws {
-        let newTitle = "Bravo Timetable"
+        let newTitle = "\(testTimetableName)_RENAMED"
+        guard let testTimetable = testTimetable else {
+            return
+        }
 
-        let recentTimetable = try await repository.fetchRecentTimetable()
-        let _ = try await repository.updateTimetableTitle(withTimetableId: recentTimetable._id, withTitle: newTitle)
+        let _ = try await repository.updateTimetableTitle(withTimetableId: testTimetable._id, withTitle: newTitle)
 
-        let updatedTimetable = try await repository.fetchTimetable(withTimetableId: recentTimetable._id)
+        let updatedTimetable = try await repository.fetchTimetable(withTimetableId: testTimetable._id)
 
         XCTAssertEqual(newTitle, updatedTimetable.title)
     }
 
     func testCopyTimetable() async throws {
-        let recentTimetable = try await repository.fetchRecentTimetable()
-        let _ = try await repository.copyTimetable(withTimetableId: recentTimetable._id)
+        let oldList = try await repository.fetchTimetableList()
+        var newList = try await repository.copyTimetable(withTimetableId: testTimetable!._id)
+        XCTAssertEqual(oldList.count + 1, newList.count)
+
+        // cleanup
+        newList.removeAll(where: { new in oldList.contains(where: { old in new._id == old._id }) })
+        let copiedTimetable = newList.first!
+        let _ = try await repository.deleteTimetable(withTimetableId: copiedTimetable._id)
     }
 
-    func updateTimetableTheme() async throws {
+    func testUpdateTimetableTheme() async throws {
         let newThemeIndex = 2
 
-        let recentTimetable = try await repository.fetchRecentTimetable()
-        let _ = try await repository.updateTimetableTheme(withTimetableId: recentTimetable._id, withTheme: newThemeIndex)
+        let _ = try await repository.updateTimetableTheme(withTimetableId: testTimetable!._id, withTheme: newThemeIndex)
 
-        let updatedTimetable = try await repository.fetchTimetable(withTimetableId: recentTimetable._id)
+        let updatedTimetable = try await repository.fetchTimetable(withTimetableId: testTimetable!._id)
 
         XCTAssertEqual(newThemeIndex, updatedTimetable.theme)
     }

@@ -8,26 +8,18 @@
 import Alamofire
 import Foundation
 
-/// 적절한 장소로 옮겨야
-protocol AuthStorage {
-    typealias ApiKey = String
-    typealias AccessToken = String
-    var apiKey: ApiKey { get set }
-    var accessToken: AccessToken { get set }
-}
-
 final class Interceptor: RequestInterceptor {
-    private let authStorage: AuthStorage
+    private let userState: UserState
 
-    init(authStorage: AuthStorage) {
-        self.authStorage = authStorage
+    init(userState: UserState) {
+        self.userState = userState
     }
 
     func adapt(_ urlRequest: URLRequest, for _: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         var urlRequest = urlRequest
 
-        urlRequest.setValue(authStorage.apiKey, forHTTPHeaderField: "x-access-apikey")
-        urlRequest.setValue(authStorage.accessToken, forHTTPHeaderField: "x-access-token")
+        urlRequest.setValue(Bundle.main.infoDictionary?["API_KEY"] as? String, forHTTPHeaderField: "x-access-apikey")
+        urlRequest.setValue(userState.accessToken, forHTTPHeaderField: "x-access-token")
 
         completion(.success(urlRequest))
     }
