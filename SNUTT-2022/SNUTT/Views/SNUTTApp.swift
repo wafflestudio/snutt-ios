@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-// TODO: change this
-class Storage: AuthStorage {
-    var apiKey: ApiKey = ""
-    var accessToken: AccessToken = ""
-}
-
 @main
 struct SNUTTApp: App {
     let appEnvironment: AppEnvironment

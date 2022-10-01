@@ -6,6 +6,7 @@
 //
 
 import Alamofire
+@testable import SNUTT
 import XCTest
 
 class AuthRepositoryTests: XCTestCase {
