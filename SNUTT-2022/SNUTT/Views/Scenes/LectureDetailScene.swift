@@ -322,12 +322,12 @@ struct RectangleButtonStyle: ButtonStyle {
 }
 
 #if DEBUG
-struct LectureDetailList_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview, displayMode: .normal)
-                .navigationBarTitleDisplayMode(.inline)
+    struct LectureDetailList_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview, displayMode: .normal)
+                    .navigationBarTitleDisplayMode(.inline)
+            }
         }
     }
-}
 #endif
