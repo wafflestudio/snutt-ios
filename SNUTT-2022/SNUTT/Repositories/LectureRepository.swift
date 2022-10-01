@@ -29,7 +29,7 @@ class LectureRepository: LectureRepositoryProtocol {
             .serializingDecodable(TimetableDto.self)
             .handlingError()
     }
-    
+
     func addCustomLecture(timetableId: String, lecture: LectureDto) async throws -> TimetableDto {
         return try await session
             .request(LectureRouter.addCustomLecture(timetableId: timetableId, lecture: lecture))

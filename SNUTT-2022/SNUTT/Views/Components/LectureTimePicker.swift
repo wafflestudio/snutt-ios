@@ -53,7 +53,7 @@ struct LectureTimePicker: View {
                 .datePickerStyle(.compact)
         }
         .padding()
-        .onChange(of: start, perform: { newValue in
+        .onChange(of: start, perform: { _ in
             if !endRange.contains(end) {
                 end = endRange.lowerBound
             }

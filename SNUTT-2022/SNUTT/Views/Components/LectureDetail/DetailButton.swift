@@ -37,14 +37,11 @@ extension DetailButton {
 struct DetailButton_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            
-        STColor.groupBackground
-        VStack {
-            DetailButton(text: "강의평") {
-                
+            STColor.groupBackground
+            VStack {
+                DetailButton(text: "강의평") {}
             }
-        }
-        .background(STColor.groupForeground)
+            .background(STColor.groupForeground)
         }
     }
 }

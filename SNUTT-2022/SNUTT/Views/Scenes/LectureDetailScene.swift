@@ -12,22 +12,23 @@ struct LectureDetailScene: View {
     @ObservedObject var viewModel: ViewModel
     @State var lecture: Lecture
     var displayMode: DisplayMode
-    
+
     @State private var editMode: EditMode
     @State private var tempLecture: Lecture = .preview
-    
+
     init(viewModel: ViewModel, lecture: Lecture, displayMode: DisplayMode) {
         self.viewModel = viewModel
-        self._lecture = State(initialValue: lecture)
-        self._editMode = State(initialValue: displayMode == .create ? .active : .inactive)
+        _lecture = State(initialValue: lecture)
+        _editMode = State(initialValue: displayMode == .create ? .active : .inactive)
         self.displayMode = displayMode
     }
-    
+
     enum DisplayMode {
         case normal
         case create
         case preview
     }
+
     @State private var isResetAlertPresented = false
     @State private var isDeleteAlertPresented = false
 
@@ -52,7 +53,7 @@ struct LectureDetailScene: View {
                                 EditableNumberField(value: $lecture.credit)
                             }
                         }
-                        
+
                         HStack {
                             DetailLabel(text: "색")
                             NavigationLink {
@@ -71,7 +72,7 @@ struct LectureDetailScene: View {
                         }
                     }
                     .padding()
-                    
+
                     if !lecture.isCustom {
                         VStack(spacing: 20) {
                             HStack {
@@ -121,13 +122,13 @@ struct LectureDetailScene: View {
                         }
                         .padding()
                     }
-                    
+
                     VStack {
                         Text("시간 및 장소")
                             .font(STFont.detailLabel)
                             .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        
+
                         ForEach(lecture.timePlaces) { timePlace in
                             HStack(alignment: .top) {
                                 VStack {
@@ -146,9 +147,9 @@ struct LectureDetailScene: View {
                                     }
                                 }
                                 .padding(.vertical, 2)
-                                
+
                                 Spacer()
-                                
+
                                 if editMode.isEditing {
                                     Button {
                                         lecture = viewModel.getLecture(lecture: lecture, without: timePlace)
@@ -159,7 +160,7 @@ struct LectureDetailScene: View {
                                 }
                             }
                         }
-                        
+
                         if editMode.isEditing {
                             Button {
                                 lecture = viewModel.getLectureWithNewTimePlace(lecture: lecture)
@@ -291,7 +292,6 @@ struct LectureDetailScene: View {
                 case .preview:
                     EmptyView()
                 }
-                
             }
         }
         .environment(\.editMode, $editMode)
@@ -309,7 +309,6 @@ extension EnvironmentValues {
     }
 }
 
-
 struct RectangleButtonStyle: ButtonStyle {
     var color: Color? = nil
     func makeBody(configuration: Self.Configuration) -> some View {
@@ -318,8 +317,6 @@ struct RectangleButtonStyle: ButtonStyle {
             .background(configuration.isPressed ? STColor.buttonPressed : (color ?? .clear))
     }
 }
-
-
 
 struct LectureDetailList_Previews: PreviewProvider {
     static var previews: some View {

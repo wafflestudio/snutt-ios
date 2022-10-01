@@ -17,7 +17,7 @@ class LectureListViewModel: BaseViewModel, ObservableObject {
         super.init(container: container)
         appState.system.$errorContent.assign(to: &$errorContent)
         appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
-        appState.timetable.$current.compactMap({ $0?.lectures }).assign(to: &$lectures)
+        appState.timetable.$current.compactMap { $0?.lectures }.assign(to: &$lectures)
     }
 
     var errorTitle: String {
@@ -27,7 +27,7 @@ class LectureListViewModel: BaseViewModel, ObservableObject {
     var errorMessage: String {
         (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
     }
-    
+
     func getPlaceholderLecture() -> Lecture {
         var lecture: Lecture = .init(from: .init(_id: UUID().uuidString, classification: nil, department: nil, academic_year: nil, course_title: "새로운 강의", credit: 0, class_time: nil, class_time_json: [], class_time_mask: [], instructor: "", quota: nil, remark: nil, category: nil, course_number: nil, lecture_number: nil, created_at: nil, updated_at: nil, color: nil, colorIndex: 1))
         lecture.theme = appState.timetable.current?.theme ?? .snutt

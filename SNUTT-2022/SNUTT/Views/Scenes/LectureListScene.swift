@@ -9,9 +9,8 @@ import SwiftUI
 
 struct LectureListScene: View {
     @ObservedObject var viewModel: LectureListViewModel
-    
+
     @State private var showingCreatePage = false
-    
 
     var body: some View {
         LectureList(viewModel: .init(container: viewModel.container),
@@ -34,7 +33,6 @@ struct LectureListScene: View {
                     }
                     // this view is duplicated on purpose (i.e. there are 2 instances of LectureTimeSheetScene)
                     LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
-                    
                 }
                 .accentColor(Color(UIColor.label))
             })

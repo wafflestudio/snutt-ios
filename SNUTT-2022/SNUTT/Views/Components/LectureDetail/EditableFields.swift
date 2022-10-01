@@ -5,9 +5,8 @@
 //  Created by 박신홍 on 2022/09/17.
 //
 
-import SwiftUI
 import Combine
-
+import SwiftUI
 
 struct EditableTextField: View {
     @Binding var text: String

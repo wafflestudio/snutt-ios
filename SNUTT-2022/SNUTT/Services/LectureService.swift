@@ -32,7 +32,7 @@ struct LectureService: LectureServiceProtocol {
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
-    
+
     func addCustomLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         var lectureDto = LectureDto(from: lecture)
@@ -94,7 +94,7 @@ struct LectureService: LectureServiceProtocol {
 }
 
 class FakeLectureService: LectureServiceProtocol {
-    func addCustomLecture(lecture: Lecture) async throws {}
+    func addCustomLecture(lecture _: Lecture) async throws {}
     func updateLecture(oldLecture _: Lecture, newLecture _: Lecture) async throws {}
     func addLecture(lecture _: Lecture) async throws {}
     func deleteLecture(lecture _: Lecture) async throws {}
