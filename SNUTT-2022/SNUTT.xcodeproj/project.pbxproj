@@ -58,6 +58,7 @@
 		BE28036628E8854D00B2B1AB /* SingleWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE28036528E8854D00B2B1AB /* SingleWebView.swift */; };
 		BE28036828E8883700B2B1AB /* WebViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE28036728E8883700B2B1AB /* WebViewProtocol.swift */; };
 		BE28036A28E93EEF00B2B1AB /* LoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE28036928E93EEF00B2B1AB /* LoginScene.swift */; };
+		BE28036C28E9F0B100B2B1AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE28036B28E9F0B100B2B1AB /* LaunchScreen.storyboard */; };
 		BE2EA7B128D479BE007C0998 /* Publisher+SinkWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */; };
 		BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
 		BE419B84288B8B8F00FA9590 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
@@ -291,6 +292,7 @@
 		BE28036528E8854D00B2B1AB /* SingleWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleWebView.swift; sourceTree = "<group>"; };
 		BE28036728E8883700B2B1AB /* WebViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewProtocol.swift; sourceTree = "<group>"; };
 		BE28036928E93EEF00B2B1AB /* LoginScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScene.swift; sourceTree = "<group>"; };
+		BE28036B28E9F0B100B2B1AB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+SinkWithAnimation.swift"; sourceTree = "<group>"; };
 		BE419B8C288B8C5A00FA9590 /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
 		BE419B99288B915800FA9590 /* TimetableUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableUtils.swift; sourceTree = "<group>"; };
@@ -778,6 +780,7 @@
 		DCD41A6B27E5CDAF00CF380E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BE28036B28E9F0B100B2B1AB /* LaunchScreen.storyboard */,
 				BE779B1928E3E28C009960EB /* AppDelegate.swift */,
 				DC860F4827E5C87D0068C94B /* SNUTTApp.swift */,
 				BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */,
@@ -1018,6 +1021,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */,
+				BE28036C28E9F0B100B2B1AB /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1349,6 +1353,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -1640,6 +1645,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -1676,6 +1682,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";

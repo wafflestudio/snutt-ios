@@ -11,41 +11,58 @@ import SwiftUI
 
 struct OnboardScene: View {
     @ObservedObject var viewModel: ViewModel
-
+    
     @State private var pushToSignUpScene = false
     @State private var pushToLoginScene = false
-
+    
+    @Namespace private var launchScreenAnimation
+    @State private var isActivated = false
+    private let logoId = "Logo"
+    
     var body: some View {
-        VStack(spacing: 15) {
-            Spacer()
-            
-            Logo(orientation: .vertical)
-            
-            Spacer()
-            
-            VStack {
-                
-            SignInButton(label: "로그인") {
-                pushToLoginScene = true
-                
+        ZStack {
+            if isActivated {
+                VStack(spacing: 15) {
+                    Spacer()
+                    
+                    Logo(orientation: .vertical)
+                        .matchedGeometryEffect(id: logoId, in: launchScreenAnimation)
+                    
+                    Spacer()
+                    
+                    VStack {
+                        SignInButton(label: "로그인") {
+                            pushToLoginScene = true
+                            
+                        }
+                        SignInButton(label: "가입하기") {
+                            pushToSignUpScene = true
+                        }
+                        
+                        
+                        SignInButton(label: "Facebook으로 계속하기", imageName: "facebook") {
+                            viewModel.performFacebookSignIn()
+                        }
+                        
+                        SignInButton(label: "Apple로 계속하기", imageName: "apple") {
+                            viewModel.performAppleSignIn()
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    Spacer()
+                        .frame(height: 20)
+                }
+                .transition(.scale(scale: 1))
+            } else {
+                VStack {
+                    Spacer()
+                    Logo(orientation: .vertical)
+                        .matchedGeometryEffect(id: logoId, in: launchScreenAnimation)
+                    Spacer()
+                }
+                .ignoresSafeArea()
+                .transition(.scale(scale: 1))
             }
-            SignInButton(label: "가입하기") {
-                pushToSignUpScene = true
-            }
-            
-            
-            SignInButton(label: "Facebook으로 계속하기", imageName: "facebook") {
-                viewModel.performFacebookSignIn()
-            }
-            
-            SignInButton(label: "Apple로 계속하기", imageName: "apple") {
-                viewModel.performAppleSignIn()
-            }
-            }
-            .padding(.horizontal, 20)
-            Spacer()
-                .frame(height: 20)
-            
         }
         .navigationBarHidden(true)
         .background(
@@ -54,6 +71,11 @@ struct OnboardScene: View {
                 NavigationLink(destination: LoginScene(viewModel: .init(container: viewModel.container)), isActive: $pushToLoginScene) { EmptyView() }
             }
         )
+        .onLoad {
+            withAnimation(.easeInOut(duration: 0.7).delay(0.1)) {
+                isActivated = true
+            }
+        }
     }
 }
 
@@ -96,34 +118,34 @@ extension OnboardScene {
     class ViewModel: BaseViewModel, ObservableObject {
         func performFacebookSignIn() {
             LoginManager().logIn(permissions: [Permission.publicProfile.name], from: nil) { result, error in
-
+                
                 if error != nil {
                     self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
                     return
                 }
-
+                
                 guard let result = result else {
                     self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
                     return
                 }
-
+                
                 if result.isCancelled {
                     return
                 }
-
+                
                 guard let fbUserId = result.token?.userID,
                       let fbToken = result.token?.tokenString
                 else {
                     self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
                     return
                 }
-
+                
                 Task {
                     await self.loginWithFacebook(id: fbUserId, token: fbToken)
                 }
             }
         }
-
+        
         private func loginWithFacebook(id: String, token: String) async {
             do {
                 try await services.authService.loginWithFacebook(id: id, token: token)
@@ -131,7 +153,7 @@ extension OnboardScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-
+        
         
     }
 }
@@ -175,9 +197,9 @@ extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
 }
 
 #if DEBUG
-    struct OnboardScene_Previews: PreviewProvider {
-        static var previews: some View {
-            OnboardScene(viewModel: .init(container: .preview))
-        }
+struct OnboardScene_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardScene(viewModel: .init(container: .preview))
     }
+}
 #endif

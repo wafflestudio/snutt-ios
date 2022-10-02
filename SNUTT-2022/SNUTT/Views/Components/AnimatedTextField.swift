@@ -37,7 +37,7 @@ struct AnimatedTextField: View {
             ZStack(alignment: .leading) {
                 Rectangle()
                     .frame(height: 2)
-                    .foregroundColor(Color(uiColor: .opaqueSeparator))
+                    .foregroundColor(Color(uiColor: .quaternaryLabel))
 
                 Rectangle()
                     .frame(maxWidth: text.isEmpty ? 0 : .infinity, alignment: .leading)
