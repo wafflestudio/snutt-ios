@@ -32,7 +32,7 @@ struct ReviewScene: View {
             ReviewWebView(url: reviewUrl, accessToken: viewModel.accessToken, connectionState: $viewModel.connectionState, reloadSignal: reloadSignal)
                 .navigationBarHidden(true)
                 .edgesIgnoringSafeArea(.bottom)
-            
+
             if viewModel.connectionState == .error {
                 WebErrorView(refresh: {
                     print("sending signal..")
