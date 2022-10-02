@@ -84,7 +84,21 @@ struct ReviewWebView: WebView {
         }
 
         func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
-            parent.connectionState = .error
+            if parent.connectionState == .success {
+                parent.connectionState = .error
+            }
+        }
+        
+        func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+            if parent.connectionState == .success {
+                parent.connectionState = .error
+            }
+        }
+        
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            if parent.connectionState == .error {
+                parent.connectionState = .success
+            }
         }
     }
 }

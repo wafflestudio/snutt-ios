@@ -28,17 +28,21 @@ struct ReviewScene: View {
     }
 
     var body: some View {
-        switch viewModel.connectionState {
-        case .success:
+        ZStack {
             ReviewWebView(url: reviewUrl, accessToken: viewModel.accessToken, connectionState: $viewModel.connectionState, reloadSignal: reloadSignal)
                 .navigationBarHidden(true)
                 .edgesIgnoringSafeArea(.bottom)
-        case .error:
-            WebErrorView(refresh: {
-                reloadSignal.send()
-            })
-            .navigationTitle("강의평")
-            .navigationBarTitleDisplayMode(.inline)
+            
+            if viewModel.connectionState == .error {
+                WebErrorView(refresh: {
+                    print("sending signal..")
+                    reloadSignal.send()
+                })
+                .navigationTitle("강의평")
+                .navigationBarTitleDisplayMode(.inline)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(uiColor: .systemBackground))
+            }
         }
         let _ = debugChanges()
     }
@@ -47,7 +51,7 @@ struct ReviewScene: View {
 extension ReviewScene {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var accessToken: String = ""
-        @State var connectionState: WebViewConnectionState = .success
+        @Published var connectionState: WebViewConnectionState = .success
 
         private var bag = Set<AnyCancellable>()
 
