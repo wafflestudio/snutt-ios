@@ -30,7 +30,9 @@ struct SNUTTView: View {
     var body: some View {
         ZStack {
             if !viewModel.isAuthenticated {
-                LoginScene(viewModel: .init(container: viewModel.container))
+                NavigationView {
+                    OnboardScene(viewModel: .init(container: viewModel.container))
+                }
             } else {
                 TabView(selection: selected) {
                     TabScene(tabType: .timetable) {

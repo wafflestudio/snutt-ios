@@ -12,18 +12,27 @@ struct AnimatedTextField: View {
     let placeholder: String
     @Binding var text: String
 
-    var shouldFocusOn: Bool
+    var shouldFocusOn: Bool = false
+    var secure: Bool = false
+    
     @FocusState private var _isFocused: Bool
 
     var body: some View {
         VStack {
-            Text("시간표 제목")
+            Text(label)
                 .font(STFont.detailLabel)
                 .foregroundColor(Color(uiColor: .secondaryLabel))
                 .frame(maxWidth: .infinity, alignment: .leading)
-
-            TextField("시간표 제목을 입력하세요", text: $text)
-                .focused($_isFocused)
+            
+            Group {
+                if secure {
+                    SecureField(placeholder, text: $text)
+                } else {
+                    TextField(placeholder, text: $text)
+                }
+            }
+            .focused($_isFocused)
+            .frame(height: 20)
 
             ZStack(alignment: .leading) {
                 Rectangle()
@@ -37,9 +46,29 @@ struct AnimatedTextField: View {
                     .animation(.customSpring, value: text.isEmpty)
             }
         }
+        .onTapGesture(perform: {
+            _isFocused = true
+        })
+        .onAppear {
+            _isFocused = shouldFocusOn
+        }
         .onChange(of: shouldFocusOn) { newValue in
             _isFocused = newValue
         }
     }
 }
 
+
+struct AnimatedTextField_Previews: PreviewProvider {
+    
+    struct WrapperView: View {
+        @State var text: String = ""
+        var body: some View {
+            AnimatedTextField(label: "메롱", placeholder: "메롱메롱", text: $text)
+        }
+    }
+    
+    static var previews: some View {
+        WrapperView().padding(.horizontal, 20)
+    }
+}
