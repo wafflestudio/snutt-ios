@@ -46,7 +46,7 @@ struct SettingScene: View {
                 SettingsMenu(Settings.logout, destructive: true)
             }
         }
-        .listStyle(.grouped)
+        .listStyle(.insetGrouped)
         .navigationTitle("설정")
         .navigationBarTitleDisplayMode(.inline)
 
