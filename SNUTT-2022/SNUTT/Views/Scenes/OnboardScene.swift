@@ -11,39 +11,37 @@ import SwiftUI
 
 struct OnboardScene: View {
     @ObservedObject var viewModel: ViewModel
-    
+
     @State private var pushToSignUpScene = false
     @State private var pushToLoginScene = false
-    
+
     @Namespace private var launchScreenAnimation
     @State private var isActivated = false
     private let logoId = "Logo"
-    
+
     var body: some View {
         ZStack {
             if isActivated {
                 VStack(spacing: 15) {
                     Spacer()
-                    
+
                     Logo(orientation: .vertical)
                         .matchedGeometryEffect(id: logoId, in: launchScreenAnimation)
-                    
+
                     Spacer()
-                    
+
                     VStack {
                         SignInButton(label: "로그인") {
                             pushToLoginScene = true
-                            
                         }
                         SignInButton(label: "가입하기") {
                             pushToSignUpScene = true
                         }
-                        
-                        
+
                         SignInButton(label: "Facebook으로 계속하기", imageName: "facebook") {
                             viewModel.performFacebookSignIn()
                         }
-                        
+
                         SignInButton(label: "Apple로 계속하기", imageName: "apple") {
                             viewModel.performAppleSignIn()
                         }
@@ -82,10 +80,10 @@ struct OnboardScene: View {
 struct SignInButton: View {
     let label: String
     var imageName: String? = nil
-    var borderColor: Color = Color(uiColor: .tertiaryLabel)
-    var fontColor: Color = Color(uiColor: .label)
+    var borderColor: Color = .init(uiColor: .tertiaryLabel)
+    var fontColor: Color = .init(uiColor: .label)
     var action: (() -> Void)? = nil
-    
+
     var body: some View {
         Button {
             action?()
@@ -118,34 +116,34 @@ extension OnboardScene {
     class ViewModel: BaseViewModel, ObservableObject {
         func performFacebookSignIn() {
             LoginManager().logIn(permissions: [Permission.publicProfile.name], from: nil) { result, error in
-                
+
                 if error != nil {
                     self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
                     return
                 }
-                
+
                 guard let result = result else {
                     self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
                     return
                 }
-                
+
                 if result.isCancelled {
                     return
                 }
-                
+
                 guard let fbUserId = result.token?.userID,
                       let fbToken = result.token?.tokenString
                 else {
                     self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
                     return
                 }
-                
+
                 Task {
                     await self.loginWithFacebook(id: fbUserId, token: fbToken)
                 }
             }
         }
-        
+
         private func loginWithFacebook(id: String, token: String) async {
             do {
                 try await services.authService.loginWithFacebook(id: id, token: token)
@@ -153,24 +151,22 @@ extension OnboardScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
-        
     }
 }
 
-
 extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController,
-                                 didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller _: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization)
+    {
         Task {
             await loginWithApple(successResult: authorization)
         }
     }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {
         services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
     }
-    
+
     func performAppleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
@@ -179,7 +175,7 @@ extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
         controller.delegate = self
         controller.performRequests()
     }
-    
+
     private func loginWithApple(successResult: ASAuthorization) async {
         guard let credentail = successResult.credential as? ASAuthorizationAppleIDCredential,
               let tokenData = credentail.identityToken,
@@ -197,9 +193,9 @@ extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
 }
 
 #if DEBUG
-struct OnboardScene_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardScene(viewModel: .init(container: .preview))
+    struct OnboardScene_Previews: PreviewProvider {
+        static var previews: some View {
+            OnboardScene(viewModel: .init(container: .preview))
+        }
     }
-}
 #endif
