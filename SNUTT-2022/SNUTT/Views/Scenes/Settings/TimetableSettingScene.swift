@@ -5,10 +5,9 @@
 //  Created by 최유림 on 2022/08/01.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 import UIKit
-
 
 struct TimetableSettingScene: View {
     @ObservedObject var viewModel: ViewModel
@@ -18,7 +17,7 @@ struct TimetableSettingScene: View {
             Section {
                 Toggle("자동 맞춤", isOn: $viewModel.timetableConfig.autoFit)
             }
-            
+
             Section(header: Text("시간표 범위 설정")) {
                 SettingsLinkItem(title: "요일", detail: viewModel.visibleWeekdaysPreview) {
                     List {
@@ -38,21 +37,20 @@ struct TimetableSettingScene: View {
                     }
                     .navigationBarTitle("요일 선택")
                 }
-                
+
                 DatePicker("시작",
                            selection: $viewModel.minHour,
                            in: viewModel.minTimeRange,
                            displayedComponents: [.hourAndMinute])
-                .datePickerStyle(.compact)
-                
+                    .datePickerStyle(.compact)
+
                 DatePicker("종료",
                            selection: $viewModel.maxHour,
                            in: viewModel.maxTimeRange,
                            displayedComponents: [.hourAndMinute])
-                .datePickerStyle(.compact)
+                    .datePickerStyle(.compact)
             }
-            
-            
+
             Section(header: Text("시간표 미리보기")) {
                 TimetableZStack(current: viewModel.currentTimetable, config: viewModel.timetableConfig)
                     .animation(.customSpring, value: viewModel.timetableConfig.minHour)
@@ -84,53 +82,53 @@ extension TimetableSettingScene {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var currentTimetable: Timetable?
         @Published private var _timetableConfig: TimetableConfiguration = .init()
-        
+
         var timetableConfig: TimetableConfiguration {
             get { _timetableConfig }
             set { services.timetableService.setTimetableConfig(config: newValue) }
         }
-        
+
         var minHour: Date {
             get { Calendar.current.date(from: DateComponents(hour: timetableConfig.minHour))! }
             set {
                 timetableConfig.minHour = Calendar.current.component(.hour, from: newValue)
             }
         }
-        
+
         var maxHour: Date {
             get { Calendar.current.date(from: DateComponents(hour: timetableConfig.maxHour))! }
             set {
                 timetableConfig.maxHour = Calendar.current.component(.hour, from: newValue)
             }
         }
-        
+
         var minTimeRange: ClosedRange<Date> {
             let calendar = Calendar.current
             return calendar.date(from: .init(hour: 0, minute: 0))! ... calendar.date(from: .init(hour: 17, minute: 0))!
         }
-        
+
         var maxTimeRange: ClosedRange<Date> {
             let calendar = Calendar.current
             return calendar.date(byAdding: .hour, value: 6, to: minHour)! ... calendar.date(from: .init(hour: 23, minute: 0))!
         }
-        
+
         var visibleWeekdaysPreview: String {
             var weekdayOrder: [Weekday: Int] = [:]
             Weekday.allCases.enumerated().forEach { offset, element in
                 weekdayOrder[element] = offset
             }
             return timetableConfig.visibleWeeks
-                .sorted {weekdayOrder[$0]! < weekdayOrder[$1]! }
-                .map({ $0.veryShortSymbol }).joined(separator: " ")
+                .sorted { weekdayOrder[$0]! < weekdayOrder[$1]! }
+                .map { $0.veryShortSymbol }.joined(separator: " ")
         }
-        
+
         override init(container: DIContainer) {
             super.init(container: container)
-            
+
             appState.timetable.$current.assign(to: &$currentTimetable)
             appState.timetable.$configuration.assign(to: &$_timetableConfig)
         }
-        
+
         func toggleWeekday(weekday: Weekday) {
             if let removeIndex = timetableConfig.visibleWeeks.firstIndex(of: weekday) {
                 timetableConfig.visibleWeeks.remove(at: removeIndex)
@@ -138,15 +136,13 @@ extension TimetableSettingScene {
                 timetableConfig.visibleWeeks.append(weekday)
             }
         }
-        
-        
     }
 }
 
 #if DEBUG
-struct TimetableSettingScene_Previews: PreviewProvider {
-    static var previews: some View {
-        TimetableSettingScene(viewModel: .init(container: .preview))
+    struct TimetableSettingScene_Previews: PreviewProvider {
+        static var previews: some View {
+            TimetableSettingScene(viewModel: .init(container: .preview))
+        }
     }
-}
 #endif
