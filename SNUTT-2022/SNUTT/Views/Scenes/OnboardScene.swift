@@ -9,39 +9,37 @@ import SwiftUI
 
 struct OnboardScene: View {
     @ObservedObject var viewModel: ViewModel
-    
+
     @State private var pushToSignUpScene = false
     @State private var pushToLoginScene = false
-    
+
     @Namespace private var launchScreenAnimation
     @State private var isActivated = false
     private let logoId = "Logo"
-    
+
     var body: some View {
         ZStack {
             if isActivated {
                 VStack(spacing: 15) {
                     Spacer()
-                    
+
                     Logo(orientation: .vertical)
                         .matchedGeometryEffect(id: logoId, in: launchScreenAnimation)
-                    
+
                     Spacer()
-                    
+
                     VStack {
                         SignInButton(label: "로그인") {
                             pushToLoginScene = true
-                            
                         }
                         SignInButton(label: "가입하기") {
                             pushToSignUpScene = true
                         }
-                        
-                        
+
                         SignInButton(label: "Facebook으로 계속하기", imageName: "facebook") {
                             viewModel.performFacebookSignIn()
                         }
-                        
+
                         SignInButton(label: "Apple로 계속하기", imageName: "apple") {
                             viewModel.performAppleSignIn()
                         }
@@ -81,10 +79,10 @@ struct OnboardScene: View {
 struct SignInButton: View {
     let label: String
     var imageName: String? = nil
-    var borderColor: Color = Color(uiColor: .tertiaryLabel)
-    var fontColor: Color = Color(uiColor: .label)
+    var borderColor: Color = .init(uiColor: .tertiaryLabel)
+    var fontColor: Color = .init(uiColor: .label)
     var action: (() -> Void)? = nil
-    
+
     var body: some View {
         Button {
             action?()
@@ -113,11 +111,10 @@ struct SignInButton: View {
     }
 }
 
-
 #if DEBUG
-struct OnboardScene_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardScene(viewModel: .init(container: .preview))
+    struct OnboardScene_Previews: PreviewProvider {
+        static var previews: some View {
+            OnboardScene(viewModel: .init(container: .preview))
+        }
     }
-}
 #endif

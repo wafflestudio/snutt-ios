@@ -30,41 +30,39 @@ class UserRepository: UserRepositoryProtocol {
             .serializingDecodable(UserDto.self)
             .handlingError()
     }
-    
+
     func attachFacebook(fbId: String, fbToken: String) async throws -> TokenResponseDto {
         return try await session
             .request(UserRouter.addFB(id: fbId, token: fbToken))
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
-    
+
     func detachFacebook() async throws -> TokenResponseDto {
         return try await session
             .request(UserRouter.detachFB)
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
-    
+
     func changePassword(from oldPassword: String, to newPassword: String) async throws -> TokenResponseDto {
         return try await session
             .request(UserRouter.changePassword(oldPassword: oldPassword, newPassword: newPassword))
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
-    
+
     func addLocalId(id: String, password: String) async throws -> TokenResponseDto {
         return try await session
             .request(UserRouter.addLocalId(id: id, password: password))
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
-    
+
     func unregister() async throws {
         let _ = try await session
             .request(UserRouter.deleteUser)
             .serializingString()
             .handlingError()
-        return
     }
-    
 }

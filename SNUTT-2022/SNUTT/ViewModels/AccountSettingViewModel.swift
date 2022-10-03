@@ -12,13 +12,13 @@ extension AccountSettingScene {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var currentUser: User?
         private var bag = Set<AnyCancellable>()
-        
+
         override init(container: DIContainer) {
             super.init(container: container)
-            
+
             appState.user.$current.assign(to: &$currentUser)
         }
-        
+
         func unregister() async {
             do {
                 try await services.userService.unregister()
@@ -26,7 +26,7 @@ extension AccountSettingScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func detachFacebook() async {
             do {
                 try await services.userService.detachFacebook()
@@ -34,7 +34,7 @@ extension AccountSettingScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func attachLocalId(id: String, password: String) async {
             do {
                 try await services.userService.addLocalId(id: id, password: password)
@@ -42,7 +42,7 @@ extension AccountSettingScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func changePassword(from oldPassword: String, to newPassword: String) async -> Bool {
             do {
                 try await services.userService.changePassword(from: oldPassword, to: newPassword)
@@ -52,7 +52,7 @@ extension AccountSettingScene {
                 return false
             }
         }
-        
+
         func fetchUser() async {
             do {
                 try await services.userService.fetchUser()
@@ -71,6 +71,4 @@ extension AccountSettingScene.ViewModel: FacebookLoginProtocol {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
-    
 }

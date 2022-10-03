@@ -9,22 +9,22 @@ import SwiftUI
 
 struct SignUpView: View {
     var displayMode: DisplayMode = .register
-    var registerLocalId: (String, String, String) async -> Void  // id, password, email
-    
+    var registerLocalId: (String, String, String) async -> Void // id, password, email
+
     enum DisplayMode: String {
         case register = "계정 만들기"
         case attach = "계정 추가하기"
     }
-    
+
     @State private var id: String = ""
     @State private var password: String = ""
     @State private var password2: String = ""
     @State private var email: String = ""
-    
+
     var isButtonDisabled: Bool {
         id.isEmpty || password.isEmpty || password2.isEmpty || password != password2
     }
-    
+
     var body: some View {
         VStack {
             VStack(spacing: 15) {
@@ -35,12 +35,11 @@ struct SignUpView: View {
                     AnimatedTextField(label: "이메일", placeholder: "(선택) 이메일 주소를 입력하세요.", text: $email)
                 }
             }
-            
+
             Spacer()
-            
+
             VStack {
                 if displayMode == .register {
-                    
                     NavigationLink {
                         TermsOfServiceView()
                     } label: {
@@ -49,7 +48,7 @@ struct SignUpView: View {
                             .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.3)))
                     }
                 }
-                
+
                 Button {
                     Task {
                         await registerLocalId(id, password, email)
@@ -66,7 +65,6 @@ struct SignUpView: View {
                 .disabled(isButtonDisabled)
                 .animation(.customSpring, value: isButtonDisabled)
             }
-            
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)
@@ -74,15 +72,14 @@ struct SignUpView: View {
     }
 }
 
-
 #if DEBUG
-struct SignUpScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            SignUpView { id, password, email in
-                print(id, password, email)
+    struct SignUpScene_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                SignUpView { id, password, email in
+                    print(id, password, email)
+                }
             }
         }
     }
-}
 #endif

@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2022/10/03.
 //
 
-import SwiftUI
 import AuthenticationServices
+import SwiftUI
 
 extension OnboardScene {
     class ViewModel: BaseViewModel, ObservableObject {
@@ -31,19 +31,19 @@ extension OnboardScene.ViewModel: FacebookLoginProtocol {
     }
 }
 
-
 extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController,
-                                 didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller _: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization)
+    {
         Task {
             await loginWithApple(successResult: authorization)
         }
     }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {
         services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
     }
-    
+
     func performAppleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
@@ -52,7 +52,7 @@ extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
         controller.delegate = self
         controller.performRequests()
     }
-    
+
     private func loginWithApple(successResult: ASAuthorization) async {
         guard let credentail = successResult.credential as? ASAuthorizationAppleIDCredential,
               let tokenData = credentail.identityToken,
@@ -68,4 +68,3 @@ extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
         }
     }
 }
-

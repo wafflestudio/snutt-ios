@@ -55,7 +55,7 @@ struct AuthService: AuthServiceProtocol {
         let dto = try await authRepository.loginWithId(id: id, password: password)
         saveAccessTokenFromLoginResponse(dto: dto)
     }
-    
+
     func registerWithId(id: String, password: String, email: String?) async throws {
         let dto = try await authRepository.registerWithId(id: id, password: password, email: email)
         saveAccessTokenFromLoginResponse(dto: dto)
@@ -70,7 +70,7 @@ struct AuthService: AuthServiceProtocol {
         let dto = try await authRepository.loginWithFacebook(id: id, token: token)
         saveAccessTokenFromLoginResponse(dto: dto)
     }
-    
+
     func logout() async throws {
         // TODO: update when FCM ready
         guard let userId = appState.user.userId else { throw STError.NO_USER_TOKEN }
@@ -94,6 +94,6 @@ class FakeAuthService: AuthServiceProtocol {
     func loginWithId(id _: String, password _: String) async throws {}
     func loginWithApple(token _: String) async throws {}
     func loginWithFacebook(id _: String, token _: String) async throws {}
-    func registerWithId(id: String, password: String, email: String?) async throws {}
+    func registerWithId(id _: String, password _: String, email _: String?) async throws {}
     func logout() async throws {}
 }

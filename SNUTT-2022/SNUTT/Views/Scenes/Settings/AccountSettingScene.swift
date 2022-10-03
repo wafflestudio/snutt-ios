@@ -10,7 +10,7 @@ import SwiftUI
 struct AccountSettingScene: View {
     @ObservedObject var viewModel: ViewModel
     @State private var alertDetachFacebook: Bool = false
-    
+
     var body: some View {
         List {
             if let username = viewModel.currentUser?.localId {
@@ -31,7 +31,7 @@ struct AccountSettingScene: View {
                     }
                 }
             }
-            
+
             if let facebookName = viewModel.currentUser?.fbName {
                 Section {
                     SettingsTextItem(title: "페이스북 이름", detail: facebookName)
@@ -56,7 +56,7 @@ struct AccountSettingScene: View {
                     }
                 }
             }
-            
+
             Section {
                 SettingsTextItem(title: "이메일", detail: viewModel.currentUser?.email ?? "(없음)")
             }
@@ -78,7 +78,6 @@ struct AccountSettingScene: View {
         }
     }
 }
-
 
 #if DEBUG
     struct AccountSettingScene_Previews: PreviewProvider {

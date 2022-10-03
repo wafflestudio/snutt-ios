@@ -89,7 +89,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func fetchUser() async {
         do {
             try await services.userService.fetchUser()
