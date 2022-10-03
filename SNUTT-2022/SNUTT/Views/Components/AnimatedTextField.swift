@@ -14,7 +14,7 @@ struct AnimatedTextField: View {
 
     var shouldFocusOn: Bool = false
     var secure: Bool = false
-    
+
     @FocusState private var _isFocused: Bool
 
     var body: some View {
@@ -23,7 +23,7 @@ struct AnimatedTextField: View {
                 .font(STFont.detailLabel)
                 .foregroundColor(Color(uiColor: .secondaryLabel))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             Group {
                 if secure {
                     SecureField(placeholder, text: $text)
@@ -58,16 +58,14 @@ struct AnimatedTextField: View {
     }
 }
 
-
 struct AnimatedTextField_Previews: PreviewProvider {
-    
     struct WrapperView: View {
         @State var text: String = ""
         var body: some View {
             AnimatedTextField(label: "메롱", placeholder: "메롱메롱", text: $text)
         }
     }
-    
+
     static var previews: some View {
         WrapperView().padding(.horizontal, 20)
     }
