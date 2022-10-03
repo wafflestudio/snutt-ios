@@ -14,10 +14,6 @@ struct SNUTTApp: App {
 
     init() {
         appEnvironment = AppEnvironment.bootstrap()
-
-        /// We need to load access token ASAP in order to determine which screen to show first.
-        /// Note that this should run synchronously on the main thread.
-        appEnvironment.container.services.authService.loadAccessTokenDuringBootstrap()
     }
 
     var body: some Scene {
