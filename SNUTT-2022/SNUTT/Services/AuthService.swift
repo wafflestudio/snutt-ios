@@ -49,7 +49,7 @@ struct AuthService: AuthServiceProtocol {
         let dto = try await authRepository.loginWithId(id: id, password: password)
         saveAccessTokenFromLoginResponse(dto: dto)
     }
-    
+
     func registerWithId(id: String, password: String, email: String?) async throws {
         let dto = try await authRepository.registerWithId(id: id, password: password, email: email)
         saveAccessTokenFromLoginResponse(dto: dto)
@@ -71,5 +71,5 @@ class FakeAuthService: AuthServiceProtocol {
     func loginWithId(id _: String, password _: String) async throws {}
     func loginWithApple(token _: String) async throws {}
     func loginWithFacebook(id _: String, token _: String) async throws {}
-    func registerWithId(id: String, password: String, email: String?) async throws {}
+    func registerWithId(id _: String, password _: String, email _: String?) async throws {}
 }

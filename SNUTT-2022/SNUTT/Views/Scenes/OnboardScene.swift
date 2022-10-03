@@ -18,34 +18,30 @@ struct OnboardScene: View {
     var body: some View {
         VStack(spacing: 15) {
             Spacer()
-            
+
             Logo(orientation: .vertical)
-            
+
             Spacer()
-            
+
             VStack {
-                
-            SignInButton(label: "로그인") {
-                pushToLoginScene = true
-                
-            }
-            SignInButton(label: "가입하기") {
-                pushToSignUpScene = true
-            }
-            
-            
-            SignInButton(label: "Facebook으로 계속하기", imageName: "facebook") {
-                viewModel.performFacebookSignIn()
-            }
-            
-            SignInButton(label: "Apple로 계속하기", imageName: "apple") {
-                viewModel.performAppleSignIn()
-            }
+                SignInButton(label: "로그인") {
+                    pushToLoginScene = true
+                }
+                SignInButton(label: "가입하기") {
+                    pushToSignUpScene = true
+                }
+
+                SignInButton(label: "Facebook으로 계속하기", imageName: "facebook") {
+                    viewModel.performFacebookSignIn()
+                }
+
+                SignInButton(label: "Apple로 계속하기", imageName: "apple") {
+                    viewModel.performAppleSignIn()
+                }
             }
             .padding(.horizontal, 20)
             Spacer()
                 .frame(height: 20)
-            
         }
         .navigationBarHidden(true)
         .background(
@@ -60,10 +56,10 @@ struct OnboardScene: View {
 struct SignInButton: View {
     let label: String
     var imageName: String? = nil
-    var borderColor: Color = Color(uiColor: .tertiaryLabel)
-    var fontColor: Color = Color(uiColor: .label)
+    var borderColor: Color = .init(uiColor: .tertiaryLabel)
+    var fontColor: Color = .init(uiColor: .label)
     var action: (() -> Void)? = nil
-    
+
     var body: some View {
         Button {
             action?()
@@ -131,24 +127,22 @@ extension OnboardScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-
-        
     }
 }
 
-
 extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController,
-                                 didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller _: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization)
+    {
         Task {
             await loginWithApple(successResult: authorization)
         }
     }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {
         services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
     }
-    
+
     func performAppleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
@@ -157,7 +151,7 @@ extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
         controller.delegate = self
         controller.performRequests()
     }
-    
+
     private func loginWithApple(successResult: ASAuthorization) async {
         guard let credentail = successResult.credential as? ASAuthorizationAppleIDCredential,
               let tokenData = credentail.identityToken,
