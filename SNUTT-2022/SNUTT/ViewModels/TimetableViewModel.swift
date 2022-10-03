@@ -98,10 +98,6 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func loadTimetableConfig() {
-        timetableService.loadTimetableConfig()
-    }
-
     private var timetableService: TimetableServiceProtocol {
         services.timetableService
     }

@@ -19,6 +19,7 @@ protocol TimetableServiceProtocol {
     func deleteTimetable(timetableId: String) async throws
     func selectTimetableTheme(theme: Theme)
     func createTimetable(title: String, quarter: Quarter) async throws
+    func setTimetableConfig(config: TimetableConfiguration)
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -114,7 +115,14 @@ struct TimetableService: TimetableServiceProtocol {
     func selectTimetableTheme(theme: Theme) {
         appState.timetable.current?.selectedTheme = theme
     }
-
+    
+    func setTimetableConfig(config: TimetableConfiguration) {
+        DispatchQueue.main.async {
+            appState.timetable.configuration = config
+        }
+        userDefaultsRepository.set(TimetableConfiguration.self, key: .timetableConfig, value: config)
+    }
+    
     func loadTimetableConfig() {
         DispatchQueue.main.async {
             appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
@@ -139,4 +147,5 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func deleteTimetable(timetableId _: String) async throws {}
     func selectTimetableTheme(theme _: Theme) {}
     func createTimetable(title _: String, quarter _: Quarter) async throws {}
+    func setTimetableConfig(config: TimetableConfiguration){}
 }

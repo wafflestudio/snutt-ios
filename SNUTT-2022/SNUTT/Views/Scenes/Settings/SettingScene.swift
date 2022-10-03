@@ -18,7 +18,7 @@ struct SettingScene: View {
                 }
 
                 SettingsLinkItem(title: "시간표 설정") {
-                    EmptyView()
+                    TimetableSettingScene(viewModel: .init(container: viewModel.container))
                 }
             }
 
