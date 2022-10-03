@@ -51,7 +51,6 @@ struct AccountSettingScene: View {
     }
 }
 
-
 #if DEBUG
     struct AccountSettingScene_Previews: PreviewProvider {
         static var previews: some View {

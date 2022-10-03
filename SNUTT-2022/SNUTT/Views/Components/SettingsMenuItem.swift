@@ -7,12 +7,11 @@
 
 import SwiftUI
 
-
 struct SettingsTextItem: View {
     let title: String
     var detail: String? = nil
     var role: ButtonRole? = nil
-    
+
     var body: some View {
         HStack {
             Text(title)
@@ -26,9 +25,9 @@ struct SettingsTextItem: View {
 
 struct SettingsLinkItem<Destination>: View where Destination: View {
     let title: String
-    var detail: String? = nil
+    var detail: String?
     let destination: () -> Destination
-    
+
     var body: some View {
         NavigationLink {
             destination()
@@ -36,7 +35,6 @@ struct SettingsLinkItem<Destination>: View where Destination: View {
         } label: {
             SettingsTextItem(title: title, detail: detail)
         }
-
     }
 }
 
@@ -45,13 +43,12 @@ struct SettingsButtonItem: View {
     var detail: String? = nil
     var role: ButtonRole? = nil
     var action: () -> Void
-    
+
     var body: some View {
         Button {
             action()
         } label: {
             SettingsTextItem(title: title, detail: detail, role: role)
         }
-
     }
 }

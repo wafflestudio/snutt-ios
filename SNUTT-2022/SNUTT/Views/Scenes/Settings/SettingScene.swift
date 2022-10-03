@@ -16,16 +16,16 @@ struct SettingScene: View {
                 SettingsLinkItem(title: "계정 관리") {
                     AccountSettingScene(viewModel: .init(container: viewModel.container))
                 }
-                
+
                 SettingsLinkItem(title: "시간표 설정") {
                     EmptyView()
                 }
             }
-            
+
             Section {
                 SettingsTextItem(title: "버전 정보", detail: "최신 버전")
             }
-            
+
             Section {
                 SettingsLinkItem(title: "개발자 정보") {
                     DeveloperInfoView()
@@ -34,7 +34,7 @@ struct SettingScene: View {
                     UserSupportScene()
                 }
             }
-            
+
             Section {
                 SettingsLinkItem(title: "라이센스 정보") {
                     LicenseView()
@@ -46,7 +46,7 @@ struct SettingScene: View {
                     PrivacyPolicyView()
                 }
             }
-            
+
             Section {
                 SettingsButtonItem(title: "로그아웃", role: .destructive) {
                     Task {
