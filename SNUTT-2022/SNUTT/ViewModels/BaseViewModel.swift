@@ -7,7 +7,13 @@
 
 import SwiftUI
 
-class BaseViewModel: NSObject {
+protocol BaseViewModelProtocol {
+    var container: DIContainer { get set }
+    var appState: AppState { get }
+    var services: AppEnvironment.Services { get }
+}
+
+class BaseViewModel: NSObject, BaseViewModelProtocol {
     var container: DIContainer
 
     init(container: DIContainer) {

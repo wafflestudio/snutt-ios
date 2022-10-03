@@ -5,8 +5,6 @@
 //  Created by 박신홍 on 2022/09/24.
 //
 
-import AuthenticationServices
-import FacebookLogin
 import SwiftUI
 
 struct OnboardScene: View {
@@ -67,7 +65,8 @@ struct OnboardScene: View {
         .navigationBarHidden(true)
         .background(
             Group {
-                NavigationLink(destination: SignUpScene(viewModel: .init(container: viewModel.container)), isActive: $pushToSignUpScene) { EmptyView() }
+                NavigationLink(destination: SignUpView(registerLocalId: viewModel.registerWith(id:password:email:)),
+                               isActive: $pushToSignUpScene) { EmptyView() }
                 NavigationLink(destination: LoginScene(viewModel: .init(container: viewModel.container)), isActive: $pushToLoginScene) { EmptyView() }
             }
         )
@@ -114,87 +113,6 @@ struct SignInButton: View {
     }
 }
 
-extension OnboardScene {
-    class ViewModel: BaseViewModel, ObservableObject {
-        func performFacebookSignIn() {
-            LoginManager().logIn(permissions: [Permission.publicProfile.name], from: nil) { result, error in
-                
-                if error != nil {
-                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
-                    return
-                }
-                
-                guard let result = result else {
-                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
-                    return
-                }
-                
-                if result.isCancelled {
-                    return
-                }
-                
-                guard let fbUserId = result.token?.userID,
-                      let fbToken = result.token?.tokenString
-                else {
-                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
-                    return
-                }
-                
-                Task {
-                    await self.loginWithFacebook(id: fbUserId, token: fbToken)
-                }
-            }
-        }
-        
-        private func loginWithFacebook(id: String, token: String) async {
-            do {
-                try await services.authService.loginWithFacebook(id: id, token: token)
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
-        }
-        
-        
-    }
-}
-
-
-extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController,
-                                 didCompleteWithAuthorization authorization: ASAuthorization) {
-        Task {
-            await loginWithApple(successResult: authorization)
-        }
-    }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
-    }
-    
-    func performAppleSignIn() {
-        let provider = ASAuthorizationAppleIDProvider()
-        let request = provider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        let controller = ASAuthorizationController(authorizationRequests: [request])
-        controller.delegate = self
-        controller.performRequests()
-    }
-    
-    private func loginWithApple(successResult: ASAuthorization) async {
-        guard let credentail = successResult.credential as? ASAuthorizationAppleIDCredential,
-              let tokenData = credentail.identityToken,
-              let token = String(data: tokenData, encoding: .utf8)
-        else {
-            services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
-            return
-        }
-        do {
-            try await services.authService.loginWithApple(token: token)
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-    }
-}
 
 #if DEBUG
 struct OnboardScene_Previews: PreviewProvider {

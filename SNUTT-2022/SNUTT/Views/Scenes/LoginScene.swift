@@ -34,6 +34,7 @@ struct LoginScene: View {
                 } label: {
                     Text("로그인")
                         .padding(.vertical, 5)
+                        .font(.system(size: 17, weight: .semibold))
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)

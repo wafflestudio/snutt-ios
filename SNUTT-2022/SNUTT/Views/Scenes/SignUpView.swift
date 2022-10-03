@@ -1,5 +1,5 @@
 //
-//  SignUpScene.swift
+//  SignUpView.swift
 //  SNUTT
 //
 //  Created by 박신홍 on 2022/10/01.
@@ -7,8 +7,14 @@
 
 import SwiftUI
 
-struct SignUpScene: View {
-    @ObservedObject var viewModel: ViewModel
+struct SignUpView: View {
+    var displayMode: DisplayMode = .register
+    var registerLocalId: (String, String, String) async -> Void  // id, password, email
+    
+    enum DisplayMode: String {
+        case register = "계정 만들기"
+        case attach = "계정 추가하기"
+    }
     
     @State private var id: String = ""
     @State private var password: String = ""
@@ -20,56 +26,62 @@ struct SignUpScene: View {
     }
     
     var body: some View {
-            VStack {
-                VStack(spacing: 15) {
+        VStack {
+            VStack(spacing: 15) {
                 AnimatedTextField(label: "아이디", placeholder: "아이디를 입력하세요.", text: $id, shouldFocusOn: true)
                 AnimatedTextField(label: "비밀번호", placeholder: "비밀번호를 입력하세요.", text: $password, secure: true)
                 AnimatedTextField(label: "비밀번호 확인", placeholder: "비밀번호를 한번 더 입력하세요.", text: $password2, secure: true)
-                AnimatedTextField(label: "이메일", placeholder: "(선택) 이메일 주소를 입력하세요.", text: $email)
+                if displayMode == .register {
+                    AnimatedTextField(label: "이메일", placeholder: "(선택) 이메일 주소를 입력하세요.", text: $email)
                 }
-                
-                Spacer()
+            }
+            
+            Spacer()
+            
+            VStack {
+                if displayMode == .register {
+                    
+                    NavigationLink {
+                        TermsOfServiceView()
+                    } label: {
+                        Text("아래 버튼을 누르시면 **일반 이용 약관**에 동의하시게 됩니다.".markdown)
+                            .font(.caption)
+                            .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.3)))
+                    }
+                }
                 
                 Button {
                     Task {
-                        await viewModel.registerWith(id: id, password: password, email: email)
+                        await registerLocalId(id, password, email)
                         resignFirstResponder()
                     }
                 } label: {
-                    Text("가입하기")
+                    Text(displayMode.rawValue)
                         .padding(.vertical, 5)
+                        .font(.system(size: 17, weight: .semibold))
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(STColor.cyan)
                 .disabled(isButtonDisabled)
                 .animation(.customSpring, value: isButtonDisabled)
-
             }
-        .padding()
-        .navigationTitle("계정 만들기")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-extension SignUpScene {
-    class ViewModel: BaseViewModel, ObservableObject {
-        func registerWith(id: String, password: String, email: String) async {
-            // TODO: Validation
-            do {
-                try await services.authService.registerWithId(id: id, password: password, email: email.isEmpty ? nil : email)
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
+            
         }
+        .padding()
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(displayMode.rawValue)
     }
 }
+
 
 #if DEBUG
 struct SignUpScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SignUpScene(viewModel: .init(container: .preview))
+            SignUpView { id, password, email in
+                print(id, password, email)
+            }
         }
     }
 }
