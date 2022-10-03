@@ -26,7 +26,7 @@ struct TimetableSettingScene: View {
                                 viewModel.toggleWeekday(weekday: weekday)
                             } label: {
                                 HStack {
-                                    Text(weekday.veryShortSymbol)
+                                    Text(weekday.symbol)
                                     Spacer()
                                     if viewModel.timetableConfig.visibleWeeks.contains(weekday) {
                                         Image(systemName: "checkmark")
@@ -119,7 +119,7 @@ extension TimetableSettingScene {
             }
             return timetableConfig.visibleWeeks
                 .sorted { weekdayOrder[$0]! < weekdayOrder[$1]! }
-                .map { $0.veryShortSymbol }.joined(separator: " ")
+                .map { $0.shortSymbol }.joined(separator: " ")
         }
 
         override init(container: DIContainer) {
