@@ -13,37 +13,46 @@ struct SettingScene: View {
     var body: some View {
         List {
             Section {
-                SettingsMenu(Settings.accountSetting) {
-                    AccountSettingScene(viewModel: AccountSettingViewModel(container: viewModel.container))
+                SettingsLinkItem(title: "계정 관리") {
+                    AccountSettingScene(viewModel: .init(container: viewModel.container))
                 }
-                SettingsMenu(Settings.timetableSetting) {
-                    TimetableSettingScene()
+                
+                SettingsLinkItem(title: "시간표 설정") {
+                    EmptyView()
                 }
             }
+            
             Section {
-                SettingsMenu(Settings.showVersionInfo)
+                SettingsTextItem(title: "버전 정보", detail: "최신 버전")
             }
+            
             Section {
-                SettingsMenu(Settings.developerInfo) {
+                SettingsLinkItem(title: "개발자 정보") {
                     DeveloperInfoView()
                 }
-                SettingsMenu(Settings.userSupport) {
+                SettingsLinkItem(title: "개발자 괴롭히기") {
                     UserSupportScene()
                 }
             }
+            
             Section {
-                SettingsMenu(Settings.licenseInfo) {
+                SettingsLinkItem(title: "라이센스 정보") {
                     LicenseView()
                 }
-                SettingsMenu(Settings.termsOfService) {
+                SettingsLinkItem(title: "서비스 약관") {
                     TermsOfServiceView()
                 }
-                SettingsMenu(Settings.privacyPolicy) {
+                SettingsLinkItem(title: "개인정보 처리방침") {
                     PrivacyPolicyView()
                 }
             }
+            
             Section {
-                SettingsMenu(Settings.logout, destructive: true)
+                SettingsButtonItem(title: "로그아웃", role: .destructive) {
+                    Task {
+                        await viewModel.logout()
+                    }
+                }
             }
         }
         .listStyle(.insetGrouped)

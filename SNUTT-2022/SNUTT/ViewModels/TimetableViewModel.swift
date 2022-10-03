@@ -89,6 +89,14 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
+    
+    func fetchUser() async {
+        do {
+            try await services.userService.fetchUser()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
 
     func loadTimetableConfig() {
         timetableService.loadTimetableConfig()

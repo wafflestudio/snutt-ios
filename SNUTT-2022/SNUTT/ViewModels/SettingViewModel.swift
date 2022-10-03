@@ -13,11 +13,11 @@ class SettingViewModel: BaseViewModel {
         super.init(container: container)
     }
 
-    private var setting: Setting {
-        appState.setting
-    }
-
-    private var userService: UserServiceProtocol {
-        container.services.userService
+    func logout() async {
+        do {
+            try await services.authService.logout()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
     }
 }
