@@ -11,7 +11,7 @@ struct MenuSheetTopBar: View {
     var cancel: () -> Void
     var confirm: () async -> Void
     var confirmDisabled: Bool = false
-    
+
     /// An optional property used to fix animation glitch in iOS 16. See this [Pull Request](https://github.com/wafflestudio/snutt-ios/pull/132).
     var isSheetOpen: Bool = false
 
