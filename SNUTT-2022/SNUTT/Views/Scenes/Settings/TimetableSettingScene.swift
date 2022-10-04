@@ -113,12 +113,7 @@ extension TimetableSettingScene {
         }
 
         var visibleWeekdaysPreview: String {
-            var weekdayOrder: [Weekday: Int] = [:]
-            Weekday.allCases.enumerated().forEach { offset, element in
-                weekdayOrder[element] = offset
-            }
-            return timetableConfig.visibleWeeks
-                .sorted { weekdayOrder[$0]! < weekdayOrder[$1]! }
+            timetableConfig.visibleWeeksSorted
                 .map { $0.shortSymbol }.joined(separator: " ")
         }
 
