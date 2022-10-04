@@ -10,6 +10,12 @@ import Foundation
 extension UserDefaults {
     /// To share data saved in UserDefaults with App Extensions
     static var shared: UserDefaults {
-        return UserDefaults(suiteName: "group.com.wafflestudio.snutt-2022")!
+        return UserDefaults(suiteName: "group.com.wafflestudio.snutt3")!
     }
+    
+    #if DEBUG
+    static var preview: UserDefaults {
+        return UserDefaults(suiteName: "group.com.wafflestudio.snutt3.preview")!
+    }
+    #endif
 }

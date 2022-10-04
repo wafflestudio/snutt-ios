@@ -16,9 +16,9 @@ protocol AuthServiceProtocol {
     func logout() async throws
 }
 
-struct AuthService: AuthServiceProtocol {
-    let appState: AppState
-    let webRepositories: AppEnvironment.WebRepositories
+struct AuthService: AuthServiceProtocol, UserAuthHandler {
+    var appState: AppState
+    var webRepositories: AppEnvironment.WebRepositories
     var localRepositories: AppEnvironment.LocalRepositories
 
     var userRepository: UserRepositoryProtocol {
@@ -70,22 +70,32 @@ struct AuthService: AuthServiceProtocol {
         let dto = try await authRepository.loginWithFacebook(id: id, token: token)
         saveAccessTokenFromLoginResponse(dto: dto)
     }
-
+    
     func logout() async throws {
         // TODO: update when FCM ready
         guard let userId = appState.user.userId else { throw STError.NO_USER_TOKEN }
         let _ = try? await authRepository.logout(userId: userId, fcmToken: "fweafa")
+        clearUserToken()
+    }
+}
+
+/// A collection of methods that are called both on `UserService` and `AuthService`.
+protocol UserAuthHandler {
+    var appState: AppState { get set }
+    var localRepositories: AppEnvironment.LocalRepositories { get set }
+    func clearUserToken()
+}
+
+extension UserAuthHandler {
+    func clearUserToken() {
         DispatchQueue.main.async {
             appState.user.accessToken = nil
             appState.user.userId = nil
             appState.user.current = nil
         }
-        userDefaultsRepository.set(String.self, key: .token, value: nil)
-        userDefaultsRepository.set(String.self, key: .userId, value: nil)
-        userDefaultsRepository.set(UserDto.self, key: .userDto, value: nil)
-//        if dto.message != "ok" {
-//            throw STError.UNKNOWN_ERROR
-//        }
+        localRepositories.userDefaultsRepository.set(String.self, key: .token, value: nil)
+        localRepositories.userDefaultsRepository.set(String.self, key: .userId, value: nil)
+        localRepositories.userDefaultsRepository.set(UserDto.self, key: .userDto, value: nil)
     }
 }
 
