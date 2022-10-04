@@ -19,7 +19,7 @@ struct MenuRenameSheet: View {
               orientation: .bottom(maxHeight: 180),
               disableDragGesture: true) {
             VStack {
-                MenuSheetTopBar(cancel: cancel, confirm: confirm, confirmDisabled: titleText.isEmpty)
+                MenuSheetTopBar(cancel: cancel, confirm: confirm, confirmDisabled: titleText.isEmpty, isSheetOpen: isOpen)
 
                 TitleTextField(titleText: $titleText, isSheetOpen: isOpen)
 

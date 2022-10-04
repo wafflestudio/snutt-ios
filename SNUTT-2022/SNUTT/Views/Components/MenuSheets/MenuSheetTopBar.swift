@@ -11,6 +11,9 @@ struct MenuSheetTopBar: View {
     var cancel: () -> Void
     var confirm: () async -> Void
     var confirmDisabled: Bool = false
+    
+    /// An optional property used to fix animation glitch in iOS 16. See this [Pull Request](https://github.com/wafflestudio/snutt-ios/pull/132).
+    var isSheetOpen: Bool = false
 
     var body: some View {
         HStack {
@@ -18,6 +21,7 @@ struct MenuSheetTopBar: View {
                 cancel()
             } label: {
                 Text("취소")
+                    .animation(.customSpring, value: isSheetOpen)
             }
 
             Spacer()
@@ -28,6 +32,7 @@ struct MenuSheetTopBar: View {
                 }
             } label: {
                 Text("적용")
+                    .animation(.customSpring, value: isSheetOpen)
             }
             .disabled(confirmDisabled)
         }

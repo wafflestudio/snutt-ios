@@ -21,7 +21,7 @@ struct MenuThemeSheet: View {
               disableDragGesture: true,
               onBackgroundTap: cancel) {
             VStack {
-                MenuSheetTopBar(cancel: cancel, confirm: confirm)
+                MenuSheetTopBar(cancel: cancel, confirm: confirm, isSheetOpen: isOpen)
                     .padding(.horizontal, 20)
 
                 ScrollView(.horizontal, showsIndicators: false) {
