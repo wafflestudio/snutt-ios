@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2022/09/10.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct LectureTimeSheetScene: View {
     @ObservedObject var viewModel: ViewModel
@@ -36,7 +36,7 @@ extension LectureTimeSheetScene {
         @Published var weekday: Weekday = .mon
         @Published var start = Calendar.current.date(from: DateComponents(hour: 8))!
         @Published var end = Calendar.current.date(from: DateComponents(hour: 9))!
-        
+
         private var bag = Set<AnyCancellable>()
 
         @Published private var _isOpen: Bool = false
