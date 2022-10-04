@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct LectureTimeSheetScene: View {
     @ObservedObject var viewModel: ViewModel
@@ -35,6 +36,8 @@ extension LectureTimeSheetScene {
         @Published var weekday: Weekday = .mon
         @Published var start = Calendar.current.date(from: DateComponents(hour: 8))!
         @Published var end = Calendar.current.date(from: DateComponents(hour: 9))!
+        
+        private var bag = Set<AnyCancellable>()
 
         @Published private var _isOpen: Bool = false
         var isOpen: Bool {
@@ -44,7 +47,7 @@ extension LectureTimeSheetScene {
 
         override init(container: DIContainer) {
             super.init(container: container)
-            appState.menu.$isLectureTimeSheetOpen.assign(to: &$_isOpen)
+            appState.menu.$isLectureTimeSheetOpen.sinkWithAnimation(receiveValue: { self._isOpen = $0 }).store(in: &bag)
         }
 
         private func getSelectedTimePlace() -> TimePlace? {
