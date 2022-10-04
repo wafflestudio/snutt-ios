@@ -7,6 +7,7 @@
 
 import Alamofire
 import Foundation
+import UIKit
 
 final class Interceptor: RequestInterceptor {
     private let userState: UserState
@@ -18,10 +19,54 @@ final class Interceptor: RequestInterceptor {
     func adapt(_ urlRequest: URLRequest, for _: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         var urlRequest = urlRequest
 
-        urlRequest.setValue(Bundle.main.infoDictionary?["API_KEY"] as? String, forHTTPHeaderField: "x-access-apikey")
         urlRequest.setValue(userState.accessToken, forHTTPHeaderField: "x-access-token")
+        
+        AdditionalHeaderType.allCases
+            .forEach { header in
+                urlRequest.setValue(header.value, forHTTPHeaderField: header.key)
+            }
 
         completion(.success(urlRequest))
+    }
+    
+    enum AdditionalHeaderType: String, CaseIterable {
+        case appVersion, appType, osType, osVersion, apiKey
+        
+        var value: String? {
+            switch self {
+            case .appVersion:
+                return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+            case .appType:
+                #if DEBUG
+                return "debug"
+                #else
+                return "release"
+                #endif
+            case .osType:
+                return "ios"
+            case .osVersion:
+                return UIDevice.current.systemVersion
+            case .apiKey:
+                //TODO: change to NetworkConfiguration
+//                return NetworkConfiguration.apiKey
+                return Bundle.main.infoDictionary?["API_KEY"] as? String
+            }
+        }
+        
+        var key: String {
+            switch self {
+            case .appVersion:
+                return "x-app-version"
+            case .appType:
+                return "x-app-type"
+            case .osType:
+                return "x-os-type"
+            case .osVersion:
+                return "x-os-version"
+            case .apiKey:
+                return "x-access-apikey"
+            }
+        }
     }
 }
 
