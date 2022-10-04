@@ -60,8 +60,10 @@ extension LoginScene {
     }
 }
 
+#if DEBUG
 struct LoginScene_Previews: PreviewProvider {
     static var previews: some View {
         LoginScene(viewModel: .init(container: .preview))
     }
 }
+#endif
