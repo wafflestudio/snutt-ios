@@ -70,7 +70,7 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         let dto = try await authRepository.loginWithFacebook(id: id, token: token)
         saveAccessTokenFromLoginResponse(dto: dto)
     }
-    
+
     func logout() async throws {
         // TODO: update when FCM ready
         guard let userId = appState.user.userId else { throw STError.NO_USER_TOKEN }
