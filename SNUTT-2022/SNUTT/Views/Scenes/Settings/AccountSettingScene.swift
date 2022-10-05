@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AccountSettingScene: View {
     @ObservedObject var viewModel: ViewModel
-    @State private var alertDetachFacebook: Bool = false
+    @State private var alertDisconnectFacebook: Bool = false
 
     var body: some View {
         List {
@@ -36,9 +36,9 @@ struct AccountSettingScene: View {
                 Section {
                     SettingsTextItem(title: "페이스북 이름", detail: facebookName)
                     SettingsButtonItem(title: "페이스북 연동 해제", role: .destructive) {
-                        alertDetachFacebook = true
+                        alertDisconnectFacebook = true
                     }
-                    .alert("페이스북 연동 해제", isPresented: $alertDetachFacebook) {
+                    .alert("페이스북 연동 해제", isPresented: $alertDisconnectFacebook) {
                         Button("취소", role: .cancel, action: {})
                         Button("해제", role: .destructive, action: {
                             Task {
