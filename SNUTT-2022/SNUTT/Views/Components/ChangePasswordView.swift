@@ -22,18 +22,12 @@ struct ChangePasswordView: View {
     var body: some View {
         Form {
             Section(header: Text("이전 비밀번호")) {
-                HStack {
-                    SecureField("필수사항", text: $oldPassword)
-                }
+                SecureField("필수사항", text: $oldPassword)
             }
 
             Section(header: Text("새로운 비밀번호")) {
-                HStack {
-                    SecureField("비밀번호", text: $password)
-                }
-                HStack {
-                    SecureField("비밀번호 확인", text: $password2)
-                }
+                SecureField("비밀번호", text: $password)
+                SecureField("비밀번호 확인", text: $password2)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
