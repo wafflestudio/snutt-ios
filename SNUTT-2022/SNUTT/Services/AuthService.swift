@@ -13,6 +13,7 @@ protocol AuthServiceProtocol {
     func loginWithApple(token: String) async throws
     func loginWithFacebook(id: String, token: String) async throws
     func registerWithId(id: String, password: String, email: String?) async throws
+    func logout() async throws
 }
 
 struct AuthService: AuthServiceProtocol {
@@ -35,13 +36,16 @@ struct AuthService: AuthServiceProtocol {
     private func saveAccessTokenFromLoginResponse(dto: LoginResponseDto) {
         DispatchQueue.main.async {
             appState.user.accessToken = dto.token
+            appState.user.userId = dto.user_id
         }
         userDefaultsRepository.set(String.self, key: .token, value: dto.token)
+        userDefaultsRepository.set(String.self, key: .userId, value: dto.user_id)
     }
 
     func loadAccessTokenDuringBootstrap() {
         /// **DO NOT RUN THIS CODE ASYNCHRONOUSLY**. We need to show splash screen until the loading finishes.
         appState.user.accessToken = userDefaultsRepository.get(String.self, key: .token)
+        appState.user.userId = userDefaultsRepository.get(String.self, key: .userId)
 //        appState.user.accessToken = nil
     }
 
@@ -64,6 +68,21 @@ struct AuthService: AuthServiceProtocol {
         let dto = try await authRepository.loginWithFacebook(id: id, token: token)
         saveAccessTokenFromLoginResponse(dto: dto)
     }
+
+    func logout() async throws {
+        // TODO: update when FCM ready
+        guard let userId = appState.user.userId else { throw STError.NO_USER_TOKEN }
+        let _ = try? await authRepository.logout(userId: userId, fcmToken: "fweafa")
+        DispatchQueue.main.async {
+            appState.user.accessToken = nil
+            appState.user.userId = nil
+        }
+        userDefaultsRepository.set(String.self, key: .token, value: nil)
+        userDefaultsRepository.set(String.self, key: .userId, value: nil)
+//        if dto.message != "ok" {
+//            throw STError.UNKNOWN_ERROR
+//        }
+    }
 }
 
 class FakeAuthService: AuthServiceProtocol {
@@ -72,4 +91,5 @@ class FakeAuthService: AuthServiceProtocol {
     func loginWithApple(token _: String) async throws {}
     func loginWithFacebook(id _: String, token _: String) async throws {}
     func registerWithId(id _: String, password _: String, email _: String?) async throws {}
+    func logout() async throws {}
 }

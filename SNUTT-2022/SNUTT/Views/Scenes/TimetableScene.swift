@@ -73,13 +73,16 @@ struct TimetableScene: View {
                     group.addTask {
                         await viewModel.fetchInitialNotifications(updateLastRead: false)
                     }
+                    group.addTask {
+                        await viewModel.fetchNotificationsCount()
+                    }
                 })
             }
-            .onAppear {
-                Task {
-                    await viewModel.fetchNotificationsCount()
-                }
-            }
+//            .onAppear {
+//                Task {
+//                    await viewModel.fetchNotificationsCount()
+//                }
+//            }
 
         let _ = debugChanges()
     }

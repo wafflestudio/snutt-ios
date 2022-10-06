@@ -8,56 +8,48 @@
 import SwiftUI
 
 struct AccountSettingScene: View {
-    @ObservedObject var viewModel: AccountSettingViewModel
-
-    private var menuList: [[SettingsMenu]] {
-        viewModel.menuList.map { $0.map { convertToView(menu: $0) }}
-    }
+    @ObservedObject var viewModel: ViewModel
 
     var body: some View {
-        List(menuList, id: \.self) { section in
+        List {
             Section {
-                ForEach(section, id: \.self) { menu in
-                    menu
+                if let username = viewModel.currentUser?.localId {
+                    SettingsTextItem(title: "아이디", detail: username)
+                    SettingsLinkItem(title: "비밀번호 변경") {
+                        EmptyView()
+                    }
+                } else {
+                    SettingsLinkItem(title: "아이디 / 비밀번호 추가") {
+                        EmptyView()
+                    }
+                }
+            }
+            Section {
+                if let facebookName = viewModel.currentUser?.fbName {
+                    SettingsTextItem(title: "페이스북 이름", detail: facebookName)
+                    SettingsButtonItem(title: "페이스북 연동 취소", role: .destructive) {
+                        print("로그아웃")
+                    }
+                } else {
+                    SettingsButtonItem(title: "페이스북 연동") {
+                        print("연동")
+                    }
+                }
+            }
+            Section {
+                SettingsTextItem(title: "이메일", detail: viewModel.currentUser?.email ?? "(없음)")
+            }
+            Section {
+                SettingsButtonItem(title: "회원 탈퇴", role: .destructive) {
+                    print("로그아웃")
                 }
             }
         }
-        .onLoad {
-            await viewModel.fetchUser()
-        }
-        .listStyle(.grouped)
+        .listStyle(.insetGrouped)
         .navigationTitle("계정 관리")
         .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-extension AccountSettingScene {
-    private func convertToView(menu: AccountSettings) -> SettingsMenu {
-        // TODO: implement destination of each menu
-        switch menu {
-        case .addLocalId:
-            return SettingsMenu(AccountSettings.addLocalId) {
-                AddLocalIdScene(viewModel: AddLocalIdViewModel(container: viewModel.container))
-            }
-        case .showLocalId:
-            return SettingsMenu(AccountSettings.showLocalId,
-                                content: viewModel.currentUser?.localId ?? "(없음)")
-        case .changePassword:
-            return SettingsMenu(AccountSettings.changePassword)
-        case .makeFbConnection:
-            return SettingsMenu(AccountSettings.makeFbConnection)
-        case .showFbName:
-            return SettingsMenu(AccountSettings.showFbName,
-                                content: viewModel.currentUser?.fbName ?? "(없음)")
-        case .deleteFbConnection:
-            return SettingsMenu(AccountSettings.deleteFbConnection)
-        case .showEmail:
-            return SettingsMenu(AccountSettings.showEmail,
-                                content: viewModel.currentUser?.email ?? "(없음)")
-        case .deleteAccount:
-            return SettingsMenu(AccountSettings.deleteAccount, destructive: true) {
-                viewModel.deleteUser()
-            }
+        .task {
+            await viewModel.fetchUser()
         }
     }
 }
