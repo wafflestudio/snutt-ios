@@ -62,7 +62,7 @@ struct AnimatedTextField_Previews: PreviewProvider {
     struct WrapperView: View {
         @State var text: String = ""
         var body: some View {
-            AnimatedTextField(label: "메롱", placeholder: "메롱메롱", text: $text)
+            AnimatedTextField(label: "라벨", placeholder: "텍스트를 입력하세요", text: $text)
         }
     }
 
