@@ -90,14 +90,6 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func fetchUser() async {
-        do {
-            try await services.userService.fetchUser()
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-    }
-
     func loadTimetableConfig() {
         timetableService.loadTimetableConfig()
     }

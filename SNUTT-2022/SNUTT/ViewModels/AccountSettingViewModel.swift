@@ -18,6 +18,14 @@ extension AccountSettingScene {
 
             appState.user.$current.assign(to: &$currentUser)
         }
+        
+        func fetchUser() async {
+            do {
+                try await services.userService.fetchUser()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
 
         func deleteUser() {
             // TODO: implement
