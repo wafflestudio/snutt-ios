@@ -73,9 +73,6 @@ struct AccountSettingScene: View {
         .listStyle(.insetGrouped)
         .navigationTitle("계정 관리")
         .navigationBarTitleDisplayMode(.inline)
-        .task {
-            await viewModel.fetchUser()
-        }
     }
 }
 
