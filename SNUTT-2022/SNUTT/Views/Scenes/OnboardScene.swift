@@ -15,33 +15,52 @@ struct OnboardScene: View {
     @State private var pushToSignUpScene = false
     @State private var pushToLoginScene = false
 
+    @Namespace private var launchScreenAnimation
+    @State private var isActivated = false
+    private let logoId = "Logo"
+
     var body: some View {
-        VStack(spacing: 15) {
-            Spacer()
+        ZStack {
+            if isActivated {
+                VStack(spacing: 15) {
+                    Spacer()
 
-            Logo(orientation: .vertical)
+                    Logo(orientation: .vertical)
+                        .matchedGeometryEffect(id: logoId, in: launchScreenAnimation)
 
-            Spacer()
+                    Spacer()
 
-            VStack {
-                SignInButton(label: "로그인") {
-                    pushToLoginScene = true
+                    VStack {
+                        SignInButton(label: "로그인") {
+                            pushToLoginScene = true
+                        }
+                        SignInButton(label: "가입하기") {
+                            pushToSignUpScene = true
+                        }
+
+                        SignInButton(label: "Facebook으로 계속하기", imageName: "facebook") {
+                            viewModel.performFacebookSignIn()
+                        }
+
+                        SignInButton(label: "Apple로 계속하기", imageName: "apple") {
+                            viewModel.performAppleSignIn()
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    Spacer()
+                        .frame(height: 20)
                 }
-                SignInButton(label: "가입하기") {
-                    pushToSignUpScene = true
+                .transition(.scale(scale: 1))
+            } else {
+                VStack {
+                    Spacer()
+                    Logo(orientation: .vertical)
+                        .matchedGeometryEffect(id: logoId, in: launchScreenAnimation)
+                    Spacer()
                 }
-
-                SignInButton(label: "Facebook으로 계속하기", imageName: "facebook") {
-                    viewModel.performFacebookSignIn()
-                }
-
-                SignInButton(label: "Apple로 계속하기", imageName: "apple") {
-                    viewModel.performAppleSignIn()
-                }
+                .ignoresSafeArea()
+                .transition(.scale(scale: 1))
             }
-            .padding(.horizontal, 20)
-            Spacer()
-                .frame(height: 20)
         }
         .navigationBarHidden(true)
         .background(
@@ -50,6 +69,11 @@ struct OnboardScene: View {
                 NavigationLink(destination: LoginScene(viewModel: .init(container: viewModel.container)), isActive: $pushToLoginScene) { EmptyView() }
             }
         )
+        .onLoad {
+            withAnimation(.easeInOut(duration: 0.7).delay(0.1)) {
+                isActivated = true
+            }
+        }
     }
 }
 
