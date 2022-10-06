@@ -35,16 +35,6 @@ struct UserService: UserServiceProtocol {
         updateUser(from: dto)
     }
 
-    func connectFacebook(fbId: String, fbToken: String) async throws {
-        let dto = try await userRepository.connectFacebook(fbId: fbId, fbToken: fbToken)
-        try await updateToken(from: dto)
-    }
-
-    func disconnectFacebook() async throws {
-        let dto = try await userRepository.disconnectFacebook()
-        try await updateToken(from: dto)
-    }
-
     func changePassword(from oldPassword: String, to newPassword: String) async throws {
         let dto = try await userRepository.changePassword(from: oldPassword, to: newPassword)
         try await updateToken(from: dto)
@@ -55,17 +45,18 @@ struct UserService: UserServiceProtocol {
         try await updateToken(from: dto)
     }
 
-    func deleteUser() async throws {
-        try await userRepository.deleteUser()
-        DispatchQueue.main.async {
-            appState.user.accessToken = nil
-            appState.user.userId = nil
-        }
-        userDefaultsRepository.set(String.self, key: .token, value: nil)
-        userDefaultsRepository.set(String.self, key: .userId, value: nil)
+    func connectFacebook(fbId: String, fbToken: String) async throws {
+        let dto = try await userRepository.connectFacebook(fbId: fbId, fbToken: fbToken)
+        try await updateToken(from: dto)
     }
 
-    private func updateState(to user: User) {
+    func disconnectFacebook() async throws {
+        let dto = try await userRepository.disconnectFacebook()
+        try await updateToken(from: dto)
+    }
+
+    func deleteUser() async throws {
+        try await userRepository.deleteUser()
         DispatchQueue.main.async {
             appState.user.accessToken = nil
             appState.user.userId = nil

@@ -72,7 +72,7 @@ struct TimetableGridLayer: View {
     /// 시간표 맨 위쪽, 날짜를 나타내는 행
     var weeksHStack: some View {
         HStack(spacing: 0) {
-            ForEach(config.visibleWeeks) { week in
+            ForEach(config.visibleWeeksSorted) { week in
                 Text(week.shortSymbol)
                     .font(STFont.details)
                     .foregroundColor(Color(UIColor.secondaryLabel))

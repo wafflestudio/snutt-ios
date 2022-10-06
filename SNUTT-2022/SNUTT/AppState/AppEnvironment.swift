@@ -55,6 +55,7 @@ extension AppEnvironment {
         /// We need to load access token ASAP in order to determine which screen to show first.
         /// Note that this should run synchronously on the main thread.
         services.authService.loadAccessTokenDuringBootstrap()
+        services.timetableService.loadTimetableConfig()
 
         return .init(container: container)
     }

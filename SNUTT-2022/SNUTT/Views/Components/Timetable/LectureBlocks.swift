@@ -39,6 +39,10 @@ struct LectureBlocks: View {
                                                    theme: theme)
                                 }
                                 .buttonStyle(.plain)
+                            } else {
+                                TimetableBlock(lecture: lecture,
+                                               timePlace: timePlace,
+                                               theme: theme)
                             }
                         #endif
                     }

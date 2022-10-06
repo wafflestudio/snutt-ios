@@ -66,7 +66,7 @@ enum UserRouter: Router {
         }
     }
 
-    var parameters: Parameters? {
+    var parameters: [String: Any]? {
         switch self {
         case .getUser:
             return nil
