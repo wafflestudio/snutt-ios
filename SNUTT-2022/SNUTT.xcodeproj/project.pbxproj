@@ -523,7 +523,6 @@
 				BEB3B6B028D4D4D900E56062 /* View+ResignResponder.swift */,
 				BEB57C2028B6758200279EFF /* Animation+Custom.swift */,
 				BE9413D128C2458A00171060 /* DateFormatter+Parse.swift */,
-				BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1142,7 +1141,6 @@
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
 				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
 				B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */,
-				BE2EA7B128D479BE007C0998 /* Publisher+SinkWithAnimation.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				BE28036A28E93EEF00B2B1AB /* LoginScene.swift in Sources */,
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
