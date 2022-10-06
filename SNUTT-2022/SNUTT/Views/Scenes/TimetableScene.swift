@@ -88,7 +88,6 @@ struct TimetableScene: View {
     }
 }
 
-
 // struct MyTimetableScene_Previews: PreviewProvider {
 //    static var previews: some View {
 //        NavigationView {
