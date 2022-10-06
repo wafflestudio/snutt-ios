@@ -63,7 +63,7 @@ struct AccountSettingScene: View {
             Section {
                 SettingsButtonItem(title: "회원 탈퇴", role: .destructive) {
                     Task {
-                        await viewModel.unregister()
+                        await viewModel.deleteUser()
                     }
                 }
             }

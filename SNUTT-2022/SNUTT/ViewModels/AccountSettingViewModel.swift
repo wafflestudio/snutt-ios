@@ -27,9 +27,9 @@ extension AccountSettingScene {
             }
         }
 
-        func unregister() async {
+        func deleteUser() async {
             do {
-                try await services.userService.unregister()
+                try await services.userService.deleteUser()
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
@@ -37,7 +37,7 @@ extension AccountSettingScene {
 
         func detachFacebook() async {
             do {
-                try await services.userService.detachFacebook()
+                try await services.userService.disconnectFacebook()
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
@@ -66,7 +66,7 @@ extension AccountSettingScene {
 extension AccountSettingScene.ViewModel: FacebookLoginProtocol {
     func handleFacebookToken(fbId: String, fbToken: String) async {
         do {
-            try await services.userService.attachFacebook(fbId: fbId, fbToken: fbToken)
+            try await services.userService.connectFacebook(fbId: fbId, fbToken: fbToken)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
