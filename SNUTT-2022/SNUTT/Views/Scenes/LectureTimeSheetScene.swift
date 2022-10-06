@@ -5,6 +5,7 @@
 //  Created by 박신홍 on 2022/09/10.
 //
 
+import Combine
 import SwiftUI
 
 struct LectureTimeSheetScene: View {
@@ -16,7 +17,7 @@ struct LectureTimeSheetScene: View {
               disableBackgroundTap: true,
               disableDragGesture: true) {
             VStack {
-                MenuSheetTopBar(cancel: { viewModel.isOpen = false }, confirm: viewModel.confirm)
+                MenuSheetTopBar(cancel: { viewModel.isOpen = false }, confirm: viewModel.confirm, isSheetOpen: viewModel.isOpen)
                     .padding(.horizontal, 20)
 
                 LectureTimePicker(weekday: $viewModel.weekday, start: $viewModel.start, end: $viewModel.end)

@@ -12,8 +12,6 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published var currentTimetable: Timetable?
     @Published var metadataList: [TimetableMetadata]?
 
-    private var bag = Set<AnyCancellable>()
-
     @Published private var _isMenuSheetOpen: Bool = false
     var isMenuSheetOpen: Bool {
         get { _isMenuSheetOpen }
@@ -65,12 +63,11 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     override init(container: DIContainer) {
         super.init(container: container)
 
-        appState.menu.$isOpen.sinkWithAnimation(receiveValue: { self._isMenuSheetOpen = $0 }).store(in: &bag)
-        appState.menu.$isEllipsisSheetOpen.sinkWithAnimation(receiveValue: { self._isEllipsisSheetOpen = $0 }).store(in: &bag)
-        appState.menu.$isThemeSheetOpen.sinkWithAnimation(receiveValue: { self._isThemeSheetOpen = $0 }).store(in: &bag)
-        appState.menu.$isRenameSheetOpen.sinkWithAnimation(receiveValue: { self._isRenameSheetOpen = $0 }).store(in: &bag)
-        appState.menu.$isCreateSheetOpen.sinkWithAnimation(receiveValue: { self._isCreateSheetOpen = $0 }).store(in: &bag)
-
+        appState.menu.$isOpen.assign(to: &$_isMenuSheetOpen)
+        appState.menu.$isEllipsisSheetOpen.assign(to: &$_isEllipsisSheetOpen)
+        appState.menu.$isThemeSheetOpen.assign(to: &$_isThemeSheetOpen)
+        appState.menu.$isRenameSheetOpen.assign(to: &$_isRenameSheetOpen)
+        appState.menu.$isCreateSheetOpen.assign(to: &$_isCreateSheetOpen)
         appState.timetable.$current.assign(to: &$currentTimetable)
         appState.timetable.$metadataList.assign(to: &$metadataList)
         appState.menu.$renameTitle.assign(to: &$_renameTitle)
