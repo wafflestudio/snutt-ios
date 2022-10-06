@@ -12,28 +12,22 @@ struct ChangePasswordView: View {
 
     @State private var oldPassword: String = ""
     @State private var password: String = ""
-    @State private var password2: String = ""
+    @State private var confirmPassword: String = ""
     @Environment(\.presentationMode) private var mode
 
     var isButtonDisabled: Bool {
-        oldPassword.isEmpty || password.isEmpty || password2.isEmpty || password != password2
+        oldPassword.isEmpty || password.isEmpty || confirmPassword.isEmpty || password != confirmPassword
     }
 
     var body: some View {
         Form {
             Section(header: Text("이전 비밀번호")) {
-                HStack {
-                    SecureField("필수사항", text: $oldPassword)
-                }
+                SecureField("필수사항", text: $oldPassword)
             }
 
             Section(header: Text("새로운 비밀번호")) {
-                HStack {
-                    SecureField("비밀번호", text: $password)
-                }
-                HStack {
-                    SecureField("비밀번호 확인", text: $password2)
-                }
+                SecureField("비밀번호", text: $password)
+                SecureField("비밀번호 확인", text: $confirmPassword)
             }
         }
         .navigationBarTitleDisplayMode(.inline)

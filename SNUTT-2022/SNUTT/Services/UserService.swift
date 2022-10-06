@@ -9,11 +9,11 @@ import Foundation
 
 protocol UserServiceProtocol {
     func fetchUser() async throws
-    func unregister() async throws
+    func deleteUser() async throws
     func addLocalId(id: String, password: String) async throws
     func changePassword(from oldPassword: String, to newPassword: String) async throws
-    func detachFacebook() async throws
-    func attachFacebook(fbId: String, fbToken: String) async throws
+    func disconnectFacebook() async throws
+    func connectFacebook(fbId: String, fbToken: String) async throws
 }
 
 struct UserService: UserServiceProtocol, UserAuthHandler {
@@ -35,16 +35,6 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
         updateUser(from: dto)
     }
 
-    func attachFacebook(fbId: String, fbToken: String) async throws {
-        let dto = try await userRepository.attachFacebook(fbId: fbId, fbToken: fbToken)
-        try await updateToken(from: dto)
-    }
-
-    func detachFacebook() async throws {
-        let dto = try await userRepository.detachFacebook()
-        try await updateToken(from: dto)
-    }
-
     func changePassword(from oldPassword: String, to newPassword: String) async throws {
         let dto = try await userRepository.changePassword(from: oldPassword, to: newPassword)
         try await updateToken(from: dto)
@@ -55,9 +45,26 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
         try await updateToken(from: dto)
     }
 
-    func unregister() async throws {
-        try await userRepository.unregister()
-        clearUserToken()
+    func connectFacebook(fbId: String, fbToken: String) async throws {
+        let dto = try await userRepository.connectFacebook(fbId: fbId, fbToken: fbToken)
+        try await updateToken(from: dto)
+    }
+
+    func disconnectFacebook() async throws {
+        let dto = try await userRepository.disconnectFacebook()
+        try await updateToken(from: dto)
+    }
+
+    func deleteUser() async throws {
+        try await userRepository.deleteUser()
+        DispatchQueue.main.async {
+            appState.user.accessToken = nil
+            appState.user.userId = nil
+            appState.user.current = nil
+        }
+        userDefaultsRepository.set(String.self, key: .token, value: nil)
+        userDefaultsRepository.set(String.self, key: .userId, value: nil)
+        userDefaultsRepository.set(UserDto.self, key: .userDto, value: nil)
     }
 
     private func updateToken(from dto: TokenResponseDto) async throws {
@@ -78,9 +85,9 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
 
 class FakeUserService: UserServiceProtocol {
     func fetchUser() {}
-    func unregister() async throws {}
+    func deleteUser() async throws {}
     func addLocalId(id _: String, password _: String) async throws {}
     func changePassword(from _: String, to _: String) async throws {}
-    func detachFacebook() async throws {}
-    func attachFacebook(fbId _: String, fbToken _: String) async throws {}
+    func disconnectFacebook() async throws {}
+    func connectFacebook(fbId _: String, fbToken _: String) async throws {}
 }

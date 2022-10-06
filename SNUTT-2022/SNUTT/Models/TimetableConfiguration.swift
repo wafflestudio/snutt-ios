@@ -14,6 +14,15 @@ struct TimetableConfiguration: Codable {
 
     var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
 
+    var visibleWeeksSorted: [Weekday] {
+        var weekdayOrder: [Weekday: Int] = [:]
+        Weekday.allCases.enumerated().forEach { offset, element in
+            weekdayOrder[element] = offset
+        }
+        return visibleWeeks
+            .sorted { weekdayOrder[$0]! < weekdayOrder[$1]! }
+    }
+
     var weekCount: Int {
         visibleWeeks.count
     }

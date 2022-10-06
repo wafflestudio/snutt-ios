@@ -28,6 +28,7 @@ struct MenuSheet: View {
                         isOpen = false
                     } label: {
                         Image("xmark.black")
+                            .animation(.customSpring, value: isOpen)
                     }
                 }
                 .padding(.horizontal, 20)
