@@ -75,7 +75,7 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         // TODO: update when FCM ready
         guard let userId = appState.user.userId else { throw STError.NO_USER_TOKEN }
         let _ = try? await authRepository.logout(userId: userId, fcmToken: "fweafa")
-        clearUserToken()
+        clearUserInfo()
     }
 }
 
@@ -83,11 +83,11 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
 protocol UserAuthHandler {
     var appState: AppState { get set }
     var localRepositories: AppEnvironment.LocalRepositories { get set }
-    func clearUserToken()
+    func clearUserInfo()
 }
 
 extension UserAuthHandler {
-    func clearUserToken() {
+    func clearUserInfo() {
         DispatchQueue.main.async {
             appState.user.accessToken = nil
             appState.user.userId = nil

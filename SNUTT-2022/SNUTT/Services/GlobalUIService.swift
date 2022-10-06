@@ -138,7 +138,7 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
             return
         }
         if error == .WRONG_USER_TOKEN || error == .NO_USER_TOKEN {
-            clearUserToken()
+            clearUserInfo()
         }
         DispatchQueue.main.async {
             appState.system.errorContent = error
