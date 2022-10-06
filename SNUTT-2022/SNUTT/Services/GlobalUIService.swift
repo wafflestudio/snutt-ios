@@ -32,8 +32,9 @@ protocol GlobalUIServiceProtocol {
     func presentErrorAlert(error: Error)
 }
 
-struct GlobalUIService: GlobalUIServiceProtocol {
+struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
     var appState: AppState
+    var localRepositories: AppEnvironment.LocalRepositories
 
     func setIsMenuOpen(_ value: Bool) {
         DispatchQueue.main.async {
@@ -135,6 +136,9 @@ struct GlobalUIService: GlobalUIServiceProtocol {
     func presentErrorAlert(error: STError?) {
         guard let error = error else {
             return
+        }
+        if error == .WRONG_USER_TOKEN || error == .NO_USER_TOKEN {
+            clearUserInfo()
         }
         DispatchQueue.main.async {
             appState.system.errorContent = error

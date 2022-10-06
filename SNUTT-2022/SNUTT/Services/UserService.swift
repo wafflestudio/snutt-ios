@@ -16,8 +16,8 @@ protocol UserServiceProtocol {
     func connectFacebook(fbId: String, fbToken: String) async throws
 }
 
-struct UserService: UserServiceProtocol {
-    let appState: AppState
+struct UserService: UserServiceProtocol, UserAuthHandler {
+    var appState: AppState
     let webRepositories: AppEnvironment.WebRepositories
 
     var localRepositories: AppEnvironment.LocalRepositories
@@ -57,14 +57,7 @@ struct UserService: UserServiceProtocol {
 
     func deleteUser() async throws {
         try await userRepository.deleteUser()
-        DispatchQueue.main.async {
-            appState.user.accessToken = nil
-            appState.user.userId = nil
-            appState.user.current = nil
-        }
-        userDefaultsRepository.set(String.self, key: .token, value: nil)
-        userDefaultsRepository.set(String.self, key: .userId, value: nil)
-        userDefaultsRepository.set(UserDto.self, key: .userDto, value: nil)
+        clearUserInfo()
     }
 
     private func updateToken(from dto: TokenResponseDto) async throws {

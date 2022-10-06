@@ -20,7 +20,7 @@ final class Interceptor: RequestInterceptor {
         var urlRequest = urlRequest
 
         urlRequest.setValue(userState.accessToken, forHTTPHeaderField: "x-access-token")
-        
+
         AdditionalHeaderType.allCases
             .forEach { header in
                 urlRequest.setValue(header.value, forHTTPHeaderField: header.key)
@@ -28,31 +28,29 @@ final class Interceptor: RequestInterceptor {
 
         completion(.success(urlRequest))
     }
-    
+
     enum AdditionalHeaderType: String, CaseIterable {
         case appVersion, appType, osType, osVersion, apiKey
-        
+
         var value: String? {
             switch self {
             case .appVersion:
                 return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
             case .appType:
                 #if DEBUG
-                return "debug"
+                    return "debug"
                 #else
-                return "release"
+                    return "release"
                 #endif
             case .osType:
                 return "ios"
             case .osVersion:
                 return UIDevice.current.systemVersion
             case .apiKey:
-                //TODO: change to NetworkConfiguration
-//                return NetworkConfiguration.apiKey
-                return Bundle.main.infoDictionary?["API_KEY"] as? String
+                return NetworkConfiguration.apiKey
             }
         }
-        
+
         var key: String {
             switch self {
             case .appVersion:

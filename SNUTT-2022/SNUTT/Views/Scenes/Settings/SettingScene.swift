@@ -58,6 +58,9 @@ struct SettingScene: View {
         .listStyle(.insetGrouped)
         .navigationTitle("설정")
         .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await viewModel.fetchUser()
+        }
 
         let _ = debugChanges()
     }
