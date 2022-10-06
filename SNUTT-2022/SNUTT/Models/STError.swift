@@ -185,11 +185,11 @@ public enum STError: Int, Error {
         case .DUPLICATE_LECTURE:
             return "이미 추가된 강좌입니다."
         case .ALREADY_LOCAL_ACCOUNT:
-            return "이미 ID와 비번이 등록되어있습니다."
+            return "이미 ID와 비밀번호가 등록되어 있습니다."
         case .ALREADY_FB_ACCOUNT:
-            return "이미 페이스북 계정이 연동되어있습니다."
+            return "이미 페이스북 계정이 연동되어 있습니다."
         case .NOT_LOCAL_ACCOUNT:
-            return "등록된 ID와 비번이 없습니다."
+            return "등록된 ID와 비밀번호가 없습니다."
         case .NOT_FB_ACCOUNT:
             return "연동된 페이스북 계정이 없습니다."
         case .FB_ID_WITH_SOMEONE_ELSE:
