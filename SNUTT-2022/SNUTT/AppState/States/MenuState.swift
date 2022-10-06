@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// TODO: maybe change variable name to `GlobalUIState` in order to match `GlobalUIService`
 class MenuState: ObservableObject {
     @Published var isOpen = false
 

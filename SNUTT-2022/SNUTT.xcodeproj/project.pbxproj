@@ -7,20 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B827A8FF289AEC6F00ABAE39 /* SNUTTDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827A8FE289AEC6F00ABAE39 /* SNUTTDefaults.swift */; };
-		B827A903289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827A902289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift */; };
 		B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* BaseViewModel.swift */; };
 		B87B315D28D5A70F005C170B /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315828D5A70F005C170B /* UserState.swift */; };
 		B87B315E28D5A70F005C170B /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315928D5A70F005C170B /* SearchState.swift */; };
 		B87B315F28D5A70F005C170B /* TimetableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315A28D5A70F005C170B /* TimetableState.swift */; };
-		B87B316028D5A70F005C170B /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315B28D5A70F005C170B /* Setting.swift */; };
 		B87B316C28D755B6005C170B /* SystemState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316A28D755B6005C170B /* SystemState.swift */; };
 		B87B316D28D755B6005C170B /* MenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316B28D755B6005C170B /* MenuState.swift */; };
-		B87B317028D813EB005C170B /* CourseBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316E28D813EB005C170B /* CourseBook.swift */; };
-		B87B317128D813EB005C170B /* SearchResultDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316F28D813EB005C170B /* SearchResultDto.swift */; };
 		B87B317328D81447005C170B /* UserDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B317228D81447005C170B /* UserDto.swift */; };
 		B87B317428D816E1005C170B /* MenuSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A00D288AA3D200C2CE95 /* MenuSheet.swift */; };
-		B87E0A3728A68A6900D2EA95 /* AddLocalIdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87E0A3628A68A6900D2EA95 /* AddLocalIdViewModel.swift */; };
 		B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16F228ABC5DD00E2D652 /* String+ext.swift */; };
 		B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FA28AE2BB900E2D652 /* UserRouter.swift */; };
 		B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FC28AE2E1E00E2D652 /* User.swift */; };
@@ -156,6 +150,7 @@
 		BEB57C2228B6759000279EFF /* Animation+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2028B6758200279EFF /* Animation+Custom.swift */; };
 		BEB57C2828BC985900279EFF /* LectureColorPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2728BC985900279EFF /* LectureColorPreview.swift */; };
 		BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2928BCA7E400279EFF /* LectureColorList.swift */; };
+		BEBCC29C28EF4C6100732304 /* OnLoadModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBCC29B28EF4C6100732304 /* OnLoadModifier.swift */; };
 		BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */; };
 		BED04D2F28EA6FA600937E4C /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */; };
 		BED04D3128EA8B0A00937E4C /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */; };
@@ -244,19 +239,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B827A8FE289AEC6F00ABAE39 /* SNUTTDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTDefaults.swift; sourceTree = "<group>"; };
-		B827A902289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTDefaultsContainer.swift; sourceTree = "<group>"; };
 		B87431CA283B5A7300D78C59 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		B87B315828D5A70F005C170B /* UserState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
 		B87B315928D5A70F005C170B /* SearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
 		B87B315A28D5A70F005C170B /* TimetableState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableState.swift; sourceTree = "<group>"; };
-		B87B315B28D5A70F005C170B /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		B87B316A28D755B6005C170B /* SystemState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemState.swift; sourceTree = "<group>"; };
 		B87B316B28D755B6005C170B /* MenuState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuState.swift; sourceTree = "<group>"; };
-		B87B316E28D813EB005C170B /* CourseBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseBook.swift; sourceTree = "<group>"; };
-		B87B316F28D813EB005C170B /* SearchResultDto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultDto.swift; sourceTree = "<group>"; };
 		B87B317228D81447005C170B /* UserDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDto.swift; sourceTree = "<group>"; };
-		B87E0A3628A68A6900D2EA95 /* AddLocalIdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocalIdViewModel.swift; sourceTree = "<group>"; };
 		B88D16F228ABC5DD00E2D652 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
 		B88D16FA28AE2BB900E2D652 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		B88D16FC28AE2E1E00E2D652 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -377,6 +366,7 @@
 		BEB57C2028B6758200279EFF /* Animation+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Animation+Custom.swift"; sourceTree = "<group>"; };
 		BEB57C2728BC985900279EFF /* LectureColorPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureColorPreview.swift; sourceTree = "<group>"; };
 		BEB57C2928BCA7E400279EFF /* LectureColorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureColorList.swift; sourceTree = "<group>"; };
+		BEBCC29B28EF4C6100732304 /* OnLoadModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnLoadModifier.swift; sourceTree = "<group>"; };
 		BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetScene.swift; sourceTree = "<group>"; };
 		BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
@@ -468,7 +458,6 @@
 				B87B316B28D755B6005C170B /* MenuState.swift */,
 				B87B316A28D755B6005C170B /* SystemState.swift */,
 				B87B315928D5A70F005C170B /* SearchState.swift */,
-				B87B315B28D5A70F005C170B /* Setting.swift */,
 				B87B315A28D5A70F005C170B /* TimetableState.swift */,
 				B87B315828D5A70F005C170B /* UserState.swift */,
 			);
@@ -481,10 +470,6 @@
 				DC29159A2865F95100FE5F9A /* SettingScene.swift */,
 				B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */,
 				B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */,
-				B8F40EAE28980D990021A2A9 /* DeveloperInfoView.swift */,
-				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
-				B8F40EB028980DE00021A2A9 /* TermsOfServiceView.swift */,
-				B8F40EB228980DFF0021A2A9 /* PrivacyPolicyView.swift */,
 				B88D170028AF71E300E2D652 /* UserSupportScene.swift */,
 			);
 			path = Settings;
@@ -508,9 +493,13 @@
 			children = (
 				B8E51E6728B615140065248E /* WebErrorView.swift */,
 				BE28036728E8883700B2B1AB /* WebViewProtocol.swift */,
-				BE28036128E884F400B2B1AB /* ReviewWebView.swift */,
 				BE28036328E8850E00B2B1AB /* WebViewType.swift */,
+				BE28036128E884F400B2B1AB /* ReviewWebView.swift */,
 				BE28036528E8854D00B2B1AB /* SingleWebView.swift */,
+				B8F40EAE28980D990021A2A9 /* DeveloperInfoView.swift */,
+				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
+				B8F40EB028980DE00021A2A9 /* TermsOfServiceView.swift */,
+				B8F40EB228980DFF0021A2A9 /* PrivacyPolicyView.swift */,
 			);
 			path = WebViews;
 			sourceTree = "<group>";
@@ -533,6 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				BE9413B628BE8A2200171060 /* CircleBadgeModifier.swift */,
+				BEBCC29B28EF4C6100732304 /* OnLoadModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -710,8 +700,6 @@
 		DC9C2CA928780589009EC3BC /* Dto */ = {
 			isa = PBXGroup;
 			children = (
-				B87B316E28D813EB005C170B /* CourseBook.swift */,
-				B87B316F28D813EB005C170B /* SearchResultDto.swift */,
 				DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */,
 				BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */,
 				BE682BEE288722A5009EBCB7 /* ErrorDto.swift */,
@@ -851,7 +839,6 @@
 				BE4B0EBD2873BC84005FE164 /* FilterSheetViewModel.swift */,
 				BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */,
 				B8F40EB628980E7A0021A2A9 /* AccountSettingViewModel.swift */,
-				B87E0A3628A68A6900D2EA95 /* AddLocalIdViewModel.swift */,
 				BED04D3428EA966100937E4C /* OnboardViewModel.swift */,
 			);
 			path = ViewModels;
@@ -863,8 +850,6 @@
 				BEDE34DB2879B40100525014 /* AppEnvironment.swift */,
 				DCD41A7427E5CEA500CF380E /* AppState.swift */,
 				BEDE34D52879A7B800525014 /* DIContainer.swift */,
-				B827A8FE289AEC6F00ABAE39 /* SNUTTDefaults.swift */,
-				B827A902289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift */,
 				B8E51E6928B75E9E0065248E /* States */,
 			);
 			path = AppState;
@@ -1126,7 +1111,6 @@
 				BE77D0AC28B1384D0067A9D8 /* MenuSheetTopBar.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
-				B87B317028D813EB005C170B /* CourseBook.swift in Sources */,
 				BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */,
 				BE9413DF28C3BDF600171060 /* SearchLectureList.swift in Sources */,
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
@@ -1135,6 +1119,7 @@
 				BED04D2F28EA6FA600937E4C /* SettingsMenuItem.swift in Sources */,
 				BE28036228E884F400B2B1AB /* ReviewWebView.swift in Sources */,
 				BEB3B6A528CDE1FD00E56062 /* TimeUtils.swift in Sources */,
+				BEBCC29C28EF4C6100732304 /* OnLoadModifier.swift in Sources */,
 				B8F40EB128980DE00021A2A9 /* TermsOfServiceView.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
@@ -1154,7 +1139,6 @@
 				BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */,
 				BE9413DD28C3B68F00171060 /* SearchTagsScrollView.swift in Sources */,
 				B8F570A6289E1221005C199F /* UserDefaults+ext.swift in Sources */,
-				B827A8FF289AEC6F00ABAE39 /* SNUTTDefaults.swift in Sources */,
 				B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				B87B316C28D755B6005C170B /* SystemState.swift in Sources */,
@@ -1168,14 +1152,12 @@
 				BE98A00A288A90C000C2CE95 /* Logo.swift in Sources */,
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
-				B87B317128D813EB005C170B /* SearchResultDto.swift in Sources */,
 				BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */,
 				BE9413CA28C21F1300171060 /* NotificationList.swift in Sources */,
 				BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */,
 				BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
-				B87B316028D5A70F005C170B /* Setting.swift in Sources */,
 				BE77D0A428AEAD4D0067A9D8 /* CourseBookDto.swift in Sources */,
 				BE9413BF28C2157600171060 /* NotificationDto.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
@@ -1205,7 +1187,6 @@
 				BEB57C2828BC985900279EFF /* LectureColorPreview.swift in Sources */,
 				BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */,
 				BED04D3528EA966100937E4C /* OnboardViewModel.swift in Sources */,
-				B87E0A3728A68A6900D2EA95 /* AddLocalIdViewModel.swift in Sources */,
 				BE77D0AE28B13A920067A9D8 /* MenuCreateSheet.swift in Sources */,
 				BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */,
 				BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */,
@@ -1223,7 +1204,6 @@
 				BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */,
 				B8F40EAD28980D840021A2A9 /* TimetableSettingScene.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
-				B827A903289BEB7C00ABAE39 /* SNUTTDefaultsContainer.swift in Sources */,
 				BE9413D028C220C900171060 /* NotificationService.swift in Sources */,
 				BE9413B928C20A4000171060 /* AuthRouter.swift in Sources */,
 				BE682BDB28870872009EBCB7 /* LectureService.swift in Sources */,

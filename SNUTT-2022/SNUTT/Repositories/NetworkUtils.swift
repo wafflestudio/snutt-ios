@@ -47,9 +47,7 @@ final class Interceptor: RequestInterceptor {
             case .osVersion:
                 return UIDevice.current.systemVersion
             case .apiKey:
-                //TODO: change to NetworkConfiguration
-//                return NetworkConfiguration.apiKey
-                return Bundle.main.infoDictionary?["API_KEY"] as? String
+                return NetworkConfiguration.apiKey
             }
         }
         
