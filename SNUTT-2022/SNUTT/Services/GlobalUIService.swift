@@ -6,11 +6,8 @@
 //
 
 import Foundation
-import SwiftUI
 
 protocol GlobalUIServiceProtocol {
-    func setSelectedTab(_ tab: TabType)
-
     func setIsMenuOpen(_ value: Bool)
 
     func openEllipsis(for timetable: TimetableMetadata)
@@ -37,14 +34,6 @@ protocol GlobalUIServiceProtocol {
 
 struct GlobalUIService: GlobalUIServiceProtocol {
     var appState: AppState
-
-    // MARK: Menu Sheet
-
-    func setSelectedTab(_ tab: TabType) {
-        DispatchQueue.main.async {
-            appState.tab.selected = tab
-        }
-    }
 
     func setIsMenuOpen(_ value: Bool) {
         DispatchQueue.main.async {

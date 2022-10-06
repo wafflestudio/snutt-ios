@@ -223,7 +223,7 @@ public enum STError: Int, Error {
         case .UNKNOWN_ERROR:
             return "알 수 없는 오류가 발생했습니다."
         case .WRONG_APPLE_TOKEN:
-            return "애플 계정으로 로그인이 실패했습니다. 다른 로그인 방법을 시도해주세요."
+            return "애플 계정으로 로그인하지 못했습니다."
         }
     }
 }

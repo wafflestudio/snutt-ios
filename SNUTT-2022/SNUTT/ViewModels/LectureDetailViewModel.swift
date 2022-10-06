@@ -5,7 +5,6 @@
 //  Created by 박신홍 on 2022/07/20.
 //
 
-import Alamofire
 import Foundation
 import SwiftUI
 
@@ -13,10 +12,6 @@ extension LectureDetailScene {
     class ViewModel: BaseViewModel, ObservableObject {
         var lectureService: LectureServiceProtocol {
             services.lectureService
-        }
-
-        var reviewService: ReviewServiceProtocol {
-            services.reviewService
         }
 
         var currentTimetable: Timetable? {
@@ -70,11 +65,9 @@ extension LectureDetailScene {
             return nil
         }
 
-        func fetchReviewId(of lecture: Lecture) async {
+        func fetchReviewId(of lecture: Lecture, bind: Binding<String>) async {
             do {
-                let id = try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
-                reviewService.setDetailId(id)
-                services.globalUIService.setSelectedTab(.review)
+                try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }

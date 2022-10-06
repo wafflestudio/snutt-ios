@@ -15,12 +15,44 @@ struct SNUTTView: View {
     /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
     @State private var navigationBarHeight: CGFloat = 0
 
+    private var selected: Binding<TabType> {
+        Binding<TabType> {
+            selectedTab
+        } set: {
+            [previous = selectedTab] current in
+            if previous == current, current == .review {
+                viewModel.reloadReviewWebView()
+            }
+            selectedTab = current
+        }
+    }
+
     var body: some View {
         ZStack {
             if !viewModel.isAuthenticated {
-                LoginScene(viewModel: .init(container: viewModel.container))
+                NavigationView {
+                    OnboardScene(viewModel: .init(container: viewModel.container))
+                }
             } else {
-                MainTabScene(viewModel: .init(container: viewModel.container), navigationBarHeight: $navigationBarHeight)
+                TabView(selection: selected) {
+                    TabScene(tabType: .timetable) {
+                        TimetableScene(viewModel: .init(container: viewModel.container))
+                            .background(NavigationBarReader { navbar in
+                                DispatchQueue.main.async {
+                                    navigationBarHeight = navbar.frame.height
+                                }
+                            })
+                    }
+                    TabScene(tabType: .search) {
+                        SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
+                    }
+                    TabScene(tabType: .review) {
+                        ReviewScene(viewModel: .init(container: viewModel.container), reloadSignal: viewModel.reloadReviewSignal)
+                    }
+                    TabScene(tabType: .settings) {
+                        SettingScene(viewModel: .init(container: viewModel.container))
+                    }
+                }
                 if selectedTab == .timetable {
                     MenuSheetScene(viewModel: .init(container: viewModel.container))
                 }
@@ -65,6 +97,7 @@ extension SNUTTView {
         @Published var isErrorAlertPresented = false
         @Published var errorContent: STError? = nil
         @Published var accessToken: String? = nil
+        var reloadReviewSignal = PassthroughSubject<Void, Never>()
 
         var isAuthenticated: Bool {
             guard let accessToken = accessToken else { return false }
@@ -85,69 +118,9 @@ extension SNUTTView {
         var errorMessage: String {
             (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
         }
-    }
-}
 
-private struct MainTabScene: View {
-    @ObservedObject var viewModel: MainTabViewModel
-    @Binding var navigationBarHeight: CGFloat
-
-    var body: some View {
-        let selected = Binding {
-            viewModel.selected
-        } set: {
-            [previous = viewModel.selected] current in
-            if previous == .review && current == .review {
-                viewModel.resetDetailId()
-            }
-            viewModel.selected = current
-        }
-
-        TabView(selection: selected) {
-            TabScene(tabType: .timetable) {
-                TimetableScene(viewModel: .init(container: viewModel.container))
-                    .background(NavigationBarReader { navbar in
-                        DispatchQueue.main.async {
-                            navigationBarHeight = navbar.frame.height
-                        }
-                    })
-            }
-            TabScene(tabType: .search) {
-                SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
-            }
-            TabScene(tabType: .review) {
-                ReviewScene(viewModel: .init(container: viewModel.container))
-            }
-            TabScene(tabType: .settings) {
-                SettingScene(viewModel: .init(container: viewModel.container))
-            }
-        }
-    }
-}
-
-extension MainTabScene {
-    final class MainTabViewModel: BaseViewModel, ObservableObject {
-        @Published var selectedTab: TabType = .timetable
-
-        override init(container: DIContainer) {
-            super.init(container: container)
-
-            // TODO: fix this
-            container.appState.tab.$selected
-                .assign(to: &$selectedTab)
-        }
-
-        var selected: TabType {
-            get { selectedTab }
-            set { setSelectedTab(newValue) }
-        }
-
-        func resetDetailId() {
-            services.reviewService.setDetailId("")
-        }
-
-        func setSelectedTab(_ tab: TabType) {
-            services.globalUIService.setSelectedTab(tab)
+        func reloadReviewWebView() {
+            reloadReviewSignal.send()
         }
     }
 }

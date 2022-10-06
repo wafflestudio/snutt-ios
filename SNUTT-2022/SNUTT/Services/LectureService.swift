@@ -14,7 +14,7 @@ protocol LectureServiceProtocol {
     func addLecture(lecture: Lecture) async throws
     func deleteLecture(lecture: Lecture) async throws
     func resetLecture(lecture: Lecture) async throws
-    func fetchReviewId(courseNumber: String, instructor: String) async throws -> String
+    func fetchReviewId(courseNumber: String, instructor: String, bind: Binding<String>) async throws
 }
 
 struct LectureService: LectureServiceProtocol {
@@ -75,9 +75,9 @@ struct LectureService: LectureServiceProtocol {
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
-    func fetchReviewId(courseNumber: String, instructor: String) async throws -> String {
+    func fetchReviewId(courseNumber: String, instructor: String, bind: Binding<String>) async throws {
         let id = try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
-        return "\(id)"
+        bind.wrappedValue = "\(id)"
     }
 
     private var lectureRepository: LectureRepositoryProtocol {
@@ -99,5 +99,5 @@ class FakeLectureService: LectureServiceProtocol {
     func addLecture(lecture _: Lecture) async throws {}
     func deleteLecture(lecture _: Lecture) async throws {}
     func resetLecture(lecture _: Lecture) async throws {}
-    func fetchReviewId(courseNumber _: String, instructor _: String) async throws -> String { return "" }
+    func fetchReviewId(courseNumber _: String, instructor _: String, bind _: Binding<String>) async throws {}
 }

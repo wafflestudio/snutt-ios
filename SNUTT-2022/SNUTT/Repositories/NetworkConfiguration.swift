@@ -10,4 +10,5 @@ import Foundation
 struct NetworkConfiguration {
     static let serverBaseURL: String = Bundle.main.infoDictionary?["API_SERVER_URL"] as! String
     static let snuevBaseURL: String = Bundle.main.infoDictionary?["SNUEV_WEB_URL"] as! String
+    static let apiKey: String = Bundle.main.infoDictionary?["API_KEY"] as! String
 }

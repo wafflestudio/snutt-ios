@@ -19,7 +19,6 @@ extension AppEnvironment {
         let userService: UserServiceProtocol
         let lectureService: LectureServiceProtocol
         let searchService: SearchServiceProtocol
-        let reviewService: ReviewServiceProtocol
         let globalUIService: GlobalUIServiceProtocol
         let courseBookService: CourseBookServiceProtocol
         let authService: AuthServiceProtocol
@@ -93,7 +92,6 @@ extension AppEnvironment {
         let userService = UserService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
-        let reviewService = ReviewService(appState: appState)
         let globalUIService = GlobalUIService(appState: appState)
         let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
         let authService = AuthService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
@@ -102,7 +100,6 @@ extension AppEnvironment {
                      userService: userService,
                      lectureService: lectureService,
                      searchService: searchService,
-                     reviewService: reviewService,
                      globalUIService: globalUIService,
                      courseBookService: courseBookService,
                      authService: authService,
@@ -128,7 +125,6 @@ extension EnvironmentValues {
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
                   searchService: FakeSearchService(),
-                  reviewService: FakeReviewService(),
                   globalUIService: GlobalUIService(appState: appState),
                   courseBookService: FakeCourseBookService(),
                   authService: FakeAuthService(),

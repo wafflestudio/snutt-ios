@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class BaseViewModel {
+class BaseViewModel: NSObject {
     var container: DIContainer
 
     init(container: DIContainer) {

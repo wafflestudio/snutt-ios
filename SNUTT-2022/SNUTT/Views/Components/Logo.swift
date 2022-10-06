@@ -21,7 +21,7 @@ struct Logo: View {
                 Image("logo")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 50)
+                    .frame(width: 52, height: 52)
                 Text("SNUTT")
                     .font(.system(size: 22, weight: .heavy))
             }

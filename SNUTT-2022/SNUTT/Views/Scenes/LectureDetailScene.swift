@@ -31,6 +31,8 @@ struct LectureDetailScene: View {
 
     @State private var isResetAlertPresented = false
     @State private var isDeleteAlertPresented = false
+    @State private var showReviewWebView = false
+    @State private var reviewId: String = ""
 
     @Environment(\.dismiss) var dismiss
 
@@ -179,9 +181,12 @@ struct LectureDetailScene: View {
 
                         DetailButton(text: "강의평") {
                             Task {
-                                await viewModel.deleteLecture(lecture: lecture)
-                                await viewModel.fetchReviewId(of: lecture)
+                                await viewModel.fetchReviewId(of: lecture, bind: $reviewId)
+                                showReviewWebView = true
                             }
+                        }
+                        .sheet(isPresented: $showReviewWebView) {
+                            ReviewScene(viewModel: .init(container: viewModel.container), detailId: $reviewId)
                         }
                     }
 

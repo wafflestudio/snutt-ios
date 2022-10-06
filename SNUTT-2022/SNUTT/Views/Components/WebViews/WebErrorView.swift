@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct WebErrorView: View {
-    let viewModel: ReviewViewModel
+    let refresh: () -> Void
 
     var body: some View {
         VStack {
             Image("warning.cat")
             Spacer().frame(height: 20)
             Text("네트워크 연결을 확인해주세요")
-                .font(.system(size: 17))
             Spacer().frame(height: 28)
             Button {
-                viewModel.shouldReloadWebView(true)
+                refresh()
             } label: {
                 Text("다시 불러오기")
                     .bold()
@@ -31,9 +30,3 @@ struct WebErrorView: View {
         }
     }
 }
-
-// struct WebErrorView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WebErrorView()
-//    }
-// }
