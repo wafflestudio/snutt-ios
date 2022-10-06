@@ -46,7 +46,9 @@ struct AuthService: AuthServiceProtocol {
         /// **DO NOT RUN THIS CODE ASYNCHRONOUSLY**. We need to show splash screen until the loading finishes.
         appState.user.accessToken = userDefaultsRepository.get(String.self, key: .token)
         appState.user.userId = userDefaultsRepository.get(String.self, key: .userId)
-//        appState.user.accessToken = nil
+        if let userDto = userDefaultsRepository.get(UserDto.self, key: .userDto) {
+            appState.user.current = User(from: userDto)
+        }
     }
 
     func loginWithId(id: String, password: String) async throws {
@@ -76,9 +78,11 @@ struct AuthService: AuthServiceProtocol {
         DispatchQueue.main.async {
             appState.user.accessToken = nil
             appState.user.userId = nil
+            appState.user.current = nil
         }
         userDefaultsRepository.set(String.self, key: .token, value: nil)
         userDefaultsRepository.set(String.self, key: .userId, value: nil)
+        userDefaultsRepository.set(UserDto.self, key: .userDto, value: nil)
 //        if dto.message != "ok" {
 //            throw STError.UNKNOWN_ERROR
 //        }

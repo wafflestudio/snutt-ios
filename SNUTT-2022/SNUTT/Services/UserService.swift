@@ -31,11 +31,8 @@ struct UserService: UserServiceProtocol {
     }
 
     func fetchUser() async throws {
-        let userDto = try await userRepository.fetchUser()
-        let user = User(from: userDto)
-        userDefaultsRepository.set(String.self, key: .userLocalId, value: user.localId)
-        userDefaultsRepository.set(String.self, key: .userFBName, value: user.fbName)
-        updateState(to: user)
+        let dto = try await userRepository.fetchUser()
+        updateUser(from: dto)
     }
 
     func connectFacebook(fbId: String, fbToken: String) async throws {
@@ -68,17 +65,30 @@ struct UserService: UserServiceProtocol {
         userDefaultsRepository.set(String.self, key: .userId, value: nil)
     }
 
+    private func updateState(to user: User) {
+        DispatchQueue.main.async {
+            appState.user.accessToken = nil
+            appState.user.userId = nil
+            appState.user.current = nil
+        }
+        userDefaultsRepository.set(String.self, key: .token, value: nil)
+        userDefaultsRepository.set(String.self, key: .userId, value: nil)
+        userDefaultsRepository.set(UserDto.self, key: .userDto, value: nil)
+    }
+
     private func updateToken(from dto: TokenResponseDto) async throws {
         DispatchQueue.main.async {
             appState.user.accessToken = dto.token
         }
+        userDefaultsRepository.set(String.self, key: .token, value: dto.token)
         try await fetchUser()
     }
 
-    private func updateState(to user: User) {
+    private func updateUser(from dto: UserDto) {
         DispatchQueue.main.async {
-            appState.user.current = user
+            appState.user.current = User(from: dto)
         }
+        userDefaultsRepository.set(UserDto.self, key: .userDto, value: dto)
     }
 }
 

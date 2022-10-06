@@ -20,7 +20,6 @@
 		B87B317128D813EB005C170B /* SearchResultDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316F28D813EB005C170B /* SearchResultDto.swift */; };
 		B87B317328D81447005C170B /* UserDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B317228D81447005C170B /* UserDto.swift */; };
 		B87B317428D816E1005C170B /* MenuSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A00D288AA3D200C2CE95 /* MenuSheet.swift */; };
-		B87E0A3528A688FF00D2EA95 /* AddLocalIdScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87E0A3428A688FF00D2EA95 /* AddLocalIdScene.swift */; };
 		B87E0A3728A68A6900D2EA95 /* AddLocalIdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87E0A3628A68A6900D2EA95 /* AddLocalIdViewModel.swift */; };
 		B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16F228ABC5DD00E2D652 /* String+ext.swift */; };
 		B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FA28AE2BB900E2D652 /* UserRouter.swift */; };
@@ -58,7 +57,6 @@
 		BE28036828E8883700B2B1AB /* WebViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE28036728E8883700B2B1AB /* WebViewProtocol.swift */; };
 		BE28036A28E93EEF00B2B1AB /* LoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE28036928E93EEF00B2B1AB /* LoginScene.swift */; };
 		BE28036C28E9F0B100B2B1AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE28036B28E9F0B100B2B1AB /* LaunchScreen.storyboard */; };
-		BE2EA7B128D479BE007C0998 /* Publisher+SinkWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */; };
 		BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
 		BE419B84288B8B8F00FA9590 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
 		BE419B85288B8B8F00FA9590 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507427F4289B00CDCC13 /* Lecture.swift */; };
@@ -160,6 +158,9 @@
 		BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2928BCA7E400279EFF /* LectureColorList.swift */; };
 		BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */; };
 		BED04D2F28EA6FA600937E4C /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */; };
+		BED04D3128EA8B0A00937E4C /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */; };
+		BED04D3328EA963E00937E4C /* FacebookLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED04D3228EA963E00937E4C /* FacebookLogin.swift */; };
+		BED04D3528EA966100937E4C /* OnboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED04D3428EA966100937E4C /* OnboardViewModel.swift */; };
 		BEDE34CA28754F3100525014 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34C928754F3100525014 /* Sheet.swift */; };
 		BEDE34D42879A59B00525014 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BEDE34D32879A59B00525014 /* Alamofire */; };
 		BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE34D52879A7B800525014 /* DIContainer.swift */; };
@@ -180,7 +181,7 @@
 		BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */; };
 		BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */; };
 		BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */; };
-		BEF9233628E7EE45004AFCB2 /* SignUpScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233528E7EE45004AFCB2 /* SignUpScene.swift */; };
+		BEF9233628E7EE45004AFCB2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233528E7EE45004AFCB2 /* SignUpView.swift */; };
 		BEF9233828E84653004AFCB2 /* LectureTimeSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233728E84653004AFCB2 /* LectureTimeSheetScene.swift */; };
 		BEF9233A28E84B62004AFCB2 /* SearchLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */; };
 		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
@@ -255,7 +256,6 @@
 		B87B316E28D813EB005C170B /* CourseBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseBook.swift; sourceTree = "<group>"; };
 		B87B316F28D813EB005C170B /* SearchResultDto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultDto.swift; sourceTree = "<group>"; };
 		B87B317228D81447005C170B /* UserDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDto.swift; sourceTree = "<group>"; };
-		B87E0A3428A688FF00D2EA95 /* AddLocalIdScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocalIdScene.swift; sourceTree = "<group>"; };
 		B87E0A3628A68A6900D2EA95 /* AddLocalIdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocalIdViewModel.swift; sourceTree = "<group>"; };
 		B88D16F228ABC5DD00E2D652 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
 		B88D16FA28AE2BB900E2D652 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
@@ -292,7 +292,6 @@
 		BE28036728E8883700B2B1AB /* WebViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewProtocol.swift; sourceTree = "<group>"; };
 		BE28036928E93EEF00B2B1AB /* LoginScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScene.swift; sourceTree = "<group>"; };
 		BE28036B28E9F0B100B2B1AB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		BE2EA7B028D479BE007C0998 /* Publisher+SinkWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+SinkWithAnimation.swift"; sourceTree = "<group>"; };
 		BE419B8C288B8C5A00FA9590 /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
 		BE419B99288B915800FA9590 /* TimetableUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableUtils.swift; sourceTree = "<group>"; };
 		BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetViewModel.swift; sourceTree = "<group>"; };
@@ -380,6 +379,9 @@
 		BEB57C2928BCA7E400279EFF /* LectureColorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureColorList.swift; sourceTree = "<group>"; };
 		BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetScene.swift; sourceTree = "<group>"; };
 		BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
+		BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		BED04D3228EA963E00937E4C /* FacebookLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLogin.swift; sourceTree = "<group>"; };
+		BED04D3428EA966100937E4C /* OnboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewModel.swift; sourceTree = "<group>"; };
 		BEDE34C928754F3100525014 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		BEDE34D52879A7B800525014 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		BEDE34D72879A9DC00525014 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -399,7 +401,7 @@
 		BEEBDFB7286B38B600DB5976 /* SNUTTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNUTTView.swift; sourceTree = "<group>"; };
 		BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabScene.swift; sourceTree = "<group>"; };
 		BEEBDFBB286B408E00DB5976 /* LectureBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureBlocks.swift; sourceTree = "<group>"; };
-		BEF9233528E7EE45004AFCB2 /* SignUpScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScene.swift; sourceTree = "<group>"; };
+		BEF9233528E7EE45004AFCB2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		BEF9233728E84653004AFCB2 /* LectureTimeSheetScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureTimeSheetScene.swift; sourceTree = "<group>"; };
 		BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLectureCell.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
@@ -483,7 +485,6 @@
 				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
 				B8F40EB028980DE00021A2A9 /* TermsOfServiceView.swift */,
 				B8F40EB228980DFF0021A2A9 /* PrivacyPolicyView.swift */,
-				B87E0A3428A688FF00D2EA95 /* AddLocalIdScene.swift */,
 				B88D170028AF71E300E2D652 /* UserSupportScene.swift */,
 			);
 			path = Settings;
@@ -523,6 +524,7 @@
 				BEB3B6B028D4D4D900E56062 /* View+ResignResponder.swift */,
 				BEB57C2028B6758200279EFF /* Animation+Custom.swift */,
 				BE9413D128C2458A00171060 /* DateFormatter+Parse.swift */,
+				BED04D3228EA963E00937E4C /* FacebookLogin.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -800,7 +802,7 @@
 				DC29159E28660F7800FE5F9A /* ReviewScene.swift */,
 				BEF9233728E84653004AFCB2 /* LectureTimeSheetScene.swift */,
 				BE060BD828DF4C1E00A2F1B9 /* OnboardScene.swift */,
-				BEF9233528E7EE45004AFCB2 /* SignUpScene.swift */,
+				BEF9233528E7EE45004AFCB2 /* SignUpView.swift */,
 				BE28036928E93EEF00B2B1AB /* LoginScene.swift */,
 				BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */,
 				BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */,
@@ -826,6 +828,7 @@
 				BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */,
 				BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */,
 				BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */,
+				BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */,
 				BE28036028E884D300B2B1AB /* WebViews */,
 				BE9413D728C3AF8300171060 /* Search */,
 				BEB3B6AB28D4D3DF00E56062 /* LectureDetail */,
@@ -849,6 +852,7 @@
 				BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */,
 				B8F40EB628980E7A0021A2A9 /* AccountSettingViewModel.swift */,
 				B87E0A3628A68A6900D2EA95 /* AddLocalIdViewModel.swift */,
+				BED04D3428EA966100937E4C /* OnboardViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1094,7 +1098,6 @@
 				BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */,
 				BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */,
 				B8AF8D3E28C72A880056DE62 /* Validation.swift in Sources */,
-				B87E0A3528A688FF00D2EA95 /* AddLocalIdScene.swift in Sources */,
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
 				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */,
@@ -1117,6 +1120,7 @@
 				BE9413BD28C2119500171060 /* NotificationRouter.swift in Sources */,
 				BE28036428E8850E00B2B1AB /* WebViewType.swift in Sources */,
 				BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */,
+				BED04D3128EA8B0A00937E4C /* ChangePasswordView.swift in Sources */,
 				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
 				BEB3B6A228CDB7A400E56062 /* LectureTimePicker.swift in Sources */,
 				BE77D0AC28B1384D0067A9D8 /* MenuSheetTopBar.swift in Sources */,
@@ -1182,7 +1186,7 @@
 				BE9413BB28C20DC500171060 /* AuthDto.swift in Sources */,
 				BE1B610C289D7C2500401361 /* GlobalUIService.swift in Sources */,
 				DC2915992865D69700FE5F9A /* LectureListViewModel.swift in Sources */,
-				BEF9233628E7EE45004AFCB2 /* SignUpScene.swift in Sources */,
+				BEF9233628E7EE45004AFCB2 /* SignUpView.swift in Sources */,
 				B8F40EAF28980D990021A2A9 /* DeveloperInfoView.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
 				BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */,
@@ -1200,6 +1204,7 @@
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,
 				BEB57C2828BC985900279EFF /* LectureColorPreview.swift in Sources */,
 				BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */,
+				BED04D3528EA966100937E4C /* OnboardViewModel.swift in Sources */,
 				B87E0A3728A68A6900D2EA95 /* AddLocalIdViewModel.swift in Sources */,
 				BE77D0AE28B13A920067A9D8 /* MenuCreateSheet.swift in Sources */,
 				BEDE34DA2879AA0B00525014 /* UserRepository.swift in Sources */,
@@ -1207,6 +1212,7 @@
 				BE9413CC28C21F1E00171060 /* NotificationListCell.swift in Sources */,
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
 				BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */,
+				BED04D3328EA963E00937E4C /* FacebookLogin.swift in Sources */,
 				B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */,
 				BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */,
 				B8F40EB328980DFF0021A2A9 /* PrivacyPolicyView.swift in Sources */,

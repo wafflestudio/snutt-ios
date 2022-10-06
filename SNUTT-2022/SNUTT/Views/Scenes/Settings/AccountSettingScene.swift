@@ -9,42 +9,67 @@ import SwiftUI
 
 struct AccountSettingScene: View {
     @ObservedObject var viewModel: ViewModel
+    @State private var alertDisconnectFacebook: Bool = false
 
     var body: some View {
         List {
-            Section {
-                if let username = viewModel.currentUser?.localId {
+            if let username = viewModel.currentUser?.localId {
+                Section {
                     SettingsTextItem(title: "아이디", detail: username)
                     SettingsLinkItem(title: "비밀번호 변경") {
-                        EmptyView()
+                        ChangePasswordView { old, new in
+                            await viewModel.changePassword(from: old, to: new)
+                        }
                     }
-                } else {
+                }
+            } else {
+                Section {
                     SettingsLinkItem(title: "아이디 / 비밀번호 추가") {
-                        EmptyView()
+                        SignUpView(displayMode: .attach) { id, password, _ in
+                            await viewModel.attachLocalId(id: id, password: password)
+                        }
                     }
                 }
             }
-            Section {
-                if let facebookName = viewModel.currentUser?.fbName {
+
+            if let facebookName = viewModel.currentUser?.fbName {
+                Section {
                     SettingsTextItem(title: "페이스북 이름", detail: facebookName)
-                    SettingsButtonItem(title: "페이스북 연동 취소", role: .destructive) {
-                        print("로그아웃")
+                    SettingsButtonItem(title: "페이스북 연동 해제", role: .destructive) {
+                        alertDisconnectFacebook = true
                     }
-                } else {
+                    .alert("페이스북 연동 해제", isPresented: $alertDisconnectFacebook) {
+                        Button("취소", role: .cancel, action: {})
+                        Button("해제", role: .destructive, action: {
+                            Task {
+                                await viewModel.detachFacebook()
+                            }
+                        })
+                    } message: {
+                        Text("페이스북 연동을 해제하시겠습니까?")
+                    }
+                }
+            } else {
+                Section {
                     SettingsButtonItem(title: "페이스북 연동") {
-                        print("연동")
+                        viewModel.performFacebookSignIn()
                     }
                 }
             }
+
             Section {
                 SettingsTextItem(title: "이메일", detail: viewModel.currentUser?.email ?? "(없음)")
             }
             Section {
                 SettingsButtonItem(title: "회원 탈퇴", role: .destructive) {
-                    print("로그아웃")
+                    Task {
+                        await viewModel.deleteUser()
+                    }
                 }
             }
         }
+        .animation(.customSpring, value: viewModel.currentUser?.fbName)
+        .animation(.customSpring, value: viewModel.currentUser?.localId)
         .listStyle(.insetGrouped)
         .navigationTitle("계정 관리")
         .navigationBarTitleDisplayMode(.inline)
