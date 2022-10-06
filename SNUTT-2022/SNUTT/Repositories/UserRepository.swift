@@ -10,11 +10,11 @@ import Foundation
 
 protocol UserRepositoryProtocol {
     func fetchUser() async throws -> UserDto
-    func attachFacebook(fbId: String, fbToken: String) async throws -> TokenResponseDto
-    func detachFacebook() async throws -> TokenResponseDto
+    func connectFacebook(fbId: String, fbToken: String) async throws -> TokenResponseDto
+    func disconnectFacebook() async throws -> TokenResponseDto
     func changePassword(from oldPassword: String, to newPassword: String) async throws -> TokenResponseDto
     func addLocalId(id: String, password: String) async throws -> TokenResponseDto
-    func unregister() async throws
+    func deleteUser() async throws
 }
 
 class UserRepository: UserRepositoryProtocol {
@@ -31,16 +31,16 @@ class UserRepository: UserRepositoryProtocol {
             .handlingError()
     }
 
-    func attachFacebook(fbId: String, fbToken: String) async throws -> TokenResponseDto {
+    func connectFacebook(fbId: String, fbToken: String) async throws -> TokenResponseDto {
         return try await session
-            .request(UserRouter.addFB(id: fbId, token: fbToken))
+            .request(UserRouter.connectFacebook(id: fbId, token: fbToken))
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
 
-    func detachFacebook() async throws -> TokenResponseDto {
+    func disconnectFacebook() async throws -> TokenResponseDto {
         return try await session
-            .request(UserRouter.detachFB)
+            .request(UserRouter.disconnectFacebook)
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
@@ -59,7 +59,7 @@ class UserRepository: UserRepositoryProtocol {
             .handlingError()
     }
 
-    func unregister() async throws {
+    func deleteUser() async throws {
         let _ = try await session
             .request(UserRouter.deleteUser)
             .serializingString()

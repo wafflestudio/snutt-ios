@@ -17,8 +17,8 @@ enum UserRouter: Router {
     case editUser(email: String)
     case changePassword(oldPassword: String, newPassword: String)
     case addLocalId(id: String, password: String)
-    case addFB(id: String, token: String)
-    case detachFB
+    case connectFacebook(id: String, token: String)
+    case disconnectFacebook
     case getFB
     case addDevice(id: String)
     case deleteDevice(id: String)
@@ -34,9 +34,9 @@ enum UserRouter: Router {
             return .put
         case .addLocalId:
             return .post
-        case .addFB:
+        case .connectFacebook:
             return .post
-        case .detachFB:
+        case .disconnectFacebook:
             return .delete
         case .getFB:
             return .get
@@ -55,7 +55,7 @@ enum UserRouter: Router {
             return "/info"
         case .changePassword, .addLocalId:
             return "/password"
-        case .addFB, .detachFB, .getFB:
+        case .connectFacebook, .disconnectFacebook, .getFB:
             return "/facebook"
         case let .addDevice(id):
             return "/device/\(id)"
@@ -76,9 +76,9 @@ enum UserRouter: Router {
             return ["old_password": oldPassword, "new_password": newPassword]
         case let .addLocalId(id, password):
             return ["id": id, "password": password]
-        case let .addFB(id, token):
+        case let .connectFacebook(id, token):
             return ["fb_id": id, "fb_token": token]
-        case .detachFB:
+        case .disconnectFacebook:
             return nil
         case .getFB:
             return nil
