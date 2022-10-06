@@ -35,6 +35,16 @@ struct UserService: UserServiceProtocol {
         updateUser(from: dto)
     }
 
+    func changePassword(from oldPassword: String, to newPassword: String) async throws {
+        let dto = try await userRepository.changePassword(from: oldPassword, to: newPassword)
+        try await updateToken(from: dto)
+    }
+
+    func addLocalId(id: String, password: String) async throws {
+        let dto = try await userRepository.addLocalId(id: id, password: password)
+        try await updateToken(from: dto)
+    }
+
     func connectFacebook(fbId: String, fbToken: String) async throws {
         let dto = try await userRepository.connectFacebook(fbId: fbId, fbToken: fbToken)
         try await updateToken(from: dto)
@@ -45,48 +55,8 @@ struct UserService: UserServiceProtocol {
         try await updateToken(from: dto)
     }
 
-    func changePassword(from oldPassword: String, to newPassword: String) async throws {
-        let dto = try await userRepository.changePassword(from: oldPassword, to: newPassword)
-        try await updateToken(from: dto)
-    }
-
-    func addLocalId(id: String, password: String) async throws {
-        let dto = try await userRepository.addLocalId(id: id, password: password)
-        try await updateToken(from: dto)
-    }
-
     func deleteUser() async throws {
         try await userRepository.deleteUser()
-        DispatchQueue.main.async {
-            appState.user.accessToken = nil
-            appState.user.userId = nil
-        }
-        userDefaultsRepository.set(String.self, key: .token, value: nil)
-        userDefaultsRepository.set(String.self, key: .userId, value: nil)
-    }
-
-    func attachFacebook(fbId: String, fbToken: String) async throws {
-        let dto = try await userRepository.attachFacebook(fbId: fbId, fbToken: fbToken)
-        try await updateToken(from: dto)
-    }
-
-    func detachFacebook() async throws {
-        let dto = try await userRepository.detachFacebook()
-        try await updateToken(from: dto)
-    }
-
-    func changePassword(from oldPassword: String, to newPassword: String) async throws {
-        let dto = try await userRepository.changePassword(from: oldPassword, to: newPassword)
-        try await updateToken(from: dto)
-    }
-
-    func addLocalId(id: String, password: String) async throws {
-        let dto = try await userRepository.addLocalId(id: id, password: password)
-        try await updateToken(from: dto)
-    }
-
-    func unregister() async throws {
-        try await userRepository.unregister()
         DispatchQueue.main.async {
             appState.user.accessToken = nil
             appState.user.userId = nil
