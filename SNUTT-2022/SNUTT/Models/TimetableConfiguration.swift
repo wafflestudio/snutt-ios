@@ -13,7 +13,7 @@ struct TimetableConfiguration: Codable {
     var autoFit: Bool = true
 
     var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
-    
+
     var visibleWeeksSorted: [Weekday] {
         var weekdayOrder: [Weekday: Int] = [:]
         Weekday.allCases.enumerated().forEach { offset, element in
