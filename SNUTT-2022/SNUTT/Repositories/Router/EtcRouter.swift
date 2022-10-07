@@ -12,8 +12,9 @@ enum EtcRouter: Router {
     var baseURL: URL {
         URL(string: NetworkConfiguration.serverBaseURL)!
     }
+
     static let shouldAddToken: Bool = true
-    
+
     case feedback(email: String?, message: String)
     case getColor
 

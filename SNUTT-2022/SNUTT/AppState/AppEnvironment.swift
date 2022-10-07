@@ -84,8 +84,7 @@ extension AppEnvironment {
                      reviewRepository: reviewRepository,
                      authRepository: authRepository,
                      notificationRepository: notificationRepository,
-                     etcRepository: etcRepository
-        )
+                     etcRepository: etcRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -137,8 +136,7 @@ extension EnvironmentValues {
                   courseBookService: FakeCourseBookService(),
                   authService: FakeAuthService(),
                   notificationService: FakeNotificationService(),
-                  etcService: FakeEtcService()
-            )
+                  etcService: FakeEtcService())
         }
     }
 #endif

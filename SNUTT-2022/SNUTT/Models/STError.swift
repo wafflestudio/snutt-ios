@@ -12,7 +12,7 @@ public enum STError: Int, Error {
     case SERVER_FAULT = 0x0000
     case NO_NETWORK = 0x0001
     case UNKNOWN_ERROR = 0x0002
-    
+
     /* 401 - Request was invalid */
     case NO_FB_ID_OR_TOKEN = 0x1001
     case NO_YEAR_OR_SEMESTER = 0x1002
@@ -27,7 +27,7 @@ public enum STError: Int, Error {
     case NO_LECTURE_TITLE = 0x100B
     case INVALID_TIMEJSON = 0x100C
     case INVALID_EMAIL = 0x100D
-    
+
     /* 403 - Authorization-related */
     case WRONG_API_KEY = 0x2000
     case NO_USER_TOKEN = 0x2001
@@ -38,7 +38,7 @@ public enum STError: Int, Error {
     case WRONG_FB_TOKEN = 0x2006
     case UNKNOWN_APP = 0x2007
     case WRONG_APPLE_TOKEN = 0x2008
-    
+
     /* 403 - Restrictions */
     case INVALID_ID = 0x3000
     case INVALID_PASSWORD = 0x3001
@@ -55,7 +55,7 @@ public enum STError: Int, Error {
     case LECTURE_TIME_OVERLAP = 0x300C
     case IS_CUSTOM_LECTURE = 0x300D
     case USER_HAS_NO_FCM_KEY = 0x300E
-    
+
     /* 404 - NOT found */
     case TAG_NOT_FOUND = 0x4000
     case TIMETABLE_NOT_FOUND = 0x4001
@@ -63,11 +63,11 @@ public enum STError: Int, Error {
     case REF_LECTURE_NOT_FOUND = 0x4003
     case USER_NOT_FOUND = 0x4004
     case COLORLIST_NOT_FOUND = 0x4005
-    
+
     /* Client-side Errors */
     case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
     case CANT_CHANGE_OTHERS_THEME = 0x5001
-    
+
     var errorTitle: String {
         switch self {
         case .SERVER_FAULT:
@@ -75,61 +75,61 @@ public enum STError: Int, Error {
         case .NO_NETWORK:
             return "네트워크 오류"
         case .NO_FB_ID_OR_TOKEN,
-                .NO_YEAR_OR_SEMESTER,
-                .NOT_ENOUGH_TO_CREATE_TIMETABLE,
-                .NO_LECTURE_INPUT,
-                .NO_LECTURE_ID,
-                .ATTEMPT_TO_MODIFY_IDENTITIY,
-                .NO_TIMETABLE_TITLE,
-                .NO_REGISTRATION_ID,
-                .INVALID_TIMEMASK,
-                .INVALID_COLOR,
-                .NO_LECTURE_TITLE,
-                .CANT_CHANGE_OTHERS_THEME:
+             .NO_YEAR_OR_SEMESTER,
+             .NOT_ENOUGH_TO_CREATE_TIMETABLE,
+             .NO_LECTURE_INPUT,
+             .NO_LECTURE_ID,
+             .ATTEMPT_TO_MODIFY_IDENTITIY,
+             .NO_TIMETABLE_TITLE,
+             .NO_REGISTRATION_ID,
+             .INVALID_TIMEMASK,
+             .INVALID_COLOR,
+             .NO_LECTURE_TITLE,
+             .CANT_CHANGE_OTHERS_THEME:
             return "요청 실패"
         case .NO_USER_TOKEN,
-                .WRONG_API_KEY,
-                .WRONG_USER_TOKEN,
-                .NO_ADMIN_PRIVILEGE:
+             .WRONG_API_KEY,
+             .WRONG_USER_TOKEN,
+             .NO_ADMIN_PRIVILEGE:
             return "권한 문제"
         case .WRONG_ID,
-                .WRONG_PASSWORD,
-                .WRONG_APPLE_TOKEN,
-                .WRONG_FB_TOKEN:
+             .WRONG_PASSWORD,
+             .WRONG_APPLE_TOKEN,
+             .WRONG_FB_TOKEN:
             return "로그인 실패"
         case .UNKNOWN_APP:
             return "앱 정보 실패"
         case .INVALID_ID,
-                .INVALID_PASSWORD,
-                .DUPLICATE_ID,
-                .DUPLICATE_TIMETABLE_TITLE,
-                .DUPLICATE_LECTURE,
-                .ALREADY_LOCAL_ACCOUNT,
-                .ALREADY_FB_ACCOUNT,
-                .NOT_LOCAL_ACCOUNT,
-                .NOT_FB_ACCOUNT,
-                .FB_ID_WITH_SOMEONE_ELSE,
-                .WRONG_SEMESTER,
-                .NOT_CUSTOM_LECTURE,
-                .LECTURE_TIME_OVERLAP,
-                .IS_CUSTOM_LECTURE,
-                .USER_HAS_NO_FCM_KEY,
-                .INVALID_TIMEJSON,
-                .CANT_DELETE_CURRENT_TIMETABLE,
-                .INVALID_EMAIL:
+             .INVALID_PASSWORD,
+             .DUPLICATE_ID,
+             .DUPLICATE_TIMETABLE_TITLE,
+             .DUPLICATE_LECTURE,
+             .ALREADY_LOCAL_ACCOUNT,
+             .ALREADY_FB_ACCOUNT,
+             .NOT_LOCAL_ACCOUNT,
+             .NOT_FB_ACCOUNT,
+             .FB_ID_WITH_SOMEONE_ELSE,
+             .WRONG_SEMESTER,
+             .NOT_CUSTOM_LECTURE,
+             .LECTURE_TIME_OVERLAP,
+             .IS_CUSTOM_LECTURE,
+             .USER_HAS_NO_FCM_KEY,
+             .INVALID_TIMEJSON,
+             .CANT_DELETE_CURRENT_TIMETABLE,
+             .INVALID_EMAIL:
             return "잘못된 요청"
         case .TAG_NOT_FOUND,
-                .TIMETABLE_NOT_FOUND,
-                .LECTURE_NOT_FOUND,
-                .REF_LECTURE_NOT_FOUND,
-                .USER_NOT_FOUND,
-                .COLORLIST_NOT_FOUND:
+             .TIMETABLE_NOT_FOUND,
+             .LECTURE_NOT_FOUND,
+             .REF_LECTURE_NOT_FOUND,
+             .USER_NOT_FOUND,
+             .COLORLIST_NOT_FOUND:
             return "찾지 못함"
         case .UNKNOWN_ERROR:
             return "알 수 없는 오류"
         }
     }
-    
+
     var errorMessage: String {
         switch self {
         case .SERVER_FAULT:
@@ -231,8 +231,7 @@ public enum STError: Int, Error {
         }
     }
 }
-        
-    
+
 public extension Error {
     var asSTError: STError? {
         self as? STError

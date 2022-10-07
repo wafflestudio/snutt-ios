@@ -9,16 +9,16 @@ import SwiftUI
 
 struct UserSupportView: View {
     var sendFeedback: (String, String) async -> Bool // email, message -> success
-    
+
     @State private var email: String = ""
     @State private var content: String = ""
     @State private var alertSendFeedback: Bool = false
     @Environment(\.presentationMode) private var mode
-    
+
     var isButtonDisabled: Bool {
         email.isEmpty || content.isEmpty
     }
-    
+
     var body: some View {
         Form {
             Section(header: Text("이메일 주소")) {
@@ -59,8 +59,8 @@ struct UserSupportView: View {
 
 struct UserSupportScene_Previews: PreviewProvider {
     static var previews: some View {
-        UserSupportView { email, message in
-            return true
+        UserSupportView { _, _ in
+            true
         }
     }
 }

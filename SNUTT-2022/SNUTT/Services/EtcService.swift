@@ -15,7 +15,7 @@ protocol EtcServiceProtocol {
 struct EtcService: EtcServiceProtocol {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
-    
+
     private var etcRepository: EtcRepositoryProtocol {
         return webRepositories.etcRepository
     }
@@ -26,5 +26,5 @@ struct EtcService: EtcServiceProtocol {
 }
 
 class FakeEtcService: EtcServiceProtocol {
-    func sendFeedback(email: String, message: String) async throws {}
+    func sendFeedback(email _: String, message _: String) async throws {}
 }
