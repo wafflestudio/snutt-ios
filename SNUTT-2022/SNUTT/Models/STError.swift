@@ -87,7 +87,7 @@ public enum STError: Int, Error {
              .NO_LECTURE_TITLE,
              .CANT_CHANGE_OTHERS_THEME,
              .EMAIL_NOT_VERIFIED
-            :
+             :
             return "요청 실패"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,

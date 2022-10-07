@@ -13,19 +13,18 @@ enum WebViewEventType {
     case colorSchemeChange(to: ColorScheme)
 }
 
-
 struct ReviewScene: View {
     @ObservedObject var viewModel: ViewModel
     @Binding var detailId: String
-    
+
     var eventSignal: PassthroughSubject<WebViewEventType, Never>
-    
+
     @Environment(\.colorScheme) var colorScheme
 
     init(viewModel: ViewModel, detailId: Binding<String> = .constant(""), webViewEventSignal: PassthroughSubject<WebViewEventType, Never>? = nil) {
         self.viewModel = viewModel
         _detailId = detailId
-        self.eventSignal = webViewEventSignal ?? .init()
+        eventSignal = webViewEventSignal ?? .init()
     }
 
     private var reviewUrl: URL {
@@ -55,7 +54,7 @@ struct ReviewScene: View {
         .onChange(of: colorScheme) { newValue in
             eventSignal.send(.colorSchemeChange(to: newValue))
         }
-        
+
         let _ = debugChanges()
     }
 }

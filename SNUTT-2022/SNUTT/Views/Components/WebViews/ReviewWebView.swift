@@ -13,10 +13,10 @@ struct ReviewWebView: WebView {
     var url: URL
     let accessToken: String
     @Binding var connectionState: WebViewConnectionState
-    
+
     /// An event stream used to control `WKWebView` instance outside current view.
     var eventSignal: PassthroughSubject<WebViewEventType, Never>
-    
+
     var webView: WKWebView
 
     init(url: URL, accessToken: String, connectionState: Binding<WebViewConnectionState>, eventSignal: PassthroughSubject<WebViewEventType, Never>, initialColorScheme: ColorScheme) {
@@ -42,7 +42,7 @@ struct ReviewWebView: WebView {
     func makeCoordinator() -> ReviewWebView.Coordinator {
         Coordinator(self)
     }
-    
+
     private static func getCookie(name: String, value: String) -> HTTPCookie? {
         return HTTPCookie(properties: [
             .domain: NetworkConfiguration.snuevBaseURL.replacingOccurrences(of: "https://", with: ""),
@@ -76,7 +76,7 @@ struct ReviewWebView: WebView {
                 switch event {
                 case .reload:
                     self?.parent.reloadWebView()
-                case .colorSchemeChange(to: let colorScheme):
+                case let .colorSchemeChange(to: colorScheme):
                     self?.parent.webView.evaluateJavaScript("changeTheme(\(colorScheme.descriptionWithQuotes))")
                 }
             }.store(in: &bag)
@@ -102,9 +102,8 @@ struct ReviewWebView: WebView {
     }
 }
 
-
-extension ColorScheme {
-    fileprivate var description: String {
+private extension ColorScheme {
+    var description: String {
         switch self {
         case .dark:
             return "dark"
@@ -114,9 +113,8 @@ extension ColorScheme {
             return "light"
         }
     }
-    
-    fileprivate var descriptionWithQuotes: String {
+
+    var descriptionWithQuotes: String {
         "'\(description)'"
     }
 }
-
