@@ -28,4 +28,14 @@ class SettingViewModel: BaseViewModel {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
+    
+    var versionString: String {
+        guard let appVersion = AppMetadata.appVersion.value,
+              let buildNumber = AppMetadata.buildNumber.value,
+              let appType = AppMetadata.appType.value
+        else {
+            return "버전 정보 없음"
+        }
+        return "v\(appVersion)-\(appType).\(buildNumber)"
+    }
 }

@@ -23,7 +23,7 @@ struct SettingScene: View {
             }
 
             Section {
-                SettingsTextItem(title: "버전 정보", detail: "최신 버전")
+                SettingsTextItem(title: "버전 정보", detail: viewModel.versionString)
             }
 
             Section {
