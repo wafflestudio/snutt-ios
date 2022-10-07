@@ -88,6 +88,8 @@
 		BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C002888173B009EBCB7 /* TagRouter.swift */; };
 		BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C02288817C8009EBCB7 /* SearchRepository.swift */; };
 		BE682C0528881852009EBCB7 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C0428881852009EBCB7 /* SearchService.swift */; };
+		BE6D893028EFD662000607A6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE6D893228EFD662000607A6 /* Localizable.strings */; };
+		BE6D893528EFD68E000607A6 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6D893428EFD68E000607A6 /* String+Localized.swift */; };
 		BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = BE779B1728E3DD5B009960EB /* FacebookLogin */; };
 		BE779B1A28E3E28C009960EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE779B1928E3E28C009960EB /* AppDelegate.swift */; };
 		BE779B1C28E72622009960EB /* AnimatedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE779B1B28E72622009960EB /* AnimatedTextField.swift */; };
@@ -305,6 +307,9 @@
 		BE682C002888173B009EBCB7 /* TagRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagRouter.swift; sourceTree = "<group>"; };
 		BE682C02288817C8009EBCB7 /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
 		BE682C0428881852009EBCB7 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		BE6D893128EFD662000607A6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BE6D893328EFD669000607A6 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BE6D893428EFD68E000607A6 /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
 		BE779B1928E3E28C009960EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE779B1B28E72622009960EB /* AnimatedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedTextField.swift; sourceTree = "<group>"; };
 		BE77D09D28AEAA5A0067A9D8 /* CourseBookRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookRouter.swift; sourceTree = "<group>"; };
@@ -509,6 +514,7 @@
 			children = (
 				BE419B8C288B8C5A00FA9590 /* View+Debug.swift */,
 				B88D16F228ABC5DD00E2D652 /* String+ext.swift */,
+				BE6D893428EFD68E000607A6 /* String+Localized.swift */,
 				B8F570A5289E1221005C199F /* UserDefaults+ext.swift */,
 				BEB3B6B028D4D4D900E56062 /* View+ResignResponder.swift */,
 				BEB57C2028B6758200279EFF /* Animation+Custom.swift */,
@@ -664,6 +670,7 @@
 				B8E51E5C28B546770065248E /* DebugConfig.xcconfig */,
 				B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */,
 				B8E51E5F28B549660065248E /* StagingConfig.xcconfig */,
+				BE6D893228EFD662000607A6 /* Localizable.strings */,
 			);
 			path = SNUTT;
 			sourceTree = "<group>";
@@ -977,6 +984,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = DC860F3C27E5C87D0068C94B;
 			packageReferences = (
@@ -1009,6 +1017,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */,
+				BE6D893028EFD662000607A6 /* Localizable.strings in Resources */,
 				BE28036C28E9F0B100B2B1AB /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1107,6 +1116,7 @@
 				BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */,
 				BED04D3128EA8B0A00937E4C /* ChangePasswordView.swift in Sources */,
 				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
+				BE6D893528EFD68E000607A6 /* String+Localized.swift in Sources */,
 				BEB3B6A228CDB7A400E56062 /* LectureTimePicker.swift in Sources */,
 				BE77D0AC28B1384D0067A9D8 /* MenuSheetTopBar.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
@@ -1260,6 +1270,18 @@
 			targetProxy = DC860F6027E5C87F0068C94B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BE6D893228EFD662000607A6 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BE6D893128EFD662000607A6 /* en */,
+				BE6D893328EFD669000607A6 /* ko */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		B8E51E6028B549700065248E /* Staging */ = {

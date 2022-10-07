@@ -70,7 +70,7 @@ public enum STError: Int, Error {
     var errorTitle: String {
         switch self {
         case .SERVER_FAULT:
-            return "서버 오류"
+            return "SERVER_ERROR".localized
         case .NO_NETWORK:
             return "네트워크 오류"
         case .NO_FB_ID_OR_TOKEN,
