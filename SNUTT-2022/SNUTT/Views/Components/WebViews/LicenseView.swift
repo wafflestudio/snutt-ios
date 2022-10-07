@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct LicenseView: View {
-    
     enum LicenseApps: CaseIterable {
         case alamofire
         case facebookSDK
-        
+
         var projectName: String {
             switch self {
             case .alamofire:
@@ -21,7 +20,7 @@ struct LicenseView: View {
                 return "Facebook iOS SDK"
             }
         }
-        
+
         var copyright: String {
             switch self {
             case .alamofire:
@@ -30,7 +29,7 @@ struct LicenseView: View {
                 return "Copyright (c) Meta Platforms, Inc."
             }
         }
-        
+
         var homepage: String {
             switch self {
             case .alamofire:
@@ -39,7 +38,7 @@ struct LicenseView: View {
                 return "https://github.com/facebook/facebook-ios-sdk"
             }
         }
-        
+
         var license: String {
             switch self {
             case .alamofire:
@@ -48,9 +47,8 @@ struct LicenseView: View {
                 return ""
             }
         }
-    
     }
-    
+
     var body: some View {
         List {
             ForEach(LicenseApps.allCases, id: \.self) { project in
@@ -61,7 +59,7 @@ struct LicenseView: View {
                         .foregroundColor(.gray)
                         .font(.system(size: 14))
                         .padding(.bottom, 5)
-                    
+
                     Text(project.copyright)
                         .font(.system(size: 14))
                     Text(project.license)
