@@ -18,8 +18,8 @@
 		B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16F228ABC5DD00E2D652 /* String+ext.swift */; };
 		B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FA28AE2BB900E2D652 /* UserRouter.swift */; };
 		B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FC28AE2E1E00E2D652 /* User.swift */; };
-		B88D170128AF71E300E2D652 /* UserSupportScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170028AF71E300E2D652 /* UserSupportScene.swift */; };
-		B8AF8D3E28C72A880056DE62 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF8D3D28C72A880056DE62 /* Validation.swift */; };
+		B88D170128AF71E300E2D652 /* UserSupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170028AF71E300E2D652 /* UserSupportView.swift */; };
+		B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */; };
 		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
@@ -88,6 +88,10 @@
 		BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C002888173B009EBCB7 /* TagRouter.swift */; };
 		BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C02288817C8009EBCB7 /* SearchRepository.swift */; };
 		BE682C0528881852009EBCB7 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682C0428881852009EBCB7 /* SearchService.swift */; };
+		BE6D892828EFC5A1000607A6 /* EtcRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6D892728EFC5A1000607A6 /* EtcRouter.swift */; };
+		BE6D892A28EFC637000607A6 /* EtcRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6D892928EFC637000607A6 /* EtcRepository.swift */; };
+		BE6D892C28EFC76E000607A6 /* EtcService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6D892B28EFC76E000607A6 /* EtcService.swift */; };
+		BE6D892D28EFC8FB000607A6 /* ValidationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */; };
 		BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = BE779B1728E3DD5B009960EB /* FacebookLogin */; };
 		BE779B1A28E3E28C009960EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE779B1928E3E28C009960EB /* AppDelegate.swift */; };
 		BE779B1C28E72622009960EB /* AnimatedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE779B1B28E72622009960EB /* AnimatedTextField.swift */; };
@@ -249,9 +253,9 @@
 		B88D16F228ABC5DD00E2D652 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
 		B88D16FA28AE2BB900E2D652 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		B88D16FC28AE2E1E00E2D652 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		B88D170028AF71E300E2D652 /* UserSupportScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSupportScene.swift; sourceTree = "<group>"; };
+		B88D170028AF71E300E2D652 /* UserSupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSupportView.swift; sourceTree = "<group>"; };
 		B88D170728B361DC00E2D652 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B8AF8D3D28C72A880056DE62 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
+		B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationUtils.swift; sourceTree = "<group>"; };
 		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
 		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ProductionConfig.xcconfig; sourceTree = "<group>"; };
@@ -305,6 +309,9 @@
 		BE682C002888173B009EBCB7 /* TagRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagRouter.swift; sourceTree = "<group>"; };
 		BE682C02288817C8009EBCB7 /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
 		BE682C0428881852009EBCB7 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		BE6D892728EFC5A1000607A6 /* EtcRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcRouter.swift; sourceTree = "<group>"; };
+		BE6D892928EFC637000607A6 /* EtcRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcRepository.swift; sourceTree = "<group>"; };
+		BE6D892B28EFC76E000607A6 /* EtcService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcService.swift; sourceTree = "<group>"; };
 		BE779B1928E3E28C009960EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE779B1B28E72622009960EB /* AnimatedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedTextField.swift; sourceTree = "<group>"; };
 		BE77D09D28AEAA5A0067A9D8 /* CourseBookRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseBookRouter.swift; sourceTree = "<group>"; };
@@ -470,7 +477,6 @@
 				DC29159A2865F95100FE5F9A /* SettingScene.swift */,
 				B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */,
 				B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */,
-				B88D170028AF71E300E2D652 /* UserSupportScene.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -583,6 +589,7 @@
 			isa = PBXGroup;
 			children = (
 				BEB3B6A428CDE1FD00E56062 /* TimeUtils.swift */,
+				B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -625,6 +632,7 @@
 				B88D16FA28AE2BB900E2D652 /* UserRouter.swift */,
 				B8E51E6A28B769680065248E /* ReviewRouter.swift */,
 				BE77D09D28AEAA5A0067A9D8 /* CourseBookRouter.swift */,
+				BE6D892728EFC5A1000607A6 /* EtcRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -726,7 +734,6 @@
 				BE9413CD28C2207D00171060 /* NotificationState.swift */,
 				BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */,
 				B88D16FC28AE2E1E00E2D652 /* User.swift */,
-				B8AF8D3D28C72A880056DE62 /* Validation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -742,6 +749,7 @@
 				BE9413CF28C220C900171060 /* NotificationService.swift */,
 				BE1B610B289D7C2500401361 /* GlobalUIService.swift */,
 				BE682C0428881852009EBCB7 /* SearchService.swift */,
+				BE6D892B28EFC76E000607A6 /* EtcService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -760,6 +768,7 @@
 				BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */,
 				BE77D09F28AEAB920067A9D8 /* CourseBookRepository.swift */,
 				B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */,
+				BE6D892928EFC637000607A6 /* EtcRepository.swift */,
 				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
 				B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */,
 			);
@@ -817,6 +826,7 @@
 				BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */,
 				BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */,
 				BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */,
+				B88D170028AF71E300E2D652 /* UserSupportView.swift */,
 				BE28036028E884D300B2B1AB /* WebViews */,
 				BE9413D728C3AF8300171060 /* Search */,
 				BEB3B6AB28D4D3DF00E56062 /* LectureDetail */,
@@ -1040,6 +1050,7 @@
 				BE804BEB288B9EFE00782F16 /* TimetableConfiguration.swift in Sources */,
 				BE419B8A288B8BB600FA9590 /* STColor.swift in Sources */,
 				BE419B89288B8BAD00FA9590 /* TimetableDto.swift in Sources */,
+				BE6D892D28EFC8FB000607A6 /* ValidationUtils.swift in Sources */,
 				BE13C5B628AE636D0081D0AB /* UserDefaultsRepository.swift in Sources */,
 				BE419B86288B8B8F00FA9590 /* Theme.swift in Sources */,
 				BE419B87288B8B8F00FA9590 /* Weekday.swift in Sources */,
@@ -1082,7 +1093,7 @@
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
 				BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */,
 				BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */,
-				B8AF8D3E28C72A880056DE62 /* Validation.swift in Sources */,
+				B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */,
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
 				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */,
@@ -1102,8 +1113,10 @@
 				B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */,
 				B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
+				BE6D892A28EFC637000607A6 /* EtcRepository.swift in Sources */,
 				BE9413BD28C2119500171060 /* NotificationRouter.swift in Sources */,
 				BE28036428E8850E00B2B1AB /* WebViewType.swift in Sources */,
+				BE6D892C28EFC76E000607A6 /* EtcService.swift in Sources */,
 				BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */,
 				BED04D3128EA8B0A00937E4C /* ChangePasswordView.swift in Sources */,
 				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
@@ -1114,7 +1127,7 @@
 				BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */,
 				BE9413DF28C3BDF600171060 /* SearchLectureList.swift in Sources */,
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
-				B88D170128AF71E300E2D652 /* UserSupportScene.swift in Sources */,
+				B88D170128AF71E300E2D652 /* UserSupportView.swift in Sources */,
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
 				BED04D2F28EA6FA600937E4C /* SettingsMenuItem.swift in Sources */,
 				BE28036228E884F400B2B1AB /* ReviewWebView.swift in Sources */,
@@ -1192,6 +1205,7 @@
 				BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */,
 				BE9413CC28C21F1E00171060 /* NotificationListCell.swift in Sources */,
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
+				BE6D892828EFC5A1000607A6 /* EtcRouter.swift in Sources */,
 				BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */,
 				BED04D3328EA963E00937E4C /* FacebookLogin.swift in Sources */,
 				B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */,

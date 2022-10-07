@@ -28,4 +28,18 @@ class SettingViewModel: BaseViewModel {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
+    
+    func sendFeedback(email: String, message: String) async -> Bool {
+        if !Validation.check(email: email) {
+            services.globalUIService.presentErrorAlert(error: .INVALID_EMAIL)
+            return false
+        }
+        do {
+            try await services.etcService.sendFeedback(email: email, message: message)
+            return true
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+            return false
+        }
+    }
 }
