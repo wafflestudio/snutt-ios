@@ -34,6 +34,7 @@ struct LectureDetailScene: View {
     @State private var showReviewWebView = false
     @State private var reviewId: String = ""
 
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -187,6 +188,7 @@ struct LectureDetailScene: View {
                         }
                         .sheet(isPresented: $showReviewWebView) {
                             ReviewScene(viewModel: .init(container: viewModel.container), detailId: $reviewId)
+                                .id(colorScheme)
                         }
                     }
 
