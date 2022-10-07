@@ -32,6 +32,8 @@ struct ReviewWebView: WebView {
         webView.allowsBackForwardNavigationGestures = true
         webView.scrollView.bounces = false
         webView.load(urlRequest)
+        webView.backgroundColor = UIColor(STColor.systemBackground)
+        webView.isOpaque = false
         return webView
     }
 

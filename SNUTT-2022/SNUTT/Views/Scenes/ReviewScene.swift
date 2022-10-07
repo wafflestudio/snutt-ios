@@ -39,7 +39,8 @@ struct ReviewScene: View {
         ZStack {
             ReviewWebView(url: reviewUrl, accessToken: viewModel.accessToken, connectionState: $viewModel.connectionState, eventSignal: eventSignal, initialColorScheme: colorScheme)
                 .navigationBarHidden(true)
-                .edgesIgnoringSafeArea(.all)
+                .edgesIgnoringSafeArea(.bottom)
+                .background(STColor.systemBackground)
 
             if viewModel.connectionState == .error {
                 WebErrorView(refresh: {
@@ -48,7 +49,7 @@ struct ReviewScene: View {
                 .navigationTitle("강의평")
                 .navigationBarTitleDisplayMode(.inline)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color(uiColor: .systemBackground))
+                .background(STColor.systemBackground)
             }
         }
         .onChange(of: colorScheme) { newValue in
