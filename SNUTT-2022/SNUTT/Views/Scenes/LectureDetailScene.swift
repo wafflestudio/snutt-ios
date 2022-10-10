@@ -308,30 +308,26 @@ struct LectureDetailScene: View {
             }
         }
         .environment(\.editMode, $editMode)
-        .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented) {
+        .alert(viewModel.errorTitle, isPresented: $viewModel.isLectureOverlapped) {
             Button {
-                if viewModel.isLectureOverlapped {
-                    Task {
-                        let success = await editMode.isEditing
-                            ? viewModel.forceUpdateLecture(oldLecture: tempLecture, newLecture: lecture)
-                            : (lecture.isCustom
-                                ? viewModel.overwriteCustomLecture(lecture: lecture)
-                                : viewModel.overwriteLecture(lecture: lecture))
-                        if success {
-                            editMode = .inactive
-                            resignFirstResponder()
-                            dismiss()
-                        }
+                Task {
+                    let success = await editMode.isEditing && displayMode == .normal
+                        ? viewModel.forceUpdateLecture(oldLecture: tempLecture, newLecture: lecture)
+                        : (lecture.isCustom
+                            ? viewModel.overwriteCustomLecture(lecture: lecture)
+                            : viewModel.overwriteLecture(lecture: lecture))
+                    if success {
+                        editMode = .inactive
+                        resignFirstResponder()
+                        dismiss()
                     }
                 }
             } label: {
                 Text("확인")
             }
 
-            if viewModel.isLectureOverlapped {
-                Button("취소", role: .cancel) {
-                    viewModel.isLectureOverlapped.toggle()
-                }
+            Button("취소", role: .cancel) {
+                viewModel.isLectureOverlapped.toggle()
             }
         } message: {
             Text(viewModel.errorMessage)

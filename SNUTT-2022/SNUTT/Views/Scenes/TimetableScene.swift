@@ -78,11 +78,6 @@ struct TimetableScene: View {
                     }
                 })
             }
-            .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented) {
-                Button("확인") {}
-            } message: {
-                Text(viewModel.errorMessage)
-            }
 
 //            .onAppear {
 //                Task {

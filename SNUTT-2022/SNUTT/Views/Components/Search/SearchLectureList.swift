@@ -16,7 +16,6 @@ struct SearchLectureList: View {
     let errorTitle: String
     let errorMessage: String
     @Binding var isLectureOverlapped: Bool
-    @Binding var isErrorAlertPresented: Bool
     @Binding var selected: Lecture?
 
     var body: some View {
@@ -38,21 +37,17 @@ struct SearchLectureList: View {
                                 selected = lecture
                             }
                         }
-                        .alert(errorTitle, isPresented: $isErrorAlertPresented) {
+                        .alert(errorTitle, isPresented: $isLectureOverlapped) {
                             Button {
-                                if isLectureOverlapped {
-                                    Task {
-                                        await overwriteLecture(lecture)
-                                    }
+                                Task {
+                                    await overwriteLecture(selected!)
                                 }
                             } label: {
                                 Text("확인")
                             }
 
-                            if isLectureOverlapped {
-                                Button("취소", role: .cancel) {
-                                    isLectureOverlapped.toggle()
-                                }
+                            Button("취소", role: .cancel) {
+                                isLectureOverlapped.toggle()
                             }
                         } message: {
                             Text(errorMessage)

@@ -17,10 +17,9 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var searchResult: [Lecture]? = nil
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
-    @Published var isErrorAlertPresented = false
     @Published var isLectureOverlapped: Bool = false
-    @Published var errorTitle: String = ""
-    @Published var errorMessage: String = ""
+    var errorTitle: String = ""
+    var errorMessage: String = ""
 
     var searchText: String {
         get { _searchText }
@@ -66,7 +65,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.searchService.fetchTags(quarter: currentTimetable.quarter)
         } catch {
-            showError(error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -78,7 +77,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.searchService.fetchInitialSearchResult()
         } catch {
-            showError(error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -86,7 +85,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.searchService.fetchMoreSearchResult()
         } catch {
-            showError(error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -98,7 +97,17 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.lectureService.addLecture(lecture: lecture)
         } catch {
-            showError(error)
+            if let error = error.asSTError {
+                if error.code == .LECTURE_TIME_OVERLAP {
+                    DispatchQueue.main.async {
+                        self.isLectureOverlapped = true
+                        self.errorTitle = error.title
+                        self.errorMessage = error.content
+                    }
+                } else {
+                    services.globalUIService.presentErrorAlert(error: error)
+                }
+            }
         }
     }
 
@@ -106,7 +115,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
         } catch {
-            showError(error)
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -114,20 +123,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.lectureService.overwriteLecture(lecture: lecture)
         } catch {
-            showError(error)
-        }
-    }
-
-    private func showError(_ error: Error) {
-        if let error = error.asSTError {
-            DispatchQueue.main.async {
-                self.isErrorAlertPresented = true
-                if error.code == .LECTURE_TIME_OVERLAP {
-                    self.isLectureOverlapped = true
-                }
-                self.errorTitle = error.title
-                self.errorMessage = error.content
-            }
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 

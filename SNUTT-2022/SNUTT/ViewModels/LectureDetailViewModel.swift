@@ -13,8 +13,8 @@ extension LectureDetailScene {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var isLectureOverlapped: Bool = false
-        @Published var errorTitle: String = ""
-        @Published var errorMessage: String = ""
+        var errorTitle: String = ""
+        var errorMessage: String = ""
 
         override init(container: DIContainer) {
             super.init(container: container)
@@ -33,7 +33,17 @@ extension LectureDetailScene {
                 try await lectureService.addCustomLecture(lecture: lecture)
                 return true
             } catch {
-                showError(error)
+                if let error = error.asSTError {
+                    if error.code == .LECTURE_TIME_OVERLAP {
+                        DispatchQueue.main.async {
+                            self.isLectureOverlapped = true
+                            self.errorTitle = error.title
+                            self.errorMessage = error.content
+                        }
+                    } else {
+                        services.globalUIService.presentErrorAlert(error: error)
+                    }
+                }
                 return false
             }
         }
@@ -43,7 +53,7 @@ extension LectureDetailScene {
                 try await lectureService.overwriteLecture(lecture: lecture)
                 return true
             } catch {
-                showError(error)
+                services.globalUIService.presentErrorAlert(error: error)
                 return false
             }
         }
@@ -53,7 +63,7 @@ extension LectureDetailScene {
                 try await lectureService.overwriteCustomLecture(lecture: lecture)
                 return true
             } catch {
-                showError(error)
+                services.globalUIService.presentErrorAlert(error: error)
                 return false
             }
         }
@@ -63,7 +73,17 @@ extension LectureDetailScene {
                 try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture)
                 return true
             } catch {
-                showError(error)
+                if let error = error.asSTError {
+                    if error.code == .LECTURE_TIME_OVERLAP {
+                        DispatchQueue.main.async {
+                            self.isLectureOverlapped = true
+                            self.errorTitle = error.title
+                            self.errorMessage = error.content
+                        }
+                    } else {
+                        services.globalUIService.presentErrorAlert(error: error)
+                    }
+                }
                 return false
             }
         }
@@ -72,12 +92,11 @@ extension LectureDetailScene {
             guard let oldLecture = oldLecture else {
                 return false
             }
-
             do {
                 try await lectureService.forceUpdateLecture(oldLecture: oldLecture, newLecture: newLecture)
                 return true
             } catch {
-                showError(error)
+                services.globalUIService.presentErrorAlert(error: error)
                 return false
             }
         }
@@ -86,7 +105,7 @@ extension LectureDetailScene {
             do {
                 try await lectureService.deleteLecture(lecture: lecture)
             } catch {
-                showError(error)
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
@@ -103,7 +122,7 @@ extension LectureDetailScene {
                 guard let current = appState.timetable.current else { return nil }
                 return current.lectures.first(where: { $0.id == lecture.id })
             } catch {
-                showError(error)
+                services.globalUIService.presentErrorAlert(error: error)
             }
             return nil
         }
@@ -112,7 +131,7 @@ extension LectureDetailScene {
             do {
                 try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
             } catch {
-                showError(error)
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
@@ -133,19 +152,6 @@ extension LectureDetailScene {
                                             isCustom: lecture.isCustom,
                                             isTemporary: true))
             return lecture
-        }
-
-        private func showError(_ error: Error) {
-            if let error = error.asSTError {
-                DispatchQueue.main.async {
-                    self.isErrorAlertPresented = true
-                    if error.code == .LECTURE_TIME_OVERLAP {
-                        self.isLectureOverlapped = true
-                    }
-                    self.errorTitle = error.title
-                    self.errorMessage = error.content
-                }
-            }
         }
     }
 }
