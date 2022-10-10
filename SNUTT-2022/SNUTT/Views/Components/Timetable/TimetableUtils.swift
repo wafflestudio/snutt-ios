@@ -34,7 +34,7 @@ struct TimetablePainter {
 
         let minHour = getStartingHour(current: current, config: config)
         let hourIndex = timePlace.startTime - Double(minHour)
-        guard let weekdayIndex = config.visibleWeeks.firstIndex(of: timePlace.day) else { return nil }
+        guard let weekdayIndex = config.visibleWeeksSorted.firstIndex(of: timePlace.day) else { return nil }
         if hourIndex < 0 {
             return nil
         }
