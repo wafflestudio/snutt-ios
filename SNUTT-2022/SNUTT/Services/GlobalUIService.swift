@@ -29,6 +29,7 @@ protocol GlobalUIServiceProtocol {
     func setIsLectureTimeSheetOpen(_ value: Bool, modifying timePlace: TimePlace?, action: ((TimePlace) -> Void)?)
 
     func presentErrorAlert(error: STError?)
+    func presentErrorAlert(error: ErrorCode)
     func presentErrorAlert(error: Error)
 }
 
@@ -132,16 +133,23 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
     func presentErrorAlert(error: Error) {
         presentErrorAlert(error: error.asSTError)
     }
+    
+    func presentErrorAlert(error: ErrorCode) {
+        presentErrorAlert(error: .init(error))
+    }
 
     func presentErrorAlert(error: STError?) {
         guard let error = error else {
+            appState.system.isErrorAlertPresented = false
             return
         }
-        if error == .WRONG_USER_TOKEN || error == .NO_USER_TOKEN {
+        
+        if error.code == .WRONG_USER_TOKEN || error.code == .NO_USER_TOKEN {
             clearUserInfo()
         }
+        
         DispatchQueue.main.async {
-            appState.system.errorContent = error
+            appState.system.error = error
             appState.system.isErrorAlertPresented = true
         }
     }

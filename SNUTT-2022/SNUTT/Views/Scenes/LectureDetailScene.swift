@@ -22,6 +22,13 @@ struct LectureDetailScene: View {
         _editMode = State(initialValue: displayMode == .create ? .active : .inactive)
         self.displayMode = displayMode
     }
+    
+    init(viewModel: ViewModel, lecture: Binding<Lecture>, displayMode: DisplayMode) {
+        self.viewModel = viewModel
+        _lecture = State(wrappedValue: lecture.wrappedValue)
+        _editMode = State(initialValue: displayMode == .create ? .active : .inactive)
+        self.displayMode = displayMode
+    }
 
     enum DisplayMode {
         case normal
@@ -269,14 +276,12 @@ struct LectureDetailScene: View {
                             guard let tempLecture = tempLecture else { return }
                             // save
                             Task {
-                                guard let updatedLecture = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) else {
-                                    lecture = tempLecture
-                                    return
+                                let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
+                                if success {
+                                    editMode = .inactive
+                                    resignFirstResponder()
                                 }
-                                lecture = updatedLecture
                             }
-                            editMode = .inactive
-                            resignFirstResponder()
                         } else {
                             // edit
                             tempLecture = lecture
@@ -303,6 +308,34 @@ struct LectureDetailScene: View {
             }
         }
         .environment(\.editMode, $editMode)
+        .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented) {
+            Button {
+                if viewModel.isLectureOverlapped {
+                    Task {
+                        let success = await editMode.isEditing
+                        ? viewModel.forceUpdateLecture(oldLecture: tempLecture, newLecture: lecture)
+                        : (lecture.isCustom
+                           ? viewModel.overwriteCustomLecture(lecture: lecture)
+                           : viewModel.overwriteLecture(lecture: lecture))
+                        if success {
+                            editMode = .inactive
+                            resignFirstResponder()
+                            dismiss()
+                        }
+                    }
+                }
+            } label: {
+                Text("확인")
+            }
+            
+            if viewModel.isLectureOverlapped {
+                Button("취소", role: .cancel) {
+                    viewModel.isLectureOverlapped.toggle()
+                }
+            }
+        } message: {
+            Text(viewModel.errorMessage)
+        }
     }
 }
 
@@ -327,12 +360,12 @@ struct RectangleButtonStyle: ButtonStyle {
 }
 
 #if DEBUG
-    struct LectureDetailList_Previews: PreviewProvider {
-        static var previews: some View {
-            NavigationView {
-                LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview, displayMode: .normal)
-                    .navigationBarTitleDisplayMode(.inline)
-            }
-        }
-    }
+//    struct LectureDetailList_Previews: PreviewProvider {
+//        static var previews: some View {
+//            NavigationView {
+//                LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview, displayMode: .normal)
+//                    .navigationBarTitleDisplayMode(.inline)
+//            }
+//        }
+//    }
 #endif

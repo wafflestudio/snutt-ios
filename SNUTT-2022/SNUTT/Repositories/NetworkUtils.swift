@@ -108,9 +108,15 @@ extension DataTask {
                 debugPrint("Error Raw Response: \(String(describing: String(data: responseBody, encoding: .utf8)))")
             }
         #endif
-        if let data = await response.data, let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data) {
-            throw STError(rawValue: errDto.errcode) ?? .SERVER_FAULT
+        if let data = await response.data,
+           let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data) {
+            let errCode = ErrorCode(rawValue: errDto.errcode) ?? .SERVER_FAULT
+            if let serverMessage = errDto.ext?.first?.1 {
+                throw STError(errCode, content: serverMessage)
+            } else {
+                throw STError(errCode)
+            }
         }
-        throw STError.SERVER_FAULT
+        throw STError(.SERVER_FAULT)
     }
 }

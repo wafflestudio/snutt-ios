@@ -67,9 +67,6 @@ struct SNUTTView: View {
         }
         .animation(.easeOut, value: viewModel.accessToken)
         .accentColor(Color(UIColor.label))
-        .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
-            Text(viewModel.errorMessage)
-        }
         .onAppear {
             setTabBarStyle()
             setNavBarStyle()
@@ -97,8 +94,6 @@ struct SNUTTView: View {
 
 extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
-        @Published var isErrorAlertPresented = false
-        @Published var errorContent: STError? = nil
         @Published var accessToken: String? = nil
         var reloadReviewSignal = PassthroughSubject<Void, Never>()
 
@@ -106,20 +101,10 @@ extension SNUTTView {
             guard let accessToken = accessToken else { return false }
             return !accessToken.isEmpty
         }
-
+        
         override init(container: DIContainer) {
             super.init(container: container)
-            appState.system.$errorContent.assign(to: &$errorContent)
-            appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
             appState.user.$accessToken.assign(to: &$accessToken)
-        }
-
-        var errorTitle: String {
-            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorTitle
-        }
-
-        var errorMessage: String {
-            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
         }
 
         func reloadReviewWebView() {

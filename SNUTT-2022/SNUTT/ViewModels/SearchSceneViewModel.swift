@@ -17,6 +17,10 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var searchResult: [Lecture]? = nil
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
+    @Published var isErrorAlertPresented = false
+    @Published var isLectureOverlapped: Bool = false
+    @Published var errorTitle: String = ""
+    @Published var errorMessage: String = ""
 
     var searchText: String {
         get { _searchText }
@@ -54,14 +58,6 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
     }
 
-    private var searchState: SearchState {
-        appState.search
-    }
-
-    private var timetableState: TimetableState {
-        appState.timetable
-    }
-
     func fetchTags() async {
         if appState.search.searchTagList != nil {
             return
@@ -70,7 +66,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.searchService.fetchTags(quarter: currentTimetable.quarter)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
     }
 
@@ -82,7 +78,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.searchService.fetchInitialSearchResult()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
     }
 
@@ -90,7 +86,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.searchService.fetchMoreSearchResult()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
     }
 
@@ -102,7 +98,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.lectureService.addLecture(lecture: lecture)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
     }
 
@@ -110,7 +106,36 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
+    }
+    
+    func overwriteLecture(lecture: Lecture) async {
+        do {
+            try await services.lectureService.overwriteLecture(lecture: lecture)
+        } catch {
+            showError(error)
+        }
+    }
+    
+    private func showError(_ error: Error) {
+        if let error = error.asSTError {
+            DispatchQueue.main.async {
+                self.isErrorAlertPresented = true
+                if error.code == .LECTURE_TIME_OVERLAP {
+                    self.isLectureOverlapped = true
+                }
+                self.errorTitle = error.title
+                self.errorMessage = error.content
+            }
+        }
+    }
+    
+    private var searchState: SearchState {
+        appState.search
+    }
+
+    private var timetableState: TimetableState {
+        appState.timetable
     }
 }

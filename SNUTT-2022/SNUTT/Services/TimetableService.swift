@@ -103,7 +103,7 @@ struct TimetableService: TimetableServiceProtocol {
 
     func deleteTimetable(timetableId: String) async throws {
         if appState.timetable.current?.id == timetableId {
-            throw STError.CANT_DELETE_CURRENT_TIMETABLE
+            throw STError(.CANT_DELETE_CURRENT_TIMETABLE)
         }
         let dtos = try await timetableRepository.deleteTimetable(withTimetableId: timetableId)
         let timetables = dtos.map { TimetableMetadata(from: $0) }

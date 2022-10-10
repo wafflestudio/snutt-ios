@@ -8,7 +8,25 @@
 
 import Foundation
 
-public enum STError: Int, Error {
+struct STError: Error {
+    let code: ErrorCode
+    let title: String
+    let content: String
+    
+    init(_ errorCode: ErrorCode) {
+        self.title = errorCode.errorTitle
+        self.content = errorCode.errorMessage
+        self.code = errorCode
+    }
+    
+    init(_ errorCode: ErrorCode, content: String) {
+        self.title = errorCode.errorTitle
+        self.content = content
+        self.code = errorCode
+    }
+}
+
+enum ErrorCode: Int {
     case SERVER_FAULT = 0x0000
     case NO_NETWORK = 0x0001
     case UNKNOWN_ERROR = 0x0002
@@ -110,12 +128,13 @@ public enum STError: Int, Error {
              .FB_ID_WITH_SOMEONE_ELSE,
              .WRONG_SEMESTER,
              .NOT_CUSTOM_LECTURE,
-             .LECTURE_TIME_OVERLAP,
              .IS_CUSTOM_LECTURE,
              .USER_HAS_NO_FCM_KEY,
              .INVALID_TIMEJSON,
              .CANT_DELETE_CURRENT_TIMETABLE:
             return "잘못된 요청"
+        case .LECTURE_TIME_OVERLAP:
+            return "시간대 겹침"
         case .TAG_NOT_FOUND,
              .TIMETABLE_NOT_FOUND,
              .LECTURE_NOT_FOUND,
@@ -228,7 +247,7 @@ public enum STError: Int, Error {
     }
 }
 
-public extension Error {
+extension Error {
     var asSTError: STError? {
         self as? STError
     }

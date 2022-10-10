@@ -14,7 +14,7 @@ struct TimetableScene: View {
 
     var body: some View {
         TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
-            .animation(.customSpring, value: viewModel.timetableState.current?.id)
+            .animation(.customSpring, value: viewModel.currentTimetable?.id)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
                 Group {
@@ -78,6 +78,12 @@ struct TimetableScene: View {
                     }
                 })
             }
+            .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented) {
+                Button("확인") {}
+            } message: {
+                Text(viewModel.errorMessage)
+            }
+            
 //            .onAppear {
 //                Task {
 //                    await viewModel.fetchNotificationsCount()

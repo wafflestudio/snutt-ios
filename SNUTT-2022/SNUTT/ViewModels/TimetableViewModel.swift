@@ -9,12 +9,14 @@ import Combine
 import Foundation
 
 class TimetableViewModel: BaseViewModel, ObservableObject {
-    private var bag = Set<AnyCancellable>()
     @Published var currentTimetable: Timetable?
     @Published var configuration: TimetableConfiguration = .init()
     @Published private var metadataList: [TimetableMetadata]?
     @Published var notifications: [Notification] = []
     @Published var unreadCount: Int = 0
+    @Published var isErrorAlertPresented = false
+    @Published var errorTitle: String = ""
+    @Published var errorMessage: String = ""
 
     override init(container: DIContainer) {
         super.init(container: container)
@@ -46,7 +48,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await timetableService.fetchRecentTimetable()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
     }
 
@@ -54,7 +56,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await timetableService.fetchTimetableList()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
     }
 
@@ -62,7 +64,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.courseBookService.fetchCourseBookList()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
     }
 
@@ -70,7 +72,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.notificationService.fetchInitialNotifications(updateLastRead: updateLastRead)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
     }
 
@@ -78,7 +80,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.notificationService.fetchMoreNotifications()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
     }
 
@@ -86,7 +88,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.notificationService.fetchUnreadNotificationCount()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
     }
 
@@ -94,19 +96,29 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.userService.fetchUser()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            showError(error)
         }
     }
 
     func loadTimetableConfig() {
         timetableService.loadTimetableConfig()
     }
+    
+    private func showError(_ error: Error) {
+        if let error = error.asSTError {
+            DispatchQueue.main.async {
+                self.isErrorAlertPresented = true
+                self.errorTitle = error.title
+                self.errorMessage = error.content
+            }
+        }
+    }
 
     private var timetableService: TimetableServiceProtocol {
         services.timetableService
     }
 
-    var timetableState: TimetableState {
+    private var timetableState: TimetableState {
         appState.timetable
     }
 }

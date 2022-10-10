@@ -7,9 +7,19 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 extension LectureDetailScene {
     class ViewModel: BaseViewModel, ObservableObject {
+        @Published var isErrorAlertPresented = false
+        @Published var isLectureOverlapped: Bool = false
+        @Published var errorTitle: String = ""
+        @Published var errorMessage: String = ""
+        
+        override init(container: DIContainer) {
+            super.init(container: container)
+        }
+        
         var lectureService: LectureServiceProtocol {
             services.lectureService
         }
@@ -23,19 +33,52 @@ extension LectureDetailScene {
                 try await lectureService.addCustomLecture(lecture: lecture)
                 return true
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                showError(error)
+                return false
+            }
+        }
+        
+        func overwriteLecture(lecture: Lecture) async -> Bool {
+            do {
+                try await lectureService.overwriteLecture(lecture: lecture)
+                return true
+            } catch {
+                showError(error)
                 return false
             }
         }
 
-        func updateLecture(oldLecture: Lecture, newLecture: Lecture) async -> Lecture? {
+        func overwriteCustomLecture(lecture: Lecture) async -> Bool {
+            do {
+                try await lectureService.overwriteCustomLecture(lecture: lecture)
+                return true
+            } catch {
+                showError(error)
+                return false
+            }
+        }
+
+        func updateLecture(oldLecture: Lecture, newLecture: Lecture) async -> Bool {
             do {
                 try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture)
-                guard let lecture = appState.timetable.current?.lectures.first(where: { $0.id == newLecture.id }) else { return nil }
-                return lecture
+                return true
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-                return nil
+                showError(error)
+                return false
+            }
+        }
+        
+        func forceUpdateLecture(oldLecture: Lecture?, newLecture: Lecture) async -> Bool {
+            guard let oldLecture = oldLecture else {
+                return false
+            }
+            
+            do {
+                try await lectureService.forceUpdateLecture(oldLecture: oldLecture, newLecture: newLecture)
+                return true
+            } catch {
+                showError(error)
+                return false
             }
         }
 
@@ -43,7 +86,7 @@ extension LectureDetailScene {
             do {
                 try await lectureService.deleteLecture(lecture: lecture)
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                showError(error)
             }
         }
 
@@ -60,7 +103,7 @@ extension LectureDetailScene {
                 guard let current = appState.timetable.current else { return nil }
                 return current.lectures.first(where: { $0.id == lecture.id })
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                showError(error)
             }
             return nil
         }
@@ -69,7 +112,7 @@ extension LectureDetailScene {
             do {
                 try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                showError(error)
             }
         }
 
@@ -90,6 +133,19 @@ extension LectureDetailScene {
                                             isCustom: lecture.isCustom,
                                             isTemporary: true))
             return lecture
+        }
+        
+        private func showError(_ error: Error) {
+            if let error = error.asSTError {
+                DispatchQueue.main.async {
+                    self.isErrorAlertPresented = true
+                    if error.code == .LECTURE_TIME_OVERLAP {
+                        self.isLectureOverlapped = true
+                    }
+                    self.errorTitle = error.title
+                    self.errorMessage = error.content
+                }
+            }
         }
     }
 }
