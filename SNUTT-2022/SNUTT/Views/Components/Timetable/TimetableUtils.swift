@@ -60,7 +60,7 @@ struct TimetablePainter {
         guard let startTime = current?.earliestStartTime else {
             return config.minHour
         }
-        return Int(startTime > 10 ? 10 : startTime)
+        return Int(min(startTime, 10))
     }
 
     /// `autoFit`을 고려한 시간표의 종료 시각. 빈 시간표일 때에는 설정 값을 따른다.
