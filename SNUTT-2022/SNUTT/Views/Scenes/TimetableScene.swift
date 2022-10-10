@@ -83,7 +83,7 @@ struct TimetableScene: View {
             } message: {
                 Text(viewModel.errorMessage)
             }
-            
+
 //            .onAppear {
 //                Task {
 //                    await viewModel.fetchNotificationsCount()

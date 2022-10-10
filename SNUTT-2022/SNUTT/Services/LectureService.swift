@@ -45,7 +45,7 @@ struct LectureService: LectureServiceProtocol {
         updateTimetableState(to: timetable)
         saveToUserDefaults(timetableDto: dto)
     }
-    
+
     func overwriteLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id, isForced: true)
@@ -53,7 +53,7 @@ struct LectureService: LectureServiceProtocol {
         updateTimetableState(to: timetable)
         saveToUserDefaults(timetableDto: dto)
     }
-    
+
     func overwriteCustomLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         var lectureDto = LectureDto(from: lecture)
@@ -71,7 +71,7 @@ struct LectureService: LectureServiceProtocol {
         updateTimetableState(to: timetable)
         saveToUserDefaults(timetableDto: dto)
     }
-    
+
     func forceUpdateLecture(oldLecture: Lecture, newLecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture), isForced: true)
@@ -100,13 +100,13 @@ struct LectureService: LectureServiceProtocol {
         let id = try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
         bind.wrappedValue = "\(id)"
     }
-    
+
     private func updateTimetableState(to timetable: Timetable) {
         DispatchQueue.main.async {
             appState.timetable.current = timetable
         }
     }
-    
+
     private func saveToUserDefaults(timetableDto: TimetableDto) {
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: timetableDto)
     }

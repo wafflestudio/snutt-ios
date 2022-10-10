@@ -5,8 +5,8 @@
 //  Created by Jinsup Keum on 2022/06/25.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 class SystemState: ObservableObject {
     @Published var isErrorAlertPresented = false

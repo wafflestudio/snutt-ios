@@ -5,9 +5,9 @@
 //  Created by 박신홍 on 2022/07/20.
 //
 
+import Combine
 import Foundation
 import SwiftUI
-import Combine
 
 extension LectureDetailScene {
     class ViewModel: BaseViewModel, ObservableObject {
@@ -15,11 +15,11 @@ extension LectureDetailScene {
         @Published var isLectureOverlapped: Bool = false
         @Published var errorTitle: String = ""
         @Published var errorMessage: String = ""
-        
+
         override init(container: DIContainer) {
             super.init(container: container)
         }
-        
+
         var lectureService: LectureServiceProtocol {
             services.lectureService
         }
@@ -37,7 +37,7 @@ extension LectureDetailScene {
                 return false
             }
         }
-        
+
         func overwriteLecture(lecture: Lecture) async -> Bool {
             do {
                 try await lectureService.overwriteLecture(lecture: lecture)
@@ -67,12 +67,12 @@ extension LectureDetailScene {
                 return false
             }
         }
-        
+
         func forceUpdateLecture(oldLecture: Lecture?, newLecture: Lecture) async -> Bool {
             guard let oldLecture = oldLecture else {
                 return false
             }
-            
+
             do {
                 try await lectureService.forceUpdateLecture(oldLecture: oldLecture, newLecture: newLecture)
                 return true
@@ -134,7 +134,7 @@ extension LectureDetailScene {
                                             isTemporary: true))
             return lecture
         }
-        
+
         private func showError(_ error: Error) {
             if let error = error.asSTError {
                 DispatchQueue.main.async {

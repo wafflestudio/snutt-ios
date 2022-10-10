@@ -48,7 +48,7 @@ struct SearchLectureList: View {
                             } label: {
                                 Text("확인")
                             }
-                            
+
                             if isLectureOverlapped {
                                 Button("취소", role: .cancel) {
                                     isLectureOverlapped.toggle()
@@ -57,7 +57,6 @@ struct SearchLectureList: View {
                         } message: {
                             Text(errorMessage)
                         }
-                        
                 }
             }
         }

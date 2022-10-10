@@ -103,7 +103,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     func loadTimetableConfig() {
         timetableService.loadTimetableConfig()
     }
-    
+
     private func showError(_ error: Error) {
         if let error = error.asSTError {
             DispatchQueue.main.async {

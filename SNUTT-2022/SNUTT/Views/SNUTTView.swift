@@ -106,14 +106,14 @@ extension SNUTTView {
             guard let accessToken = accessToken else { return false }
             return !accessToken.isEmpty
         }
-        
+
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$error.assign(to: &$error)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
             appState.user.$accessToken.assign(to: &$accessToken)
         }
-        
+
         var errorTitle: String {
             (appState.system.error ?? .init(.UNKNOWN_ERROR)).title
         }

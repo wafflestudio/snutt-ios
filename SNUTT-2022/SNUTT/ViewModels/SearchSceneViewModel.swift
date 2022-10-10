@@ -109,7 +109,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             showError(error)
         }
     }
-    
+
     func overwriteLecture(lecture: Lecture) async {
         do {
             try await services.lectureService.overwriteLecture(lecture: lecture)
@@ -117,7 +117,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             showError(error)
         }
     }
-    
+
     private func showError(_ error: Error) {
         if let error = error.asSTError {
             DispatchQueue.main.async {
@@ -130,7 +130,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             }
         }
     }
-    
+
     private var searchState: SearchState {
         appState.search
     }
