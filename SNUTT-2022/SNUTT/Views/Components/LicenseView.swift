@@ -14,14 +14,13 @@ struct LicenseView: View {
                 VStack(alignment: .leading) {
                     NavigationLink {
                         ScrollView {
-                                Text(project.licenseText)
-                                    .padding()
+                            Text(project.licenseText)
+                                .padding()
                         }
                         .navigationTitle(project.projectName)
                     } label: {
                         Text(project.projectName)
                     }
-
                 }
             }
         }
@@ -30,12 +29,11 @@ struct LicenseView: View {
     }
 }
 
-
 extension LicenseView {
     enum LicenseApps: CaseIterable {
         case alamofire
         case facebookSDK
-        
+
         var projectName: String {
             switch self {
             case .alamofire:
@@ -44,7 +42,7 @@ extension LicenseView {
                 return "Facebook iOS SDK"
             }
         }
-        
+
         var licenseText: String {
             switch self {
             case .alamofire:
@@ -101,5 +99,3 @@ struct LicenseScene_Previews: PreviewProvider {
         }
     }
 }
-
-
