@@ -17,7 +17,7 @@ extension LectureDetailScene {
         var currentTimetable: Timetable? {
             appState.timetable.current
         }
-        
+
         var currentQuarter: Quarter? {
             currentTimetable?.quarter
         }
@@ -76,12 +76,12 @@ extension LectureDetailScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func fetchSyllabusURL(of lecture: Lecture, bind: Binding<String>) async -> Bool {
             guard let currentQuarter = currentQuarter else {
                 return false
             }
-            
+
             do {
                 try await services.courseBookService.fetchSyllabusURL(quarter: currentQuarter, lecture: lecture, bind: bind)
                 return true
