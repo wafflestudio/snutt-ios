@@ -497,7 +497,6 @@
 				BE28036128E884F400B2B1AB /* ReviewWebView.swift */,
 				BE28036528E8854D00B2B1AB /* SingleWebView.swift */,
 				B8F40EAE28980D990021A2A9 /* DeveloperInfoView.swift */,
-				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
 				B8F40EB028980DE00021A2A9 /* TermsOfServiceView.swift */,
 				B8F40EB228980DFF0021A2A9 /* PrivacyPolicyView.swift */,
 			);
@@ -817,6 +816,7 @@
 				BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */,
 				BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */,
 				BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */,
+				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
 				BE28036028E884D300B2B1AB /* WebViews */,
 				BE9413D728C3AF8300171060 /* Search */,
 				BEB3B6AB28D4D3DF00E56062 /* LectureDetail */,
