@@ -33,6 +33,8 @@ struct LectureDetailScene: View {
     @State private var isDeleteAlertPresented = false
     @State private var showReviewWebView = false
     @State private var reviewId: String = ""
+    @State private var syllabusURL: String = ""
+    @State private var showSyllabusWebView = false
 
     @Environment(\.dismiss) var dismiss
 
@@ -176,8 +178,17 @@ struct LectureDetailScene: View {
                     }
                     .padding()
 
-                    if displayMode == .normal && !editMode.isEditing {
-                        DetailButton(text: "강의계획서") {}
+                    if displayMode != .create && !editMode.isEditing {
+                        DetailButton(text: "강의계획서") {
+                            Task {
+                                if await viewModel.fetchSyllabusURL(of: lecture, bind: $syllabusURL) {
+                                    showSyllabusWebView = true
+                                }
+                            }
+                        }.fullScreenCover(isPresented: $showSyllabusWebView) {
+                            SyllabusWebView(url: $syllabusURL)
+                                .edgesIgnoringSafeArea(.all)
+                        }
 
                         DetailButton(text: "강의평") {
                             Task {
