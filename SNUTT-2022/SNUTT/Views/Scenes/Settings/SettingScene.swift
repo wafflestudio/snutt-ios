@@ -36,7 +36,7 @@ struct SettingScene: View {
             }
 
             Section {
-                SettingsLinkItem(title: "라이선스 고지") {
+                SettingsLinkItem(title: "오픈소스 라이선스") {
                     LicenseView()
                 }
                 SettingsLinkItem(title: "서비스 약관") {

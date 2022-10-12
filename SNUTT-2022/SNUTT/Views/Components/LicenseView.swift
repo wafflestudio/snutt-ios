@@ -24,7 +24,7 @@ struct LicenseView: View {
                 }
             }
         }
-        .navigationTitle("라이선스 고지")
+        .navigationTitle("오픈소스 라이선스")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
