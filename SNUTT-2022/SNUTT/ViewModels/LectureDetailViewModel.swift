@@ -18,10 +18,6 @@ extension LectureDetailScene {
             appState.timetable.current
         }
 
-        var currentQuarter: Quarter? {
-            currentTimetable?.quarter
-        }
-
         func addCustomLecture(lecture: Lecture) async -> Bool {
             do {
                 try await lectureService.addCustomLecture(lecture: lecture)
@@ -77,17 +73,16 @@ extension LectureDetailScene {
             }
         }
 
-        func fetchSyllabusURL(of lecture: Lecture, bind: Binding<String>) async -> Bool {
-            guard let currentQuarter = currentQuarter else {
-                return false
+        func fetchSyllabusURL(of lecture: Lecture) async -> String {
+            guard let currentQuarter = currentTimetable?.quarter else {
+                return ""
             }
 
             do {
-                try await services.courseBookService.fetchSyllabusURL(quarter: currentQuarter, lecture: lecture, bind: bind)
-                return true
+                return try await services.courseBookService.fetchSyllabusURL(quarter: currentQuarter, lecture: lecture)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
-                return false
+                return ""
             }
         }
 

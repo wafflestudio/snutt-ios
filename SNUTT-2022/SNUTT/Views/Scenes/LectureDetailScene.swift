@@ -181,7 +181,8 @@ struct LectureDetailScene: View {
                     if displayMode != .create && !editMode.isEditing {
                         DetailButton(text: "강의계획서") {
                             Task {
-                                if await viewModel.fetchSyllabusURL(of: lecture, bind: $syllabusURL) {
+                                syllabusURL = await viewModel.fetchSyllabusURL(of: lecture)
+                                if !syllabusURL.isEmpty {
                                     showSyllabusWebView = true
                                 }
                             }
