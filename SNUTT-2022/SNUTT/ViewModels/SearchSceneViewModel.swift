@@ -121,7 +121,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
 
     func overwriteLecture(lecture: Lecture) async {
         do {
-            try await services.lectureService.overwriteLecture(lecture: lecture)
+            try await services.lectureService.addLecture(lecture: lecture, isForced: true)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

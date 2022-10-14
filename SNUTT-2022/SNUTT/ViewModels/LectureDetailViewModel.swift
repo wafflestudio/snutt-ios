@@ -50,7 +50,7 @@ extension LectureDetailScene {
 
         func overwriteLecture(lecture: Lecture) async -> Bool {
             do {
-                try await lectureService.overwriteLecture(lecture: lecture)
+                try await lectureService.addLecture(lecture: lecture, isForced: true)
                 return true
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
@@ -60,7 +60,7 @@ extension LectureDetailScene {
 
         func overwriteCustomLecture(lecture: Lecture) async -> Bool {
             do {
-                try await lectureService.overwriteCustomLecture(lecture: lecture)
+                try await lectureService.addCustomLecture(lecture: lecture, isForced: true)
                 return true
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
@@ -93,7 +93,7 @@ extension LectureDetailScene {
                 return false
             }
             do {
-                try await lectureService.forceUpdateLecture(oldLecture: oldLecture, newLecture: newLecture)
+                try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture, isForced: true)
                 return true
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
