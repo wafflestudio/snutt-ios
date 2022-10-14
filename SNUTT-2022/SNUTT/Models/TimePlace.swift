@@ -54,6 +54,12 @@ struct TimePlace: Identifiable {
     }
 }
 
+extension TimePlace: Equatable {
+    static func ==(lhs: TimePlace, rhs: TimePlace) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
 extension TimePlace {
     init(from dto: TimePlaceDto, isCustom: Bool) {
         id = dto._id ?? UUID().description

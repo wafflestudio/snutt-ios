@@ -61,6 +61,16 @@ struct LectureService: LectureServiceProtocol {
 
     func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool = false) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
+        
+        // Check if `Lecture` itself has overlapping `TimePlace`
+        try newLecture.timePlaces.forEach { lhs in
+            try newLecture.timePlaces.forEach { rhs in
+                if lhs.day == rhs.day && lhs.endTime > rhs.startTime && lhs != rhs {
+                    throw STError.init(.INVALID_LECTURE_TIME)
+                }
+            }
+        }
+        
         let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture), isForced: isForced)
         let timetable = Timetable(from: dto)
         DispatchQueue.main.async {

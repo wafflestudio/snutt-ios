@@ -84,6 +84,7 @@ enum ErrorCode: Int {
     /* Client-side Errors */
     case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
     case CANT_CHANGE_OTHERS_THEME = 0x5001
+    case INVALID_LECTURE_TIME = 0x5002
 
     var errorTitle: String {
         switch self {
@@ -133,7 +134,8 @@ enum ErrorCode: Int {
              .INVALID_TIMEJSON,
              .CANT_DELETE_CURRENT_TIMETABLE:
             return "잘못된 요청"
-        case .LECTURE_TIME_OVERLAP:
+        case .LECTURE_TIME_OVERLAP,
+             .INVALID_LECTURE_TIME:
             return "시간대 겹침"
         case .TAG_NOT_FOUND,
              .TIMETABLE_NOT_FOUND,
@@ -227,6 +229,8 @@ enum ErrorCode: Int {
             return "직접 만든 강좌가 아닙니다."
         case .LECTURE_TIME_OVERLAP:
             return "시간표의 시간과 겹칩니다."
+        case .INVALID_LECTURE_TIME:
+            return "강의 시간이 서로 겹칩니다."
         case .IS_CUSTOM_LECTURE:
             return "직접 만든 강좌입니다."
         case .REF_LECTURE_NOT_FOUND:
