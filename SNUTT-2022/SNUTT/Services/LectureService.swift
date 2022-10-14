@@ -21,11 +21,11 @@ extension LectureServiceProtocol {
     func addLecture(lecture: Lecture, isForced: Bool = false) async throws {
         try await addLecture(lecture: lecture, isForced: isForced)
     }
-    
+
     func addCustomLecture(lecture: Lecture, isForced: Bool = false) async throws {
         try await addCustomLecture(lecture: lecture, isForced: isForced)
     }
-    
+
     func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool = false) async throws {
         try await updateLecture(oldLecture: oldLecture, newLecture: newLecture, isForced: isForced)
     }
@@ -58,7 +58,7 @@ struct LectureService: LectureServiceProtocol {
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
-    
+
     func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool = false) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture), isForced: isForced)
