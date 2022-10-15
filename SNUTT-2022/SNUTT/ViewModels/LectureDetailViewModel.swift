@@ -28,9 +28,9 @@ extension LectureDetailScene {
             appState.timetable.current
         }
 
-        func addCustomLecture(lecture: Lecture) async -> Bool {
+        func addCustomLecture(lecture: Lecture, isForced: Bool = false) async -> Bool {
             do {
-                try await lectureService.addCustomLecture(lecture: lecture)
+                try await lectureService.addCustomLecture(lecture: lecture, isForced: isForced)
                 return true
             } catch {
                 if let error = error.asSTError {
@@ -58,20 +58,11 @@ extension LectureDetailScene {
             }
         }
 
-        func overwriteCustomLecture(lecture: Lecture) async -> Bool {
+        func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool = false) async -> Lecture? {
             do {
-                try await lectureService.addCustomLecture(lecture: lecture, isForced: true)
-                return true
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-                return false
-            }
-        }
-
-        func updateLecture(oldLecture: Lecture, newLecture: Lecture) async -> Bool {
-            do {
-                try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture)
-                return true
+                try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture, isForced: isForced)
+                guard let lecture = appState.timetable.current?.lectures.first(where: { $0.id == newLecture.id }) else { return nil }
+                return lecture
             } catch {
                 if let error = error.asSTError {
                     if error.code == .LECTURE_TIME_OVERLAP {
@@ -84,7 +75,7 @@ extension LectureDetailScene {
                         services.globalUIService.presentErrorAlert(error: error)
                     }
                 }
-                return false
+                return nil
             }
         }
 

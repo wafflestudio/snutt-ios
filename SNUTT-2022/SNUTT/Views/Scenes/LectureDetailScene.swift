@@ -23,13 +23,6 @@ struct LectureDetailScene: View {
         self.displayMode = displayMode
     }
 
-    init(viewModel: ViewModel, lecture: Binding<Lecture>, displayMode: DisplayMode) {
-        self.viewModel = viewModel
-        _lecture = State(wrappedValue: lecture.wrappedValue)
-        _editMode = State(initialValue: displayMode == .create ? .active : .inactive)
-        self.displayMode = displayMode
-    }
-
     enum DisplayMode {
         case normal
         case create
@@ -183,7 +176,7 @@ struct LectureDetailScene: View {
                     }
                     .padding()
 
-                    if displayMode == .normal && !editMode.isEditing {
+                    if displayMode != .create && !editMode.isEditing && !lecture.isCustom {
                         DetailButton(text: "강의계획서") {}
 
                         DetailButton(text: "강의평") {
@@ -276,11 +269,15 @@ struct LectureDetailScene: View {
                             guard let tempLecture = tempLecture else { return }
                             // save
                             Task {
-                                let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
-                                if success {
-                                    editMode = .inactive
-                                    resignFirstResponder()
+                                guard let updatedLecture = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) else {
+                                    if !viewModel.isLectureOverlapped {
+                                        lecture = tempLecture
+                                    }
+                                    return
                                 }
+                                lecture = updatedLecture
+                                editMode = .inactive
+                                resignFirstResponder()
                             }
                         } else {
                             // edit
@@ -314,8 +311,8 @@ struct LectureDetailScene: View {
                     let success = await editMode.isEditing && displayMode == .normal
                         ? viewModel.forceUpdateLecture(oldLecture: tempLecture, newLecture: lecture)
                         : (lecture.isCustom
-                            ? viewModel.overwriteCustomLecture(lecture: lecture)
-                            : viewModel.overwriteLecture(lecture: lecture))
+                           ? viewModel.addCustomLecture(lecture: lecture, isForced: true)
+                           : viewModel.overwriteLecture(lecture: lecture))
                     if success {
                         editMode = .inactive
                         resignFirstResponder()
@@ -327,7 +324,7 @@ struct LectureDetailScene: View {
             }
 
             Button("취소", role: .cancel) {
-                viewModel.isLectureOverlapped.toggle()
+                viewModel.isLectureOverlapped = false
             }
         } message: {
             Text(viewModel.errorMessage)

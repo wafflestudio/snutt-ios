@@ -65,7 +65,7 @@ struct LectureService: LectureServiceProtocol {
         // Check if `Lecture` itself has overlapping `TimePlace`
         try newLecture.timePlaces.forEach { lhs in
             try newLecture.timePlaces.forEach { rhs in
-                if lhs.day == rhs.day, lhs.endTime > rhs.startTime, lhs != rhs {
+                if lhs.day == rhs.day, lhs.endTime > rhs.startTime, lhs.id != rhs.id {
                     throw STError(.INVALID_LECTURE_TIME)
                 }
             }
