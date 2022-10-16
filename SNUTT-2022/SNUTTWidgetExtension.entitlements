@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.wafflestudio.snutt3</string>
+		<string>group.com.wafflestudio.snutt.dev</string>
 	</array>
 </dict>
 </plist>
