@@ -18,6 +18,7 @@
 		B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16F228ABC5DD00E2D652 /* String+ext.swift */; };
 		B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FA28AE2BB900E2D652 /* UserRouter.swift */; };
 		B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FC28AE2E1E00E2D652 /* User.swift */; };
+		B89826D128F4971000477A14 /* SyllabusWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89826D028F4971000477A14 /* SyllabusWebView.swift */; };
 		B88D170128AF71E300E2D652 /* UserSupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170028AF71E300E2D652 /* UserSupportView.swift */; };
 		B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */; };
 		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
@@ -255,6 +256,7 @@
 		B88D16FC28AE2E1E00E2D652 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B88D170028AF71E300E2D652 /* UserSupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSupportView.swift; sourceTree = "<group>"; };
 		B88D170728B361DC00E2D652 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B89826D028F4971000477A14 /* SyllabusWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabusWebView.swift; sourceTree = "<group>"; };
 		B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationUtils.swift; sourceTree = "<group>"; };
 		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
 		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
@@ -502,8 +504,8 @@
 				BE28036328E8850E00B2B1AB /* WebViewType.swift */,
 				BE28036128E884F400B2B1AB /* ReviewWebView.swift */,
 				BE28036528E8854D00B2B1AB /* SingleWebView.swift */,
+				B89826D028F4971000477A14 /* SyllabusWebView.swift */,
 				B8F40EAE28980D990021A2A9 /* DeveloperInfoView.swift */,
-				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
 				B8F40EB028980DE00021A2A9 /* TermsOfServiceView.swift */,
 				B8F40EB228980DFF0021A2A9 /* PrivacyPolicyView.swift */,
 			);
@@ -826,6 +828,7 @@
 				BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */,
 				BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */,
 				BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */,
+				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
 				B88D170028AF71E300E2D652 /* UserSupportView.swift */,
 				BE28036028E884D300B2B1AB /* WebViews */,
 				BE9413D728C3AF8300171060 /* Search */,
@@ -1184,6 +1187,7 @@
 				BEF9233628E7EE45004AFCB2 /* SignUpView.swift in Sources */,
 				B8F40EAF28980D990021A2A9 /* DeveloperInfoView.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
+				B89826D128F4971000477A14 /* SyllabusWebView.swift in Sources */,
 				BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */,
 				B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */,
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
