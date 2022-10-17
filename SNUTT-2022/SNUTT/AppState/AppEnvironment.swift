@@ -23,6 +23,7 @@ extension AppEnvironment {
         let courseBookService: CourseBookServiceProtocol
         let authService: AuthServiceProtocol
         let notificationService: NotificationServiceProtocol
+        let etcService: EtcServiceProtocol
     }
 }
 
@@ -36,6 +37,7 @@ extension AppEnvironment {
         let reviewRepository: ReviewRepositoryProtocol
         let authRepository: AuthRepositoryProtocol
         let notificationRepository: NotificationRepositoryProtocol
+        let etcRepository: EtcRepositoryProtocol
     }
 
     struct LocalRepositories {
@@ -73,6 +75,7 @@ extension AppEnvironment {
         let courseBookRepository = CourseBookRepository(session: session)
         let authRepository = AuthRepository(session: session)
         let notificationRepository = NotificationRepository(session: session)
+        let etcRepository = EtcRepository(session: session)
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
                      lectureRepository: lectureRepository,
@@ -80,7 +83,8 @@ extension AppEnvironment {
                      courseBookRepository: courseBookRepository,
                      reviewRepository: reviewRepository,
                      authRepository: authRepository,
-                     notificationRepository: notificationRepository)
+                     notificationRepository: notificationRepository,
+                     etcRepository: etcRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -97,6 +101,7 @@ extension AppEnvironment {
         let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
         let authService = AuthService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let notificationService = NotificationService(appState: appState, webRepositories: webRepositories)
+        let etcService = EtcService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
@@ -104,7 +109,8 @@ extension AppEnvironment {
                      globalUIService: globalUIService,
                      courseBookService: courseBookService,
                      authService: authService,
-                     notificationService: notificationService)
+                     notificationService: notificationService,
+                     etcService: etcService)
     }
 }
 
@@ -129,7 +135,8 @@ extension EnvironmentValues {
                   globalUIService: GlobalUIService(appState: appState, localRepositories: .init(userDefaultsRepository: UserDefaultsRepository(storage: .preview))),
                   courseBookService: FakeCourseBookService(),
                   authService: FakeAuthService(),
-                  notificationService: FakeNotificationService())
+                  notificationService: FakeNotificationService(),
+                  etcService: FakeEtcService())
         }
     }
 #endif

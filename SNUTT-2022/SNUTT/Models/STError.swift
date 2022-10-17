@@ -26,6 +26,7 @@ public enum STError: Int, Error {
     case INVALID_COLOR = 0x100A
     case NO_LECTURE_TITLE = 0x100B
     case INVALID_TIMEJSON = 0x100C
+    case INVALID_EMAIL = 0x100D
 
     /* 403 - Authorization-related */
     case WRONG_API_KEY = 0x2000
@@ -114,7 +115,8 @@ public enum STError: Int, Error {
              .IS_CUSTOM_LECTURE,
              .USER_HAS_NO_FCM_KEY,
              .INVALID_TIMEJSON,
-             .CANT_DELETE_CURRENT_TIMETABLE:
+             .CANT_DELETE_CURRENT_TIMETABLE,
+             .INVALID_EMAIL:
             return "잘못된 요청"
         case .TAG_NOT_FOUND,
              .TIMETABLE_NOT_FOUND,
@@ -224,6 +226,8 @@ public enum STError: Int, Error {
             return "알 수 없는 오류가 발생했습니다."
         case .WRONG_APPLE_TOKEN:
             return "애플 계정으로 로그인하지 못했습니다."
+        case .INVALID_EMAIL:
+            return "유효한 이메일 주소를 입력해주세요."
         }
     }
 }
