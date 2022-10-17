@@ -38,7 +38,7 @@ class SettingViewModel: BaseViewModel {
         }
         return "v\(appVersion)-\(appType).\(buildNumber)"
     }
-    
+
     func sendFeedback(email: String, message: String) async -> Bool {
         if !Validation.check(email: email) {
             services.globalUIService.presentErrorAlert(error: .INVALID_EMAIL)
