@@ -1,0 +1,15 @@
+
+apple_id "apple@wafflestudio.com"
+team_id 'K9883YB4VR'
+
+for_lane :dev do
+    app_identifier 'com.wafflestudio.snutt.dev'
+end
+
+for_lane :prod do
+    app_identifier 'com.wafflestudio.snutt'
+end
+
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
