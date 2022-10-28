@@ -23,7 +23,7 @@ struct SettingScene: View {
             }
 
             Section {
-                SettingsTextItem(title: "버전 정보", detail: "최신 버전")
+                SettingsTextItem(title: "버전 정보", detail: viewModel.versionString)
             }
 
             Section {
@@ -31,12 +31,12 @@ struct SettingScene: View {
                     DeveloperInfoView()
                 }
                 SettingsLinkItem(title: "개발자 괴롭히기") {
-                    UserSupportScene()
+                    UserSupportView(sendFeedback: viewModel.sendFeedback(email:message:))
                 }
             }
 
             Section {
-                SettingsLinkItem(title: "라이센스 정보") {
+                SettingsLinkItem(title: "오픈소스 라이선스") {
                     LicenseView()
                 }
                 SettingsLinkItem(title: "서비스 약관") {

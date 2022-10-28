@@ -53,6 +53,9 @@ struct SNUTTView: View {
                         SettingScene(viewModel: .init(container: viewModel.container))
                     }
                 }
+                .onAppear {
+                    selectedTab = .timetable
+                }
                 if selectedTab == .timetable {
                     MenuSheetScene(viewModel: .init(container: viewModel.container))
                 }

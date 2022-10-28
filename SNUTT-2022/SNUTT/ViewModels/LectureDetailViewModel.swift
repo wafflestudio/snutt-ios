@@ -73,6 +73,19 @@ extension LectureDetailScene {
             }
         }
 
+        func fetchSyllabusURL(of lecture: Lecture) async -> String {
+            guard let currentQuarter = currentTimetable?.quarter else {
+                return ""
+            }
+
+            do {
+                return try await services.courseBookService.fetchSyllabusURL(quarter: currentQuarter, lecture: lecture)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+                return ""
+            }
+        }
+
         func getLecture(lecture: Lecture, without timePlace: TimePlace) -> Lecture {
             var lecture = lecture
             guard let index = lecture.timePlaces.firstIndex(where: { $0.id == timePlace.id }) else { return lecture }

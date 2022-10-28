@@ -9,16 +9,16 @@ import Alamofire
 import Foundation
 
 enum CourseBookRouter: Router {
-    var baseURL: URL { return URL(string: "https://snutt-api-dev.wafflestudio.com" + "/course_books")! }
+    var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/course_books")! }
     static let shouldAddToken: Bool = true
 
     case getCourseBookList
     case getRecentCourseBook
-    case getSyllabusUrl(year: Int, semester: Int, lecture: LectureDto)
+    case getSyllabusURL(year: Int, semester: Int, lecture: LectureDto)
 
     var method: HTTPMethod {
         switch self {
-        case .getCourseBookList, .getSyllabusUrl:
+        case .getCourseBookList, .getSyllabusURL:
             return .get
         case .getRecentCourseBook:
             return .get
@@ -31,7 +31,7 @@ enum CourseBookRouter: Router {
             return "/"
         case .getRecentCourseBook:
             return "/recent"
-        case .getSyllabusUrl:
+        case .getSyllabusURL:
             return "/official"
         }
     }
@@ -42,7 +42,7 @@ enum CourseBookRouter: Router {
             return nil
         case .getRecentCourseBook:
             return nil
-        case let .getSyllabusUrl(year, semester, lecture):
+        case let .getSyllabusURL(year, semester, lecture):
             guard let courseNumber = lecture.course_number,
                   let lectureNumber = lecture.lecture_number else { return nil }
             return [

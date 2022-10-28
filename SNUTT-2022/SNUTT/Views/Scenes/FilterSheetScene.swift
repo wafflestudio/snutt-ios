@@ -22,6 +22,7 @@ struct FilterSheetScene: View {
                     } label: {
                         Image("xmark.black")
                             .padding([.horizontal, .top], 10)
+                            .animation(.customSpring, value: viewModel.isFilterOpen)
                     }
                 }
                 .padding(10)
