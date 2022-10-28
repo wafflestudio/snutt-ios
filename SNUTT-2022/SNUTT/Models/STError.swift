@@ -55,6 +55,7 @@ public enum STError: Int, Error {
     case LECTURE_TIME_OVERLAP = 0x300C
     case IS_CUSTOM_LECTURE = 0x300D
     case USER_HAS_NO_FCM_KEY = 0x300E
+    case EMAIL_NOT_VERIFIED = 0x3011
 
     /* 404 - NOT found */
     case TAG_NOT_FOUND = 0x4000
@@ -85,7 +86,9 @@ public enum STError: Int, Error {
              .INVALID_TIMEMASK,
              .INVALID_COLOR,
              .NO_LECTURE_TITLE,
-             .CANT_CHANGE_OTHERS_THEME:
+             .CANT_CHANGE_OTHERS_THEME,
+             .EMAIL_NOT_VERIFIED
+             :
             return "요청 실패"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,
@@ -228,6 +231,8 @@ public enum STError: Int, Error {
             return "애플 계정으로 로그인하지 못했습니다."
         case .INVALID_EMAIL:
             return "유효한 이메일 주소를 입력해주세요."
+        case .EMAIL_NOT_VERIFIED:
+            return "인증되지 않은 이메일입니다. 강의평 탭에서 이메일 인증을 먼저 진행해주세요."
         }
     }
 }
