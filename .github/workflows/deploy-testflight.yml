@@ -17,6 +17,13 @@ jobs:
     env:
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
+    
+    strategy:
+      fail-fast: false # if 'true' then one failed job cancels all jobs remaining
+      matrix:
+        xcode: 
+          - '14.0'
+        macos: ['macos-latest']
 
     steps:
       - name: Parse tag name
@@ -27,6 +34,10 @@ jobs:
           regex: '^testflight\/v(\d+)\.(\d+)\.(\d+)-(release|debug)\.(\d+)$'
       
       - uses: actions/checkout@v3
+
+      - run: |
+          sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
+          ls
 
       - name: Set version number and build number
         run: |
