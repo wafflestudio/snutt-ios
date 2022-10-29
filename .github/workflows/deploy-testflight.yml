@@ -55,6 +55,9 @@ jobs:
             ${{ secrets.MATCH_DEPLOY_KEY }}
           repo-mappings: |
             github.com/wafflestudio/wafflestudio-apple-certificates
+      
+      - name: Setup CI environment for fastlane
+        run: fastlane run setup_ci
 
       - name: Upload dev app to testflight
         if: ${{ steps.regex.outputs.group4 == 'debug' }}
