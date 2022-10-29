@@ -1,4 +1,4 @@
-name: deploy-testflight
+name: Deploy
 
 on:
   push:

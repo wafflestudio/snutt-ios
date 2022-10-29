@@ -1,4 +1,4 @@
-name: deploy-appstore
+name: Release
 
 on:
   push:
