@@ -22,8 +22,8 @@ jobs:
       fail-fast: false # if 'true' then one failed job cancels all jobs remaining
       matrix:
         xcode: 
-          - '14.0'
-        macos: ['macos-latest']
+          - '14.0.1'
+        macos: ['macos-12']
 
     steps:
       - name: Parse tag name
