@@ -19,7 +19,7 @@ BUNDLE_IDENTIFIER = ENV['BUNDLE_IDENTIFIER']
 BUILD_CONFIGURATION = ENV['BUILD_CONFIGURATION']
 APP_STORE_CONNECT_KEY_ID = ENV['APP_STORE_CONNECT_KEY_ID']
 APP_STORE_CONNECT_KEY_ISSUER = ENV['APP_STORE_CONNECT_KEY_ISSUER']
-KEY_FILEPATH = ENV['KEY_FILEPATH']
+KEY_CONTENT = ENV['APP_STORE_CONNECT_KEY_CONTENT']
 
 platform :ios do
   desc "🧪 Upload app to Testflight"
@@ -33,7 +33,7 @@ platform :ios do
     app_store_connect_api_key(
       key_id: APP_STORE_CONNECT_KEY_ID,
       issuer_id: APP_STORE_CONNECT_KEY_ISSUER,
-      key_filepath: KEY_FILEPATH,
+      key_content: KEY_CONTENT,
     )
     upload_to_testflight
   end

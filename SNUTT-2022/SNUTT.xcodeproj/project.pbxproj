@@ -260,7 +260,7 @@
 		B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationUtils.swift; sourceTree = "<group>"; };
 		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
 		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
-		B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ProductionConfig.xcconfig; sourceTree = "<group>"; };
+		B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5F28B549660065248E /* StagingConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = StagingConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
 		B8E51E6728B615140065248E /* WebErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebErrorView.swift; sourceTree = "<group>"; };
@@ -672,7 +672,7 @@
 				DCD41A5E27E5CC4700CF380E /* Models */,
 				DC860F4E27E5C87F0068C94B /* Preview Content */,
 				B8E51E5C28B546770065248E /* DebugConfig.xcconfig */,
-				B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */,
+				B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */,
 				B8E51E5F28B549660065248E /* StagingConfig.xcconfig */,
 			);
 			path = SNUTT;
@@ -1495,7 +1495,7 @@
 		};
 		BE98A075288AFC1600C2CE95 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
+			baseConfigurationReference = B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
@@ -1592,7 +1592,7 @@
 		};
 		DC860F6827E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
+			baseConfigurationReference = B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1691,7 +1691,7 @@
 		};
 		DC860F6B27E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
+			baseConfigurationReference = B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1756,7 +1756,7 @@
 		};
 		DC860F6E27E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
+			baseConfigurationReference = B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1799,7 +1799,7 @@
 		};
 		DC860F7127E5C87F0068C94B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8E51E5E28B547000065248E /* ProductionConfig.xcconfig */;
+			baseConfigurationReference = B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
