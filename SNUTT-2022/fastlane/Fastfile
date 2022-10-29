@@ -26,25 +26,41 @@ KEY_CONTENT = ENV['APP_STORE_CONNECT_KEY_CONTENT']
 TEAM_ID = ENV['TEAM_ID']
 VERSION_NUMBER = ENV['VERSION_NUMBER'] || "3.0.0"
 BUILD_NUMBER = ENV['BUILD_NUMBER'] || "3"
+SLACK_WEBHOOK = ENV['SLACK_WEBHOOK']
 
 platform :ios do
   desc "🧪 Upload app to Testflight"
   lane :beta do
-    setup_ci
-    certificates_distribution
-    increment_version_number(version_number: VERSION_NUMBER)
-    increment_build_number(build_number: BUILD_NUMBER)
-    build_app(scheme: APP_NAME, 
-              configuration: BUILD_CONFIGURATION,
-              output_directory: "./archive",
-              silent: true,
-              clean: true)
-    app_store_connect_api_key(
-      key_id: APP_STORE_CONNECT_KEY_ID,
-      issuer_id: APP_STORE_CONNECT_KEY_ISSUER,
-      key_content: KEY_CONTENT,
-    )
-    upload_to_testflight
+    begin
+      setup_ci
+      certificates_distribution
+      increment_version_number(version_number: VERSION_NUMBER)
+      increment_build_number(build_number: BUILD_NUMBER)
+      build_app(scheme: APP_NAME, 
+      configuration: BUILD_CONFIGURATION,
+      output_directory: "./archive",
+      silent: true,
+      clean: true)
+      app_store_connect_api_key(
+        key_id: APP_STORE_CONNECT_KEY_ID,
+        issuer_id: APP_STORE_CONNECT_KEY_ISSUER,
+        key_content: KEY_CONTENT,
+        )
+      upload_to_testflight
+      slack(
+        message: "App successfully uploaded to Testflight 🎉",
+        channel: "#team-snutt-deploy",
+        success: true,
+        payload: {
+          "Version" => VERSION_NUMBER,
+          "Build" => BUILD_NUMBER,
+          "Type" => BUILD_CONFIGURATION
+        },
+        default_payloads: [:git_branch, :git_author, :last_git_commit_message, :last_git_commit_hash],
+      )
+    rescue => exception
+        on_error(exception)
+    end
   end
 
   desc "🛠️ Update xcodeproj file"
@@ -93,4 +109,18 @@ platform :ios do
     update_xcodeproj(type: "appstore")
   end
 
+end
+
+def on_error(exception)
+  slack(
+      message: "Something went wrong 😢",
+      channel: "#team-snutt-deploy",
+      success: false,
+      payload: {
+        "Version" => VERSION_NUMBER,
+        "Build" => BUILD_NUMBER,
+        "Type" => BUILD_CONFIGURATION
+      },
+      default_payloads: [:git_branch, :git_author, :last_git_commit_message, :last_git_commit_hash],
+  )
 end

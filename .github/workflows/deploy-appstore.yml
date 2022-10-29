@@ -16,6 +16,7 @@ jobs:
     env:
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
     
     strategy:
       fail-fast: false # if 'true' then one failed job cancels all jobs remaining
