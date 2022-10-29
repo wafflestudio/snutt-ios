@@ -1,13 +1,21 @@
 name: build-ios-app
-# on:
-#   push:
-#     branches:
-#       - 'master'
+on:
+  push:
+    branches:
+      - 'Config/fastlane-ci'
 jobs:
   build:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - run: fastlane beta
+      - name: Set up Ruby 3.1.2
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 3.1.2
+      - run: |
+          gem install bundler
+          bundle exec fastlane beta
+
+        working-directory: ./SNUTT-2022
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}

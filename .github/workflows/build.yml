@@ -1,48 +1,48 @@
-name: Xcode
+# name: Xcode
 
-on:
-  pull_request:
-    paths:
-      - 'SNUTT-2022/**'
-      - ".github/workflows/build.yml"
+# on:
+#   pull_request:
+#     paths:
+#       - 'SNUTT-2022/**'
+#       - ".github/workflows/build.yml"
 
-jobs:
-  build-and-test:
-    name: ${{ matrix.command }} on Xcode ${{ matrix.xcode }}, ${{ matrix.macos }}
-    runs-on: ${{ matrix.macos }} # os switching
+# jobs:
+#   build-and-test:
+#     name: ${{ matrix.command }} on Xcode ${{ matrix.xcode }}, ${{ matrix.macos }}
+#     runs-on: ${{ matrix.macos }} # os switching
     
-    strategy:
-      fail-fast: false # if 'true' then one failed job cancels all jobs remaining
-      matrix:
-        # see https://github.com/actions/virtual-environments/blob/main/images/macos/macos-12-Readme.md for available versions
-        xcode: 
-          - '13.3.1'
-          - '14.0'
-        macos: ['macos-12']
-        command: ['build', 'test']
-        scheme: ['SNUTT']
+#     strategy:
+#       fail-fast: false # if 'true' then one failed job cancels all jobs remaining
+#       matrix:
+#         # see https://github.com/actions/virtual-environments/blob/main/images/macos/macos-12-Readme.md for available versions
+#         xcode: 
+#           - '13.3.1'
+#           - '14.0'
+#         macos: ['macos-12']
+#         command: ['build', 'test']
+#         scheme: ['SNUTT']
 
-    steps:
-    - uses: actions/checkout@v2
+#     steps:
+#     - uses: actions/checkout@v2
 
-    - run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
+#     - run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
     
-    - run: xcodebuild -showsdks
+#     - run: xcodebuild -showsdks
 
-    - name: Populate DebugConfig.xcconfig from Secrets
-      shell: bash
-      env:
-        DEBUG_CONFIG: ${{ secrets.DEBUGCONFIG }}
-      run: |
-        echo "$DEBUG_CONFIG" > SNUTT-2022/SNUTT/DebugConfig.xcconfig
+#     - name: Populate DebugConfig.xcconfig from Secrets
+#       shell: bash
+#       env:
+#         DEBUG_CONFIG: ${{ secrets.DEBUGCONFIG }}
+#       run: |
+#         echo "$DEBUG_CONFIG" > SNUTT-2022/SNUTT/DebugConfig.xcconfig
     
-    - uses: mxcl/xcodebuild@v1.9.2
-      with:
-        platform: iOS
-        action: ${{ matrix.command }} 
-        code-coverage: true
-        scheme: ${{ matrix.scheme }}
-        verbosity: xcpretty
-        configuration: Debug
-        working-directory: SNUTT-2022
+#     - uses: mxcl/xcodebuild@v1.9.2
+#       with:
+#         platform: iOS
+#         action: ${{ matrix.command }} 
+#         code-coverage: true
+#         scheme: ${{ matrix.scheme }}
+#         verbosity: xcpretty
+#         configuration: Debug
+#         working-directory: SNUTT-2022
     
