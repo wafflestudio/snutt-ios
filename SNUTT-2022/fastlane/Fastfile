@@ -48,21 +48,24 @@ platform :ios do
 
   desc "🛠️ Update xcodeproj file"
   private_lane :update_xcodeproj do |options|
+    code_sign_identity = options[:type] == 'appstore' ? 'iPhone Distribution' : 'iPhone Developer'
     update_code_signing_settings(
       use_automatic_signing: false,
       path: XCODEPROJ_NAME,
       team_id: TEAM_ID,
       targets: APP_NAME,
       bundle_identifier: BUNDLE_IDENTIFIER,
+      code_sign_identity:  code_sign_identity,
       profile_name: ENV["sigh_#{BUNDLE_IDENTIFIER}_#{options[:type]}_profile-name"],
-    )
-
-    update_code_signing_settings(
-      use_automatic_signing: false,
-      path: XCODEPROJ_NAME,
-      team_id: TEAM_ID,
-      targets: "SNUTTWidgetExtension",
-      bundle_identifier: WIDGET_BUNDLE_IDENTIFIER,
+      )
+      
+      update_code_signing_settings(
+        use_automatic_signing: false,
+        path: XCODEPROJ_NAME,
+        team_id: TEAM_ID,
+        targets: "SNUTTWidgetExtension",
+        bundle_identifier: WIDGET_BUNDLE_IDENTIFIER,
+        code_sign_identity: code_sign_identity,
       profile_name: ENV["sigh_#{WIDGET_BUNDLE_IDENTIFIER}_#{options[:type]}_profile-name"],
     )
 
