@@ -30,8 +30,8 @@ jobs:
 
       - name: Set version number and build number
         run: |
-          echo "VERSION_NUMBER=${{ steps.regex.outputs.group2 }}.${{ steps.regex.outputs.group3 }}.${{ steps.regex.outputs.group4 }}" >> $GITHUB_ENV
-          echo "BUILD_NUMBER=${{ steps.regex.outputs.group6 }}" >> $GITHUB_ENV
+          echo "VERSION_NUMBER=${{ steps.regex.outputs.group1 }}.${{ steps.regex.outputs.group2 }}.${{ steps.regex.outputs.group3 }}" >> $GITHUB_ENV
+          echo "BUILD_NUMBER=${{ steps.regex.outputs.group5 }}" >> $GITHUB_ENV
 
       - name: Populate debug xcconfig from Secrets
         shell: bash
