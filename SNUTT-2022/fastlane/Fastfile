@@ -48,6 +48,7 @@ platform :ios do
 
   desc "🛠️ Update xcodeproj file"
   private_lane :update_xcodeproj do |options|
+    setup_ci
     code_sign_identity = options[:type] == 'appstore' ? 'iPhone Distribution' : 'iPhone Developer'
     update_code_signing_settings(
       use_automatic_signing: false,
