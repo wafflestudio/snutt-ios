@@ -4,10 +4,9 @@ on:
   push:
     tags:
       - testflight/v[0-9]+.[0-9]+.[0-9]+-*.[0-9]+
-      - appstore/v[0-9]+.[0-9]+.[0-9]+-*.[0-9]+
 
 jobs:
-  deploy-testflight:
+  deploy:
     name: Execute fastlane for testflight
     runs-on: macos-latest
     
@@ -25,9 +24,14 @@ jobs:
         id: regex
         with:
           text: ${{ github.ref_name }}
-          regex: '^\/refs\/tags\/(testflight|appstore)\/v(\d+)\.(\d+)\.(\d+)-(release|debug)\.(\d+)$'
+          regex: '^\/refs\/tags\/testflight\/v(\d+)\.(\d+)\.(\d+)-(release|debug)\.(\d+)$'
       
       - uses: actions/checkout@v3
+
+      - name: Set version number and build number
+        run: |
+          echo "VERSION_NUMBER=${{ steps.regex.outputs.group2 }}.${{ steps.regex.outputs.group3 }}.${{ steps.regex.outputs.group4 }}" >> $GITHUB_ENV
+          echo "BUILD_NUMBER=${{ steps.regex.outputs.group6 }}" >> $GITHUB_ENV
 
       - name: Populate debug xcconfig from Secrets
         shell: bash
@@ -58,12 +62,12 @@ jobs:
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
       
       - name: Upload dev app to testflight
-        if: ${{ steps.regex.outputs.group5 == 'testflight' && steps.regex.outputs.group5 == 'debug' }}
+        if: ${{ steps.regex.outputs.group5 == 'debug' }}
         run: |
           bundle exec fastlane beta --env dev
 
       - name: Upload prod app to testflight
-        if: ${{ steps.regex.outputs.group5 == 'testflight' && steps.regex.outputs.group5 == 'release' }}
+        if: ${{ steps.regex.outputs.group5 == 'release' }}
         run: |
           bundle exec fastlane beta --env prod
       

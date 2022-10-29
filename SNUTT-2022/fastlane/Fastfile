@@ -20,11 +20,15 @@ BUILD_CONFIGURATION = ENV['BUILD_CONFIGURATION']
 APP_STORE_CONNECT_KEY_ID = ENV['APP_STORE_CONNECT_KEY_ID']
 APP_STORE_CONNECT_KEY_ISSUER = ENV['APP_STORE_CONNECT_KEY_ISSUER']
 KEY_CONTENT = ENV['APP_STORE_CONNECT_KEY_CONTENT']
+VERSION_NUMBER = ENV['VERSION_NUMBER'] || "3.0.0"
+BUILD_NUMBER = ENV['BUILD_NUMBER'] || "1"
 
 platform :ios do
   desc "🧪 Upload app to Testflight"
   lane :beta do
     certificates_distribution
+    increment_version_number(version_number: VERSION_NUMBER)
+    increment_build_number(build_number: BUILD_NUMBER)
     build_app(scheme: "SNUTT", 
               configuration: BUILD_CONFIGURATION,
               output_directory: "./archive",

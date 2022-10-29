@@ -1,0 +1,61 @@
+name: deploy-appstore
+
+on:
+  push:
+    tags:
+      - appstore/v[0-9]+.[0-9]+.[0-9]+-*.[0-9]+
+
+jobs:
+  deploy:
+    name: Execute fastlane for appstore
+    runs-on: macos-latest
+    
+    defaults:
+      run:
+        working-directory: ./SNUTT-2022
+    
+    env:
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
+
+    steps:
+      - name: Parse tag name
+        uses: actions-ecosystem/action-regex-match@v2
+        id: regex
+        with:
+          text: ${{ github.ref_name }}
+          regex: '^\/refs\/tags\/appstore\/v(\d+)\.(\d+)\.(\d+)-(release)\.(\d+)$'
+      
+      - uses: actions/checkout@v3
+
+      - name: Set version number and build number
+        run: |
+          echo "VERSION_NUMBER=${{ steps.regex.outputs.group2 }}.${{ steps.regex.outputs.group3 }}.${{ steps.regex.outputs.group4 }}" >> $GITHUB_ENV
+          echo "BUILD_NUMBER=${{ steps.regex.outputs.group6 }}" >> $GITHUB_ENV
+
+      - name: Populate release xcconfig from Secrets
+        shell: bash
+        if: ${{ steps.regex.outputs.group5 == 'release' }}
+        env:
+          RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
+        run: |
+          echo "$RELEASE_CONFIG" > SNUTT-2022/SNUTT/ReleaseConfig.xcconfig
+
+      - name: Install Ruby Dependencies
+        run: bundle install
+
+      - name: Acquire access to the match certificates repository
+        env:
+          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY  }}
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+          MATCH_READONLY: true
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
+      
+      - name: Upload prod app to App Store
+        if: ${{ steps.regex.outputs.group5 == 'release' }}
+        run: |
+          echo "NotImplemented"
+          bundle exec fastlane appstore --env prod
+      
