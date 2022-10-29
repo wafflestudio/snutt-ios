@@ -35,21 +35,17 @@ jobs:
 
       - name: Install Ruby Dependencies
         run: bundle install
-
-      - name: Acquire access to the match certificates repository
+        
+      - name: Upload dev app to testflight
+        if: ${{ steps.regex.outputs.group4 == 'debug' }}
         env:
+          DEBUG_CONFIG: ${{ secrets.DEBUG_CONFIG }}
           MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY  }}
           GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
           MATCH_READONLY: true
         run: |
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
-      
-      - name: Upload dev app to testflight
-        if: ${{ steps.regex.outputs.group4 == 'debug' }}
-        env:
-          DEBUG_CONFIG: ${{ secrets.DEBUG_CONFIG }}
-        run: |
           echo "$DEBUG_CONFIG" > SNUTT/DebugConfig.xcconfig
           bundle exec fastlane beta --env dev
 
@@ -57,7 +53,12 @@ jobs:
         if: ${{ steps.regex.outputs.group4 == 'release' }}
         env:
           RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
+          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY  }}
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+          MATCH_READONLY: true
         run: |
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           echo "$RELEASE_CONFIG" > SNUTT/ReleaseConfig.xcconfig
           bundle exec fastlane beta --env prod
       
