@@ -24,7 +24,7 @@ jobs:
         id: regex
         with:
           text: ${{ github.ref_name }}
-          regex: '^\/refs\/tags\/testflight\/v(\d+)\.(\d+)\.(\d+)-(release|debug)\.(\d+)$'
+          regex: '^testflight\/v(\d+)\.(\d+)\.(\d+)-(release|debug)\.(\d+)$'
       
       - uses: actions/checkout@v3
 
