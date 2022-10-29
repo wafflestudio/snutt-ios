@@ -1,0 +1,29 @@
+name: Execute fastlane
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build_dev:
+    name: Execute fastlane
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: ./SNUTT-2022
+    steps:
+      - uses: actions/checkout@master
+      - name: Install Ruby Dependencies
+        run: bundle install
+
+      - name: Match Repo Clone Test (please delete this)
+        env:
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
+          git clone git@github.com:wafflestudio/wafflestudio-apple-certificates.git
+          ls wafflestudio-apple-certificates
+
