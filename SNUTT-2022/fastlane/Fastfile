@@ -26,6 +26,7 @@ KEY_CONTENT = ENV['APP_STORE_CONNECT_KEY_CONTENT']
 TEAM_ID = ENV['TEAM_ID']
 VERSION_NUMBER = ENV['VERSION_NUMBER'] || "3.0.0"
 BUILD_NUMBER = ENV['BUILD_NUMBER'] || "3"
+GIT_TAG_NAME = ENV['GIT_TAG_NAME']
 SLACK_WEBHOOK = ENV['SLACK_WEBHOOK']
 
 platform :ios do
@@ -52,12 +53,16 @@ platform :ios do
         channel: "#team-snutt-deploy",
         slack_url: SLACK_WEBHOOK,
         success: true,
-        payload: {
-          "Version" => VERSION_NUMBER,
-          "Build" => BUILD_NUMBER,
-          "Type" => BUILD_CONFIGURATION
+        attachment_properties: {
+          fields: [
+                {
+                    title: "Tag",
+                    value: GIT_TAG_NAME,
+                    short: false
+                }
+            ]
         },
-        default_payloads: [:git_branch, :git_author, :last_git_commit_message, :last_git_commit_hash],
+        default_payloads: [:git_branch, :git_author, :last_git_commit_hash, :last_git_commit]
       )
     rescue => exception
         on_error(exception)
@@ -118,11 +123,15 @@ def on_error(exception)
       channel: "#team-snutt-deploy",
       slack_url: SLACK_WEBHOOK,
       success: false,
-      payload: {
-        "Version" => VERSION_NUMBER,
-        "Build" => BUILD_NUMBER,
-        "Type" => BUILD_CONFIGURATION
-      },
-      default_payloads: [:git_branch, :git_author, :last_git_commit_message, :last_git_commit_hash],
+      attachment_properties: {
+          fields: [
+                {
+                    title: "Tag",
+                    value: GIT_TAG_NAME,
+                    short: false
+                }
+            ]
+        },
+        default_payloads: [:git_branch, :git_author, :last_git_commit_hash, :last_git_commit]
   )
 end
