@@ -50,6 +50,7 @@ platform :ios do
       slack(
         message: "App successfully uploaded to Testflight 🎉",
         channel: "#team-snutt-deploy",
+        slack_url: SLACK_WEBHOOK,
         success: true,
         payload: {
           "Version" => VERSION_NUMBER,
@@ -115,6 +116,7 @@ def on_error(exception)
   slack(
       message: "Something went wrong 😢",
       channel: "#team-snutt-deploy",
+      slack_url: SLACK_WEBHOOK,
       success: false,
       payload: {
         "Version" => VERSION_NUMBER,
