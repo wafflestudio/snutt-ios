@@ -1,0 +1,83 @@
+name: Deploy Testflight
+
+on:
+  push:
+    tags:
+      - testflight/v[0-9]+.[0-9]+.[0-9]+-*.[0-9]+
+
+jobs:
+  deploy:
+    name: Execute fastlane for testflight
+    
+    defaults:
+      run:
+        working-directory: ./SNUTT-2022
+    
+    env:
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+      APP_STORE_CONNECT_KEY_ISSUER: ${{ secrets.APP_STORE_CONNECT_KEY_ISSUER }}
+      APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      GIT_TAG_NAME: ${{ github.ref_name }}
+      XCODE_VERSION: 13.4.1
+
+    runs-on: macos-12
+
+    steps:
+      - name: Parse tag name
+        uses: actions-ecosystem/action-regex-match@v2
+        id: regex
+        with:
+          text: ${{ github.ref_name }}
+          regex: '^testflight\/v(\d+)\.(\d+)\.(\d+)-(release|debug)\.(\d+)$'
+      
+      - uses: actions/checkout@v3
+
+      - run: |
+          sudo xcode-select -s /Applications/Xcode_${XCODE_VERSION}.app/Contents/Developer
+          ls
+
+      - name: Set version number and build number
+        run: |
+          echo "VERSION_NUMBER=${{ steps.regex.outputs.group1 }}.${{ steps.regex.outputs.group2 }}.${{ steps.regex.outputs.group3 }}" >> $GITHUB_ENV
+          echo "BUILD_NUMBER=${{ steps.regex.outputs.group5 }}" >> $GITHUB_ENV
+
+      - name: Install Ruby Dependencies
+        run: bundle install
+
+      - name: Setup git ssh - repo mapping
+        uses: shaunco/ssh-agent@git-repo-mapping
+        with:
+          ssh-private-key: |
+            ${{ secrets.MATCH_DEPLOY_KEY }}
+          repo-mappings: |
+            github.com/wafflestudio/wafflestudio-apple-certificates
+
+      - name: Upload dev app to testflight
+        if: ${{ steps.regex.outputs.group4 == 'debug' }}
+        env:
+          DEBUG_CONFIG: ${{ secrets.DEBUG_CONFIG }}
+          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+          MATCH_READONLY: true
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
+          echo "$DEBUG_CONFIG" > SNUTT/DebugConfig.xcconfig
+          bundle exec fastlane beta --env dev
+
+      - name: Upload prod app to testflight
+        if: ${{ steps.regex.outputs.group4 == 'release' }}
+        env:
+          RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
+          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+          MATCH_READONLY: true
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
+          echo "$RELEASE_CONFIG" > SNUTT/ReleaseConfig.xcconfig
+          echo "Not Implemented"
+          bundle exec fastlane beta --env prod
+      
