@@ -12,6 +12,8 @@ jobs:
     defaults:
       run:
         working-directory: ./SNUTT-2022
+    env:
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
     steps:
       - uses: actions/checkout@master
       - name: Install Ruby Dependencies
