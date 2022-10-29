@@ -21,7 +21,7 @@ jobs:
       fail-fast: false # if 'true' then one failed job cancels all jobs remaining
       matrix:
         xcode: 
-          - '14.0.1'
+          - '13.4.1'
         macos: ['macos-12']
     
     runs-on: ${{ matrix.macos }}
@@ -56,14 +56,11 @@ jobs:
           repo-mappings: |
             github.com/wafflestudio/wafflestudio-apple-certificates
 
-      - name: Setup CI environment for fastlane
-        run: fastlane run setup_ci
-        
       - name: Upload prod app to App Store
         if: ${{ steps.regex.outputs.group4 == 'release' }}
         env:
           RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
-          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY  }}
+          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
           GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
           MATCH_READONLY: true
         run: |
