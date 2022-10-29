@@ -33,14 +33,6 @@ jobs:
           echo "VERSION_NUMBER=${{ steps.regex.outputs.group1 }}.${{ steps.regex.outputs.group2 }}.${{ steps.regex.outputs.group3 }}" >> $GITHUB_ENV
           echo "BUILD_NUMBER=${{ steps.regex.outputs.group5 }}" >> $GITHUB_ENV
 
-      - name: Populate release xcconfig from Secrets
-        shell: bash
-        if: ${{ steps.regex.outputs.group5 == 'release' }}
-        env:
-          RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
-        run: |
-          echo "$RELEASE_CONFIG" > SNUTT-2022/SNUTT/ReleaseConfig.xcconfig
-
       - name: Install Ruby Dependencies
         run: bundle install
 
@@ -54,8 +46,11 @@ jobs:
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
       
       - name: Upload prod app to App Store
-        if: ${{ steps.regex.outputs.group5 == 'release' }}
+        if: ${{ steps.regex.outputs.group4 == 'release' }}
+        env:
+          RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
         run: |
-          echo "NotImplemented"
+          echo "$RELEASE_CONFIG" > SNUTT-2022/SNUTT/ReleaseConfig.xcconfig
+          echo "Not Implemented"
           bundle exec fastlane appstore --env prod
       
