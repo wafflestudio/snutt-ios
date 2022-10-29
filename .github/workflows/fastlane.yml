@@ -26,6 +26,13 @@ jobs:
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           git clone git@github.com:wafflestudio/wafflestudio-apple-certificates.git
           ls wafflestudio-apple-certificates
+      
+      - uses: shaunco/ssh-agent@git-repo-mapping
+        with:
+          ssh-private-key: |
+            ${{ secrets.MATCH_DEPLOY_KEY }}
+          repo-mappings: |
+            github.com/wafflestudio/wafflestudio-apple-certificates
 
 
       - name: fastlane
