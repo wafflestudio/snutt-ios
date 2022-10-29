@@ -50,7 +50,7 @@ jobs:
         env:
           RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
         run: |
-          echo "$RELEASE_CONFIG" > SNUTT-2022/SNUTT/ReleaseConfig.xcconfig
+          echo "$RELEASE_CONFIG" > SNUTT/ReleaseConfig.xcconfig
           echo "Not Implemented"
           bundle exec fastlane appstore --env prod
       

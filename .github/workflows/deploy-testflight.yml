@@ -50,7 +50,7 @@ jobs:
         env:
           DEBUG_CONFIG: ${{ secrets.DEBUG_CONFIG }}
         run: |
-          echo "$DEBUG_CONFIG" > SNUTT-2022/SNUTT/DebugConfig.xcconfig
+          echo "$DEBUG_CONFIG" > SNUTT/DebugConfig.xcconfig
           bundle exec fastlane beta --env dev
 
       - name: Upload prod app to testflight
@@ -58,6 +58,6 @@ jobs:
         env:
           RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
         run: |
-          echo "$RELEASE_CONFIG" > SNUTT-2022/SNUTT/ReleaseConfig.xcconfig
+          echo "$RELEASE_CONFIG" > SNUTT/ReleaseConfig.xcconfig
           bundle exec fastlane beta --env prod
       
