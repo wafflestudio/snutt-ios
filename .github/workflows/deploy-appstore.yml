@@ -56,6 +56,9 @@ jobs:
           repo-mappings: |
             github.com/wafflestudio/wafflestudio-apple-certificates
 
+      - name: Setup CI environment for fastlane
+        run: fastlane run setup_ci
+        
       - name: Upload prod app to App Store
         if: ${{ steps.regex.outputs.group4 == 'release' }}
         env:
