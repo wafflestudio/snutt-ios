@@ -1,10 +1,11 @@
 
+
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/wafflestudio/snutt-ios">
-    <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
-    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 27 27" id="logo"><g fill="none" fill-rule="evenodd"><path fill="#E54459" d="M0 0h12.226v17.066H0z"></path><path fill="#1BD0C8" d="M14.774 9.934H27V27H14.774z"></path><path fill="#FAC42D" d="M14.774 0H27v7.387H14.774z"></path><path fill="#A6D930" d="M0 19.613h12.226V27H0z"></path></g></svg>
+    <img src="https://user-images.githubusercontent.com/33917774/199519767-60590904-b15a-4464-ab21-e3a424649d5c.svg" alt="Logo" width="70" height="70">
   </a>
 
   <h3 align="center">SNUTT iOS</h3>
