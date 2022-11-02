@@ -76,7 +76,7 @@ brew install fastlane
    fastlane certificates_distribution --env prod
    ```
 
-4. Now you should be able to run the app using your iOS devices!
+4. Now you should be able to run the app on your real iOS devices!
 
 <!-- ROADMAP -->
 ## Roadmap
