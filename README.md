@@ -1,20 +1,10 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-<a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/wafflestudio/snutt-ios">
     <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
-    <svg width="70" height="70" viewBox="0 0 27 27" id="logo"><g fill="none" fill-rule="evenodd"><path fill="#E54459" d="M0 0h12.226v17.066H0z"></path><path fill="#1BD0C8" d="M14.774 9.934H27V27H14.774z"></path><path fill="#FAC42D" d="M14.774 0H27v7.387H14.774z"></path><path fill="#A6D930" d="M0 19.613h12.226V27H0z"></path></g></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 27 27" id="logo"><g fill="none" fill-rule="evenodd"><path fill="#E54459" d="M0 0h12.226v17.066H0z"></path><path fill="#1BD0C8" d="M14.774 9.934H27V27H14.774z"></path><path fill="#FAC42D" d="M14.774 0H27v7.387H14.774z"></path><path fill="#A6D930" d="M0 19.613h12.226V27H0z"></path></g></svg>
   </a>
 
   <h3 align="center">SNUTT iOS</h3>
