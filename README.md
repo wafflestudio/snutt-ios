@@ -84,7 +84,7 @@ brew install fastlane
 - [x] Dark mode support
 - [x] iOS widget support
 - [ ] iOS 16 support (Lock Screen Widgets, Live Activities, etc.)
-- [ ] Multi-language Support
+- [ ] Multi-language support
 
 See the [open issues](https://github.com/wafflestudio/snutt-ios/issues) for a full list of proposed features (and known issues).
 
