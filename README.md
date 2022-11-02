@@ -13,9 +13,10 @@
   <p align="center">
     The best timetable application for SNU students, developed and maintained by SNU students.
     <div style=" padding-bottom: 1rem;">
+    <img src="https://img.shields.io/badge/iOS-1A1A1A?style=for-the-badge&logo=apple&logoColor=white"/>
     <img src="https://img.shields.io/badge/SwiftUI-F05138?style=for-the-badge&logo=swift&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Fastlane-68BD49?style=for-the-badge&logo=xcode&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Xcode-147EFB?style=for-the-badge&logo=xcode&logoColor=white"/>
+    <img src="https://img.shields.io/badge/UIKit-2396F3?style=for-the-badge&logo=uikit&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Fastlane-68BD49?style=for-the-badge&logo=fastlane&logoColor=white"/>
     </div>
     <a href="https://apps.apple.com/kr/app/snutt-%EC%84%9C%EC%9A%B8%EB%8C%80%ED%95%99%EA%B5%90-%EC%8B%9C%EA%B0%84%ED%91%9C-%EC%95%B1/id1215668309">App Store</a>
     ·
