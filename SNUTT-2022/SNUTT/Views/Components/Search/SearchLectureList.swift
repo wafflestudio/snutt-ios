@@ -47,7 +47,7 @@ struct SearchLectureList: View {
                             }
 
                             Button("취소", role: .cancel) {
-                                isLectureOverlapped.toggle()
+                                isLectureOverlapped = false
                             }
                         } message: {
                             Text(errorMessage)

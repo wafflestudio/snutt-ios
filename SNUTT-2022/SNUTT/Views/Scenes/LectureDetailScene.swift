@@ -269,15 +269,10 @@ struct LectureDetailScene: View {
                             guard let tempLecture = tempLecture else { return }
                             // save
                             Task {
-                                guard let updatedLecture = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) else {
-                                    if !viewModel.isLectureOverlapped {
-                                        lecture = tempLecture
-                                    }
-                                    return
+                                if await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) {
+                                    editMode = .inactive
+                                    resignFirstResponder()
                                 }
-                                lecture = updatedLecture
-                                editMode = .inactive
-                                resignFirstResponder()
                             }
                         } else {
                             // edit
@@ -308,8 +303,9 @@ struct LectureDetailScene: View {
         .alert(viewModel.errorTitle, isPresented: $viewModel.isLectureOverlapped) {
             Button {
                 Task {
-                    let success = await editMode.isEditing && displayMode == .normal
-                        ? viewModel.forceUpdateLecture(oldLecture: tempLecture, newLecture: lecture)
+                    let isUpdatingLecture = editMode.isEditing && displayMode == .normal
+                    let success = await isUpdatingLecture
+                        ? viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture, isForced: true)
                         : (lecture.isCustom
                            ? viewModel.addCustomLecture(lecture: lecture, isForced: true)
                            : viewModel.overwriteLecture(lecture: lecture))
