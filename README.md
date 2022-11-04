@@ -32,7 +32,23 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-TBD
+This repository contains two iOS projects in the root directory: `./SNUTT` and `./SNUTT-2022`.
+
+| | SNUTT | SNUTT-2022
+|---|:---:|:---:|
+|First Release| 2017.03.22 | 2022.11.12 |
+|Directory| `./SNUTT` | `./SNUTT-2022` |
+|Version| `<=2.1.3` | `>=3.0.0` |
+|Framework| UIKit | SwiftUI |
+|Status| ![deprecated](https://img.shields.io/badge/deprecated-red) | ![maintained](https://img.shields.io/badge/maintained-success) |
+
+
+## Features
+
+- ♻️ Clean Architecture + MVVM
+- 🌓 Dark Mode Support
+- 🖼️ Widgets Support
+- 💫 Hand-crafted UI components
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -81,10 +97,9 @@ brew install fastlane
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Dark mode support
-- [x] iOS widget support
 - [ ] iOS 16 support (Lock Screen Widgets, Live Activities, etc.)
 - [ ] Multi-language support
+- [ ] Apple Watch support
 
 See the [open issues](https://github.com/wafflestudio/snutt-ios/issues) for a full list of proposed features (and known issues).
 
@@ -110,6 +125,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-TBD
+The app architecture is highly inspired by the following source codes and articles.
+
+- [Clean Architecture for SwiftUI + Combine](https://github.com/nalexn/clean-architecture-swiftui)
+- [Clean Architecture for SwiftUI](https://nalexn.github.io/clean-architecture-swiftui/?utm_source=nalexn_github)
 
 [SwiftUI]: https://img.shields.io/badge/SwiftUI-F05138?style=for-the-badge&logo=swift&logoColor=white
