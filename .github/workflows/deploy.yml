@@ -56,7 +56,7 @@ jobs:
       - name: Setup git ssh - repo mapping
         uses: shaunco/ssh-agent@git-repo-mapping
         with:
-          ssh-private-key: $MATCH_DEPLOY_KEY
+          ssh-private-key: ${{ secrets.MATCH_DEPLOY_KEY }}
           repo-mappings: github.com/wafflestudio/wafflestudio-apple-certificates
       
       - name: Configure ssh agent
