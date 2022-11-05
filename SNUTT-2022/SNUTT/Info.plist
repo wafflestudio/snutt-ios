@@ -31,6 +31,6 @@
 	<key>SNUEV_WEB_URL</key>
 	<string>https://${SNUEV_WEB_URL}</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Save Screeshots to Photo Library</string>
+	<string>Save Screenshots to Photo Library</string>
 </dict>
 </plist>

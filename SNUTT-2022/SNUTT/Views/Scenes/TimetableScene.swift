@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LinkPresentation
 
 struct TimetableScene: View {
     @State private var pushToListScene = false
@@ -13,6 +14,9 @@ struct TimetableScene: View {
     @State private var isShareSheetOpened = false
     @State private var screenshot: UIImage = .init()
     @ObservedObject var viewModel: TimetableViewModel
+    
+    /// Provide title for `UIActivityViewController`.
+    private let linkMetadata = LinkMetadata()
 
     var body: some View {
         GeometryReader { reader in
@@ -63,7 +67,7 @@ struct TimetableScene: View {
                     }
                 }
                 .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
-                    ActivityViewController(activityItems: [screenshot])
+                    ActivityViewController(activityItems: [screenshot, linkMetadata])
                 }
                 .onLoad {
                     // make the following three api calls execute concurrently
@@ -97,7 +101,7 @@ struct TimetableScene: View {
 
 // MARK: ActivityViewController
 
-struct ActivityViewController: UIViewControllerRepresentable {
+fileprivate struct ActivityViewController: UIViewControllerRepresentable {
     var activityItems: [Any]
 
     func makeUIViewController(context _: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
@@ -106,6 +110,30 @@ struct ActivityViewController: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_: UIActivityViewController, context _: UIViewControllerRepresentableContext<ActivityViewController>) {}
+}
+
+final fileprivate class LinkMetadata: NSObject, UIActivityItemSource {
+    var linkMetadata: LPLinkMetadata
+    
+    override init() {
+        linkMetadata = LPLinkMetadata()
+        linkMetadata.title = "SNUTT"
+        linkMetadata.url = URL(fileURLWithPath: "서울대학교 시간표 앱")
+        linkMetadata.iconProvider = NSItemProvider(object: UIImage(named: "logo")!)
+        super.init()
+    }
+    
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return ""
+    }
+    
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        return nil
+    }
+    
+    func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
+        return linkMetadata
+    }
 }
 
 // struct MyTimetableScene_Previews: PreviewProvider {
