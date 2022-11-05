@@ -15,36 +15,36 @@ import UIKit
 ///
 /// See [here](https://www.raywenderlich.com/20201639-firebase-cloud-messaging-for-ios-push-notifications) for more information about FCM configuration.
 class AppDelegate: NSObject, UIApplicationDelegate {
-    
     var firebaseConfigName: String {
         #if DEBUG
-        return "GoogleServiceDebugInfo"
+            return "GoogleServiceDebugInfo"
         #else
-        return "GoogleServiceReleaseInfo"
+            return "GoogleServiceReleaseInfo"
         #endif
     }
-    
+
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool
     {
         // configure firebase sdk
         if let filePath = Bundle.main.path(forResource: firebaseConfigName, ofType: "plist"),
-           let configOption = FirebaseOptions(contentsOfFile: filePath) {
+           let configOption = FirebaseOptions(contentsOfFile: filePath)
+        {
             FirebaseApp.configure(options: configOption)
             FirebaseConfiguration.shared.setLoggerLevel(.min)
-            
+
             UNUserNotificationCenter.current().delegate = self
             UNUserNotificationCenter.current().requestAuthorization(
                 options: [.alert, .badge, .sound]) { _, _ in }
             application.registerForRemoteNotifications()
-            
+
             Messaging.messaging().delegate = self
         }
-        
+
         // configure facebook sdk
         return ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
-    
+
     func application(_ app: UIApplication,
                      open url: URL,
                      options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
@@ -57,43 +57,43 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 /// Firebase Push Notification Settings.
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
+        _: UNUserNotificationCenter,
+        willPresent _: UNNotification,
         withCompletionHandler completionHandler:
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         completionHandler([[.banner, .sound, .list]])
     }
-    
+
     func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse,
+        _: UNUserNotificationCenter,
+        didReceive _: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         completionHandler()
     }
-    
+
     func application(
-        _ application: UIApplication,
+        _: UIApplication,
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
     ) {
         /// Register the token when the user grants permission for push notifications.
         Messaging.messaging().apnsToken = deviceToken
     }
-    
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-    }
+
+    func application(_: UIApplication, didFailToRegisterForRemoteNotificationsWithError _: Error) {}
 }
 
 extension AppDelegate: MessagingDelegate {
     func messaging(
-        _ messaging: Messaging,
+        _: Messaging,
         didReceiveRegistrationToken fcmToken: String?
     ) {
         let tokenDict = ["token": fcmToken ?? ""]
         NotificationCenter.default.post(
             name: Notification.Name("FCMToken"),
             object: nil,
-            userInfo: tokenDict)
+            userInfo: tokenDict
+        )
     }
 }
