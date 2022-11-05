@@ -85,12 +85,11 @@ struct TimetableScene: View {
                         }
                     })
                 }
-    //            .onAppear {
-    //                Task {
-    //                    await viewModel.fetchNotificationsCount()
-    //                }
-    //            }
-
+            //            .onAppear {
+            //                Task {
+            //                    await viewModel.fetchNotificationsCount()
+            //                }
+            //            }
         }
         let _ = debugChanges()
     }
@@ -100,14 +99,13 @@ struct TimetableScene: View {
 
 struct ActivityViewController: UIViewControllerRepresentable {
     var activityItems: [Any]
-    
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
+
+    func makeUIViewController(context _: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
         let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {
-    }
+    func updateUIViewController(_: UIActivityViewController, context _: UIViewControllerRepresentableContext<ActivityViewController>) {}
 }
 
 // struct MyTimetableScene_Previews: PreviewProvider {
