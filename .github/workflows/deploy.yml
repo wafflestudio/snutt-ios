@@ -16,6 +16,7 @@ jobs:
     
     env:
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
       APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
       APP_STORE_CONNECT_KEY_ISSUER: ${{ secrets.APP_STORE_CONNECT_KEY_ISSUER }}
       APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
@@ -55,14 +56,11 @@ jobs:
       - name: Setup git ssh - repo mapping
         uses: shaunco/ssh-agent@git-repo-mapping
         with:
-          ssh-private-key: |
-            ${{ secrets.MATCH_DEPLOY_KEY }}
-          repo-mappings: |
-            github.com/wafflestudio/wafflestudio-apple-certificates
+          ssh-private-key: ${MATCH_DEPLOY_KEY}
+          repo-mappings: github.com/wafflestudio/wafflestudio-apple-certificates
       
       - name: Configure ssh agent
         env:
-          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
           GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
         run: |
           eval "$(ssh-agent -s)"
@@ -72,11 +70,7 @@ jobs:
         if: ${{ steps.regex.outputs.group1 == 'testflight' && steps.regex.outputs.group5 == 'debug' }}
         env:
           DEBUG_CONFIG: ${{ secrets.DEBUG_CONFIG }}
-          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
-          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
         run: |
-          # eval "$(ssh-agent -s)"
-          # ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           echo "$DEBUG_CONFIG" > SNUTT/DebugConfig.xcconfig
           bundle exec fastlane beta --env dev
 
@@ -84,25 +78,16 @@ jobs:
         if: ${{ steps.regex.outputs.group1 == 'testflight' && steps.regex.outputs.group5 == 'release' }}
         env:
           RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
-          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
-          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
         run: |
-          # eval "$(ssh-agent -s)"
-          # ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           echo "$RELEASE_CONFIG" > SNUTT/ReleaseConfig.xcconfig
           echo "Not Implemented"
-          bundle exec fastlane beta --env prod
+          # bundle exec fastlane beta --env prod
       
       - name: Upload prod app to App Store
         if: ${{ steps.regex.outputs.group1 == 'appstore' && steps.regex.outputs.group4 == 'release' }}
         env:
           RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
-          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
-          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
-          MATCH_READONLY: true
         run: |
-          eval "$(ssh-agent -s)"
-          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           echo "$RELEASE_CONFIG" > SNUTT/ReleaseConfig.xcconfig
           echo "Not Implemented"
           # bundle exec fastlane appstore --env prod
