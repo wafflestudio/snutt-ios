@@ -6,20 +6,94 @@
 //
 
 import FacebookCore
+import FirebaseCore
+import FirebaseMessaging
 import SwiftUI
+import UIKit
 
-/// Required to post process the results from Facebook Login.
+/// Required to integrate Firebase SDK and Facebook SDK.
+///
+/// See [here](https://www.raywenderlich.com/20201639-firebase-cloud-messaging-for-ios-push-notifications) for more information about FCM configuration.
 class AppDelegate: NSObject, UIApplicationDelegate {
+    
+    var firebaseConfigName: String {
+        #if DEBUG
+        return "GoogleServiceDebugInfo"
+        #else
+        return "GoogleServiceReleaseInfo"
+        #endif
+    }
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool
     {
-        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        // configure firebase sdk
+        if let filePath = Bundle.main.path(forResource: firebaseConfigName, ofType: "plist"),
+           let configOption = FirebaseOptions(contentsOfFile: filePath) {
+            FirebaseApp.configure(options: configOption)
+            FirebaseConfiguration.shared.setLoggerLevel(.min)
+            
+            UNUserNotificationCenter.current().delegate = self
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: [.alert, .badge, .sound]) { _, _ in }
+            application.registerForRemoteNotifications()
+            
+            Messaging.messaging().delegate = self
+        }
+        
+        // configure facebook sdk
+        return ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
-
+    
     func application(_ app: UIApplication,
                      open url: URL,
                      options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
     {
+        // configure facebook sdk
         return ApplicationDelegate.shared.application(app, open: url, options: options)
+    }
+}
+
+/// Firebase Push Notification Settings.
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler:
+        @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([[.banner, .sound, .list]])
+    }
+    
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        completionHandler()
+    }
+    
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+        /// Register the token when the user grants permission for push notifications.
+        Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    }
+}
+
+extension AppDelegate: MessagingDelegate {
+    func messaging(
+        _ messaging: Messaging,
+        didReceiveRegistrationToken fcmToken: String?
+    ) {
+        let tokenDict = ["token": fcmToken ?? ""]
+        NotificationCenter.default.post(
+            name: Notification.Name("FCMToken"),
+            object: nil,
+            userInfo: tokenDict)
     }
 }

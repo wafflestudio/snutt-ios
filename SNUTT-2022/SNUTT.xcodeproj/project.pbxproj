@@ -18,8 +18,8 @@
 		B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16F228ABC5DD00E2D652 /* String+ext.swift */; };
 		B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FA28AE2BB900E2D652 /* UserRouter.swift */; };
 		B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FC28AE2E1E00E2D652 /* User.swift */; };
-		B89826D128F4971000477A14 /* SyllabusWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89826D028F4971000477A14 /* SyllabusWebView.swift */; };
 		B88D170128AF71E300E2D652 /* UserSupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D170028AF71E300E2D652 /* UserSupportView.swift */; };
+		B89826D128F4971000477A14 /* SyllabusWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89826D028F4971000477A14 /* SyllabusWebView.swift */; };
 		B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */; };
 		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
@@ -73,6 +73,11 @@
 		BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */; };
 		BE4B0EBE2873BC84005FE164 /* FilterSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBD2873BC84005FE164 /* FilterSheetViewModel.swift */; };
 		BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */; };
+		BE4CD86128F5A56200BA9BBC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = BE4CD86028F5A56200BA9BBC /* FirebaseAnalytics */; };
+		BE4CD86328F5A56200BA9BBC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BE4CD86228F5A56200BA9BBC /* FirebaseAnalyticsSwift */; };
+		BE4CD86528F5A56200BA9BBC /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = BE4CD86428F5A56200BA9BBC /* FirebaseCrashlytics */; };
+		BE4CD86728F5A56200BA9BBC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = BE4CD86628F5A56200BA9BBC /* FirebaseMessaging */; };
+		BE4CD86928F5BBD600BA9BBC /* GoogleServiceDebugInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BE4CD85D28F5A25D00BA9BBC /* GoogleServiceDebugInfo.plist */; };
 		BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BB5287C40AF009EBCB7 /* Theme.swift */; };
 		BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BC528845CDB009EBCB7 /* UITextEditor.swift */; };
 		BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BD028864CA8009EBCB7 /* LectureRouter.swift */; };
@@ -116,7 +121,7 @@
 		BE9413BB28C20DC500171060 /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BA28C20DC500171060 /* AuthDto.swift */; };
 		BE9413BD28C2119500171060 /* NotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BC28C2119500171060 /* NotificationRouter.swift */; };
 		BE9413BF28C2157600171060 /* NotificationDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BE28C2157600171060 /* NotificationDto.swift */; };
-		BE9413C128C219AD00171060 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C028C219AD00171060 /* Notification.swift */; };
+		BE9413C128C219AD00171060 /* STNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C028C219AD00171060 /* STNotification.swift */; };
 		BE9413C328C21D1000171060 /* NotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C228C21D1000171060 /* NotificationRepository.swift */; };
 		BE9413CA28C21F1300171060 /* NotificationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C928C21F1300171060 /* NotificationList.swift */; };
 		BE9413CC28C21F1E00171060 /* NotificationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413CB28C21F1E00171060 /* NotificationListCell.swift */; };
@@ -292,6 +297,7 @@
 		BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetViewModel.swift; sourceTree = "<group>"; };
 		BE4B0EBD2873BC84005FE164 /* FilterSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetViewModel.swift; sourceTree = "<group>"; };
 		BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSceneViewModel.swift; sourceTree = "<group>"; };
+		BE4CD85D28F5A25D00BA9BBC /* GoogleServiceDebugInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoogleServiceDebugInfo.plist; sourceTree = "<group>"; };
 		BE682BB22879E24D009EBCB7 /* SNUTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNUTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE682BB32879E24D009EBCB7 /* SNUTTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNUTTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE682BB42879E24D009EBCB7 /* SNUTTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNUTTUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -336,7 +342,7 @@
 		BE9413BA28C20DC500171060 /* AuthDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDto.swift; sourceTree = "<group>"; };
 		BE9413BC28C2119500171060 /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
 		BE9413BE28C2157600171060 /* NotificationDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDto.swift; sourceTree = "<group>"; };
-		BE9413C028C219AD00171060 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		BE9413C028C219AD00171060 /* STNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STNotification.swift; sourceTree = "<group>"; };
 		BE9413C228C21D1000171060 /* NotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRepository.swift; sourceTree = "<group>"; };
 		BE9413C928C21F1300171060 /* NotificationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationList.swift; sourceTree = "<group>"; };
 		BE9413CB28C21F1E00171060 /* NotificationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListCell.swift; sourceTree = "<group>"; };
@@ -439,8 +445,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE4CD86728F5A56200BA9BBC /* FirebaseMessaging in Frameworks */,
+				BE4CD86328F5A56200BA9BBC /* FirebaseAnalyticsSwift in Frameworks */,
 				BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */,
+				BE4CD86528F5A56200BA9BBC /* FirebaseCrashlytics in Frameworks */,
 				BEDE34D42879A59B00525014 /* Alamofire in Frameworks */,
+				BE4CD86128F5A56200BA9BBC /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,6 +670,7 @@
 			children = (
 				B88D170728B361DC00E2D652 /* Info.plist */,
 				BE804BEC288BA3DF00782F16 /* SNUTT.entitlements */,
+				BE4CD85D28F5A25D00BA9BBC /* GoogleServiceDebugInfo.plist */,
 				BEB3B6A328CDE1EF00E56062 /* Utils */,
 				BE9413B528BE89D000171060 /* Modifiers */,
 				BE419B8B288B8C4900FA9590 /* Extensions */,
@@ -729,7 +740,7 @@
 				BEDF507427F4289B00CDCC13 /* Lecture.swift */,
 				BE682BB5287C40AF009EBCB7 /* Theme.swift */,
 				BE682BFE2888056C009EBCB7 /* Quarter.swift */,
-				BE9413C028C219AD00171060 /* Notification.swift */,
+				BE9413C028C219AD00171060 /* STNotification.swift */,
 				BE1D2B3928014527008F9134 /* Weekday.swift */,
 				BE682BFC2887FC78009EBCB7 /* SearchTag.swift */,
 				BE682BF028872315009EBCB7 /* STError.swift */,
@@ -916,6 +927,10 @@
 			packageProductDependencies = (
 				BEDE34D32879A59B00525014 /* Alamofire */,
 				BE779B1728E3DD5B009960EB /* FacebookLogin */,
+				BE4CD86028F5A56200BA9BBC /* FirebaseAnalytics */,
+				BE4CD86228F5A56200BA9BBC /* FirebaseAnalyticsSwift */,
+				BE4CD86428F5A56200BA9BBC /* FirebaseCrashlytics */,
+				BE4CD86628F5A56200BA9BBC /* FirebaseMessaging */,
 			);
 			productName = SNUTT;
 			productReference = BE682BB22879E24D009EBCB7 /* SNUTT.app */;
@@ -995,6 +1010,7 @@
 			packageReferences = (
 				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+				BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = DC860F3C27E5C87D0068C94B;
 			projectDirPath = "";
@@ -1021,6 +1037,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE4CD86928F5BBD600BA9BBC /* GoogleServiceDebugInfo.plist in Resources */,
 				DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */,
 				BE28036C28E9F0B100B2B1AB /* LaunchScreen.storyboard in Resources */,
 			);
@@ -1085,7 +1102,7 @@
 				B87B317428D816E1005C170B /* MenuSheet.swift in Sources */,
 				BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */,
 				BEE5CE10289E738900CF5ED3 /* MenuThemeSheet.swift in Sources */,
-				BE9413C128C219AD00171060 /* Notification.swift in Sources */,
+				BE9413C128C219AD00171060 /* STNotification.swift in Sources */,
 				B87B317328D81447005C170B /* UserDto.swift in Sources */,
 				BE060BD928DF4C1E00A2F1B9 /* OnboardScene.swift in Sources */,
 				BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */,
@@ -1344,12 +1361,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1370,8 +1387,8 @@
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev 1665933034";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1428,10 +1445,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
 				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTTWidget/Info.plist;
@@ -1446,8 +1464,8 @@
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget 1665933043";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev.widget";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1463,11 +1481,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
 				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTTWidget/Info.plist;
@@ -1483,8 +1501,8 @@
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget 1665933043";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev.widget";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG WIDGET";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1500,10 +1518,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
 				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTTWidget/Info.plist;
@@ -1518,8 +1537,8 @@
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget 1665933043";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev.widget";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1654,12 +1673,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1680,8 +1699,8 @@
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev 1665933034";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1697,12 +1716,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1723,8 +1742,8 @@
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev 1665933034";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1873,6 +1892,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
@@ -1892,6 +1919,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BE4CD86028F5A56200BA9BBC /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		BE4CD86228F5A56200BA9BBC /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		BE4CD86428F5A56200BA9BBC /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		BE4CD86628F5A56200BA9BBC /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		BE779B1728E3DD5B009960EB /* FacebookLogin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;

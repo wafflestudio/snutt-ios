@@ -70,7 +70,9 @@ jobs:
         if: ${{ steps.regex.outputs.group1 == 'testflight' && steps.regex.outputs.group5 == 'debug' }}
         env:
           DEBUG_CONFIG: ${{ secrets.DEBUG_CONFIG }}
+          GOOGLE_SERVICE_DEBUG_INFO: ${{ secrets.GOOGLE_SERVICE_DEBUG_INFO }}
         run: |
+          echo "$GOOGLE_SERVICE_DEBUG_INFO" > SNUTT/GoogleServiceDebugInfo.plist
           echo "$DEBUG_CONFIG" > SNUTT/DebugConfig.xcconfig
           bundle exec fastlane beta --env dev
 
