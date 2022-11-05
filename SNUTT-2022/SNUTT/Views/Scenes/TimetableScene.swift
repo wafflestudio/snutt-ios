@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2022/04/07.
 //
 
-import SwiftUI
 import LinkPresentation
+import SwiftUI
 
 struct TimetableScene: View {
     @State private var pushToListScene = false
@@ -14,7 +14,7 @@ struct TimetableScene: View {
     @State private var isShareSheetOpened = false
     @State private var screenshot: UIImage = .init()
     @ObservedObject var viewModel: TimetableViewModel
-    
+
     /// Provide title for `UIActivityViewController`.
     private let linkMetadata = LinkMetadata()
 
@@ -101,7 +101,7 @@ struct TimetableScene: View {
 
 // MARK: ActivityViewController
 
-fileprivate struct ActivityViewController: UIViewControllerRepresentable {
+private struct ActivityViewController: UIViewControllerRepresentable {
     var activityItems: [Any]
 
     func makeUIViewController(context _: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
@@ -112,9 +112,9 @@ fileprivate struct ActivityViewController: UIViewControllerRepresentable {
     func updateUIViewController(_: UIActivityViewController, context _: UIViewControllerRepresentableContext<ActivityViewController>) {}
 }
 
-final fileprivate class LinkMetadata: NSObject, UIActivityItemSource {
+private final class LinkMetadata: NSObject, UIActivityItemSource {
     var linkMetadata: LPLinkMetadata
-    
+
     override init() {
         linkMetadata = LPLinkMetadata()
         linkMetadata.title = "SNUTT"
@@ -122,16 +122,16 @@ final fileprivate class LinkMetadata: NSObject, UIActivityItemSource {
         linkMetadata.iconProvider = NSItemProvider(object: UIImage(named: "logo")!)
         super.init()
     }
-    
-    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+
+    func activityViewControllerPlaceholderItem(_: UIActivityViewController) -> Any {
         return ""
     }
-    
-    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+
+    func activityViewController(_: UIActivityViewController, itemForActivityType _: UIActivity.ActivityType?) -> Any? {
         return nil
     }
-    
-    func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
+
+    func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
         return linkMetadata
     }
 }
