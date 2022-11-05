@@ -10,7 +10,7 @@ import SwiftUI
 
 class NotificationState: ObservableObject {
     @Published var isLoading = false
-    @Published var notifications: [Notification] = []
+    @Published var notifications: [STNotification] = []
     @Published var unreadCount: Int = 0
 
     let perPage: Int = 20

@@ -31,7 +31,7 @@ struct NotificationService: NotificationServiceProtocol {
         let dtos = try await notificationRepository.fetchNotifications(limit: notificationState.perPage,
                                                                        offset: offset,
                                                                        explicit: updateLastRead)
-        let models = dtos.map { Notification(from: $0) }
+        let models = dtos.map { STNotification(from: $0) }
         await MainActor.run {
             notificationState.notifications = offset == 0 ? models : notificationState.notifications + models
             if updateLastRead {
