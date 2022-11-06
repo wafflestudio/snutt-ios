@@ -35,8 +35,8 @@ jobs:
         GOOGLE_SERVICE_DEBUG_INFO: ${{ secrets.GOOGLE_SERVICE_DEBUG_INFO }}
         GOOGLE_SERVICE_RELEASE_INFO: ${{ secrets.GOOGLE_SERVICE_RELEASE_INFO }}
       run: |
-        echo "$GOOGLE_SERVICE_DEBUG_INFO" > SNUTT/GoogleServiceDebugInfo.plist
-        echo "$GOOGLE_SERVICE_RELEASE_INFO" > SNUTT/GoogleServiceReleaseInfo.plist
+        echo "$GOOGLE_SERVICE_DEBUG_INFO" > SNUTT-2022/SNUTT/GoogleServiceDebugInfo.plist
+        echo "$GOOGLE_SERVICE_RELEASE_INFO" > SNUTT-2022/SNUTT/GoogleServiceReleaseInfo.plist
         echo "$DEBUG_CONFIG" > SNUTT-2022/SNUTT/DebugConfig.xcconfig
     
     - uses: mxcl/xcodebuild@v1.9.2
