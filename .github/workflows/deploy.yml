@@ -80,7 +80,9 @@ jobs:
         if: ${{ steps.regex.outputs.group1 == 'testflight' && steps.regex.outputs.group5 == 'release' }}
         env:
           RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
+          GOOGLE_SERVICE_RELEASE_INFO: ${{ secrets.GOOGLE_SERVICE_RELEASE_INFO }}
         run: |
+          echo "$GOOGLE_SERVICE_RELEASE_INFO" > SNUTT/GoogleServiceReleaseInfo.plist
           echo "$RELEASE_CONFIG" > SNUTT/ReleaseConfig.xcconfig
           bundle exec fastlane beta --env prod
       
