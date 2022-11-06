@@ -70,31 +70,30 @@ jobs:
         run: |
           brew install imagemagick
 
-      - name: Upload dev app to testflight
-        if: ${{ steps.regex.outputs.group1 == 'testflight' && steps.regex.outputs.group5 == 'debug' }}
+      - name: Inject secret file dependencies
         env:
           DEBUG_CONFIG: ${{ secrets.DEBUG_CONFIG }}
+          RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
           GOOGLE_SERVICE_DEBUG_INFO: ${{ secrets.GOOGLE_SERVICE_DEBUG_INFO }}
+          GOOGLE_SERVICE_RELEASE_INFO: ${{ secrets.GOOGLE_SERVICE_RELEASE_INFO }}
         run: |
+          echo "$GOOGLE_SERVICE_RELEASE_INFO" > SNUTT/GoogleServiceReleaseInfo.plist
           echo "$GOOGLE_SERVICE_DEBUG_INFO" > SNUTT/GoogleServiceDebugInfo.plist
           echo "$DEBUG_CONFIG" > SNUTT/DebugConfig.xcconfig
+          echo "$RELEASE_CONFIG" > SNUTT/ReleaseConfig.xcconfig
+
+      - name: Upload dev app to testflight
+        if: ${{ steps.regex.outputs.group1 == 'testflight' && steps.regex.outputs.group5 == 'debug' }}
+        run: |
           bundle exec fastlane beta --env dev
 
       - name: Upload prod app to testflight
         if: ${{ steps.regex.outputs.group1 == 'testflight' && steps.regex.outputs.group5 == 'release' }}
-        env:
-          RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
-          GOOGLE_SERVICE_RELEASE_INFO: ${{ secrets.GOOGLE_SERVICE_RELEASE_INFO }}
         run: |
-          echo "$GOOGLE_SERVICE_RELEASE_INFO" > SNUTT/GoogleServiceReleaseInfo.plist
-          echo "$RELEASE_CONFIG" > SNUTT/ReleaseConfig.xcconfig
           bundle exec fastlane beta --env prod
       
       - name: Upload prod app to App Store
         if: ${{ steps.regex.outputs.group1 == 'appstore' && steps.regex.outputs.group4 == 'release' }}
-        env:
-          RELEASE_CONFIG: ${{ secrets.RELEASE_CONFIG }}
         run: |
-          echo "$RELEASE_CONFIG" > SNUTT/ReleaseConfig.xcconfig
           echo "Not Implemented"
           # bundle exec fastlane appstore --env prod
