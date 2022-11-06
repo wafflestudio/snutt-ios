@@ -1014,7 +1014,7 @@
 			);
 			mainGroup = DC860F3C27E5C87D0068C94B;
 			packageReferences = (
-				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
 				BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 				BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
@@ -1916,7 +1916,7 @@
 				minimumVersion = 14.1.0;
 			};
 		};
-		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -1954,7 +1954,7 @@
 		};
 		BEDE34D32879A59B00525014 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
