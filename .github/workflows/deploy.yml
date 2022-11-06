@@ -66,6 +66,10 @@ jobs:
           eval "$(ssh-agent -s)"
           ssh-add - <<< "$MATCH_DEPLOY_KEY"
 
+      - name: Install imageMagick dependency (for adding badge to app icon)
+        run: |
+          brew install imagemagick
+
       - name: Upload dev app to testflight
         if: ${{ steps.regex.outputs.group1 == 'testflight' && steps.regex.outputs.group5 == 'debug' }}
         env:
