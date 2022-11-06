@@ -130,4 +130,6 @@ The app architecture is highly inspired by the following source codes and articl
 - [Clean Architecture for SwiftUI + Combine](https://github.com/nalexn/clean-architecture-swiftui)
 - [Clean Architecture for SwiftUI](https://nalexn.github.io/clean-architecture-swiftui/?utm_source=nalexn_github)
 
+Big credit to [@Rajin9601](https://github.com/Rajin9601), who is the original author of this project. 
+
 [SwiftUI]: https://img.shields.io/badge/SwiftUI-F05138?style=for-the-badge&logo=swift&logoColor=white
