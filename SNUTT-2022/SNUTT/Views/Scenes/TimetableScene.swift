@@ -118,8 +118,6 @@ private final class LinkMetadata: NSObject, UIActivityItemSource {
     override init() {
         linkMetadata = LPLinkMetadata()
         linkMetadata.title = "SNUTT"
-        linkMetadata.url = URL(fileURLWithPath: "서울대학교 시간표 앱")
-        linkMetadata.iconProvider = NSItemProvider(object: UIImage(named: "logo")!)
         super.init()
     }
 
