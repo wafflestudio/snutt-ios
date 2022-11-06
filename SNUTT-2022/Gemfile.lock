@@ -105,6 +105,12 @@ GEM
       xcodeproj (>= 1.13.0, < 2.0.0)
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3)
+    fastlane-plugin-github_action (1.0.0)
+      dotenv
+      fastlane (>= 2.148.1)
+      rbnacl
+      sshkey
+    ffi (1.15.5)
     gh_inspector (1.1.3)
     google-apis-androidpublisher_v3 (0.29.0)
       google-apis-core (>= 0.9.0, < 2.a)
@@ -163,6 +169,8 @@ GEM
     plist (3.6.0)
     public_suffix (5.0.0)
     rake (13.0.6)
+    rbnacl (7.1.1)
+      ffi
     representable (3.2.0)
       declarative (< 0.1.0)
       trailblazer-option (>= 0.1.1, < 0.2.0)
@@ -181,6 +189,7 @@ GEM
     simctl (1.6.8)
       CFPropertyList
       naturally
+    sshkey (2.0.0)
     terminal-notifier (2.0.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
@@ -213,6 +222,7 @@ PLATFORMS
 
 DEPENDENCIES
   fastlane
+  fastlane-plugin-github_action
 
 BUNDLED WITH
    2.3.11
