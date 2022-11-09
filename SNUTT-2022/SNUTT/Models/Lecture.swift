@@ -30,7 +30,7 @@ struct Lecture: Identifiable {
     var createdAt: String
     var updatedAt: String
 
-    /// A property is populated by the client.
+    /// A property which is populated by the client.
     var theme: Theme?
 
     func withTheme(theme: Theme) -> Self {
@@ -40,6 +40,11 @@ struct Lecture: Identifiable {
     }
 
     func getColor(with theme: Theme? = nil) -> LectureColor {
+        // use temporary if theme is nil or color itself is temporary
+        if theme == nil || color == .temporary {
+            return .temporary
+        }
+        
         // use custom color if colorIndex is zero
         if colorIndex == 0, let color = color {
             return color
@@ -74,7 +79,7 @@ struct LectureColor: Hashable {
     var fg: Color
     var bg: Color
 
-    static var temporary: Self = .init(fg: .white, bg: .gray)
+    static var temporary: Self = .init(fg: .black, bg: .init(red: 196 / 255, green: 196 / 255, blue: 196 / 255))
 }
 
 extension Lecture {
