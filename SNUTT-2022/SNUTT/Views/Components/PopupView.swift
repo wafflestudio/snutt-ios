@@ -11,7 +11,7 @@ struct PopupView: View {
     let popup: Popup
     let dismissOnce: (PopupView) -> Void
     let dismissNdays: (PopupView) -> Void
-    
+
     var body: some View {
         VStack(spacing: 0) {
             AsyncImage(url: URL(string: popup.imageURL)!) { popupImage in
@@ -26,7 +26,7 @@ struct PopupView: View {
 
             HStack {
                 Spacer()
-                
+
                 Button {
                     dismissNdays(self)
                 } label: {
@@ -34,15 +34,15 @@ struct PopupView: View {
                         .foregroundColor(.white)
                         .font(.system(size: 14))
                 }.frame(width: 105)
-                
+
                 Spacer()
-                
+
                 Rectangle()
                     .frame(width: 1, height: 17)
                     .foregroundColor(.white.opacity(0.5))
-                
+
                 Spacer()
-                
+
                 Button {
                     dismissOnce(self)
                 } label: {
@@ -50,7 +50,7 @@ struct PopupView: View {
                         .foregroundColor(.white)
                         .font(.system(size: 14))
                 }.frame(width: 60)
-                
+
                 Spacer()
             }.frame(height: 33)
         }
@@ -67,7 +67,8 @@ struct PopupView_Previews: PreviewProvider {
             },
             dismissNdays: { _ in
                 print("당분간 보지 않기")
-            })
+            }
+        )
         .background(.black.opacity(0.2))
     }
 }

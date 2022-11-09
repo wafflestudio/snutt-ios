@@ -12,6 +12,7 @@ enum PopupRouter: Router {
     var baseURL: URL {
         URL(string: NetworkConfiguration.serverBaseURL + "/v1/popups")!
     }
+
     static let shouldAddToken: Bool = true
 
     case getPopupList
