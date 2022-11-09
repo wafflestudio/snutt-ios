@@ -30,5 +30,7 @@
 	</dict>
 	<key>SNUEV_WEB_URL</key>
 	<string>https://${SNUEV_WEB_URL}</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Save Screenshots to Photo Library</string>
 </dict>
 </plist>
