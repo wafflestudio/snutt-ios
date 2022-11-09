@@ -22,11 +22,11 @@ struct TimetableBlock: View {
                 Group {
                     Text(lecture.title)
                         .foregroundColor(lecture.getColor(with: theme).fg)
-                        .font(STFont.details)
+                        .font(STFont.lectureBlockTitle)
 
                     if !timePlace.place.isEmpty {
                         Text(timePlace.place)
-                            .font(STFont.detailsSemibold)
+                            .font(STFont.lectureBlockPlace)
                             .padding(2)
                             .minimumScaleFactor(0.5)
                             .lineLimit(1)
@@ -34,7 +34,7 @@ struct TimetableBlock: View {
                 }
                 .multilineTextAlignment(.center)
                 .foregroundColor(lecture.getColor(with: theme).fg)
-            }.padding(2)
+            }.padding(4)
         }
 
         let _ = debugChanges()
