@@ -44,7 +44,7 @@ struct Lecture: Identifiable {
         if theme == nil || color == .temporary {
             return .temporary
         }
-        
+
         // use custom color if colorIndex is zero
         if colorIndex == 0, let color = color {
             return color
