@@ -53,6 +53,9 @@ struct SNUTTView: View {
                         SettingScene(viewModel: .init(container: viewModel.container))
                     }
                 }
+                .onLoad {
+                    await viewModel.getRecentPopupList()
+                }
                 .onAppear {
                     selectedTab = .timetable
                 }
@@ -61,6 +64,9 @@ struct SNUTTView: View {
                 }
                 if selectedTab == .search {
                     FilterSheetScene(viewModel: .init(container: viewModel.container))
+                }
+                if viewModel.shouldShowPopup {
+                    PopupScene(viewModel: .init(container: viewModel.container))
                 }
             }
             LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
@@ -100,6 +106,7 @@ extension SNUTTView {
         @Published var isErrorAlertPresented = false
         @Published var errorContent: STError? = nil
         @Published var accessToken: String? = nil
+        @Published private var _shouldShowPopup = false
         var reviewEventSignal = PassthroughSubject<WebViewEventType, Never>()
 
         var isAuthenticated: Bool {
@@ -111,6 +118,7 @@ extension SNUTTView {
             super.init(container: container)
             appState.system.$errorContent.assign(to: &$errorContent)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
+            appState.popup.$shouldShowPopup.assign(to: &$_shouldShowPopup)
             appState.user.$accessToken.assign(to: &$accessToken)
         }
 
@@ -121,9 +129,21 @@ extension SNUTTView {
         var errorMessage: String {
             (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
         }
+        
+        var shouldShowPopup: Bool {
+            _shouldShowPopup
+        }
 
         func reloadReviewWebView() {
             reviewEventSignal.send(.reload)
+        }
+        
+        func getRecentPopupList() async {
+            do {
+                try await services.popupService.getRecentPopupList()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
         }
     }
 }
