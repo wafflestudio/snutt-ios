@@ -23,6 +23,7 @@ extension AppEnvironment {
         let courseBookService: CourseBookServiceProtocol
         let authService: AuthServiceProtocol
         let notificationService: NotificationServiceProtocol
+        let popupService: PopupServiceProtocol
         let etcService: EtcServiceProtocol
     }
 }
@@ -37,6 +38,7 @@ extension AppEnvironment {
         let reviewRepository: ReviewRepositoryProtocol
         let authRepository: AuthRepositoryProtocol
         let notificationRepository: NotificationRepositoryProtocol
+        let popupRepository: PopupRepositoryProtocol
         let etcRepository: EtcRepositoryProtocol
     }
 
@@ -75,6 +77,7 @@ extension AppEnvironment {
         let courseBookRepository = CourseBookRepository(session: session)
         let authRepository = AuthRepository(session: session)
         let notificationRepository = NotificationRepository(session: session)
+        let popupRepository = PopupRepository(session: session)
         let etcRepository = EtcRepository(session: session)
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
@@ -84,6 +87,7 @@ extension AppEnvironment {
                      reviewRepository: reviewRepository,
                      authRepository: authRepository,
                      notificationRepository: notificationRepository,
+                     popupRepository: popupRepository,
                      etcRepository: etcRepository)
     }
 
@@ -101,6 +105,7 @@ extension AppEnvironment {
         let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
         let authService = AuthService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let notificationService = NotificationService(appState: appState, webRepositories: webRepositories)
+        let popupService = PopupService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let etcService = EtcService(appState: appState, webRepositories: webRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
@@ -110,6 +115,7 @@ extension AppEnvironment {
                      courseBookService: courseBookService,
                      authService: authService,
                      notificationService: notificationService,
+                     popupService: popupService,
                      etcService: etcService)
     }
 }
@@ -136,6 +142,7 @@ extension EnvironmentValues {
                   courseBookService: FakeCourseBookService(),
                   authService: FakeAuthService(),
                   notificationService: FakeNotificationService(),
+                  popupService: FakePopupService(),
                   etcService: FakeEtcService())
         }
     }

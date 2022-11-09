@@ -53,6 +53,9 @@ struct SNUTTView: View {
                         SettingScene(viewModel: .init(container: viewModel.container))
                     }
                 }
+                .onLoad {
+                    await viewModel.getRecentPopupList()
+                }
                 .onAppear {
                     selectedTab = .timetable
                 }
@@ -61,6 +64,9 @@ struct SNUTTView: View {
                 }
                 if selectedTab == .search {
                     FilterSheetScene(viewModel: .init(container: viewModel.container))
+                }
+                if viewModel.shouldShowPopup {
+                    PopupScene(viewModel: .init(container: viewModel.container))
                 }
             }
             LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
@@ -99,6 +105,7 @@ extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var accessToken: String? = nil
+        @Published var shouldShowPopup = false
         @Published private var error: STError? = nil
         var reviewEventSignal = PassthroughSubject<WebViewEventType, Never>()
 
@@ -121,9 +128,21 @@ extension SNUTTView {
         var errorMessage: String {
             (appState.system.error ?? .init(.UNKNOWN_ERROR)).content
         }
+        
+        var shouldShowPopup: Bool {
+            appState.popup.shouldShowPopup
+        }
 
         func reloadReviewWebView() {
             reviewEventSignal.send(.reload)
+        }
+        
+        func getRecentPopupList() async {
+            do {
+                try await services.popupService.getRecentPopupList()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
         }
     }
 }

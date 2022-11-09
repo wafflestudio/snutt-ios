@@ -28,7 +28,7 @@ enum STDefaultsKey: String {
     case shouldShowBadge
     case shouldDeleteFCMInfos
 
-    case snuevWebURL
+    case popupList
 }
 
 class UserDefaultsRepository: UserDefaultsRepositoryProtocol {
