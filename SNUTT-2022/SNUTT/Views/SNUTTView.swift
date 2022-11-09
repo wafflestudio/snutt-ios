@@ -128,7 +128,7 @@ extension SNUTTView {
         var errorMessage: String {
             (appState.system.error ?? .init(.UNKNOWN_ERROR)).content
         }
-        
+
         var shouldShowPopup: Bool {
             appState.popup.shouldShowPopup
         }
@@ -136,7 +136,7 @@ extension SNUTTView {
         func reloadReviewWebView() {
             reviewEventSignal.send(.reload)
         }
-        
+
         func getRecentPopupList() async {
             do {
                 try await services.popupService.getRecentPopupList()

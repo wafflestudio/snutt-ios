@@ -15,14 +15,12 @@ struct Popup {
 }
 
 extension Popup: Equatable {
-    static func ==(lhs: Popup, rhs: Popup) -> Bool {
+    static func == (lhs: Popup, rhs: Popup) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
-extension Popup: Identifiable {
-    
-}
+extension Popup: Identifiable {}
 
 extension Popup {
     init(from dto: PopupDto) {
