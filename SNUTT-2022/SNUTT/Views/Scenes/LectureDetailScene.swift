@@ -59,21 +59,23 @@ struct LectureDetailScene: View {
                             }
                         }
 
-                        HStack {
-                            DetailLabel(text: "색")
-                            NavigationLink {
-                                LectureColorList(theme: lecture.theme ?? .snutt, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
-                            } label: {
-                                HStack {
-                                    LectureColorPreview(lectureColor: lecture.getColor())
-                                        .frame(height: 25)
-                                    Spacer()
-                                    if editMode.isEditing {
-                                        Image("chevron.right")
+                        if displayMode != .preview {
+                            HStack {
+                                DetailLabel(text: "색")
+                                NavigationLink {
+                                    LectureColorList(theme: lecture.theme ?? .snutt, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
+                                } label: {
+                                    HStack {
+                                        LectureColorPreview(lectureColor: lecture.getColor())
+                                            .frame(height: 25)
+                                        Spacer()
+                                        if editMode.isEditing {
+                                            Image("chevron.right")
+                                        }
                                     }
                                 }
+                                .disabled(!editMode.isEditing)
                             }
-                            .disabled(!editMode.isEditing)
                         }
                     }
                     .padding()
