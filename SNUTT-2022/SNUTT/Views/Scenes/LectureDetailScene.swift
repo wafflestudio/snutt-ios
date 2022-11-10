@@ -321,8 +321,8 @@ struct LectureDetailScene: View {
                     let success = await isUpdatingLecture
                         ? viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture, isForced: true)
                         : (lecture.isCustom
-                           ? viewModel.addCustomLecture(lecture: lecture, isForced: true)
-                           : viewModel.overwriteLecture(lecture: lecture))
+                            ? viewModel.addCustomLecture(lecture: lecture, isForced: true)
+                            : viewModel.overwriteLecture(lecture: lecture))
                     if success {
                         editMode = .inactive
                         resignFirstResponder()
