@@ -34,7 +34,7 @@ struct TimetablePainter {
 
         let minHour = getStartingHour(current: current, config: config)
         let hourIndex = timePlace.startTime - Double(minHour)
-        guard let weekdayIndex = config.visibleWeeks.firstIndex(of: timePlace.day) else { return nil }
+        guard let weekdayIndex = config.visibleWeeksSorted.firstIndex(of: timePlace.day) else { return nil }
         if hourIndex < 0 {
             return nil
         }
@@ -60,7 +60,7 @@ struct TimetablePainter {
         guard let startTime = current?.earliestStartTime else {
             return config.minHour
         }
-        return Int(startTime)
+        return Int(min(startTime, 10))
     }
 
     /// `autoFit`을 고려한 시간표의 종료 시각. 빈 시간표일 때에는 설정 값을 따른다.
@@ -73,7 +73,7 @@ struct TimetablePainter {
         }
 
         let startTime = getStartingHour(current: current, config: config)
-        return max(Int((endTime - 1).rounded(.up)), startTime + 7) // autofit을 사용한다면 최소 7시간의 간격은 유지한다.
+        return max(Int((endTime - 1).rounded(.up)), startTime + 8) // autofit을 사용한다면 최소 8시간의 간격은 유지한다.
     }
 
     /// `autoFit`을 고려한 시간표의 세로 칸 수

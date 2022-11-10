@@ -47,7 +47,7 @@ struct SNUTTView: View {
                         SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
                     }
                     TabScene(tabType: .review) {
-                        ReviewScene(viewModel: .init(container: viewModel.container), reloadSignal: viewModel.reloadReviewSignal)
+                        ReviewScene(viewModel: .init(container: viewModel.container), webViewEventSignal: viewModel.reviewEventSignal)
                     }
                     TabScene(tabType: .settings) {
                         SettingScene(viewModel: .init(container: viewModel.container))
@@ -100,7 +100,7 @@ extension SNUTTView {
         @Published var isErrorAlertPresented = false
         @Published var accessToken: String? = nil
         @Published private var error: STError? = nil
-        var reloadReviewSignal = PassthroughSubject<Void, Never>()
+        var reviewEventSignal = PassthroughSubject<WebViewEventType, Never>()
 
         var isAuthenticated: Bool {
             guard let accessToken = accessToken else { return false }
@@ -123,7 +123,7 @@ extension SNUTTView {
         }
 
         func reloadReviewWebView() {
-            reloadReviewSignal.send()
+            reviewEventSignal.send(.reload)
         }
     }
 }

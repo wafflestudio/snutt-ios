@@ -14,15 +14,17 @@ struct ReviewWebView: WebView {
     let accessToken: String
     @Binding var connectionState: WebViewConnectionState
 
-    var reloadSignal: PassthroughSubject<Void, Never>
+    /// An event stream used to control `WKWebView` instance outside current view.
+    var eventSignal: PassthroughSubject<WebViewEventType, Never>
+
     var webView: WKWebView
 
-    init(url: URL, accessToken: String, connectionState: Binding<WebViewConnectionState>, reloadSignal: PassthroughSubject<Void, Never>) {
+    init(url: URL, accessToken: String, connectionState: Binding<WebViewConnectionState>, eventSignal: PassthroughSubject<WebViewEventType, Never>, initialColorScheme: ColorScheme) {
         self.url = url
         self.accessToken = accessToken
         _connectionState = connectionState
-        self.reloadSignal = reloadSignal
-        webView = WKWebView(cookies: ReviewWebView.getCookiesFrom(accessToken: accessToken) ?? [])
+        self.eventSignal = eventSignal
+        webView = WKWebView(cookies: ReviewWebView.getCookiesFrom(accessToken: accessToken, colorScheme: initialColorScheme))
     }
 
     func makeUIView(context: Context) -> WKWebView {
@@ -30,6 +32,8 @@ struct ReviewWebView: WebView {
         webView.allowsBackForwardNavigationGestures = true
         webView.scrollView.bounces = false
         webView.load(urlRequest)
+        webView.backgroundColor = UIColor(STColor.systemBackground)
+        webView.isOpaque = false
         return webView
     }
 
@@ -41,28 +45,21 @@ struct ReviewWebView: WebView {
         Coordinator(self)
     }
 
-    private static func getCookiesFrom(accessToken: String) -> [HTTPCookie]? {
-        let apiURI = NetworkConfiguration.snuevBaseURL
-
-        guard let apiKeyCookie = HTTPCookie(properties: [
-            .domain: apiURI.replacingOccurrences(of: "https://", with: ""),
+    private static func getCookie(name: String, value: String) -> HTTPCookie? {
+        return HTTPCookie(properties: [
+            .domain: NetworkConfiguration.snuevBaseURL.replacingOccurrences(of: "https://", with: ""),
             .path: "/",
-            .name: "x-access-apikey",
-            .value: NetworkConfiguration.apiKey,
-        ]) else {
-            return nil
-        }
+            .name: name,
+            .value: value,
+        ])
+    }
 
-        guard let tokenCookie = HTTPCookie(properties: [
-            .domain: apiURI.replacingOccurrences(of: "https://", with: ""),
-            .path: "/",
-            .name: "x-access-token",
-            .value: accessToken,
-        ]) else {
-            return nil
-        }
+    private static func getCookiesFrom(accessToken: String, colorScheme: ColorScheme) -> [HTTPCookie] {
+        guard let apiKeyCookie = getCookie(name: "x-access-apikey", value: NetworkConfiguration.apiKey),
+              let tokenCookie = getCookie(name: "x-access-token", value: accessToken),
+              let themeCookie = getCookie(name: "theme", value: colorScheme.description) else { return [] }
 
-        return [apiKeyCookie, tokenCookie]
+        return [apiKeyCookie, tokenCookie, themeCookie]
     }
 
     func reloadWebView() {
@@ -77,9 +74,13 @@ struct ReviewWebView: WebView {
             self.parent = parent
             super.init()
 
-            // bind reload signal: refresh webview when triggered
-            self.parent.reloadSignal.sink { [weak self] _ in
-                self?.parent.reloadWebView()
+            self.parent.eventSignal.sink { [weak self] event in
+                switch event {
+                case .reload:
+                    self?.parent.reloadWebView()
+                case let .colorSchemeChange(to: colorScheme):
+                    self?.parent.webView.evaluateJavaScript("changeTheme(\(colorScheme.descriptionWithQuotes))")
+                }
             }.store(in: &bag)
         }
 
@@ -100,5 +101,22 @@ struct ReviewWebView: WebView {
                 parent.connectionState = .success
             }
         }
+    }
+}
+
+private extension ColorScheme {
+    var description: String {
+        switch self {
+        case .dark:
+            return "dark"
+        case .light:
+            return "light"
+        @unknown default:
+            return "light"
+        }
+    }
+
+    var descriptionWithQuotes: String {
+        "'\(description)'"
     }
 }

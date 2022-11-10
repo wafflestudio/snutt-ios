@@ -44,6 +44,7 @@ enum ErrorCode: Int {
     case INVALID_COLOR = 0x100A
     case NO_LECTURE_TITLE = 0x100B
     case INVALID_TIMEJSON = 0x100C
+    case INVALID_EMAIL = 0x100D
 
     /* 403 - Authorization-related */
     case WRONG_API_KEY = 0x2000
@@ -72,6 +73,7 @@ enum ErrorCode: Int {
     case LECTURE_TIME_OVERLAP = 0x300C
     case IS_CUSTOM_LECTURE = 0x300D
     case USER_HAS_NO_FCM_KEY = 0x300E
+    case EMAIL_NOT_VERIFIED = 0x3011
 
     /* 404 - NOT found */
     case TAG_NOT_FOUND = 0x4000
@@ -103,7 +105,9 @@ enum ErrorCode: Int {
              .INVALID_TIMEMASK,
              .INVALID_COLOR,
              .NO_LECTURE_TITLE,
-             .CANT_CHANGE_OTHERS_THEME:
+             .CANT_CHANGE_OTHERS_THEME,
+             .EMAIL_NOT_VERIFIED
+             :
             return "요청 실패"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,
@@ -132,7 +136,8 @@ enum ErrorCode: Int {
              .IS_CUSTOM_LECTURE,
              .USER_HAS_NO_FCM_KEY,
              .INVALID_TIMEJSON,
-             .CANT_DELETE_CURRENT_TIMETABLE:
+             .CANT_DELETE_CURRENT_TIMETABLE,
+             .INVALID_EMAIL:
             return "잘못된 요청"
         case .LECTURE_TIME_OVERLAP,
              .INVALID_LECTURE_TIME:
@@ -247,6 +252,10 @@ enum ErrorCode: Int {
             return "알 수 없는 오류가 발생했습니다."
         case .WRONG_APPLE_TOKEN:
             return "애플 계정으로 로그인하지 못했습니다."
+        case .INVALID_EMAIL:
+            return "유효한 이메일 주소를 입력해주세요."
+        case .EMAIL_NOT_VERIFIED:
+            return "인증되지 않은 이메일입니다. 강의평 탭에서 이메일 인증을 먼저 진행해주세요."
         }
     }
 }
