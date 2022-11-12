@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NotificationList: View {
-    let notifications: [Notification]
+    let notifications: [STNotification]
     let initialFetch: (Bool) async -> Void
     let fetchMore: () async -> Void
     var body: some View {

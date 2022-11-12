@@ -13,7 +13,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     @Published var currentTimetable: Timetable?
     @Published var configuration: TimetableConfiguration = .init()
     @Published private var metadataList: [TimetableMetadata]?
-    @Published var notifications: [Notification] = []
+    @Published var notifications: [STNotification] = []
     @Published var unreadCount: Int = 0
 
     override init(container: DIContainer) {

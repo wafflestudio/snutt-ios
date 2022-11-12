@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NotificationListCell: View {
-    let notification: Notification
+    let notification: STNotification
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
             Image(notification.imageName)

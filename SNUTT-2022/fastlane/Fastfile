@@ -35,6 +35,9 @@ platform :ios do
     begin
       setup_ci
       certificates_distribution
+      if BUILD_CONFIGURATION == "Debug"
+        add_badge(dark: true)
+      end
       increment_version_number(version_number: VERSION_NUMBER)
       increment_build_number(build_number: BUILD_NUMBER)
       build_app(scheme: APP_NAME, 
