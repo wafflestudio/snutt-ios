@@ -1,5 +1,5 @@
 //
-//  Notification.swift
+//  STNotification.swift
 //  SNUTT
 //
 //  Created by 박신홍 on 2022/09/02.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Notification: Hashable {
+struct STNotification: Hashable {
     let message: String
     let created_at: String
     let type: NotificationType
@@ -51,7 +51,7 @@ struct Notification: Hashable {
     }
 }
 
-extension Notification {
+extension STNotification {
     init(from dto: NotificationDto
     ) {
         message = dto.message

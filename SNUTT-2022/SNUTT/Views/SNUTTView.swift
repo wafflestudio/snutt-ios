@@ -104,9 +104,9 @@ struct SNUTTView: View {
 extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
-        @Published var errorContent: STError? = nil
         @Published var accessToken: String? = nil
         @Published private var _shouldShowPopup = false
+        @Published private var error: STError? = nil
         var reviewEventSignal = PassthroughSubject<WebViewEventType, Never>()
 
         var isAuthenticated: Bool {
@@ -116,18 +116,18 @@ extension SNUTTView {
 
         override init(container: DIContainer) {
             super.init(container: container)
-            appState.system.$errorContent.assign(to: &$errorContent)
+            appState.system.$error.assign(to: &$error)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
             appState.popup.$shouldShowPopup.assign(to: &$_shouldShowPopup)
             appState.user.$accessToken.assign(to: &$accessToken)
         }
 
         var errorTitle: String {
-            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorTitle
+            (appState.system.error ?? .init(.UNKNOWN_ERROR)).title
         }
 
         var errorMessage: String {
-            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
+            (appState.system.error ?? .init(.UNKNOWN_ERROR)).content
         }
 
         var shouldShowPopup: Bool {

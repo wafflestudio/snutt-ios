@@ -17,6 +17,9 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var searchResult: [Lecture]? = nil
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
+    @Published var isLectureOverlapped: Bool = false
+    var errorTitle: String = ""
+    var errorMessage: String = ""
 
     var searchText: String {
         get { _searchText }
@@ -52,14 +55,6 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$searchResult.assign(to: &$searchResult)
         appState.search.$isLoading.assign(to: &$isLoading)
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
-    }
-
-    private var searchState: SearchState {
-        appState.search
-    }
-
-    private var timetableState: TimetableState {
-        appState.timetable
     }
 
     func fetchTags() async {
@@ -102,7 +97,17 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.lectureService.addLecture(lecture: lecture)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            if let error = error.asSTError {
+                if error.code == .LECTURE_TIME_OVERLAP {
+                    DispatchQueue.main.async {
+                        self.isLectureOverlapped = true
+                        self.errorTitle = error.title
+                        self.errorMessage = error.content
+                    }
+                } else {
+                    services.globalUIService.presentErrorAlert(error: error)
+                }
+            }
         }
     }
 
@@ -112,5 +117,21 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+    }
+
+    func overwriteLecture(lecture: Lecture) async {
+        do {
+            try await services.lectureService.addLecture(lecture: lecture, isForced: true)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+
+    private var searchState: SearchState {
+        appState.search
+    }
+
+    private var timetableState: TimetableState {
+        appState.timetable
     }
 }

@@ -83,6 +83,10 @@
 		BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */; };
 		BE4B0EBE2873BC84005FE164 /* FilterSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBD2873BC84005FE164 /* FilterSheetViewModel.swift */; };
 		BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */; };
+		BE4CD86128F5A56200BA9BBC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = BE4CD86028F5A56200BA9BBC /* FirebaseAnalytics */; };
+		BE4CD86328F5A56200BA9BBC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BE4CD86228F5A56200BA9BBC /* FirebaseAnalyticsSwift */; };
+		BE4CD86528F5A56200BA9BBC /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = BE4CD86428F5A56200BA9BBC /* FirebaseCrashlytics */; };
+		BE4CD86728F5A56200BA9BBC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = BE4CD86628F5A56200BA9BBC /* FirebaseMessaging */; };
 		BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BB5287C40AF009EBCB7 /* Theme.swift */; };
 		BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BC528845CDB009EBCB7 /* UITextEditor.swift */; };
 		BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BD028864CA8009EBCB7 /* LectureRouter.swift */; };
@@ -91,7 +95,7 @@
 		BE682BDB28870872009EBCB7 /* LectureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BDA28870872009EBCB7 /* LectureService.swift */; };
 		BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */; };
 		BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BEE288722A5009EBCB7 /* ErrorDto.swift */; };
-		BE682BF128872315009EBCB7 /* STError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BF028872315009EBCB7 /* STError.swift */; };
+		BE682BF128872315009EBCB7 /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BF028872315009EBCB7 /* ErrorCode.swift */; };
 		BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BF82887FB59009EBCB7 /* SearchRouter.swift */; };
 		BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */; };
 		BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFC2887FC78009EBCB7 /* SearchTag.swift */; };
@@ -126,7 +130,7 @@
 		BE9413BB28C20DC500171060 /* AuthDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BA28C20DC500171060 /* AuthDto.swift */; };
 		BE9413BD28C2119500171060 /* NotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BC28C2119500171060 /* NotificationRouter.swift */; };
 		BE9413BF28C2157600171060 /* NotificationDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413BE28C2157600171060 /* NotificationDto.swift */; };
-		BE9413C128C219AD00171060 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C028C219AD00171060 /* Notification.swift */; };
+		BE9413C128C219AD00171060 /* STNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C028C219AD00171060 /* STNotification.swift */; };
 		BE9413C328C21D1000171060 /* NotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C228C21D1000171060 /* NotificationRepository.swift */; };
 		BE9413CA28C21F1300171060 /* NotificationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413C928C21F1300171060 /* NotificationList.swift */; };
 		BE9413CC28C21F1E00171060 /* NotificationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9413CB28C21F1E00171060 /* NotificationListCell.swift */; };
@@ -166,6 +170,8 @@
 		BEB57C2828BC985900279EFF /* LectureColorPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2728BC985900279EFF /* LectureColorPreview.swift */; };
 		BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB57C2928BCA7E400279EFF /* LectureColorList.swift */; };
 		BEBCC29C28EF4C6100732304 /* OnLoadModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBCC29B28EF4C6100732304 /* OnLoadModifier.swift */; };
+		BEC560582917F60600380B9C /* GoogleServiceReleaseInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEC560572917F60600380B9C /* GoogleServiceReleaseInfo.plist */; };
+		BEC5605C2917F63000380B9C /* GoogleServiceDebugInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEC5605B2917F63000380B9C /* GoogleServiceDebugInfo.plist */; };
 		BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */; };
 		BED04D2F28EA6FA600937E4C /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */; };
 		BED04D3128EA8B0A00937E4C /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */; };
@@ -323,7 +329,7 @@
 		BE682BDA28870872009EBCB7 /* LectureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureService.swift; sourceTree = "<group>"; };
 		BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetailViewModel.swift; sourceTree = "<group>"; };
 		BE682BEE288722A5009EBCB7 /* ErrorDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDto.swift; sourceTree = "<group>"; };
-		BE682BF028872315009EBCB7 /* STError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STError.swift; sourceTree = "<group>"; };
+		BE682BF028872315009EBCB7 /* ErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCode.swift; sourceTree = "<group>"; };
 		BE682BF82887FB59009EBCB7 /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
 		BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagDto.swift; sourceTree = "<group>"; };
 		BE682BFC2887FC78009EBCB7 /* SearchTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTag.swift; sourceTree = "<group>"; };
@@ -356,7 +362,7 @@
 		BE9413BA28C20DC500171060 /* AuthDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDto.swift; sourceTree = "<group>"; };
 		BE9413BC28C2119500171060 /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
 		BE9413BE28C2157600171060 /* NotificationDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDto.swift; sourceTree = "<group>"; };
-		BE9413C028C219AD00171060 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		BE9413C028C219AD00171060 /* STNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STNotification.swift; sourceTree = "<group>"; };
 		BE9413C228C21D1000171060 /* NotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRepository.swift; sourceTree = "<group>"; };
 		BE9413C928C21F1300171060 /* NotificationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationList.swift; sourceTree = "<group>"; };
 		BE9413CB28C21F1E00171060 /* NotificationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListCell.swift; sourceTree = "<group>"; };
@@ -396,6 +402,8 @@
 		BEB57C2728BC985900279EFF /* LectureColorPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureColorPreview.swift; sourceTree = "<group>"; };
 		BEB57C2928BCA7E400279EFF /* LectureColorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureColorList.swift; sourceTree = "<group>"; };
 		BEBCC29B28EF4C6100732304 /* OnLoadModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnLoadModifier.swift; sourceTree = "<group>"; };
+		BEC560572917F60600380B9C /* GoogleServiceReleaseInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoogleServiceReleaseInfo.plist; sourceTree = "<group>"; };
+		BEC5605B2917F63000380B9C /* GoogleServiceDebugInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoogleServiceDebugInfo.plist; sourceTree = "<group>"; };
 		BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetScene.swift; sourceTree = "<group>"; };
 		BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
@@ -459,8 +467,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE4CD86728F5A56200BA9BBC /* FirebaseMessaging in Frameworks */,
+				BE4CD86328F5A56200BA9BBC /* FirebaseAnalyticsSwift in Frameworks */,
 				BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */,
+				BE4CD86528F5A56200BA9BBC /* FirebaseCrashlytics in Frameworks */,
 				BEDE34D42879A59B00525014 /* Alamofire in Frameworks */,
+				BE4CD86128F5A56200BA9BBC /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,6 +697,8 @@
 			children = (
 				B88D170728B361DC00E2D652 /* Info.plist */,
 				BE804BEC288BA3DF00782F16 /* SNUTT.entitlements */,
+				BEC5605B2917F63000380B9C /* GoogleServiceDebugInfo.plist */,
+				BEC560572917F60600380B9C /* GoogleServiceReleaseInfo.plist */,
 				BEB3B6A328CDE1EF00E56062 /* Utils */,
 				BE9413B528BE89D000171060 /* Modifiers */,
 				BE419B8B288B8C4900FA9590 /* Extensions */,
@@ -755,10 +769,10 @@
 				BEDF507427F4289B00CDCC13 /* Lecture.swift */,
 				BE682BB5287C40AF009EBCB7 /* Theme.swift */,
 				BE682BFE2888056C009EBCB7 /* Quarter.swift */,
-				BE9413C028C219AD00171060 /* Notification.swift */,
+				BE9413C028C219AD00171060 /* STNotification.swift */,
 				BE1D2B3928014527008F9134 /* Weekday.swift */,
 				BE682BFC2887FC78009EBCB7 /* SearchTag.swift */,
-				BE682BF028872315009EBCB7 /* STError.swift */,
+				BE682BF028872315009EBCB7 /* ErrorCode.swift */,
 				BE9413CD28C2207D00171060 /* NotificationState.swift */,
 				BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */,
 				B87DF6E82914F8FC008BB95B /* Popup.swift */,
@@ -947,6 +961,10 @@
 			packageProductDependencies = (
 				BEDE34D32879A59B00525014 /* Alamofire */,
 				BE779B1728E3DD5B009960EB /* FacebookLogin */,
+				BE4CD86028F5A56200BA9BBC /* FirebaseAnalytics */,
+				BE4CD86228F5A56200BA9BBC /* FirebaseAnalyticsSwift */,
+				BE4CD86428F5A56200BA9BBC /* FirebaseCrashlytics */,
+				BE4CD86628F5A56200BA9BBC /* FirebaseMessaging */,
 			);
 			productName = SNUTT;
 			productReference = BE682BB22879E24D009EBCB7 /* SNUTT.app */;
@@ -1024,8 +1042,9 @@
 			);
 			mainGroup = DC860F3C27E5C87D0068C94B;
 			packageReferences = (
-				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
 				BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+				BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = DC860F3C27E5C87D0068C94B;
 			projectDirPath = "";
@@ -1054,6 +1073,8 @@
 			files = (
 				DC860F4D27E5C87F0068C94B /* Assets.xcassets in Resources */,
 				BE28036C28E9F0B100B2B1AB /* LaunchScreen.storyboard in Resources */,
+				BEC560582917F60600380B9C /* GoogleServiceReleaseInfo.plist in Resources */,
+				BEC5605C2917F63000380B9C /* GoogleServiceDebugInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1116,7 +1137,7 @@
 				B87B317428D816E1005C170B /* MenuSheet.swift in Sources */,
 				BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */,
 				BEE5CE10289E738900CF5ED3 /* MenuThemeSheet.swift in Sources */,
-				BE9413C128C219AD00171060 /* Notification.swift in Sources */,
+				BE9413C128C219AD00171060 /* STNotification.swift in Sources */,
 				B87B317328D81447005C170B /* UserDto.swift in Sources */,
 				BE060BD928DF4C1E00A2F1B9 /* OnboardScene.swift in Sources */,
 				BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */,
@@ -1134,7 +1155,7 @@
 				BEE86519289E287400D3D0E4 /* MenuRenameSheet.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
-				BE682BF128872315009EBCB7 /* STError.swift in Sources */,
+				BE682BF128872315009EBCB7 /* ErrorCode.swift in Sources */,
 				B87B315F28D5A70F005C170B /* TimetableState.swift in Sources */,
 				BE28036828E8883700B2B1AB /* WebViewProtocol.swift in Sources */,
 				BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */,
@@ -1385,12 +1406,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1411,8 +1432,8 @@
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev 1665933034";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1469,10 +1490,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
 				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTTWidget/Info.plist;
@@ -1487,8 +1509,8 @@
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget 1665933043";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev.widget";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1504,11 +1526,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
 				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTTWidget/Info.plist;
@@ -1524,8 +1546,8 @@
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget 1665933043";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev.widget";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG WIDGET";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1541,10 +1563,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = widget.background;
 				CODE_SIGN_ENTITLEMENTS = SNUTTWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SNUTTWidget/Info.plist;
@@ -1559,8 +1582,8 @@
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget 1665933043";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev.widget";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev.widget";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WIDGET;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1695,12 +1718,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1721,8 +1744,8 @@
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev 1665933034";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1738,12 +1761,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SNUTT/SNUTT.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SNUTT/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K9883YB4VR;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K9883YB4VR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1764,8 +1787,8 @@
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev 1665933034";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1914,6 +1937,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
@@ -1922,7 +1953,7 @@
 				minimumVersion = 14.1.0;
 			};
 		};
-		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -1933,6 +1964,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BE4CD86028F5A56200BA9BBC /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		BE4CD86228F5A56200BA9BBC /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		BE4CD86428F5A56200BA9BBC /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		BE4CD86628F5A56200BA9BBC /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		BE779B1728E3DD5B009960EB /* FacebookLogin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
@@ -1940,7 +1991,7 @@
 		};
 		BEDE34D32879A59B00525014 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */

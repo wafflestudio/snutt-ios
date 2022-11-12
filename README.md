@@ -60,6 +60,8 @@ To get the project up and running, ensure that you have the following files in a
 
 - `SNUTT-2022/SNUTT/DebugConfig.xcconfig`
 - `SNUTT-2022/SNUTT/ReleaseConfig.xcconfig`
+- `SNUTT-2022/SNUTT/GoogleServiceDebugInfo.plist`
+- `SNUTT-2022/SNUTT/GoogleServiceReleaseInfo.plist`
 
 You'll need to have *fastlane* installed on your local development machine. See [fastlane installation guide](https://docs.fastlane.tools/) for more information. One of the possible methods could be using *homebrew*:
 
