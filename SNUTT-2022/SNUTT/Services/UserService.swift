@@ -14,6 +14,8 @@ protocol UserServiceProtocol {
     func changePassword(from oldPassword: String, to newPassword: String) async throws
     func disconnectFacebook() async throws
     func connectFacebook(fbId: String, fbToken: String) async throws
+    func addDevice(fcmToken: String) async throws
+    func deleteDevice(fcmToken: String) async throws
 }
 
 struct UserService: UserServiceProtocol, UserAuthHandler {
@@ -59,6 +61,27 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
         try await userRepository.deleteUser()
         clearUserInfo()
     }
+    
+    func addDevice(fcmToken: String) async throws {
+        userDefaultsRepository.set(String.self, key: .fcmToken, value: fcmToken)
+
+        if appState.user.accessToken == nil {
+            // defer until sign in
+            return
+        }
+        
+        try await userRepository.addDevice(fcmToken: fcmToken)
+    }
+    
+    func deleteDevice(fcmToken: String) async throws {
+        userDefaultsRepository.set(String.self, key: .fcmToken, value: nil)
+    
+        if appState.user.accessToken == nil {
+            return
+        }
+        
+        try await userRepository.deleteDevice(fcmToken: fcmToken)
+    }
 
     private func updateToken(from dto: TokenResponseDto) async throws {
         DispatchQueue.main.async {
@@ -83,4 +106,6 @@ class FakeUserService: UserServiceProtocol {
     func changePassword(from _: String, to _: String) async throws {}
     func disconnectFacebook() async throws {}
     func connectFacebook(fbId _: String, fbToken _: String) async throws {}
+    func addDevice(fcmToken: String) async throws {}
+    func deleteDevice(fcmToken: String) async throws {}
 }
