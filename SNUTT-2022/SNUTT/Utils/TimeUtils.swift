@@ -12,23 +12,33 @@ struct TimeUtils {
         let hour: Int
         let minute: Int
     }
-
+    
     /// 월요일 7교시인 경우 `월7`을 반환한다.
     static func getStartDateTimeString(day: Weekday, classPeriod: Double) -> String {
         return "\(day.shortSymbol)\(String(format: "%g", classPeriod))"
     }
 
     /// `time: Double`을 분 단위로 정확하게 60진법 수로 환산한다.
-    /// ex) 15.3 -> 15시 18분(`0.3 * 60 == 18`)
     static func getPreciseHourMinute(from time: Double) -> Time {
         let hour = Int(time)
         let minute = Int((time.truncatingRemainder(dividingBy: 1) * 60).rounded())
         return .init(hour: hour, minute: minute)
     }
 
-    static func getPreciseHourMinuteString(from time: Double) -> String {
+    static func getTimeInString(from time: Double) -> String {
         let preciseTime = getPreciseHourMinute(from: time)
-        return "\(preciseTime.hour):\(String(format: "%02d", preciseTime.minute))"
+        return "\(String(format: "%02d", preciseTime.hour)):\(String(format: "%02d", preciseTime.minute))"
+    }
+    
+    static func getTimeInString(from date: Date) -> String {
+        let time = getTime(from: date)
+        let timeDouble = getTimeInDouble(from: time)
+        return getTimeInString(from: timeDouble)
+    }
+    
+    static func getDate(from time: String) -> Date? {
+        let timeDouble = getTimeInDouble(from: time)
+        return getDate(from: timeDouble)
     }
 
     static func getDate(from time: Double) -> Date? {
@@ -45,6 +55,12 @@ struct TimeUtils {
         let hour = calendar.component(.hour, from: date)
         let minute = calendar.component(.minute, from: date)
         return .init(hour: hour, minute: minute)
+    }
+    
+    static func getTimeInDouble(from time: String) -> Double {
+        let splitted = time.components(separatedBy: ":")
+        guard let hour = Int(splitted[0]), let minute = Int(splitted[1]) else { return 0 }
+        return getTimeInDouble(from: .init(hour: hour, minute: minute))
     }
 
     static func getTimeInDouble(from time: Time) -> Double {

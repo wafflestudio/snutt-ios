@@ -53,11 +53,11 @@ struct Timetable {
     }
 
     var earliestStartTime: Double? {
-        aggregatedTimePlaces.min(by: { $0.startTime < $1.startTime })?.startTime
+        aggregatedTimePlaces.min(by: { $0.startTimeDouble < $1.startTimeDouble })?.startTimeDouble
     }
 
     var lastEndTime: Double? {
-        aggregatedTimePlaces.max(by: { $0.endTime < $1.endTime })?.endTime
+        aggregatedTimePlaces.max(by: { $0.endTimeDouble < $1.endTimeDouble })?.endTimeDouble
     }
 
     func withSelectedLecture(_ lecture: Lecture?) -> Self {

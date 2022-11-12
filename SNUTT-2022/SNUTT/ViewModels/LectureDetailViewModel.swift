@@ -140,8 +140,8 @@ extension LectureDetailScene {
             var lecture = lecture
             lecture.timePlaces.append(.init(id: UUID().description,
                                             day: .mon,
-                                            start: 1,
-                                            len: 1,
+                                            startTime: "9:00",
+                                            endTime: "10:00",
                                             place: "",
                                             isCustom: lecture.isCustom,
                                             isTemporary: true))

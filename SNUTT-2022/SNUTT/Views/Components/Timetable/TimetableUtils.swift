@@ -33,7 +33,7 @@ struct TimetablePainter {
         }
 
         let minHour = getStartingHour(current: current, config: config)
-        let hourIndex = timePlace.startTime - Double(minHour)
+        let hourIndex = timePlace.startTimeDouble - Double(minHour)
         guard let weekdayIndex = config.visibleWeeksSorted.firstIndex(of: timePlace.day) else { return nil }
         if hourIndex < 0 {
             return nil
@@ -47,7 +47,7 @@ struct TimetablePainter {
 
     /// 주어진 `TimePlace`블록의 높이를 구한다.
     static func getHeight(of timePlace: TimePlace, in containerSize: CGSize, hourCount: Int) -> CGFloat {
-        return timePlace.len * getHourHeight(in: containerSize, hourCount: hourCount)
+        return timePlace.duration * getHourHeight(in: containerSize, hourCount: hourCount)
     }
 
     // MARK: Auto Fit
