@@ -105,7 +105,7 @@ extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var accessToken: String? = nil
-        @Published private var _shouldShowPopup = false
+        @Published var shouldShowPopup = false
         @Published private var error: STError? = nil
         var reviewEventSignal = PassthroughSubject<WebViewEventType, Never>()
 
@@ -118,7 +118,7 @@ extension SNUTTView {
             super.init(container: container)
             appState.system.$error.assign(to: &$error)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
-            appState.popup.$shouldShowPopup.assign(to: &$_shouldShowPopup)
+            appState.popup.$shouldShowPopup.assign(to: &$shouldShowPopup)
             appState.user.$accessToken.assign(to: &$accessToken)
         }
 
@@ -128,10 +128,6 @@ extension SNUTTView {
 
         var errorMessage: String {
             (appState.system.error ?? .init(.UNKNOWN_ERROR)).content
-        }
-
-        var shouldShowPopup: Bool {
-            _shouldShowPopup
         }
 
         func reloadReviewWebView() {
