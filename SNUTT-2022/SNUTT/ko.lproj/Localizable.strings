@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  SNUTT
+
+  Created by 박신홍 on 2022/10/07.
+  
+*/
+
+"SERVER_ERROR" = "서버 오류";
