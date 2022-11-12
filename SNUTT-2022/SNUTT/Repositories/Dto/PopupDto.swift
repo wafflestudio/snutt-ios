@@ -19,7 +19,7 @@ struct PopupDto: Codable {
 }
 
 extension PopupDto {
-    init(with model: Popup) {
+    init(from model: Popup) {
         key = model.id
         image_url = model.imageURL
         hidden_days = model.hiddenDays
