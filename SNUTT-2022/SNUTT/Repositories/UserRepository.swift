@@ -60,14 +60,14 @@ class UserRepository: UserRepositoryProtocol {
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
-    
+
     func addDevice(fcmToken: String) async throws -> String {
         return try await session
             .request(UserRouter.addDevice(fcmToken: fcmToken))
             .serializingDecodable(String.self)
             .handlingError()
     }
-    
+
     func deleteDevice(fcmToken: String) async throws -> String {
         return try await session
             .request(UserRouter.deleteDevice(fcmToken: fcmToken))

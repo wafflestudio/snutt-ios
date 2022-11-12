@@ -41,7 +41,7 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         userDefaultsRepository.set(String.self, key: .token, value: dto.token)
         userDefaultsRepository.set(String.self, key: .userId, value: dto.user_id)
     }
-    
+
     private func registerFCMToken() async throws {
         guard let fcmToken = userDefaultsRepository.get(String.self, key: .fcmToken) else { return }
         let _ = try await userRepository.addDevice(fcmToken: fcmToken)
