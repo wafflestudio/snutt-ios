@@ -8,14 +8,23 @@
 import Foundation
 
 extension UserDefaults {
+    
+    static var groupName: String {
+        #if DEBUG
+        "group.com.wafflestudio.snutt.dev"
+        #else
+        "group.com.wafflestudio.snutt"
+        #endif
+    }
+    
     /// To share data saved in UserDefaults with App Extensions
     static var shared: UserDefaults {
-        return UserDefaults(suiteName: "group.com.wafflestudio.snutt3")!
+        return UserDefaults(suiteName: groupName)!
     }
     
     #if DEBUG
     static var preview: UserDefaults {
-        return UserDefaults(suiteName: "group.com.wafflestudio.snutt3.preview")!
+        return UserDefaults(suiteName: "\(groupName).preview")!
     }
     #endif
 }
