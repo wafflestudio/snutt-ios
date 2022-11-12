@@ -21,49 +21,53 @@ final class Interceptor: RequestInterceptor {
 
         urlRequest.setValue(userState.accessToken, forHTTPHeaderField: "x-access-token")
 
-        AdditionalHeaderType.allCases
+        AppMetadata.allCases
             .forEach { header in
                 urlRequest.setValue(header.value, forHTTPHeaderField: header.key)
             }
 
         completion(.success(urlRequest))
     }
+}
 
-    enum AdditionalHeaderType: String, CaseIterable {
-        case appVersion, appType, osType, osVersion, apiKey
+enum AppMetadata: CaseIterable {
+    case appVersion, appType, osType, osVersion, apiKey, buildNumber
 
-        var value: String? {
-            switch self {
-            case .appVersion:
-                return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
-            case .appType:
-                #if DEBUG
-                    return "debug"
-                #else
-                    return "release"
-                #endif
-            case .osType:
-                return "ios"
-            case .osVersion:
-                return UIDevice.current.systemVersion
-            case .apiKey:
-                return NetworkConfiguration.apiKey
-            }
+    var value: String? {
+        switch self {
+        case .appVersion:
+            return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+        case .appType:
+            #if DEBUG
+                return "debug"
+            #else
+                return "release"
+            #endif
+        case .osType:
+            return "ios"
+        case .osVersion:
+            return UIDevice.current.systemVersion
+        case .apiKey:
+            return NetworkConfiguration.apiKey
+        case .buildNumber:
+            return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
         }
+    }
 
-        var key: String {
-            switch self {
-            case .appVersion:
-                return "x-app-version"
-            case .appType:
-                return "x-app-type"
-            case .osType:
-                return "x-os-type"
-            case .osVersion:
-                return "x-os-version"
-            case .apiKey:
-                return "x-access-apikey"
-            }
+    var key: String {
+        switch self {
+        case .appVersion:
+            return "x-app-version"
+        case .appType:
+            return "x-app-type"
+        case .osType:
+            return "x-os-type"
+        case .osVersion:
+            return "x-os-version"
+        case .apiKey:
+            return "x-access-apikey"
+        case .buildNumber:
+            return "x-build-number"
         }
     }
 }
@@ -104,9 +108,16 @@ extension DataTask {
                 debugPrint("Error Raw Response: \(String(describing: String(data: responseBody, encoding: .utf8)))")
             }
         #endif
-        if let data = await response.data, let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data) {
-            throw STError(rawValue: errDto.errcode) ?? .SERVER_FAULT
+        if let data = await response.data,
+           let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data)
+        {
+            let errCode = ErrorCode(rawValue: errDto.errcode) ?? .SERVER_FAULT
+            if let serverMessage = errDto.ext?.first?.1 {
+                throw STError(errCode, content: serverMessage)
+            } else {
+                throw STError(errCode)
+            }
         }
-        throw STError.SERVER_FAULT
+        throw STError(.SERVER_FAULT)
     }
 }

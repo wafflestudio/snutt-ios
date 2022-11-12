@@ -5,11 +5,21 @@
 //  Created by 박신홍 on 2022/07/20.
 //
 
+import Combine
 import Foundation
 import SwiftUI
 
 extension LectureDetailScene {
     class ViewModel: BaseViewModel, ObservableObject {
+        @Published var isErrorAlertPresented = false
+        @Published var isLectureOverlapped: Bool = false
+        var errorTitle: String = ""
+        var errorMessage: String = ""
+
+        override init(container: DIContainer) {
+            super.init(container: container)
+        }
+
         var lectureService: LectureServiceProtocol {
             services.lectureService
         }
@@ -18,9 +28,29 @@ extension LectureDetailScene {
             appState.timetable.current
         }
 
-        func addCustomLecture(lecture: Lecture) async -> Bool {
+        func addCustomLecture(lecture: Lecture, isForced: Bool = false) async -> Bool {
             do {
-                try await lectureService.addCustomLecture(lecture: lecture)
+                try await lectureService.addCustomLecture(lecture: lecture, isForced: isForced)
+                return true
+            } catch {
+                if let error = error.asSTError {
+                    if error.code == .LECTURE_TIME_OVERLAP {
+                        DispatchQueue.main.async {
+                            self.isLectureOverlapped = true
+                            self.errorTitle = error.title
+                            self.errorMessage = error.content
+                        }
+                    } else {
+                        services.globalUIService.presentErrorAlert(error: error)
+                    }
+                }
+                return false
+            }
+        }
+
+        func overwriteLecture(lecture: Lecture) async -> Bool {
+            do {
+                try await lectureService.addLecture(lecture: lecture, isForced: true)
                 return true
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
@@ -28,14 +58,27 @@ extension LectureDetailScene {
             }
         }
 
-        func updateLecture(oldLecture: Lecture, newLecture: Lecture) async -> Lecture? {
+        func updateLecture(oldLecture: Lecture?, newLecture: Lecture, isForced: Bool = false) async -> Bool {
+            guard let oldLecture = oldLecture else {
+                return false
+            }
+
             do {
-                try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture)
-                guard let lecture = appState.timetable.current?.lectures.first(where: { $0.id == newLecture.id }) else { return nil }
-                return lecture
+                try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture, isForced: isForced)
+                return true
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-                return nil
+                if let error = error.asSTError {
+                    if error.code == .LECTURE_TIME_OVERLAP {
+                        DispatchQueue.main.async {
+                            self.isLectureOverlapped = true
+                            self.errorTitle = error.title
+                            self.errorMessage = error.content
+                        }
+                    } else {
+                        services.globalUIService.presentErrorAlert(error: error)
+                    }
+                }
+                return false
             }
         }
 
@@ -70,6 +113,19 @@ extension LectureDetailScene {
                 try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+
+        func fetchSyllabusURL(of lecture: Lecture) async -> String {
+            guard let currentQuarter = currentTimetable?.quarter else {
+                return ""
+            }
+
+            do {
+                return try await services.courseBookService.fetchSyllabusURL(quarter: currentQuarter, lecture: lecture)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+                return ""
             }
         }
 

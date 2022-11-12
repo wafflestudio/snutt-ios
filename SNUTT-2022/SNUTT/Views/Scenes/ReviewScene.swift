@@ -8,15 +8,23 @@
 import Combine
 import SwiftUI
 
+enum WebViewEventType {
+    case reload
+    case colorSchemeChange(to: ColorScheme)
+}
+
 struct ReviewScene: View {
     @ObservedObject var viewModel: ViewModel
     @Binding var detailId: String
-    var reloadSignal: PassthroughSubject<Void, Never>
 
-    init(viewModel: ViewModel, detailId: Binding<String> = .constant(""), reloadSignal: PassthroughSubject<Void, Never>? = nil) {
+    var eventSignal: PassthroughSubject<WebViewEventType, Never>
+
+    @Environment(\.colorScheme) var colorScheme
+
+    init(viewModel: ViewModel, detailId: Binding<String> = .constant(""), webViewEventSignal: PassthroughSubject<WebViewEventType, Never>? = nil) {
         self.viewModel = viewModel
         _detailId = detailId
-        self.reloadSignal = reloadSignal ?? .init()
+        eventSignal = webViewEventSignal ?? .init()
     }
 
     private var reviewUrl: URL {
@@ -29,21 +37,25 @@ struct ReviewScene: View {
 
     var body: some View {
         ZStack {
-            ReviewWebView(url: reviewUrl, accessToken: viewModel.accessToken, connectionState: $viewModel.connectionState, reloadSignal: reloadSignal)
+            ReviewWebView(url: reviewUrl, accessToken: viewModel.accessToken, connectionState: $viewModel.connectionState, eventSignal: eventSignal, initialColorScheme: colorScheme)
                 .navigationBarHidden(true)
                 .edgesIgnoringSafeArea(.bottom)
+                .background(STColor.systemBackground)
 
             if viewModel.connectionState == .error {
                 WebErrorView(refresh: {
-                    print("sending signal..")
-                    reloadSignal.send()
+                    eventSignal.send(.reload)
                 })
                 .navigationTitle("강의평")
                 .navigationBarTitleDisplayMode(.inline)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color(uiColor: .systemBackground))
+                .background(STColor.systemBackground)
             }
         }
+        .onChange(of: colorScheme) { newValue in
+            eventSignal.send(.colorSchemeChange(to: newValue))
+        }
+
         let _ = debugChanges()
     }
 }

@@ -47,11 +47,14 @@ struct SNUTTView: View {
                         SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
                     }
                     TabScene(tabType: .review) {
-                        ReviewScene(viewModel: .init(container: viewModel.container), reloadSignal: viewModel.reloadReviewSignal)
+                        ReviewScene(viewModel: .init(container: viewModel.container), webViewEventSignal: viewModel.reviewEventSignal)
                     }
                     TabScene(tabType: .settings) {
                         SettingScene(viewModel: .init(container: viewModel.container))
                     }
+                }
+                .onAppear {
+                    selectedTab = .timetable
                 }
                 if selectedTab == .timetable {
                     MenuSheetScene(viewModel: .init(container: viewModel.container))
@@ -95,9 +98,9 @@ struct SNUTTView: View {
 extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
-        @Published var errorContent: STError? = nil
         @Published var accessToken: String? = nil
-        var reloadReviewSignal = PassthroughSubject<Void, Never>()
+        @Published private var error: STError? = nil
+        var reviewEventSignal = PassthroughSubject<WebViewEventType, Never>()
 
         var isAuthenticated: Bool {
             guard let accessToken = accessToken else { return false }
@@ -106,21 +109,21 @@ extension SNUTTView {
 
         override init(container: DIContainer) {
             super.init(container: container)
-            appState.system.$errorContent.assign(to: &$errorContent)
+            appState.system.$error.assign(to: &$error)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
             appState.user.$accessToken.assign(to: &$accessToken)
         }
 
         var errorTitle: String {
-            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorTitle
+            (appState.system.error ?? .init(.UNKNOWN_ERROR)).title
         }
 
         var errorMessage: String {
-            (appState.system.errorContent ?? .UNKNOWN_ERROR).errorMessage
+            (appState.system.error ?? .init(.UNKNOWN_ERROR)).content
         }
 
         func reloadReviewWebView() {
-            reloadReviewSignal.send()
+            reviewEventSignal.send(.reload)
         }
     }
 }

@@ -12,6 +12,10 @@ struct SearchLectureList: View {
     let fetchMore: () async -> Void
     let addLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture, Binding<String>) async -> Void
+    let overwriteLecture: (Lecture) async -> Void
+    let errorTitle: String
+    let errorMessage: String
+    @Binding var isLectureOverlapped: Bool
     @Binding var selected: Lecture?
 
     var body: some View {
@@ -32,6 +36,21 @@ struct SearchLectureList: View {
                             if selected?.id != lecture.id {
                                 selected = lecture
                             }
+                        }
+                        .alert(errorTitle, isPresented: $isLectureOverlapped) {
+                            Button {
+                                Task {
+                                    await overwriteLecture(selected!)
+                                }
+                            } label: {
+                                Text("확인")
+                            }
+
+                            Button("취소", role: .cancel) {
+                                isLectureOverlapped = false
+                            }
+                        } message: {
+                            Text(errorMessage)
                         }
                 }
             }

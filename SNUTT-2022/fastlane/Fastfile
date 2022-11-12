@@ -1,0 +1,140 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+APP_NAME = "SNUTT"
+XCODEPROJ_NAME = "SNUTT.xcodeproj"
+BUNDLE_IDENTIFIER = ENV['BUNDLE_IDENTIFIER']
+WIDGET_BUNDLE_IDENTIFIER = "#{BUNDLE_IDENTIFIER}.widget"
+BUILD_CONFIGURATION = ENV['BUILD_CONFIGURATION']
+APP_STORE_CONNECT_KEY_ID = ENV['APP_STORE_CONNECT_KEY_ID']
+APP_STORE_CONNECT_KEY_ISSUER = ENV['APP_STORE_CONNECT_KEY_ISSUER']
+KEY_CONTENT = ENV['APP_STORE_CONNECT_KEY_CONTENT']
+TEAM_ID = ENV['TEAM_ID']
+VERSION_NUMBER = ENV['VERSION_NUMBER'] || "3.0.0"
+BUILD_NUMBER = ENV['BUILD_NUMBER'] || "3"
+GIT_TAG_NAME = ENV['GIT_TAG_NAME']
+SLACK_WEBHOOK = ENV['SLACK_WEBHOOK']
+
+platform :ios do
+  desc "🧪 Upload app to Testflight"
+  lane :beta do
+    begin
+      setup_ci
+      certificates_distribution
+      if BUILD_CONFIGURATION == "Debug"
+        add_badge(dark: true)
+      end
+      increment_version_number(version_number: VERSION_NUMBER)
+      increment_build_number(build_number: BUILD_NUMBER)
+      build_app(scheme: APP_NAME, 
+      configuration: BUILD_CONFIGURATION,
+      output_directory: "./archive",
+      silent: true,
+      clean: true)
+      app_store_connect_api_key(
+        key_id: APP_STORE_CONNECT_KEY_ID,
+        issuer_id: APP_STORE_CONNECT_KEY_ISSUER,
+        key_content: KEY_CONTENT,
+        )
+      upload_to_testflight
+      slack(
+        message: "App successfully uploaded to Testflight 🎉",
+        channel: "#team-snutt-deploy",
+        slack_url: SLACK_WEBHOOK,
+        success: true,
+        attachment_properties: {
+          fields: [
+                {
+                    title: "Tag",
+                    value: GIT_TAG_NAME,
+                    short: false
+                }
+            ]
+        },
+        default_payloads: [:git_branch, :git_author, :last_git_commit_hash, :last_git_commit]
+      )
+    rescue => exception
+        on_error(exception)
+    end
+  end
+
+  desc "🛠️ Update xcodeproj file"
+  private_lane :update_xcodeproj do |options|
+    code_sign_identity = options[:type] == 'appstore' ? 'iPhone Distribution' : 'iPhone Developer'
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: XCODEPROJ_NAME,
+      team_id: TEAM_ID,
+      targets: APP_NAME,
+      bundle_identifier: BUNDLE_IDENTIFIER,
+      code_sign_identity:  code_sign_identity,
+      profile_name: ENV["sigh_#{BUNDLE_IDENTIFIER}_#{options[:type]}_profile-name"],
+      )
+      
+      update_code_signing_settings(
+        use_automatic_signing: false,
+        path: XCODEPROJ_NAME,
+        team_id: TEAM_ID,
+        targets: "SNUTTWidgetExtension",
+        bundle_identifier: WIDGET_BUNDLE_IDENTIFIER,
+        code_sign_identity: code_sign_identity,
+      profile_name: ENV["sigh_#{WIDGET_BUNDLE_IDENTIFIER}_#{options[:type]}_profile-name"],
+    )
+
+    update_app_group_identifiers(
+      entitlements_file: "SNUTT/SNUTT.entitlements",
+      app_group_identifiers: ["group.#{BUNDLE_IDENTIFIER}"]
+    )
+
+    update_app_group_identifiers(
+      entitlements_file: "SNUTTWidgetExtension.entitlements",
+      app_group_identifiers: ["group.#{BUNDLE_IDENTIFIER}"]
+    )
+  end
+
+  desc "🔐 Configure certificates and provisioning profiles for development"
+  lane :certificates_development do
+    match(type: "development", app_identifier: [BUNDLE_IDENTIFIER, "#{BUNDLE_IDENTIFIER}.widget"], readonly: true)
+    update_xcodeproj(type: "development")
+  end
+
+  desc "🔐 Configure certificates and provisioning profiles for distribution"
+  lane :certificates_distribution do
+    match(type: "appstore", app_identifier: [BUNDLE_IDENTIFIER, "#{ENV['BUNDLE_IDENTIFIER']}.widget"], readonly: true)
+    update_xcodeproj(type: "appstore")
+  end
+
+end
+
+def on_error(exception)
+  slack(
+      message: "Something went wrong 😢",
+      channel: "#team-snutt-deploy",
+      slack_url: SLACK_WEBHOOK,
+      success: false,
+      attachment_properties: {
+          fields: [
+                {
+                    title: "Tag",
+                    value: GIT_TAG_NAME,
+                    short: false
+                }
+            ]
+        },
+        default_payloads: [:git_branch, :git_author, :last_git_commit_hash, :last_git_commit]
+  )
+end
