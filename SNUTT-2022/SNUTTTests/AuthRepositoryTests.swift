@@ -19,23 +19,23 @@ class AuthRepositoryTests: XCTestCase {
         do {
             let _ = try await repository.registerWithId(id: testId, password: testPW, email: "")
         } catch {
-            if error.asSTError == .DUPLICATE_ID {
+            if error.asSTError?.code == .DUPLICATE_ID {
                 // 중복 발생 가능
                 return
             }
-            XCTFail(error.asSTError?.errorTitle ?? "")
+            XCTFail(error.asSTError?.title ?? "")
         }
 
         do {
             let _ = try await repository.registerWithId(id: testId, password: testPW, email: "")
         } catch {
-            XCTAssertEqual(error.asSTError, .DUPLICATE_ID)
+            XCTAssertEqual(error.asSTError?.code, .DUPLICATE_ID)
         }
 
         do {
             let _ = try await repository.loginWithId(id: testId, password: testPW)
         } catch {
-            XCTFail(error.asSTError?.errorTitle ?? "")
+            XCTFail(error.asSTError?.title ?? "")
         }
     }
 }
