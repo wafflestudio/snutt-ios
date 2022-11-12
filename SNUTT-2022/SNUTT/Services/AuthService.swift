@@ -73,7 +73,7 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
 
     func logout() async throws {
         // TODO: update when FCM ready
-        guard let userId = appState.user.userId else { throw STError.NO_USER_TOKEN }
+        guard let userId = appState.user.userId else { throw STError(.NO_USER_TOKEN) }
         let _ = try? await authRepository.logout(userId: userId, fcmToken: "fweafa")
         clearUserInfo()
     }

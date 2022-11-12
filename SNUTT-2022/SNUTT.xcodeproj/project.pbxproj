@@ -86,7 +86,7 @@
 		BE682BDB28870872009EBCB7 /* LectureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BDA28870872009EBCB7 /* LectureService.swift */; };
 		BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */; };
 		BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BEE288722A5009EBCB7 /* ErrorDto.swift */; };
-		BE682BF128872315009EBCB7 /* STError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BF028872315009EBCB7 /* STError.swift */; };
+		BE682BF128872315009EBCB7 /* ErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BF028872315009EBCB7 /* ErrorCode.swift */; };
 		BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BF82887FB59009EBCB7 /* SearchRouter.swift */; };
 		BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */; };
 		BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE682BFC2887FC78009EBCB7 /* SearchTag.swift */; };
@@ -311,7 +311,7 @@
 		BE682BDA28870872009EBCB7 /* LectureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureService.swift; sourceTree = "<group>"; };
 		BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetailViewModel.swift; sourceTree = "<group>"; };
 		BE682BEE288722A5009EBCB7 /* ErrorDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDto.swift; sourceTree = "<group>"; };
-		BE682BF028872315009EBCB7 /* STError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STError.swift; sourceTree = "<group>"; };
+		BE682BF028872315009EBCB7 /* ErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCode.swift; sourceTree = "<group>"; };
 		BE682BF82887FB59009EBCB7 /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
 		BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagDto.swift; sourceTree = "<group>"; };
 		BE682BFC2887FC78009EBCB7 /* SearchTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTag.swift; sourceTree = "<group>"; };
@@ -749,7 +749,7 @@
 				BE9413C028C219AD00171060 /* STNotification.swift */,
 				BE1D2B3928014527008F9134 /* Weekday.swift */,
 				BE682BFC2887FC78009EBCB7 /* SearchTag.swift */,
-				BE682BF028872315009EBCB7 /* STError.swift */,
+				BE682BF028872315009EBCB7 /* ErrorCode.swift */,
 				BE9413CD28C2207D00171060 /* NotificationState.swift */,
 				BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */,
 				B88D16FC28AE2E1E00E2D652 /* User.swift */,
@@ -1127,7 +1127,7 @@
 				BEE86519289E287400D3D0E4 /* MenuRenameSheet.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
-				BE682BF128872315009EBCB7 /* STError.swift in Sources */,
+				BE682BF128872315009EBCB7 /* ErrorCode.swift in Sources */,
 				B87B315F28D5A70F005C170B /* TimetableState.swift in Sources */,
 				BE28036828E8883700B2B1AB /* WebViewProtocol.swift in Sources */,
 				BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */,

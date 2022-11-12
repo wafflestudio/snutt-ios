@@ -8,7 +8,25 @@
 
 import Foundation
 
-public enum STError: Int, Error {
+struct STError: Error {
+    let code: ErrorCode
+    let title: String
+    let content: String
+
+    init(_ errorCode: ErrorCode) {
+        title = errorCode.errorTitle
+        content = errorCode.errorMessage
+        code = errorCode
+    }
+
+    init(_ errorCode: ErrorCode, content: String) {
+        title = errorCode.errorTitle
+        self.content = content
+        code = errorCode
+    }
+}
+
+enum ErrorCode: Int {
     case SERVER_FAULT = 0x0000
     case NO_NETWORK = 0x0001
     case UNKNOWN_ERROR = 0x0002
@@ -68,6 +86,7 @@ public enum STError: Int, Error {
     /* Client-side Errors */
     case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
     case CANT_CHANGE_OTHERS_THEME = 0x5001
+    case INVALID_LECTURE_TIME = 0x5002
 
     var errorTitle: String {
         switch self {
@@ -114,13 +133,15 @@ public enum STError: Int, Error {
              .FB_ID_WITH_SOMEONE_ELSE,
              .WRONG_SEMESTER,
              .NOT_CUSTOM_LECTURE,
-             .LECTURE_TIME_OVERLAP,
              .IS_CUSTOM_LECTURE,
              .USER_HAS_NO_FCM_KEY,
              .INVALID_TIMEJSON,
              .CANT_DELETE_CURRENT_TIMETABLE,
              .INVALID_EMAIL:
             return "잘못된 요청"
+        case .LECTURE_TIME_OVERLAP,
+             .INVALID_LECTURE_TIME:
+            return "시간대 겹침"
         case .TAG_NOT_FOUND,
              .TIMETABLE_NOT_FOUND,
              .LECTURE_NOT_FOUND,
@@ -213,6 +234,8 @@ public enum STError: Int, Error {
             return "직접 만든 강좌가 아닙니다."
         case .LECTURE_TIME_OVERLAP:
             return "시간표의 시간과 겹칩니다."
+        case .INVALID_LECTURE_TIME:
+            return "강의 시간이 서로 겹칩니다."
         case .IS_CUSTOM_LECTURE:
             return "직접 만든 강좌입니다."
         case .REF_LECTURE_NOT_FOUND:
@@ -237,7 +260,7 @@ public enum STError: Int, Error {
     }
 }
 
-public extension Error {
+extension Error {
     var asSTError: STError? {
         self as? STError
     }

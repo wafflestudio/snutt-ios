@@ -9,7 +9,6 @@ import Combine
 import Foundation
 
 class TimetableViewModel: BaseViewModel, ObservableObject {
-    private var bag = Set<AnyCancellable>()
     @Published var currentTimetable: Timetable?
     @Published var configuration: TimetableConfiguration = .init()
     @Published private var metadataList: [TimetableMetadata]?
@@ -106,7 +105,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         services.timetableService
     }
 
-    var timetableState: TimetableState {
+    private var timetableState: TimetableState {
         appState.timetable
     }
 }

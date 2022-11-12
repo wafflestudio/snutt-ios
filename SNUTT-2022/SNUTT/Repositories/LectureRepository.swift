@@ -9,9 +9,9 @@ import Alamofire
 import Foundation
 
 protocol LectureRepositoryProtocol {
-    func addLecture(timetableId: String, lectureId: String) async throws -> TimetableDto
-    func addCustomLecture(timetableId: String, lecture: LectureDto) async throws -> TimetableDto
-    func updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto) async throws -> TimetableDto
+    func addLecture(timetableId: String, lectureId: String, isForced: Bool) async throws -> TimetableDto
+    func addCustomLecture(timetableId: String, lecture: LectureDto, isForced: Bool) async throws -> TimetableDto
+    func updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto, isForced: Bool) async throws -> TimetableDto
     func deleteLecture(timetableId: String, lectureId: String) async throws -> TimetableDto
     func resetLecture(timetableId: String, lectureId: String) async throws -> TimetableDto
 }
@@ -23,16 +23,16 @@ class LectureRepository: LectureRepositoryProtocol {
         self.session = session
     }
 
-    func addLecture(timetableId: String, lectureId: String) async throws -> TimetableDto {
+    func addLecture(timetableId: String, lectureId: String, isForced: Bool) async throws -> TimetableDto {
         return try await session
-            .request(LectureRouter.addLecture(timetableId: timetableId, lectureId: lectureId))
+            .request(LectureRouter.addLecture(timetableId: timetableId, lectureId: lectureId, isForced: isForced))
             .serializingDecodable(TimetableDto.self)
             .handlingError()
     }
 
-    func addCustomLecture(timetableId: String, lecture: LectureDto) async throws -> TimetableDto {
+    func addCustomLecture(timetableId: String, lecture: LectureDto, isForced: Bool) async throws -> TimetableDto {
         return try await session
-            .request(LectureRouter.addCustomLecture(timetableId: timetableId, lecture: lecture))
+            .request(LectureRouter.addCustomLecture(timetableId: timetableId, lecture: lecture, isForced: isForced))
             .serializingDecodable(TimetableDto.self)
             .handlingError()
     }
@@ -44,9 +44,9 @@ class LectureRepository: LectureRepositoryProtocol {
             .handlingError()
     }
 
-    func updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto) async throws -> TimetableDto {
+    func updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto, isForced: Bool) async throws -> TimetableDto {
         return try await session
-            .request(LectureRouter.updateLecture(timetableId: timetableId, oldLecture: oldLecture, newLecture: newLecture))
+            .request(LectureRouter.updateLecture(timetableId: timetableId, oldLecture: oldLecture, newLecture: newLecture, isForced: isForced))
             .serializingDecodable(TimetableDto.self)
             .handlingError()
     }

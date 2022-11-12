@@ -12,17 +12,15 @@ enum LectureRouter: Router {
     var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/tables")! }
     static let shouldAddToken: Bool = true
 
-    case addCustomLecture(timetableId: String, lecture: LectureDto)
-    case addLecture(timetableId: String, lectureId: String)
+    case addCustomLecture(timetableId: String, lecture: LectureDto, isForced: Bool)
+    case addLecture(timetableId: String, lectureId: String, isForced: Bool)
     case deleteLecture(timetableId: String, lectureId: String)
-    case updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto)
+    case updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto, isForced: Bool)
     case resetLecture(timetableId: String, lectureId: String)
 
     var method: HTTPMethod {
         switch self {
-        case .addCustomLecture:
-            return .post
-        case .addLecture:
+        case .addCustomLecture, .addLecture:
             return .post
         case .deleteLecture:
             return .delete
@@ -33,13 +31,13 @@ enum LectureRouter: Router {
 
     var path: String {
         switch self {
-        case let .addCustomLecture(timetableId, _):
+        case let .addCustomLecture(timetableId, _, _):
             return "/\(timetableId)/lecture"
-        case let .addLecture(timetableId, lectureId):
+        case let .addLecture(timetableId, lectureId, _):
             return "/\(timetableId)/lecture/\(lectureId)"
         case let .deleteLecture(timetableId, lectureId):
             return "/\(timetableId)/lecture/\(lectureId)"
-        case let .updateLecture(timetableId, oldLecture, _):
+        case let .updateLecture(timetableId, oldLecture, _, _):
             return "/\(timetableId)/lecture/\(oldLecture._id)"
         case let .resetLecture(timetableId, lectureId):
             return "/\(timetableId)/lecture/\(lectureId)/reset"
@@ -48,14 +46,19 @@ enum LectureRouter: Router {
 
     var parameters: Parameters? {
         switch self {
-        case let .addCustomLecture(_, lecture):
-            return lecture.asDictionary()
-        case .addLecture:
-            return nil
+        case let .addCustomLecture(_, lecture, isForced):
+            var dict = lecture.asDictionary()
+            dict?.removeValue(forKey: "_id")
+            dict?["is_forced"] = isForced
+            return dict
+        case let .addLecture(_, _, isForced):
+            return ["is_forced": isForced]
         case .deleteLecture:
             return nil
-        case let .updateLecture(_, oldLecture, newLecture):
-            return oldLecture.extractModified(in: newLecture)
+        case let .updateLecture(_, oldLecture, newLecture, isForced):
+            var dict = oldLecture.extractModified(in: newLecture)
+            dict["is_forced"] = isForced
+            return dict
         case .resetLecture:
             return nil
         }

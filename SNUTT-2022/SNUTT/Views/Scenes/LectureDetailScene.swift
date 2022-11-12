@@ -283,14 +283,11 @@ struct LectureDetailScene: View {
                             guard let tempLecture = tempLecture else { return }
                             // save
                             Task {
-                                guard let updatedLecture = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) else {
-                                    lecture = tempLecture
-                                    return
+                                if await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) {
+                                    editMode = .inactive
+                                    resignFirstResponder()
                                 }
-                                lecture = updatedLecture
                             }
-                            editMode = .inactive
-                            resignFirstResponder()
                         } else {
                             // edit
                             tempLecture = lecture
@@ -317,6 +314,31 @@ struct LectureDetailScene: View {
             }
         }
         .environment(\.editMode, $editMode)
+        .alert(viewModel.errorTitle, isPresented: $viewModel.isLectureOverlapped) {
+            Button {
+                Task {
+                    let isUpdatingLecture = editMode.isEditing && displayMode == .normal
+                    let success = await isUpdatingLecture
+                        ? viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture, isForced: true)
+                        : (lecture.isCustom
+                            ? viewModel.addCustomLecture(lecture: lecture, isForced: true)
+                            : viewModel.overwriteLecture(lecture: lecture))
+                    if success {
+                        editMode = .inactive
+                        resignFirstResponder()
+                        dismiss()
+                    }
+                }
+            } label: {
+                Text("확인")
+            }
+
+            Button("취소", role: .cancel) {
+                viewModel.isLectureOverlapped = false
+            }
+        } message: {
+            Text(viewModel.errorMessage)
+        }
     }
 }
 
@@ -341,12 +363,12 @@ struct RectangleButtonStyle: ButtonStyle {
 }
 
 #if DEBUG
-    struct LectureDetailList_Previews: PreviewProvider {
-        static var previews: some View {
-            NavigationView {
-                LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview, displayMode: .normal)
-                    .navigationBarTitleDisplayMode(.inline)
-            }
-        }
-    }
+//    struct LectureDetailList_Previews: PreviewProvider {
+//        static var previews: some View {
+//            NavigationView {
+//                LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview, displayMode: .normal)
+//                    .navigationBarTitleDisplayMode(.inline)
+//            }
+//        }
+//    }
 #endif

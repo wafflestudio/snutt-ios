@@ -64,6 +64,10 @@ struct SearchLectureScene: View {
                                           fetchMore: viewModel.fetchMoreSearchResult,
                                           addLecture: viewModel.addLecture,
                                           fetchReviewId: viewModel.fetchReviewId(of:bind:),
+                                          overwriteLecture: viewModel.overwriteLecture(lecture:),
+                                          errorTitle: viewModel.errorTitle,
+                                          errorMessage: viewModel.errorMessage,
+                                          isLectureOverlapped: $viewModel.isLectureOverlapped,
                                           selected: $viewModel.selectedLecture)
                             .animation(.customSpring, value: viewModel.selectedLecture?.id)
                             .id(reloadSearchList) // reload everything when any of the search conditions changes
