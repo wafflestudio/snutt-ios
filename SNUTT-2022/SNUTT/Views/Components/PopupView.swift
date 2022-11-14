@@ -15,12 +15,12 @@ struct PopupView: View {
     var body: some View {
         AsyncImage(url: URL(string: popup.imageURL)!, transaction: Transaction(animation: .customSpring)) { phase in
             switch phase {
-            case .success(let popupImage):
+            case let .success(popupImage):
                 VStack(spacing: 0) {
                     popupImage
                         .resizable()
                         .scaledToFit()
-                    
+
                     HStack {
                         Spacer()
 
