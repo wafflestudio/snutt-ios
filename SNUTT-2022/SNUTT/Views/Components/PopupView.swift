@@ -13,48 +13,48 @@ struct PopupView: View {
     let dismissNdays: (PopupView) -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
-            AsyncImage(url: URL(string: popup.imageURL)!) { popupImage in
-                popupImage
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 230, height: 280)
-                    .clipped()
-            } placeholder: {
+        AsyncImage(url: URL(string: popup.imageURL)!, transaction: Transaction(animation: .customSpring)) { phase in
+            switch phase {
+            case .success(let popupImage):
+                VStack(spacing: 0) {
+                    popupImage
+                        .resizable()
+                        .scaledToFit()
+                    
+                    HStack {
+                        Spacer()
+
+                        Button {
+                            dismissNdays(self)
+                        } label: {
+                            Text("당분간 보지 않기")
+                                .foregroundColor(.white)
+                                .font(.system(size: 14))
+                        }
+
+                        Spacer()
+
+                        Rectangle()
+                            .frame(width: 1, height: 17)
+                            .foregroundColor(.white.opacity(0.5))
+
+                        Spacer()
+
+                        Button {
+                            dismissOnce(self)
+                        } label: {
+                            Text("닫기")
+                                .foregroundColor(.white)
+                                .font(.system(size: 14))
+                        }
+
+                        Spacer()
+                    }.frame(height: 33)
+                }
+            default:
                 ProgressView()
             }
-
-            HStack {
-                Spacer()
-
-                Button {
-                    dismissNdays(self)
-                } label: {
-                    Text("당분간 보지 않기")
-                        .foregroundColor(.white)
-                        .font(.system(size: 14))
-                }.frame(width: 105)
-
-                Spacer()
-
-                Rectangle()
-                    .frame(width: 1, height: 17)
-                    .foregroundColor(.white.opacity(0.5))
-
-                Spacer()
-
-                Button {
-                    dismissOnce(self)
-                } label: {
-                    Text("닫기")
-                        .foregroundColor(.white)
-                        .font(.system(size: 14))
-                }.frame(width: 60)
-
-                Spacer()
-            }.frame(height: 33)
         }
-        .fixedSize(horizontal: true, vertical: false)
     }
 }
 

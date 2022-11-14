@@ -58,7 +58,7 @@ struct PopupService: PopupServiceProtocol {
             currentPopupList[$0].lastUpdate = Date()
         }
 
-        let currentPopupListDto = currentPopupList.compactMap { PopupDto(with: $0) }
+        let currentPopupListDto = currentPopupList.compactMap { PopupDto(from: $0) }
 
         DispatchQueue.main.async {
             appState.popup.currentList = currentPopupList
