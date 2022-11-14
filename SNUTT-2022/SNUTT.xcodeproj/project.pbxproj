@@ -15,7 +15,25 @@
 		B87B316D28D755B6005C170B /* MenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B316B28D755B6005C170B /* MenuState.swift */; };
 		B87B317328D81447005C170B /* UserDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B317228D81447005C170B /* UserDto.swift */; };
 		B87B317428D816E1005C170B /* MenuSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A00D288AA3D200C2CE95 /* MenuSheet.swift */; };
+		B87DF6E729139B8D008BB95B /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6E629139B8D008BB95B /* PopupView.swift */; };
+		B87DF6E92914F8FC008BB95B /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6E82914F8FC008BB95B /* Popup.swift */; };
+		B87DF6EB2914F962008BB95B /* PopupDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EA2914F962008BB95B /* PopupDto.swift */; };
+		B87DF6ED2914FAFB008BB95B /* PopupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */; };
+		B87DF6EF2914FC02008BB95B /* PopupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EE2914FC02008BB95B /* PopupRepository.swift */; };
+		B87DF6F129150A00008BB95B /* PopupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F029150A00008BB95B /* PopupService.swift */; };
+		B87DF6F52918AB5D008BB95B /* Date+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+ext.swift */; };
+		B87DF6F92918B7AD008BB95B /* PopupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F82918B7AD008BB95B /* PopupState.swift */; };
+		B87DF6FB291A4303008BB95B /* PopupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6FA291A4303008BB95B /* PopupScene.swift */; };
 		B87DF6F329152649008BB95B /* View+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F229152649008BB95B /* View+Screenshot.swift */; };
+		B87DF6E729139B8D008BB95B /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6E629139B8D008BB95B /* PopupView.swift */; };
+		B87DF6E92914F8FC008BB95B /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6E82914F8FC008BB95B /* Popup.swift */; };
+		B87DF6EB2914F962008BB95B /* PopupDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EA2914F962008BB95B /* PopupDto.swift */; };
+		B87DF6ED2914FAFB008BB95B /* PopupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */; };
+		B87DF6EF2914FC02008BB95B /* PopupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EE2914FC02008BB95B /* PopupRepository.swift */; };
+		B87DF6F129150A00008BB95B /* PopupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F029150A00008BB95B /* PopupService.swift */; };
+		B87DF6F52918AB5D008BB95B /* Date+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+ext.swift */; };
+		B87DF6F92918B7AD008BB95B /* PopupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F82918B7AD008BB95B /* PopupState.swift */; };
+		B87DF6FB291A4303008BB95B /* PopupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6FA291A4303008BB95B /* PopupScene.swift */; };
 		B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16F228ABC5DD00E2D652 /* String+ext.swift */; };
 		B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FA28AE2BB900E2D652 /* UserRouter.swift */; };
 		B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D16FC28AE2E1E00E2D652 /* User.swift */; };
@@ -260,7 +278,25 @@
 		B87B316A28D755B6005C170B /* SystemState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemState.swift; sourceTree = "<group>"; };
 		B87B316B28D755B6005C170B /* MenuState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuState.swift; sourceTree = "<group>"; };
 		B87B317228D81447005C170B /* UserDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDto.swift; sourceTree = "<group>"; };
+		B87DF6E629139B8D008BB95B /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		B87DF6E82914F8FC008BB95B /* Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
+		B87DF6EA2914F962008BB95B /* PopupDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDto.swift; sourceTree = "<group>"; };
+		B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRouter.swift; sourceTree = "<group>"; };
+		B87DF6EE2914FC02008BB95B /* PopupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRepository.swift; sourceTree = "<group>"; };
+		B87DF6F029150A00008BB95B /* PopupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupService.swift; sourceTree = "<group>"; };
+		B87DF6F42918AB5D008BB95B /* Date+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ext.swift"; sourceTree = "<group>"; };
+		B87DF6F82918B7AD008BB95B /* PopupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupState.swift; sourceTree = "<group>"; };
+		B87DF6FA291A4303008BB95B /* PopupScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupScene.swift; sourceTree = "<group>"; };
 		B87DF6F229152649008BB95B /* View+Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Screenshot.swift"; sourceTree = "<group>"; };
+		B87DF6E629139B8D008BB95B /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		B87DF6E82914F8FC008BB95B /* Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
+		B87DF6EA2914F962008BB95B /* PopupDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDto.swift; sourceTree = "<group>"; };
+		B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRouter.swift; sourceTree = "<group>"; };
+		B87DF6EE2914FC02008BB95B /* PopupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRepository.swift; sourceTree = "<group>"; };
+		B87DF6F029150A00008BB95B /* PopupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupService.swift; sourceTree = "<group>"; };
+		B87DF6F42918AB5D008BB95B /* Date+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ext.swift"; sourceTree = "<group>"; };
+		B87DF6F82918B7AD008BB95B /* PopupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupState.swift; sourceTree = "<group>"; };
+		B87DF6FA291A4303008BB95B /* PopupScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupScene.swift; sourceTree = "<group>"; };
 		B88D16F228ABC5DD00E2D652 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
 		B88D16FA28AE2BB900E2D652 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		B88D16FC28AE2E1E00E2D652 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -488,6 +524,7 @@
 				B87B315928D5A70F005C170B /* SearchState.swift */,
 				B87B315A28D5A70F005C170B /* TimetableState.swift */,
 				B87B315828D5A70F005C170B /* UserState.swift */,
+				B87DF6F82918B7AD008BB95B /* PopupState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -540,6 +577,7 @@
 				B88D16F228ABC5DD00E2D652 /* String+ext.swift */,
 				BE6D893428EFD68E000607A6 /* String+Localized.swift */,
 				B8F570A5289E1221005C199F /* UserDefaults+ext.swift */,
+				B87DF6F42918AB5D008BB95B /* Date+ext.swift */,
 				BEB57C2028B6758200279EFF /* Animation+Custom.swift */,
 				BE9413D128C2458A00171060 /* DateFormatter+Parse.swift */,
 				BED04D3228EA963E00937E4C /* FacebookLogin.swift */,
@@ -655,6 +693,7 @@
 				B88D16FA28AE2BB900E2D652 /* UserRouter.swift */,
 				B8E51E6A28B769680065248E /* ReviewRouter.swift */,
 				BE77D09D28AEAA5A0067A9D8 /* CourseBookRouter.swift */,
+				B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */,
 				BE6D892728EFC5A1000607A6 /* EtcRouter.swift */,
 			);
 			path = Router;
@@ -741,6 +780,7 @@
 				BE9413BE28C2157600171060 /* NotificationDto.swift */,
 				BE9413BA28C20DC500171060 /* AuthDto.swift */,
 				B87B317228D81447005C170B /* UserDto.swift */,
+				B87DF6EA2914F962008BB95B /* PopupDto.swift */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
@@ -759,6 +799,7 @@
 				BE682BF028872315009EBCB7 /* ErrorCode.swift */,
 				BE9413CD28C2207D00171060 /* NotificationState.swift */,
 				BE804BE9288B9EF700782F16 /* TimetableConfiguration.swift */,
+				B87DF6E82914F8FC008BB95B /* Popup.swift */,
 				B88D16FC28AE2E1E00E2D652 /* User.swift */,
 			);
 			path = Models;
@@ -775,6 +816,7 @@
 				BE9413CF28C220C900171060 /* NotificationService.swift */,
 				BE1B610B289D7C2500401361 /* GlobalUIService.swift */,
 				BE682C0428881852009EBCB7 /* SearchService.swift */,
+				B87DF6F029150A00008BB95B /* PopupService.swift */,
 				BE6D892B28EFC76E000607A6 /* EtcService.swift */,
 			);
 			path = Services;
@@ -794,6 +836,7 @@
 				BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */,
 				BE77D09F28AEAB920067A9D8 /* CourseBookRepository.swift */,
 				B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */,
+				B87DF6EE2914FC02008BB95B /* PopupRepository.swift */,
 				BE6D892928EFC637000607A6 /* EtcRepository.swift */,
 				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
 				B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */,
@@ -831,6 +874,7 @@
 				BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */,
 				BE9413E028CCD04900171060 /* LectureTimeSheetScene.swift */,
 				BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */,
+				B87DF6FA291A4303008BB95B /* PopupScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -847,6 +891,7 @@
 				BEB57C2928BCA7E400279EFF /* LectureColorList.swift */,
 				BEB57C2728BC985900279EFF /* LectureColorPreview.swift */,
 				BE7E230227FF3C38004DC202 /* NavBarButton.swift */,
+				B87DF6E629139B8D008BB95B /* PopupView.swift */,
 				BEDE34C928754F3100525014 /* Sheet.swift */,
 				BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */,
 				BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */,
@@ -1141,9 +1186,11 @@
 				BE28036828E8883700B2B1AB /* WebViewProtocol.swift in Sources */,
 				BEEBDFBA286B3A0C00DB5976 /* TabScene.swift in Sources */,
 				BEF9233828E84653004AFCB2 /* LectureTimeSheetScene.swift in Sources */,
+				B87DF6F129150A00008BB95B /* PopupService.swift in Sources */,
 				DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */,
 				DC1E0ED12877381F005632A3 /* Router.swift in Sources */,
 				B87B315D28D5A70F005C170B /* UserState.swift in Sources */,
+				B87DF6F92918B7AD008BB95B /* PopupState.swift in Sources */,
 				B87B316D28D755B6005C170B /* MenuState.swift in Sources */,
 				DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */,
 				B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */,
@@ -1161,6 +1208,7 @@
 				BE77D0AC28B1384D0067A9D8 /* MenuSheetTopBar.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
+				B87DF6F52918AB5D008BB95B /* Date+ext.swift in Sources */,
 				BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */,
 				BE9413DF28C3BDF600171060 /* SearchLectureList.swift in Sources */,
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
@@ -1178,6 +1226,7 @@
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				BE28036628E8854D00B2B1AB /* SingleWebView.swift in Sources */,
 				BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */,
+				B87DF6EF2914FC02008BB95B /* PopupRepository.swift in Sources */,
 				BEB3B6AD28D4D40400E56062 /* EditableFields.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
 				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
@@ -1198,6 +1247,7 @@
 				BE95D1F728DF2F44009C0C0B /* AuthRepository.swift in Sources */,
 				BEB3B6B328D4D4F500E56062 /* DetailButton.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
+				B87DF6ED2914FAFB008BB95B /* PopupRouter.swift in Sources */,
 				BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */,
 				BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */,
 				BE98A00A288A90C000C2CE95 /* Logo.swift in Sources */,
@@ -1209,7 +1259,9 @@
 				BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
+				B87DF6E729139B8D008BB95B /* PopupView.swift in Sources */,
 				BE77D0A428AEAD4D0067A9D8 /* CourseBookDto.swift in Sources */,
+				B87DF6EB2914F962008BB95B /* PopupDto.swift in Sources */,
 				BE9413BF28C2157600171060 /* NotificationDto.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
@@ -1222,6 +1274,7 @@
 				BEF9233628E7EE45004AFCB2 /* SignUpView.swift in Sources */,
 				B8F40EAF28980D990021A2A9 /* DeveloperInfoView.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
+				B87DF6E92914F8FC008BB95B /* Popup.swift in Sources */,
 				B89826D128F4971000477A14 /* SyllabusWebView.swift in Sources */,
 				BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */,
 				B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */,
@@ -1267,6 +1320,7 @@
 				B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
 				BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */,
+				B87DF6FB291A4303008BB95B /* PopupScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,7 +14,7 @@ struct UserDto: Codable {
 }
 
 extension UserDto {
-    init(with model: User) {
+    init(from model: User) {
         local_id = model.localId
         fb_name = model.fbName
         email = model.email
