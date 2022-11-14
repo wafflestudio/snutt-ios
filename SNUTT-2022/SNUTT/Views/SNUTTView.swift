@@ -118,6 +118,7 @@ extension SNUTTView {
             super.init(container: container)
             appState.system.$error.assign(to: &$error)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
+            appState.popup.$shouldShowPopup.assign(to: &$shouldShowPopup)
             appState.user.$accessToken.assign(to: &$accessToken)
         }
 
