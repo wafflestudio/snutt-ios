@@ -12,13 +12,16 @@ struct PopupScene: View {
     @ObservedObject var viewModel: ViewModel
 
     var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(Color.black.opacity(0.5))
-                .ignoresSafeArea(.all)
-            PopupView(popup: viewModel.currentPopup,
-                      dismissOnce: viewModel.dismissOnce(popupView:),
-                      dismissNdays: viewModel.dismissNdays(popupView:))
+        GeometryReader { reader in
+            ZStack {
+                Rectangle()
+                    .fill(Color.black.opacity(0.5))
+                    .ignoresSafeArea(.all)
+                PopupView(popup: viewModel.currentPopup,
+                          dismissOnce: viewModel.dismissOnce(popupView:),
+                          dismissNdays: viewModel.dismissNdays(popupView:))
+                    .padding(.horizontal, reader.size.width * 0.1)
+            }
         }
     }
 }
