@@ -58,16 +58,11 @@ struct SearchBar: View {
                         }
                     }
 
-                    if true {
-                        Button {
-                            isFilterOpen.toggle()
-                            if isFilterOpen {
-                                isFocused = false
-                            }
-                        } label: {
-                            Image("search.filter")
-                                .padding(.trailing, 8)
-                        }
+                    Button {
+                        isFilterOpen = true
+                    } label: {
+                        Image("search.filter")
+                            .padding(.trailing, 8)
                     }
                 }
             )
@@ -96,6 +91,11 @@ struct SearchBar: View {
         .animation(.easeOut(duration: 0.2), value: showCancel)
         .onChange(of: shouldShowCancelButton) { newValue in
             showCancel = newValue
+        }
+        .onChange(of: isFilterOpen) { newValue in
+            if newValue {
+                isFocused = false
+            }
         }
     }
 }
