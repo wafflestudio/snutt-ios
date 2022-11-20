@@ -52,13 +52,6 @@ struct SearchLectureCell: View {
                                 .frame(maxWidth: .infinity)
                                 .font(STFont.details)
                         }
-                        .sheet(isPresented: $showingDetailPage) {
-                            if let container = container {
-                                NavigationView {
-                                    LectureDetailScene(viewModel: .init(container: container), lecture: lecture, displayMode: .preview)
-                                }
-                            }
-                        }
 
                         Button {
                             Task {
@@ -69,7 +62,8 @@ struct SearchLectureCell: View {
                             Text("강의평")
                                 .frame(maxWidth: .infinity)
                                 .font(STFont.details)
-                        }.sheet(isPresented: $showReviewWebView) {
+                        }
+                        .sheet(isPresented: $showReviewWebView) {
                             if let container = container {
                                 ReviewScene(viewModel: .init(container: container), detailId: $reviewId)
                             }
@@ -83,6 +77,14 @@ struct SearchLectureCell: View {
                             Text("+ 추가하기")
                                 .frame(maxWidth: .infinity)
                                 .font(STFont.details)
+                        }
+                    }
+                    /// This `sheet` modifier should be called on `HStack` to prevent animation glitch when `dismiss`ed.
+                    .sheet(isPresented: $showingDetailPage) {
+                        if let container = container {
+                            NavigationView {
+                                LectureDetailScene(viewModel: .init(container: container), lecture: lecture, displayMode: .preview)
+                            }
                         }
                     }
                 }
