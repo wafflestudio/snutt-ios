@@ -13,7 +13,7 @@ struct TimePlace: Identifiable {
     var day: Weekday
 
     var startTime: String
-    
+
     var endTime: String
 
     var place: String
@@ -23,19 +23,19 @@ struct TimePlace: Identifiable {
     /// `true` if and only if this `TimePlace` object is created locally, but not committed to the server yet.
     /// This flag is necessary in order to remove `_id` field for newly created objects, before comitting to the server.
     var isTemporary: Bool = false
-    
+
     var startTimeDouble: Double {
         return TimeUtils.getTimeInDouble(from: startTime)
     }
-    
+
     var endTimeDouble: Double {
         return TimeUtils.getTimeInDouble(from: endTime)
     }
-    
+
     var duration: Double {
         return endTimeDouble - startTimeDouble
     }
-    
+
     var preciseTimeString: String {
         return "\(day.veryShortSymbol)(\(startTime)~\(endTime))"
     }

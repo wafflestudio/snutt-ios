@@ -70,7 +70,7 @@ struct Lecture: Identifiable {
         }
         return timePlaces.map { $0.preciseTimeString }.joined(separator: ", ")
     }
-    
+
     var placesString: String {
         if timePlaces.isEmpty {
             return ""

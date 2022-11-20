@@ -12,7 +12,7 @@ struct TimeUtils {
         let hour: Int
         let minute: Int
     }
-    
+
     /// 월요일 7교시인 경우 `월7`을 반환한다.
     static func getStartDateTimeString(day: Weekday, classPeriod: Double) -> String {
         return "\(day.shortSymbol)\(String(format: "%g", classPeriod))"
@@ -29,13 +29,13 @@ struct TimeUtils {
         let preciseTime = getPreciseHourMinute(from: time)
         return "\(String(format: "%02d", preciseTime.hour)):\(String(format: "%02d", preciseTime.minute))"
     }
-    
+
     static func getTimeInString(from date: Date) -> String {
         let time = getTime(from: date)
         let timeDouble = getTimeInDouble(from: time)
         return getTimeInString(from: timeDouble)
     }
-    
+
     static func getDate(from time: String) -> Date? {
         let timeDouble = getTimeInDouble(from: time)
         return getDate(from: timeDouble)
@@ -56,7 +56,7 @@ struct TimeUtils {
         let minute = calendar.component(.minute, from: date)
         return .init(hour: hour, minute: minute)
     }
-    
+
     static func getTimeInDouble(from time: String) -> Double {
         let splitted = time.components(separatedBy: ":")
         guard let hour = Int(splitted[0]), let minute = Int(splitted[1]) else { return 0 }
