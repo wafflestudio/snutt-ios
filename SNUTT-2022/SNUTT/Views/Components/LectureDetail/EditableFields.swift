@@ -88,7 +88,7 @@ struct EditableTimeField: View {
     @Environment(\.editMode) private var editMode
 
     @ViewBuilder private func timeTextLabel(from timePlace: TimePlace) -> some View {
-        Text("\(timePlace.day.shortSymbol) \(timePlace.startTimeString) ~ \(timePlace.endTimeString)")
+        Text("\(timePlace.day.shortSymbol) \(timePlace.startTime) ~ \(timePlace.endTime)")
     }
 
     var isEditing: Bool {

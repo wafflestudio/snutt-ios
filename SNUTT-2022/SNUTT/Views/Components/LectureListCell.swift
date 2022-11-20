@@ -17,12 +17,12 @@ struct LectureListCell: View {
 
             // details
             if lecture.isCustom {
-                LectureDetailRow(imageName: "tag.black", text: "(없음)")
+                LectureDetailRow(imageName: "tag.black", text: "")
             } else {
                 LectureDetailRow(imageName: "tag.black", text: "\(lecture.department), \(lecture.academicYear)")
             }
-            LectureDetailRow(imageName: "clock.black", text: lecture.timeString.isEmpty ? "(없음)" : lecture.timeString)
-            LectureDetailRow(imageName: "map.black", text: lecture.timePlaces.isEmpty ? "(없음)" : lecture.timePlaces.map { $0.place }.joined(separator: "/"))
+            LectureDetailRow(imageName: "clock.black", text: lecture.preciseTimeString)
+            LectureDetailRow(imageName: "map.black", text: lecture.placesString)
         }
         .padding(.vertical, 5)
 
@@ -38,8 +38,13 @@ struct LectureHeaderRow: View {
                 Text(lecture.title)
                     .font(STFont.subheading)
                 Spacer()
-                Text("\(lecture.instructor) / \(lecture.credit)학점")
-                    .font(STFont.details)
+                if lecture.instructor.isEmpty {
+                    Text("\(lecture.credit)학점")
+                        .font(STFont.details)
+                } else {
+                    Text("\(lecture.instructor) / \(lecture.credit)학점")
+                        .font(STFont.details)
+                }
             }
         }
     }
@@ -54,9 +59,10 @@ struct LectureDetailRow: View {
             Image(imageName)
                 .resizable()
                 .frame(width: 15, height: 15)
-            Text(text)
+            Text(text.isEmpty ? "-" : text)
                 .font(STFont.details)
                 .lineLimit(1)
+                .opacity(text.isEmpty ? 0.5 : 1)
             Spacer()
         }
     }

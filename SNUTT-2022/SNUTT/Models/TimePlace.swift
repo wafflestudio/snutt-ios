@@ -36,18 +36,8 @@ struct TimePlace: Identifiable {
         return endTimeDouble - startTimeDouble
     }
     
-    // TODO: use better format
-    var startTimeString: String {
-        return startTime
-    }
-
-    var endTimeString: String {
-        return endTime
-    }
-
-    /// `월7`(월요일 7교시)과 같이 표기한다.
-    var startDateTimeString: String {
-        return startTime
+    var preciseTimeString: String {
+        return "\(day.veryShortSymbol)(\(startTime)~\(endTime))"
     }
 }
 
