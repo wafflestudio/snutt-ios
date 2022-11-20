@@ -87,7 +87,6 @@ struct SearchLectureCell: View {
                             }
                         }
                     }
-                    
                 }
             }
             .foregroundColor(.white)
