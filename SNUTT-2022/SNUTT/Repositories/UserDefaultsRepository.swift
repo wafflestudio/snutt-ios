@@ -18,6 +18,7 @@ enum STDefaultsKey: String {
     case apiKey
     case userId
     case userDto
+    case fcmToken
 
     case currentTimetable
     case timetableConfig

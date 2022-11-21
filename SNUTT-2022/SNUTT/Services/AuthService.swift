@@ -42,6 +42,11 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         userDefaultsRepository.set(String.self, key: .userId, value: dto.user_id)
     }
 
+    private func registerFCMToken() async throws {
+        guard let fcmToken = userDefaultsRepository.get(String.self, key: .fcmToken) else { return }
+        let _ = try await userRepository.addDevice(fcmToken: fcmToken)
+    }
+
     func loadAccessTokenDuringBootstrap() {
         /// **DO NOT RUN THIS CODE ASYNCHRONOUSLY**. We need to show splash screen until the loading finishes.
         appState.user.accessToken = userDefaultsRepository.get(String.self, key: .token)
@@ -54,27 +59,31 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
     func loginWithId(id: String, password: String) async throws {
         let dto = try await authRepository.loginWithId(id: id, password: password)
         saveAccessTokenFromLoginResponse(dto: dto)
+        try await registerFCMToken()
     }
 
     func registerWithId(id: String, password: String, email: String?) async throws {
         let dto = try await authRepository.registerWithId(id: id, password: password, email: email)
         saveAccessTokenFromLoginResponse(dto: dto)
+        try await registerFCMToken()
     }
 
     func loginWithApple(token: String) async throws {
         let dto = try await authRepository.loginWithApple(token: token)
         saveAccessTokenFromLoginResponse(dto: dto)
+        try await registerFCMToken()
     }
 
     func loginWithFacebook(id: String, token: String) async throws {
         let dto = try await authRepository.loginWithFacebook(id: id, token: token)
         saveAccessTokenFromLoginResponse(dto: dto)
+        try await registerFCMToken()
     }
 
     func logout() async throws {
-        // TODO: update when FCM ready
+        let fcmToken = userDefaultsRepository.get(String.self, key: .fcmToken, defaultValue: "")
         guard let userId = appState.user.userId else { throw STError(.NO_USER_TOKEN) }
-        let _ = try? await authRepository.logout(userId: userId, fcmToken: "fweafa")
+        let _ = try? await authRepository.logout(userId: userId, fcmToken: fcmToken)
         clearUserInfo()
     }
 }
@@ -96,6 +105,7 @@ extension UserAuthHandler {
         localRepositories.userDefaultsRepository.set(String.self, key: .token, value: nil)
         localRepositories.userDefaultsRepository.set(String.self, key: .userId, value: nil)
         localRepositories.userDefaultsRepository.set(UserDto.self, key: .userDto, value: nil)
+        localRepositories.userDefaultsRepository.set(String.self, key: .fcmToken, value: nil)
     }
 }
 

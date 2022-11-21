@@ -56,6 +56,15 @@ extension AppEnvironment {
         let services = configuredServices(appState: appState, webRepositories: webRepos, localRepositories: dbRepos)
         let container = DIContainer(appState: appState, services: services)
 
+        /// Listens to the FCM token sent from `AppDelegate` and forwards it to the server.
+        NotificationCenter.default.addObserver(forName: Notification.Name("FCMToken"), object: nil, queue: .main) { notification in
+            guard let fcmToken = notification.userInfo?["token"] as? String else { return }
+            Task {
+                try await services.userService.addDevice(fcmToken: fcmToken)
+            }
+            print("FCM Token: \(fcmToken)")
+        }
+
         /// We need to load access token ASAP in order to determine which screen to show first.
         /// Note that this should run synchronously on the main thread.
         services.authService.loadAccessTokenDuringBootstrap()

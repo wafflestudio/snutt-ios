@@ -20,8 +20,8 @@ enum UserRouter: Router {
     case connectFacebook(id: String, token: String)
     case disconnectFacebook
     case getFB
-    case addDevice(id: String)
-    case deleteDevice(id: String)
+    case addDevice(fcmToken: String)
+    case deleteDevice(fcmToken: String)
     case deleteUser
 
     var method: HTTPMethod {
@@ -57,10 +57,10 @@ enum UserRouter: Router {
             return "/password"
         case .connectFacebook, .disconnectFacebook, .getFB:
             return "/facebook"
-        case let .addDevice(id):
-            return "/device/\(id)"
-        case let .deleteDevice(id):
-            return "/device/\(id)"
+        case let .addDevice(fcmToken):
+            return "/device/\(fcmToken)"
+        case let .deleteDevice(fcmToken):
+            return "/device/\(fcmToken)"
         case .deleteUser:
             return "/account"
         }
