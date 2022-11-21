@@ -43,6 +43,7 @@ platform :ios do
       build_app(scheme: APP_NAME, 
       configuration: BUILD_CONFIGURATION,
       output_directory: "./archive",
+      include_bitcode: true,
       silent: true,
       clean: true)
       app_store_connect_api_key(
