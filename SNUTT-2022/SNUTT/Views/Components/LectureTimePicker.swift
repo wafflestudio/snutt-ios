@@ -35,6 +35,7 @@ struct LectureTimePicker: View {
                         Text(day.symbol).tag(day)
                     }
                 }
+                .labelsHidden()
                 .padding(.horizontal, usePadding ? 12 : 0)
                 .padding(.vertical, usePadding ? 3 : 0)
                 .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(uiColor: .tertiarySystemFill)))
