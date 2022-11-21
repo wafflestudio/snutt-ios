@@ -19,3 +19,7 @@ struct LogoutResponseDto: Codable {
 struct TokenResponseDto: Codable {
     let token: String
 }
+
+struct DeviceResponseDto: Codable {
+    let message: String
+}

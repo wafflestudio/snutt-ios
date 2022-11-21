@@ -15,8 +15,8 @@ protocol UserRepositoryProtocol {
     func changePassword(from oldPassword: String, to newPassword: String) async throws -> TokenResponseDto
     func addLocalId(id: String, password: String) async throws -> TokenResponseDto
     func deleteUser() async throws
-    func addDevice(fcmToken: String) async throws -> String
-    func deleteDevice(fcmToken: String) async throws -> String
+    func addDevice(fcmToken: String) async throws -> DeviceResponseDto
+    func deleteDevice(fcmToken: String) async throws -> DeviceResponseDto
 }
 
 class UserRepository: UserRepositoryProtocol {
@@ -61,17 +61,17 @@ class UserRepository: UserRepositoryProtocol {
             .handlingError()
     }
 
-    func addDevice(fcmToken: String) async throws -> String {
+    func addDevice(fcmToken: String) async throws -> DeviceResponseDto {
         return try await session
             .request(UserRouter.addDevice(fcmToken: fcmToken))
-            .serializingDecodable(String.self)
+            .serializingDecodable(DeviceResponseDto.self)
             .handlingError()
     }
 
-    func deleteDevice(fcmToken: String) async throws -> String {
+    func deleteDevice(fcmToken: String) async throws -> DeviceResponseDto {
         return try await session
             .request(UserRouter.deleteDevice(fcmToken: fcmToken))
-            .serializingDecodable(String.self)
+            .serializingDecodable(DeviceResponseDto.self)
             .handlingError()
     }
 
