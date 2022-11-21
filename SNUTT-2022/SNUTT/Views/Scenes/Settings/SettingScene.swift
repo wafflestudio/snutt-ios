@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingScene: View {
     let viewModel: SettingViewModel
-    
+
     @State private var isLogoutAlertPresented: Bool = false
 
     var body: some View {

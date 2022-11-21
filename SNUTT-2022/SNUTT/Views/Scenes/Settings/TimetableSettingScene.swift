@@ -18,7 +18,7 @@ struct TimetableSettingScene: View {
                 Toggle("자동 맞춤", isOn: $viewModel.timetableConfig.autoFit)
                     .animation(.easeInOut, value: viewModel.timetableConfig.autoFit)
             }
-            
+
             if !viewModel.timetableConfig.autoFit {
                 Section(header: Text("시간표 범위 설정")) {
                     SettingsLinkItem(title: "요일", detail: viewModel.visibleWeekdaysPreview) {
