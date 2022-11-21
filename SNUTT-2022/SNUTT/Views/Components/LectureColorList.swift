@@ -13,23 +13,16 @@ struct LectureColorList: View {
     /// `colorIndex`의 값이 `0`이면 `customColor`를 사용하고, 그렇지 않으면 `colorList[colorIndex]`를 사용한다.
     @Binding var colorIndex: Int
     @Binding var customColor: LectureColor?
-
-    @Binding private var selectionFg: Color
-    @Binding private var selectionBg: Color
+    @Binding private var selectedColor: LectureColor
 
     init(theme: Theme, colorIndex: Binding<Int>, customColor: Binding<LectureColor?>) {
         self.theme = theme
         _colorIndex = colorIndex
         _customColor = customColor
-        _selectionBg = .init(get: {
-            customColor.wrappedValue?.bg ?? LectureColor.temporary.bg
-        }, set: { color in
-            customColor.wrappedValue = .init(fg: customColor.wrappedValue?.fg ?? LectureColor.temporary.fg, bg: color)
-        })
-        _selectionFg = .init(get: {
-            customColor.wrappedValue?.fg ?? LectureColor.temporary.fg
-        }, set: { color in
-            customColor.wrappedValue = .init(fg: color, bg: customColor.wrappedValue?.bg ?? LectureColor.temporary.bg)
+        _selectedColor = .init(get: {
+            customColor.wrappedValue ?? LectureColor.temporary
+        }, set: { newColor in
+            customColor.wrappedValue = newColor
         })
     }
 
@@ -57,6 +50,7 @@ struct LectureColorList: View {
                                      displayTick: colorIndex == 0,
                                      title: "직접 선택하기") {
                         colorIndex = 0
+                        selectedColor = .temporary
                     }
 
                     if colorIndex == 0 {
@@ -64,8 +58,8 @@ struct LectureColorList: View {
                             .frame(height: 1)
                         VStack {
                             Group {
-                                ColorPicker("글꼴색", selection: $selectionFg, supportsOpacity: false)
-                                ColorPicker("배경색", selection: $selectionBg, supportsOpacity: false)
+                                ColorPicker("글꼴색", selection: $selectedColor.fg, supportsOpacity: false)
+                                ColorPicker("배경색", selection: $selectedColor.bg, supportsOpacity: false)
                             }
                         }
                         .padding(.leading, 80)
