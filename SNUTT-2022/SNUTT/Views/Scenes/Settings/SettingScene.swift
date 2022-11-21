@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SettingScene: View {
     let viewModel: SettingViewModel
+    
+    @State private var isLogoutAlertPresented: Bool = false
 
     var body: some View {
         List {
@@ -49,9 +51,14 @@ struct SettingScene: View {
 
             Section {
                 SettingsButtonItem(title: "로그아웃", role: .destructive) {
-                    Task {
-                        await viewModel.logout()
+                    isLogoutAlertPresented = true
+                }.alert("로그아웃 하시겠습니까?", isPresented: $isLogoutAlertPresented) {
+                    Button("로그아웃", role: .destructive) {
+                        Task {
+                            await viewModel.logout()
+                        }
                     }
+                    Button("취소", role: .cancel) {}
                 }
             }
         }
