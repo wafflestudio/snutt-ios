@@ -33,6 +33,7 @@ struct AnimatedTextField: View {
             }
             .focused($_isFocused)
             .frame(height: 20)
+            .textInputAutocapitalization(.never)
 
             ZStack(alignment: .leading) {
                 Rectangle()

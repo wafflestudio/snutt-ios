@@ -22,7 +22,7 @@ struct SignUpView: View {
     @State private var email: String = ""
 
     var isButtonDisabled: Bool {
-        id.isEmpty || password.isEmpty || password2.isEmpty || password != password2
+        id.isEmpty || password.isEmpty || password2.isEmpty || email.isEmpty || password != password2
     }
 
     var body: some View {
@@ -31,9 +31,7 @@ struct SignUpView: View {
                 AnimatedTextField(label: "아이디", placeholder: "아이디를 입력하세요.", text: $id, shouldFocusOn: true)
                 AnimatedTextField(label: "비밀번호", placeholder: "비밀번호를 입력하세요.", text: $password, secure: true)
                 AnimatedTextField(label: "비밀번호 확인", placeholder: "비밀번호를 한번 더 입력하세요.", text: $password2, secure: true)
-                if displayMode == .register {
-                    AnimatedTextField(label: "이메일", placeholder: "(선택) 이메일 주소를 입력하세요.", text: $email)
-                }
+                AnimatedTextField(label: "이메일", placeholder: "이메일 주소를 입력하세요.", text: $email)
             }
 
             Spacer()

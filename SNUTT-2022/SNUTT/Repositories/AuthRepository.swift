@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 protocol AuthRepositoryProtocol {
-    func registerWithId(id: String, password: String, email: String?) async throws -> LoginResponseDto
+    func registerWithId(id: String, password: String, email: String) async throws -> LoginResponseDto
     func loginWithApple(token: String) async throws -> LoginResponseDto
     func loginWithFacebook(id: String, token: String) async throws -> LoginResponseDto
     func loginWithId(id: String, password: String) async throws -> LoginResponseDto
@@ -23,7 +23,7 @@ class AuthRepository: AuthRepositoryProtocol {
         self.session = session
     }
 
-    func registerWithId(id: String, password: String, email: String?) async throws -> LoginResponseDto {
+    func registerWithId(id: String, password: String, email: String) async throws -> LoginResponseDto {
         return try await session
             .request(AuthRouter.registerWithId(id: id, password: password, email: email))
             .serializingDecodable(LoginResponseDto.self)
