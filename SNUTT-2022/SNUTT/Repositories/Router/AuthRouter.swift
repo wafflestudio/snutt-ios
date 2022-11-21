@@ -13,7 +13,7 @@ enum AuthRouter: Router {
     var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/auth")! }
     static let shouldAddToken: Bool = false
 
-    case registerWithId(id: String, password: String, email: String?)
+    case registerWithId(id: String, password: String, email: String)
     case loginWithId(id: String, password: String)
     case loginWithFacebook(id: String, token: String)
     case loginWithApple(token: String)
@@ -54,11 +54,7 @@ enum AuthRouter: Router {
         case let .loginWithId(id, password):
             return ["id": id, "password": password]
         case let .registerWithId(id, password, email):
-            var ret = ["id": id, "password": password]
-            if let email = email {
-                ret["email"] = email
-            }
-            return ret
+            return ["id": id, "password": password, "email": email]
         case let .loginWithFacebook(id, token):
             return ["fb_id": id, "fb_token": token]
         case let .loginWithApple(token):

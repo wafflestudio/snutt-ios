@@ -9,7 +9,8 @@ import SwiftUI
 
 struct AccountSettingScene: View {
     @ObservedObject var viewModel: ViewModel
-    @State private var alertDisconnectFacebook: Bool = false
+    @State private var isDisconnectFBAlertPresented: Bool = false
+    @State private var isDeleteAccountAlertPresented: Bool = false
 
     var body: some View {
         List {
@@ -36,9 +37,9 @@ struct AccountSettingScene: View {
                 Section {
                     SettingsTextItem(title: "페이스북 이름", detail: facebookName)
                     SettingsButtonItem(title: "페이스북 연동 해제", role: .destructive) {
-                        alertDisconnectFacebook = true
+                        isDisconnectFBAlertPresented = true
                     }
-                    .alert("페이스북 연동 해제", isPresented: $alertDisconnectFacebook) {
+                    .alert("페이스북 연동 해제", isPresented: $isDisconnectFBAlertPresented) {
                         Button("취소", role: .cancel, action: {})
                         Button("해제", role: .destructive, action: {
                             Task {
@@ -62,9 +63,16 @@ struct AccountSettingScene: View {
             }
             Section {
                 SettingsButtonItem(title: "회원 탈퇴", role: .destructive) {
-                    Task {
-                        await viewModel.deleteUser()
+                    isDeleteAccountAlertPresented = true
+                }.alert("회원 탈퇴", isPresented: $isDeleteAccountAlertPresented) {
+                    Button("회원 탈퇴", role: .destructive) {
+                        Task {
+                            await viewModel.deleteUser()
+                        }
                     }
+                    Button("취소", role: .cancel) {}
+                } message: {
+                    Text("SNUTT 회원 탈퇴를 하시겠습니까?")
                 }
             }
         }

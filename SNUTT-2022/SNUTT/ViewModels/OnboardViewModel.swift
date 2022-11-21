@@ -13,7 +13,7 @@ extension OnboardScene {
         func registerWith(id: String, password: String, email: String) async {
             // TODO: Validation
             do {
-                try await services.authService.registerWithId(id: id, password: password, email: email.isEmpty ? nil : email)
+                try await services.authService.registerWithId(id: id, password: password, email: email)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }

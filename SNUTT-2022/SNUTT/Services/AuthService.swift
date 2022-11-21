@@ -12,7 +12,7 @@ protocol AuthServiceProtocol {
     func loginWithId(id: String, password: String) async throws
     func loginWithApple(token: String) async throws
     func loginWithFacebook(id: String, token: String) async throws
-    func registerWithId(id: String, password: String, email: String?) async throws
+    func registerWithId(id: String, password: String, email: String) async throws
     func logout() async throws
 }
 
@@ -62,7 +62,7 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         try await registerFCMToken()
     }
 
-    func registerWithId(id: String, password: String, email: String?) async throws {
+    func registerWithId(id: String, password: String, email: String) async throws {
         let dto = try await authRepository.registerWithId(id: id, password: password, email: email)
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
@@ -114,6 +114,6 @@ class FakeAuthService: AuthServiceProtocol {
     func loginWithId(id _: String, password _: String) async throws {}
     func loginWithApple(token _: String) async throws {}
     func loginWithFacebook(id _: String, token _: String) async throws {}
-    func registerWithId(id _: String, password _: String, email _: String?) async throws {}
+    func registerWithId(id _: String, password _: String, email _: String) async throws {}
     func logout() async throws {}
 }
