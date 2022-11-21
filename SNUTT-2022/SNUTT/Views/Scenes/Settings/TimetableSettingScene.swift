@@ -16,39 +16,41 @@ struct TimetableSettingScene: View {
         Form {
             Section {
                 Toggle("자동 맞춤", isOn: $viewModel.timetableConfig.autoFit)
+                    .animation(.easeInOut, value: viewModel.timetableConfig.autoFit)
             }
-
-            Section(header: Text("시간표 범위 설정")) {
-                SettingsLinkItem(title: "요일", detail: viewModel.visibleWeekdaysPreview) {
-                    List {
-                        ForEach(Weekday.allCases) { weekday in
-                            Button {
-                                viewModel.toggleWeekday(weekday: weekday)
-                            } label: {
-                                HStack {
-                                    Text(weekday.symbol)
-                                    Spacer()
-                                    if viewModel.timetableConfig.visibleWeeks.contains(weekday) {
-                                        Image(systemName: "checkmark")
+            
+            if !viewModel.timetableConfig.autoFit {
+                Section(header: Text("시간표 범위 설정")) {
+                    SettingsLinkItem(title: "요일", detail: viewModel.visibleWeekdaysPreview) {
+                        List {
+                            ForEach(Weekday.allCases) { weekday in
+                                Button {
+                                    viewModel.toggleWeekday(weekday: weekday)
+                                } label: {
+                                    HStack {
+                                        Text(weekday.symbol)
+                                        Spacer()
+                                        if viewModel.timetableConfig.visibleWeeks.contains(weekday) {
+                                            Image(systemName: "checkmark")
+                                        }
                                     }
                                 }
                             }
                         }
+                        .navigationBarTitle("요일 선택")
                     }
-                    .navigationBarTitle("요일 선택")
+
+                    Group {
+                        DatePicker("시작",
+                                   selection: $viewModel.minHour,
+                                   in: viewModel.minTimeRange,
+                                   displayedComponents: [.hourAndMinute])
+                        DatePicker("종료",
+                                   selection: $viewModel.maxHour,
+                                   in: viewModel.maxTimeRange,
+                                   displayedComponents: [.hourAndMinute])
+                    }.datePickerStyle(.compact)
                 }
-
-                DatePicker("시작",
-                           selection: $viewModel.minHour,
-                           in: viewModel.minTimeRange,
-                           displayedComponents: [.hourAndMinute])
-                    .datePickerStyle(.compact)
-
-                DatePicker("종료",
-                           selection: $viewModel.maxHour,
-                           in: viewModel.maxTimeRange,
-                           displayedComponents: [.hourAndMinute])
-                    .datePickerStyle(.compact)
             }
 
             Section(header: Text("시간표 미리보기")) {
