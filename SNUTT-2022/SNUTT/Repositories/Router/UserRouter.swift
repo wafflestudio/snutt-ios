@@ -16,8 +16,8 @@ enum UserRouter: Router {
     case getUser
     case editUser(email: String)
     case changePassword(oldPassword: String, newPassword: String)
-    case addLocalId(id: String, password: String)
-    case connectFacebook(id: String, token: String)
+    case addLocalId(localId: String, localPassword: String)
+    case connectFacebook(fbId: String, fbToken: String)
     case disconnectFacebook
     case getFB
     case addDevice(fcmToken: String)
@@ -74,10 +74,10 @@ enum UserRouter: Router {
             return ["email": email]
         case let .changePassword(oldPassword, newPassword):
             return ["old_password": oldPassword, "new_password": newPassword]
-        case let .addLocalId(id, password):
-            return ["id": id, "password": password]
-        case let .connectFacebook(id, token):
-            return ["fb_id": id, "fb_token": token]
+        case let .addLocalId(localId, localPasword):
+            return ["id": localId, "password": localPasword]
+        case let .connectFacebook(fbId, fbToken):
+            return ["fb_id": fbId, "fb_token": fbToken]
         case .disconnectFacebook:
             return nil
         case .getFB:

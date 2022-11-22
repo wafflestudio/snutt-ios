@@ -9,10 +9,10 @@ import Alamofire
 import Foundation
 
 protocol AuthRepositoryProtocol {
-    func registerWithId(id: String, password: String, email: String) async throws -> LoginResponseDto
-    func loginWithApple(token: String) async throws -> LoginResponseDto
-    func loginWithFacebook(id: String, token: String) async throws -> LoginResponseDto
-    func loginWithId(id: String, password: String) async throws -> LoginResponseDto
+    func registerWithLocalId(localId: String, localPassword: String, email: String) async throws -> LoginResponseDto
+    func loginWithApple(appleToken: String) async throws -> LoginResponseDto
+    func loginWithFacebook(fbId: String, fbToken: String) async throws -> LoginResponseDto
+    func loginWithLocalId(localId: String, localPassword: String) async throws -> LoginResponseDto
     func logout(userId: String, fcmToken: String) async throws -> LogoutResponseDto
 }
 
@@ -23,30 +23,30 @@ class AuthRepository: AuthRepositoryProtocol {
         self.session = session
     }
 
-    func registerWithId(id: String, password: String, email: String) async throws -> LoginResponseDto {
+    func registerWithLocalId(localId: String, localPassword: String, email: String) async throws -> LoginResponseDto {
         return try await session
-            .request(AuthRouter.registerWithId(id: id, password: password, email: email))
+            .request(AuthRouter.registerWithLocalId(localId: localId, localPassword: localPassword, email: email))
             .serializingDecodable(LoginResponseDto.self)
             .handlingError()
     }
 
-    func loginWithApple(token: String) async throws -> LoginResponseDto {
+    func loginWithApple(appleToken: String) async throws -> LoginResponseDto {
         return try await session
-            .request(AuthRouter.loginWithApple(token: token))
+            .request(AuthRouter.loginWithApple(appleToken: appleToken))
             .serializingDecodable(LoginResponseDto.self)
             .handlingError()
     }
 
-    func loginWithFacebook(id: String, token: String) async throws -> LoginResponseDto {
+    func loginWithFacebook(fbId: String, fbToken: String) async throws -> LoginResponseDto {
         return try await session
-            .request(AuthRouter.loginWithFacebook(id: id, token: token))
+            .request(AuthRouter.loginWithFacebook(fbId: fbId, fbToken: fbToken))
             .serializingDecodable(LoginResponseDto.self)
             .handlingError()
     }
 
-    func loginWithId(id: String, password: String) async throws -> LoginResponseDto {
+    func loginWithLocalId(localId: String, localPassword: String) async throws -> LoginResponseDto {
         return try await session
-            .request(AuthRouter.loginWithId(id: id, password: password))
+            .request(AuthRouter.loginWithLocalId(localId: localId, localPassword: localPassword))
             .serializingDecodable(LoginResponseDto.self)
             .handlingError()
     }
