@@ -21,16 +21,7 @@
 		B87DF6ED2914FAFB008BB95B /* PopupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */; };
 		B87DF6EF2914FC02008BB95B /* PopupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EE2914FC02008BB95B /* PopupRepository.swift */; };
 		B87DF6F129150A00008BB95B /* PopupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F029150A00008BB95B /* PopupService.swift */; };
-		B87DF6F52918AB5D008BB95B /* Date+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+ext.swift */; };
-		B87DF6F92918B7AD008BB95B /* PopupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F82918B7AD008BB95B /* PopupState.swift */; };
-		B87DF6FB291A4303008BB95B /* PopupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6FA291A4303008BB95B /* PopupScene.swift */; };
 		B87DF6F329152649008BB95B /* View+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F229152649008BB95B /* View+Screenshot.swift */; };
-		B87DF6E729139B8D008BB95B /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6E629139B8D008BB95B /* PopupView.swift */; };
-		B87DF6E92914F8FC008BB95B /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6E82914F8FC008BB95B /* Popup.swift */; };
-		B87DF6EB2914F962008BB95B /* PopupDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EA2914F962008BB95B /* PopupDto.swift */; };
-		B87DF6ED2914FAFB008BB95B /* PopupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */; };
-		B87DF6EF2914FC02008BB95B /* PopupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EE2914FC02008BB95B /* PopupRepository.swift */; };
-		B87DF6F129150A00008BB95B /* PopupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F029150A00008BB95B /* PopupService.swift */; };
 		B87DF6F52918AB5D008BB95B /* Date+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+ext.swift */; };
 		B87DF6F92918B7AD008BB95B /* PopupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F82918B7AD008BB95B /* PopupState.swift */; };
 		B87DF6FB291A4303008BB95B /* PopupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6FA291A4303008BB95B /* PopupScene.swift */; };
@@ -284,16 +275,7 @@
 		B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRouter.swift; sourceTree = "<group>"; };
 		B87DF6EE2914FC02008BB95B /* PopupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRepository.swift; sourceTree = "<group>"; };
 		B87DF6F029150A00008BB95B /* PopupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupService.swift; sourceTree = "<group>"; };
-		B87DF6F42918AB5D008BB95B /* Date+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ext.swift"; sourceTree = "<group>"; };
-		B87DF6F82918B7AD008BB95B /* PopupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupState.swift; sourceTree = "<group>"; };
-		B87DF6FA291A4303008BB95B /* PopupScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupScene.swift; sourceTree = "<group>"; };
 		B87DF6F229152649008BB95B /* View+Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Screenshot.swift"; sourceTree = "<group>"; };
-		B87DF6E629139B8D008BB95B /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
-		B87DF6E82914F8FC008BB95B /* Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
-		B87DF6EA2914F962008BB95B /* PopupDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDto.swift; sourceTree = "<group>"; };
-		B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRouter.swift; sourceTree = "<group>"; };
-		B87DF6EE2914FC02008BB95B /* PopupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRepository.swift; sourceTree = "<group>"; };
-		B87DF6F029150A00008BB95B /* PopupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupService.swift; sourceTree = "<group>"; };
 		B87DF6F42918AB5D008BB95B /* Date+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ext.swift"; sourceTree = "<group>"; };
 		B87DF6F82918B7AD008BB95B /* PopupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupState.swift; sourceTree = "<group>"; };
 		B87DF6FA291A4303008BB95B /* PopupScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupScene.swift; sourceTree = "<group>"; };
@@ -1038,7 +1020,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					BE98A060288AFC1500C2CE95 = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -1067,7 +1049,7 @@
 			);
 			mainGroup = DC860F3C27E5C87D0068C94B;
 			packageReferences = (
-				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
+				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 				BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
@@ -1386,6 +1368,7 @@
 			baseConfigurationReference = B8E51E5F28B549660065248E /* StagingConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -1636,6 +1619,7 @@
 			baseConfigurationReference = B8E51E5C28B546770065248E /* DebugConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -1698,6 +1682,7 @@
 			baseConfigurationReference = B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -1980,7 +1965,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
-				kind = upToNextMajorVersion;
+				kind = upToNextMinorVersion;
 				minimumVersion = 10.0.0;
 			};
 		};
@@ -1992,7 +1977,7 @@
 				minimumVersion = 14.1.0;
 			};
 		};
-		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
+		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -2030,7 +2015,7 @@
 		};
 		BEDE34D32879A59B00525014 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
+			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
