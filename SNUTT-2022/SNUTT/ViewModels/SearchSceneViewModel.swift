@@ -99,7 +99,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         } catch {
             if let error = error.asSTError {
                 if error.code == .LECTURE_TIME_OVERLAP {
-                    DispatchQueue.main.async {
+                    await MainActor.run {
                         self.isLectureOverlapped = true
                         self.errorTitle = error.title
                         self.errorMessage = error.content

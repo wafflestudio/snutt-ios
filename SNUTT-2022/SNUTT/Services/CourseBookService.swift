@@ -28,7 +28,7 @@ struct CourseBookService: CourseBookServiceProtocol {
     func fetchCourseBookList() async throws {
         let dtos = try await courseBookRepository.fetchAllCourseBookList()
         let quarters = dtos.map { Quarter(from: $0) }
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.timetable.courseBookList = quarters
         }
     }

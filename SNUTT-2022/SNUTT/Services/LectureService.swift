@@ -40,7 +40,7 @@ struct LectureService: LectureServiceProtocol {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id, isForced: isForced)
         let timetable = Timetable(from: dto)
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.timetable.current = timetable
             appState.search.selectedLecture = nil
         }
@@ -53,7 +53,7 @@ struct LectureService: LectureServiceProtocol {
         lectureDto.class_time_mask = nil
         let dto = try await lectureRepository.addCustomLecture(timetableId: currentTimetable.id, lecture: lectureDto, isForced: isForced)
         let timetable = Timetable(from: dto)
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.timetable.current = timetable
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
@@ -73,7 +73,7 @@ struct LectureService: LectureServiceProtocol {
 
         let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture), isForced: isForced)
         let timetable = Timetable(from: dto)
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.timetable.current = timetable
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
@@ -83,7 +83,7 @@ struct LectureService: LectureServiceProtocol {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.deleteLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
         let timetable = Timetable(from: dto)
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.timetable.current = timetable
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
@@ -93,7 +93,7 @@ struct LectureService: LectureServiceProtocol {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.resetLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
         let timetable = Timetable(from: dto)
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.timetable.current = timetable
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)

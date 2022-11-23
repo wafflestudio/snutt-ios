@@ -84,7 +84,7 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
     }
 
     private func updateToken(from dto: TokenResponseDto) async throws {
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.user.accessToken = dto.token
         }
         userDefaultsRepository.set(String.self, key: .token, value: dto.token)
@@ -92,7 +92,7 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
     }
 
     private func updateUser(from dto: UserDto) {
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.user.current = User(from: dto)
         }
         userDefaultsRepository.set(UserDto.self, key: .userDto, value: dto)

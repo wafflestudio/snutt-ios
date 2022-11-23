@@ -58,7 +58,7 @@ struct TimetableService: TimetableServiceProtocol {
     func fetchTimetableList() async throws {
         let dtos = try await timetableRepository.fetchTimetableList()
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.timetable.metadataList = timetables
         }
     }
@@ -66,7 +66,7 @@ struct TimetableService: TimetableServiceProtocol {
     func createTimetable(title: String, quarter: Quarter) async throws {
         let dtos = try await timetableRepository.createTimetable(title: title, year: quarter.year, semester: quarter.semester.rawValue)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.timetable.metadataList = timetables
         }
     }
@@ -74,7 +74,7 @@ struct TimetableService: TimetableServiceProtocol {
     func copyTimetable(timetableId: String) async throws {
         let dtos = try await timetableRepository.copyTimetable(withTimetableId: timetableId)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.timetable.metadataList = timetables
         }
     }
@@ -82,7 +82,7 @@ struct TimetableService: TimetableServiceProtocol {
     func updateTimetableTitle(timetableId: String, title: String) async throws {
         let dtos = try await timetableRepository.updateTimetableTitle(withTimetableId: timetableId, withTitle: title)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.timetable.metadataList = timetables
             if appState.timetable.current?.id == timetableId {
                 appState.timetable.current?.title = title
@@ -94,7 +94,7 @@ struct TimetableService: TimetableServiceProtocol {
         guard let theme = appState.timetable.current?.selectedTheme else { return }
         let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: theme.rawValue)
         let timetable = Timetable(from: dto)
-        DispatchQueue.main.async {
+        await MainActor.run {
             if appState.timetable.current?.id == timetableId {
                 appState.timetable.current = timetable
             }
@@ -107,7 +107,7 @@ struct TimetableService: TimetableServiceProtocol {
         }
         let dtos = try await timetableRepository.deleteTimetable(withTimetableId: timetableId)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
+        await MainActor.run {
             appState.timetable.metadataList = timetables
         }
     }

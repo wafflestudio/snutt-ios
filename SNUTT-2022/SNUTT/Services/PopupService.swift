@@ -43,7 +43,7 @@ struct PopupService: PopupServiceProtocol {
 
         recentPopupList = recentPopupList.filter { shouldShow(popup: $0) }
 
-        DispatchQueue.main.async { [recentPopupList] in
+        await MainActor.run { [recentPopupList] in
             appState.popup.currentList = recentPopupList
             appState.popup.shouldShowPopup = recentPopupList.isEmpty ? false : true
         }

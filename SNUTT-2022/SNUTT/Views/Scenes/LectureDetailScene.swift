@@ -213,7 +213,7 @@ struct LectureDetailScene: View {
                             Button("초기화", role: .destructive, action: {
                                 Task {
                                     guard let originalLecture = await viewModel.resetLecture(lecture: lecture) else { return }
-                                    DispatchQueue.main.async {
+                                    await MainActor.run {
                                         lecture = originalLecture
                                         editMode = .inactive
                                         resignFirstResponder()
