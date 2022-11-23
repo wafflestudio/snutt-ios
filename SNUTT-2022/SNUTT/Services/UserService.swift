@@ -34,7 +34,7 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
 
     func fetchUser() async throws {
         let dto = try await userRepository.fetchUser()
-        updateUser(from: dto)
+        await updateUser(from: dto)
     }
 
     func changePassword(from oldPassword: String, to newPassword: String) async throws {
@@ -91,7 +91,7 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
         try await fetchUser()
     }
 
-    private func updateUser(from dto: UserDto) {
+    private func updateUser(from dto: UserDto) async {
         await MainActor.run {
             appState.user.current = User(from: dto)
         }
