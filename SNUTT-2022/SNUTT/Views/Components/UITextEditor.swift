@@ -65,15 +65,13 @@ struct UITextEditor: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UITextView, context _: Context) {
-        DispatchQueue.main.async {
-            if !uiView.isFirstResponder {
-                // When this uiView is the first responder, `uiView.delegate` takes care of all the view updates.
-                // When it's not, manually call delegate method to trigger ui update.
-                uiView.text = text
-                uiView.delegate?.textViewDidChange?(uiView)
-            }
-            self.textDidChange(uiView)
+        if !uiView.isFirstResponder {
+            // When this uiView is the first responder, `uiView.delegate` takes care of all the view updates.
+            // When it's not, manually call delegate method to trigger ui update.
+            uiView.text = text
+            uiView.delegate?.textViewDidChange?(uiView)
         }
+        self.textDidChange(uiView)
     }
 
     func makeCoordinator() -> Coordinator {

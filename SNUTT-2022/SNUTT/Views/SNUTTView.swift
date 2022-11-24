@@ -38,9 +38,7 @@ struct SNUTTView: View {
                     TabScene(tabType: .timetable) {
                         TimetableScene(viewModel: .init(container: viewModel.container))
                             .background(NavigationBarReader { navbar in
-                                DispatchQueue.main.async {
-                                    navigationBarHeight = navbar.frame.height
-                                }
+                                navigationBarHeight = navbar.frame.height
                             })
                     }
                     TabScene(tabType: .search) {
@@ -161,7 +159,7 @@ enum TabType: String {
 
 // TODO: move elsewhere if needed
 struct NavigationBarReader: UIViewControllerRepresentable {
-    var callback: (UINavigationBar) -> Void
+    var callback: @MainActor (UINavigationBar) -> Void
     private let proxyController = ViewController()
 
     func makeUIViewController(context _: UIViewControllerRepresentableContext<NavigationBarReader>) -> UIViewController {
@@ -172,7 +170,7 @@ struct NavigationBarReader: UIViewControllerRepresentable {
     func updateUIViewController(_: UIViewController, context _: UIViewControllerRepresentableContext<NavigationBarReader>) {}
 
     private class ViewController: UIViewController {
-        var callback: (UINavigationBar) -> Void = { _ in }
+        var callback: @MainActor (UINavigationBar) -> Void = { _ in }
 
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)

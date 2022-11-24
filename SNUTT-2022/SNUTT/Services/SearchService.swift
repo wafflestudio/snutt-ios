@@ -36,19 +36,15 @@ struct SearchService: SearchServiceProtocol {
         appState.timetable
     }
 
-    func setLoading(_ value: Bool) {
-        DispatchQueue.main.async {
-            searchState.isLoading = value
-        }
+    @MainActor func setLoading(_ value: Bool) {
+        searchState.isLoading = value
     }
 
-    func initializeSearchState() {
-        DispatchQueue.main.async {
-            searchState.selectedLecture = nil
-            searchState.selectedTagList = []
-            searchState.searchResult = nil
-            searchState.searchText = ""
-        }
+    @MainActor func initializeSearchState() {
+        searchState.selectedLecture = nil
+        searchState.selectedTagList = []
+        searchState.searchResult = nil
+        searchState.searchText = ""
     }
 
     func fetchTags(quarter: Quarter) async throws {
@@ -80,7 +76,7 @@ struct SearchService: SearchServiceProtocol {
         }
     }
 
-    func fetchInitialSearchResult() async throws {
+    @MainActor func fetchInitialSearchResult() async throws {
         setLoading(true)
         defer {
             setLoading(false)
@@ -93,43 +89,33 @@ struct SearchService: SearchServiceProtocol {
         searchState.pageNum += 1
         try await _fetchSearchResult()
     }
-
-    func toggle(_ tag: SearchTag) {
-        DispatchQueue.main.async {
-            if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
-                searchState.selectedTagList.remove(at: index)
-                return
-            }
-            searchState.selectedTagList.append(tag)
+    
+    @MainActor func toggle(_ tag: SearchTag) {
+        if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
+            searchState.selectedTagList.remove(at: index)
+            return
         }
+        searchState.selectedTagList.append(tag)
     }
 
     /// We need a separate method that only deselects tags.
-    func deselectTag(_ tag: SearchTag) {
+    @MainActor func deselectTag(_ tag: SearchTag) {
         if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
-            DispatchQueue.main.async {
-                searchState.selectedTagList.remove(at: index)
-            }
+            searchState.selectedTagList.remove(at: index)
             return
         }
     }
 
-    func setIsFilterOpen(_ value: Bool) {
-        DispatchQueue.main.async {
-            searchState.isFilterOpen = value
-        }
+    @MainActor func setIsFilterOpen(_ value: Bool) {
+        searchState.isFilterOpen = value
     }
 
-    func setSelectedLecture(_ value: Lecture?) {
-        DispatchQueue.main.async {
-            searchState.selectedLecture = value
-        }
+    @MainActor func setSelectedLecture(_ value: Lecture?) {
+        searchState.selectedLecture = value
     }
 
-    func setSearchText(_ value: String) {
-        DispatchQueue.main.async {
-            searchState.searchText = value
-        }
+    @MainActor func setSearchText(_ value: String) {
+        searchState.searchText = value
     }
 }
 

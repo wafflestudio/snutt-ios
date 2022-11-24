@@ -59,7 +59,7 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
 
     func deleteUser() async throws {
         try await userRepository.deleteUser()
-        clearUserInfo()
+        await clearUserInfo()
     }
 
     func addDevice(fcmToken: String) async throws {

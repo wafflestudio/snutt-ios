@@ -37,108 +37,82 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
     var appState: AppState
     var localRepositories: AppEnvironment.LocalRepositories
 
-    func setIsMenuOpen(_ value: Bool) {
-        DispatchQueue.main.async {
-            appState.menu.isOpen = value
-        }
+    @MainActor func setIsMenuOpen(_ value: Bool) {
+        appState.menu.isOpen = value
     }
 
-    func openEllipsis(for timetable: TimetableMetadata) {
-        DispatchQueue.main.async {
-            appState.menu.isEllipsisSheetOpen = true
-            appState.menu.ellipsisTarget = timetable
-        }
+    @MainActor func openEllipsis(for timetable: TimetableMetadata) {
+        appState.menu.isEllipsisSheetOpen = true
+        appState.menu.ellipsisTarget = timetable
     }
 
-    func closeEllipsis() {
-        DispatchQueue.main.async {
-            appState.menu.isEllipsisSheetOpen = false
-            appState.menu.ellipsisTarget = nil
-        }
+    @MainActor func closeEllipsis() {
+        appState.menu.isEllipsisSheetOpen = false
+        appState.menu.ellipsisTarget = nil
     }
 
-    func openThemeSheet() {
-        DispatchQueue.main.async {
-            appState.menu.isOpen = false
-            appState.menu.isEllipsisSheetOpen = false
-            appState.menu.isThemeSheetOpen = true
-        }
+    @MainActor func openThemeSheet() {
+        appState.menu.isOpen = false
+        appState.menu.isEllipsisSheetOpen = false
+        appState.menu.isThemeSheetOpen = true
     }
 
-    func closeThemeSheet() {
-        DispatchQueue.main.async {
-            appState.menu.isThemeSheetOpen = false
-            appState.timetable.current?.selectedTheme = nil
-        }
+    @MainActor func closeThemeSheet() {
+        appState.menu.isThemeSheetOpen = false
+        appState.timetable.current?.selectedTheme = nil
     }
 
-    func openRenameSheet() {
-        DispatchQueue.main.async {
-            appState.menu.renameTitle = appState.menu.ellipsisTarget?.title ?? ""
-            appState.menu.isEllipsisSheetOpen = false
-            appState.menu.isRenameSheetOpen = true
-        }
+    @MainActor func openRenameSheet() {
+        appState.menu.renameTitle = appState.menu.ellipsisTarget?.title ?? ""
+        appState.menu.isEllipsisSheetOpen = false
+        appState.menu.isRenameSheetOpen = true
     }
 
-    func closeRenameSheet() {
-        DispatchQueue.main.async {
-            appState.menu.isRenameSheetOpen = false
-        }
+    @MainActor func closeRenameSheet() {
+        appState.menu.isRenameSheetOpen = false
     }
 
-    func openCreateSheet(withPicker: Bool) {
-        DispatchQueue.main.async {
-            appState.menu.createTitle = ""
-            appState.menu.createQuarter = withPicker ? appState.timetable.courseBookList?.first : nil
-            appState.menu.isCreateSheetOpen = true
-        }
+    @MainActor func openCreateSheet(withPicker: Bool) {
+        appState.menu.createTitle = ""
+        appState.menu.createQuarter = withPicker ? appState.timetable.courseBookList?.first : nil
+        appState.menu.isCreateSheetOpen = true
     }
 
-    func closeCreateSheet() {
-        DispatchQueue.main.async {
-            appState.menu.isCreateSheetOpen = false
-        }
+    @MainActor func closeCreateSheet() {
+        appState.menu.isCreateSheetOpen = false
     }
 
-    func setRenameTitle(_ value: String) {
-        DispatchQueue.main.async {
-            appState.menu.renameTitle = value
-        }
+    @MainActor func setRenameTitle(_ value: String) {
+        appState.menu.renameTitle = value
     }
 
-    func setCreateTitle(_ value: String) {
-        DispatchQueue.main.async {
-            appState.menu.createTitle = value
-        }
+    @MainActor func setCreateTitle(_ value: String) {
+        appState.menu.createTitle = value
     }
 
-    func setCreateQuarter(_ value: Quarter?) {
-        DispatchQueue.main.async {
-            appState.menu.createQuarter = value
-        }
+    @MainActor func setCreateQuarter(_ value: Quarter?) {
+        appState.menu.createQuarter = value
     }
 
     // MARK: Lecture Time Sheet
 
-    func setIsLectureTimeSheetOpen(_ value: Bool, modifying timePlace: TimePlace?, action: ((TimePlace) -> Void)?) {
-        DispatchQueue.main.async {
-            appState.menu.timePlaceToModify = timePlace
-            appState.menu.lectureTimeSheetAction = action
-            appState.menu.isLectureTimeSheetOpen = value
-        }
+    @MainActor func setIsLectureTimeSheetOpen(_ value: Bool, modifying timePlace: TimePlace?, action: ((TimePlace) -> Void)?) {
+        appState.menu.timePlaceToModify = timePlace
+        appState.menu.lectureTimeSheetAction = action
+        appState.menu.isLectureTimeSheetOpen = value
     }
 
     // MARK: Error Handling
 
-    func presentErrorAlert(error: Error) {
+    @MainActor func presentErrorAlert(error: Error) {
         presentErrorAlert(error: error.asSTError)
     }
 
-    func presentErrorAlert(error: ErrorCode) {
+    @MainActor func presentErrorAlert(error: ErrorCode) {
         presentErrorAlert(error: .init(error))
     }
 
-    func presentErrorAlert(error: STError?) {
+    @MainActor func presentErrorAlert(error: STError?) {
         guard let error = error else {
             appState.system.isErrorAlertPresented = false
             return
@@ -148,9 +122,7 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
             clearUserInfo()
         }
 
-        DispatchQueue.main.async {
-            appState.system.error = error
-            appState.system.isErrorAlertPresented = true
-        }
+        appState.system.error = error
+        appState.system.isErrorAlertPresented = true
     }
 }

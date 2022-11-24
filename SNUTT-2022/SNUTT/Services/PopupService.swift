@@ -49,7 +49,7 @@ struct PopupService: PopupServiceProtocol {
         }
     }
 
-    func saveLastUpdate(popup: Popup) {
+    @MainActor func saveLastUpdate(popup: Popup) {
         var currentPopupList = appState.popup.currentList
 
         currentPopupList.indices.filter {
@@ -60,10 +60,7 @@ struct PopupService: PopupServiceProtocol {
 
         let currentPopupListDto = currentPopupList.compactMap { PopupDto(from: $0) }
 
-        DispatchQueue.main.async {
-            appState.popup.currentList = currentPopupList
-        }
-
+        appState.popup.currentList = currentPopupList
         userDefaultsRepository.set([PopupDto].self, key: .popupList, value: currentPopupListDto)
     }
 

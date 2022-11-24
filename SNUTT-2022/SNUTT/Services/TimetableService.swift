@@ -112,26 +112,20 @@ struct TimetableService: TimetableServiceProtocol {
         }
     }
 
-    func selectTimetableTheme(theme: Theme) {
+    @MainActor func selectTimetableTheme(theme: Theme) {
         appState.timetable.current?.selectedTheme = theme
     }
-
-    func setTimetableConfig(config: TimetableConfiguration) {
-        DispatchQueue.main.async {
-            appState.timetable.configuration = config
-        }
+    
+    @MainActor func setTimetableConfig(config: TimetableConfiguration) {
+        appState.timetable.configuration = config
         userDefaultsRepository.set(TimetableConfiguration.self, key: .timetableConfig, value: config)
     }
 
-    func loadTimetableConfig() {
-        DispatchQueue.main.async {
-            appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
-        }
+    @MainActor func loadTimetableConfig() {
+        appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
     }
 
-    // TODO: to be refactored
-    @MainActor
-    private func updateState(to currentTimetable: Timetable) {
+    @MainActor private func updateState(to currentTimetable: Timetable) {
         appState.timetable.current = currentTimetable
     }
 }
