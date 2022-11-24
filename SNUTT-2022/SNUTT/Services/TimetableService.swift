@@ -115,7 +115,7 @@ struct TimetableService: TimetableServiceProtocol {
     @MainActor func selectTimetableTheme(theme: Theme) {
         appState.timetable.current?.selectedTheme = theme
     }
-    
+
     @MainActor func setTimetableConfig(config: TimetableConfiguration) {
         appState.timetable.configuration = config
         userDefaultsRepository.set(TimetableConfiguration.self, key: .timetableConfig, value: config)

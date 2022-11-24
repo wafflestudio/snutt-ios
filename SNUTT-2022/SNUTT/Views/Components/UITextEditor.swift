@@ -71,7 +71,7 @@ struct UITextEditor: UIViewRepresentable {
             uiView.text = text
             uiView.delegate?.textViewDidChange?(uiView)
         }
-        self.textDidChange(uiView)
+        textDidChange(uiView)
     }
 
     func makeCoordinator() -> Coordinator {

@@ -89,7 +89,7 @@ struct SearchService: SearchServiceProtocol {
         searchState.pageNum += 1
         try await _fetchSearchResult()
     }
-    
+
     @MainActor func toggle(_ tag: SearchTag) {
         if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
             searchState.selectedTagList.remove(at: index)
