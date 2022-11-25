@@ -14,7 +14,7 @@ protocol UserDefaultsRepositoryProtocol {
 }
 
 enum STDefaultsKey: String {
-    case token
+    case accessToken
     case apiKey
     case userId
     case userDto

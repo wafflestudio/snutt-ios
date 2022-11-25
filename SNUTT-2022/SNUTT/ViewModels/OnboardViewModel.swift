@@ -13,7 +13,7 @@ extension OnboardScene {
         func registerWith(id: String, password: String, email: String) async {
             // TODO: Validation
             do {
-                try await services.authService.registerWithId(id: id, password: password, email: email)
+                try await services.authService.registerWithLocalId(localId: id, localPassword: password, email: email)
             } catch {
                 await services.globalUIService.presentErrorAlert(error: error)
             }
@@ -24,7 +24,7 @@ extension OnboardScene {
 extension OnboardScene.ViewModel: FacebookLoginProtocol {
     func handleFacebookToken(fbId: String, fbToken: String) async {
         do {
-            try await services.authService.loginWithFacebook(id: fbId, token: fbToken)
+            try await services.authService.loginWithFacebook(fbId: fbId, fbToken: fbToken)
         } catch {
             await services.globalUIService.presentErrorAlert(error: error)
         }
@@ -64,7 +64,7 @@ extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
             return
         }
         do {
-            try await services.authService.loginWithApple(token: token)
+            try await services.authService.loginWithApple(appleToken: token)
         } catch {
             await services.globalUIService.presentErrorAlert(error: error)
         }

@@ -74,8 +74,8 @@ struct SignUpView: View {
     struct SignUpScene_Previews: PreviewProvider {
         static var previews: some View {
             NavigationView {
-                SignUpView { id, password, email in
-                    print(id, password, email)
+                SignUpView { localId, localPassword, email in
+                    print(localId, localPassword, email)
                 }
             }
         }

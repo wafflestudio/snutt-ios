@@ -14,9 +14,9 @@ struct AccountSettingScene: View {
 
     var body: some View {
         List {
-            if let username = viewModel.currentUser?.localId {
+            if let localId = viewModel.currentUser?.localId {
                 Section {
-                    SettingsTextItem(title: "아이디", detail: username)
+                    SettingsTextItem(title: "아이디", detail: localId)
                     SettingsLinkItem(title: "비밀번호 변경") {
                         ChangePasswordView { old, new in
                             await viewModel.changePassword(from: old, to: new)
@@ -26,8 +26,8 @@ struct AccountSettingScene: View {
             } else {
                 Section {
                     SettingsLinkItem(title: "아이디 / 비밀번호 추가") {
-                        SignUpView(displayMode: .attach) { id, password, _ in
-                            await viewModel.attachLocalId(id: id, password: password)
+                        SignUpView(displayMode: .attach) { localId, localPassword, _ in
+                            await viewModel.attachLocalId(localId: localId, localPassword: localPassword)
                         }
                     }
                 }

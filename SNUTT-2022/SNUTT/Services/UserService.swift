@@ -10,7 +10,7 @@ import Foundation
 protocol UserServiceProtocol {
     func fetchUser() async throws
     func deleteUser() async throws
-    func addLocalId(id: String, password: String) async throws
+    func addLocalId(localId: String, localPassword: String) async throws
     func changePassword(from oldPassword: String, to newPassword: String) async throws
     func disconnectFacebook() async throws
     func connectFacebook(fbId: String, fbToken: String) async throws
@@ -42,8 +42,8 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
         try await updateToken(from: dto)
     }
 
-    func addLocalId(id: String, password: String) async throws {
-        let dto = try await userRepository.addLocalId(id: id, password: password)
+    func addLocalId(localId: String, localPassword: String) async throws {
+        let dto = try await userRepository.addLocalId(localId: localId, localPassword: localPassword)
         try await updateToken(from: dto)
     }
 
@@ -70,7 +70,7 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
             return
         }
 
-        try await userRepository.addDevice(fcmToken: fcmToken)
+        let _ = try await userRepository.addDevice(fcmToken: fcmToken)
     }
 
     func deleteDevice(fcmToken: String) async throws {
@@ -80,14 +80,14 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
             return
         }
 
-        try await userRepository.deleteDevice(fcmToken: fcmToken)
+        let _ = try await userRepository.deleteDevice(fcmToken: fcmToken)
     }
 
     private func updateToken(from dto: TokenResponseDto) async throws {
         await MainActor.run {
             appState.user.accessToken = dto.token
         }
-        userDefaultsRepository.set(String.self, key: .token, value: dto.token)
+        userDefaultsRepository.set(String.self, key: .accessToken, value: dto.token)
         try await fetchUser()
     }
 
@@ -102,7 +102,7 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
 class FakeUserService: UserServiceProtocol {
     func fetchUser() {}
     func deleteUser() async throws {}
-    func addLocalId(id _: String, password _: String) async throws {}
+    func addLocalId(localId _: String, localPassword _: String) async throws {}
     func changePassword(from _: String, to _: String) async throws {}
     func disconnectFacebook() async throws {}
     func connectFacebook(fbId _: String, fbToken _: String) async throws {}
