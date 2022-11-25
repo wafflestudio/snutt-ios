@@ -112,7 +112,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     }
 
     func deleteLecture(selected: Lecture) async {
-        guard let lecture = getSameLecture(selected) else { return }
+        guard let lecture = getExistingLecture(selected) else { return }
         do {
             try await services.lectureService.deleteLecture(lecture: lecture)
             services.searchService.setSelectedLecture(nil)
@@ -121,7 +121,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func getSameLecture(_ lecture: Lecture) -> Lecture? {
+    func getExistingLecture(_ lecture: Lecture) -> Lecture? {
         timetableState.current?.lectures.filter { $0 == lecture }.first
     }
 
