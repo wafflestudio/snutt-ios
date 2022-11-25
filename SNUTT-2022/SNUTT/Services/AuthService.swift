@@ -56,25 +56,25 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
 
     func loginWithLocalId(localId: String, localPassword: String) async throws {
         let dto = try await authRepository.loginWithLocalId(localId: localId, localPassword: localPassword)
-        saveAccessTokenFromLoginResponse(dto: dto)
+        await saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
 
     func registerWithLocalId(localId: String, localPassword: String, email: String) async throws {
         let dto = try await authRepository.registerWithLocalId(localId: localId, localPassword: localPassword, email: email)
-        saveAccessTokenFromLoginResponse(dto: dto)
+        await saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
 
     func loginWithApple(appleToken: String) async throws {
         let dto = try await authRepository.loginWithApple(appleToken: appleToken)
-        saveAccessTokenFromLoginResponse(dto: dto)
+        await saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
 
     func loginWithFacebook(fbId: String, fbToken: String) async throws {
         let dto = try await authRepository.loginWithFacebook(fbId: fbId, fbToken: fbToken)
-        saveAccessTokenFromLoginResponse(dto: dto)
+        await saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
 
