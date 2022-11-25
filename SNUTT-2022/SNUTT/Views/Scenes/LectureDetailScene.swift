@@ -285,10 +285,14 @@ struct LectureDetailScene: View {
                             guard let tempLecture = tempLecture else { return }
                             // save
                             Task {
-                                if await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) {
-                                    editMode = .inactive
-                                    resignFirstResponder()
+                                if await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture),
+                                   let updatedLecture = viewModel.searchLecture(lecture) {
+                                    lecture = updatedLecture
+                                } else {
+                                    lecture = tempLecture
                                 }
+                                editMode = .inactive
+                                resignFirstResponder()
                             }
                         } else {
                             // edit

@@ -50,7 +50,7 @@ extension Color {
         str = str.replacingOccurrences(of: "0X", with: "")
 
         if str.count != 6 {
-            self.init(uiColor: .gray)
+            self.init(uiColor: .init(LectureColor.temporary.bg))
             return
         }
 
