@@ -12,7 +12,6 @@ struct Lecture: Identifiable {
     let id: String
     var title: String
     var instructor: String
-    var timeString: String
     var timePlaces: [TimePlace]
     let timeMasks: [Int]
     var courseNumber: String
@@ -65,8 +64,22 @@ struct Lecture: Identifiable {
         return lecture
     }
 
-    var startDateTimeString: String {
-        timePlaces.map { $0.startDateTimeString }.joined(separator: "/")
+    var preciseTimeString: String {
+        if timePlaces.isEmpty {
+            return ""
+        }
+        return timePlaces.map { $0.preciseTimeString }.joined(separator: ", ")
+    }
+
+    var placesString: String {
+        if timePlaces.isEmpty {
+            return ""
+        }
+        let places = timePlaces.compactMap { $0.place.isEmpty ? nil : $0.place }
+        if places.isEmpty {
+            return ""
+        }
+        return places.joined(separator: ", ")
     }
 }
 
@@ -82,7 +95,6 @@ extension Lecture {
         id = dto._id
         title = dto.course_title
         instructor = dto.instructor
-        timeString = dto.class_time ?? ""
         timePlaces = dto.class_time_json.map { .init(from: $0, isCustom: dto.course_number == nil) }
         timeMasks = dto.class_time_mask ?? []
         isCustom = (dto.course_number == nil || dto.course_number == "")
@@ -114,7 +126,6 @@ extension Lecture {
             return Lecture(id: UUID().uuidString,
                            title: titles.randomElement()!,
                            instructor: instructors.randomElement()!,
-                           timeString: "월(6-1.5)/수(6-1.5)",
                            timePlaces: [.preview, .preview],
                            timeMasks: [],
                            courseNumber: "400.313",

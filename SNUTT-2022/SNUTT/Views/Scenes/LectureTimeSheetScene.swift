@@ -50,12 +50,8 @@ extension LectureTimeSheetScene {
 
         private func getSelectedTimePlace() -> TimePlace? {
             guard var initialTimePlace = appState.menu.timePlaceToModify else { return nil }
-            let startDouble = TimeUtils.getTimeInDouble(from: start)
-            let endDouble = TimeUtils.getTimeInDouble(from: end)
-            let len = endDouble - startDouble
-
-            initialTimePlace.startTime = startDouble
-            initialTimePlace.len = len
+            initialTimePlace.startTime = TimeUtils.getTimeInString(from: start)
+            initialTimePlace.endTime = TimeUtils.getTimeInString(from: end)
             initialTimePlace.day = weekday
             return initialTimePlace
         }
@@ -63,7 +59,7 @@ extension LectureTimeSheetScene {
         func initializeTime() {
             guard let initialTimePlace = appState.menu.timePlaceToModify else { return }
             guard let startDate = TimeUtils.getDate(from: initialTimePlace.startTime),
-                  let endDate = TimeUtils.getDate(from: initialTimePlace.startTime + initialTimePlace.len) else { return }
+                  let endDate = TimeUtils.getDate(from: initialTimePlace.endTime) else { return }
             start = startDate
             end = endDate
             weekday = initialTimePlace.day

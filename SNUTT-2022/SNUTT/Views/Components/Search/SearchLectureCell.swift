@@ -31,15 +31,15 @@ struct SearchLectureCell: View {
 
                 // details
                 if lecture.isCustom {
-                    LectureDetailRow(imageName: "tag.white", text: "(없음)")
+                    LectureDetailRow(imageName: "tag.white", text: "")
                 } else {
                     LectureDetailRow(imageName: "tag.white", text: "\(lecture.department), \(lecture.academicYear)")
                 }
-                LectureDetailRow(imageName: "clock.white", text: lecture.startDateTimeString.isEmpty ? "(없음)" : lecture.startDateTimeString)
+                LectureDetailRow(imageName: "clock.white", text: lecture.preciseTimeString)
 
-                LectureDetailRow(imageName: "map.white", text: lecture.timePlaces.isEmpty ? "(없음)" : lecture.timePlaces.map { $0.place }.joined(separator: "/"))
+                LectureDetailRow(imageName: "map.white", text: lecture.placesString)
 
-                LectureDetailRow(imageName: "ellipsis.white", text: lecture.remark.isEmpty ? "(없음)" : lecture.remark)
+                LectureDetailRow(imageName: "ellipsis.white", text: lecture.remark)
 
                 if selected {
                     Spacer().frame(height: 5)

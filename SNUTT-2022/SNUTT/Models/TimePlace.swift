@@ -12,13 +12,9 @@ struct TimePlace: Identifiable {
 
     var day: Weekday
 
-    /// 단위: 교시
-    var start: Double
+    var startTime: String
 
-    /// 단위: 시간
-    ///
-    /// - TODO: 서버에서 내려주는 시간은 0.5의 배수이다. 따라서 강의가 끝나는 시각을 정확하게 나타내기 위해서는 적절한 보정이 필요하다.
-    var len: Double
+    var endTime: String
 
     var place: String
 
@@ -28,37 +24,28 @@ struct TimePlace: Identifiable {
     /// This flag is necessary in order to remove `_id` field for newly created objects, before comitting to the server.
     var isTemporary: Bool = false
 
-    /// 단위: 시각
-    ///
-    /// 7.5교시는 오후 15시 30분을 의미한다.
-    var startTime: Double {
-        get { start + 8 }
-        set { start = newValue - 8 }
+    var startTimeDouble: Double {
+        return TimeUtils.getTimeInDouble(from: startTime)
     }
 
-    var endTime: Double {
-        startTime + len
+    var endTimeDouble: Double {
+        return TimeUtils.getTimeInDouble(from: endTime)
     }
 
-    var startTimeString: String {
-        TimeUtils.getPreciseHourMinuteString(from: startTime)
+    var duration: Double {
+        return endTimeDouble - startTimeDouble
     }
 
-    var endTimeString: String {
-        TimeUtils.getPreciseHourMinuteString(from: endTime)
-    }
-
-    /// `월7`(월요일 7교시)과 같이 표기한다.
-    var startDateTimeString: String {
-        TimeUtils.getStartDateTimeString(day: day, classPeriod: start)
+    var preciseTimeString: String {
+        return "\(day.veryShortSymbol)(\(startTime)~\(endTime))"
     }
 }
 
 extension TimePlace {
     init(from dto: TimePlaceDto, isCustom: Bool) {
         id = dto._id ?? UUID().description
-        start = dto.start
-        len = dto.len
+        startTime = dto.start_time
+        endTime = dto.end_time
         place = dto.place
         day = .init(rawValue: dto.day) ?? .mon
         self.isCustom = isCustom
@@ -71,8 +58,8 @@ extension TimePlace {
             let place = "\(Int.random(in: 100 ... 999))-\(Int.random(in: 100 ... 999))"
             return TimePlace(id: UUID().uuidString,
                              day: .init(rawValue: Int.random(in: 0 ... 6))!,
-                             start: Double.random(in: 1 ... 8),
-                             len: Double.random(in: 0 ... 3),
+                             startTime: "15:00",
+                             endTime: "18:15",
                              place: place,
                              isCustom: Bool.random())
         }
