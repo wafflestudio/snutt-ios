@@ -62,7 +62,9 @@ struct SearchLectureScene: View {
                     } else {
                         SearchLectureList(data: viewModel.searchResult!,
                                           fetchMore: viewModel.fetchMoreSearchResult,
+                                          sameLecture: viewModel.getSameLecture,
                                           addLecture: viewModel.addLecture,
+                                          deleteLecture: viewModel.deleteLecture,
                                           fetchReviewId: viewModel.fetchReviewId(of:bind:),
                                           overwriteLecture: viewModel.overwriteLecture(lecture:),
                                           errorTitle: viewModel.errorTitle,

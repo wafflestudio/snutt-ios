@@ -10,7 +10,9 @@ import SwiftUI
 struct SearchLectureList: View {
     let data: [Lecture]
     let fetchMore: () async -> Void
+    let sameLecture: (Lecture) -> Lecture?
     let addLecture: (Lecture) async -> Void
+    let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture, Binding<String>) async -> Void
     let overwriteLecture: (Lecture) async -> Void
     let errorTitle: String
@@ -25,7 +27,9 @@ struct SearchLectureList: View {
                     SearchLectureCell(lecture: lecture,
                                       selected: selected?.id == lecture.id,
                                       addLecture: addLecture,
-                                      fetchReviewId: fetchReviewId)
+                                      deleteLecture: deleteLecture,
+                                      fetchReviewId: fetchReviewId,
+                                      isInTimetable: sameLecture(lecture) != nil)
                         .task {
                             if lecture.id == data.last?.id {
                                 await fetchMore()

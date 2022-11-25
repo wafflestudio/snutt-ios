@@ -11,7 +11,9 @@ struct SearchLectureCell: View {
     let lecture: Lecture
     let selected: Bool
     let addLecture: (Lecture) async -> Void
+    let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture, Binding<String>) async -> Void
+    let isInTimetable: Bool
 
     @State var showingDetailPage = false
     @State private var showReviewWebView: Bool = false
@@ -69,14 +71,26 @@ struct SearchLectureCell: View {
                             }
                         }
 
-                        Button {
-                            Task {
-                                await addLecture(lecture)
+                        if isInTimetable {
+                            Button {
+                                Task {
+                                    await deleteLecture(lecture)
+                                }
+                            } label: {
+                                Text("제거하기")
+                                    .frame(maxWidth: .infinity)
+                                    .font(STFont.details)
                             }
-                        } label: {
-                            Text("+ 추가하기")
-                                .frame(maxWidth: .infinity)
-                                .font(STFont.details)
+                        } else {
+                            Button {
+                                Task {
+                                    await addLecture(lecture)
+                                }
+                            } label: {
+                                Text("+ 추가하기")
+                                    .frame(maxWidth: .infinity)
+                                    .font(STFont.details)
+                            }
                         }
                     }
                     /// This `sheet` modifier should be called on `HStack` to prevent animation glitch when `dismiss`ed.
