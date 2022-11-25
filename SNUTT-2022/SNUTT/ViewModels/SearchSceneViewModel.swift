@@ -111,6 +111,20 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         }
     }
 
+    func deleteLecture(selected: Lecture) async {
+        guard let lecture = getExistingLecture(selected) else { return }
+        do {
+            try await services.lectureService.deleteLecture(lecture: lecture)
+            services.searchService.setSelectedLecture(nil)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+
+    func getExistingLecture(_ lecture: Lecture) -> Lecture? {
+        timetableState.current?.lectures.filter { $0 == lecture }.first
+    }
+
     func fetchReviewId(of lecture: Lecture, bind: Binding<String>) async {
         do {
             try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)

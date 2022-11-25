@@ -83,6 +83,13 @@ struct Lecture: Identifiable {
     }
 }
 
+/// for non-custom Lecture
+extension Lecture: Equatable {
+    static func == (lhs: Lecture, rhs: Lecture) -> Bool {
+        return lhs.courseNumber == rhs.courseNumber && lhs.lectureNumber == rhs.lectureNumber
+    }
+}
+
 struct LectureColor: Hashable {
     var fg: Color
     var bg: Color
