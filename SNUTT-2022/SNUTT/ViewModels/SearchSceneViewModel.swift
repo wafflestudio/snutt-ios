@@ -110,7 +110,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             }
         }
     }
-    
+
     func deleteLecture(selected: Lecture) async {
         guard let lecture = getSameLecture(selected) else { return }
         do {
@@ -120,7 +120,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func getSameLecture(_ lecture: Lecture) -> Lecture? {
         timetableState.current?.lectures.filter { $0 == lecture }.first
     }
