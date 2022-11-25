@@ -16,6 +16,7 @@ struct LectureListScene: View {
         ZStack {
             if viewModel.lectures.isEmpty {
                 EmptyLectureList()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 LectureList(viewModel: .init(container: viewModel.container),
                             lectures: viewModel.lectures)
@@ -29,6 +30,7 @@ struct LectureListScene: View {
                 }
             }
         }
+        .background(STColor.systemBackground)
         .sheet(isPresented: $showingCreatePage, content: {
             ZStack {
                 NavigationView {
