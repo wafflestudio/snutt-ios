@@ -13,7 +13,7 @@ protocol UserRepositoryProtocol {
     func connectFacebook(fbId: String, fbToken: String) async throws -> TokenResponseDto
     func disconnectFacebook() async throws -> TokenResponseDto
     func changePassword(from oldPassword: String, to newPassword: String) async throws -> TokenResponseDto
-    func addLocalId(id: String, password: String) async throws -> TokenResponseDto
+    func addLocalId(localId: String, localPassword: String) async throws -> TokenResponseDto
     func deleteUser() async throws
     func addDevice(fcmToken: String) async throws -> DeviceResponseDto
     func deleteDevice(fcmToken: String) async throws -> DeviceResponseDto
@@ -35,7 +35,7 @@ class UserRepository: UserRepositoryProtocol {
 
     func connectFacebook(fbId: String, fbToken: String) async throws -> TokenResponseDto {
         return try await session
-            .request(UserRouter.connectFacebook(id: fbId, token: fbToken))
+            .request(UserRouter.connectFacebook(fbId: fbId, fbToken: fbToken))
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
@@ -54,9 +54,9 @@ class UserRepository: UserRepositoryProtocol {
             .handlingError()
     }
 
-    func addLocalId(id: String, password: String) async throws -> TokenResponseDto {
+    func addLocalId(localId: String, localPassword: String) async throws -> TokenResponseDto {
         return try await session
-            .request(UserRouter.addLocalId(id: id, password: password))
+            .request(UserRouter.addLocalId(localId: localId, localPassword: localPassword))
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }

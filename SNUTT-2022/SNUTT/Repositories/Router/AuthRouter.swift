@@ -13,17 +13,17 @@ enum AuthRouter: Router {
     var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/auth")! }
     static let shouldAddToken: Bool = false
 
-    case registerWithId(id: String, password: String, email: String)
-    case loginWithId(id: String, password: String)
-    case loginWithFacebook(id: String, token: String)
-    case loginWithApple(token: String)
+    case registerWithLocalId(localId: String, localPassword: String, email: String)
+    case loginWithLocalId(localId: String, localPassword: String)
+    case loginWithFacebook(fbId: String, fbToken: String)
+    case loginWithApple(appleToken: String)
     case logout(userId: String, fcmToken: String)
 
     var method: HTTPMethod {
         switch self {
-        case .loginWithId:
+        case .loginWithLocalId:
             return .post
-        case .registerWithId:
+        case .registerWithLocalId:
             return .post
         case .loginWithFacebook:
             return .post
@@ -36,9 +36,9 @@ enum AuthRouter: Router {
 
     var path: String {
         switch self {
-        case .loginWithId:
+        case .loginWithLocalId:
             return "/login_local"
-        case .registerWithId:
+        case .registerWithLocalId:
             return "/register_local"
         case .loginWithFacebook:
             return "/login_fb"
@@ -51,14 +51,14 @@ enum AuthRouter: Router {
 
     var parameters: [String: Any]? {
         switch self {
-        case let .loginWithId(id, password):
-            return ["id": id, "password": password]
-        case let .registerWithId(id, password, email):
-            return ["id": id, "password": password, "email": email]
-        case let .loginWithFacebook(id, token):
-            return ["fb_id": id, "fb_token": token]
-        case let .loginWithApple(token):
-            return ["apple_token": token]
+        case let .loginWithLocalId(localId, localPassword):
+            return ["id": localId, "password": localPassword]
+        case let .registerWithLocalId(localId, localPassword, email):
+            return ["id": localId, "password": localPassword, "email": email]
+        case let .loginWithFacebook(fbId, fbToken):
+            return ["fb_id": fbId, "fb_token": fbToken]
+        case let .loginWithApple(appleToken):
+            return ["apple_token": appleToken]
         case let .logout(userId, fcmToken):
             return ["user_id": userId, "registration_id": fcmToken]
         }

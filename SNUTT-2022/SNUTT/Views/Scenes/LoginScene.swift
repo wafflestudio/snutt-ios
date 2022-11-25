@@ -10,25 +10,25 @@ import SwiftUI
 struct LoginScene: View {
     @ObservedObject var viewModel: ViewModel
 
-    @State private var id: String = ""
-    @State private var password: String = ""
+    @State private var localId: String = ""
+    @State private var localPassword: String = ""
 
     var isButtonDisabled: Bool {
-        id.isEmpty || password.isEmpty
+        localId.isEmpty || localPassword.isEmpty
     }
 
     var body: some View {
         VStack {
             VStack(spacing: 15) {
-                AnimatedTextField(label: "아이디", placeholder: "아이디를 입력하세요.", text: $id, shouldFocusOn: true)
-                AnimatedTextField(label: "비밀번호", placeholder: "비밀번호를 입력하세요.", text: $password, secure: true)
+                AnimatedTextField(label: "아이디", placeholder: "아이디를 입력하세요.", text: $localId, shouldFocusOn: true)
+                AnimatedTextField(label: "비밀번호", placeholder: "비밀번호를 입력하세요.", text: $localPassword, secure: true)
             }
 
             Spacer()
 
             Button {
                 Task {
-                    await viewModel.loginWithId(id: id, password: password)
+                    await viewModel.loginWithLocalId(localId: localId, localPassword: localPassword)
                     resignFirstResponder()
                 }
             } label: {
@@ -50,9 +50,9 @@ struct LoginScene: View {
 
 extension LoginScene {
     class ViewModel: BaseViewModel, ObservableObject {
-        func loginWithId(id: String, password: String) async {
+        func loginWithLocalId(localId: String, localPassword: String) async {
             do {
-                try await services.authService.loginWithId(id: id, password: password)
+                try await services.authService.loginWithLocalId(localId: localId, localPassword: localPassword)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }

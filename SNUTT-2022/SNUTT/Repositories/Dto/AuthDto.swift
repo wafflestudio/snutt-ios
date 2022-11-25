@@ -9,7 +9,7 @@ import Foundation
 
 struct LoginResponseDto: Codable {
     let token: String
-    let user_id: String
+    let user_id: String // server-side id of user entity
 }
 
 struct LogoutResponseDto: Codable {
@@ -17,7 +17,7 @@ struct LogoutResponseDto: Codable {
 }
 
 struct TokenResponseDto: Codable {
-    let token: String
+    let token: String // access token
 }
 
 struct DeviceResponseDto: Codable {
