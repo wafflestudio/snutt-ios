@@ -92,11 +92,10 @@ extension LectureDetailScene {
 
         func openLectureTimeSheet(lecture: Binding<Lecture>, timePlace: TimePlace) {
             Task {
-                
-            await services.globalUIService.setIsLectureTimeSheetOpen(true, modifying: timePlace) { modifiedTimePlace in
-                guard let firstIndex = lecture.timePlaces.firstIndex(where: { $0.id == timePlace.id }) else { return }
-                lecture.wrappedValue.timePlaces[firstIndex] = modifiedTimePlace
-            }
+                await services.globalUIService.setIsLectureTimeSheetOpen(true, modifying: timePlace) { modifiedTimePlace in
+                    guard let firstIndex = lecture.timePlaces.firstIndex(where: { $0.id == timePlace.id }) else { return }
+                    lecture.wrappedValue.timePlaces[firstIndex] = modifiedTimePlace
+                }
             }
         }
 

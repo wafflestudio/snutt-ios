@@ -41,7 +41,7 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
         appState.menu.isOpen = value
     }
 
-    @MainActor func openEllipsis(for timetable: TimetableMetadata) async  {
+    @MainActor func openEllipsis(for timetable: TimetableMetadata) async {
         appState.menu.isEllipsisSheetOpen = true
         appState.menu.ellipsisTarget = timetable
     }

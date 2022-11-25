@@ -15,7 +15,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published private var _isMenuSheetOpen: Bool = false
     var isMenuSheetOpen: Bool {
         get { _isMenuSheetOpen }
-        set { Task {await services.globalUIService.setIsMenuOpen(newValue) }}
+        set { Task { await services.globalUIService.setIsMenuOpen(newValue) }}
     }
 
     @Published private var _isEllipsisSheetOpen: Bool = false
@@ -27,7 +27,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published private var _isThemeSheetOpen: Bool = false
     var isThemeSheetOpen: Bool {
         get { _isThemeSheetOpen }
-        set { Task {await services.globalUIService.closeThemeSheet() }} // close-only;
+        set { Task { await services.globalUIService.closeThemeSheet() }} // close-only;
     }
 
     @Published private var _isRenameSheetOpen: Bool = false
@@ -39,7 +39,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published private var _isCreateSheetOpen: Bool = false
     var isCreateSheetOpen: Bool {
         get { _isCreateSheetOpen }
-        set { Task {await services.globalUIService.closeCreateSheet() }} // close-only;
+        set { Task { await services.globalUIService.closeCreateSheet() }} // close-only;
     }
 
     @Published private var _renameTitle: String = ""
@@ -51,13 +51,13 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published private var _createTitle: String = ""
     var createTitle: String {
         get { _createTitle }
-        set { Task {await services.globalUIService.setCreateTitle(newValue) }}
+        set { Task { await services.globalUIService.setCreateTitle(newValue) }}
     }
 
     @Published private var _createQuarter: Quarter?
     var createQuarter: Quarter? {
         get { _createQuarter }
-        set { Task {await services.globalUIService.setCreateQuarter(newValue) }}
+        set { Task { await services.globalUIService.setCreateQuarter(newValue) }}
     }
 
     override init(container: DIContainer) {
@@ -95,7 +95,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         return dict
     }
 
-    func openThemeSheet() async  {
+    func openThemeSheet() async {
         if menuState.ellipsisTarget?.id != appState.timetable.current?.id {
             await services.globalUIService.presentErrorAlert(error: .CANT_CHANGE_OTHERS_THEME)
             await services.globalUIService.closeEllipsis()

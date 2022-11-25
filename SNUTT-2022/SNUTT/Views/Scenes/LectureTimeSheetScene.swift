@@ -40,7 +40,7 @@ extension LectureTimeSheetScene {
         @Published private var _isOpen: Bool = false
         var isOpen: Bool {
             get { _isOpen }
-            set { Task {await services.globalUIService.setIsLectureTimeSheetOpen(newValue, modifying: nil, action: nil) }} // close-only
+            set { Task { await services.globalUIService.setIsLectureTimeSheetOpen(newValue, modifying: nil, action: nil) }} // close-only
         }
 
         override init(container: DIContainer) {
@@ -79,20 +79,15 @@ extension LectureTimeSheetScene {
 
 #if DEBUG
     struct LectureTimeSheetScene_Previews: PreviewProvider {
-        
-        
-        
-        
         static var previews: some View {
             let container: DIContainer = {
                 let container = DIContainer.preview
                 Task {
                     await container.services.globalUIService.setIsLectureTimeSheetOpen(true, modifying: nil, action: nil)
-
                 }
                 return container
             }()
-            
+
             LectureTimeSheetScene(viewModel: .init(container: container))
                 .background(.blue)
         }

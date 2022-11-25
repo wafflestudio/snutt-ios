@@ -28,12 +28,12 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
 
     var isFilterOpen: Bool {
         get { _isFilterOpen }
-        set {Task { await services.searchService.setIsFilterOpen(newValue) }}
+        set { Task { await services.searchService.setIsFilterOpen(newValue) }}
     }
 
     var selectedLecture: Lecture? {
         get { _selectedLecture }
-        set {Task { await services.searchService.setSelectedLecture(newValue) }}
+        set { Task { await services.searchService.setSelectedLecture(newValue) }}
     }
 
     var currentTimetableWithSelection: Timetable? {
@@ -89,10 +89,9 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func deselectTag(_ tag: SearchTag){
+    func deselectTag(_ tag: SearchTag) {
         Task {
             await services.searchService.deselectTag(tag)
-            
         }
     }
 
