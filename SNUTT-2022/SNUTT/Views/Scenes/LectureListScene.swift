@@ -13,26 +13,34 @@ struct LectureListScene: View {
     @State private var showingCreatePage = false
 
     var body: some View {
-        LectureList(viewModel: .init(container: viewModel.container),
-                    lectures: viewModel.lectures)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavBarButton(imageName: "nav.plus") {
-                        showingCreatePage = true
-                    }
+        ZStack {
+            if viewModel.lectures.isEmpty {
+                EmptyLectureList()
+            } else {
+                LectureList(viewModel: .init(container: viewModel.container),
+                            lectures: viewModel.lectures)
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavBarButton(imageName: "nav.plus") {
+                    showingCreatePage = true
                 }
             }
-            .sheet(isPresented: $showingCreatePage, content: {
-                ZStack {
-                    NavigationView {
-                        LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: viewModel.placeholderLecture, displayMode: .create)
-                    }
-                    // this view is duplicated on purpose (i.e. there are 2 instances of LectureTimeSheetScene)
-                    LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
+        }
+        .sheet(isPresented: $showingCreatePage, content: {
+            ZStack {
+                NavigationView {
+                    LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: viewModel.placeholderLecture, displayMode: .create)
                 }
-                .accentColor(Color(UIColor.label))
-            })
+                // this view is duplicated on purpose (i.e. there are 2 instances of LectureTimeSheetScene)
+                LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
+            }
+            .accentColor(Color(UIColor.label))
+        })
+        
+            
 
         let _ = debugChanges()
     }
