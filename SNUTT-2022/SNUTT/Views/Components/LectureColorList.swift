@@ -50,7 +50,8 @@ struct LectureColorList: View {
                                      displayTick: colorIndex == 0,
                                      title: "직접 선택하기") {
                         colorIndex = 0
-                        selectedColor = .temporary
+                        print(selectedColor)
+                        selectedColor = customColor ?? .temporary
                     }
 
                     if colorIndex == 0 {
