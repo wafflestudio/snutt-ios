@@ -147,7 +147,7 @@ extension LectureDetailScene {
                                             isTemporary: true))
             return lecture
         }
-        
+
         func searchLecture(_ lecture: Lecture) -> Lecture? {
             guard let lecture = appState.timetable.current?.lectures.filter({ $0.id == lecture.id }).first else {
                 return nil

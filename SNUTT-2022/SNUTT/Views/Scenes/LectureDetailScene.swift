@@ -286,7 +286,8 @@ struct LectureDetailScene: View {
                             // save
                             Task {
                                 if await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture),
-                                   let updatedLecture = viewModel.searchLecture(lecture) {
+                                   let updatedLecture = viewModel.searchLecture(lecture)
+                                {
                                     lecture = updatedLecture
                                 } else {
                                     lecture = tempLecture
