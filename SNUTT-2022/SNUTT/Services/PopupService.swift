@@ -10,7 +10,7 @@ import SwiftUI
 
 protocol PopupServiceProtocol {
     func getRecentPopupList() async throws
-    func saveLastUpdate(popup: Popup)
+    func saveLastUpdate(popup: Popup) async
     func showNextPopup()
 }
 
@@ -49,7 +49,7 @@ struct PopupService: PopupServiceProtocol {
         }
     }
 
-    @MainActor func saveLastUpdate(popup: Popup) {
+    @MainActor func saveLastUpdate(popup: Popup) async {
         var currentPopupList = appState.popup.currentList
 
         currentPopupList.indices.filter {

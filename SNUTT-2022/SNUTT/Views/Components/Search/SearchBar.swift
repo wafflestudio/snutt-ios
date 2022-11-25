@@ -13,7 +13,7 @@ struct SearchBar: View {
     @Binding var isFilterOpen: Bool
     var shouldShowCancelButton: Bool
     var action: () async -> Void
-    var cancel: () -> Void
+    var cancel: () async -> Void
 
     @State private var isEditing = false
     @FocusState private var isFocused: Bool
@@ -74,7 +74,9 @@ struct SearchBar: View {
                             isFocused = false
                             text = ""
                             showCancel = false
-                            cancel()
+                            Task {
+                                await cancel()
+                            }
                         }
                     }) {
                         Text("취소")

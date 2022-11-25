@@ -14,7 +14,7 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
 
     var isFilterOpen: Bool {
         get { _isFilterOpen }
-        set { services.searchService.setIsFilterOpen(newValue) }
+        set { Task { await services.searchService.setIsFilterOpen(newValue) }}
     }
 
     override init(container: DIContainer) {
@@ -31,14 +31,16 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
     }
 
     func toggle(_ tag: SearchTag) {
-        services.searchService.toggle(tag)
+        Task {
+            await services.searchService.toggle(tag)
+        }
     }
 
     func fetchInitialSearchResult() async {
         do {
             try await services.searchService.fetchInitialSearchResult()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 

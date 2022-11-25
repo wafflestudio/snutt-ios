@@ -36,7 +36,7 @@ struct TimetableScene: View {
                     ToolbarItem(placement: .principal) {
                         HStack {
                             NavBarButton(imageName: "nav.menu") {
-                                viewModel.setIsMenuOpen(true)
+                                await viewModel.setIsMenuOpen(true)
                             }
                             .circleBadge(condition: viewModel.isNewCourseBookAvailable)
 

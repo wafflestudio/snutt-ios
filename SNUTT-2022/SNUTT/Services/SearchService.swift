@@ -9,15 +9,15 @@ import Foundation
 import SwiftUI
 
 protocol SearchServiceProtocol {
-    func toggle(_ tag: SearchTag)
-    func deselectTag(_ tag: SearchTag)
+    func toggle(_ tag: SearchTag) async
+    func deselectTag(_ tag: SearchTag) async
     func fetchTags(quarter: Quarter) async throws
     func fetchInitialSearchResult() async throws
     func fetchMoreSearchResult() async throws
-    func setIsFilterOpen(_ value: Bool)
-    func setSearchText(_ value: String)
-    func setSelectedLecture(_ value: Lecture?)
-    func initializeSearchState()
+    func setIsFilterOpen(_ value: Bool) async
+    func setSearchText(_ value: String) async
+    func setSelectedLecture(_ value: Lecture?) async
+    func initializeSearchState() async
 }
 
 struct SearchService: SearchServiceProtocol {
@@ -36,11 +36,11 @@ struct SearchService: SearchServiceProtocol {
         appState.timetable
     }
 
-    @MainActor func setLoading(_ value: Bool) {
+    @MainActor private func setLoading(_ value: Bool) async {
         searchState.isLoading = value
     }
 
-    @MainActor func initializeSearchState() {
+    @MainActor func initializeSearchState() async {
         searchState.selectedLecture = nil
         searchState.selectedTagList = []
         searchState.searchResult = nil
@@ -77,9 +77,11 @@ struct SearchService: SearchServiceProtocol {
     }
 
     @MainActor func fetchInitialSearchResult() async throws {
-        setLoading(true)
+        await setLoading(true)
         defer {
-            setLoading(false)
+            Task {
+                await setLoading(false)
+            }
         }
         searchState.pageNum = 0
         try await _fetchSearchResult()
@@ -90,7 +92,7 @@ struct SearchService: SearchServiceProtocol {
         try await _fetchSearchResult()
     }
 
-    @MainActor func toggle(_ tag: SearchTag) {
+    @MainActor func toggle(_ tag: SearchTag) async {
         if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
             searchState.selectedTagList.remove(at: index)
             return
@@ -99,22 +101,22 @@ struct SearchService: SearchServiceProtocol {
     }
 
     /// We need a separate method that only deselects tags.
-    @MainActor func deselectTag(_ tag: SearchTag) {
+    @MainActor func deselectTag(_ tag: SearchTag) async {
         if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
             searchState.selectedTagList.remove(at: index)
             return
         }
     }
 
-    @MainActor func setIsFilterOpen(_ value: Bool) {
+    @MainActor func setIsFilterOpen(_ value: Bool) async {
         searchState.isFilterOpen = value
     }
 
-    @MainActor func setSelectedLecture(_ value: Lecture?) {
+    @MainActor func setSelectedLecture(_ value: Lecture?) async {
         searchState.selectedLecture = value
     }
 
-    @MainActor func setSearchText(_ value: String) {
+    @MainActor func setSearchText(_ value: String) async {
         searchState.searchText = value
     }
 }

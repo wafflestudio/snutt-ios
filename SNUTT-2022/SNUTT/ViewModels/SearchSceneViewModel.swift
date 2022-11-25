@@ -23,17 +23,17 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
 
     var searchText: String {
         get { _searchText }
-        set { services.searchService.setSearchText(newValue) }
+        set { Task { await services.searchService.setSearchText(newValue) }}
     }
 
     var isFilterOpen: Bool {
         get { _isFilterOpen }
-        set { services.searchService.setIsFilterOpen(newValue) }
+        set {Task { await services.searchService.setIsFilterOpen(newValue) }}
     }
 
     var selectedLecture: Lecture? {
         get { _selectedLecture }
-        set { services.searchService.setSelectedLecture(newValue) }
+        set {Task { await services.searchService.setSelectedLecture(newValue) }}
     }
 
     var currentTimetableWithSelection: Timetable? {
@@ -65,19 +65,19 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.searchService.fetchTags(quarter: currentTimetable.quarter)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
-    func initializeSearchState() {
-        services.searchService.initializeSearchState()
+    func initializeSearchState() async {
+        await services.searchService.initializeSearchState()
     }
 
     func fetchInitialSearchResult() async {
         do {
             try await services.searchService.fetchInitialSearchResult()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -85,12 +85,15 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.searchService.fetchMoreSearchResult()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
-    func deselectTag(_ tag: SearchTag) {
-        services.searchService.deselectTag(tag)
+    func deselectTag(_ tag: SearchTag){
+        Task {
+            await services.searchService.deselectTag(tag)
+            
+        }
     }
 
     func addLecture(lecture: Lecture) async {
@@ -105,7 +108,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
                         self.errorMessage = error.content
                     }
                 } else {
-                    services.globalUIService.presentErrorAlert(error: error)
+                    await services.globalUIService.presentErrorAlert(error: error)
                 }
             }
         }
@@ -115,7 +118,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -123,7 +126,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.lectureService.addLecture(lecture: lecture, isForced: true)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 

@@ -22,7 +22,7 @@ extension AccountSettingScene {
             do {
                 try await services.userService.deleteUser()
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
@@ -30,7 +30,7 @@ extension AccountSettingScene {
             do {
                 try await services.userService.disconnectFacebook()
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
@@ -38,7 +38,7 @@ extension AccountSettingScene {
             do {
                 try await services.userService.addLocalId(id: id, password: password)
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
@@ -47,7 +47,7 @@ extension AccountSettingScene {
                 try await services.userService.changePassword(from: oldPassword, to: newPassword)
                 return true
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
                 return false
             }
         }
@@ -59,7 +59,7 @@ extension AccountSettingScene.ViewModel: FacebookLoginProtocol {
         do {
             try await services.userService.connectFacebook(fbId: fbId, fbToken: fbToken)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 }

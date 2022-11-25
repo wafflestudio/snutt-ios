@@ -65,7 +65,7 @@ struct MenuSheetScene: View {
                         container.appState.menu.isOpen.toggle()
                     }
                     NavBarButton(imageName: "menu.ellipsis") {
-                        container.services.globalUIService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", updatedAt: "3232", totalCredit: 3))
+                        await container.services.globalUIService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", updatedAt: "3232", totalCredit: 3))
                     }
                 }
                 MenuSheetScene(viewModel: .init(container: container))

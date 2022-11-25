@@ -15,7 +15,7 @@ extension OnboardScene {
             do {
                 try await services.authService.registerWithId(id: id, password: password, email: email)
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
             }
         }
     }
@@ -26,7 +26,7 @@ extension OnboardScene.ViewModel: FacebookLoginProtocol {
         do {
             try await services.authService.loginWithFacebook(id: fbId, token: fbToken)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 }
@@ -41,7 +41,9 @@ extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
     }
 
     func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {
-        services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
+        Task {
+            await services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
+        }
     }
 
     func performAppleSignIn() {
@@ -58,13 +60,13 @@ extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
               let tokenData = credentail.identityToken,
               let token = String(data: tokenData, encoding: .utf8)
         else {
-            services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
+            await services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
             return
         }
         do {
             try await services.authService.loginWithApple(token: token)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 }

@@ -17,9 +17,9 @@ protocol TimetableServiceProtocol {
     func updateTimetableTitle(timetableId: String, title: String) async throws
     func updateTimetableTheme(timetableId: String) async throws
     func deleteTimetable(timetableId: String) async throws
-    func selectTimetableTheme(theme: Theme)
+    func selectTimetableTheme(theme: Theme) async
     func createTimetable(title: String, quarter: Quarter) async throws
-    func setTimetableConfig(config: TimetableConfiguration)
+    func setTimetableConfig(config: TimetableConfiguration) async
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -112,11 +112,11 @@ struct TimetableService: TimetableServiceProtocol {
         }
     }
 
-    @MainActor func selectTimetableTheme(theme: Theme) {
+    @MainActor func selectTimetableTheme(theme: Theme) async {
         appState.timetable.current?.selectedTheme = theme
     }
 
-    @MainActor func setTimetableConfig(config: TimetableConfiguration) {
+    @MainActor func setTimetableConfig(config: TimetableConfiguration) async {
         appState.timetable.configuration = config
         userDefaultsRepository.set(TimetableConfiguration.self, key: .timetableConfig, value: config)
     }
@@ -125,7 +125,7 @@ struct TimetableService: TimetableServiceProtocol {
         appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
     }
 
-    @MainActor private func updateState(to currentTimetable: Timetable) {
+    @MainActor private func updateState(to currentTimetable: Timetable) async {
         appState.timetable.current = currentTimetable
     }
 }

@@ -9,11 +9,13 @@ import SwiftUI
 
 struct NavBarButton: View {
     let imageName: String
-    let action: () -> Void
+    let action: () async -> Void
 
     var body: some View {
         Button {
-            action()
+            Task {
+                await action()
+            }
         } label: {
             Image(imageName)
         }

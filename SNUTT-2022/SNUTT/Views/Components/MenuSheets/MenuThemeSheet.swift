@@ -11,9 +11,9 @@ struct MenuThemeSheet: View {
     @Binding var isOpen: Bool
     var selectedTheme: Theme
 
-    var cancel: () -> Void
+    var cancel: () async -> Void
     var confirm: () async -> Void
-    var select: (Theme) -> Void
+    var select: (Theme) async -> Void
 
     var body: some View {
         Sheet(isOpen: $isOpen,
@@ -28,7 +28,9 @@ struct MenuThemeSheet: View {
                     HStack(spacing: 20) {
                         ForEach(Theme.allCases, id: \.rawValue) { theme in
                             Button {
-                                select(theme)
+                                Task {
+                                    await select(theme)
+                                }
                             } label: {
                                 VStack {
                                     Image(theme.imageName)

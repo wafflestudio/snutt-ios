@@ -41,7 +41,7 @@ extension LectureDetailScene {
                             self.errorMessage = error.content
                         }
                     } else {
-                        services.globalUIService.presentErrorAlert(error: error)
+                        await services.globalUIService.presentErrorAlert(error: error)
                     }
                 }
                 return false
@@ -53,7 +53,7 @@ extension LectureDetailScene {
                 try await lectureService.addLecture(lecture: lecture, isForced: true)
                 return true
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
                 return false
             }
         }
@@ -75,7 +75,7 @@ extension LectureDetailScene {
                             self.errorMessage = error.content
                         }
                     } else {
-                        services.globalUIService.presentErrorAlert(error: error)
+                        await services.globalUIService.presentErrorAlert(error: error)
                     }
                 }
                 return false
@@ -86,14 +86,17 @@ extension LectureDetailScene {
             do {
                 try await lectureService.deleteLecture(lecture: lecture)
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
         func openLectureTimeSheet(lecture: Binding<Lecture>, timePlace: TimePlace) {
-            services.globalUIService.setIsLectureTimeSheetOpen(true, modifying: timePlace) { modifiedTimePlace in
+            Task {
+                
+            await services.globalUIService.setIsLectureTimeSheetOpen(true, modifying: timePlace) { modifiedTimePlace in
                 guard let firstIndex = lecture.timePlaces.firstIndex(where: { $0.id == timePlace.id }) else { return }
                 lecture.wrappedValue.timePlaces[firstIndex] = modifiedTimePlace
+            }
             }
         }
 
@@ -103,7 +106,7 @@ extension LectureDetailScene {
                 guard let current = appState.timetable.current else { return nil }
                 return current.lectures.first(where: { $0.id == lecture.id })
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
             }
             return nil
         }
@@ -112,7 +115,7 @@ extension LectureDetailScene {
             do {
                 try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
@@ -124,7 +127,7 @@ extension LectureDetailScene {
             do {
                 return try await services.courseBookService.fetchSyllabusURL(quarter: currentQuarter, lecture: lecture)
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
                 return ""
             }
         }

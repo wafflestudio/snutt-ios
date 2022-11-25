@@ -136,7 +136,7 @@ extension SNUTTView {
             do {
                 try await services.popupService.getRecentPopupList()
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
             }
         }
     }
@@ -159,7 +159,7 @@ enum TabType: String {
 
 // TODO: move elsewhere if needed
 struct NavigationBarReader: UIViewControllerRepresentable {
-    var callback: @MainActor (UINavigationBar) -> Void
+    var callback: @MainActor (UINavigationBar) async -> Void
     private let proxyController = ViewController()
 
     func makeUIViewController(context _: UIViewControllerRepresentableContext<NavigationBarReader>) -> UIViewController {
@@ -170,12 +170,14 @@ struct NavigationBarReader: UIViewControllerRepresentable {
     func updateUIViewController(_: UIViewController, context _: UIViewControllerRepresentableContext<NavigationBarReader>) {}
 
     private class ViewController: UIViewController {
-        var callback: @MainActor (UINavigationBar) -> Void = { _ in }
+        var callback: @MainActor (UINavigationBar) async -> Void = { _ in }
 
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
             if let navBar = navigationController {
-                callback(navBar.navigationBar)
+                Task {
+                    await callback(navBar.navigationBar)
+                }
             }
         }
     }

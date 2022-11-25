@@ -17,12 +17,16 @@ extension FacebookLoginProtocol {
         LoginManager().logIn(permissions: [Permission.publicProfile.name], from: nil) { result, error in
 
             if error != nil {
-                self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                Task {
+                    await self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                }
                 return
             }
 
             guard let result = result else {
-                self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                Task {
+                    await self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                }
                 return
             }
 
@@ -33,7 +37,9 @@ extension FacebookLoginProtocol {
             guard let fbUserId = result.token?.userID,
                   let fbToken = result.token?.tokenString
             else {
-                self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                Task {
+                    await self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                }
                 return
             }
 

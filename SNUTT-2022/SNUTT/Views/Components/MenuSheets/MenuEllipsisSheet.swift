@@ -9,16 +9,16 @@ import SwiftUI
 
 struct MenuEllipsisSheet: View {
     @Binding var isOpen: Bool
-    var openRenameSheet: () -> Void
+    var openRenameSheet: () async -> Void
     var deleteTimetable: () async -> Void
-    var openThemeSheet: () -> Void
+    var openThemeSheet: () async -> Void
     @State private var isDeleteAlertPresented = false
 
     var body: some View {
         Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 180)) {
             VStack(spacing: 0) {
                 EllipsisSheetButton(imageName: "pen", text: "이름 변경", isSheetOpen: isOpen) {
-                    openRenameSheet()
+                    await openRenameSheet()
                 }
 
                 EllipsisSheetButton(imageName: "trash", text: "시간표 삭제", isSheetOpen: isOpen) {
@@ -34,7 +34,7 @@ struct MenuEllipsisSheet: View {
                 }
 
                 EllipsisSheetButton(imageName: "palette", text: "시간표 테마 설정", isSheetOpen: isOpen) {
-                    openThemeSheet()
+                    await openThemeSheet()
                 }
             }
         }

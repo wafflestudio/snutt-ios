@@ -17,7 +17,7 @@ class SettingViewModel: BaseViewModel {
         do {
             try await services.authService.logout()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -25,7 +25,7 @@ class SettingViewModel: BaseViewModel {
         do {
             try await services.userService.fetchUser()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -41,14 +41,14 @@ class SettingViewModel: BaseViewModel {
 
     func sendFeedback(email: String, message: String) async -> Bool {
         if !Validation.check(email: email) {
-            services.globalUIService.presentErrorAlert(error: .INVALID_EMAIL)
+            await services.globalUIService.presentErrorAlert(error: .INVALID_EMAIL)
             return false
         }
         do {
             try await services.etcService.sendFeedback(email: email, message: message)
             return true
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
             return false
         }
     }

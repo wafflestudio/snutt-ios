@@ -10,7 +10,7 @@ import SwiftUI
 struct PopupView: View {
     let popup: Popup
     let dismissOnce: (PopupView) -> Void
-    let dismissNdays: (PopupView) -> Void
+    let dismissNdays: (PopupView) async -> Void
 
     var body: some View {
         AsyncImage(url: URL(string: popup.imageURL)!, transaction: Transaction(animation: .customSpring)) { phase in
@@ -25,7 +25,9 @@ struct PopupView: View {
                         Spacer()
 
                         Button {
-                            dismissNdays(self)
+                            Task {
+                                await dismissNdays(self)
+                            }
                         } label: {
                             Text("당분간 보지 않기")
                                 .foregroundColor(.white)

@@ -33,7 +33,7 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         localRepositories.userDefaultsRepository
     }
 
-    @MainActor private func saveAccessTokenFromLoginResponse(dto: LoginResponseDto) {
+    @MainActor private func saveAccessTokenFromLoginResponse(dto: LoginResponseDto) async {
         appState.user.accessToken = dto.token
         appState.user.userId = dto.user_id
         userDefaultsRepository.set(String.self, key: .token, value: dto.token)
@@ -90,11 +90,11 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
 protocol UserAuthHandler {
     var appState: AppState { get set }
     var localRepositories: AppEnvironment.LocalRepositories { get set }
-    func clearUserInfo()
+    func clearUserInfo() async
 }
 
 extension UserAuthHandler {
-    @MainActor func clearUserInfo() {
+    @MainActor func clearUserInfo() async {
         appState.user.accessToken = nil
         appState.user.userId = nil
         appState.user.current = nil

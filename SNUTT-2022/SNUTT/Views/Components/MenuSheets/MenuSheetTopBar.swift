@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MenuSheetTopBar: View {
-    var cancel: () -> Void
+    var cancel: () async -> Void
     var confirm: () async -> Void
     var confirmDisabled: Bool = false
 
@@ -18,7 +18,9 @@ struct MenuSheetTopBar: View {
     var body: some View {
         HStack {
             Button {
-                cancel()
+                Task {
+                    await cancel()
+                }
             } label: {
                 Text("취소")
                     .animation(.customSpring, value: isSheetOpen)

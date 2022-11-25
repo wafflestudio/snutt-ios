@@ -87,7 +87,7 @@ extension TimetableSettingScene {
 
         var timetableConfig: TimetableConfiguration {
             get { _timetableConfig }
-            set { services.timetableService.setTimetableConfig(config: newValue) }
+            set { Task { await services.timetableService.setTimetableConfig(config: newValue) }}
         }
 
         var minHour: Date {

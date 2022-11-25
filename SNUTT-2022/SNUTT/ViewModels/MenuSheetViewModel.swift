@@ -15,49 +15,49 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published private var _isMenuSheetOpen: Bool = false
     var isMenuSheetOpen: Bool {
         get { _isMenuSheetOpen }
-        set { services.globalUIService.setIsMenuOpen(newValue) }
+        set { Task {await services.globalUIService.setIsMenuOpen(newValue) }}
     }
 
     @Published private var _isEllipsisSheetOpen: Bool = false
     var isEllipsisSheetOpen: Bool {
         get { _isEllipsisSheetOpen }
-        set { services.globalUIService.closeEllipsis() } // close-only; the sheets can't open themselves
+        set { Task { await services.globalUIService.closeEllipsis() }} // close-only; the sheets can't open themselves
     }
 
     @Published private var _isThemeSheetOpen: Bool = false
     var isThemeSheetOpen: Bool {
         get { _isThemeSheetOpen }
-        set { services.globalUIService.closeThemeSheet() } // close-only;
+        set { Task {await services.globalUIService.closeThemeSheet() }} // close-only;
     }
 
     @Published private var _isRenameSheetOpen: Bool = false
     var isRenameSheetOpen: Bool {
         get { _isRenameSheetOpen }
-        set { services.globalUIService.closeRenameSheet() } // close-only;
+        set { Task { await services.globalUIService.closeRenameSheet() } } // close-only;
     }
 
     @Published private var _isCreateSheetOpen: Bool = false
     var isCreateSheetOpen: Bool {
         get { _isCreateSheetOpen }
-        set { services.globalUIService.closeCreateSheet() } // close-only;
+        set { Task {await services.globalUIService.closeCreateSheet() }} // close-only;
     }
 
     @Published private var _renameTitle: String = ""
     var renameTitle: String {
         get { _renameTitle }
-        set { services.globalUIService.setRenameTitle(newValue) }
+        set { Task { await services.globalUIService.setRenameTitle(newValue) } }
     }
 
     @Published private var _createTitle: String = ""
     var createTitle: String {
         get { _createTitle }
-        set { services.globalUIService.setCreateTitle(newValue) }
+        set { Task {await services.globalUIService.setCreateTitle(newValue) }}
     }
 
     @Published private var _createQuarter: Quarter?
     var createQuarter: Quarter? {
         get { _createQuarter }
-        set { services.globalUIService.setCreateQuarter(newValue) }
+        set { Task {await services.globalUIService.setCreateQuarter(newValue) }}
     }
 
     override init(container: DIContainer) {
@@ -95,33 +95,35 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         return dict
     }
 
-    func openThemeSheet() {
+    func openThemeSheet() async  {
         if menuState.ellipsisTarget?.id != appState.timetable.current?.id {
-            services.globalUIService.presentErrorAlert(error: .CANT_CHANGE_OTHERS_THEME)
-            services.globalUIService.closeEllipsis()
+            await services.globalUIService.presentErrorAlert(error: .CANT_CHANGE_OTHERS_THEME)
+            await services.globalUIService.closeEllipsis()
             return
         }
-        services.globalUIService.openThemeSheet()
+        await services.globalUIService.openThemeSheet()
     }
 
-    func openRenameSheet() {
-        services.globalUIService.openRenameSheet()
+    func openRenameSheet() async {
+        await services.globalUIService.openRenameSheet()
     }
 
-    func closeRenameSheet() {
-        services.globalUIService.closeRenameSheet()
+    func closeRenameSheet() async {
+        await services.globalUIService.closeRenameSheet()
     }
 
     func openCreateSheet(withPicker: Bool) {
-        services.globalUIService.openCreateSheet(withPicker: withPicker)
+        Task {
+            await services.globalUIService.openCreateSheet(withPicker: withPicker)
+        }
     }
 
     func selectTimetable(timetableId: String) async {
         do {
-            services.searchService.initializeSearchState()
+            await services.searchService.initializeSearchState()
             try await services.timetableService.fetchTimetable(timetableId: timetableId)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -129,21 +131,23 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.timetableService.copyTimetable(timetableId: timetableId)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
     func openEllipsis(for timetable: TimetableMetadata) {
-        services.globalUIService.openEllipsis(for: timetable)
+        Task {
+            await services.globalUIService.openEllipsis(for: timetable)
+        }
     }
 
     func applyRenameSheet() async {
         guard let timetableId = menuState.ellipsisTarget?.id else { return }
         do {
             try await services.timetableService.updateTimetableTitle(timetableId: timetableId, title: menuState.renameTitle)
-            services.globalUIService.closeRenameSheet()
+            await services.globalUIService.closeRenameSheet()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
@@ -151,14 +155,14 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         guard let timetableId = menuState.ellipsisTarget?.id else { return }
         do {
             try await services.timetableService.deleteTimetable(timetableId: timetableId)
-            services.globalUIService.closeEllipsis()
+            await services.globalUIService.closeEllipsis()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
-    func closeThemeSheet() {
-        services.globalUIService.closeThemeSheet()
+    func closeThemeSheet() async {
+        await services.globalUIService.closeThemeSheet()
     }
 
     func applyThemeSheet() async {
@@ -166,14 +170,14 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
 
         do {
             try await services.timetableService.updateTimetableTheme(timetableId: timetableId)
-            services.globalUIService.closeThemeSheet()
+            await services.globalUIService.closeThemeSheet()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
-    func closeCreateSheet() {
-        services.globalUIService.closeCreateSheet()
+    func closeCreateSheet() async {
+        await services.globalUIService.closeCreateSheet()
     }
 
     func applyCreateSheet() async {
@@ -181,14 +185,14 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.timetableService.createTimetable(title: menuState.createTitle, quarter: quarter)
             try await services.timetableService.fetchRecentTimetable() // change current timetable to newly created one
-            services.globalUIService.closeCreateSheet()
+            await services.globalUIService.closeCreateSheet()
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            await services.globalUIService.presentErrorAlert(error: error)
         }
     }
 
-    func selectTheme(theme: Theme) {
-        services.timetableService.selectTimetableTheme(theme: theme)
+    func selectTheme(theme: Theme) async {
+        await services.timetableService.selectTimetableTheme(theme: theme)
     }
 
     var selectedTheme: Theme {

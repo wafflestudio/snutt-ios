@@ -43,8 +43,8 @@ extension PopupScene {
             services.popupService.showNextPopup()
         }
 
-        func dismissNdays(popupView: PopupView) {
-            services.popupService.saveLastUpdate(popup: popupView.popup)
+        func dismissNdays(popupView: PopupView) async {
+            await services.popupService.saveLastUpdate(popup: popupView.popup)
             services.popupService.showNextPopup()
         }
     }

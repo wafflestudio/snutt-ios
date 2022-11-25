@@ -54,7 +54,7 @@ extension LoginScene {
             do {
                 try await services.authService.loginWithId(id: id, password: password)
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                await services.globalUIService.presentErrorAlert(error: error)
             }
         }
     }

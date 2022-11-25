@@ -15,7 +15,7 @@ struct Sheet<Content>: View where Content: View {
     var sheetOpacity: CGFloat = 1
     var disableBackgroundTap: Bool = false
     var disableDragGesture: Bool = false
-    var onBackgroundTap: (() -> Void)?
+    var onBackgroundTap: (() async -> Void)?
     @ViewBuilder var content: () -> Content
 
     @GestureState private var translation: CGFloat = 0
@@ -50,7 +50,9 @@ struct Sheet<Content>: View where Content: View {
                         withAnimation(.easeInOut(duration: 0.2)) {
                             self.isOpen = false
                         }
-                        onBackgroundTap?()
+                        Task {
+                            await onBackgroundTap?()
+                        }
                     }
                 }
 
