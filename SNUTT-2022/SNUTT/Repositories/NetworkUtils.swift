@@ -8,6 +8,7 @@
 import Alamofire
 import Foundation
 import UIKit
+import FirebaseCrashlytics
 
 final class Interceptor: RequestInterceptor {
     private let userState: UserState
@@ -100,24 +101,47 @@ extension DataTask {
         if let dto = try? await value {
             return dto
         }
-        #if DEBUG
-            if let requestBody = (await response.request?.httpBody) {
-                debugPrint("Error Request Body: \(String(data: requestBody, encoding: .utf8) ?? "")")
-            }
-            if let responseBody = (await response.data) {
-                debugPrint("Error Raw Response: \(String(describing: String(data: responseBody, encoding: .utf8)))")
-            }
-        #endif
+        
+        var userInfo: [String : Any] = [:]
+        
+        if let requestHeader = (await response.request?.headers.description) {
+            userInfo["RequestHeader"] = requestHeader
+        }
+        
+        if let requestBody = (await response.request?.httpBody),
+           let requestBodyDecoded = String(data: requestBody, encoding: .utf8) {
+            #if DEBUG
+            debugPrint("Error Request Body: \(requestBodyDecoded)")
+            #endif
+            userInfo["RequestBody"] = requestBodyDecoded
+        }
+        
+        if let responseBody = (await response.data),
+           let responseBodyDecoded = String(data: responseBody, encoding: .utf8) {
+            #if DEBUG
+            debugPrint("Error Raw Response: \(responseBodyDecoded)")
+            #endif
+            userInfo["ResponseBody"] = responseBodyDecoded
+        }
+        
         if let data = await response.data,
            let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data)
         {
             let errCode = ErrorCode(rawValue: errDto.errcode) ?? .SERVER_FAULT
+            userInfo["ErrorMessage"] = errCode.errorMessage
+            
+            if errCode == .SERVER_FAULT {
+                Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: userInfo))
+            }
+            
             if let serverMessage = errDto.ext?.first?.1 {
                 throw STError(errCode, content: serverMessage)
             } else {
                 throw STError(errCode)
             }
         }
+        
+        Crashlytics.crashlytics().record(error: NSError(domain: "UNKNOWN_ERROR", code: -1, userInfo: userInfo))
         throw STError(.SERVER_FAULT)
     }
 }
