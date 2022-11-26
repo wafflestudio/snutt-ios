@@ -27,7 +27,7 @@ struct TimetableBlock: View {
                     if !timePlace.place.isEmpty {
                         Text(timePlace.place)
                             .font(STFont.detailsSemibold)
-                            .padding(2)
+                            .padding(.top, 2)
                             .minimumScaleFactor(0.5)
                             .lineLimit(1)
                     }
