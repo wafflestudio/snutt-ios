@@ -17,6 +17,7 @@ jobs:
         # see https://github.com/actions/virtual-environments/blob/main/images/macos/macos-12-Readme.md for available versions
         xcode: 
           - '13.4.1'
+          - '14.1'
         macos: ['macos-12']
         command: ['build', 'test']
         scheme: ['SNUTT']
