@@ -82,12 +82,12 @@ jobs:
           echo "$DEBUG_CONFIG" > SNUTT/DebugConfig.xcconfig
           echo "$RELEASE_CONFIG" > SNUTT/ReleaseConfig.xcconfig
 
-      - name: Upload dev app to testflight
+      - name: Upload dev app to TestFlight
         if: ${{ steps.regex.outputs.group1 == 'testflight' && steps.regex.outputs.group5 == 'debug' }}
         run: |
           bundle exec fastlane beta --env dev
 
-      - name: Upload prod app to testflight
+      - name: Upload prod app to TestFlight
         if: ${{ steps.regex.outputs.group1 == 'testflight' && steps.regex.outputs.group5 == 'release' }}
         run: |
           bundle exec fastlane beta --env prod
@@ -95,5 +95,4 @@ jobs:
       - name: Upload prod app to App Store
         if: ${{ steps.regex.outputs.group1 == 'appstore' && steps.regex.outputs.group4 == 'release' }}
         run: |
-          echo "Not Implemented"
-          # bundle exec fastlane appstore --env prod
+          bundle exec fastlane release --env prod
