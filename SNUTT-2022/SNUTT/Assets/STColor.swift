@@ -53,7 +53,7 @@ extension Color {
         if str.count == 8 {
             str = String(str.suffix(6))
         }
-        
+
         // fallback
         if str.count != 6 {
             self.init(uiColor: .init(LectureColor.temporary.bg))
