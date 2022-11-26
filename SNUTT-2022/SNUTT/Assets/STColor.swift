@@ -49,10 +49,15 @@ extension Color {
         str = str.replacingOccurrences(of: "#", with: "")
         str = str.replacingOccurrences(of: "0X", with: "")
 
+        // for aRGB
+        if str.count == 8 {
+            str = String(str.suffix(6))
+        }
+        
+        // fallback
         if str.count != 6 {
-            let start = str.index(str.startIndex, offsetBy: 2)
-            let end = str.endIndex
-            str = String(str[start ..< end])
+            self.init(uiColor: .init(LectureColor.temporary.bg))
+            return
         }
 
         var rgbValue: UInt64 = 0
