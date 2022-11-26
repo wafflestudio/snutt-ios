@@ -78,20 +78,16 @@ final class Logger: EventMonitor {
 
     // Event called when any type of Request is resumed.
     func requestDidResume(_ request: Request) {
-        #if DEBUG
-            debugPrint("Resuming: \(request)")
-        #endif
+        debugPrint("Resuming: \(request)")
     }
 
     // Event called whenever a DataRequest has parsed a response.
     func request<Value>(_: DataRequest, didParseResponse response: DataResponse<Value, AFError>) {
-        #if DEBUG
-            if response.error == nil {
-                debugPrint("Finished: \(response)")
-            } else {
-                debugPrint("Error: \(response)")
-            }
-        #endif
+        if response.error == nil {
+            debugPrint("Finished: \(response)")
+        } else {
+            debugPrint("Error: \(response)")
+        }
     }
 }
 
@@ -111,18 +107,14 @@ extension DataTask {
         if let requestBody = (await response.request?.httpBody),
            let requestBodyDecoded = String(data: requestBody, encoding: .utf8)
         {
-            #if DEBUG
-                debugPrint("Error Request Body: \(requestBodyDecoded)")
-            #endif
+            debugPrint("Error Request Body: \(requestBodyDecoded)")
             userInfo["RequestBody"] = requestBodyDecoded
         }
 
         if let responseBody = (await response.data),
            let responseBodyDecoded = String(data: responseBody, encoding: .utf8)
         {
-            #if DEBUG
-                debugPrint("Error Raw Response: \(responseBodyDecoded)")
-            #endif
+            debugPrint("Error Raw Response: \(responseBodyDecoded)")
             userInfo["ResponseBody"] = responseBodyDecoded
         }
 
