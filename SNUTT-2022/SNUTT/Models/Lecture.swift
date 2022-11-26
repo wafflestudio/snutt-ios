@@ -40,11 +40,6 @@ struct Lecture: Identifiable {
     }
 
     func getColor(with theme: Theme? = nil) -> LectureColor {
-        // use temporary if color itself is temporary
-        if color == .temporary {
-            return .temporary
-        }
-
         // use custom color if colorIndex is zero
         if colorIndex == 0, let color = color {
             return color
