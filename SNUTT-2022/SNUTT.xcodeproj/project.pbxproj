@@ -21,16 +21,7 @@
 		B87DF6ED2914FAFB008BB95B /* PopupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */; };
 		B87DF6EF2914FC02008BB95B /* PopupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EE2914FC02008BB95B /* PopupRepository.swift */; };
 		B87DF6F129150A00008BB95B /* PopupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F029150A00008BB95B /* PopupService.swift */; };
-		B87DF6F52918AB5D008BB95B /* Date+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+ext.swift */; };
-		B87DF6F92918B7AD008BB95B /* PopupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F82918B7AD008BB95B /* PopupState.swift */; };
-		B87DF6FB291A4303008BB95B /* PopupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6FA291A4303008BB95B /* PopupScene.swift */; };
 		B87DF6F329152649008BB95B /* View+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F229152649008BB95B /* View+Screenshot.swift */; };
-		B87DF6E729139B8D008BB95B /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6E629139B8D008BB95B /* PopupView.swift */; };
-		B87DF6E92914F8FC008BB95B /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6E82914F8FC008BB95B /* Popup.swift */; };
-		B87DF6EB2914F962008BB95B /* PopupDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EA2914F962008BB95B /* PopupDto.swift */; };
-		B87DF6ED2914FAFB008BB95B /* PopupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */; };
-		B87DF6EF2914FC02008BB95B /* PopupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6EE2914FC02008BB95B /* PopupRepository.swift */; };
-		B87DF6F129150A00008BB95B /* PopupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F029150A00008BB95B /* PopupService.swift */; };
 		B87DF6F52918AB5D008BB95B /* Date+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+ext.swift */; };
 		B87DF6F92918B7AD008BB95B /* PopupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F82918B7AD008BB95B /* PopupState.swift */; };
 		B87DF6FB291A4303008BB95B /* PopupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6FA291A4303008BB95B /* PopupScene.swift */; };
@@ -57,7 +48,6 @@
 		BE060BD928DF4C1E00A2F1B9 /* OnboardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE060BD828DF4C1E00A2F1B9 /* OnboardScene.swift */; };
 		BE060C1228DF573900A2F1B9 /* UserDefaults+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F570A5289E1221005C199F /* UserDefaults+ext.swift */; };
 		BE0743DD28DC08CE00999F86 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0743DC28DC08CE00999F86 /* TestUtils.swift */; };
-		BE0743E128DC0A6500999F86 /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507827F42D7500CDCC13 /* STColor.swift */; };
 		BE0743E228DC0A6700999F86 /* STFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507627F42D1100CDCC13 /* STFont.swift */; };
 		BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */; };
 		BE13C5B628AE636D0081D0AB /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */; };
@@ -284,16 +274,7 @@
 		B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRouter.swift; sourceTree = "<group>"; };
 		B87DF6EE2914FC02008BB95B /* PopupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRepository.swift; sourceTree = "<group>"; };
 		B87DF6F029150A00008BB95B /* PopupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupService.swift; sourceTree = "<group>"; };
-		B87DF6F42918AB5D008BB95B /* Date+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ext.swift"; sourceTree = "<group>"; };
-		B87DF6F82918B7AD008BB95B /* PopupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupState.swift; sourceTree = "<group>"; };
-		B87DF6FA291A4303008BB95B /* PopupScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupScene.swift; sourceTree = "<group>"; };
 		B87DF6F229152649008BB95B /* View+Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Screenshot.swift"; sourceTree = "<group>"; };
-		B87DF6E629139B8D008BB95B /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
-		B87DF6E82914F8FC008BB95B /* Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
-		B87DF6EA2914F962008BB95B /* PopupDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDto.swift; sourceTree = "<group>"; };
-		B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRouter.swift; sourceTree = "<group>"; };
-		B87DF6EE2914FC02008BB95B /* PopupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupRepository.swift; sourceTree = "<group>"; };
-		B87DF6F029150A00008BB95B /* PopupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupService.swift; sourceTree = "<group>"; };
 		B87DF6F42918AB5D008BB95B /* Date+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ext.swift"; sourceTree = "<group>"; };
 		B87DF6F82918B7AD008BB95B /* PopupState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupState.swift; sourceTree = "<group>"; };
 		B87DF6FA291A4303008BB95B /* PopupScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupScene.swift; sourceTree = "<group>"; };
@@ -1067,7 +1048,7 @@
 			);
 			mainGroup = DC860F3C27E5C87D0068C94B;
 			packageReferences = (
-				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
+				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 				BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
@@ -1333,7 +1314,6 @@
 				BE060C1228DF573900A2F1B9 /* UserDefaults+ext.swift in Sources */,
 				DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */,
 				BE95D1F928DF32EC009C0C0B /* AuthRepositoryTests.swift in Sources */,
-				BE0743E128DC0A6500999F86 /* STColor.swift in Sources */,
 				BE682BD3288676FA009EBCB7 /* LectureRepositoryTests.swift in Sources */,
 				BE0743E228DC0A6700999F86 /* STFont.swift in Sources */,
 			);
@@ -1992,7 +1972,7 @@
 				minimumVersion = 14.1.0;
 			};
 		};
-		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
+		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -2030,7 +2010,7 @@
 		};
 		BEDE34D32879A59B00525014 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
+			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */

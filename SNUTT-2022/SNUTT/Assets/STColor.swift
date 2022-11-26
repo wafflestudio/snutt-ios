@@ -56,7 +56,7 @@ extension Color {
 
         // fallback
         if str.count != 6 {
-            self.init(uiColor: .init(LectureColor.temporary.bg))
+            self.init(.init(LectureColor.temporary.bg))
             return
         }
 
