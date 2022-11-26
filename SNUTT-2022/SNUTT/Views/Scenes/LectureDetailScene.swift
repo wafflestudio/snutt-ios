@@ -181,7 +181,7 @@ struct LectureDetailScene: View {
                     }
                     .padding()
 
-                    if displayMode != .create && !editMode.isEditing {
+                    if !lecture.isCustom && displayMode != .create && !editMode.isEditing {
                         DetailButton(text: "강의계획서") {
                             Task {
                                 syllabusURL = await viewModel.fetchSyllabusURL(of: lecture)
@@ -206,7 +206,7 @@ struct LectureDetailScene: View {
                         }
                     }
 
-                    if displayMode == .normal && editMode.isEditing {
+                    if !lecture.isCustom && displayMode == .normal && editMode.isEditing {
                         DetailButton(text: "초기화", role: .destructive) {
                             isResetAlertPresented = true
                         }
@@ -227,7 +227,7 @@ struct LectureDetailScene: View {
                         }
                     }
 
-                    if displayMode == .normal {
+                    if displayMode == .normal && !editMode.isEditing {
                         DetailButton(text: "삭제", role: .destructive) {
                             isDeleteAlertPresented = true
                         }
