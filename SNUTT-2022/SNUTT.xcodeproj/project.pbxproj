@@ -49,7 +49,6 @@
 		BE060BD928DF4C1E00A2F1B9 /* OnboardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE060BD828DF4C1E00A2F1B9 /* OnboardScene.swift */; };
 		BE060C1228DF573900A2F1B9 /* UserDefaults+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F570A5289E1221005C199F /* UserDefaults+ext.swift */; };
 		BE0743DD28DC08CE00999F86 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0743DC28DC08CE00999F86 /* TestUtils.swift */; };
-		BE0743E128DC0A6500999F86 /* STColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507827F42D7500CDCC13 /* STColor.swift */; };
 		BE0743E228DC0A6700999F86 /* STFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507627F42D1100CDCC13 /* STFont.swift */; };
 		BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */; };
 		BE13C5B628AE636D0081D0AB /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */; };
@@ -1343,7 +1342,6 @@
 				BE060C1228DF573900A2F1B9 /* UserDefaults+ext.swift in Sources */,
 				DC860F5A27E5C87F0068C94B /* SNUTTTests.swift in Sources */,
 				BE95D1F928DF32EC009C0C0B /* AuthRepositoryTests.swift in Sources */,
-				BE0743E128DC0A6500999F86 /* STColor.swift in Sources */,
 				BE682BD3288676FA009EBCB7 /* LectureRepositoryTests.swift in Sources */,
 				BE0743E228DC0A6700999F86 /* STFont.swift in Sources */,
 			);

@@ -59,21 +59,23 @@ struct LectureDetailScene: View {
                             }
                         }
 
-                        HStack {
-                            DetailLabel(text: "색")
-                            NavigationLink {
-                                LectureColorList(theme: lecture.theme ?? .snutt, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
-                            } label: {
-                                HStack {
-                                    LectureColorPreview(lectureColor: lecture.getColor())
-                                        .frame(height: 25)
-                                    Spacer()
-                                    if editMode.isEditing {
-                                        Image("chevron.right")
+                        if displayMode != .preview {
+                            HStack {
+                                DetailLabel(text: "색")
+                                NavigationLink {
+                                    LectureColorList(theme: lecture.theme ?? .snutt, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
+                                } label: {
+                                    HStack {
+                                        LectureColorPreview(lectureColor: lecture.getColor())
+                                            .frame(height: 25)
+                                        Spacer()
+                                        if editMode.isEditing {
+                                            Image("chevron.right")
+                                        }
                                     }
                                 }
+                                .disabled(!editMode.isEditing)
                             }
-                            .disabled(!editMode.isEditing)
                         }
                     }
                     .padding()
@@ -179,7 +181,7 @@ struct LectureDetailScene: View {
                     }
                     .padding()
 
-                    if displayMode != .create && !editMode.isEditing {
+                    if !lecture.isCustom && displayMode != .create && !editMode.isEditing {
                         DetailButton(text: "강의계획서") {
                             Task {
                                 syllabusURL = await viewModel.fetchSyllabusURL(of: lecture)
@@ -204,7 +206,7 @@ struct LectureDetailScene: View {
                         }
                     }
 
-                    if displayMode == .normal && editMode.isEditing {
+                    if !lecture.isCustom && displayMode == .normal && editMode.isEditing {
                         DetailButton(text: "초기화", role: .destructive) {
                             isResetAlertPresented = true
                         }
@@ -225,7 +227,7 @@ struct LectureDetailScene: View {
                         }
                     }
 
-                    if displayMode == .normal {
+                    if displayMode == .normal && !editMode.isEditing {
                         DetailButton(text: "삭제", role: .destructive) {
                             isDeleteAlertPresented = true
                         }
@@ -283,10 +285,15 @@ struct LectureDetailScene: View {
                             guard let tempLecture = tempLecture else { return }
                             // save
                             Task {
-                                if await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture) {
-                                    editMode = .inactive
-                                    resignFirstResponder()
+                                if await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture),
+                                   let updatedLecture = viewModel.searchLecture(lecture)
+                                {
+                                    lecture = updatedLecture
+                                } else {
+                                    lecture = tempLecture
                                 }
+                                editMode = .inactive
+                                resignFirstResponder()
                             }
                         } else {
                             // edit

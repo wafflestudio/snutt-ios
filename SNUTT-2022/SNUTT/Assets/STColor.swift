@@ -49,8 +49,14 @@ extension Color {
         str = str.replacingOccurrences(of: "#", with: "")
         str = str.replacingOccurrences(of: "0X", with: "")
 
+        // for aRGB
+        if str.count == 8 {
+            str = String(str.suffix(6))
+        }
+
+        // fallback
         if str.count != 6 {
-            self.init(uiColor: .gray)
+            self.init(.init(LectureColor.temporary.bg))
             return
         }
 
@@ -61,29 +67,15 @@ extension Color {
     }
 
     func toHex() -> String {
-        return UIColor(self).toHex()
-    }
-}
+        let uiColor = UIColor(self)
+        guard let components = uiColor.cgColor.components, components.count >= 3 else {
+            return ""
+        }
 
-extension UIColor {
-    convenience init(hex: UInt64, alpha: Double = 1) {
-        self.init(.init(hex: hex, alpha: alpha))
-    }
+        let red = lroundf(Float(components[0]) * 255)
+        let green = lroundf(Float(components[1]) * 255)
+        let blue = lroundf(Float(components[2]) * 255)
 
-    convenience init(hex: String, alpha: Double = 1) {
-        self.init(.init(hex: hex, alpha: alpha))
-    }
-
-    func toHex() -> String {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-
-        getRed(&r, green: &g, blue: &b, alpha: &a)
-
-        let rgb = Int(r * 255) << 16 | Int(g * 255) << 8 | Int(b * 255) << 0
-
-        return String(format: "#%06x", rgb)
+        return String(format: "#%02X%02X%02X", red, green, blue)
     }
 }
