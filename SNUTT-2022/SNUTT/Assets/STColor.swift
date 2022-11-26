@@ -48,16 +48,16 @@ extension Color {
 
         str = str.replacingOccurrences(of: "#", with: "")
         str = str.replacingOccurrences(of: "0X", with: "")
-        
+
         if str.count != 6 {
             let start = str.index(str.startIndex, offsetBy: 2)
             let end = str.endIndex
-            str = String(str[start..<end])
+            str = String(str[start ..< end])
         }
 
         var rgbValue: UInt64 = 0
         Scanner(string: str).scanHexInt64(&rgbValue)
-        
+
         self.init(hex: rgbValue, alpha: alpha)
     }
 
