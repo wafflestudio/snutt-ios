@@ -74,7 +74,7 @@ platform :ios do
 
   desc "📱 Upload app to App Store"
   lane :release do
-    begin
+    # begin
       setup_ci
       certificates_distribution
       increment_version_number(version_number: VERSION_NUMBER)
@@ -90,30 +90,30 @@ platform :ios do
         key_content: KEY_CONTENT,
         )
       # release = get_github_release(url: "wafflestudio/snutt-ios", version: GIT_TAG_NAME)
-      upload_to_appstore(
+      upload_to_app_store(
           release_notes: "테스트 릴리즈 노트입니다.",
           submit_for_review: false,
           skip_screenshots: true,
       )
-      slack(
-        message: "App successfully uploaded to App Store 🎉",
-        channel: "#team-snutt-deploy",
-        slack_url: SLACK_WEBHOOK,
-        success: true,
-        attachment_properties: {
-          fields: [
-                {
-                    title: "Tag",
-                    value: GIT_TAG_NAME,
-                    short: false
-                }
-            ]
-        },
-        default_payloads: [:git_branch, :git_author, :last_git_commit_hash, :last_git_commit]
-      )
-    rescue => exception
-        on_error(exception)
-    end
+    #   slack(
+    #     message: "App successfully uploaded to App Store 🎉",
+    #     channel: "#team-snutt-deploy",
+    #     slack_url: SLACK_WEBHOOK,
+    #     success: true,
+    #     attachment_properties: {
+    #       fields: [
+    #             {
+    #                 title: "Tag",
+    #                 value: GIT_TAG_NAME,
+    #                 short: false
+    #             }
+    #         ]
+    #     },
+    #     default_payloads: [:git_branch, :git_author, :last_git_commit_hash, :last_git_commit]
+    #   )
+    # rescue => exception
+    #     on_error(exception)
+    # end
   end
 
   desc "🛠️ Update xcodeproj file"

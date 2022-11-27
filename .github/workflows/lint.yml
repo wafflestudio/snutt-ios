@@ -1,65 +1,65 @@
-name: Lint
+# name: Lint
 
-on:
-  pull_request:
-    paths:
-      - ".github/workflows/lint.yml"
-      - "**.swift"
-      - '.swiftlint.yml'
-      - '.swiftformat'
+# on:
+#   pull_request:
+#     paths:
+#       - ".github/workflows/lint.yml"
+#       - "**.swift"
+#       - '.swiftlint.yml'
+#       - '.swiftformat'
 
-jobs:
-  format:
-    name: SwiftFormat
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
+# jobs:
+#   format:
+#     name: SwiftFormat
+#     runs-on: macos-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
+#           ref: ${{ github.event.pull_request.head.sha }}
           
-      - name: Print current branch name
-        run: |
-          echo ${{ github.ref_name }}
-          git log -1
+#       - name: Print current branch name
+#         run: |
+#           echo ${{ github.ref_name }}
+#           git log -1
       
-      - run: |
-          echo ${{ github.event.pull_request.head.sha }}
-          echo ${{ github.event.pull_request.base.sha }}
+#       - run: |
+#           echo ${{ github.event.pull_request.head.sha }}
+#           echo ${{ github.event.pull_request.base.sha }}
 
-      - name: Get list changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v17
-        with:
-          sha: ${{ github.event.pull_request.head.sha }}
-          base_sha: ${{ github.event.pull_request.base.sha }}
-          separator: ","
-          files: |
-            **/*.swift
+#       - name: Get list changed files
+#         id: changed-files
+#         uses: tj-actions/changed-files@v17
+#         with:
+#           sha: ${{ github.event.pull_request.head.sha }}
+#           base_sha: ${{ github.event.pull_request.base.sha }}
+#           separator: ","
+#           files: |
+#             **/*.swift
 
-      - name: Install SwiftFormat
-        run: brew install swiftformat
+#       - name: Install SwiftFormat
+#         run: brew install swiftformat
 
-      - name: Format Swift code
-        run: |
-          string='${{ steps.changed-files.outputs.all_changed_files }}'
-          IFS=, read -r -a files  <<<"$string"
-          swiftformat --verbose "${files[@]}" --config .swiftformat
+#       - name: Format Swift code
+#         run: |
+#           string='${{ steps.changed-files.outputs.all_changed_files }}'
+#           IFS=, read -r -a files  <<<"$string"
+#           swiftformat --verbose "${files[@]}" --config .swiftformat
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply SwiftFormat changes
+#       - uses: stefanzweifel/git-auto-commit-action@v4
+#         with:
+#           commit_message: Apply SwiftFormat changes
 
-  lint:
-    name: SwiftLint
-    runs-on: ubuntu-latest
-    needs: format
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.head_ref }}
+#   lint:
+#     name: SwiftLint
+#     runs-on: ubuntu-latest
+#     needs: format
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           ref: ${{ github.head_ref }}
 
-      - name: SwiftLint
-        uses: norio-nomura/action-swiftlint@3.2.1
-        env:
-          DIFF_BASE: ${{ github.base_ref }} # only files changed in the PR
+#       - name: SwiftLint
+#         uses: norio-nomura/action-swiftlint@3.2.1
+#         env:
+#           DIFF_BASE: ${{ github.base_ref }} # only files changed in the PR
