@@ -100,6 +100,7 @@ platform :ios do
           precheck_include_in_app_purchases: false,
           release_notes: {
             'default' => '테스트 릴리즈 노트 :)',
+            'ko' => '테스트 릴리즈 노트! :)',
           },
       )
     #   slack(
