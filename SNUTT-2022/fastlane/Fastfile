@@ -89,11 +89,16 @@ platform :ios do
         issuer_id: APP_STORE_CONNECT_KEY_ISSUER,
         key_content: KEY_CONTENT,
         )
-      set_changelog(app_identifier: BUNDLE_IDENTIFIER, changelog: "테스트 Changelog")
+      # set_changelog(app_identifier: BUNDLE_IDENTIFIER, changelog: "테스트 Changelog")
       # release = get_github_release(url: "wafflestudio/snutt-ios", version: GIT_TAG_NAME)
+      sh("mkdir -p metadata/default")
+      sh("echo '테스트 릴리즈 노트!' > metadata/default/release_notes.txt")
       upload_to_app_store(
-          submit_for_review: false,
+          force: true,
           skip_screenshots: true,
+          submit_for_review: false,
+          automatic_release: false,
+          precheck_include_in_app_purchases: false
       )
     #   slack(
     #     message: "App successfully uploaded to App Store 🎉",
