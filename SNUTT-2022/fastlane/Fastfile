@@ -74,7 +74,7 @@ platform :ios do
 
   desc "📱 Upload app to App Store"
   lane :release do
-    # begin
+    begin
       setup_ci
       certificates_distribution
       increment_version_number(version_number: VERSION_NUMBER)
@@ -89,39 +89,38 @@ platform :ios do
         key_id: APP_STORE_CONNECT_KEY_ID,
         issuer_id: APP_STORE_CONNECT_KEY_ISSUER,
         key_content: KEY_CONTENT,
-        )
-      # set_changelog(app_identifier: BUNDLE_IDENTIFIER, changelog: "테스트 Changelog")
-      # release = get_github_release(url: "wafflestudio/snutt-ios", version: GIT_TAG_NAME)
+      )
+      release = get_github_release(url: "wafflestudio/snutt-ios", version: GIT_TAG_NAME)
       upload_to_app_store(
           force: true,
           skip_screenshots: true,
-          submit_for_review: false,
+          submit_for_review: true,
           automatic_release: false,
           precheck_include_in_app_purchases: false,
           release_notes: {
-            'default' => '테스트 릴리즈 노트 :)',
-            'ko' => '테스트 릴리즈 노트! :)',
+            'default' => release['body'] || "테스트 릴리즈 노트입니다.",
+            'ko' => release['body'] || "테스트 릴리즈 노트입니다.",
           },
       )
-    #   slack(
-    #     message: "App successfully uploaded to App Store 🎉",
-    #     channel: "#team-snutt-deploy",
-    #     slack_url: SLACK_WEBHOOK,
-    #     success: true,
-    #     attachment_properties: {
-    #       fields: [
-    #             {
-    #                 title: "Tag",
-    #                 value: GIT_TAG_NAME,
-    #                 short: false
-    #             }
-    #         ]
-    #     },
-    #     default_payloads: [:git_branch, :git_author, :last_git_commit_hash, :last_git_commit]
-    #   )
-    # rescue => exception
-    #     on_error(exception)
-    # end
+      slack(
+        message: "App successfully submitted for review 🎉",
+        channel: "#team-snutt-deploy",
+        slack_url: SLACK_WEBHOOK,
+        success: true,
+        attachment_properties: {
+          fields: [
+                {
+                    title: "Tag",
+                    value: GIT_TAG_NAME,
+                    short: false
+                }
+            ]
+        },
+        default_payloads: [:git_branch, :git_author, :last_git_commit_hash, :last_git_commit]
+      )
+    rescue => exception
+        on_error(exception)
+    end
   end
 
   desc "🛠️ Update xcodeproj file"
