@@ -89,9 +89,9 @@ platform :ios do
         issuer_id: APP_STORE_CONNECT_KEY_ISSUER,
         key_content: KEY_CONTENT,
         )
+      set_changelog(app_identifier: BUNDLE_IDENTIFIER, changelog: "테스트 Changelog")
       # release = get_github_release(url: "wafflestudio/snutt-ios", version: GIT_TAG_NAME)
       upload_to_app_store(
-          release_notes: "테스트 릴리즈 노트입니다.",
           submit_for_review: false,
           skip_screenshots: true,
       )
