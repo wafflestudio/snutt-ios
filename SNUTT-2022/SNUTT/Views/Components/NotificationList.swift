@@ -25,6 +25,7 @@ struct NotificationList: View {
             }
             .animation(.customSpring, value: notifications)
         }
+        .navigationBarTitleDisplayMode(.inline)
         .background(STColor.systemBackground)
         .task {
             await initialFetch(true)
