@@ -80,10 +80,11 @@ platform :ios do
       increment_version_number(version_number: VERSION_NUMBER)
       increment_build_number(build_number: BUILD_NUMBER)
       build_app(scheme: APP_NAME, 
-      configuration: BUILD_CONFIGURATION,
-      output_directory: "./archive",
-      silent: true,
-      clean: true)
+        configuration: BUILD_CONFIGURATION,
+        output_directory: "./archive",
+        silent: true,
+        clean: true
+      )
       app_store_connect_api_key(
         key_id: APP_STORE_CONNECT_KEY_ID,
         issuer_id: APP_STORE_CONNECT_KEY_ISSUER,
@@ -91,14 +92,15 @@ platform :ios do
         )
       # set_changelog(app_identifier: BUNDLE_IDENTIFIER, changelog: "테스트 Changelog")
       # release = get_github_release(url: "wafflestudio/snutt-ios", version: GIT_TAG_NAME)
-      sh("mkdir -p metadata/default")
-      sh("echo '테스트 릴리즈 노트!' > metadata/default/release_notes.txt")
       upload_to_app_store(
           force: true,
           skip_screenshots: true,
           submit_for_review: false,
           automatic_release: false,
-          precheck_include_in_app_purchases: false
+          precheck_include_in_app_purchases: false,
+          release_notes: {
+            'default' => '테스트 릴리즈 노트 :)',
+          },
       )
     #   slack(
     #     message: "App successfully uploaded to App Store 🎉",
