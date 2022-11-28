@@ -101,6 +101,10 @@ platform :ios do
             'default' => "테스트 릴리즈 노트입니다.",
             'ko' => "테스트 릴리즈 노트입니다.",
           },
+          submission_information: { 
+            add_id_info_uses_idfa: false,
+            export_compliance_uses_encryption: false
+          }
       )
       slack(
         message: "App successfully submitted for review 🎉",
