@@ -122,7 +122,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     }
 
     func getExistingLecture(_ lecture: Lecture) -> Lecture? {
-        timetableState.current?.lectures.filter { $0 == lecture }.first
+        timetableState.current?.lectures.first(where: { $0.isEquivalent(with: lecture) })
     }
 
     func fetchReviewId(of lecture: Lecture, bind: Binding<String>) async {
