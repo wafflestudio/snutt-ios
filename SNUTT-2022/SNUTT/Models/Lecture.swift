@@ -81,9 +81,9 @@ struct Lecture: Identifiable {
         }
         return places.joined(separator: ", ")
     }
-    
+
     func isEquivalent(with lecture: Lecture) -> Bool {
-        return !self.isCustom && self.courseNumber == lecture.courseNumber && self.lectureNumber == lecture.lectureNumber
+        return !isCustom && courseNumber == lecture.courseNumber && lectureNumber == lecture.lectureNumber
     }
 }
 
