@@ -81,12 +81,9 @@ struct Lecture: Identifiable {
         }
         return places.joined(separator: ", ")
     }
-}
 
-/// for non-custom Lecture
-extension Lecture: Equatable {
-    static func == (lhs: Lecture, rhs: Lecture) -> Bool {
-        return lhs.courseNumber == rhs.courseNumber && lhs.lectureNumber == rhs.lectureNumber
+    func isEquivalent(with lecture: Lecture) -> Bool {
+        return !isCustom && courseNumber == lecture.courseNumber && lectureNumber == lecture.lectureNumber
     }
 }
 
