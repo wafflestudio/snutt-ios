@@ -108,12 +108,13 @@ This project is deployed by the tag-based deployment method. Simply create and p
 
 For instance, a tag named `testflight/v3.0.0-debug.1` will trigger an action that creates a `debug` build of the app, sets the version and build number as `3.0.0` and `1` respectively, and uploads it to TestFlight.
 
-Alternatively, an action scheduled under the tag named `appstore/v3.0.0-release.1` will create a release build and submit it to App Store for review. Note that after the review process is complete, you should manually choose to release the app on [App Store Connect](https://appstoreconnect.apple.com/). **It is advised to [create a new release](https://github.com/wafflestudio/snutt-ios/releases) when submitting to App Store.**
+Alternatively, an action scheduled under the tag named `appstore/v3.0.0-release.1` will create a release build and submit it to App Store for review. Note that after the review process is complete, you should manually choose to release the app on [App Store Connect](https://appstoreconnect.apple.com/).
 
 #### Caveats
 
 - You cannot upload debug builds to App Store. In other words, tag names such as `appstore/v3.0.0-debug.1` will be ignored.
 - The build numbers for any specific version should be monotonically increasing **for each build configuration**. For example, `appstore/v3.0.0-release.5` can't precede `testflight/v3.0.0-release.3`.
+- To submit a build to App Store, you must [create a new release](https://github.com/wafflestudio/snutt-ios/releases). The release description should be carefully written, because it will go directly into the App Store changelog.
 
 ## Roadmap
 
