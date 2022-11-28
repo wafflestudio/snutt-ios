@@ -61,6 +61,7 @@ struct Lecture: Identifiable {
     func withTemporaryColor() -> Self {
         var lecture = self
         lecture.color = .temporary
+        lecture.colorIndex = 0
         return lecture
     }
 
