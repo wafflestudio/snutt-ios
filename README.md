@@ -96,7 +96,25 @@ brew install fastlane
 
 4. Now you should be able to run the app on your real iOS devices!
 
-<!-- ROADMAP -->
+### Deployment
+
+> :warning: Admin privileges for this repository are required in order to push this app to the App Store or TestFlight.
+
+This project is deployed by the tag-based deployment method. Simply create and push tags according to the rules below, and fastlane will take care of the rest.
+
+```
+^(testflight|appstore)\/v(\d+)\.(\d+)\.(\d+)-(release|debug)\.(\d+)$
+```
+
+For instance, a tag named `testflight/v3.0.0-debug.1` will trigger an action that creates a `debug` build of the app, sets the version and build number as `3.0.0` and `1` respectively, and uploads it to TestFlight.
+
+Alternatively, an action scheduled under the tag named `appstore/v3.0.0-release.1` will create a release build and submit it to App Store for review. Note that after the review process is complete, you should manually choose to release the app on [App Store Connect](https://appstoreconnect.apple.com/). **It is advised to [create a new release](https://github.com/wafflestudio/snutt-ios/releases) when submitting to App Store.**
+
+#### Caveats
+
+- You cannot upload debug builds to App Store. In other words, tag names such as `appstore/v3.0.0-debug.1` will be ignored.
+- The build numbers for any specific version should be monotonically increasing **for each build configuration**. For example, `appstore/v3.0.0-release.5` can't precede `testflight/v3.0.0-release.3`.
+
 ## Roadmap
 
 - [ ] iOS 16 support (Lock Screen Widgets, Live Activities, etc.)
