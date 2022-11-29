@@ -30,8 +30,8 @@ struct PopupService: PopupServiceProtocol {
         let remotePopupDtos = try await popupRepository.getRecentPopupList()
         let localPopupDtos = userDefaultsRepository.get([PopupDto].self, key: .popupList, defaultValue: [])
         let concatPopupDtos = (localPopupDtos + remotePopupDtos).map { ($0.key, Popup(from: $0)) }
-        let popupDictByKey = Dictionary(concatPopupDtos, uniquingKeysWith: {(key, _) in key})
-        
+        let popupDictByKey = Dictionary(concatPopupDtos, uniquingKeysWith: { key, _ in key })
+
         await MainActor.run {
             appState.popup.currentList = popupDictByKey.values.map {
                 var popup = $0
@@ -42,7 +42,7 @@ struct PopupService: PopupServiceProtocol {
             }
         }
     }
-    
+
     func dismissPopup(popup: Popup, dontShowForWhile: Bool) {
         var currentPopupList = appState.popup.currentList
         guard let firstPopupIndex = currentPopupList.firstIndex(where: { $0.id == popup.id }) else { return }
@@ -58,5 +58,5 @@ struct PopupService: PopupServiceProtocol {
 
 class FakePopupService: PopupServiceProtocol {
     func getRecentPopupList() async throws {}
-    func dismissPopup(popup: Popup, dontShowForWhile: Bool) {}
+    func dismissPopup(popup _: Popup, dontShowForWhile _: Bool) {}
 }

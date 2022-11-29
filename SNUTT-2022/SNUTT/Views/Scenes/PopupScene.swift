@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PopupScene: View {
     @ObservedObject var viewModel: ViewModel
-    
+
     var body: some View {
         GeometryReader { reader in
             if let currentPopup = viewModel.currentPopup {
@@ -20,7 +20,7 @@ struct PopupScene: View {
                         .ignoresSafeArea(.all)
                     PopupView(popup: currentPopup,
                               dismiss: viewModel.dismiss(popup:dontShowForWhile:))
-                    .padding(.horizontal, reader.size.width * 0.1)
+                        .padding(.horizontal, reader.size.width * 0.1)
                 }
             }
         }
@@ -34,20 +34,20 @@ struct PopupScene: View {
 extension PopupScene {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published private var currentPopupList: [Popup] = []
-        
+
         override init(container: DIContainer) {
             super.init(container: container)
             appState.popup.$currentList.assign(to: &$currentPopupList)
         }
-        
+
         var currentPopup: Popup? {
             appState.popup.currentList.first { $0.shouldShow }
         }
-        
+
         func dismiss(popup: Popup, dontShowForWhile: Bool) {
             services.popupService.dismissPopup(popup: popup, dontShowForWhile: dontShowForWhile)
         }
-        
+
         func getRecentPopupList() async {
             do {
                 try await services.popupService.getRecentPopupList()

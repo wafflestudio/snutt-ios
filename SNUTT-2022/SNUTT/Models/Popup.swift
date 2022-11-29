@@ -13,7 +13,7 @@ struct Popup: Identifiable {
     let hiddenDays: Int?
     var dismissedAt: Date?
     var dontShowForWhile: Bool
-    
+
     var shouldShow: Bool {
         if !dontShowForWhile {
             return dismissedAt == nil
