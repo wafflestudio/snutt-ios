@@ -336,11 +336,7 @@ struct LectureDetailScene: View {
                     var success = false
                     switch displayMode {
                     case .create:
-                        if lecture.isCustom {
-                            success = await viewModel.addCustomLecture(lecture: lecture, isForced: true)
-                        } else {
-                            success = await viewModel.overwriteLecture(lecture: lecture)
-                        }
+                        success = await viewModel.addCustomLecture(lecture: lecture, isForced: true)
                     case .normal:
                         success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture, isForced: true)
                     case .preview:

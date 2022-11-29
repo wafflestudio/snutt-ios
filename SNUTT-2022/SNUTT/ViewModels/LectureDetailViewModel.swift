@@ -48,16 +48,6 @@ extension LectureDetailScene {
             }
         }
 
-        func overwriteLecture(lecture: Lecture) async -> Bool {
-            do {
-                try await lectureService.addLecture(lecture: lecture, isForced: true)
-                return true
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-                return false
-            }
-        }
-
         func updateLecture(oldLecture: Lecture?, newLecture: Lecture, isForced: Bool = false) async -> Bool {
             guard let oldLecture = oldLecture else {
                 return false
