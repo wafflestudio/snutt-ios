@@ -286,22 +286,22 @@ struct LectureDetailScene: View {
                             // save
                             Task {
                                 let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
-                                
+
                                 if success, let updatedLecture = viewModel.findLectureInCurrentTimetable(lecture) {
                                     lecture = updatedLecture
                                     editMode = .inactive
                                     resignFirstResponder()
                                     return
                                 }
-                                
+
                                 // non-duplicate failures
-                                if !success && !viewModel.isLectureOverlapped {
+                                if !success, !viewModel.isLectureOverlapped {
                                     lecture = tempLecture
                                     editMode = .inactive
                                     resignFirstResponder()
                                     return
                                 }
-                                
+
                                 // in case of duplicate failures, delegate the rollback operation to lecture overlap alert.
                             }
                         } else {
@@ -346,7 +346,7 @@ struct LectureDetailScene: View {
                     case .preview:
                         return
                     }
-                    
+
                     if success {
                         editMode = .inactive
                         resignFirstResponder()
