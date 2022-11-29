@@ -9,8 +9,7 @@ import SwiftUI
 
 struct PopupView: View {
     let popup: Popup
-    let dismissOnce: (PopupView) -> Void
-    let dismissNdays: (PopupView) -> Void
+    let dismiss: (Popup, Bool) -> Void // dismiss(popup:dontShowForWhile:)
 
     var body: some View {
         AsyncImage(url: URL(string: popup.imageURL)!, transaction: Transaction(animation: .customSpring)) { phase in
@@ -25,7 +24,7 @@ struct PopupView: View {
                         Spacer()
 
                         Button {
-                            dismissNdays(self)
+                            dismiss(popup, true)
                         } label: {
                             Text("당분간 보지 않기")
                                 .foregroundColor(.white)
@@ -41,7 +40,7 @@ struct PopupView: View {
                         Spacer()
 
                         Button {
-                            dismissOnce(self)
+                            dismiss(popup, false)
                         } label: {
                             Text("닫기")
                                 .foregroundColor(.white)
@@ -61,12 +60,9 @@ struct PopupView: View {
 struct PopupView_Previews: PreviewProvider {
     static var previews: some View {
         PopupView(
-            popup: .init(id: "", imageURL: "https://avatars.githubusercontent.com/u/70614553?v=4", hiddenDays: 0, lastUpdate: nil),
-            dismissOnce: { _ in
-                print("닫기")
-            },
-            dismissNdays: { _ in
-                print("당분간 보지 않기")
+            popup: .init(id: "", imageURL: "https://avatars.githubusercontent.com/u/70614553?v=4", hiddenDays: 0, dismissedAt: nil, dontShowForWhile: false),
+            dismiss: { _, _ in
+                return
             }
         )
         .background(.black.opacity(0.2))
