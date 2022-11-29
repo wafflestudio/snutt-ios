@@ -48,16 +48,6 @@ extension LectureDetailScene {
             }
         }
 
-        func overwriteLecture(lecture: Lecture) async -> Bool {
-            do {
-                try await lectureService.addLecture(lecture: lecture, isForced: true)
-                return true
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-                return false
-            }
-        }
-
         func updateLecture(oldLecture: Lecture?, newLecture: Lecture, isForced: Bool = false) async -> Bool {
             guard let oldLecture = oldLecture else {
                 return false
@@ -69,7 +59,7 @@ extension LectureDetailScene {
             } catch {
                 if let error = error.asSTError {
                     if error.code == .LECTURE_TIME_OVERLAP {
-                        DispatchQueue.main.async {
+                        await MainActor.run {
                             self.isLectureOverlapped = true
                             self.errorTitle = error.title
                             self.errorMessage = error.content
@@ -148,8 +138,8 @@ extension LectureDetailScene {
             return lecture
         }
 
-        func searchLecture(_ lecture: Lecture) -> Lecture? {
-            guard let lecture = appState.timetable.current?.lectures.filter({ $0.id == lecture.id }).first else {
+        func findLectureInCurrentTimetable(_ lecture: Lecture) -> Lecture? {
+            guard let lecture = appState.timetable.current?.lectures.first(where: { $0.id == lecture.id }) else {
                 return nil
             }
             return lecture
