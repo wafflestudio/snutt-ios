@@ -69,7 +69,7 @@ extension LectureDetailScene {
             } catch {
                 if let error = error.asSTError {
                     if error.code == .LECTURE_TIME_OVERLAP {
-                        DispatchQueue.main.async {
+                        await MainActor.run {
                             self.isLectureOverlapped = true
                             self.errorTitle = error.title
                             self.errorMessage = error.content
@@ -148,8 +148,8 @@ extension LectureDetailScene {
             return lecture
         }
 
-        func searchLecture(_ lecture: Lecture) -> Lecture? {
-            guard let lecture = appState.timetable.current?.lectures.filter({ $0.id == lecture.id }).first else {
+        func findLectureInCurrentTimetable(_ lecture: Lecture) -> Lecture? {
+            guard let lecture = appState.timetable.current?.lectures.first(where: { $0.id == lecture.id }) else {
                 return nil
             }
             return lecture

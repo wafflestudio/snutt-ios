@@ -285,15 +285,24 @@ struct LectureDetailScene: View {
                             guard let tempLecture = tempLecture else { return }
                             // save
                             Task {
-                                if await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture),
-                                   let updatedLecture = viewModel.searchLecture(lecture)
-                                {
+                                let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
+                                
+                                if success, let updatedLecture = viewModel.findLectureInCurrentTimetable(lecture) {
                                     lecture = updatedLecture
-                                } else {
-                                    lecture = tempLecture
+                                    editMode = .inactive
+                                    resignFirstResponder()
+                                    return
                                 }
-                                editMode = .inactive
-                                resignFirstResponder()
+                                
+                                // non-duplicate failures
+                                if !success && !viewModel.isLectureOverlapped {
+                                    lecture = tempLecture
+                                    editMode = .inactive
+                                    resignFirstResponder()
+                                    return
+                                }
+                                
+                                // in case of duplicate failures, delegate the rollback operation to lecture overlap alert.
                             }
                         } else {
                             // edit
@@ -324,12 +333,20 @@ struct LectureDetailScene: View {
         .alert(viewModel.errorTitle, isPresented: $viewModel.isLectureOverlapped) {
             Button {
                 Task {
-                    let isUpdatingLecture = editMode.isEditing && displayMode == .normal
-                    let success = await isUpdatingLecture
-                        ? viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture, isForced: true)
-                        : (lecture.isCustom
-                            ? viewModel.addCustomLecture(lecture: lecture, isForced: true)
-                            : viewModel.overwriteLecture(lecture: lecture))
+                    var success = false
+                    switch displayMode {
+                    case .create:
+                        if lecture.isCustom {
+                            success = await viewModel.addCustomLecture(lecture: lecture, isForced: true)
+                        } else {
+                            success = await viewModel.overwriteLecture(lecture: lecture)
+                        }
+                    case .normal:
+                        success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture, isForced: true)
+                    case .preview:
+                        return
+                    }
+                    
                     if success {
                         editMode = .inactive
                         resignFirstResponder()
@@ -342,6 +359,8 @@ struct LectureDetailScene: View {
 
             Button("취소", role: .cancel) {
                 viewModel.isLectureOverlapped = false
+                guard let tempLecture = tempLecture else { return }
+                lecture = tempLecture
             }
         } message: {
             Text(viewModel.errorMessage)
