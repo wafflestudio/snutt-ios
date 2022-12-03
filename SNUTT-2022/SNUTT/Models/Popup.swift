@@ -7,26 +7,29 @@
 
 import Foundation
 
-struct Popup {
+struct Popup: Identifiable {
     let id: String
     let imageURL: String
-    let hiddenDays: Int
-    var lastUpdate: Date?
-}
+    let hiddenDays: Int?
+    var dismissedAt: Date?
+    var dontShowForWhile: Bool
 
-extension Popup: Equatable {
-    static func == (lhs: Popup, rhs: Popup) -> Bool {
-        return lhs.id == rhs.id
+    var shouldShow: Bool {
+        if !dontShowForWhile {
+            return dismissedAt == nil
+        }
+        guard let lastUpdate = dismissedAt else { return true }
+        guard let hiddenDays = hiddenDays else { return false }
+        return Date().daysFrom(lastUpdate) > hiddenDays
     }
 }
 
-extension Popup: Identifiable {}
-
 extension Popup {
     init(from dto: PopupDto) {
-        id = dto.key ?? ""
-        imageURL = dto.image_url ?? ""
-        hiddenDays = dto.hidden_days ?? 0
-        lastUpdate = dto.last_update ?? nil
+        id = dto.key
+        imageURL = dto.image_url
+        hiddenDays = dto.hidden_days
+        dismissedAt = dto.dismissed_at
+        dontShowForWhile = dto.dont_show_for_while ?? false
     }
 }

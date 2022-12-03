@@ -13,39 +13,47 @@ struct PopupScene: View {
 
     var body: some View {
         GeometryReader { reader in
-            ZStack {
-                Rectangle()
-                    .fill(Color.black.opacity(0.5))
-                    .ignoresSafeArea(.all)
-                PopupView(popup: viewModel.currentPopup,
-                          dismissOnce: viewModel.dismissOnce(popupView:),
-                          dismissNdays: viewModel.dismissNdays(popupView:))
-                    .padding(.horizontal, reader.size.width * 0.1)
+            if let currentPopup = viewModel.currentPopup {
+                ZStack {
+                    Rectangle()
+                        .fill(Color.black.opacity(0.5))
+                        .ignoresSafeArea(.all)
+                    PopupView(popup: currentPopup,
+                              dismiss: viewModel.dismiss(popup:dontShowForWhile:))
+                        .padding(.horizontal, reader.size.width * 0.1)
+                }
             }
+        }
+        .animation(.customSpring, value: viewModel.currentPopup?.id)
+        .onLoad {
+            await viewModel.getRecentPopupList()
         }
     }
 }
 
 extension PopupScene {
     class ViewModel: BaseViewModel, ObservableObject {
-        @Published private var _currentIndex = 0
+        @Published private var currentPopupList: [Popup] = []
 
         override init(container: DIContainer) {
             super.init(container: container)
-            appState.popup.$currentIndex.assign(to: &$_currentIndex)
+            appState.popup.$currentList.assign(to: &$currentPopupList)
         }
 
-        var currentPopup: Popup {
-            appState.popup.currentList[_currentIndex]
+        var currentPopup: Popup? {
+            appState.popup.currentList.first { $0.shouldShow }
         }
 
-        func dismissOnce(popupView _: PopupView) {
-            services.popupService.showNextPopup()
+        func dismiss(popup: Popup, dontShowForWhile: Bool) {
+            services.popupService.dismissPopup(popup: popup, dontShowForWhile: dontShowForWhile)
         }
 
-        func dismissNdays(popupView: PopupView) {
-            services.popupService.saveLastUpdate(popup: popupView.popup)
-            services.popupService.showNextPopup()
+        func getRecentPopupList() async {
+            do {
+                try await services.popupService.getRecentPopupList()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
         }
     }
 }

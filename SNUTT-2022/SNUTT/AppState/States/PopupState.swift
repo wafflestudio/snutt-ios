@@ -9,6 +9,4 @@ import Foundation
 
 class PopupState: ObservableObject {
     @Published var currentList: [Popup] = []
-    @Published var currentIndex: Int = 0
-    @Published var shouldShowPopup: Bool = false
 }
