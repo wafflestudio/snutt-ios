@@ -72,6 +72,61 @@ platform :ios do
     end
   end
 
+  desc "📱 Upload app to App Store"
+  lane :release do
+    begin
+      setup_ci
+      certificates_distribution
+      increment_version_number(version_number: VERSION_NUMBER)
+      increment_build_number(build_number: BUILD_NUMBER)
+      build_app(scheme: APP_NAME, 
+        configuration: BUILD_CONFIGURATION,
+        output_directory: "./archive",
+        silent: true,
+        clean: true
+      )
+      app_store_connect_api_key(
+        key_id: APP_STORE_CONNECT_KEY_ID,
+        issuer_id: APP_STORE_CONNECT_KEY_ISSUER,
+        key_content: KEY_CONTENT,
+      )
+      release = get_github_release(url: "wafflestudio/snutt-ios", version: GIT_TAG_NAME)
+      upload_to_app_store(
+          force: true,
+          skip_screenshots: true,
+          submit_for_review: true,
+          automatic_release: false,
+          precheck_include_in_app_purchases: false,
+          release_notes: {
+            'default' => release['body'],
+            'ko' => release['body'],
+          },
+          submission_information: { 
+            add_id_info_uses_idfa: false,
+            export_compliance_uses_encryption: false
+          }
+      )
+      slack(
+        message: "App successfully submitted for review 🎉",
+        channel: "#team-snutt-deploy",
+        slack_url: SLACK_WEBHOOK,
+        success: true,
+        attachment_properties: {
+          fields: [
+                {
+                    title: "Tag",
+                    value: GIT_TAG_NAME,
+                    short: false
+                }
+            ]
+        },
+        default_payloads: [:git_branch, :git_author, :last_git_commit_hash, :last_git_commit]
+      )
+    rescue => exception
+        on_error(exception)
+    end
+  end
+
   desc "🛠️ Update xcodeproj file"
   private_lane :update_xcodeproj do |options|
     code_sign_identity = options[:type] == 'appstore' ? 'iPhone Distribution' : 'iPhone Developer'
@@ -137,4 +192,5 @@ def on_error(exception)
         },
         default_payloads: [:git_branch, :git_author, :last_git_commit_hash, :last_git_commit]
   )
+  puts exception
 end
