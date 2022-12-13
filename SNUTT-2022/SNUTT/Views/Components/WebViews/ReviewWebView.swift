@@ -79,7 +79,7 @@ struct ReviewWebView: WebView {
                 case .reload:
                     self?.parent.reloadWebView()
                 case let .colorSchemeChange(to: colorScheme):
-                    self?.parent.webView.evaluateJavaScript("changeTheme(\(colorScheme.descriptionWithQuotes))")
+                    self?.parent.webView.evaluateJavaScript("changeTheme('\(colorScheme.description)')")
                 }
             }.store(in: &bag)
         }
@@ -101,22 +101,5 @@ struct ReviewWebView: WebView {
                 parent.connectionState = .success
             }
         }
-    }
-}
-
-private extension ColorScheme {
-    var description: String {
-        switch self {
-        case .dark:
-            return "dark"
-        case .light:
-            return "light"
-        @unknown default:
-            return "light"
-        }
-    }
-
-    var descriptionWithQuotes: String {
-        "'\(description)'"
     }
 }

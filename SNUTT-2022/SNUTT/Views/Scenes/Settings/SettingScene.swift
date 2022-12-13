@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct SettingScene: View {
-    let viewModel: SettingViewModel
-
+    @ObservedObject var viewModel: SettingViewModel
     @State private var isLogoutAlertPresented: Bool = false
 
     var body: some View {
@@ -21,6 +20,10 @@ struct SettingScene: View {
 
                 SettingsLinkItem(title: "시간표 설정") {
                     TimetableSettingScene(viewModel: .init(container: viewModel.container))
+                }
+                
+                SettingsLinkItem(title: "색상 모드", detail: viewModel.currentColorSchemeSelection.rawValue) {
+                    ColorSchemeSettingScene(selection: $viewModel.currentColorSchemeSelection)
                 }
             }
 
@@ -71,6 +74,12 @@ struct SettingScene: View {
 
         let _ = debugChanges()
     }
+}
+
+enum ColorSchemeSelection: String, CaseIterable {
+    case automatic = "자동"
+    case light = "라이트 모드"
+    case dark = "다크 모드"
 }
 
 #if DEBUG

@@ -160,6 +160,8 @@
 		BE98A072288AFC1600C2CE95 /* SNUTTWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BE98A061288AFC1500C2CE95 /* SNUTTWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BE98A07F288B046400C2CE95 /* TimetableWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A07D288B032600C2CE95 /* TimetableWidget.swift */; };
 		BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */; };
+		BE9C90EB2948EA1800003AA6 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9C90EA2948EA1800003AA6 /* ColorScheme.swift */; };
+		BE9C90ED2948F4BE00003AA6 /* ColorSchemeSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9C90EC2948F4BE00003AA6 /* ColorSchemeSettingScene.swift */; };
 		BEB3B6A228CDB7A400E56062 /* LectureTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */; };
 		BEB3B6A528CDE1FD00E56062 /* TimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3B6A428CDE1FD00E56062 /* TimeUtils.swift */; };
 		BEB3B6A628CDE8AA00E56062 /* TimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3B6A428CDE1FD00E56062 /* TimeUtils.swift */; };
@@ -398,6 +400,8 @@
 		BE98A06D288AFC1600C2CE95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidgetEntryView.swift; sourceTree = "<group>"; };
 		BE98A07D288B032600C2CE95 /* TimetableWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableWidget.swift; sourceTree = "<group>"; };
+		BE9C90EA2948EA1800003AA6 /* ColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorScheme.swift; sourceTree = "<group>"; };
+		BE9C90EC2948F4BE00003AA6 /* ColorSchemeSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeSettingScene.swift; sourceTree = "<group>"; };
 		BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureTimePicker.swift; sourceTree = "<group>"; };
 		BEB3B6A428CDE1FD00E56062 /* TimeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtils.swift; sourceTree = "<group>"; };
 		BEB3B6AC28D4D40400E56062 /* EditableFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableFields.swift; sourceTree = "<group>"; };
@@ -517,6 +521,7 @@
 			children = (
 				DC29159A2865F95100FE5F9A /* SettingScene.swift */,
 				B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */,
+				BE9C90EC2948F4BE00003AA6 /* ColorSchemeSettingScene.swift */,
 				B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */,
 			);
 			path = Settings;
@@ -564,6 +569,7 @@
 				BEB57C2028B6758200279EFF /* Animation+Custom.swift */,
 				BE9413D128C2458A00171060 /* DateFormatter+Parse.swift */,
 				BED04D3228EA963E00937E4C /* FacebookLogin.swift */,
+				BE9C90EA2948EA1800003AA6 /* ColorScheme.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1185,6 +1191,7 @@
 				B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */,
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
 				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
+				BE9C90EB2948EA1800003AA6 /* ColorScheme.swift in Sources */,
 				BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */,
 				BEE86519289E287400D3D0E4 /* MenuRenameSheet.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
@@ -1327,6 +1334,7 @@
 				BE682BB6287C40AF009EBCB7 /* Theme.swift in Sources */,
 				BE779B1C28E72622009960EB /* AnimatedTextField.swift in Sources */,
 				B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */,
+				BE9C90ED2948F4BE00003AA6 /* ColorSchemeSettingScene.swift in Sources */,
 				BEDF507927F42D7500CDCC13 /* STColor.swift in Sources */,
 				BE4B0EB628735005005FE164 /* MenuSheetViewModel.swift in Sources */,
 				B87DF6FB291A4303008BB95B /* PopupScene.swift in Sources */,

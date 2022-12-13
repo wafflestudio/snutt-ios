@@ -8,11 +8,42 @@
 import Foundation
 import SwiftUI
 
-class SettingViewModel: BaseViewModel {
+class SettingViewModel: BaseViewModel, ObservableObject {
+    @Published var preferredColorScheme: ColorScheme? = nil
+    
     override init(container: DIContainer) {
         super.init(container: container)
+        appState.system.$preferredColorScheme.assign(to: &$preferredColorScheme)
     }
-
+    
+    func setColorScheme(colorScheme: ColorScheme?) {
+        services.globalUIService.setColorScheme(colorScheme)
+    }
+    
+    var currentColorSchemeSelection: ColorSchemeSelection {
+        get {
+            if preferredColorScheme == .light {
+                return .light
+            }
+            if preferredColorScheme == .dark {
+                return .dark
+            }
+            return .automatic
+        }
+        
+        set {
+            switch newValue {
+            case .automatic:
+                setColorScheme(colorScheme: nil)
+            case .light:
+                setColorScheme(colorScheme: .light)
+            case .dark:
+                setColorScheme(colorScheme: .dark)
+                
+            }
+        }
+    }
+    
     func logout() async {
         do {
             try await services.authService.logout()

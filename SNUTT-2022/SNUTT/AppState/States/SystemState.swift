@@ -7,8 +7,10 @@
 
 import Combine
 import UIKit
+import SwiftUI
 
 class SystemState: ObservableObject {
     @Published var isErrorAlertPresented = false
     @Published var error: STError? = nil
+    @Published var preferredColorScheme: ColorScheme? = nil
 }

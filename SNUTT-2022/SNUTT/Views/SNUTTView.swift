@@ -67,6 +67,7 @@ struct SNUTTView: View {
             LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
         }
         .animation(.easeOut, value: viewModel.accessToken)
+        .preferredColorScheme(viewModel.preferredColorScheme)
         .accentColor(Color(UIColor.label))
         .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
             Text(viewModel.errorMessage)
@@ -100,6 +101,8 @@ extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var accessToken: String? = nil
+        @Published var preferredColorScheme: ColorScheme? = nil
+        
         @Published private var error: STError? = nil
         var reviewEventSignal = PassthroughSubject<WebViewEventType, Never>()
 
@@ -113,6 +116,7 @@ extension SNUTTView {
             appState.system.$error.assign(to: &$error)
             appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
             appState.user.$accessToken.assign(to: &$accessToken)
+            appState.system.$preferredColorScheme.assign(to: &$preferredColorScheme)
         }
 
         var errorTitle: String {
