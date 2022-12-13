@@ -10,16 +10,16 @@ import SwiftUI
 
 class SettingViewModel: BaseViewModel, ObservableObject {
     @Published var preferredColorScheme: ColorScheme? = nil
-    
+
     override init(container: DIContainer) {
         super.init(container: container)
         appState.system.$preferredColorScheme.assign(to: &$preferredColorScheme)
     }
-    
+
     func setColorScheme(colorScheme: ColorScheme?) {
         services.globalUIService.setColorScheme(colorScheme)
     }
-    
+
     var currentColorSchemeSelection: ColorSchemeSelection {
         get {
             if preferredColorScheme == .light {
@@ -30,7 +30,7 @@ class SettingViewModel: BaseViewModel, ObservableObject {
             }
             return .automatic
         }
-        
+
         set {
             switch newValue {
             case .automatic:
@@ -39,11 +39,10 @@ class SettingViewModel: BaseViewModel, ObservableObject {
                 setColorScheme(colorScheme: .light)
             case .dark:
                 setColorScheme(colorScheme: .dark)
-                
             }
         }
     }
-    
+
     func logout() async {
         do {
             try await services.authService.logout()

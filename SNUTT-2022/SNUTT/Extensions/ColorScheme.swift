@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 extension ColorScheme {
     var description: String {
         switch self {
@@ -19,17 +18,16 @@ extension ColorScheme {
             return "light"
         }
     }
-    
+
     static func from(description: String?) -> Self? {
         if description == "light" {
             return .light
         }
-        
+
         if description == "dark" {
             return .dark
         }
-        
+
         return nil
     }
 }
-

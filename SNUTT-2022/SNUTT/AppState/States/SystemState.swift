@@ -6,8 +6,8 @@
 //
 
 import Combine
-import UIKit
 import SwiftUI
+import UIKit
 
 class SystemState: ObservableObject {
     @Published var isErrorAlertPresented = false

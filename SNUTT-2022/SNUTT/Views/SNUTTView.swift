@@ -102,7 +102,7 @@ extension SNUTTView {
         @Published var isErrorAlertPresented = false
         @Published var accessToken: String? = nil
         @Published var preferredColorScheme: ColorScheme? = nil
-        
+
         @Published private var error: STError? = nil
         var reviewEventSignal = PassthroughSubject<WebViewEventType, Never>()
 

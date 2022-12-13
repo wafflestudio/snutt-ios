@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ColorSchemeSettingScene: View {
     @Binding var selection: ColorSchemeSelection
-    
+
     var body: some View {
         List {
             ForEach(ColorSchemeSelection.allCases, id: \.self) { scheme in
@@ -32,4 +32,3 @@ struct ColorSchemeSettingScene: View {
         .navigationTitle("색상 모드")
     }
 }
-
