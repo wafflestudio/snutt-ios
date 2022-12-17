@@ -116,6 +116,7 @@ GEM
       fastlane (>= 2.148.1)
       rbnacl
       sshkey
+    fastlane-plugin-versioning (0.5.1)
     ffi (1.15.5)
     gh_inspector (1.1.3)
     google-apis-androidpublisher_v3 (0.29.0)
@@ -230,6 +231,7 @@ DEPENDENCIES
   fastlane
   fastlane-plugin-badge
   fastlane-plugin-github_action
+  fastlane-plugin-versioning
 
 BUNDLED WITH
    2.3.11

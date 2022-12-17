@@ -4,3 +4,4 @@
 
 gem 'fastlane-plugin-github_action'
 gem 'fastlane-plugin-badge'
+gem 'fastlane-plugin-versioning'
