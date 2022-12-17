@@ -38,8 +38,8 @@ platform :ios do
       if BUILD_CONFIGURATION == "Debug"
         add_badge(dark: true)
       end
-      increment_version_number(version_number: VERSION_NUMBER)
-      increment_build_number(build_number: BUILD_NUMBER)
+      increment_version_number_in_xcodeproj(version_number: VERSION_NUMBER)
+      increment_build_number_in_xcodeproj(build_number: BUILD_NUMBER)
       build_app(scheme: APP_NAME, 
       configuration: BUILD_CONFIGURATION,
       output_directory: "./archive",
@@ -77,8 +77,8 @@ platform :ios do
     begin
       setup_ci
       certificates_distribution
-      increment_version_number(version_number: VERSION_NUMBER)
-      increment_build_number(build_number: BUILD_NUMBER)
+      increment_version_number_in_xcodeproj(version_number: VERSION_NUMBER)
+      increment_build_number_in_xcodeproj(build_number: BUILD_NUMBER)
       build_app(scheme: APP_NAME, 
         configuration: BUILD_CONFIGURATION,
         output_directory: "./archive",
