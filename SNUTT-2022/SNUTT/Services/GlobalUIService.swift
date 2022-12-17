@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol GlobalUIServiceProtocol {
+    func setColorScheme(_ colorScheme: ColorScheme?)
+    func loadColorSchemeDuringBootstrap()
+
     func setIsMenuOpen(_ value: Bool)
 
     func openEllipsis(for timetable: TimetableMetadata)
@@ -36,6 +40,19 @@ protocol GlobalUIServiceProtocol {
 struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
     var appState: AppState
     var localRepositories: AppEnvironment.LocalRepositories
+
+    func setColorScheme(_ colorScheme: ColorScheme?) {
+        DispatchQueue.main.async {
+            appState.system.preferredColorScheme = colorScheme
+        }
+        localRepositories.userDefaultsRepository.set(String.self, key: .preferredColorScheme, value: colorScheme?.description)
+    }
+
+    func loadColorSchemeDuringBootstrap() {
+        let colorSchemeDescription = localRepositories.userDefaultsRepository.get(String.self, key: .preferredColorScheme)
+        let colorScheme = ColorScheme.from(description: colorSchemeDescription)
+        appState.system.preferredColorScheme = colorScheme
+    }
 
     func setIsMenuOpen(_ value: Bool) {
         DispatchQueue.main.async {

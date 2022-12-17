@@ -6,9 +6,11 @@
 //
 
 import Combine
+import SwiftUI
 import UIKit
 
 class SystemState: ObservableObject {
     @Published var isErrorAlertPresented = false
     @Published var error: STError? = nil
+    @Published var preferredColorScheme: ColorScheme? = nil
 }

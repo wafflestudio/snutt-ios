@@ -19,15 +19,10 @@ enum STDefaultsKey: String {
     case userId
     case userDto
     case fcmToken
+    case preferredColorScheme
 
     case currentTimetable
     case timetableConfig
-
-    case registeredFCMToken
-    case appVersion
-
-    case shouldShowBadge
-    case shouldDeleteFCMInfos
 
     case popupList
 }
