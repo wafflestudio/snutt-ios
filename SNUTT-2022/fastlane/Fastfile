@@ -50,7 +50,7 @@ platform :ios do
         issuer_id: APP_STORE_CONNECT_KEY_ISSUER,
         key_content: KEY_CONTENT,
         )
-      upload_to_testflight
+      upload_to_testflight(app_version: VERSION_NUMBER)
       slack(
         message: "App successfully uploaded to Testflight 🎉",
         channel: "#team-snutt-deploy",
@@ -93,6 +93,7 @@ platform :ios do
       release = get_github_release(url: "wafflestudio/snutt-ios", version: GIT_TAG_NAME)
       upload_to_app_store(
           force: true,
+          app_version: VERSION_NUMBER,
           skip_screenshots: true,
           submit_for_review: true,
           automatic_release: false,
