@@ -53,18 +53,15 @@ struct SNUTTView: View {
                         SettingScene(viewModel: .init(container: viewModel.container))
                     }
                 }
-                .onAppear {
-                    selectedTab = .timetable
-                }
                 if selectedTab == .timetable {
                     MenuSheetScene(viewModel: .init(container: viewModel.container))
+                    LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
                 }
                 if selectedTab == .search {
                     FilterSheetScene(viewModel: .init(container: viewModel.container))
                 }
                 PopupScene(viewModel: .init(container: viewModel.container))
             }
-            LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
         }
         .animation(.easeOut, value: viewModel.accessToken)
         .preferredColorScheme(viewModel.preferredColorScheme)
