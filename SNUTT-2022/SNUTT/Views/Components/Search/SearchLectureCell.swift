@@ -17,8 +17,8 @@ struct SearchLectureCell: View {
 
     @State var showingDetailPage = false
     @State private var showReviewWebView: Bool = false
-    @State private var reviewId: String? = ""
-
+    @State private var reviewId: String? = nil
+    
     @Environment(\.dependencyContainer) var container: DIContainer?
 
     var body: some View {
@@ -59,6 +59,11 @@ struct SearchLectureCell: View {
                             Task {
                                 reviewId = await fetchReviewId(lecture)
                                 showReviewWebView = true
+                                
+                                // TODO: fix me
+                                if let detailId = reviewId {
+                                    container?.services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: detailId).url)
+                                }
                             }
                         } label: {
                             Text("강의평")
@@ -68,6 +73,7 @@ struct SearchLectureCell: View {
                         .sheet(isPresented: $showReviewWebView) {
                             if let container = container {
                                 ReviewScene(viewModel: .init(container: container), detailId: $reviewId)
+                                    .id(reviewId)
                             }
                         }
 

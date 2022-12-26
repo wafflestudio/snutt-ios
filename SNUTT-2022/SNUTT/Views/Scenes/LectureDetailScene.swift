@@ -195,19 +195,21 @@ struct LectureDetailScene: View {
                         }
 
                         DetailButton(text: "강의평") {
+                            showReviewWebView = true
+                        }
+                        .onAppear {
                             Task {
                                 reviewId = await viewModel.fetchReviewId(of: lecture)
-                                showReviewWebView = true
                             }
+                        }
+                        .onChange(of: reviewId) { newValue in
+                            guard let reviewId = newValue else { return }
+                            viewModel.reloadDetailWebView(detailId: reviewId)
                         }
                         .sheet(isPresented: $showReviewWebView) {
                             ReviewScene(viewModel: .init(container: viewModel.container), detailId: $reviewId)
                                 .id(colorScheme)
                                 .id(reviewId)
-                        }
-                        .onChange(of: reviewId) { newValue in
-                            guard let reviewId = newValue else { return }
-                            viewModel.reloadDetailWebView(detailId: reviewId)
                         }
                     }
 
