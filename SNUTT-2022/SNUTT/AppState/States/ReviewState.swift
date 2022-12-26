@@ -25,22 +25,21 @@ class WebViewPreloadManager {
         if eventSignal != nil && webView != nil {
             return
         }
-        self.url = url
         eventSignal = eventSignal ?? .init()
         webView = webView ?? WKWebView(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken))
         coordinator = coordinator ?? Coordinator(eventSignal: eventSignal!)
-        webView?.allowsBackForwardNavigationGestures = true
         webView?.scrollView.bounces = false
         webView?.backgroundColor = UIColor(STColor.systemBackground)
         webView?.isOpaque = false
         webView?.configuration.userContentController.add(coordinator!, name: MessageHandlerType.snutt.rawValue)
-        webView?.load(URLRequest(url: url))
+        reload(url: url)
         bindEventSignal()
     }
 
     func reload(url: URL? = nil) {
         guard let url = url ?? self.url else { return }
         webView?.load(URLRequest(url: url))
+        webView?.allowsBackForwardNavigationGestures = url == WebViewType.review.url
         self.url = url
     }
 
