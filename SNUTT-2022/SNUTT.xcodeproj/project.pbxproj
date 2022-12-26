@@ -62,6 +62,7 @@
 		BE28036828E8883700B2B1AB /* WebViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE28036728E8883700B2B1AB /* WebViewProtocol.swift */; };
 		BE28036A28E93EEF00B2B1AB /* LoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE28036928E93EEF00B2B1AB /* LoginScene.swift */; };
 		BE28036C28E9F0B100B2B1AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE28036B28E9F0B100B2B1AB /* LaunchScreen.storyboard */; };
+		BE2CB3632959C0CC00FCF0F0 /* ReviewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2CB3622959C0CC00FCF0F0 /* ReviewState.swift */; };
 		BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A5F27E5CC7700CF380E /* Timetable.swift */; };
 		BE419B84288B8B8F00FA9590 /* TimePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE982FBB281D5227005F71E6 /* TimePlace.swift */; };
 		BE419B85288B8B8F00FA9590 /* Lecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDF507427F4289B00CDCC13 /* Lecture.swift */; };
@@ -318,6 +319,7 @@
 		BE28036728E8883700B2B1AB /* WebViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewProtocol.swift; sourceTree = "<group>"; };
 		BE28036928E93EEF00B2B1AB /* LoginScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScene.swift; sourceTree = "<group>"; };
 		BE28036B28E9F0B100B2B1AB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BE2CB3622959C0CC00FCF0F0 /* ReviewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewState.swift; sourceTree = "<group>"; };
 		BE419B8C288B8C5A00FA9590 /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
 		BE419B99288B915800FA9590 /* TimetableUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableUtils.swift; sourceTree = "<group>"; };
 		BE4B0EB528735005005FE164 /* MenuSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSheetViewModel.swift; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 				B87B315928D5A70F005C170B /* SearchState.swift */,
 				B87B315A28D5A70F005C170B /* TimetableState.swift */,
 				B87B315828D5A70F005C170B /* UserState.swift */,
+				BE2CB3622959C0CC00FCF0F0 /* ReviewState.swift */,
 				B87DF6F82918B7AD008BB95B /* PopupState.swift */,
 			);
 			path = States;
@@ -1233,6 +1236,7 @@
 				B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */,
 				BE28036228E884F400B2B1AB /* ReviewWebView.swift in Sources */,
 				BEB3B6A528CDE1FD00E56062 /* TimeUtils.swift in Sources */,
+				BE2CB3632959C0CC00FCF0F0 /* ReviewState.swift in Sources */,
 				BEBCC29C28EF4C6100732304 /* OnLoadModifier.swift in Sources */,
 				B8F40EB128980DE00021A2A9 /* TermsOfServiceView.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,

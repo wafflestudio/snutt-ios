@@ -12,12 +12,12 @@ struct SearchLectureCell: View {
     let selected: Bool
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
-    let fetchReviewId: (Lecture, Binding<String>) async -> Void
+    let fetchReviewId: (Lecture) async -> String?
     let isInTimetable: Bool
 
     @State var showingDetailPage = false
     @State private var showReviewWebView: Bool = false
-    @State private var reviewId: String = ""
+    @State private var reviewId: String? = ""
 
     @Environment(\.dependencyContainer) var container: DIContainer?
 
@@ -57,7 +57,7 @@ struct SearchLectureCell: View {
 
                         Button {
                             Task {
-                                await fetchReviewId(lecture, $reviewId)
+                                reviewId = await fetchReviewId(lecture)
                                 showReviewWebView = true
                             }
                         } label: {

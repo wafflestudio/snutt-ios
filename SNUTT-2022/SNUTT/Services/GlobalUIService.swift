@@ -35,6 +35,10 @@ protocol GlobalUIServiceProtocol {
     func presentErrorAlert(error: STError?)
     func presentErrorAlert(error: ErrorCode)
     func presentErrorAlert(error: Error)
+    
+    func preloadWebViews()
+    func sendMainWebViewReloadSignal()
+    func sendDetailWebViewReloadSignal(url: URL)
 }
 
 struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
@@ -134,7 +138,25 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
             appState.menu.createQuarter = value
         }
     }
-
+    
+    // MARK: Preload Review WebViews
+    
+    func preloadWebViews() {
+        guard let accessToken = appState.user.accessToken else { return }
+        DispatchQueue.main.async {
+        appState.review.preloadedMain.preload(url: WebViewType.review.url, accessToken: accessToken)
+        appState.review.preloadedDetail.preload(url: WebViewType.review.url, accessToken: accessToken)
+        }
+    }
+    
+    func sendMainWebViewReloadSignal() {
+        appState.review.preloadedMain.eventSignal?.send(.reload(url: WebViewType.review.url))
+    }
+    
+    func sendDetailWebViewReloadSignal(url: URL) {
+        appState.review.preloadedDetail.eventSignal?.send(.reload(url: url))
+    }
+    
     // MARK: Lecture Time Sheet
 
     func setIsLectureTimeSheetOpen(_ value: Bool, modifying timePlace: TimePlace?, action: ((TimePlace) -> Void)?) {

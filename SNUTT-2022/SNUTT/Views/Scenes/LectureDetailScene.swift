@@ -32,7 +32,7 @@ struct LectureDetailScene: View {
     @State private var isResetAlertPresented = false
     @State private var isDeleteAlertPresented = false
     @State private var showReviewWebView = false
-    @State private var reviewId: String = ""
+    @State private var reviewId: String? = ""
     @State private var syllabusURL: String = ""
     @State private var showSyllabusWebView = false
 
@@ -196,13 +196,18 @@ struct LectureDetailScene: View {
 
                         DetailButton(text: "강의평") {
                             Task {
-                                await viewModel.fetchReviewId(of: lecture, bind: $reviewId)
+                                reviewId = await viewModel.fetchReviewId(of: lecture)
                                 showReviewWebView = true
                             }
                         }
                         .sheet(isPresented: $showReviewWebView) {
                             ReviewScene(viewModel: .init(container: viewModel.container), detailId: $reviewId)
                                 .id(colorScheme)
+                                .id(reviewId)
+                        }
+                        .onChange(of: reviewId) { newValue in
+                            guard let reviewId = newValue else { return }
+                            viewModel.reloadDetailWebView(detailId: reviewId)
                         }
                     }
 

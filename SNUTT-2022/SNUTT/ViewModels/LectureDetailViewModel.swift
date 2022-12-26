@@ -98,12 +98,13 @@ extension LectureDetailScene {
             return nil
         }
 
-        func fetchReviewId(of lecture: Lecture, bind: Binding<String>) async {
+        func fetchReviewId(of lecture: Lecture) async -> String? {
             do {
-                try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
+                return try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
+            return nil
         }
 
         func fetchSyllabusURL(of lecture: Lecture) async -> String {
@@ -143,6 +144,11 @@ extension LectureDetailScene {
                 return nil
             }
             return lecture
+        }
+        
+        func reloadDetailWebView(detailId: String?) {
+            guard let detailId = detailId else { return }
+            services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: detailId).url)
         }
     }
 }

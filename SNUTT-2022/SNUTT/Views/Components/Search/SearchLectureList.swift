@@ -13,7 +13,7 @@ struct SearchLectureList: View {
     let existingLecture: (Lecture) -> Lecture?
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
-    let fetchReviewId: (Lecture, Binding<String>) async -> Void
+    let fetchReviewId: (Lecture) async -> String?
     let overwriteLecture: (Lecture) async -> Void
     let errorTitle: String
     let errorMessage: String

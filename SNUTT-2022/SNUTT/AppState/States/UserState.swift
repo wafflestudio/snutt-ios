@@ -11,6 +11,6 @@ class UserState: ObservableObject {
     @Published var accessToken: String?
     @Published var current: User?
 
-    /// Primary key of User. Required to logout.
+    /// Primary key of User. Required to logout. This is not `localId`.
     var userId: String?
 }
