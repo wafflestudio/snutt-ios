@@ -108,7 +108,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     private var timetableState: TimetableState {
         appState.timetable
     }
-    
+
     func preloadWebViews() {
         services.globalUIService.preloadWebViews()
     }

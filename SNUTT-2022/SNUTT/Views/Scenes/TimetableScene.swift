@@ -71,7 +71,7 @@ struct TimetableScene: View {
                 }
                 .onLoad {
                     viewModel.preloadWebViews()
-                    
+
                     await withTaskGroup(of: Void.self, body: { group in
                         group.addTask {
                             await viewModel.fetchTimetableList()

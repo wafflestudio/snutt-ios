@@ -32,9 +32,9 @@ extension WKWebView {
         configuration.websiteDataStore = dataStore
         self.init(frame: .zero, configuration: configuration)
     }
-    
-    func setCookie(name:String, value: String) {
+
+    func setCookie(name: String, value: String) {
         guard let cookie = NetworkConfiguration.getCookie(name: name, value: value) else { return }
-        self.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
+        configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
     }
 }

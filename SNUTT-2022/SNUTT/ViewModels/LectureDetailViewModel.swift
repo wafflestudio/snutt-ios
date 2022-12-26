@@ -145,7 +145,7 @@ extension LectureDetailScene {
             }
             return lecture
         }
-        
+
         func reloadDetailWebView(detailId: String?) {
             guard let detailId = detailId else { return }
             services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: detailId).url)
