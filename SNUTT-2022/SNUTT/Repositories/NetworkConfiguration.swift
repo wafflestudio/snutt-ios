@@ -23,9 +23,10 @@ struct NetworkConfiguration {
     
     static func getCookiesFrom(accessToken: String) -> [HTTPCookie] {
         guard let apiKeyCookie = getCookie(name: "x-access-apikey", value: NetworkConfiguration.apiKey),
-              let tokenCookie = getCookie(name: "x-access-token", value: accessToken)
+              let tokenCookie = getCookie(name: "x-access-token", value: accessToken),
+                let deviceTypeCookie = getCookie(name: "x-os-type", value: AppMetadata.osType.value ?? "ios")
               else { return [] }
 
-        return [apiKeyCookie, tokenCookie]
+        return [apiKeyCookie, tokenCookie, deviceTypeCookie]
     }
 }

@@ -39,7 +39,7 @@ enum WebViewType {
         case .review:
             return ""
         case let .reviewDetail(id):
-            return "/detail/?id=\(id)"
+            return "/detail/?id=\(id)&on_back=close"
         }
     }
 

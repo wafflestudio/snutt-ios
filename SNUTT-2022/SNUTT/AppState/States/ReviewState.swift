@@ -11,15 +11,16 @@ import SwiftUI
 
 
 class ReviewState {
-    let preloadedMain = PreloadedWebView()
-    let preloadedDetail = PreloadedWebView()
+    let preloadedMain = WebViewPreloadManager()
+    let preloadedDetail = WebViewPreloadManager()
 }
 
 
-class PreloadedWebView {
+class WebViewPreloadManager {
     var url: URL? = nil
     var webView: WKWebView? = nil
     var eventSignal: PassthroughSubject<WebViewEventType, Never>? = nil
+    var coordinator: Coordinator? = nil
     private var bag = Set<AnyCancellable>()
     
     func preload(url: URL, accessToken: String) {
@@ -29,10 +30,12 @@ class PreloadedWebView {
         self.url = url
         eventSignal = eventSignal ?? .init()
         webView = webView ?? WKWebView(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken))
+        coordinator = coordinator ?? Coordinator(eventSignal: eventSignal!)
         webView?.allowsBackForwardNavigationGestures = true
         webView?.scrollView.bounces = false
         webView?.backgroundColor = UIColor(STColor.systemBackground)
         webView?.isOpaque = false
+        webView?.configuration.userContentController.add(coordinator!, name: MessageHandlerType.snutt.rawValue)
         webView?.load(URLRequest(url: url))
         bindEventSignal()
     }
@@ -57,6 +60,31 @@ class PreloadedWebView {
         }
         .store(in: &bag)
     }
+    
+    
+}
+
+extension WebViewPreloadManager {
+    class Coordinator: NSObject, WKScriptMessageHandler {
+        
+        let eventSignal: PassthroughSubject<WebViewEventType, Never>
+        
+        init(eventSignal: PassthroughSubject<WebViewEventType, Never>) {
+            self.eventSignal = eventSignal
+        }
+        
+        func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+            if message.name == MessageHandlerType.snutt.rawValue {
+                eventSignal.send(.close)
+            }
+        }
+    }
+}
+
+
+fileprivate enum MessageHandlerType: String {
+    case snutt
+    // ...
 }
 
 enum WebViewEventType {

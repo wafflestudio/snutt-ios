@@ -70,12 +70,6 @@ struct SearchLectureCell: View {
                                 .frame(maxWidth: .infinity)
                                 .font(STFont.details)
                         }
-                        .sheet(isPresented: $showReviewWebView) {
-                            if let container = container {
-                                ReviewScene(viewModel: .init(container: container), detailId: $reviewId)
-                                    .id(reviewId)
-                            }
-                        }
 
                         if isInTimetable {
                             Button {
@@ -100,6 +94,12 @@ struct SearchLectureCell: View {
                         }
                     }
                     /// This `sheet` modifier should be called on `HStack` to prevent animation glitch when `dismiss`ed.
+                    .sheet(isPresented: $showReviewWebView) {
+                        if let container = container {
+                            ReviewScene(viewModel: .init(container: container), detailId: $reviewId)
+                                .id(reviewId)
+                        }
+                    }
                     .sheet(isPresented: $showingDetailPage) {
                         if let container = container {
                             NavigationView {
@@ -107,6 +107,7 @@ struct SearchLectureCell: View {
                             }
                         }
                     }
+                    
                 }
             }
             .foregroundColor(.white)

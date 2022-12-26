@@ -15,6 +15,7 @@ struct ReviewScene: View {
     @Binding var detailId: String?
 
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) var dismiss
 
     init(viewModel: ViewModel, detailId: Binding<String?>? = nil) {
         self.viewModel = viewModel
@@ -66,6 +67,8 @@ struct ReviewScene: View {
                 viewModel.connectionState = .success
             case .error:
                 viewModel.connectionState = .error
+            case .close:
+                dismiss()
             default:
                 return
             }
@@ -95,7 +98,7 @@ extension ReviewScene {
             }.store(in: &bag)
         }
         
-        func getPreloadedWebView(detailId: String?) -> PreloadedWebView {
+        func getPreloadedWebView(detailId: String?) -> WebViewPreloadManager {
             if detailId == nil {
                 return appState.review.preloadedMain
             } else {

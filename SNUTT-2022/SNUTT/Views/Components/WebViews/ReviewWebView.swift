@@ -10,7 +10,7 @@ import SwiftUI
 import WebKit
 
 struct ReviewWebView: UIViewRepresentable {
-    var preloadWebView: PreloadedWebView
+    var preloadWebView: WebViewPreloadManager
     
     var webView: WKWebView {
         preloadWebView.webView!
@@ -20,12 +20,13 @@ struct ReviewWebView: UIViewRepresentable {
         preloadWebView.eventSignal!
     }
 
-    init(preloadedWebView: PreloadedWebView) {
+    init(preloadedWebView: WebViewPreloadManager) {
         self.preloadWebView = preloadedWebView
     }
 
     func makeUIView(context: Context) -> WKWebView {
         webView.navigationDelegate = context.coordinator
+        
         return webView
     }
 
@@ -37,24 +38,28 @@ struct ReviewWebView: UIViewRepresentable {
         Coordinator(self)
     }
 
-    class Coordinator: NSObject, WKNavigationDelegate {
+    class Coordinator: NSObject {
         let parent: ReviewWebView
 
         init(_ parent: ReviewWebView) {
             self.parent = parent
             super.init()
         }
-
-        func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
-            parent.eventSignal.send(.error)
-        }
-
-        func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
-            parent.eventSignal.send(.error)
-        }
-
-        func webView(_: WKWebView, didFinish _: WKNavigation!) {
-            parent.eventSignal.send(.success)
-        }
     }
 }
+
+
+extension ReviewWebView.Coordinator: WKNavigationDelegate {
+    func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
+        parent.eventSignal.send(.error)
+    }
+
+    func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
+        parent.eventSignal.send(.error)
+    }
+
+    func webView(_: WKWebView, didFinish _: WKNavigation!) {
+        parent.eventSignal.send(.success)
+    }
+}
+
