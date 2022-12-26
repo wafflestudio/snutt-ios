@@ -5,8 +5,8 @@
 //  Created by 최유림 on 2022/08/24.
 //
 
-import SwiftUI
 import Foundation
+import SwiftUI
 
 struct NetworkConfiguration {
     static let serverBaseURL: String = Bundle.main.infoDictionary?["API_SERVER_URL"] as! String
@@ -19,7 +19,7 @@ struct NetworkConfiguration {
             .path: "/",
             .name: name,
             .value: value,
-            .expires: Date(timeIntervalSince1970: Date().timeIntervalSince1970 + pow(10, 9) * 2)
+            .expires: Date(timeIntervalSince1970: Date().timeIntervalSince1970 + pow(10, 9) * 2),
         ])
     }
 
