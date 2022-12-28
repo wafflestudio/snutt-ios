@@ -141,7 +141,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func preloadReviewWebView(reviewId: String) {
         services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: reviewId).url)
     }
