@@ -15,6 +15,7 @@ struct SearchLectureList: View {
     let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture) async -> String?
     let overwriteLecture: (Lecture) async -> Void
+    let preloadReviewWebView: (String) -> Void
     let errorTitle: String
     let errorMessage: String
     @Binding var isLectureOverlapped: Bool
@@ -29,6 +30,7 @@ struct SearchLectureList: View {
                                       addLecture: addLecture,
                                       deleteLecture: deleteLecture,
                                       fetchReviewId: fetchReviewId,
+                                      preloadReviewWebView: preloadReviewWebView,
                                       isInTimetable: existingLecture(lecture) != nil)
                         .task {
                             if lecture.id == data.last?.id {

@@ -13,6 +13,7 @@ struct SearchLectureCell: View {
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture) async -> String?
+    let preloadReviewWebView: (String) -> Void
     let isInTimetable: Bool
 
     @State var showingDetailPage = false
@@ -58,11 +59,9 @@ struct SearchLectureCell: View {
                         Button {
                             Task {
                                 reviewId = await fetchReviewId(lecture)
-                                showReviewWebView = true
-
-                                // TODO: fix me
                                 if let detailId = reviewId {
-                                    container?.services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: detailId).url)
+                                    preloadReviewWebView(detailId)
+                                    showReviewWebView = true
                                 }
                             }
                         } label: {

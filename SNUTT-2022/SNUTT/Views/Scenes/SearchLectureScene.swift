@@ -67,6 +67,7 @@ struct SearchLectureScene: View {
                                           deleteLecture: viewModel.deleteLecture,
                                           fetchReviewId: viewModel.fetchReviewId(of:),
                                           overwriteLecture: viewModel.overwriteLecture(lecture:),
+                                          preloadReviewWebView: viewModel.preloadReviewWebView(reviewId:),
                                           errorTitle: viewModel.errorTitle,
                                           errorMessage: viewModel.errorMessage,
                                           isLectureOverlapped: $viewModel.isLectureOverlapped,
