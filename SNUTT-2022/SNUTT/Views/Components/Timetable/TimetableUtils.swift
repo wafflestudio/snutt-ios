@@ -83,17 +83,17 @@ struct TimetablePainter {
         let end = getEndingHour(current: current, config: config)
         return end - start + 1
     }
-    
+
     /// `autoFit`을 고려한 시간표 요일들
     static func getVisibleWeeks(current: Timetable?, config: TimetableConfiguration) -> [Weekday] {
         if !config.autoFit {
             return config.visibleWeeksSorted
         }
-        
+
         guard let lastWeekDay = current?.lastWeekDay else {
             return config.visibleWeeksSorted
         }
-        
+
         if lastWeekDay == .sun {
             return [.mon, .tue, .wed, .thu, .fri, .sat, .sun]
         }
@@ -102,7 +102,7 @@ struct TimetablePainter {
         }
         return config.visibleWeeksSorted
     }
-    
+
     /// `autoFit`을 고려한 시간표 요일 수
     static func getWeekCount(current: Timetable?, config: TimetableConfiguration) -> Int {
         let weeks = getVisibleWeeks(current: current, config: config)

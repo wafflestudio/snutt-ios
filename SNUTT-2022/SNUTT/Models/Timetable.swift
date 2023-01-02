@@ -59,7 +59,7 @@ struct Timetable {
     var lastEndTime: Double? {
         aggregatedTimePlaces.max(by: { $0.endTimeDouble < $1.endTimeDouble })?.endTimeDouble
     }
-    
+
     var lastWeekDay: Weekday {
         (aggregatedTimePlaces.max(by: { $0.day.rawValue < $1.day.rawValue })?.day) ?? .mon
     }
