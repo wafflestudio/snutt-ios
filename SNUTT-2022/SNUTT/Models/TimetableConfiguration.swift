@@ -24,7 +24,7 @@ struct TimetableConfiguration: Codable {
     }
 
     var weekCount: Int {
-        visibleWeeks.count
+        return visibleWeeks.count
     }
 
     func withAutoFitEnabled() -> Self {

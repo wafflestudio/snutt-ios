@@ -46,7 +46,7 @@ struct LectureBlocks: View {
                             }
                         #endif
                     }
-                    .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: config.weekCount),
+                    .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: Painter.getWeekCount(current: current, config: config)),
                            height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: Painter.getHourCount(current: current, config: config)),
                            alignment: .top)
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
