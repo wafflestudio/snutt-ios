@@ -44,7 +44,9 @@ enum ErrorCode: Int {
     case INVALID_COLOR = 0x100A
     case NO_LECTURE_TITLE = 0x100B
     case INVALID_TIMEJSON = 0x100C
-    case INVALID_EMAIL = 0x100D
+    case INVALID_NOTIFICATION_DETAIL = 0x100D
+    case NO_LOCAL_ID = 0x1015
+    case NO_EMAIL = 0x1018
 
     /* 403 - Authorization-related */
     case WRONG_API_KEY = 0x2000
@@ -56,6 +58,9 @@ enum ErrorCode: Int {
     case WRONG_FB_TOKEN = 0x2006
     case UNKNOWN_APP = 0x2007
     case WRONG_APPLE_TOKEN = 0x2008
+    case NO_PASSWORD_RESET_REQUEST = 0x2009
+    case EXPIRED_PASSWORD_RESET_CODE = 0x2010
+    case WRONG_PASSWORD_RESET_CODE = 0x2011
 
     /* 403 - Restrictions */
     case INVALID_ID = 0x3000
@@ -73,6 +78,7 @@ enum ErrorCode: Int {
     case LECTURE_TIME_OVERLAP = 0x300C
     case IS_CUSTOM_LECTURE = 0x300D
     case USER_HAS_NO_FCM_KEY = 0x300E
+    case INVALID_EMAIL = 0x300F
     case EMAIL_NOT_VERIFIED = 0x3011
 
     /* 404 - NOT found */
@@ -82,6 +88,7 @@ enum ErrorCode: Int {
     case REF_LECTURE_NOT_FOUND = 0x4003
     case USER_NOT_FOUND = 0x4004
     case COLORLIST_NOT_FOUND = 0x4005
+    case EMAIL_NOT_FOUND = 0x4006
 
     /* Client-side Errors */
     case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
@@ -103,11 +110,14 @@ enum ErrorCode: Int {
              .NO_TIMETABLE_TITLE,
              .NO_REGISTRATION_ID,
              .INVALID_TIMEMASK,
+             .INVALID_NOTIFICATION_DETAIL,
              .INVALID_COLOR,
              .NO_LECTURE_TITLE,
+             .NO_EMAIL,
+             .NO_PASSWORD_RESET_REQUEST,
              .CANT_CHANGE_OTHERS_THEME,
-             .EMAIL_NOT_VERIFIED
-             :
+             .EMAIL_NOT_VERIFIED,
+             .EXPIRED_PASSWORD_RESET_CODE:
             return "요청 실패"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,
@@ -123,6 +133,7 @@ enum ErrorCode: Int {
             return "앱 정보 실패"
         case .INVALID_ID,
              .INVALID_PASSWORD,
+             .INVALID_EMAIL,
              .DUPLICATE_ID,
              .DUPLICATE_TIMETABLE_TITLE,
              .DUPLICATE_LECTURE,
@@ -132,12 +143,13 @@ enum ErrorCode: Int {
              .NOT_FB_ACCOUNT,
              .FB_ID_WITH_SOMEONE_ELSE,
              .WRONG_SEMESTER,
+             .WRONG_PASSWORD_RESET_CODE,
              .NOT_CUSTOM_LECTURE,
              .IS_CUSTOM_LECTURE,
              .USER_HAS_NO_FCM_KEY,
              .INVALID_TIMEJSON,
              .CANT_DELETE_CURRENT_TIMETABLE,
-             .INVALID_EMAIL:
+             .NO_LOCAL_ID:
             return "잘못된 요청"
         case .LECTURE_TIME_OVERLAP,
              .INVALID_LECTURE_TIME:
@@ -147,6 +159,7 @@ enum ErrorCode: Int {
              .LECTURE_NOT_FOUND,
              .REF_LECTURE_NOT_FOUND,
              .USER_NOT_FOUND,
+             .EMAIL_NOT_FOUND,
              .COLORLIST_NOT_FOUND:
             return "찾지 못함"
         case .UNKNOWN_ERROR:
@@ -157,7 +170,7 @@ enum ErrorCode: Int {
     var errorMessage: String {
         switch self {
         case .SERVER_FAULT:
-            return "서버에 문제가 있으니, 잠시후 다시 시도해주세요."
+            return "서버에 문제가 있으니, 잠시 후 다시 시도해주세요."
         case .NO_NETWORK:
             return "네트워크가 불안정합니다."
         case .NO_USER_TOKEN:
@@ -196,6 +209,10 @@ enum ErrorCode: Int {
             return "잘못된 비밀번호입니다."
         case .WRONG_FB_TOKEN:
             return "잘못된 페이스북 토큰입니다."
+        case .NO_LOCAL_ID:
+            return "아이디를 입력해주세요."
+        case .NO_EMAIL:
+            return "이메일을 입력해주세요."
         case .UNKNOWN_APP:
             return "앱 버전 정보를 가져오는 것을 실패했습니다."
         case .INVALID_ID:
@@ -204,6 +221,10 @@ enum ErrorCode: Int {
             return "강의 시간은 0보다 큰 숫자여야 합니다."
         case .INVALID_PASSWORD:
             return "비밀번호는 최소 하나의 숫자와 하나의 영문자를 포함하는 6~20자여야 합니다."
+        case .INVALID_EMAIL:
+            return "올바른 이메일을 입력해주세요."
+        case .INVALID_NOTIFICATION_DETAIL:
+            return "알림을 불러올 수 없습니다. 잠시 후 다시 시도해주세요."
         case .DUPLICATE_ID:
             return "이미 존재하는 ID입니다."
         case .DUPLICATE_TIMETABLE_TITLE:
@@ -241,7 +262,9 @@ enum ErrorCode: Int {
         case .REF_LECTURE_NOT_FOUND:
             return "수강편람에서 찾을 수 없는 강좌입니다."
         case .USER_NOT_FOUND:
-            return "유저를 찾을 수 없습니다."
+            return "해당 정보로 가입된 사용자가 없습니다."
+        case .EMAIL_NOT_FOUND:
+            return "등록된 이메일이 없습니다."
         case .COLORLIST_NOT_FOUND:
             return "색상 목록을 찾을 수 없습니다."
         case .CANT_DELETE_CURRENT_TIMETABLE:
@@ -252,10 +275,14 @@ enum ErrorCode: Int {
             return "알 수 없는 오류가 발생했습니다."
         case .WRONG_APPLE_TOKEN:
             return "애플 계정으로 로그인하지 못했습니다."
-        case .INVALID_EMAIL:
-            return "유효한 이메일 주소를 입력해주세요."
         case .EMAIL_NOT_VERIFIED:
             return "인증되지 않은 이메일입니다. 강의평 탭에서 이메일 인증을 먼저 진행해주세요."
+        case .NO_PASSWORD_RESET_REQUEST:
+            return "비밀번호 재설정을 다시 시도해주세요."
+        case .EXPIRED_PASSWORD_RESET_CODE:
+            return "만료된 인증코드입니다."
+        case .WRONG_PASSWORD_RESET_CODE:
+            return "잘못된 인증코드입니다."
         }
     }
 }

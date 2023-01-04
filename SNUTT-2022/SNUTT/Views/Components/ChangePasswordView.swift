@@ -8,21 +8,32 @@
 import SwiftUI
 
 struct ChangePasswordView: View {
-    var changePassword: (String, String) async -> Bool // old, new -> success
-
+    var initializingPassword: Bool = false
+    
+    /// old, new -> success
+    var changePassword: (String, String) async -> Bool = { _,_ in return true }
+    /// localId, new -> success
+    var resetPassword: (String) async -> () = { _ in }
+    
     @State private var oldPassword: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
     @Environment(\.presentationMode) private var mode
 
     var isButtonDisabled: Bool {
-        oldPassword.isEmpty || password.isEmpty || confirmPassword.isEmpty || password != confirmPassword
+        if initializingPassword {
+            return password.isEmpty || confirmPassword.isEmpty || password != confirmPassword
+        } else {
+            return oldPassword.isEmpty || password.isEmpty || confirmPassword.isEmpty || password != confirmPassword
+        }
     }
 
     var body: some View {
         Form {
-            Section(header: Text("이전 비밀번호")) {
-                SecureField("필수사항", text: $oldPassword)
+            if !initializingPassword {
+                Section(header: Text("이전 비밀번호")) {
+                    SecureField("필수사항", text: $oldPassword)
+                }
             }
 
             Section(header: Text("새로운 비밀번호")) {
@@ -31,14 +42,18 @@ struct ChangePasswordView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("비밀번호 변경")
+        .navigationTitle(initializingPassword ? "비밀번호 재설정" : "비밀번호 변경")
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button {
                     Task {
-                        let success = await changePassword(oldPassword, password)
-                        if success {
-                            mode.wrappedValue.dismiss()
+                        if !initializingPassword {
+                            let success = await changePassword(oldPassword, password)
+                            if success {
+                                mode.wrappedValue.dismiss()
+                            }
+                        } else {
+                            await resetPassword(password)
                         }
                     }
                 } label: {
@@ -52,9 +67,9 @@ struct ChangePasswordView: View {
 
 struct ChangePasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        ChangePasswordView { old, new in
+        ChangePasswordView(changePassword: { old, new in
             print(old, new)
             return true
-        }
+        })
     }
 }

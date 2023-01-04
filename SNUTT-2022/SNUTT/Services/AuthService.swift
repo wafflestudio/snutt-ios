@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol AuthServiceProtocol {
     func loadAccessTokenDuringBootstrap()
@@ -13,6 +14,11 @@ protocol AuthServiceProtocol {
     func loginWithApple(appleToken: String) async throws
     func loginWithFacebook(fbId: String, fbToken: String) async throws
     func registerWithLocalId(localId: String, localPassword: String, email: String) async throws
+    func findId(email: String) async throws
+    func checkLinkedEmail(localId: String, email: Binding<String>) async throws
+    func sendVerificationCode(email: String) async throws
+    func checkVerificationCode(localId: String, code: String) async throws
+    func resetPassword(localId: String, password: String) async throws
     func logout() async throws
 }
 
@@ -79,6 +85,27 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
+    
+    func findId(email: String) async throws {
+        let _ = try await authRepository.findId(email: email)
+    }
+    
+    func checkLinkedEmail(localId: String, email: Binding<String>) async throws {
+        let dto = try await authRepository.checkLinkedEmail(localId: localId)
+        email.wrappedValue = dto.email
+    }
+    
+    func sendVerificationCode(email: String) async throws {
+        try await authRepository.sendVerificationCode(email: email)
+    }
+    
+    func checkVerificationCode(localId: String, code: String) async throws {
+        try await authRepository.checkVerificationCode(localId: localId, code: code)
+    }
+    
+    func resetPassword(localId: String, password: String) async throws {
+        try await authRepository.resetPassword(localId: localId, password: password)
+    }
 
     func logout() async throws {
         let fcmToken = userDefaultsRepository.get(String.self, key: .fcmToken, defaultValue: "")
@@ -115,5 +142,10 @@ class FakeAuthService: AuthServiceProtocol {
     func loginWithApple(appleToken _: String) async throws {}
     func loginWithFacebook(fbId _: String, fbToken _: String) async throws {}
     func registerWithLocalId(localId _: String, localPassword _: String, email _: String) async throws {}
+    func findId(email _: String) async throws {}
+    func checkLinkedEmail(localId _: String, email _: Binding<String>) async throws {}
+    func sendVerificationCode(email _: String) async throws {}
+    func checkVerificationCode(localId _: String, code _: String) async throws {}
+    func resetPassword(localId _: String, password _: String) async throws {}
     func logout() async throws {}
 }

@@ -16,6 +16,14 @@ struct LogoutResponseDto: Codable {
     let message: String // typically "ok"
 }
 
+struct SendLocalIdDto: Decodable {
+    let message: String
+}
+
+struct CheckLinkedEmailDto: Decodable {
+    let email: String
+}
+
 struct TokenResponseDto: Codable {
     let token: String // access token
 }
