@@ -21,6 +21,7 @@ enum AuthRouter: Router {
             return URL(string: NetworkConfiguration.serverBaseURL + "/auth")!
         }
     }
+
     static let shouldAddToken: Bool = false
 
     case registerWithLocalId(localId: String, localPassword: String, email: String)

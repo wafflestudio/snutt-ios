@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ChangePasswordView: View {
     var initializingPassword: Bool = false
-    
+
     /// old, new -> success
-    var changePassword: (String, String) async -> Bool = { _,_ in return true }
+    var changePassword: (String, String) async -> Bool = { _, _ in true }
     /// localId, new -> success
-    var resetPassword: (String) async -> () = { _ in }
-    
+    var resetPassword: (String) async -> Void = { _ in }
+
     @State private var oldPassword: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""

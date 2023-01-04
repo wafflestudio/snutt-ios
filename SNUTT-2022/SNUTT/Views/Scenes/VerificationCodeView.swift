@@ -12,25 +12,25 @@ struct VerificationCodeView: View {
     @State private var verificationCode: String = ""
     @State private var timeOut: Bool = false
     @State private var remainingTime: Int = 0
-    
+
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
     @State private var currentTimer: Cancellable? = nil
-    
+
     let email: String
     let timeLimit: Int
     let sendVerificationCode: (String) async -> Bool
-    let checkVerificationCode: (String) async -> ()
-    
+    let checkVerificationCode: (String) async -> Void
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Spacer().frame(height: 15)
-            
+
             Text("\(email)으로 전송된\n인증코드를 입력해주세요.")
                 .fixedSize()
                 .font(STFont.title)
-            
+
             Spacer().frame(height: 8)
-            
+
             VStack(alignment: .leading) {
                 AnimatedTextField(label: "인증코드", placeholder: "인증코드 8자리를 입력하세요", text: $verificationCode, needsTimer: true, timeOut: $timeOut, remainingTime: remainingTime) {
                     Task {
@@ -47,16 +47,16 @@ struct VerificationCodeView: View {
                         timeOut = true
                     }
                 }
-                
+
                 if timeOut {
                     Text("시간이 초과되었습니다. 다시 시도해주세요.")
                         .font(.system(size: 12, weight: .light))
                         .foregroundColor(STColor.red)
                 }
             }
-            
+
             Spacer().frame(height: 10)
-            
+
             Button {
                 Task {
                     await checkVerificationCode(verificationCode)
@@ -101,7 +101,7 @@ struct VerifyEmailScene_Previews: PreviewProvider {
                 return true
             } checkVerificationCode: { _ in
                 print("checkVerificationCode")
-                //return true
+                // return true
             }
         }
     }

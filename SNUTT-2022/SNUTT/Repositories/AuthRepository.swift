@@ -55,35 +55,35 @@ class AuthRepository: AuthRepositoryProtocol {
             .serializingDecodable(LoginResponseDto.self)
             .handlingError()
     }
-    
+
     func findId(email: String) async throws -> SendLocalIdDto {
         return try await session
             .request(AuthRouter.findId(email: email))
             .serializingDecodable(SendLocalIdDto.self)
             .handlingError()
     }
-    
+
     func checkLinkedEmail(localId: String) async throws -> CheckLinkedEmailDto {
         return try await session
             .request(AuthRouter.checkLinkedEmail(localId: localId))
             .serializingDecodable(CheckLinkedEmailDto.self)
             .handlingError()
     }
-    
+
     func sendVerificationCode(email: String) async throws {
         let _ = try await session
             .request(AuthRouter.sendVerificationCode(email: email))
             .serializingString()
             .handlingError()
     }
-    
+
     func checkVerificationCode(localId: String, code: String) async throws {
         let _ = try await session
             .request(AuthRouter.checkVerificationCode(localId: localId, code: code))
             .serializingString()
             .handlingError()
     }
-    
+
     func resetPassword(localId: String, password: String) async throws {
         let _ = try await session
             .request(AuthRouter.resetPassword(localId: localId, password: password))

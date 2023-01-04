@@ -9,22 +9,22 @@ import SwiftUI
 
 struct FindIdView: View {
     @Binding var email: String
-    let sendEmail: () async -> ()
+    let sendEmail: () async -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Spacer().frame(height: 22)
-            
+
             Text("아이디를 찾기 위해\n연동된 이메일 주소가 필요합니다.")
                 .fixedSize()
                 .font(STFont.title)
-            
+
             Spacer().frame(height: 8)
-            
+
             AnimatedTextField(label: "이메일", placeholder: "이메일을 입력하세요", text: $email, shouldFocusOn: true)
-            
+
             Spacer().frame(height: 12)
-            
+
             Button {
                 Task {
                     await sendEmail()
@@ -40,9 +40,7 @@ struct FindIdView: View {
             .buttonBorderShape(.roundedRectangle(radius: 0))
             .tint(STColor.cyan)
             .disabled(email.isEmpty)
-            .onTapGesture {
-                
-            }
+            .onTapGesture {}
 
             Spacer()
         }

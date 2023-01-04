@@ -116,7 +116,7 @@ extension DataTask {
                 debugPrint("Error Raw Response: \(responseBodyDecoded)")
                 userInfo["ResponseBody"] = responseBodyDecoded
             }
-            
+
             if let errCode = ErrorCode(rawValue: errDto.errcode) {
                 userInfo["ErrorMessage"] = errCode.errorMessage
 
@@ -137,7 +137,7 @@ extension DataTask {
                 return dto
             }
         }
-        
+
         throw STError(.SERVER_FAULT)
     }
 }

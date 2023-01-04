@@ -14,15 +14,15 @@ struct AnimatedTextField: View {
 
     var shouldFocusOn: Bool = false
     var secure: Bool = false
-    
+
     // TextField with Timer
     var needsTimer: Bool = false
     @Binding var timeOut: Bool
     var remainingTime: Int = 0
-    var action: (() -> Void)? = nil
+    var action: (() -> Void)?
 
     @FocusState private var _isFocused: Bool
-    
+
     init(label: String, placeholder: String, text: Binding<String>, shouldFocusOn: Bool = false, secure: Bool = false, needsTimer: Bool = false, timeOut: Binding<Bool> = .constant(false), remainingTime: Int = 0, action: (() -> Void)? = nil) {
         self.label = label
         self.placeholder = placeholder
@@ -55,11 +55,11 @@ struct AnimatedTextField: View {
                 .autocorrectionDisabled()
                 .font(STFont.detailLabel)
                 .frame(height: 20)
-                
+
                 // TextField with Timer
                 if needsTimer {
                     Spacer().frame(width: 4)
-                    
+
                     Group {
                         if timeOut {
                             Button {

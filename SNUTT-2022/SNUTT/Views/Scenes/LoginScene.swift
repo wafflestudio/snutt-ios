@@ -27,7 +27,7 @@ struct LoginScene: View {
             VStack(alignment: .leading, spacing: 15) {
                 AnimatedTextField(label: "아이디", placeholder: "아이디를 입력하세요", text: $localId, shouldFocusOn: true)
                 AnimatedTextField(label: "비밀번호", placeholder: "비밀번호를 입력하세요", text: $localPassword, secure: true)
-                
+
                 HStack {
                     Group {
                         Text("아이디 찾기")
@@ -35,9 +35,9 @@ struct LoginScene: View {
                             .onTapGesture {
                                 pushToFindIdView = true
                             }
-                        
+
                         Text("|")
-                        
+
                         Text("비밀번호 재설정")
                             .underline()
                             .onTapGesture {
@@ -81,8 +81,8 @@ struct LoginScene: View {
                     FindIdView(email: $email) {
                         showConfirmAlert = await viewModel.findLocalId(with: email)
                     },
-                               isActive: $pushToFindIdView) { EmptyView() }
-                
+                    isActive: $pushToFindIdView) { EmptyView() }
+
                 NavigationLink(destination: ResetPasswordScene(viewModel: .init(container: viewModel.container), showResetPasswordScene: $pushToResetPasswordScene),
                                isActive: $pushToResetPasswordScene) { EmptyView() }
             }
@@ -99,7 +99,7 @@ extension LoginScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func findLocalId(with email: String) async -> Bool {
             do {
                 try await services.authService.findId(email: email)

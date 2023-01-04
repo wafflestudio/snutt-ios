@@ -85,24 +85,24 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
-    
+
     func findId(email: String) async throws {
         let _ = try await authRepository.findId(email: email)
     }
-    
+
     func checkLinkedEmail(localId: String, email: Binding<String>) async throws {
         let dto = try await authRepository.checkLinkedEmail(localId: localId)
         email.wrappedValue = dto.email
     }
-    
+
     func sendVerificationCode(email: String) async throws {
         try await authRepository.sendVerificationCode(email: email)
     }
-    
+
     func checkVerificationCode(localId: String, code: String) async throws {
         try await authRepository.checkVerificationCode(localId: localId, code: code)
     }
-    
+
     func resetPassword(localId: String, password: String) async throws {
         try await authRepository.resetPassword(localId: localId, password: password)
     }

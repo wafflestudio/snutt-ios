@@ -25,7 +25,7 @@ struct STFont {
 
     /// 상세 정보 (12, Regular)
     static let details: Font = .system(size: 12, weight: .regular)
-    
+
     /// 상세 정보 (12, Semibold)
     static let detailsSemibold: Font = .system(size: 12, weight: .semibold)
 }
