@@ -12,8 +12,6 @@ struct LoginScene: View {
 
     @State private var localId: String = ""
     @State private var localPassword: String = ""
-    @State private var email: String = ""
-    @State private var showConfirmAlert: Bool = false
     @State private var pushToFindIdView: Bool = false
     @State private var pushToResetPasswordScene: Bool = false
 
@@ -69,16 +67,11 @@ struct LoginScene: View {
         .padding()
         .navigationTitle("로그인")
         .navigationBarTitleDisplayMode(.inline)
-        .alert("전송 완료", isPresented: $showConfirmAlert) {
-            Button("확인") {}
-        } message: {
-            Text("\(email)로 아이디를 전송했습니다.")
-        }
         .background(
             Group {
                 NavigationLink(destination:
-                    FindIdView(email: $email) {
-                        showConfirmAlert = await viewModel.findLocalId(with: email)
+                    FindIdView() { email in
+                        await viewModel.findLocalId(with: email)
                     },
                     isActive: $pushToFindIdView) { EmptyView() }
 

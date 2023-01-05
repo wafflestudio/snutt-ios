@@ -8,20 +8,21 @@
 import SwiftUI
 
 struct ChangePasswordView: View {
-    var initializingPassword: Bool = false
+    var resetMode: Bool = false
 
     /// old, new -> success
     var changePassword: (String, String) async -> Bool = { _, _ in true }
-    /// localId, new -> success
-    var resetPassword: (String) async -> Void = { _ in }
+    /// new -> success
+    var resetPassword: (String) async -> Bool = { _ in true }
 
     @State private var oldPassword: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
+    @State private var showConfirmAlert: Bool = false
     @Environment(\.presentationMode) private var mode
 
     var isButtonDisabled: Bool {
-        if initializingPassword {
+        if resetMode {
             return password.isEmpty || confirmPassword.isEmpty || password != confirmPassword
         } else {
             return oldPassword.isEmpty || password.isEmpty || confirmPassword.isEmpty || password != confirmPassword
@@ -30,37 +31,41 @@ struct ChangePasswordView: View {
 
     var body: some View {
         Form {
-            if !initializingPassword {
+            if !resetMode {
                 Section(header: Text("이전 비밀번호")) {
                     SecureField("필수사항", text: $oldPassword)
                 }
             }
 
             Section(header: Text("새로운 비밀번호")) {
-                SecureField("비밀번호", text: $password)
-                SecureField("비밀번호 확인", text: $confirmPassword)
+                SecureField("영문, 숫자 모두 포함 6-20자 이내", text: $password)
+                SecureField("비밀번호를 한번 더 입력하세요", text: $confirmPassword)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(initializingPassword ? "비밀번호 재설정" : "비밀번호 변경")
+        .navigationTitle(resetMode ? "비밀번호 재설정" : "비밀번호 변경")
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button {
                     Task {
-                        if !initializingPassword {
-                            let success = await changePassword(oldPassword, password)
-                            if success {
-                                mode.wrappedValue.dismiss()
-                            }
-                        } else {
-                            await resetPassword(password)
-                        }
+                        showConfirmAlert = await resetMode
+                        ? resetPassword(password)
+                        : changePassword(oldPassword, password)
                     }
                 } label: {
                     Text("저장")
                 }
                 .disabled(isButtonDisabled)
             }
+        }
+        .alert("완료", isPresented: $showConfirmAlert) {
+            Button("확인") {
+                mode.wrappedValue.dismiss()
+            }
+        } message: {
+            Text(resetMode
+                 ? "비밀번호가 재설정되었습니다."
+                 : "비밀번호가 변경되었습니다.")
         }
     }
 }

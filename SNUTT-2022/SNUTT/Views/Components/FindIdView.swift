@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct FindIdView: View {
-    @Binding var email: String
-    let sendEmail: () async -> Void
+    @State private var email: String = ""
+    @State private var showConfirmAlert: Bool = false
+    let sendEmail: (String) async -> Bool
+    
+    @Environment(\.presentationMode) private var mode
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -27,7 +30,7 @@ struct FindIdView: View {
 
             Button {
                 Task {
-                    await sendEmail()
+                    showConfirmAlert = await sendEmail(email)
                     resignFirstResponder()
                 }
             } label: {
@@ -46,14 +49,22 @@ struct FindIdView: View {
         .navigationTitle("아이디 찾기")
         .navigationBarTitleDisplayMode(.inline)
         .padding(.horizontal, 20)
+        .alert("전송 완료", isPresented: $showConfirmAlert) {
+            Button("확인") {
+                mode.wrappedValue.dismiss()
+            }
+        } message: {
+            Text("\(email)로 아이디를 전송했습니다.")
+        }
     }
 }
 
 struct FindIDView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            FindIdView(email: .constant("example@wafflestudio.com"), sendEmail: {
+            FindIdView(sendEmail: { _ in
                 print("send email")
+                return true
             })
         }
     }

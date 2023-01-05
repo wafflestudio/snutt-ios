@@ -11,9 +11,8 @@ struct ResetPasswordScene: View {
     @ObservedObject var viewModel: ViewModel
 
     @State private var localId: String = ""
-    @State private var linkedEmail: String = ""
-    @State private var showLinkedEmail: Bool = false
-    @State private var showConfirmAlert: Bool = false
+    @State private var email: String = ""
+    @State private var showEmailAlert: Bool = false
     @State private var pushToVerificationView: Bool = false
     @State private var pushToResetPasswordView: Bool = false
     @Binding var showResetPasswordScene: Bool
@@ -34,7 +33,7 @@ struct ResetPasswordScene: View {
 
             Button {
                 Task {
-                    showLinkedEmail = await viewModel.checkLinkedEmail(localId: localId, email: $linkedEmail)
+                    showEmailAlert = await viewModel.checkLinkedEmail(localId: localId, email: $email)
                     resignFirstResponder()
                 }
             } label: {
@@ -53,48 +52,39 @@ struct ResetPasswordScene: View {
         .navigationTitle("비밀번호 재설정")
         .navigationBarTitleDisplayMode(.inline)
         .padding(.horizontal, 20)
-        .alert("이메일 확인", isPresented: $showLinkedEmail) {
+        .alert("이메일 확인", isPresented: $showEmailAlert) {
             Button("전송") {
                 Task {
-                    if await viewModel.sendVerificationCode(to: linkedEmail) {
+                    if await viewModel.sendVerificationCode(to: email) {
                         pushToVerificationView = true
                     }
                 }
             }
 
-            Button("취소", role: .cancel) {
-                showLinkedEmail = false
-            }
+            Button("취소", role: .cancel) {}
         } message: {
-            Text("아이디에 연동된 메일 주소는 \(linkedEmail)입니다. 이 주소로 인증코드를 보낼까요?")
+            Text("아이디에 연동된 메일 주소는 \(email)입니다. 이 주소로 인증코드를 보낼까요?")
         }
-        .alert("완료", isPresented: $showConfirmAlert) {
-            Button("확인") {
+        .onChange(of: pushToResetPasswordView) { newValue in
+            if !newValue {
                 showResetPasswordScene = false
             }
-        } message: {
-            Text("비밀번호가 재설정되었습니다.")
         }
         .background(
             Group {
                 NavigationLink(destination:
-                    VerificationCodeView(email: linkedEmail, timeLimit: viewModel.timeLimit,
+                    VerificationCodeView(email: email, timeLimit: viewModel.timeLimit,
                                          sendVerificationCode: { _ in
-                                             await viewModel.sendVerificationCode(to: linkedEmail)
+                                             await viewModel.sendVerificationCode(to: email)
                                          }, checkVerificationCode: { code in
-                                             if await viewModel.checkVerificationCode(localId: localId, code: code) {
-                                                 pushToResetPasswordView = true
-                                             }
+                                             pushToResetPasswordView = await viewModel.checkVerificationCode(localId: localId, code: code)
                                          }),
                     isActive: $pushToVerificationView) { EmptyView() }
 
                 NavigationLink(destination:
-                    ChangePasswordView(initializingPassword: true,
+                    ChangePasswordView(resetMode: true,
                                        resetPassword: { password in
-                                           let success = await viewModel.resetPassword(localId: localId, to: password)
-                                           if success {
-                                               showConfirmAlert = true
-                                           }
+                                            await viewModel.resetPassword(localId: localId, to: password)
                                        }),
                     isActive: $pushToResetPasswordView) { EmptyView() }
             }
