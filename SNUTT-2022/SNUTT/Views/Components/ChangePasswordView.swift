@@ -49,8 +49,8 @@ struct ChangePasswordView: View {
                 Button {
                     Task {
                         showConfirmAlert = await resetMode
-                        ? resetPassword(password)
-                        : changePassword(oldPassword, password)
+                            ? resetPassword(password)
+                            : changePassword(oldPassword, password)
                     }
                 } label: {
                     Text("저장")
@@ -64,8 +64,8 @@ struct ChangePasswordView: View {
             }
         } message: {
             Text(resetMode
-                 ? "비밀번호가 재설정되었습니다."
-                 : "비밀번호가 변경되었습니다.")
+                ? "비밀번호가 재설정되었습니다."
+                : "비밀번호가 변경되었습니다.")
         }
     }
 }

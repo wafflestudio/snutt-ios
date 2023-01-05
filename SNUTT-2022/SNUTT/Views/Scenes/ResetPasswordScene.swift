@@ -84,7 +84,7 @@ struct ResetPasswordScene: View {
                 NavigationLink(destination:
                     ChangePasswordView(resetMode: true,
                                        resetPassword: { password in
-                                            await viewModel.resetPassword(localId: localId, to: password)
+                                           await viewModel.resetPassword(localId: localId, to: password)
                                        }),
                     isActive: $pushToResetPasswordView) { EmptyView() }
             }

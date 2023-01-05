@@ -70,7 +70,7 @@ struct LoginScene: View {
         .background(
             Group {
                 NavigationLink(destination:
-                    FindIdView() { email in
+                    FindIdView { email in
                         await viewModel.findLocalId(with: email)
                     },
                     isActive: $pushToFindIdView) { EmptyView() }

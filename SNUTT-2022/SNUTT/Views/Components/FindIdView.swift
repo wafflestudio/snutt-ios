@@ -11,7 +11,7 @@ struct FindIdView: View {
     @State private var email: String = ""
     @State private var showConfirmAlert: Bool = false
     let sendEmail: (String) async -> Bool
-    
+
     @Environment(\.presentationMode) private var mode
 
     var body: some View {
