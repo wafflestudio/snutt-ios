@@ -101,7 +101,6 @@ struct VerifyEmailScene_Previews: PreviewProvider {
                 return true
             } checkVerificationCode: { _ in
                 print("checkVerificationCode")
-                // return true
             }
         }
     }

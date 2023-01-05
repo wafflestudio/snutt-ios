@@ -16,7 +16,6 @@ struct LoginScene: View {
     @State private var showConfirmAlert: Bool = false
     @State private var pushToFindIdView: Bool = false
     @State private var pushToResetPasswordScene: Bool = false
-    @State private var popToLoginScene: Bool = false
 
     var isButtonDisabled: Bool {
         localId.isEmpty || localPassword.isEmpty

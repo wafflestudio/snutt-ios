@@ -52,7 +52,7 @@ struct AnimatedTextField: View {
                 }
                 .focused($_isFocused)
                 .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
+                .disableAutocorrection(true)
                 .font(STFont.detailLabel)
                 .frame(height: 20)
 

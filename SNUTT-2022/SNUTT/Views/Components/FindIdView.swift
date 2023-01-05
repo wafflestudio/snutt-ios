@@ -40,7 +40,6 @@ struct FindIdView: View {
             .buttonBorderShape(.roundedRectangle(radius: 0))
             .tint(STColor.cyan)
             .disabled(email.isEmpty)
-            .onTapGesture {}
 
             Spacer()
         }
