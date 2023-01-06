@@ -223,7 +223,7 @@
 		DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6227E5CCD500CF380E /* TimetableService.swift */; };
 		DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */; };
 		DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7427E5CEA500CF380E /* AppState.swift */; };
-/* End PBXBuildFile section */
+		/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		BE98A070288AFC1600C2CE95 /* PBXContainerItemProxy */ = {
@@ -461,7 +461,7 @@
 		DCD41A6227E5CCD500CF380E /* TimetableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableService.swift; sourceTree = "<group>"; };
 		DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableViewModel.swift; sourceTree = "<group>"; };
 		DCD41A7427E5CEA500CF380E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+		/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BE98A05E288AFC1500C2CE95 /* Frameworks */ = {
