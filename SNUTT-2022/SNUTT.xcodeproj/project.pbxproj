@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		093675C7F9B4EBC21A2382D3 /* Pods_SNUTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C7813F08861F0E2AE2E897B /* Pods_SNUTT.framework */; };
-		9BE36A57014B6107B56D747B /* Pods_SNUTT_SNUTTUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16FECD05026F01C7EB9F6CA3 /* Pods_SNUTT_SNUTTUITests.framework */; };
 		B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* BaseViewModel.swift */; };
 		B87B315D28D5A70F005C170B /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315828D5A70F005C170B /* UserState.swift */; };
 		B87B315E28D5A70F005C170B /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315928D5A70F005C170B /* SearchState.swift */; };
@@ -225,8 +223,7 @@
 		DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A6227E5CCD500CF380E /* TimetableService.swift */; };
 		DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */; };
 		DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD41A7427E5CEA500CF380E /* AppState.swift */; };
-		FD607D59DF3D8D5CF2808BF4 /* Pods_SNUTT_SNUTTTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32849595BD5FC0C7243386CB /* Pods_SNUTT_SNUTTTests.framework */; };
-/* End PBXBuildFile section */
+		/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		BE98A070288AFC1600C2CE95 /* PBXContainerItemProxy */ = {
@@ -267,17 +264,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		13E5AA6E1654022602F97857 /* Pods-SNUTT.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.staging.xcconfig"; path = "Target Support Files/Pods-SNUTT/Pods-SNUTT.staging.xcconfig"; sourceTree = "<group>"; };
-		16FECD05026F01C7EB9F6CA3 /* Pods_SNUTT_SNUTTUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_SNUTTUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		26439B049154DBE478448A85 /* Pods-SNUTT-SNUTTTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT-SNUTTTests.release.xcconfig"; path = "Target Support Files/Pods-SNUTT-SNUTTTests/Pods-SNUTT-SNUTTTests.release.xcconfig"; sourceTree = "<group>"; };
-		32849595BD5FC0C7243386CB /* Pods_SNUTT_SNUTTTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT_SNUTTTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4945F19E87D00C37221C2CD8 /* Pods-SNUTT-SNUTTUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT-SNUTTUITests.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		7C7813F08861F0E2AE2E897B /* Pods_SNUTT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SNUTT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		84CEAA03B8806089F72371C4 /* Pods-SNUTT-SNUTTTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT-SNUTTTests.staging.xcconfig"; path = "Target Support Files/Pods-SNUTT-SNUTTTests/Pods-SNUTT-SNUTTTests.staging.xcconfig"; sourceTree = "<group>"; };
-		8AFAB18FFE926F984BEA9895 /* Pods-SNUTT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT/Pods-SNUTT.debug.xcconfig"; sourceTree = "<group>"; };
-		90B19970B9D30EA9758CF1C0 /* Pods-SNUTT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT.release.xcconfig"; path = "Target Support Files/Pods-SNUTT/Pods-SNUTT.release.xcconfig"; sourceTree = "<group>"; };
-		949F1EAA7429C730F20FB293 /* Pods-SNUTT-SNUTTUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT-SNUTTUITests.release.xcconfig"; path = "Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests.release.xcconfig"; sourceTree = "<group>"; };
-		B778CBA3BAA79AF3D8E2B836 /* Pods-SNUTT-SNUTTTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT-SNUTTTests.debug.xcconfig"; path = "Target Support Files/Pods-SNUTT-SNUTTTests/Pods-SNUTT-SNUTTTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B87431CA283B5A7300D78C59 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		B87B315828D5A70F005C170B /* UserState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
 		B87B315928D5A70F005C170B /* SearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
@@ -475,8 +461,7 @@
 		DCD41A6227E5CCD500CF380E /* TimetableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableService.swift; sourceTree = "<group>"; };
 		DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableViewModel.swift; sourceTree = "<group>"; };
 		DCD41A7427E5CEA500CF380E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		EAE2435C309F41809711A130 /* Pods-SNUTT-SNUTTUITests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SNUTT-SNUTTUITests.staging.xcconfig"; path = "Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests.staging.xcconfig"; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+		/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BE98A05E288AFC1500C2CE95 /* Frameworks */ = {
@@ -498,7 +483,6 @@
 				BE4CD86528F5A56200BA9BBC /* FirebaseCrashlytics in Frameworks */,
 				BEDE34D42879A59B00525014 /* Alamofire in Frameworks */,
 				BE4CD86128F5A56200BA9BBC /* FirebaseAnalytics in Frameworks */,
-				093675C7F9B4EBC21A2382D3 /* Pods_SNUTT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,7 +490,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD607D59DF3D8D5CF2808BF4 /* Pods_SNUTT_SNUTTTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,29 +497,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BE36A57014B6107B56D747B /* Pods_SNUTT_SNUTTUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B13869679CB9DF342CBC2054 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				8AFAB18FFE926F984BEA9895 /* Pods-SNUTT.debug.xcconfig */,
-				90B19970B9D30EA9758CF1C0 /* Pods-SNUTT.release.xcconfig */,
-				13E5AA6E1654022602F97857 /* Pods-SNUTT.staging.xcconfig */,
-				B778CBA3BAA79AF3D8E2B836 /* Pods-SNUTT-SNUTTTests.debug.xcconfig */,
-				26439B049154DBE478448A85 /* Pods-SNUTT-SNUTTTests.release.xcconfig */,
-				84CEAA03B8806089F72371C4 /* Pods-SNUTT-SNUTTTests.staging.xcconfig */,
-				4945F19E87D00C37221C2CD8 /* Pods-SNUTT-SNUTTUITests.debug.xcconfig */,
-				949F1EAA7429C730F20FB293 /* Pods-SNUTT-SNUTTUITests.release.xcconfig */,
-				EAE2435C309F41809711A130 /* Pods-SNUTT-SNUTTUITests.staging.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		B8E51E6928B75E9E0065248E /* States */ = {
 			isa = PBXGroup;
 			children = (
@@ -635,9 +601,6 @@
 			children = (
 				BE98A063288AFC1500C2CE95 /* WidgetKit.framework */,
 				BE98A065288AFC1500C2CE95 /* SwiftUI.framework */,
-				7C7813F08861F0E2AE2E897B /* Pods_SNUTT.framework */,
-				32849595BD5FC0C7243386CB /* Pods_SNUTT_SNUTTTests.framework */,
-				16FECD05026F01C7EB9F6CA3 /* Pods_SNUTT_SNUTTUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -738,7 +701,6 @@
 				BE682BB42879E24D009EBCB7 /* SNUTTUITests.xctest */,
 				BE98A061288AFC1500C2CE95 /* SNUTTWidgetExtension.appex */,
 				BE98A062288AFC1500C2CE95 /* Frameworks */,
-				B13869679CB9DF342CBC2054 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -999,13 +961,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC860F6927E5C87F0068C94B /* Build configuration list for PBXNativeTarget "SNUTT" */;
 			buildPhases = (
-				C7108020A203967B0DF5FFED /* [CP] Check Pods Manifest.lock */,
 				DC860F4127E5C87D0068C94B /* Sources */,
 				DC860F4227E5C87D0068C94B /* Frameworks */,
 				DC860F4327E5C87D0068C94B /* Resources */,
 				BE98A073288AFC1600C2CE95 /* Embed Foundation Extensions */,
 				BEBB3C14292CCD960023F695 /* Upload dSym to Firebase */,
-				36B8BB657DF3EA97A0FFEAD7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1029,11 +989,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC860F6C27E5C87F0068C94B /* Build configuration list for PBXNativeTarget "SNUTTTests" */;
 			buildPhases = (
-				940070A934CD7E41E9F3AF1D /* [CP] Check Pods Manifest.lock */,
 				DC860F5127E5C87F0068C94B /* Sources */,
 				DC860F5227E5C87F0068C94B /* Frameworks */,
 				DC860F5327E5C87F0068C94B /* Resources */,
-				E556223E024542E49B269690 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1049,11 +1007,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC860F6F27E5C87F0068C94B /* Build configuration list for PBXNativeTarget "SNUTTUITests" */;
 			buildPhases = (
-				3BF53F50C55A470DC77D1DCA /* [CP] Check Pods Manifest.lock */,
 				DC860F5B27E5C87F0068C94B /* Sources */,
 				DC860F5C27E5C87F0068C94B /* Frameworks */,
 				DC860F5D27E5C87F0068C94B /* Resources */,
-				FB268D6C9C90D87A76E68A99 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1156,66 +1112,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		36B8BB657DF3EA97A0FFEAD7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 8;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SNUTT/Pods-SNUTT-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3BF53F50C55A470DC77D1DCA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SNUTT-SNUTTUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		940070A934CD7E41E9F3AF1D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SNUTT-SNUTTTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		BEBB3C14292CCD960023F695 /* Upload dSym to Firebase */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1235,60 +1131,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\nif [ \"${CONFIGURATION}\" = \"Release\" ]; \nthen \n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run -gsp ${PROJECT_DIR}/SNUTT/GoogleServiceReleaseInfo.plist\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols -gsp ${PROJECT_DIR}/SNUTT/GoogleServiceReleaseInfo.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nelse\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run -gsp ${PROJECT_DIR}/SNUTT/GoogleServiceDebugInfo.plist\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols -gsp ${PROJECT_DIR}/SNUTT/GoogleServiceDebugInfo.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nfi\n";
-		};
-		C7108020A203967B0DF5FFED /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 8;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E556223E024542E49B269690 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTTests/Pods-SNUTT-SNUTTTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTTests/Pods-SNUTT-SNUTTTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTTests/Pods-SNUTT-SNUTTTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FB268D6C9C90D87A76E68A99 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SNUTT-SNUTTUITests/Pods-SNUTT-SNUTTUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
