@@ -95,49 +95,53 @@ extension DataTask {
     /// Extract DTO from `DataTask`, or throw error parsed from the response body.
     func handlingError() async throws -> Value {
         if let data = await response.data,
-           let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data)
+           let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data),
+           let errCode = ErrorCode(rawValue: errDto.errcode)
         {
-            var userInfo: [String: Any] = [:]
+            var requestInfo = await collectRequestInfo()
+            requestInfo["ErrorMessage"] = errCode.errorMessage
 
-            if let requestHeader = (await response.request?.headers.description) {
-                userInfo["RequestHeader"] = requestHeader
+            if errCode == .SERVER_FAULT {
+                Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: requestInfo))
             }
 
-            if let requestBody = (await response.request?.httpBody),
-               let requestBodyDecoded = String(data: requestBody, encoding: .utf8)
-            {
-                debugPrint("Error Request Body: \(requestBodyDecoded)")
-                userInfo["RequestBody"] = requestBodyDecoded
-            }
-
-            if let responseBody = (await response.data),
-               let responseBodyDecoded = String(data: responseBody, encoding: .utf8)
-            {
-                debugPrint("Error Raw Response: \(responseBodyDecoded)")
-                userInfo["ResponseBody"] = responseBodyDecoded
-            }
-
-            if let errCode = ErrorCode(rawValue: errDto.errcode) {
-                userInfo["ErrorMessage"] = errCode.errorMessage
-
-                if errCode == .SERVER_FAULT {
-                    Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: userInfo))
-                }
-
-                if let serverMessage = errDto.ext?.first?.1 {
-                    throw STError(errCode, content: serverMessage)
-                } else {
-                    throw STError(errCode)
-                }
+            if let serverMessage = errDto.ext?.first?.1 {
+                throw STError(errCode, content: serverMessage)
             } else {
-                Crashlytics.crashlytics().record(error: NSError(domain: "UNKNOWN_ERROR", code: -1, userInfo: userInfo))
-            }
-        } else {
-            if let dto = try? await value {
-                return dto
+                throw STError(errCode)
             }
         }
-
+        
+        if let dto = try? await value {
+            return dto
+        }
+        
+        let requestInfo = await collectRequestInfo()
+        Crashlytics.crashlytics().record(error: NSError(domain: "UNKNOWN_ERROR", code: -1, userInfo: requestInfo))
         throw STError(.SERVER_FAULT)
+    }
+    
+    private func collectRequestInfo() async -> [String: Any] {
+        var requestInfo: [String: Any] = [:]
+        
+        if let requestHeader = await response.request?.headers.description {
+            requestInfo["RequestHeader"] = requestHeader
+        }
+
+        if let requestBody = await response.request?.httpBody,
+           let requestBodyDecoded = String(data: requestBody, encoding: .utf8)
+        {
+            debugPrint("Error Request Body: \(requestBodyDecoded)")
+            requestInfo["RequestBody"] = requestBodyDecoded
+        }
+
+        if let responseBody = await response.data,
+           let responseBodyDecoded = String(data: responseBody, encoding: .utf8)
+        {
+            debugPrint("Error Raw Response: \(responseBodyDecoded)")
+            requestInfo["ResponseBody"] = responseBodyDecoded
+        }
+        
+        return requestInfo
     }
 }
