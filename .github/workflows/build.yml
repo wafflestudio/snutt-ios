@@ -32,7 +32,7 @@ jobs:
     - name: Populate DebugConfig.xcconfig from Secrets
       shell: bash
       env:
-        DEBUG_CONFIG: ${{ secrets.DEBUGCONFIG }}
+        DEBUG_CONFIG: ${{ secrets.DEBUG_CONFIG }}
         GOOGLE_SERVICE_DEBUG_INFO: ${{ secrets.GOOGLE_SERVICE_DEBUG_INFO }}
         GOOGLE_SERVICE_RELEASE_INFO: ${{ secrets.GOOGLE_SERVICE_RELEASE_INFO }}
       run: |
