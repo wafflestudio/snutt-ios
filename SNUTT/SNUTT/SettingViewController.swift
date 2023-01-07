@@ -45,7 +45,7 @@ class SettingViewController: UIViewController {
         present(alert, animated: true)
     }
 
-    @IBAction func rename(_: UIButton) {
+    @IBAction func rename1(_: UIButton) {
         showRenameTextfield()
     }
 
