@@ -111,19 +111,19 @@ extension DataTask {
                 throw STError(errCode)
             }
         }
-        
+
         if let dto = try? await value {
             return dto
         }
-        
+
         let requestInfo = await collectRequestInfo()
         Crashlytics.crashlytics().record(error: NSError(domain: "UNKNOWN_ERROR", code: -1, userInfo: requestInfo))
         throw STError(.SERVER_FAULT)
     }
-    
+
     private func collectRequestInfo() async -> [String: Any] {
         var requestInfo: [String: Any] = [:]
-        
+
         if let requestHeader = await response.request?.headers.description {
             requestInfo["RequestHeader"] = requestHeader
         }
@@ -141,7 +141,7 @@ extension DataTask {
             debugPrint("Error Raw Response: \(responseBodyDecoded)")
             requestInfo["ResponseBody"] = responseBodyDecoded
         }
-        
+
         return requestInfo
     }
 }
