@@ -8,8 +8,6 @@
 import Combine
 import SwiftUI
 
-
-
 struct ReviewScene: View {
     @ObservedObject var viewModel: ViewModel
     @Binding var detailId: String?
@@ -20,16 +18,16 @@ struct ReviewScene: View {
     init(viewModel: ViewModel, detailId: Binding<String?>? = nil) {
         self.viewModel = viewModel
         if let detailId = detailId {
-            self._detailId = detailId
+            _detailId = detailId
         } else {
-            self._detailId = .constant(nil)
+            _detailId = .constant(nil)
         }
     }
-    
+
     private var eventSignal: PassthroughSubject<WebViewEventType, Never>? {
         viewModel.getPreloadedWebView(detailId: detailId).eventSignal
     }
-    
+
     private var reviewUrl: URL {
         if let detailId = detailId {
             return WebViewType.reviewDetail(id: detailId).url
@@ -97,7 +95,7 @@ extension ReviewScene {
                 }
             }.store(in: &bag)
         }
-        
+
         func getPreloadedWebView(detailId: String?) -> WebViewPreloadManager {
             if detailId == nil {
                 return appState.review.preloadedMain

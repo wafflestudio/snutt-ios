@@ -11,22 +11,22 @@ import WebKit
 
 struct ReviewWebView: UIViewRepresentable {
     var preloadWebView: WebViewPreloadManager
-    
+
     var webView: WKWebView {
         preloadWebView.webView!
     }
-    
+
     var eventSignal: PassthroughSubject<WebViewEventType, Never> {
         preloadWebView.eventSignal!
     }
 
     init(preloadedWebView: WebViewPreloadManager) {
-        self.preloadWebView = preloadedWebView
+        preloadWebView = preloadedWebView
     }
 
     func makeUIView(context: Context) -> WKWebView {
         webView.navigationDelegate = context.coordinator
-        
+
         return webView
     }
 
@@ -48,7 +48,6 @@ struct ReviewWebView: UIViewRepresentable {
     }
 }
 
-
 extension ReviewWebView.Coordinator: WKNavigationDelegate {
     func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
         parent.eventSignal.send(.error)
@@ -62,4 +61,3 @@ extension ReviewWebView.Coordinator: WKNavigationDelegate {
         parent.eventSignal.send(.success)
     }
 }
-
