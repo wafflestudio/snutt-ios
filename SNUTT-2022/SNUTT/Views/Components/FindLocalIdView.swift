@@ -1,5 +1,5 @@
 //
-//  FindIdView.swift
+//  FindLocalIdView.swift
 //  SNUTT
 //
 //  Created by 최유림 on 2022/12/28.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FindIdView: View {
+struct FindLocalIdView: View {
     @State private var email: String = ""
     @State private var showConfirmAlert: Bool = false
     let sendEmail: (String) async -> Bool
@@ -59,10 +59,10 @@ struct FindIdView: View {
     }
 }
 
-struct FindIDView_Previews: PreviewProvider {
+struct FindLocalIDView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            FindIdView(sendEmail: { _ in
+            FindLocalIdView(sendEmail: { _ in
                 print("send email")
                 return true
             })

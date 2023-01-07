@@ -12,7 +12,7 @@ struct LoginScene: View {
 
     @State private var localId: String = ""
     @State private var localPassword: String = ""
-    @State private var pushToFindIdView: Bool = false
+    @State private var pushToFindLocalIdView: Bool = false
     @State private var pushToResetPasswordScene: Bool = false
 
     var isButtonDisabled: Bool {
@@ -30,7 +30,7 @@ struct LoginScene: View {
                         Text("아이디 찾기")
                             .underline()
                             .onTapGesture {
-                                pushToFindIdView = true
+                                pushToFindLocalIdView = true
                             }
 
                         Text("|")
@@ -70,10 +70,8 @@ struct LoginScene: View {
         .background(
             Group {
                 NavigationLink(destination:
-                    FindIdView { email in
-                        await viewModel.findLocalId(with: email)
-                    },
-                    isActive: $pushToFindIdView) { EmptyView() }
+                    FindLocalIdView(sendEmail: viewModel.findLocalId(with:)),
+                               isActive: $pushToFindLocalIdView) { EmptyView() }
 
                 NavigationLink(destination: ResetPasswordScene(viewModel: .init(container: viewModel.container), showResetPasswordScene: $pushToResetPasswordScene),
                                isActive: $pushToResetPasswordScene) { EmptyView() }
@@ -94,7 +92,7 @@ extension LoginScene {
 
         func findLocalId(with email: String) async -> Bool {
             do {
-                try await services.authService.findId(email: email)
+                try await services.authService.findLocalId(email: email)
                 return true
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)

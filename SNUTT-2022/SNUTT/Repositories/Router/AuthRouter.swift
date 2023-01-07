@@ -28,7 +28,7 @@ enum AuthRouter: Router {
     case loginWithLocalId(localId: String, localPassword: String)
     case loginWithFacebook(fbId: String, fbToken: String)
     case loginWithApple(appleToken: String)
-    case findId(email: String)
+    case findLocalId(email: String)
     case checkLinkedEmail(localId: String)
     case sendVerificationCode(email: String)
     case checkVerificationCode(localId: String, code: String)
@@ -45,7 +45,7 @@ enum AuthRouter: Router {
             return .post
         case .loginWithApple:
             return .post
-        case .findId:
+        case .findLocalId:
             return .post
         case .checkLinkedEmail:
             return .post
@@ -70,7 +70,7 @@ enum AuthRouter: Router {
             return "/login_fb"
         case .loginWithApple:
             return "/login_apple"
-        case .findId:
+        case .findLocalId:
             return "/id/find"
         case .checkLinkedEmail:
             return "/password/reset/email/check"
@@ -95,7 +95,7 @@ enum AuthRouter: Router {
             return ["fb_id": fbId, "fb_token": fbToken]
         case let .loginWithApple(appleToken):
             return ["apple_token": appleToken]
-        case let .findId(email: email):
+        case let .findLocalId(email: email):
             return ["email": email]
         case let .checkLinkedEmail(localId: localId):
             return ["user_id": localId]

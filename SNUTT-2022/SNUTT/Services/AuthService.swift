@@ -14,8 +14,8 @@ protocol AuthServiceProtocol {
     func loginWithApple(appleToken: String) async throws
     func loginWithFacebook(fbId: String, fbToken: String) async throws
     func registerWithLocalId(localId: String, localPassword: String, email: String) async throws
-    func findId(email: String) async throws
-    func checkLinkedEmail(localId: String, email: Binding<String>) async throws
+    func findLocalId(email: String) async throws
+    func checkLinkedEmail(localId: String) async throws -> String
     func sendVerificationCode(email: String) async throws
     func checkVerificationCode(localId: String, code: String) async throws
     func resetPassword(localId: String, password: String) async throws
@@ -86,13 +86,12 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         try await registerFCMToken()
     }
 
-    func findId(email: String) async throws {
-        let _ = try await authRepository.findId(email: email)
+    func findLocalId(email: String) async throws {
+        let _ = try await authRepository.findLocalId(email: email)
     }
 
-    func checkLinkedEmail(localId: String, email: Binding<String>) async throws {
-        let dto = try await authRepository.checkLinkedEmail(localId: localId)
-        email.wrappedValue = dto.email
+    func checkLinkedEmail(localId: String) async throws -> String {
+        return try await authRepository.checkLinkedEmail(localId: localId).email
     }
 
     func sendVerificationCode(email: String) async throws {
@@ -142,8 +141,8 @@ class FakeAuthService: AuthServiceProtocol {
     func loginWithApple(appleToken _: String) async throws {}
     func loginWithFacebook(fbId _: String, fbToken _: String) async throws {}
     func registerWithLocalId(localId _: String, localPassword _: String, email _: String) async throws {}
-    func findId(email _: String) async throws {}
-    func checkLinkedEmail(localId _: String, email _: Binding<String>) async throws {}
+    func findLocalId(email _: String) async throws {}
+    func checkLinkedEmail(localId _: String) async throws -> String { return "" }
     func sendVerificationCode(email _: String) async throws {}
     func checkVerificationCode(localId _: String, code _: String) async throws {}
     func resetPassword(localId _: String, password _: String) async throws {}

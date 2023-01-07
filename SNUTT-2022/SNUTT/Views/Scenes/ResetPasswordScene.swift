@@ -33,8 +33,11 @@ struct ResetPasswordScene: View {
 
             Button {
                 Task {
-                    showEmailAlert = await viewModel.checkLinkedEmail(localId: localId, email: $email)
-                    resignFirstResponder()
+                    if let email = await viewModel.checkLinkedEmail(localId: localId) {
+                        self.email = email
+                        showEmailAlert = true
+                        resignFirstResponder()
+                    }
                 }
             } label: {
                 Text("확인")
@@ -96,13 +99,12 @@ extension ResetPasswordScene {
     class ViewModel: BaseViewModel, ObservableObject {
         var timeLimit: Int { 180 }
 
-        func checkLinkedEmail(localId: String, email: Binding<String>) async -> Bool {
+        func checkLinkedEmail(localId: String) async -> String? {
             do {
-                try await services.authService.checkLinkedEmail(localId: localId, email: email)
-                return true
+                return try await services.authService.checkLinkedEmail(localId: localId)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
-                return false
+                return nil
             }
         }
 
