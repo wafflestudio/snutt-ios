@@ -100,7 +100,7 @@ struct TimetablePainter {
         if lastWeekDay == .sat {
             return [.mon, .tue, .wed, .thu, .fri, .sat]
         }
-        return config.visibleWeeksSorted
+        return [.mon, .tue, .wed, .thu, .fri]
     }
 
     /// `autoFit`을 고려한 시간표 요일 수
