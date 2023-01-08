@@ -15,13 +15,9 @@ struct ReviewScene: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
 
-    init(viewModel: ViewModel, detailId: Binding<String?>? = nil) {
+    init(viewModel: ViewModel, detailId: Binding<String?> = .constant(nil)) {
         self.viewModel = viewModel
-        if let detailId = detailId {
-            _detailId = detailId
-        } else {
-            _detailId = .constant(nil)
-        }
+        _detailId = detailId
     }
 
     private var eventSignal: PassthroughSubject<WebViewEventType, Never>? {
