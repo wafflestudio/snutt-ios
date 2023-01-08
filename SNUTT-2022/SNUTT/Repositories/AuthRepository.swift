@@ -13,6 +13,11 @@ protocol AuthRepositoryProtocol {
     func loginWithApple(appleToken: String) async throws -> LoginResponseDto
     func loginWithFacebook(fbId: String, fbToken: String) async throws -> LoginResponseDto
     func loginWithLocalId(localId: String, localPassword: String) async throws -> LoginResponseDto
+    func findLocalId(email: String) async throws -> SendLocalIdDto
+    func checkLinkedEmail(localId: String) async throws -> CheckLinkedEmailDto
+    func sendVerificationCode(email: String) async throws
+    func checkVerificationCode(localId: String, code: String) async throws
+    func resetPassword(localId: String, password: String) async throws
     func logout(userId: String, fcmToken: String) async throws -> LogoutResponseDto
 }
 
@@ -48,6 +53,41 @@ class AuthRepository: AuthRepositoryProtocol {
         return try await session
             .request(AuthRouter.loginWithLocalId(localId: localId, localPassword: localPassword))
             .serializingDecodable(LoginResponseDto.self)
+            .handlingError()
+    }
+
+    func findLocalId(email: String) async throws -> SendLocalIdDto {
+        return try await session
+            .request(AuthRouter.findLocalId(email: email))
+            .serializingDecodable(SendLocalIdDto.self)
+            .handlingError()
+    }
+
+    func checkLinkedEmail(localId: String) async throws -> CheckLinkedEmailDto {
+        return try await session
+            .request(AuthRouter.checkLinkedEmail(localId: localId))
+            .serializingDecodable(CheckLinkedEmailDto.self)
+            .handlingError()
+    }
+
+    func sendVerificationCode(email: String) async throws {
+        let _ = try await session
+            .request(AuthRouter.sendVerificationCode(email: email))
+            .serializingString()
+            .handlingError()
+    }
+
+    func checkVerificationCode(localId: String, code: String) async throws {
+        let _ = try await session
+            .request(AuthRouter.checkVerificationCode(localId: localId, code: code))
+            .serializingString()
+            .handlingError()
+    }
+
+    func resetPassword(localId: String, password: String) async throws {
+        let _ = try await session
+            .request(AuthRouter.resetPassword(localId: localId, password: password))
+            .serializingString()
             .handlingError()
     }
 

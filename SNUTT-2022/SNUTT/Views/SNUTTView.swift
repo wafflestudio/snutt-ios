@@ -33,6 +33,7 @@ struct SNUTTView: View {
                 NavigationView {
                     OnboardScene(viewModel: .init(container: viewModel.container))
                 }
+                .navigationViewStyle(StackNavigationViewStyle())
             } else {
                 TabView(selection: selected) {
                     TabScene(tabType: .timetable) {

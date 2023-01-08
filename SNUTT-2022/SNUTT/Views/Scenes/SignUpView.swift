@@ -28,10 +28,10 @@ struct SignUpView: View {
     var body: some View {
         VStack {
             VStack(spacing: 15) {
-                AnimatedTextField(label: "아이디", placeholder: "아이디를 입력하세요.", text: $id, shouldFocusOn: true)
-                AnimatedTextField(label: "비밀번호", placeholder: "비밀번호를 입력하세요.", text: $password, secure: true)
-                AnimatedTextField(label: "비밀번호 확인", placeholder: "비밀번호를 한번 더 입력하세요.", text: $password2, secure: true)
-                AnimatedTextField(label: "이메일", placeholder: "이메일 주소를 입력하세요.", text: $email)
+                AnimatedTextField(label: "아이디", placeholder: "영문, 숫자 포함 4-32자 이내", text: $id, shouldFocusOn: true)
+                AnimatedTextField(label: "비밀번호", placeholder: "영문, 숫자 모두 포함 6-20자 이내", text: $password, secure: true)
+                AnimatedTextField(label: "비밀번호 확인", placeholder: "비밀번호를 한번 더 입력하세요", text: $password2, secure: true)
+                AnimatedTextField(label: "이메일", placeholder: "이메일 주소를 입력하세요", text: $email)
             }
 
             Spacer()
@@ -41,7 +41,7 @@ struct SignUpView: View {
                     NavigationLink {
                         TermsOfServiceView()
                     } label: {
-                        Text("아래 버튼을 누르시면 **일반 이용 약관**에 동의하시게 됩니다.".markdown)
+                        Text("아래 버튼을 누르면 **일반 이용 약관**에 동의하시게 됩니다.".markdown)
                             .font(.caption)
                             .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.3)))
                     }

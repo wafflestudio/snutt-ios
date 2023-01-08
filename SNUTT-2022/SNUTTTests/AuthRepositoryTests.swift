@@ -17,7 +17,7 @@ class AuthRepositoryTests: XCTestCase {
 
     func testRegisterAndLoginWithId() async throws {
         do {
-            let _ = try await repository.registerWithLocalId(localId: testId, localPassword: testPW, email: "")
+            let _ = try await repository.registerWithLocalId(localId: testId, localPassword: testPW, email: "test@example.com")
         } catch {
             if error.asSTError?.code == .DUPLICATE_ID {
                 // 중복 발생 가능
@@ -27,7 +27,7 @@ class AuthRepositoryTests: XCTestCase {
         }
 
         do {
-            let _ = try await repository.registerWithLocalId(localId: testId, localPassword: testPW, email: "")
+            let _ = try await repository.registerWithLocalId(localId: testId, localPassword: testPW, email: "test@example.com")
         } catch {
             XCTAssertEqual(error.asSTError?.code, .DUPLICATE_ID)
         }

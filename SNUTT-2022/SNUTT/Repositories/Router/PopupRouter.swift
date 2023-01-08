@@ -9,10 +9,7 @@ import Alamofire
 import Foundation
 
 enum PopupRouter: Router {
-    var baseURL: URL {
-        URL(string: NetworkConfiguration.serverBaseURL + "/v1/popups")!
-    }
-
+    var baseURL: URL { URL(string: NetworkConfiguration.serverV1BaseURL + "/popups")! }
     static let shouldAddToken: Bool = true
 
     case getPopupList

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct STColor {
     static let cyan: Color = .init(hex: 0x1BD0C8)
+    static let red: Color = .init(hex: "#E54459")
 
     static let disabled: Color = .init(uiColor: .label.withAlphaComponent(0.6))
 

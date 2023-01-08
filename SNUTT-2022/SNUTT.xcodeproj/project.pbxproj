@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85B244C295BF36F00E6577E /* FindLocalIdView.swift */; };
+		B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */; };
+		B86C4CCF294DCA150019CE51 /* VerificationCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */; };
 		B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* BaseViewModel.swift */; };
 		B87B315D28D5A70F005C170B /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315828D5A70F005C170B /* UserState.swift */; };
 		B87B315E28D5A70F005C170B /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315928D5A70F005C170B /* SearchState.swift */; };
@@ -264,6 +267,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B85B244C295BF36F00E6577E /* FindLocalIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocalIdView.swift; sourceTree = "<group>"; };
+		B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordScene.swift; sourceTree = "<group>"; };
+		B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeView.swift; sourceTree = "<group>"; };
 		B87431CA283B5A7300D78C59 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		B87B315828D5A70F005C170B /* UserState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
 		B87B315928D5A70F005C170B /* SearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
@@ -859,6 +865,8 @@
 				BE060BD828DF4C1E00A2F1B9 /* OnboardScene.swift */,
 				BEF9233528E7EE45004AFCB2 /* SignUpView.swift */,
 				BE28036928E93EEF00B2B1AB /* LoginScene.swift */,
+				B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */,
+				B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */,
 				BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */,
 				BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */,
 				BE9413E028CCD04900171060 /* LectureTimeSheetScene.swift */,
@@ -887,6 +895,7 @@
 				BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */,
 				BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */,
 				BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */,
+				B85B244C295BF36F00E6577E /* FindLocalIdView.swift */,
 				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
 				B88D170028AF71E300E2D652 /* UserSupportView.swift */,
 				BE28036028E884D300B2B1AB /* WebViews */,
@@ -1247,6 +1256,7 @@
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
 				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
 				B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */,
+				B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				BE28036A28E93EEF00B2B1AB /* LoginScene.swift in Sources */,
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
@@ -1291,6 +1301,7 @@
 				B8F40EAF28980D990021A2A9 /* DeveloperInfoView.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
 				B87DF6E92914F8FC008BB95B /* Popup.swift in Sources */,
+				B86C4CCF294DCA150019CE51 /* VerificationCodeView.swift in Sources */,
 				B89826D128F4971000477A14 /* SyllabusWebView.swift in Sources */,
 				BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */,
 				B88D16F328ABC5DD00E2D652 /* String+ext.swift in Sources */,
@@ -1323,6 +1334,7 @@
 				BEB3B6AF28D4D49A00E56062 /* DetailLabel.swift in Sources */,
 				BE804BEA288B9EF700782F16 /* TimetableConfiguration.swift in Sources */,
 				BE9413CE28C2207D00171060 /* NotificationState.swift in Sources */,
+				B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */,
 				BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */,
 				B8F40EAD28980D840021A2A9 /* TimetableSettingScene.swift in Sources */,
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,

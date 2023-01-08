@@ -15,7 +15,25 @@ struct AnimatedTextField: View {
     var shouldFocusOn: Bool = false
     var secure: Bool = false
 
+    // TextField with Timer
+    var needsTimer: Bool = false
+    @Binding var timeOut: Bool
+    var remainingTime: Int = 0
+    var action: (() -> Void)?
+
     @FocusState private var _isFocused: Bool
+
+    init(label: String, placeholder: String, text: Binding<String>, shouldFocusOn: Bool = false, secure: Bool = false, needsTimer: Bool = false, timeOut: Binding<Bool> = .constant(false), remainingTime: Int = 0, action: (() -> Void)? = nil) {
+        self.label = label
+        self.placeholder = placeholder
+        _text = text
+        self.shouldFocusOn = shouldFocusOn
+        self.secure = secure
+        self.needsTimer = needsTimer
+        _timeOut = timeOut
+        self.action = action
+        self.remainingTime = remainingTime
+    }
 
     var body: some View {
         VStack {
@@ -24,25 +42,50 @@ struct AnimatedTextField: View {
                 .foregroundColor(Color(uiColor: .secondaryLabel))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            Group {
-                if secure {
-                    SecureField(placeholder, text: $text)
-                } else {
-                    TextField(placeholder, text: $text)
+            HStack(spacing: 0) {
+                Group {
+                    if secure {
+                        SecureField(placeholder, text: $text)
+                    } else {
+                        TextField(placeholder, text: $text)
+                    }
+                }
+                .focused($_isFocused)
+                .textInputAutocapitalization(.never)
+                .disableAutocorrection(true)
+                .font(STFont.detailLabel)
+                .frame(height: 20)
+
+                // TextField with Timer
+                if needsTimer {
+                    Spacer().frame(width: 4)
+
+                    Group {
+                        if timeOut {
+                            Button {
+                                action?()
+                            } label: {
+                                Text("다시 요청")
+                                    .foregroundColor(STColor.cyan)
+                            }
+                        } else {
+                            Text(Calendar.current.date(byAdding: .second, value: remainingTime + 1, to: Date()) ?? Date(), style: .timer)
+                                .foregroundColor(STColor.red)
+                        }
+                    }
+                    .font(STFont.subheading)
+                    .padding(.horizontal, 16)
                 }
             }
-            .focused($_isFocused)
-            .frame(height: 20)
-            .textInputAutocapitalization(.never)
 
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .frame(height: 2)
+                    .frame(height: 1)
                     .foregroundColor(Color(uiColor: .quaternaryLabel))
 
                 Rectangle()
                     .frame(maxWidth: text.isEmpty ? 0 : .infinity, alignment: .leading)
-                    .frame(height: 2)
+                    .frame(height: 1)
                     .foregroundColor(STColor.cyan)
                     .animation(.customSpring, value: text.isEmpty)
             }
