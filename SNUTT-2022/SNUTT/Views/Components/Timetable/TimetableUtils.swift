@@ -105,7 +105,6 @@ struct TimetablePainter {
 
     /// `autoFit`을 고려한 시간표 요일 수
     static func getWeekCount(current: Timetable?, config: TimetableConfiguration) -> Int {
-        let weeks = getVisibleWeeks(current: current, config: config)
-        return weeks.count
+        getVisibleWeeks(current: current, config: config).count
     }
 }
