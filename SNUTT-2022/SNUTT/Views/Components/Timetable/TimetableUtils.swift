@@ -39,8 +39,7 @@ struct TimetablePainter {
             return nil
         }
 
-        let weekCount = getWeekCount(current: current, config: config)
-        let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: weekCount)
+        let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: getWeekCount(current: current, config: config))
         let y = weekdayHeight + CGFloat(hourIndex) * getHourHeight(in: containerSize, hourCount: getHourCount(current: current, config: config))
 
         return CGPoint(x: x, y: y)
