@@ -140,6 +140,7 @@ extension ResetPasswordScene {
     }
 }
 
+#if DEBUG
 struct FindPasswordView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -147,3 +148,4 @@ struct FindPasswordView_Previews: PreviewProvider {
         }
     }
 }
+#endif
