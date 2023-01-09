@@ -31,9 +31,10 @@ struct TimetableGridLayer: View {
 
     /// 하루 간격의 수직선
     func verticalPaths(in containerSize: CGSize) -> Path {
-        let weekWidth = Painter.getWeekWidth(in: containerSize, weekCount: config.weekCount)
+        let weekCount = Painter.getWeekCount(current: current, config: config)
+        let weekWidth = Painter.getWeekWidth(in: containerSize, weekCount: weekCount)
         return Path { path in
-            for i in 0 ..< config.weekCount {
+            for i in 0 ..< weekCount {
                 let x = Painter.hourWidth + CGFloat(i) * weekWidth
                 path.move(to: CGPoint(x: x, y: 0))
                 path.addLine(to: CGPoint(x: x, y: containerSize.height))
@@ -72,7 +73,8 @@ struct TimetableGridLayer: View {
     /// 시간표 맨 위쪽, 날짜를 나타내는 행
     var weeksHStack: some View {
         HStack(spacing: 0) {
-            ForEach(config.visibleWeeksSorted) { week in
+            let visibleWeeksSorted = Painter.getVisibleWeeks(current: current, config: config)
+            ForEach(visibleWeeksSorted) { week in
                 Text(week.shortSymbol)
                     .font(STFont.details)
                     .foregroundColor(Color(UIColor.secondaryLabel))

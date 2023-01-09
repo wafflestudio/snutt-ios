@@ -34,12 +34,13 @@ struct TimetablePainter {
 
         let minHour = getStartingHour(current: current, config: config)
         let hourIndex = timePlace.startTimeDouble - Double(minHour)
-        guard let weekdayIndex = config.visibleWeeksSorted.firstIndex(of: timePlace.day) else { return nil }
+        guard let weekdayIndex = getVisibleWeeks(current: current, config: config).firstIndex(of: timePlace.day) else { return nil }
         if hourIndex < 0 {
             return nil
         }
 
-        let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: config.weekCount)
+        let weekCount = getWeekCount(current: current, config: config)
+        let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: weekCount)
         let y = weekdayHeight + CGFloat(hourIndex) * getHourHeight(in: containerSize, hourCount: getHourCount(current: current, config: config))
 
         return CGPoint(x: x, y: y)
@@ -81,5 +82,29 @@ struct TimetablePainter {
         let start = getStartingHour(current: current, config: config)
         let end = getEndingHour(current: current, config: config)
         return end - start + 1
+    }
+
+    /// `autoFit`을 고려한 시간표 요일들
+    static func getVisibleWeeks(current: Timetable?, config: TimetableConfiguration) -> [Weekday] {
+        if !config.autoFit {
+            return config.visibleWeeksSorted
+        }
+
+        guard let lastWeekDay = current?.lastWeekDay else {
+            return config.visibleWeeksSorted
+        }
+
+        if lastWeekDay == .sun {
+            return [.mon, .tue, .wed, .thu, .fri, .sat, .sun]
+        }
+        if lastWeekDay == .sat {
+            return [.mon, .tue, .wed, .thu, .fri, .sat]
+        }
+        return [.mon, .tue, .wed, .thu, .fri]
+    }
+
+    /// `autoFit`을 고려한 시간표 요일 수
+    static func getWeekCount(current: Timetable?, config: TimetableConfiguration) -> Int {
+        getVisibleWeeks(current: current, config: config).count
     }
 }
