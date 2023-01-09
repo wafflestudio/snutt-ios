@@ -28,6 +28,7 @@ VERSION_NUMBER = ENV['VERSION_NUMBER'] || "3.0.0"
 BUILD_NUMBER = ENV['BUILD_NUMBER'] || "3"
 GIT_TAG_NAME = ENV['GIT_TAG_NAME']
 SLACK_WEBHOOK = ENV['SLACK_WEBHOOK']
+GIT_PAT_READONLY = ENV['GIT_PAT_READONLY']
 
 platform :ios do
   desc "🧪 Upload app to Testflight"
@@ -75,6 +76,7 @@ platform :ios do
   desc "📱 Upload app to App Store"
   lane :release do
     begin
+      release = get_github_release(url: "wafflestudio/snutt-ios", version: GIT_TAG_NAME, api_token: GIT_PAT_READONLY)
       setup_ci
       certificates_distribution
       increment_version_number_in_xcodeproj(version_number: VERSION_NUMBER)
@@ -90,7 +92,6 @@ platform :ios do
         issuer_id: APP_STORE_CONNECT_KEY_ISSUER,
         key_content: KEY_CONTENT,
       )
-      release = get_github_release(url: "wafflestudio/snutt-ios", version: GIT_TAG_NAME)
       upload_to_app_store(
           force: true,
           app_version: VERSION_NUMBER,
