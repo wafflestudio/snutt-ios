@@ -9,8 +9,12 @@ import Foundation
 
 struct TimeUtils {
     struct Time {
-        let hour: Int
-        let minute: Int
+        var hour: Int
+        var minute: Int
+        
+        func toString() -> String {
+            return "\(String(format: "%02d", hour)):\(String(format: "%02d", minute))"
+        }
     }
 
     /// 월요일 7교시인 경우 `월7`을 반환한다.
@@ -27,7 +31,7 @@ struct TimeUtils {
 
     static func getTimeInString(from time: Double) -> String {
         let preciseTime = getPreciseHourMinute(from: time)
-        return "\(String(format: "%02d", preciseTime.hour)):\(String(format: "%02d", preciseTime.minute))"
+        return preciseTime.toString()
     }
 
     static func getTimeInString(from date: Date) -> String {
@@ -55,6 +59,11 @@ struct TimeUtils {
         let hour = calendar.component(.hour, from: date)
         let minute = calendar.component(.minute, from: date)
         return .init(hour: hour, minute: minute)
+    }
+    
+    static func getTime(from time: String) -> Time {
+        let timeDouble = getTimeInDouble(from: time)
+        return getPreciseHourMinute(from: timeDouble)
     }
 
     static func getTimeInDouble(from time: String) -> Double {
