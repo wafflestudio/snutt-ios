@@ -11,6 +11,7 @@ struct TimetableConfiguration: Codable {
     var minHour: Int = 9
     var maxHour: Int = 18
     var autoFit: Bool = true
+    var compactMode: Bool = false
 
     var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
 

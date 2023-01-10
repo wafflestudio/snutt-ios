@@ -17,6 +17,9 @@ struct TimetableSettingScene: View {
             Section {
                 Toggle("자동 맞춤", isOn: $viewModel.timetableConfig.autoFit)
                     .animation(.easeInOut, value: viewModel.timetableConfig.autoFit)
+                
+                Toggle("컴팩트 모드", isOn: $viewModel.timetableConfig.compactMode)
+                    .animation(.easeInOut, value: viewModel.timetableConfig.compactMode)
             }
 
             if !viewModel.timetableConfig.autoFit {

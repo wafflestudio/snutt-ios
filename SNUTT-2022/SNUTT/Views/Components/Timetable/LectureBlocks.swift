@@ -50,6 +50,7 @@ struct LectureBlocks: View {
                            height: Painter.getHeight(of: timePlace, in: reader.size, hourCount: Painter.getHourCount(current: current, config: config)),
                            alignment: .top)
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
+                    .animation(.customSpring, value: config.compactMode)
                 }
             }
         }
