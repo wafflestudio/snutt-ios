@@ -17,9 +17,13 @@ struct TimetableSettingScene: View {
             Section {
                 Toggle("자동 맞춤", isOn: $viewModel.timetableConfig.autoFit)
                     .animation(.easeInOut, value: viewModel.timetableConfig.autoFit)
-
-                Toggle("컴팩트 모드", isOn: $viewModel.timetableConfig.compactMode)
+                
+                Toggle("컴팩트 모드 (Beta)", isOn: $viewModel.timetableConfig.compactMode)
                     .animation(.easeInOut, value: viewModel.timetableConfig.compactMode)
+            } footer: {
+                if viewModel.timetableConfig.compactMode {
+                    Text("꽉 찬 시간표를 표시합니다. 직접 추가한 강의와 일부 겹치는 현상이 발생할 수 있습니다.")
+                }
             }
 
             if !viewModel.timetableConfig.autoFit {
