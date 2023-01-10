@@ -31,7 +31,7 @@ struct TimePlace: Identifiable {
     var endTimeDouble: Double {
         endTimeDouble(compactMode: false)
     }
-    
+
     func duration(compactMode: Bool) -> Double {
         return endTimeDouble(compactMode: compactMode) - startTimeDouble
     }
@@ -39,7 +39,7 @@ struct TimePlace: Identifiable {
     var preciseTimeString: String {
         return "\(day.veryShortSymbol)(\(startTime)~\(endTime))"
     }
-    
+
     private func endTimeDouble(compactMode: Bool) -> Double {
         if compactMode && !isCustom {
             return TimeUtils.getTimeInDouble(from: endTime.roundUpForCompactMode())

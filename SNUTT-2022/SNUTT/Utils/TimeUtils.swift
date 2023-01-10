@@ -11,7 +11,7 @@ struct TimeUtils {
     struct Time {
         var hour: Int
         var minute: Int
-        
+
         func toString() -> String {
             return "\(String(format: "%02d", hour)):\(String(format: "%02d", minute))"
         }
@@ -60,7 +60,7 @@ struct TimeUtils {
         let minute = calendar.component(.minute, from: date)
         return .init(hour: hour, minute: minute)
     }
-    
+
     static func getTime(from time: String) -> Time {
         let timeDouble = getTimeInDouble(from: time)
         return getPreciseHourMinute(from: timeDouble)
