@@ -9,31 +9,24 @@ import Combine
 import SwiftUI
 import WebKit
 
-struct ReviewWebView: WebView {
-    var url: URL
-    let accessToken: String
-    @Binding var connectionState: WebViewConnectionState
+struct ReviewWebView: UIViewRepresentable {
+    var preloadWebView: WebViewPreloadManager
 
-    /// An event stream used to control `WKWebView` instance outside current view.
-    var eventSignal: PassthroughSubject<WebViewEventType, Never>
+    var webView: WKWebView {
+        preloadWebView.webView!
+    }
 
-    var webView: WKWebView
+    var eventSignal: PassthroughSubject<WebViewEventType, Never> {
+        preloadWebView.eventSignal!
+    }
 
-    init(url: URL, accessToken: String, connectionState: Binding<WebViewConnectionState>, eventSignal: PassthroughSubject<WebViewEventType, Never>, initialColorScheme: ColorScheme) {
-        self.url = url
-        self.accessToken = accessToken
-        _connectionState = connectionState
-        self.eventSignal = eventSignal
-        webView = WKWebView(cookies: ReviewWebView.getCookiesFrom(accessToken: accessToken, colorScheme: initialColorScheme))
+    init(preloadedWebView: WebViewPreloadManager) {
+        preloadWebView = preloadedWebView
     }
 
     func makeUIView(context: Context) -> WKWebView {
         webView.navigationDelegate = context.coordinator
-        webView.allowsBackForwardNavigationGestures = true
-        webView.scrollView.bounces = false
-        webView.load(urlRequest)
-        webView.backgroundColor = UIColor(STColor.systemBackground)
-        webView.isOpaque = false
+
         return webView
     }
 
@@ -45,61 +38,26 @@ struct ReviewWebView: WebView {
         Coordinator(self)
     }
 
-    private static func getCookie(name: String, value: String) -> HTTPCookie? {
-        return HTTPCookie(properties: [
-            .domain: NetworkConfiguration.snuevBaseURL.replacingOccurrences(of: "https://", with: ""),
-            .path: "/",
-            .name: name,
-            .value: value,
-        ])
-    }
-
-    private static func getCookiesFrom(accessToken: String, colorScheme: ColorScheme) -> [HTTPCookie] {
-        guard let apiKeyCookie = getCookie(name: "x-access-apikey", value: NetworkConfiguration.apiKey),
-              let tokenCookie = getCookie(name: "x-access-token", value: accessToken),
-              let themeCookie = getCookie(name: "theme", value: colorScheme.description) else { return [] }
-
-        return [apiKeyCookie, tokenCookie, themeCookie]
-    }
-
-    func reloadWebView() {
-        webView.load(urlRequest)
-    }
-
-    class Coordinator: NSObject, WKNavigationDelegate {
+    class Coordinator: NSObject {
         let parent: ReviewWebView
-        private var bag = Set<AnyCancellable>()
 
         init(_ parent: ReviewWebView) {
             self.parent = parent
             super.init()
-
-            self.parent.eventSignal.sink { [weak self] event in
-                switch event {
-                case .reload:
-                    self?.parent.reloadWebView()
-                case let .colorSchemeChange(to: colorScheme):
-                    self?.parent.webView.evaluateJavaScript("changeTheme('\(colorScheme.description)')")
-                }
-            }.store(in: &bag)
         }
+    }
+}
 
-        func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
-            if parent.connectionState == .success {
-                parent.connectionState = .error
-            }
-        }
+extension ReviewWebView.Coordinator: WKNavigationDelegate {
+    func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
+        parent.eventSignal.send(.error)
+    }
 
-        func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
-            if parent.connectionState == .success {
-                parent.connectionState = .error
-            }
-        }
+    func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
+        parent.eventSignal.send(.error)
+    }
 
-        func webView(_: WKWebView, didFinish _: WKNavigation!) {
-            if parent.connectionState == .error {
-                parent.connectionState = .success
-            }
-        }
+    func webView(_: WKWebView, didFinish _: WKNavigation!) {
+        parent.eventSignal.send(.success)
     }
 }

@@ -48,24 +48,21 @@ struct SNUTTView: View {
                         SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
                     }
                     TabScene(tabType: .review) {
-                        ReviewScene(viewModel: .init(container: viewModel.container), webViewEventSignal: viewModel.reviewEventSignal)
+                        ReviewScene(viewModel: .init(container: viewModel.container))
                     }
                     TabScene(tabType: .settings) {
                         SettingScene(viewModel: .init(container: viewModel.container))
                     }
                 }
-                .onAppear {
-                    selectedTab = .timetable
-                }
                 if selectedTab == .timetable {
                     MenuSheetScene(viewModel: .init(container: viewModel.container))
+                    LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
                 }
                 if selectedTab == .search {
                     FilterSheetScene(viewModel: .init(container: viewModel.container))
                 }
                 PopupScene(viewModel: .init(container: viewModel.container))
             }
-            LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
         }
         .animation(.easeOut, value: viewModel.accessToken)
         .preferredColorScheme(viewModel.preferredColorScheme)
@@ -103,9 +100,7 @@ extension SNUTTView {
         @Published var isErrorAlertPresented = false
         @Published var accessToken: String? = nil
         @Published var preferredColorScheme: ColorScheme? = nil
-
         @Published private var error: STError? = nil
-        var reviewEventSignal = PassthroughSubject<WebViewEventType, Never>()
 
         var isAuthenticated: Bool {
             guard let accessToken = accessToken else { return false }
@@ -129,7 +124,7 @@ extension SNUTTView {
         }
 
         func reloadReviewWebView() {
-            reviewEventSignal.send(.reload)
+            services.globalUIService.sendMainWebViewReloadSignal()
         }
     }
 }

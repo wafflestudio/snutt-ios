@@ -12,12 +12,13 @@ struct SearchLectureCell: View {
     let selected: Bool
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
-    let fetchReviewId: (Lecture, Binding<String>) async -> Void
+    let fetchReviewId: (Lecture) async -> String?
+    let preloadReviewWebView: (String) -> Void
     let isInTimetable: Bool
 
     @State var showingDetailPage = false
     @State private var showReviewWebView: Bool = false
-    @State private var reviewId: String = ""
+    @State private var reviewId: String? = nil
 
     @Environment(\.dependencyContainer) var container: DIContainer?
 
@@ -57,18 +58,16 @@ struct SearchLectureCell: View {
 
                         Button {
                             Task {
-                                await fetchReviewId(lecture, $reviewId)
-                                showReviewWebView = true
+                                reviewId = await fetchReviewId(lecture)
+                                if let detailId = reviewId {
+                                    preloadReviewWebView(detailId)
+                                    showReviewWebView = true
+                                }
                             }
                         } label: {
                             Text("강의평")
                                 .frame(maxWidth: .infinity)
                                 .font(STFont.details)
-                        }
-                        .sheet(isPresented: $showReviewWebView) {
-                            if let container = container {
-                                ReviewScene(viewModel: .init(container: container), detailId: $reviewId)
-                            }
                         }
 
                         if isInTimetable {
@@ -94,6 +93,12 @@ struct SearchLectureCell: View {
                         }
                     }
                     /// This `sheet` modifier should be called on `HStack` to prevent animation glitch when `dismiss`ed.
+                    .sheet(isPresented: $showReviewWebView) {
+                        if let container = container {
+                            ReviewScene(viewModel: .init(container: container), detailId: $reviewId)
+                                .id(reviewId)
+                        }
+                    }
                     .sheet(isPresented: $showingDetailPage) {
                         if let container = container {
                             NavigationView {

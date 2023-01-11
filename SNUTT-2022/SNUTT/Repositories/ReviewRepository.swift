@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 protocol ReviewRepositoryProtocol {
-    func fetchReviewId(courseNumber: String, instructor: String) async throws -> Int
+    func fetchReviewId(courseNumber: String, instructor: String) async throws -> String
 }
 
 class ReviewRepository: ReviewRepositoryProtocol {
@@ -19,11 +19,11 @@ class ReviewRepository: ReviewRepositoryProtocol {
         self.session = session
     }
 
-    func fetchReviewId(courseNumber: String, instructor: String) async throws -> Int {
+    func fetchReviewId(courseNumber: String, instructor: String) async throws -> String {
         return try await session.request(ReviewRouter.getReviewId(courseNumber: courseNumber, instructor: instructor))
             .serializingDecodable([String: Int].self)
             .handlingError()
-            .compactMap { $0.value }
+            .compactMap { String($0.value) }
             .first!
     }
 }

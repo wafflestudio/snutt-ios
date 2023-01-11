@@ -18,6 +18,7 @@ class AppState {
     var menu = MenuState()
     var notification = NotificationState()
     var popup = PopupState()
+    var review = ReviewState()
 }
 
 #if DEBUG

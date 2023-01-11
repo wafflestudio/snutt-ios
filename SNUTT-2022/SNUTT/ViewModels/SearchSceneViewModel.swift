@@ -125,12 +125,13 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         timetableState.current?.lectures.first(where: { $0.isEquivalent(with: lecture) })
     }
 
-    func fetchReviewId(of lecture: Lecture, bind: Binding<String>) async {
+    func fetchReviewId(of lecture: Lecture) async -> String? {
         do {
-            try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor, bind: bind)
+            return try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+        return nil
     }
 
     func overwriteLecture(lecture: Lecture) async {
@@ -139,6 +140,10 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+    }
+
+    func preloadReviewWebView(reviewId: String) {
+        services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: reviewId).url)
     }
 
     private var searchState: SearchState {

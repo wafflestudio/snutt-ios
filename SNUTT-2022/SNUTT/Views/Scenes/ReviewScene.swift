@@ -8,27 +8,24 @@
 import Combine
 import SwiftUI
 
-enum WebViewEventType {
-    case reload
-    case colorSchemeChange(to: ColorScheme)
-}
-
 struct ReviewScene: View {
     @ObservedObject var viewModel: ViewModel
-    @Binding var detailId: String
-
-    var eventSignal: PassthroughSubject<WebViewEventType, Never>
+    @Binding var detailId: String?
 
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) var dismiss
 
-    init(viewModel: ViewModel, detailId: Binding<String> = .constant(""), webViewEventSignal: PassthroughSubject<WebViewEventType, Never>? = nil) {
+    init(viewModel: ViewModel, detailId: Binding<String?> = .constant(nil)) {
         self.viewModel = viewModel
         _detailId = detailId
-        eventSignal = webViewEventSignal ?? .init()
+    }
+
+    private var eventSignal: PassthroughSubject<WebViewEventType, Never>? {
+        viewModel.getPreloadedWebView(detailId: detailId).eventSignal
     }
 
     private var reviewUrl: URL {
-        if !detailId.isEmpty {
+        if let detailId = detailId {
             return WebViewType.reviewDetail(id: detailId).url
         } else {
             return WebViewType.review.url
@@ -37,14 +34,14 @@ struct ReviewScene: View {
 
     var body: some View {
         ZStack {
-            ReviewWebView(url: reviewUrl, accessToken: viewModel.accessToken, connectionState: $viewModel.connectionState, eventSignal: eventSignal, initialColorScheme: colorScheme)
+            ReviewWebView(preloadedWebView: viewModel.getPreloadedWebView(detailId: detailId))
                 .navigationBarHidden(true)
                 .edgesIgnoringSafeArea(.bottom)
                 .background(STColor.systemBackground)
 
             if viewModel.connectionState == .error {
                 WebErrorView(refresh: {
-                    eventSignal.send(.reload)
+                    eventSignal?.send(.reload(url: reviewUrl))
                 })
                 .navigationTitle("강의평")
                 .navigationBarTitleDisplayMode(.inline)
@@ -52,8 +49,23 @@ struct ReviewScene: View {
                 .background(STColor.systemBackground)
             }
         }
+        .onAppear {
+            eventSignal?.send(.colorSchemeChange(to: colorScheme))
+        }
         .onChange(of: colorScheme) { newValue in
-            eventSignal.send(.colorSchemeChange(to: newValue))
+            eventSignal?.send(.colorSchemeChange(to: newValue))
+        }
+        .onReceive(eventSignal ?? .init()) { signal in
+            switch signal {
+            case .success:
+                viewModel.connectionState = .success
+            case .error:
+                viewModel.connectionState = .error
+            case .close:
+                dismiss()
+            default:
+                return
+            }
         }
 
         let _ = debugChanges()
@@ -78,6 +90,14 @@ extension ReviewScene {
                     self.accessToken = ""
                 }
             }.store(in: &bag)
+        }
+
+        func getPreloadedWebView(detailId: String?) -> WebViewPreloadManager {
+            if detailId == nil {
+                return appState.review.preloadedMain
+            } else {
+                return appState.review.preloadedDetail
+            }
         }
     }
 }
