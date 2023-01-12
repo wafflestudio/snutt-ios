@@ -62,14 +62,14 @@ struct TimeUtils {
     }
 
     static func getTime(from time: String) -> Time {
-        let timeDouble = getTimeInDouble(from: time)
-        return getPreciseHourMinute(from: timeDouble)
+        let splitted = time.components(separatedBy: ":")
+        guard let hour = Int(splitted[0]), let minute = Int(splitted[1]) else { return .init(hour: 0, minute: 0) }
+        return .init(hour: hour, minute: minute)
     }
 
     static func getTimeInDouble(from time: String) -> Double {
-        let splitted = time.components(separatedBy: ":")
-        guard let hour = Int(splitted[0]), let minute = Int(splitted[1]) else { return 0 }
-        return getTimeInDouble(from: .init(hour: hour, minute: minute))
+        let time = getTime(from: time)
+        return getTimeInDouble(from: time)
     }
 
     static func getTimeInDouble(from time: Time) -> Double {
