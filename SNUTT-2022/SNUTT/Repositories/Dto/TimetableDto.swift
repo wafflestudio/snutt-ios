@@ -38,6 +38,10 @@ struct LectureDto: Codable {
     let updated_at: String?
     let color: LectureColorDto?
     let colorIndex: Int?
+
+    var isCustom: Bool {
+        course_number == nil || course_number == ""
+    }
 }
 
 struct LectureColorDto: Codable {
