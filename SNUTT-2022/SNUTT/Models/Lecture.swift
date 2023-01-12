@@ -100,9 +100,9 @@ extension Lecture {
         id = dto._id
         title = dto.course_title
         instructor = dto.instructor
-        timePlaces = dto.class_time_json.map { .init(from: $0, isCustom: dto.course_number == nil) }
+        timePlaces = dto.class_time_json.map { .init(from: $0, isCustom: dto.isCustom) }
         timeMasks = dto.class_time_mask ?? []
-        isCustom = (dto.course_number == nil || dto.course_number == "")
+        isCustom = dto.isCustom
         courseNumber = dto.course_number ?? ""
         lectureNumber = dto.lecture_number ?? ""
         credit = dto.credit

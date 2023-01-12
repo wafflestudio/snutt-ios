@@ -29,15 +29,36 @@ struct TimePlace: Identifiable {
     }
 
     var endTimeDouble: Double {
-        return TimeUtils.getTimeInDouble(from: endTime)
+        endTimeDouble(compactMode: false)
     }
 
-    var duration: Double {
-        return endTimeDouble - startTimeDouble
+    func duration(compactMode: Bool) -> Double {
+        return endTimeDouble(compactMode: compactMode) - startTimeDouble
     }
 
     var preciseTimeString: String {
         return "\(day.veryShortSymbol)(\(startTime)~\(endTime))"
+    }
+
+    private func endTimeDouble(compactMode: Bool) -> Double {
+        if compactMode && !isCustom {
+            return TimeUtils.getTimeInDouble(from: endTime.roundUpForCompactMode())
+        } else {
+            return TimeUtils.getTimeInDouble(from: endTime)
+        }
+    }
+}
+
+private extension String {
+    func roundUpForCompactMode() -> String {
+        var time = TimeUtils.getTime(from: self)
+        if time.minute > 0 && time.minute < 30 {
+            time.minute = 30
+        } else if time.minute > 30 {
+            time.hour += 1
+            time.minute = 0
+        }
+        return time.toString()
     }
 }
 

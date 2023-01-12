@@ -39,16 +39,15 @@ struct TimetablePainter {
             return nil
         }
 
-        let weekCount = getWeekCount(current: current, config: config)
-        let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: weekCount)
+        let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: getWeekCount(current: current, config: config))
         let y = weekdayHeight + CGFloat(hourIndex) * getHourHeight(in: containerSize, hourCount: getHourCount(current: current, config: config))
 
         return CGPoint(x: x, y: y)
     }
 
     /// 주어진 `TimePlace`블록의 높이를 구한다.
-    static func getHeight(of timePlace: TimePlace, in containerSize: CGSize, hourCount: Int) -> CGFloat {
-        return timePlace.duration * getHourHeight(in: containerSize, hourCount: hourCount)
+    static func getHeight(of timePlace: TimePlace, in containerSize: CGSize, hourCount: Int, config: TimetableConfiguration) -> CGFloat {
+        return timePlace.duration(compactMode: config.compactMode) * getHourHeight(in: containerSize, hourCount: hourCount)
     }
 
     // MARK: Auto Fit
