@@ -52,9 +52,9 @@ struct TimePlace: Identifiable {
 private extension String {
     func roundUpForCompactMode() -> String {
         var time = TimeUtils.getTime(from: self)
-        if time.minute == 15 {
+        if time.minute > 0 && time.minute < 30 {
             time.minute = 30
-        } else if time.minute == 50 {
+        } else if time.minute > 30 {
             time.hour += 1
             time.minute = 0
         }
