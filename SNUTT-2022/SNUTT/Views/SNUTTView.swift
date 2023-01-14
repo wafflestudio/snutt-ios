@@ -57,7 +57,7 @@ struct SNUTTView: View {
                     viewModel.selectedTab = .timetable
                     viewModel.preloadWebViews()
                 }
-                
+
                 if viewModel.selectedTab == .timetable {
                     MenuSheetScene(viewModel: .init(container: viewModel.container))
                     LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
@@ -142,7 +142,7 @@ extension SNUTTView {
         func reloadReviewWebView() {
             services.globalUIService.sendMainWebViewReloadSignal()
         }
-        
+
         func preloadWebViews() {
             services.globalUIService.preloadWebViews()
         }
