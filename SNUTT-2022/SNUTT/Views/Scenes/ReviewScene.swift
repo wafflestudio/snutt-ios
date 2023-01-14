@@ -11,17 +11,19 @@ import SwiftUI
 struct ReviewScene: View {
     @ObservedObject var viewModel: ViewModel
     @Binding var detailId: String?
+    private var isMainWebView: Bool
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
 
-    init(viewModel: ViewModel, detailId: Binding<String?> = .constant(nil)) {
+    init(viewModel: ViewModel, isMainWebView: Bool, detailId: Binding<String?> = .constant(nil)) {
         self.viewModel = viewModel
         _detailId = detailId
+        self.isMainWebView = isMainWebView
     }
 
     private var eventSignal: PassthroughSubject<WebViewEventType, Never>? {
-        viewModel.getPreloadedWebView(detailId: detailId).eventSignal
+        viewModel.getPreloadedWebView(isMain: isMainWebView).eventSignal
     }
 
     private var reviewUrl: URL {
@@ -34,7 +36,7 @@ struct ReviewScene: View {
 
     var body: some View {
         ZStack {
-            ReviewWebView(preloadedWebView: viewModel.getPreloadedWebView(detailId: detailId))
+            ReviewWebView(preloadedWebView: viewModel.getPreloadedWebView(isMain: isMainWebView))
                 .navigationBarHidden(true)
                 .edgesIgnoringSafeArea(.bottom)
                 .background(STColor.systemBackground)
@@ -92,8 +94,8 @@ extension ReviewScene {
             }.store(in: &bag)
         }
 
-        func getPreloadedWebView(detailId: String?) -> WebViewPreloadManager {
-            if detailId == nil {
+        func getPreloadedWebView(isMain: Bool) -> WebViewPreloadManager {
+            if isMain {
                 return appState.review.preloadedMain
             } else {
                 return appState.review.preloadedDetail

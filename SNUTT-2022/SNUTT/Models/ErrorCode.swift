@@ -116,9 +116,10 @@ enum ErrorCode: Int {
              .NO_EMAIL,
              .NO_PASSWORD_RESET_REQUEST,
              .CANT_CHANGE_OTHERS_THEME,
-             .EMAIL_NOT_VERIFIED,
              .EXPIRED_PASSWORD_RESET_CODE:
             return "요청 실패"
+        case .EMAIL_NOT_VERIFIED:
+            return "인증 필요"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,
              .WRONG_USER_TOKEN,
@@ -276,7 +277,7 @@ enum ErrorCode: Int {
         case .WRONG_APPLE_TOKEN:
             return "애플 계정으로 로그인하지 못했습니다."
         case .EMAIL_NOT_VERIFIED:
-            return "인증되지 않은 이메일입니다. 강의평 탭에서 이메일 인증을 먼저 진행해주세요."
+            return "강의평 확인을 위해 이메일 인증이 필요합니다. 이메일 인증을 진행하시겠습니까?"
         case .NO_PASSWORD_RESET_REQUEST:
             return "비밀번호 재설정을 다시 시도해주세요."
         case .EXPIRED_PASSWORD_RESET_CODE:

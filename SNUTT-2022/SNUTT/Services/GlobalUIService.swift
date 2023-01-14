@@ -12,6 +12,8 @@ protocol GlobalUIServiceProtocol {
     func setColorScheme(_ colorScheme: ColorScheme?)
     func loadColorSchemeDuringBootstrap()
 
+    func setSelectedTab(_ tab: TabType)
+    func setIsErrorAlertPresented(_ value: Bool)
     func setIsMenuOpen(_ value: Bool)
 
     func openEllipsis(for timetable: TimetableMetadata)
@@ -56,6 +58,14 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
         let colorSchemeDescription = localRepositories.userDefaultsRepository.get(String.self, key: .preferredColorScheme)
         let colorScheme = ColorScheme.from(description: colorSchemeDescription)
         appState.system.preferredColorScheme = colorScheme
+    }
+    
+    func setSelectedTab(_ tab: TabType) {
+        appState.system.selectedTab = tab
+    }
+    
+    func setIsErrorAlertPresented(_ value: Bool) {
+        appState.system.isErrorAlertPresented = value
     }
 
     func setIsMenuOpen(_ value: Bool) {

@@ -14,10 +14,15 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published private var _selectedLecture: Lecture?
     @Published private var _searchText: String = ""
     @Published private var _isFilterOpen: Bool = false
+    @Published private var _selectedTab: TabType = .review
     @Published var searchResult: [Lecture]? = nil
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
     @Published var isLectureOverlapped: Bool = false
+    
+    @Published var emailVerifyError: STError? = nil
+    @Published var presentEmailVerifyAlert = false
+    
     var errorTitle: String = ""
     var errorMessage: String = ""
 
@@ -35,6 +40,11 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         get { _selectedLecture }
         set { services.searchService.setSelectedLecture(newValue) }
     }
+    
+    var selectedTab: TabType {
+        get { _selectedTab }
+        set { services.globalUIService.setSelectedTab(newValue) }
+    }
 
     var currentTimetableWithSelection: Timetable? {
         _currentTimetable?.withSelectedLecture(_selectedLecture)
@@ -50,6 +60,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         appState.timetable.$current.assign(to: &$_currentTimetable)
         appState.timetable.$configuration.assign(to: &$_timetableConfig)
         appState.search.$selectedLecture.assign(to: &$_selectedLecture)
+        appState.system.$selectedTab.assign(to: &$_selectedTab)
         appState.search.$searchText.assign(to: &$_searchText)
         appState.search.$isFilterOpen.assign(to: &$_isFilterOpen)
         appState.search.$searchResult.assign(to: &$searchResult)
@@ -128,6 +139,9 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     func fetchReviewId(of lecture: Lecture) async -> String? {
         do {
             return try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+        } catch let error as STError where error.code == .EMAIL_NOT_VERIFIED {
+            emailVerifyError = error
+            presentEmailVerifyAlert = true
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

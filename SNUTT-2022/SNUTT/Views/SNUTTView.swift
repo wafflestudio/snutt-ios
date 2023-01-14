@@ -10,20 +10,19 @@ import SwiftUI
 
 struct SNUTTView: View {
     @ObservedObject var viewModel: ViewModel
-    @State private var selectedTab: TabType = .timetable
 
     /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
     @State private var navigationBarHeight: CGFloat = 0
 
     private var selected: Binding<TabType> {
         Binding<TabType> {
-            selectedTab
+            viewModel.selectedTab
         } set: {
-            [previous = selectedTab] current in
+            [previous = viewModel.selectedTab] current in
             if previous == current, current == .review {
                 viewModel.reloadReviewWebView()
             }
-            selectedTab = current
+            viewModel.selectedTab = current
         }
     }
 
@@ -48,17 +47,17 @@ struct SNUTTView: View {
                         SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
                     }
                     TabScene(tabType: .review) {
-                        ReviewScene(viewModel: .init(container: viewModel.container))
+                        ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: true)
                     }
                     TabScene(tabType: .settings) {
                         SettingScene(viewModel: .init(container: viewModel.container))
                     }
                 }
-                if selectedTab == .timetable {
+                if viewModel.selectedTab == .timetable {
                     MenuSheetScene(viewModel: .init(container: viewModel.container))
                     LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
                 }
-                if selectedTab == .search {
+                if viewModel.selectedTab == .search {
                     FilterSheetScene(viewModel: .init(container: viewModel.container))
                 }
                 PopupScene(viewModel: .init(container: viewModel.container))
@@ -97,10 +96,22 @@ struct SNUTTView: View {
 
 extension SNUTTView {
     class ViewModel: BaseViewModel, ObservableObject {
-        @Published var isErrorAlertPresented = false
         @Published var accessToken: String? = nil
         @Published var preferredColorScheme: ColorScheme? = nil
         @Published private var error: STError? = nil
+        
+        @Published private var _isErrorAlertPresented = false
+        var isErrorAlertPresented: Bool {
+            get { _isErrorAlertPresented }
+            set { services.globalUIService.setIsErrorAlertPresented(newValue) }
+        }
+        
+        
+        @Published private var _selectedTab: TabType = .review
+        var selectedTab: TabType {
+            get { _selectedTab }
+            set { services.globalUIService.setSelectedTab(newValue) }
+        }
 
         var isAuthenticated: Bool {
             guard let accessToken = accessToken else { return false }
@@ -110,9 +121,10 @@ extension SNUTTView {
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$error.assign(to: &$error)
-            appState.system.$isErrorAlertPresented.assign(to: &$isErrorAlertPresented)
+            appState.system.$isErrorAlertPresented.assign(to: &$_isErrorAlertPresented)
             appState.user.$accessToken.assign(to: &$accessToken)
             appState.system.$preferredColorScheme.assign(to: &$preferredColorScheme)
+            appState.system.$selectedTab.assign(to: &$_selectedTab)
         }
 
         var errorTitle: String {
