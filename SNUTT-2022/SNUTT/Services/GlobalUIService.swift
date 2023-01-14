@@ -59,11 +59,11 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
         let colorScheme = ColorScheme.from(description: colorSchemeDescription)
         appState.system.preferredColorScheme = colorScheme
     }
-    
+
     func setSelectedTab(_ tab: TabType) {
         appState.system.selectedTab = tab
     }
-    
+
     func setIsErrorAlertPresented(_ value: Bool) {
         appState.system.isErrorAlertPresented = value
     }

@@ -99,14 +99,13 @@ extension SNUTTView {
         @Published var accessToken: String? = nil
         @Published var preferredColorScheme: ColorScheme? = nil
         @Published private var error: STError? = nil
-        
+
         @Published private var _isErrorAlertPresented = false
         var isErrorAlertPresented: Bool {
             get { _isErrorAlertPresented }
             set { services.globalUIService.setIsErrorAlertPresented(newValue) }
         }
-        
-        
+
         @Published private var _selectedTab: TabType = .review
         var selectedTab: TabType {
             get { _selectedTab }

@@ -19,10 +19,10 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
     @Published var isLectureOverlapped: Bool = false
-    
+
     @Published var emailVerifyError: STError? = nil
     @Published var presentEmailVerifyAlert = false
-    
+
     var errorTitle: String = ""
     var errorMessage: String = ""
 
@@ -40,7 +40,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         get { _selectedLecture }
         set { services.searchService.setSelectedLecture(newValue) }
     }
-    
+
     var selectedTab: TabType {
         get { _selectedTab }
         set { services.globalUIService.setSelectedTab(newValue) }
