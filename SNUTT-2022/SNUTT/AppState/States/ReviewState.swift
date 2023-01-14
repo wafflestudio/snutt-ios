@@ -22,11 +22,8 @@ class WebViewPreloadManager {
     private var bag = Set<AnyCancellable>()
 
     func preload(url: URL, accessToken: String) {
-        if eventSignal != nil && webView != nil {
-            return
-        }
         eventSignal = eventSignal ?? .init()
-        webView = webView ?? WKWebView(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken))
+        webView = WKWebView(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken))
         coordinator = coordinator ?? Coordinator(eventSignal: eventSignal!)
         webView?.scrollView.bounces = false
         webView?.backgroundColor = UIColor(STColor.systemBackground)
