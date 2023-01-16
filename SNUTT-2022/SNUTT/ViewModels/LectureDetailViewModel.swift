@@ -101,6 +101,8 @@ extension LectureDetailScene {
         func fetchReviewId(of lecture: Lecture) async -> String? {
             do {
                 return try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
+            } catch let error as STError where error.code == .EMAIL_NOT_VERIFIED {
+                // noop
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }

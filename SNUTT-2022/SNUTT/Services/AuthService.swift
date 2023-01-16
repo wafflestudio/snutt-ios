@@ -127,7 +127,9 @@ extension UserAuthHandler {
             appState.user.accessToken = nil
             appState.user.userId = nil
             appState.user.current = nil
+            appState.timetable.current = nil
         }
+        localRepositories.userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: nil)
         localRepositories.userDefaultsRepository.set(String.self, key: .accessToken, value: nil)
         localRepositories.userDefaultsRepository.set(String.self, key: .userId, value: nil)
         localRepositories.userDefaultsRepository.set(UserDto.self, key: .userDto, value: nil)

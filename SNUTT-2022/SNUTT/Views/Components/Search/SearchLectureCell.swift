@@ -95,7 +95,7 @@ struct SearchLectureCell: View {
                     /// This `sheet` modifier should be called on `HStack` to prevent animation glitch when `dismiss`ed.
                     .sheet(isPresented: $showReviewWebView) {
                         if let container = container {
-                            ReviewScene(viewModel: .init(container: container), detailId: $reviewId)
+                            ReviewScene(viewModel: .init(container: container), isMainWebView: false, detailId: $reviewId)
                                 .id(reviewId)
                         }
                     }
