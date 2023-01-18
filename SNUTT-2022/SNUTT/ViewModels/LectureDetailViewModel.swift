@@ -29,13 +29,13 @@ extension LectureDetailScene {
         var currentTimetable: Timetable? {
             appState.timetable.current
         }
-        
+
         @Published private var _selectedTab: TabType = .review
         var selectedTab: TabType {
             get { _selectedTab }
             set { services.globalUIService.setSelectedTab(newValue) }
         }
-        
+
         func presentEmailVerifyAlert() {
             let emailVerifyError = STError(.EMAIL_NOT_VERIFIED)
             errorTitle = emailVerifyError.title
