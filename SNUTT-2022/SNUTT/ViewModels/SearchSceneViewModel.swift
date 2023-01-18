@@ -19,9 +19,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
     @Published var isLectureOverlapped: Bool = false
-
-    @Published var emailVerifyError: STError? = nil
-    @Published var presentEmailVerifyAlert = false
+    @Published var isEmailVerifyAlertPresented = false
 
     var errorTitle: String = ""
     var errorMessage: String = ""
@@ -140,8 +138,11 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         do {
             return try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
         } catch let error as STError where error.code == .EMAIL_NOT_VERIFIED {
-            emailVerifyError = error
-            presentEmailVerifyAlert = true
+            await MainActor.run {
+                errorTitle = error.title
+                errorMessage = error.content
+                isEmailVerifyAlertPresented = true
+            }
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

@@ -195,8 +195,20 @@ struct LectureDetailScene: View {
                         }
 
                         DetailButton(text: "강의평") {
-                            showReviewWebView = true
+                            if reviewId == nil {
+                                viewModel.presentEmailVerifyAlert()
+                            } else {
+                                showReviewWebView = true
+                            }
                         }
+                        .alert(viewModel.errorTitle, isPresented: $viewModel.isEmailVerifyAlertPresented, actions: {
+                            Button("확인") {
+                                viewModel.selectedTab = .review
+                            }
+                            Button("취소", role: .cancel) {}
+                        }, message: {
+                            Text(viewModel.errorMessage)
+                        })
                         .onAppear {
                             Task {
                                 reviewId = await viewModel.fetchReviewId(of: lecture)

@@ -13,11 +13,13 @@ extension LectureDetailScene {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var isLectureOverlapped: Bool = false
+        @Published var isEmailVerifyAlertPresented = false
         var errorTitle: String = ""
         var errorMessage: String = ""
 
         override init(container: DIContainer) {
             super.init(container: container)
+            appState.system.$selectedTab.assign(to: &$_selectedTab)
         }
 
         var lectureService: LectureServiceProtocol {
@@ -26,6 +28,21 @@ extension LectureDetailScene {
 
         var currentTimetable: Timetable? {
             appState.timetable.current
+        }
+        
+        @Published private var _selectedTab: TabType = .review
+        var selectedTab: TabType {
+            get { _selectedTab }
+            set { services.globalUIService.setSelectedTab(newValue) }
+        }
+        
+        func presentEmailVerifyAlert() {
+            let emailVerifyError = STError(.EMAIL_NOT_VERIFIED)
+            errorTitle = emailVerifyError.title
+            errorMessage = emailVerifyError.content
+            DispatchQueue.main.async {
+                self.isEmailVerifyAlertPresented = true
+            }
         }
 
         func addCustomLecture(lecture: Lecture, isForced: Bool = false) async -> Bool {

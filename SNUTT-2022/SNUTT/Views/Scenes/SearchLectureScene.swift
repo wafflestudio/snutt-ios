@@ -82,16 +82,13 @@ struct SearchLectureScene: View {
             .task {
                 await viewModel.fetchTags()
             }
-            .alert(viewModel.emailVerifyError?.title ?? "", isPresented: $viewModel.presentEmailVerifyAlert, actions: {
+            .alert(viewModel.errorTitle, isPresented: $viewModel.isEmailVerifyAlertPresented, actions: {
                 Button("확인") {
-                    viewModel.emailVerifyError = nil
                     viewModel.selectedTab = .review
                 }
-                Button("취소", role: .cancel) {
-                    viewModel.emailVerifyError = nil
-                }
+                Button("취소", role: .cancel) {}
             }, message: {
-                Text(viewModel.emailVerifyError?.content ?? "")
+                Text(viewModel.errorMessage)
             })
             .navigationBarHidden(true)
             .animation(.customSpring, value: viewModel.searchResult?.count)
