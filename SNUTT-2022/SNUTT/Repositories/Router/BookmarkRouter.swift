@@ -28,8 +28,8 @@ enum BookmarkRouter: Router {
 
     var path: String {
         switch self {
-        case .getBookmark(_):
-            return "/"
+        case let .getBookmark(quarter):
+            return "/?year=\(quarter.year)&semester=\(quarter.semester.rawValue)/"
         case .bookmarkLecture(_):
             return "/lecture"
         case .undoBookmarkLecture(_):
@@ -37,10 +37,10 @@ enum BookmarkRouter: Router {
         }
     }
 
-    var parameters: Parameters? {
+    var parameters: [String: Any]? {
         switch self {
-        case let .getBookmark(quarter):
-            return ["year": quarter.year, "semester": quarter.semester.rawValue]
+        case .getBookmark(_):
+            return nil
         case let .bookmarkLecture(lectureId):
             return ["lecture_id": lectureId]
         case let .undoBookmarkLecture(lectureId):

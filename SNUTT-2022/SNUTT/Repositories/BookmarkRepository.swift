@@ -31,14 +31,14 @@ class BookmarkRepository: BookmarkRepositoryProtocol {
     func bookmarkLecture(lectureId: String) async throws {
         let _ = try await session
             .request(BookmarkRouter.bookmarkLecture(lectureId: lectureId))
-            .serializingDecodable(BookmarkDto.self)
+            .serializingString()
             .handlingError()
     }
 
     func undoBookmarkLecture(lectureId: String) async throws {
         let _ = try await session
             .request(BookmarkRouter.undoBookmarkLecture(lectureId: lectureId))
-            .serializingDecodable(BookmarkDto.self)
+            .serializingString()
             .handlingError()
     }
 }

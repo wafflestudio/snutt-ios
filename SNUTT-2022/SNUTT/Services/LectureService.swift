@@ -118,14 +118,14 @@ struct LectureService: LectureServiceProtocol {
     
     func bookmarkLecture(lecture: Lecture) async throws {
         try await bookmarkRepository.bookmarkLecture(lectureId: lecture.id)
-        guard let currentTimetable = appState.timetable.current else { return }
-        try await getBookmark(quarter: currentTimetable.quarter)
+//        guard let currentTimetable = appState.timetable.current else { return }
+//        try await getBookmark(quarter: currentTimetable.quarter)
     }
     
     func undoBookmarkLecture(lecture: Lecture) async throws {
         try await bookmarkRepository.undoBookmarkLecture(lectureId: lecture.id)
-        guard let currentTimetable = appState.timetable.current else { return }
-        try await getBookmark(quarter: currentTimetable.quarter)
+//        guard let currentTimetable = appState.timetable.current else { return }
+//        try await getBookmark(quarter: currentTimetable.quarter)
     }
     
     private var lectureRepository: LectureRepositoryProtocol {
