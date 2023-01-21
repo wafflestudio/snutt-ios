@@ -10,10 +10,13 @@ import SwiftUI
 struct SearchLectureCell: View {
     let lecture: Lecture
     let selected: Bool
+    let bookmarkLecture: (Lecture) async -> Void
+    let undoBookmarkLecture: (Lecture) async -> Void
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture) async -> String?
     let preloadReviewWebView: (String) -> Void
+    let isBookmarked: Bool
     let isInTimetable: Bool
 
     @State var showingDetailPage = false
@@ -69,7 +72,35 @@ struct SearchLectureCell: View {
                                 .frame(maxWidth: .infinity)
                                 .font(STFont.details)
                         }
-
+                        
+                        if isBookmarked {
+                            Button {
+                                Task {
+                                    await undoBookmarkLecture(lecture)
+                                }
+                            } label: {
+                                HStack {
+                                    Image("bookmark.mint")
+                                    Text("관심강좌")
+                                        .font(STFont.details)
+                                }
+                                .frame(maxWidth: .infinity)
+                            }
+                        } else {
+                            Button {
+                                Task {
+                                    await bookmarkLecture(lecture)
+                                }
+                            } label: {
+                                HStack {
+                                    Image("bookmark.white")
+                                    Text("관심강좌")
+                                        .font(STFont.details)
+                                }
+                                .frame(maxWidth: .infinity)
+                            }
+                        }
+                        
                         if isInTimetable {
                             Button {
                                 Task {

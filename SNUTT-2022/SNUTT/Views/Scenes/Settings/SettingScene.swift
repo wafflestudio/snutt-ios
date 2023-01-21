@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingScene: View {
     @ObservedObject var viewModel: SettingViewModel
+    @State private var pushToNotiScene = false
     @State private var isLogoutAlertPresented: Bool = false
 
     var body: some View {
@@ -68,8 +69,23 @@ struct SettingScene: View {
         .listStyle(.insetGrouped)
         .navigationTitle("설정")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavBarButton(imageName: "nav.alarm.off") {
+                    pushToNotiScene = true
+                }
+                .circleBadge(condition: viewModel.unreadCount > 0)
+            }
+        }
+        .background {
+            NavigationLink(destination: NotificationList(notifications: viewModel.notifications,
+                                                         initialFetch: viewModel.fetchInitialNotifications,
+                                                         fetchMore: viewModel.fetchMoreNotifications), isActive: $pushToNotiScene) { EmptyView() }
+        }
         .task {
             await viewModel.fetchUser()
+            await viewModel.fetchInitialNotifications(updateLastRead: false)
+            await viewModel.fetchNotificationsCount()
         }
 
         let _ = debugChanges()

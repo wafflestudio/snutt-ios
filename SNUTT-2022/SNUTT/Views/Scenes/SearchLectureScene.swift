@@ -62,7 +62,10 @@ struct SearchLectureScene: View {
                     } else {
                         SearchLectureList(data: viewModel.searchResult!,
                                           fetchMore: viewModel.fetchMoreSearchResult,
+                                          bookmarkedLecture: viewModel.getBookmarkedLecture,
                                           existingLecture: viewModel.getExistingLecture,
+                                          bookmarkLecture: viewModel.bookmarkLecture,
+                                          undoBookmarkLecture: viewModel.undoBookmarkLecture,
                                           addLecture: viewModel.addLecture,
                                           deleteLecture: viewModel.deleteLecture,
                                           fetchReviewId: viewModel.fetchReviewId(of:),

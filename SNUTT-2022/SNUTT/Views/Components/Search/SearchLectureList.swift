@@ -10,7 +10,10 @@ import SwiftUI
 struct SearchLectureList: View {
     let data: [Lecture]
     let fetchMore: () async -> Void
+    let bookmarkedLecture: (Lecture) -> Lecture?
     let existingLecture: (Lecture) -> Lecture?
+    let bookmarkLecture: (Lecture) async -> Void
+    let undoBookmarkLecture: (Lecture) async -> Void
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture) async -> String?
@@ -27,10 +30,13 @@ struct SearchLectureList: View {
                 ForEach(data) { lecture in
                     SearchLectureCell(lecture: lecture,
                                       selected: selected?.id == lecture.id,
+                                      bookmarkLecture: bookmarkLecture,
+                                      undoBookmarkLecture: undoBookmarkLecture,
                                       addLecture: addLecture,
                                       deleteLecture: deleteLecture,
                                       fetchReviewId: fetchReviewId,
                                       preloadReviewWebView: preloadReviewWebView,
+                                      isBookmarked: bookmarkedLecture(lecture) != nil,
                                       isInTimetable: existingLecture(lecture) != nil)
                         .task {
                             if lecture.id == data.last?.id {

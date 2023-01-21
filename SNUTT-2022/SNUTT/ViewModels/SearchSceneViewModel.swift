@@ -101,6 +101,28 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     func deselectTag(_ tag: SearchTag) {
         services.searchService.deselectTag(tag)
     }
+    
+    func bookmarkLecture(lecture: Lecture) async {
+        do {
+            try await services.lectureService.bookmarkLecture(lecture: lecture)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+    
+    func undoBookmarkLecture(selected: Lecture) async {
+        guard let lecture = getBookmarkedLecture(selected) else { return }
+        do {
+            try await services.lectureService.undoBookmarkLecture(lecture: lecture)
+            services.searchService.setSelectedLecture(nil)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+    
+    func getBookmarkedLecture(_ lecture: Lecture) -> Lecture? {
+        timetableState.bookmark?.lectures.first(where: { $0.isEquivalent(with: lecture) })
+    }
 
     func addLecture(lecture: Lecture) async {
         do {
@@ -133,7 +155,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     func getExistingLecture(_ lecture: Lecture) -> Lecture? {
         timetableState.current?.lectures.first(where: { $0.isEquivalent(with: lecture) })
     }
-
+    
     func fetchReviewId(of lecture: Lecture) async -> String? {
         do {
             return try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)

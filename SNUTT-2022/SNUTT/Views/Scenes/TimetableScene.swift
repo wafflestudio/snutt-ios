@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TimetableScene: View {
     @State private var pushToListScene = false
-    @State private var pushToNotiScene = false
+    @State private var pushToBookmarkScene = false
     @State private var isShareSheetOpened = false
     @State private var screenshot: UIImage = .init()
     @ObservedObject var viewModel: TimetableViewModel
@@ -26,9 +26,7 @@ struct TimetableScene: View {
                 .background(
                     Group {
                         NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
-                        NavigationLink(destination: NotificationList(notifications: viewModel.notifications,
-                                                                     initialFetch: viewModel.fetchInitialNotifications,
-                                                                     fetchMore: viewModel.fetchMoreNotifications), isActive: $pushToNotiScene) { EmptyView() }
+                        NavigationLink(destination: BookmarkScene(viewModel: .init(container: viewModel.container), navigationBarHeight: 0), isActive: $pushToBookmarkScene) { EmptyView() }
                     }
                 )
                 .navigationBarTitleDisplayMode(.inline)
@@ -58,11 +56,12 @@ struct TimetableScene: View {
                                 self.screenshot = body.takeScreenshot(size: reader.size)
                                 isShareSheetOpened = true
                             }
-
-                            NavBarButton(imageName: "nav.alarm.off") {
-                                pushToNotiScene = true
+                            
+                            NavBarButton(imageName: "nav.bookmark") {
+                                pushToBookmarkScene = true
                             }
-                            .circleBadge(condition: viewModel.unreadCount > 0)
+                            // TODO: isNewToBookmark
+//                            .circleBadge(condition: viewModel.isNewToBookmark > 0)
                         }
                     }
                 }
@@ -80,19 +79,8 @@ struct TimetableScene: View {
                         group.addTask {
                             await viewModel.fetchCourseBookList()
                         }
-                        group.addTask {
-                            await viewModel.fetchInitialNotifications(updateLastRead: false)
-                        }
-                        group.addTask {
-                            await viewModel.fetchNotificationsCount()
-                        }
                     })
                 }
-            //            .onAppear {
-            //                Task {
-            //                    await viewModel.fetchNotificationsCount()
-            //                }
-            //            }
         }
         let _ = debugChanges()
     }

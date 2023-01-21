@@ -11,6 +11,7 @@
 		731D9FFF297BC52D0027BA25 /* BookmarkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731D9FFE297BC52D0027BA25 /* BookmarkRepository.swift */; };
 		731DA001297BC54B0027BA25 /* BookmarkDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA000297BC54B0027BA25 /* BookmarkDto.swift */; };
 		731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA002297BC5740027BA25 /* BookmarkRouter.swift */; };
+		731DA005297BC8990027BA25 /* BookmarkScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA004297BC8990027BA25 /* BookmarkScene.swift */; };
 		B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85B244C295BF36F00E6577E /* FindLocalIdView.swift */; };
 		B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */; };
 		B86C4CCF294DCA150019CE51 /* VerificationCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */; };
@@ -276,6 +277,7 @@
 		731D9FFE297BC52D0027BA25 /* BookmarkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRepository.swift; sourceTree = "<group>"; };
 		731DA000297BC54B0027BA25 /* BookmarkDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkDto.swift; sourceTree = "<group>"; };
 		731DA002297BC5740027BA25 /* BookmarkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRouter.swift; sourceTree = "<group>"; };
+		731DA004297BC8990027BA25 /* BookmarkScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkScene.swift; sourceTree = "<group>"; };
 		B85B244C295BF36F00E6577E /* FindLocalIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocalIdView.swift; sourceTree = "<group>"; };
 		B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordScene.swift; sourceTree = "<group>"; };
 		B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeView.swift; sourceTree = "<group>"; };
@@ -887,6 +889,7 @@
 				BE9413E028CCD04900171060 /* LectureTimeSheetScene.swift */,
 				BE8BB3AC285D763B00070A66 /* SearchLectureScene.swift */,
 				B87DF6FA291A4303008BB95B /* PopupScene.swift */,
+				731DA004297BC8990027BA25 /* BookmarkScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1237,6 +1240,7 @@
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
 				BE6D892A28EFC637000607A6 /* EtcRepository.swift in Sources */,
 				BE9413BD28C2119500171060 /* NotificationRouter.swift in Sources */,
+				731DA005297BC8990027BA25 /* BookmarkScene.swift in Sources */,
 				BE28036428E8850E00B2B1AB /* WebViewType.swift in Sources */,
 				BE6D892C28EFC76E000607A6 /* EtcService.swift in Sources */,
 				BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */,
