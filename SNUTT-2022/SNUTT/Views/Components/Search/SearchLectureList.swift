@@ -23,6 +23,7 @@ struct SearchLectureList: View {
     let errorMessage: String
     @Binding var isLectureOverlapped: Bool
     @Binding var selected: Lecture?
+    @Binding var isFirstBookmark: Bool
 
     var body: some View {
         ScrollView {
@@ -37,7 +38,8 @@ struct SearchLectureList: View {
                                       fetchReviewId: fetchReviewId,
                                       preloadReviewWebView: preloadReviewWebView,
                                       isBookmarked: bookmarkedLecture(lecture) != nil,
-                                      isInTimetable: existingLecture(lecture) != nil)
+                                      isInTimetable: existingLecture(lecture) != nil,
+                                      isFirstBookmark: $isFirstBookmark)
                         .task {
                             if lecture.id == data.last?.id {
                                 await fetchMore()

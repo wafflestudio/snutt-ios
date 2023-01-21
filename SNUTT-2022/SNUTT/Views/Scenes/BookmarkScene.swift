@@ -45,7 +45,8 @@ struct BookmarkScene: View {
                                       errorTitle: viewModel.errorTitle,
                                       errorMessage: viewModel.errorMessage,
                                       isLectureOverlapped: $viewModel.isLectureOverlapped,
-                                      selected: $viewModel.selectedLecture)
+                                      selected: $viewModel.selectedLecture,
+                                      isFirstBookmark: $viewModel.isFirstBookmark)
                         .animation(.customSpring, value: viewModel.selectedLecture?.id)
                         .id(reloadBookmarkList)
                 }

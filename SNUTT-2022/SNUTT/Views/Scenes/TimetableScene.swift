@@ -9,6 +9,7 @@ import LinkPresentation
 import SwiftUI
 
 struct TimetableScene: View {
+    @AppStorage("isNewToBookmark") var isNewToBookmark: Bool = true
     @State private var pushToListScene = false
     @State private var pushToBookmarkScene = false
     @State private var isShareSheetOpened = false
@@ -59,9 +60,9 @@ struct TimetableScene: View {
                             
                             NavBarButton(imageName: "nav.bookmark") {
                                 pushToBookmarkScene = true
+                                isNewToBookmark = false
                             }
-                            // TODO: isNewToBookmark
-//                            .circleBadge(condition: viewModel.isNewToBookmark > 0)
+                            .circleBadge(condition: isNewToBookmark)
                         }
                     }
                 }

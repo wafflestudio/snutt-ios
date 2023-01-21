@@ -21,7 +21,9 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var isLectureOverlapped: Bool = false
     @Published var isEmailVerifyAlertPresented = false
     @Published var bookmarkedLectures: [Lecture] = []
-
+    
+    @AppStorage("isFirstBookmark") var isFirstBookmark: Bool = true
+    
     var errorTitle: String = ""
     var errorMessage: String = ""
 
