@@ -22,6 +22,7 @@ struct SearchLectureCell: View {
     @State var showingDetailPage = false
     @State private var showReviewWebView: Bool = false
     @State private var reviewId: String? = nil
+    @State private var isUndoBookmarkAlertPresented = false
 
     @Environment(\.dependencyContainer) var container: DIContainer?
 
@@ -75,9 +76,7 @@ struct SearchLectureCell: View {
                         
                         if isBookmarked {
                             Button {
-                                Task {
-                                    await undoBookmarkLecture(lecture)
-                                }
+                                isUndoBookmarkAlertPresented = true
                             } label: {
                                 HStack {
                                     Image("bookmark.mint")
@@ -85,6 +84,14 @@ struct SearchLectureCell: View {
                                         .font(STFont.details)
                                 }
                                 .frame(maxWidth: .infinity)
+                            }
+                            .alert("강의를 관심강좌에서 제외하시겠습니까?", isPresented: $isUndoBookmarkAlertPresented) {
+                                Button("취소", role: .cancel, action: {})
+                                Button("확인", role: .destructive) {
+                                    Task {
+                                        await deleteLecture(lecture)
+                                    }
+                                }
                             }
                         } else {
                             Button {
@@ -103,9 +110,7 @@ struct SearchLectureCell: View {
                         
                         if isInTimetable {
                             Button {
-                                Task {
-                                    await deleteLecture(lecture)
-                                }
+                                
                             } label: {
                                 Text("제거하기")
                                     .frame(maxWidth: .infinity)

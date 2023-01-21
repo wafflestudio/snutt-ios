@@ -20,6 +20,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var isLoading: Bool = false
     @Published var isLectureOverlapped: Bool = false
     @Published var isEmailVerifyAlertPresented = false
+    @Published var bookmarkedLectures: [Lecture] = []
 
     var errorTitle: String = ""
     var errorMessage: String = ""
@@ -64,6 +65,8 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$searchResult.assign(to: &$searchResult)
         appState.search.$isLoading.assign(to: &$isLoading)
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
+        appState.timetable.$bookmark.compactMap {
+            $0?.lectures }.assign(to: &$bookmarkedLectures)
     }
 
     func fetchTags() async {
