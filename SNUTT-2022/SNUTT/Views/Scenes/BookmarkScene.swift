@@ -37,6 +37,7 @@ struct BookmarkScene: View {
                                       existingLecture: viewModel.getExistingLecture,
                                       bookmarkLecture: viewModel.bookmarkLecture,
                                       undoBookmarkLecture: viewModel.undoBookmarkLecture,
+                                      getBookmark: viewModel.getBookmark,
                                       addLecture: viewModel.addLecture,
                                       deleteLecture: viewModel.deleteLecture,
                                       fetchReviewId: viewModel.fetchReviewId(of:),

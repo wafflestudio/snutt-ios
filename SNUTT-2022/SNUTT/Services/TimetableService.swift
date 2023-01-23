@@ -20,6 +20,7 @@ protocol TimetableServiceProtocol {
     func selectTimetableTheme(theme: Theme)
     func createTimetable(title: String, quarter: Quarter) async throws
     func setTimetableConfig(config: TimetableConfiguration)
+    func setBookmark(lectures: [Lecture])
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -128,6 +129,12 @@ struct TimetableService: TimetableServiceProtocol {
             appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
         }
     }
+    
+    func setBookmark(lectures: [Lecture]) {
+        DispatchQueue.main.async {
+            appState.timetable.bookmark?.lectures = lectures
+        }
+    }
 
     // TODO: to be refactored
     @MainActor
@@ -148,4 +155,5 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func selectTimetableTheme(theme _: Theme) {}
     func createTimetable(title _: String, quarter _: Quarter) async throws {}
     func setTimetableConfig(config _: TimetableConfiguration) {}
+    func setBookmark(lectures: [Lecture]) {}
 }

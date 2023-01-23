@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchLectureScene: View {
     @ObservedObject var viewModel: SearchSceneViewModel
     var navigationBarHeight: CGFloat
-
+    
     @State private var reloadSearchList: Int = 0
     @State private var reviewId: String = ""
 
@@ -66,6 +66,7 @@ struct SearchLectureScene: View {
                                           existingLecture: viewModel.getExistingLecture,
                                           bookmarkLecture: viewModel.bookmarkLecture,
                                           undoBookmarkLecture: viewModel.undoBookmarkLecture,
+                                          getBookmark: viewModel.getBookmark,
                                           addLecture: viewModel.addLecture,
                                           deleteLecture: viewModel.deleteLecture,
                                           fetchReviewId: viewModel.fetchReviewId(of:),

@@ -8,9 +8,9 @@
 import Foundation
 
 struct BookmarkDto: Codable {
-    let year: Int
-    let semester: Int
-    let lectures: [BookmarkLectureDto]
+    let year: Int?
+    let semester: Int?
+    let lectures: [BookmarkLectureDto]?
 }
 
 struct BookmarkLectureDto: Codable {

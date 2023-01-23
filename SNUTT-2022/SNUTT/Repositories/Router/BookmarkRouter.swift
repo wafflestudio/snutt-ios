@@ -9,8 +9,17 @@ import Alamofire
 import Foundation
 
 enum BookmarkRouter: Router {
-    var baseURL: URL { return URL(string: NetworkConfiguration.serverV1BaseURL + "/bookmarks")! }
-
+    var baseURL: URL {
+        switch self {
+        case .getBookmark:
+            return URL(string: NetworkConfiguration.serverBaseURL)!
+        case .bookmarkLecture:
+            return URL(string: NetworkConfiguration.serverBaseURL + "/bookmarks")!
+        case .undoBookmarkLecture:
+            return URL(string: NetworkConfiguration.serverBaseURL + "/bookmarks")!
+        }
+    }
+    
     case getBookmark(quarter: Quarter)
     case bookmarkLecture(lectureId: String)
     case undoBookmarkLecture(lectureId: String)
@@ -28,8 +37,8 @@ enum BookmarkRouter: Router {
 
     var path: String {
         switch self {
-        case let .getBookmark(quarter):
-            return "/?year=\(quarter.year)&semester=\(quarter.semester.rawValue)/"
+        case .getBookmark:
+            return "/bookmarks"
         case .bookmarkLecture(_):
             return "/lecture"
         case .undoBookmarkLecture(_):
@@ -37,10 +46,10 @@ enum BookmarkRouter: Router {
         }
     }
 
-    var parameters: [String: Any]? {
+    var parameters: Parameters? {
         switch self {
-        case .getBookmark(_):
-            return nil
+        case let .getBookmark(quarter):
+            return ["year": quarter.year, "semester": quarter.semester.rawValue]
         case let .bookmarkLecture(lectureId):
             return ["lecture_id": lectureId]
         case let .undoBookmarkLecture(lectureId):

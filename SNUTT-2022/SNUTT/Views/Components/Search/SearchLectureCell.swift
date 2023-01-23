@@ -12,6 +12,7 @@ struct SearchLectureCell: View {
     let selected: Bool
     let bookmarkLecture: (Lecture) async -> Void
     let undoBookmarkLecture: (Lecture) async -> Void
+    let getBookmark: () async -> Void
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture) async -> String?
@@ -91,7 +92,8 @@ struct SearchLectureCell: View {
                                 Button("취소", role: .cancel, action: {})
                                 Button("확인", role: .destructive) {
                                     Task {
-                                        await deleteLecture(lecture)
+                                        await undoBookmarkLecture(lecture)
+                                        await getBookmark()
                                     }
                                 }
                             }
@@ -100,6 +102,7 @@ struct SearchLectureCell: View {
                                 isFirstBookmarkAlertPresented = isFirstBookmark
                                 Task {
                                     await bookmarkLecture(lecture)
+                                    await getBookmark()
                                 }
                             } label: {
                                 HStack {
@@ -118,7 +121,9 @@ struct SearchLectureCell: View {
                         
                         if isInTimetable {
                             Button {
-                                
+                                Task {
+                                    await deleteLecture(lecture)
+                                }
                             } label: {
                                 Text("제거하기")
                                     .frame(maxWidth: .infinity)
