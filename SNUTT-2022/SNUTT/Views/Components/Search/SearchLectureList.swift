@@ -14,7 +14,6 @@ struct SearchLectureList: View {
     let existingLecture: (Lecture) -> Lecture?
     let bookmarkLecture: (Lecture) async -> Void
     let undoBookmarkLecture: (Lecture) async -> Void
-    let getBookmark: () async -> Void
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture) async -> String?
@@ -34,7 +33,6 @@ struct SearchLectureList: View {
                                       selected: selected?.id == lecture.id,
                                       bookmarkLecture: bookmarkLecture,
                                       undoBookmarkLecture: undoBookmarkLecture,
-                                      getBookmark: getBookmark,
                                       addLecture: addLecture,
                                       deleteLecture: deleteLecture,
                                       fetchReviewId: fetchReviewId,

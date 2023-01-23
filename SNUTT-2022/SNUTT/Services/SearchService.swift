@@ -18,6 +18,7 @@ protocol SearchServiceProtocol {
     func setSearchText(_ value: String)
     func setSelectedLecture(_ value: Lecture?)
     func initializeSearchState()
+    func getBookmark() async throws
 }
 
 struct SearchService: SearchServiceProtocol {
@@ -131,6 +132,28 @@ struct SearchService: SearchServiceProtocol {
             searchState.searchText = value
         }
     }
+    
+    func getBookmark() async throws {
+        setLoading(true)
+        defer {
+            setLoading(false)
+        }
+        searchState.pageNum = 0
+        try await _getBookmark()
+    }
+    
+    private func _getBookmark() async throws {
+        guard let currentTimetable = appState.timetable.current else { return }
+        let dto = try await bookmarkRepository.getBookmark(quarter: currentTimetable.quarter)
+        let bookmark = Bookmark(from: dto)
+        await MainActor.run {
+            appState.timetable.bookmark = bookmark
+        }
+    }
+    
+    private var bookmarkRepository: BookmarkRepositoryProtocol {
+        webRepositories.bookmarkRepository
+    }
 }
 
 class FakeSearchService: SearchServiceProtocol {
@@ -144,4 +167,5 @@ class FakeSearchService: SearchServiceProtocol {
     func setSearchText(_: String) {}
     func setSelectedLecture(_: Lecture?) {}
     func initializeSearchState() {}
+    func getBookmark() async throws {}
 }

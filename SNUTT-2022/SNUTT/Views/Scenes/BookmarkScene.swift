@@ -37,7 +37,6 @@ struct BookmarkScene: View {
                                       existingLecture: viewModel.getExistingLecture,
                                       bookmarkLecture: viewModel.bookmarkLecture,
                                       undoBookmarkLecture: viewModel.undoBookmarkLecture,
-                                      getBookmark: viewModel.getBookmark,
                                       addLecture: viewModel.addLecture,
                                       deleteLecture: viewModel.deleteLecture,
                                       fetchReviewId: viewModel.fetchReviewId(of:),
@@ -65,6 +64,11 @@ struct BookmarkScene: View {
         .navigationBarTitleDisplayMode(.inline)
         .animation(.customSpring, value: viewModel.bookmarkedLectures.count)
         .animation(.customSpring, value: viewModel.isLoading)
+        .onAppear {
+            Task {
+                await viewModel.getBookmark()
+            }
+        }
         .onChange(of: viewModel.isLoading) { _ in
             withAnimation(.customSpring) {
                 reloadBookmarkList += 1

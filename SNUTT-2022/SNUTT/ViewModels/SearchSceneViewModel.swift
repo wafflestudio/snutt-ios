@@ -107,6 +107,14 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         services.searchService.deselectTag(tag)
     }
     
+    func getBookmark() async {
+        do {
+            try await services.searchService.getBookmark()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+    
     func bookmarkLecture(lecture: Lecture) async {
         do {
             try await services.lectureService.bookmarkLecture(lecture: lecture)
@@ -119,7 +127,6 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         guard let lecture = getBookmarkedLecture(selected) else { return }
         do {
             try await services.lectureService.undoBookmarkLecture(lecture: lecture)
-            services.searchService.setSelectedLecture(nil)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

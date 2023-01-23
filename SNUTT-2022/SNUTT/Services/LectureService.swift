@@ -15,7 +15,6 @@ protocol LectureServiceProtocol {
     func deleteLecture(lecture: Lecture) async throws
     func resetLecture(lecture: Lecture) async throws
     func fetchReviewId(courseNumber: String, instructor: String) async throws -> String
-    func getBookmark(quarter: Quarter) async throws
     func bookmarkLecture(lecture: Lecture) async throws
     func undoBookmarkLecture(lecture: Lecture) async throws
 }
@@ -106,26 +105,27 @@ struct LectureService: LectureServiceProtocol {
         return try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
     }
     
-    func getBookmark(quarter: Quarter) async throws {
+    func bookmarkLecture(lecture: Lecture) async throws {
+        try await bookmarkRepository.bookmarkLecture(lectureId: lecture.id)
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await bookmarkRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)
         await MainActor.run {
             appState.timetable.bookmark = bookmark
+            appState.search.selectedLecture = nil
         }
-        userDefaultsRepository.set(BookmarkDto.self, key: .bookmark, value: dto)
-    }
-    
-    func bookmarkLecture(lecture: Lecture) async throws {
-        try await bookmarkRepository.bookmarkLecture(lectureId: lecture.id)
-//        guard let currentTimetable = appState.timetable.current else { return }
-//        try await getBookmark(quarter: currentTimetable.quarter)
     }
     
     func undoBookmarkLecture(lecture: Lecture) async throws {
         try await bookmarkRepository.undoBookmarkLecture(lectureId: lecture.id)
-//        guard let currentTimetable = appState.timetable.current else { return }
-//        try await getBookmark(quarter: currentTimetable.quarter)
+        
+        guard let currentTimetable = appState.timetable.current else { return }
+        let dto = try await bookmarkRepository.getBookmark(quarter: currentTimetable.quarter)
+        let bookmark = Bookmark(from: dto)
+        await MainActor.run {
+            appState.timetable.bookmark = bookmark
+            appState.search.selectedLecture = nil
+        }
     }
     
     private var lectureRepository: LectureRepositoryProtocol {

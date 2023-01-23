@@ -12,7 +12,6 @@ struct SearchLectureCell: View {
     let selected: Bool
     let bookmarkLecture: (Lecture) async -> Void
     let undoBookmarkLecture: (Lecture) async -> Void
-    let getBookmark: () async -> Void
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture) async -> String?
@@ -93,16 +92,18 @@ struct SearchLectureCell: View {
                                 Button("확인", role: .destructive) {
                                     Task {
                                         await undoBookmarkLecture(lecture)
-                                        await getBookmark()
+                                        await undoBookmarkLecture(lecture)
                                     }
                                 }
                             }
                         } else {
                             Button {
                                 isFirstBookmarkAlertPresented = isFirstBookmark
-                                Task {
-                                    await bookmarkLecture(lecture)
-                                    await getBookmark()
+                                if (!isFirstBookmark) {
+                                    Task {
+                                        await bookmarkLecture(lecture)
+                                        await bookmarkLecture(lecture)
+                                    }
                                 }
                             } label: {
                                 HStack {
@@ -113,7 +114,13 @@ struct SearchLectureCell: View {
                                 .frame(maxWidth: .infinity)
                             }
                             .alert("관심강좌", isPresented: $isFirstBookmarkAlertPresented) {
-                                Button("확인", role: .cancel, action: { isFirstBookmark = false })
+                                Button("확인", role: .cancel, action: {
+                                    isFirstBookmark = false
+                                    Task {
+                                        await bookmarkLecture(lecture)
+                                        await bookmarkLecture(lecture)
+                                    }
+                                })
                             } message: {
                                 Text("시간표 우측 상단에서 선택한 관심강좌 목록을 확인해보세요")
                             }
