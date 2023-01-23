@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchLectureScene: View {
     @ObservedObject var viewModel: SearchSceneViewModel
     var navigationBarHeight: CGFloat
-    
+
     @State private var reloadSearchList: Int = 0
     @State private var reviewId: String = ""
 

@@ -75,7 +75,7 @@ struct SearchLectureCell: View {
                                 .frame(maxWidth: .infinity)
                                 .font(STFont.details)
                         }
-                        
+
                         if isBookmarked {
                             Button {
                                 isUndoBookmarkAlertPresented = true
@@ -99,7 +99,7 @@ struct SearchLectureCell: View {
                         } else {
                             Button {
                                 isFirstBookmarkAlertPresented = isFirstBookmark
-                                if (!isFirstBookmark) {
+                                if !isFirstBookmark {
                                     Task {
                                         await bookmarkLecture(lecture)
                                         await bookmarkLecture(lecture)
@@ -125,7 +125,7 @@ struct SearchLectureCell: View {
                                 Text("시간표 우측 상단에서 선택한 관심강좌 목록을 확인해보세요")
                             }
                         }
-                        
+
                         if isInTimetable {
                             Button {
                                 Task {

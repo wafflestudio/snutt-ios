@@ -57,7 +57,7 @@ struct TimetableScene: View {
                                 self.screenshot = body.takeScreenshot(size: reader.size)
                                 isShareSheetOpened = true
                             }
-                            
+
                             NavBarButton(imageName: "nav.bookmark") {
                                 pushToBookmarkScene = true
                                 isNewToBookmark = false

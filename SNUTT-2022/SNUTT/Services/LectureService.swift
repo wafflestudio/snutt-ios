@@ -37,7 +37,7 @@ struct LectureService: LectureServiceProtocol {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
     var localRepositories: AppEnvironment.LocalRepositories
-    
+
     func addLecture(lecture: Lecture, isForced: Bool = false) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id, isForced: isForced)
@@ -48,7 +48,7 @@ struct LectureService: LectureServiceProtocol {
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
-    
+
     func addCustomLecture(lecture: Lecture, isForced: Bool = false) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         var lectureDto = LectureDto(from: lecture)
@@ -60,10 +60,10 @@ struct LectureService: LectureServiceProtocol {
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
-    
+
     func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool = false) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
-        
+
         // Check if `Lecture` itself has overlapping `TimePlace`
         try newLecture.timePlaces.forEach { lhs in
             try newLecture.timePlaces.forEach { rhs in
@@ -72,7 +72,7 @@ struct LectureService: LectureServiceProtocol {
                 }
             }
         }
-        
+
         let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture), isForced: isForced)
         let timetable = Timetable(from: dto)
         await MainActor.run {
@@ -80,7 +80,7 @@ struct LectureService: LectureServiceProtocol {
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
-    
+
     func deleteLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.deleteLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
@@ -90,7 +90,7 @@ struct LectureService: LectureServiceProtocol {
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
-    
+
     func resetLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.resetLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
@@ -100,11 +100,11 @@ struct LectureService: LectureServiceProtocol {
         }
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
-    
+
     func fetchReviewId(courseNumber: String, instructor: String) async throws -> String {
         return try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
     }
-    
+
     func bookmarkLecture(lecture: Lecture) async throws {
         try await bookmarkRepository.bookmarkLecture(lectureId: lecture.id)
         guard let currentTimetable = appState.timetable.current else { return }
@@ -115,10 +115,10 @@ struct LectureService: LectureServiceProtocol {
             appState.search.selectedLecture = nil
         }
     }
-    
+
     func undoBookmarkLecture(lecture: Lecture) async throws {
         try await bookmarkRepository.undoBookmarkLecture(lectureId: lecture.id)
-        
+
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await bookmarkRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)
@@ -127,19 +127,19 @@ struct LectureService: LectureServiceProtocol {
             appState.search.selectedLecture = nil
         }
     }
-    
+
     private var lectureRepository: LectureRepositoryProtocol {
         webRepositories.lectureRepository
     }
-    
+
     private var userDefaultsRepository: UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
     }
-    
+
     private var reviewRepository: ReviewRepositoryProtocol {
         webRepositories.reviewRepository
     }
-    
+
     private var bookmarkRepository: BookmarkRepositoryProtocol {
         webRepositories.bookmarkRepository
     }

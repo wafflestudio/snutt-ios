@@ -10,11 +10,11 @@ import SwiftUI
 struct BookmarkScene: View {
     @ObservedObject var viewModel: SearchSceneViewModel
     var navigationBarHeight: CGFloat
-    
+
     @State private var reloadBookmarkList: Int = 0
 
     var body: some View {
-        GeometryReader { reader in
+        GeometryReader { _ in
             ZStack {
                 Group {
                     VStack {
@@ -26,7 +26,7 @@ struct BookmarkScene: View {
                     }
                     STColor.searchListBackground
                 }
-                
+
                 if viewModel.bookmarkedLectures.isEmpty {
                     EmptyBookmarkList()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)

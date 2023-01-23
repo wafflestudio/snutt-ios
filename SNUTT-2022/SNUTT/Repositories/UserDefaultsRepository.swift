@@ -25,7 +25,7 @@ enum STDefaultsKey: String {
     case timetableConfig
 
     case popupList
-    
+
     case bookmark
 }
 

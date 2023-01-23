@@ -15,7 +15,7 @@ class TimetableState: ObservableObject {
     @Published var courseBookList: [Quarter]?
     @Published var configuration: TimetableConfiguration = .init()
     @Published var bookmark: Bookmark?
-    
+
     private var bag = Set<AnyCancellable>()
 
     // TODO: refactor this

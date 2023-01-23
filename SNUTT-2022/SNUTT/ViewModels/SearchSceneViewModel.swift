@@ -21,9 +21,9 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var isLectureOverlapped: Bool = false
     @Published var isEmailVerifyAlertPresented = false
     @Published var bookmarkedLectures: [Lecture] = []
-    
+
     @AppStorage("isFirstBookmark") var isFirstBookmark: Bool = true
-    
+
     var errorTitle: String = ""
     var errorMessage: String = ""
 
@@ -68,7 +68,8 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$isLoading.assign(to: &$isLoading)
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
         appState.timetable.$bookmark.compactMap {
-            $0?.lectures }.assign(to: &$bookmarkedLectures)
+            $0?.lectures
+        }.assign(to: &$bookmarkedLectures)
     }
 
     func fetchTags() async {
@@ -106,7 +107,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     func deselectTag(_ tag: SearchTag) {
         services.searchService.deselectTag(tag)
     }
-    
+
     func getBookmark() async {
         do {
             try await services.searchService.getBookmark()
@@ -114,7 +115,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func bookmarkLecture(lecture: Lecture) async {
         do {
             try await services.lectureService.bookmarkLecture(lecture: lecture)
@@ -122,7 +123,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func undoBookmarkLecture(selected: Lecture) async {
         guard let lecture = getBookmarkedLecture(selected) else { return }
         do {
@@ -131,7 +132,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func getBookmarkedLecture(_ lecture: Lecture) -> Lecture? {
         timetableState.bookmark?.lectures.first(where: { $0.isEquivalent(with: lecture) })
     }
@@ -167,7 +168,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     func getExistingLecture(_ lecture: Lecture) -> Lecture? {
         timetableState.current?.lectures.first(where: { $0.isEquivalent(with: lecture) })
     }
-    
+
     func fetchReviewId(of lecture: Lecture) async -> String? {
         do {
             return try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)

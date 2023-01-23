@@ -101,8 +101,7 @@ extension AppEnvironment {
                      notificationRepository: notificationRepository,
                      popupRepository: popupRepository,
                      etcRepository: etcRepository,
-                     bookmarkRepository: bookmarkRepository
-        )
+                     bookmarkRepository: bookmarkRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {

@@ -18,6 +18,6 @@ extension Bookmark {
         year = dto.year ?? 0
         semester = dto.semester ?? 0
         let lectureList = dto.lectures ?? []
-        lectures = lectureList.map { .init(from: $0)}
+        lectures = lectureList.map { .init(from: $0) }
     }
 }
