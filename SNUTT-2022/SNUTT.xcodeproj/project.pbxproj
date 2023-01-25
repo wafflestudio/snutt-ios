@@ -11,6 +11,7 @@
 		731DA001297BC54B0027BA25 /* BookmarkDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA000297BC54B0027BA25 /* BookmarkDto.swift */; };
 		731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA002297BC5740027BA25 /* BookmarkRouter.swift */; };
 		731DA005297BC8990027BA25 /* BookmarkScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA004297BC8990027BA25 /* BookmarkScene.swift */; };
+		73805EF22981143E000F81EA /* TranslucentListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73805EF12981143E000F81EA /* TranslucentListViewModel.swift */; };
 		B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85B244C295BF36F00E6577E /* FindLocalIdView.swift */; };
 		B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */; };
 		B86C4CCF294DCA150019CE51 /* VerificationCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */; };
@@ -276,6 +277,7 @@
 		731DA000297BC54B0027BA25 /* BookmarkDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkDto.swift; sourceTree = "<group>"; };
 		731DA002297BC5740027BA25 /* BookmarkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRouter.swift; sourceTree = "<group>"; };
 		731DA004297BC8990027BA25 /* BookmarkScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkScene.swift; sourceTree = "<group>"; };
+		73805EF12981143E000F81EA /* TranslucentListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslucentListViewModel.swift; sourceTree = "<group>"; };
 		B85B244C295BF36F00E6577E /* FindLocalIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocalIdView.swift; sourceTree = "<group>"; };
 		B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordScene.swift; sourceTree = "<group>"; };
 		B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeView.swift; sourceTree = "<group>"; };
@@ -936,6 +938,7 @@
 				BE4B0EBF2873BDAA005FE164 /* SearchSceneViewModel.swift */,
 				B8F40EB628980E7A0021A2A9 /* AccountSettingViewModel.swift */,
 				BED04D3428EA966100937E4C /* OnboardViewModel.swift */,
+				73805EF12981143E000F81EA /* TranslucentListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1257,6 +1260,7 @@
 				BED04D2F28EA6FA600937E4C /* SettingsMenuItem.swift in Sources */,
 				B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */,
 				BE28036228E884F400B2B1AB /* ReviewWebView.swift in Sources */,
+				73805EF22981143E000F81EA /* TranslucentListViewModel.swift in Sources */,
 				BEB3B6A528CDE1FD00E56062 /* TimeUtils.swift in Sources */,
 				BE2CB3632959C0CC00FCF0F0 /* ReviewState.swift in Sources */,
 				BEBCC29C28EF4C6100732304 /* OnLoadModifier.swift in Sources */,

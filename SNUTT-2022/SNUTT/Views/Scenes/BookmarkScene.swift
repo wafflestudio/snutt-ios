@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BookmarkScene: View {
-    @ObservedObject var viewModel: SearchSceneViewModel
+    @ObservedObject var viewModel: TransculentListViewModel
     @State private var reloadBookmarkList: Int = 0
 
     var body: some View {
