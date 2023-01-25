@@ -23,7 +23,7 @@ class SearchSceneViewModel: TransculentListViewModel {
         get { _isFilterOpen }
         set { services.searchService.setIsFilterOpen(newValue) }
     }
-    
+
     override init(container: DIContainer) {
         super.init(container: container)
 

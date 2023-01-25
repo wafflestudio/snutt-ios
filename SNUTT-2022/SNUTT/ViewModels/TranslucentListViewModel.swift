@@ -13,14 +13,14 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
     @Published private var _timetableConfig: TimetableConfiguration = .init()
     @Published private var _selectedLecture: Lecture?
     @Published private var _selectedTab: TabType = .review
-    
+
     @Published var isLoading: Bool = false
     @Published var isLectureOverlapped: Bool = false
     @Published var isEmailVerifyAlertPresented = false
     @Published var bookmarkedLectures: [Lecture] = []
     @Published var isFirstBookmark: Bool = false
     @Published var isFirstBookmarkAlertPresented: Bool = false
-    
+
     var errorTitle: String = ""
     var errorMessage: String = ""
 
@@ -51,10 +51,11 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
         appState.system.$selectedTab.assign(to: &$_selectedTab)
         appState.search.$isLoading.assign(to: &$isLoading)
         appState.timetable.$bookmark.compactMap {
-            $0?.lectures }.assign(to: &$bookmarkedLectures)
+            $0?.lectures
+        }.assign(to: &$bookmarkedLectures)
         appState.timetable.$isFirstBookmark.assign(to: &$isFirstBookmark)
     }
-    
+
     func fetchMoreSearchResult() async {
         do {
             try await services.searchService.fetchMoreSearchResult()
