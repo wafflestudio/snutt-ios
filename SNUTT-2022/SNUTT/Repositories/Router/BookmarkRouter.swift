@@ -10,7 +10,7 @@ import Foundation
 
 enum BookmarkRouter: Router {
     var baseURL: URL { return URL(string: NetworkConfiguration.serverV1BaseURL)! }
-    
+
     case getBookmark(quarter: Quarter)
     case bookmarkLecture(lectureId: String)
     case undoBookmarkLecture(lectureId: String)
@@ -30,9 +30,9 @@ enum BookmarkRouter: Router {
         switch self {
         case .getBookmark:
             return "/bookmarks"
-        case .bookmarkLecture(_):
+        case .bookmarkLecture:
             return "/bookmarks/lecture"
-        case .undoBookmarkLecture(_):
+        case .undoBookmarkLecture:
             return "/bookmarks/lecture"
         }
     }

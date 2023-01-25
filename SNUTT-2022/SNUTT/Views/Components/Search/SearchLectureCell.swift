@@ -73,7 +73,7 @@ struct SearchLectureCell: View {
                                 .frame(maxWidth: .infinity)
                                 .font(STFont.details)
                         }
-                        
+
                         if isBookmarked {
                             Button {
                                 isUndoBookmarkAlertPresented = true
@@ -100,7 +100,6 @@ struct SearchLectureCell: View {
                                     await bookmarkLecture(lecture)
                                     await bookmarkLecture(lecture)
                                 }
-                                
                             } label: {
                                 HStack {
                                     Image("bookmark.white")
@@ -110,7 +109,7 @@ struct SearchLectureCell: View {
                                 .frame(maxWidth: .infinity)
                             }
                         }
-                        
+
                         if isInTimetable {
                             Button {
                                 Task {
