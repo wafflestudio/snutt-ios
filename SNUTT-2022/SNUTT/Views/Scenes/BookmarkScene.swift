@@ -9,7 +9,6 @@ import SwiftUI
 
 struct BookmarkScene: View {
     @ObservedObject var viewModel: SearchSceneViewModel
-    var navigationBarHeight: CGFloat
     
     @State private var reloadBookmarkList: Int = 0
 
@@ -18,8 +17,6 @@ struct BookmarkScene: View {
             ZStack {
                 Group {
                     VStack {
-                        Spacer()
-                            .frame(height: navigationBarHeight)
                         TimetableZStack(current: viewModel.currentTimetableWithSelection,
                                         config: viewModel.timetableConfigWithAutoFit)
                             .animation(.customSpring, value: viewModel.selectedLecture?.id)
@@ -46,7 +43,7 @@ struct BookmarkScene: View {
                                       errorMessage: viewModel.errorMessage,
                                       isLectureOverlapped: $viewModel.isLectureOverlapped,
                                       selected: $viewModel.selectedLecture,
-                                      isFirstBookmark: $viewModel.isFirstBookmark)
+                                      isFirstBookmarkAlertPresented: $viewModel.isFirstBookmarkAlertPresented)
                         .animation(.customSpring, value: viewModel.selectedLecture?.id)
                         .id(reloadBookmarkList)
                 }
@@ -64,7 +61,7 @@ struct BookmarkScene: View {
         .navigationBarTitleDisplayMode(.inline)
         .animation(.customSpring, value: viewModel.bookmarkedLectures.count)
         .animation(.customSpring, value: viewModel.isLoading)
-        .onAppear {
+        .onLoad {
             Task {
                 await viewModel.getBookmark()
             }
@@ -81,10 +78,10 @@ struct EmptyBookmarkList: View {
     var body: some View {
         VStack(alignment: .center) {
             Text("추가한 관심강좌가 없습니다.")
-                .font(.system(size: 16, weight: .bold))
+                .font(STFont.title)
             Spacer().frame(height: 6)
             Text("고민되는 강의를 관심강좌에 추가하여\n관리해보세요.")
-                .font(.system(size: 16))
+                .font(.system(size: 17, weight: .regular))
                 .multilineTextAlignment(.center)
         }
         .padding(.horizontal, 40)
@@ -95,7 +92,7 @@ struct EmptyBookmarkList: View {
 struct BookmarkScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            BookmarkScene(viewModel: .init(container: .preview), navigationBarHeight: 80)
+            BookmarkScene(viewModel: .init(container: .preview))
         }
     }
 }

@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 enum BookmarkRouter: Router {
-    var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL)! }
+    var baseURL: URL { return URL(string: NetworkConfiguration.serverV1BaseURL)! }
     
     case getBookmark(quarter: Quarter)
     case bookmarkLecture(lectureId: String)

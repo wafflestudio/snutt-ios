@@ -27,7 +27,7 @@ struct TimetableScene: View {
                 .background(
                     Group {
                         NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
-                        NavigationLink(destination: BookmarkScene(viewModel: .init(container: viewModel.container), navigationBarHeight: 0), isActive: $pushToBookmarkScene) { EmptyView() }
+                        NavigationLink(destination: BookmarkScene(viewModel: .init(container: viewModel.container)), isActive: $pushToBookmarkScene) { EmptyView() }
                     }
                 )
                 .navigationBarTitleDisplayMode(.inline)

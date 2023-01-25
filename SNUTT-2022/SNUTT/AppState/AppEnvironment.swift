@@ -40,7 +40,6 @@ extension AppEnvironment {
         let notificationRepository: NotificationRepositoryProtocol
         let popupRepository: PopupRepositoryProtocol
         let etcRepository: EtcRepositoryProtocol
-        let bookmarkRepository: BookmarkRepositoryProtocol
     }
 
     struct LocalRepositories {
@@ -90,7 +89,7 @@ extension AppEnvironment {
         let notificationRepository = NotificationRepository(session: session)
         let popupRepository = PopupRepository(session: session)
         let etcRepository = EtcRepository(session: session)
-        let bookmarkRepository = BookmarkRepository(session: session)
+
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
                      lectureRepository: lectureRepository,
@@ -100,8 +99,7 @@ extension AppEnvironment {
                      authRepository: authRepository,
                      notificationRepository: notificationRepository,
                      popupRepository: popupRepository,
-                     etcRepository: etcRepository,
-                     bookmarkRepository: bookmarkRepository
+                     etcRepository: etcRepository
         )
     }
 

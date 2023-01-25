@@ -21,8 +21,8 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var isLectureOverlapped: Bool = false
     @Published var isEmailVerifyAlertPresented = false
     @Published var bookmarkedLectures: [Lecture] = []
-    
-    @AppStorage("isFirstBookmark") var isFirstBookmark: Bool = true
+    @Published var isFirstBookmark: Bool = false
+    @Published var isFirstBookmarkAlertPresented: Bool = false
     
     var errorTitle: String = ""
     var errorMessage: String = ""
@@ -69,6 +69,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
         appState.timetable.$bookmark.compactMap {
             $0?.lectures }.assign(to: &$bookmarkedLectures)
+        appState.timetable.$isFirstBookmark.assign(to: &$isFirstBookmark)
     }
 
     func fetchTags() async {
@@ -116,6 +117,9 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     }
     
     func bookmarkLecture(lecture: Lecture) async {
+        DispatchQueue.main.async {
+            self.isFirstBookmarkAlertPresented = self.isFirstBookmark
+        }
         do {
             try await services.lectureService.bookmarkLecture(lecture: lecture)
         } catch {

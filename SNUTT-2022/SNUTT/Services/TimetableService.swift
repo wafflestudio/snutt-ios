@@ -20,7 +20,6 @@ protocol TimetableServiceProtocol {
     func selectTimetableTheme(theme: Theme)
     func createTimetable(title: String, quarter: Quarter) async throws
     func setTimetableConfig(config: TimetableConfiguration)
-    func setBookmark(lectures: [Lecture])
 }
 
 struct TimetableService: TimetableServiceProtocol {
@@ -127,12 +126,6 @@ struct TimetableService: TimetableServiceProtocol {
     func loadTimetableConfig() {
         DispatchQueue.main.async {
             appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
-        }
-    }
-    
-    func setBookmark(lectures: [Lecture]) {
-        DispatchQueue.main.async {
-            appState.timetable.bookmark?.lectures = lectures
         }
     }
 

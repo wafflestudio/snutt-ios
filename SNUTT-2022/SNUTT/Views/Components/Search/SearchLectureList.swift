@@ -23,7 +23,7 @@ struct SearchLectureList: View {
     let errorMessage: String
     @Binding var isLectureOverlapped: Bool
     @Binding var selected: Lecture?
-    @Binding var isFirstBookmark: Bool
+    @Binding var isFirstBookmarkAlertPresented: Bool
 
     var body: some View {
         ScrollView {
@@ -38,8 +38,7 @@ struct SearchLectureList: View {
                                       fetchReviewId: fetchReviewId,
                                       preloadReviewWebView: preloadReviewWebView,
                                       isBookmarked: bookmarkedLecture(lecture) != nil,
-                                      isInTimetable: existingLecture(lecture) != nil,
-                                      isFirstBookmark: $isFirstBookmark)
+                                      isInTimetable: existingLecture(lecture) != nil)
                         .task {
                             if lecture.id == data.last?.id {
                                 await fetchMore()
@@ -65,6 +64,13 @@ struct SearchLectureList: View {
                             }
                         } message: {
                             Text(errorMessage)
+                        }
+                        .alert("관심강좌", isPresented: $isFirstBookmarkAlertPresented) {
+                            Button("확인", role: .cancel, action: {
+                                isFirstBookmarkAlertPresented = false
+                            })
+                        } message: {
+                            Text("시간표 우측 상단에서 선택한 관심강좌 목록을 확인해보세요")
                         }
                 }
             }

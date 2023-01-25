@@ -19,12 +19,10 @@ struct SearchLectureCell: View {
     let isBookmarked: Bool
     let isInTimetable: Bool
 
-    @Binding var isFirstBookmark: Bool
     @State var showingDetailPage = false
     @State private var showReviewWebView: Bool = false
     @State private var reviewId: String? = nil
     @State private var isUndoBookmarkAlertPresented = false
-    @State private var isFirstBookmarkAlertPresented = false
 
     @Environment(\.dependencyContainer) var container: DIContainer?
 
@@ -98,13 +96,11 @@ struct SearchLectureCell: View {
                             }
                         } else {
                             Button {
-                                isFirstBookmarkAlertPresented = isFirstBookmark
-                                if (!isFirstBookmark) {
-                                    Task {
-                                        await bookmarkLecture(lecture)
-                                        await bookmarkLecture(lecture)
-                                    }
+                                Task {
+                                    await bookmarkLecture(lecture)
+                                    await bookmarkLecture(lecture)
                                 }
+                                
                             } label: {
                                 HStack {
                                     Image("bookmark.white")
@@ -112,17 +108,6 @@ struct SearchLectureCell: View {
                                         .font(STFont.details)
                                 }
                                 .frame(maxWidth: .infinity)
-                            }
-                            .alert("관심강좌", isPresented: $isFirstBookmarkAlertPresented) {
-                                Button("확인", role: .cancel, action: {
-                                    isFirstBookmark = false
-                                    Task {
-                                        await bookmarkLecture(lecture)
-                                        await bookmarkLecture(lecture)
-                                    }
-                                })
-                            } message: {
-                                Text("시간표 우측 상단에서 선택한 관심강좌 목록을 확인해보세요")
                             }
                         }
                         

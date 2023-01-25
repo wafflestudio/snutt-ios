@@ -15,9 +15,8 @@ struct Bookmark {
 
 extension Bookmark {
     init(from dto: BookmarkDto) {
-        year = dto.year ?? 0
-        semester = dto.semester ?? 0
-        let lectureList = dto.lectures ?? []
-        lectures = lectureList.map { .init(from: $0)}
+        year = dto.year
+        semester = dto.semester
+        lectures = dto.lectures.map { .init(from: $0) }
     }
 }
