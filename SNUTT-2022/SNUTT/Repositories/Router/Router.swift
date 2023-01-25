@@ -19,7 +19,7 @@ protocol Router: URLRequestConvertible {
 
 extension Router {
     func asURLRequest() throws -> URLRequest {
-        let url = baseURL.appendingPathComponent(path)
+        let url = URL(string: baseURL.absoluteString + path)!
         var request = URLRequest(url: url)
         request.method = method
 
