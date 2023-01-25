@@ -79,7 +79,7 @@ struct SearchLectureCell: View {
                                 isUndoBookmarkAlertPresented = true
                             } label: {
                                 HStack {
-                                    Image("bookmark.mint")
+                                    Image("bookmark.on")
                                     Text("관심강좌")
                                         .font(STFont.details)
                                 }
@@ -90,7 +90,6 @@ struct SearchLectureCell: View {
                                 Button("확인", role: .destructive) {
                                     Task {
                                         await undoBookmarkLecture(lecture)
-                                        await undoBookmarkLecture(lecture)
                                     }
                                 }
                             }
@@ -98,11 +97,10 @@ struct SearchLectureCell: View {
                             Button {
                                 Task {
                                     await bookmarkLecture(lecture)
-                                    await bookmarkLecture(lecture)
                                 }
                             } label: {
                                 HStack {
-                                    Image("bookmark.white")
+                                    Image("bookmark.off")
                                     Text("관심강좌")
                                         .font(STFont.details)
                                 }
