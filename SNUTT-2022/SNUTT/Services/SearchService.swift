@@ -150,7 +150,7 @@ struct SearchService: SearchServiceProtocol {
             appState.timetable.bookmark = bookmark
         }
     }
-    
+
     private var lectureRepository: LectureRepositoryProtocol {
         webRepositories.lectureRepository
     }

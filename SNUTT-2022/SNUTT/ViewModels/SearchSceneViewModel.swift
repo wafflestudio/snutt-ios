@@ -23,7 +23,7 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
     @Published var bookmarkedLectures: [Lecture] = []
     @Published var isFirstBookmark: Bool = false
     @Published var isFirstBookmarkAlertPresented: Bool = false
-    
+
     var errorTitle: String = ""
     var errorMessage: String = ""
 
@@ -68,7 +68,8 @@ class SearchSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$isLoading.assign(to: &$isLoading)
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
         appState.timetable.$bookmark.compactMap {
-            $0?.lectures }.assign(to: &$bookmarkedLectures)
+            $0?.lectures
+        }.assign(to: &$bookmarkedLectures)
         appState.timetable.$isFirstBookmark.assign(to: &$isFirstBookmark)
     }
 

@@ -118,7 +118,7 @@ struct LectureService: LectureServiceProtocol {
 
     func undoBookmarkLecture(lecture: Lecture) async throws {
         try await lectureRepository.undoBookmarkLecture(lectureId: lecture.id)
-        
+
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)
@@ -151,5 +151,5 @@ class FakeLectureService: LectureServiceProtocol {
     func bookmarkLecture(lecture _: Lecture) async throws {}
     func undoBookmarkLecture(lecture _: Lecture) async throws {}
     func fetchReviewId(courseNumber _: String, instructor _: String) async throws -> String { return "" }
-    func setIsFirstBookmark(_ value: Bool) {}
+    func setIsFirstBookmark(_: Bool) {}
 }

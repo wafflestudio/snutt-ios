@@ -14,7 +14,7 @@ protocol LectureRepositoryProtocol {
     func updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto, isForced: Bool) async throws -> TimetableDto
     func deleteLecture(timetableId: String, lectureId: String) async throws -> TimetableDto
     func resetLecture(timetableId: String, lectureId: String) async throws -> TimetableDto
-    
+
     func getBookmark(quarter: Quarter) async throws -> BookmarkDto
     func bookmarkLecture(lectureId: String) async throws
     func undoBookmarkLecture(lectureId: String) async throws
@@ -61,22 +61,21 @@ class LectureRepository: LectureRepositoryProtocol {
             .serializingDecodable(TimetableDto.self)
             .handlingError()
     }
-    
-    
+
     func getBookmark(quarter: Quarter) async throws -> BookmarkDto {
         return try await session
             .request(BookmarkRouter.getBookmark(quarter: quarter))
             .serializingDecodable(BookmarkDto.self)
             .handlingError()
     }
-    
+
     func bookmarkLecture(lectureId: String) async throws {
         let _ = try await session
             .request(BookmarkRouter.bookmarkLecture(lectureId: lectureId))
             .serializingString(emptyResponseCodes: [200])
             .handlingError()
     }
-    
+
     func undoBookmarkLecture(lectureId: String) async throws {
         let _ = try await session
             .request(BookmarkRouter.undoBookmarkLecture(lectureId: lectureId))
