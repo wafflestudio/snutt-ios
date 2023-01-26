@@ -27,9 +27,9 @@ struct EmptyLectureList: View {
 }
 
 #if DEBUG
-struct LectureListEmptyView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmptyLectureList()
+    struct LectureListEmptyView_Previews: PreviewProvider {
+        static var previews: some View {
+            EmptyLectureList()
+        }
     }
-}
 #endif
