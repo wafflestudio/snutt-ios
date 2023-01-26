@@ -25,6 +25,8 @@ enum STDefaultsKey: String {
     case timetableConfig
 
     case popupList
+
+    case bookmark
 }
 
 class UserDefaultsRepository: UserDefaultsRepositoryProtocol {

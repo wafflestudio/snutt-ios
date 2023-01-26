@@ -15,6 +15,8 @@ protocol LectureServiceProtocol {
     func deleteLecture(lecture: Lecture) async throws
     func resetLecture(lecture: Lecture) async throws
     func fetchReviewId(courseNumber: String, instructor: String) async throws -> String
+    func bookmarkLecture(lecture: Lecture) async throws
+    func undoBookmarkLecture(lecture: Lecture) async throws
 }
 
 extension LectureServiceProtocol {
@@ -103,6 +105,29 @@ struct LectureService: LectureServiceProtocol {
         return try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
     }
 
+    func bookmarkLecture(lecture: Lecture) async throws {
+        try await lectureRepository.bookmarkLecture(lectureId: lecture.id)
+        guard let currentTimetable = appState.timetable.current else { return }
+        let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
+        let bookmark = Bookmark(from: dto)
+        await MainActor.run {
+            appState.timetable.bookmark = bookmark
+            appState.timetable.isFirstBookmark = false
+        }
+    }
+
+    func undoBookmarkLecture(lecture: Lecture) async throws {
+        try await lectureRepository.undoBookmarkLecture(lectureId: lecture.id)
+
+        guard let currentTimetable = appState.timetable.current else { return }
+        let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
+        let bookmark = Bookmark(from: dto)
+        await MainActor.run {
+            appState.timetable.bookmark = bookmark
+            appState.search.selectedLecture = nil
+        }
+    }
+
     private var lectureRepository: LectureRepositoryProtocol {
         webRepositories.lectureRepository
     }
@@ -122,5 +147,9 @@ class FakeLectureService: LectureServiceProtocol {
     func addLecture(lecture _: Lecture, isForced _: Bool) async throws {}
     func deleteLecture(lecture _: Lecture) async throws {}
     func resetLecture(lecture _: Lecture) async throws {}
+    func getBookmark(quarter _: Quarter) async throws {}
+    func bookmarkLecture(lecture _: Lecture) async throws {}
+    func undoBookmarkLecture(lecture _: Lecture) async throws {}
     func fetchReviewId(courseNumber _: String, instructor _: String) async throws -> String { return "" }
+    func setIsFirstBookmark(_: Bool) {}
 }

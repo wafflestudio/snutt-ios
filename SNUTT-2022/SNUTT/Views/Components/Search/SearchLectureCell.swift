@@ -10,15 +10,19 @@ import SwiftUI
 struct SearchLectureCell: View {
     let lecture: Lecture
     let selected: Bool
+    let bookmarkLecture: (Lecture) async -> Void
+    let undoBookmarkLecture: (Lecture) async -> Void
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture) async -> String?
     let preloadReviewWebView: (String) -> Void
+    let isBookmarked: Bool
     let isInTimetable: Bool
 
     @State var showingDetailPage = false
     @State private var showReviewWebView: Bool = false
     @State private var reviewId: String? = nil
+    @State private var isUndoBookmarkAlertPresented = false
 
     @Environment(\.dependencyContainer) var container: DIContainer?
 
@@ -68,6 +72,40 @@ struct SearchLectureCell: View {
                             Text("강의평")
                                 .frame(maxWidth: .infinity)
                                 .font(STFont.details)
+                        }
+
+                        if isBookmarked {
+                            Button {
+                                isUndoBookmarkAlertPresented = true
+                            } label: {
+                                HStack {
+                                    Image("bookmark.on")
+                                    Text("관심강좌")
+                                        .font(STFont.details)
+                                }
+                                .frame(maxWidth: .infinity)
+                            }
+                            .alert("강의를 관심강좌에서 제외하시겠습니까?", isPresented: $isUndoBookmarkAlertPresented) {
+                                Button("취소", role: .cancel, action: {})
+                                Button("확인", role: .destructive) {
+                                    Task {
+                                        await undoBookmarkLecture(lecture)
+                                    }
+                                }
+                            }
+                        } else {
+                            Button {
+                                Task {
+                                    await bookmarkLecture(lecture)
+                                }
+                            } label: {
+                                HStack {
+                                    Image("bookmark.off")
+                                    Text("관심강좌")
+                                        .font(STFont.details)
+                                }
+                                .frame(maxWidth: .infinity)
+                            }
                         }
 
                         if isInTimetable {

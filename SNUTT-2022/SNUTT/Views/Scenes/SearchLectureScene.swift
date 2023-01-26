@@ -62,7 +62,10 @@ struct SearchLectureScene: View {
                     } else {
                         SearchLectureList(data: viewModel.searchResult!,
                                           fetchMore: viewModel.fetchMoreSearchResult,
+                                          bookmarkedLecture: viewModel.getBookmarkedLecture,
                                           existingLecture: viewModel.getExistingLecture,
+                                          bookmarkLecture: viewModel.bookmarkLecture,
+                                          undoBookmarkLecture: viewModel.undoBookmarkLecture,
                                           addLecture: viewModel.addLecture,
                                           deleteLecture: viewModel.deleteLecture,
                                           fetchReviewId: viewModel.fetchReviewId(of:),
@@ -71,7 +74,8 @@ struct SearchLectureScene: View {
                                           errorTitle: viewModel.errorTitle,
                                           errorMessage: viewModel.errorMessage,
                                           isLectureOverlapped: $viewModel.isLectureOverlapped,
-                                          selected: $viewModel.selectedLecture)
+                                          selected: $viewModel.selectedLecture,
+                                          isFirstBookmarkAlertPresented: $viewModel.isFirstBookmarkAlertPresented)
                             .animation(.customSpring, value: viewModel.selectedLecture?.id)
                             .id(reloadSearchList) // reload everything when any of the search conditions changes
                     }

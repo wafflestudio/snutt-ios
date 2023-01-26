@@ -14,6 +14,8 @@ class TimetableState: ObservableObject {
     @Published var metadataList: [TimetableMetadata]?
     @Published var courseBookList: [Quarter]?
     @Published var configuration: TimetableConfiguration = .init()
+    @Published var bookmark: Bookmark?
+    @Published var isFirstBookmark: Bool = true
 
     private var bag = Set<AnyCancellable>()
 

@@ -89,6 +89,7 @@ extension AppEnvironment {
         let notificationRepository = NotificationRepository(session: session)
         let popupRepository = PopupRepository(session: session)
         let etcRepository = EtcRepository(session: session)
+
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
                      lectureRepository: lectureRepository,
