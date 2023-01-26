@@ -88,6 +88,7 @@ struct EmptyBookmarkList: View {
     }
 }
 
+#if DEBUG
 struct BookmarkScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -95,3 +96,4 @@ struct BookmarkScene_Previews: PreviewProvider {
         }
     }
 }
+#endif
