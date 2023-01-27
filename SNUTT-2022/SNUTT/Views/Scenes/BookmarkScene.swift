@@ -88,10 +88,12 @@ struct EmptyBookmarkList: View {
     }
 }
 
-struct BookmarkScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            BookmarkScene(viewModel: .init(container: .preview))
+#if DEBUG
+    struct BookmarkScene_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                BookmarkScene(viewModel: .init(container: .preview))
+            }
         }
     }
-}
+#endif
