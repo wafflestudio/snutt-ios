@@ -11,16 +11,10 @@ import WidgetKit
 struct TimetableWidgetEntryView: View {
     var entry: SNUTTWidgetProvider.Entry
 
-    var config: TimetableConfiguration = {
-        var config = TimetableConfiguration()
-        config.maxHour = 18
-        return config
-    }()
-
     var body: some View {
         ZStack {
             STColor.systemBackground
-            TimetableZStack(current: entry.currentTimetable, config: config)
+            TimetableZStack(current: entry.currentTimetable, config: entry.timetableConfig)
         }
     }
 }
@@ -28,7 +22,7 @@ struct TimetableWidgetEntryView: View {
 #if DEBUG
     struct TimetableWidgetEntryView_Previews: PreviewProvider {
         static var previews: some View {
-            TimetableWidgetEntryView(entry: TimetableEntry(date: Date(), configuration: ConfigurationIntent(), currentTimetable: .preview))
+            TimetableWidgetEntryView(entry: TimetableEntry(date: Date(), configuration: ConfigurationIntent(), currentTimetable: .preview, timetableConfig: TimetableConfiguration()))
                 .previewContext(WidgetPreviewContext(family: .systemLarge))
         }
     }

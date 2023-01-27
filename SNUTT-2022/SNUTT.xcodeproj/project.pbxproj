@@ -629,7 +629,6 @@
 			children = (
 				BE98A068288AFC1500C2CE95 /* SNUTTWidgetBundle.swift */,
 				BE804C052894157500782F16 /* SNUTTWidgetProvider.swift */,
-				BE98A07C288B02F500C2CE95 /* DailyWidget */,
 				BE98A079288B029000C2CE95 /* TimetableWidget */,
 				BE98A06A288AFC1600C2CE95 /* SNUTTWidget.intentdefinition */,
 				BE98A06B288AFC1600C2CE95 /* Assets.xcassets */,
@@ -645,13 +644,6 @@
 				BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */,
 			);
 			path = TimetableWidget;
-			sourceTree = "<group>";
-		};
-		BE98A07C288B02F500C2CE95 /* DailyWidget */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DailyWidget;
 			sourceTree = "<group>";
 		};
 		BEB3B6A328CDE1EF00E56062 /* Utils */ = {

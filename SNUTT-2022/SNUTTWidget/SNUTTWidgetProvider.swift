@@ -12,33 +12,28 @@ struct SNUTTWidgetProvider: IntentTimelineProvider {
 
     var userDefaultsRepository: UserDefaultsRepositoryProtocol = UserDefaultsRepository(storage: .shared)
 
+    var currentTimetable: Timetable? {
+        guard let dto = userDefaultsRepository.get(TimetableDto.self, key: .currentTimetable) else { return nil }
+        return Timetable(from: dto)
+    }
+
+    var timetableConfig: TimetableConfiguration {
+        userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: TimetableConfiguration())
+    }
+
     func placeholder(in _: Context) -> Entry {
-        Entry(date: Date(), configuration: ConfigurationIntent(), currentTimetable: getCurrentTimetable())
+        Entry(date: Date(), configuration: ConfigurationIntent(), currentTimetable: currentTimetable, timetableConfig: timetableConfig)
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in _: Context, completion: @escaping (Entry) -> Void) {
-        let entry = Entry(date: Date(), configuration: configuration, currentTimetable: getCurrentTimetable())
+        let entry = Entry(date: Date(), configuration: configuration, currentTimetable: currentTimetable, timetableConfig: timetableConfig)
         completion(entry)
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
-        var entries: [Entry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = Entry(date: entryDate, configuration: configuration, currentTimetable: getCurrentTimetable())
-            entries.append(entry)
-        }
-
+        let entries = [Entry(date: Date(), configuration: configuration, currentTimetable: currentTimetable, timetableConfig: timetableConfig)]
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
-    }
-
-    func getCurrentTimetable() -> Timetable? {
-        guard let dto = userDefaultsRepository.get(TimetableDto.self, key: .currentTimetable) else { return nil }
-        return Timetable(from: dto)
     }
 }
 
@@ -46,10 +41,12 @@ struct TimetableEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
     let currentTimetable: Timetable?
+    let timetableConfig: TimetableConfiguration
 
-    init(date: Date, configuration: ConfigurationIntent, currentTimetable: Timetable? = nil) {
+    init(date: Date, configuration: ConfigurationIntent, currentTimetable: Timetable?, timetableConfig: TimetableConfiguration) {
         self.date = date
         self.configuration = configuration
         self.currentTimetable = currentTimetable
+        self.timetableConfig = timetableConfig
     }
 }

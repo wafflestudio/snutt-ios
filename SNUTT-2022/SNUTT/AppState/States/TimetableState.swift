@@ -29,6 +29,12 @@ class TimetableState: ObservableObject {
             }
             .store(in: &bag)
 
+        $configuration
+            .sink { _ in
+                WidgetCenter.shared.reloadTimelines(ofKind: "TimetableWidget")
+            }
+            .store(in: &bag)
+
         // sync between current timetable and timetable metadata
         $current
             .compactMap { $0 }
