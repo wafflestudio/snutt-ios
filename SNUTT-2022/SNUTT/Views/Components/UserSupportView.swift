@@ -16,12 +16,12 @@ struct UserSupportView: View {
     @State private var alertSendFeedback: Bool = false
     @FocusState private var _isFocused: Bool
     @Environment(\.presentationMode) private var mode
-    
+
     init(email: String?, sendFeedback: @escaping (String, String) async -> Bool) {
         self.sendFeedback = sendFeedback
-        self._email = .init(initialValue: email ?? "")
+        _email = .init(initialValue: email ?? "")
         if let email = email {
-            self._hasEmail = .init(initialValue: !email.isEmpty)
+            _hasEmail = .init(initialValue: !email.isEmpty)
         }
     }
 
@@ -52,10 +52,10 @@ struct UserSupportView: View {
                 }
                 .disabled(isButtonDisabled)
             }
-            
+
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
-                
+
                 Button("완료") {
                     _isFocused = false
                 }
