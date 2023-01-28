@@ -12,8 +12,18 @@ struct UserSupportView: View {
 
     @State private var email: String = ""
     @State private var content: String = ""
+    @State private var hasEmail: Bool = false
     @State private var alertSendFeedback: Bool = false
+    @FocusState private var _isFocused: Bool
     @Environment(\.presentationMode) private var mode
+    
+    init(email: String?, sendFeedback: @escaping (String, String) async -> Bool) {
+        self.sendFeedback = sendFeedback
+        self._email = .init(initialValue: email ?? "")
+        if let email = email {
+            self._hasEmail = .init(initialValue: !email.isEmpty)
+        }
+    }
 
     var isButtonDisabled: Bool {
         email.isEmpty || content.isEmpty
@@ -23,10 +33,12 @@ struct UserSupportView: View {
         Form {
             Section(header: Text("이메일 주소")) {
                 TextField("이메일", text: $email)
+                    .disabled(hasEmail)
             }
             Section(header: Text("문의 내용"), footer: Text("불편한 점이나 버그를 제보해주세요.")) {
                 TextEditor(text: $content)
                     .frame(minHeight: 300)
+                    .focused($_isFocused)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -39,6 +51,14 @@ struct UserSupportView: View {
                     Text("전송")
                 }
                 .disabled(isButtonDisabled)
+            }
+            
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                
+                Button("완료") {
+                    _isFocused = false
+                }
             }
         }
         .alert("개발자 괴롭히기", isPresented: $alertSendFeedback) {
@@ -59,8 +79,10 @@ struct UserSupportView: View {
 
 struct UserSupportScene_Previews: PreviewProvider {
     static var previews: some View {
-        UserSupportView { _, _ in
-            true
+        NavigationView {
+            UserSupportView(email: "snutt@wafflestudio.com") { _, _ in
+                true
+            }
         }
     }
 }
