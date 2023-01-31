@@ -20,6 +20,10 @@ class SettingViewModel: BaseViewModel, ObservableObject {
         appState.notification.$unreadCount.assign(to: &$unreadCount)
     }
 
+    var userEmail: String? {
+        appState.user.current?.email
+    }
+
     func fetchInitialNotifications(updateLastRead: Bool) async {
         do {
             try await services.notificationService.fetchInitialNotifications(updateLastRead: updateLastRead)

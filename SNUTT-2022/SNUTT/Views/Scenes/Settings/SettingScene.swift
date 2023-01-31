@@ -37,7 +37,7 @@ struct SettingScene: View {
                     DeveloperInfoView()
                 }
                 SettingsLinkItem(title: "개발자 괴롭히기") {
-                    UserSupportView(sendFeedback: viewModel.sendFeedback(email:message:))
+                    UserSupportView(email: viewModel.userEmail, sendFeedback: viewModel.sendFeedback(email:message:))
                 }
             }
 
