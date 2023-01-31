@@ -14,7 +14,7 @@ struct UserSupportView: View {
     @State private var content: String = ""
     @State private var hasEmail: Bool = false
     @State private var alertSendFeedback: Bool = false
-    @FocusState private var _isFocused: Bool
+    @FocusState private var isFocused: Bool
     @Environment(\.presentationMode) private var mode
 
     init(email: String?, sendFeedback: @escaping (String, String) async -> Bool) {
@@ -33,12 +33,13 @@ struct UserSupportView: View {
         Form {
             Section(header: Text("이메일 주소")) {
                 TextField("이메일", text: $email)
+                    .foregroundColor(hasEmail ? .secondary : .primary)
                     .disabled(hasEmail)
             }
             Section(header: Text("문의 내용"), footer: Text("불편한 점이나 버그를 제보해주세요.")) {
                 TextEditor(text: $content)
                     .frame(minHeight: 300)
-                    .focused($_isFocused)
+                    .focused($isFocused)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -57,7 +58,7 @@ struct UserSupportView: View {
                 Spacer()
 
                 Button("완료") {
-                    _isFocused = false
+                    isFocused = false
                 }
             }
         }
