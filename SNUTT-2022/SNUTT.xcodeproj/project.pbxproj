@@ -1149,7 +1149,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nif [ \"${CONFIGURATION}\" = \"Release\" ]; \nthen \n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run -gsp ${PROJECT_DIR}/SNUTT/GoogleServiceReleaseInfo.plist\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols -gsp ${PROJECT_DIR}/SNUTT/GoogleServiceReleaseInfo.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nelse\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run -gsp ${PROJECT_DIR}/SNUTT/GoogleServiceDebugInfo.plist\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols -gsp ${PROJECT_DIR}/SNUTT/GoogleServiceDebugInfo.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nfi\n";
+			shellScript = "\nif [ \"${CONFIGURATION}\" = \"Release\" ]; \nthen \n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run -gsp \"${PROJECT_DIR}\"/SNUTT/GoogleServiceReleaseInfo.plist\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols -gsp \"${PROJECT_DIR}\"/SNUTT/GoogleServiceReleaseInfo.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nelse\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run -gsp \"${PROJECT_DIR}\"/SNUTT/GoogleServiceDebugInfo.plist\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols -gsp \"${PROJECT_DIR}\"/SNUTT/GoogleServiceDebugInfo.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
