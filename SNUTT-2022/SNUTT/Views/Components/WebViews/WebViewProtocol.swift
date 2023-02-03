@@ -24,7 +24,7 @@ extension WebView {
 
 extension WKWebView {
     convenience init(cookies: [HTTPCookie]) {
-        let dataStore = WKWebsiteDataStore.nonPersistent()
+        let dataStore = WKWebsiteDataStore.default()
         let configuration = WKWebViewConfiguration()
         for cookie in cookies {
             dataStore.httpCookieStore.setCookie(cookie)
@@ -33,13 +33,16 @@ extension WKWebView {
         self.init(frame: .zero, configuration: configuration)
     }
 
+    var cookieStore: WKHTTPCookieStore {
+        configuration.websiteDataStore.httpCookieStore
+    }
+
     func setCookie(name: String, value: String) {
         guard let cookie = NetworkConfiguration.getCookie(name: name, value: value) else { return }
-        configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
+        cookieStore.setCookie(cookie)
     }
 
     func setCookies(cookies: [HTTPCookie]) {
-        let cookieStore = configuration.websiteDataStore.httpCookieStore
         cookies.forEach { cookie in
             cookieStore.setCookie(cookie)
         }
