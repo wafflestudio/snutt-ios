@@ -48,9 +48,6 @@ class WebViewPreloadManager {
             case let .colorSchemeChange(to: colorScheme):
                 self?.webView?.setCookie(name: "theme", value: colorScheme.description)
                 self?.webView?.evaluateJavaScript("changeTheme('\(colorScheme.description)')")
-            case let .resetCookies(accessToken: accessToken):
-                guard let accessToken else { return }
-                self?.webView?.setCookies(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken))
             default:
                 return
             }
@@ -83,7 +80,6 @@ private enum MessageHandlerType: String {
 enum WebViewEventType {
     case reload(url: URL)
     case colorSchemeChange(to: ColorScheme)
-    case resetCookies(accessToken: String?)
     case close
     case error
     case success

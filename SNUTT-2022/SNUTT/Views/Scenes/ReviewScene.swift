@@ -99,13 +99,11 @@ extension ReviewScene {
         }
 
         func getPreloadedWebView(isMain: Bool) -> WebViewPreloadManager {
-            let webview = isMain ? appState.review.preloadedMain : appState.review.preloadedDetail
-            configureCookies(webview: webview)
-            return webview
-        }
-
-        private func configureCookies(webview: WebViewPreloadManager) {
-            webview.eventSignal?.send(.resetCookies(accessToken: appState.user.accessToken))
+            if isMain {
+                return appState.review.preloadedMain
+            } else {
+                return appState.review.preloadedDetail
+            }
         }
     }
 }
