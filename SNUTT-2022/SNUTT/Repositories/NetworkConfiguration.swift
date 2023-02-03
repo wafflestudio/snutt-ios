@@ -12,7 +12,6 @@ struct NetworkConfiguration {
     static let serverBaseURL: String = Bundle.main.infoDictionary?["API_SERVER_URL"] as! String
     static let serverV1BaseURL: String = serverBaseURL + "/v1"
     static let snuevBaseURL: String = Bundle.main.infoDictionary?["SNUEV_WEB_URL"] as! String
-    static let apiKey: String = Bundle.main.infoDictionary?["API_KEY"] as! String
 
     static func getCookie(name: String, value: String) -> HTTPCookie? {
         return HTTPCookie(properties: [
@@ -25,11 +24,15 @@ struct NetworkConfiguration {
     }
 
     static func getCookiesFrom(accessToken: String) -> [HTTPCookie] {
-        guard let apiKeyCookie = getCookie(name: "x-access-apikey", value: NetworkConfiguration.apiKey),
-              let tokenCookie = getCookie(name: "x-access-token", value: accessToken),
-              let deviceTypeCookie = getCookie(name: "x-os-type", value: AppMetadata.osType.value ?? "ios")
+        guard let tokenCookie = getCookie(name: "x-access-token", value: accessToken),
+              let apiKeyCookie = getCookie(name: AppMetadata.apiKey.key, value: AppMetadata.apiKey.value),
+              let osTypeCookie = getCookie(name: AppMetadata.osType.key, value: AppMetadata.osType.value),
+              let osVersionCookie = getCookie(name: AppMetadata.osVersion.key, value: AppMetadata.osVersion.value),
+              let appVersionCookie = getCookie(name: AppMetadata.appVersion.key, value: AppMetadata.appVersion.value),
+              let appTypeCookie = getCookie(name: AppMetadata.appType.key, value: AppMetadata.appType.value),
+              let buildNumberCookie = getCookie(name: AppMetadata.buildNumber.key, value: AppMetadata.buildNumber.value)
         else { return [] }
 
-        return [apiKeyCookie, tokenCookie, deviceTypeCookie]
+        return [apiKeyCookie, tokenCookie, osTypeCookie, osVersionCookie, appVersionCookie, appTypeCookie, buildNumberCookie]
     }
 }

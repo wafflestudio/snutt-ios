@@ -34,10 +34,10 @@ final class Interceptor: RequestInterceptor {
 enum AppMetadata: CaseIterable {
     case appVersion, appType, osType, osVersion, apiKey, buildNumber
 
-    var value: String? {
+    var value: String {
         switch self {
         case .appVersion:
-            return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+            return (Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? "9.9.9"
         case .appType:
             #if DEBUG
                 return "debug"
@@ -49,9 +49,9 @@ enum AppMetadata: CaseIterable {
         case .osVersion:
             return UIDevice.current.systemVersion
         case .apiKey:
-            return NetworkConfiguration.apiKey
+            return Bundle.main.infoDictionary?["API_KEY"] as! String
         case .buildNumber:
-            return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
+            return (Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String) ?? "999"
         }
     }
 
