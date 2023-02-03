@@ -20,6 +20,10 @@ struct ReviewScene: View {
         self.viewModel = viewModel
         _detailId = detailId
         self.isMainWebView = isMainWebView
+
+        /// It's too early to access `colorScheme` environment variable in the init phase.
+        /// Use the system color scheme instead.
+        eventSignal?.send(.colorSchemeChange(to: UITraitCollection.current.userInterfaceStyle.toColorScheme()))
     }
 
     private var eventSignal: PassthroughSubject<WebViewEventType, Never>? {

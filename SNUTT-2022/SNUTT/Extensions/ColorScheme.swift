@@ -31,3 +31,19 @@ extension ColorScheme {
         return nil
     }
 }
+
+
+extension UIUserInterfaceStyle {
+    func toColorScheme() -> ColorScheme {
+        switch self {
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        case .unspecified:
+            return .light
+        @unknown default:
+            return .light
+        }
+    }
+}
