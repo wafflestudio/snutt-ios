@@ -32,7 +32,6 @@ extension ColorScheme {
     }
 }
 
-
 extension UIUserInterfaceStyle {
     func toColorScheme() -> ColorScheme {
         switch self {

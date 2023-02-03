@@ -44,5 +44,4 @@ extension WKWebView {
             cookieStore.setCookie(cookie)
         }
     }
-
 }
