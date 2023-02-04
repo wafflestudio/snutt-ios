@@ -123,11 +123,14 @@ extension ReviewScene {
         }
 
         func getPreloadedWebView(isMain: Bool) -> WebViewPreloadManager {
-            if isMain {
-                return appState.review.preloadedMain
-            } else {
-                return appState.review.preloadedDetail
+            let webviewManager = isMain ? appState.review.preloadedMain : appState.review.preloadedDetail
+            
+            // make sure the webview has all required cookies
+            if let accessToken = appState.user.accessToken {
+                webviewManager.webView?.setCookies(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken))
             }
+            
+            return webviewManager
         }
     }
 }
