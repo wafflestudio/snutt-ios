@@ -13,7 +13,6 @@ struct ReviewScene: View {
     @Binding var detailId: String?
     
     private var isMainWebView: Bool
-    @State private var isAppForeground = true
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
@@ -63,18 +62,8 @@ struct ReviewScene: View {
             eventSignal?.send(.colorSchemeChange(to: newValue))
         }
         /// Respond to changes of system color scheme.
-        /// The `isAppForeground` variable is used to ignore fluctuations in the `colorScheme`
-        /// when the app is transitioning from the background to the foreground.
         .onChange(of: colorScheme) { newValue in
-            if isAppForeground {
-                eventSignal?.send(.colorSchemeChange(to: newValue))
-            }
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-            isAppForeground = true
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-            isAppForeground = false
+            eventSignal?.send(.colorSchemeChange(to: newValue))
         }
         .onReceive(eventSignal ?? .init()) { signal in
             switch signal {

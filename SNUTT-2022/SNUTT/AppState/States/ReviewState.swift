@@ -39,20 +39,37 @@ class WebViewPreloadManager {
         webView?.allowsBackForwardNavigationGestures = url == WebViewType.review.url
         self.url = url
     }
+    
+    func setColorScheme(_ colorScheme: ColorScheme) {
+        webView?.setCookie(name: "theme", value: colorScheme.description)
+        webView?.evaluateJavaScript("changeTheme('\(colorScheme.description)')")
+    }
 
     private func bindEventSignal() {
-        eventSignal?.sink { [weak self] event in
-            switch event {
-            case let .reload(url):
-                self?.reload(url: url)
-            case let .colorSchemeChange(to: colorScheme):
-                self?.webView?.setCookie(name: "theme", value: colorScheme.description)
-                self?.webView?.evaluateJavaScript("changeTheme('\(colorScheme.description)')")
-            default:
-                return
-            }
+        eventSignal?
+            .sink { [weak self] event in
+                switch event {
+                case let .reload(url):
+                    self?.reload(url: url)
+                default:
+                    return
+                }
         }
         .store(in: &bag)
+            
+        /// The `colorScheme` value can be quite unstable, especially during the SwiftUI lifecycle.
+        /// To address this, we debounce it for 0.1 seconds.
+        eventSignal?
+            .debounce(for: .seconds(0.1), scheduler: DispatchQueue.main)
+            .sink { [weak self] event in
+                switch event {
+                case let .colorSchemeChange(to: colorScheme):
+                    self?.setColorScheme(colorScheme)
+                default:
+                    return
+                }
+            }
+            .store(in: &bag)
     }
 }
 
