@@ -11,7 +11,7 @@ import SwiftUI
 struct ReviewScene: View {
     @ObservedObject var viewModel: ViewModel
     @Binding var detailId: String?
-    
+
     private var isMainWebView: Bool
 
     @Environment(\.colorScheme) var colorScheme
@@ -101,7 +101,7 @@ extension ReviewScene {
                     self.accessToken = ""
                 }
             }.store(in: &bag)
-            
+
             appState.system.$preferredColorScheme.sink { newValue in
                 if let newValue {
                     self.preferredColorScheme = newValue
@@ -113,12 +113,12 @@ extension ReviewScene {
 
         func getPreloadedWebView(isMain: Bool) -> WebViewPreloadManager {
             let webviewManager = isMain ? appState.review.preloadedMain : appState.review.preloadedDetail
-            
+
             // make sure the webview has all required cookies
             if let accessToken = appState.user.accessToken {
                 webviewManager.webView?.setCookies(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken))
             }
-            
+
             return webviewManager
         }
     }

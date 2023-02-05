@@ -12,7 +12,7 @@ import UIKit
 class SystemState: ObservableObject {
     @Published var isErrorAlertPresented = false
     @Published var error: STError? = nil
-    
+
     /// The property stores the color scheme that the user has set as their preference.
     /// If `nil`, the system appearance will be used.
     @Published var preferredColorScheme: ColorScheme? = nil

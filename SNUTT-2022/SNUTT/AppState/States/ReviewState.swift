@@ -39,7 +39,7 @@ class WebViewPreloadManager {
         webView?.allowsBackForwardNavigationGestures = url == WebViewType.review.url
         self.url = url
     }
-    
+
     func setColorScheme(_ colorScheme: ColorScheme) {
         webView?.setCookie(name: "theme", value: colorScheme.description)
         webView?.evaluateJavaScript("changeTheme('\(colorScheme.description)')")
@@ -54,9 +54,9 @@ class WebViewPreloadManager {
                 default:
                     return
                 }
-        }
-        .store(in: &bag)
-            
+            }
+            .store(in: &bag)
+
         /// The `colorScheme` value can be quite unstable, especially during the SwiftUI lifecycle.
         /// To address this, we debounce it for 0.1 seconds.
         eventSignal?

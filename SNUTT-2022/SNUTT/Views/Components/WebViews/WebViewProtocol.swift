@@ -41,7 +41,7 @@ extension WKWebView {
         guard let cookie = NetworkConfiguration.getCookie(name: name, value: value) else { return }
         cookieStore.setCookie(cookie)
     }
-    
+
     func setCookies(cookies: [HTTPCookie]) {
         cookies.forEach { cookie in
             cookieStore.setCookie(cookie)
