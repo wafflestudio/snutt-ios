@@ -11,6 +11,7 @@ import SwiftUI
 struct ReviewScene: View {
     @ObservedObject var viewModel: ViewModel
     @Binding var detailId: String?
+
     private var isMainWebView: Bool
 
     @Environment(\.colorScheme) var colorScheme
@@ -21,9 +22,7 @@ struct ReviewScene: View {
         _detailId = detailId
         self.isMainWebView = isMainWebView
 
-        /// It's too early to access `colorScheme` environment variable during the init phase.
-        /// Use the system color scheme instead.
-        eventSignal?.send(.colorSchemeChange(to: UITraitCollection.current.userInterfaceStyle.toColorScheme()))
+        eventSignal?.send(.colorSchemeChange(to: viewModel.preferredColorScheme))
     }
 
     private var eventSignal: PassthroughSubject<WebViewEventType, Never>? {
@@ -56,8 +55,13 @@ struct ReviewScene: View {
             }
         }
         .onAppear {
-            eventSignal?.send(.colorSchemeChange(to: colorScheme))
+            eventSignal?.send(.colorSchemeChange(to: viewModel.preferredColorScheme))
         }
+        /// Respond to changes of preferred color scheme in `SettingScene`.
+        .onChange(of: viewModel.preferredColorScheme) { newValue in
+            eventSignal?.send(.colorSchemeChange(to: newValue))
+        }
+        /// Respond to changes of system color scheme.
         .onChange(of: colorScheme) { newValue in
             eventSignal?.send(.colorSchemeChange(to: newValue))
         }
@@ -82,6 +86,7 @@ extension ReviewScene {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var accessToken: String = ""
         @Published var connectionState: WebViewConnectionState = .success
+        @Published var preferredColorScheme = UITraitCollection.current.userInterfaceStyle.toColorScheme()
 
         private var bag = Set<AnyCancellable>()
 
@@ -96,14 +101,25 @@ extension ReviewScene {
                     self.accessToken = ""
                 }
             }.store(in: &bag)
+
+            appState.system.$preferredColorScheme.sink { newValue in
+                if let newValue {
+                    self.preferredColorScheme = newValue
+                } else {
+                    self.preferredColorScheme = UITraitCollection.current.userInterfaceStyle.toColorScheme()
+                }
+            }.store(in: &bag)
         }
 
         func getPreloadedWebView(isMain: Bool) -> WebViewPreloadManager {
-            if isMain {
-                return appState.review.preloadedMain
-            } else {
-                return appState.review.preloadedDetail
+            let webviewManager = isMain ? appState.review.preloadedMain : appState.review.preloadedDetail
+
+            // make sure the webview has all required cookies
+            if let accessToken = appState.user.accessToken {
+                webviewManager.webView?.setCookies(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken))
             }
+
+            return webviewManager
         }
     }
 }
