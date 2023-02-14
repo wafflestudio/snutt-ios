@@ -169,5 +169,26 @@ extension LectureDetailScene {
             guard let detailId = detailId else { return }
             services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: detailId).url)
         }
+        
+        func bookmarkLecture(lecture: Lecture) async {
+            do {
+                try await services.lectureService.bookmarkLecture(lecture: lecture)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+
+        func undoBookmarkLecture(selected: Lecture) async {
+            guard let lecture = getBookmarkedLecture(selected) else { return }
+            do {
+                try await services.lectureService.undoBookmarkLecture(lecture: lecture)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+
+        func getBookmarkedLecture(_ lecture: Lecture) -> Lecture? {
+            appState.timetable.bookmark?.lectures.first(where: { $0.isEquivalent(with: lecture) })
+        }
     }
 }

@@ -15,7 +15,7 @@ class TimetableState: ObservableObject {
     @Published var courseBookList: [Quarter]?
     @Published var configuration: TimetableConfiguration = .init()
     @Published var bookmark: Bookmark?
-    @Published var isFirstBookmark: Bool = true
+    @AppStorage("isFirstBookmark") var isFirstBookmark: Bool?
 
     private var bag = Set<AnyCancellable>()
 

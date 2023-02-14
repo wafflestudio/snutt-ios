@@ -18,7 +18,6 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
     @Published var isLectureOverlapped: Bool = false
     @Published var isEmailVerifyAlertPresented = false
     @Published var bookmarkedLectures: [Lecture] = []
-    @Published var isFirstBookmark: Bool = false
     @Published var isFirstBookmarkAlertPresented: Bool = false
 
     var errorTitle: String = ""
@@ -53,7 +52,6 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
         appState.timetable.$bookmark.compactMap {
             $0?.lectures
         }.assign(to: &$bookmarkedLectures)
-        appState.timetable.$isFirstBookmark.assign(to: &$isFirstBookmark)
     }
 
     func fetchMoreSearchResult() async {
@@ -74,7 +72,7 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
 
     func bookmarkLecture(lecture: Lecture) async {
         DispatchQueue.main.async {
-            self.isFirstBookmarkAlertPresented = self.isFirstBookmark
+            self.isFirstBookmarkAlertPresented = self.appState.timetable.isFirstBookmark ?? false
         }
         do {
             try await services.lectureService.bookmarkLecture(lecture: lecture)

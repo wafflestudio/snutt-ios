@@ -35,6 +35,8 @@ struct LectureDetailScene: View {
     @State private var reviewId: String? = ""
     @State private var syllabusURL: String = ""
     @State private var showSyllabusWebView = false
+    @State private var isUndoBookmarkAlertPresented = false
+    @State private var isBookmarkAlertPresented = false
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
@@ -222,6 +224,33 @@ struct LectureDetailScene: View {
                             ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: false, detailId: $reviewId)
                                 .id(colorScheme)
                                 .id(reviewId)
+                        }
+                        
+                        if (viewModel.getBookmarkedLecture(lecture) != nil) {
+                            DetailButton(text: "관심강좌 제외") {
+                                isUndoBookmarkAlertPresented = true
+                            }
+                            .alert("강의를 관심강좌에서 제외하시겠습니까?", isPresented: $isUndoBookmarkAlertPresented) {
+                                Button("취소", role: .cancel, action: {})
+                                Button("확인", role: .destructive) {
+                                    Task {
+                                        await viewModel.undoBookmarkLecture(selected: lecture)
+                                    }
+                                }
+                            }
+                        } else {
+                            DetailButton(text: "관심강좌 지정") {
+                                isBookmarkAlertPresented = true
+                            }
+                            .alert("관심강좌", isPresented: $isBookmarkAlertPresented) {
+                                Button("확인", role: .cancel) {
+                                    Task {
+                                        await viewModel.bookmarkLecture(lecture: lecture)
+                                    }
+                                }
+                            } message: {
+                                Text("관심강좌로 지정되었습니다.")
+                            }
                         }
                     }
 
