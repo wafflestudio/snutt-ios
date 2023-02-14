@@ -240,14 +240,13 @@ struct LectureDetailScene: View {
                             }
                         } else {
                             DetailButton(text: "관심강좌 지정") {
-                                isBookmarkAlertPresented = true
+                                Task {
+                                    await viewModel.bookmarkLecture(lecture: lecture)
+                                    isBookmarkAlertPresented = true
+                                }
                             }
                             .alert("관심강좌", isPresented: $isBookmarkAlertPresented) {
-                                Button("확인", role: .cancel) {
-                                    Task {
-                                        await viewModel.bookmarkLecture(lecture: lecture)
-                                    }
-                                }
+                                Button("확인", role: .cancel) {}
                             } message: {
                                 Text("관심강좌로 지정되었습니다.")
                             }
