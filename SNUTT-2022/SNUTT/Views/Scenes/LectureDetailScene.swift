@@ -12,6 +12,8 @@ struct LectureDetailScene: View {
     @ObservedObject var viewModel: ViewModel
     @State var lecture: Lecture
     var displayMode: DisplayMode
+    
+    let isBookmarked: Bool
 
     @State private var editMode: EditMode
     @State private var tempLecture: Lecture?
@@ -21,6 +23,7 @@ struct LectureDetailScene: View {
         _lecture = State(initialValue: lecture)
         _editMode = State(initialValue: displayMode == .create ? .active : .inactive)
         self.displayMode = displayMode
+        self.isBookmarked = (viewModel.getBookmarkedLecture(lecture) != nil)
     }
 
     enum DisplayMode {
@@ -226,9 +229,10 @@ struct LectureDetailScene: View {
                                 .id(reviewId)
                         }
                         
-                        if (viewModel.getBookmarkedLecture(lecture) != nil) {
+                        if (isBookmarked) {
                             DetailButton(text: "관심강좌 제외") {
                                 isUndoBookmarkAlertPresented = true
+                                
                             }
                             .alert("강의를 관심강좌에서 제외하시겠습니까?", isPresented: $isUndoBookmarkAlertPresented) {
                                 Button("취소", role: .cancel, action: {})
@@ -242,13 +246,7 @@ struct LectureDetailScene: View {
                             DetailButton(text: "관심강좌 지정") {
                                 Task {
                                     await viewModel.bookmarkLecture(lecture: lecture)
-                                    isBookmarkAlertPresented = true
                                 }
-                            }
-                            .alert("관심강좌", isPresented: $isBookmarkAlertPresented) {
-                                Button("확인", role: .cancel) {}
-                            } message: {
-                                Text("관심강좌로 지정되었습니다.")
                             }
                         }
                     }

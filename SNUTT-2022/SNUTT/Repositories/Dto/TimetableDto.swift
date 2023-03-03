@@ -20,6 +20,7 @@ struct TimetableDto: Codable {
 
 struct LectureDto: Codable {
     let _id: String
+    let lecture_id: String?
     let classification: String?
     let department: String?
     let academic_year: String?
@@ -105,6 +106,7 @@ extension LectureDto {
     init(from model: Lecture) {
         // TODO: ""를 nil로 안바꿔도 되는지 확인할 것
         _id = model.id
+        lecture_id = model.lectureId
         classification = model.classification
         department = model.department
         academic_year = model.academicYear
