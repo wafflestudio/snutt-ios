@@ -15,31 +15,46 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published private var _isMenuSheetOpen: Bool = false
     var isMenuSheetOpen: Bool {
         get { _isMenuSheetOpen }
-        set { services.globalUIService.setIsMenuOpen(newValue) }
+        set {
+            _isMenuSheetOpen = newValue
+            services.globalUIService.setIsMenuOpen(newValue)
+        }
     }
 
     @Published private var _isEllipsisSheetOpen: Bool = false
     var isEllipsisSheetOpen: Bool {
         get { _isEllipsisSheetOpen }
-        set { services.globalUIService.closeEllipsis() } // close-only; the sheets can't open themselves
+        set {
+            _isEllipsisSheetOpen = false
+            services.globalUIService.closeEllipsis()
+        } // close-only; the sheets can't open themselves
     }
 
     @Published private var _isThemeSheetOpen: Bool = false
     var isThemeSheetOpen: Bool {
         get { _isThemeSheetOpen }
-        set { services.globalUIService.closeThemeSheet() } // close-only;
+        set {
+            _isThemeSheetOpen = false
+            services.globalUIService.closeThemeSheet()
+        } // close-only;
     }
 
     @Published private var _isRenameSheetOpen: Bool = false
     var isRenameSheetOpen: Bool {
         get { _isRenameSheetOpen }
-        set { services.globalUIService.closeRenameSheet() } // close-only;
+        set {
+            _isRenameSheetOpen = false
+            services.globalUIService.closeRenameSheet()
+        } // close-only;
     }
 
     @Published private var _isCreateSheetOpen: Bool = false
     var isCreateSheetOpen: Bool {
         get { _isCreateSheetOpen }
-        set { services.globalUIService.closeCreateSheet() } // close-only;
+        set {
+            _isCreateSheetOpen = false
+            services.globalUIService.closeCreateSheet()
+        } // close-only;
     }
 
     @Published private var _renameTitle: String = ""

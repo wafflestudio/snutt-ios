@@ -3,50 +3,48 @@ name: Xcode
 on:
   pull_request:
     paths:
-      - 'SNUTT-2022/**'
+      - "SNUTT-2022/**"
       - ".github/workflows/build.yml"
 
 jobs:
   build-and-test:
     name: ${{ matrix.command }} on Xcode ${{ matrix.xcode }}, ${{ matrix.macos }}
     runs-on: ${{ matrix.macos }} # os switching
-    
+
     strategy:
       fail-fast: false # if 'true' then one failed job cancels all jobs remaining
       matrix:
         # see https://github.com/actions/virtual-environments/blob/main/images/macos/macos-12-Readme.md for available versions
-        xcode: 
-          - '13.4.1'
-          - '14.1'
-        macos: ['macos-12']
-        command: ['build', 'test']
-        scheme: ['SNUTT']
+        xcode:
+          - "14.1"
+        macos: ["macos-12"]
+        command: ["build", "test"]
+        scheme: ["SNUTT"]
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
-    
-    - run: xcodebuild -showsdks
+      - run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
 
-    - name: Populate DebugConfig.xcconfig from Secrets
-      shell: bash
-      env:
-        DEBUG_CONFIG: ${{ secrets.DEBUG_CONFIG }}
-        GOOGLE_SERVICE_DEBUG_INFO: ${{ secrets.GOOGLE_SERVICE_DEBUG_INFO }}
-        GOOGLE_SERVICE_RELEASE_INFO: ${{ secrets.GOOGLE_SERVICE_RELEASE_INFO }}
-      run: |
-        echo "$GOOGLE_SERVICE_DEBUG_INFO" > SNUTT-2022/SNUTT/GoogleServiceDebugInfo.plist
-        echo "$GOOGLE_SERVICE_RELEASE_INFO" > SNUTT-2022/SNUTT/GoogleServiceReleaseInfo.plist
-        echo "$DEBUG_CONFIG" > SNUTT-2022/SNUTT/DebugConfig.xcconfig
-    
-    - uses: mxcl/xcodebuild@v1.9.2
-      with:
-        platform: iOS
-        action: ${{ matrix.command }} 
-        code-coverage: true
-        scheme: ${{ matrix.scheme }}
-        verbosity: xcpretty
-        configuration: Debug
-        working-directory: SNUTT-2022
-    
+      - run: xcodebuild -showsdks
+
+      - name: Populate DebugConfig.xcconfig from Secrets
+        shell: bash
+        env:
+          DEBUG_CONFIG: ${{ secrets.DEBUG_CONFIG }}
+          GOOGLE_SERVICE_DEBUG_INFO: ${{ secrets.GOOGLE_SERVICE_DEBUG_INFO }}
+          GOOGLE_SERVICE_RELEASE_INFO: ${{ secrets.GOOGLE_SERVICE_RELEASE_INFO }}
+        run: |
+          echo "$GOOGLE_SERVICE_DEBUG_INFO" > SNUTT-2022/SNUTT/GoogleServiceDebugInfo.plist
+          echo "$GOOGLE_SERVICE_RELEASE_INFO" > SNUTT-2022/SNUTT/GoogleServiceReleaseInfo.plist
+          echo "$DEBUG_CONFIG" > SNUTT-2022/SNUTT/DebugConfig.xcconfig
+
+      - uses: mxcl/xcodebuild@v1.9.2
+        with:
+          platform: iOS
+          action: ${{ matrix.command }}
+          code-coverage: true
+          scheme: ${{ matrix.scheme }}
+          verbosity: xcpretty
+          configuration: Debug
+          working-directory: SNUTT-2022
