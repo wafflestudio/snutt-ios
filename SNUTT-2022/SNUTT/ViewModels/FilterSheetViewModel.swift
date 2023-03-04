@@ -13,8 +13,13 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
     @Published private var _isFilterOpen: Bool = false
 
     var isFilterOpen: Bool {
-        get { _isFilterOpen }
-        set { services.searchService.setIsFilterOpen(newValue) }
+        get {
+            return _isFilterOpen
+        }
+        set {
+            _isFilterOpen = newValue
+            services.searchService.setIsFilterOpen(newValue)
+        }
     }
 
     override init(container: DIContainer) {
