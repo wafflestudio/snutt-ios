@@ -17,7 +17,8 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         get { _isMenuSheetOpen }
         set {
             _isMenuSheetOpen = newValue
-            services.globalUIService.setIsMenuOpen(newValue) }
+            services.globalUIService.setIsMenuOpen(newValue)
+        }
     }
 
     @Published private var _isEllipsisSheetOpen: Bool = false
@@ -25,7 +26,8 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         get { _isEllipsisSheetOpen }
         set {
             _isEllipsisSheetOpen = false
-            services.globalUIService.closeEllipsis() } // close-only; the sheets can't open themselves
+            services.globalUIService.closeEllipsis()
+        } // close-only; the sheets can't open themselves
     }
 
     @Published private var _isThemeSheetOpen: Bool = false
@@ -33,7 +35,8 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         get { _isThemeSheetOpen }
         set {
             _isThemeSheetOpen = false
-            services.globalUIService.closeThemeSheet() } // close-only;
+            services.globalUIService.closeThemeSheet()
+        } // close-only;
     }
 
     @Published private var _isRenameSheetOpen: Bool = false
@@ -41,7 +44,8 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         get { _isRenameSheetOpen }
         set {
             _isRenameSheetOpen = false
-            services.globalUIService.closeRenameSheet() } // close-only;
+            services.globalUIService.closeRenameSheet()
+        } // close-only;
     }
 
     @Published private var _isCreateSheetOpen: Bool = false
@@ -49,7 +53,8 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         get { _isCreateSheetOpen }
         set {
             _isCreateSheetOpen = false
-            services.globalUIService.closeCreateSheet() } // close-only;
+            services.globalUIService.closeCreateSheet()
+        } // close-only;
     }
 
     @Published private var _renameTitle: String = ""
