@@ -13,9 +13,7 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
     @Published private var _isFilterOpen: Bool = false
 
     var isFilterOpen: Bool {
-        get {
-            return _isFilterOpen
-        }
+        get { _isFilterOpen }
         set {
             _isFilterOpen = newValue
             services.searchService.setIsFilterOpen(newValue)
