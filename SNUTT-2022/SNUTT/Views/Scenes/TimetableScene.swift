@@ -19,6 +19,8 @@ struct TimetableScene: View {
     /// Provide title for `UIActivityViewController`.
     private let linkMetadata = LinkMetadata()
 
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         GeometryReader { reader in
             TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
@@ -54,7 +56,7 @@ struct TimetableScene: View {
                             }
 
                             NavBarButton(imageName: "nav.share") {
-                                self.screenshot = body.takeScreenshot(size: reader.size)
+                                self.screenshot = body.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
                                 isShareSheetOpened = true
                             }
 
