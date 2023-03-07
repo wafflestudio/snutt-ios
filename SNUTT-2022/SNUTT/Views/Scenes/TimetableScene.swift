@@ -80,6 +80,9 @@ struct TimetableScene: View {
                         group.addTask {
                             await viewModel.fetchCourseBookList()
                         }
+                        group.addTask {
+                            await viewModel.fetchBookmark()
+                        }
                     })
                 }
         }

@@ -146,7 +146,7 @@ struct SearchService: SearchServiceProtocol {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)
-        await MainActor.run {
+        DispatchQueue.main.async {
             appState.timetable.bookmark = bookmark
         }
     }

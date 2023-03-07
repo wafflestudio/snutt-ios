@@ -12,18 +12,17 @@ struct LectureDetailScene: View {
     @ObservedObject var viewModel: ViewModel
     @State var lecture: Lecture
     var displayMode: DisplayMode
-    
-    let isBookmarked: Bool
 
     @State private var editMode: EditMode
     @State private var tempLecture: Lecture?
+    @State private var isBookmarked: Bool
 
     init(viewModel: ViewModel, lecture: Lecture, displayMode: DisplayMode) {
         self.viewModel = viewModel
         _lecture = State(initialValue: lecture)
         _editMode = State(initialValue: displayMode == .create ? .active : .inactive)
+        _isBookmarked = State(initialValue: viewModel.getBookmarkedLecture(lecture) != nil)
         self.displayMode = displayMode
-        self.isBookmarked = (viewModel.getBookmarkedLecture(lecture) != nil)
     }
 
     enum DisplayMode {
@@ -228,27 +227,6 @@ struct LectureDetailScene: View {
                                 .id(colorScheme)
                                 .id(reviewId)
                         }
-                        
-                        if (isBookmarked) {
-                            DetailButton(text: "관심강좌 제외") {
-                                isUndoBookmarkAlertPresented = true
-                                
-                            }
-                            .alert("강의를 관심강좌에서 제외하시겠습니까?", isPresented: $isUndoBookmarkAlertPresented) {
-                                Button("취소", role: .cancel, action: {})
-                                Button("확인", role: .destructive) {
-                                    Task {
-                                        await viewModel.undoBookmarkLecture(selected: lecture)
-                                    }
-                                }
-                            }
-                        } else {
-                            DetailButton(text: "관심강좌 지정") {
-                                Task {
-                                    await viewModel.bookmarkLecture(lecture: lecture)
-                                }
-                            }
-                        }
                     }
 
                     if !lecture.isCustom && displayMode == .normal && editMode.isEditing {
@@ -296,7 +274,7 @@ struct LectureDetailScene: View {
         .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(editMode.isEditing)
-        .navigationTitle("세부사항")
+        .navigationTitle(displayMode == .preview ? "세부사항" : "")
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 switch displayMode {
@@ -325,38 +303,56 @@ struct LectureDetailScene: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 switch displayMode {
                 case .normal:
-                    Button {
-                        if editMode.isEditing {
-                            guard let tempLecture = tempLecture else { return }
-                            // save
-                            Task {
-                                let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
-
-                                if success, let updatedLecture = viewModel.findLectureInCurrentTimetable(lecture) {
-                                    lecture = updatedLecture
-                                    editMode = .inactive
-                                    resignFirstResponder()
-                                    return
+                    HStack {
+                        if !editMode.isEditing {
+                            Button {
+                                if isBookmarked {
+                                    isUndoBookmarkAlertPresented = true
+                                } else {
+                                    Task {
+                                        let success = await viewModel.bookmarkLecture(lecture: lecture)
+                                        if success {
+                                            self.isBookmarked = true
+                                        }
+                                    }
                                 }
-
-                                // non-duplicate failures
-                                if !success, !viewModel.isLectureOverlapped {
-                                    lecture = tempLecture
-                                    editMode = .inactive
-                                    resignFirstResponder()
-                                    return
-                                }
-
-                                // in case of duplicate failures, delegate the rollback operation to lecture overlap alert.
+                            } label: {
+                                isBookmarked ? Image("nav.bookmark.on") : Image("nav.bookmark")
                             }
-                        } else {
-                            // edit
-                            tempLecture = lecture
-                            editMode = .active
-                            resignFirstResponder()
                         }
-                    } label: {
-                        Text(editMode.isEditing ? "저장" : "편집")
+                        Button {
+                            if editMode.isEditing {
+                                guard let tempLecture = tempLecture else { return }
+                                // save
+                                Task {
+                                    let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
+
+                                    if success, let updatedLecture = viewModel.findLectureInCurrentTimetable(lecture) {
+                                        lecture = updatedLecture
+                                        editMode = .inactive
+                                        resignFirstResponder()
+                                        return
+                                    }
+
+                                    // non-duplicate failures
+                                    if !success, !viewModel.isLectureOverlapped {
+                                        lecture = tempLecture
+                                        editMode = .inactive
+                                        resignFirstResponder()
+                                        return
+                                    }
+
+                                    // in case of duplicate failures, delegate the rollback operation to lecture overlap alert.
+                                }
+                            } else {
+                                // edit
+                                tempLecture = lecture
+                                editMode = .active
+                                resignFirstResponder()
+                            }
+                        } label: {
+                            Text(editMode.isEditing ? "저장" : "편집")
+                        }
                     }
                 case .create:
                     Button {
@@ -370,7 +366,24 @@ struct LectureDetailScene: View {
                         Text("저장")
                     }
                 case .preview:
-                    EmptyView()
+                    Button {
+                        if isBookmarked {
+                            isUndoBookmarkAlertPresented = true
+                        } else {
+                            Task {
+                                let success = await viewModel.bookmarkLecture(lecture: lecture)
+                                if success {
+                                    self.isBookmarked = true
+                                }
+                            }
+                        }
+                    } label: {
+                        if isBookmarked {
+                            Image("nav.bookmark.on")
+                        } else {
+                            Image("nav.bookmark")
+                        }
+                    }
                 }
             }
         }
@@ -405,6 +418,17 @@ struct LectureDetailScene: View {
             }
         } message: {
             Text(viewModel.errorMessage)
+        }
+        .alert("강의를 관심강좌에서 제외하시겠습니까?", isPresented: $isUndoBookmarkAlertPresented) {
+            Button("취소", role: .cancel, action: {})
+            Button("확인", role: .destructive) {
+                Task {
+                    let success = await viewModel.undoBookmarkLecture(selected: lecture)
+                    if success {
+                        self.isBookmarked = false
+                    }
+                }
+            }
         }
     }
 }
