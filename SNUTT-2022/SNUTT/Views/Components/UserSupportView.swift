@@ -14,6 +14,7 @@ struct UserSupportView: View {
     @State private var content: String = ""
     @State private var hasEmail: Bool = false
     @State private var alertSendFeedback: Bool = false
+    @State private var isLoading: Bool = false
     @FocusState private var isFocused: Bool
     @Environment(\.presentationMode) private var mode
 
@@ -46,12 +47,16 @@ struct UserSupportView: View {
         .navigationTitle("개발자 괴롭히기")
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    alertSendFeedback = true
-                } label: {
-                    Text("전송")
+                if isLoading {
+                    ProgressView()
+                } else {
+                    Button {
+                        alertSendFeedback = true
+                    } label: {
+                        Text("전송")
+                    }
+                    .disabled(isButtonDisabled)
                 }
-                .disabled(isButtonDisabled)
             }
 
             ToolbarItemGroup(placement: .keyboard) {
@@ -65,11 +70,13 @@ struct UserSupportView: View {
         .alert("개발자 괴롭히기", isPresented: $alertSendFeedback) {
             Button("취소", role: .cancel, action: {})
             Button("전송", role: .none, action: {
+                isLoading = true
                 Task {
                     let success = await sendFeedback(email, content)
                     if success {
                         mode.wrappedValue.dismiss()
                     }
+                    isLoading = false
                 }
             })
         } message: {
