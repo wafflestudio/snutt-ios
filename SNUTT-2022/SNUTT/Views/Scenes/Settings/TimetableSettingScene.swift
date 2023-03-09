@@ -61,7 +61,7 @@ struct TimetableSettingScene: View {
             }
 
             Section(header: Text("시간표 미리보기")) {
-                TimetableZStack(current: viewModel.currentTimetable, config: viewModel.timetableConfig)
+                TimetableZStack(current: viewModel.currentTimetable, config: viewModel.timetableConfig, bookmarks: [])
                     .animation(.customSpring, value: viewModel.timetableConfig.minHour)
                     .animation(.customSpring, value: viewModel.timetableConfig.maxHour)
                     .animation(.customSpring, value: viewModel.timetableConfig.weekCount)

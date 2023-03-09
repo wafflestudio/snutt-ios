@@ -10,6 +10,7 @@ import SwiftUI
 struct TimetableBlocksLayer: View {
     let current: Timetable?
     let config: TimetableConfiguration
+    let bookmarks: [Lecture]
 
     var displayedTheme: Theme {
         current?.selectedTheme ?? (current?.theme ?? .snutt)
@@ -17,12 +18,12 @@ struct TimetableBlocksLayer: View {
 
     var body: some View {
         ForEach(current?.lectures ?? []) { lecture in
-            LectureBlocks(current: current, lecture: lecture, theme: displayedTheme, config: config)
+            LectureBlocks(current: current, lecture: lecture, theme: displayedTheme, config: config, bookmarks: bookmarks)
         }
         .animation(.customSpring, value: displayedTheme)
 
         if let selectedLecture = current?.selectedLecture {
-            LectureBlocks(current: current, lecture: selectedLecture.withTemporaryColor(), theme: displayedTheme, config: config)
+            LectureBlocks(current: current, lecture: selectedLecture.withTemporaryColor(), theme: displayedTheme, config: config, bookmarks: bookmarks)
         }
 
         let _ = debugChanges()

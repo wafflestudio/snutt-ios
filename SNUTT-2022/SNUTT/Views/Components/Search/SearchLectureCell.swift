@@ -140,7 +140,7 @@ struct SearchLectureCell: View {
                     .sheet(isPresented: $showingDetailPage) {
                         if let container = container {
                             NavigationView {
-                                LectureDetailScene(viewModel: .init(container: container), lecture: lecture, displayMode: .preview)
+                                LectureDetailScene(viewModel: .init(container: container), lecture: lecture, displayMode: .preview, bookmarks: [])
                             }
                         }
                     }

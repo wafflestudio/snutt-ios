@@ -10,11 +10,12 @@ import SwiftUI
 struct TimetableZStack: View {
     let current: Timetable?
     let config: TimetableConfiguration
+    let bookmarks: [Lecture]
 
     var body: some View {
         ZStack {
             TimetableGridLayer(current: current, config: config)
-            TimetableBlocksLayer(current: current, config: config)
+            TimetableBlocksLayer(current: current, config: config, bookmarks: bookmarks)
         }
         .background(STColor.systemBackground)
         .ignoresSafeArea(.keyboard)

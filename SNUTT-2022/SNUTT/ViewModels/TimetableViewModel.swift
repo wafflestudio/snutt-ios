@@ -73,14 +73,6 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         }
     }
     
-    func fetchBookmark() async {
-        do {
-            try await services.searchService.getBookmark()
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-    }
-
     func loadTimetableConfig() {
         timetableService.loadTimetableConfig()
     }

@@ -13,6 +13,7 @@ struct LectureBlocks: View {
     let lecture: Lecture
     let theme: Theme
     let config: TimetableConfiguration
+    let bookmarks: [Lecture]
 
     #if !WIDGET
         @Environment(\.dependencyContainer) var container: DIContainer?
@@ -33,7 +34,7 @@ struct LectureBlocks: View {
                                            theme: theme)
                         #else
                             if let container = container {
-                                NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture, displayMode: .normal)) {
+                                NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture, displayMode: .normal, bookmarks: bookmarks)) {
                                     TimetableBlock(lecture: lecture,
                                                    timePlace: timePlace,
                                                    theme: theme)
