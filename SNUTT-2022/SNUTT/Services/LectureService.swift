@@ -106,7 +106,7 @@ struct LectureService: LectureServiceProtocol {
     }
 
     func bookmarkLecture(lecture: Lecture) async throws {
-        if (lecture.lectureId != "") {
+        if lecture.lectureId != "" {
             try await lectureRepository.bookmarkLecture(lectureId: lecture.lectureId)
         } else {
             try await lectureRepository.bookmarkLecture(lectureId: lecture.id)
@@ -121,7 +121,7 @@ struct LectureService: LectureServiceProtocol {
     }
 
     func undoBookmarkLecture(lecture: Lecture) async throws {
-        if (lecture.lectureId != "") {
+        if lecture.lectureId != "" {
             try await lectureRepository.undoBookmarkLecture(lectureId: lecture.lectureId)
         } else {
             try await lectureRepository.undoBookmarkLecture(lectureId: lecture.id)

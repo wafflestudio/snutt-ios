@@ -17,7 +17,7 @@ struct LectureDetailScene: View {
     @State private var tempLecture: Lecture?
     @State private var isBookmarked: Bool
 
-    init(viewModel: ViewModel, lecture: Lecture, displayMode: DisplayMode, bookmarks: [Lecture]) {
+    init(viewModel: ViewModel, lecture: Lecture, displayMode: DisplayMode, bookmarks _: [Lecture]) {
         self.viewModel = viewModel
         _lecture = State(initialValue: lecture)
         _editMode = State(initialValue: displayMode == .create ? .active : .inactive)

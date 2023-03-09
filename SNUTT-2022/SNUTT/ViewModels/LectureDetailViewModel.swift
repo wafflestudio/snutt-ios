@@ -29,13 +29,13 @@ extension LectureDetailScene {
         var currentTimetable: Timetable? {
             appState.timetable.current
         }
-        
+
         @Published private var _selectedTab: TabType = .review
         var selectedTab: TabType {
             get { _selectedTab }
             set { services.globalUIService.setSelectedTab(newValue) }
         }
-        
+
         func presentEmailVerifyAlert() {
             let emailVerifyError = STError(.EMAIL_NOT_VERIFIED)
             errorTitle = emailVerifyError.title
@@ -169,7 +169,7 @@ extension LectureDetailScene {
             guard let detailId = detailId else { return }
             services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: detailId).url)
         }
-        
+
         func bookmarkLecture(lecture: Lecture) async -> Bool {
             do {
                 try await services.lectureService.bookmarkLecture(lecture: lecture)
@@ -192,10 +192,10 @@ extension LectureDetailScene {
         }
 
         func getBookmarkedLecture(_ lecture: Lecture) -> Lecture? {
-            if (lecture.lectureId != "") {
-                return appState.timetable.bookmark?.lectures.first(where: { ($0.id == lecture.lectureId) })
+            if lecture.lectureId != "" {
+                return appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.lectureId })
             } else {
-                return appState.timetable.bookmark?.lectures.first(where: { ($0.id == lecture.id) })
+                return appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.id })
             }
         }
     }
