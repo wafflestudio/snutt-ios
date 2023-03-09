@@ -14,12 +14,28 @@ extension LectureDetailScene {
         @Published var isErrorAlertPresented = false
         @Published var isLectureOverlapped: Bool = false
         @Published var isEmailVerifyAlertPresented = false
+
+        @Published private var bookmarkedLectures: [Lecture] = []
+
         var errorTitle: String = ""
         var errorMessage: String = ""
 
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$selectedTab.assign(to: &$_selectedTab)
+            appState.timetable.$bookmark.compactMap { return $0?.lectures }.assign(to: &$bookmarkedLectures)
+        }
+
+        func getBookmarkedLecture(_ lecture: Lecture) -> Lecture? {
+            if (lecture.lectureId != "") {
+                return appState.timetable.bookmark?.lectures.first(where: { ($0.id == lecture.lectureId) })
+            } else {
+                return appState.timetable.bookmark?.lectures.first(where: { ($0.id == lecture.id) })
+            }
+        }
+
+        func isBookmarked(lecture: Lecture) -> Bool {
+            return bookmarkedLectures.contains(where: { $0.id == lecture.id })
         }
 
         var lectureService: LectureServiceProtocol {
@@ -191,12 +207,6 @@ extension LectureDetailScene {
             return false
         }
 
-        func getBookmarkedLecture(_ lecture: Lecture) -> Lecture? {
-            if (lecture.lectureId != "") {
-                return appState.timetable.bookmark?.lectures.first(where: { ($0.id == lecture.lectureId) })
-            } else {
-                return appState.timetable.bookmark?.lectures.first(where: { ($0.id == lecture.id) })
-            }
-        }
+
     }
 }
