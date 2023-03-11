@@ -105,7 +105,7 @@ struct LectureService: LectureServiceProtocol {
     func fetchReviewId(courseNumber: String, instructor: String) async throws -> String {
         return try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
     }
-    
+
     func fetchIsFirstBookmark() {
         DispatchQueue.main.async {
             appState.timetable.isFirstBookmark = userDefaultsRepository.get(Bool.self, key: .isFirstBookmark, defaultValue: true)
