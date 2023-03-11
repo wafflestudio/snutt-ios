@@ -15,6 +15,7 @@ protocol LectureServiceProtocol {
     func deleteLecture(lecture: Lecture) async throws
     func resetLecture(lecture: Lecture) async throws
     func fetchReviewId(courseNumber: String, instructor: String) async throws -> String
+    func fetchIsFirstBookmark()
     func bookmarkLecture(lecture: Lecture) async throws
     func undoBookmarkLecture(lecture: Lecture) async throws
 }
@@ -104,6 +105,12 @@ struct LectureService: LectureServiceProtocol {
     func fetchReviewId(courseNumber: String, instructor: String) async throws -> String {
         return try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
     }
+    
+    func fetchIsFirstBookmark() {
+        DispatchQueue.main.async {
+            appState.timetable.isFirstBookmark = userDefaultsRepository.get(Bool.self, key: .isFirstBookmark, defaultValue: true)
+        }
+    }
 
     func bookmarkLecture(lecture: Lecture) async throws {
         if lecture.lectureId != "" {
@@ -116,6 +123,7 @@ struct LectureService: LectureServiceProtocol {
         let bookmark = Bookmark(from: dto)
         await MainActor.run {
             appState.timetable.bookmark = bookmark
+            userDefaultsRepository.set(Bool.self, key: .isFirstBookmark, value: false)
             appState.timetable.isFirstBookmark = false
         }
     }
@@ -157,6 +165,6 @@ class FakeLectureService: LectureServiceProtocol {
     func getBookmark(quarter _: Quarter) async throws {}
     func bookmarkLecture(lecture _: Lecture) async throws {}
     func undoBookmarkLecture(lecture _: Lecture) async throws {}
+    func fetchIsFirstBookmark() {}
     func fetchReviewId(courseNumber _: String, instructor _: String) async throws -> String { return "" }
-    func setIsFirstBookmark(_: Bool) {}
 }

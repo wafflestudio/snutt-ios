@@ -27,6 +27,7 @@ enum STDefaultsKey: String {
     case popupList
 
     case bookmark
+    case isFirstBookmark
 }
 
 class UserDefaultsRepository: UserDefaultsRepositoryProtocol {

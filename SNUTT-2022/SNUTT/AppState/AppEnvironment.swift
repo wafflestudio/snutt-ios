@@ -70,6 +70,7 @@ extension AppEnvironment {
         services.authService.loadAccessTokenDuringBootstrap()
         services.globalUIService.loadColorSchemeDuringBootstrap()
         services.timetableService.loadTimetableConfig()
+        services.lectureService.fetchIsFirstBookmark()
 
         return .init(container: container)
     }

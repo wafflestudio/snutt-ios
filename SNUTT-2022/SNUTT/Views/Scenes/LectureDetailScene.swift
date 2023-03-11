@@ -302,7 +302,7 @@ struct LectureDetailScene: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 switch displayMode {
-                case .normal:
+                case .normal, .preview:
                     HStack {
                         if !editMode.isEditing {
                             Button {
@@ -320,38 +320,40 @@ struct LectureDetailScene: View {
                                 isBookmarked ? Image("nav.bookmark.on") : Image("nav.bookmark")
                             }
                         }
-                        Button {
-                            if editMode.isEditing {
-                                guard let tempLecture = tempLecture else { return }
-                                // save
-                                Task {
-                                    let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
+                        if displayMode == .normal {
+                            Button {
+                                if editMode.isEditing {
+                                    guard let tempLecture = tempLecture else { return }
+                                    // save
+                                    Task {
+                                        let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
 
-                                    if success, let updatedLecture = viewModel.findLectureInCurrentTimetable(lecture) {
-                                        lecture = updatedLecture
-                                        editMode = .inactive
-                                        resignFirstResponder()
-                                        return
+                                        if success, let updatedLecture = viewModel.findLectureInCurrentTimetable(lecture) {
+                                            lecture = updatedLecture
+                                            editMode = .inactive
+                                            resignFirstResponder()
+                                            return
+                                        }
+
+                                        // non-duplicate failures
+                                        if !success, !viewModel.isLectureOverlapped {
+                                            lecture = tempLecture
+                                            editMode = .inactive
+                                            resignFirstResponder()
+                                            return
+                                        }
+
+                                        // in case of duplicate failures, delegate the rollback operation to lecture overlap alert.
                                     }
-
-                                    // non-duplicate failures
-                                    if !success, !viewModel.isLectureOverlapped {
-                                        lecture = tempLecture
-                                        editMode = .inactive
-                                        resignFirstResponder()
-                                        return
-                                    }
-
-                                    // in case of duplicate failures, delegate the rollback operation to lecture overlap alert.
+                                } else {
+                                    // edit
+                                    tempLecture = lecture
+                                    editMode = .active
+                                    resignFirstResponder()
                                 }
-                            } else {
-                                // edit
-                                tempLecture = lecture
-                                editMode = .active
-                                resignFirstResponder()
+                            } label: {
+                                Text(editMode.isEditing ? "저장" : "편집")
                             }
-                        } label: {
-                            Text(editMode.isEditing ? "저장" : "편집")
                         }
                     }
                 case .create:
@@ -364,25 +366,6 @@ struct LectureDetailScene: View {
                         }
                     } label: {
                         Text("저장")
-                    }
-                case .preview:
-                    Button {
-                        if isBookmarked {
-                            isUndoBookmarkAlertPresented = true
-                        } else {
-                            Task {
-                                let success = await viewModel.bookmarkLecture(lecture: lecture)
-                                if success {
-                                    self.isBookmarked = true
-                                }
-                            }
-                        }
-                    } label: {
-                        if isBookmarked {
-                            Image("nav.bookmark.on")
-                        } else {
-                            Image("nav.bookmark")
-                        }
                     }
                 }
             }
