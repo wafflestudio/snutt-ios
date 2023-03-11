@@ -14,7 +14,7 @@ struct TimetableWidgetEntryView: View {
     var body: some View {
         ZStack {
             STColor.systemBackground
-            TimetableZStack(current: entry.currentTimetable, config: entry.timetableConfig, bookmarks: [])
+            TimetableZStack(current: entry.currentTimetable, config: entry.timetableConfig)
         }
     }
 }

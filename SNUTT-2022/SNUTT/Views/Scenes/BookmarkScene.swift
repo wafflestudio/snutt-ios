@@ -17,7 +17,7 @@ struct BookmarkScene: View {
                 Group {
                     VStack {
                         TimetableZStack(current: viewModel.currentTimetableWithSelection,
-                                        config: viewModel.timetableConfigWithAutoFit, bookmarks: viewModel.bookmarkedLectures)
+                                        config: viewModel.timetableConfigWithAutoFit)
                             .animation(.customSpring, value: viewModel.selectedLecture?.id)
                     }
                     STColor.searchListBackground

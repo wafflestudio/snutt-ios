@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Lecture: Identifiable {
     let id: String
-    let lectureId: String
+    let lectureId: String?
     var title: String
     var instructor: String
     var timePlaces: [TimePlace]
@@ -99,7 +99,7 @@ struct LectureColor: Hashable {
 extension Lecture {
     init(from dto: LectureDto) {
         id = dto._id
-        lectureId = dto.lecture_id ?? ""
+        lectureId = dto.lecture_id
         title = dto.course_title
         instructor = dto.instructor
         timePlaces = dto.class_time_json.map { .init(from: $0, isCustom: dto.isCustom) }

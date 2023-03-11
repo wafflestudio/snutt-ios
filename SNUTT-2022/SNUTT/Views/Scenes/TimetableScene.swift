@@ -21,7 +21,7 @@ struct TimetableScene: View {
 
     var body: some View {
         GeometryReader { reader in
-            TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration, bookmarks: viewModel.bookmarkedLectures)
+            TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
                 .animation(.customSpring, value: viewModel.currentTimetable?.id)
                 // navigate programmatically, because NavigationLink inside toolbar doesn't work
                 .background(

@@ -14,12 +14,14 @@ extension LectureDetailScene {
         @Published var isErrorAlertPresented = false
         @Published var isLectureOverlapped: Bool = false
         @Published var isEmailVerifyAlertPresented = false
+        @Published private var bookmarkedLectures: [Lecture] = []
         var errorTitle: String = ""
         var errorMessage: String = ""
 
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$selectedTab.assign(to: &$_selectedTab)
+            appState.timetable.$bookmark.compactMap { return $0?.lectures }.assign(to: &$bookmarkedLectures)
         }
 
         var lectureService: LectureServiceProtocol {
@@ -170,33 +172,25 @@ extension LectureDetailScene {
             services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: detailId).url)
         }
 
-        func bookmarkLecture(lecture: Lecture) async -> Bool {
+        func bookmarkLecture(lecture: Lecture) async {
             do {
                 try await services.lectureService.bookmarkLecture(lecture: lecture)
-                return true
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
-            return false
         }
 
-        func undoBookmarkLecture(selected: Lecture) async -> Bool {
-            guard let lecture = getBookmarkedLecture(selected) else { return false }
+        func undoBookmarkLecture(lecture: Lecture) async {
+            if !isBookmarked(lecture: lecture) { return }
             do {
                 try await services.lectureService.undoBookmarkLecture(lecture: lecture)
-                return true
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
-            return false
         }
-
-        func getBookmarkedLecture(_ lecture: Lecture) -> Lecture? {
-            if lecture.lectureId != "" {
-                return appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.lectureId })
-            } else {
-                return appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.id })
-            }
+        
+        func isBookmarked(lecture: Lecture) -> Bool {
+            return ((appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.lectureId ?? lecture.id })) != nil)
         }
     }
 }

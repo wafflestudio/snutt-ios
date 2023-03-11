@@ -34,7 +34,7 @@ struct LectureListScene: View {
         .sheet(isPresented: $showingCreatePage, content: {
             ZStack {
                 NavigationView {
-                    LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: viewModel.placeholderLecture, displayMode: .create, bookmarks: [])
+                    LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: viewModel.placeholderLecture, displayMode: .create)
                 }
                 // this view is duplicated on purpose (i.e. there are 2 instances of LectureTimeSheetScene)
                 LectureTimeSheetScene(viewModel: .init(container: viewModel.container))

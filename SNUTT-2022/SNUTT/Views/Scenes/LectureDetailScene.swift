@@ -15,13 +15,11 @@ struct LectureDetailScene: View {
 
     @State private var editMode: EditMode
     @State private var tempLecture: Lecture?
-    @State private var isBookmarked: Bool
 
-    init(viewModel: ViewModel, lecture: Lecture, displayMode: DisplayMode, bookmarks _: [Lecture]) {
+    init(viewModel: ViewModel, lecture: Lecture, displayMode: DisplayMode) {
         self.viewModel = viewModel
         _lecture = State(initialValue: lecture)
         _editMode = State(initialValue: displayMode == .create ? .active : .inactive)
-        _isBookmarked = State(initialValue: viewModel.getBookmarkedLecture(lecture) != nil)
         self.displayMode = displayMode
     }
 
@@ -301,6 +299,7 @@ struct LectureDetailScene: View {
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
+                let isBookmarked = viewModel.isBookmarked(lecture: lecture)
                 switch displayMode {
                 case .normal, .preview:
                     HStack {
@@ -310,10 +309,7 @@ struct LectureDetailScene: View {
                                     isUndoBookmarkAlertPresented = true
                                 } else {
                                     Task {
-                                        let success = await viewModel.bookmarkLecture(lecture: lecture)
-                                        if success {
-                                            self.isBookmarked = true
-                                        }
+                                        await viewModel.bookmarkLecture(lecture: lecture)
                                     }
                                 }
                             } label: {
@@ -406,10 +402,7 @@ struct LectureDetailScene: View {
             Button("취소", role: .cancel, action: {})
             Button("확인", role: .destructive) {
                 Task {
-                    let success = await viewModel.undoBookmarkLecture(selected: lecture)
-                    if success {
-                        self.isBookmarked = false
-                    }
+                    await viewModel.undoBookmarkLecture(lecture: lecture)
                 }
             }
         }
