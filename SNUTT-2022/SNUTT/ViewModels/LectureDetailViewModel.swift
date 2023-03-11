@@ -21,7 +21,7 @@ extension LectureDetailScene {
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$selectedTab.assign(to: &$_selectedTab)
-            appState.timetable.$bookmark.compactMap { return $0?.lectures }.assign(to: &$bookmarkedLectures)
+            appState.timetable.$bookmark.compactMap { $0?.lectures }.assign(to: &$bookmarkedLectures)
         }
 
         var lectureService: LectureServiceProtocol {
@@ -188,7 +188,7 @@ extension LectureDetailScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func isBookmarked(lecture: Lecture) -> Bool {
             return ((appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.lectureId ?? lecture.id })) != nil)
         }
