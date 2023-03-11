@@ -47,16 +47,8 @@ struct TimetableSettingScene: View {
                         .navigationBarTitle("요일 선택")
                     }
 
-                    Group {
-                        DatePicker("시작",
-                                   selection: $viewModel.minHour,
-                                   in: viewModel.minTimeRange,
-                                   displayedComponents: [.hourAndMinute])
-                        DatePicker("종료",
-                                   selection: $viewModel.maxHour,
-                                   in: viewModel.maxTimeRange,
-                                   displayedComponents: [.hourAndMinute])
-                    }.datePickerStyle(.compact)
+                    TimeRangeSlider(minHour: $viewModel.timetableConfig.minHour, maxHour: $viewModel.timetableConfig.maxHour)
+                        .frame(height: 40)
                 }
             }
 
@@ -79,11 +71,6 @@ struct TimetableSettingScene: View {
         }
         .navigationTitle("시간표 설정")
         .navigationBarTitleDisplayMode(.inline)
-        .onChange(of: viewModel.minHour, perform: { _ in
-            if !viewModel.maxTimeRange.contains(viewModel.maxHour) {
-                viewModel.maxHour = viewModel.maxTimeRange.lowerBound
-            }
-        })
     }
 }
 
@@ -95,30 +82,6 @@ extension TimetableSettingScene {
         var timetableConfig: TimetableConfiguration {
             get { _timetableConfig }
             set { services.timetableService.setTimetableConfig(config: newValue) }
-        }
-
-        var minHour: Date {
-            get { Calendar.current.date(from: DateComponents(hour: timetableConfig.minHour))! }
-            set {
-                timetableConfig.minHour = Calendar.current.component(.hour, from: newValue)
-            }
-        }
-
-        var maxHour: Date {
-            get { Calendar.current.date(from: DateComponents(hour: timetableConfig.maxHour))! }
-            set {
-                timetableConfig.maxHour = Calendar.current.component(.hour, from: newValue)
-            }
-        }
-
-        var minTimeRange: ClosedRange<Date> {
-            let calendar = Calendar.current
-            return calendar.date(from: .init(hour: 0, minute: 0))! ... calendar.date(from: .init(hour: 17, minute: 0))!
-        }
-
-        var maxTimeRange: ClosedRange<Date> {
-            let calendar = Calendar.current
-            return calendar.date(byAdding: .hour, value: 6, to: minHour)! ... calendar.date(from: .init(hour: 23, minute: 0))!
         }
 
         var visibleWeekdaysPreview: String {
@@ -145,8 +108,11 @@ extension TimetableSettingScene {
 
 #if DEBUG
     struct TimetableSettingScene_Previews: PreviewProvider {
+
         static var previews: some View {
-            TimetableSettingScene(viewModel: .init(container: .preview))
+            var preview = DIContainer.preview
+            preview.appState.timetable.configuration.autoFit = false
+            return TimetableSettingScene(viewModel: .init(container: preview))
         }
     }
 #endif

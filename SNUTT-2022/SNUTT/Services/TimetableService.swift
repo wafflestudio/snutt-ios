@@ -125,7 +125,12 @@ struct TimetableService: TimetableServiceProtocol {
 
     func loadTimetableConfig() {
         DispatchQueue.main.async {
-            appState.timetable.configuration = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
+            var localConfig = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
+            if localConfig.maxHour - localConfig.minHour < 6 {
+                localConfig.minHour = 9
+                localConfig.maxHour = 18
+            }
+            appState.timetable.configuration = localConfig
         }
     }
 
