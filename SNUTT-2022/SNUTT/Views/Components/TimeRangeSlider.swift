@@ -39,7 +39,7 @@ struct TimeRangeSlider: View {
             let centerY = rect.size.height / 2
             return Path { path in
                 for i in 0 ... tickCount {
-                    let x: Double = Double(i)*width / Double(tickCount)
+                    let x: Double = .init(i) * width / Double(tickCount)
                     let y: Double = i % 6 == 0 ? 5 : 2
                     path.move(to: CGPoint(x: x, y: centerY))
                     path.addLine(to: .init(x: x, y: centerY + y))
@@ -64,9 +64,9 @@ struct TimeRangeSlider: View {
                 })
             // Gesture that reacts to the location changes
             let draggingGesture = DragGesture()
-                .onChanged({ value in
+                .onChanged { value in
                     onChanged(value)
-                })
+                }
             // Combine two gestures with different minimumDistance
             // to prevent jumps when pressed
             return draggingGesture.simultaneously(with: initialGesture)
@@ -138,7 +138,7 @@ struct TimeRangeSlider: View {
                         }
                     }
                 }
-                .padding(.horizontal, -config.handleDiameter/2)
+                .padding(.horizontal, -config.handleDiameter / 2)
             }
             .padding(.top, 10)
         }
