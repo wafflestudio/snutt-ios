@@ -14,12 +14,14 @@ extension LectureDetailScene {
         @Published var isErrorAlertPresented = false
         @Published var isLectureOverlapped: Bool = false
         @Published var isEmailVerifyAlertPresented = false
+        @Published private var bookmarkedLectures: [Lecture] = []
         var errorTitle: String = ""
         var errorMessage: String = ""
 
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$selectedTab.assign(to: &$_selectedTab)
+            appState.timetable.$bookmark.compactMap { $0?.lectures }.assign(to: &$bookmarkedLectures)
         }
 
         var lectureService: LectureServiceProtocol {
@@ -29,13 +31,13 @@ extension LectureDetailScene {
         var currentTimetable: Timetable? {
             appState.timetable.current
         }
-        
+
         @Published private var _selectedTab: TabType = .review
         var selectedTab: TabType {
             get { _selectedTab }
             set { services.globalUIService.setSelectedTab(newValue) }
         }
-        
+
         func presentEmailVerifyAlert() {
             let emailVerifyError = STError(.EMAIL_NOT_VERIFIED)
             errorTitle = emailVerifyError.title
@@ -168,6 +170,27 @@ extension LectureDetailScene {
         func reloadDetailWebView(detailId: String?) {
             guard let detailId = detailId else { return }
             services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: detailId).url)
+        }
+
+        func bookmarkLecture(lecture: Lecture) async {
+            do {
+                try await services.lectureService.bookmarkLecture(lecture: lecture)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+
+        func undoBookmarkLecture(lecture: Lecture) async {
+            if !isBookmarked(lecture: lecture) { return }
+            do {
+                try await services.lectureService.undoBookmarkLecture(lecture: lecture)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+
+        func isBookmarked(lecture: Lecture) -> Bool {
+            return ((appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.lectureId ?? lecture.id })) != nil)
         }
     }
 }

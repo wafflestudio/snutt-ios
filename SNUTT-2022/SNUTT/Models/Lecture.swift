@@ -10,6 +10,7 @@ import SwiftUI
 
 struct Lecture: Identifiable {
     let id: String
+    let lectureId: String?
     var title: String
     var instructor: String
     var timePlaces: [TimePlace]
@@ -98,6 +99,7 @@ struct LectureColor: Hashable {
 extension Lecture {
     init(from dto: LectureDto) {
         id = dto._id
+        lectureId = dto.lecture_id
         title = dto.course_title
         instructor = dto.instructor
         timePlaces = dto.class_time_json.map { .init(from: $0, isCustom: dto.isCustom) }
@@ -129,6 +131,7 @@ extension Lecture {
             let departments = ["경영학과", "컴퓨터공학과", "서양사학과", "디자인과"]
             let academicYears = ["1학년", "2학년", "3학년", "학년"]
             return Lecture(id: UUID().uuidString,
+                           lectureId: UUID().uuidString,
                            title: titles.randomElement()!,
                            instructor: instructors.randomElement()!,
                            timePlaces: [.preview, .preview],

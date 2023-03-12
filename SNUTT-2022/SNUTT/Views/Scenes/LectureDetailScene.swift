@@ -35,6 +35,8 @@ struct LectureDetailScene: View {
     @State private var reviewId: String? = ""
     @State private var syllabusURL: String = ""
     @State private var showSyllabusWebView = false
+    @State private var isUndoBookmarkAlertPresented = false
+    @State private var isBookmarkAlertPresented = false
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
@@ -270,7 +272,7 @@ struct LectureDetailScene: View {
         .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(editMode.isEditing)
-        .navigationTitle("세부사항")
+        .navigationTitle(displayMode == .preview ? "세부사항" : "")
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 switch displayMode {
@@ -297,40 +299,58 @@ struct LectureDetailScene: View {
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
+                let isBookmarked = viewModel.isBookmarked(lecture: lecture)
                 switch displayMode {
-                case .normal:
-                    Button {
-                        if editMode.isEditing {
-                            guard let tempLecture = tempLecture else { return }
-                            // save
-                            Task {
-                                let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
-
-                                if success, let updatedLecture = viewModel.findLectureInCurrentTimetable(lecture) {
-                                    lecture = updatedLecture
-                                    editMode = .inactive
-                                    resignFirstResponder()
-                                    return
+                case .normal, .preview:
+                    HStack {
+                        if !editMode.isEditing {
+                            Button {
+                                if isBookmarked {
+                                    isUndoBookmarkAlertPresented = true
+                                } else {
+                                    Task {
+                                        await viewModel.bookmarkLecture(lecture: lecture)
+                                    }
                                 }
-
-                                // non-duplicate failures
-                                if !success, !viewModel.isLectureOverlapped {
-                                    lecture = tempLecture
-                                    editMode = .inactive
-                                    resignFirstResponder()
-                                    return
-                                }
-
-                                // in case of duplicate failures, delegate the rollback operation to lecture overlap alert.
+                            } label: {
+                                isBookmarked ? Image("nav.bookmark.on") : Image("nav.bookmark")
                             }
-                        } else {
-                            // edit
-                            tempLecture = lecture
-                            editMode = .active
-                            resignFirstResponder()
                         }
-                    } label: {
-                        Text(editMode.isEditing ? "저장" : "편집")
+                        if displayMode == .normal {
+                            Button {
+                                if editMode.isEditing {
+                                    guard let tempLecture = tempLecture else { return }
+                                    // save
+                                    Task {
+                                        let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
+
+                                        if success, let updatedLecture = viewModel.findLectureInCurrentTimetable(lecture) {
+                                            lecture = updatedLecture
+                                            editMode = .inactive
+                                            resignFirstResponder()
+                                            return
+                                        }
+
+                                        // non-duplicate failures
+                                        if !success, !viewModel.isLectureOverlapped {
+                                            lecture = tempLecture
+                                            editMode = .inactive
+                                            resignFirstResponder()
+                                            return
+                                        }
+
+                                        // in case of duplicate failures, delegate the rollback operation to lecture overlap alert.
+                                    }
+                                } else {
+                                    // edit
+                                    tempLecture = lecture
+                                    editMode = .active
+                                    resignFirstResponder()
+                                }
+                            } label: {
+                                Text(editMode.isEditing ? "저장" : "편집")
+                            }
+                        }
                     }
                 case .create:
                     Button {
@@ -343,8 +363,6 @@ struct LectureDetailScene: View {
                     } label: {
                         Text("저장")
                     }
-                case .preview:
-                    EmptyView()
                 }
             }
         }
@@ -379,6 +397,14 @@ struct LectureDetailScene: View {
             }
         } message: {
             Text(viewModel.errorMessage)
+        }
+        .alert("강의를 관심강좌에서 제외하시겠습니까?", isPresented: $isUndoBookmarkAlertPresented) {
+            Button("취소", role: .cancel, action: {})
+            Button("확인", role: .destructive) {
+                Task {
+                    await viewModel.undoBookmarkLecture(lecture: lecture)
+                }
+            }
         }
     }
 }
