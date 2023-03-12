@@ -73,21 +73,21 @@ struct TimeRangeSlider: View {
         }
 
         var body: some View {
-                Circle()
-                    .fill(Color.white)
-                    .frame(width: diameter)
-                    .shadow(radius: 1)
-                    .scaleEffect(isDragging ? 1.5 : 1.0)
-                    .offset(x: offset)
-                    .gesture(simultaneousGesture)
-                    .overlay {
-                        Text("\(hour)시")
-                            .fixedSize()
-                            .font(.system(size: isDragging ? 14 : 12, weight: .bold))
-                            .offset(x: offset, y: isDragging ? -25 : -20)
-                            .opacity(0.8)
-                    }
-            .animation(.customSpring, value: isDragging)
+            Circle()
+                .fill(Color.white)
+                .frame(width: diameter)
+                .shadow(radius: 1)
+                .scaleEffect(isDragging ? 1.5 : 1.0)
+                .offset(x: offset)
+                .gesture(simultaneousGesture)
+                .overlay {
+                    Text("\(hour)시")
+                        .fixedSize()
+                        .font(.system(size: isDragging ? 14 : 12, weight: .bold))
+                        .offset(x: offset, y: isDragging ? -25 : -20)
+                        .opacity(0.8)
+                }
+                .animation(.customSpring, value: isDragging)
         }
     }
 

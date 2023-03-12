@@ -49,7 +49,7 @@ struct TimetableSettingScene: View {
 
                     VStack(alignment: .leading) {
                         Text("시간대")
-                        
+
                         TimeRangeSlider(minHour: $viewModel.timetableConfig.minHour, maxHour: $viewModel.timetableConfig.maxHour)
                             .frame(height: 40)
                     }
