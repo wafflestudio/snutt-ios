@@ -47,8 +47,12 @@ struct TimetableSettingScene: View {
                         .navigationBarTitle("요일 선택")
                     }
 
-                    TimeRangeSlider(minHour: $viewModel.timetableConfig.minHour, maxHour: $viewModel.timetableConfig.maxHour)
-                        .frame(height: 40)
+                    VStack(alignment: .leading) {
+                        Text("시간대")
+                        
+                        TimeRangeSlider(minHour: $viewModel.timetableConfig.minHour, maxHour: $viewModel.timetableConfig.maxHour)
+                            .frame(height: 40)
+                    }
                 }
             }
 
