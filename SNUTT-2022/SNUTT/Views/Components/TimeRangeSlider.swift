@@ -51,26 +51,38 @@ struct TimeRangeSlider: View {
 
         @GestureState private var isDragging = false
 
+        private var simultaneousGesture: some Gesture {
+            // Gesture that toggles `isDragging` when pressed
+            let initialGesture = DragGesture(minimumDistance: 0)
+                .updating($isDragging, body: { _, state, _ in
+                    state = true
+                })
+            // Gesture that reacts to the location changes
+            let draggingGesture = DragGesture()
+                .onChanged({ value in
+                    onChanged(value)
+                })
+            // Combine two gestures with different minimumDistance
+            // to prevent jumps when pressed
+            return draggingGesture.simultaneously(with: initialGesture)
+        }
+
         var body: some View {
             ZStack {
-                Text("\(hour)")
-                    .font(.system(size: isDragging ? 14 : 12, weight: .bold))
-                    .offset(x: offset, y: isDragging ? -25 : -20)
-                    .opacity(0.8)
-
                 Circle()
                     .fill(Color.white)
                     .frame(width: 20)
                     .shadow(radius: 1)
                     .scaleEffect(isDragging ? 1.5 : 1.0)
                     .offset(x: offset)
-                    .gesture(DragGesture(minimumDistance: 0)
-                        .updating($isDragging, body: { _, state, _ in
-                            state = true
-                        })
-                        .onChanged({ value in
-                            onChanged(value)
-                        }))
+                    .gesture(simultaneousGesture)
+                    .overlay {
+                        Text("\(hour)시")
+                            .fixedSize()
+                            .font(.system(size: isDragging ? 14 : 12, weight: .bold))
+                            .offset(x: offset, y: isDragging ? -25 : -20)
+                            .opacity(0.8)
+                    }
             }
             .animation(.customSpring, value: isDragging)
         }
@@ -91,34 +103,32 @@ struct TimeRangeSlider: View {
     }
 
     var body: some View {
-            GeometryReader { reader in
-                ZStack(alignment: .leading) {
-                    
-                    SliderPath()
-                        .stroke(Color(uiColor: .quaternaryLabel).opacity(0.5), style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
+        GeometryReader { reader in
+            ZStack(alignment: .leading) {
+                SliderPath()
+                    .stroke(Color(uiColor: .quaternaryLabel).opacity(0.5), style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
 
-                    TickMarks()
-                        .stroke(Color(uiColor: .quaternaryLabel).opacity(0.5), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
-                        .offset(y: lineWidth)
+                TickMarks()
+                    .stroke(Color(uiColor: .quaternaryLabel).opacity(0.5), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
+                    .offset(y: lineWidth)
 
-                    SliderPath()
-                        .trim(from: calculatePercentage(hour: minHour), to: calculatePercentage(hour: maxHour))
-                        .stroke(STColor.cyan, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
+                SliderPath()
+                    .trim(from: calculatePercentage(hour: minHour), to: calculatePercentage(hour: maxHour))
+                    .stroke(STColor.cyan, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
 
-                    ZStack {
-                        SliderKnob(hour: minHour, offset: translateHourToWidth(hour: minHour, reader: reader)) { value in
-                            minHour = min(translateWidthToHour(width: value.location.x, reader: reader), maxHour - 6)
-                        }
-
-                        SliderKnob(hour: maxHour, offset: translateHourToWidth(hour: maxHour, reader: reader)) { value in
-
-                            maxHour = max(translateWidthToHour(width: value.location.x, reader: reader), minHour + 6)
-                        }
+                ZStack {
+                    SliderKnob(hour: minHour, offset: translateHourToWidth(hour: minHour, reader: reader)) { value in
+                        minHour = min(translateWidthToHour(width: value.location.x, reader: reader), maxHour - 6)
                     }
-                    .padding(.horizontal, -10)
+
+                    SliderKnob(hour: maxHour, offset: translateHourToWidth(hour: maxHour, reader: reader)) { value in
+                        maxHour = max(translateWidthToHour(width: value.location.x, reader: reader), minHour + 6)
+                    }
                 }
-                .padding(.top, 10)
+                .padding(.horizontal, -10)
             }
+            .padding(.top, 10)
+        }
     }
 }
 
