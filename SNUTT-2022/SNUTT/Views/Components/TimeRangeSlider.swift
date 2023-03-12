@@ -73,7 +73,6 @@ struct TimeRangeSlider: View {
         }
 
         var body: some View {
-            ZStack {
                 Circle()
                     .fill(Color.white)
                     .frame(width: diameter)
@@ -88,7 +87,6 @@ struct TimeRangeSlider: View {
                             .offset(x: offset, y: isDragging ? -25 : -20)
                             .opacity(0.8)
                     }
-            }
             .animation(.customSpring, value: isDragging)
         }
     }
