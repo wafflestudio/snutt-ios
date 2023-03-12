@@ -7,16 +7,18 @@
 
 import SwiftUI
 
-
+struct TimeRangeSliderConfig {
+    var lineWidth: CGFloat = 5
+    var handleDiameter: CGFloat = 20
+    var minimumDistance = 6
+    var tickCount = 24
+    var tickMarkWidth: CGFloat = 2
+}
 
 struct TimeRangeSlider: View {
     @Binding var minHour: Int
     @Binding var maxHour: Int
-    @GestureState private var isDraggingMinSlider = false
-    @GestureState private var isDraggingMaxSlider = false
-
-    let lineWidth: CGFloat = 5
-    static let tickCount = 24
+    var config: TimeRangeSliderConfig = .init()
 
     struct SliderPath: Shape {
         func path(in rect: CGRect) -> Path {
@@ -29,10 +31,10 @@ struct TimeRangeSlider: View {
     }
 
     struct TickMarks: Shape {
+        let tickCount: Int
         func path(in rect: CGRect) -> Path {
             let width = rect.size.width
             let centerY = rect.size.height / 2
-            let tickCount = TimeRangeSlider.tickCount
             return Path { path in
                 for i in 0 ... tickCount {
                     let x: Double = Double(i)*width / Double(tickCount)
@@ -44,9 +46,10 @@ struct TimeRangeSlider: View {
         }
     }
 
-    struct SliderKnob: View {
+    struct SliderHandle: View {
         let hour: Int
         let offset: CGFloat
+        let diameter: CGFloat
         let onChanged: (DragGesture.Value) -> Void
 
         @GestureState private var isDragging = false
@@ -71,7 +74,7 @@ struct TimeRangeSlider: View {
             ZStack {
                 Circle()
                     .fill(Color.white)
-                    .frame(width: 20)
+                    .frame(width: diameter)
                     .shadow(radius: 1)
                     .scaleEffect(isDragging ? 1.5 : 1.0)
                     .offset(x: offset)
@@ -89,46 +92,47 @@ struct TimeRangeSlider: View {
     }
 
     func translateHourToWidth(hour: Int, reader: GeometryProxy) -> CGFloat {
-        return CGFloat(hour) * reader.size.width / CGFloat(TimeRangeSlider.tickCount)
+        return CGFloat(hour) * reader.size.width / CGFloat(config.tickCount)
     }
 
     func translateWidthToHour(width: CGFloat, reader: GeometryProxy) -> Int {
         let normalizedWidth = max(min(width / reader.size.width, 1.0), 0.0)
-        let hour = Int(round(Double(normalizedWidth) * Double(TimeRangeSlider.tickCount)))
+        let hour = Int(round(Double(normalizedWidth) * Double(config.tickCount)))
         return hour
     }
 
     func calculatePercentage(hour: Int) -> Double {
-        return Double(hour) / Double(TimeRangeSlider.tickCount)
+        return Double(hour) / Double(config.tickCount)
     }
 
     var body: some View {
         GeometryReader { reader in
             ZStack(alignment: .leading) {
                 SliderPath()
-                    .stroke(Color(uiColor: .quaternaryLabel).opacity(0.5), style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
+                    .stroke(Color(uiColor: .quaternaryLabel).opacity(0.5), style: StrokeStyle(lineWidth: config.lineWidth, lineCap: .round, lineJoin: .round))
 
-                TickMarks()
-                    .stroke(Color(uiColor: .quaternaryLabel).opacity(0.5), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
-                    .offset(y: lineWidth)
+                TickMarks(tickCount: config.tickCount)
+                    .stroke(Color(uiColor: .quaternaryLabel).opacity(0.5), style: StrokeStyle(lineWidth: config.tickMarkWidth, lineCap: .round, lineJoin: .round))
+                    .offset(y: config.lineWidth)
 
                 SliderPath()
                     .trim(from: calculatePercentage(hour: minHour), to: calculatePercentage(hour: maxHour))
-                    .stroke(STColor.cyan, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
+                    .stroke(STColor.cyan, style: StrokeStyle(lineWidth: config.lineWidth, lineCap: .round, lineJoin: .round))
 
                 ZStack {
-                    SliderKnob(hour: minHour, offset: translateHourToWidth(hour: minHour, reader: reader)) { value in
-                        minHour = min(translateWidthToHour(width: value.location.x, reader: reader), maxHour - 6)
+                    SliderHandle(hour: minHour, offset: translateHourToWidth(hour: minHour, reader: reader), diameter: config.handleDiameter) { value in
+                        minHour = min(translateWidthToHour(width: value.location.x, reader: reader), maxHour - config.minimumDistance)
                     }
 
-                    SliderKnob(hour: maxHour, offset: translateHourToWidth(hour: maxHour, reader: reader)) { value in
-                        maxHour = max(translateWidthToHour(width: value.location.x, reader: reader), minHour + 6)
+                    SliderHandle(hour: maxHour, offset: translateHourToWidth(hour: maxHour, reader: reader), diameter: config.handleDiameter) { value in
+                        maxHour = max(translateWidthToHour(width: value.location.x, reader: reader), minHour + config.minimumDistance)
                     }
                 }
-                .padding(.horizontal, -10)
+                .padding(.horizontal, -config.handleDiameter/2)
             }
             .padding(.top, 10)
         }
+        .padding(.horizontal, 5)
     }
 }
 
@@ -136,9 +140,15 @@ struct TimeRangeSliderWrapper: View {
     @State private var minHour = 4
     @State private var maxHour = 18
 
+    var config: TimeRangeSliderConfig {
+        var config = TimeRangeSliderConfig()
+        config.lineWidth = 20
+        return config
+    }
+
     var body: some View {
         VStack {
-            TimeRangeSlider(minHour: $minHour, maxHour: $maxHour)
+            TimeRangeSlider(minHour: $minHour, maxHour: $maxHour, config: config)
                 .padding(.horizontal, 20)
         }
     }
