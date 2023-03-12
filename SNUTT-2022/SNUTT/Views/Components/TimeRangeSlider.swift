@@ -20,6 +20,8 @@ struct TimeRangeSlider: View {
     @Binding var maxHour: Int
     var config: TimeRangeSliderConfig = .init()
 
+    @State private var feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+
     struct SliderPath: Shape {
         func path(in rect: CGRect) -> Path {
             let height = rect.size.height
@@ -121,11 +123,19 @@ struct TimeRangeSlider: View {
 
                 ZStack {
                     SliderHandle(hour: minHour, offset: translateHourToWidth(hour: minHour, reader: reader), diameter: config.handleDiameter) { value in
-                        minHour = min(translateWidthToHour(width: value.location.x, reader: reader), maxHour - config.minimumDistance)
+                        let newValue = min(translateWidthToHour(width: value.location.x, reader: reader), maxHour - config.minimumDistance)
+                        if minHour != newValue {
+                            minHour = newValue
+                            feedbackGenerator.impactOccurred()
+                        }
                     }
 
                     SliderHandle(hour: maxHour, offset: translateHourToWidth(hour: maxHour, reader: reader), diameter: config.handleDiameter) { value in
-                        maxHour = max(translateWidthToHour(width: value.location.x, reader: reader), minHour + config.minimumDistance)
+                        let newValue = max(translateWidthToHour(width: value.location.x, reader: reader), minHour + config.minimumDistance)
+                        if maxHour != newValue {
+                            maxHour = newValue
+                            feedbackGenerator.impactOccurred()
+                        }
                     }
                 }
                 .padding(.horizontal, -config.handleDiameter/2)
