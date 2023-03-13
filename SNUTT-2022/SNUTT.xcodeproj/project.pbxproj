@@ -213,6 +213,7 @@
 		BEF9233628E7EE45004AFCB2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233528E7EE45004AFCB2 /* SignUpView.swift */; };
 		BEF9233828E84653004AFCB2 /* LectureTimeSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233728E84653004AFCB2 /* LectureTimeSheetScene.swift */; };
 		BEF9233A28E84B62004AFCB2 /* SearchLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */; };
+		CE4F2C6229BA45420007194E /* TimeRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */; };
 		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
 		DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
 		DC1E0ED12877381F005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
@@ -458,6 +459,7 @@
 		BEF9233528E7EE45004AFCB2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		BEF9233728E84653004AFCB2 /* LectureTimeSheetScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureTimeSheetScene.swift; sourceTree = "<group>"; };
 		BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLectureCell.swift; sourceTree = "<group>"; };
+		CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRangeSlider.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
 		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
 		DC1E0ED02877381F005632A3 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -905,6 +907,7 @@
 				B85B244C295BF36F00E6577E /* FindLocalIdView.swift */,
 				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
 				B88D170028AF71E300E2D652 /* UserSupportView.swift */,
+				CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */,
 				BE28036028E884D300B2B1AB /* WebViews */,
 				BE9413D728C3AF8300171060 /* Search */,
 				BEB3B6AB28D4D3DF00E56062 /* LectureDetail */,
@@ -1354,6 +1357,7 @@
 				DC860F4927E5C87D0068C94B /* SNUTTApp.swift in Sources */,
 				BE9413D028C220C900171060 /* NotificationService.swift in Sources */,
 				BE9413B928C20A4000171060 /* AuthRouter.swift in Sources */,
+				CE4F2C6229BA45420007194E /* TimeRangeSlider.swift in Sources */,
 				BE682BDB28870872009EBCB7 /* LectureService.swift in Sources */,
 				BE7E230127FF20EE004DC202 /* TimetableScene.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
