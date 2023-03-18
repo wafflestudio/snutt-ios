@@ -55,32 +55,34 @@ struct TimetablePainter {
     /// `autoFit`을 고려한 시간표의 시작 시각. 빈 시간표일 때에는 기본 9시이다.
     static func getStartingHour(current: Timetable?, config: TimetableConfiguration) -> Int {
         if let _ = current?.lectures.isEmpty,
-           current?.earliestStartTime == nil {
+           current?.earliestStartTime == nil
+        {
             return 9
         }
-        
+
         if !config.autoFit {
             return config.minHour
         }
-        
+
         guard let startTime = current?.earliestStartTime else {
             return config.minHour
         }
-        
+
         return Int(min(startTime, 9))
     }
 
     /// `autoFit`을 고려한 시간표의 종료 시각. 빈 시간표일 때에는 기본 17시이다.
     static func getEndingHour(current: Timetable?, config: TimetableConfiguration) -> Int {
         if let _ = current?.lectures.isEmpty,
-           current?.lastEndTime == nil {
+           current?.lastEndTime == nil
+        {
             return 17
         }
-        
+
         if !config.autoFit {
             return config.maxHour
         }
-        
+
         guard let endTime = current?.lastEndTime else {
             return config.maxHour
         }
