@@ -11,11 +11,22 @@ import WidgetKit
 struct TimetableWidgetEntryView: View {
     var entry: SNUTTWidgetProvider.Entry
 
+    @Environment(\.widgetFamily) private var family
+
     var body: some View {
-        ZStack {
-            STColor.systemBackground
-            TimetableZStack(current: entry.currentTimetable, config: entry.timetableConfig)
+        switch family {
+        case .systemLarge:
+            ZStack {
+                STColor.systemBackground
+                TimetableFullWidgetView(entry: entry)
+            }
+        default:
+            ZStack {
+                STColor.systemBackground
+                TimetableCompactWidgetView(entry: entry)
+            }
         }
+
     }
 }
 

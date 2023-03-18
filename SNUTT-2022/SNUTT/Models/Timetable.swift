@@ -134,3 +134,37 @@ extension TimetableMetadata {
         totalCredit = dto.total_credit
     }
 }
+
+// MARK: Timetable+Utils
+extension Timetable {
+    typealias LectureTime = (lecture: Lecture, timePlace: TimePlace)
+
+    func getRemainingLectureTimes(on date: Date) -> [LectureTime] {
+        let now = Calendar.current.dateComponents([.hour, .minute], from: date)
+        guard let nowHour = now.hour,
+              let nowMinute = now.minute else {
+            return []
+        }
+        let nowTime = TimeUtils.Time(hour: nowHour, minute: nowMinute)
+
+        let remaining = lectures.flatMap { lecture -> [LectureTime] in
+            lecture.timePlaces
+                .filter { $0.day == date.weekday }
+                .filter { timePlace in
+                    let endTime = TimeUtils.getTime(from: timePlace.endTime)
+                    return nowTime.hour < endTime.hour ||
+                        (nowTime.hour == endTime.hour && nowTime.minute < endTime.minute)
+                }
+                .map { timePlace in
+                    (lecture: lecture, timePlace: timePlace)
+                }
+        }
+        return remaining.sorted { lectureTime1, lectureTime2 in
+            let startTime1 = TimeUtils.getTimeInDouble(from: lectureTime1.timePlace.startTime)
+            let startTime2 = TimeUtils.getTimeInDouble(from: lectureTime2.timePlace.startTime)
+            return startTime1 < startTime2
+        }
+    }
+
+
+}
