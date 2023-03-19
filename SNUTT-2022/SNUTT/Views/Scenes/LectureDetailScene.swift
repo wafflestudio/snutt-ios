@@ -303,7 +303,7 @@ struct LectureDetailScene: View {
                 switch displayMode {
                 case .normal, .preview:
                     HStack {
-                        if !editMode.isEditing {
+                        if !lecture.isCustom && !editMode.isEditing {
                             Button {
                                 if isBookmarked {
                                     isUndoBookmarkAlertPresented = true
