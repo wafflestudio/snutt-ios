@@ -49,6 +49,7 @@ enum LectureRouter: Router {
         case let .addCustomLecture(_, lecture, isForced):
             var dict = lecture.asDictionary()
             dict?.removeValue(forKey: "_id")
+            dict?.removeValue(forKey: "lecture_id")
             dict?["is_forced"] = isForced
             return dict
         case let .addLecture(_, _, isForced):

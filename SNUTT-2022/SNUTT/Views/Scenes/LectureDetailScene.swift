@@ -35,8 +35,6 @@ struct LectureDetailScene: View {
     @State private var reviewId: String? = ""
     @State private var syllabusURL: String = ""
     @State private var showSyllabusWebView = false
-    @State private var isUndoBookmarkAlertPresented = false
-    @State private var isBookmarkAlertPresented = false
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
@@ -303,10 +301,12 @@ struct LectureDetailScene: View {
                 switch displayMode {
                 case .normal, .preview:
                     HStack {
-                        if !editMode.isEditing {
+                        if !lecture.isCustom && !editMode.isEditing {
                             Button {
                                 if isBookmarked {
-                                    isUndoBookmarkAlertPresented = true
+                                    Task {
+                                        await viewModel.undoBookmarkLecture(lecture: lecture)
+                                    }
                                 } else {
                                     Task {
                                         await viewModel.bookmarkLecture(lecture: lecture)
@@ -397,14 +397,6 @@ struct LectureDetailScene: View {
             }
         } message: {
             Text(viewModel.errorMessage)
-        }
-        .alert("강의를 관심강좌에서 제외하시겠습니까?", isPresented: $isUndoBookmarkAlertPresented) {
-            Button("취소", role: .cancel, action: {})
-            Button("확인", role: .destructive) {
-                Task {
-                    await viewModel.undoBookmarkLecture(lecture: lecture)
-                }
-            }
         }
     }
 }
