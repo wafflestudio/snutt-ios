@@ -12,6 +12,7 @@ enum Weekday: Int, Identifiable, Codable, CaseIterable {
 
     var id: RawValue { rawValue }
 
+    /// 0 for Sunday up to 6 for Monday.
     var sundayIndexedId: Int {
         (id + 1) % 7
     }

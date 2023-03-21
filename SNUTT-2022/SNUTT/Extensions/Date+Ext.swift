@@ -28,9 +28,16 @@ extension Date {
         Calendar.current.component(.day, from: self)
     }
 
-    var localizedDateString: String {
+    var localizedShortDateString: String {
         let dateFormatter = DateFormatter()
         dateFormatter.setLocalizedDateFormatFromTemplate("MMM dd")
+        return dateFormatter.string(from: self)
+    }
+
+    func localizedDateString(dateStyle: DateFormatter.Style, timeStyle: DateFormatter.Style) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = dateStyle
+        dateFormatter.timeStyle = timeStyle
         return dateFormatter.string(from: self)
     }
 }
