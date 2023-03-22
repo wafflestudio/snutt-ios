@@ -46,19 +46,16 @@ struct TimetableCompactLeftView: View {
                     if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date) {
 
                         if let item = lectureTimes.get(at: 0) {
-                            TimePlaceListItem(lecture: item.lecture,
-                                              timePlace: item.timePlace)
+                            TimePlaceListItem(items: [item])
                         }
 
                         if let item = lectureTimes.get(at: 1) {
-                            TimePlaceListItem(lecture: item.lecture,
-                                              timePlace: item.timePlace,
-                                              // show place string only if there's enough space available
+                            TimePlaceListItem(items: [item],
                                               showPlace: lectureTimes.count <= 2 || lectureTimes.get(at: 0)?.timePlace.place.isEmpty == true)
                         }
 
                         if lectureTimes.count > 2 {
-                            TimePlaceTruncatedItem(items: Array(lectureTimes.dropFirst(2)))
+                            TimePlaceListItem(items: Array(lectureTimes.dropFirst(2)), showTime: false, showPlace: false)
                         }
 
                     }
@@ -75,8 +72,6 @@ struct TimetableCompactLeftView: View {
     }
 }
 
-// TODO: circle 겹치게 +3
-
 struct TimetableCompactRightView: View {
     var entry: SNUTTWidgetProvider.Entry
     var body: some View {
@@ -92,14 +87,13 @@ struct TimetableCompactRightView: View {
                             .lineLimit(1)
 
                         ForEach(upcomingLectureTimesResult.lectureTimes.prefix(2), id: \.timePlace.id) { item in
-                            TimePlaceListItem(lecture: item.lecture,
-                                              timePlace: item.timePlace,
-                                              showPlace: false
-                            )
+                            TimePlaceListItem(items: [item], showPlace: false)
                         }
 
-                        TimePlaceTruncatedItem(items: Array(upcomingLectureTimesResult.lectureTimes.dropFirst(2)), showTime: true)
+                        TimePlaceListItem(items: Array(upcomingLectureTimesResult.lectureTimes.dropFirst(2)), showPlace: false)
                     }
+                } else {
+                    Text ("No upcoming ectures")
                 }
             }
         }
@@ -107,24 +101,35 @@ struct TimetableCompactRightView: View {
     }
 }
 
-struct TimePlaceTruncatedItem: View {
+struct TimePlaceListItem: View {
     let items: [Timetable.LectureTime]
-    var showTime: Bool = false
 
-    var numberOfCircles: Int {
+    var showTime: Bool = true
+    var showPlace: Bool = true
+
+    private var numberOfCircles: Int {
         min(items.count, 3)
     }
 
-    var displayTitle: String {
-        items.get(at: 0)?.lecture.title ?? "-"
+    private var displayItem: Timetable.LectureTime? {
+        items.get(at: 0)
     }
 
-    var displayTime: String {
-        guard let timePlace = items.get(at: 0)?.timePlace else { return "" }
+    private var displayTitle: String {
+        displayItem?.lecture.title ?? "-"
+    }
+
+    private var displayTime: String {
+        guard let timePlace = displayItem?.timePlace else { return "" }
         return "\(timePlace.startTime) - \(timePlace.endTime)"
     }
 
-    var moreCount: Int {
+    private var displayPlace: String? {
+        guard let place = displayItem?.timePlace.place else { return nil }
+        return place.isEmpty ? nil : place
+    }
+
+    private var moreCount: Int {
         max(items.count - 1, 0)
     }
 
@@ -135,11 +140,10 @@ struct TimePlaceTruncatedItem: View {
                     if let item = items.get(at: index) {
                         Circle()
                             .fill(item.lecture.getColor().bg)
-                            .frame(width: 7, height: 7)
+                            .frame(width: 8, height: 8)
                             .overlay(
                                 Circle()
                                     .stroke(STColor.systemBackground, lineWidth: 1)
-                                    .frame(width: 8, height: 8)
                             )
                             .offset(x: 5 * CGFloat(index))
                             .zIndex(-Double(index))
@@ -155,11 +159,18 @@ struct TimePlaceTruncatedItem: View {
                     .font(.system(size: 13, weight: .semibold))
                     .lineLimit(1)
 
-                if showTime {
-                    Text(displayTime)
-                        .font(.system(size: 13, weight: .regular))
-                        .foregroundColor(.gray)
+                Group {
+                    if showTime {
+                        Text(displayTime)
+                    }
+
+                    if let place = displayPlace, showPlace {
+                        Text("\(place)")
+                    }
                 }
+                .lineLimit(1)
+                .font(.system(size: 13, weight: .regular))
+                .foregroundColor(.gray)
             }
 
 
@@ -176,45 +187,6 @@ struct TimePlaceTruncatedItem: View {
         }
     }
 
-}
-
-struct TimePlaceListItem: View {
-    let lecture: Lecture
-    let timePlace: TimePlace
-
-    var showTime: Bool = true
-    var showPlace: Bool = true
-
-
-    var body: some View {
-        HStack(alignment: .firstTextBaseline ,spacing: 0) {
-            Circle()
-                .fill(lecture.getColor().bg)
-                .frame(width: 7, height: 7)
-
-            Spacer()
-                .frame(width: 10)
-
-            VStack(alignment: .leading) {
-                Text(lecture.title)
-                    .font(.system(size: 13, weight: .semibold))
-                    .lineLimit(1)
-
-                Group {
-                    if showTime {
-                        Text("\(timePlace.startTime) - \(timePlace.endTime)")
-                    }
-
-                    if showPlace && !timePlace.place.isEmpty {
-                        Text("\(timePlace.place)")
-                    }
-                }
-                .lineLimit(1)
-                .font(.system(size: 13, weight: .regular))
-                .foregroundColor(.gray)
-            }
-        }
-    }
 }
 
 #if DEBUG
