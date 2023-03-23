@@ -171,7 +171,7 @@ extension Timetable {
     /// Get the upcoming `LectureTimes` within the next week.
     func getUpcomingLectureTimes() -> (date: Date, lectureTimes: [LectureTime])? {
         let now = Date()
-        for offset in 1...6 {
+        for offset in 1...7 {
             guard let nextDate = Calendar.current.date(byAdding: .day, value: offset, to: now) else { continue }
             guard let nextDateAtMidnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: nextDate) else { continue }
             let lectureTimes = getRemainingLectureTimes(on: nextDateAtMidnight)

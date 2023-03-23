@@ -13,11 +13,15 @@ struct TimetableCompactWidgetView: View {
 
     @Environment(\.widgetFamily) private var family
 
+    private var isTimetableEmpty: Bool {
+        entry.currentTimetable?.lectures.isEmpty ?? true
+    }
+
     var body: some View {
         HStack {
             TimetableCompactLeftView(entry: entry)
 
-            if family == .systemMedium {
+            if family == .systemMedium && !isTimetableEmpty {
                 TimetableCompactRightView(entry: entry)
             }
         }
@@ -36,24 +40,67 @@ struct TimetableCompactLeftView: View {
         .padding(.top, 12)
     }
 
+    private var isTimetableEmpty: Bool {
+        entry.currentTimetable?.lectures.isEmpty ?? true
+    }
+
+    private var emptyTimetableView: some View {
+        VStack {
+            Spacer()
+                .frame(height: 20)
+
+            Text("빈 시간표")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundColor(.gray)
+                .padding(.bottom, 2)
+
+            Text("시간표에 강의가 존재하지 않습니다.")
+                .multilineTextAlignment(.center)
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(.gray)
+
+            Spacer()
+
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var emptyRemainingLecturesView: some View {
+        VStack {
+
+            HStack(alignment: .center) {
+
+                Circle()
+                    .stroke(.gray.opacity(0.8), lineWidth: 1)
+                    .frame(width: 6, height: 6)
+
+                Text("오늘 남은 강의 없음")
+                    .font(.system(size: 13, weight: .regular))
+                    .foregroundColor(.gray)
+                    .padding(.bottom, 2)
+            }
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+    }
+
     private var dateHeaderView: some View {
         HStack {
             Text(entry.date.weekday.shortSymbol)
                 .font(.system(size: 17, weight: .bold))
-
             Text(entry.date.localizedShortDateString)
                 .font(.system(size: 13, weight: .regular))
                 .foregroundColor(.gray)
-
             Spacer()
         }
     }
 
     private var timetableBody: some View {
         GeometryReader { reader in
-            VStack(alignment: .leading, spacing: 5) {
-                if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date) {
-
+            let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date)
+            if let lectureTimes, !lectureTimes.isEmpty {
+                VStack(alignment: .leading, spacing: 5) {
                     if let item = lectureTimes.get(at: 0) {
                         TimePlaceListItem(items: [item])
                     }
@@ -67,11 +114,16 @@ struct TimetableCompactLeftView: View {
                     if lectureTimes.count > 2 {
                         TimePlaceListItem(items: Array(lectureTimes.dropFirst(2)), showTime: false, showPlace: false)
                     }
+                    Spacer()
                 }
-                Spacer()
+                .frame(height: reader.size.height)
+                .clipped()
+            } else if isTimetableEmpty {
+                emptyTimetableView
             }
-            .frame(height: reader.size.height)
-            .clipped()
+            else {
+                emptyRemainingLecturesView
+            }
         }
     }
 }
@@ -99,8 +151,6 @@ struct TimetableCompactRightView: View {
                             TimePlaceListItem(items: remainingItems, showPlace: false)
                         }
                     }
-                } else {
-                    Text ("No upcoming ectures")
                 }
             }
         }
