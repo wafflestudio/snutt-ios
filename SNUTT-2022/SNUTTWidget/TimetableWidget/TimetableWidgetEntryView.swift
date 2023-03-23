@@ -15,16 +15,18 @@ struct TimetableWidgetEntryView: View {
 
     var body: some View {
         switch family {
-        case .systemLarge:
+        case .systemLarge, .systemExtraLarge:
             ZStack {
                 STColor.systemBackground
                 TimetableFullWidgetView(entry: entry)
             }
-        default:
+        case .systemSmall, .systemMedium:
             ZStack {
                 STColor.systemBackground
                 TimetableCompactWidgetView(entry: entry)
             }
+        default:
+            EmptyView()
         }
 
     }

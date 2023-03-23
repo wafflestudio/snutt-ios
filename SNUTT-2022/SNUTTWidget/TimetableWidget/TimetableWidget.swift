@@ -13,9 +13,9 @@ struct TimetableWidget: Widget {
 
     private var supportedFamilies: [WidgetFamily] {
         var supported: [WidgetFamily] = [.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge]
-        if #available(iOS 16.0, watchOS 9.0, *) {
-            supported.append(contentsOf: [.accessoryRectangular, .accessoryCircular, .accessoryInline])
-        }
+//        if #available(iOS 16.0, watchOS 9.0, *) {
+//            supported.append(contentsOf: [.accessoryRectangular, .accessoryCircular, .accessoryInline])
+//        }
         return supported
     }
 
