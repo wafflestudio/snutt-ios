@@ -30,45 +30,49 @@ struct TimetableCompactLeftView: View {
 
     var body: some View {
         VStack(spacing: 7) {
-            HStack {
-                Text(entry.date.weekday.shortSymbol)
-                    .font(.system(size: 17, weight: .bold))
-
-                Text(entry.date.localizedShortDateString)
-                    .font(.system(size: 13, weight: .regular))
-                    .foregroundColor(.gray)
-
-                Spacer()
-            }
-
-            GeometryReader { reader in
-                VStack(alignment: .leading, spacing: 5) {
-                    if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date) {
-
-                        if let item = lectureTimes.get(at: 0) {
-                            TimePlaceListItem(items: [item])
-                        }
-
-                        if let item = lectureTimes.get(at: 1) {
-                            TimePlaceListItem(items: [item],
-                                              showPlace: lectureTimes.count <= 2 || lectureTimes.get(at: 0)?.timePlace.place.isEmpty == true)
-                        }
-
-                        if lectureTimes.count > 2 {
-                            TimePlaceListItem(items: Array(lectureTimes.dropFirst(2)), showTime: false, showPlace: false)
-                        }
-
-                    }
-
-                    Spacer()
-
-                }
-                .frame(height: reader.size.height)
-                .clipped()
-            }
-
+            dateHeaderView
+            timetableBody
         }
         .padding(.top, 12)
+    }
+
+    private var dateHeaderView: some View {
+        HStack {
+            Text(entry.date.weekday.shortSymbol)
+                .font(.system(size: 17, weight: .bold))
+
+            Text(entry.date.localizedShortDateString)
+                .font(.system(size: 13, weight: .regular))
+                .foregroundColor(.gray)
+
+            Spacer()
+        }
+    }
+
+    private var timetableBody: some View {
+        GeometryReader { reader in
+            VStack(alignment: .leading, spacing: 5) {
+                if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date) {
+
+                    if let item = lectureTimes.get(at: 0) {
+                        TimePlaceListItem(items: [item])
+                    }
+
+                    if let item = lectureTimes.get(at: 1) {
+                        let hasEnoughSpace = lectureTimes.count <= 2 || lectureTimes.get(at: 0)?.timePlace.place.isEmpty == true
+                        TimePlaceListItem(items: [item],
+                                          showPlace: hasEnoughSpace)
+                    }
+
+                    if lectureTimes.count > 2 {
+                        TimePlaceListItem(items: Array(lectureTimes.dropFirst(2)), showTime: false, showPlace: false)
+                    }
+                }
+                Spacer()
+            }
+            .frame(height: reader.size.height)
+            .clipped()
+        }
     }
 }
 
@@ -90,7 +94,10 @@ struct TimetableCompactRightView: View {
                             TimePlaceListItem(items: [item], showPlace: false)
                         }
 
-                        TimePlaceListItem(items: Array(upcomingLectureTimesResult.lectureTimes.dropFirst(2)), showPlace: false)
+                        let remainingItems = Array(upcomingLectureTimesResult.lectureTimes.dropFirst(2))
+                        if !remainingItems.isEmpty {
+                            TimePlaceListItem(items: remainingItems, showPlace: false)
+                        }
                     }
                 } else {
                     Text ("No upcoming ectures")
