@@ -28,7 +28,6 @@ struct TimetableWidgetEntryView: View {
         default:
             EmptyView()
         }
-
     }
 }
 

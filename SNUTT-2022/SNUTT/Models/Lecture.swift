@@ -134,7 +134,7 @@ extension Lecture {
                            lectureId: UUID().uuidString,
                            title: titles.randomElement()!,
                            instructor: instructors.randomElement()!,
-                           timePlaces: [.preview, .preview,.preview,.preview,.preview],
+                           timePlaces: [.preview, .preview, .preview, .preview, .preview],
                            timeMasks: [],
                            courseNumber: "400.313",
                            lectureNumber: "001",

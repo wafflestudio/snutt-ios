@@ -60,16 +60,13 @@ struct TimetableCompactLeftView: View {
                 .foregroundColor(.gray)
 
             Spacer()
-
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var emptyRemainingLecturesView: some View {
         VStack {
-
             HStack(alignment: .center) {
-
                 Circle()
                     .stroke(.gray.opacity(0.8), lineWidth: 1)
                     .frame(width: 6, height: 6)
@@ -120,8 +117,7 @@ struct TimetableCompactLeftView: View {
                 .clipped()
             } else if isTimetableEmpty {
                 emptyTimetableView
-            }
-            else {
+            } else {
                 emptyRemainingLecturesView
             }
         }
@@ -132,7 +128,7 @@ struct TimetableCompactRightView: View {
     var entry: SNUTTWidgetProvider.Entry
     var body: some View {
         VStack {
-            GeometryReader { reader in
+            GeometryReader { _ in
                 if let upcomingLectureTimesResult = entry.currentTimetable?.getUpcomingLectureTimes()
                 {
                     VStack(alignment: .leading, spacing: 5) {
@@ -193,7 +189,7 @@ struct TimePlaceListItem: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 0) {
             ZStack {
-                ForEach(0..<numberOfCircles, id: \.self) { index in
+                ForEach(0 ..< numberOfCircles, id: \.self) { index in
                     if let item = items.get(at: index) {
                         Circle()
                             .fill(item.lecture.getColor().bg)
@@ -230,8 +226,6 @@ struct TimePlaceListItem: View {
                 .foregroundColor(.gray)
             }
 
-
-
             if moreCount > 0 {
                 Spacer()
                 Text("+\(moreCount)")
@@ -240,17 +234,15 @@ struct TimePlaceListItem: View {
                     .foregroundColor(.gray)
                     .lineLimit(1)
             }
-
         }
     }
-
 }
 
 #if DEBUG
-struct TimetableCompactWidgetView_Previews: PreviewProvider {
-    static var previews: some View {
-        TimetableCompactWidgetView(entry: .init(date: Calendar.current.date(from: .init(hour: 0, minute: 0))!, configuration: ConfigurationIntent(), currentTimetable: .preview, timetableConfig: .init()))
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
+    struct TimetableCompactWidgetView_Previews: PreviewProvider {
+        static var previews: some View {
+            TimetableCompactWidgetView(entry: .init(date: Calendar.current.date(from: .init(hour: 0, minute: 0))!, configuration: ConfigurationIntent(), currentTimetable: .preview, timetableConfig: .init()))
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
+        }
     }
-}
 #endif

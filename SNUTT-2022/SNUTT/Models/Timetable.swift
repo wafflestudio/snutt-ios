@@ -144,7 +144,8 @@ extension Timetable {
     func getRemainingLectureTimes(on date: Date) -> [LectureTime] {
         let now = Calendar.current.dateComponents([.hour, .minute], from: date)
         guard let nowHour = now.hour,
-              let nowMinute = now.minute else {
+              let nowMinute = now.minute
+        else {
             return []
         }
         let nowTime = TimeUtils.Time(hour: nowHour, minute: nowMinute)
@@ -155,7 +156,7 @@ extension Timetable {
                 .filter { timePlace in
                     let endTime = TimeUtils.getTime(from: timePlace.endTime)
                     return nowTime.hour < endTime.hour ||
-                    (nowTime.hour == endTime.hour && nowTime.minute < endTime.minute)
+                        (nowTime.hour == endTime.hour && nowTime.minute < endTime.minute)
                 }
                 .map { timePlace in
                     (lecture: lecture, timePlace: timePlace)
@@ -171,7 +172,7 @@ extension Timetable {
     /// Get the upcoming `LectureTimes` within the next week.
     func getUpcomingLectureTimes() -> (date: Date, lectureTimes: [LectureTime])? {
         let now = Date()
-        for offset in 1...7 {
+        for offset in 1 ... 7 {
             guard let nextDate = Calendar.current.date(byAdding: .day, value: offset, to: now) else { continue }
             guard let nextDateAtMidnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: nextDate) else { continue }
             let lectureTimes = getRemainingLectureTimes(on: nextDateAtMidnight)

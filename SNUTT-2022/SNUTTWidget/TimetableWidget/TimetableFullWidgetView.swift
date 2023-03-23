@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 /// Just a simple wrapper of `TimetableZStack` for consistency.
 struct TimetableFullWidgetView: View {
     var entry: SNUTTWidgetProvider.Entry
@@ -15,4 +14,3 @@ struct TimetableFullWidgetView: View {
         TimetableZStack(current: entry.currentTimetable, config: entry.timetableConfig)
     }
 }
-

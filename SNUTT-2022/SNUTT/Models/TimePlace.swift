@@ -80,11 +80,11 @@ extension TimePlace {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm"
 
-            let startHour = Int.random(in: 8...21) // generate a random start hour between 8am and 9pm
-            let endHour = Int.random(in: (startHour+1)...22) // generate a random end hour that is at least 1 hour after startHour, but before 10pm
+            let startHour = Int.random(in: 8 ... 21) // generate a random start hour between 8am and 9pm
+            let endHour = Int.random(in: (startHour + 1) ... 22) // generate a random end hour that is at least 1 hour after startHour, but before 10pm
 
-            let startMinute = Int.random(in: 0...59) // generate a random start minute
-            let endMinute = Int.random(in: 0...59) // generate a random end minute
+            let startMinute = Int.random(in: 0 ... 59) // generate a random start minute
+            let endMinute = Int.random(in: 0 ... 59) // generate a random end minute
 
             let startTime = DateComponents(hour: startHour, minute: startMinute)
             let endTime = DateComponents(hour: endHour, minute: endMinute)
