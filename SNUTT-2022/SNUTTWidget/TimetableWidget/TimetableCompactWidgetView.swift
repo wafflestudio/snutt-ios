@@ -23,6 +23,7 @@ struct TimetableCompactWidgetView: View {
 
             if family == .systemMedium && !isTimetableEmpty {
                 TimetableCompactRightView(entry: entry)
+                    .padding(.leading, 5)
             }
         }
         .padding(.horizontal, 16)
@@ -109,7 +110,10 @@ struct TimetableCompactLeftView: View {
                     }
 
                     if lectureTimes.count > 2 {
-                        TimePlaceListItem(items: Array(lectureTimes.dropFirst(2)), showTime: false, showPlace: false)
+                        let hasEnoughSpace = lectureTimes.prefix(2).reduce(true) { partialResult, item in
+                            partialResult && item.timePlace.place.isEmpty
+                        }
+                        TimePlaceListItem(items: Array(lectureTimes.dropFirst(2)), showTime: hasEnoughSpace, showPlace: false)
                     }
                     Spacer()
                 }
