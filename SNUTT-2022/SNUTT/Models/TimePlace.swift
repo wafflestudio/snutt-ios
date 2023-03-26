@@ -73,6 +73,20 @@ extension TimePlace {
     }
 }
 
+// MARK: Widget Utils
+
+extension TimePlace {
+    func toDates() -> [Date] {
+        let start = TimeUtils.getTime(from: startTime)
+        let end = TimeUtils.getTime(from: endTime)
+        let today = Date()
+        let calendar = Calendar.current
+        return [start, end].map { time in
+            calendar.date(bySettingHour: time.hour, minute: time.minute, second: 0, of: today)!
+        }
+    }
+}
+
 #if DEBUG
     extension TimePlace {
         static var preview: Self {

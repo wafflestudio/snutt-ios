@@ -135,7 +135,7 @@ extension TimetableMetadata {
     }
 }
 
-// MARK: Timetable+Utils
+// MARK: Widget Utils
 
 extension Timetable {
     typealias LectureTime = (lecture: Lecture, timePlace: TimePlace)
