@@ -38,6 +38,8 @@ struct SNUTTWidgetProvider: IntentTimelineProvider {
             dates.append(contentsOf: remainingLectureTimes.map { $0.timePlace.toDates() }.flatMap { $0 })
         }
 
+        dates = Array(Set(dates))
+
         let entries = dates.map {
             Entry(date: $0, configuration: configuration, currentTimetable: currentTimetable, timetableConfig: timetableConfig)
         }
