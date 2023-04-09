@@ -31,11 +31,10 @@ struct TimetableWidgetEntryView: View {
     }
 }
 
-
 protocol TimetableWidgetViewProtocol {
-    associatedtype LoginRequiredView : View
-    associatedtype EmptyTimetableView : View
-    associatedtype EmptyRemainingLecturesView : View
+    associatedtype LoginRequiredView: View
+    associatedtype EmptyTimetableView: View
+    associatedtype EmptyRemainingLecturesView: View
 
     var entry: SNUTTWidgetProvider.Entry { get }
 
@@ -45,8 +44,6 @@ protocol TimetableWidgetViewProtocol {
     @ViewBuilder @MainActor var loginRequiredView: LoginRequiredView { get }
     @ViewBuilder @MainActor var emptyTimetableView: EmptyTimetableView { get }
     @ViewBuilder @MainActor var emptyRemainingLecturesView: EmptyRemainingLecturesView { get }
-
-
 }
 
 extension TimetableWidgetViewProtocol {
@@ -59,9 +56,6 @@ extension TimetableWidgetViewProtocol {
         return timetable.lectures.isEmpty
     }
 }
-
-
-
 
 #if DEBUG
     struct TimetableWidgetEntryView_Previews: PreviewProvider {

@@ -14,7 +14,8 @@ struct TimetableAccessoryRectangularView: View {
         VStack(alignment: .leading) {
             Spacer()
             if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date, by: .startTime),
-               let firstLectureTime = lectureTimes.get(at: 0) {
+               let firstLectureTime = lectureTimes.get(at: 0)
+            {
                 TimePlaceListItem(items: [firstLectureTime], showTime: true, showPlace: true)
             } else if isLoginRequired {
                 loginRequiredView
@@ -29,8 +30,6 @@ struct TimetableAccessoryRectangularView: View {
         .padding(.horizontal, 1)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-
-
 }
 
 extension TimetableAccessoryRectangularView: TimetableWidgetViewProtocol {

@@ -16,15 +16,15 @@ struct TimetableCompactWidgetView: View {
     var body: some View {
         ZStack {
             STColor.systemBackground
-        HStack {
-            TimetableCompactLeftView(entry: entry)
+            HStack {
+                TimetableCompactLeftView(entry: entry)
 
-            if family == .systemMedium && !isTimetableEmpty && !isLoginRequired {
-                TimetableCompactRightView(entry: entry)
-                    .padding(.leading, 5)
+                if family == .systemMedium && !isTimetableEmpty && !isLoginRequired {
+                    TimetableCompactRightView(entry: entry)
+                        .padding(.leading, 5)
+                }
             }
-        }
-        .padding(.horizontal, 16)
+            .padding(.horizontal, 16)
         }
     }
 }
@@ -101,7 +101,6 @@ extension TimetableCompactLeftView: TimetableWidgetViewProtocol {
     var loginRequiredView: some View {
         placeholderView(title: "로그인 필요", description: "먼저 로그인을 진행해주세요.")
     }
-
 
     var emptyRemainingLecturesView: some View {
         VStack {
@@ -275,10 +274,10 @@ struct TimePlaceListItem: View {
 }
 
 #if DEBUG
-struct TimetableCompactWidgetView_Previews: PreviewProvider {
-    static var previews: some View {
-        TimetableCompactWidgetView(entry: .init(date: Calendar.current.date(from: .init(hour: 0, minute: 0))!, configuration: ConfigurationIntent(), currentTimetable: .preview, timetableConfig: .init()))
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
+    struct TimetableCompactWidgetView_Previews: PreviewProvider {
+        static var previews: some View {
+            TimetableCompactWidgetView(entry: .init(date: Calendar.current.date(from: .init(hour: 0, minute: 0))!, configuration: ConfigurationIntent(), currentTimetable: .preview, timetableConfig: .init()))
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
+        }
     }
-}
 #endif
