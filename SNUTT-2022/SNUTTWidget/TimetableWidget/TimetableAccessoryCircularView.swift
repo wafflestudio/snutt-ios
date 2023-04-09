@@ -14,49 +14,31 @@ struct TimetableAccessoryCircularView: View {
     var body: some View {
         if #available(iOS 16.0, *) {
             ZStack {
-
-                Gauge(value: currentGaugeValue, in: 0...maximumGaugeValue) {
-                    VStack(spacing: 0) {
-                        Image("logo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 13)
-                            .padding(.bottom, 3)
-                        Group {
-                            if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date, by: .startTime),
-                               let firstLectureTime = lectureTimes.get(at: 0)
-                            {
-                                Text(firstLectureTime.timePlace.startTime)
-                            } else if isLoginRequired {
-                                loginRequiredView
-                            } else if isTimetableEmpty {
-                                emptyTimetableView
-                            } else {
-                                emptyRemainingLecturesView
-                            }
+                AccessoryWidgetBackground()
+                VStack(spacing: 0) {
+                    Image("logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 13)
+                        .padding(.bottom, 3)
+                    Group {
+                        if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date, by: .startTime),
+                           let firstLectureTime = lectureTimes.get(at: 0)
+                        {
+                            Text(firstLectureTime.timePlace.startTime)
+                        } else if isLoginRequired {
+                            loginRequiredView
+                        } else if isTimetableEmpty {
+                            emptyTimetableView
+                        } else {
+                            emptyRemainingLecturesView
                         }
-                        .font(.body.bold())
                     }
+                    .font(.body.bold())
                 }
-                .gaugeStyle(.accessoryCircularCapacity)
             }
         }
     }
-
-    private var maximumGaugeValue: Double {
-        guard let todayMidnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date()),
-              let count = entry.currentTimetable?.getRemainingLectureTimes(on: todayMidnight, by: .endTime).count,
-              count > 0
-        else { return Double.infinity }
-        return Double(count)
-    }
-
-    private var currentGaugeValue: Double {
-        guard let remainingCount = entry.currentTimetable?.getRemainingLectureTimes(on: Date(), by: .endTime).count else { return 0 }
-        return maximumGaugeValue - Double(remainingCount)
-    }
-
-
 }
 
 extension TimetableAccessoryCircularView: TimetableWidgetViewProtocol {
@@ -65,7 +47,7 @@ extension TimetableAccessoryCircularView: TimetableWidgetViewProtocol {
     }
 
     var emptyRemainingLecturesView: some View {
-        Text("100%")
+        Text("-")
     }
 
     var loginRequiredView: some View {
