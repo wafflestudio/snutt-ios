@@ -19,11 +19,9 @@ class TimetableState: ObservableObject {
 
     private var bag = Set<AnyCancellable>()
 
-    // TODO: refactor this
     init() {
         // sync between current timetable and widget
         $current
-            .compactMap { $0 }
             .sink { _ in
                 WidgetCenter.shared.reloadTimelines(ofKind: "TimetableWidget")
             }
