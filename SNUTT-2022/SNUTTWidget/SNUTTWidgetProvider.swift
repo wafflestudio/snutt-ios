@@ -34,7 +34,7 @@ struct SNUTTWidgetProvider: IntentTimelineProvider {
         let now = Date()
         var dates: [Date] = [now]
 
-        if let remainingLectureTimes = currentTimetable?.getRemainingLectureTimes(on: now) {
+        if let remainingLectureTimes = currentTimetable?.getRemainingLectureTimes(on: now, by: .startTime) {
             dates.append(contentsOf: remainingLectureTimes.map { $0.timePlace.toDates() }.flatMap { $0 })
         }
 

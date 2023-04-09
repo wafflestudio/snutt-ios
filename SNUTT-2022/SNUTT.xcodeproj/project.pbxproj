@@ -215,7 +215,11 @@
 		BEF9233A28E84B62004AFCB2 /* SearchLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */; };
 		CE3F37A929C4CBC6009EDCCC /* TimetableCompactWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */; };
 		CE3F37AD29C5D452009EDCCC /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
+		CE6CA91029E1E611004E92B1 /* logo.inline.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6CA90F29E1E610004E92B1 /* logo.inline.png */; };
+		CE6CA91229E24676004E92B1 /* TimetableAccessoryCircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6CA91129E24676004E92B1 /* TimetableAccessoryCircularView.swift */; };
 		CE98750C29CC527F007F063A /* TimeRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */; };
+		CEB5A71E29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */; };
+		CEB5A72029DDA8B200E74C47 /* TimetableAccessoryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */; };
 		CEEAB49229C5EA37005497B0 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+Ext.swift */; };
 		CEEAB49329C5EA41005497B0 /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */; };
@@ -467,6 +471,10 @@
 		CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableCompactWidgetView.swift; sourceTree = "<group>"; };
 		CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Getter.swift"; sourceTree = "<group>"; };
 		CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRangeSlider.swift; sourceTree = "<group>"; };
+		CE6CA90F29E1E610004E92B1 /* logo.inline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.inline.png; sourceTree = "<group>"; };
+		CE6CA91129E24676004E92B1 /* TimetableAccessoryCircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryCircularView.swift; sourceTree = "<group>"; };
+		CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryRectangularView.swift; sourceTree = "<group>"; };
+		CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryInlineView.swift; sourceTree = "<group>"; };
 		CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableFullWidgetView.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
 		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
@@ -654,6 +662,10 @@
 				BE98A07A288B02DD00C2CE95 /* TimetableWidgetEntryView.swift */,
 				CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */,
 				CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */,
+				CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */,
+				CE6CA91129E24676004E92B1 /* TimetableAccessoryCircularView.swift */,
+				CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */,
+				CE6CA90F29E1E610004E92B1 /* logo.inline.png */,
 			);
 			path = TimetableWidget;
 			sourceTree = "<group>";
@@ -1110,6 +1122,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE6CA91029E1E611004E92B1 /* logo.inline.png in Resources */,
 				BE98A06C288AFC1600C2CE95 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1174,6 +1187,7 @@
 				CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */,
 				BE419B88288B8B8F00FA9590 /* Quarter.swift in Sources */,
 				BE419B84288B8B8F00FA9590 /* TimePlace.swift in Sources */,
+				CE6CA91229E24676004E92B1 /* TimetableAccessoryCircularView.swift in Sources */,
 				BE804BEB288B9EFE00782F16 /* TimetableConfiguration.swift in Sources */,
 				BE419B8A288B8BB600FA9590 /* STColor.swift in Sources */,
 				BE419B89288B8BAD00FA9590 /* TimetableDto.swift in Sources */,
@@ -1184,6 +1198,7 @@
 				BE419B87288B8B8F00FA9590 /* Weekday.swift in Sources */,
 				BE419B92288B8F9F00FA9590 /* TimetableBlock.swift in Sources */,
 				BE419B93288B8FA600FA9590 /* TimetableBlocksLayer.swift in Sources */,
+				CEB5A72029DDA8B200E74C47 /* TimetableAccessoryInlineView.swift in Sources */,
 				BE98A069288AFC1600C2CE95 /* SNUTTWidgetBundle.swift in Sources */,
 				BE419B9B288B917A00FA9590 /* TimetableUtils.swift in Sources */,
 				BE419B8E288B8C6800FA9590 /* View+Debug.swift in Sources */,
@@ -1200,6 +1215,7 @@
 				CE3F37A929C4CBC6009EDCCC /* TimetableCompactWidgetView.swift in Sources */,
 				BE98A06E288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
 				BE419B98288B8FDC00FA9590 /* STFont.swift in Sources */,
+				CEB5A71E29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift in Sources */,
 				BE98A07F288B046400C2CE95 /* TimetableWidget.swift in Sources */,
 				BE77D0A528AEADE30067A9D8 /* CourseBookDto.swift in Sources */,
 			);

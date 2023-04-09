@@ -11,6 +11,9 @@ import SwiftUI
 struct TimetableFullWidgetView: View {
     var entry: SNUTTWidgetProvider.Entry
     var body: some View {
-        TimetableZStack(current: entry.currentTimetable, config: entry.timetableConfig)
+        ZStack {
+            STColor.systemBackground
+            TimetableZStack(current: entry.currentTimetable, config: entry.timetableConfig)
+        }
     }
 }

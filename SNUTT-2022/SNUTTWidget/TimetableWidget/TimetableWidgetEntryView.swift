@@ -16,20 +16,52 @@ struct TimetableWidgetEntryView: View {
     var body: some View {
         switch family {
         case .systemLarge, .systemExtraLarge:
-            ZStack {
-                STColor.systemBackground
-                TimetableFullWidgetView(entry: entry)
-            }
+            TimetableFullWidgetView(entry: entry)
         case .systemSmall, .systemMedium:
-            ZStack {
-                STColor.systemBackground
-                TimetableCompactWidgetView(entry: entry)
-            }
+            TimetableCompactWidgetView(entry: entry)
+        case .accessoryRectangular:
+            TimetableAccessoryRectangularView(entry: entry)
+        case .accessoryInline:
+            TimetableAccessoryInlineView(entry: entry)
+        case .accessoryCircular:
+            TimetableAccessoryCircularView(entry: entry)
         default:
             EmptyView()
         }
     }
 }
+
+
+protocol TimetableWidgetViewProtocol {
+    associatedtype LoginRequiredView : View
+    associatedtype EmptyTimetableView : View
+    associatedtype EmptyRemainingLecturesView : View
+
+    var entry: SNUTTWidgetProvider.Entry { get }
+
+    var isLoginRequired: Bool { get }
+    var isTimetableEmpty: Bool { get }
+
+    @ViewBuilder @MainActor var loginRequiredView: LoginRequiredView { get }
+    @ViewBuilder @MainActor var emptyTimetableView: EmptyTimetableView { get }
+    @ViewBuilder @MainActor var emptyRemainingLecturesView: EmptyRemainingLecturesView { get }
+
+
+}
+
+extension TimetableWidgetViewProtocol {
+    var isLoginRequired: Bool {
+        entry.currentTimetable == nil
+    }
+
+    var isTimetableEmpty: Bool {
+        guard let timetable = entry.currentTimetable else { return false /* isLoginRequired */ }
+        return timetable.lectures.isEmpty
+    }
+}
+
+
+
 
 #if DEBUG
     struct TimetableWidgetEntryView_Previews: PreviewProvider {

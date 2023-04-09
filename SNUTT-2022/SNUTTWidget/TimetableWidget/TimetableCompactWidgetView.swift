@@ -13,21 +13,26 @@ struct TimetableCompactWidgetView: View {
 
     @Environment(\.widgetFamily) private var family
 
-    private var isTimetableEmpty: Bool {
-        entry.currentTimetable?.lectures.isEmpty ?? true
-    }
-
     var body: some View {
+        ZStack {
+            STColor.systemBackground
         HStack {
             TimetableCompactLeftView(entry: entry)
 
-            if family == .systemMedium && !isTimetableEmpty {
+            if family == .systemMedium && !isTimetableEmpty && !isLoginRequired {
                 TimetableCompactRightView(entry: entry)
                     .padding(.leading, 5)
             }
         }
         .padding(.horizontal, 16)
+        }
     }
+}
+
+extension TimetableCompactWidgetView: TimetableWidgetViewProtocol {
+    var loginRequiredView: some View { EmptyView() }
+    var emptyRemainingLecturesView: some View { EmptyView() }
+    var emptyTimetableView: some View { EmptyView() }
 }
 
 struct TimetableCompactLeftView: View {
@@ -41,48 +46,6 @@ struct TimetableCompactLeftView: View {
         .padding(.top, 12)
     }
 
-    private var isTimetableEmpty: Bool {
-        entry.currentTimetable?.lectures.isEmpty ?? true
-    }
-
-    private var emptyTimetableView: some View {
-        VStack {
-            Spacer()
-                .frame(height: 20)
-
-            Text("빈 시간표")
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundColor(.gray)
-                .padding(.bottom, 2)
-
-            Text("시간표에 강의가 존재하지 않습니다.")
-                .multilineTextAlignment(.center)
-                .font(.system(size: 13, weight: .medium))
-                .foregroundColor(.gray)
-
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    private var emptyRemainingLecturesView: some View {
-        VStack {
-            HStack(alignment: .center) {
-                Circle()
-                    .stroke(.gray.opacity(0.8), lineWidth: 1)
-                    .frame(width: 6, height: 6)
-
-                Text("오늘 남은 강의 없음")
-                    .font(.system(size: 13, weight: .regular))
-                    .foregroundColor(.gray)
-                    .padding(.bottom, 2)
-            }
-
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-    }
-
     private var dateHeaderView: some View {
         HStack {
             Text(entry.date.weekday.shortSymbol)
@@ -94,9 +57,9 @@ struct TimetableCompactLeftView: View {
         }
     }
 
-    private var timetableBody: some View {
+    @MainActor private var timetableBody: some View {
         GeometryReader { reader in
-            let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date)
+            let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date, by: .endTime)
             if let lectureTimes, !lectureTimes.isEmpty {
                 VStack(alignment: .leading, spacing: 5) {
                     if let item = lectureTimes.get(at: 0) {
@@ -119,12 +82,63 @@ struct TimetableCompactLeftView: View {
                 }
                 .frame(height: reader.size.height)
                 .clipped()
+            } else if isLoginRequired {
+                loginRequiredView
             } else if isTimetableEmpty {
                 emptyTimetableView
             } else {
                 emptyRemainingLecturesView
             }
         }
+    }
+}
+
+extension TimetableCompactLeftView: TimetableWidgetViewProtocol {
+    var emptyTimetableView: some View {
+        placeholderView(title: "빈 시간표", description: "시간표에 강의가 존재하지 않습니다.")
+    }
+
+    var loginRequiredView: some View {
+        placeholderView(title: "로그인 필요", description: "먼저 로그인을 진행해주세요.")
+    }
+
+
+    var emptyRemainingLecturesView: some View {
+        VStack {
+            HStack(alignment: .center) {
+                Circle()
+                    .stroke(.gray.opacity(0.8), lineWidth: 1)
+                    .frame(width: 6, height: 6)
+
+                Text("오늘 남은 강의 없음")
+                    .font(.system(size: 13, weight: .regular))
+                    .foregroundColor(.gray)
+                    .padding(.bottom, 2)
+            }
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+    }
+
+    @ViewBuilder func placeholderView(title: String, description: String) -> some View {
+        VStack {
+            Spacer()
+                .frame(height: 20)
+
+            Text(title)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundColor(.gray)
+                .padding(.bottom, 2)
+
+            Text(description)
+                .multilineTextAlignment(.center)
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(.gray)
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
@@ -164,6 +178,23 @@ struct TimePlaceListItem: View {
     var showTime: Bool = true
     var showPlace: Bool = true
 
+    @Environment(\.widgetFamily) private var family
+
+    private var isAccessoryWidget: Bool {
+        if #available(iOS 16.0, watchOS 9.0, *) {
+            return family == .accessoryRectangular
+        }
+        return false
+    }
+
+    private var titleFontSize: CGFloat {
+        isAccessoryWidget ? 15 : 13
+    }
+
+    private var secondaryFontSize: CGFloat {
+        isAccessoryWidget ? 14 : 13
+    }
+
     private var numberOfCircles: Int {
         min(items.count, 3)
     }
@@ -201,6 +232,7 @@ struct TimePlaceListItem: View {
                             .overlay(
                                 Circle()
                                     .stroke(STColor.systemBackground, lineWidth: 1)
+                                    .opacity(isAccessoryWidget ? 0 : 1)
                             )
                             .offset(x: 5 * CGFloat(index))
                             .zIndex(-Double(index))
@@ -209,11 +241,11 @@ struct TimePlaceListItem: View {
             }
 
             Spacer()
-                .frame(width: 10 + CGFloat(numberOfCircles - 1) * 2.5)
+                .frame(width: 8 + CGFloat(numberOfCircles - 1) * 3)
 
             VStack(alignment: .leading) {
                 Text(displayTitle)
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(.system(size: titleFontSize, weight: .semibold))
                     .lineLimit(1)
 
                 Group {
@@ -226,7 +258,7 @@ struct TimePlaceListItem: View {
                     }
                 }
                 .lineLimit(1)
-                .font(.system(size: 13, weight: .regular))
+                .font(.system(size: titleFontSize, weight: .regular))
                 .foregroundColor(.gray)
             }
 
@@ -243,10 +275,10 @@ struct TimePlaceListItem: View {
 }
 
 #if DEBUG
-    struct TimetableCompactWidgetView_Previews: PreviewProvider {
-        static var previews: some View {
-            TimetableCompactWidgetView(entry: .init(date: Calendar.current.date(from: .init(hour: 0, minute: 0))!, configuration: ConfigurationIntent(), currentTimetable: .preview, timetableConfig: .init()))
-                .previewContext(WidgetPreviewContext(family: .systemMedium))
-        }
+struct TimetableCompactWidgetView_Previews: PreviewProvider {
+    static var previews: some View {
+        TimetableCompactWidgetView(entry: .init(date: Calendar.current.date(from: .init(hour: 0, minute: 0))!, configuration: ConfigurationIntent(), currentTimetable: .preview, timetableConfig: .init()))
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
+}
 #endif
