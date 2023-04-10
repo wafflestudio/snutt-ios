@@ -43,7 +43,7 @@ extension FacebookLoginProtocol {
                 return
             }
 
-            Task {
+            Task { @MainActor in
                 await self.handleFacebookToken(fbId: fbUserId, fbToken: fbToken)
             }
         }

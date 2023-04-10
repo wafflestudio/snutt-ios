@@ -8,7 +8,6 @@
 import Combine
 import SwiftUI
 
-@MainActor
 class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published var currentTimetable: Timetable?
     @Published var metadataList: [TimetableMetadata]?

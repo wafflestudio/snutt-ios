@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 
-@MainActor
 class LectureListViewModel: BaseViewModel, ObservableObject {
     @Published var lectures: [Lecture] = []
 

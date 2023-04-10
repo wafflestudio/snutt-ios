@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-protocol BaseViewModelProtocol {
+protocol BaseViewModelProtocol: Sendable {
     var container: DIContainer { get set }
     var appState: AppState { get }
     var services: AppEnvironment.Services { get }

@@ -8,7 +8,6 @@
 import Combine
 import SwiftUI
 
-@MainActor
 class TransculentListViewModel: BaseViewModel, ObservableObject {
     @Published private var _currentTimetable: Timetable?
     @Published private var _timetableConfig: TimetableConfiguration = .init()
