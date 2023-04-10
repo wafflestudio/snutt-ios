@@ -59,19 +59,19 @@ struct TimetableService: TimetableServiceProtocol {
     func fetchTimetableList() async throws {
         let dtos = try await timetableRepository.fetchTimetableList()
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-            appState.timetable.metadataList = timetables
+        appState.timetable.metadataList = timetables
     }
 
     func createTimetable(title: String, quarter: Quarter) async throws {
         let dtos = try await timetableRepository.createTimetable(title: title, year: quarter.year, semester: quarter.semester.rawValue)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-            appState.timetable.metadataList = timetables
+        appState.timetable.metadataList = timetables
     }
 
     func copyTimetable(timetableId: String) async throws {
         let dtos = try await timetableRepository.copyTimetable(withTimetableId: timetableId)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-            appState.timetable.metadataList = timetables
+        appState.timetable.metadataList = timetables
     }
 
     func updateTimetableTitle(timetableId: String, title: String) async throws {

@@ -79,7 +79,6 @@ struct TimetableSettingScene: View {
 }
 
 extension TimetableSettingScene {
-
     @MainActor
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var currentTimetable: Timetable?

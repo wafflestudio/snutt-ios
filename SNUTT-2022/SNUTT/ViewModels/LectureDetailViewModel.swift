@@ -10,7 +10,6 @@ import Foundation
 import SwiftUI
 
 extension LectureDetailScene {
-
     @MainActor
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
@@ -54,9 +53,9 @@ extension LectureDetailScene {
             } catch {
                 if let error = error.asSTError {
                     if error.code == .LECTURE_TIME_OVERLAP {
-                            self.isLectureOverlapped = true
-                            self.errorTitle = error.title
-                            self.errorMessage = error.content
+                        isLectureOverlapped = true
+                        errorTitle = error.title
+                        errorMessage = error.content
                     } else {
                         services.globalUIService.presentErrorAlert(error: error)
                     }
@@ -76,9 +75,9 @@ extension LectureDetailScene {
             } catch {
                 if let error = error.asSTError {
                     if error.code == .LECTURE_TIME_OVERLAP {
-                            self.isLectureOverlapped = true
-                            self.errorTitle = error.title
-                            self.errorMessage = error.content
+                        isLectureOverlapped = true
+                        errorTitle = error.title
+                        errorMessage = error.content
                     } else {
                         services.globalUIService.presentErrorAlert(error: error)
                     }
@@ -186,7 +185,7 @@ extension LectureDetailScene {
         }
 
         func isBookmarked(lecture: Lecture) -> Bool {
-            return ((appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.lectureId ?? lecture.id })) != nil)
+            return (appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.lectureId ?? lecture.id })) != nil
         }
     }
 }

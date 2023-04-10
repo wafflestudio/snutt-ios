@@ -33,11 +33,11 @@ struct NotificationService: NotificationServiceProtocol {
                                                                        offset: offset,
                                                                        explicit: updateLastRead)
         let models = dtos.map { STNotification(from: $0) }
-            notificationState.notifications = offset == 0 ? models : notificationState.notifications + models
-            if updateLastRead {
-                // no need to call api again; just update locally
-                appState.notification.unreadCount = 0
-            }
+        notificationState.notifications = offset == 0 ? models : notificationState.notifications + models
+        if updateLastRead {
+            // no need to call api again; just update locally
+            appState.notification.unreadCount = 0
+        }
     }
 
     func fetchInitialNotifications(updateLastRead: Bool) async throws {

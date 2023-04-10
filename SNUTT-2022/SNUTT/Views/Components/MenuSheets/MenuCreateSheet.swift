@@ -14,8 +14,8 @@ struct MenuCreateSheet: View {
 
     var quarterChoices: [Quarter]
 
-    var cancel: @MainActor  () -> Void
-    var confirm: @MainActor  () async -> Void
+    var cancel: @MainActor () -> Void
+    var confirm: @MainActor () async -> Void
 
     var showPicker: Bool {
         selectedQuarter != nil
@@ -27,7 +27,8 @@ struct MenuCreateSheet: View {
         Sheet(isOpen: $isOpen,
               orientation: .bottom(maxHeight: showPicker ? 370 : 180),
               disableBackgroundTap: false,
-              disableDragGesture: true) {
+              disableDragGesture: true)
+        {
             VStack {
                 MenuSheetTopBar(cancel: cancel, confirm: confirm, confirmDisabled: titleText.isEmpty, isSheetOpen: isOpen)
 

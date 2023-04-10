@@ -33,13 +33,13 @@ struct PopupService: PopupServiceProtocol {
         let concatPopupDtos = (localPopupDtos + remotePopupDtos).map { ($0.key, Popup(from: $0)) }
         let popupDictByKey = Dictionary(concatPopupDtos, uniquingKeysWith: { key, _ in key })
 
-            appState.popup.currentList = popupDictByKey.values.map {
-                var popup = $0
-                if !popup.dontShowForWhile {
-                    popup.dismissedAt = nil
-                }
-                return popup
+        appState.popup.currentList = popupDictByKey.values.map {
+            var popup = $0
+            if !popup.dontShowForWhile {
+                popup.dismissedAt = nil
             }
+            return popup
+        }
     }
 
     func dismissPopup(popup: Popup, dontShowForWhile: Bool) {
@@ -47,7 +47,7 @@ struct PopupService: PopupServiceProtocol {
         guard let firstPopupIndex = currentPopupList.firstIndex(where: { $0.id == popup.id }) else { return }
         currentPopupList[firstPopupIndex].dismissedAt = Date()
         currentPopupList[firstPopupIndex].dontShowForWhile = dontShowForWhile
-            appState.popup.currentList = currentPopupList
+        appState.popup.currentList = currentPopupList
         let currentPopupListDto = currentPopupList.compactMap { PopupDto(from: $0) }
         userDefaultsRepository.set([PopupDto].self, key: .popupList, value: currentPopupListDto)
     }

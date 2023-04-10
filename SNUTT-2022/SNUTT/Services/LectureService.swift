@@ -40,7 +40,7 @@ struct LectureService: LectureServiceProtocol {
     var webRepositories: AppEnvironment.WebRepositories
     var localRepositories: AppEnvironment.LocalRepositories
 
-     func addLecture(lecture: Lecture, isForced: Bool = false) async throws {
+    func addLecture(lecture: Lecture, isForced: Bool = false) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id, isForced: isForced)
         let timetable = Timetable(from: dto)
@@ -49,7 +49,7 @@ struct LectureService: LectureServiceProtocol {
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
-     func addCustomLecture(lecture: Lecture, isForced: Bool = false) async throws {
+    func addCustomLecture(lecture: Lecture, isForced: Bool = false) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         var lectureDto = LectureDto(from: lecture)
         lectureDto.class_time_mask = nil
@@ -59,7 +59,7 @@ struct LectureService: LectureServiceProtocol {
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
-     func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool = false) async throws {
+    func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool = false) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
 
         // Check if `Lecture` itself has overlapping `TimePlace`
@@ -73,19 +73,19 @@ struct LectureService: LectureServiceProtocol {
 
         let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture), isForced: isForced)
         let timetable = Timetable(from: dto)
-            appState.timetable.current = timetable
+        appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
-     func deleteLecture(lecture: Lecture) async throws {
+    func deleteLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.deleteLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
         let timetable = Timetable(from: dto)
-            appState.timetable.current = timetable
+        appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
-     func resetLecture(lecture: Lecture) async throws {
+    func resetLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.resetLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
         let timetable = Timetable(from: dto)
@@ -97,21 +97,21 @@ struct LectureService: LectureServiceProtocol {
         return try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
     }
 
-     func fetchIsFirstBookmark() {
+    func fetchIsFirstBookmark() {
         appState.timetable.isFirstBookmark = userDefaultsRepository.get(Bool.self, key: .isFirstBookmark, defaultValue: true)
     }
 
-     func bookmarkLecture(lecture: Lecture) async throws {
+    func bookmarkLecture(lecture: Lecture) async throws {
         try await lectureRepository.bookmarkLecture(lectureId: lecture.lectureId ?? lecture.id)
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)
-            appState.timetable.bookmark = bookmark
-            userDefaultsRepository.set(Bool.self, key: .isFirstBookmark, value: false)
-            appState.timetable.isFirstBookmark = false
+        appState.timetable.bookmark = bookmark
+        userDefaultsRepository.set(Bool.self, key: .isFirstBookmark, value: false)
+        appState.timetable.isFirstBookmark = false
     }
 
-     func undoBookmarkLecture(lecture: Lecture) async throws {
+    func undoBookmarkLecture(lecture: Lecture) async throws {
         try await lectureRepository.undoBookmarkLecture(lectureId: lecture.lectureId ?? lecture.id)
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)

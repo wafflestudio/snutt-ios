@@ -38,18 +38,16 @@ struct SearchService: SearchServiceProtocol {
         appState.timetable
     }
 
-     func setLoading(_ value: Bool) {
+    func setLoading(_ value: Bool) {
         searchState.isLoading = value
     }
 
-    
-     func initializeSearchState() {
-            searchState.selectedLecture = nil
-            searchState.selectedTagList = []
-            searchState.searchResult = nil
-            searchState.searchText = ""
+    func initializeSearchState() {
+        searchState.selectedLecture = nil
+        searchState.selectedTagList = []
+        searchState.searchResult = nil
+        searchState.searchText = ""
     }
-
 
     func fetchTags(quarter: Quarter) async throws {
         // TODO: get from userDefault
@@ -58,9 +56,8 @@ struct SearchService: SearchServiceProtocol {
         }
         let dto = try await searchRepository.fetchTags(quarter: quarter)
         let model = SearchTagList(from: dto)
-            appState.search.searchTagList = model
+        appState.search.searchTagList = model
     }
-
 
     private func _fetchSearchResult() async throws {
         guard let currentTimetable = timetableState.current else { return }
@@ -74,9 +71,8 @@ struct SearchService: SearchServiceProtocol {
                                                                 offset: offset,
                                                                 limit: searchState.perPage)
         let models: [Lecture] = dtos.map { Lecture(from: $0) }
-        self.searchState.searchResult = offset == 0 ? models : (self.searchState.searchResult ?? []) + models
+        searchState.searchResult = offset == 0 ? models : (searchState.searchResult ?? []) + models
     }
-
 
     func fetchInitialSearchResult() async throws {
         setLoading(true)
@@ -87,41 +83,40 @@ struct SearchService: SearchServiceProtocol {
         try await _fetchSearchResult()
     }
 
-     func fetchMoreSearchResult() async throws {
+    func fetchMoreSearchResult() async throws {
         searchState.pageNum += 1
         try await _fetchSearchResult()
     }
 
-
     func toggle(_ tag: SearchTag) {
-            if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
-                searchState.selectedTagList.remove(at: index)
-                return
-            }
-            searchState.selectedTagList.append(tag)
+        if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
+            searchState.selectedTagList.remove(at: index)
+            return
+        }
+        searchState.selectedTagList.append(tag)
     }
 
     /// We need a separate method that only deselects tags.
-     func deselectTag(_ tag: SearchTag) {
+    func deselectTag(_ tag: SearchTag) {
         if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
-                searchState.selectedTagList.remove(at: index)
+            searchState.selectedTagList.remove(at: index)
             return
         }
     }
 
-     func setIsFilterOpen(_ value: Bool) {
-            searchState.isFilterOpen = value
+    func setIsFilterOpen(_ value: Bool) {
+        searchState.isFilterOpen = value
     }
 
-     func setSelectedLecture(_ value: Lecture?) {
-            searchState.selectedLecture = value
+    func setSelectedLecture(_ value: Lecture?) {
+        searchState.selectedLecture = value
     }
 
-     func setSearchText(_ value: String) {
-            searchState.searchText = value
+    func setSearchText(_ value: String) {
+        searchState.searchText = value
     }
 
-     func getBookmark() async throws {
+    func getBookmark() async throws {
         setLoading(true)
         defer {
             setLoading(false)
@@ -130,7 +125,7 @@ struct SearchService: SearchServiceProtocol {
         try await _getBookmark()
     }
 
-     private func _getBookmark() async throws {
+    private func _getBookmark() async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)

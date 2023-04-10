@@ -38,7 +38,7 @@ struct SNUTTView: View {
                     TabScene(tabType: .timetable) {
                         TimetableScene(viewModel: .init(container: viewModel.container))
                             .background(NavigationBarReader { navbar in
-                                    navigationBarHeight = navbar.frame.height
+                                navigationBarHeight = navbar.frame.height
                             })
                     }
                     TabScene(tabType: .search) {

@@ -11,15 +11,16 @@ struct MenuThemeSheet: View {
     @Binding var isOpen: Bool
     var selectedTheme: Theme
 
-    var cancel: @MainActor  () -> Void
-    var confirm:@MainActor   () async -> Void
+    var cancel: @MainActor () -> Void
+    var confirm: @MainActor () async -> Void
     var select: @MainActor (Theme) -> Void
 
     var body: some View {
         Sheet(isOpen: $isOpen,
               orientation: .bottom(maxHeight: 200),
               disableDragGesture: true,
-              onBackgroundTap: cancel) {
+              onBackgroundTap: cancel)
+        {
             VStack {
                 MenuSheetTopBar(cancel: cancel, confirm: confirm, isSheetOpen: isOpen)
                     .padding(.horizontal, 20)

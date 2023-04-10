@@ -49,7 +49,7 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
     var localRepositories: AppEnvironment.LocalRepositories
 
     func setColorScheme(_ colorScheme: ColorScheme?) {
-            appState.system.preferredColorScheme = colorScheme
+        appState.system.preferredColorScheme = colorScheme
         localRepositories.userDefaultsRepository.set(String.self, key: .preferredColorScheme, value: colorScheme?.description)
     }
 
@@ -68,68 +68,68 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
     }
 
     func setIsMenuOpen(_ value: Bool) {
-            appState.menu.isOpen = value
+        appState.menu.isOpen = value
     }
 
     func openEllipsis(for timetable: TimetableMetadata) {
-            appState.menu.isEllipsisSheetOpen = true
-            appState.menu.ellipsisTarget = timetable
+        appState.menu.isEllipsisSheetOpen = true
+        appState.menu.ellipsisTarget = timetable
     }
 
     func closeEllipsis() {
-            appState.menu.isEllipsisSheetOpen = false
-            appState.menu.ellipsisTarget = nil
+        appState.menu.isEllipsisSheetOpen = false
+        appState.menu.ellipsisTarget = nil
     }
 
     func openThemeSheet() {
-            appState.menu.isOpen = false
-            appState.menu.isEllipsisSheetOpen = false
-            appState.menu.isThemeSheetOpen = true
+        appState.menu.isOpen = false
+        appState.menu.isEllipsisSheetOpen = false
+        appState.menu.isThemeSheetOpen = true
     }
 
     func closeThemeSheet() {
-            appState.menu.isThemeSheetOpen = false
-            appState.timetable.current?.selectedTheme = nil
+        appState.menu.isThemeSheetOpen = false
+        appState.timetable.current?.selectedTheme = nil
     }
 
     func openRenameSheet() {
-            appState.menu.renameTitle = appState.menu.ellipsisTarget?.title ?? ""
-            appState.menu.isEllipsisSheetOpen = false
-            appState.menu.isRenameSheetOpen = true
+        appState.menu.renameTitle = appState.menu.ellipsisTarget?.title ?? ""
+        appState.menu.isEllipsisSheetOpen = false
+        appState.menu.isRenameSheetOpen = true
     }
 
     func closeRenameSheet() {
-            appState.menu.isRenameSheetOpen = false
+        appState.menu.isRenameSheetOpen = false
     }
 
     func openCreateSheet(withPicker: Bool) {
-            appState.menu.createTitle = ""
-            appState.menu.createQuarter = withPicker ? appState.timetable.courseBookList?.first : nil
-            appState.menu.isCreateSheetOpen = true
+        appState.menu.createTitle = ""
+        appState.menu.createQuarter = withPicker ? appState.timetable.courseBookList?.first : nil
+        appState.menu.isCreateSheetOpen = true
     }
 
     func closeCreateSheet() {
-            appState.menu.isCreateSheetOpen = false
+        appState.menu.isCreateSheetOpen = false
     }
 
     func setRenameTitle(_ value: String) {
-            appState.menu.renameTitle = value
+        appState.menu.renameTitle = value
     }
 
     func setCreateTitle(_ value: String) {
-            appState.menu.createTitle = value
+        appState.menu.createTitle = value
     }
 
     func setCreateQuarter(_ value: Quarter?) {
-            appState.menu.createQuarter = value
+        appState.menu.createQuarter = value
     }
 
     // MARK: Preload Review WebViews
 
     func preloadWebViews() {
         guard let accessToken = appState.user.accessToken else { return }
-            appState.review.preloadedMain.preload(url: WebViewType.review.url, accessToken: accessToken)
-            appState.review.preloadedDetail.preload(url: WebViewType.review.url, accessToken: accessToken)
+        appState.review.preloadedMain.preload(url: WebViewType.review.url, accessToken: accessToken)
+        appState.review.preloadedDetail.preload(url: WebViewType.review.url, accessToken: accessToken)
     }
 
     func sendMainWebViewReloadSignal() {
@@ -143,9 +143,9 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
     // MARK: Lecture Time Sheet
 
     func setIsLectureTimeSheetOpen(_ value: Bool, modifying timePlace: TimePlace?, action: ((TimePlace) -> Void)?) {
-            appState.menu.timePlaceToModify = timePlace
-            appState.menu.lectureTimeSheetAction = action
-            appState.menu.isLectureTimeSheetOpen = value
+        appState.menu.timePlaceToModify = timePlace
+        appState.menu.lectureTimeSheetAction = action
+        appState.menu.isLectureTimeSheetOpen = value
     }
 
     // MARK: Error Handling
@@ -168,7 +168,7 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
             clearUserInfo()
         }
 
-            appState.system.error = error
-            appState.system.isErrorAlertPresented = true
+        appState.system.error = error
+        appState.system.isErrorAlertPresented = true
     }
 }

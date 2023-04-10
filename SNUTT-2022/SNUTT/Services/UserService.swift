@@ -85,13 +85,13 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
     }
 
     private func updateToken(from dto: TokenResponseDto) async throws {
-            appState.user.accessToken = dto.token
+        appState.user.accessToken = dto.token
         userDefaultsRepository.set(String.self, key: .accessToken, value: dto.token)
         try await fetchUser()
     }
 
     private func updateUser(from dto: UserDto) {
-            appState.user.current = User(from: dto)
+        appState.user.current = User(from: dto)
         userDefaultsRepository.set(UserDto.self, key: .userDto, value: dto)
     }
 }
