@@ -10,15 +10,15 @@ import SwiftUI
 struct SearchLectureList: View {
     let data: [Lecture]
     let fetchMore: () async -> Void
-    let bookmarkedLecture: (Lecture) -> Lecture?
-    let existingLecture: (Lecture) -> Lecture?
+    let bookmarkedLecture: @MainActor  (Lecture) -> Lecture?
+    let existingLecture: @MainActor  (Lecture) -> Lecture?
     let bookmarkLecture: (Lecture) async -> Void
     let undoBookmarkLecture: (Lecture) async -> Void
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture) async -> String?
     let overwriteLecture: (Lecture) async -> Void
-    let preloadReviewWebView: (String) -> Void
+    let preloadReviewWebView:@MainActor   (String) -> Void
     let errorTitle: String
     let errorMessage: String
     @Binding var isLectureOverlapped: Bool

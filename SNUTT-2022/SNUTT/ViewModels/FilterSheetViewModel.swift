@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 class FilterSheetViewModel: BaseViewModel, ObservableObject {
     @Published var selectedTagList: [SearchTag] = []
     @Published var searchTagList: SearchTagList?

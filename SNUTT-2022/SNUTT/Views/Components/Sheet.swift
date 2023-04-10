@@ -15,7 +15,7 @@ struct Sheet<Content>: View where Content: View {
     var sheetOpacity: CGFloat = 1
     var disableBackgroundTap: Bool = false
     var disableDragGesture: Bool = false
-    var onBackgroundTap: (() -> Void)?
+    var onBackgroundTap: (@MainActor  () -> Void)?
     @ViewBuilder var content: () -> Content
 
     @GestureState private var translation: CGFloat = 0

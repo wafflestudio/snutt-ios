@@ -11,8 +11,8 @@ struct MenuRenameSheet: View {
     @Binding var isOpen: Bool
     @Binding var titleText: String
 
-    var cancel: () -> Void
-    var confirm: () async -> Void
+    var cancel:@MainActor  () -> Void
+    var confirm: @MainActor () async -> Void
 
     var body: some View {
         Sheet(isOpen: $isOpen,

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 protocol BaseViewModelProtocol {
     var container: DIContainer { get set }
     var appState: AppState { get }

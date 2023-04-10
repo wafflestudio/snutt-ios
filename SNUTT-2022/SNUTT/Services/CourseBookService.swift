@@ -25,12 +25,10 @@ struct CourseBookService: CourseBookServiceProtocol {
         webRepositories.courseBookRepository
     }
 
-    func fetchCourseBookList() async throws {
+    @MainActor func fetchCourseBookList() async throws {
         let dtos = try await courseBookRepository.fetchAllCourseBookList()
         let quarters = dtos.map { Quarter(from: $0) }
-        DispatchQueue.main.async {
-            appState.timetable.courseBookList = quarters
-        }
+        appState.timetable.courseBookList = quarters
     }
 
     func fetchRecentCourseBook() async throws {
@@ -45,7 +43,7 @@ struct CourseBookService: CourseBookServiceProtocol {
         return dto.url
     }
 
-    func getLatestEmptyQuarter() -> Quarter? {
+    @MainActor func getLatestEmptyQuarter() -> Quarter? {
         let myLatestQuarter = appState.timetable.metadataList?.map { $0.quarter }.sorted().last
         let latestCourseBook = appState.timetable.courseBookList?.sorted().last
 
@@ -56,7 +54,7 @@ struct CourseBookService: CourseBookServiceProtocol {
         return nil
     }
 
-    func isNewCourseBookAvailable() -> Bool {
+    @MainActor func isNewCourseBookAvailable() -> Bool {
         getLatestEmptyQuarter() != nil
     }
 }

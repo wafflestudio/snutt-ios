@@ -73,7 +73,7 @@ struct MenuSectionRow: View {
     var isSelected: Bool
     let selectTimetable: ((String) async -> Void)?
     let duplicateTimetable: ((String) async -> Void)?
-    let openEllipsis: ((TimetableMetadata) -> Void)?
+    let openEllipsis: (@MainActor (TimetableMetadata) -> Void)?
     @State var isLoading: Bool = false
 
     var body: some View {

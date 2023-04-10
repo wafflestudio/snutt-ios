@@ -48,7 +48,7 @@ extension AppEnvironment {
 }
 
 extension AppEnvironment {
-    static func bootstrap() -> Self {
+    @MainActor static func bootstrap() -> Self {
         let appState = AppState()
         let session = configuredSession(appState: appState)
         let webRepos = configuredWebRepositories(session: session)
@@ -145,7 +145,7 @@ extension EnvironmentValues {
 
 #if DEBUG
     extension AppEnvironment.Services {
-        static func preview(appState: AppState) -> Self {
+        @MainActor static func preview(appState: AppState) -> Self {
             .init(timetableService: FakeTimetableService(),
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),

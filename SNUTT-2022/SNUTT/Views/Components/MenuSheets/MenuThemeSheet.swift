@@ -11,9 +11,9 @@ struct MenuThemeSheet: View {
     @Binding var isOpen: Bool
     var selectedTheme: Theme
 
-    var cancel: () -> Void
-    var confirm: () async -> Void
-    var select: (Theme) -> Void
+    var cancel: @MainActor  () -> Void
+    var confirm:@MainActor   () async -> Void
+    var select: @MainActor (Theme) -> Void
 
     var body: some View {
         Sheet(isOpen: $isOpen,

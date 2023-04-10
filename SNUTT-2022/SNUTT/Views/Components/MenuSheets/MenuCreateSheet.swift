@@ -14,8 +14,8 @@ struct MenuCreateSheet: View {
 
     var quarterChoices: [Quarter]
 
-    var cancel: () -> Void
-    var confirm: () async -> Void
+    var cancel: @MainActor  () -> Void
+    var confirm: @MainActor  () async -> Void
 
     var showPicker: Bool {
         selectedQuarter != nil

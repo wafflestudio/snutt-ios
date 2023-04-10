@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchTagsScrollView: View {
     let selectedTagList: [SearchTag]
-    let deselect: (SearchTag) -> Void
+    let deselect:@MainActor  (SearchTag) -> Void
 
     @State private var previousTagCount: Int = 0
 

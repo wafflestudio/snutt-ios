@@ -12,8 +12,8 @@ struct SearchBar: View {
     @Binding var text: String
     @Binding var isFilterOpen: Bool
     var shouldShowCancelButton: Bool
-    var action: () async -> Void
-    var cancel: () -> Void
+    var action:@MainActor  () async -> Void
+    var cancel: @MainActor () -> Void
 
     @State private var isEditing = false
     @FocusState private var isFocused: Bool

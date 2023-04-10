@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 
+@MainActor
 class TimetableViewModel: BaseViewModel, ObservableObject {
     @Published var currentTimetable: Timetable?
     @Published var configuration: TimetableConfiguration = .init()

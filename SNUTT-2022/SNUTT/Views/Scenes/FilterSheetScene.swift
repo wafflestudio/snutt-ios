@@ -36,7 +36,7 @@ struct FilterSheetScene: View {
 
 #if DEBUG
     ///// A simple wrapper that is used to preview `FilterSheet`.
-    struct FilterSheetWrapper: View {
+@MainActor struct FilterSheetWrapper: View {
         let container: DIContainer = .preview
         var body: some View {
             ZStack {

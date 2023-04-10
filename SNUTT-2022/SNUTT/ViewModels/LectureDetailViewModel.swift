@@ -10,6 +10,8 @@ import Foundation
 import SwiftUI
 
 extension LectureDetailScene {
+
+    @MainActor
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isErrorAlertPresented = false
         @Published var isLectureOverlapped: Bool = false

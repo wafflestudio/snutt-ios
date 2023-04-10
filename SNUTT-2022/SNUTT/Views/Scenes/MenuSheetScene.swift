@@ -50,7 +50,7 @@ struct MenuSheetScene: View {
 
 #if DEBUG
     ///// A simple wrapper that is used to preview `MenuSheet`.
-    struct MenuSheetWrapper: View {
+    @MainActor struct MenuSheetWrapper: View {
         let container = DIContainer.preview
 
         init() {

@@ -15,7 +15,7 @@ struct SearchLectureCell: View {
     let addLecture: (Lecture) async -> Void
     let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture) async -> String?
-    let preloadReviewWebView: (String) -> Void
+    let preloadReviewWebView: @MainActor (String) -> Void
     let isBookmarked: Bool
     let isInTimetable: Bool
 

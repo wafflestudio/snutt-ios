@@ -8,6 +8,7 @@
 import Combine
 import SwiftUI
 
+@MainActor
 class SearchSceneViewModel: TransculentListViewModel {
     @Published private var _searchText: String = ""
     @Published private var _isFilterOpen: Bool = false

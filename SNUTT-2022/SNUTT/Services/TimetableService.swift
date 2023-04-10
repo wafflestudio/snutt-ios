@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 protocol TimetableServiceProtocol {
     func fetchRecentTimetable() async throws
     func fetchTimetableList() async throws
@@ -38,55 +39,47 @@ struct TimetableService: TimetableServiceProtocol {
     func fetchTimetable(timetableId: String) async throws {
         let dto = try await timetableRepository.fetchTimetable(withTimetableId: timetableId)
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
-        await updateState(to: Timetable(from: dto))
+        appState.timetable.current = Timetable(from: dto)
     }
 
     func fetchRecentTimetable() async throws {
         if let localData = userDefaultsRepository.get(TimetableDto.self, key: .currentTimetable) {
             let localTimetable = Timetable(from: localData)
             if appState.user.userId == localTimetable.userId {
-                await updateState(to: localTimetable) // 일단 저장된 시간표로 상태 업데이트
+                appState.timetable.current = localTimetable // 일단 저장된 시간표로 상태 업데이트
                 try await fetchTimetable(timetableId: localTimetable.id) // API 요청을 통해 시간표 최신화
                 return
             }
         }
         let dto = try await timetableRepository.fetchRecentTimetable()
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
-        await updateState(to: Timetable(from: dto))
+        appState.timetable.current = Timetable(from: dto)
     }
 
     func fetchTimetableList() async throws {
         let dtos = try await timetableRepository.fetchTimetableList()
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
             appState.timetable.metadataList = timetables
-        }
     }
 
     func createTimetable(title: String, quarter: Quarter) async throws {
         let dtos = try await timetableRepository.createTimetable(title: title, year: quarter.year, semester: quarter.semester.rawValue)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
             appState.timetable.metadataList = timetables
-        }
     }
 
     func copyTimetable(timetableId: String) async throws {
         let dtos = try await timetableRepository.copyTimetable(withTimetableId: timetableId)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
             appState.timetable.metadataList = timetables
-        }
     }
 
     func updateTimetableTitle(timetableId: String, title: String) async throws {
         let dtos = try await timetableRepository.updateTimetableTitle(withTimetableId: timetableId, withTitle: title)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
-            appState.timetable.metadataList = timetables
-            if appState.timetable.current?.id == timetableId {
-                appState.timetable.current?.title = title
-            }
+        appState.timetable.metadataList = timetables
+        if appState.timetable.current?.id == timetableId {
+            appState.timetable.current?.title = title
         }
     }
 
@@ -94,10 +87,8 @@ struct TimetableService: TimetableServiceProtocol {
         guard let theme = appState.timetable.current?.selectedTheme else { return }
         let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: theme.rawValue)
         let timetable = Timetable(from: dto)
-        DispatchQueue.main.async {
-            if appState.timetable.current?.id == timetableId {
-                appState.timetable.current = timetable
-            }
+        if appState.timetable.current?.id == timetableId {
+            appState.timetable.current = timetable
         }
     }
 
@@ -107,9 +98,7 @@ struct TimetableService: TimetableServiceProtocol {
         }
         let dtos = try await timetableRepository.deleteTimetable(withTimetableId: timetableId)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
-        DispatchQueue.main.async {
-            appState.timetable.metadataList = timetables
-        }
+        appState.timetable.metadataList = timetables
     }
 
     func selectTimetableTheme(theme: Theme) {
@@ -117,14 +106,13 @@ struct TimetableService: TimetableServiceProtocol {
     }
 
     func setTimetableConfig(config: TimetableConfiguration) {
-        DispatchQueue.main.async {
-            appState.timetable.configuration = config
-        }
+        appState.timetable.configuration = config
         userDefaultsRepository.set(TimetableConfiguration.self, key: .timetableConfig, value: config)
     }
 
     func loadTimetableConfig() {
-        DispatchQueue.main.async {
+        // load asynchronously on startup
+        Task { @MainActor in
             var localConfig = userDefaultsRepository.get(TimetableConfiguration.self, key: .timetableConfig, defaultValue: .init())
             if localConfig.maxHour - localConfig.minHour < 6 {
                 // fix data integrity
@@ -134,12 +122,6 @@ struct TimetableService: TimetableServiceProtocol {
             }
             appState.timetable.configuration = localConfig
         }
-    }
-
-    // TODO: to be refactored
-    @MainActor
-    private func updateState(to currentTimetable: Timetable) {
-        appState.timetable.current = currentTimetable
     }
 }
 
