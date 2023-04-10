@@ -217,6 +217,8 @@
 		CE3F37AD29C5D452009EDCCC /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CE6CA91029E1E611004E92B1 /* logo.inline.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6CA90F29E1E610004E92B1 /* logo.inline.png */; };
 		CE6CA91229E24676004E92B1 /* TimetableAccessoryCircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6CA91129E24676004E92B1 /* TimetableAccessoryCircularView.swift */; };
+		CE6CA91329E3CFA6004E92B1 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6D893428EFD68E000607A6 /* String+Localized.swift */; };
+		CE6CA91429E3CFB4004E92B1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE6D893228EFD662000607A6 /* Localizable.strings */; };
 		CE98750C29CC527F007F063A /* TimeRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */; };
 		CEB5A71E29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */; };
 		CEB5A72029DDA8B200E74C47 /* TimetableAccessoryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */; };
@@ -1123,6 +1125,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE6CA91029E1E611004E92B1 /* logo.inline.png in Resources */,
+				CE6CA91429E3CFB4004E92B1 /* Localizable.strings in Resources */,
 				BE98A06C288AFC1600C2CE95 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1201,6 +1204,7 @@
 				CEB5A72029DDA8B200E74C47 /* TimetableAccessoryInlineView.swift in Sources */,
 				BE98A069288AFC1600C2CE95 /* SNUTTWidgetBundle.swift in Sources */,
 				BE419B9B288B917A00FA9590 /* TimetableUtils.swift in Sources */,
+				CE6CA91329E3CFA6004E92B1 /* String+Localized.swift in Sources */,
 				BE419B8E288B8C6800FA9590 /* View+Debug.swift in Sources */,
 				BE419B83288B8B8600FA9590 /* Timetable.swift in Sources */,
 				B8F570A7289E1233005C199F /* UserDefaults+ext.swift in Sources */,
