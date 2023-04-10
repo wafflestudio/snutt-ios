@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-protocol TimetableServiceProtocol:Sendable {
+protocol TimetableServiceProtocol: Sendable {
     func fetchRecentTimetable() async throws
     func fetchTimetableList() async throws
     func fetchTimetable(timetableId: String) async throws

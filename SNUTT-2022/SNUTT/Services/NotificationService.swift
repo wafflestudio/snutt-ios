@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-protocol NotificationServiceProtocol:Sendable {
+protocol NotificationServiceProtocol: Sendable {
     func fetchInitialNotifications(updateLastRead: Bool) async throws
     func fetchMoreNotifications() async throws
     func fetchUnreadNotificationCount() async throws

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-protocol CourseBookServiceProtocol:Sendable {
+protocol CourseBookServiceProtocol: Sendable {
     func fetchCourseBookList() async throws
     func fetchRecentCourseBook() async throws
     func fetchSyllabusURL(quarter: Quarter, lecture: Lecture) async throws -> String

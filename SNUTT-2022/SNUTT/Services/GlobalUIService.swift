@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-protocol GlobalUIServiceProtocol :Sendable{
+protocol GlobalUIServiceProtocol: Sendable {
     func setColorScheme(_ colorScheme: ColorScheme?)
     func loadColorSchemeDuringBootstrap()
 

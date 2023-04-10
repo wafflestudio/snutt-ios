@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-protocol SearchServiceProtocol:Sendable {
+protocol SearchServiceProtocol: Sendable {
     func toggle(_ tag: SearchTag)
     func deselectTag(_ tag: SearchTag)
     func fetchTags(quarter: Quarter) async throws
