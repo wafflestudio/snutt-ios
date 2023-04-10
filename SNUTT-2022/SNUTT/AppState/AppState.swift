@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 
 @MainActor
-class AppState {
+final class AppState {
     var user = UserState()
 
     var system = SystemState()

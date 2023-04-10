@@ -14,7 +14,7 @@ struct AppEnvironment {
 }
 
 extension AppEnvironment {
-    struct Services {
+    struct Services: Sendable {
         let timetableService: TimetableServiceProtocol
         let userService: UserServiceProtocol
         let lectureService: LectureServiceProtocol

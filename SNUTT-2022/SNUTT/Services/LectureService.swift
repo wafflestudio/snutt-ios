@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-protocol LectureServiceProtocol {
+protocol LectureServiceProtocol :Sendable{
     func addLecture(lecture: Lecture, isForced: Bool) async throws
     func addCustomLecture(lecture: Lecture, isForced: Bool) async throws
     func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool) async throws

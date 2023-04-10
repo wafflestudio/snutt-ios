@@ -8,7 +8,7 @@
 import Foundation
 
 @MainActor
-protocol UserServiceProtocol {
+protocol UserServiceProtocol:Sendable {
     func fetchUser() async throws
     func deleteUser() async throws
     func addLocalId(localId: String, localPassword: String) async throws

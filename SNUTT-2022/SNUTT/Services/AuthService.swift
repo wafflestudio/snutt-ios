@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-protocol AuthServiceProtocol {
+protocol AuthServiceProtocol :Sendable{
     func loadAccessTokenDuringBootstrap()
     func loginWithLocalId(localId: String, localPassword: String) async throws
     func loginWithApple(appleToken: String) async throws

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-protocol EtcServiceProtocol {
+protocol EtcServiceProtocol :Sendable{
     func sendFeedback(email: String, message: String) async throws
 }
 

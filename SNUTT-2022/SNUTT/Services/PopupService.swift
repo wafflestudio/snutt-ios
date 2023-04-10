@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-protocol PopupServiceProtocol {
+protocol PopupServiceProtocol:Sendable {
     func getRecentPopupList() async throws
     func dismissPopup(popup: Popup, dontShowForWhile: Bool)
 }

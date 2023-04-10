@@ -8,7 +8,7 @@
 import LinkPresentation
 import SwiftUI
 
-struct TimetableScene: View {
+struct TimetableScene: View, Sendable {
     @AppStorage("isNewToBookmark") var isNewToBookmark: Bool = true
     @State private var pushToListScene = false
     @State private var pushToBookmarkScene = false
