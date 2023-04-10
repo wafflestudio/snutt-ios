@@ -72,9 +72,7 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
     }
 
     func bookmarkLecture(lecture: Lecture) async {
-        DispatchQueue.main.async {
-            self.isFirstBookmarkAlertPresented = self.appState.timetable.isFirstBookmark ?? false
-        }
+            isFirstBookmarkAlertPresented = appState.timetable.isFirstBookmark ?? false
         do {
             try await services.lectureService.bookmarkLecture(lecture: lecture)
         } catch {
@@ -101,11 +99,9 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
         } catch {
             if let error = error.asSTError {
                 if error.code == .LECTURE_TIME_OVERLAP {
-                    DispatchQueue.main.async {
                         self.isLectureOverlapped = true
                         self.errorTitle = error.title
                         self.errorMessage = error.content
-                    }
                 } else {
                     services.globalUIService.presentErrorAlert(error: error)
                 }
@@ -131,11 +127,9 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
         do {
             return try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
         } catch let error as STError where error.code == .EMAIL_NOT_VERIFIED {
-            await MainActor.run {
                 errorTitle = error.title
                 errorMessage = error.content
                 isEmailVerifyAlertPresented = true
-            }
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

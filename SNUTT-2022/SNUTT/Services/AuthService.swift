@@ -41,10 +41,8 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
     }
 
     private func saveAccessTokenFromLoginResponse(dto: LoginResponseDto) {
-        DispatchQueue.main.async {
-            appState.user.accessToken = dto.token
-            appState.user.userId = dto.user_id
-        }
+        appState.user.accessToken = dto.token
+        appState.user.userId = dto.user_id
         userDefaultsRepository.set(String.self, key: .accessToken, value: dto.token)
         userDefaultsRepository.set(String.self, key: .userId, value: dto.user_id)
     }
@@ -116,7 +114,7 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
 }
 
 /// A collection of methods that are called both on `UserService` and `AuthService`.
-@MainActor 
+@MainActor
 protocol UserAuthHandler {
     var appState: AppState { get set }
     var localRepositories: AppEnvironment.LocalRepositories { get set }

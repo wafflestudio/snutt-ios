@@ -44,9 +44,7 @@ extension LectureDetailScene {
             let emailVerifyError = STError(.EMAIL_NOT_VERIFIED)
             errorTitle = emailVerifyError.title
             errorMessage = emailVerifyError.content
-            DispatchQueue.main.async {
-                self.isEmailVerifyAlertPresented = true
-            }
+            isEmailVerifyAlertPresented = true
         }
 
         func addCustomLecture(lecture: Lecture, isForced: Bool = false) async -> Bool {
@@ -56,11 +54,9 @@ extension LectureDetailScene {
             } catch {
                 if let error = error.asSTError {
                     if error.code == .LECTURE_TIME_OVERLAP {
-                        DispatchQueue.main.async {
                             self.isLectureOverlapped = true
                             self.errorTitle = error.title
                             self.errorMessage = error.content
-                        }
                     } else {
                         services.globalUIService.presentErrorAlert(error: error)
                     }
@@ -80,11 +76,9 @@ extension LectureDetailScene {
             } catch {
                 if let error = error.asSTError {
                     if error.code == .LECTURE_TIME_OVERLAP {
-                        await MainActor.run {
                             self.isLectureOverlapped = true
                             self.errorTitle = error.title
                             self.errorMessage = error.content
-                        }
                     } else {
                         services.globalUIService.presentErrorAlert(error: error)
                     }
