@@ -10,7 +10,7 @@ import Alamofire
 import XCTest
 
 class AuthRepositoryTests: XCTestCase {
-    var repository : AuthRepository!
+    var repository: AuthRepository!
 
     let testId = "snuttiostest123"
     let testPW = "snuttiostest123"
