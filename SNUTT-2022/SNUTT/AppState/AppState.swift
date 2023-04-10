@@ -11,7 +11,7 @@ import SwiftUI
 class AppState {
     var user = UserState()
 
-    var system = SystemState()
+    @MainActor var system = SystemState()
     @MainActor var search = SearchState()
     @MainActor var timetable = TimetableState()
 

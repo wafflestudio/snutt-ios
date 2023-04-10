@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 protocol GlobalUIServiceProtocol {
     func setColorScheme(_ colorScheme: ColorScheme?)
     func loadColorSchemeDuringBootstrap()
@@ -48,9 +49,7 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
     var localRepositories: AppEnvironment.LocalRepositories
 
     func setColorScheme(_ colorScheme: ColorScheme?) {
-        DispatchQueue.main.async {
             appState.system.preferredColorScheme = colorScheme
-        }
         localRepositories.userDefaultsRepository.set(String.self, key: .preferredColorScheme, value: colorScheme?.description)
     }
 
@@ -69,94 +68,68 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
     }
 
     func setIsMenuOpen(_ value: Bool) {
-        DispatchQueue.main.async {
             appState.menu.isOpen = value
-        }
     }
 
     func openEllipsis(for timetable: TimetableMetadata) {
-        DispatchQueue.main.async {
             appState.menu.isEllipsisSheetOpen = true
             appState.menu.ellipsisTarget = timetable
-        }
     }
 
     func closeEllipsis() {
-        DispatchQueue.main.async {
             appState.menu.isEllipsisSheetOpen = false
             appState.menu.ellipsisTarget = nil
-        }
     }
 
     func openThemeSheet() {
-        DispatchQueue.main.async {
             appState.menu.isOpen = false
             appState.menu.isEllipsisSheetOpen = false
             appState.menu.isThemeSheetOpen = true
-        }
     }
 
     func closeThemeSheet() {
-        DispatchQueue.main.async {
             appState.menu.isThemeSheetOpen = false
             appState.timetable.current?.selectedTheme = nil
-        }
     }
 
     func openRenameSheet() {
-        DispatchQueue.main.async {
             appState.menu.renameTitle = appState.menu.ellipsisTarget?.title ?? ""
             appState.menu.isEllipsisSheetOpen = false
             appState.menu.isRenameSheetOpen = true
-        }
     }
 
     func closeRenameSheet() {
-        DispatchQueue.main.async {
             appState.menu.isRenameSheetOpen = false
-        }
     }
 
     func openCreateSheet(withPicker: Bool) {
-        DispatchQueue.main.async {
             appState.menu.createTitle = ""
             appState.menu.createQuarter = withPicker ? appState.timetable.courseBookList?.first : nil
             appState.menu.isCreateSheetOpen = true
-        }
     }
 
     func closeCreateSheet() {
-        DispatchQueue.main.async {
             appState.menu.isCreateSheetOpen = false
-        }
     }
 
     func setRenameTitle(_ value: String) {
-        DispatchQueue.main.async {
             appState.menu.renameTitle = value
-        }
     }
 
     func setCreateTitle(_ value: String) {
-        DispatchQueue.main.async {
             appState.menu.createTitle = value
-        }
     }
 
     func setCreateQuarter(_ value: Quarter?) {
-        DispatchQueue.main.async {
             appState.menu.createQuarter = value
-        }
     }
 
     // MARK: Preload Review WebViews
 
     func preloadWebViews() {
         guard let accessToken = appState.user.accessToken else { return }
-        DispatchQueue.main.async {
             appState.review.preloadedMain.preload(url: WebViewType.review.url, accessToken: accessToken)
             appState.review.preloadedDetail.preload(url: WebViewType.review.url, accessToken: accessToken)
-        }
     }
 
     func sendMainWebViewReloadSignal() {
@@ -170,11 +143,9 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
     // MARK: Lecture Time Sheet
 
     func setIsLectureTimeSheetOpen(_ value: Bool, modifying timePlace: TimePlace?, action: ((TimePlace) -> Void)?) {
-        DispatchQueue.main.async {
             appState.menu.timePlaceToModify = timePlace
             appState.menu.lectureTimeSheetAction = action
             appState.menu.isLectureTimeSheetOpen = value
-        }
     }
 
     // MARK: Error Handling
@@ -197,9 +168,7 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
             clearUserInfo()
         }
 
-        DispatchQueue.main.async {
             appState.system.error = error
             appState.system.isErrorAlertPresented = true
-        }
     }
 }
