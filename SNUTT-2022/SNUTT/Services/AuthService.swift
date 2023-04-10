@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 protocol AuthServiceProtocol {
     func loadAccessTokenDuringBootstrap()
     func loginWithLocalId(localId: String, localPassword: String) async throws
@@ -115,6 +116,7 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
 }
 
 /// A collection of methods that are called both on `UserService` and `AuthService`.
+@MainActor 
 protocol UserAuthHandler {
     var appState: AppState { get set }
     var localRepositories: AppEnvironment.LocalRepositories { get set }
@@ -123,12 +125,10 @@ protocol UserAuthHandler {
 
 extension UserAuthHandler {
     func clearUserInfo() {
-        DispatchQueue.main.async {
             appState.user.accessToken = nil
             appState.user.userId = nil
             appState.user.current = nil
             appState.timetable.current = nil
-        }
         localRepositories.userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: nil)
         localRepositories.userDefaultsRepository.set(String.self, key: .accessToken, value: nil)
         localRepositories.userDefaultsRepository.set(String.self, key: .userId, value: nil)

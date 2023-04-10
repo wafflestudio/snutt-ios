@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 
 class AppState {
-    var user = UserState()
+    @MainActor var user = UserState()
 
     @MainActor var system = SystemState()
     @MainActor var search = SearchState()

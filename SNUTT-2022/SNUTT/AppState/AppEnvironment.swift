@@ -75,7 +75,7 @@ extension AppEnvironment {
         return .init(container: container)
     }
 
-    private static func configuredSession(appState: AppState) -> Session {
+    @MainActor private static func configuredSession(appState: AppState) -> Session {
         return Session(interceptor: Interceptor(userState: appState.user), eventMonitors: [Logger()])
     }
 
