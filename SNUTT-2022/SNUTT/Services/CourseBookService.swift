@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 protocol CourseBookServiceProtocol {
     func fetchCourseBookList() async throws
     func fetchRecentCourseBook() async throws
@@ -25,7 +26,7 @@ struct CourseBookService: CourseBookServiceProtocol {
         webRepositories.courseBookRepository
     }
 
-    @MainActor func fetchCourseBookList() async throws {
+    func fetchCourseBookList() async throws {
         let dtos = try await courseBookRepository.fetchAllCourseBookList()
         let quarters = dtos.map { Quarter(from: $0) }
         appState.timetable.courseBookList = quarters
@@ -43,7 +44,7 @@ struct CourseBookService: CourseBookServiceProtocol {
         return dto.url
     }
 
-    @MainActor func getLatestEmptyQuarter() -> Quarter? {
+    func getLatestEmptyQuarter() -> Quarter? {
         let myLatestQuarter = appState.timetable.metadataList?.map { $0.quarter }.sorted().last
         let latestCourseBook = appState.timetable.courseBookList?.sorted().last
 
@@ -54,7 +55,7 @@ struct CourseBookService: CourseBookServiceProtocol {
         return nil
     }
 
-    @MainActor func isNewCourseBookAvailable() -> Bool {
+    func isNewCourseBookAvailable() -> Bool {
         getLatestEmptyQuarter() != nil
     }
 }

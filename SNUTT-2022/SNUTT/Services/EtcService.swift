@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 protocol EtcServiceProtocol {
     func sendFeedback(email: String, message: String) async throws
 }

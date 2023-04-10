@@ -8,12 +8,13 @@
 import Combine
 import SwiftUI
 
+@MainActor
 class AppState {
-    @MainActor var user = UserState()
+    var user = UserState()
 
-    @MainActor var system = SystemState()
-    @MainActor var search = SearchState()
-    @MainActor var timetable = TimetableState()
+    var system = SystemState()
+    var search = SearchState()
+    var timetable = TimetableState()
 
     var menu = MenuState()
     var notification = NotificationState()
@@ -23,7 +24,7 @@ class AppState {
 
 #if DEBUG
     extension AppState {
-        @MainActor static var preview: AppState {
+        static var preview: AppState {
             let state = AppState()
             state.timetable.current = .preview
             state.search.selectedTagList = [.init(id: .init(), type: .classification, text: "예시1"), .init(id: .init(), type: .credit, text: "예시2")]

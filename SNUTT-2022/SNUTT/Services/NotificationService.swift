@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 protocol NotificationServiceProtocol {
     func fetchInitialNotifications(updateLastRead: Bool) async throws
     func fetchMoreNotifications() async throws
@@ -32,13 +33,11 @@ struct NotificationService: NotificationServiceProtocol {
                                                                        offset: offset,
                                                                        explicit: updateLastRead)
         let models = dtos.map { STNotification(from: $0) }
-        await MainActor.run {
             notificationState.notifications = offset == 0 ? models : notificationState.notifications + models
             if updateLastRead {
                 // no need to call api again; just update locally
                 appState.notification.unreadCount = 0
             }
-        }
     }
 
     func fetchInitialNotifications(updateLastRead: Bool) async throws {
@@ -53,9 +52,7 @@ struct NotificationService: NotificationServiceProtocol {
 
     func fetchUnreadNotificationCount() async throws {
         let dto = try await notificationRepository.fetchNotificationCount()
-        await MainActor.run {
-            notificationState.unreadCount = dto.count
-        }
+        notificationState.unreadCount = dto.count
     }
 }
 
