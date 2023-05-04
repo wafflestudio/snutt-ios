@@ -9,6 +9,7 @@ import Combine
 import SwiftUI
 import WidgetKit
 
+@MainActor
 class TimetableState: ObservableObject {
     @Published var current: Timetable?
     @Published var metadataList: [TimetableMetadata]?
@@ -19,7 +20,6 @@ class TimetableState: ObservableObject {
 
     private var bag = Set<AnyCancellable>()
 
-    // TODO: refactor this
     init() {
         // sync between current timetable and widget
         $current

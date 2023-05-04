@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-protocol AuthServiceProtocol {
+@MainActor
+protocol AuthServiceProtocol: Sendable {
     func loadAccessTokenDuringBootstrap()
     func loginWithLocalId(localId: String, localPassword: String) async throws
     func loginWithApple(appleToken: String) async throws
@@ -40,10 +41,8 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
     }
 
     private func saveAccessTokenFromLoginResponse(dto: LoginResponseDto) {
-        DispatchQueue.main.async {
-            appState.user.accessToken = dto.token
-            appState.user.userId = dto.user_id
-        }
+        appState.user.accessToken = dto.token
+        appState.user.userId = dto.user_id
         userDefaultsRepository.set(String.self, key: .accessToken, value: dto.token)
         userDefaultsRepository.set(String.self, key: .userId, value: dto.user_id)
     }
@@ -115,6 +114,7 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
 }
 
 /// A collection of methods that are called both on `UserService` and `AuthService`.
+@MainActor
 protocol UserAuthHandler {
     var appState: AppState { get set }
     var localRepositories: AppEnvironment.LocalRepositories { get set }
@@ -123,12 +123,10 @@ protocol UserAuthHandler {
 
 extension UserAuthHandler {
     func clearUserInfo() {
-        DispatchQueue.main.async {
-            appState.user.accessToken = nil
-            appState.user.userId = nil
-            appState.user.current = nil
-            appState.timetable.current = nil
-        }
+        appState.user.accessToken = nil
+        appState.user.userId = nil
+        appState.user.current = nil
+        appState.timetable.current = nil
         localRepositories.userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: nil)
         localRepositories.userDefaultsRepository.set(String.self, key: .accessToken, value: nil)
         localRepositories.userDefaultsRepository.set(String.self, key: .userId, value: nil)

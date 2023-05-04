@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-protocol SearchServiceProtocol {
+@MainActor
+protocol SearchServiceProtocol: Sendable {
     func toggle(_ tag: SearchTag)
     func deselectTag(_ tag: SearchTag)
     func fetchTags(quarter: Quarter) async throws
@@ -38,18 +39,14 @@ struct SearchService: SearchServiceProtocol {
     }
 
     func setLoading(_ value: Bool) {
-        DispatchQueue.main.async {
-            searchState.isLoading = value
-        }
+        searchState.isLoading = value
     }
 
     func initializeSearchState() {
-        DispatchQueue.main.async {
-            searchState.selectedLecture = nil
-            searchState.selectedTagList = []
-            searchState.searchResult = nil
-            searchState.searchText = ""
-        }
+        searchState.selectedLecture = nil
+        searchState.selectedTagList = []
+        searchState.searchResult = nil
+        searchState.searchText = ""
     }
 
     func fetchTags(quarter: Quarter) async throws {
@@ -59,9 +56,7 @@ struct SearchService: SearchServiceProtocol {
         }
         let dto = try await searchRepository.fetchTags(quarter: quarter)
         let model = SearchTagList(from: dto)
-        await MainActor.run {
-            appState.search.searchTagList = model
-        }
+        appState.search.searchTagList = model
     }
 
     private func _fetchSearchResult() async throws {
@@ -76,9 +71,7 @@ struct SearchService: SearchServiceProtocol {
                                                                 offset: offset,
                                                                 limit: searchState.perPage)
         let models: [Lecture] = dtos.map { Lecture(from: $0) }
-        await MainActor.run {
-            self.searchState.searchResult = offset == 0 ? models : (self.searchState.searchResult ?? []) + models
-        }
+        searchState.searchResult = offset == 0 ? models : (searchState.searchResult ?? []) + models
     }
 
     func fetchInitialSearchResult() async throws {
@@ -96,41 +89,31 @@ struct SearchService: SearchServiceProtocol {
     }
 
     func toggle(_ tag: SearchTag) {
-        DispatchQueue.main.async {
-            if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
-                searchState.selectedTagList.remove(at: index)
-                return
-            }
-            searchState.selectedTagList.append(tag)
+        if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
+            searchState.selectedTagList.remove(at: index)
+            return
         }
+        searchState.selectedTagList.append(tag)
     }
 
     /// We need a separate method that only deselects tags.
     func deselectTag(_ tag: SearchTag) {
         if let index = searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) {
-            DispatchQueue.main.async {
-                searchState.selectedTagList.remove(at: index)
-            }
+            searchState.selectedTagList.remove(at: index)
             return
         }
     }
 
     func setIsFilterOpen(_ value: Bool) {
-        DispatchQueue.main.async {
-            searchState.isFilterOpen = value
-        }
+        searchState.isFilterOpen = value
     }
 
     func setSelectedLecture(_ value: Lecture?) {
-        DispatchQueue.main.async {
-            searchState.selectedLecture = value
-        }
+        searchState.selectedLecture = value
     }
 
     func setSearchText(_ value: String) {
-        DispatchQueue.main.async {
-            searchState.searchText = value
-        }
+        searchState.searchText = value
     }
 
     func getBookmark() async throws {
@@ -146,9 +129,7 @@ struct SearchService: SearchServiceProtocol {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)
-        await MainActor.run {
-            appState.timetable.bookmark = bookmark
-        }
+        appState.timetable.bookmark = bookmark
     }
 
     private var lectureRepository: LectureRepositoryProtocol {

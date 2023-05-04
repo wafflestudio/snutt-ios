@@ -9,9 +9,9 @@ import SwiftUI
 
 struct MenuEllipsisSheet: View {
     @Binding var isOpen: Bool
-    var openRenameSheet: () -> Void
-    var deleteTimetable: () async -> Void
-    var openThemeSheet: () -> Void
+    var openRenameSheet: @MainActor () -> Void
+    var deleteTimetable: @MainActor () async -> Void
+    var openThemeSheet: @MainActor () -> Void
     @State private var isDeleteAlertPresented = false
 
     var body: some View {

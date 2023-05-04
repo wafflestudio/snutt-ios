@@ -10,12 +10,13 @@ import Alamofire
 import XCTest
 
 class TimetableRepositoryTests: XCTestCase {
-    let repository = TimetableRepository(session: .test)
+    var repository: TimetableRepository!
 
     let testTimetableName = "Timetable_\(TestUtils.randomString(length: 5))"
     var testTimetable: TimetableMetadataDto?
 
     override func setUp() async throws {
+        repository = TimetableRepository(session: await .test)
         let timetables = try await repository.createTimetable(title: testTimetableName, year: 2022, semester: 1)
         testTimetable = timetables.first(where: { $0.title == testTimetableName })!
     }

@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-protocol CourseBookServiceProtocol {
+@MainActor
+protocol CourseBookServiceProtocol: Sendable {
     func fetchCourseBookList() async throws
     func fetchRecentCourseBook() async throws
     func fetchSyllabusURL(quarter: Quarter, lecture: Lecture) async throws -> String
@@ -28,9 +29,7 @@ struct CourseBookService: CourseBookServiceProtocol {
     func fetchCourseBookList() async throws {
         let dtos = try await courseBookRepository.fetchAllCourseBookList()
         let quarters = dtos.map { Quarter(from: $0) }
-        DispatchQueue.main.async {
-            appState.timetable.courseBookList = quarters
-        }
+        appState.timetable.courseBookList = quarters
     }
 
     func fetchRecentCourseBook() async throws {

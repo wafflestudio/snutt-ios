@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PopupView: View {
     let popup: Popup
-    let dismiss: (Popup, Bool) -> Void // dismiss(popup:dontShowForWhile:)
+    let dismiss: @MainActor (Popup, Bool) -> Void // dismiss(popup:dontShowForWhile:)
 
     var body: some View {
         AsyncImage(url: URL(string: popup.imageURL)!, transaction: Transaction(animation: .customSpring)) { phase in

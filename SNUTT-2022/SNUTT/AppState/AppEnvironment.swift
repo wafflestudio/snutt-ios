@@ -14,7 +14,7 @@ struct AppEnvironment {
 }
 
 extension AppEnvironment {
-    struct Services {
+    struct Services: Sendable {
         let timetableService: TimetableServiceProtocol
         let userService: UserServiceProtocol
         let lectureService: LectureServiceProtocol
@@ -48,7 +48,7 @@ extension AppEnvironment {
 }
 
 extension AppEnvironment {
-    static func bootstrap() -> Self {
+    @MainActor static func bootstrap() -> Self {
         let appState = AppState()
         let session = configuredSession(appState: appState)
         let webRepos = configuredWebRepositories(session: session)
@@ -75,7 +75,7 @@ extension AppEnvironment {
         return .init(container: container)
     }
 
-    private static func configuredSession(appState: AppState) -> Session {
+    @MainActor private static func configuredSession(appState: AppState) -> Session {
         return Session(interceptor: Interceptor(userState: appState.user), eventMonitors: [Logger()])
     }
 
@@ -145,7 +145,7 @@ extension EnvironmentValues {
 
 #if DEBUG
     extension AppEnvironment.Services {
-        static func preview(appState: AppState) -> Self {
+        @MainActor static func preview(appState: AppState) -> Self {
             .init(timetableService: FakeTimetableService(),
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),

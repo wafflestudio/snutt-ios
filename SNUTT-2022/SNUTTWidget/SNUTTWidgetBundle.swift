@@ -11,8 +11,7 @@ import WidgetKit
 
 @main
 struct SNUTTWidgetBundle: WidgetBundle {
-    @WidgetBundleBuilder
-    var body: some Widget {
+    @WidgetBundleBuilder var body: some Widget {
         TimetableWidget()
     }
 }

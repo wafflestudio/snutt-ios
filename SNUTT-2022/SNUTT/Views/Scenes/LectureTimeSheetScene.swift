@@ -15,7 +15,8 @@ struct LectureTimeSheetScene: View {
         Sheet(isOpen: $viewModel.isOpen,
               orientation: .bottom(maxHeight: 250),
               disableBackgroundTap: true,
-              disableDragGesture: true) {
+              disableDragGesture: true)
+        {
             VStack {
                 MenuSheetTopBar(cancel: { viewModel.isOpen = false }, confirm: viewModel.confirm, isSheetOpen: viewModel.isOpen)
                     .padding(.horizontal, 20)

@@ -11,13 +11,14 @@ struct MenuRenameSheet: View {
     @Binding var isOpen: Bool
     @Binding var titleText: String
 
-    var cancel: () -> Void
-    var confirm: () async -> Void
+    var cancel: @MainActor () -> Void
+    var confirm: @MainActor () async -> Void
 
     var body: some View {
         Sheet(isOpen: $isOpen,
               orientation: .bottom(maxHeight: 180),
-              disableDragGesture: true) {
+              disableDragGesture: true)
+        {
             VStack {
                 MenuSheetTopBar(cancel: cancel, confirm: confirm, confirmDisabled: titleText.isEmpty, isSheetOpen: isOpen)
 

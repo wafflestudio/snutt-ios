@@ -8,7 +8,8 @@
 import Combine
 import SwiftUI
 
-class AppState {
+@MainActor
+final class AppState {
     var user = UserState()
 
     var system = SystemState()
