@@ -44,11 +44,11 @@ enum TimetableRouter: Router {
     var path: String {
         switch self {
         case .getTimetableList:
-            return "/"
+            return ""
         case let .getTimetable(id):
             return "/\(id)"
         case .createTimetable:
-            return "/"
+            return ""
         case let .updateTimetable(id, _):
             return "/\(id)"
         case let .deleteTimetable(id):
