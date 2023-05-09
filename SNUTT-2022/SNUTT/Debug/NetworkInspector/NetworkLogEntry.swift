@@ -5,9 +5,8 @@
 //  Created by 박신홍 on 2023/05/09.
 //
 
-import Foundation
 import Alamofire
-
+import Foundation
 
 struct NetworkLogEntry: Identifiable, Sendable {
     let id: UUID
@@ -23,7 +22,8 @@ struct NetworkLogEntry: Identifiable, Sendable {
 extension Data {
     func jsonFormatted() -> String? {
         guard let jsonObject = try? JSONSerialization.jsonObject(with: self, options: []),
-              let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted]) else {
+              let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted])
+        else {
             return String(data: self, encoding: .utf8)
         }
         return String(data: jsonData, encoding: .utf8)

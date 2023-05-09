@@ -22,7 +22,7 @@ final class AppState {
     var review = ReviewState()
 
     #if DEBUG
-    var debug = DebugState()
+        var debug = DebugState()
     #endif
 }
 

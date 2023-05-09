@@ -73,7 +73,7 @@ enum AppMetadata: CaseIterable {
     }
 }
 
-extension DataResponse: @unchecked Sendable { }
+extension DataResponse: @unchecked Sendable {}
 
 final class Logger: EventMonitor {
     let queue = DispatchQueue(label: "NetworkingLog")

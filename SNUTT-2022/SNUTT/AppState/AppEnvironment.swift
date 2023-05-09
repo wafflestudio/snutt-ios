@@ -77,9 +77,9 @@ extension AppEnvironment {
 
     @MainActor private static func configuredSession(appState: AppState) -> Session {
         #if DEBUG
-        let logger = Logger(logStore: appState.debug.networkLogStore)
+            let logger = Logger(logStore: appState.debug.networkLogStore)
         #else
-        let logger = Logger()
+            let logger = Logger()
         #endif
         return Session(interceptor: Interceptor(userState: appState.user), eventMonitors: [logger])
     }

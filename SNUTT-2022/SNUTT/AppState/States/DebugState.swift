@@ -8,12 +8,12 @@
 @preconcurrency import Combine
 
 #if DEBUG
-@MainActor
-class DebugState {
-    let networkLogStore = NetworkLogStore()
+    @MainActor
+    class DebugState {
+        let networkLogStore = NetworkLogStore()
 
-    var currentLogs: AnyPublisher<[NetworkLogEntry], Never> {
-        networkLogStore.$logs.eraseToAnyPublisher()
+        var currentLogs: AnyPublisher<[NetworkLogEntry], Never> {
+            networkLogStore.$logs.eraseToAnyPublisher()
+        }
     }
-}
 #endif

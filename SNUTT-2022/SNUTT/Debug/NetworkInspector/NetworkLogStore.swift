@@ -12,10 +12,10 @@ import Foundation
 @MainActor
 class NetworkLogStore {
     @Published private(set) var logs: [NetworkLogEntry] = []
-    
+
     private let maxLogEntries = 10000
 
-    func log<Value>(response: DataResponse<Value, AFError>)  {
+    func log<Value>(response: DataResponse<Value, AFError>) {
         guard let urlRequest = response.request,
               let urlResponse = response.response else { return }
         let logEntry = NetworkLogEntry(id: UUID(),
