@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class MenuState: ObservableObject {
+class MenuState {
     @Published var isOpen = false
 
     /// The target timetable that the ellipsis sheet is open for. There's no need to be `@Published` because no view updates on the change this property.

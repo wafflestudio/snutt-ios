@@ -10,7 +10,7 @@ import SwiftUI
 import WidgetKit
 
 @MainActor
-class TimetableState: ObservableObject {
+class TimetableState {
     @Published var current: Timetable?
     @Published var metadataList: [TimetableMetadata]?
     @Published var courseBookList: [Quarter]?

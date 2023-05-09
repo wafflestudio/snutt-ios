@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 
 @MainActor
-class SystemState: ObservableObject {
+class SystemState {
     @Published var isErrorAlertPresented = false
     @Published var error: STError? = nil
 

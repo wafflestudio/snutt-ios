@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class UserState: ObservableObject {
+class UserState {
     @Published var accessToken: String?
     @Published var current: User?
 
