@@ -20,6 +20,10 @@ final class AppState {
     var notification = NotificationState()
     var popup = PopupState()
     var review = ReviewState()
+
+    #if DEBUG
+    var debug = DebugState()
+    #endif
 }
 
 #if DEBUG
