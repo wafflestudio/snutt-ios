@@ -217,6 +217,8 @@
 		CE076E022A0967E200C9430B /* NetworkLogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE076E012A0967E200C9430B /* NetworkLogStore.swift */; };
 		CE4F2C6229BA45420007194E /* TimeRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */; };
 		CE98204B2A09FBDD001037F5 /* DebugState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE98204A2A09FBDD001037F5 /* DebugState.swift */; };
+		CE9820502A0A0BB7001037F5 /* NetworkLogListScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE98204F2A0A0BB7001037F5 /* NetworkLogListScene.swift */; };
+		CE9820522A0A0BE9001037F5 /* NetworkLogEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9820512A0A0BE9001037F5 /* NetworkLogEntryView.swift */; };
 		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
 		DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
 		DC1E0ED12877381F005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
@@ -466,6 +468,8 @@
 		CE076E012A0967E200C9430B /* NetworkLogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogStore.swift; sourceTree = "<group>"; };
 		CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRangeSlider.swift; sourceTree = "<group>"; };
 		CE98204A2A09FBDD001037F5 /* DebugState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugState.swift; sourceTree = "<group>"; };
+		CE98204F2A0A0BB7001037F5 /* NetworkLogListScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogListScene.swift; sourceTree = "<group>"; };
+		CE9820512A0A0BE9001037F5 /* NetworkLogEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogEntryView.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
 		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
 		DC1E0ED02877381F005632A3 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -701,6 +705,8 @@
 			children = (
 				CE076DFF2A09661400C9430B /* NetworkLogEntry.swift */,
 				CE076E012A0967E200C9430B /* NetworkLogStore.swift */,
+				CE98204F2A0A0BB7001037F5 /* NetworkLogListScene.swift */,
+				CE9820512A0A0BE9001037F5 /* NetworkLogEntryView.swift */,
 			);
 			path = NetworkInspector;
 			sourceTree = "<group>";
@@ -1238,6 +1244,7 @@
 				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE9C90EB2948EA1800003AA6 /* ColorScheme.swift in Sources */,
 				BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */,
+				CE9820522A0A0BE9001037F5 /* NetworkLogEntryView.swift in Sources */,
 				BEE86519289E287400D3D0E4 /* MenuRenameSheet.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
@@ -1309,6 +1316,7 @@
 				B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				B87B316C28D755B6005C170B /* SystemState.swift in Sources */,
+				CE9820502A0A0BB7001037F5 /* NetworkLogListScene.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
 				B8E51E6828B615140065248E /* WebErrorView.swift in Sources */,
 				BE95D1F728DF2F44009C0C0B /* AuthRepository.swift in Sources */,
