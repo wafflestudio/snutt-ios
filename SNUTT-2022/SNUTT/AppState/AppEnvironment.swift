@@ -76,7 +76,12 @@ extension AppEnvironment {
     }
 
     @MainActor private static func configuredSession(appState: AppState) -> Session {
-        return Session(interceptor: Interceptor(userState: appState.user), eventMonitors: [Logger()])
+        #if DEBUG
+            let logger = Logger(logStore: appState.debug.networkLogStore)
+        #else
+            let logger = Logger()
+        #endif
+        return Session(interceptor: Interceptor(userState: appState.user), eventMonitors: [logger])
     }
 
     private static func configuredWebRepositories(session: Session) -> WebRepositories {

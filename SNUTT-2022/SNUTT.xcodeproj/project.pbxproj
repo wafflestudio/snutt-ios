@@ -213,7 +213,12 @@
 		BEF9233628E7EE45004AFCB2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233528E7EE45004AFCB2 /* SignUpView.swift */; };
 		BEF9233828E84653004AFCB2 /* LectureTimeSheetScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233728E84653004AFCB2 /* LectureTimeSheetScene.swift */; };
 		BEF9233A28E84B62004AFCB2 /* SearchLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */; };
+		CE076E002A09661400C9430B /* NetworkLogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE076DFF2A09661400C9430B /* NetworkLogEntry.swift */; };
+		CE076E022A0967E200C9430B /* NetworkLogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE076E012A0967E200C9430B /* NetworkLogStore.swift */; };
 		CE4F2C6229BA45420007194E /* TimeRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */; };
+		CE98204B2A09FBDD001037F5 /* DebugState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE98204A2A09FBDD001037F5 /* DebugState.swift */; };
+		CE9820502A0A0BB7001037F5 /* NetworkLogListScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE98204F2A0A0BB7001037F5 /* NetworkLogListScene.swift */; };
+		CE9820522A0A0BE9001037F5 /* NetworkLogEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9820512A0A0BE9001037F5 /* NetworkLogEntryView.swift */; };
 		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
 		DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
 		DC1E0ED12877381F005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
@@ -459,7 +464,12 @@
 		BEF9233528E7EE45004AFCB2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		BEF9233728E84653004AFCB2 /* LectureTimeSheetScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureTimeSheetScene.swift; sourceTree = "<group>"; };
 		BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLectureCell.swift; sourceTree = "<group>"; };
+		CE076DFF2A09661400C9430B /* NetworkLogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogEntry.swift; sourceTree = "<group>"; };
+		CE076E012A0967E200C9430B /* NetworkLogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogStore.swift; sourceTree = "<group>"; };
 		CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRangeSlider.swift; sourceTree = "<group>"; };
+		CE98204A2A09FBDD001037F5 /* DebugState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugState.swift; sourceTree = "<group>"; };
+		CE98204F2A0A0BB7001037F5 /* NetworkLogListScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogListScene.swift; sourceTree = "<group>"; };
+		CE9820512A0A0BE9001037F5 /* NetworkLogEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogEntryView.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
 		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
 		DC1E0ED02877381F005632A3 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -532,6 +542,7 @@
 				B87B315828D5A70F005C170B /* UserState.swift */,
 				BE2CB3622959C0CC00FCF0F0 /* ReviewState.swift */,
 				B87DF6F82918B7AD008BB95B /* PopupState.swift */,
+				CE98204A2A09FBDD001037F5 /* DebugState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -681,6 +692,25 @@
 			path = MenuSheets;
 			sourceTree = "<group>";
 		};
+		CE076DFD2A0964B700C9430B /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				CE076DFE2A09659200C9430B /* NetworkInspector */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		CE076DFE2A09659200C9430B /* NetworkInspector */ = {
+			isa = PBXGroup;
+			children = (
+				CE076DFF2A09661400C9430B /* NetworkLogEntry.swift */,
+				CE076E012A0967E200C9430B /* NetworkLogStore.swift */,
+				CE98204F2A0A0BB7001037F5 /* NetworkLogListScene.swift */,
+				CE9820512A0A0BE9001037F5 /* NetworkLogEntryView.swift */,
+			);
+			path = NetworkInspector;
+			sourceTree = "<group>";
+		};
 		DC1E0ED2287738DF005632A3 /* Router */ = {
 			isa = PBXGroup;
 			children = (
@@ -724,6 +754,7 @@
 				BE804BEC288BA3DF00782F16 /* SNUTT.entitlements */,
 				BEC5605B2917F63000380B9C /* GoogleServiceDebugInfo.plist */,
 				BEC560572917F60600380B9C /* GoogleServiceReleaseInfo.plist */,
+				CE076DFD2A0964B700C9430B /* Debug */,
 				BEB3B6A328CDE1EF00E56062 /* Utils */,
 				BE9413B528BE89D000171060 /* Modifiers */,
 				BE419B8B288B8C4900FA9590 /* Extensions */,
@@ -1213,6 +1244,7 @@
 				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE9C90EB2948EA1800003AA6 /* ColorScheme.swift in Sources */,
 				BE4B0EC02873BDAA005FE164 /* SearchSceneViewModel.swift in Sources */,
+				CE9820522A0A0BE9001037F5 /* NetworkLogEntryView.swift in Sources */,
 				BEE86519289E287400D3D0E4 /* MenuRenameSheet.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
@@ -1266,7 +1298,9 @@
 				BE28036628E8854D00B2B1AB /* SingleWebView.swift in Sources */,
 				BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */,
 				B87DF6EF2914FC02008BB95B /* PopupRepository.swift in Sources */,
+				CE98204B2A09FBDD001037F5 /* DebugState.swift in Sources */,
 				BEB3B6AD28D4D40400E56062 /* EditableFields.swift in Sources */,
+				CE076E022A0967E200C9430B /* NetworkLogStore.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
 				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
 				B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */,
@@ -1282,6 +1316,7 @@
 				B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				B87B316C28D755B6005C170B /* SystemState.swift in Sources */,
+				CE9820502A0A0BB7001037F5 /* NetworkLogListScene.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
 				B8E51E6828B615140065248E /* WebErrorView.swift in Sources */,
 				BE95D1F728DF2F44009C0C0B /* AuthRepository.swift in Sources */,
@@ -1294,6 +1329,7 @@
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */,
+				CE076E002A09661400C9430B /* NetworkLogEntry.swift in Sources */,
 				BE9413CA28C21F1300171060 /* NotificationList.swift in Sources */,
 				BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */,
 				BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */,

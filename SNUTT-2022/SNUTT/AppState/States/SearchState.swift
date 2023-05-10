@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-class SearchState: ObservableObject {
+class SearchState {
     @Published var isFilterOpen = false
     @Published var searchTagList: SearchTagList?
     @Published var selectedTagList: [SearchTag] = []

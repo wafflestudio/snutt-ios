@@ -53,6 +53,14 @@ struct SettingScene: View {
                 }
             }
 
+            #if DEBUG
+                Section("디버그 메뉴") {
+                    SettingsLinkItem(title: "네트워크 로그") {
+                        NetworkLogListScene(viewModel: .init(container: viewModel.container))
+                    }
+                }
+            #endif
+
             Section {
                 SettingsButtonItem(title: "로그아웃", role: .destructive) {
                     isLogoutAlertPresented = true
