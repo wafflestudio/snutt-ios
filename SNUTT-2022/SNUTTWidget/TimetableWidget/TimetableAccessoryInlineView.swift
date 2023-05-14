@@ -37,7 +37,7 @@ extension TimetableAccessoryInlineView: TimetableWidgetViewProtocol {
     }
 
     var emptyRemainingLecturesView: some View {
-        Text("오늘 남은 강의 없음")
+        Text("남은 강의 없음")
     }
 }
 
