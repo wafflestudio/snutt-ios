@@ -1,5 +1,5 @@
 //
-//  UserDefaults+ext.swift
+//  UserDefaults+Ext.swift
 //  SNUTT
 //
 //  Created by 최유림 on 2022/08/06.
