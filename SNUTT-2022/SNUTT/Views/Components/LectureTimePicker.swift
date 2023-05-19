@@ -12,6 +12,11 @@ struct LectureTimePicker: View {
     @Binding var start: Date
     @Binding var end: Date
 
+    var startRange: ClosedRange<Date> {
+        let calendar = Calendar.current
+        return calendar.date(from: .init(hour: 0, minute: 0))! ... calendar.date(from: .init(hour: 23, minute: 50))!
+    }
+
     var endRange: ClosedRange<Date> {
         let calendar = Calendar.current
         return calendar.date(byAdding: .minute, value: 5, to: start)! ... calendar.date(from: .init(hour: 23, minute: 59))!
@@ -44,6 +49,7 @@ struct LectureTimePicker: View {
             Divider()
             DatePicker("시작",
                        selection: $start,
+                       in: startRange,
                        displayedComponents: [.hourAndMinute])
                 .datePickerStyle(.compact)
             Divider()

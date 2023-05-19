@@ -31,7 +31,19 @@ struct SNUTTWidgetProvider: IntentTimelineProvider {
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
-        let entries = [Entry(date: Date(), configuration: configuration, currentTimetable: currentTimetable, timetableConfig: timetableConfig)]
+        let now = Date()
+        var dates: [Date] = [now]
+
+        if let remainingLectureTimes = currentTimetable?.getRemainingLectureTimes(on: now, by: .startTime) {
+            dates.append(contentsOf: remainingLectureTimes.map { $0.timePlace.toDates() }.flatMap { $0 })
+        }
+
+        dates = Array(Set(dates))
+
+        let entries = dates.map {
+            Entry(date: $0, configuration: configuration, currentTimetable: currentTimetable, timetableConfig: timetableConfig)
+        }
+
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }

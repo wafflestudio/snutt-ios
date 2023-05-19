@@ -73,14 +73,45 @@ extension TimePlace {
     }
 }
 
+// MARK: Widget Utils
+
+extension TimePlace {
+    func toDates() -> [Date] {
+        let start = TimeUtils.getTime(from: startTime)
+        let end = TimeUtils.getTime(from: endTime)
+        let today = Date()
+        let calendar = Calendar.current
+        return [start, end].map { time in
+            calendar.date(bySettingHour: time.hour, minute: time.minute, second: 0, of: today)!
+        }
+    }
+}
+
 #if DEBUG
     extension TimePlace {
         static var preview: Self {
             let place = "\(Int.random(in: 100 ... 999))-\(Int.random(in: 100 ... 999))"
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm"
+
+            let startHour = Int.random(in: 8 ... 21) // generate a random start hour between 8am and 9pm
+            let endHour = Int.random(in: (startHour + 1) ... 22) // generate a random end hour that is at least 1 hour after startHour, but before 10pm
+
+            let startMinute = Int.random(in: 0 ... 59) // generate a random start minute
+            let endMinute = Int.random(in: 0 ... 59) // generate a random end minute
+
+            let startTime = DateComponents(hour: startHour, minute: startMinute)
+            let endTime = DateComponents(hour: endHour, minute: endMinute)
+
+            let startTimeDate = Calendar.current.date(from: startTime)!
+            let endTimeDate = Calendar.current.date(from: endTime)!
+
+            let startTimeString = dateFormatter.string(from: startTimeDate)
+            let endTimeString = dateFormatter.string(from: endTimeDate)
             return TimePlace(id: UUID().uuidString,
                              day: .init(rawValue: Int.random(in: 0 ... 6))!,
-                             startTime: "15:00",
-                             endTime: "18:15",
+                             startTime: startTimeString,
+                             endTime: endTimeString,
                              place: place,
                              isCustom: Bool.random())
         }

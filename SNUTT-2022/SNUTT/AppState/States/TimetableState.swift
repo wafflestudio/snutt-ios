@@ -23,7 +23,6 @@ class TimetableState {
     init() {
         // sync between current timetable and widget
         $current
-            .compactMap { $0 }
             .sink { _ in
                 WidgetCenter.shared.reloadTimelines(ofKind: "TimetableWidget")
             }
