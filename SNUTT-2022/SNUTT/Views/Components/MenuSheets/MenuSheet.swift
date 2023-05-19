@@ -9,13 +9,13 @@ import SwiftUI
 
 struct MenuSheet: View {
     @Binding var isOpen: Bool
-    var openCreateSheet: (Bool) -> Void
+    var openCreateSheet: @MainActor (Bool) -> Void
     var current: Timetable?
     var metadataList: [TimetableMetadata]?
     var timetablesByQuarter: [Quarter: [TimetableMetadata]]
     let selectTimetable: (String) async -> Void
     let duplicateTimetable: (String) async -> Void
-    let openEllipsis: (TimetableMetadata) -> Void
+    let openEllipsis: @MainActor (TimetableMetadata) -> Void
 
     var body: some View {
         Sheet(isOpen: $isOpen, orientation: .left(maxWidth: 320), cornerRadius: 0, sheetOpacity: 0.7) {

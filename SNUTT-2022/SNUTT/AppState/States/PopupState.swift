@@ -7,6 +7,6 @@
 
 import Foundation
 
-class PopupState: ObservableObject {
+class PopupState {
     @Published var currentList: [Popup] = []
 }

@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-protocol LectureServiceProtocol {
+@MainActor
+protocol LectureServiceProtocol: Sendable {
     func addLecture(lecture: Lecture, isForced: Bool) async throws
     func addCustomLecture(lecture: Lecture, isForced: Bool) async throws
     func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool) async throws
@@ -43,10 +44,8 @@ struct LectureService: LectureServiceProtocol {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id, isForced: isForced)
         let timetable = Timetable(from: dto)
-        await MainActor.run {
-            appState.timetable.current = timetable
-            appState.search.selectedLecture = nil
-        }
+        appState.timetable.current = timetable
+        appState.search.selectedLecture = nil
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
@@ -56,9 +55,7 @@ struct LectureService: LectureServiceProtocol {
         lectureDto.class_time_mask = nil
         let dto = try await lectureRepository.addCustomLecture(timetableId: currentTimetable.id, lecture: lectureDto, isForced: isForced)
         let timetable = Timetable(from: dto)
-        await MainActor.run {
-            appState.timetable.current = timetable
-        }
+        appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
@@ -76,9 +73,7 @@ struct LectureService: LectureServiceProtocol {
 
         let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture), isForced: isForced)
         let timetable = Timetable(from: dto)
-        await MainActor.run {
-            appState.timetable.current = timetable
-        }
+        appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
@@ -86,9 +81,7 @@ struct LectureService: LectureServiceProtocol {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.deleteLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
         let timetable = Timetable(from: dto)
-        await MainActor.run {
-            appState.timetable.current = timetable
-        }
+        appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
@@ -96,9 +89,7 @@ struct LectureService: LectureServiceProtocol {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.resetLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
         let timetable = Timetable(from: dto)
-        await MainActor.run {
-            appState.timetable.current = timetable
-        }
+        appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
@@ -107,9 +98,7 @@ struct LectureService: LectureServiceProtocol {
     }
 
     func fetchIsFirstBookmark() {
-        DispatchQueue.main.async {
-            appState.timetable.isFirstBookmark = userDefaultsRepository.get(Bool.self, key: .isFirstBookmark, defaultValue: true)
-        }
+        appState.timetable.isFirstBookmark = userDefaultsRepository.get(Bool.self, key: .isFirstBookmark, defaultValue: true)
     }
 
     func bookmarkLecture(lecture: Lecture) async throws {
@@ -117,11 +106,9 @@ struct LectureService: LectureServiceProtocol {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)
-        await MainActor.run {
-            appState.timetable.bookmark = bookmark
-            userDefaultsRepository.set(Bool.self, key: .isFirstBookmark, value: false)
-            appState.timetable.isFirstBookmark = false
-        }
+        appState.timetable.bookmark = bookmark
+        userDefaultsRepository.set(Bool.self, key: .isFirstBookmark, value: false)
+        appState.timetable.isFirstBookmark = false
     }
 
     func undoBookmarkLecture(lecture: Lecture) async throws {
@@ -129,10 +116,8 @@ struct LectureService: LectureServiceProtocol {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)
-        await MainActor.run {
-            appState.timetable.bookmark = bookmark
-            appState.search.selectedLecture = nil
-        }
+        appState.timetable.bookmark = bookmark
+        appState.search.selectedLecture = nil
     }
 
     private var lectureRepository: LectureRepositoryProtocol {

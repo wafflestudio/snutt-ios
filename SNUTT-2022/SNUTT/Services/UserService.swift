@@ -7,7 +7,8 @@
 
 import Foundation
 
-protocol UserServiceProtocol {
+@MainActor
+protocol UserServiceProtocol: Sendable {
     func fetchUser() async throws
     func deleteUser() async throws
     func addLocalId(localId: String, localPassword: String) async throws
@@ -84,17 +85,13 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
     }
 
     private func updateToken(from dto: TokenResponseDto) async throws {
-        DispatchQueue.main.async {
-            appState.user.accessToken = dto.token
-        }
+        appState.user.accessToken = dto.token
         userDefaultsRepository.set(String.self, key: .accessToken, value: dto.token)
         try await fetchUser()
     }
 
     private func updateUser(from dto: UserDto) {
-        DispatchQueue.main.async {
-            appState.user.current = User(from: dto)
-        }
+        appState.user.current = User(from: dto)
         userDefaultsRepository.set(UserDto.self, key: .userDto, value: dto)
     }
 }

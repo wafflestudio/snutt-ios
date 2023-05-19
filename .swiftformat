@@ -1,3 +1,6 @@
 --disable enumNamespaces
 --disable strongOutlets
 --exclude Pods
+--varattributes same-line
+--funcattributes same-line
+--typeattributes prev-line

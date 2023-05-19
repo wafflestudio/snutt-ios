@@ -10,10 +10,13 @@ import Alamofire
 import XCTest
 
 class AuthRepositoryTests: XCTestCase {
-    let repository = AuthRepository(session: .test)
+    var repository: AuthRepository!
 
     let testId = "snuttiostest123"
     let testPW = "snuttiostest123"
+    override func setUp() async throws {
+        repository = AuthRepository(session: await .test)
+    }
 
     func testRegisterAndLoginWithId() async throws {
         do {

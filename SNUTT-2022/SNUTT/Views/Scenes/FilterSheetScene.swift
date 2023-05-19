@@ -13,7 +13,8 @@ struct FilterSheetScene: View {
     var body: some View {
         Sheet(isOpen: $viewModel.isFilterOpen,
               orientation: .bottom(maxHeight: 450),
-              sheetOpacity: 1) {
+              sheetOpacity: 1)
+        {
             VStack {
                 HStack {
                     Spacer()
@@ -36,6 +37,7 @@ struct FilterSheetScene: View {
 
 #if DEBUG
     ///// A simple wrapper that is used to preview `FilterSheet`.
+    @MainActor
     struct FilterSheetWrapper: View {
         let container: DIContainer = .preview
         var body: some View {

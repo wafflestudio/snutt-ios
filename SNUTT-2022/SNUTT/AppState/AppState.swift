@@ -8,7 +8,8 @@
 import Combine
 import SwiftUI
 
-class AppState {
+@MainActor
+final class AppState {
     var user = UserState()
 
     var system = SystemState()
@@ -19,6 +20,10 @@ class AppState {
     var notification = NotificationState()
     var popup = PopupState()
     var review = ReviewState()
+
+    #if DEBUG
+        var debug = DebugState()
+    #endif
 }
 
 #if DEBUG

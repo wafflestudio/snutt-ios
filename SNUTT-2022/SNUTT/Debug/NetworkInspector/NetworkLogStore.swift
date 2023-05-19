@@ -1,0 +1,38 @@
+//
+//  NetworkLogStore.swift
+//  SNUTT
+//
+//  Created by 박신홍 on 2023/05/09.
+//
+
+import Alamofire
+import Combine
+import Foundation
+
+@MainActor
+class NetworkLogStore {
+    @Published private(set) var logs: [NetworkLogEntry] = []
+
+    private let maxLogEntries = 10000
+
+    func log<Value>(response: DataResponse<Value, AFError>) {
+        guard let urlRequest = response.request,
+              let urlResponse = response.response else { return }
+        let logEntry = NetworkLogEntry(id: UUID(),
+                                       url: urlRequest.url,
+                                       statusCode: urlResponse.statusCode,
+                                       httpMethod: urlRequest.httpMethod,
+                                       requestHeaders: urlRequest.headers,
+                                       responseHeaders: urlResponse.headers,
+                                       requestData: urlRequest.httpBody,
+                                       responseData: response.data)
+        logs.append(logEntry)
+        rotateLogsIfNeeded()
+    }
+
+    private func rotateLogsIfNeeded() {
+        if logs.count > maxLogEntries {
+            logs.removeFirst(logs.count - maxLogEntries)
+        }
+    }
+}

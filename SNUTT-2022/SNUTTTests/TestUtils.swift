@@ -10,7 +10,7 @@ import Foundation
 @testable import SNUTT
 
 extension Session {
-    static var test: Session {
+    @MainActor static var test: Session {
         Session(interceptor: Interceptor(userState: AppState.test.user), eventMonitors: [Logger()])
     }
 }

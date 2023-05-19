@@ -28,7 +28,7 @@ enum CourseBookRouter: Router {
     var path: String {
         switch self {
         case .getCourseBookList:
-            return "/"
+            return ""
         case .getRecentCourseBook:
             return "/recent"
         case .getSyllabusURL:

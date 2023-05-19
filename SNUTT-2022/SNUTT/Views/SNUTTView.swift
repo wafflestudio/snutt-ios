@@ -12,7 +12,7 @@ struct SNUTTView: View {
     @ObservedObject var viewModel: ViewModel
 
     /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
-    @State private var navigationBarHeight: CGFloat = 0
+    @MainActor @State private var navigationBarHeight: CGFloat = 0
 
     private var selected: Binding<TabType> {
         Binding<TabType> {
@@ -38,9 +38,7 @@ struct SNUTTView: View {
                     TabScene(tabType: .timetable) {
                         TimetableScene(viewModel: .init(container: viewModel.container))
                             .background(NavigationBarReader { navbar in
-                                DispatchQueue.main.async {
-                                    navigationBarHeight = navbar.frame.height
-                                }
+                                navigationBarHeight = navbar.frame.height
                             })
                     }
                     TabScene(tabType: .search) {
