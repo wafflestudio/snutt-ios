@@ -52,22 +52,33 @@ struct TimetablePainter {
 
     // MARK: Auto Fit
 
-    /// `autoFit`을 고려한 시간표의 시작 시각. 빈 시간표일 때에는 설정 값을 따른다.
+    /// `autoFit`을 고려한 시간표의 시작 시각. 빈 시간표인 경우 기본 9시이다.
     static func getStartingHour(current: Timetable?, config: TimetableConfiguration) -> Int {
         if !config.autoFit {
             return config.minHour
         }
+
+        if current?.lectures.isEmpty ?? true {
+            return 9
+        }
+
         guard let startTime = current?.earliestStartTime else {
             return config.minHour
         }
-        return Int(min(startTime, 10))
+
+        return Int(min(startTime, 9))
     }
 
-    /// `autoFit`을 고려한 시간표의 종료 시각. 빈 시간표일 때에는 설정 값을 따른다.
+    /// `autoFit`을 고려한 시간표의 종료 시각. 빈 시간표인 경우 기본 17시이다.
     static func getEndingHour(current: Timetable?, config: TimetableConfiguration) -> Int {
         if !config.autoFit {
             return config.maxHour
         }
+
+        if current?.lectures.isEmpty ?? true {
+            return 17
+        }
+
         guard let endTime = current?.lastEndTime else {
             return config.maxHour
         }
@@ -83,10 +94,14 @@ struct TimetablePainter {
         return end - start + 1
     }
 
-    /// `autoFit`을 고려한 시간표 요일들
+    /// `autoFit`을 고려한 시간표 요일들. 빈 시간표인 경우 기본 월~금이다.
     static func getVisibleWeeks(current: Timetable?, config: TimetableConfiguration) -> [Weekday] {
         if !config.autoFit {
             return config.visibleWeeksSorted
+        }
+
+        if current?.lectures.isEmpty ?? true {
+            return [.mon, .tue, .wed, .thu, .fri]
         }
 
         guard let lastWeekDay = current?.lastWeekDay else {
