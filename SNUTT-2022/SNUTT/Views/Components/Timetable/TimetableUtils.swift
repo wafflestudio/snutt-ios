@@ -57,11 +57,11 @@ struct TimetablePainter {
         if !config.autoFit {
             return config.minHour
         }
-        
+
         if current?.lectures.isEmpty ?? true {
             return 9
         }
-        
+
         guard let startTime = current?.earliestStartTime else {
             return config.minHour
         }
@@ -74,7 +74,7 @@ struct TimetablePainter {
         if !config.autoFit {
             return config.maxHour
         }
-        
+
         if current?.lectures.isEmpty ?? true {
             return 17
         }
@@ -99,7 +99,7 @@ struct TimetablePainter {
         if !config.autoFit {
             return config.visibleWeeksSorted
         }
-        
+
         if current?.lectures.isEmpty ?? true {
             return [.mon, .tue, .wed, .thu, .fri]
         }
