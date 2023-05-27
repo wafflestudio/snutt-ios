@@ -25,6 +25,7 @@
                         Text("\(logEntry.url?.relativePath ?? "UNK")")
                             .lineLimit(isExpanded ? nil : 1)
                             .font(.system(size: 15, weight: .regular, design: .monospaced))
+                            .textSelection(.enabled)
 
                         Spacer()
                         Text("\(logEntry.statusCode)")
@@ -51,8 +52,10 @@
                                 .font(.system(size: 11, weight: .regular, design: .monospaced))
                                 .foregroundColor(Color.gray)
                             Text("\(logEntry.requestHeaders.description)")
+                                .textSelection(.enabled)
                             if let requestDataString = logEntry.requestData?.jsonFormatted() {
                                 Text("\n\(requestDataString)")
+                                    .textSelection(.enabled)
                             }
 
                             Divider().padding(.vertical, 2)
@@ -61,8 +64,10 @@
                                 .font(.system(size: 11, weight: .regular, design: .monospaced))
                                 .foregroundColor(Color.gray)
                             Text("\(logEntry.responseHeaders.description)")
+                                .textSelection(.enabled)
                             if let responseDataString = logEntry.responseData?.jsonFormatted() {
                                 Text("\n\(responseDataString)")
+                                    .textSelection(.enabled)
                             }
                         }
                     }
