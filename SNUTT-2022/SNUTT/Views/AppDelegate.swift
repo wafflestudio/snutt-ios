@@ -58,7 +58,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(
         _: UNUserNotificationCenter,
-        willPresent _: UNNotification,
+        willPresent notification: UNNotification,
         withCompletionHandler completionHandler:
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
@@ -67,9 +67,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
     func userNotificationCenter(
         _: UNUserNotificationCenter,
-        didReceive _: UNNotificationResponse,
+        didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
+        openUrl(from: response.notification)
         completionHandler()
     }
 
@@ -82,6 +83,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     func application(_: UIApplication, didFailToRegisterForRemoteNotificationsWithError _: Error) {}
+
+    func openUrl(from notification: UNNotification) {
+        let userInfo = notification.request.content.userInfo
+        if let urlString = userInfo["url_scheme"] as? String, let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
 }
 
 extension AppDelegate: MessagingDelegate {

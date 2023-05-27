@@ -7,10 +7,22 @@
 
 import SwiftUI
 
+extension SettingScene {
+    class RoutingState: ObservableObject {
+        @Published var pushToNotification = false
+    }
+}
+
 struct SettingScene: View {
     @ObservedObject var viewModel: SettingViewModel
+    @ObservedObject var routingState: RoutingState
     @State private var pushToNotiScene = false
     @State private var isLogoutAlertPresented: Bool = false
+
+    init(viewModel: SettingViewModel) {
+        self.viewModel = viewModel
+        self.routingState = viewModel.appState.routing.settingScene
+    }
 
     var body: some View {
         List {
@@ -53,13 +65,13 @@ struct SettingScene: View {
                 }
             }
 
-            #if DEBUG
-                Section("디버그 메뉴") {
-                    SettingsLinkItem(title: "네트워크 로그") {
-                        NetworkLogListScene(viewModel: .init(container: viewModel.container))
-                    }
+#if DEBUG
+            Section("디버그 메뉴") {
+                SettingsLinkItem(title: "네트워크 로그") {
+                    NetworkLogListScene(viewModel: .init(container: viewModel.container))
                 }
-            #endif
+            }
+#endif
 
             Section {
                 SettingsButtonItem(title: "로그아웃", role: .destructive) {
@@ -90,6 +102,11 @@ struct SettingScene: View {
                                                          initialFetch: viewModel.fetchInitialNotifications,
                                                          fetchMore: viewModel.fetchMoreNotifications), isActive: $pushToNotiScene) { EmptyView() }
         }
+        .background {
+            NavigationLink(destination: NotificationList(notifications: viewModel.notifications,
+                                                         initialFetch: viewModel.fetchInitialNotifications,
+                                                         fetchMore: viewModel.fetchMoreNotifications), isActive: $routingState.pushToNotification) { EmptyView() }
+        }
         .task {
             await viewModel.fetchUser()
             await viewModel.fetchInitialNotifications(updateLastRead: false)
@@ -107,13 +124,13 @@ enum ColorSchemeSelection: String, CaseIterable {
 }
 
 #if DEBUG
-    struct SettingScene_Previews: PreviewProvider {
-        static var previews: some View {
-            NavigationView {
-                TabView {
-                    SettingScene(viewModel: .init(container: .preview))
-                }
+struct SettingScene_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            TabView {
+                SettingScene(viewModel: .init(container: .preview))
             }
         }
     }
+}
 #endif
