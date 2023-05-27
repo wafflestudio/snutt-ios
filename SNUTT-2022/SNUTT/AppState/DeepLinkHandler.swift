@@ -26,7 +26,7 @@ struct DeepLinkHandler {
 }
 
 extension DeepLinkHandler {
-    private func handleNotification(parameters: Parameters?) {
+    private func handleNotification(parameters _: Parameters?) {
         appState.system.selectedTab = .settings
         appState.routing.settingScene.pushToNotification = true
     }

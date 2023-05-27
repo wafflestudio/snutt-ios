@@ -21,7 +21,7 @@ struct SettingScene: View {
 
     init(viewModel: SettingViewModel) {
         self.viewModel = viewModel
-        self.routingState = viewModel.appState.routing.settingScene
+        routingState = viewModel.appState.routing.settingScene
     }
 
     var body: some View {
@@ -65,13 +65,13 @@ struct SettingScene: View {
                 }
             }
 
-#if DEBUG
-            Section("디버그 메뉴") {
-                SettingsLinkItem(title: "네트워크 로그") {
-                    NetworkLogListScene(viewModel: .init(container: viewModel.container))
+            #if DEBUG
+                Section("디버그 메뉴") {
+                    SettingsLinkItem(title: "네트워크 로그") {
+                        NetworkLogListScene(viewModel: .init(container: viewModel.container))
+                    }
                 }
-            }
-#endif
+            #endif
 
             Section {
                 SettingsButtonItem(title: "로그아웃", role: .destructive) {
@@ -124,13 +124,13 @@ enum ColorSchemeSelection: String, CaseIterable {
 }
 
 #if DEBUG
-struct SettingScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TabView {
-                SettingScene(viewModel: .init(container: .preview))
+    struct SettingScene_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                TabView {
+                    SettingScene(viewModel: .init(container: .preview))
+                }
             }
         }
     }
-}
 #endif

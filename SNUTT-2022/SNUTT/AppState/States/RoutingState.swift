@@ -7,8 +7,6 @@
 
 import Foundation
 
-
 class ViewRoutingState {
     var settingScene = SettingScene.RoutingState()
 }
-
