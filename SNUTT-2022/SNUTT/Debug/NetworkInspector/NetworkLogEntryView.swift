@@ -22,7 +22,7 @@
                         Text("\(logEntry.httpMethod ?? "UNK")")
                             .font(.system(size: 15, weight: .bold, design: .monospaced))
 
-                        Text("\(logEntry.url?.relativePath ?? "UNK")")
+                        Text("\((isExpanded ? logEntry.absoluteURLString : logEntry.relativeURLString) ?? "UNK")")
                             .lineLimit(isExpanded ? nil : 1)
                             .font(.system(size: 15, weight: .regular, design: .monospaced))
 

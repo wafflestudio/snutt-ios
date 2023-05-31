@@ -17,6 +17,17 @@ struct NetworkLogEntry: Identifiable, Sendable {
     var responseHeaders: HTTPHeaders
     var requestData: Data?
     var responseData: Data?
+    var absoluteURLString: String? {
+        url?.absoluteString
+    }
+
+    var relativeURLString: String? {
+        guard let url else { return nil }
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        components?.scheme = nil
+        components?.host = nil
+        return components?.string
+    }
 }
 
 extension Data {
