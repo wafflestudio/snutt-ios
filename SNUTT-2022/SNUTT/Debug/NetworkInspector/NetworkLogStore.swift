@@ -25,7 +25,8 @@ class NetworkLogStore {
                                        requestHeaders: urlRequest.headers,
                                        responseHeaders: urlResponse.headers,
                                        requestData: urlRequest.httpBody,
-                                       responseData: response.data)
+                                       responseData: response.data,
+                                       metrics: response.metrics)
         logs.append(logEntry)
         rotateLogsIfNeeded()
     }
