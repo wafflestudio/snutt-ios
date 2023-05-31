@@ -77,7 +77,9 @@ struct Lecture: Identifiable {
         if timePlaces.isEmpty {
             return ""
         }
-        let places = timePlaces.compactMap { $0.place.isEmpty ? nil : $0.place }
+        let places = timePlaces
+            .compactMap { $0.place.isEmpty ? nil : $0.place }
+            .reduce(into: Set<String>(), { $0.insert($1) })
         if places.isEmpty {
             return ""
         }
