@@ -47,7 +47,6 @@
                 if isExpanded {
                     VStack(alignment: .leading) {
                         Group {
-
                             if let timeMetrics = logEntry.timeMetrics {
                                 Text("Start")
                                     .logEntryLabel()
@@ -66,11 +65,9 @@
                                 Divider().padding(.vertical, 2)
                             }
 
-
-
                             Text("Request")
                                 .logEntryLabel()
-                            
+
                             Text("\(logEntry.requestHeaders.description)")
                             if let requestDataString = logEntry.requestData?.jsonFormatted() {
                                 Text("\n\(requestDataString)")
@@ -118,25 +115,25 @@
         }
     }
 
-struct LogEntryLabelStyle: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .font(.system(size: 11, weight: .regular, design: .monospaced))
-            .foregroundColor(Color.gray)
+    struct LogEntryLabelStyle: ViewModifier {
+        func body(content: Content) -> some View {
+            content
+                .font(.system(size: 11, weight: .regular, design: .monospaced))
+                .foregroundColor(Color.gray)
+        }
     }
-}
 
-fileprivate extension View {
-    func logEntryLabel() -> some View {
-        modifier(LogEntryLabelStyle())
+    fileprivate extension View {
+        func logEntryLabel() -> some View {
+            modifier(LogEntryLabelStyle())
+        }
     }
-}
 
-fileprivate extension Date {
-    var logFormattedString: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd HH:mm:ss.SSS"
-        return dateFormatter.string(from: self)
+    fileprivate extension Date {
+        var logFormattedString: String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy.MM.dd HH:mm:ss.SSS"
+            return dateFormatter.string(from: self)
+        }
     }
-}
 #endif
