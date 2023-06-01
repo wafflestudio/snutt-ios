@@ -115,7 +115,7 @@
         }
     }
 
-    struct LogEntryLabelStyle: ViewModifier {
+    fileprivate struct LogEntryLabelStyle: ViewModifier {
         func body(content: Content) -> some View {
             content
                 .font(.system(size: 11, weight: .regular, design: .monospaced))
