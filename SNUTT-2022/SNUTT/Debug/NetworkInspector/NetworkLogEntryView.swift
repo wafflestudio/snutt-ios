@@ -22,7 +22,7 @@
                         Text("\(logEntry.httpMethod ?? "UNK")")
                             .font(.system(size: 15, weight: .bold, design: .monospaced))
 
-                        Text("\(logEntry.url?.relativePath ?? "UNK")")
+                        Text("\((isExpanded ? logEntry.absoluteURLString : logEntry.relativeURLString) ?? "UNK")")
                             .lineLimit(isExpanded ? nil : 1)
                             .font(.system(size: 15, weight: .regular, design: .monospaced))
 
@@ -47,9 +47,27 @@
                 if isExpanded {
                     VStack(alignment: .leading) {
                         Group {
+                            if let timeMetrics = logEntry.timeMetrics {
+                                Text("Start")
+                                    .logEntryLabel()
+                                Text("\(timeMetrics.start.logFormattedString)")
+                                    .padding(.bottom, 1)
+
+                                Text("End")
+                                    .logEntryLabel()
+                                Text("\(timeMetrics.end.logFormattedString)")
+                                    .padding(.bottom, 1)
+
+                                Text("Duration")
+                                    .logEntryLabel()
+                                Text("\(String(format: "%.3f", timeMetrics.duration))s")
+
+                                Divider().padding(.vertical, 2)
+                            }
+
                             Text("Request")
-                                .font(.system(size: 11, weight: .regular, design: .monospaced))
-                                .foregroundColor(Color.gray)
+                                .logEntryLabel()
+
                             Text("\(logEntry.requestHeaders.description)")
                             if let requestDataString = logEntry.requestData?.jsonFormatted() {
                                 Text("\n\(requestDataString)")
@@ -58,8 +76,7 @@
                             Divider().padding(.vertical, 2)
 
                             Text("Response")
-                                .font(.system(size: 11, weight: .regular, design: .monospaced))
-                                .foregroundColor(Color.gray)
+                                .logEntryLabel()
                             Text("\(logEntry.responseHeaders.description)")
                             if let responseDataString = logEntry.responseData?.jsonFormatted() {
                                 Text("\n\(responseDataString)")
@@ -80,7 +97,7 @@
             .animation(.customSpring, value: isExpanded)
         }
 
-        var semanticColor: Color {
+        private var semanticColor: Color {
             if logEntry.statusCode >= 200 && logEntry.statusCode < 300 {
                 return .green
             } else if logEntry.statusCode >= 300 && logEntry.statusCode < 400 {
@@ -95,6 +112,28 @@
     struct NetworkLogEntryView_Previews: PreviewProvider {
         static var previews: some View {
             NetworkLogEntryView(logEntry: NetworkLogEntry.createFixture())
+        }
+    }
+
+    fileprivate struct LogEntryLabelStyle: ViewModifier {
+        func body(content: Content) -> some View {
+            content
+                .font(.system(size: 11, weight: .regular, design: .monospaced))
+                .foregroundColor(Color.gray)
+        }
+    }
+
+    fileprivate extension View {
+        func logEntryLabel() -> some View {
+            modifier(LogEntryLabelStyle())
+        }
+    }
+
+    fileprivate extension Date {
+        var logFormattedString: String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy.MM.dd HH:mm:ss.SSS"
+            return dateFormatter.string(from: self)
         }
     }
 #endif

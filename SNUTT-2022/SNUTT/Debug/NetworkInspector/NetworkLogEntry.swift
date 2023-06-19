@@ -17,6 +17,24 @@ struct NetworkLogEntry: Identifiable, Sendable {
     var responseHeaders: HTTPHeaders
     var requestData: Data?
     var responseData: Data?
+    var metrics: URLSessionTaskMetrics?
+
+    var absoluteURLString: String? {
+        url?.absoluteString
+    }
+
+    var relativeURLString: String? {
+        guard let url else { return nil }
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        components?.scheme = nil
+        components?.host = nil
+        return components?.string
+    }
+
+    var timeMetrics: (duration: TimeInterval, start: Date, end: Date)? {
+        guard let taskInterval = metrics?.taskInterval else { return nil }
+        return (duration: taskInterval.duration, start: taskInterval.start, end: taskInterval.end)
+    }
 }
 
 extension Data {
