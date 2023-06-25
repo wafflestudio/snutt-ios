@@ -7,6 +7,14 @@
 
 import Foundation
 
+@MainActor
 class ViewRoutingState {
-    var settingScene = SettingScene.RoutingState()
+    @Published var settingScene = SettingScene.RoutingState()
+}
+
+
+extension SettingScene {
+    struct RoutingState {
+        var pushToNotification = false
+    }
 }

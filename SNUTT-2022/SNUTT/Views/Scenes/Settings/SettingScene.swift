@@ -7,21 +7,13 @@
 
 import SwiftUI
 
-extension SettingScene {
-    class RoutingState: ObservableObject {
-        @Published var pushToNotification = false
-    }
-}
-
 struct SettingScene: View {
     @ObservedObject var viewModel: SettingViewModel
-    @ObservedObject var routingState: RoutingState
     @State private var pushToNotiScene = false
     @State private var isLogoutAlertPresented: Bool = false
 
     init(viewModel: SettingViewModel) {
         self.viewModel = viewModel
-        routingState = viewModel.appState.routing.settingScene
     }
 
     var body: some View {
@@ -105,7 +97,7 @@ struct SettingScene: View {
         .background {
             NavigationLink(destination: NotificationList(notifications: viewModel.notifications,
                                                          initialFetch: viewModel.fetchInitialNotifications,
-                                                         fetchMore: viewModel.fetchMoreNotifications), isActive: $routingState.pushToNotification) { EmptyView() }
+                                                         fetchMore: viewModel.fetchMoreNotifications), isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
         }
         .task {
             await viewModel.fetchUser()
