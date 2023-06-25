@@ -16,7 +16,7 @@ struct DeepLinkHandler {
     func open(url: URL) {
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return }
         switch urlComponents.host {
-        case "notification":
+        case "notifications":
             handleNotification(parameters: urlComponents.queryItems)
             return
         default:
