@@ -12,7 +12,6 @@ class ViewRoutingState {
     @Published var settingScene = SettingScene.RoutingState()
 }
 
-
 extension SettingScene {
     struct RoutingState {
         var pushToNotification = false
