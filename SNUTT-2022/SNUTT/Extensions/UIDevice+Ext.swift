@@ -13,7 +13,10 @@ extension UIDevice {
         var systemInfo = utsname()
         uname(&systemInfo)
         let data = Data(bytes: &systemInfo.machine, count: Int(_SYS_NAMELEN))
-        let identifier = String(bytes: data, encoding: .ascii)!
-        return identifier.trimmingCharacters(in: .controlCharacters)
+        if let identifier = String(bytes: data, encoding: .ascii) {
+            return identifier.trimmingCharacters(in: .controlCharacters)
+        } else {
+            return "Unknown"
+        }
     }
 }
