@@ -113,7 +113,7 @@ extension TimetableSettingScene {
 #if DEBUG
     struct TimetableSettingScene_Previews: PreviewProvider {
         static var previews: some View {
-            var preview = DIContainer.preview
+            let preview = DIContainer.preview
             preview.appState.timetable.configuration.autoFit = false
             return TimetableSettingScene(viewModel: .init(container: preview))
         }

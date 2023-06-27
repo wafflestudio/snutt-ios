@@ -44,6 +44,7 @@
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
+		B8F0B2302A4B27A500A2E15E /* UIDevice+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */; };
 		B8F40EA9289809C60021A2A9 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EA8289809C60021A2A9 /* LicenseView.swift */; };
 		B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */; };
 		B8F40EAD28980D840021A2A9 /* TimetableSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */; };
@@ -330,6 +331,7 @@
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
 		B8E51E6728B615140065248E /* WebErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebErrorView.swift; sourceTree = "<group>"; };
 		B8E51E6A28B769680065248E /* ReviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRouter.swift; sourceTree = "<group>"; };
+		B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Ext.swift"; sourceTree = "<group>"; };
 		B8F40EA8289809C60021A2A9 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingScene.swift; sourceTree = "<group>"; };
 		B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSettingScene.swift; sourceTree = "<group>"; };
@@ -622,6 +624,7 @@
 				BED04D3228EA963E00937E4C /* FacebookLogin.swift */,
 				BE9C90EA2948EA1800003AA6 /* ColorScheme.swift */,
 				CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */,
+				B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1424,6 +1427,7 @@
 				B8F40EB728980E7A0021A2A9 /* AccountSettingViewModel.swift in Sources */,
 				BEB3B6AF28D4D49A00E56062 /* DetailLabel.swift in Sources */,
 				BE804BEA288B9EF700782F16 /* TimetableConfiguration.swift in Sources */,
+				B8F0B2302A4B27A500A2E15E /* UIDevice+Ext.swift in Sources */,
 				BE9413CE28C2207D00171060 /* NotificationState.swift in Sources */,
 				731D9FFD297BC5060027BA25 /* Bookmark.swift in Sources */,
 				B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */,

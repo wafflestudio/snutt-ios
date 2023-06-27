@@ -32,7 +32,7 @@ final class Interceptor: RequestInterceptor {
 }
 
 enum AppMetadata: CaseIterable {
-    case appVersion, appType, osType, osVersion, apiKey, buildNumber
+    case appVersion, appType, osType, osVersion, apiKey, buildNumber, deviceID, deviceModel
 
     var value: String {
         switch self {
@@ -52,6 +52,10 @@ enum AppMetadata: CaseIterable {
             return Bundle.main.infoDictionary?["API_KEY"] as! String
         case .buildNumber:
             return (Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String) ?? "999"
+        case .deviceID:
+            return UIDevice.current.identifierForVendor?.uuidString ?? ""
+        case .deviceModel:
+            return UIDevice.current.modelName
         }
     }
 
@@ -69,6 +73,10 @@ enum AppMetadata: CaseIterable {
             return "x-access-apikey"
         case .buildNumber:
             return "x-build-number"
+        case .deviceID:
+            return "x-device-id"
+        case .deviceModel:
+            return "x-device-model"
         }
     }
 }
