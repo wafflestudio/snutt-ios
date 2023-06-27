@@ -12,6 +12,10 @@ struct SettingScene: View {
     @State private var pushToNotiScene = false
     @State private var isLogoutAlertPresented: Bool = false
 
+    init(viewModel: SettingViewModel) {
+        self.viewModel = viewModel
+    }
+
     var body: some View {
         List {
             Section {
@@ -89,6 +93,11 @@ struct SettingScene: View {
             NavigationLink(destination: NotificationList(notifications: viewModel.notifications,
                                                          initialFetch: viewModel.fetchInitialNotifications,
                                                          fetchMore: viewModel.fetchMoreNotifications), isActive: $pushToNotiScene) { EmptyView() }
+        }
+        .background {
+            NavigationLink(destination: NotificationList(notifications: viewModel.notifications,
+                                                         initialFetch: viewModel.fetchInitialNotifications,
+                                                         fetchMore: viewModel.fetchMoreNotifications), isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
         }
         .task {
             await viewModel.fetchUser()

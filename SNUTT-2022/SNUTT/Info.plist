@@ -18,6 +18,16 @@
 				<string>fb$(FACEBOOK_APP_ID)</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>$(BUNDLE_ID)</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>$(URL_SCHEME)</string>
+			</array>
+		</dict>
 	</array>
 	<key>FacebookAppID</key>
 	<string>$(FACEBOOK_APP_ID)</string>

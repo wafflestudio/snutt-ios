@@ -109,7 +109,7 @@ extension SNUTTView {
             set { services.globalUIService.setIsErrorAlertPresented(newValue) }
         }
 
-        @Published private var _selectedTab: TabType = .review
+        @Published private var _selectedTab: TabType = .timetable
         var selectedTab: TabType {
             get { _selectedTab }
             set { services.globalUIService.setSelectedTab(newValue) }

@@ -13,11 +13,20 @@ class SettingViewModel: BaseViewModel, ObservableObject {
     @Published var notifications: [STNotification] = []
     @Published var unreadCount: Int = 0
 
+    @Published var _routingState: SettingScene.RoutingState = .init()
+    var routingState: SettingScene.RoutingState {
+        get { _routingState }
+        set {
+            services.globalUIService.setRoutingState(\.settingScene, value: newValue)
+        }
+    }
+
     override init(container: DIContainer) {
         super.init(container: container)
         appState.system.$preferredColorScheme.assign(to: &$preferredColorScheme)
         appState.notification.$notifications.assign(to: &$notifications)
         appState.notification.$unreadCount.assign(to: &$unreadCount)
+        appState.routing.$settingScene.assign(to: &$_routingState)
     }
 
     var userEmail: String? {

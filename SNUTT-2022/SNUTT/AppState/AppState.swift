@@ -20,6 +20,7 @@ final class AppState {
     var notification = NotificationState()
     var popup = PopupState()
     var review = ReviewState()
+    var routing = ViewRoutingState()
 
     #if DEBUG
         var debug = DebugState()

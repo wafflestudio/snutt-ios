@@ -42,6 +42,8 @@ protocol GlobalUIServiceProtocol: Sendable {
     func preloadWebViews()
     func sendMainWebViewReloadSignal()
     func sendDetailWebViewReloadSignal(url: URL)
+
+    func setRoutingState<V>(_ key: WritableKeyPath<ViewRoutingState, V>, value: V)
 }
 
 struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
@@ -170,5 +172,13 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
 
         appState.system.error = error
         appState.system.isErrorAlertPresented = true
+    }
+}
+
+// MARK: Deep Link Routing
+
+extension GlobalUIService {
+    func setRoutingState<V>(_ key: WritableKeyPath<ViewRoutingState, V>, value: V) {
+        appState.routing[keyPath: key] = value
     }
 }

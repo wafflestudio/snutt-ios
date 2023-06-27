@@ -25,6 +25,7 @@
                         Text("\((isExpanded ? logEntry.absoluteURLString : logEntry.relativeURLString) ?? "UNK")")
                             .lineLimit(isExpanded ? nil : 1)
                             .font(.system(size: 15, weight: .regular, design: .monospaced))
+                            .textSelection(.enabled)
 
                         Spacer()
                         Text("\(logEntry.statusCode)")
@@ -69,8 +70,10 @@
                                 .logEntryLabel()
 
                             Text("\(logEntry.requestHeaders.description)")
+                                .textSelection(.enabled)
                             if let requestDataString = logEntry.requestData?.jsonFormatted() {
                                 Text("\n\(requestDataString)")
+                                    .textSelection(.enabled)
                             }
 
                             Divider().padding(.vertical, 2)
@@ -78,8 +81,10 @@
                             Text("Response")
                                 .logEntryLabel()
                             Text("\(logEntry.responseHeaders.description)")
+                                .textSelection(.enabled)
                             if let responseDataString = logEntry.responseData?.jsonFormatted() {
                                 Text("\n\(responseDataString)")
+                                    .textSelection(.enabled)
                             }
                         }
                     }
