@@ -34,11 +34,13 @@ extension AccountSettingScene {
             }
         }
 
-        func attachLocalId(localId: String, localPassword: String) async {
+        func attachLocalId(localId: String, localPassword: String) async -> Bool {
             do {
                 try await services.userService.addLocalId(localId: localId, localPassword: localPassword)
+                return true
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
+                return false
             }
         }
 

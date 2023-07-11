@@ -45,6 +45,7 @@
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
 		B8F0B2302A4B27A500A2E15E /* UIDevice+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */; };
+		B8F0B2322A540A5300A2E15E /* EmailVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0B2312A540A5300A2E15E /* EmailVerificationView.swift */; };
 		B8F40EA9289809C60021A2A9 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EA8289809C60021A2A9 /* LicenseView.swift */; };
 		B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */; };
 		B8F40EAD28980D840021A2A9 /* TimetableSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */; };
@@ -333,6 +334,7 @@
 		B8E51E6728B615140065248E /* WebErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebErrorView.swift; sourceTree = "<group>"; };
 		B8E51E6A28B769680065248E /* ReviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRouter.swift; sourceTree = "<group>"; };
 		B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Ext.swift"; sourceTree = "<group>"; };
+		B8F0B2312A540A5300A2E15E /* EmailVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationView.swift; sourceTree = "<group>"; };
 		B8F40EA8289809C60021A2A9 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingScene.swift; sourceTree = "<group>"; };
 		B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSettingScene.swift; sourceTree = "<group>"; };
@@ -935,10 +937,8 @@
 				DC29159E28660F7800FE5F9A /* ReviewScene.swift */,
 				BEF9233728E84653004AFCB2 /* LectureTimeSheetScene.swift */,
 				BE060BD828DF4C1E00A2F1B9 /* OnboardScene.swift */,
-				BEF9233528E7EE45004AFCB2 /* SignUpView.swift */,
 				BE28036928E93EEF00B2B1AB /* LoginScene.swift */,
 				B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */,
-				B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */,
 				BECDB8992840CFAA00F62AC8 /* MenuSheetScene.swift */,
 				BE8BB3B4285D97A600070A66 /* FilterSheetScene.swift */,
 				BE9413E028CCD04900171060 /* LectureTimeSheetScene.swift */,
@@ -967,8 +967,11 @@
 				BEEBDFB52868BA6D00DB5976 /* FilterSheetContent.swift */,
 				BEB3B6A128CDB7A400E56062 /* LectureTimePicker.swift */,
 				BED04D2E28EA6FA600937E4C /* SettingsMenuItem.swift */,
+				BEF9233528E7EE45004AFCB2 /* SignUpView.swift */,
 				BED04D3028EA8B0A00937E4C /* ChangePasswordView.swift */,
 				B85B244C295BF36F00E6577E /* FindLocalIdView.swift */,
+				B8F0B2312A540A5300A2E15E /* EmailVerificationView.swift */,
+				B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */,
 				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
 				B88D170028AF71E300E2D652 /* UserSupportView.swift */,
 				CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */,
@@ -1361,6 +1364,7 @@
 				B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				B87B316C28D755B6005C170B /* SystemState.swift in Sources */,
+				B8F0B2322A540A5300A2E15E /* EmailVerificationView.swift in Sources */,
 				CE9820502A0A0BB7001037F5 /* NetworkLogListScene.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
 				B8E51E6828B615140065248E /* WebErrorView.swift in Sources */,

@@ -16,10 +16,28 @@ struct VerificationCodeView: View {
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
     @State private var currentTimer: Cancellable? = nil
 
+    let mode: Mode
     let email: String
-    let timeLimit: Int
+    
+    /// Time limitation for entering verification code. 180 seconds by default.
+    var timeLimit: Int = 180
     let sendVerificationCode: (String) async -> Bool
     let checkVerificationCode: (String) async -> Void
+    
+    enum Mode {
+        case signup, resetPassword
+        
+        var placeholder: String {
+            switch self {
+            case .signup: return "인증코드 6자리를 입력하세요"
+            case .resetPassword: return "인증코드 8자리를 입력하세요"
+            }
+        }
+        
+        var keyboardType: UIKeyboardType {
+            self == .signup ? .numberPad : .asciiCapable
+        }
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -32,7 +50,7 @@ struct VerificationCodeView: View {
             Spacer().frame(height: 8)
 
             VStack(alignment: .leading) {
-                AnimatedTextField(label: "인증코드", placeholder: "인증코드 8자리를 입력하세요", text: $verificationCode, needsTimer: true, timeOut: $timeOut, remainingTime: remainingTime) {
+                AnimatedTextField(label: "인증코드", placeholder: mode.placeholder, text: $verificationCode, keyboardType: mode.keyboardType, needsTimer: true, timeOut: $timeOut, remainingTime: remainingTime) {
                     Task {
                         if await sendVerificationCode(email) {
                             startTimer()
@@ -96,7 +114,7 @@ extension VerificationCodeView {
 struct VerifyEmailScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            VerificationCodeView(email: "example@gmail.com", timeLimit: 10) { _ in
+            VerificationCodeView(mode: .resetPassword, email: "example@gmail.com", timeLimit: 10) { _ in
                 print("sendVerificationCode")
                 return true
             } checkVerificationCode: { _ in

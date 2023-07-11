@@ -76,13 +76,13 @@ struct ResetPasswordScene: View {
         .background(
             Group {
                 NavigationLink(destination:
-                    VerificationCodeView(email: email, timeLimit: viewModel.timeLimit,
-                                         sendVerificationCode: { _ in
-                                             await viewModel.sendVerificationCode(to: email)
-                                         }, checkVerificationCode: { code in
-                                             pushToResetPasswordView = await viewModel.checkVerificationCode(localId: localId, code: code)
-                                         }),
-                    isActive: $pushToVerificationView) { EmptyView() }
+                    VerificationCodeView(mode: .resetPassword, email: email,
+                             sendVerificationCode: { _ in
+                                 await viewModel.sendVerificationCode(to: email)
+                             }, checkVerificationCode: { code in
+                                 pushToResetPasswordView = await viewModel.checkVerificationCode(localId: localId, code: code)
+                             }),
+            isActive: $pushToVerificationView) { EmptyView() }
 
                 NavigationLink(destination:
                     ChangePasswordView(resetMode: true,
@@ -97,8 +97,6 @@ struct ResetPasswordScene: View {
 
 extension ResetPasswordScene {
     class ViewModel: BaseViewModel, ObservableObject {
-        var timeLimit: Int { 180 }
-
         func checkLinkedEmail(localId: String) async -> String? {
             do {
                 return try await services.authService.checkLinkedEmail(localId: localId)

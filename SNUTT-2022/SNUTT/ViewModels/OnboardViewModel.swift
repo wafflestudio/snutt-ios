@@ -10,12 +10,14 @@ import SwiftUI
 
 extension OnboardScene {
     class ViewModel: BaseViewModel, ObservableObject {
-        func registerWith(id: String, password: String, email: String) async {
+        func registerWith(id: String, password: String, email: String) async -> Bool {
             // TODO: Validation
             do {
                 try await services.authService.registerWithLocalId(localId: id, localPassword: password, email: email)
+                return true
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
+                return false
             }
         }
     }

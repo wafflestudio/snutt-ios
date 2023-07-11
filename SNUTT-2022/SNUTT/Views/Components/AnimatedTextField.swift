@@ -11,6 +11,7 @@ struct AnimatedTextField: View {
     let label: String
     let placeholder: String
     @Binding var text: String
+    var keyboardType: UIKeyboardType = .default
 
     var shouldFocusOn: Bool = false
     var secure: Bool = false
@@ -23,10 +24,11 @@ struct AnimatedTextField: View {
 
     @FocusState private var _isFocused: Bool
 
-    init(label: String, placeholder: String, text: Binding<String>, shouldFocusOn: Bool = false, secure: Bool = false, needsTimer: Bool = false, timeOut: Binding<Bool> = .constant(false), remainingTime: Int = 0, action: (() -> Void)? = nil) {
+    init(label: String, placeholder: String, text: Binding<String>, keyboardType: UIKeyboardType = .default, shouldFocusOn: Bool = false, secure: Bool = false, needsTimer: Bool = false, timeOut: Binding<Bool> = .constant(false), remainingTime: Int = 0, action: (() -> Void)? = nil) {
         self.label = label
         self.placeholder = placeholder
         _text = text
+        self.keyboardType = keyboardType
         self.shouldFocusOn = shouldFocusOn
         self.secure = secure
         self.needsTimer = needsTimer
@@ -51,6 +53,7 @@ struct AnimatedTextField: View {
                     }
                 }
                 .focused($_isFocused)
+                .keyboardType(keyboardType)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
                 .font(STFont.detailLabel)
