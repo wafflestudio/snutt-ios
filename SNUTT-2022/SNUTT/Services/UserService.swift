@@ -17,6 +17,8 @@ protocol UserServiceProtocol: Sendable {
     func connectFacebook(fbId: String, fbToken: String) async throws
     func addDevice(fcmToken: String) async throws
     func deleteDevice(fcmToken: String) async throws
+    func sendVerificationCode(email: String) async throws
+    func submitVerificationCode(code: String) async throws
 }
 
 struct UserService: UserServiceProtocol, UserAuthHandler {
@@ -83,6 +85,14 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
 
         let _ = try await userRepository.deleteDevice(fcmToken: fcmToken)
     }
+    
+    func sendVerificationCode(email: String) async throws {
+        let _ = try await userRepository.sendVerificationCode(email: email)
+    }
+    
+    func submitVerificationCode(code: String) async throws {
+        let _ = try await userRepository.submitVerificationCode(code: code)
+    }
 
     private func updateToken(from dto: TokenResponseDto) async throws {
         appState.user.accessToken = dto.token
@@ -105,4 +115,7 @@ class FakeUserService: UserServiceProtocol {
     func connectFacebook(fbId _: String, fbToken _: String) async throws {}
     func addDevice(fcmToken _: String) async throws {}
     func deleteDevice(fcmToken _: String) async throws {}
+    func sendVerificationCode(email: String) async throws {}
+    func submitVerificationCode(code: String) async throws {}
+    func checkEmailVerification() async throws {}
 }

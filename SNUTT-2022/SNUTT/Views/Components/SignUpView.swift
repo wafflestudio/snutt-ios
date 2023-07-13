@@ -8,9 +8,18 @@
 import SwiftUI
 
 struct SignUpView: View {
+    
+    /// `.register` by default
     var displayMode: DisplayMode = .register
-    var registerLocalId: (String, String, String) async -> Bool // id, password, email
-    let domain: String = "@snu.ac.kr"
+    var registerLocalId: (_ id: String, _ password: String, _ email: String) async -> Bool
+    
+    var sendVerificationCode: (String) async -> Bool = { _ in return false }
+    var checkVerificationCode: (String) async -> Bool = { _ in return false }
+    
+    private let domain = "@snu.ac.kr"
+    private var emailAddress: String {
+        email + domain
+    }
 
     enum DisplayMode: String {
         case register = "계정 만들기"
@@ -23,7 +32,7 @@ struct SignUpView: View {
     @State private var email: String = ""
     @State private var pushToEmailVerificationView: Bool = false
     @State private var pushToCodeVerificationView: Bool = false
-    @State private var pushToTimetableScene: Bool = false
+    @Binding var pushToTimetableScene: Bool
 
     var isButtonDisabled: Bool {
         id.isEmpty || password.isEmpty || password2.isEmpty || email.isEmpty || password != password2
@@ -35,12 +44,14 @@ struct SignUpView: View {
                 AnimatedTextField(label: "아이디", placeholder: "영문 혹은 숫자 4-32자 이내", text: $id, keyboardType: .asciiCapable, shouldFocusOn: true)
                 AnimatedTextField(label: "비밀번호", placeholder: "영문과 숫자 모두 포함 6-20자 이내", text: $password, keyboardType: .asciiCapable, secure: true)
                 AnimatedTextField(label: "비밀번호 확인", placeholder: "비밀번호를 한번 더 입력하세요", text: $password2, keyboardType: .asciiCapable, secure: true)
-                HStack {
-                    AnimatedTextField(label: "이메일", placeholder: "서울대학교 메일 주소를 입력하세요", text: $email, keyboardType: .asciiCapable)
-                    Text(domain)
-                        .font(STFont.detailLabel)
-                        .foregroundColor(.primary)
-                        .alignmentGuide(VerticalAlignment.center) { _ in 0 }
+                if displayMode == .register {
+                    HStack {
+                        AnimatedTextField(label: "이메일", placeholder: "서울대학교 메일 주소를 입력하세요", text: $email, keyboardType: .asciiCapable)
+                        Text(domain)
+                            .font(STFont.detailLabel)
+                            .foregroundColor(.primary)
+                            .alignmentGuide(VerticalAlignment.center) { _ in 0 }
+                    }
                 }
             }
 
@@ -58,13 +69,18 @@ struct SignUpView: View {
                 }
 
                 Button {
+                    resignFirstResponder()
+                    
                     Task {
-                        if await registerLocalId(id, password, email + domain) {
-                            resignFirstResponder()
+                        if displayMode == .attach {
+                            let _ = await registerLocalId(id, password, emailAddress)
+                        } else {
+                            pushToTimetableScene = false
+                            pushToEmailVerificationView = await registerLocalId(id, password, emailAddress)
                         }
                     }
                 } label: {
-                    Text(displayMode.rawValue)
+                    Text(displayMode == .register ? "계속하기" : displayMode.rawValue)
                         .padding(.vertical, 5)
                         .font(.system(size: 17, weight: .semibold))
                         .frame(maxWidth: .infinity)
@@ -79,12 +95,26 @@ struct SignUpView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(displayMode.rawValue)
         .background(
-            NavigationLink(isActive: $pushToEmailVerificationView) {
-                EmailVerificationView(email: email + domain,
-                                      pushToCodeVerificationView: $pushToCodeVerificationView,
-                                      pushToTimetableScene: $pushToTimetableScene)
-            } label: {
-                EmptyView()
+            Group {
+                NavigationLink(destination:
+                    EmailVerificationView(
+                        email: emailAddress,
+                        pushToCodeVerificationView: $pushToCodeVerificationView,
+                        skipVerification: { pushToTimetableScene = true },
+                        sendVerificationCode: {
+                            pushToCodeVerificationView = await sendVerificationCode(emailAddress)
+                        }
+                ), isActive: $pushToEmailVerificationView) { EmptyView() }
+                
+                NavigationLink(destination:
+                    VerificationCodeView(
+                        mode: .signup,
+                        email: emailAddress,
+                        sendVerificationCode: sendVerificationCode,
+                        checkVerificationCode: { code in
+                            pushToTimetableScene = await checkVerificationCode(code)
+                        }
+                ), isActive: $pushToCodeVerificationView) { EmptyView() }
             }
         )
     }
@@ -94,10 +124,10 @@ struct SignUpView: View {
     struct SignUpScene_Previews: PreviewProvider {
         static var previews: some View {
             NavigationView {
-                SignUpView { localId, localPassword, email in
+                SignUpView(displayMode: .attach, registerLocalId: { localId, localPassword, email in
                     print(localId, localPassword, email)
                     return false
-                }
+                }, pushToTimetableScene: .constant(false))
             }
         }
     }

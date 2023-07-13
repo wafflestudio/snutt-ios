@@ -99,7 +99,7 @@ extension ResetPasswordScene {
     class ViewModel: BaseViewModel, ObservableObject {
         func checkLinkedEmail(localId: String) async -> String? {
             do {
-                return try await services.authService.checkLinkedEmail(localId: localId)
+                return try await services.authService.getLinkedEmail(localId: localId)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
                 return nil

@@ -23,6 +23,8 @@ enum UserRouter: Router {
     case addDevice(fcmToken: String)
     case deleteDevice(fcmToken: String)
     case deleteUser
+    case sendVerificationCode(email: String)
+    case submitVerificationCode(code: String)
 
     var method: HTTPMethod {
         switch self {
@@ -46,6 +48,10 @@ enum UserRouter: Router {
             return .delete
         case .deleteUser:
             return .delete
+        case .sendVerificationCode:
+            return .post
+        case .submitVerificationCode:
+            return .post
         }
     }
 
@@ -63,6 +69,10 @@ enum UserRouter: Router {
             return "/device/\(fcmToken)"
         case .deleteUser:
             return "/account"
+        case .sendVerificationCode:
+            return "/email/verification"
+        case .submitVerificationCode:
+            return "/email/verification/code"
         }
     }
 
@@ -88,6 +98,10 @@ enum UserRouter: Router {
             return nil
         case .deleteUser:
             return nil
+        case let .sendVerificationCode(email):
+            return ["email": email]
+        case let .submitVerificationCode(code):
+            return ["code": code]
         }
     }
 }

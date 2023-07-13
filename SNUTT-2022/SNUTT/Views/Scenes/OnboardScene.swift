@@ -12,6 +12,7 @@ struct OnboardScene: View {
 
     @State private var pushToSignUpScene = false
     @State private var pushToLoginScene = false
+    @Binding var pushToTimetableScene: Bool
 
     @Namespace private var launchScreenAnimation
     @State private var isActivated = false
@@ -63,9 +64,10 @@ struct OnboardScene: View {
         .navigationBarHidden(true)
         .background(
             Group {
-                NavigationLink(destination: SignUpView(registerLocalId: viewModel.registerWith(id:password:email:)),
-                               isActive: $pushToSignUpScene) { EmptyView() }
-                NavigationLink(destination: LoginScene(viewModel: .init(container: viewModel.container)), isActive: $pushToLoginScene) { EmptyView() }
+                NavigationLink(destination: SignUpView(registerLocalId: viewModel.registerWith(id:password:email:), sendVerificationCode: viewModel.sendVerificationCode(email:), checkVerificationCode: viewModel.submitVerificationCode(code:), pushToTimetableScene: $pushToTimetableScene
+                ), isActive: $pushToSignUpScene) { EmptyView() }
+                
+                NavigationLink(destination: LoginScene(viewModel: .init(container: viewModel.container), moveToTimetableScene: $pushToTimetableScene), isActive: $pushToLoginScene) { EmptyView() }
             }
         )
         .onLoad {
@@ -114,7 +116,7 @@ struct SignInButton: View {
 #if DEBUG
     struct OnboardScene_Previews: PreviewProvider {
         static var previews: some View {
-            OnboardScene(viewModel: .init(container: .preview))
+            OnboardScene(viewModel: .init(container: .preview), pushToTimetableScene: .constant(true))
         }
     }
 #endif

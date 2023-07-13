@@ -20,3 +20,11 @@ extension UserDto {
         email = model.email
     }
 }
+
+struct SendVerificationCodeDto: Decodable {
+    let message: String
+}
+
+struct EmailVerifiedDto: Decodable {
+    let is_email_verified: Bool
+}

@@ -11,7 +11,8 @@ struct EmailVerificationView: View {
     let email: String
     
     @Binding var pushToCodeVerificationView: Bool
-    @Binding var pushToTimetableScene: Bool
+    var skipVerification: () -> Void
+    var sendVerificationCode: () async -> Void
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -30,7 +31,10 @@ struct EmailVerificationView: View {
             
             Group {
                 Button {
-                    pushToCodeVerificationView = true
+                    Task {
+                        await sendVerificationCode()
+                        pushToCodeVerificationView = true
+                    }
                 } label: {
                     Text("확인")
                         .font(STFont.title)
@@ -43,7 +47,7 @@ struct EmailVerificationView: View {
                 Spacer().frame(height: 12)
                 
                 Button {
-                    pushToTimetableScene = true
+                    skipVerification()
                 } label: {
                     Text("나중에 하기")
                         .font(STFont.title)
@@ -67,7 +71,7 @@ struct EmailVerificationView: View {
 struct EmailVerificationView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            EmailVerificationView(email: "penggggg@snu.ac.kr", pushToCodeVerificationView: .constant(false), pushToTimetableScene: .constant(false))
+            EmailVerificationView(email: "penggggg@snu.ac.kr", pushToCodeVerificationView: .constant(false), skipVerification: {}, sendVerificationCode: {})
         }
         .navigationTitle("이메일 인증")
         .navigationBarTitleDisplayMode(.inline)

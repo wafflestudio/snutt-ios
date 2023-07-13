@@ -28,9 +28,13 @@ struct VerificationCodeView: View {
         case signup, resetPassword
         
         var placeholder: String {
+            "인증코드 \(codeCount)자리를 입력하세요"
+        }
+        
+        var codeCount: Int {
             switch self {
-            case .signup: return "인증코드 6자리를 입력하세요"
-            case .resetPassword: return "인증코드 8자리를 입력하세요"
+            case .signup: return 6
+            case .resetPassword: return 8
             }
         }
         
@@ -88,7 +92,7 @@ struct VerificationCodeView: View {
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.roundedRectangle(radius: 0))
             .tint(STColor.cyan)
-            .disabled(verificationCode.count != 8 || timeOut)
+            .disabled(verificationCode.count != mode.codeCount || timeOut)
 
             Spacer()
         }
@@ -115,10 +119,9 @@ struct VerifyEmailScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             VerificationCodeView(mode: .resetPassword, email: "example@gmail.com", timeLimit: 10) { _ in
-                print("sendVerificationCode")
                 return true
             } checkVerificationCode: { _ in
-                print("checkVerificationCode")
+                
             }
         }
     }

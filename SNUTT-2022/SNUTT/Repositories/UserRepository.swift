@@ -17,6 +17,8 @@ protocol UserRepositoryProtocol {
     func deleteUser() async throws
     func addDevice(fcmToken: String) async throws -> DeviceResponseDto
     func deleteDevice(fcmToken: String) async throws -> DeviceResponseDto
+    func sendVerificationCode(email: String) async throws -> SendVerificationCodeDto
+    func submitVerificationCode(code: String) async throws -> EmailVerifiedDto
 }
 
 class UserRepository: UserRepositoryProtocol {
@@ -79,6 +81,18 @@ class UserRepository: UserRepositoryProtocol {
         let _ = try await session
             .request(UserRouter.deleteUser)
             .serializingString()
+            .handlingError()
+    }
+    
+    func sendVerificationCode(email: String) async throws -> SendVerificationCodeDto {
+        try await session.request(UserRouter.sendVerificationCode(email: email))
+            .serializingDecodable(SendVerificationCodeDto.self)
+            .handlingError()
+    }
+    
+    func submitVerificationCode(code: String) async throws -> EmailVerifiedDto {
+        try await session.request(UserRouter.submitVerificationCode(code: code))
+            .serializingDecodable(EmailVerifiedDto.self)
             .handlingError()
     }
 }
