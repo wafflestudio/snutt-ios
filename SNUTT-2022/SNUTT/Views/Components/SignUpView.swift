@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct SignUpView: View {
-    
     /// `.register` by default
     var displayMode: DisplayMode = .register
     var registerLocalId: (_ id: String, _ password: String, _ email: String) async -> Bool
-    
-    var sendVerificationCode: (String) async -> Bool = { _ in return false }
-    var checkVerificationCode: (String) async -> Bool = { _ in return false }
-    
+
+    var sendVerificationCode: (String) async -> Bool = { _ in false }
+    var checkVerificationCode: (String) async -> Bool = { _ in false }
+
     private let domain = "@snu.ac.kr"
     private var emailAddress: String {
         email + domain
@@ -70,7 +69,7 @@ struct SignUpView: View {
 
                 Button {
                     resignFirstResponder()
-                    
+
                     Task {
                         if displayMode == .attach {
                             let _ = await registerLocalId(id, password, emailAddress)
@@ -104,8 +103,8 @@ struct SignUpView: View {
                         sendVerificationCode: {
                             pushToCodeVerificationView = await sendVerificationCode(emailAddress)
                         }
-                ), isActive: $pushToEmailVerificationView) { EmptyView() }
-                
+                    ), isActive: $pushToEmailVerificationView) { EmptyView() }
+
                 NavigationLink(destination:
                     VerificationCodeView(
                         mode: .signup,
@@ -114,7 +113,7 @@ struct SignUpView: View {
                         checkVerificationCode: { code in
                             pushToTimetableScene = await checkVerificationCode(code)
                         }
-                ), isActive: $pushToCodeVerificationView) { EmptyView() }
+                    ), isActive: $pushToCodeVerificationView) { EmptyView() }
             }
         )
     }

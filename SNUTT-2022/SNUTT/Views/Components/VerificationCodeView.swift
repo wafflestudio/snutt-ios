@@ -18,26 +18,26 @@ struct VerificationCodeView: View {
 
     let mode: Mode
     let email: String
-    
+
     /// Time limitation for entering verification code. 180 seconds by default.
     var timeLimit: Int = 180
     let sendVerificationCode: (String) async -> Bool
     let checkVerificationCode: (String) async -> Void
-    
+
     enum Mode {
         case signup, resetPassword
-        
+
         var placeholder: String {
             "인증코드 \(codeCount)자리를 입력하세요"
         }
-        
+
         var codeCount: Int {
             switch self {
             case .signup: return 6
             case .resetPassword: return 8
             }
         }
-        
+
         var keyboardType: UIKeyboardType {
             self == .signup ? .numberPad : .asciiCapable
         }
@@ -119,9 +119,8 @@ struct VerifyEmailScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             VerificationCodeView(mode: .resetPassword, email: "example@gmail.com", timeLimit: 10) { _ in
-                return true
+                true
             } checkVerificationCode: { _ in
-                
             }
         }
     }

@@ -20,7 +20,7 @@ extension OnboardScene {
                 return false
             }
         }
-        
+
         func sendVerificationCode(email: String) async -> Bool {
             do {
                 try await services.userService.sendVerificationCode(email: email)
@@ -30,7 +30,7 @@ extension OnboardScene {
                 return false
             }
         }
-        
+
         func submitVerificationCode(code: String) async -> Bool {
             do {
                 try await services.userService.submitVerificationCode(code: code)

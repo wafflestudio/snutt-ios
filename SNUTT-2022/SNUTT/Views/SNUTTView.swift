@@ -25,7 +25,7 @@ struct SNUTTView: View {
             viewModel.selectedTab = current
         }
     }
-    
+
     @State private var pushToTimetableScene = true
 
     var body: some View {

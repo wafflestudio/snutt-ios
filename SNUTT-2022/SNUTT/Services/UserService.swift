@@ -85,11 +85,11 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
 
         let _ = try await userRepository.deleteDevice(fcmToken: fcmToken)
     }
-    
+
     func sendVerificationCode(email: String) async throws {
         let _ = try await userRepository.sendVerificationCode(email: email)
     }
-    
+
     func submitVerificationCode(code: String) async throws {
         let _ = try await userRepository.submitVerificationCode(code: code)
     }
@@ -115,7 +115,7 @@ class FakeUserService: UserServiceProtocol {
     func connectFacebook(fbId _: String, fbToken _: String) async throws {}
     func addDevice(fcmToken _: String) async throws {}
     func deleteDevice(fcmToken _: String) async throws {}
-    func sendVerificationCode(email: String) async throws {}
-    func submitVerificationCode(code: String) async throws {}
+    func sendVerificationCode(email _: String) async throws {}
+    func submitVerificationCode(code _: String) async throws {}
     func checkEmailVerification() async throws {}
 }

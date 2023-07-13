@@ -83,13 +83,13 @@ class UserRepository: UserRepositoryProtocol {
             .serializingString()
             .handlingError()
     }
-    
+
     func sendVerificationCode(email: String) async throws -> SendVerificationCodeDto {
         try await session.request(UserRouter.sendVerificationCode(email: email))
             .serializingDecodable(SendVerificationCodeDto.self)
             .handlingError()
     }
-    
+
     func submitVerificationCode(code: String) async throws -> EmailVerifiedDto {
         try await session.request(UserRouter.submitVerificationCode(code: code))
             .serializingDecodable(EmailVerifiedDto.self)

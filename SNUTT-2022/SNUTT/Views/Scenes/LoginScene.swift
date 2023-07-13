@@ -14,7 +14,7 @@ struct LoginScene: View {
     @State private var localPassword: String = ""
     @State private var pushToFindLocalIdView: Bool = false
     @State private var pushToResetPasswordScene: Bool = false
-    
+
     @Binding var moveToTimetableScene: Bool
 
     var isButtonDisabled: Bool {

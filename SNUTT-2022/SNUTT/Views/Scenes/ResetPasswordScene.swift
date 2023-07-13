@@ -77,12 +77,12 @@ struct ResetPasswordScene: View {
             Group {
                 NavigationLink(destination:
                     VerificationCodeView(mode: .resetPassword, email: email,
-                             sendVerificationCode: { _ in
-                                 await viewModel.sendVerificationCode(to: email)
-                             }, checkVerificationCode: { code in
-                                 pushToResetPasswordView = await viewModel.checkVerificationCode(localId: localId, code: code)
-                             }),
-            isActive: $pushToVerificationView) { EmptyView() }
+                                         sendVerificationCode: { _ in
+                                             await viewModel.sendVerificationCode(to: email)
+                                         }, checkVerificationCode: { code in
+                                             pushToResetPasswordView = await viewModel.checkVerificationCode(localId: localId, code: code)
+                                         }),
+                    isActive: $pushToVerificationView) { EmptyView() }
 
                 NavigationLink(destination:
                     ChangePasswordView(resetMode: true,
@@ -139,11 +139,11 @@ extension ResetPasswordScene {
 }
 
 #if DEBUG
-struct FindPasswordView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            ResetPasswordScene(viewModel: .init(container: .preview), showResetPasswordScene: .constant(true))
+    struct FindPasswordView_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                ResetPasswordScene(viewModel: .init(container: .preview), showResetPasswordScene: .constant(true))
+            }
         }
     }
-}
 #endif
