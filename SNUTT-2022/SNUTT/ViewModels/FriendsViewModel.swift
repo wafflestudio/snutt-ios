@@ -6,19 +6,16 @@
 //
 
 #if FEATURE_RN_FRIENDS
-import Foundation
+    import Foundation
 
+    class FriendsViewModel: BaseViewModel, ObservableObject {
+        override init(container: DIContainer) {
+            super.init(container: container)
+        }
 
-class FriendsViewModel: BaseViewModel, ObservableObject {
-
-    override init(container: DIContainer) {
-        super.init(container: container)
+        var accessToken: String? {
+            appState.user.accessToken
+        }
     }
-
-    var accessToken: String? {
-        appState.user.accessToken
-    }
-
-}
 
 #endif

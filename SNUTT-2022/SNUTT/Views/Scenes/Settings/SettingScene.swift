@@ -33,11 +33,11 @@ struct SettingScene: View {
             }
 
             #if FEATURE_RN_FRIENDS
-            Section {
-                SettingsLinkItem(title: "친구 (DEV)") {
-                    FriendsScene(viewModel: .init(container: viewModel.container))
+                Section {
+                    SettingsLinkItem(title: "친구 (DEV)") {
+                        FriendsScene(viewModel: .init(container: viewModel.container))
+                    }
                 }
-            }
             #endif
 
             Section {
