@@ -32,6 +32,14 @@ struct SettingScene: View {
                 }
             }
 
+            #if FEATURE_RN_FRIENDS
+            Section {
+                SettingsLinkItem(title: "친구 (DEV)") {
+                    FriendsScene(viewModel: .init(container: viewModel.container))
+                }
+            }
+            #endif
+
             Section {
                 SettingsLinkItem(title: "빈자리 알림", isActive: $viewModel.routingState.pushToVacancy) {
                     VacancyScene(viewModel: .init(container: viewModel.container))

@@ -15,6 +15,11 @@ import UIKit
 ///
 /// See [here](https://www.raywenderlich.com/20201639-firebase-cloud-messaging-for-ios-push-notifications) for more information about FCM configuration.
 class AppDelegate: NSObject, UIApplicationDelegate {
+    #if DEBUG
+    /// `ReactNativeDevKit` requires this property to be declared.
+    var window: UIWindow?
+    #endif
+
     var firebaseConfigName: String {
         #if DEBUG
             return "GoogleServiceDebugInfo"

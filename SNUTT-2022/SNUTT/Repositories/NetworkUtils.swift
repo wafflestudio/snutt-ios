@@ -79,6 +79,14 @@ enum AppMetadata: CaseIterable {
             return "x-device-model"
         }
     }
+
+    static func asDictionary() -> [String: String] {
+        var dictionary: [String: String] = [:]
+        for metadata in allCases {
+            dictionary[metadata.key] = metadata.value
+        }
+        return dictionary
+    }
 }
 
 extension DataResponse: @unchecked Sendable {}
