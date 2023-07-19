@@ -31,6 +31,7 @@ struct SignUpView: View {
     @State private var email: String = ""
     @State private var pushToEmailVerificationView: Bool = false
     @State private var pushToCodeVerificationView: Bool = false
+    @State private var showCompletionAlert: Bool = false
     @Binding var pushToTimetableScene: Bool
 
     var isButtonDisabled: Bool {
@@ -72,10 +73,11 @@ struct SignUpView: View {
 
                     Task {
                         if displayMode == .attach {
-                            let _ = await registerLocalId(id, password, emailAddress)
+                            showCompletionAlert = await registerLocalId(id, password, emailAddress)
                         } else {
                             pushToTimetableScene = false
-                            pushToEmailVerificationView = await registerLocalId(id, password, emailAddress)
+                            let success = await registerLocalId(id, password, emailAddress)
+                            showCompletionAlert = success
                         }
                     }
                 } label: {
@@ -93,6 +95,17 @@ struct SignUpView: View {
         .padding()
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(displayMode.rawValue)
+        .alert("완료", isPresented: $showCompletionAlert) {
+            Button {
+                pushToEmailVerificationView = true
+            } label: {
+                Text("확인")
+            }
+
+        } message: {
+            Text(displayMode == .register ? "회원가입이 완료되었습니다."
+                                          : "아이디가 추가되었습니다.")
+        }
         .background(
             Group {
                 NavigationLink(destination:
@@ -101,7 +114,9 @@ struct SignUpView: View {
                         pushToCodeVerificationView: $pushToCodeVerificationView,
                         skipVerification: { pushToTimetableScene = true },
                         sendVerificationCode: {
-                            pushToCodeVerificationView = await sendVerificationCode(emailAddress)
+                            let success = await sendVerificationCode(emailAddress)
+                            pushToCodeVerificationView = success
+                            return success
                         }
                     ), isActive: $pushToEmailVerificationView) { EmptyView() }
 

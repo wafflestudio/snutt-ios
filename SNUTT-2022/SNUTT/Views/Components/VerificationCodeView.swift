@@ -28,10 +28,10 @@ struct VerificationCodeView: View {
         case signup, resetPassword
 
         var placeholder: String {
-            "인증코드 \(codeCount)자리를 입력하세요"
+            "인증코드 \(codeLength)자리를 입력하세요"
         }
 
-        var codeCount: Int {
+        var codeLength: Int {
             switch self {
             case .signup: return 6
             case .resetPassword: return 8
@@ -92,7 +92,7 @@ struct VerificationCodeView: View {
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.roundedRectangle(radius: 0))
             .tint(STColor.cyan)
-            .disabled(verificationCode.count != mode.codeCount || timeOut)
+            .disabled(verificationCode.count != mode.codeLength || timeOut)
 
             Spacer()
         }

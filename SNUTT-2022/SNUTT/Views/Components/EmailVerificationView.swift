@@ -12,7 +12,7 @@ struct EmailVerificationView: View {
 
     @Binding var pushToCodeVerificationView: Bool
     var skipVerification: () -> Void
-    var sendVerificationCode: () async -> Void
+    var sendVerificationCode: () async -> Bool
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,8 +32,7 @@ struct EmailVerificationView: View {
             Group {
                 Button {
                     Task {
-                        await sendVerificationCode()
-                        pushToCodeVerificationView = true
+                        pushToCodeVerificationView = await sendVerificationCode()
                     }
                 } label: {
                     Text("확인")
@@ -71,7 +70,7 @@ struct EmailVerificationView: View {
 struct EmailVerificationView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            EmailVerificationView(email: "penggggg@snu.ac.kr", pushToCodeVerificationView: .constant(false), skipVerification: {}, sendVerificationCode: {})
+            EmailVerificationView(email: "penggggg@snu.ac.kr", pushToCodeVerificationView: .constant(false), skipVerification: {}, sendVerificationCode: { return false })
         }
         .navigationTitle("이메일 인증")
         .navigationBarTitleDisplayMode(.inline)

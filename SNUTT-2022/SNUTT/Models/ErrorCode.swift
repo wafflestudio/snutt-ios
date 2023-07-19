@@ -94,6 +94,13 @@ enum ErrorCode: Int {
     case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
     case CANT_CHANGE_OTHERS_THEME = 0x5001
     case INVALID_LECTURE_TIME = 0x5002
+    
+    /* 409 - Conflicts (Email Verification related) */
+    case ALREADY_VERIFIED_ACCOUNT = 0x9000
+    case ALREADY_VERIFIED_EMAIL = 0x9001
+    
+    /* 429 - Too many requests */
+    case EXCESSIVE_EMAIL_VERIFICATION_REQUEST = 0xA000
 
     var errorTitle: String {
         switch self {
@@ -140,6 +147,9 @@ enum ErrorCode: Int {
              .DUPLICATE_LECTURE,
              .ALREADY_LOCAL_ACCOUNT,
              .ALREADY_FB_ACCOUNT,
+             .ALREADY_VERIFIED_ACCOUNT,
+             .ALREADY_VERIFIED_EMAIL,
+             .EXCESSIVE_EMAIL_VERIFICATION_REQUEST,
              .NOT_LOCAL_ACCOUNT,
              .NOT_FB_ACCOUNT,
              .FB_ID_WITH_SOMEONE_ELSE,
@@ -284,6 +294,12 @@ enum ErrorCode: Int {
             return "만료된 인증코드입니다."
         case .WRONG_PASSWORD_RESET_CODE:
             return "잘못된 인증코드입니다."
+        case .ALREADY_VERIFIED_ACCOUNT:
+            return "이메일 인증이 완료된 계정입니다."
+        case .ALREADY_VERIFIED_EMAIL:
+            return "다른 계정에서 인증된 이메일입니다."
+        case .EXCESSIVE_EMAIL_VERIFICATION_REQUEST:
+            return "인증 요청 횟수가 초과되었습니다. 3분 후 인증 요청을 다시 해주시기 바랍니다."
         }
     }
 }
