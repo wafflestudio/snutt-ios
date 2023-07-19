@@ -16,7 +16,7 @@ protocol AuthServiceProtocol: Sendable {
     func loginWithFacebook(fbId: String, fbToken: String) async throws
     func registerWithLocalId(localId: String, localPassword: String, email: String) async throws
     func findLocalId(email: String) async throws
-    func checkLinkedEmail(localId: String) async throws -> String
+    func getLinkedEmail(localId: String) async throws -> String
     func sendVerificationCode(email: String) async throws
     func checkVerificationCode(localId: String, code: String) async throws
     func resetPassword(localId: String, password: String) async throws
@@ -89,8 +89,8 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         let _ = try await authRepository.findLocalId(email: email)
     }
 
-    func checkLinkedEmail(localId: String) async throws -> String {
-        return try await authRepository.checkLinkedEmail(localId: localId).email
+    func getLinkedEmail(localId: String) async throws -> String {
+        try await authRepository.getLinkedEmail(localId: localId).email
     }
 
     func sendVerificationCode(email: String) async throws {
@@ -142,7 +142,7 @@ class FakeAuthService: AuthServiceProtocol {
     func loginWithFacebook(fbId _: String, fbToken _: String) async throws {}
     func registerWithLocalId(localId _: String, localPassword _: String, email _: String) async throws {}
     func findLocalId(email _: String) async throws {}
-    func checkLinkedEmail(localId _: String) async throws -> String { return "" }
+    func getLinkedEmail(localId _: String) async throws -> String { return "" }
     func sendVerificationCode(email _: String) async throws {}
     func checkVerificationCode(localId _: String, code _: String) async throws {}
     func resetPassword(localId _: String, password _: String) async throws {}

@@ -15,6 +15,8 @@ struct LoginScene: View {
     @State private var pushToFindLocalIdView: Bool = false
     @State private var pushToResetPasswordScene: Bool = false
 
+    @Binding var moveToTimetableScene: Bool
+
     var isButtonDisabled: Bool {
         localId.isEmpty || localPassword.isEmpty
     }
@@ -51,6 +53,7 @@ struct LoginScene: View {
             Button {
                 Task {
                     await viewModel.loginWithLocalId(localId: localId, localPassword: localPassword)
+                    moveToTimetableScene = true
                     resignFirstResponder()
                 }
             } label: {
@@ -105,7 +108,7 @@ extension LoginScene {
 #if DEBUG
     struct LoginScene_Previews: PreviewProvider {
         static var previews: some View {
-            LoginScene(viewModel: .init(container: .preview))
+            LoginScene(viewModel: .init(container: .preview), moveToTimetableScene: .constant(false))
         }
     }
 #endif

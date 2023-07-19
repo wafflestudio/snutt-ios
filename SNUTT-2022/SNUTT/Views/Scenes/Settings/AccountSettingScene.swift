@@ -26,9 +26,9 @@ struct AccountSettingScene: View {
             } else {
                 Section {
                     SettingsLinkItem(title: "아이디 / 비밀번호 추가") {
-                        SignUpView(displayMode: .attach) { localId, localPassword, _ in
+                        SignUpView(displayMode: .attach, registerLocalId: { localId, localPassword, _ in
                             await viewModel.attachLocalId(localId: localId, localPassword: localPassword)
-                        }
+                        }, pushToTimetableScene: .constant(false))
                     }
                 }
             }

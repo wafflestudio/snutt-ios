@@ -76,7 +76,7 @@ struct ResetPasswordScene: View {
         .background(
             Group {
                 NavigationLink(destination:
-                    VerificationCodeView(email: email, timeLimit: viewModel.timeLimit,
+                    VerificationCodeView(mode: .resetPassword, email: email,
                                          sendVerificationCode: { _ in
                                              await viewModel.sendVerificationCode(to: email)
                                          }, checkVerificationCode: { code in
@@ -97,11 +97,9 @@ struct ResetPasswordScene: View {
 
 extension ResetPasswordScene {
     class ViewModel: BaseViewModel, ObservableObject {
-        var timeLimit: Int { 180 }
-
         func checkLinkedEmail(localId: String) async -> String? {
             do {
-                return try await services.authService.checkLinkedEmail(localId: localId)
+                return try await services.authService.getLinkedEmail(localId: localId)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
                 return nil
@@ -141,11 +139,11 @@ extension ResetPasswordScene {
 }
 
 #if DEBUG
-struct FindPasswordView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            ResetPasswordScene(viewModel: .init(container: .preview), showResetPasswordScene: .constant(true))
+    struct FindPasswordView_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                ResetPasswordScene(viewModel: .init(container: .preview), showResetPasswordScene: .constant(true))
+            }
         }
     }
-}
 #endif

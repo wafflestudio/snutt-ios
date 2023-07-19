@@ -12,7 +12,7 @@ import Foundation
 enum AuthRouter: Router {
     var baseURL: URL {
         switch self {
-        case .checkLinkedEmail,
+        case .getLinkedEmail,
              .sendVerificationCode,
              .checkVerificationCode,
              .resetPassword:
@@ -29,7 +29,7 @@ enum AuthRouter: Router {
     case loginWithFacebook(fbId: String, fbToken: String)
     case loginWithApple(appleToken: String)
     case findLocalId(email: String)
-    case checkLinkedEmail(localId: String)
+    case getLinkedEmail(localId: String)
     case sendVerificationCode(email: String)
     case checkVerificationCode(localId: String, code: String)
     case resetPassword(localId: String, password: String)
@@ -47,7 +47,7 @@ enum AuthRouter: Router {
             return .post
         case .findLocalId:
             return .post
-        case .checkLinkedEmail:
+        case .getLinkedEmail:
             return .post
         case .sendVerificationCode:
             return .post
@@ -72,7 +72,7 @@ enum AuthRouter: Router {
             return "/login_apple"
         case .findLocalId:
             return "/id/find"
-        case .checkLinkedEmail:
+        case .getLinkedEmail:
             return "/password/reset/email/check"
         case .sendVerificationCode:
             return "/password/reset/email/send"
@@ -97,7 +97,7 @@ enum AuthRouter: Router {
             return ["apple_token": appleToken]
         case let .findLocalId(email: email):
             return ["email": email]
-        case let .checkLinkedEmail(localId: localId):
+        case let .getLinkedEmail(localId: localId):
             return ["user_id": localId]
         case let .sendVerificationCode(email: email):
             return ["user_email": email]

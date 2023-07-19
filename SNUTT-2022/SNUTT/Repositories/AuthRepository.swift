@@ -14,7 +14,7 @@ protocol AuthRepositoryProtocol {
     func loginWithFacebook(fbId: String, fbToken: String) async throws -> LoginResponseDto
     func loginWithLocalId(localId: String, localPassword: String) async throws -> LoginResponseDto
     func findLocalId(email: String) async throws -> SendLocalIdDto
-    func checkLinkedEmail(localId: String) async throws -> CheckLinkedEmailDto
+    func getLinkedEmail(localId: String) async throws -> LinkedEmailDto
     func sendVerificationCode(email: String) async throws
     func checkVerificationCode(localId: String, code: String) async throws
     func resetPassword(localId: String, password: String) async throws
@@ -63,10 +63,10 @@ class AuthRepository: AuthRepositoryProtocol {
             .handlingError()
     }
 
-    func checkLinkedEmail(localId: String) async throws -> CheckLinkedEmailDto {
+    func getLinkedEmail(localId: String) async throws -> LinkedEmailDto {
         return try await session
-            .request(AuthRouter.checkLinkedEmail(localId: localId))
-            .serializingDecodable(CheckLinkedEmailDto.self)
+            .request(AuthRouter.getLinkedEmail(localId: localId))
+            .serializingDecodable(LinkedEmailDto.self)
             .handlingError()
     }
 

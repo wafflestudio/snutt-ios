@@ -26,14 +26,11 @@ struct SNUTTView: View {
         }
     }
 
+    @State private var pushToTimetableScene = true
+
     var body: some View {
         ZStack {
-            if !viewModel.isAuthenticated {
-                NavigationView {
-                    OnboardScene(viewModel: .init(container: viewModel.container))
-                }
-                .navigationViewStyle(StackNavigationViewStyle())
-            } else {
+            if viewModel.isAuthenticated && pushToTimetableScene {
                 TabView(selection: selected) {
                     TabScene(tabType: .timetable) {
                         TimetableScene(viewModel: .init(container: viewModel.container))
@@ -64,6 +61,11 @@ struct SNUTTView: View {
                     FilterSheetScene(viewModel: .init(container: viewModel.container))
                 }
                 PopupScene(viewModel: .init(container: viewModel.container))
+            } else {
+                NavigationView {
+                    OnboardScene(viewModel: .init(container: viewModel.container), pushToTimetableScene: $pushToTimetableScene)
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
             }
         }
         .animation(.easeOut, value: viewModel.accessToken)

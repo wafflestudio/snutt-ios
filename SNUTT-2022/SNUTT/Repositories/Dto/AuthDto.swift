@@ -20,7 +20,7 @@ struct SendLocalIdDto: Decodable {
     let message: String
 }
 
-struct CheckLinkedEmailDto: Decodable {
+struct LinkedEmailDto: Decodable {
     let email: String
 }
 
