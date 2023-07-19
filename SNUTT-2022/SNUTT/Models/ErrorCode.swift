@@ -94,11 +94,11 @@ enum ErrorCode: Int {
     case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
     case CANT_CHANGE_OTHERS_THEME = 0x5001
     case INVALID_LECTURE_TIME = 0x5002
-    
+
     /* 409 - Conflicts (Email Verification related) */
     case ALREADY_VERIFIED_ACCOUNT = 0x9000
     case ALREADY_VERIFIED_EMAIL = 0x9001
-    
+
     /* 429 - Too many requests */
     case EXCESSIVE_EMAIL_VERIFICATION_REQUEST = 0xA000
 

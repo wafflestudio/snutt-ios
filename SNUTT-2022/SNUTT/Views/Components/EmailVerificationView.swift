@@ -70,7 +70,7 @@ struct EmailVerificationView: View {
 struct EmailVerificationView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            EmailVerificationView(email: "penggggg@snu.ac.kr", pushToCodeVerificationView: .constant(false), skipVerification: {}, sendVerificationCode: { return false })
+            EmailVerificationView(email: "penggggg@snu.ac.kr", pushToCodeVerificationView: .constant(false), skipVerification: {}, sendVerificationCode: { false })
         }
         .navigationTitle("이메일 인증")
         .navigationBarTitleDisplayMode(.inline)

@@ -104,7 +104,7 @@ struct SignUpView: View {
 
         } message: {
             Text(displayMode == .register ? "회원가입이 완료되었습니다."
-                                          : "아이디가 추가되었습니다.")
+                : "아이디가 추가되었습니다.")
         }
         .background(
             Group {
