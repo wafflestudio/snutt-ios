@@ -10,11 +10,6 @@ import SwiftUI
 struct VacancyLectureCell: View {
     let lecture: Lecture
 
-    private var hasVacancy: Bool {
-        guard let current = lecture.registrationCount else { return false }
-        return current < lecture.quota
-    }
-
     var body: some View {
         VStack(spacing: 2) {
             // title
@@ -38,9 +33,6 @@ struct VacancyLectureCell: View {
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 15)
-        .background(hasVacancy ? STColor.vacancyRedBackground : .clear)
-
-        let _ = debugChanges()
     }
 
     private var vacancyBadge: some View {
@@ -60,7 +52,8 @@ struct VacancyLectureCell: View {
             Group {
                 Text(lecture.title)
                     .font(STFont.subheading)
-                if hasVacancy {
+                    .lineLimit(1)
+                if lecture.hasVacancy {
                     vacancyBadge
                 }
                 Spacer()

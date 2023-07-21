@@ -29,11 +29,11 @@ enum VacancyRouter: Router {
     var path: String {
         switch self {
         case .getLectures:
-            return ""
-        case .addLecture(_):
             return "/lectures"
-        case .deleteLecture(_):
-            return "/lectures"
+        case let .addLecture(lectureId):
+            return "/lectures/\(lectureId)"
+        case let .deleteLecture(lectureId):
+            return "/lectures/\(lectureId)"
         }
     }
 
@@ -41,10 +41,10 @@ enum VacancyRouter: Router {
         switch self {
         case .getLectures:
             return nil
-        case let .addLecture(lectureId):
-            return ["lectureId": lectureId]
-        case let .deleteLecture(lectureId):
-            return ["lectureId": lectureId]
+        case .addLecture(_):
+            return nil
+        case .deleteLecture(_):
+            return nil
         }
     }
 }

@@ -23,10 +23,11 @@ class VacancyRepository: VacancyRepositoryProtocol {
     }
 
     func fetchLectures() async throws -> [LectureDto] {
-        return try await session
+        let dto = try await session
             .request(VacancyRouter.getLectures)
-            .serializingDecodable([LectureDto].self)
+            .serializingDecodable(VacancyResponseDto.self)
             .handlingError()
+        return dto.lectures
     }
 
     func addLecture(lectureId: String) async throws {

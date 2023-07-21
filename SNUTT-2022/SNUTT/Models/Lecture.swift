@@ -88,6 +88,11 @@ struct Lecture: Identifiable {
         return places.joined(separator: ", ")
     }
 
+    var hasVacancy: Bool {
+        guard let current = registrationCount else { return false }
+        return current < quota
+    }
+
     func isEquivalent(with lecture: Lecture) -> Bool {
         return !isCustom && courseNumber == lecture.courseNumber && lectureNumber == lecture.lectureNumber
     }

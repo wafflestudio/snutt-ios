@@ -236,6 +236,9 @@
 		CEB5A72029DDA8B200E74C47 /* TimetableAccessoryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */; };
 		CEDDCA7B2A6AE62B00474D4E /* VacancyLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */; };
 		CEDDCA7E2A6AEF2200474D4E /* VacancyLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */; };
+		CEDDCA802A6AF57400474D4E /* VacancyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7F2A6AF57400474D4E /* VacancyService.swift */; };
+		CEDDCA822A6AF66D00474D4E /* VacancyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA812A6AF66D00474D4E /* VacancyState.swift */; };
+		CEDDCA842A6AFBF700474D4E /* VacancyDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA832A6AFBF700474D4E /* VacancyDto.swift */; };
 		CEEAB49229C5EA37005497B0 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+Ext.swift */; };
 		CEEAB49329C5EA41005497B0 /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */; };
@@ -505,6 +508,9 @@
 		CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryInlineView.swift; sourceTree = "<group>"; };
 		CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyLectureCell.swift; sourceTree = "<group>"; };
 		CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyLectureList.swift; sourceTree = "<group>"; };
+		CEDDCA7F2A6AF57400474D4E /* VacancyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyService.swift; sourceTree = "<group>"; };
+		CEDDCA812A6AF66D00474D4E /* VacancyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyState.swift; sourceTree = "<group>"; };
+		CEDDCA832A6AFBF700474D4E /* VacancyDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyDto.swift; sourceTree = "<group>"; };
 		CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableFullWidgetView.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
 		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
@@ -578,6 +584,7 @@
 				CE63A3BB2A21B06900A633FC /* RoutingState.swift */,
 				B87B315828D5A70F005C170B /* UserState.swift */,
 				BE2CB3622959C0CC00FCF0F0 /* ReviewState.swift */,
+				CEDDCA812A6AF66D00474D4E /* VacancyState.swift */,
 				B87DF6F82918B7AD008BB95B /* PopupState.swift */,
 				CE98204A2A09FBDD001037F5 /* DebugState.swift */,
 			);
@@ -869,6 +876,7 @@
 				B87B317228D81447005C170B /* UserDto.swift */,
 				B87DF6EA2914F962008BB95B /* PopupDto.swift */,
 				731DA000297BC54B0027BA25 /* BookmarkDto.swift */,
+				CEDDCA832A6AFBF700474D4E /* VacancyDto.swift */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
@@ -901,6 +909,7 @@
 				BEDE34D72879A9DC00525014 /* UserService.swift */,
 				BE060BD628DF43AC00A2F1B9 /* AuthService.swift */,
 				BE682BDA28870872009EBCB7 /* LectureService.swift */,
+				CEDDCA7F2A6AF57400474D4E /* VacancyService.swift */,
 				BE77D0A628AEB0650067A9D8 /* CourseBookService.swift */,
 				BE9413CF28C220C900171060 /* NotificationService.swift */,
 				BE1B610B289D7C2500401361 /* GlobalUIService.swift */,
@@ -1318,6 +1327,7 @@
 				CE9820522A0A0BE9001037F5 /* NetworkLogEntryView.swift in Sources */,
 				BEE86519289E287400D3D0E4 /* MenuRenameSheet.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
+				CEDDCA842A6AFBF700474D4E /* VacancyDto.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
 				BE682BF128872315009EBCB7 /* ErrorCode.swift in Sources */,
 				B87B315F28D5A70F005C170B /* TimetableState.swift in Sources */,
@@ -1405,7 +1415,9 @@
 				BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */,
 				CE076E002A09661400C9430B /* NetworkLogEntry.swift in Sources */,
 				BE9413CA28C21F1300171060 /* NotificationList.swift in Sources */,
+				CEDDCA822A6AF66D00474D4E /* VacancyState.swift in Sources */,
 				BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */,
+				CEDDCA802A6AF57400474D4E /* VacancyService.swift in Sources */,
 				BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
