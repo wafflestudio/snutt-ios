@@ -221,6 +221,7 @@
 		CE3F37AD29C5D452009EDCCC /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CE4777F32A6ADCAC00E03253 /* VacancyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777F22A6ADCAC00E03253 /* VacancyRepository.swift */; };
 		CE4777F52A6ADCE200E03253 /* VacancyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777F42A6ADCE200E03253 /* VacancyRouter.swift */; };
+		CE4777F72A6AE41C00E03253 /* VacancyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777F62A6AE41C00E03253 /* VacancyScene.swift */; };
 		CE63A3BC2A21B06900A633FC /* RoutingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE63A3BB2A21B06900A633FC /* RoutingState.swift */; };
 		CE63A3BE2A21DD3400A633FC /* DeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE63A3BD2A21DD3400A633FC /* DeepLinkHandler.swift */; };
 		CE6CA91029E1E611004E92B1 /* logo.inline.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6CA90F29E1E610004E92B1 /* logo.inline.png */; };
@@ -233,6 +234,8 @@
 		CE98750C29CC527F007F063A /* TimeRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */; };
 		CEB5A71E29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */; };
 		CEB5A72029DDA8B200E74C47 /* TimetableAccessoryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */; };
+		CEDDCA7B2A6AE62B00474D4E /* VacancyLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */; };
+		CEDDCA7E2A6AEF2200474D4E /* VacancyLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */; };
 		CEEAB49229C5EA37005497B0 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+Ext.swift */; };
 		CEEAB49329C5EA41005497B0 /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */; };
@@ -489,6 +492,7 @@
 		CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Getter.swift"; sourceTree = "<group>"; };
 		CE4777F22A6ADCAC00E03253 /* VacancyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyRepository.swift; sourceTree = "<group>"; };
 		CE4777F42A6ADCE200E03253 /* VacancyRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyRouter.swift; sourceTree = "<group>"; };
+		CE4777F62A6AE41C00E03253 /* VacancyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyScene.swift; sourceTree = "<group>"; };
 		CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRangeSlider.swift; sourceTree = "<group>"; };
 		CE63A3BB2A21B06900A633FC /* RoutingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingState.swift; sourceTree = "<group>"; };
 		CE63A3BD2A21DD3400A633FC /* DeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandler.swift; sourceTree = "<group>"; };
@@ -499,6 +503,8 @@
 		CE9820512A0A0BE9001037F5 /* NetworkLogEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogEntryView.swift; sourceTree = "<group>"; };
 		CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryRectangularView.swift; sourceTree = "<group>"; };
 		CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryInlineView.swift; sourceTree = "<group>"; };
+		CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyLectureCell.swift; sourceTree = "<group>"; };
+		CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyLectureList.swift; sourceTree = "<group>"; };
 		CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableFullWidgetView.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
 		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
@@ -750,6 +756,15 @@
 			path = NetworkInspector;
 			sourceTree = "<group>";
 		};
+		CEDDCA7C2A6AEF0E00474D4E /* Vacancy */ = {
+			isa = PBXGroup;
+			children = (
+				CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */,
+				CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */,
+			);
+			path = Vacancy;
+			sourceTree = "<group>";
+		};
 		DC1E0ED2287738DF005632A3 /* Router */ = {
 			isa = PBXGroup;
 			children = (
@@ -938,6 +953,7 @@
 				B8F40EA7289809AD0021A2A9 /* Settings */,
 				BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */,
 				BE7E230027FF20EE004DC202 /* TimetableScene.swift */,
+				CE4777F62A6AE41C00E03253 /* VacancyScene.swift */,
 				BEDF507227F427FA00CDCC13 /* LectureListScene.swift */,
 				BEDF506E27EB744A00CDCC13 /* LectureDetailScene.swift */,
 				DC29159E28660F7800FE5F9A /* ReviewScene.swift */,
@@ -981,6 +997,7 @@
 				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
 				B88D170028AF71E300E2D652 /* UserSupportView.swift */,
 				CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */,
+				CEDDCA7C2A6AEF0E00474D4E /* Vacancy */,
 				BE28036028E884D300B2B1AB /* WebViews */,
 				BE9413D728C3AF8300171060 /* Search */,
 				BEB3B6AB28D4D3DF00E56062 /* LectureDetail */,
@@ -1293,6 +1310,7 @@
 				BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */,
 				BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */,
 				B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */,
+				CEDDCA7E2A6AEF2200474D4E /* VacancyLectureList.swift in Sources */,
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
 				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE9C90EB2948EA1800003AA6 /* ColorScheme.swift in Sources */,
@@ -1347,6 +1365,7 @@
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
 				BEB3B6B128D4D4D900E56062 /* View+ResignResponder.swift in Sources */,
+				CE4777F72A6AE41C00E03253 /* VacancyScene.swift in Sources */,
 				B87DF6F329152649008BB95B /* View+Screenshot.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
 				BE28036628E8854D00B2B1AB /* SingleWebView.swift in Sources */,
@@ -1433,6 +1452,7 @@
 				731DA001297BC54B0027BA25 /* BookmarkDto.swift in Sources */,
 				BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */,
 				BE9413CC28C21F1E00171060 /* NotificationListCell.swift in Sources */,
+				CEDDCA7B2A6AE62B00474D4E /* VacancyLectureCell.swift in Sources */,
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
 				BE6D892828EFC5A1000607A6 /* EtcRouter.swift in Sources */,
 				BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */,

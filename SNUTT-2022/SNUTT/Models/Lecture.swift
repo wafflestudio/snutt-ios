@@ -157,7 +157,7 @@ extension Lecture {
                        updatedAt: "2022-04-02T16:35:53.652Z",
                        quota: Int.random(in: 10...100),
                        freshmanQuota: Int.random(in: 1...10),
-                       registrationCount: nil,
+                       registrationCount: Int.random(in: 10...100),
                        theme: nil
         )
     }

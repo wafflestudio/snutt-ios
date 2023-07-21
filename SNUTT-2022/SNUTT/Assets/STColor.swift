@@ -12,6 +12,10 @@ struct STColor {
     static let cyan: Color = .init(hex: 0x1BD0C8)
     static let red: Color = .init(hex: "#E54459")
 
+    static let vacancyBlue: Color = .init(hex: "#446CC2")
+    static let vacancyRed: Color = .init(hex: "#ED6C58")
+    static let vacancyRedBackground: Color = vacancyRed.opacity(0.05)
+
     /// RGB 196-196-196 /
     /// Hex #C4C4C4
     static let gray: Color = .init(hex: "#C4C4C4")

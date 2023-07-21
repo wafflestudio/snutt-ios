@@ -10,12 +10,6 @@ import SwiftUI
 struct VacancyLectureCell: View {
     let lecture: Lecture
 
-    private enum Design {
-        static let vacancyBlue: Color = .init(hex: "#446CC2")
-        static let vacancyRed: Color = .init(hex: "#ED6C58")
-        static let vacancyRedBackground: Color = vacancyRed.opacity(0.05)
-    }
-
     private var hasVacancy: Bool {
         guard let current = lecture.registrationCount else { return false }
         return current < lecture.quota
@@ -30,7 +24,7 @@ struct VacancyLectureCell: View {
                 Spacer()
                 Text("\(lecture.registrationCount?.description ?? "-")명 / \(lecture.quota)명")
                     .font(STFont.details)
-                    .foregroundStyle(Design.vacancyBlue)
+                    .foregroundStyle(STColor.vacancyBlue)
             }
             .padding(.bottom, -7)
 
@@ -43,8 +37,8 @@ struct VacancyLectureCell: View {
 
         }
         .padding(.vertical, 10)
-        .padding(.horizontal, 10)
-        .background(hasVacancy ? Design.vacancyRedBackground : .clear)
+        .padding(.horizontal, 15)
+        .background(hasVacancy ? STColor.vacancyRedBackground : .clear)
 
         let _ = debugChanges()
     }
@@ -56,9 +50,9 @@ struct VacancyLectureCell: View {
             .padding(.horizontal, 3)
             .overlay(
                 RoundedRectangle(cornerRadius: 3)
-                    .stroke(Design.vacancyRed, lineWidth: 1)
+                    .stroke(STColor.vacancyRed, lineWidth: 1)
             )
-            .foregroundColor(Design.vacancyRed)
+            .foregroundColor(STColor.vacancyRed)
     }
 
     private var titleView: some View {
@@ -66,7 +60,9 @@ struct VacancyLectureCell: View {
             Group {
                 Text(lecture.title)
                     .font(STFont.subheading)
-                vacancyBadge
+                if hasVacancy {
+                    vacancyBadge
+                }
                 Spacer()
                 if lecture.instructor.isEmpty {
                     Text("\(lecture.credit)학점")
@@ -85,8 +81,6 @@ struct VacancyLectureCell: View {
     struct VacancyLectureCell_Previews: PreviewProvider {
         static var previewLecture: Lecture {
             var previewLecture = Lecture.preview
-            previewLecture.registrationCount = 179
-            previewLecture.quota = 180
             return previewLecture
         }
 
