@@ -15,8 +15,9 @@ struct DetailLabel: View {
                 .padding(.trailing, 10)
                 .padding(.top, 2.5)
                 .font(STFont.detailLabel)
-                .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
-                .frame(maxWidth: 70, maxHeight: .infinity, alignment: .topLeading)
+                .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.6)))
+                .lineLimit(1)
+                .frame(maxWidth: 84, maxHeight: .infinity, alignment: .topLeading)
         }
     }
 }

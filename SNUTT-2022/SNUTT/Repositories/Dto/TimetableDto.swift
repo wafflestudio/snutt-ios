@@ -31,6 +31,7 @@ struct LectureDto: Codable {
     var class_time_mask: [Int]?
     let instructor: String
     let quota: Int?
+    let freshmanQuota: Int?
     let remark: String?
     let category: String?
     let course_number: String?
@@ -117,6 +118,7 @@ extension LectureDto {
         class_time_mask = model.timeMasks
         instructor = model.instructor
         quota = model.quota
+        freshmanQuota = model.quota - model.nonFreshmanQuota
         remark = model.remark
         category = model.category
         course_number = model.courseNumber
