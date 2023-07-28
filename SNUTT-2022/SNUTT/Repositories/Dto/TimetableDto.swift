@@ -118,7 +118,7 @@ extension LectureDto {
         class_time_mask = model.timeMasks
         instructor = model.instructor
         quota = model.quota
-        freshmanQuota = model.quota - model.nonFreshmanQuota
+        freshmanQuota = model.freshmanQuota
         remark = model.remark
         category = model.category
         course_number = model.courseNumber
