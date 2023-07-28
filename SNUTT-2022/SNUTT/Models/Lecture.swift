@@ -31,6 +31,7 @@ struct Lecture: Identifiable {
     var nonFreshmanQuota: Int {
         quota - freshmanQuota
     }
+
     var createdAt: String
     var updatedAt: String
 
