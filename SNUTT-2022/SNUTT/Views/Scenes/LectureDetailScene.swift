@@ -111,8 +111,8 @@ struct LectureDetailScene: View {
                                 EditableTextField(text: $lecture.lectureNumber, readOnly: true)
                             }
                             HStack {
-                                DetailLabel(text: "정원")
-                                EditableNumberField(value: $lecture.quota, readOnly: true)
+                                DetailLabel(text: "정원(재학생)")
+                                EditableTextField(text: .constant("\(lecture.quota)(\(lecture.nonFreshmanQuota))"), readOnly: true)
                             }
                             HStack {
                                 DetailLabel(text: "비고")

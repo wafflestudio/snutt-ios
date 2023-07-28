@@ -27,6 +27,11 @@ struct Lecture: Identifiable {
     var isCustom: Bool
     var color: LectureColor?
     var quota: Int
+    var freshmanQuota: Int
+    var nonFreshmanQuota: Int {
+        quota - freshmanQuota
+    }
+
     var createdAt: String
     var updatedAt: String
 
@@ -117,6 +122,7 @@ extension Lecture {
         category = dto.category ?? ""
         remark = dto.remark ?? ""
         quota = dto.quota ?? 0
+        freshmanQuota = dto.freshmanQuota ?? 0
         createdAt = dto.created_at ?? ""
         updatedAt = dto.updated_at ?? ""
         if let colorDto = dto.color, let fg = colorDto.fg, let bg = colorDto.bg {
@@ -150,6 +156,7 @@ extension Lecture {
                            isCustom: false,
                            color: nil,
                            quota: 40,
+                           freshmanQuota: 30,
                            createdAt: "2022-04-02T16:35:53.652Z",
                            updatedAt: "2022-04-02T16:35:53.652Z",
                            theme: .snutt)
