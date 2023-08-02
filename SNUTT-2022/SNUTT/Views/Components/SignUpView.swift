@@ -33,15 +33,15 @@ struct SignUpView: View {
     @State private var pushToCodeVerificationView: Bool = false
     @State private var showCompletionAlert: Bool = false
     @Binding var pushToTimetableScene: Bool
-    
+
     var isPasswordIncomplete: Bool {
         password.isEmpty || password2.isEmpty || password != password2
     }
 
     var isButtonDisabled: Bool {
         displayMode == .register
-        ? id.isEmpty || isPasswordIncomplete || email.isEmpty
-        : id.isEmpty || isPasswordIncomplete
+            ? id.isEmpty || isPasswordIncomplete || email.isEmpty
+            : id.isEmpty || isPasswordIncomplete
     }
 
     var body: some View {
