@@ -44,6 +44,10 @@ struct SNUTTView: View {
                     TabScene(tabType: .review) {
                         ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: true)
                     }
+                    TabScene(tabType: .friends) {
+                        // TODO: replace with FriendsScene
+                        SettingScene(viewModel: .init(container: viewModel.container))
+                    }
                     TabScene(tabType: .settings) {
                         SettingScene(viewModel: .init(container: viewModel.container))
                     }
@@ -153,6 +157,7 @@ enum TabType: String {
     case timetable
     case search
     case review
+    case friends
     case settings
 }
 

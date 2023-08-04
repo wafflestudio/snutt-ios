@@ -79,7 +79,7 @@ struct SettingScene: View {
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("설정")
+        .navigationTitle("더보기")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
