@@ -23,12 +23,12 @@ struct NotificationListCell: View {
                     Spacer()
 
                     Text(notification.dateString)
-                        .font(.system(size: 14))
+                        .font(STFont.detailLabel)
                         .foregroundColor(Color(uiColor: .secondaryLabel))
                 }
 
                 Text(notification.message)
-                    .font(.system(size: 14, weight: .regular))
+                    .font(STFont.detailLabel)
             }
         }
         .padding()

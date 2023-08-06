@@ -106,7 +106,7 @@ struct MenuSectionRow: View {
                         .lineLimit(1)
 
                     Text("(\(timetableMetadata.totalCredit)학점)")
-                        .font(.system(size: 14))
+                        .font(STFont.detailLabel)
                         .foregroundColor(Color(uiColor: .secondaryLabel))
                         .lineLimit(1)
                 }

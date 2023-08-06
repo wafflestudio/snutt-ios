@@ -41,7 +41,7 @@ struct MenuSheet: View {
                         VStack(spacing: 15) {
                             HStack {
                                 Text("나의 시간표")
-                                    .font(.system(size: 14))
+                                    .font(STFont.detailLabel)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
 
                                 Spacer()
@@ -74,7 +74,7 @@ struct MenuSheet: View {
                                                 openCreateSheet(false)
                                             } label: {
                                                 Text("+ 시간표 추가하기")
-                                                    .font(.system(size: 14))
+                                                    .font(STFont.detailLabel)
                                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                                                     .padding(.leading, 30)
                                                     .frame(maxWidth: .infinity, alignment: .leading)

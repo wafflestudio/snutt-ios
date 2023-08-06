@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "tabSettingOn.png",
+      "filename" : "tab.more.on.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Type=setting, Status=on.png",
+      "filename" : "tab.more.on.dark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "tabSettingOn@2x.png",
+      "filename" : "tab.more.on@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Type=setting, Status=on@2x.png",
+      "filename" : "tab.more.on.dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "tabSettingOn@3x.png",
+      "filename" : "tab.more.on@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Type=setting, Status=on@3x.png",
+      "filename" : "tab.more.on.dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

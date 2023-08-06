@@ -58,7 +58,7 @@ struct FilterSheetContent: View {
                                             .frame(width: 16)
                                             .padding(.trailing, 3)
                                         Text(tag.text)
-                                            .font(.system(size: 14))
+                                            .font(STFont.detailLabel)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .contentShape(Rectangle())
                                     }
@@ -89,7 +89,7 @@ struct FilterSheetContent: View {
             } label: {
                 Text("필터 적용")
                     .foregroundColor(.white)
-                    .font(.system(size: 17, weight: .bold))
+                    .font(STFont.title)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
             }

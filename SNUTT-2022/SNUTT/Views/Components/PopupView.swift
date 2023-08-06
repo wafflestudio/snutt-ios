@@ -28,7 +28,7 @@ struct PopupView: View {
                         } label: {
                             Text("당분간 보지 않기")
                                 .foregroundColor(.white)
-                                .font(.system(size: 14))
+                                .font(STFont.detailLabel)
                         }
 
                         Spacer()
@@ -44,7 +44,7 @@ struct PopupView: View {
                         } label: {
                             Text("닫기")
                                 .foregroundColor(.white)
-                                .font(.system(size: 14))
+                                .font(STFont.detailLabel)
                         }
 
                         Spacer()
