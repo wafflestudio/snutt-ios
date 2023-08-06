@@ -2236,7 +2236,7 @@
 			repositoryURL = "https://github.com/wafflestudio/ios-rn-prebuilt";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.1;
+				minimumVersion = 0.1.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
