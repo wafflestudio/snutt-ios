@@ -45,8 +45,8 @@ struct SNUTTView: View {
                         ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: true)
                     }
                     TabScene(tabType: .friends) {
-                        // TODO: replace with FriendsScene
-                        SettingScene(viewModel: .init(container: viewModel.container))
+                        // TODO: replace with RN-FriendsScene
+                        FriendsScene()
                     }
                     TabScene(tabType: .settings) {
                         SettingScene(viewModel: .init(container: viewModel.container))
