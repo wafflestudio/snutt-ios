@@ -10,6 +10,9 @@ import SwiftUI
 struct STFont {
     /// 시간표 이름 등의 제목 (17, Bold)
     static let title: Font = .system(size: 17, weight: .bold)
+    
+    /// 비어있는 페이지에서의 제목 (16, Bold)
+    static let subtitle: Font = .system(size: 16, weight: .bold)
 
     /// 강의명 등의 제목 (14, Bold)
     static let subheading: Font = .system(size: 14, weight: .bold)
