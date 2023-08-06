@@ -15,14 +15,14 @@ struct WIPFriendsView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 72)
-                
+
             Spacer().frame(height: 24)
-            
+
             Text("친구기능 개발 중...")
                 .font(STFont.title)
-            
+
             Spacer().frame(height: 8)
-            
+
             Text("Coming Soon!")
                 .font(STFont.detailLabel)
         }
