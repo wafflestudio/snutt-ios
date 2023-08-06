@@ -47,6 +47,7 @@ enum ErrorCode: Int {
     case INVALID_NOTIFICATION_DETAIL = 0x100D
     case NO_LOCAL_ID = 0x1015
     case NO_EMAIL = 0x1018
+    case INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION = 40005
 
     /* 403 - Authorization-related */
     case WRONG_API_KEY = 0x2000
@@ -98,6 +99,7 @@ enum ErrorCode: Int {
     /* 409 - Conflicts (Email Verification related) */
     case ALREADY_VERIFIED_ACCOUNT = 0x9000
     case ALREADY_VERIFIED_EMAIL = 0x9001
+    case DUPLICATE_VACANCY_NOTIFICATION = 40900
 
     /* 429 - Too many requests */
     case EXCESSIVE_EMAIL_VERIFICATION_REQUEST = 0xA000
@@ -149,6 +151,7 @@ enum ErrorCode: Int {
              .ALREADY_FB_ACCOUNT,
              .ALREADY_VERIFIED_ACCOUNT,
              .ALREADY_VERIFIED_EMAIL,
+             .DUPLICATE_VACANCY_NOTIFICATION,
              .EXCESSIVE_EMAIL_VERIFICATION_REQUEST,
              .NOT_LOCAL_ACCOUNT,
              .NOT_FB_ACCOUNT,
@@ -160,6 +163,7 @@ enum ErrorCode: Int {
              .USER_HAS_NO_FCM_KEY,
              .INVALID_TIMEJSON,
              .CANT_DELETE_CURRENT_TIMETABLE,
+             .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION,
              .NO_LOCAL_ID:
             return "잘못된 요청"
         case .LECTURE_TIME_OVERLAP,
@@ -298,6 +302,10 @@ enum ErrorCode: Int {
             return "이메일 인증이 완료된 계정입니다."
         case .ALREADY_VERIFIED_EMAIL:
             return "다른 계정에서 인증된 이메일입니다."
+        case .DUPLICATE_VACANCY_NOTIFICATION:
+            return "이미 등록된 빈자리 알림입니다."
+        case .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION:
+            return "이전 학기에는 빈자리 알림을 등록할 수 없습니다."
         case .EXCESSIVE_EMAIL_VERIFICATION_REQUEST:
             return "인증 요청 횟수가 초과되었습니다. 3분 후 인증 요청을 다시 해주시기 바랍니다."
         }
