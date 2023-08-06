@@ -2,7 +2,7 @@
 //  RoutingState.swift
 //  SNUTT
 //
-//  Created by user on 2023/05/27.
+//  Created by 박신홍 on 2023/05/27.
 //
 
 import Foundation
@@ -15,5 +15,6 @@ class ViewRoutingState {
 extension SettingScene {
     struct RoutingState {
         var pushToNotification = false
+        var pushToVacancy = false
     }
 }

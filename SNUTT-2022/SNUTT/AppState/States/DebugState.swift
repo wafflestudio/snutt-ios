@@ -2,7 +2,7 @@
 //  DebugState.swift
 //  SNUTT
 //
-//  Created by user on 2023/05/09.
+//  Created by 박신홍 on 2023/05/09.
 //
 
 @preconcurrency import Combine

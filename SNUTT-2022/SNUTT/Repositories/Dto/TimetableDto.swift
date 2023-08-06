@@ -30,8 +30,6 @@ struct LectureDto: Codable {
     let class_time_json: [TimePlaceDto]
     var class_time_mask: [Int]?
     let instructor: String
-    let quota: Int?
-    let freshmanQuota: Int?
     let remark: String?
     let category: String?
     let course_number: String?
@@ -40,6 +38,10 @@ struct LectureDto: Codable {
     let updated_at: String?
     let color: LectureColorDto?
     let colorIndex: Int?
+
+    let quota: Int?
+    let registrationCount: Int?
+    let freshmanQuota: Int?
 
     var isCustom: Bool {
         course_number == nil || course_number == ""
@@ -127,5 +129,6 @@ extension LectureDto {
         updated_at = model.updatedAt
         colorIndex = model.colorIndex
         color = .init(fg: model.color?.fg.toHex(), bg: model.color?.bg.toHex())
+        registrationCount = model.registrationCount
     }
 }
