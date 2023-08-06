@@ -12,6 +12,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     @Published var currentTimetable: Timetable?
     @Published var configuration: TimetableConfiguration = .init()
     @Published private var metadataList: [TimetableMetadata]?
+    @Published var isVacancyBannerVisible = false
 
     override init(container: DIContainer) {
         super.init(container: container)
@@ -19,6 +20,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         appState.timetable.$current.assign(to: &$currentTimetable)
         appState.timetable.$configuration.assign(to: &$configuration)
         appState.timetable.$metadataList.assign(to: &$metadataList)
+        appState.vacancy.$isBannerVisible.assign(to: &$isVacancyBannerVisible)
     }
 
     var totalCredit: Int {
@@ -37,36 +39,12 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         services.globalUIService.setIsMenuOpen(value)
     }
 
-    func fetchRecentTimetable() async {
-        do {
-            try await timetableService.fetchRecentTimetable()
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
+    func goToVacancyPage() {
+        services.vacancyService.goToVacancyPage()
     }
 
-    func fetchTimetableList() async {
-        do {
-            try await timetableService.fetchTimetableList()
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-    }
-
-    func fetchCourseBookList() async {
-        do {
-            try await services.courseBookService.fetchCourseBookList()
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-    }
-
-    func fetchUser() async {
-        do {
-            try await services.userService.fetchUser()
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
+    func dismissVacancyNotificationBanner() {
+        services.vacancyService.dismissVacancyNotificationBanner()
     }
 
     func loadTimetableConfig() {

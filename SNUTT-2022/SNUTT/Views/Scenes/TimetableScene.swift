@@ -23,67 +23,68 @@ struct TimetableScene: View, Sendable {
 
     var body: some View {
         GeometryReader { reader in
-            TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
-                .animation(.customSpring, value: viewModel.currentTimetable?.id)
+            VStack(spacing: 0) {
+
+                if viewModel.isVacancyBannerVisible {
+                    VacancyBanner {
+                        viewModel.goToVacancyPage()
+                    } close: {
+                        viewModel.dismissVacancyNotificationBanner()
+                    }
+                    .transition(.move(edge: .trailing))
+
+                }
+
+                TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
+                    .animation(.customSpring, value: viewModel.currentTimetable?.id)
                 // navigate programmatically, because NavigationLink inside toolbar doesn't work
-                .background(
-                    Group {
-                        NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
-                        NavigationLink(destination: BookmarkScene(viewModel: .init(container: viewModel.container)), isActive: $pushToBookmarkScene) { EmptyView() }
-                    }
-                )
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        HStack {
-                            NavBarButton(imageName: "nav.menu") {
-                                viewModel.setIsMenuOpen(true)
+                    .background(
+                        Group {
+                            NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
+                            NavigationLink(destination: BookmarkScene(viewModel: .init(container: viewModel.container)), isActive: $pushToBookmarkScene) { EmptyView() }
+                        }
+                    )
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            HStack {
+                                NavBarButton(imageName: "nav.menu") {
+                                    viewModel.setIsMenuOpen(true)
+                                }
+                                .circleBadge(condition: viewModel.isNewCourseBookAvailable)
+
+                                Text(viewModel.timetableTitle)
+                                    .font(STFont.title)
+                                    .minimumScaleFactor(0.9)
+                                    .lineLimit(1)
+                                Text("(\(viewModel.totalCredit) 학점)")
+                                    .font(STFont.details)
+                                    .foregroundColor(Color(UIColor.secondaryLabel))
+
+                                Spacer()
+
+                                NavBarButton(imageName: "nav.list") {
+                                    pushToListScene = true
+                                }
+
+                                NavBarButton(imageName: "nav.share") {
+                                    self.screenshot = body.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
+                                    isShareSheetOpened = true
+                                }
+
+                                NavBarButton(imageName: "nav.bookmark") {
+                                    pushToBookmarkScene = true
+                                    isNewToBookmark = false
+                                }
+                                .circleBadge(condition: isNewToBookmark)
                             }
-                            .circleBadge(condition: viewModel.isNewCourseBookAvailable)
-
-                            Text(viewModel.timetableTitle)
-                                .font(STFont.title)
-                                .minimumScaleFactor(0.9)
-                                .lineLimit(1)
-                            Text("(\(viewModel.totalCredit) 학점)")
-                                .font(STFont.details)
-                                .foregroundColor(Color(UIColor.secondaryLabel))
-
-                            Spacer()
-
-                            NavBarButton(imageName: "nav.list") {
-                                pushToListScene = true
-                            }
-
-                            NavBarButton(imageName: "nav.share") {
-                                self.screenshot = body.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
-                                isShareSheetOpened = true
-                            }
-
-                            NavBarButton(imageName: "nav.bookmark") {
-                                pushToBookmarkScene = true
-                                isNewToBookmark = false
-                            }
-                            .circleBadge(condition: isNewToBookmark)
                         }
                     }
-                }
-                .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
-                    ActivityViewController(activityItems: [screenshot, linkMetadata])
-                }
-                .onLoad {
-                    await withTaskGroup(of: Void.self, body: { group in
-                        group.addTask {
-                            await viewModel.fetchTimetableList()
-                        }
-                        group.addTask {
-                            await viewModel.fetchRecentTimetable()
-                        }
-                        group.addTask {
-                            await viewModel.fetchCourseBookList()
-                        }
-                    })
-                }
+                    .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
+                        ActivityViewController(activityItems: [screenshot, linkMetadata])
+                    }
+            }
+            .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
         }
         let _ = debugChanges()
     }
