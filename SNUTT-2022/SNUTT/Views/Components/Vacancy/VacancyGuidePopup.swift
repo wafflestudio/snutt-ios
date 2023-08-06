@@ -10,7 +10,7 @@ import SwiftUI
 struct VacancyGuidePopup: View {
     let dismiss: () -> Void
 
-    static private let imageIndices = Array(1...4)
+    private static let imageIndices = Array(1 ... 4)
     @State private var currentGuideIndex = 1
 
     var body: some View {
@@ -33,7 +33,6 @@ struct VacancyGuidePopup: View {
                                 .scaledToFit()
                                 .frame(width: 15)
                                 .padding([.top, .trailing])
-
                         }
                     }
                     ZStack {
@@ -75,7 +74,6 @@ struct VacancyGuidePopup: View {
                 .frame(height: reader.size.height * 0.5)
             }
         }
-
     }
 
     struct GuideNavigationButton: View {
@@ -98,8 +96,6 @@ struct VacancyGuidePopup: View {
     }
 }
 
-
-
 struct VacancyGuidePopup_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { reader in
@@ -107,7 +103,7 @@ struct VacancyGuidePopup_Previews: PreviewProvider {
                 Rectangle()
                     .fill(Color.black.opacity(0.5))
                     .ignoresSafeArea(.all)
-                VacancyGuidePopup(dismiss: {  })
+                VacancyGuidePopup(dismiss: {})
                     .padding(.horizontal, reader.size.width * 0.1)
                     .frame(height: 400)
             }

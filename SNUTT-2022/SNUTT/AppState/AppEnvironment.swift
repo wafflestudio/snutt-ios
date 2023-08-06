@@ -112,8 +112,7 @@ extension AppEnvironment {
                      popupRepository: popupRepository,
                      etcRepository: etcRepository,
                      vacancyRepository: vacancyRepository,
-                     configRepository: configRepository
-        )
+                     configRepository: configRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -143,8 +142,7 @@ extension AppEnvironment {
                      notificationService: notificationService,
                      popupService: popupService,
                      etcService: etcService,
-                     vacancyService: vacancyService
-        )
+                     vacancyService: vacancyService)
     }
 }
 
@@ -172,8 +170,7 @@ extension EnvironmentValues {
                   notificationService: FakeNotificationService(),
                   popupService: FakePopupService(),
                   etcService: FakeEtcService(),
-                  vacancyService: FakeVacancyService()
-            )
+                  vacancyService: FakeVacancyService())
         }
     }
 #endif

@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2023/08/05.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 protocol ConfigRepositoryProtocol {
     func fetchConfigs() async throws -> ConfigsDto
@@ -25,5 +25,4 @@ class ConfigRepository: ConfigRepositoryProtocol {
             .serializingDecodable(ConfigsDto.self)
             .handlingError()
     }
-
 }

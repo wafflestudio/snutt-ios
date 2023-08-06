@@ -29,7 +29,6 @@ struct LectureCellActionButton: View {
 
     @State private var isLoading = false
 
-
     var body: some View {
         Button {
             isLoading = true
@@ -39,10 +38,10 @@ struct LectureCellActionButton: View {
             }
         } label: {
             VStack {
-                    icon.image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 19, height: 19)
+                icon.image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 19, height: 19)
 
                 Text(text)
                     .font(.system(size: 11, weight: .regular))

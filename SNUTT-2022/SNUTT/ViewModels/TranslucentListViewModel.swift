@@ -176,5 +176,4 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-
 }

@@ -16,4 +16,3 @@ extension ConfigsDto {
         let visible: Bool
     }
 }
-

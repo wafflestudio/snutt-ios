@@ -34,11 +34,10 @@ struct VacancyService: VacancyServiceProtocol {
         localRepositories.userDefaultsRepository
     }
 
-
     func fetchLectures() async throws {
         let lectureDtos = try await vacancyRepository.fetchLectures()
         let lectures = lectureDtos
-            .map({ Lecture(from: $0) })
+            .map { Lecture(from: $0) }
             .sorted {
                 if $0.hasVacancy != $1.hasVacancy {
                     return $0.hasVacancy
@@ -106,22 +105,17 @@ struct VacancyService: VacancyServiceProtocol {
 }
 
 struct FakeVacancyService: VacancyServiceProtocol {
-    func dismissVacancyNotificationBanner() {
-    }
+    func dismissVacancyNotificationBanner() {}
 
-    func showVacancyBannerIfNeeded() async throws {
-    }
+    func showVacancyBannerIfNeeded() async throws {}
 
-    func fetchLectures() async throws {
-    }
-    
-    func addLecture(lecture: Lecture) async throws {
-    }
-    
-    func deleteLecture(lecture: Lecture) async throws {
-    }
+    func fetchLectures() async throws {}
 
-    func deleteLectures(lectures: [Lecture]) async throws {}
+    func addLecture(lecture _: Lecture) async throws {}
+
+    func deleteLecture(lecture _: Lecture) async throws {}
+
+    func deleteLectures(lectures _: [Lecture]) async throws {}
 
     func goToVacancyPage() {}
 }

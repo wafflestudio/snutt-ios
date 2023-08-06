@@ -19,9 +19,9 @@ enum VacancyRouter: Router {
         switch self {
         case .getLectures:
             return .get
-        case .addLecture(_):
+        case .addLecture:
             return .post
-        case .deleteLecture(_):
+        case .deleteLecture:
             return .delete
         }
     }
@@ -41,9 +41,9 @@ enum VacancyRouter: Router {
         switch self {
         case .getLectures:
             return nil
-        case .addLecture(_):
+        case .addLecture:
             return nil
-        case .deleteLecture(_):
+        case .deleteLecture:
             return nil
         }
     }

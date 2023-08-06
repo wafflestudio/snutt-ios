@@ -30,6 +30,6 @@ struct VacancySugangSnuButton: View {
 
 struct VacancySugangSnuButton_Previews: PreviewProvider {
     static var previews: some View {
-        VacancySugangSnuButton(action: { })
+        VacancySugangSnuButton(action: {})
     }
 }

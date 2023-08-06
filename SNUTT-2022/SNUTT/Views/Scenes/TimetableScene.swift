@@ -24,7 +24,6 @@ struct TimetableScene: View, Sendable {
     var body: some View {
         GeometryReader { reader in
             VStack(spacing: 0) {
-
                 if viewModel.isVacancyBannerVisible {
                     VacancyBanner {
                         viewModel.goToVacancyPage()
@@ -32,12 +31,11 @@ struct TimetableScene: View, Sendable {
                         viewModel.dismissVacancyNotificationBanner()
                     }
                     .transition(.move(edge: .trailing))
-
                 }
 
                 TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
                     .animation(.customSpring, value: viewModel.currentTimetable?.id)
-                // navigate programmatically, because NavigationLink inside toolbar doesn't work
+                    // navigate programmatically, because NavigationLink inside toolbar doesn't work
                     .background(
                         Group {
                             NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }

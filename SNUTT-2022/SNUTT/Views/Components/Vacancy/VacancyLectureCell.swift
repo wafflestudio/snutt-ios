@@ -29,7 +29,6 @@ struct VacancyLectureCell: View {
                 LectureDetailRow(imageName: "clock.black", text: lecture.preciseTimeString)
                 LectureDetailRow(imageName: "map.black", text: lecture.placesString)
             }
-
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 15)
@@ -65,7 +64,6 @@ struct VacancyLectureCell: View {
                         .font(STFont.details)
                 }
             }
-
         }
     }
 }

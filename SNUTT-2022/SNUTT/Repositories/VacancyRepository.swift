@@ -15,7 +15,6 @@ protocol VacancyRepositoryProtocol {
 }
 
 class VacancyRepository: VacancyRepositoryProtocol {
-
     private let session: Session
 
     init(session: Session) {

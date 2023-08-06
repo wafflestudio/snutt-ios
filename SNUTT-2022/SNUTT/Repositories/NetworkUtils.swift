@@ -112,8 +112,7 @@ final class Logger: EventMonitor {
 
 extension DataTask {
     /// Extract DTO from `DataTask`, or throw error parsed from the response body.
-    @discardableResult
-    func handlingError() async throws -> Value {
+    @discardableResult func handlingError() async throws -> Value {
         if let data = await response.data,
            let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data),
            let errCode = ErrorCode(rawValue: errDto.errcode)

@@ -12,6 +12,7 @@ enum ConfigRouter: Router {
     var baseURL: URL {
         URL(string: NetworkConfiguration.serverV1BaseURL + "/configs")!
     }
+
     static var shouldAddToken: Bool { false }
 
     case getConfigs

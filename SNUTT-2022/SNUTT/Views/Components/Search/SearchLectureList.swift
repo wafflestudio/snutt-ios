@@ -44,8 +44,7 @@ struct SearchLectureList: View {
                                       deleteVacancyLecture: deleteVacancyLecture,
                                       isBookmarked: bookmarkedLecture(lecture) != nil,
                                       isInTimetable: existingLecture(lecture) != nil,
-                                      isVacancyNotificationEnabled: checkIsVacancyNotificationEnabled(lecture)
-                    )
+                                      isVacancyNotificationEnabled: checkIsVacancyNotificationEnabled(lecture))
                         .task {
                             if lecture.id == data.last?.id {
                                 await fetchMore()

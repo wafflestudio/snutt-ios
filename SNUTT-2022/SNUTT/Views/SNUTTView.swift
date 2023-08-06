@@ -208,7 +208,6 @@ extension SNUTTView {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-
     }
 }
 

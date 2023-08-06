@@ -65,7 +65,6 @@ struct VacancyLectureList: View {
         .background(selection.isEmpty ? STColor.gray : STColor.cyan)
         .disabled(selection.isEmpty)
         .foregroundColor(Color(uiColor: .systemBackground))
-
     }
 
     private var editButton: some View {
@@ -92,11 +91,11 @@ extension EditMode {
 }
 
 #if DEBUG
-struct VacancyLectureList_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            VacancyLectureList(viewModel: .init(container: .preview), editMode: .constant(.inactive), isGuidePopupPresented: false)
+    struct VacancyLectureList_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                VacancyLectureList(viewModel: .init(container: .preview), editMode: .constant(.inactive), isGuidePopupPresented: false)
+            }
         }
     }
-}
 #endif

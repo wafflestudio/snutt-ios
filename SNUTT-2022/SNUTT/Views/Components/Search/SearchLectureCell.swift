@@ -53,62 +53,66 @@ struct SearchLectureCell: View {
 
                 if selected {
                     Spacer().frame(height: 5)
-                    
 
                     HStack {
                         LectureCellActionButton(
                             icon: .asset(name: "search.detail"),
-                            text: "자세히") {
-                                showingDetailPage = true
-                            }
+                            text: "자세히"
+                        ) {
+                            showingDetailPage = true
+                        }
 
                         LectureCellActionButton(
                             icon: .asset(name: "search.evaluation"),
-                            text: "강의평") {
-                                reviewId = await fetchReviewId(lecture)
-                                if let detailId = reviewId {
-                                    preloadReviewWebView(detailId)
-                                    showReviewWebView = true
-                                }
+                            text: "강의평"
+                        ) {
+                            reviewId = await fetchReviewId(lecture)
+                            if let detailId = reviewId {
+                                preloadReviewWebView(detailId)
+                                showReviewWebView = true
                             }
+                        }
 
                         LectureCellActionButton(
                             icon: .asset(name: isBookmarked ? "search.bookmark.fill" : "search.bookmark"),
-                            text: "관심강좌") {
-                                if isBookmarked {
-                                    isUndoBookmarkAlertPresented = true
-                                } else {
-                                    await bookmarkLecture(lecture)
+                            text: "관심강좌"
+                        ) {
+                            if isBookmarked {
+                                isUndoBookmarkAlertPresented = true
+                            } else {
+                                await bookmarkLecture(lecture)
+                            }
+                        }
+                        .alert("강의를 관심강좌에서 제외하시겠습니까?", isPresented: $isUndoBookmarkAlertPresented) {
+                            Button("취소", role: .cancel, action: {})
+                            Button("확인", role: .destructive) {
+                                Task {
+                                    await undoBookmarkLecture(lecture)
                                 }
                             }
-                            .alert("강의를 관심강좌에서 제외하시겠습니까?", isPresented: $isUndoBookmarkAlertPresented) {
-                                Button("취소", role: .cancel, action: {})
-                                Button("확인", role: .destructive) {
-                                    Task {
-                                        await undoBookmarkLecture(lecture)
-                                    }
-                                }
-                            }
+                        }
 
                         LectureCellActionButton(
                             icon: .asset(name: isVacancyNotificationEnabled ? "search.vacancy.fill" : "search.vacancy"),
-                            text: "빈자리알림") {
-                                if isVacancyNotificationEnabled {
-                                    await deleteVacancyLecture(lecture)
-                                } else {
-                                    await addVacancyLecture(lecture)
-                                }
+                            text: "빈자리알림"
+                        ) {
+                            if isVacancyNotificationEnabled {
+                                await deleteVacancyLecture(lecture)
+                            } else {
+                                await addVacancyLecture(lecture)
                             }
+                        }
 
                         LectureCellActionButton(
                             icon: .asset(name: isInTimetable ? "search.remove.fill" : "search.add"),
-                            text: isInTimetable ? "제거하기" : "추가하기") {
-                                if isInTimetable {
-                                    await deleteLecture(lecture)
-                                } else {
-                                    await addLecture(lecture)
-                                }
+                            text: isInTimetable ? "제거하기" : "추가하기"
+                        ) {
+                            if isInTimetable {
+                                await deleteLecture(lecture)
+                            } else {
+                                await addLecture(lecture)
                             }
+                        }
                     }
                     /// This `sheet` modifier should be called on `HStack` to prevent animation glitch when `dismiss`ed.
                     .sheet(isPresented: $showReviewWebView) {

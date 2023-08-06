@@ -29,7 +29,8 @@ struct VacancyScene: View, Sendable {
             if viewModel.lectures.isEmpty {
                 UnavailableView(
                     title: "빈자리 알림 신청 내역이 없습니다.",
-                    subtitle: "검색 탭에서 빈자리 알림을 신청할 수 있습니다.")
+                    subtitle: "검색 탭에서 빈자리 알림을 신청할 수 있습니다."
+                )
             }
 
             if showGuidePopup {
@@ -39,7 +40,6 @@ struct VacancyScene: View, Sendable {
                 })
                 .transition(.opacity.animation(.customSpring))
             }
-
         }
         .onDisappear {
             editMode = .inactive
@@ -56,7 +56,6 @@ struct VacancyScene: View, Sendable {
                             .scaledToFit()
                             .frame(height: 17)
                     }
-
                 }
             }
         }
@@ -72,7 +71,6 @@ struct VacancyScene: View, Sendable {
             .disabled(showGuidePopup)
         }
     }
-
 }
 
 extension VacancyScene {
@@ -105,4 +103,3 @@ extension VacancyScene {
         }
     }
 }
-
