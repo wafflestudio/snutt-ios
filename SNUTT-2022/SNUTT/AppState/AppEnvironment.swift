@@ -25,6 +25,7 @@ extension AppEnvironment {
         let notificationService: NotificationServiceProtocol
         let popupService: PopupServiceProtocol
         let etcService: EtcServiceProtocol
+        let vacancyService: VacancyServiceProtocol
     }
 }
 
@@ -40,6 +41,8 @@ extension AppEnvironment {
         let notificationRepository: NotificationRepositoryProtocol
         let popupRepository: PopupRepositoryProtocol
         let etcRepository: EtcRepositoryProtocol
+        let vacancyRepository: VacancyRepositoryProtocol
+        let configRepository: ConfigRepositoryProtocol
     }
 
     struct LocalRepositories {
@@ -95,6 +98,8 @@ extension AppEnvironment {
         let notificationRepository = NotificationRepository(session: session)
         let popupRepository = PopupRepository(session: session)
         let etcRepository = EtcRepository(session: session)
+        let vacancyRepository = VacancyRepository(session: session)
+        let configRepository = ConfigRepository(session: session)
 
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
@@ -105,7 +110,10 @@ extension AppEnvironment {
                      authRepository: authRepository,
                      notificationRepository: notificationRepository,
                      popupRepository: popupRepository,
-                     etcRepository: etcRepository)
+                     etcRepository: etcRepository,
+                     vacancyRepository: vacancyRepository,
+                     configRepository: configRepository
+        )
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -124,6 +132,7 @@ extension AppEnvironment {
         let notificationService = NotificationService(appState: appState, webRepositories: webRepositories)
         let popupService = PopupService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let etcService = EtcService(appState: appState, webRepositories: webRepositories)
+        let vacancyService = VacancyService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
@@ -133,7 +142,9 @@ extension AppEnvironment {
                      authService: authService,
                      notificationService: notificationService,
                      popupService: popupService,
-                     etcService: etcService)
+                     etcService: etcService,
+                     vacancyService: vacancyService
+        )
     }
 }
 
@@ -160,7 +171,9 @@ extension EnvironmentValues {
                   authService: FakeAuthService(),
                   notificationService: FakeNotificationService(),
                   popupService: FakePopupService(),
-                  etcService: FakeEtcService())
+                  etcService: FakeEtcService(),
+                  vacancyService: FakeVacancyService()
+            )
         }
     }
 #endif
