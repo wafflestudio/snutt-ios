@@ -26,14 +26,24 @@ struct SettingsTextItem: View {
 struct SettingsLinkItem<Destination>: View where Destination: View {
     let title: String
     var detail: String?
+    var isActive: Binding<Bool>?
     let destination: () -> Destination
 
     var body: some View {
-        NavigationLink {
-            destination()
-                .navigationBarTitleDisplayMode(.inline)
-        } label: {
-            SettingsTextItem(title: title, detail: detail)
+        if let isActive {
+            NavigationLink(isActive: isActive) {
+                destination()
+                    .navigationBarTitleDisplayMode(.inline)
+            } label: {
+                SettingsTextItem(title: title, detail: detail)
+            }
+        } else {
+            NavigationLink {
+                destination()
+                    .navigationBarTitleDisplayMode(.inline)
+            } label: {
+                SettingsTextItem(title: title, detail: detail)
+            }
         }
     }
 }

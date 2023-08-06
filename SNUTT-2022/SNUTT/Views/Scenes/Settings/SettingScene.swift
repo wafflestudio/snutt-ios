@@ -33,6 +33,12 @@ struct SettingScene: View {
             }
 
             Section {
+                SettingsLinkItem(title: "빈자리 알림", isActive: $viewModel.routingState.pushToVacancy) {
+                    VacancyScene(viewModel: .init(container: viewModel.container))
+                }
+            }
+
+            Section {
                 SettingsTextItem(title: "버전 정보", detail: viewModel.versionString)
             }
 
