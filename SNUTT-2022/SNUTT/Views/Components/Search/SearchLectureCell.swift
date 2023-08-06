@@ -16,8 +16,11 @@ struct SearchLectureCell: View {
     let deleteLecture: (Lecture) async -> Void
     let fetchReviewId: (Lecture) async -> String?
     let preloadReviewWebView: @MainActor (String) -> Void
+    let addVacancyLecture: (Lecture) async -> Void
+    let deleteVacancyLecture: (Lecture) async -> Void
     let isBookmarked: Bool
     let isInTimetable: Bool
+    let isVacancyNotificationEnabled: Bool
 
     @State var showingDetailPage = false
     @State private var showReviewWebView: Bool = false
@@ -50,40 +53,33 @@ struct SearchLectureCell: View {
 
                 if selected {
                     Spacer().frame(height: 5)
+                    
 
                     HStack {
-                        Button {
-                            showingDetailPage = true
-                        } label: {
-                            Text("자세히")
-                                .frame(maxWidth: .infinity)
-                                .font(STFont.details)
-                        }
+                        LectureCellActionButton(
+                            icon: .asset(name: "search.detail"),
+                            text: "자세히") {
+                                showingDetailPage = true
+                            }
 
-                        Button {
-                            Task {
+                        LectureCellActionButton(
+                            icon: .asset(name: "search.evaluation"),
+                            text: "강의평") {
                                 reviewId = await fetchReviewId(lecture)
                                 if let detailId = reviewId {
                                     preloadReviewWebView(detailId)
                                     showReviewWebView = true
                                 }
                             }
-                        } label: {
-                            Text("강의평")
-                                .frame(maxWidth: .infinity)
-                                .font(STFont.details)
-                        }
 
-                        if isBookmarked {
-                            Button {
-                                isUndoBookmarkAlertPresented = true
-                            } label: {
-                                HStack {
-                                    Image("bookmark.on")
-                                    Text("관심강좌")
-                                        .font(STFont.details)
+                        LectureCellActionButton(
+                            icon: .asset(name: isBookmarked ? "search.bookmark.fill" : "search.bookmark"),
+                            text: "관심강좌") {
+                                if isBookmarked {
+                                    isUndoBookmarkAlertPresented = true
+                                } else {
+                                    await bookmarkLecture(lecture)
                                 }
-                                .frame(maxWidth: .infinity)
                             }
                             .alert("강의를 관심강좌에서 제외하시겠습니까?", isPresented: $isUndoBookmarkAlertPresented) {
                                 Button("취소", role: .cancel, action: {})
@@ -93,42 +89,26 @@ struct SearchLectureCell: View {
                                     }
                                 }
                             }
-                        } else {
-                            Button {
-                                Task {
-                                    await bookmarkLecture(lecture)
-                                }
-                            } label: {
-                                HStack {
-                                    Image("bookmark.off")
-                                    Text("관심강좌")
-                                        .font(STFont.details)
-                                }
-                                .frame(maxWidth: .infinity)
-                            }
-                        }
 
-                        if isInTimetable {
-                            Button {
-                                Task {
-                                    await deleteLecture(lecture)
+                        LectureCellActionButton(
+                            icon: .asset(name: isVacancyNotificationEnabled ? "search.vacancy.fill" : "search.vacancy"),
+                            text: "빈자리알림") {
+                                if isVacancyNotificationEnabled {
+                                    await deleteVacancyLecture(lecture)
+                                } else {
+                                    await addVacancyLecture(lecture)
                                 }
-                            } label: {
-                                Text("제거하기")
-                                    .frame(maxWidth: .infinity)
-                                    .font(STFont.details)
                             }
-                        } else {
-                            Button {
-                                Task {
+
+                        LectureCellActionButton(
+                            icon: .asset(name: isInTimetable ? "search.remove.fill" : "search.add"),
+                            text: isInTimetable ? "제거하기" : "추가하기") {
+                                if isInTimetable {
+                                    await deleteLecture(lecture)
+                                } else {
                                     await addLecture(lecture)
                                 }
-                            } label: {
-                                Text("+ 추가하기")
-                                    .frame(maxWidth: .infinity)
-                                    .font(STFont.details)
                             }
-                        }
                     }
                     /// This `sheet` modifier should be called on `HStack` to prevent animation glitch when `dismiss`ed.
                     .sheet(isPresented: $showReviewWebView) {
