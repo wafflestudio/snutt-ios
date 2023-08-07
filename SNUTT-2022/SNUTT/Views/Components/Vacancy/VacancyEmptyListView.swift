@@ -39,8 +39,6 @@ struct VacancyEmptyListView: View {
 
 struct VacancyEmptyListView_Previews: PreviewProvider {
     static var previews: some View {
-        VacancyEmptyListView {
-            
-        }
+        VacancyEmptyListView {}
     }
 }
