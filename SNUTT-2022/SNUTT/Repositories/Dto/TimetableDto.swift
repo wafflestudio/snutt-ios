@@ -38,6 +38,7 @@ struct LectureDto: Codable {
     let updated_at: String?
     let color: LectureColorDto?
     let colorIndex: Int?
+    let wasFull: Bool?
 
     let quota: Int?
     let registrationCount: Int?
@@ -130,5 +131,6 @@ extension LectureDto {
         colorIndex = model.colorIndex
         color = .init(fg: model.color?.fg.toHex(), bg: model.color?.bg.toHex())
         registrationCount = model.registrationCount
+        wasFull = model.wasFull
     }
 }
