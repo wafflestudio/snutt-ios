@@ -13,6 +13,7 @@ struct VacancyScene: View, Sendable {
     @AppStorage("isNewToVacancyService") private var isNewToVacancyService: Bool = true
     @State private var editMode = EditMode.inactive
     @State private var isGuidePopupPresented = false
+    @State private var sugangSnuUrl: URL? = nil
     @Environment(\.openURL) var openURL
 
     private var showGuidePopup: Bool {
@@ -61,13 +62,18 @@ struct VacancyScene: View, Sendable {
         .navigationBarTitleDisplayMode(.inline)
         .overlay(alignment: .bottomTrailing) {
             VacancySugangSnuButton {
-                openURL(URL(string: "https://sugang.snu.ac.kr/sugang/cc/cc100InterfaceSrch.action")!)
+                if let sugangSnuUrl {
+                    openURL(sugangSnuUrl)
+                }
             }
             .padding()
             .opacity(editMode.isEditing ? 0 : 1)
             .offset(x: 0, y: editMode.isEditing ? 100 : 0)
             .animation(.customSpring, value: editMode)
             .disabled(showGuidePopup)
+        }
+        .task {
+            sugangSnuUrl = await viewModel.fetchSugangSnuUrl()
         }
     }
 }
@@ -99,6 +105,15 @@ extension VacancyScene {
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
+        }
+
+        func fetchSugangSnuUrl() async -> URL? {
+            do {
+                return try await vacancyService.fetchSugangSnuUrl()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+            return nil
         }
     }
 }

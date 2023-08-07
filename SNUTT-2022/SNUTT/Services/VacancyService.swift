@@ -10,6 +10,7 @@ import Foundation
 @MainActor
 protocol VacancyServiceProtocol: Sendable {
     func fetchLectures() async throws
+    func fetchSugangSnuUrl() async throws -> URL
     func addLecture(lecture: Lecture) async throws
     func deleteLectures(lectures: [Lecture]) async throws
     func showVacancyBannerIfNeeded() async throws
@@ -68,13 +69,23 @@ struct VacancyService: VacancyServiceProtocol {
         try await fetchLectures()
     }
 
-    private func isVacancyNotificationBannerEnabled() async throws -> Bool {
-        if let cachedConfigs = appState.system.configs {
-            return cachedConfigs.vacancyNotificationBanner.visible
+    private func fetchConfigs() async throws -> ConfigsDto {
+        guard let cachedConfigs = appState.system.configs else {
+            let configsDto = try await configRepository.fetchConfigs()
+            appState.system.configs = configsDto
+            return configsDto
         }
-        let configsDto = try await configRepository.fetchConfigs()
-        appState.system.configs = configsDto
+        return cachedConfigs
+    }
+
+    private func isVacancyNotificationBannerEnabled() async throws -> Bool {
+        let configsDto = try await fetchConfigs()
         return configsDto.vacancyNotificationBanner.visible
+    }
+
+    func fetchSugangSnuUrl() async throws -> URL {
+        let configsDto = try await fetchConfigs()
+        return configsDto.vacancySugangSnuUrl.url
     }
 
     func showVacancyBannerIfNeeded() async throws {
@@ -105,6 +116,10 @@ struct VacancyService: VacancyServiceProtocol {
 }
 
 struct FakeVacancyService: VacancyServiceProtocol {
+    func fetchSugangSnuUrl() async throws -> URL {
+        return URL(string: "https://sugang.snu.ac.kr")!
+    }
+
     func dismissVacancyNotificationBanner() {}
 
     func showVacancyBannerIfNeeded() async throws {}
