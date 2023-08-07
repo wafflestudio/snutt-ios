@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 protocol VacancyRepositoryProtocol {
-    func fetchLectures() async throws -> [LectureDto]
+    func fetchLectures() async throws -> VacancyResponseDto
     func addLecture(lectureId: String) async throws
     func deleteLecture(lectureId: String) async throws
 }
@@ -21,12 +21,11 @@ class VacancyRepository: VacancyRepositoryProtocol {
         self.session = session
     }
 
-    func fetchLectures() async throws -> [LectureDto] {
-        let dto = try await session
+    func fetchLectures() async throws -> VacancyResponseDto {
+        try await session
             .request(VacancyRouter.getLectures)
             .serializingDecodable(VacancyResponseDto.self)
             .handlingError()
-        return dto.lectures
     }
 
     func addLecture(lectureId: String) async throws {

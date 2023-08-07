@@ -35,7 +35,7 @@ struct VacancyService: VacancyServiceProtocol {
     }
 
     func fetchLectures() async throws {
-        let lectureDtos = try await vacancyRepository.fetchLectures()
+        let lectureDtos = try await vacancyRepository.fetchLectures().lectures
         let lectures = lectureDtos
             .map { Lecture(from: $0) }
             .sorted {
