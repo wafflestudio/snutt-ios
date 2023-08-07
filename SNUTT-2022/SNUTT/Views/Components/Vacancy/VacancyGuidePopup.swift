@@ -64,6 +64,7 @@ struct VacancyGuidePopup: View {
                             }
                         }
                     }
+                    .padding(10)
                 }
                 .background(STColor.systemBackground)
                 .onAppear {
@@ -98,15 +99,6 @@ struct VacancyGuidePopup: View {
 
 struct VacancyGuidePopup_Previews: PreviewProvider {
     static var previews: some View {
-        GeometryReader { reader in
-            ZStack {
-                Rectangle()
-                    .fill(Color.black.opacity(0.5))
-                    .ignoresSafeArea(.all)
-                VacancyGuidePopup(dismiss: {})
-                    .padding(.horizontal, reader.size.width * 0.1)
-                    .frame(height: 400)
-            }
-        }
+        VacancyGuidePopup(dismiss: {})
     }
 }
