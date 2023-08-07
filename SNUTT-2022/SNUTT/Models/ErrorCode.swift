@@ -98,6 +98,7 @@ enum ErrorCode: Int {
     /* 409 - Conflicts (Email Verification related) */
     case ALREADY_VERIFIED_ACCOUNT = 0x9000
     case ALREADY_VERIFIED_EMAIL = 0x9001
+    case DUPLICATE_EMAIL = 40901
 
     /* 429 - Too many requests */
     case EXCESSIVE_EMAIL_VERIFICATION_REQUEST = 0xA000
@@ -145,6 +146,7 @@ enum ErrorCode: Int {
              .DUPLICATE_ID,
              .DUPLICATE_TIMETABLE_TITLE,
              .DUPLICATE_LECTURE,
+             .DUPLICATE_EMAIL,
              .ALREADY_LOCAL_ACCOUNT,
              .ALREADY_FB_ACCOUNT,
              .ALREADY_VERIFIED_ACCOUNT,
@@ -296,6 +298,8 @@ enum ErrorCode: Int {
             return "잘못된 인증코드입니다."
         case .ALREADY_VERIFIED_ACCOUNT:
             return "이메일 인증이 완료된 계정입니다."
+        case .DUPLICATE_EMAIL:
+            return "이미 사용 중인 이메일입니다."
         case .ALREADY_VERIFIED_EMAIL:
             return "다른 계정에서 인증된 이메일입니다."
         case .EXCESSIVE_EMAIL_VERIFICATION_REQUEST:
