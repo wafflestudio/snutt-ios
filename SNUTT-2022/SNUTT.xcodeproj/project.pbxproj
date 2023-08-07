@@ -242,6 +242,7 @@
 		CEA7F1E62A6D096000299BAF /* LectureCellActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA7F1E52A6D096000299BAF /* LectureCellActionButton.swift */; };
 		CEB5A71E29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */; };
 		CEB5A72029DDA8B200E74C47 /* TimetableAccessoryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */; };
+		CEC91CAA2A812499008B0F15 /* VacancyEmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC91CA92A812499008B0F15 /* VacancyEmptyListView.swift */; };
 		CECE96642A72D5F2003D87FA /* VacancyBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE96632A72D5F2003D87FA /* VacancyBanner.swift */; };
 		CEDDCA7B2A6AE62B00474D4E /* VacancyLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */; };
 		CEDDCA7E2A6AEF2200474D4E /* VacancyLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */; };
@@ -523,6 +524,7 @@
 		CEA7F1E52A6D096000299BAF /* LectureCellActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureCellActionButton.swift; sourceTree = "<group>"; };
 		CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryRectangularView.swift; sourceTree = "<group>"; };
 		CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryInlineView.swift; sourceTree = "<group>"; };
+		CEC91CA92A812499008B0F15 /* VacancyEmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyEmptyListView.swift; sourceTree = "<group>"; };
 		CECE96632A72D5F2003D87FA /* VacancyBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyBanner.swift; sourceTree = "<group>"; };
 		CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyLectureCell.swift; sourceTree = "<group>"; };
 		CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyLectureList.swift; sourceTree = "<group>"; };
@@ -788,6 +790,7 @@
 				CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */,
 				CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */,
 				CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */,
+				CEC91CA92A812499008B0F15 /* VacancyEmptyListView.swift */,
 				CECE96632A72D5F2003D87FA /* VacancyBanner.swift */,
 				CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */,
 			);
@@ -1411,6 +1414,7 @@
 				CE4777F72A6AE41C00E03253 /* VacancyScene.swift in Sources */,
 				B87DF6F329152649008BB95B /* View+Screenshot.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
+				CEC91CAA2A812499008B0F15 /* VacancyEmptyListView.swift in Sources */,
 				BE28036628E8854D00B2B1AB /* SingleWebView.swift in Sources */,
 				BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */,
 				B87DF6EF2914FC02008BB95B /* PopupRepository.swift in Sources */,

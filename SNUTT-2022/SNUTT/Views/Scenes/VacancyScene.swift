@@ -27,10 +27,9 @@ struct VacancyScene: View, Sendable {
                 }
 
             if viewModel.lectures.isEmpty {
-                UnavailableView(
-                    title: "빈자리 알림 신청 내역이 없습니다.",
-                    subtitle: "검색 탭에서 빈자리 알림을 신청할 수 있습니다."
-                )
+                VacancyEmptyListView {
+                    isGuidePopupPresented = true
+                }
             }
 
             if showGuidePopup {
