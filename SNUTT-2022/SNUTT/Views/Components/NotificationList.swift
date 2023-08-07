@@ -34,21 +34,19 @@ struct NotificationList: View {
 }
 
 #if DEBUG
-struct NotificationList_Previews: PreviewProvider {
-    static var notifications: [STNotification] {
-        return [
-            .init(message: "공지", created_at: "2022-04-30T08:11:04.200Z", type: .normal, user_id: ""),
-            .init(message: "공지", created_at: "2022-04-30T08:11:04.201Z", type: .normal, user_id: ""),
-            .init(message: "공지", created_at: "2022-04-30T08:11:04.202Z", type: .normal, user_id: "")
-        ]
-    }
-    static var previews: some View {
-        NotificationList(notifications: notifications) { _ in
-
-        } fetchMore: {
-
+    struct NotificationList_Previews: PreviewProvider {
+        static var notifications: [STNotification] {
+            return [
+                .init(message: "공지", created_at: "2022-04-30T08:11:04.200Z", type: .normal, user_id: ""),
+                .init(message: "공지", created_at: "2022-04-30T08:11:04.201Z", type: .normal, user_id: ""),
+                .init(message: "공지", created_at: "2022-04-30T08:11:04.202Z", type: .normal, user_id: ""),
+            ]
         }
 
+        static var previews: some View {
+            NotificationList(notifications: notifications) { _ in
+
+            } fetchMore: {}
+        }
     }
-}
 #endif

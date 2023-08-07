@@ -6,9 +6,9 @@
 //
 
 #if DEBUG
-import Alamofire
-import Foundation
-import SwiftUI
+    import Alamofire
+    import Foundation
+    import SwiftUI
 
     struct NetworkLogListScene: View {
         @ObservedObject var viewModel: ViewModel
@@ -28,7 +28,6 @@ import SwiftUI
                     Image(systemName: "arrow.clockwise")
                         .imageScale(.medium)
                 }
-
             }
         }
     }
