@@ -12,6 +12,7 @@ struct VacancyLectureList: View {
     @Binding var editMode: EditMode
     var isGuidePopupPresented: Bool
     @State private var selection = Set<String>()
+    @State private var isDeleteConfirmAlertPresented = false
 
     var body: some View {
         ZStack {
@@ -44,16 +45,7 @@ struct VacancyLectureList: View {
 
     private var deleteButton: some View {
         Button {
-            let lectures = viewModel.lectures
-            let selection = selection
-            viewModel.lectures.removeAll(where: { selection.contains($0.id) })
-            editMode = .inactive
-            Task {
-                let lecturesToDelete = lectures.filter { lecture in
-                    selection.contains(lecture.id)
-                }
-                await viewModel.deleteLectures(lectures: lecturesToDelete)
-            }
+            isDeleteConfirmAlertPresented = true
         } label: {
             Text("선택한 강의 삭제")
                 .fontWeight(.semibold)
@@ -65,6 +57,23 @@ struct VacancyLectureList: View {
         .background(selection.isEmpty ? STColor.gray : STColor.cyan)
         .disabled(selection.isEmpty)
         .foregroundColor(Color(uiColor: .systemBackground))
+        .alert(Text("목록에서 삭제"), isPresented: $isDeleteConfirmAlertPresented) {
+            Button("취소", role: .cancel, action: {})
+            Button("삭제", role: .destructive) {
+                let lectures = viewModel.lectures
+                let selection = selection
+                viewModel.lectures.removeAll(where: { selection.contains($0.id) })
+                editMode = .inactive
+                Task {
+                    let lecturesToDelete = lectures.filter { lecture in
+                        selection.contains(lecture.id)
+                    }
+                    await viewModel.deleteLectures(lectures: lecturesToDelete)
+                }
+            }
+        } message: {
+            Text("선택한 강의의 빈자리 알림을 해제하시겠습니까?")
+        }
     }
 
     private var editButton: some View {
