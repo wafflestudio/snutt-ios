@@ -44,11 +44,17 @@ protocol GlobalUIServiceProtocol: Sendable {
     func sendDetailWebViewReloadSignal(url: URL)
 
     func setRoutingState<V>(_ key: WritableKeyPath<ViewRoutingState, V>, value: V)
+    func hasNewBadge(settingName: String) -> Bool
 }
 
 struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
     var appState: AppState
     var localRepositories: AppEnvironment.LocalRepositories
+    var webRepositories: AppEnvironment.WebRepositories?
+
+    var configRepository: ConfigRepositoryProtocol? {
+        webRepositories?.configRepository
+    }
 
     func setColorScheme(_ colorScheme: ColorScheme?) {
         appState.system.preferredColorScheme = colorScheme
@@ -124,6 +130,10 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
 
     func setCreateQuarter(_ value: Quarter?) {
         appState.menu.createQuarter = value
+    }
+
+    func hasNewBadge(settingName: String) -> Bool {
+        return appState.system.configs?.settingsBadge?.new.contains { $0 == settingName } ?? false
     }
 
     // MARK: Preload Review WebViews

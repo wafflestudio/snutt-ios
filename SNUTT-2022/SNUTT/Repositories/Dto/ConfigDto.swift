@@ -8,8 +8,9 @@
 import Foundation
 
 struct ConfigsDto: Codable {
-    let vacancyNotificationBanner: VacancyNotificationBannerDto
-    let vacancySugangSnuUrl: VacancySugangSnuUrlDto
+    let vacancyNotificationBanner: VacancyNotificationBannerDto?
+    let vacancySugangSnuUrl: VacancySugangSnuUrlDto?
+    let settingsBadge: SettingsBadgeDto?
 }
 
 extension ConfigsDto {
@@ -19,5 +20,9 @@ extension ConfigsDto {
 
     struct VacancySugangSnuUrlDto: Codable {
         let url: URL
+    }
+
+    struct SettingsBadgeDto: Codable {
+        let new: [String]
     }
 }

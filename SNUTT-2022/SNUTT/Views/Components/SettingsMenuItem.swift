@@ -12,10 +12,15 @@ struct SettingsTextItem: View {
     var detail: String? = nil
     var role: ButtonRole? = nil
 
+    @Environment(\.hasNewBadgeClosure) var hasNewBadge: HasNewBadgeClosure?
+
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             Text(title)
                 .foregroundColor(role == .destructive ? .red : .primary)
+            if hasNewBadge?(title) == true {
+                SettingsNewBadge()
+            }
             Spacer()
             Text(detail ?? "")
                 .foregroundColor(Color.gray)
@@ -60,5 +65,31 @@ struct SettingsButtonItem: View {
         } label: {
             SettingsTextItem(title: title, detail: detail, role: role)
         }
+    }
+}
+
+struct SettingsNewBadge: View {
+    var body: some View {
+        Text("NEW!")
+            .font(.system(size: 8, weight: .bold))
+            .padding(.vertical, 3)
+            .padding(.horizontal, 3)
+            .background(STColor.cyan)
+            .foregroundColor(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 3))
+            .padding(.horizontal, 5)
+    }
+}
+
+typealias HasNewBadgeClosure = (String) -> Bool
+
+private struct SettingsBadgeConfigKey: EnvironmentKey {
+    static let defaultValue: HasNewBadgeClosure? = nil
+}
+
+extension EnvironmentValues {
+    var hasNewBadgeClosure: HasNewBadgeClosure? {
+        get { self[SettingsBadgeConfigKey.self] }
+        set { self[SettingsBadgeConfigKey.self] = newValue }
     }
 }

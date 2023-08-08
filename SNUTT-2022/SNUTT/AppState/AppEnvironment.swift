@@ -125,7 +125,7 @@ extension AppEnvironment {
         let userService = UserService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let searchService = SearchService(appState: appState, webRepositories: webRepositories)
-        let globalUIService = GlobalUIService(appState: appState, localRepositories: localRepositories)
+        let globalUIService = GlobalUIService(appState: appState, localRepositories: localRepositories, webRepositories: webRepositories)
         let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
         let authService = AuthService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let notificationService = NotificationService(appState: appState, webRepositories: webRepositories)
@@ -164,7 +164,7 @@ extension EnvironmentValues {
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
                   searchService: FakeSearchService(),
-                  globalUIService: GlobalUIService(appState: appState, localRepositories: .init(userDefaultsRepository: UserDefaultsRepository(storage: .preview))),
+                  globalUIService: GlobalUIService(appState: appState, localRepositories: .init(userDefaultsRepository: UserDefaultsRepository(storage: .preview)), webRepositories: nil),
                   courseBookService: FakeCourseBookService(),
                   authService: FakeAuthService(),
                   notificationService: FakeNotificationService(),

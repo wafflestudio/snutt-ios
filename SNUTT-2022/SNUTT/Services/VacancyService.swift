@@ -10,7 +10,7 @@ import Foundation
 @MainActor
 protocol VacancyServiceProtocol: Sendable {
     func fetchLectures() async throws
-    func fetchSugangSnuUrl() async throws -> URL
+    func fetchSugangSnuUrl() async throws -> URL?
     func addLecture(lecture: Lecture) async throws
     func deleteLectures(lectures: [Lecture]) async throws
     func showVacancyBannerIfNeeded() async throws
@@ -80,12 +80,12 @@ struct VacancyService: VacancyServiceProtocol {
 
     private func isVacancyNotificationBannerEnabled() async throws -> Bool {
         let configsDto = try await fetchConfigs()
-        return configsDto.vacancyNotificationBanner.visible
+        return configsDto.vacancyNotificationBanner?.visible ?? false
     }
 
-    func fetchSugangSnuUrl() async throws -> URL {
+    func fetchSugangSnuUrl() async throws -> URL? {
         let configsDto = try await fetchConfigs()
-        return configsDto.vacancySugangSnuUrl.url
+        return configsDto.vacancySugangSnuUrl?.url
     }
 
     func showVacancyBannerIfNeeded() async throws {
@@ -116,8 +116,8 @@ struct VacancyService: VacancyServiceProtocol {
 }
 
 struct FakeVacancyService: VacancyServiceProtocol {
-    func fetchSugangSnuUrl() async throws -> URL {
-        return URL(string: "https://sugang.snu.ac.kr")!
+    func fetchSugangSnuUrl() async throws -> URL? {
+        return nil
     }
 
     func dismissVacancyNotificationBanner() {}
