@@ -42,7 +42,8 @@ struct VacancyGuidePopup: View {
                                     Image("vacancy.guide\(imageNum)")
                                         .resizable()
                                         .scaledToFit()
-                                        .padding()
+                                        .padding(.horizontal, 30)
+                                        .padding(.top, 10)
                                     Spacer()
                                 }
                                 .tag(imageNum)
@@ -63,8 +64,8 @@ struct VacancyGuidePopup: View {
                                 })
                             }
                         }
+                        .padding(.horizontal, 5)
                     }
-                    .padding(10)
                 }
                 .background(STColor.systemBackground)
                 .onAppear {
@@ -72,7 +73,7 @@ struct VacancyGuidePopup: View {
                     UIPageControl.appearance().pageIndicatorTintColor = UIColor.label.withAlphaComponent(0.1)
                 }
                 .padding(.horizontal, reader.size.width * 0.1)
-                .frame(height: reader.size.height * 0.5)
+                .frame(height: 320)
             }
         }
     }
