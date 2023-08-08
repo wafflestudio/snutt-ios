@@ -84,7 +84,7 @@ struct SettingScene: View {
                 }
             }
         }
-        .environment(\.hasNewBadgeClosure, { name in viewModel.hasNewBadge(settingName: name) })
+        .environment(\.hasNewBadgeClosure) { name in viewModel.hasNewBadge(settingName: name) }
         .listStyle(.insetGrouped)
         .navigationTitle("더보기")
         .navigationBarTitleDisplayMode(.inline)
