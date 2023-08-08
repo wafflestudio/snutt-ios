@@ -5,11 +5,11 @@
 //  Created by 박신홍 on 2023/05/09.
 //
 
-import Alamofire
-import Foundation
-import SwiftUI
-
 #if DEBUG
+    import Alamofire
+    import Foundation
+    import SwiftUI
+
     struct NetworkLogListScene: View {
         @ObservedObject var viewModel: ViewModel
 
@@ -19,6 +19,14 @@ import SwiftUI
                     ForEach(viewModel.logs) { logEntry in
                         NetworkLogEntryView(logEntry: logEntry)
                     }
+                }
+            }
+            .toolbar {
+                Button {
+                    viewModel.reset()
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                        .imageScale(.medium)
                 }
             }
         }
@@ -31,6 +39,10 @@ import SwiftUI
             override init(container: DIContainer) {
                 super.init(container: container)
                 appState.debug.currentLogs.assign(to: &$logs)
+            }
+
+            func reset() {
+                appState.debug.networkLogStore.reset()
             }
         }
     }

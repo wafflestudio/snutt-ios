@@ -31,7 +31,7 @@ struct NotificationListCell: View {
                     .font(STFont.detailLabel)
             }
         }
-        .padding()
+        .padding(.vertical, 5)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
