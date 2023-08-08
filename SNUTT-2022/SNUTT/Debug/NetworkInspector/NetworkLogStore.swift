@@ -36,4 +36,8 @@ class NetworkLogStore {
             logs.removeFirst(logs.count - maxLogEntries)
         }
     }
+
+    func reset() {
+        logs.removeAll()
+    }
 }
