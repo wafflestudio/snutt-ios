@@ -307,9 +307,9 @@ enum ErrorCode: Int {
         case .ALREADY_VERIFIED_EMAIL:
             return "다른 계정에서 인증된 이메일입니다."
         case .DUPLICATE_VACANCY_NOTIFICATION:
-            return "이미 등록된 빈자리 알림입니다."
+            return "이미 빈자리 알림을 받고 있는 강의입니다."
         case .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION:
-            return "이전 학기에는 빈자리 알림을 등록할 수 없습니다."
+            return "해당 학기의 빈자리 알림 신청 기간이 종료되었습니다."
         case .EXCESSIVE_EMAIL_VERIFICATION_REQUEST:
             return "인증 요청 횟수가 초과되었습니다. 3분 후 인증 요청을 다시 해주시기 바랍니다."
         }
