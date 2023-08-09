@@ -19,4 +19,6 @@ class SystemState {
     @Published var preferredColorScheme: ColorScheme? = nil
 
     @Published var selectedTab: TabType = .timetable
+
+    var configs: ConfigsDto?
 }

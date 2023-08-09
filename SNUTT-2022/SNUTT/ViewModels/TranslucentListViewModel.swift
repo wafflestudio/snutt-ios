@@ -19,6 +19,7 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
     @Published var isEmailVerifyAlertPresented = false
     @Published var bookmarkedLectures: [Lecture] = []
     @Published var isFirstBookmarkAlertPresented: Bool = false
+    @Published var vacancyNotificationLectures = [Lecture]()
 
     var errorTitle: String = ""
     var errorMessage: String = ""
@@ -49,6 +50,7 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
         appState.search.$selectedLecture.assign(to: &$_selectedLecture)
         appState.system.$selectedTab.assign(to: &$_selectedTab)
         appState.search.$isLoading.assign(to: &$isLoading)
+        appState.vacancy.$lectures.assign(to: &$vacancyNotificationLectures)
         appState.timetable.$bookmark.compactMap {
             $0?.lectures
         }.assign(to: &$bookmarkedLectures)
@@ -153,5 +155,25 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
 
     private var timetableState: TimetableState {
         appState.timetable
+    }
+
+    func checkIsVacancyNotificationEnabled(lecture: Lecture) -> Bool {
+        return vacancyNotificationLectures.contains(where: { $0.isEquivalent(with: lecture) })
+    }
+
+    func addVacancyLecture(lecture: Lecture) async {
+        do {
+            try await services.vacancyService.addLecture(lecture: lecture)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+
+    func deleteVacancyLecture(lecture: Lecture) async {
+        do {
+            try await services.vacancyService.deleteLectures(lectures: [lecture])
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
     }
 }

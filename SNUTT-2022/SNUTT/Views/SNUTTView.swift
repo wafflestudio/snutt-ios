@@ -56,6 +56,25 @@ struct SNUTTView: View {
                     viewModel.selectedTab = .timetable
                     viewModel.preloadWebViews()
                 }
+                .onLoad {
+                    await withTaskGroup(of: Void.self, body: { group in
+                        group.addTask {
+                            await viewModel.fetchTimetableList()
+                        }
+                        group.addTask {
+                            await viewModel.fetchRecentTimetable()
+                        }
+                        group.addTask {
+                            await viewModel.fetchCourseBookList()
+                        }
+                        group.addTask {
+                            await viewModel.showVacancyBannerIfNeeded()
+                        }
+                        group.addTask {
+                            await viewModel.fetchVacancyLectures()
+                        }
+                    })
+                }
 
                 if viewModel.selectedTab == .timetable {
                     MenuSheetScene(viewModel: .init(container: viewModel.container))
@@ -82,7 +101,6 @@ struct SNUTTView: View {
             setTabBarStyle()
             setNavBarStyle()
         }
-
         let _ = debugChanges()
     }
 
@@ -149,6 +167,46 @@ extension SNUTTView {
 
         func preloadWebViews() {
             services.globalUIService.preloadWebViews()
+        }
+
+        func fetchTimetableList() async {
+            do {
+                try await services.timetableService.fetchTimetableList()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+
+        func fetchCourseBookList() async {
+            do {
+                try await services.courseBookService.fetchCourseBookList()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+
+        func fetchRecentTimetable() async {
+            do {
+                try await services.timetableService.fetchRecentTimetable()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+
+        func showVacancyBannerIfNeeded() async {
+            do {
+                try await services.vacancyService.showVacancyBannerIfNeeded()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+
+        func fetchVacancyLectures() async {
+            do {
+                try await services.vacancyService.fetchLectures()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
         }
     }
 }

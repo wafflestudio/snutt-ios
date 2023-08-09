@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-struct EmptyLectureList: View {
+struct UnavailableView: View {
+    let title: String
+    let subtitle: String
+
     var body: some View {
         VStack(alignment: .center) {
             Image("logo")
@@ -15,18 +18,24 @@ struct EmptyLectureList: View {
                 .frame(width: 20, height: 20)
 
             Spacer().frame(height: 16)
-
-            Text("시간표에 강좌가 없습니다.")
-                .font(STFont.subtitle)
-
+            Text(title)
+                .font(.system(size: 16, weight: .bold))
             Spacer().frame(height: 6)
-
-            Text("강좌를 찾아서 넣을 수도 있지만, 우측 상단의 + 버튼을 눌러 직접 만들 수도 있습니다.")
-                .font(STFont.detailLabel)
+            Text(subtitle)
+                .font(.system(size: 14))
                 .multilineTextAlignment(.center)
         }
         .padding(.horizontal, 40)
         .foregroundColor(Color.primary.opacity(0.4))
+    }
+}
+
+struct EmptyLectureList: View {
+    var body: some View {
+        UnavailableView(
+            title: "시간표에 강좌가 없습니다.",
+            subtitle: "강좌를 찾아서 넣을 수도 있지만, 우측 상단의 + 버튼을 눌러 직접 만들 수도 있습니다."
+        )
     }
 }
 

@@ -19,6 +19,9 @@ struct SearchLectureList: View {
     let fetchReviewId: (Lecture) async -> String?
     let overwriteLecture: (Lecture) async -> Void
     let preloadReviewWebView: @MainActor (String) -> Void
+    let checkIsVacancyNotificationEnabled: @MainActor (Lecture) -> Bool
+    let addVacancyLecture: (Lecture) async -> Void
+    let deleteVacancyLecture: (Lecture) async -> Void
     let errorTitle: String
     let errorMessage: String
     @Binding var isLectureOverlapped: Bool
@@ -37,8 +40,11 @@ struct SearchLectureList: View {
                                       deleteLecture: deleteLecture,
                                       fetchReviewId: fetchReviewId,
                                       preloadReviewWebView: preloadReviewWebView,
+                                      addVacancyLecture: addVacancyLecture,
+                                      deleteVacancyLecture: deleteVacancyLecture,
                                       isBookmarked: bookmarkedLecture(lecture) != nil,
-                                      isInTimetable: existingLecture(lecture) != nil)
+                                      isInTimetable: existingLecture(lecture) != nil,
+                                      isVacancyNotificationEnabled: checkIsVacancyNotificationEnabled(lecture))
                         .task {
                             if lecture.id == data.last?.id {
                                 await fetchMore()

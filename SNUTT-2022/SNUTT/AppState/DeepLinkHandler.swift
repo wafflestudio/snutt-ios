@@ -19,6 +19,9 @@ struct DeepLinkHandler {
         case "notifications":
             handleNotification(parameters: urlComponents.queryItems)
             return
+        case "vacancy":
+            handleVacancy(parameters: urlComponents.queryItems)
+            return
         default:
             return
         }
@@ -29,5 +32,10 @@ extension DeepLinkHandler {
     private func handleNotification(parameters _: Parameters?) {
         appState.system.selectedTab = .settings
         appState.routing.settingScene.pushToNotification = true
+    }
+
+    private func handleVacancy(parameters _: Parameters?) {
+        appState.system.selectedTab = .settings
+        appState.routing.settingScene.pushToVacancy = true
     }
 }

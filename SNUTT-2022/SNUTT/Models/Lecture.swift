@@ -26,14 +26,16 @@ struct Lecture: Identifiable {
     var remark: String
     var isCustom: Bool
     var color: LectureColor?
-    var quota: Int
-    var freshmanQuota: Int
     var nonFreshmanQuota: Int {
         quota - freshmanQuota
     }
 
     var createdAt: String
     var updatedAt: String
+    var quota: Int
+    var freshmanQuota: Int
+    var registrationCount: Int?
+    var wasFull: Bool
 
     /// A property which is populated by the client.
     var theme: Theme?
@@ -91,6 +93,11 @@ struct Lecture: Identifiable {
         return places.joined(separator: ", ")
     }
 
+    var hasVacancy: Bool {
+        guard let current = registrationCount else { return false }
+        return wasFull && current < quota
+    }
+
     func isEquivalent(with lecture: Lecture) -> Bool {
         return !isCustom && courseNumber == lecture.courseNumber && lectureNumber == lecture.lectureNumber
     }
@@ -128,6 +135,9 @@ extension Lecture {
         if let colorDto = dto.color, let fg = colorDto.fg, let bg = colorDto.bg {
             color = .init(fg: .init(hex: fg), bg: .init(hex: bg))
         }
+        freshmanQuota = dto.freshmanQuota ?? 0
+        registrationCount = dto.registrationCount
+        wasFull = dto.wasFull ?? false
     }
 }
 
@@ -137,7 +147,7 @@ extension Lecture {
             let instructors = ["염헌영", "엄현상", "김진수", "김형주", "이영기", "배영애", "유성호"]
             let titles = ["시스템프로그래밍", "양궁", "죽음의 과학적 이해", "북한학개론", "Operating System"]
             let departments = ["경영학과", "컴퓨터공학과", "서양사학과", "디자인과"]
-            let academicYears = ["1학년", "2학년", "3학년", "학년"]
+            let academicYears = ["1학년", "2학년", "3학년", "4학년"]
             return Lecture(id: UUID().uuidString,
                            lectureId: UUID().uuidString,
                            title: titles.randomElement()!,
@@ -155,11 +165,13 @@ extension Lecture {
                            remark: "영어강의, 복부전생수강불가, 주전공생수강불가, 어쩌구 저쩌구",
                            isCustom: false,
                            color: nil,
-                           quota: 40,
-                           freshmanQuota: 30,
                            createdAt: "2022-04-02T16:35:53.652Z",
                            updatedAt: "2022-04-02T16:35:53.652Z",
-                           theme: .snutt)
+                           quota: Int.random(in: 10 ... 100),
+                           freshmanQuota: Int.random(in: 1 ... 10),
+                           registrationCount: Int.random(in: 10 ... 100),
+                           wasFull: false,
+                           theme: nil)
         }
     }
 #endif

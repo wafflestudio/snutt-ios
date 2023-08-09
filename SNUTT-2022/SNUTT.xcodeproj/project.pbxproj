@@ -219,8 +219,16 @@
 		BEF9233A28E84B62004AFCB2 /* SearchLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */; };
 		CE076E002A09661400C9430B /* NetworkLogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE076DFF2A09661400C9430B /* NetworkLogEntry.swift */; };
 		CE076E022A0967E200C9430B /* NetworkLogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE076E012A0967E200C9430B /* NetworkLogStore.swift */; };
+		CE17DF872A7E9560000432B8 /* ConfigRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF862A7E9560000432B8 /* ConfigRouter.swift */; };
+		CE17DF892A7E9670000432B8 /* ConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF882A7E9670000432B8 /* ConfigRepository.swift */; };
+		CE17DF8B2A7E96E1000432B8 /* ConfigDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF8A2A7E96E1000432B8 /* ConfigDto.swift */; };
+		CE17DF912A7F43E0000432B8 /* VacancySugangSnuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */; };
+		CE17DF932A7FCB32000432B8 /* VacancyGuidePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */; };
 		CE3F37A929C4CBC6009EDCCC /* TimetableCompactWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */; };
 		CE3F37AD29C5D452009EDCCC /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
+		CE4777F32A6ADCAC00E03253 /* VacancyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777F22A6ADCAC00E03253 /* VacancyRepository.swift */; };
+		CE4777F52A6ADCE200E03253 /* VacancyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777F42A6ADCE200E03253 /* VacancyRouter.swift */; };
+		CE4777F72A6AE41C00E03253 /* VacancyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777F62A6AE41C00E03253 /* VacancyScene.swift */; };
 		CE63A3BC2A21B06900A633FC /* RoutingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE63A3BB2A21B06900A633FC /* RoutingState.swift */; };
 		CE63A3BE2A21DD3400A633FC /* DeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE63A3BD2A21DD3400A633FC /* DeepLinkHandler.swift */; };
 		CE6CA91029E1E611004E92B1 /* logo.inline.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6CA90F29E1E610004E92B1 /* logo.inline.png */; };
@@ -231,8 +239,16 @@
 		CE9820502A0A0BB7001037F5 /* NetworkLogListScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE98204F2A0A0BB7001037F5 /* NetworkLogListScene.swift */; };
 		CE9820522A0A0BE9001037F5 /* NetworkLogEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9820512A0A0BE9001037F5 /* NetworkLogEntryView.swift */; };
 		CE98750C29CC527F007F063A /* TimeRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */; };
+		CEA7F1E62A6D096000299BAF /* LectureCellActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA7F1E52A6D096000299BAF /* LectureCellActionButton.swift */; };
 		CEB5A71E29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */; };
 		CEB5A72029DDA8B200E74C47 /* TimetableAccessoryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */; };
+		CEC91CAA2A812499008B0F15 /* VacancyEmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC91CA92A812499008B0F15 /* VacancyEmptyListView.swift */; };
+		CECE96642A72D5F2003D87FA /* VacancyBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE96632A72D5F2003D87FA /* VacancyBanner.swift */; };
+		CEDDCA7B2A6AE62B00474D4E /* VacancyLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */; };
+		CEDDCA7E2A6AEF2200474D4E /* VacancyLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */; };
+		CEDDCA802A6AF57400474D4E /* VacancyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7F2A6AF57400474D4E /* VacancyService.swift */; };
+		CEDDCA822A6AF66D00474D4E /* VacancyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA812A6AF66D00474D4E /* VacancyState.swift */; };
+		CEDDCA842A6AFBF700474D4E /* VacancyDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA832A6AFBF700474D4E /* VacancyDto.swift */; };
 		CEEAB49229C5EA37005497B0 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+Ext.swift */; };
 		CEEAB49329C5EA41005497B0 /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */; };
@@ -487,8 +503,16 @@
 		BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLectureCell.swift; sourceTree = "<group>"; };
 		CE076DFF2A09661400C9430B /* NetworkLogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogEntry.swift; sourceTree = "<group>"; };
 		CE076E012A0967E200C9430B /* NetworkLogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogStore.swift; sourceTree = "<group>"; };
+		CE17DF862A7E9560000432B8 /* ConfigRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigRouter.swift; sourceTree = "<group>"; };
+		CE17DF882A7E9670000432B8 /* ConfigRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigRepository.swift; sourceTree = "<group>"; };
+		CE17DF8A2A7E96E1000432B8 /* ConfigDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDto.swift; sourceTree = "<group>"; };
+		CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancySugangSnuButton.swift; sourceTree = "<group>"; };
+		CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyGuidePopup.swift; sourceTree = "<group>"; };
 		CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableCompactWidgetView.swift; sourceTree = "<group>"; };
 		CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Getter.swift"; sourceTree = "<group>"; };
+		CE4777F22A6ADCAC00E03253 /* VacancyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyRepository.swift; sourceTree = "<group>"; };
+		CE4777F42A6ADCE200E03253 /* VacancyRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyRouter.swift; sourceTree = "<group>"; };
+		CE4777F62A6AE41C00E03253 /* VacancyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyScene.swift; sourceTree = "<group>"; };
 		CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRangeSlider.swift; sourceTree = "<group>"; };
 		CE63A3BB2A21B06900A633FC /* RoutingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingState.swift; sourceTree = "<group>"; };
 		CE63A3BD2A21DD3400A633FC /* DeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandler.swift; sourceTree = "<group>"; };
@@ -497,8 +521,16 @@
 		CE98204A2A09FBDD001037F5 /* DebugState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugState.swift; sourceTree = "<group>"; };
 		CE98204F2A0A0BB7001037F5 /* NetworkLogListScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogListScene.swift; sourceTree = "<group>"; };
 		CE9820512A0A0BE9001037F5 /* NetworkLogEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogEntryView.swift; sourceTree = "<group>"; };
+		CEA7F1E52A6D096000299BAF /* LectureCellActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureCellActionButton.swift; sourceTree = "<group>"; };
 		CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryRectangularView.swift; sourceTree = "<group>"; };
 		CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryInlineView.swift; sourceTree = "<group>"; };
+		CEC91CA92A812499008B0F15 /* VacancyEmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyEmptyListView.swift; sourceTree = "<group>"; };
+		CECE96632A72D5F2003D87FA /* VacancyBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyBanner.swift; sourceTree = "<group>"; };
+		CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyLectureCell.swift; sourceTree = "<group>"; };
+		CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyLectureList.swift; sourceTree = "<group>"; };
+		CEDDCA7F2A6AF57400474D4E /* VacancyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyService.swift; sourceTree = "<group>"; };
+		CEDDCA812A6AF66D00474D4E /* VacancyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyState.swift; sourceTree = "<group>"; };
+		CEDDCA832A6AFBF700474D4E /* VacancyDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyDto.swift; sourceTree = "<group>"; };
 		CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableFullWidgetView.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
 		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
@@ -572,6 +604,7 @@
 				CE63A3BB2A21B06900A633FC /* RoutingState.swift */,
 				B87B315828D5A70F005C170B /* UserState.swift */,
 				BE2CB3622959C0CC00FCF0F0 /* ReviewState.swift */,
+				CEDDCA812A6AF66D00474D4E /* VacancyState.swift */,
 				B87DF6F82918B7AD008BB95B /* PopupState.swift */,
 				CE98204A2A09FBDD001037F5 /* DebugState.swift */,
 			);
@@ -653,6 +686,7 @@
 				BE8BB3AE285D77D000070A66 /* SearchBar.swift */,
 				BE9413D828C3AFA500171060 /* EmptySearchResult.swift */,
 				BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */,
+				CEA7F1E52A6D096000299BAF /* LectureCellActionButton.swift */,
 				BE9413DA28C3B33300171060 /* SearchTips.swift */,
 				BE9413DE28C3BDF600171060 /* SearchLectureList.swift */,
 				BE9413DC28C3B68F00171060 /* SearchTagsScrollView.swift */,
@@ -750,6 +784,19 @@
 			path = NetworkInspector;
 			sourceTree = "<group>";
 		};
+		CEDDCA7C2A6AEF0E00474D4E /* Vacancy */ = {
+			isa = PBXGroup;
+			children = (
+				CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */,
+				CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */,
+				CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */,
+				CEC91CA92A812499008B0F15 /* VacancyEmptyListView.swift */,
+				CECE96632A72D5F2003D87FA /* VacancyBanner.swift */,
+				CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */,
+			);
+			path = Vacancy;
+			sourceTree = "<group>";
+		};
 		DC1E0ED2287738DF005632A3 /* Router */ = {
 			isa = PBXGroup;
 			children = (
@@ -762,10 +809,12 @@
 				BE682C002888173B009EBCB7 /* TagRouter.swift */,
 				B88D16FA28AE2BB900E2D652 /* UserRouter.swift */,
 				B8E51E6A28B769680065248E /* ReviewRouter.swift */,
+				CE17DF862A7E9560000432B8 /* ConfigRouter.swift */,
 				BE77D09D28AEAA5A0067A9D8 /* CourseBookRouter.swift */,
 				B87DF6EC2914FAFB008BB95B /* PopupRouter.swift */,
 				BE6D892728EFC5A1000607A6 /* EtcRouter.swift */,
 				731DA002297BC5740027BA25 /* BookmarkRouter.swift */,
+				CE4777F42A6ADCE200E03253 /* VacancyRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -853,6 +902,8 @@
 				B87B317228D81447005C170B /* UserDto.swift */,
 				B87DF6EA2914F962008BB95B /* PopupDto.swift */,
 				731DA000297BC54B0027BA25 /* BookmarkDto.swift */,
+				CEDDCA832A6AFBF700474D4E /* VacancyDto.swift */,
+				CE17DF8A2A7E96E1000432B8 /* ConfigDto.swift */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
@@ -885,6 +936,7 @@
 				BEDE34D72879A9DC00525014 /* UserService.swift */,
 				BE060BD628DF43AC00A2F1B9 /* AuthService.swift */,
 				BE682BDA28870872009EBCB7 /* LectureService.swift */,
+				CEDDCA7F2A6AF57400474D4E /* VacancyService.swift */,
 				BE77D0A628AEB0650067A9D8 /* CourseBookService.swift */,
 				BE9413CF28C220C900171060 /* NotificationService.swift */,
 				BE1B610B289D7C2500401361 /* GlobalUIService.swift */,
@@ -908,6 +960,8 @@
 				BEDE34D92879AA0B00525014 /* UserRepository.swift */,
 				BE13C5B428AE4CBA0081D0AB /* UserDefaultsRepository.swift */,
 				BE77D09F28AEAB920067A9D8 /* CourseBookRepository.swift */,
+				CE4777F22A6ADCAC00E03253 /* VacancyRepository.swift */,
+				CE17DF882A7E9670000432B8 /* ConfigRepository.swift */,
 				B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */,
 				B87DF6EE2914FC02008BB95B /* PopupRepository.swift */,
 				BE6D892928EFC637000607A6 /* EtcRepository.swift */,
@@ -936,6 +990,7 @@
 				B8F40EA7289809AD0021A2A9 /* Settings */,
 				BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */,
 				BE7E230027FF20EE004DC202 /* TimetableScene.swift */,
+				CE4777F62A6AE41C00E03253 /* VacancyScene.swift */,
 				BEDF507227F427FA00CDCC13 /* LectureListScene.swift */,
 				BEDF506E27EB744A00CDCC13 /* LectureDetailScene.swift */,
 				DC29159E28660F7800FE5F9A /* ReviewScene.swift */,
@@ -981,6 +1036,7 @@
 				B8F40EA8289809C60021A2A9 /* LicenseView.swift */,
 				B88D170028AF71E300E2D652 /* UserSupportView.swift */,
 				CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */,
+				CEDDCA7C2A6AEF0E00474D4E /* Vacancy */,
 				BE28036028E884D300B2B1AB /* WebViews */,
 				BE9413D728C3AF8300171060 /* Search */,
 				BEB3B6AB28D4D3DF00E56062 /* LectureDetail */,
@@ -1281,6 +1337,7 @@
 				B87B317428D816E1005C170B /* MenuSheet.swift in Sources */,
 				BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */,
 				BEE5CE10289E738900CF5ED3 /* MenuThemeSheet.swift in Sources */,
+				CE17DF892A7E9670000432B8 /* ConfigRepository.swift in Sources */,
 				BE9413C128C219AD00171060 /* STNotification.swift in Sources */,
 				B87B317328D81447005C170B /* UserDto.swift in Sources */,
 				BE060BD928DF4C1E00A2F1B9 /* OnboardScene.swift in Sources */,
@@ -1293,6 +1350,7 @@
 				BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */,
 				BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */,
 				B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */,
+				CEDDCA7E2A6AEF2200474D4E /* VacancyLectureList.swift in Sources */,
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
 				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE9C90EB2948EA1800003AA6 /* ColorScheme.swift in Sources */,
@@ -1300,6 +1358,7 @@
 				CE9820522A0A0BE9001037F5 /* NetworkLogEntryView.swift in Sources */,
 				BEE86519289E287400D3D0E4 /* MenuRenameSheet.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
+				CEDDCA842A6AFBF700474D4E /* VacancyDto.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
 				BE682BF128872315009EBCB7 /* ErrorCode.swift in Sources */,
 				B87B315F28D5A70F005C170B /* TimetableState.swift in Sources */,
@@ -1312,6 +1371,7 @@
 				B87B315D28D5A70F005C170B /* UserState.swift in Sources */,
 				B87DF6F92918B7AD008BB95B /* PopupState.swift in Sources */,
 				B87B316D28D755B6005C170B /* MenuState.swift in Sources */,
+				CEA7F1E62A6D096000299BAF /* LectureCellActionButton.swift in Sources */,
 				B8F3E4582A7FDD3B00A69CBF /* FriendsScene.swift in Sources */,
 				DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */,
 				B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */,
@@ -1324,6 +1384,7 @@
 				BE28036428E8850E00B2B1AB /* WebViewType.swift in Sources */,
 				BE6D892C28EFC76E000607A6 /* EtcService.swift in Sources */,
 				BE682BEF288722A5009EBCB7 /* ErrorDto.swift in Sources */,
+				CE17DF8B2A7E96E1000432B8 /* ConfigDto.swift in Sources */,
 				BED04D3128EA8B0A00937E4C /* ChangePasswordView.swift in Sources */,
 				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
 				BE6D893528EFD68E000607A6 /* String+Localized.swift in Sources */,
@@ -1346,11 +1407,14 @@
 				BE2CB3632959C0CC00FCF0F0 /* ReviewState.swift in Sources */,
 				BEBCC29C28EF4C6100732304 /* OnLoadModifier.swift in Sources */,
 				B8F40EB128980DE00021A2A9 /* TermsOfServiceView.swift in Sources */,
+				CE17DF912A7F43E0000432B8 /* VacancySugangSnuButton.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
 				BEB3B6B128D4D4D900E56062 /* View+ResignResponder.swift in Sources */,
+				CE4777F72A6AE41C00E03253 /* VacancyScene.swift in Sources */,
 				B87DF6F329152649008BB95B /* View+Screenshot.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
+				CEC91CAA2A812499008B0F15 /* VacancyEmptyListView.swift in Sources */,
 				BE28036628E8854D00B2B1AB /* SingleWebView.swift in Sources */,
 				BE9413DB28C3B33300171060 /* SearchTips.swift in Sources */,
 				B87DF6EF2914FC02008BB95B /* PopupRepository.swift in Sources */,
@@ -1388,7 +1452,9 @@
 				BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */,
 				CE076E002A09661400C9430B /* NetworkLogEntry.swift in Sources */,
 				BE9413CA28C21F1300171060 /* NotificationList.swift in Sources */,
+				CEDDCA822A6AF66D00474D4E /* VacancyState.swift in Sources */,
 				BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */,
+				CEDDCA802A6AF57400474D4E /* VacancyService.swift in Sources */,
 				BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
 				BEDE34D82879A9DC00525014 /* UserService.swift in Sources */,
@@ -1397,6 +1463,7 @@
 				B87DF6EB2914F962008BB95B /* PopupDto.swift in Sources */,
 				BE9413BF28C2157600171060 /* NotificationDto.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
+				CE4777F32A6ADCAC00E03253 /* VacancyRepository.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
 				CE63A3BE2A21DD3400A633FC /* DeepLinkHandler.swift in Sources */,
@@ -1421,10 +1488,13 @@
 				BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */,
 				731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */,
 				BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */,
+				CE17DF932A7FCB32000432B8 /* VacancyGuidePopup.swift in Sources */,
 				BEB57C2128B6758200279EFF /* Animation+Custom.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
+				CE17DF872A7E9560000432B8 /* ConfigRouter.swift in Sources */,
 				BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */,
 				BEEBDFB8286B38B600DB5976 /* SNUTTView.swift in Sources */,
+				CE4777F52A6ADCE200E03253 /* VacancyRouter.swift in Sources */,
 				BEB57C2828BC985900279EFF /* LectureColorPreview.swift in Sources */,
 				BE682BC628845CDB009EBCB7 /* UITextEditor.swift in Sources */,
 				BED04D3528EA966100937E4C /* OnboardViewModel.swift in Sources */,
@@ -1433,7 +1503,9 @@
 				731DA001297BC54B0027BA25 /* BookmarkDto.swift in Sources */,
 				BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */,
 				BE9413CC28C21F1E00171060 /* NotificationListCell.swift in Sources */,
+				CEDDCA7B2A6AE62B00474D4E /* VacancyLectureCell.swift in Sources */,
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
+				CECE96642A72D5F2003D87FA /* VacancyBanner.swift in Sources */,
 				BE6D892828EFC5A1000607A6 /* EtcRouter.swift in Sources */,
 				BE682C03288817C8009EBCB7 /* SearchRepository.swift in Sources */,
 				BED04D3328EA963E00937E4C /* FacebookLogin.swift in Sources */,

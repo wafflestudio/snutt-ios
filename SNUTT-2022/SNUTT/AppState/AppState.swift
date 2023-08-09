@@ -21,6 +21,7 @@ final class AppState {
     var popup = PopupState()
     var review = ReviewState()
     var routing = ViewRoutingState()
+    var vacancy = VacancyState()
 
     #if DEBUG
         var debug = DebugState()

@@ -2,7 +2,7 @@
 //  Collection+Safe.swift
 //  SNUTT
 //
-//  Created by user on 2023/03/18.
+//  Created by 박신홍 on 2023/03/18.
 //
 
 import Foundation
