@@ -15,7 +15,7 @@ struct VacancySugangSnuButton: View {
             action()
         }) {
             Text("수강신청 사이트")
-                .font(.system(size: 15, weight: .bold))
+                .font(.system(size: 14, weight: .bold))
                 .foregroundColor(.white)
                 .padding(.horizontal, 15)
                 .padding(.vertical, 10)
