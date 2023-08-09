@@ -29,10 +29,13 @@ struct VacancyGuidePopup: View {
                             dismiss()
                         } label: {
                             Image("vacancy.xmark")
+                                .renderingMode(.template)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 15)
                                 .padding([.top, .trailing])
+                                .foregroundColor(Color(uiColor: .label))
+                                .opacity(currentGuideIndex == Self.imageIndices.last ? 1 : 0.2)
                         }
                     }
                     ZStack {
