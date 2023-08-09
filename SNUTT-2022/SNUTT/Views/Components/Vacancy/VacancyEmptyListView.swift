@@ -9,6 +9,9 @@ import SwiftUI
 
 struct VacancyEmptyListView: View {
     let detail: () -> Void
+
+    private let buttonForegroundColor = Color(uiColor: .label).opacity(0.6)
+
     var body: some View {
         VStack(spacing: 15) {
             Image("vacancy.empty")
@@ -24,12 +27,12 @@ struct VacancyEmptyListView: View {
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 16)
-                        .tint(Color(uiColor: .label).opacity(0.8))
+                        .frame(height: 14)
+                        .foregroundColor(buttonForegroundColor)
                     Text("자세히 보기")
-                        .font(.system(size: 14))
+                        .font(.system(size: 13))
                         .underline()
-                        .foregroundColor(Color(uiColor: .label).opacity(0.8))
+                        .foregroundColor(buttonForegroundColor)
                 }
             }
             .buttonStyle(.plain)
