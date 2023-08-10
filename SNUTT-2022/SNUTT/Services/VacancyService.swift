@@ -50,12 +50,12 @@ struct VacancyService: VacancyServiceProtocol {
     }
 
     func addLecture(lecture: Lecture) async throws {
-        try await vacancyRepository.addLecture(lectureId: lecture.id)
+        try await vacancyRepository.addLecture(lectureId: lecture.lectureId ?? lecture.id)
         try await fetchLectures()
     }
 
     private func deleteLecture(lecture: Lecture) async throws {
-        try await vacancyRepository.deleteLecture(lectureId: lecture.id)
+        try await vacancyRepository.deleteLecture(lectureId: lecture.lectureId ?? lecture.id)
     }
 
     func deleteLectures(lectures: [Lecture]) async throws {

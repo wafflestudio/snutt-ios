@@ -15,6 +15,7 @@ extension LectureDetailScene {
         @Published var isLectureOverlapped: Bool = false
         @Published var isEmailVerifyAlertPresented = false
         @Published private var bookmarkedLectures: [Lecture] = []
+        @Published var vacancyNotificationLectures: [Lecture] = []
         var errorTitle: String = ""
         var errorMessage: String = ""
 
@@ -22,6 +23,7 @@ extension LectureDetailScene {
             super.init(container: container)
             appState.system.$selectedTab.assign(to: &$_selectedTab)
             appState.timetable.$bookmark.compactMap { $0?.lectures }.assign(to: &$bookmarkedLectures)
+            appState.vacancy.$lectures.assign(to: &$vacancyNotificationLectures)
         }
 
         var lectureService: LectureServiceProtocol {
@@ -185,6 +187,26 @@ extension LectureDetailScene {
 
         func isBookmarked(lecture: Lecture) -> Bool {
             return (appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.lectureId ?? lecture.id })) != nil
+        }
+        
+        func addVacancyLecture(lecture: Lecture) async {
+            do {
+                try await services.vacancyService.addLecture(lecture: lecture)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+
+        func deleteVacancyLecture(lecture: Lecture) async {
+            do {
+                try await services.vacancyService.deleteLectures(lectures: [lecture])
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+        
+        func isVacancyNotificationEnabled(lecture: Lecture) -> Bool {
+            return vacancyNotificationLectures.contains(where: { $0.isEquivalent(with: lecture) })
         }
     }
 }
