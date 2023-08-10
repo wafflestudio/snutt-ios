@@ -296,22 +296,33 @@ struct LectureDetailScene: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 let isBookmarked = viewModel.isBookmarked(lecture: lecture)
+                let isVacancyNotificationEnabled = viewModel.isVacancyNotificationEnabled(lecture: lecture)
                 switch displayMode {
                 case .normal, .preview:
                     HStack {
                         if !lecture.isCustom && !editMode.isEditing {
                             Button {
-                                if isBookmarked {
-                                    Task {
-                                        await viewModel.undoBookmarkLecture(lecture: lecture)
-                                    }
-                                } else {
-                                    Task {
-                                        await viewModel.bookmarkLecture(lecture: lecture)
-                                    }
+                                Task {
+                                    isVacancyNotificationEnabled
+                                        ? await viewModel.deleteVacancyLecture(lecture: lecture)
+                                        : await viewModel.addVacancyLecture(lecture: lecture)
                                 }
                             } label: {
-                                isBookmarked ? Image("nav.bookmark.on") : Image("nav.bookmark")
+                                isVacancyNotificationEnabled
+                                    ? Image("nav.vacancy.on")
+                                    : Image("nav.vacancy.off")
+                            }
+
+                            Button {
+                                Task {
+                                    isBookmarked
+                                        ? await viewModel.undoBookmarkLecture(lecture: lecture)
+                                        : await viewModel.bookmarkLecture(lecture: lecture)
+                                }
+                            } label: {
+                                isBookmarked
+                                    ? Image("nav.bookmark.on")
+                                    : Image("nav.bookmark")
                             }
                         }
                         if displayMode == .normal {

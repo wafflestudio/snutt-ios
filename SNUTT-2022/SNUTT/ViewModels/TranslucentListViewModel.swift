@@ -19,7 +19,7 @@ class TransculentListViewModel: BaseViewModel, ObservableObject {
     @Published var isEmailVerifyAlertPresented = false
     @Published var bookmarkedLectures: [Lecture] = []
     @Published var isFirstBookmarkAlertPresented: Bool = false
-    @Published var vacancyNotificationLectures = [Lecture]()
+    @Published var vacancyNotificationLectures: [Lecture] = []
 
     var errorTitle: String = ""
     var errorMessage: String = ""

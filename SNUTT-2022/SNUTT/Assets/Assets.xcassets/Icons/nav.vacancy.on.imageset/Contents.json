@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "vacancyModal1.png",
+      "filename" : "nav.vacancy.on.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "vacancyModal1D.png",
+      "filename" : "nav.vacancy.on.dark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "vacancyModal1@2x.png",
+      "filename" : "nav.vacancy.on@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "vacancyModal1D@2x.png",
+      "filename" : "nav.vacancy.on.dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "vacancyModal1@3x.png",
+      "filename" : "nav.vacancy.on@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "vacancyModal1D@3x.png",
+      "filename" : "nav.vacancy.on.dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
