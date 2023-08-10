@@ -188,7 +188,7 @@ extension LectureDetailScene {
         func isBookmarked(lecture: Lecture) -> Bool {
             return (appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.lectureId ?? lecture.id })) != nil
         }
-        
+
         func addVacancyLecture(lecture: Lecture) async {
             do {
                 try await services.vacancyService.addLecture(lecture: lecture)
@@ -204,7 +204,7 @@ extension LectureDetailScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func isVacancyNotificationEnabled(lecture: Lecture) -> Bool {
             return vacancyNotificationLectures.contains(where: { $0.isEquivalent(with: lecture) })
         }

@@ -304,25 +304,25 @@ struct LectureDetailScene: View {
                             Button {
                                 Task {
                                     isVacancyNotificationEnabled
-                                    ? await viewModel.deleteVacancyLecture(lecture: lecture)
-                                    : await viewModel.addVacancyLecture(lecture: lecture)
+                                        ? await viewModel.deleteVacancyLecture(lecture: lecture)
+                                        : await viewModel.addVacancyLecture(lecture: lecture)
                                 }
                             } label: {
                                 isVacancyNotificationEnabled
-                                ? Image("nav.vacancy.on")
-                                : Image("nav.vacancy.off")
+                                    ? Image("nav.vacancy.on")
+                                    : Image("nav.vacancy.off")
                             }
-                            
+
                             Button {
                                 Task {
                                     isBookmarked
-                                    ? await viewModel.undoBookmarkLecture(lecture: lecture)
-                                    : await viewModel.bookmarkLecture(lecture: lecture)
+                                        ? await viewModel.undoBookmarkLecture(lecture: lecture)
+                                        : await viewModel.bookmarkLecture(lecture: lecture)
                                 }
                             } label: {
                                 isBookmarked
-                                ? Image("nav.bookmark.on")
-                                : Image("nav.bookmark")
+                                    ? Image("nav.bookmark.on")
+                                    : Image("nav.bookmark")
                             }
                         }
                         if displayMode == .normal {
