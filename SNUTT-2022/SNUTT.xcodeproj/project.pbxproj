@@ -220,16 +220,14 @@
 		CE076E002A09661400C9430B /* NetworkLogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE076DFF2A09661400C9430B /* NetworkLogEntry.swift */; };
 		CE076E022A0967E200C9430B /* NetworkLogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE076E012A0967E200C9430B /* NetworkLogStore.swift */; };
 		CE17DF832A7C1ED2000432B8 /* ReactNativeKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE17DF822A7C1ED2000432B8 /* ReactNativeKit */; };
-		CE3F37A929C4CBC6009EDCCC /* TimetableCompactWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */; };
-		CE3F37AD29C5D452009EDCCC /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CE17DF872A7E9560000432B8 /* ConfigRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF862A7E9560000432B8 /* ConfigRouter.swift */; };
 		CE17DF892A7E9670000432B8 /* ConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF882A7E9670000432B8 /* ConfigRepository.swift */; };
 		CE17DF8B2A7E96E1000432B8 /* ConfigDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF8A2A7E96E1000432B8 /* ConfigDto.swift */; };
 		CE17DF912A7F43E0000432B8 /* VacancySugangSnuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */; };
 		CE17DF932A7FCB32000432B8 /* VacancyGuidePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */; };
+		CE3384BA2A86704100437CC5 /* FriendsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3384B92A86704100437CC5 /* FriendsService.swift */; };
 		CE3F37A929C4CBC6009EDCCC /* TimetableCompactWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */; };
 		CE3F37AD29C5D452009EDCCC /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
-		CE461CE82A62B6B1009E8B2E /* ReactNativeKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE461CE72A62B6B1009E8B2E /* ReactNativeKit */; };
 		CE4777F32A6ADCAC00E03253 /* VacancyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777F22A6ADCAC00E03253 /* VacancyRepository.swift */; };
 		CE4777F52A6ADCE200E03253 /* VacancyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777F42A6ADCE200E03253 /* VacancyRouter.swift */; };
 		CE4777F72A6AE41C00E03253 /* VacancyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777F62A6AE41C00E03253 /* VacancyScene.swift */; };
@@ -514,6 +512,7 @@
 		CE17DF8A2A7E96E1000432B8 /* ConfigDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDto.swift; sourceTree = "<group>"; };
 		CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancySugangSnuButton.swift; sourceTree = "<group>"; };
 		CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyGuidePopup.swift; sourceTree = "<group>"; };
+		CE3384B92A86704100437CC5 /* FriendsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsService.swift; sourceTree = "<group>"; };
 		CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableCompactWidgetView.swift; sourceTree = "<group>"; };
 		CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Getter.swift"; sourceTree = "<group>"; };
 		CE4777F22A6ADCAC00E03253 /* VacancyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyRepository.swift; sourceTree = "<group>"; };
@@ -952,6 +951,7 @@
 				BE682C0428881852009EBCB7 /* SearchService.swift */,
 				B87DF6F029150A00008BB95B /* PopupService.swift */,
 				BE6D892B28EFC76E000607A6 /* EtcService.swift */,
+				CE3384B92A86704100437CC5 /* FriendsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1479,6 +1479,7 @@
 				CE4777F32A6ADCAC00E03253 /* VacancyRepository.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
+				CE3384BA2A86704100437CC5 /* FriendsService.swift in Sources */,
 				CE63A3BE2A21DD3400A633FC /* DeepLinkHandler.swift in Sources */,
 				BE779B1A28E3E28C009960EB /* AppDelegate.swift in Sources */,
 				BE4B0EBE2873BC84005FE164 /* FilterSheetViewModel.swift in Sources */,
@@ -1696,7 +1697,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
@@ -2009,7 +2010,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
@@ -2053,7 +2054,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
