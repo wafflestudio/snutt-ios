@@ -219,11 +219,13 @@
 		BEF9233A28E84B62004AFCB2 /* SearchLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9233928E84B62004AFCB2 /* SearchLectureCell.swift */; };
 		CE076E002A09661400C9430B /* NetworkLogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE076DFF2A09661400C9430B /* NetworkLogEntry.swift */; };
 		CE076E022A0967E200C9430B /* NetworkLogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE076E012A0967E200C9430B /* NetworkLogStore.swift */; };
+		CE17DF832A7C1ED2000432B8 /* ReactNativeKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE17DF822A7C1ED2000432B8 /* ReactNativeKit */; };
 		CE17DF872A7E9560000432B8 /* ConfigRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF862A7E9560000432B8 /* ConfigRouter.swift */; };
 		CE17DF892A7E9670000432B8 /* ConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF882A7E9670000432B8 /* ConfigRepository.swift */; };
 		CE17DF8B2A7E96E1000432B8 /* ConfigDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF8A2A7E96E1000432B8 /* ConfigDto.swift */; };
 		CE17DF912A7F43E0000432B8 /* VacancySugangSnuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */; };
 		CE17DF932A7FCB32000432B8 /* VacancyGuidePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */; };
+		CE3384BA2A86704100437CC5 /* FriendsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3384B92A86704100437CC5 /* FriendsService.swift */; };
 		CE3F37A929C4CBC6009EDCCC /* TimetableCompactWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */; };
 		CE3F37AD29C5D452009EDCCC /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CE4777F32A6ADCAC00E03253 /* VacancyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777F22A6ADCAC00E03253 /* VacancyRepository.swift */; };
@@ -252,6 +254,8 @@
 		CEEAB49229C5EA37005497B0 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+Ext.swift */; };
 		CEEAB49329C5EA41005497B0 /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */; };
+		CEF4200A2A62AAA7005C2B1F /* FriendsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF420092A62AAA7005C2B1F /* FriendsScene.swift */; };
+		CEF4200F2A62ADE3005C2B1F /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4200E2A62ADE3005C2B1F /* FriendsViewModel.swift */; };
 		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
 		DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
 		DC1E0ED12877381F005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
@@ -508,6 +512,7 @@
 		CE17DF8A2A7E96E1000432B8 /* ConfigDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDto.swift; sourceTree = "<group>"; };
 		CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancySugangSnuButton.swift; sourceTree = "<group>"; };
 		CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyGuidePopup.swift; sourceTree = "<group>"; };
+		CE3384B92A86704100437CC5 /* FriendsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsService.swift; sourceTree = "<group>"; };
 		CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableCompactWidgetView.swift; sourceTree = "<group>"; };
 		CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Getter.swift"; sourceTree = "<group>"; };
 		CE4777F22A6ADCAC00E03253 /* VacancyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyRepository.swift; sourceTree = "<group>"; };
@@ -532,6 +537,8 @@
 		CEDDCA812A6AF66D00474D4E /* VacancyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyState.swift; sourceTree = "<group>"; };
 		CEDDCA832A6AFBF700474D4E /* VacancyDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyDto.swift; sourceTree = "<group>"; };
 		CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableFullWidgetView.swift; sourceTree = "<group>"; };
+		CEF420092A62AAA7005C2B1F /* FriendsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsScene.swift; sourceTree = "<group>"; };
+		CEF4200E2A62ADE3005C2B1F /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
 		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
 		DC1E0ED02877381F005632A3 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -571,6 +578,7 @@
 				BE4CD86728F5A56200BA9BBC /* FirebaseMessaging in Frameworks */,
 				BE4CD86328F5A56200BA9BBC /* FirebaseAnalyticsSwift in Frameworks */,
 				BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */,
+				CE17DF832A7C1ED2000432B8 /* ReactNativeKit in Frameworks */,
 				BE4CD86528F5A56200BA9BBC /* FirebaseCrashlytics in Frameworks */,
 				BEDE34D42879A59B00525014 /* Alamofire in Frameworks */,
 				BE4CD86128F5A56200BA9BBC /* FirebaseAnalytics in Frameworks */,
@@ -943,6 +951,7 @@
 				BE682C0428881852009EBCB7 /* SearchService.swift */,
 				B87DF6F029150A00008BB95B /* PopupService.swift */,
 				BE6D892B28EFC76E000607A6 /* EtcService.swift */,
+				CE3384B92A86704100437CC5 /* FriendsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -991,6 +1000,7 @@
 				BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */,
 				BE7E230027FF20EE004DC202 /* TimetableScene.swift */,
 				CE4777F62A6AE41C00E03253 /* VacancyScene.swift */,
+				CEF420092A62AAA7005C2B1F /* FriendsScene.swift */,
 				BEDF507227F427FA00CDCC13 /* LectureListScene.swift */,
 				BEDF506E27EB744A00CDCC13 /* LectureDetailScene.swift */,
 				DC29159E28660F7800FE5F9A /* ReviewScene.swift */,
@@ -1052,6 +1062,7 @@
 			children = (
 				B87431CA283B5A7300D78C59 /* BaseViewModel.swift */,
 				DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */,
+				CEF4200E2A62ADE3005C2B1F /* FriendsViewModel.swift */,
 				DC2915982865D69700FE5F9A /* LectureListViewModel.swift */,
 				BE682BE228870EBD009EBCB7 /* LectureDetailViewModel.swift */,
 				DC29159C2865FA2800FE5F9A /* SettingViewModel.swift */,
@@ -1130,6 +1141,7 @@
 				BE4CD86228F5A56200BA9BBC /* FirebaseAnalyticsSwift */,
 				BE4CD86428F5A56200BA9BBC /* FirebaseCrashlytics */,
 				BE4CD86628F5A56200BA9BBC /* FirebaseMessaging */,
+				CE17DF822A7C1ED2000432B8 /* ReactNativeKit */,
 			);
 			productName = SNUTT;
 			productReference = BE682BB22879E24D009EBCB7 /* SNUTT.app */;
@@ -1211,6 +1223,7 @@
 				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 				BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				CE39F4FB2A7C15DC00C4F158 /* XCRemoteSwiftPackageReference "ios-rn-prebuilt" */,
 			);
 			productRefGroup = DC860F3C27E5C87D0068C94B;
 			projectDirPath = "";
@@ -1466,6 +1479,7 @@
 				CE4777F32A6ADCAC00E03253 /* VacancyRepository.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
+				CE3384BA2A86704100437CC5 /* FriendsService.swift in Sources */,
 				CE63A3BE2A21DD3400A633FC /* DeepLinkHandler.swift in Sources */,
 				BE779B1A28E3E28C009960EB /* AppDelegate.swift in Sources */,
 				BE4B0EBE2873BC84005FE164 /* FilterSheetViewModel.swift in Sources */,
@@ -1479,9 +1493,11 @@
 				B86C4CCF294DCA150019CE51 /* VerificationCodeView.swift in Sources */,
 				B89826D128F4971000477A14 /* SyllabusWebView.swift in Sources */,
 				BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */,
+				CEF4200F2A62ADE3005C2B1F /* FriendsViewModel.swift in Sources */,
 				B88D16F328ABC5DD00E2D652 /* String+Ext.swift in Sources */,
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
 				BE9413D228C2458A00171060 /* DateFormatter+Parse.swift in Sources */,
+				CEF4200A2A62AAA7005C2B1F /* FriendsScene.swift in Sources */,
 				BE9413C328C21D1000171060 /* NotificationRepository.swift in Sources */,
 				B87B315E28D5A70F005C170B /* SearchState.swift in Sources */,
 				BE060BD728DF43AC00A2F1B9 /* AuthService.swift in Sources */,
@@ -1681,7 +1697,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
@@ -1994,12 +2010,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.wafflestudio.snutt.dev";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG FEATURE_RN_FRIENDS";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = targeted;
 				SWIFT_VERSION = 5.0;
@@ -2038,7 +2054,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev";
@@ -2216,6 +2232,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		CE39F4FB2A7C15DC00C4F158 /* XCRemoteSwiftPackageReference "ios-rn-prebuilt" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wafflestudio/ios-rn-prebuilt";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2248,6 +2272,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		CE17DF822A7C1ED2000432B8 /* ReactNativeKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE39F4FB2A7C15DC00C4F158 /* XCRemoteSwiftPackageReference "ios-rn-prebuilt" */;
+			productName = ReactNativeKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

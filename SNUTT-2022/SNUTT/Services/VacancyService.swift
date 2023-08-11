@@ -18,7 +18,7 @@ protocol VacancyServiceProtocol: Sendable {
     func goToVacancyPage()
 }
 
-struct VacancyService: VacancyServiceProtocol {
+struct VacancyService: VacancyServiceProtocol, ConfigsProvidable {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
     var localRepositories: AppEnvironment.LocalRepositories
@@ -69,15 +69,6 @@ struct VacancyService: VacancyServiceProtocol {
         try await fetchLectures()
     }
 
-    private func fetchConfigs() async throws -> ConfigsDto {
-        guard let cachedConfigs = appState.system.configs else {
-            let configsDto = try await configRepository.fetchConfigs()
-            appState.system.configs = configsDto
-            return configsDto
-        }
-        return cachedConfigs
-    }
-
     private func isVacancyNotificationBannerEnabled() async throws -> Bool {
         let configsDto = try await fetchConfigs()
         return configsDto.vacancyNotificationBanner?.visible ?? false
@@ -112,6 +103,23 @@ struct VacancyService: VacancyServiceProtocol {
     func goToVacancyPage() {
         appState.system.selectedTab = .settings
         appState.routing.settingScene.pushToVacancy = true
+    }
+}
+
+protocol ConfigsProvidable {
+    var appState: AppState { get }
+    var webRepositories: AppEnvironment.WebRepositories { get }
+    func fetchConfigs() async throws -> ConfigsDto
+}
+
+extension ConfigsProvidable {
+    @MainActor func fetchConfigs() async throws -> ConfigsDto {
+        guard let cachedConfigs = appState.system.configs else {
+            let configsDto = try await webRepositories.configRepository.fetchConfigs()
+            appState.system.configs = configsDto
+            return configsDto
+        }
+        return cachedConfigs
     }
 }
 

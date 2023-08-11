@@ -26,6 +26,7 @@ extension AppEnvironment {
         let popupService: PopupServiceProtocol
         let etcService: EtcServiceProtocol
         let vacancyService: VacancyServiceProtocol
+        let friendsService: FriendsServiceProtocol
     }
 }
 
@@ -132,6 +133,7 @@ extension AppEnvironment {
         let popupService = PopupService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let etcService = EtcService(appState: appState, webRepositories: webRepositories)
         let vacancyService = VacancyService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
+        let friendsService = FriendsService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
@@ -142,7 +144,8 @@ extension AppEnvironment {
                      notificationService: notificationService,
                      popupService: popupService,
                      etcService: etcService,
-                     vacancyService: vacancyService)
+                     vacancyService: vacancyService,
+                     friendsService: friendsService)
     }
 }
 
@@ -170,7 +173,8 @@ extension EnvironmentValues {
                   notificationService: FakeNotificationService(),
                   popupService: FakePopupService(),
                   etcService: FakeEtcService(),
-                  vacancyService: FakeVacancyService())
+                  vacancyService: FakeVacancyService(),
+                  friendsService: FakeFriendsService())
         }
     }
 #endif

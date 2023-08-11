@@ -91,6 +91,15 @@
       }
     },
     {
+      "identity" : "ios-rn-prebuilt",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wafflestudio/ios-rn-prebuilt",
+      "state" : {
+        "revision" : "90e358a62bd39c3583b3fe8cdd8e20be53be7f81",
+        "version" : "0.1.2"
+      }
+    },
+    {
       "identity" : "leveldb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/leveldb.git",

@@ -2,22 +2,50 @@
 //  FriendsScene.swift
 //  SNUTT
 //
-//  Created by 최유림 on 2023/08/06.
+//  Created by 박신홍 on 2023/07/15.
 //
 
+import ReactNativeKit
 import SwiftUI
 
-// TODO: merge with RN-FriendsScene
 struct FriendsScene: View {
+    var viewModel: FriendsViewModel
+    @State private var bundleUrl: URL?
+
     var body: some View {
-        WIPFriendsView()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(STColor.systemBackground)
+        let _ = debugChanges()
+        #if FEATURE_RN_FRIENDS
+            Group {
+                if let token = viewModel.accessToken, let bundleUrl {
+                    RNFriendsView(accessToken: token, bundleUrl: bundleUrl)
+                } else {
+                    ProgressView()
+                }
+            }
+            .task {
+//            bundleUrl = URL(string: "http://localhost:8081/index.bundle?platform=ios")!
+                bundleUrl = await viewModel.fetchReactNativeBundleUrl()
+            }
+        #else
+            WIPFriendsView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(STColor.systemBackground)
+        #endif
     }
 }
 
-struct FriendsScene_Previews: PreviewProvider {
-    static var previews: some View {
-        FriendsScene()
+#if FEATURE_RN_FRIENDS
+    struct RNFriendsView: UIViewRepresentable {
+        let accessToken: String
+        let bundleUrl: URL
+        let moduleName = "friends"
+
+        func makeUIView(context _: Context) -> UIView {
+            var props = AppMetadata.asDictionary()
+            props["x-access-token"] = accessToken
+            return makeReactView(bundleURL: bundleUrl, moduleName: moduleName, initialProperties: props)
+        }
+
+        func updateUIView(_: UIView, context _: Context) {}
     }
-}
+#endif

@@ -95,6 +95,7 @@ enum ErrorCode: Int {
     case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
     case CANT_CHANGE_OTHERS_THEME = 0x5001
     case INVALID_LECTURE_TIME = 0x5002
+    case INVALID_RN_BUNDLE = 0x5003
 
     /* 409 - Conflicts (Email Verification related) */
     case ALREADY_VERIFIED_ACCOUNT = 0x9000
@@ -126,6 +127,7 @@ enum ErrorCode: Int {
              .NO_EMAIL,
              .NO_PASSWORD_RESET_REQUEST,
              .CANT_CHANGE_OTHERS_THEME,
+             .INVALID_RN_BUNDLE,
              .EXPIRED_PASSWORD_RESET_CODE:
             return "요청 실패"
         case .EMAIL_NOT_VERIFIED:
@@ -188,6 +190,8 @@ enum ErrorCode: Int {
         switch self {
         case .SERVER_FAULT:
             return "서버에 문제가 있으니, 잠시 후 다시 시도해주세요."
+        case .INVALID_RN_BUNDLE:
+            return "리소스를 다운로드하는 도중 문제가 발생했습니다."
         case .NO_NETWORK:
             return "네트워크가 불안정합니다."
         case .NO_USER_TOKEN:
