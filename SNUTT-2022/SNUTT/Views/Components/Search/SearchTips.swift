@@ -40,7 +40,6 @@ struct SearchTips: View {
             }
 
             Spacer()
-            Spacer()
         }
         .foregroundColor(STColor.whiteTranslucent)
     }

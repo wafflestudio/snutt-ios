@@ -25,6 +25,7 @@ struct NotificationList: View {
             }
         }
         .listStyle(.plain)
+        .navigationTitle(Text("알림"))
         .navigationBarTitleDisplayMode(.inline)
         .background(STColor.systemBackground)
         .task {
