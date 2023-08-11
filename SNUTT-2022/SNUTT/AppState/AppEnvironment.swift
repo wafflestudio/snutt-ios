@@ -145,8 +145,7 @@ extension AppEnvironment {
                      popupService: popupService,
                      etcService: etcService,
                      vacancyService: vacancyService,
-                     friendsService: friendsService
-        )
+                     friendsService: friendsService)
     }
 }
 
@@ -175,8 +174,7 @@ extension EnvironmentValues {
                   popupService: FakePopupService(),
                   etcService: FakeEtcService(),
                   vacancyService: FakeVacancyService(),
-                  friendsService: FakeFriendsService()
-            )
+                  friendsService: FakeFriendsService())
         }
     }
 #endif

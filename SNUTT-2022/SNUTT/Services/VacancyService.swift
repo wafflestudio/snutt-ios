@@ -113,8 +113,7 @@ protocol ConfigsProvidable {
 }
 
 extension ConfigsProvidable {
-    @MainActor
-    func fetchConfigs() async throws -> ConfigsDto {
+    @MainActor func fetchConfigs() async throws -> ConfigsDto {
         guard let cachedConfigs = appState.system.configs else {
             let configsDto = try await webRepositories.configRepository.fetchConfigs()
             appState.system.configs = configsDto
