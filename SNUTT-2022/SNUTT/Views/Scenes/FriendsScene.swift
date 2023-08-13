@@ -9,7 +9,9 @@ import ReactNativeKit
 import SwiftUI
 
 struct FriendsScene: View {
+    #if FEATURE_RN_FRIENDS
     var viewModel: FriendsViewModel
+    #endif
     @State private var bundleUrl: URL?
 
     var body: some View {

@@ -26,7 +26,9 @@ extension AppEnvironment {
         let popupService: PopupServiceProtocol
         let etcService: EtcServiceProtocol
         let vacancyService: VacancyServiceProtocol
+#if FEATURE_RN_FRIENDS
         let friendsService: FriendsServiceProtocol
+#endif
     }
 }
 
@@ -80,11 +82,11 @@ extension AppEnvironment {
     }
 
     @MainActor private static func configuredSession(appState: AppState) -> Session {
-        #if DEBUG
-            let logger = Logger(logStore: appState.debug.networkLogStore)
-        #else
-            let logger = Logger()
-        #endif
+#if DEBUG
+        let logger = Logger(logStore: appState.debug.networkLogStore)
+#else
+        let logger = Logger()
+#endif
         return Session(interceptor: Interceptor(userState: appState.user), eventMonitors: [logger])
     }
 
@@ -133,6 +135,7 @@ extension AppEnvironment {
         let popupService = PopupService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let etcService = EtcService(appState: appState, webRepositories: webRepositories)
         let vacancyService = VacancyService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
+#if FEATURE_RN_FRIENDS
         let friendsService = FriendsService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
@@ -145,7 +148,22 @@ extension AppEnvironment {
                      popupService: popupService,
                      etcService: etcService,
                      vacancyService: vacancyService,
-                     friendsService: friendsService)
+                     friendsService: friendsService
+        )
+#else
+        return .init(timetableService: timetableService,
+                     userService: userService,
+                     lectureService: lectureService,
+                     searchService: searchService,
+                     globalUIService: globalUIService,
+                     courseBookService: courseBookService,
+                     authService: authService,
+                     notificationService: notificationService,
+                     popupService: popupService,
+                     etcService: etcService,
+                     vacancyService: vacancyService
+        )
+#endif
     }
 }
 
@@ -161,20 +179,34 @@ extension EnvironmentValues {
 }
 
 #if DEBUG
-    extension AppEnvironment.Services {
-        @MainActor static func preview(appState: AppState) -> Self {
-            .init(timetableService: FakeTimetableService(),
-                  userService: FakeUserService(),
-                  lectureService: FakeLectureService(),
-                  searchService: FakeSearchService(),
-                  globalUIService: GlobalUIService(appState: appState, localRepositories: .init(userDefaultsRepository: UserDefaultsRepository(storage: .preview)), webRepositories: nil),
-                  courseBookService: FakeCourseBookService(),
-                  authService: FakeAuthService(),
-                  notificationService: FakeNotificationService(),
-                  popupService: FakePopupService(),
-                  etcService: FakeEtcService(),
-                  vacancyService: FakeVacancyService(),
-                  friendsService: FakeFriendsService())
-        }
+extension AppEnvironment.Services {
+    @MainActor static func preview(appState: AppState) -> Self {
+#if FEATURE_RN_FRIENDS
+        .init(timetableService: FakeTimetableService(),
+              userService: FakeUserService(),
+              lectureService: FakeLectureService(),
+              searchService: FakeSearchService(),
+              globalUIService: GlobalUIService(appState: appState, localRepositories: .init(userDefaultsRepository: UserDefaultsRepository(storage: .preview)), webRepositories: nil),
+              courseBookService: FakeCourseBookService(),
+              authService: FakeAuthService(),
+              notificationService: FakeNotificationService(),
+              popupService: FakePopupService(),
+              etcService: FakeEtcService(),
+              vacancyService: FakeVacancyService(),
+              friendsService: FakeFriendsService())
+#else
+        .init(timetableService: FakeTimetableService(),
+              userService: FakeUserService(),
+              lectureService: FakeLectureService(),
+              searchService: FakeSearchService(),
+              globalUIService: GlobalUIService(appState: appState, localRepositories: .init(userDefaultsRepository: UserDefaultsRepository(storage: .preview)), webRepositories: nil),
+              courseBookService: FakeCourseBookService(),
+              authService: FakeAuthService(),
+              notificationService: FakeNotificationService(),
+              popupService: FakePopupService(),
+              etcService: FakeEtcService(),
+              vacancyService: FakeVacancyService())
+        #endif
     }
+}
 #endif
