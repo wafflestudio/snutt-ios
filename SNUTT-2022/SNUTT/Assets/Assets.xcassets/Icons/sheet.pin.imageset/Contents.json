@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "write.png",
+      "filename" : "sheet.pin.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "write-1.png",
+      "filename" : "sheet.pin.dark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "write@2x.png",
+      "filename" : "sheet.pin@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "write@2x-1.png",
+      "filename" : "sheet.pin.dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "write@3x.png",
+      "filename" : "sheet.pin@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "write@3x-1.png",
+      "filename" : "sheet.pin.dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
