@@ -7,8 +7,8 @@
 
 import Foundation
 
-
 // MARK: User
+
 struct UserDto: Codable {
     let isAdmin: Bool
     var regDate: String
@@ -32,6 +32,7 @@ extension UserDto {
 }
 
 // MARK: Nickname
+
 struct NicknameDto: Codable {
     var nickname: String
     var tag: String

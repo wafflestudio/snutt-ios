@@ -35,7 +35,7 @@ class UserRepository: UserRepositoryProtocol {
             .serializingDecodable(UserDto.self)
             .handlingError()
     }
-    
+
     func editNickname(to nickname: String) async throws -> UserDto {
         return try await session
             .request(UserRouter.editNickname(nickname: nickname))
