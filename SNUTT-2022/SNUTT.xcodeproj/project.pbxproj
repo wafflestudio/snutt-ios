@@ -47,7 +47,6 @@
 		B8EE0C2C2A7DEDCE00CCFFAC /* WIPFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE0C2B2A7DEDCE00CCFFAC /* WIPFriendsView.swift */; };
 		B8F0B2302A4B27A500A2E15E /* UIDevice+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */; };
 		B8F0B2322A540A5300A2E15E /* EmailVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0B2312A540A5300A2E15E /* EmailVerificationView.swift */; };
-		B8F3E4582A7FDD3B00A69CBF /* FriendsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F3E4572A7FDD3B00A69CBF /* FriendsScene.swift */; };
 		B8F40EA9289809C60021A2A9 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EA8289809C60021A2A9 /* LicenseView.swift */; };
 		B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */; };
 		B8F40EAD28980D840021A2A9 /* TimetableSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */; };
@@ -226,6 +225,7 @@
 		CE17DF912A7F43E0000432B8 /* VacancySugangSnuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */; };
 		CE17DF932A7FCB32000432B8 /* VacancyGuidePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */; };
 		CE3384BA2A86704100437CC5 /* FriendsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3384B92A86704100437CC5 /* FriendsService.swift */; };
+		CE3384BC2A893F1B00437CC5 /* FriendsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3384BB2A893F1B00437CC5 /* FriendsScene.swift */; };
 		CE3F37A929C4CBC6009EDCCC /* TimetableCompactWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */; };
 		CE3F37AD29C5D452009EDCCC /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CE4777F32A6ADCAC00E03253 /* VacancyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4777F22A6ADCAC00E03253 /* VacancyRepository.swift */; };
@@ -254,7 +254,6 @@
 		CEEAB49229C5EA37005497B0 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DF6F42918AB5D008BB95B /* Date+Ext.swift */; };
 		CEEAB49329C5EA41005497B0 /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */; };
-		CEF4200A2A62AAA7005C2B1F /* FriendsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF420092A62AAA7005C2B1F /* FriendsScene.swift */; };
 		CEF4200F2A62ADE3005C2B1F /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4200E2A62ADE3005C2B1F /* FriendsViewModel.swift */; };
 		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
 		DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
@@ -358,7 +357,6 @@
 		B8EE0C2B2A7DEDCE00CCFFAC /* WIPFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIPFriendsView.swift; sourceTree = "<group>"; };
 		B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Ext.swift"; sourceTree = "<group>"; };
 		B8F0B2312A540A5300A2E15E /* EmailVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationView.swift; sourceTree = "<group>"; };
-		B8F3E4572A7FDD3B00A69CBF /* FriendsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsScene.swift; sourceTree = "<group>"; };
 		B8F40EA8289809C60021A2A9 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		B8F40EAA28980D730021A2A9 /* AccountSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingScene.swift; sourceTree = "<group>"; };
 		B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableSettingScene.swift; sourceTree = "<group>"; };
@@ -513,6 +511,7 @@
 		CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancySugangSnuButton.swift; sourceTree = "<group>"; };
 		CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyGuidePopup.swift; sourceTree = "<group>"; };
 		CE3384B92A86704100437CC5 /* FriendsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsService.swift; sourceTree = "<group>"; };
+		CE3384BB2A893F1B00437CC5 /* FriendsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsScene.swift; sourceTree = "<group>"; };
 		CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableCompactWidgetView.swift; sourceTree = "<group>"; };
 		CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Getter.swift"; sourceTree = "<group>"; };
 		CE4777F22A6ADCAC00E03253 /* VacancyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyRepository.swift; sourceTree = "<group>"; };
@@ -537,7 +536,6 @@
 		CEDDCA812A6AF66D00474D4E /* VacancyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyState.swift; sourceTree = "<group>"; };
 		CEDDCA832A6AFBF700474D4E /* VacancyDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyDto.swift; sourceTree = "<group>"; };
 		CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableFullWidgetView.swift; sourceTree = "<group>"; };
-		CEF420092A62AAA7005C2B1F /* FriendsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsScene.swift; sourceTree = "<group>"; };
 		CEF4200E2A62ADE3005C2B1F /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
 		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
@@ -1000,11 +998,10 @@
 				BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */,
 				BE7E230027FF20EE004DC202 /* TimetableScene.swift */,
 				CE4777F62A6AE41C00E03253 /* VacancyScene.swift */,
-				CEF420092A62AAA7005C2B1F /* FriendsScene.swift */,
+				CE3384BB2A893F1B00437CC5 /* FriendsScene.swift */,
 				BEDF507227F427FA00CDCC13 /* LectureListScene.swift */,
 				BEDF506E27EB744A00CDCC13 /* LectureDetailScene.swift */,
 				DC29159E28660F7800FE5F9A /* ReviewScene.swift */,
-				B8F3E4572A7FDD3B00A69CBF /* FriendsScene.swift */,
 				BEF9233728E84653004AFCB2 /* LectureTimeSheetScene.swift */,
 				BE060BD828DF4C1E00A2F1B9 /* OnboardScene.swift */,
 				BE28036928E93EEF00B2B1AB /* LoginScene.swift */,
@@ -1385,7 +1382,6 @@
 				B87DF6F92918B7AD008BB95B /* PopupState.swift in Sources */,
 				B87B316D28D755B6005C170B /* MenuState.swift in Sources */,
 				CEA7F1E62A6D096000299BAF /* LectureCellActionButton.swift in Sources */,
-				B8F3E4582A7FDD3B00A69CBF /* FriendsScene.swift in Sources */,
 				DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */,
 				B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */,
 				B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */,
@@ -1497,12 +1493,12 @@
 				B88D16F328ABC5DD00E2D652 /* String+Ext.swift in Sources */,
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
 				BE9413D228C2458A00171060 /* DateFormatter+Parse.swift in Sources */,
-				CEF4200A2A62AAA7005C2B1F /* FriendsScene.swift in Sources */,
 				BE9413C328C21D1000171060 /* NotificationRepository.swift in Sources */,
 				B87B315E28D5A70F005C170B /* SearchState.swift in Sources */,
 				BE060BD728DF43AC00A2F1B9 /* AuthService.swift in Sources */,
 				BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */,
 				731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */,
+				CE3384BC2A893F1B00437CC5 /* FriendsScene.swift in Sources */,
 				BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */,
 				CE17DF932A7FCB32000432B8 /* VacancyGuidePopup.swift in Sources */,
 				BEB57C2128B6758200279EFF /* Animation+Custom.swift in Sources */,
@@ -1772,7 +1768,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev.widget";
@@ -1808,7 +1804,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.2.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1845,7 +1841,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.wafflestudio.snutt.dev.widget";

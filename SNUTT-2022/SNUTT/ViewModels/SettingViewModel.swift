@@ -58,11 +58,7 @@ class SettingViewModel: BaseViewModel, ObservableObject {
     }
 
     func hasNewBadge(settingName: String) -> Bool {
-        do {
-            return services.globalUIService.hasNewBadge(settingName: settingName)
-        } catch {
-            return false
-        }
+        services.globalUIService.hasNewBadge(settingName: settingName)
     }
 
     func setColorScheme(colorScheme: ColorScheme?) {
