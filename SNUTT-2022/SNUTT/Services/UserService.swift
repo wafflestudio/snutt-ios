@@ -40,7 +40,7 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
         let dto = try await userRepository.fetchUser()
         updateUser(from: dto)
     }
-    
+
     func editNickname(to nickname: String) async throws {
         let dto = try await userRepository.editNickname(to: nickname)
         updateUser(from: dto)
