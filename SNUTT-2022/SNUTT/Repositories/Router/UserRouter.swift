@@ -9,7 +9,14 @@ import Alamofire
 import Foundation
 
 enum UserRouter: Router {
-    var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/user")! }
+    var baseURL: URL {
+        switch self {
+        case .getUser:
+            return URL(string: NetworkConfiguration.serverV1BaseURL + "/users")!
+        default:
+            return URL(string: NetworkConfiguration.serverV1BaseURL + "/user")!
+        }
+    }
 
     static let shouldAddToken: Bool = true
 
@@ -57,7 +64,9 @@ enum UserRouter: Router {
 
     var path: String {
         switch self {
-        case .getUser, .editUser:
+        case .getUser:
+            return "/me"
+        case .editUser:
             return "/info"
         case .changePassword, .addLocalId:
             return "/password"

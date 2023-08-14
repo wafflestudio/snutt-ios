@@ -7,17 +7,40 @@
 
 import Foundation
 
+
+// MARK: User
 struct UserDto: Codable {
-    var local_id: String?
-    var fb_name: String?
+    let isAdmin: Bool
+    var regDate: String
+    var notificationCheckedAt: String?
     var email: String?
+    var localId: String?
+    var fbName: String?
+    var nickname: NicknameDto
 }
 
 extension UserDto {
     init(from model: User) {
-        local_id = model.localId
-        fb_name = model.fbName
+        isAdmin = model.isAdmin
+        regDate = model.regDate
+        notificationCheckedAt = model.notificationCheckedAt
         email = model.email
+        localId = model.localId
+        fbName = model.fbName
+        nickname = .init(from: model.nickname)
+    }
+}
+
+// MARK: Nickname
+struct NicknameDto: Codable {
+    var nickname: String
+    var tag: String
+}
+
+extension NicknameDto {
+    init(from model: Nickname) {
+        nickname = model.name
+        tag = model.tag
     }
 }
 
