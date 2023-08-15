@@ -8,15 +8,35 @@
 import Foundation
 
 struct User {
+    let isAdmin: Bool
+    var regDate: String
+    var notificationCheckedAt: String?
+    var email: String?
     var localId: String?
     var fbName: String?
-    var email: String?
+    var nickname: Nickname
 }
 
 extension User {
     init(from dto: UserDto) {
-        localId = dto.local_id
-        fbName = dto.fb_name
+        isAdmin = dto.isAdmin
+        regDate = dto.regDate
+        notificationCheckedAt = dto.notificationCheckedAt
         email = dto.email
+        localId = dto.localId
+        fbName = dto.fbName
+        nickname = .init(from: dto.nickname)
+    }
+}
+
+struct Nickname {
+    var name: String
+    var tag: String
+}
+
+extension Nickname {
+    init(from dto: NicknameDto) {
+        name = dto.nickname
+        tag = dto.tag
     }
 }

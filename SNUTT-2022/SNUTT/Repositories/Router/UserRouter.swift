@@ -9,12 +9,19 @@ import Alamofire
 import Foundation
 
 enum UserRouter: Router {
-    var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/user")! }
+    var baseURL: URL {
+        switch self {
+        case .getUser, .editNickname:
+            return URL(string: NetworkConfiguration.serverV1BaseURL + "/users")!
+        default:
+            return URL(string: NetworkConfiguration.serverV1BaseURL + "/user")!
+        }
+    }
 
     static let shouldAddToken: Bool = true
 
     case getUser
-    case editUser(email: String)
+    case editNickname(nickname: String)
     case changePassword(oldPassword: String, newPassword: String)
     case addLocalId(localId: String, localPassword: String)
     case connectFacebook(fbId: String, fbToken: String)
@@ -30,8 +37,8 @@ enum UserRouter: Router {
         switch self {
         case .getUser:
             return .get
-        case .editUser:
-            return .put
+        case .editNickname:
+            return .patch
         case .changePassword:
             return .put
         case .addLocalId:
@@ -57,8 +64,8 @@ enum UserRouter: Router {
 
     var path: String {
         switch self {
-        case .getUser, .editUser:
-            return "/info"
+        case .getUser, .editNickname:
+            return "/me"
         case .changePassword, .addLocalId:
             return "/password"
         case .connectFacebook, .disconnectFacebook, .getFB:
@@ -80,8 +87,8 @@ enum UserRouter: Router {
         switch self {
         case .getUser:
             return nil
-        case let .editUser(email):
-            return ["email": email]
+        case let .editNickname(nickname):
+            return ["nickname": nickname]
         case let .changePassword(oldPassword, newPassword):
             return ["old_password": oldPassword, "new_password": newPassword]
         case let .addLocalId(localId, localPasword):
