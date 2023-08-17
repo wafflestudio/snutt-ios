@@ -13,6 +13,7 @@ protocol TimetableRepositoryProtocol {
     func fetchRecentTimetable() async throws -> TimetableDto
     func fetchTimetableList() async throws -> [TimetableMetadataDto]
     func updateTimetableTitle(withTimetableId id: String, withTitle title: String) async throws -> [TimetableMetadataDto]
+    func setPrimaryTimetable(withTimetableId id: String) async throws
     func deleteTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
     func copyTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
     func updateTimetableTheme(withTimetableId id: String, withTheme theme: Int) async throws -> TimetableDto
@@ -59,6 +60,13 @@ class TimetableRepository: TimetableRepositoryProtocol {
         return try await session
             .request(TimetableRouter.updateTimetable(id: id, title: title))
             .serializingDecodable([TimetableMetadataDto].self)
+            .handlingError()
+    }
+    
+    func setPrimaryTimetable(withTimetableId id: String) async throws {
+        try await session
+            .request(TimetableRouter.setPrimaryTimetable(id: id))
+            .serializingDecodable(Empty.self, emptyResponseCodes: [200])
             .handlingError()
     }
 

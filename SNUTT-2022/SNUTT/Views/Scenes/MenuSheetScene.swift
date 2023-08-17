@@ -24,8 +24,9 @@ struct MenuSheetScene: View {
 
             MenuEllipsisSheet(isOpen: $viewModel.isEllipsisSheetOpen,
                               openRenameSheet: viewModel.openRenameSheet,
-                              deleteTimetable: viewModel.deleteTimetable,
-                              openThemeSheet: viewModel.openThemeSheet)
+                              setPrimaryTimetable: viewModel.setPrimaryTimetable,
+                              openThemeSheet: viewModel.openThemeSheet,
+                              deleteTimetable: viewModel.deleteTimetable)
 
             MenuThemeSheet(isOpen: $viewModel.isThemeSheetOpen,
                            selectedTheme: viewModel.selectedTheme,
@@ -66,7 +67,7 @@ struct MenuSheetScene: View {
                         container.appState.menu.isOpen.toggle()
                     }
                     NavBarButton(imageName: "menu.ellipsis") {
-                        container.services.globalUIService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", updatedAt: "3232", totalCredit: 3))
+                        container.services.globalUIService.openEllipsis(for: .init(id: "4", year: 2332, semester: 2, title: "32323", isPrimary: false, updatedAt: "3232", totalCredit: 3))
                     }
                 }
                 MenuSheetScene(viewModel: .init(container: container))
