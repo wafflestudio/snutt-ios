@@ -57,33 +57,22 @@ struct MenuSheet: View {
                             .padding(.horizontal, 15)
 
                             ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
-                                let isEmptyQuarter = (timetablesByQuarter[quarter]?.count ?? 0) == 0
-                                MenuSection(quarter: quarter, current: current, isEmptyQuarter: isEmptyQuarter) {
-                                    Group {
-                                        ForEach(timetablesByQuarter[quarter] ?? [], id: \.id) { timetable in
-                                            MenuSectionRow(timetableMetadata: timetable,
-                                                           isSelected: current?.id == timetable.id,
-                                                           selectTimetable: selectTimetable,
-                                                           duplicateTimetable: duplicateTimetable,
-                                                           openEllipsis: openEllipsis)
-                                        }
-
-                                        if isEmptyQuarter {
-                                            Button {
-                                                // open CreateSheet without pickers
-                                                openCreateSheet(false)
-                                            } label: {
-                                                Text("+ 시간표 추가하기")
-                                                    .font(STFont.detailLabel)
-                                                    .foregroundColor(Color(uiColor: .secondaryLabel))
-                                                    .padding(.leading, 30)
-                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                if let quarterTimetableList = timetablesByQuarter[quarter],
+                                   let sortedTimetableList = quarterTimetableList.sorted(by: { $0.isPrimary && !$1.isPrimary }) {
+                                    MenuSection(quarter: quarter, current: current, isEmptyQuarter: false) {
+                                        Group {
+                                            ForEach(sortedTimetableList, id: \.id) { timetable in
+                                                MenuSectionRow(timetableMetadata: timetable,
+                                                               isSelected: current?.id == timetable.id,
+                                                               selectTimetable: selectTimetable,
+                                                               duplicateTimetable: duplicateTimetable,
+                                                               openEllipsis: openEllipsis)
                                             }
                                         }
                                     }
+                                    // in extreme cases, there might be hash collision
+                                    .id(quarter.hashValue)
                                 }
-                                // in extreme cases, there might be hash collision
-                                .id(quarter.hashValue)
                             }
                         }
                         .padding(.top, 20)
