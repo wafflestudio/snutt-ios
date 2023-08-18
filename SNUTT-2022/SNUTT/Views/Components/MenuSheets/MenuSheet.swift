@@ -69,7 +69,7 @@ struct MenuSheet: View {
                                                                duplicateTimetable: duplicateTimetable,
                                                                openEllipsis: openEllipsis)
                                             }
-                                            
+
                                             if isEmptyQuarter {
                                                 Button {
                                                     // open CreateSheet without pickers
