@@ -62,7 +62,7 @@ class TimetableRepository: TimetableRepositoryProtocol {
             .serializingDecodable([TimetableMetadataDto].self)
             .handlingError()
     }
-    
+
     func setPrimaryTimetable(withTimetableId id: String) async throws {
         try await session
             .request(TimetableRouter.setPrimaryTimetable(id: id))

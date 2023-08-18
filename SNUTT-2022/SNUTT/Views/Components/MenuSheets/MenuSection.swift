@@ -104,7 +104,7 @@ struct MenuSectionRow: View {
                     Text(timetableMetadata.title)
                         .font(STFont.detailLabel)
                         .lineLimit(1)
-                    
+
                     Spacer().frame(width: 5)
 
                     Text("(\(timetableMetadata.totalCredit)학점)")
@@ -112,10 +112,10 @@ struct MenuSectionRow: View {
                         .foregroundColor(Color(uiColor: .secondaryLabel))
                         .lineLimit(1)
                         .layoutPriority(0.5)
-                    
+
                     if timetableMetadata.isPrimary {
                         Spacer().frame(width: 4)
-                        
+
                         PrimaryBadge()
                             .layoutPriority(1)
                     }
@@ -137,9 +137,9 @@ struct MenuSectionRow: View {
                     .frame(width: 30)
                     .opacity(0.5)
             }
-            
+
             Spacer().frame(width: 12)
-            
+
             Button {
                 openEllipsis?(timetableMetadata)
             } label: {

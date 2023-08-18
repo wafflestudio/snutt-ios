@@ -21,7 +21,7 @@ struct MenuEllipsisSheet: View {
                 EllipsisSheetButton(menu: .edit, isSheetOpen: isOpen) {
                     openRenameSheet()
                 }
-                
+
                 EllipsisSheetButton(menu: .primary) {
                     Task {
                         await setPrimaryTimetable()
@@ -31,7 +31,7 @@ struct MenuEllipsisSheet: View {
                 EllipsisSheetButton(menu: .theme, isSheetOpen: isOpen) {
                     openThemeSheet()
                 }
-                
+
                 EllipsisSheetButton(menu: .delete, isSheetOpen: isOpen) {
                     isDeleteAlertPresented = true
                 }

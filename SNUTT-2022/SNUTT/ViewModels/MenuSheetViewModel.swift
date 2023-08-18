@@ -161,7 +161,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func setPrimaryTimetable() async {
         guard let timetableId = menuState.ellipsisTarget?.id else { return }
         do {

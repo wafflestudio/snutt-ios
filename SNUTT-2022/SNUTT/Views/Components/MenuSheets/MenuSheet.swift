@@ -58,7 +58,8 @@ struct MenuSheet: View {
 
                             ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
                                 if let quarterTimetableList = timetablesByQuarter[quarter],
-                                   let sortedTimetableList = quarterTimetableList.sorted(by: { $0.isPrimary && !$1.isPrimary }) {
+                                   let sortedTimetableList = quarterTimetableList.sorted(by: { $0.isPrimary && !$1.isPrimary })
+                                {
                                     MenuSection(quarter: quarter, current: current, isEmptyQuarter: false) {
                                         Group {
                                             ForEach(sortedTimetableList, id: \.id) { timetable in

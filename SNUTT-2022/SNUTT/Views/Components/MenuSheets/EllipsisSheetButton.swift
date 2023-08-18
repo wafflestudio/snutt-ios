@@ -24,9 +24,9 @@ struct EllipsisSheetButton: View {
                     .resizable()
                     .frame(width: 30, height: 30)
                     .padding(.horizontal, 12)
-                
+
                 Spacer().frame(width: 9)
-                
+
                 Text(menu.text)
                     .font(STFont.detailLabel)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -44,7 +44,7 @@ extension EllipsisSheetButton {
         case primary
         case theme
         case delete
-        
+
         var imageName: String {
             switch self {
             case .edit: return "sheet.edit"
@@ -53,7 +53,7 @@ extension EllipsisSheetButton {
             case .delete: return "sheet.trash"
             }
         }
-        
+
         var text: String {
             switch self {
             case .edit: return "이름 변경"

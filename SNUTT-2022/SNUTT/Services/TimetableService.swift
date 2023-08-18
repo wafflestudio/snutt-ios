@@ -92,7 +92,7 @@ struct TimetableService: TimetableServiceProtocol {
             appState.timetable.current = timetable
         }
     }
-    
+
     func setPrimaryTimetable(timetableId: String) async throws {
         try await timetableRepository.setPrimaryTimetable(withTimetableId: timetableId)
         try await fetchTimetableList()
@@ -139,7 +139,7 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func copyTimetable(timetableId _: String) {}
     func updateTimetableTitle(timetableId _: String, title _: String) {}
     func updateTimetableTheme(timetableId _: String) async throws {}
-    func setPrimaryTimetable(timetableId: String) async throws {}
+    func setPrimaryTimetable(timetableId _: String) async throws {}
     func deleteTimetable(timetableId _: String) async throws {}
     func selectTimetableTheme(theme _: Theme) {}
     func createTimetable(title _: String, quarter _: Quarter) async throws {}
