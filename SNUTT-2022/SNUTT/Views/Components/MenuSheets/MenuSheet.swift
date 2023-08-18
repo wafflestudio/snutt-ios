@@ -57,10 +57,10 @@ struct MenuSheet: View {
                             .padding(.horizontal, 15)
 
                             ForEach(Array(timetablesByQuarter.keys.sorted().reversed()), id: \.self) { quarter in
-                                if let quarterTimetableList = timetablesByQuarter[quarter],
-                                   let sortedTimetableList = quarterTimetableList.sorted(by: { $0.isPrimary && !$1.isPrimary })
-                                {
-                                    MenuSection(quarter: quarter, current: current, isEmptyQuarter: false) {
+                                let isEmptyQuarter = (timetablesByQuarter[quarter] ?? []).isEmpty
+                                if let quarterTimetableList = timetablesByQuarter[quarter] {
+                                    let sortedTimetableList = quarterTimetableList.sorted(by: { $0.isPrimary && !$1.isPrimary })
+                                    MenuSection(quarter: quarter, current: current, isEmptyQuarter: isEmptyQuarter) {
                                         Group {
                                             ForEach(sortedTimetableList, id: \.id) { timetable in
                                                 MenuSectionRow(timetableMetadata: timetable,
@@ -68,6 +68,19 @@ struct MenuSheet: View {
                                                                selectTimetable: selectTimetable,
                                                                duplicateTimetable: duplicateTimetable,
                                                                openEllipsis: openEllipsis)
+                                            }
+                                            
+                                            if isEmptyQuarter {
+                                                Button {
+                                                    // open CreateSheet without pickers
+                                                    openCreateSheet(false)
+                                                } label: {
+                                                    Text("+ 시간표 추가하기")
+                                                        .font(STFont.detailLabel)
+                                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                                        .padding(.leading, 30)
+                                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                                }
                                             }
                                         }
                                     }

@@ -10,12 +10,7 @@ import Foundation
 
 enum TimetableRouter: Router {
     var baseURL: URL {
-        switch self {
-        case .getTimetableList, .setPrimaryTimetable:
-            return URL(string: NetworkConfiguration.serverV1BaseURL + "/tables")!
-        default:
-            return URL(string: NetworkConfiguration.serverBaseURL + "/tables")!
-        }
+        return URL(string: NetworkConfiguration.serverV1BaseURL + "/tables")!
     }
 
     case getTimetableList

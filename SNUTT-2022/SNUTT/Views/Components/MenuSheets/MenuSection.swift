@@ -69,7 +69,7 @@ struct MenuSection<Content>: View where Content: View {
 }
 
 struct MenuSectionRow: View {
-    var timetableMetadata: TimetableMetadata
+    let timetableMetadata: TimetableMetadata
     var isSelected: Bool
     let selectTimetable: ((String) async -> Void)?
     let duplicateTimetable: ((String) async -> Void)?
@@ -77,7 +77,7 @@ struct MenuSectionRow: View {
     @State var isLoading: Bool = false
 
     var body: some View {
-        HStack(alignment: .center, spacing: 0) {
+        HStack(spacing: 0) {
             Group {
                 if isLoading {
                     ProgressView()
@@ -100,7 +100,7 @@ struct MenuSectionRow: View {
                     isLoading = false
                 }
             } label: {
-                HStack(alignment: .center) {
+                HStack {
                     Text(timetableMetadata.title)
                         .font(STFont.detailLabel)
                         .lineLimit(1)
