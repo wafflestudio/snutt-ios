@@ -69,7 +69,7 @@ struct MenuSection<Content>: View where Content: View {
 }
 
 struct MenuSectionRow: View {
-    let timetableMetadata: TimetableMetadata
+    var timetableMetadata: TimetableMetadata
     var isSelected: Bool
     let selectTimetable: ((String) async -> Void)?
     let duplicateTimetable: ((String) async -> Void)?

@@ -113,7 +113,7 @@ struct TimetableMetadata: Codable {
     let year: Int
     let semester: Int
     let title: String
-    var isPrimary: Bool
+    let isPrimary: Bool
     let updatedAt: String
     var totalCredit: Int
 
@@ -124,7 +124,7 @@ struct TimetableMetadata: Codable {
 
 extension TimetableMetadata: Equatable {
     static func == (lhs: TimetableMetadata, rhs: TimetableMetadata) -> Bool {
-        return lhs.id == rhs.id && lhs.title == rhs.title && lhs.totalCredit == rhs.totalCredit
+        return lhs.id == rhs.id && lhs.title == rhs.title && lhs.totalCredit == rhs.totalCredit && lhs.isPrimary == rhs.isPrimary
     }
 }
 
@@ -134,7 +134,7 @@ extension TimetableMetadata {
         year = dto.year
         semester = dto.semester
         title = dto.title
-        isPrimary = dto.is_primary
+        isPrimary = dto.isPrimary
         updatedAt = dto.updated_at
         totalCredit = dto.total_credit
     }
