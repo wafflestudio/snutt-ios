@@ -10,7 +10,7 @@ import Foundation
 @MainActor
 protocol UserServiceProtocol: Sendable {
     func fetchUser() async throws
-    func editNickname(to nickname: String) async throws
+    func changeNickname(to nickname: String) async throws
     func deleteUser() async throws
     func addLocalId(localId: String, localPassword: String) async throws
     func changePassword(from oldPassword: String, to newPassword: String) async throws
@@ -41,8 +41,8 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
         updateUser(from: dto)
     }
 
-    func editNickname(to nickname: String) async throws {
-        let dto = try await userRepository.editNickname(to: nickname)
+    func changeNickname(to nickname: String) async throws {
+        let dto = try await userRepository.changeNickname(to: nickname)
         updateUser(from: dto)
     }
 
@@ -114,7 +114,7 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
 
 class FakeUserService: UserServiceProtocol {
     func fetchUser() {}
-    func editNickname(to _: String) async throws {}
+    func changeNickname(to _: String) async throws {}
     func deleteUser() async throws {}
     func addLocalId(localId _: String, localPassword _: String) async throws {}
     func changePassword(from _: String, to _: String) async throws {}

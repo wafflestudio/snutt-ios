@@ -18,10 +18,13 @@ struct SettingsTextItem: View {
         HStack(spacing: 0) {
             Text(title)
                 .foregroundColor(role == .destructive ? .red : .primary)
+            
             if hasNewBadge?(title) == true {
                 SettingsNewBadge()
             }
+            
             Spacer()
+            
             Text(detail ?? "")
                 .foregroundColor(Color.gray)
         }

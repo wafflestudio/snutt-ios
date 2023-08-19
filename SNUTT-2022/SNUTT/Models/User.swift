@@ -32,6 +32,10 @@ extension User {
 struct Nickname {
     var name: String
     var tag: String
+    
+    var fullString: String {
+        name + "#" + tag
+    }
 }
 
 extension Nickname {

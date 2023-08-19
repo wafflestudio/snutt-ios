@@ -43,6 +43,16 @@ extension AccountSettingScene {
                 return false
             }
         }
+        
+        func changeNickname(to nickname: String) async -> Bool {
+            do {
+                try await services.userService.changeNickname(to: nickname)
+                return true
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+                return false
+            }
+        }
 
         func changePassword(from oldPassword: String, to newPassword: String) async -> Bool {
             do {

@@ -11,7 +11,7 @@ import Foundation
 enum UserRouter: Router {
     var baseURL: URL {
         switch self {
-        case .getUser, .editNickname:
+        case .getUser, .changeNickname:
             return URL(string: NetworkConfiguration.serverV1BaseURL + "/users")!
         default:
             return URL(string: NetworkConfiguration.serverV1BaseURL + "/user")!
@@ -21,7 +21,7 @@ enum UserRouter: Router {
     static let shouldAddToken: Bool = true
 
     case getUser
-    case editNickname(nickname: String)
+    case changeNickname(nickname: String)
     case changePassword(oldPassword: String, newPassword: String)
     case addLocalId(localId: String, localPassword: String)
     case connectFacebook(fbId: String, fbToken: String)
@@ -37,7 +37,7 @@ enum UserRouter: Router {
         switch self {
         case .getUser:
             return .get
-        case .editNickname:
+        case .changeNickname:
             return .patch
         case .changePassword:
             return .put
@@ -64,7 +64,7 @@ enum UserRouter: Router {
 
     var path: String {
         switch self {
-        case .getUser, .editNickname:
+        case .getUser, .changeNickname:
             return "/me"
         case .changePassword, .addLocalId:
             return "/password"
@@ -87,7 +87,7 @@ enum UserRouter: Router {
         switch self {
         case .getUser:
             return nil
-        case let .editNickname(nickname):
+        case let .changeNickname(nickname):
             return ["nickname": nickname]
         case let .changePassword(oldPassword, newPassword):
             return ["old_password": oldPassword, "new_password": newPassword]

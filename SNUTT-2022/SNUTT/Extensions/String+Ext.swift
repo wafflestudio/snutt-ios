@@ -10,6 +10,6 @@ import Foundation
 extension String {
     /// Transform String into AttributedString supporting markdown
     var markdown: AttributedString {
-        try! AttributedString(markdown: self)
+        try! AttributedString(markdown: self, options: .init(interpretedSyntax: .inlineOnly))
     }
 }

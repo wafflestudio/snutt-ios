@@ -14,6 +14,19 @@ struct AccountSettingScene: View {
 
     var body: some View {
         List {
+            if let nickname = viewModel.currentUser?.nickname {
+                Section {
+                    SettingsLinkItem(title: "닉네임 변경", detail: nickname.fullString) {
+                        ChangeNicknameView(old: nickname.name, tag: nickname.tag) { new in
+                            await viewModel.changeNickname(to: new)
+                        }
+                    }
+                    
+                    // TODO: refactor SettingsTextItem (copy button needed)
+                    SettingsTextItem(title: "닉네임 복사하기", detail: "")
+                }
+            }
+            
             if let localId = viewModel.currentUser?.localId {
                 Section {
                     SettingsTextItem(title: "아이디", detail: localId)
