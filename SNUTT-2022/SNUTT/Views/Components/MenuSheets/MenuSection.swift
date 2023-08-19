@@ -100,15 +100,25 @@ struct MenuSectionRow: View {
                     isLoading = false
                 }
             } label: {
-                HStack(spacing: 5) {
+                HStack {
                     Text(timetableMetadata.title)
-                        .font(.system(size: 15))
+                        .font(STFont.detailLabel)
                         .lineLimit(1)
+
+                    Spacer().frame(width: 5)
 
                     Text("(\(timetableMetadata.totalCredit)학점)")
                         .font(STFont.detailLabel)
                         .foregroundColor(Color(uiColor: .secondaryLabel))
                         .lineLimit(1)
+                        .layoutPriority(0.5)
+
+                    if timetableMetadata.isPrimary {
+                        Spacer().frame(width: 4)
+
+                        PrimaryBadge()
+                            .layoutPriority(1)
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
@@ -124,20 +134,35 @@ struct MenuSectionRow: View {
                 Image("menu.duplicate")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 35)
+                    .frame(width: 30)
                     .opacity(0.5)
             }
+
+            Spacer().frame(width: 12)
+
             Button {
                 openEllipsis?(timetableMetadata)
             } label: {
                 Image("menu.ellipsis")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 35)
+                    .frame(width: 30)
                     .opacity(0.5)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+struct PrimaryBadge: View {
+    var body: some View {
+        Text("대표")
+            .font(.system(size: 8, weight: .semibold))
+            .padding(.horizontal, 5)
+            .padding(.vertical, 3)
+            .foregroundColor(STColor.cyan)
+            .background(RoundedRectangle(cornerRadius: 8).strokeBorder(STColor.cyan, lineWidth: 0.5))
+            .environment(\.colorScheme, .light)
     }
 }
 

@@ -114,7 +114,7 @@ enum SheetOrientation {
             return .init(width: min(-(isOpen ? 0 : maxWidth) + translation, 0), height: 0)
         case let .bottom(maxHeight):
             let maxOffset = reader.size.height - maxHeight
-            return .init(width: 0, height: isOpen ? max(maxOffset + translation, maxOffset) : reader.size.height + 40) // TODO: fix this "+ 40"
+            return .init(width: 0, height: isOpen ? max(maxOffset + translation, maxOffset) : reader.size.height + 40)
         }
     }
 

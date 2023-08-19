@@ -17,6 +17,7 @@ protocol TimetableServiceProtocol: Sendable {
     func copyTimetable(timetableId: String) async throws
     func updateTimetableTitle(timetableId: String, title: String) async throws
     func updateTimetableTheme(timetableId: String) async throws
+    func setPrimaryTimetable(timetableId: String) async throws
     func deleteTimetable(timetableId: String) async throws
     func selectTimetableTheme(theme: Theme)
     func createTimetable(title: String, quarter: Quarter) async throws
@@ -92,6 +93,11 @@ struct TimetableService: TimetableServiceProtocol {
         }
     }
 
+    func setPrimaryTimetable(timetableId: String) async throws {
+        try await timetableRepository.setPrimaryTimetable(withTimetableId: timetableId)
+        try await fetchTimetableList()
+    }
+
     func deleteTimetable(timetableId: String) async throws {
         if appState.timetable.current?.id == timetableId {
             throw STError(.CANT_DELETE_CURRENT_TIMETABLE)
@@ -133,6 +139,7 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func copyTimetable(timetableId _: String) {}
     func updateTimetableTitle(timetableId _: String, title _: String) {}
     func updateTimetableTheme(timetableId _: String) async throws {}
+    func setPrimaryTimetable(timetableId _: String) async throws {}
     func deleteTimetable(timetableId _: String) async throws {}
     func selectTimetableTheme(theme _: Theme) {}
     func createTimetable(title _: String, quarter _: Quarter) async throws {}

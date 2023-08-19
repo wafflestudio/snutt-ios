@@ -162,6 +162,16 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         }
     }
 
+    func setPrimaryTimetable() async {
+        guard let timetableId = menuState.ellipsisTarget?.id else { return }
+        do {
+            try await services.timetableService.setPrimaryTimetable(timetableId: timetableId)
+            services.globalUIService.closeEllipsis()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+
     func deleteTimetable() async {
         guard let timetableId = menuState.ellipsisTarget?.id else { return }
         do {

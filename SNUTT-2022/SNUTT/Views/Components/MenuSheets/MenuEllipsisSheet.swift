@@ -10,18 +10,29 @@ import SwiftUI
 struct MenuEllipsisSheet: View {
     @Binding var isOpen: Bool
     var openRenameSheet: @MainActor () -> Void
-    var deleteTimetable: @MainActor () async -> Void
+    var setPrimaryTimetable: @MainActor () async -> Void
     var openThemeSheet: @MainActor () -> Void
+    var deleteTimetable: @MainActor () async -> Void
     @State private var isDeleteAlertPresented = false
 
     var body: some View {
-        Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 180)) {
+        Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 225)) {
             VStack(spacing: 0) {
-                EllipsisSheetButton(imageName: "pen", text: "이름 변경", isSheetOpen: isOpen) {
+                EllipsisSheetButton(menu: .edit, isSheetOpen: isOpen) {
                     openRenameSheet()
                 }
 
-                EllipsisSheetButton(imageName: "trash", text: "시간표 삭제", isSheetOpen: isOpen) {
+                EllipsisSheetButton(menu: .primary) {
+                    Task {
+                        await setPrimaryTimetable()
+                    }
+                }
+
+                EllipsisSheetButton(menu: .theme, isSheetOpen: isOpen) {
+                    openThemeSheet()
+                }
+
+                EllipsisSheetButton(menu: .delete, isSheetOpen: isOpen) {
                     isDeleteAlertPresented = true
                 }
                 .alert("시간표를 삭제하시겠습니까?", isPresented: $isDeleteAlertPresented) {
@@ -31,10 +42,6 @@ struct MenuEllipsisSheet: View {
                             await deleteTimetable()
                         }
                     }
-                }
-
-                EllipsisSheetButton(imageName: "palette", text: "시간표 테마 설정", isSheetOpen: isOpen) {
-                    openThemeSheet()
                 }
             }
         }

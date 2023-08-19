@@ -14,6 +14,7 @@ struct Timetable {
     var title: String
     let lectures: [Lecture]
     var theme: Theme
+    var isPrimary: Bool
     let userId: String
     let year: Int
     let semester: Int
@@ -79,6 +80,7 @@ extension Timetable {
         year = dto.year
         semester = dto.semester
         updatedAt = dto.updated_at
+        isPrimary = dto.isPrimary
 
         let theme: Theme = .init(rawValue: dto.theme) ?? .snutt
         self.theme = theme
@@ -94,6 +96,7 @@ extension Timetable {
                 title: "나의 시간표",
                 lectures: [.preview, .preview, .preview],
                 theme: .snutt,
+                isPrimary: false,
                 userId: "1234",
                 year: 2022,
                 semester: 1,
@@ -110,6 +113,7 @@ struct TimetableMetadata: Codable {
     let year: Int
     let semester: Int
     let title: String
+    let isPrimary: Bool
     let updatedAt: String
     var totalCredit: Int
 
@@ -120,7 +124,7 @@ struct TimetableMetadata: Codable {
 
 extension TimetableMetadata: Equatable {
     static func == (lhs: TimetableMetadata, rhs: TimetableMetadata) -> Bool {
-        return lhs.id == rhs.id && lhs.title == rhs.title && lhs.totalCredit == rhs.totalCredit
+        return lhs.id == rhs.id && lhs.title == rhs.title && lhs.totalCredit == rhs.totalCredit && lhs.isPrimary == rhs.isPrimary
     }
 }
 
@@ -130,6 +134,7 @@ extension TimetableMetadata {
         year = dto.year
         semester = dto.semester
         title = dto.title
+        isPrimary = dto.isPrimary
         updatedAt = dto.updated_at
         totalCredit = dto.total_credit
     }

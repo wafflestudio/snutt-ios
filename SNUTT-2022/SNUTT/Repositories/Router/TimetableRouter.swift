@@ -9,12 +9,15 @@ import Alamofire
 import Foundation
 
 enum TimetableRouter: Router {
-    var baseURL: URL { return URL(string: NetworkConfiguration.serverBaseURL + "/tables")! }
+    var baseURL: URL {
+        return URL(string: NetworkConfiguration.serverV1BaseURL + "/tables")!
+    }
 
     case getTimetableList
     case getTimetable(id: String)
     case createTimetable(title: String, year: Int, semester: Int)
     case updateTimetable(id: String, title: String)
+    case setPrimaryTimetable(id: String)
     case deleteTimetable(id: String)
     case getRecentTimetable
     case copyTimetable(id: String)
@@ -30,6 +33,8 @@ enum TimetableRouter: Router {
             return .post
         case .updateTimetable:
             return .put
+        case .setPrimaryTimetable:
+            return .post
         case .deleteTimetable:
             return .delete
         case .getRecentTimetable:
@@ -51,6 +56,8 @@ enum TimetableRouter: Router {
             return ""
         case let .updateTimetable(id, _):
             return "/\(id)"
+        case let .setPrimaryTimetable(id):
+            return "/\(id)/primary"
         case let .deleteTimetable(id):
             return "/\(id)"
         case .getRecentTimetable:
@@ -72,6 +79,8 @@ enum TimetableRouter: Router {
             return ["title": title, "year": year, "semester": semester]
         case let .updateTimetable(_, title):
             return ["title": title]
+        case .setPrimaryTimetable:
+            return nil
         case .deleteTimetable:
             return nil
         case .getRecentTimetable:

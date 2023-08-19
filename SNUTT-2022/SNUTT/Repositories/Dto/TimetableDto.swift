@@ -15,6 +15,7 @@ struct TimetableDto: Codable {
     let title: String
     let lecture_list: [LectureDto]
     let theme: Int
+    let isPrimary: Bool
     let updated_at: String
 }
 
@@ -62,23 +63,12 @@ struct TimePlaceDto: Codable {
     let place: String
 }
 
-// TODO: when is this used?
-struct TimetableListDto: Codable {
-    let _id: String
-    let user_id: String
-    let year: Int
-    let semester: Int
-    let title: String
-    let lecture_list: [LectureDto]
-    let theme: Int
-    let updated_at: String
-}
-
 struct TimetableMetadataDto: Codable {
     let _id: String
     let year: Int
     let semester: Int
     let title: String
+    let isPrimary: Bool
     let updated_at: String
     let total_credit: Int
 }
@@ -92,6 +82,7 @@ extension TimetableDto {
         title = model.title
         lecture_list = model.lectures.map { LectureDto(from: $0) }
         theme = model.theme.rawValue
+        isPrimary = model.isPrimary
         updated_at = model.updatedAt
     }
 }
