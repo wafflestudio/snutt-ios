@@ -15,14 +15,14 @@ struct VacancyBanner: View {
             Image("search.vacancy")
                 .resizable()
                 .frame(width: 19, height: 19)
-            
+
             Spacer()
                 .frame(width: 5)
-            
+
             Group {
                 Text("여기를 눌러 빈자리 알림 서비스를 이용해보세요!")
                     .font(.system(size: 13, weight: .medium))
-                
+
                 Text("NEW")
                     .font(.system(size: 7, weight: .semibold))
                     .baselineOffset(6)
