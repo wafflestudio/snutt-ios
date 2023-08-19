@@ -43,10 +43,6 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         services.vacancyService.goToVacancyPage()
     }
 
-    func dismissVacancyNotificationBanner() {
-        services.vacancyService.dismissVacancyNotificationBanner()
-    }
-
     func loadTimetableConfig() {
         timetableService.loadTimetableConfig()
     }

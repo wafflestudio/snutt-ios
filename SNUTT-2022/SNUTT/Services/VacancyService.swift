@@ -14,7 +14,6 @@ protocol VacancyServiceProtocol: Sendable {
     func addLecture(lecture: Lecture) async throws
     func deleteLectures(lectures: [Lecture]) async throws
     func showVacancyBannerIfNeeded() async throws
-    func dismissVacancyNotificationBanner()
     func goToVacancyPage()
 }
 
@@ -85,19 +84,7 @@ struct VacancyService: VacancyServiceProtocol, ConfigsProvidable {
             return
         }
 
-        if let lastDismissedAt = userDefaultsRepository.get(Date.self, key: .vacancyBannerDismissedAt),
-           Date().daysFrom(lastDismissedAt) < 1
-        {
-            appState.vacancy.isBannerVisible = false
-            return
-        }
-
         appState.vacancy.isBannerVisible = true
-    }
-
-    func dismissVacancyNotificationBanner() {
-        userDefaultsRepository.set(Date.self, key: .vacancyBannerDismissedAt, value: Date())
-        appState.vacancy.isBannerVisible = false
     }
 
     func goToVacancyPage() {
@@ -127,8 +114,6 @@ struct FakeVacancyService: VacancyServiceProtocol {
     func fetchSugangSnuUrl() async throws -> URL? {
         return nil
     }
-
-    func dismissVacancyNotificationBanner() {}
 
     func showVacancyBannerIfNeeded() async throws {}
 
