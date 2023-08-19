@@ -43,7 +43,7 @@ extension AccountSettingScene {
                 return false
             }
         }
-        
+
         func changeNickname(to nickname: String) async -> Bool {
             do {
                 try await services.userService.changeNickname(to: nickname)

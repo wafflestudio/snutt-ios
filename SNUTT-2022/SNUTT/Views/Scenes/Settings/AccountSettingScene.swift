@@ -22,7 +22,7 @@ struct AccountSettingScene: View {
                             await viewModel.changeNickname(to: new)
                         }
                     }
-                    
+
                     SettingsTextItem(title: "닉네임 복사하기", detailSystemImage: "square.on.square")
                         .onTapGesture {
                             UIPasteboard.general.string = nickname.fullString
@@ -30,7 +30,7 @@ struct AccountSettingScene: View {
                         }
                 }
             }
-            
+
             if let localId = viewModel.currentUser?.localId {
                 Section {
                     SettingsTextItem(title: "아이디", detail: localId)
