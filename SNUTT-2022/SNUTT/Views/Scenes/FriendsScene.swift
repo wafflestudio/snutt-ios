@@ -14,12 +14,14 @@ struct FriendsScene: View {
     #endif
     @State private var bundleUrl: URL?
 
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         let _ = debugChanges()
         #if FEATURE_RN_FRIENDS
             Group {
                 if let token = viewModel.accessToken, let bundleUrl {
-                    RNFriendsView(accessToken: token, bundleUrl: bundleUrl)
+                    RNFriendsView(accessToken: token, bundleUrl: bundleUrl, colorScheme: colorScheme)
                 } else {
                     ProgressView()
                 }
@@ -40,11 +42,13 @@ struct FriendsScene: View {
     struct RNFriendsView: UIViewRepresentable {
         let accessToken: String
         let bundleUrl: URL
-        let moduleName = "friends"
+        let colorScheme: ColorScheme
+        private let moduleName = "friends"
 
         func makeUIView(context _: Context) -> UIView {
             var props = AppMetadata.asDictionary()
             props["x-access-token"] = accessToken
+            props["theme"] = colorScheme.description
             return makeReactView(bundleURL: bundleUrl, moduleName: moduleName, initialProperties: props)
         }
 
