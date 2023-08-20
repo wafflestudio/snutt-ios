@@ -27,8 +27,6 @@ struct TimetableScene: View, Sendable {
                 if viewModel.isVacancyBannerVisible {
                     VacancyBanner {
                         viewModel.goToVacancyPage()
-                    } close: {
-                        viewModel.dismissVacancyNotificationBanner()
                     }
                     .transition(.move(edge: .trailing))
                 }
