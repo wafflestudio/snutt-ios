@@ -48,6 +48,7 @@ enum ErrorCode: Int {
     case NO_LOCAL_ID = 0x1015
     case NO_EMAIL = 0x1018
     case INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION = 40005
+    case INVALID_NICKNAME = 40008
 
     /* 403 - Authorization-related */
     case WRONG_API_KEY = 0x2000
@@ -168,6 +169,7 @@ enum ErrorCode: Int {
              .INVALID_TIMEJSON,
              .CANT_DELETE_CURRENT_TIMETABLE,
              .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION,
+             .INVALID_NICKNAME,
              .NO_LOCAL_ID:
             return "잘못된 요청"
         case .LECTURE_TIME_OVERLAP,
@@ -238,6 +240,8 @@ enum ErrorCode: Int {
             return "앱 버전 정보를 가져오는 것을 실패했습니다."
         case .INVALID_ID:
             return "ID는 영문자와 숫자로 이루어진 4~32자여야 합니다."
+        case .INVALID_NICKNAME:
+            return "사용할 수 없는 닉네임입니다."
         case .INVALID_TIMEJSON:
             return "강의 시간은 0보다 큰 숫자여야 합니다."
         case .INVALID_PASSWORD:

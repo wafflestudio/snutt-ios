@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsTextItem: View {
     let title: String
     var detail: String? = nil
+    var detailImage: Image? = nil
     var role: ButtonRole? = nil
 
     @Environment(\.hasNewBadgeClosure) var hasNewBadge: HasNewBadgeClosure?
@@ -18,13 +19,23 @@ struct SettingsTextItem: View {
         HStack(spacing: 0) {
             Text(title)
                 .foregroundColor(role == .destructive ? .red : .primary)
+
             if hasNewBadge?(title) == true {
                 SettingsNewBadge()
             }
+
             Spacer()
-            Text(detail ?? "")
-                .foregroundColor(Color.gray)
+
+            Group {
+                Text(detail ?? "")
+
+                if let detailImage = detailImage {
+                    detailImage
+                }
+            }
+            .foregroundColor(Color.gray)
         }
+        .contentShape(Rectangle())
     }
 }
 

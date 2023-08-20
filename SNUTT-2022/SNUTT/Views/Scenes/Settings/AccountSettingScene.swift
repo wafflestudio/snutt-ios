@@ -11,9 +11,26 @@ struct AccountSettingScene: View {
     @ObservedObject var viewModel: ViewModel
     @State private var isDisconnectFBAlertPresented: Bool = false
     @State private var isDeleteAccountAlertPresented: Bool = false
+    @State private var isNicknameCopiedToPasteboard: Bool = false
 
     var body: some View {
         List {
+            if let nickname = viewModel.currentUser?.nickname {
+                Section {
+                    SettingsLinkItem(title: "닉네임 변경", detail: nickname.fullString) {
+                        ChangeNicknameView(old: nickname.name, tag: nickname.tag) { new in
+                            await viewModel.changeNickname(to: new)
+                        }
+                    }
+
+                    SettingsTextItem(title: "닉네임 복사하기", detailImage: Image(systemName: "square.on.square"))
+                        .onTapGesture {
+                            UIPasteboard.general.string = nickname.fullString
+                            isNicknameCopiedToPasteboard = true
+                        }
+                }
+            }
+
             if let localId = viewModel.currentUser?.localId {
                 Section {
                     SettingsTextItem(title: "아이디", detail: localId)
@@ -39,16 +56,6 @@ struct AccountSettingScene: View {
                     SettingsButtonItem(title: "페이스북 연동 해제", role: .destructive) {
                         isDisconnectFBAlertPresented = true
                     }
-                    .alert("페이스북 연동 해제", isPresented: $isDisconnectFBAlertPresented) {
-                        Button("취소", role: .cancel, action: {})
-                        Button("해제", role: .destructive, action: {
-                            Task {
-                                await viewModel.detachFacebook()
-                            }
-                        })
-                    } message: {
-                        Text("페이스북 연동을 해제하시겠습니까?")
-                    }
                 }
             } else {
                 Section {
@@ -64,15 +71,6 @@ struct AccountSettingScene: View {
             Section {
                 SettingsButtonItem(title: "회원 탈퇴", role: .destructive) {
                     isDeleteAccountAlertPresented = true
-                }.alert("회원 탈퇴", isPresented: $isDeleteAccountAlertPresented) {
-                    Button("회원 탈퇴", role: .destructive) {
-                        Task {
-                            await viewModel.deleteUser()
-                        }
-                    }
-                    Button("취소", role: .cancel) {}
-                } message: {
-                    Text("SNUTT 회원 탈퇴를 하시겠습니까?")
                 }
             }
         }
@@ -81,6 +79,29 @@ struct AccountSettingScene: View {
         .listStyle(.insetGrouped)
         .navigationTitle("계정 관리")
         .navigationBarTitleDisplayMode(.inline)
+        .alert("닉네임이 클립보드에 복사되었습니다.", isPresented: $isNicknameCopiedToPasteboard) {
+            Button("확인") {}
+        }
+        .alert("페이스북 연동 해제", isPresented: $isDisconnectFBAlertPresented) {
+            Button("취소", role: .cancel, action: {})
+            Button("해제", role: .destructive, action: {
+                Task {
+                    await viewModel.detachFacebook()
+                }
+            })
+        } message: {
+            Text("페이스북 연동을 해제하시겠습니까?")
+        }
+        .alert("회원 탈퇴", isPresented: $isDeleteAccountAlertPresented) {
+            Button("회원 탈퇴", role: .destructive) {
+                Task {
+                    await viewModel.deleteUser()
+                }
+            }
+            Button("취소", role: .cancel) {}
+        } message: {
+            Text("SNUTT 회원 탈퇴를 하시겠습니까?")
+        }
     }
 }
 

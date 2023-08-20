@@ -10,7 +10,7 @@ import Foundation
 
 protocol UserRepositoryProtocol {
     func fetchUser() async throws -> UserDto
-    func editNickname(to nickname: String) async throws -> UserDto
+    func changeNickname(to nickname: String) async throws -> UserDto
     func connectFacebook(fbId: String, fbToken: String) async throws -> TokenResponseDto
     func disconnectFacebook() async throws -> TokenResponseDto
     func changePassword(from oldPassword: String, to newPassword: String) async throws -> TokenResponseDto
@@ -36,9 +36,9 @@ class UserRepository: UserRepositoryProtocol {
             .handlingError()
     }
 
-    func editNickname(to nickname: String) async throws -> UserDto {
+    func changeNickname(to nickname: String) async throws -> UserDto {
         return try await session
-            .request(UserRouter.editNickname(nickname: nickname))
+            .request(UserRouter.changeNickname(nickname: nickname))
             .serializingDecodable(UserDto.self)
             .handlingError()
     }
