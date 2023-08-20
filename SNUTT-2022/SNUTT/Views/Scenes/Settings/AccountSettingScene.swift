@@ -23,7 +23,7 @@ struct AccountSettingScene: View {
                         }
                     }
 
-                    SettingsTextItem(title: "닉네임 복사하기", detailSystemImage: "square.on.square")
+                    SettingsTextItem(title: "닉네임 복사하기", detailImage: Image(systemName: "square.on.square"))
                         .onTapGesture {
                             UIPasteboard.general.string = nickname.fullString
                             isNicknameCopiedToPasteboard = true

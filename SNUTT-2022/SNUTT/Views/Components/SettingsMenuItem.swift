@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsTextItem: View {
     let title: String
     var detail: String? = nil
-    var detailSystemImage: String? = nil
+    var detailImage: Image? = nil
     var role: ButtonRole? = nil
 
     @Environment(\.hasNewBadgeClosure) var hasNewBadge: HasNewBadgeClosure?
@@ -29,8 +29,8 @@ struct SettingsTextItem: View {
             Group {
                 Text(detail ?? "")
 
-                if let image = detailSystemImage {
-                    Image(systemName: image)
+                if let detailImage = detailImage {
+                    detailImage
                 }
             }
             .foregroundColor(Color.gray)
