@@ -27,19 +27,19 @@ struct TimetableScene: View, Sendable {
                 VacancyBanner {
                     viewModel.goToVacancyPage()
                 }
-            .transition(.move(edge: .trailing))
+                .transition(.move(edge: .trailing))
             }
             timetable
         }
         .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
         let _ = debugChanges()
     }
-    
+
     var timetable: some View {
         GeometryReader { reader in
             TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
                 .animation(.customSpring, value: viewModel.currentTimetable?.id)
-            // navigate programmatically, because NavigationLink inside toolbar doesn't work
+                // navigate programmatically, because NavigationLink inside toolbar doesn't work
                 .background(
                     Group {
                         NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
@@ -54,7 +54,7 @@ struct TimetableScene: View, Sendable {
                                 viewModel.setIsMenuOpen(true)
                             }
                             .circleBadge(condition: viewModel.isNewCourseBookAvailable)
-                            
+
                             Text(viewModel.timetableTitle)
                                 .font(STFont.title)
                                 .minimumScaleFactor(0.9)
@@ -62,18 +62,18 @@ struct TimetableScene: View, Sendable {
                             Text("(\(viewModel.totalCredit) 학점)")
                                 .font(STFont.details)
                                 .foregroundColor(Color(UIColor.secondaryLabel))
-                            
+
                             Spacer()
-                            
+
                             NavBarButton(imageName: "nav.list") {
                                 pushToListScene = true
                             }
-                            
+
                             NavBarButton(imageName: "nav.share") {
                                 self.screenshot = timetable.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
                                 isShareSheetOpened = true
                             }
-                            
+
                             NavBarButton(imageName: "nav.bookmark") {
                                 pushToBookmarkScene = true
                                 isNewToBookmark = false
