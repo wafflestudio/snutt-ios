@@ -18,7 +18,7 @@ struct AccountSettingScene: View {
             if let nickname = viewModel.currentUser?.nickname {
                 Section {
                     SettingsLinkItem(title: "닉네임 변경", detail: nickname.fullString) {
-                        ChangeNicknameView(old: nickname.name, tag: nickname.tag) { new in
+                        ChangeNicknameView(old: nickname.name) { new in
                             await viewModel.changeNickname(to: new)
                         }
                     }
@@ -77,7 +77,7 @@ struct AccountSettingScene: View {
         .animation(.customSpring, value: viewModel.currentUser?.fbName)
         .animation(.customSpring, value: viewModel.currentUser?.localId)
         .listStyle(.insetGrouped)
-        .navigationTitle("계정 관리")
+        .navigationTitle("내 계정")
         .navigationBarTitleDisplayMode(.inline)
         .alert("닉네임이 클립보드에 복사되었습니다.", isPresented: $isNicknameCopiedToPasteboard) {
             Button("확인") {}

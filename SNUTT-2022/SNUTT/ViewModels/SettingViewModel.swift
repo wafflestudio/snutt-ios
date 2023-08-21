@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 class SettingViewModel: BaseViewModel, ObservableObject {
+    @Published var currentUser: User?
     @Published var preferredColorScheme: ColorScheme? = nil
     @Published var notifications: [STNotification] = []
     @Published var unreadCount: Int = 0
@@ -23,6 +24,7 @@ class SettingViewModel: BaseViewModel, ObservableObject {
 
     override init(container: DIContainer) {
         super.init(container: container)
+        appState.user.$current.assign(to: &$currentUser)
         appState.system.$preferredColorScheme.assign(to: &$preferredColorScheme)
         appState.notification.$notifications.assign(to: &$notifications)
         appState.notification.$unreadCount.assign(to: &$unreadCount)
