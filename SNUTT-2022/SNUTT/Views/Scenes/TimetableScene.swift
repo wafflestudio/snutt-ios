@@ -64,7 +64,7 @@ struct TimetableScene: View, Sendable {
                                 }
 
                                 NavBarButton(imageName: "nav.share") {
-                                    self.screenshot = body.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
+                                    self.screenshot = body.takeScreenshot(size: reader.size, clipBounds: viewModel.isVacancyBannerVisible, preferredColorScheme: colorScheme)
                                     isShareSheetOpened = true
                                 }
 
