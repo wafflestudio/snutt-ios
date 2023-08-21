@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ChangeNicknameView: View {
     let old: String
-    let tag: String
     let changeNickname: (String) async -> Bool
 
     @State private var new: String = ""
@@ -28,6 +27,7 @@ struct ChangeNicknameView: View {
             Section {
                 HStack(spacing: 0) {
                     TextField("", text: $new, prompt: Text(old))
+                        .font(.system(size: 16))
                         .focused($isFocused)
 
                     if isFocused {
@@ -43,7 +43,7 @@ struct ChangeNicknameView: View {
 
                     Spacer().frame(width: 2)
 
-                    Text("#\(tag)")
+                    Text("#NNNN")
                         .font(.system(size: 16))
                         .foregroundColor(Color(uiColor: UIColor.tertiaryLabel))
                 }

@@ -19,33 +19,43 @@ struct SettingScene: View {
     var body: some View {
         List {
             Section {
-                SettingsLinkItem(title: "계정 관리") {
+                SettingsLinkItem(title: "내 계정", leadingImage: Image("account.person"), detail: viewModel.currentUser?.nickname.fullString) {
                     AccountSettingScene(viewModel: .init(container: viewModel.container))
+                }
+                .padding(.vertical, 12)
+            }
+
+            Section {
+                SettingsLinkItem(title: "색상 모드", detail: viewModel.currentColorSchemeSelection.rawValue) {
+                    ColorSchemeSettingScene(selection: $viewModel.currentColorSchemeSelection)
                 }
 
                 SettingsLinkItem(title: "시간표 설정") {
                     TimetableSettingScene(viewModel: .init(container: viewModel.container))
                 }
-
-                SettingsLinkItem(title: "색상 모드", detail: viewModel.currentColorSchemeSelection.rawValue) {
-                    ColorSchemeSettingScene(selection: $viewModel.currentColorSchemeSelection)
-                }
+            } header: {
+                Text("디스플레이")
             }
 
             Section {
                 SettingsLinkItem(title: "빈자리 알림", isActive: $viewModel.routingState.pushToVacancy) {
                     VacancyScene(viewModel: .init(container: viewModel.container))
                 }
+            } header: {
+                Text("서비스")
             }
 
             Section {
                 SettingsTextItem(title: "버전 정보", detail: viewModel.versionString)
-            }
 
-            Section {
                 SettingsLinkItem(title: "개발자 정보") {
                     DeveloperInfoView()
                 }
+            } header: {
+                Text("정보 및 제안")
+            }
+
+            Section {
                 SettingsLinkItem(title: "개발자 괴롭히기") {
                     UserSupportView(email: viewModel.userEmail, sendFeedback: viewModel.sendFeedback(email:message:))
                 }
@@ -84,6 +94,7 @@ struct SettingScene: View {
                 }
             }
         }
+        .environment(\.defaultMinListHeaderHeight, 1)
         .environment(\.hasNewBadgeClosure) { name in viewModel.hasNewBadge(settingName: name) }
         .listStyle(.insetGrouped)
         .navigationTitle("더보기")

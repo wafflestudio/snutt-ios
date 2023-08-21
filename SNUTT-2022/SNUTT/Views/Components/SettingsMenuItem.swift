@@ -9,15 +9,23 @@ import SwiftUI
 
 struct SettingsTextItem: View {
     let title: String
-    var detail: String? = nil
-    var detailImage: Image? = nil
-    var role: ButtonRole? = nil
+    var leadingImage: Image?
+    var detail: String?
+    var detailImage: Image?
+    var role: ButtonRole?
 
     @Environment(\.hasNewBadgeClosure) var hasNewBadge: HasNewBadgeClosure?
 
     var body: some View {
         HStack(spacing: 0) {
+            if let leadingImage = leadingImage {
+                leadingImage
+
+                Spacer().frame(width: 5)
+            }
+
             Text(title)
+                .font(.system(size: 16))
                 .foregroundColor(role == .destructive ? .red : .primary)
 
             if hasNewBadge?(title) == true {
@@ -41,6 +49,7 @@ struct SettingsTextItem: View {
 
 struct SettingsLinkItem<Destination>: View where Destination: View {
     let title: String
+    var leadingImage: Image?
     var detail: String?
     var isActive: Binding<Bool>?
     let destination: () -> Destination
@@ -58,7 +67,7 @@ struct SettingsLinkItem<Destination>: View where Destination: View {
                 destination()
                     .navigationBarTitleDisplayMode(.inline)
             } label: {
-                SettingsTextItem(title: title, detail: detail)
+                SettingsTextItem(title: title, leadingImage: leadingImage, detail: detail)
             }
         }
     }
