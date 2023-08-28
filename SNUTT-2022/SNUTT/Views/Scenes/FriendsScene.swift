@@ -22,6 +22,8 @@ struct FriendsScene: View {
             Group {
                 if let token = viewModel.accessToken, let bundleUrl {
                     RNFriendsView(accessToken: token, bundleUrl: bundleUrl, colorScheme: colorScheme)
+                        .ignoresSafeArea(edges: .all)
+                        .frame(maxHeight: .infinity)
                 } else {
                     ProgressView()
                 }
