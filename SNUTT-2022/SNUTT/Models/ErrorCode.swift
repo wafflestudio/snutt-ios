@@ -199,9 +199,9 @@ enum ErrorCode: Int {
         case .NO_FB_ID_OR_TOKEN:
             return "페이스북 로그인 정보에 문제가 생겼습니다."
         case .NO_YEAR_OR_SEMESTER:
-            return "올바른 년도와 학기를 정해주세요."
+            return "올바른 연도와 학기를 정해주세요."
         case .NOT_ENOUGH_TO_CREATE_TIMETABLE:
-            return "올바른 년도, 학기, 이름을 정해주세요."
+            return "올바른 연도, 학기, 이름을 정해주세요."
         case .NO_LECTURE_INPUT:
             return "올바른 강좌를 넣어주세요."
         case .NO_LECTURE_ID:
