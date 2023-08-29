@@ -50,6 +50,8 @@ struct LectureService: LectureServiceProtocol {
     }
 
     func addCustomLecture(lecture: Lecture, isForced: Bool = false) async throws {
+        try checkIfTimeplaceOverlapped(lecture)
+
         guard let currentTimetable = appState.timetable.current else { return }
         var lectureDto = LectureDto(from: lecture)
         lectureDto.class_time_mask = nil
@@ -60,17 +62,9 @@ struct LectureService: LectureServiceProtocol {
     }
 
     func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool = false) async throws {
+        try checkIfTimeplaceOverlapped(newLecture)
+
         guard let currentTimetable = appState.timetable.current else { return }
-
-        // Check if `Lecture` itself has overlapping `TimePlace`
-        try newLecture.timePlaces.forEach { lhs in
-            try newLecture.timePlaces.forEach { rhs in
-                if lhs.day == rhs.day, lhs.endTime > rhs.startTime, lhs.startTime < rhs.endTime, lhs.id != rhs.id {
-                    throw STError(.INVALID_LECTURE_TIME)
-                }
-            }
-        }
-
         let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture), isForced: isForced)
         let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
@@ -130,6 +124,17 @@ struct LectureService: LectureServiceProtocol {
 
     private var reviewRepository: ReviewRepositoryProtocol {
         webRepositories.reviewRepository
+    }
+
+    /// Check if `Lecture` itself has overlapping `TimePlace`
+    private func checkIfTimeplaceOverlapped(_ lecture: Lecture) throws {
+        try lecture.timePlaces.forEach { lhs in
+            try lecture.timePlaces.forEach { rhs in
+                if lhs.isOverlapped(with: rhs) {
+                    throw STError(.INVALID_LECTURE_TIME)
+                }
+            }
+        }
     }
 }
 

@@ -36,6 +36,10 @@ struct TimePlace: Identifiable {
         return endTimeDouble(compactMode: compactMode) - startTimeDouble
     }
 
+    func isOverlapped(with timeplace: TimePlace) -> Bool {
+        return day == timeplace.day && endTime > timeplace.startTime && startTime < timeplace.endTime && id != timeplace.id
+    }
+
     var preciseTimeString: String {
         return "\(day.veryShortSymbol)(\(startTime)~\(endTime))"
     }

@@ -6,12 +6,11 @@
 //
 
 import Combine
-import Foundation
 import SwiftUI
 
 extension LectureDetailScene {
     class ViewModel: BaseViewModel, ObservableObject {
-        @Published var isErrorAlertPresented = false
+        @Published var isErrorAlertPresented: Bool = false
         @Published var isLectureOverlapped: Bool = false
         @Published var isEmailVerifyAlertPresented = false
         @Published private var bookmarkedLectures: [Lecture] = []
@@ -51,18 +50,18 @@ extension LectureDetailScene {
             do {
                 try await lectureService.addCustomLecture(lecture: lecture, isForced: isForced)
                 return true
+            } catch let error as STError where error.code == .LECTURE_TIME_OVERLAP {
+                isLectureOverlapped = true
+                errorTitle = error.title
+                errorMessage = error.content
+            } catch let error as STError where error.code == .NO_LECTURE_TITLE || error.code == .INVALID_LECTURE_TIME {
+                isErrorAlertPresented = true
+                errorTitle = error.title
+                errorMessage = error.content
             } catch {
-                if let error = error.asSTError {
-                    if error.code == .LECTURE_TIME_OVERLAP {
-                        isLectureOverlapped = true
-                        errorTitle = error.title
-                        errorMessage = error.content
-                    } else {
-                        services.globalUIService.presentErrorAlert(error: error)
-                    }
-                }
-                return false
+                services.globalUIService.presentErrorAlert(error: error)
             }
+            return false
         }
 
         func updateLecture(oldLecture: Lecture?, newLecture: Lecture, isForced: Bool = false) async -> Bool {
@@ -73,18 +72,18 @@ extension LectureDetailScene {
             do {
                 try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture, isForced: isForced)
                 return true
+            } catch let error as STError where error.code == .LECTURE_TIME_OVERLAP {
+                isLectureOverlapped = true
+                errorTitle = error.title
+                errorMessage = error.content
+            } catch let error as STError where error.code == .NO_LECTURE_TITLE || error.code == .INVALID_LECTURE_TIME {
+                isErrorAlertPresented = true
+                errorTitle = error.title
+                errorMessage = error.content
             } catch {
-                if let error = error.asSTError {
-                    if error.code == .LECTURE_TIME_OVERLAP {
-                        isLectureOverlapped = true
-                        errorTitle = error.title
-                        errorMessage = error.content
-                    } else {
-                        services.globalUIService.presentErrorAlert(error: error)
-                    }
-                }
-                return false
+                services.globalUIService.presentErrorAlert(error: error)
             }
+            return false
         }
 
         func deleteLecture(lecture: Lecture) async {
