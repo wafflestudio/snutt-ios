@@ -22,6 +22,8 @@ struct FriendsScene: View {
             Group {
                 if let token = viewModel.accessToken, let bundleUrl {
                     RNFriendsView(accessToken: token, bundleUrl: bundleUrl, colorScheme: colorScheme)
+                        .ignoresSafeArea(edges: .all)
+                        .frame(maxHeight: .infinity)
                 } else {
                     ProgressView()
                 }
@@ -45,11 +47,16 @@ struct FriendsScene: View {
         let colorScheme: ColorScheme
         private let moduleName = "friends"
 
-        func makeUIView(context _: Context) -> UIView {
-            var props = AppMetadata.asDictionary()
+        private var initialProps: [String: Any] {
+            var props: [String: Any] = AppMetadata.asDictionary()
             props["x-access-token"] = accessToken
             props["theme"] = colorScheme.description
-            return makeReactView(bundleURL: bundleUrl, moduleName: moduleName, initialProperties: props)
+            props["allowFontScaling"] = false
+            return props
+        }
+
+        func makeUIView(context _: Context) -> UIView {
+            return makeReactView(bundleURL: bundleUrl, moduleName: moduleName, initialProperties: initialProps)
         }
 
         func updateUIView(_: UIView, context _: Context) {}
