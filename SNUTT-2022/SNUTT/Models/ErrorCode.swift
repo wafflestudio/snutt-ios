@@ -93,7 +93,6 @@ enum ErrorCode: Int {
     case EMAIL_NOT_FOUND = 0x4006
 
     /* Client-side Errors */
-    case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
     case CANT_CHANGE_OTHERS_THEME = 0x5001
     case INVALID_LECTURE_TIME = 0x5002
     case INVALID_RN_BUNDLE = 0x5003
@@ -167,7 +166,6 @@ enum ErrorCode: Int {
              .IS_CUSTOM_LECTURE,
              .USER_HAS_NO_FCM_KEY,
              .INVALID_TIMEJSON,
-             .CANT_DELETE_CURRENT_TIMETABLE,
              .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION,
              .INVALID_NICKNAME,
              .NO_LOCAL_ID:
@@ -292,8 +290,6 @@ enum ErrorCode: Int {
             return "등록된 이메일이 없습니다."
         case .COLORLIST_NOT_FOUND:
             return "색상 목록을 찾을 수 없습니다."
-        case .CANT_DELETE_CURRENT_TIMETABLE:
-            return "현재 시간표는 삭제할 수 없습니다."
         case .CANT_CHANGE_OTHERS_THEME:
             return "현재 시간표의 테마만 변경할 수 있습니다."
         case .UNKNOWN_ERROR:
