@@ -15,7 +15,7 @@ struct TimetableDto: Codable {
     let title: String
     let lecture_list: [LectureDto]
     let theme: Int
-    let isPrimary: Bool
+    let isPrimary: Bool?
     let updated_at: String
 }
 
@@ -68,7 +68,7 @@ struct TimetableMetadataDto: Codable {
     let year: Int
     let semester: Int
     let title: String
-    let isPrimary: Bool
+    let isPrimary: Bool?
     let updated_at: String
     let total_credit: Int
 }

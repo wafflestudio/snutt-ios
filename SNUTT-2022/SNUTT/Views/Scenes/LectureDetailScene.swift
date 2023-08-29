@@ -376,6 +376,9 @@ struct LectureDetailScene: View {
             }
         }
         .environment(\.editMode, $editMode)
+        .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
+            Text(viewModel.errorMessage)
+        }
         .alert(viewModel.errorTitle, isPresented: $viewModel.isLectureOverlapped) {
             Button {
                 Task {

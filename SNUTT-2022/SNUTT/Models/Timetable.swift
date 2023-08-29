@@ -1,5 +1,5 @@
 //
-//  Tiemtable.swift
+//  Timetable.swift
 //  SNUTT
 //
 //  Created by Jinsup Keum on 2022/03/19.
@@ -80,7 +80,7 @@ extension Timetable {
         year = dto.year
         semester = dto.semester
         updatedAt = dto.updated_at
-        isPrimary = dto.isPrimary
+        isPrimary = dto.isPrimary ?? false
 
         let theme: Theme = .init(rawValue: dto.theme) ?? .snutt
         self.theme = theme
@@ -134,7 +134,7 @@ extension TimetableMetadata {
         year = dto.year
         semester = dto.semester
         title = dto.title
-        isPrimary = dto.isPrimary
+        isPrimary = dto.isPrimary ?? false
         updatedAt = dto.updated_at
         totalCredit = dto.total_credit
     }
