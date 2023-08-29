@@ -1,5 +1,5 @@
 //
-//  MyLectureListViewModel.swift
+//  LectureListViewModel.swift
 //  SNUTT
 //
 //  Created by Jinsup Keum on 2022/06/24.
