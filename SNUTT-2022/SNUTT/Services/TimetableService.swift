@@ -110,7 +110,7 @@ struct TimetableService: TimetableServiceProtocol {
         appState.timetable.metadataList = timetables
 
         if timetableId == currentTimetableId {
-            let nextIndex = timetables.count == originalIndex ? (originalIndex - 1) : originalIndex
+            let nextIndex = min(originalIndex, timetables.count - 1)
             try await fetchTimetable(timetableId: timetables[nextIndex].id)
         }
     }
