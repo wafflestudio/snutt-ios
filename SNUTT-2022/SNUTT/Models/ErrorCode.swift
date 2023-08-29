@@ -93,7 +93,6 @@ enum ErrorCode: Int {
     case EMAIL_NOT_FOUND = 0x4006
 
     /* Client-side Errors */
-    case CANT_DELETE_CURRENT_TIMETABLE = 0x5000
     case CANT_CHANGE_OTHERS_THEME = 0x5001
     case INVALID_LECTURE_TIME = 0x5002
     case INVALID_RN_BUNDLE = 0x5003
@@ -167,7 +166,6 @@ enum ErrorCode: Int {
              .IS_CUSTOM_LECTURE,
              .USER_HAS_NO_FCM_KEY,
              .INVALID_TIMEJSON,
-             .CANT_DELETE_CURRENT_TIMETABLE,
              .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION,
              .INVALID_NICKNAME,
              .NO_LOCAL_ID:
@@ -201,9 +199,9 @@ enum ErrorCode: Int {
         case .NO_FB_ID_OR_TOKEN:
             return "페이스북 로그인 정보에 문제가 생겼습니다."
         case .NO_YEAR_OR_SEMESTER:
-            return "올바른 년도와 학기를 정해주세요."
+            return "올바른 연도와 학기를 정해주세요."
         case .NOT_ENOUGH_TO_CREATE_TIMETABLE:
-            return "올바른 년도, 학기, 이름을 정해주세요."
+            return "올바른 연도, 학기, 이름을 정해주세요."
         case .NO_LECTURE_INPUT:
             return "올바른 강좌를 넣어주세요."
         case .NO_LECTURE_ID:
@@ -292,8 +290,6 @@ enum ErrorCode: Int {
             return "등록된 이메일이 없습니다."
         case .COLORLIST_NOT_FOUND:
             return "색상 목록을 찾을 수 없습니다."
-        case .CANT_DELETE_CURRENT_TIMETABLE:
-            return "현재 시간표는 삭제할 수 없습니다."
         case .CANT_CHANGE_OTHERS_THEME:
             return "현재 시간표의 테마만 변경할 수 있습니다."
         case .UNKNOWN_ERROR:

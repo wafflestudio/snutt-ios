@@ -99,12 +99,20 @@ struct TimetableService: TimetableServiceProtocol {
     }
 
     func deleteTimetable(timetableId: String) async throws {
-        if appState.timetable.current?.id == timetableId {
-            throw STError(.CANT_DELETE_CURRENT_TIMETABLE)
+        guard let currentTimetableId = appState.timetable.current?.id,
+              let originalIndex = appState.timetable.metadataList?.firstIndex(where: { $0.id == timetableId })
+        else {
+            throw STError(.TIMETABLE_NOT_FOUND)
         }
+
         let dtos = try await timetableRepository.deleteTimetable(withTimetableId: timetableId)
         let timetables = dtos.map { TimetableMetadata(from: $0) }
         appState.timetable.metadataList = timetables
+
+        if timetableId == currentTimetableId {
+            let nextIndex = min(originalIndex, timetables.count - 1)
+            try await fetchTimetable(timetableId: timetables[nextIndex].id)
+        }
     }
 
     func selectTimetableTheme(theme: Theme) {
