@@ -21,9 +21,11 @@ struct FriendsScene: View {
         #if FEATURE_RN_FRIENDS
             Group {
                 if let token = viewModel.accessToken, let bundleUrl {
-                    RNFriendsView(accessToken: token, bundleUrl: bundleUrl, colorScheme: colorScheme)
-                        .ignoresSafeArea(edges: .all)
-                        .frame(maxHeight: .infinity)
+                    ZStack {
+                        STColor.systemBackground
+                            .ignoresSafeArea()
+                        RNFriendsView(accessToken: token, bundleUrl: bundleUrl, colorScheme: colorScheme)
+                    }
                 } else {
                     ProgressView()
                 }
