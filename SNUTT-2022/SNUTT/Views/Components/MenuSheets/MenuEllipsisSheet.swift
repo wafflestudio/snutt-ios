@@ -9,9 +9,10 @@ import SwiftUI
 
 struct MenuEllipsisSheet: View {
     @Binding var isOpen: Bool
-    let isPrimary: Bool
+    var isPrimary: Bool?
     let openRenameSheet: @MainActor () -> Void
     let setPrimaryTimetable: @MainActor () async -> Void
+    let unsetPrimaryTimetable: @MainActor () async -> Void
     let openThemeSheet: @MainActor () -> Void
     let deleteTimetable: @MainActor () async -> Void
     @State private var isDeleteAlertPresented = false
@@ -23,9 +24,13 @@ struct MenuEllipsisSheet: View {
                     openRenameSheet()
                 }
 
-                EllipsisSheetButton(menu: .primary(isOn: isPrimary)) {
-                    Task {
-                        await setPrimaryTimetable()
+                if let isPrimary = isPrimary {
+                    EllipsisSheetButton(menu: .primary(isOn: isPrimary)) {
+                        Task {
+                            isPrimary
+                                ? await unsetPrimaryTimetable()
+                                : await setPrimaryTimetable()
+                        }
                     }
                 }
 

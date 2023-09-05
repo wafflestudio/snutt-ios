@@ -18,6 +18,7 @@ protocol TimetableServiceProtocol: Sendable {
     func updateTimetableTitle(timetableId: String, title: String) async throws
     func updateTimetableTheme(timetableId: String) async throws
     func setPrimaryTimetable(timetableId: String) async throws
+    func unsetPrimaryTimetable(timetableId: String) async throws
     func deleteTimetable(timetableId: String) async throws
     func selectTimetableTheme(theme: Theme)
     func createTimetable(title: String, quarter: Quarter) async throws
@@ -98,6 +99,11 @@ struct TimetableService: TimetableServiceProtocol {
         try await fetchTimetableList()
     }
 
+    func unsetPrimaryTimetable(timetableId: String) async throws {
+        try await timetableRepository.unsetPrimaryTimetable(withTimetableId: timetableId)
+        try await fetchTimetableList()
+    }
+
     func deleteTimetable(timetableId: String) async throws {
         guard let currentTimetableId = appState.timetable.current?.id,
               let originalIndex = appState.timetable.metadataList?.firstIndex(where: { $0.id == timetableId })
@@ -148,6 +154,7 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func updateTimetableTitle(timetableId _: String, title _: String) {}
     func updateTimetableTheme(timetableId _: String) async throws {}
     func setPrimaryTimetable(timetableId _: String) async throws {}
+    func unsetPrimaryTimetable(timetableId _: String) async throws {}
     func deleteTimetable(timetableId _: String) async throws {}
     func selectTimetableTheme(theme _: Theme) {}
     func createTimetable(title _: String, quarter _: Quarter) async throws {}

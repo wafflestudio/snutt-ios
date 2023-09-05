@@ -1,5 +1,5 @@
 //
-//  Router.swift
+//  TimetableRouter.swift
 //  SNUTT
 //
 //  Created by Jinsup Keum on 2022/07/08.
@@ -18,6 +18,7 @@ enum TimetableRouter: Router {
     case createTimetable(title: String, year: Int, semester: Int)
     case updateTimetable(id: String, title: String)
     case setPrimaryTimetable(id: String)
+    case unsetPrimaryTimetable(id: String)
     case deleteTimetable(id: String)
     case getRecentTimetable
     case copyTimetable(id: String)
@@ -35,6 +36,8 @@ enum TimetableRouter: Router {
             return .put
         case .setPrimaryTimetable:
             return .post
+        case .unsetPrimaryTimetable:
+            return .delete
         case .deleteTimetable:
             return .delete
         case .getRecentTimetable:
@@ -58,6 +61,8 @@ enum TimetableRouter: Router {
             return "/\(id)"
         case let .setPrimaryTimetable(id):
             return "/\(id)/primary"
+        case let .unsetPrimaryTimetable(id):
+            return "/\(id)/primary"
         case let .deleteTimetable(id):
             return "/\(id)"
         case .getRecentTimetable:
@@ -80,6 +85,8 @@ enum TimetableRouter: Router {
         case let .updateTimetable(_, title):
             return ["title": title]
         case .setPrimaryTimetable:
+            return nil
+        case .unsetPrimaryTimetable:
             return nil
         case .deleteTimetable:
             return nil

@@ -109,7 +109,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         }
         return dict
     }
-    
+
     var targetTimetable: TimetableMetadata? {
         menuState.ellipsisTarget
     }
@@ -170,6 +170,16 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         guard let timetableId = targetTimetable?.id else { return }
         do {
             try await services.timetableService.setPrimaryTimetable(timetableId: timetableId)
+            services.globalUIService.closeEllipsis()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+
+    func unsetPrimaryTimetable() async {
+        guard let timetableId = targetTimetable?.id else { return }
+        do {
+            try await services.timetableService.unsetPrimaryTimetable(timetableId: timetableId)
             services.globalUIService.closeEllipsis()
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
