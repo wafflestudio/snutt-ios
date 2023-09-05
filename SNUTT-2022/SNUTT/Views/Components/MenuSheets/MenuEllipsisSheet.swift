@@ -50,6 +50,7 @@ struct MenuEllipsisSheet: View {
                     }
                 }
             }
+            .transformEffect(.identity)
         }
     }
 }
