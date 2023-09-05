@@ -25,6 +25,7 @@ struct FriendsScene: View {
                         STColor.systemBackground
                             .ignoresSafeArea()
                         RNFriendsView(accessToken: token, bundleUrl: bundleUrl, colorScheme: colorScheme)
+                            .id(colorScheme)
                     }
                 } else {
                     ProgressView()
@@ -58,7 +59,10 @@ struct FriendsScene: View {
         }
 
         func makeUIView(context _: Context) -> UIView {
-            return makeReactView(bundleURL: bundleUrl, moduleName: moduleName, initialProperties: initialProps)
+            return makeReactView(bundleURL: bundleUrl,
+                                 moduleName: moduleName,
+                                 initialProperties: initialProps,
+                                 backgroundColor: UIColor(STColor.systemBackground))
         }
 
         func updateUIView(_: UIView, context _: Context) {}
