@@ -58,15 +58,15 @@ struct TimetablePainter {
             return config.minHour
         }
 
-        if current?.lectures.isEmpty ?? true {
+        if let current = current, current.selectedLecture == nil && current.lectures.isEmpty {
             return 9
         }
 
         guard let startTime = current?.earliestStartTime else {
             return config.minHour
         }
-
-        return Int(min(startTime, 9))
+        
+        return Int(min(startTime.rounded(.down), 9))
     }
 
     /// `autoFit`을 고려한 시간표의 종료 시각. 빈 시간표인 경우 기본 17시이다.
@@ -75,7 +75,7 @@ struct TimetablePainter {
             return config.maxHour
         }
 
-        if current?.lectures.isEmpty ?? true {
+        if let current = current, current.selectedLecture == nil && current.lectures.isEmpty {
             return 17
         }
 
