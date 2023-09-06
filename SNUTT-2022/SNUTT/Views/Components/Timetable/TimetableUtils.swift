@@ -1,5 +1,5 @@
 //
-//  Utils.swift
+//  TimetableUtils.swift
 //  SNUTT
 //
 //  Created by 박신홍 on 2022/07/23.
@@ -65,7 +65,7 @@ struct TimetablePainter {
         guard let startTime = current?.earliestStartTime else {
             return config.minHour
         }
-        
+
         return Int(min(startTime.rounded(.down), 9))
     }
 
