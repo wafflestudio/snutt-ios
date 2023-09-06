@@ -41,14 +41,15 @@ struct EllipsisSheetButton: View {
 extension EllipsisSheetButton {
     enum Menu {
         case edit
-        case primary
+        case primary(isOn: Bool)
         case theme
         case delete
 
         var imageName: String {
             switch self {
             case .edit: return "sheet.edit"
-            case .primary: return "sheet.pin"
+            case .primary(true): return "sheet.friend.off"
+            case .primary(false): return "sheet.friend"
             case .theme: return "sheet.palette"
             case .delete: return "sheet.trash"
             }
@@ -57,7 +58,8 @@ extension EllipsisSheetButton {
         var text: String {
             switch self {
             case .edit: return "이름 변경"
-            case .primary: return "학기 대표 시간표로 지정"
+            case .primary(true): return "학기 대표 시간표 해제"
+            case .primary(false): return "학기 대표 시간표로 지정"
             case .theme: return "시간표 테마 설정"
             case .delete: return "시간표 삭제"
             }
@@ -71,7 +73,7 @@ struct EllipsisSheetButton_Previews: PreviewProvider {
             EllipsisSheetButton(menu: .edit) {
                 print("tap")
             }
-            EllipsisSheetButton(menu: .primary) {
+            EllipsisSheetButton(menu: .primary(isOn: true)) {
                 print("tap")
             }
             EllipsisSheetButton(menu: .theme) {

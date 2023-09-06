@@ -110,8 +110,12 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         return dict
     }
 
+    var targetTimetable: TimetableMetadata? {
+        menuState.ellipsisTarget
+    }
+
     func openThemeSheet() {
-        if menuState.ellipsisTarget?.id != appState.timetable.current?.id {
+        if targetTimetable?.id != appState.timetable.current?.id {
             services.globalUIService.presentErrorAlert(error: .CANT_CHANGE_OTHERS_THEME)
             services.globalUIService.closeEllipsis()
             return
@@ -153,7 +157,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     }
 
     func applyRenameSheet() async {
-        guard let timetableId = menuState.ellipsisTarget?.id else { return }
+        guard let timetableId = targetTimetable?.id else { return }
         do {
             try await services.timetableService.updateTimetableTitle(timetableId: timetableId, title: menuState.renameTitle)
             services.globalUIService.closeRenameSheet()
@@ -163,7 +167,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     }
 
     func setPrimaryTimetable() async {
-        guard let timetableId = menuState.ellipsisTarget?.id else { return }
+        guard let timetableId = targetTimetable?.id else { return }
         do {
             try await services.timetableService.setPrimaryTimetable(timetableId: timetableId)
             services.globalUIService.closeEllipsis()
@@ -172,8 +176,18 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         }
     }
 
+    func unsetPrimaryTimetable() async {
+        guard let timetableId = targetTimetable?.id else { return }
+        do {
+            try await services.timetableService.unsetPrimaryTimetable(timetableId: timetableId)
+            services.globalUIService.closeEllipsis()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+
     func deleteTimetable() async {
-        guard let timetableId = menuState.ellipsisTarget?.id else { return }
+        guard let timetableId = targetTimetable?.id else { return }
         do {
             try await services.timetableService.deleteTimetable(timetableId: timetableId)
             services.globalUIService.closeEllipsis()
@@ -187,7 +201,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     }
 
     func applyThemeSheet() async {
-        guard let timetableId = menuState.ellipsisTarget?.id else { return }
+        guard let timetableId = targetTimetable?.id else { return }
 
         do {
             try await services.timetableService.updateTimetableTheme(timetableId: timetableId)

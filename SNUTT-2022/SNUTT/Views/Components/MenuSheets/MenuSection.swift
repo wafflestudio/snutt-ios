@@ -114,9 +114,9 @@ struct MenuSectionRow: View {
                         .layoutPriority(0.5)
 
                     if timetableMetadata.isPrimary {
-                        Spacer().frame(width: 4)
+                        Spacer().frame(width: 5)
 
-                        PrimaryBadge()
+                        Image("shared.timetable")
                             .layoutPriority(1)
                     }
                 }
@@ -151,18 +151,6 @@ struct MenuSectionRow: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-    }
-}
-
-struct PrimaryBadge: View {
-    var body: some View {
-        Text("대표")
-            .font(.system(size: 8, weight: .semibold))
-            .padding(.horizontal, 5)
-            .padding(.vertical, 3)
-            .foregroundColor(STColor.cyan)
-            .background(RoundedRectangle(cornerRadius: 8).strokeBorder(STColor.cyan, lineWidth: 0.5))
-            .environment(\.colorScheme, .light)
     }
 }
 

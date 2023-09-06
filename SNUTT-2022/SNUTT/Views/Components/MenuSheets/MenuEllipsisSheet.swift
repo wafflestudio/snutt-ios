@@ -9,10 +9,12 @@ import SwiftUI
 
 struct MenuEllipsisSheet: View {
     @Binding var isOpen: Bool
-    var openRenameSheet: @MainActor () -> Void
-    var setPrimaryTimetable: @MainActor () async -> Void
-    var openThemeSheet: @MainActor () -> Void
-    var deleteTimetable: @MainActor () async -> Void
+    var isPrimary: Bool?
+    let openRenameSheet: @MainActor () -> Void
+    let setPrimaryTimetable: @MainActor () async -> Void
+    let unsetPrimaryTimetable: @MainActor () async -> Void
+    let openThemeSheet: @MainActor () -> Void
+    let deleteTimetable: @MainActor () async -> Void
     @State private var isDeleteAlertPresented = false
 
     var body: some View {
@@ -22,9 +24,13 @@ struct MenuEllipsisSheet: View {
                     openRenameSheet()
                 }
 
-                EllipsisSheetButton(menu: .primary) {
-                    Task {
-                        await setPrimaryTimetable()
+                if let isPrimary = isPrimary {
+                    EllipsisSheetButton(menu: .primary(isOn: isPrimary)) {
+                        Task {
+                            isPrimary
+                                ? await unsetPrimaryTimetable()
+                                : await setPrimaryTimetable()
+                        }
                     }
                 }
 
@@ -44,6 +50,7 @@ struct MenuEllipsisSheet: View {
                     }
                 }
             }
+            .transformEffect(.identity)
         }
     }
 }

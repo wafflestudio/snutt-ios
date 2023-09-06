@@ -1,5 +1,5 @@
 //
-//  MyTimetableScene.swift
+//  TimetableScene.swift
 //  SNUTT
 //
 //  Created by 박신홍 on 2022/04/07.
@@ -59,7 +59,8 @@ struct TimetableScene: View, Sendable {
                                 .font(STFont.title)
                                 .minimumScaleFactor(0.9)
                                 .lineLimit(1)
-                            Text("(\(viewModel.totalCredit) 학점)")
+
+                            Text("(\(viewModel.totalCredit)학점)")
                                 .font(STFont.details)
                                 .foregroundColor(Color(UIColor.secondaryLabel))
 
