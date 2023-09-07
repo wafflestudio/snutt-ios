@@ -45,11 +45,7 @@ struct SNUTTView: View {
                         ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: true)
                     }
                     TabScene(tabType: .friends) {
-                        #if FEATURE_RN_FRIENDS
-                            FriendsScene(viewModel: .init(container: viewModel.container))
-                        #else
-                            FriendsScene()
-                        #endif
+                        FriendsScene(viewModel: .init(container: viewModel.container))
                     }
                     TabScene(tabType: .settings) {
                         SettingScene(viewModel: .init(container: viewModel.container))
@@ -76,11 +72,9 @@ struct SNUTTView: View {
                         group.addTask {
                             await viewModel.fetchVacancyLectures()
                         }
-                        #if FEATURE_RN_FRIENDS
-                            group.addTask {
-                                await viewModel.fetchReactNativeBundleIfNeeded()
-                            }
-                        #endif
+                        group.addTask {
+                            await viewModel.fetchReactNativeBundleIfNeeded()
+                        }
                     })
                 }
 
@@ -217,15 +211,13 @@ extension SNUTTView {
             }
         }
 
-        #if FEATURE_RN_FRIENDS
-            func fetchReactNativeBundleIfNeeded() async {
-                do {
-                    try await services.friendsService.fetchReactNativeBundleUrl()
-                } catch {
-                    // pass
-                }
+        func fetchReactNativeBundleIfNeeded() async {
+            do {
+                try await services.friendsService.fetchReactNativeBundleUrl()
+            } catch {
+                // pass
             }
-        #endif
+        }
     }
 }
 
