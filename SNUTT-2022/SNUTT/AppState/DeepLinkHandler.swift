@@ -18,10 +18,10 @@ struct DeepLinkHandler {
         switch urlComponents.host {
         case "notifications":
             handleNotification(parameters: urlComponents.queryItems)
-            return
         case "vacancy":
             handleVacancy(parameters: urlComponents.queryItems)
-            return
+        case "friends":
+            handleFriends(parameters: urlComponents.queryItems)
         default:
             return
         }
@@ -37,5 +37,9 @@ extension DeepLinkHandler {
     private func handleVacancy(parameters _: Parameters?) {
         appState.system.selectedTab = .settings
         appState.routing.settingScene.pushToVacancy = true
+    }
+
+    private func handleFriends(parameters _: Parameters?) {
+        appState.system.selectedTab = .friends
     }
 }
