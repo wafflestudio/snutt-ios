@@ -38,7 +38,7 @@ extension DeepLinkHandler {
         appState.system.selectedTab = .settings
         appState.routing.settingScene.pushToVacancy = true
     }
-    
+
     private func handleFriends(parameters _: Parameters?) {
         appState.system.selectedTab = .friends
     }
