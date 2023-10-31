@@ -42,7 +42,6 @@ enum SearchRouter: Router {
                 "credit": [],
                 "etc": [],
                 "department": [],
-                "instructor": [],
                 "academic_year": [],
             ]
 

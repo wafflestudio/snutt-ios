@@ -44,7 +44,6 @@ enum SearchTagType: String, CaseIterable {
     case department
     case academicYear = "academic_year"
     case credit
-    case instructor
     case category
     case etc
 
@@ -54,7 +53,6 @@ enum SearchTagType: String, CaseIterable {
         case .classification: return Color(hex: "#e5731c")
         case .credit: return Color(hex: "#8bbb1a")
         case .department: return Color(hex: "#0cada6")
-        case .instructor: return Color(hex: "#0d82cd")
         case .category: return Color(hex: "#9c45a0")
         case .etc: return Color(hex: "#AF56B3")
         }
@@ -66,7 +64,6 @@ enum SearchTagType: String, CaseIterable {
         case .classification: return Color(hex: "#f58d3d")
         case .credit: return Color(hex: "#a6d930")
         case .department: return Color(hex: "#1bd0c9")
-        case .instructor: return Color(hex: "#1d99e9")
         case .category: return Color(hex: "#af56b3")
         case .etc: return Color(hex: "#AF56B3")
         }
@@ -78,7 +75,6 @@ enum SearchTagType: String, CaseIterable {
         case .classification: return "분류"
         case .credit: return "학점"
         case .department: return "학과"
-        case .instructor: return "교수"
         case .category: return "교양분류"
         case .etc: return "기타"
         }
