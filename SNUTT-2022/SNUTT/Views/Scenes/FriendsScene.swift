@@ -41,11 +41,16 @@ struct RNFriendsView: UIViewRepresentable {
     let colorScheme: ColorScheme
     private let moduleName = "friends"
 
+    private enum RNFeature: String, CaseIterable {
+        case ASYNC_STORAGE
+    }
+
     private var initialProps: [String: Any] {
         var props: [String: Any] = AppMetadata.asDictionary()
         props["x-access-token"] = accessToken
         props["theme"] = colorScheme.description
         props["allowFontScaling"] = false
+        props["feature"] = RNFeature.allCases.map { $0.rawValue }
         return props
     }
 
