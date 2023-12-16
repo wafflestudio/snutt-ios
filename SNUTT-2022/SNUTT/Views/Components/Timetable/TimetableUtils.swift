@@ -32,12 +32,18 @@ struct TimetablePainter {
             return nil
         }
 
-        let minHour = getStartingHour(current: current, config: config)
-        let hourIndex = timePlace.startTimeDouble - Double(minHour)
-        guard let weekdayIndex = getVisibleWeeks(current: current, config: config).firstIndex(of: timePlace.day) else { return nil }
-        if hourIndex < 0 {
+        if timePlace.startTimeDouble > Double(getEndingHour(current: current, config: config)) {
             return nil
         }
+
+        let minHour = Double(getStartingHour(current: current, config: config))
+
+        if timePlace.endTimeDouble < minHour {
+            return nil
+        }
+
+        let hourIndex = max(timePlace.startTimeDouble - minHour, 0)
+        guard let weekdayIndex = getVisibleWeeks(current: current, config: config).firstIndex(of: timePlace.day) else { return nil }
 
         let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: getWeekCount(current: current, config: config))
         let y = weekdayHeight + CGFloat(hourIndex) * getHourHeight(in: containerSize, hourCount: getHourCount(current: current, config: config))
@@ -46,8 +52,13 @@ struct TimetablePainter {
     }
 
     /// 주어진 `TimePlace`블록의 높이를 구한다.
-    static func getHeight(of timePlace: TimePlace, in containerSize: CGSize, hourCount: Int, config: TimetableConfiguration) -> CGFloat {
-        return timePlace.duration(compactMode: config.compactMode) * getHourHeight(in: containerSize, hourCount: hourCount)
+    static func getHeight(of timePlace: TimePlace, in containerSize: CGSize, current: Timetable?, config: TimetableConfiguration) -> CGFloat {
+        let hourCount = getHourCount(current: current, config: config)
+        let minHour = getStartingHour(current: current, config: config)
+
+        /// 시간표의 시작 시각보다 강의 시작이 이른 경우, 그만큼의 시간을 차감해서 높이를 계산한다.
+        let timeBlockCropAdjustment = abs(min(timePlace.startTimeDouble - Double(minHour), 0))
+        return (timePlace.duration(compactMode: config.compactMode) - timeBlockCropAdjustment) * getHourHeight(in: containerSize, hourCount: hourCount)
     }
 
     // MARK: Auto Fit
