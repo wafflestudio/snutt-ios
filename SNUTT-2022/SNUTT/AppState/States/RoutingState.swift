@@ -19,7 +19,6 @@ extension SettingScene {
     }
 }
 
-
 extension TimetableScene {
     struct RoutingState {
         var pushToNotification = false

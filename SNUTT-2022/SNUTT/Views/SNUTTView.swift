@@ -17,7 +17,7 @@ struct SNUTTView: View, Sendable {
         } set: {
             [previous = viewModel.selectedTab] current in
             let hasDoubleTapped = { (tabType: TabType) -> Bool in
-                return previous == current && current == tabType
+                previous == current && current == tabType
             }
             if hasDoubleTapped(.review) {
                 viewModel.reloadReviewWebView()

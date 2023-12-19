@@ -85,7 +85,7 @@ struct TimetableScene: View, Sendable {
                 }
         }
         .background {
-            NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)), 
+            NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
                            isActive: $pushToNotiScene) { EmptyView() }
         }
         .background {

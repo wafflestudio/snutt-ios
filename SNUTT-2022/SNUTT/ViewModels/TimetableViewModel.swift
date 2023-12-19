@@ -17,12 +17,12 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     @Published private(set) var unreadCount: Int = 0
 
     @Published private var _routingState: TimetableScene.RoutingState = .init()
-        var routingState: TimetableScene.RoutingState {
-            get { _routingState }
-            set {
-                services.globalUIService.setRoutingState(\.timetableScene, value: newValue)
-            }
+    var routingState: TimetableScene.RoutingState {
+        get { _routingState }
+        set {
+            services.globalUIService.setRoutingState(\.timetableScene, value: newValue)
         }
+    }
 
     override init(container: DIContainer) {
         super.init(container: container)

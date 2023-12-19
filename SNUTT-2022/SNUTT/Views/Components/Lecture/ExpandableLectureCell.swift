@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2023/12/17.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct ExpandableLectureCell: View {
     @ObservedObject var viewModel: ViewModel
@@ -63,7 +63,7 @@ struct ExpandableLectureCell: View {
                                 isReviewWebViewPresented = true
                             }
                         }
-                        
+
                         LectureCellActionButton(
                             icon: .asset(name: isBookmarked ? "search.bookmark.fill" : "search.bookmark"),
                             text: "관심강좌"
@@ -82,7 +82,7 @@ struct ExpandableLectureCell: View {
                                 }
                             }
                         }
-                        
+
                         LectureCellActionButton(
                             icon: .asset(name: isVacancyNotificationEnabled ? "search.vacancy.fill" : "search.vacancy"),
                             text: "빈자리알림"
@@ -93,7 +93,7 @@ struct ExpandableLectureCell: View {
                                 await viewModel.addVacancyLecture(lecture)
                             }
                         }
-                        
+
                         LectureCellActionButton(
                             icon: .asset(name: isInCurrentTimetable ? "search.remove.fill" : "search.add"),
                             text: isInCurrentTimetable ? "제거하기" : "추가하기"
@@ -112,15 +112,16 @@ struct ExpandableLectureCell: View {
                             isMainWebView: false,
                             detailId: reviewDetailId
                         )
-                                .id(reviewDetailId)
+                        .id(reviewDetailId)
                     }
                     .sheet(isPresented: $isDetailPagePresented) {
-                            NavigationView {
-                                LectureDetailScene(
-                                    viewModel: .init(container: viewModel.container),
-                                    lecture: lecture,
-                                    displayMode: .preview)
-                            }
+                        NavigationView {
+                            LectureDetailScene(
+                                viewModel: .init(container: viewModel.container),
+                                lecture: lecture,
+                                displayMode: .preview
+                            )
+                        }
                     }
                 }
             }
@@ -159,8 +160,6 @@ struct ExpandableLectureCell: View {
         }
     }
 }
-
-
 
 extension ExpandableLectureCell {
     class ViewModel: BaseViewModel, ObservableObject {

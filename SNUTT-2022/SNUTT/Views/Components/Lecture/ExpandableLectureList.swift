@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2023/12/17.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct ExpandableLectureList: View {
     @ObservedObject var viewModel: ViewModel
@@ -26,7 +26,8 @@ struct ExpandableLectureList: View {
                         isSelected: lecture.id == selectedLecture?.id,
                         isBookmarked: viewModel.isBookmarked(lecture: lecture),
                         isInCurrentTimetable: viewModel.isInCurrentTimetable(lecture: lecture),
-                        isVacancyNotificationEnabled: viewModel.isVacancyNotificationEnabled(lecture: lecture))
+                        isVacancyNotificationEnabled: viewModel.isVacancyNotificationEnabled(lecture: lecture)
+                    )
 
                     .task {
                         if lecture.id == lectures.last?.id {
@@ -43,11 +44,8 @@ struct ExpandableLectureList: View {
             }
         }
         .scrollDismissesKeyboardInteractively()
-
     }
 }
-
-
 
 extension ExpandableLectureList {
     class ViewModel: BaseViewModel, ObservableObject {
@@ -58,30 +56,28 @@ extension ExpandableLectureList {
         private var cancellables: Set<AnyCancellable> = .init()
 
         override init(container: DIContainer) {
-                    super.init(container: container)
+            super.init(container: container)
 
-                    objectWillChangeWhen(triggeredBy:
-                        timetableState.$bookmark,
-                        timetableState.$current,
-                        appState.vacancy.$lectures
-                    )
-                    .store(in: &cancellables)
-                }
+            objectWillChangeWhen(triggeredBy:
+                timetableState.$bookmark,
+                timetableState.$current,
+                appState.vacancy.$lectures)
+                .store(in: &cancellables)
+        }
 
-            func isBookmarked(lecture: Lecture) -> Bool {
-                timetableState.bookmark?.lectures
-                    .contains(where: { $0.isEquivalent(with: lecture) }) ?? false
-            }
-        
-            func isInCurrentTimetable(lecture: Lecture) -> Bool {
-                timetableState.current?.lectures
-                    .contains { $0.isEquivalent(with: lecture) } ?? false
-            }
+        func isBookmarked(lecture: Lecture) -> Bool {
+            timetableState.bookmark?.lectures
+                .contains(where: { $0.isEquivalent(with: lecture) }) ?? false
+        }
 
-            func isVacancyNotificationEnabled(lecture: Lecture) -> Bool {
-                appState.vacancy.lectures
-                    .contains { $0.isEquivalent(with: lecture) }
-            }
+        func isInCurrentTimetable(lecture: Lecture) -> Bool {
+            timetableState.current?.lectures
+                .contains { $0.isEquivalent(with: lecture) } ?? false
+        }
+
+        func isVacancyNotificationEnabled(lecture: Lecture) -> Bool {
+            appState.vacancy.lectures
+                .contains { $0.isEquivalent(with: lecture) }
+        }
     }
 }
-

@@ -19,7 +19,8 @@ struct BookmarkScene: View {
                 ExpandableLectureList(
                     viewModel: .init(container: viewModel.container),
                     lectures: viewModel.bookmarkedLectures,
-                    selectedLecture: $viewModel.selectedLecture)
+                    selectedLecture: $viewModel.selectedLecture
+                )
                 .animation(.customSpring, value: viewModel.selectedLecture?.id)
             }
         }

@@ -37,8 +37,8 @@ struct SearchLectureScene: View {
                       isFilterOpen: $viewModel.isFilterOpen,
                       displayMode: $displayMode,
                       action: viewModel.fetchInitialSearchResult)
-            .frame(height: Design.searchBarHeight)
-                    }
+                .frame(height: Design.searchBarHeight)
+        }
         .task {
             await viewModel.fetchTags()
         }
@@ -57,7 +57,6 @@ struct SearchLectureScene: View {
         }
 
         let _ = debugChanges()
-
     }
 
     private var backgroundTimetableView: some View {
@@ -65,20 +64,19 @@ struct SearchLectureScene: View {
             VStack {
                 TimetableZStack(current: viewModel.currentTimetableWithSelection,
                                 config: viewModel.timetableConfigWithAutoFit)
-                .animation(.customSpring, value: viewModel.selectedLecture?.id)
+                    .animation(.customSpring, value: viewModel.selectedLecture?.id)
             }
             STColor.searchListBackground
         }
         .ignoresSafeArea(.keyboard)
     }
 
-
     private var searchContentView: some View {
         VStack(spacing: 0) {
             if viewModel.selectedTagList.count > 0 {
                 SearchTagsScrollView(selectedTagList: viewModel.selectedTagList, deselect: viewModel.deselectTag)
             }
-            
+
             Group {
                 if viewModel.isLoading {
                     ProgressView()
@@ -107,7 +105,6 @@ struct SearchLectureScene: View {
     }
 }
 
-
 enum SearchDisplayMode {
     case search
     case bookmark
@@ -134,11 +131,11 @@ extension EnvironmentValues {
 }
 
 #if DEBUG
-struct SearchLectureScene_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            SearchLectureScene(viewModel: .init(container: .preview))
+    struct SearchLectureScene_Previews: PreviewProvider {
+        static var previews: some View {
+            NavigationView {
+                SearchLectureScene(viewModel: .init(container: .preview))
+            }
         }
     }
-}
 #endif
