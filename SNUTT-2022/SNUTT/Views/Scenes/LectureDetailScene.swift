@@ -219,7 +219,7 @@ struct LectureDetailScene: View {
                             viewModel.reloadDetailWebView(detailId: reviewId)
                         }
                         .sheet(isPresented: $showReviewWebView) {
-                            ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: false, detailId: $reviewId)
+                            ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: false, detailId: reviewId)
                                 .id(colorScheme)
                                 .id(reviewId)
                         }

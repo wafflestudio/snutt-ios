@@ -156,7 +156,9 @@ extension LectureDetailScene {
         }
 
         func findLectureInCurrentTimetable(_ lecture: Lecture) -> Lecture? {
-            guard let lecture = appState.timetable.current?.lectures.first(where: { $0.id == lecture.id }) else {
+            guard let lecture = appState.timetable.current?.lectures
+                .first(where: { $0.isEquivalent(with: lecture) })
+            else {
                 return nil
             }
             return lecture
@@ -185,7 +187,8 @@ extension LectureDetailScene {
         }
 
         func isBookmarked(lecture: Lecture) -> Bool {
-            return (appState.timetable.bookmark?.lectures.first(where: { $0.id == lecture.lectureId ?? lecture.id })) != nil
+            appState.timetable.bookmark?.lectures
+                .contains(where: { $0.isEquivalent(with: lecture) }) ?? false
         }
 
         func addVacancyLecture(lecture: Lecture) async {

@@ -159,5 +159,4 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func selectTimetableTheme(theme _: Theme) {}
     func createTimetable(title _: String, quarter _: Quarter) async throws {}
     func setTimetableConfig(config _: TimetableConfiguration) {}
-    func setBookmark(lectures _: [Lecture]) {}
 }

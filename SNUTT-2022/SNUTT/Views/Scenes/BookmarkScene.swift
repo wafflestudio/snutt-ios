@@ -8,70 +8,44 @@
 import SwiftUI
 
 struct BookmarkScene: View {
-    @ObservedObject var viewModel: TransculentListViewModel
-    @State private var reloadBookmarkList: Int = 0
+    @ObservedObject var viewModel: ViewModel
 
     var body: some View {
-        GeometryReader { _ in
-            ZStack {
-                Group {
-                    VStack {
-                        TimetableZStack(current: viewModel.currentTimetableWithSelection,
-                                        config: viewModel.timetableConfigWithAutoFit)
-                            .animation(.customSpring, value: viewModel.selectedLecture?.id)
-                    }
-                    STColor.searchListBackground
-                }
-
-                if viewModel.bookmarkedLectures.isEmpty {
-                    EmptyBookmarkList()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else {
-                    SearchLectureList(data: viewModel.bookmarkedLectures,
-                                      fetchMore: viewModel.fetchMoreSearchResult,
-                                      bookmarkedLecture: viewModel.getBookmarkedLecture,
-                                      existingLecture: viewModel.getExistingLecture,
-                                      bookmarkLecture: viewModel.bookmarkLecture,
-                                      undoBookmarkLecture: viewModel.undoBookmarkLecture,
-                                      addLecture: viewModel.addLecture,
-                                      deleteLecture: viewModel.deleteLecture,
-                                      fetchReviewId: viewModel.fetchReviewId(of:),
-                                      overwriteLecture: viewModel.overwriteLecture(lecture:),
-                                      preloadReviewWebView: viewModel.preloadReviewWebView(reviewId:),
-                                      checkIsVacancyNotificationEnabled: viewModel.checkIsVacancyNotificationEnabled(lecture:),
-                                      addVacancyLecture: viewModel.addVacancyLecture(lecture:),
-                                      deleteVacancyLecture: viewModel.deleteVacancyLecture(lecture:),
-                                      errorTitle: viewModel.errorTitle,
-                                      errorMessage: viewModel.errorMessage,
-                                      isLectureOverlapped: $viewModel.isLectureOverlapped,
-                                      selected: $viewModel.selectedLecture,
-                                      isFirstBookmarkAlertPresented: $viewModel.isFirstBookmarkAlertPresented)
-                        .animation(.customSpring, value: viewModel.selectedLecture?.id)
-                        .id(reloadBookmarkList)
-                }
+        VStack(spacing: 0) {
+            if viewModel.bookmarkedLectures.isEmpty {
+                EmptyBookmarkList()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                ExpandableLectureList(
+                    viewModel: .init(container: viewModel.container),
+                    lectures: viewModel.bookmarkedLectures,
+                    selectedLecture: $viewModel.selectedLecture)
+                .animation(.customSpring, value: viewModel.selectedLecture?.id)
             }
         }
-        .alert(viewModel.errorTitle, isPresented: $viewModel.isEmailVerifyAlertPresented, actions: {
-            Button("확인") {
-                viewModel.selectedTab = .review
-            }
-            Button("취소", role: .cancel) {}
-        }, message: {
-            Text(viewModel.errorMessage)
-        })
         .navigationTitle("관심강좌")
         .navigationBarTitleDisplayMode(.inline)
         .animation(.customSpring, value: viewModel.bookmarkedLectures.count)
-        .animation(.customSpring, value: viewModel.isLoading)
-        .onLoad {
-            Task {
-                await viewModel.getBookmark()
-            }
+    }
+}
+
+extension BookmarkScene {
+    class ViewModel: BaseViewModel, ObservableObject {
+        @Published private var _selectedLecture: Lecture?
+        @Published var bookmarkedLectures: [Lecture] = []
+
+        override init(container: DIContainer) {
+            super.init(container: container)
+
+            appState.search.$selectedLecture.assign(to: &$_selectedLecture)
+            appState.timetable.$bookmark.compactMap {
+                $0?.lectures
+            }.assign(to: &$bookmarkedLectures)
         }
-        .onChange(of: viewModel.isLoading) { _ in
-            withAnimation(.customSpring) {
-                reloadBookmarkList += 1
-            }
+
+        var selectedLecture: Lecture? {
+            get { _selectedLecture }
+            set { services.searchService.setSelectedLecture(newValue) }
         }
     }
 }

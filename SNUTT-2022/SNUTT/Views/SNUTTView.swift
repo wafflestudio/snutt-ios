@@ -8,19 +8,22 @@
 import Combine
 import SwiftUI
 
-struct SNUTTView: View {
+struct SNUTTView: View, Sendable {
     @ObservedObject var viewModel: ViewModel
-
-    /// Required to synchronize between two navigation bar heights: `TimetableScene` and `SearchLectureScene`.
-    @MainActor @State private var navigationBarHeight: CGFloat = 0
 
     private var selected: Binding<TabType> {
         Binding<TabType> {
             viewModel.selectedTab
         } set: {
             [previous = viewModel.selectedTab] current in
-            if previous == current, current == .review {
+            let hasDoubleTapped = { (tabType: TabType) -> Bool in
+                return previous == current && current == tabType
+            }
+            if hasDoubleTapped(.review) {
                 viewModel.reloadReviewWebView()
+            }
+            if hasDoubleTapped(.search) {
+                viewModel.initializeSearchState()
             }
             viewModel.selectedTab = current
         }
@@ -34,12 +37,9 @@ struct SNUTTView: View {
                 TabView(selection: selected) {
                     TabScene(tabType: .timetable) {
                         TimetableScene(viewModel: .init(container: viewModel.container))
-                            .background(NavigationBarReader { navbar in
-                                navigationBarHeight = navbar.frame.height
-                            })
                     }
                     TabScene(tabType: .search) {
-                        SearchLectureScene(viewModel: .init(container: viewModel.container), navigationBarHeight: navigationBarHeight)
+                        SearchLectureScene(viewModel: .init(container: viewModel.container))
                     }
                     TabScene(tabType: .review) {
                         ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: true)
@@ -229,6 +229,10 @@ extension SNUTTView {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
+
+        func initializeSearchState() {
+            services.searchService.initializeSearchState()
+        }
     }
 }
 
@@ -247,27 +251,3 @@ enum TabType: String {
         }
     }
 #endif
-
-// TODO: move elsewhere if needed
-struct NavigationBarReader: UIViewControllerRepresentable {
-    var callback: (UINavigationBar) -> Void
-    private let proxyController = ViewController()
-
-    func makeUIViewController(context _: UIViewControllerRepresentableContext<NavigationBarReader>) -> UIViewController {
-        proxyController.callback = callback
-        return proxyController
-    }
-
-    func updateUIViewController(_: UIViewController, context _: UIViewControllerRepresentableContext<NavigationBarReader>) {}
-
-    private class ViewController: UIViewController {
-        var callback: (UINavigationBar) -> Void = { _ in }
-
-        override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            if let navBar = navigationController {
-                callback(navBar.navigationBar)
-            }
-        }
-    }
-}

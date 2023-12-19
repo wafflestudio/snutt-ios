@@ -8,107 +8,117 @@
 import SwiftUI
 
 struct SearchLectureScene: View {
-    @ObservedObject var viewModel: SearchSceneViewModel
-    var navigationBarHeight: CGFloat
+    @ObservedObject var viewModel: SearchLectureSceneViewModel
 
+    private enum Design {
+        static let searchBarHeight = 44.0
+    }
+
+    @State private var displayMode: SearchDisplayMode = .search
     @State private var reloadSearchList: Int = 0
-    @State private var reviewId: String = ""
 
     var body: some View {
-        GeometryReader { reader in
-            ZStack {
-                // MARK: Background Timetable
+        ZStack {
+            backgroundTimetableView
 
-                Group {
-                    VStack {
-                        Spacer()
-                            .frame(height: navigationBarHeight)
-                        TimetableZStack(current: viewModel.currentTimetableWithSelection,
-                                        config: viewModel.timetableConfigWithAutoFit)
-                            .animation(.customSpring, value: viewModel.selectedLecture?.id)
-                    }
-                    STColor.searchListBackground
+            VStack(spacing: 0) {
+                switch displayMode {
+                case .search:
+                    searchContentView
+                        .transition(.move(edge: .leading))
+                case .bookmark:
+                    bookmarkContentView
+                        .transition(.move(edge: .trailing))
                 }
-                .ignoresSafeArea(.keyboard)
-
-                VStack(spacing: 0) {
-                    // MARK: SearchBar with padding
-
-                    VStack {
-                        Spacer()
-                        SearchBar(text: $viewModel.searchText,
-                                  isFilterOpen: $viewModel.isFilterOpen,
-                                  shouldShowCancelButton: viewModel.searchResult != nil,
-                                  action: viewModel.fetchInitialSearchResult,
-                                  cancel: viewModel.initializeSearchState)
-                    }
-                    .frame(height: reader.safeAreaInsets.top + navigationBarHeight)
-
-                    // MARK: Selected Filter Tags
-
-                    if viewModel.selectedTagList.count > 0 {
-                        SearchTagsScrollView(selectedTagList: viewModel.selectedTagList, deselect: viewModel.deselectTag)
-                    }
-
-                    // MARK: Main Content
-
-                    if viewModel.isLoading {
-                        ProgressView()
-                            .frame(maxHeight: .infinity, alignment: .center)
-                    } else if viewModel.searchResult == nil {
-                        SearchTips()
-                    } else if viewModel.searchResult?.count == 0 {
-                        EmptySearchResult()
-                    } else {
-                        SearchLectureList(data: viewModel.searchResult!,
-                                          fetchMore: viewModel.fetchMoreSearchResult,
-                                          bookmarkedLecture: viewModel.getBookmarkedLecture,
-                                          existingLecture: viewModel.getExistingLecture,
-                                          bookmarkLecture: viewModel.bookmarkLecture,
-                                          undoBookmarkLecture: viewModel.undoBookmarkLecture,
-                                          addLecture: viewModel.addLecture,
-                                          deleteLecture: viewModel.deleteLecture,
-                                          fetchReviewId: viewModel.fetchReviewId(of:),
-                                          overwriteLecture: viewModel.overwriteLecture(lecture:),
-                                          preloadReviewWebView: viewModel.preloadReviewWebView(reviewId:),
-                                          checkIsVacancyNotificationEnabled: viewModel.checkIsVacancyNotificationEnabled(lecture:),
-                                          addVacancyLecture: viewModel.addVacancyLecture(lecture:),
-                                          deleteVacancyLecture: viewModel.deleteVacancyLecture(lecture:),
-                                          errorTitle: viewModel.errorTitle,
-                                          errorMessage: viewModel.errorMessage,
-                                          isLectureOverlapped: $viewModel.isLectureOverlapped,
-                                          selected: $viewModel.selectedLecture,
-                                          isFirstBookmarkAlertPresented: $viewModel.isFirstBookmarkAlertPresented)
-                            .animation(.customSpring, value: viewModel.selectedLecture?.id)
-                            .id(reloadSearchList) // reload everything when any of the search conditions changes
-                    }
-                }
-                .edgesIgnoringSafeArea(.top)
-                .ignoresSafeArea(.keyboard)
             }
-            .task {
-                await viewModel.fetchTags()
-            }
-            .alert(viewModel.errorTitle, isPresented: $viewModel.isEmailVerifyAlertPresented, actions: {
-                Button("확인") {
-                    viewModel.selectedTab = .review
-                }
-                Button("취소", role: .cancel) {}
-            }, message: {
-                Text(viewModel.errorMessage)
-            })
-            .navigationBarHidden(true)
-            .animation(.customSpring, value: viewModel.searchResult?.count)
-            .animation(.customSpring, value: viewModel.isLoading)
-            .animation(.customSpring, value: viewModel.selectedTagList.count)
-            .onChange(of: viewModel.isLoading) { _ in
-                withAnimation(.customSpring) {
-                    reloadSearchList += 1
-                }
+        }
+        .safeAreaInset(edge: .top, alignment: .center, spacing: 0) {
+            SearchBar(text: $viewModel.searchText,
+                      isFilterOpen: $viewModel.isFilterOpen,
+                      displayMode: $displayMode,
+                      action: viewModel.fetchInitialSearchResult)
+            .frame(height: Design.searchBarHeight)
+                    }
+        .task {
+            await viewModel.fetchTags()
+        }
+        .task {
+            await viewModel.getBookmark()
+        }
+        .navigationBarHidden(true)
+        .animation(.customSpring, value: viewModel.searchResult?.count)
+        .animation(.customSpring, value: viewModel.isLoading)
+        .animation(.customSpring, value: viewModel.selectedTagList.count)
+        .animation(.customSpring, value: displayMode)
+        .onChange(of: viewModel.isLoading) { _ in
+            withAnimation(.customSpring) {
+                reloadSearchList += 1
             }
         }
 
         let _ = debugChanges()
+
+    }
+
+    private var backgroundTimetableView: some View {
+        Group {
+            VStack {
+                TimetableZStack(current: viewModel.currentTimetableWithSelection,
+                                config: viewModel.timetableConfigWithAutoFit)
+                .animation(.customSpring, value: viewModel.selectedLecture?.id)
+            }
+            STColor.searchListBackground
+        }
+        .ignoresSafeArea(.keyboard)
+    }
+
+
+    private var searchContentView: some View {
+        VStack(spacing: 0) {
+            if viewModel.selectedTagList.count > 0 {
+                SearchTagsScrollView(selectedTagList: viewModel.selectedTagList, deselect: viewModel.deselectTag)
+            }
+            
+            Group {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxHeight: .infinity, alignment: .center)
+                } else if viewModel.searchResult == nil {
+                    SearchTips()
+                } else if viewModel.searchResult?.count == 0 {
+                    EmptySearchResult()
+                } else if let searchResult = viewModel.searchResult {
+                    ExpandableLectureList(
+                        viewModel: .init(container: viewModel.container),
+                        lectures: searchResult,
+                        selectedLecture: $viewModel.selectedLecture,
+                        fetchMoreLectures: viewModel.fetchMoreSearchResult
+                    )
+                    .animation(.customSpring, value: viewModel.selectedLecture?.id)
+                    .id(reloadSearchList) // reload everything when any of the search conditions changes
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    private var bookmarkContentView: some View {
+        BookmarkScene(viewModel: .init(container: viewModel.container))
+    }
+}
+
+
+enum SearchDisplayMode {
+    case search
+    case bookmark
+
+    mutating func toggle() {
+        switch self {
+        case .search:
+            self = .bookmark
+        case .bookmark:
+            self = .search
+        }
     }
 }
 
@@ -124,11 +134,11 @@ extension EnvironmentValues {
 }
 
 #if DEBUG
-    struct SearchLectureScene_Previews: PreviewProvider {
-        static var previews: some View {
-            NavigationView {
-                SearchLectureScene(viewModel: .init(container: .preview), navigationBarHeight: 80)
-            }
+struct SearchLectureScene_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            SearchLectureScene(viewModel: .init(container: .preview))
         }
     }
+}
 #endif

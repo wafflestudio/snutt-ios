@@ -117,11 +117,6 @@ struct SearchService: SearchServiceProtocol {
     }
 
     func getBookmark() async throws {
-        setLoading(true)
-        defer {
-            setLoading(false)
-        }
-        searchState.pageNum = 0
         try await _getBookmark()
     }
 

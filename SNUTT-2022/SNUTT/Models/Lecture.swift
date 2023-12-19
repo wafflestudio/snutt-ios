@@ -99,7 +99,10 @@ struct Lecture: Identifiable {
     }
 
     func isEquivalent(with lecture: Lecture) -> Bool {
-        return !isCustom && courseNumber == lecture.courseNumber && lectureNumber == lecture.lectureNumber
+        if isCustom {
+            return id == lecture.id
+        }
+        return courseNumber == lecture.courseNumber && lectureNumber == lecture.lectureNumber
     }
 }
 
