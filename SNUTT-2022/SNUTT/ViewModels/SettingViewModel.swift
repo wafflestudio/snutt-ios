@@ -9,10 +9,8 @@ import Foundation
 import SwiftUI
 
 class SettingViewModel: BaseViewModel, ObservableObject {
-    @Published var currentUser: User?
-    @Published var preferredColorScheme: ColorScheme? = nil
-    @Published var notifications: [STNotification] = []
-    @Published var unreadCount: Int = 0
+    @Published private(set) var currentUser: User?
+    @Published private(set) var preferredColorScheme: ColorScheme? = nil
 
     @Published var _routingState: SettingScene.RoutingState = .init()
     var routingState: SettingScene.RoutingState {
@@ -26,37 +24,11 @@ class SettingViewModel: BaseViewModel, ObservableObject {
         super.init(container: container)
         appState.user.$current.assign(to: &$currentUser)
         appState.system.$preferredColorScheme.assign(to: &$preferredColorScheme)
-        appState.notification.$notifications.assign(to: &$notifications)
-        appState.notification.$unreadCount.assign(to: &$unreadCount)
         appState.routing.$settingScene.assign(to: &$_routingState)
     }
 
     var userEmail: String? {
         appState.user.current?.email
-    }
-
-    func fetchInitialNotifications(updateLastRead: Bool) async {
-        do {
-            try await services.notificationService.fetchInitialNotifications(updateLastRead: updateLastRead)
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-    }
-
-    func fetchMoreNotifications() async {
-        do {
-            try await services.notificationService.fetchMoreNotifications()
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-    }
-
-    func fetchNotificationsCount() async {
-        do {
-            try await services.notificationService.fetchUnreadNotificationCount()
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
     }
 
     func hasNewBadge(settingName: String) -> Bool {

@@ -9,9 +9,8 @@ import LinkPresentation
 import SwiftUI
 
 struct TimetableScene: View, Sendable {
-    @AppStorage("isNewToBookmark") var isNewToBookmark: Bool = true
+    @State private var pushToNotiScene = false
     @State private var pushToListScene = false
-    @State private var pushToBookmarkScene = false
     @State private var isShareSheetOpened = false
     @State private var screenshot: UIImage = .init()
     @ObservedObject var viewModel: TimetableViewModel
@@ -43,7 +42,6 @@ struct TimetableScene: View, Sendable {
                 .background(
                     Group {
                         NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
-                        NavigationLink(destination: BookmarkScene(viewModel: .init(container: viewModel.container)), isActive: $pushToBookmarkScene) { EmptyView() }
                     }
                 )
                 .navigationBarTitleDisplayMode(.inline)
@@ -71,21 +69,28 @@ struct TimetableScene: View, Sendable {
                             }
 
                             NavBarButton(imageName: "nav.share") {
-                                self.screenshot = timetable.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
+                                screenshot = self.timetable.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
                                 isShareSheetOpened = true
                             }
 
-                            NavBarButton(imageName: "nav.bookmark") {
-                                pushToBookmarkScene = true
-                                isNewToBookmark = false
+                            NavBarButton(imageName: "nav.alarm.off") {
+                                pushToNotiScene = true
                             }
-                            .circleBadge(condition: isNewToBookmark)
+                            .circleBadge(condition: viewModel.unreadCount > 0)
                         }
                     }
                 }
                 .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
                     ActivityViewController(activityItems: [screenshot, linkMetadata])
                 }
+        }
+        .background {
+            NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)), 
+                           isActive: $pushToNotiScene) { EmptyView() }
+        }
+        .background {
+            NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
+                           isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
         }
     }
 }
@@ -124,11 +129,3 @@ private final class LinkMetadata: NSObject, UIActivityItemSource {
         return linkMetadata
     }
 }
-
-// struct MyTimetableScene_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationView {
-//            TimetableScene(viewModel: .init(container: .preview))
-//        }
-//    }
-// }

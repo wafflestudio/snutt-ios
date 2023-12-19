@@ -30,8 +30,8 @@ struct DeepLinkHandler {
 
 extension DeepLinkHandler {
     private func handleNotification(parameters _: Parameters?) {
-        appState.system.selectedTab = .settings
-        appState.routing.settingScene.pushToNotification = true
+        appState.system.selectedTab = .timetable
+        appState.routing.timetableScene.pushToNotification = true
     }
 
     private func handleVacancy(parameters _: Parameters?) {

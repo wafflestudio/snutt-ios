@@ -75,6 +75,9 @@ struct SNUTTView: View {
                         group.addTask {
                             await viewModel.fetchReactNativeBundleIfNeeded()
                         }
+                        group.addTask {
+                            await viewModel.fetchNotificationsCount()
+                        }
                     })
                 }
 
@@ -216,6 +219,14 @@ extension SNUTTView {
                 try await services.friendsService.fetchReactNativeBundleUrl()
             } catch {
                 // pass
+            }
+        }
+
+        func fetchNotificationsCount() async {
+            do {
+                try await services.notificationService.fetchUnreadNotificationCount()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
     }
