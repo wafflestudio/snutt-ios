@@ -38,7 +38,7 @@ struct SearchTips: View {
                 Text("ex) 죽음의 과학적 이해 유성호 → 죽과이 유성호")
                     .font(.system(size: 16))
             }
-            
+
             Spacer()
                 .frame(height: 5)
 
