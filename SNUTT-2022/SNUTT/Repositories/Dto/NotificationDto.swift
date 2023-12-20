@@ -40,7 +40,7 @@ struct NotificationDto: Decodable {
              .lectureRemove:
             detail = try? container.decode(Detail.self, forKey: .detail)
             return
-        case .link:
+        case .lectureVacancy, .friend, .newFeature:
             detail = try? container.decode(String.self, forKey: .detail)
             return
         }
