@@ -30,23 +30,31 @@ struct STNotification: Hashable {
             return "업데이트 알림"
         case .lectureRemove:
             return "폐강 알림"
-        case .link:
-            return "공지"
+        case .lectureVacancy:
+            return "빈자리 알림"
+        case .friend:
+            return "친구"
+        case .newFeature:
+            return "신규 기능"
         }
     }
 
     var imageName: String {
         switch type {
         case .normal:
-            return "exclamation"
+            return "noti.exclamation"
         case .courseBook:
-            return "calendar"
+            return "noti.calendar"
         case .lectureUpdate:
-            return "refresh"
+            return "noti.refresh"
         case .lectureRemove:
-            return "trash"
-        case .link:
-            return "megaphone"
+            return "noti.trash"
+        case .lectureVacancy:
+            return "noti.vacancy"
+        case .friend:
+            return "noti.friend"
+        case .newFeature:
+            return "noti.megaphone"
         }
     }
 }
@@ -66,12 +74,12 @@ extension STNotification {
             detail = nil
         case .lectureRemove, .lectureUpdate:
             detail = dto.detail as? NotificationDto.Detail
-        case .link:
+        case .lectureVacancy, .friend, .newFeature:
             link = dto.detail as? String
         }
     }
 }
 
 enum NotificationType: Int {
-    case normal = 0, courseBook, lectureUpdate, lectureRemove, link
+    case normal = 0, courseBook, lectureUpdate, lectureRemove, lectureVacancy, friend, newFeature
 }
