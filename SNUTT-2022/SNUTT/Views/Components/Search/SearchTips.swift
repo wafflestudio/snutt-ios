@@ -38,6 +38,16 @@ struct SearchTips: View {
                 Text("ex) 죽음의 과학적 이해 유성호 → 죽과이 유성호")
                     .font(.system(size: 16))
             }
+            
+            Spacer()
+                .frame(height: 5)
+
+            VStack(spacing: 5) {
+                Text("강의실 위치로 검색해보세요.")
+                    .font(.system(size: 16, weight: .bold))
+                Text("ex) 26동 / 302-108 / 대글2 43-1동")
+                    .font(.system(size: 16))
+            }
 
             Spacer()
         }
