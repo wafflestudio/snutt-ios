@@ -191,6 +191,10 @@ extension LectureDetailScene {
         func addVacancyLecture(lecture: Lecture) async {
             do {
                 try await services.vacancyService.addLecture(lecture: lecture)
+            } catch let error as STError where error.code == .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION {
+                isErrorAlertPresented = true
+                errorTitle = error.title
+                errorMessage = error.content
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
