@@ -29,6 +29,6 @@ struct ColorSchemeSettingScene: View {
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("색상 모드")
+        .navigationTitle("화면 모드")
     }
 }
