@@ -32,7 +32,7 @@ struct TimetablePainter {
             return nil
         }
 
-        if timePlace.startTimeDouble > Double(getEndingHour(current: current, config: config)) {
+        if timePlace.startTimeDouble >= Double(getEndingHour(current: current, config: config)) + 1 {
             return nil
         }
 
