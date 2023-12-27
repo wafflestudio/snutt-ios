@@ -20,6 +20,7 @@ protocol SearchServiceProtocol: Sendable {
     func setSelectedLecture(_ value: Lecture?)
     func initializeSearchState()
     func getBookmark() async throws
+    func setSearchDisplayMode(_ mode: SearchDisplayMode)
 }
 
 struct SearchService: SearchServiceProtocol {
@@ -47,6 +48,7 @@ struct SearchService: SearchServiceProtocol {
         searchState.selectedTagList = []
         searchState.searchResult = nil
         searchState.searchText = ""
+        searchState.displayMode = .search
     }
 
     func fetchTags(quarter: Quarter) async throws {
@@ -108,6 +110,10 @@ struct SearchService: SearchServiceProtocol {
         searchState.isFilterOpen = value
     }
 
+    func setSearchDisplayMode(_ mode: SearchDisplayMode) {
+        searchState.displayMode = mode
+    }
+
     func setSelectedLecture(_ value: Lecture?) {
         searchState.selectedLecture = value
     }
@@ -144,4 +150,5 @@ class FakeSearchService: SearchServiceProtocol {
     func setSelectedLecture(_: Lecture?) {}
     func initializeSearchState() {}
     func getBookmark() async throws {}
+    func setSearchDisplayMode(_ mode: SearchDisplayMode) {}
 }

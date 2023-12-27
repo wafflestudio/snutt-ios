@@ -13,6 +13,7 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
     @Published private var _timetableConfig: TimetableConfiguration = .init()
     @Published private var _searchText: String = ""
     @Published private var _isFilterOpen: Bool = false
+    @Published private var _displayMode: SearchDisplayMode = .search
 
     @Published var searchResult: [Lecture]? = nil
     @Published var selectedTagList: [SearchTag] = []
@@ -28,12 +29,9 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
         set { services.searchService.setIsFilterOpen(newValue) }
     }
 
-    private var searchState: SearchState {
-        appState.search
-    }
-
-    private var timetableState: TimetableState {
-        appState.timetable
+    var displayMode: SearchDisplayMode {
+        get { _displayMode }
+        set { services.searchService.setSearchDisplayMode(newValue) }
     }
 
     override init(container: DIContainer) {
@@ -47,6 +45,7 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$isLoading.assign(to: &$isLoading)
         appState.search.$searchResult.assign(to: &$searchResult)
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
+        appState.search.$displayMode.assign(to: &$_displayMode)
     }
 
     var selectedLecture: Lecture? {
@@ -66,7 +65,7 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
         if appState.search.searchTagList != nil {
             return
         }
-        guard let currentTimetable = timetableState.current else { return }
+        guard let currentTimetable = appState.timetable.current else { return }
         do {
             try await services.searchService.fetchTags(quarter: currentTimetable.quarter)
         } catch {

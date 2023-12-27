@@ -14,7 +14,6 @@ struct SearchLectureScene: View {
         static let searchBarHeight = 44.0
     }
 
-    @State private var displayMode: SearchDisplayMode = .search
     @State private var reloadSearchList: Int = 0
 
     var body: some View {
@@ -22,7 +21,7 @@ struct SearchLectureScene: View {
             backgroundTimetableView
 
             VStack(spacing: 0) {
-                switch displayMode {
+                switch viewModel.displayMode {
                 case .search:
                     searchContentView
                         .transition(.move(edge: .leading))
@@ -35,7 +34,7 @@ struct SearchLectureScene: View {
         .safeAreaInset(edge: .top, alignment: .center, spacing: 0) {
             SearchBar(text: $viewModel.searchText,
                       isFilterOpen: $viewModel.isFilterOpen,
-                      displayMode: $displayMode,
+                      displayMode: $viewModel.displayMode,
                       action: viewModel.fetchInitialSearchResult)
                 .frame(height: Design.searchBarHeight)
         }
@@ -49,7 +48,7 @@ struct SearchLectureScene: View {
         .animation(.customSpring, value: viewModel.searchResult?.count)
         .animation(.customSpring, value: viewModel.isLoading)
         .animation(.customSpring, value: viewModel.selectedTagList.count)
-        .animation(.customSpring, value: displayMode)
+        .animation(.customSpring, value: viewModel.displayMode)
         .onChange(of: viewModel.isLoading) { _ in
             withAnimation(.customSpring) {
                 reloadSearchList += 1
