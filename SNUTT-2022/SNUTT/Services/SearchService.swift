@@ -150,5 +150,5 @@ class FakeSearchService: SearchServiceProtocol {
     func setSelectedLecture(_: Lecture?) {}
     func initializeSearchState() {}
     func getBookmark() async throws {}
-    func setSearchDisplayMode(_ mode: SearchDisplayMode) {}
+    func setSearchDisplayMode(_: SearchDisplayMode) {}
 }
