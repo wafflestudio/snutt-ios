@@ -10,16 +10,16 @@ import SwiftUI
 
 struct ReviewScene: View {
     @ObservedObject var viewModel: ViewModel
-    @Binding var detailId: String?
+    var detailId: String?
 
     private var isMainWebView: Bool
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
 
-    init(viewModel: ViewModel, isMainWebView: Bool, detailId: Binding<String?> = .constant(nil)) {
+    init(viewModel: ViewModel, isMainWebView: Bool, detailId: String? = nil) {
         self.viewModel = viewModel
-        _detailId = detailId
+        self.detailId = detailId
         self.isMainWebView = isMainWebView
 
         eventSignal?.send(.colorSchemeChange(to: viewModel.preferredColorScheme))

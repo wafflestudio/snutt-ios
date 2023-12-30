@@ -10,11 +10,17 @@ import Foundation
 @MainActor
 class ViewRoutingState {
     @Published var settingScene = SettingScene.RoutingState()
+    @Published var timetableScene = TimetableScene.RoutingState()
 }
 
 extension SettingScene {
     struct RoutingState {
-        var pushToNotification = false
         var pushToVacancy = false
+    }
+}
+
+extension TimetableScene {
+    struct RoutingState {
+        var pushToNotification = false
     }
 }

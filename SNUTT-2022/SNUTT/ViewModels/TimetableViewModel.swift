@@ -9,10 +9,20 @@ import Combine
 import Foundation
 
 class TimetableViewModel: BaseViewModel, ObservableObject {
-    @Published var currentTimetable: Timetable?
-    @Published var configuration: TimetableConfiguration = .init()
+    @Published private(set) var currentTimetable: Timetable?
+    @Published private(set) var configuration: TimetableConfiguration = .init()
     @Published private var metadataList: [TimetableMetadata]?
-    @Published var isVacancyBannerVisible = false
+    @Published private(set) var isVacancyBannerVisible = false
+
+    @Published private(set) var unreadCount: Int = 0
+
+    @Published private var _routingState: TimetableScene.RoutingState = .init()
+    var routingState: TimetableScene.RoutingState {
+        get { _routingState }
+        set {
+            services.globalUIService.setRoutingState(\.timetableScene, value: newValue)
+        }
+    }
 
     override init(container: DIContainer) {
         super.init(container: container)
@@ -21,6 +31,9 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
         appState.timetable.$configuration.assign(to: &$configuration)
         appState.timetable.$metadataList.assign(to: &$metadataList)
         appState.vacancy.$isBannerVisible.assign(to: &$isVacancyBannerVisible)
+
+        appState.notification.$unreadCount.assign(to: &$unreadCount)
+        appState.routing.$timetableScene.assign(to: &$_routingState)
     }
 
     var totalCredit: Int {

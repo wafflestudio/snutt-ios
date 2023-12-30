@@ -12,6 +12,7 @@ class SearchState {
     @Published var isFilterOpen = false
     @Published var searchTagList: SearchTagList?
     @Published var selectedTagList: [SearchTag] = []
+    @Published var displayMode: SearchDisplayMode = .search
 
     /// If `nil`, the user had never started searching.
     /// If empty, the server returned an empty search result.
