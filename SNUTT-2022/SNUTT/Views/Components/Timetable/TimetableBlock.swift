@@ -28,8 +28,7 @@ struct TimetableBlock: View {
                         Text(timePlace.place)
                             .font(STFont.detailsSemibold)
                             .padding(.top, 2)
-                            .minimumScaleFactor(0.5)
-                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
                     }
                 }
                 .multilineTextAlignment(.center)
