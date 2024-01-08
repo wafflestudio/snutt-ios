@@ -64,9 +64,9 @@ extension NotificationList {
     struct NotificationList_Previews: PreviewProvider {
         static var notifications: [STNotification] {
             return [
-                .init(message: "공지", created_at: "2022-04-30T08:11:04.200Z", type: .normal, user_id: ""),
-                .init(message: "공지", created_at: "2022-04-30T08:11:04.201Z", type: .normal, user_id: ""),
-                .init(message: "공지", created_at: "2022-04-30T08:11:04.202Z", type: .normal, user_id: ""),
+                .init(title: "공지", message: "공지예시 1", created_at: "2022-04-30T08:11:04.200Z", type: .normal, user_id: ""),
+                .init(title: "공지", message: "공지예시 2", created_at: "2022-04-30T08:11:04.201Z", type: .normal, user_id: ""),
+                .init(title: "공지", message: "공지예시 3", created_at: "2022-04-30T08:11:04.202Z", type: .normal, user_id: ""),
             ]
         }
 

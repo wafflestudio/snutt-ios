@@ -8,6 +8,7 @@
 import Foundation
 
 struct STNotification: Hashable {
+    let title: String
     let message: String
     let created_at: String
     let type: NotificationType
@@ -18,25 +19,6 @@ struct STNotification: Hashable {
     var dateString: String {
         let date = DateFormatter.parse(string: created_at)
         return DateFormatter.parse(date: date)
-    }
-
-    var title: String {
-        switch type {
-        case .normal:
-            return "공지"
-        case .courseBook:
-            return "수강편람"
-        case .lectureUpdate:
-            return "업데이트 알림"
-        case .lectureRemove:
-            return "폐강 알림"
-        case .lectureVacancy:
-            return "빈자리 알림"
-        case .friend:
-            return "친구"
-        case .newFeature:
-            return "신규 기능"
-        }
     }
 
     var imageName: String {
@@ -62,6 +44,7 @@ struct STNotification: Hashable {
 extension STNotification {
     init(from dto: NotificationDto
     ) {
+        title = dto.title
         message = dto.message
         created_at = dto.created_at
         type = NotificationType(rawValue: dto.type) ?? .normal
