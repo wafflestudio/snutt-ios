@@ -20,7 +20,7 @@ struct NotificationListCell: View {
                 VStack(alignment: .leading, spacing: 0) {
                     Spacer().frame(height: 7)
 
-                    HStack {
+                    HStack(alignment: .top) {
                         Text(notification.title)
                             .font(.system(size: 13, weight: .semibold))
 
