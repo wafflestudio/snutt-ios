@@ -9,29 +9,43 @@ import SwiftUI
 
 struct NotificationListCell: View {
     let notification: STNotification
+    
     var body: some View {
-        HStack(alignment: .top, spacing: 10) {
-            Image(notification.imageName)
-                .resizable()
-                .frame(width: 30, height: 30)
+        VStack(spacing: 0) {
+            HStack(alignment: .top, spacing: 10) {
+                Image(notification.imageName)
+                    .resizable()
+                    .frame(width: 30, height: 30)
 
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Text(notification.title)
-                        .font(.system(size: 14, weight: .bold))
+                VStack(alignment: .leading, spacing: 0) {
+                    Spacer().frame(height: 7)
+                    
+                    HStack {
+                        Text(notification.title)
+                            .font(.system(size: 13, weight: .semibold))
 
-                    Spacer()
+                        Spacer()
 
-                    Text(notification.dateString)
-                        .font(STFont.detailLabel)
-                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                        Text(notification.dateString)
+                            .font(.system(size: 13))
+                            .foregroundColor(STColor.gray30)
+                    }
+                    
+                    Spacer().frame(height: 6)
+
+                    Text(notification.message)
+                        .font(.system(size: 13))
+                    
+                    Spacer().frame(height: 7)
                 }
-
-                Text(notification.message)
-                    .font(STFont.detailLabel)
             }
+            .padding(.vertical, 8)
+            
+            Rectangle()
+                .foregroundColor(STColor.divider)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(height: 0.5)
         }
-        .padding(.vertical, 5)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
