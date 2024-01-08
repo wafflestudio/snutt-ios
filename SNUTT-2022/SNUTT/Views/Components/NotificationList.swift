@@ -20,9 +20,11 @@ struct NotificationList: View {
                         }
                     }
                     .listRowBackground(STColor.systemBackground)
+                    .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
             }
         }
+        .padding(.horizontal, 16)
         .listStyle(.plain)
         .navigationTitle(Text("알림"))
         .navigationBarTitleDisplayMode(.inline)
@@ -71,7 +73,7 @@ extension NotificationList {
         }
 
         static var previews: some View {
-            var container: DIContainer = {
+            let container: DIContainer = {
                 let container = DIContainer.preview
                 container.appState.notification.notifications = Self.notifications
                 return container
