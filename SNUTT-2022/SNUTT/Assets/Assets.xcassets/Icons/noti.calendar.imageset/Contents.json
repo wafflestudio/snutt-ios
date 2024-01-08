@@ -17,7 +17,7 @@
       "scale" : "1x"
     },
     {
-      "filename" : "timetable@2x-1.png",
+      "filename" : "noti.calendar@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "timetable@2x.png",
+      "filename" : "noti.calendar.dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "timetable@3x-1.png",
+      "filename" : "noti.calendar@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "timetable@3x.png",
+      "filename" : "noti.calendar.dark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
