@@ -22,10 +22,10 @@ struct STColor {
     /// RGB 196-196-196 /
     /// Hex #C4C4C4
     static let gray: Color = .init(hex: "#C4C4C4")
-    
+
     /// Hex #A6A6A6
     static let gray30: Color = .init(hex: "#A6A6A6")
-    
+
     /// Hex #EBEBEB
     static let divider: Color = .init(hex: "#EBEBEB")
 

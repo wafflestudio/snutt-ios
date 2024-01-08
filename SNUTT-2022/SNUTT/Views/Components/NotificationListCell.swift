@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NotificationListCell: View {
     let notification: STNotification
-    
+
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .top, spacing: 10) {
@@ -19,7 +19,7 @@ struct NotificationListCell: View {
 
                 VStack(alignment: .leading, spacing: 0) {
                     Spacer().frame(height: 7)
-                    
+
                     HStack {
                         Text(notification.title)
                             .font(.system(size: 13, weight: .semibold))
@@ -30,17 +30,17 @@ struct NotificationListCell: View {
                             .font(.system(size: 13))
                             .foregroundColor(STColor.gray30)
                     }
-                    
+
                     Spacer().frame(height: 6)
 
                     Text(notification.message)
                         .font(.system(size: 13))
-                    
+
                     Spacer().frame(height: 7)
                 }
             }
             .padding(.vertical, 8)
-            
+
             Rectangle()
                 .foregroundColor(STColor.divider)
                 .frame(maxWidth: .infinity, alignment: .leading)
