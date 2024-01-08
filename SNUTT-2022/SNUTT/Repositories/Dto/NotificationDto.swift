@@ -8,6 +8,7 @@
 import Foundation
 
 struct NotificationDto: Decodable {
+    let title: String
     let message: String
     let created_at: String
     let type: Int
@@ -15,6 +16,7 @@ struct NotificationDto: Decodable {
     var detail: Any?
 
     enum CodingKeys: String, CodingKey {
+        case title
         case message
         case created_at
         case type
@@ -24,6 +26,7 @@ struct NotificationDto: Decodable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        title = try container.decode(String.self, forKey: .title)
         message = try container.decode(String.self, forKey: .message)
         created_at = try container.decode(String.self, forKey: .created_at)
         self.type = try container.decode(Int.self, forKey: .type)
