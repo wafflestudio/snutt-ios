@@ -72,8 +72,10 @@ struct LectureService: LectureServiceProtocol {
     }
 
     func deleteLecture(lecture: Lecture) async throws {
-        guard let currentTimetable = appState.timetable.current else { return }
-        let dto = try await lectureRepository.deleteLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
+        guard let currentTimetable = appState.timetable.current,
+              let timetableLecture = currentTimetable.lectures.first(where: { $0.isEquivalent(with: lecture) })
+        else { return }
+        let dto = try await lectureRepository.deleteLecture(timetableId: currentTimetable.id, lectureId: timetableLecture.id)
         let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
