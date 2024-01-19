@@ -8,7 +8,7 @@
 import Foundation
 
 struct NotificationDto: Decodable {
-    let title: String
+    var title: String
     let message: String
     let created_at: String
     let type: Int
@@ -38,14 +38,30 @@ struct NotificationDto: Decodable {
         case .normal,
              .courseBook:
             detail = nil
-            return
         case .lectureUpdate,
              .lectureRemove:
             detail = try? container.decode(Detail.self, forKey: .detail)
-            return
         case .lectureVacancy, .friend, .newFeature:
             detail = try? container.decode(String.self, forKey: .detail)
-            return
+        }
+        
+        if title.isEmpty {
+            switch type {
+            case .normal:
+                title = "공지"
+            case .courseBook:
+                title = "수강편람"
+            case .lectureUpdate:
+                title = "업데이트 알림"
+            case .lectureRemove:
+                title = "폐강 알림"
+            case .lectureVacancy:
+                title = "빈자리 알림"
+            case .friend:
+                title = "친구"
+            case .newFeature:
+                title = "신규 기능"
+            }
         }
     }
 
