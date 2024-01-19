@@ -11,8 +11,8 @@ struct TimetableBlocksLayer: View {
     let current: Timetable?
     let config: TimetableConfiguration
 
-    var displayedTheme: Theme {
-        current?.selectedTheme ?? (current?.theme ?? .snutt)
+    var displayedTheme: BasicTheme {
+        current?.selectedTheme?.theme ?? (current?.theme ?? .snutt)
     }
 
     var body: some View {

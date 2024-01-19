@@ -32,6 +32,11 @@ struct SettingScene: View {
                 SettingsLinkItem(title: "시간표 설정") {
                     TimetableSettingScene(viewModel: .init(container: viewModel.container))
                 }
+                
+                SettingsLinkItem(title: "시간표 테마") {
+                    ThemeSettingScene(viewModel:
+                            .init(container: viewModel.container))
+                }
             } header: {
                 Text("디스플레이")
             }
@@ -100,6 +105,7 @@ struct SettingScene: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.fetchUser()
+            await viewModel.getThemeList()
         }
 
         let _ = debugChanges()

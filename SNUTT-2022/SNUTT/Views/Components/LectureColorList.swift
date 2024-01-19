@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct LectureColorList: View {
-    var theme: Theme
+    var theme: BasicTheme
 
     /// `colorIndex`의 값이 `0`이면 `customColor`를 사용하고, 그렇지 않으면 `colorList[colorIndex]`를 사용한다.
     @Binding var colorIndex: Int
     @Binding var customColor: LectureColor?
     @Binding private var selectedColor: LectureColor
 
-    init(theme: Theme, colorIndex: Binding<Int>, customColor: Binding<LectureColor?>) {
+    init(theme: BasicTheme, colorIndex: Binding<Int>, customColor: Binding<LectureColor?>) {
         self.theme = theme
         _colorIndex = colorIndex
         _customColor = customColor

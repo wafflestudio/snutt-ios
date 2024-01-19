@@ -11,7 +11,7 @@ struct LectureBlocks: View {
     typealias Painter = TimetablePainter
     let current: Timetable?
     let lecture: Lecture
-    let theme: Theme
+    let theme: BasicTheme
     let config: TimetableConfiguration
 
     #if !WIDGET
