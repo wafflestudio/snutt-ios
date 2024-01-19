@@ -87,7 +87,7 @@ struct TimetableService: TimetableServiceProtocol {
 
     func updateTimetableTheme(timetableId: String) async throws {
         guard let theme = appState.timetable.current?.selectedTheme else { return }
-        let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: theme.rawValue)
+        let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: theme)
         let timetable = Timetable(from: dto)
         if appState.timetable.current?.id == timetableId {
             appState.timetable.current = timetable

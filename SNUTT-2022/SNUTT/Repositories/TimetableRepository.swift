@@ -17,7 +17,7 @@ protocol TimetableRepositoryProtocol {
     func unsetPrimaryTimetable(withTimetableId id: String) async throws
     func deleteTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
     func copyTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
-    func updateTimetableTheme(withTimetableId id: String, withTheme theme: Int) async throws -> TimetableDto
+    func updateTimetableTheme(withTimetableId id: String, withTheme theme: Theme) async throws -> TimetableDto
     func createTimetable(title: String, year: Int, semester: Int) async throws -> [TimetableMetadataDto]
 }
 
@@ -92,9 +92,9 @@ class TimetableRepository: TimetableRepositoryProtocol {
             .handlingError()
     }
 
-    func updateTimetableTheme(withTimetableId id: String, withTheme theme: Int) async throws -> TimetableDto {
+    func updateTimetableTheme(withTimetableId id: String, withTheme theme: Theme) async throws -> TimetableDto {
         return try await session
-            .request(TimetableRouter.updateTheme(id: id, theme: theme))
+            .request(TimetableRouter.updateTheme(id: id, theme: theme.theme?.rawValue, themeId: theme.id))
             .validate()
             .serializingDecodable(TimetableDto.self)
             .handlingError()

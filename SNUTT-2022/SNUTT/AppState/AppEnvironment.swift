@@ -27,6 +27,7 @@ extension AppEnvironment {
         let etcService: EtcServiceProtocol
         let vacancyService: VacancyServiceProtocol
         let friendsService: FriendsServiceProtocol
+        let themeService: ThemeServiceProtocol
     }
 }
 
@@ -44,6 +45,7 @@ extension AppEnvironment {
         let etcRepository: EtcRepositoryProtocol
         let vacancyRepository: VacancyRepositoryProtocol
         let configRepository: ConfigRepositoryProtocol
+        let themeRepository: ThemeRepositoryProtocol
     }
 
     struct LocalRepositories {
@@ -101,6 +103,7 @@ extension AppEnvironment {
         let etcRepository = EtcRepository(session: session)
         let vacancyRepository = VacancyRepository(session: session)
         let configRepository = ConfigRepository(session: session)
+        let themeRepository = ThemeRepository(session: session)
 
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
@@ -113,7 +116,9 @@ extension AppEnvironment {
                      popupRepository: popupRepository,
                      etcRepository: etcRepository,
                      vacancyRepository: vacancyRepository,
-                     configRepository: configRepository)
+                     configRepository: configRepository,
+                     themeRepository: themeRepository
+        )
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -134,6 +139,7 @@ extension AppEnvironment {
         let etcService = EtcService(appState: appState, webRepositories: webRepositories)
         let vacancyService = VacancyService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let friendsService = FriendsService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
+        let themeService = ThemeService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
@@ -145,7 +151,9 @@ extension AppEnvironment {
                      popupService: popupService,
                      etcService: etcService,
                      vacancyService: vacancyService,
-                     friendsService: friendsService)
+                     friendsService: friendsService,
+                     themeService: themeService
+        )
     }
 }
 
@@ -174,7 +182,9 @@ extension EnvironmentValues {
                   popupService: FakePopupService(),
                   etcService: FakeEtcService(),
                   vacancyService: FakeVacancyService(),
-                  friendsService: FakeFriendsService())
+                  friendsService: FakeFriendsService(),
+                  themeService: FakeThemeService()
+            )
         }
     }
 #endif
