@@ -22,7 +22,7 @@ enum TimetableRouter: Router {
     case deleteTimetable(id: String)
     case getRecentTimetable
     case copyTimetable(id: String)
-    case updateTheme(id: String, theme: Int)
+    case updateTheme(id: String, theme: Int?, themeId: String)
 
     var method: HTTPMethod {
         switch self {
@@ -69,7 +69,7 @@ enum TimetableRouter: Router {
             return "/recent"
         case let .copyTimetable(id):
             return "/\(id)/copy"
-        case let .updateTheme(id, _):
+        case let .updateTheme(id, _, _):
             return "/\(id)/theme"
         }
     }
@@ -94,8 +94,8 @@ enum TimetableRouter: Router {
             return nil
         case .copyTimetable:
             return nil
-        case let .updateTheme(_, theme):
-            return ["theme": theme]
+        case let .updateTheme(_, theme, themeId):
+            return ["theme": theme as Any, "themeId": themeId]
         }
     }
 }
