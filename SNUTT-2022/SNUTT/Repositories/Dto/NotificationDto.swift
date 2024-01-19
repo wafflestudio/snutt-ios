@@ -44,7 +44,7 @@ struct NotificationDto: Decodable {
         case .lectureVacancy, .friend, .newFeature:
             detail = try? container.decode(String.self, forKey: .detail)
         }
-        
+
         if title.isEmpty {
             switch type {
             case .normal:
