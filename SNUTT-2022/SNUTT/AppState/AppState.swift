@@ -22,6 +22,7 @@ final class AppState {
     var review = ReviewState()
     var routing = ViewRoutingState()
     var vacancy = VacancyState()
+    var theme = ThemeState()
 
     #if DEBUG
         var debug = DebugState()
