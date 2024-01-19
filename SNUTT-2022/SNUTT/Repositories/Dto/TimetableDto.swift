@@ -17,6 +17,7 @@ struct TimetableDto: Codable {
     let theme: Int
     let isPrimary: Bool?
     let updated_at: String
+    let themeId: String?
 }
 
 struct LectureDto: Codable {
@@ -84,6 +85,7 @@ extension TimetableDto {
         theme = model.theme.rawValue
         isPrimary = model.isPrimary
         updated_at = model.updatedAt
+        themeId = model.themeId
     }
 }
 
