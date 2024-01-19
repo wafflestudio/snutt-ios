@@ -31,10 +31,10 @@ struct MenuSheetScene: View {
                               deleteTimetable: viewModel.deleteTimetable)
 
             MenuThemeSheet(isOpen: $viewModel.isThemeSheetOpen,
-                           selectedTheme: viewModel.selectedTheme,
+                           selectedTheme: viewModel.selectedTheme ?? viewModel.newTheme, themes: viewModel.themes,
                            cancel: viewModel.closeThemeSheet,
                            confirm: viewModel.applyThemeSheet,
-                           select: viewModel.selectTheme)
+                           select: viewModel.selectTheme, newTheme: viewModel.openNewThemeSheet)
 
             MenuRenameSheet(isOpen: $viewModel.isRenameSheetOpen,
                             titleText: $viewModel.renameTitle,
@@ -48,6 +48,17 @@ struct MenuSheetScene: View {
                             cancel: viewModel.closeCreateSheet,
                             confirm: viewModel.applyCreateSheet)
         }
+        .task {
+            await viewModel.getThemeList()
+        }
+        .sheet(isPresented: $viewModel.isNewThemeSheetOpen, content: {
+            ZStack {
+                NavigationView {
+                    ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.newTheme, themeType: .new)
+                }
+            }
+            .accentColor(Color(UIColor.label))
+        })
     }
 }
 
