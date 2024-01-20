@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ThemeBottomSheet: View {
     @Binding var isOpen: Bool
-    @State var theme: Theme
+    var isCustom: Bool?
+    var isDefault: Bool?
     
     let openCustomThemeSheet: @MainActor () async -> Void
     let makeCustomThemeDefault: @MainActor () async -> Void
@@ -19,32 +20,23 @@ struct ThemeBottomSheet: View {
     
     let openBasicThemeSheet: @MainActor () async -> Void
     let makeBasicThemeDefault: @MainActor () async -> Void
-   
+    let undoBasicThemeDefault: @MainActor () async -> Void
+    
     @State private var isDeleteAlertPresented = false
-
+    
     var body: some View {
-        Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 225)) {
-            switch (theme.isCustom) {
-            case true:
+        if let isCustom = isCustom, isCustom {
+            Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 225)) {
                 VStack(spacing: 0) {
-                    ThemeBottomSheetButton(menu: .detail, isSheetOpen: isOpen) {
+                    ThemeBottomSheetButton(menu: .edit, isSheetOpen: isOpen) {
                         Task {
                             await openCustomThemeSheet()
                         }
                     }
                     
-                    switch theme.isDefault {
-                    case true:
-                        ThemeBottomSheetButton(menu: .unpin, isSheetOpen: isOpen) {
-                            Task {
-                                await undoCustomThemeDefault()
-                            }
-                        }
-                    case false:
-                        ThemeBottomSheetButton(menu: .pin, isSheetOpen: isOpen) {
-                            Task {
-                                await makeCustomThemeDefault()
-                            }
+                    ThemeBottomSheetButton(menu: isDefault ?? false ? .unpin : .pin, isSheetOpen: isOpen) {
+                        Task {
+                            isDefault ?? false ? await undoCustomThemeDefault() : await makeCustomThemeDefault()
                         }
                     }
                     
@@ -53,7 +45,7 @@ struct ThemeBottomSheet: View {
                             await copyTheme()
                         }
                     }
-
+                    
                     ThemeBottomSheetButton(menu: .delete, isSheetOpen: isOpen) {
                         isDeleteAlertPresented = true
                     }
@@ -67,23 +59,19 @@ struct ThemeBottomSheet: View {
                     }
                 }
                 .transformEffect(.identity)
-                
-            case false:
-                ThemeBottomSheetButton(menu: .detail, isSheetOpen: isOpen) {
-                    Task {
-                        await openBasicThemeSheet()
-                    }
-                }
-                
-                switch theme.isDefault {
-                case true:
-                    ThemeBottomSheetButton(menu: .unpin, isSheetOpen: isOpen) {
-                        
-                    }
-                case false:
-                    ThemeBottomSheetButton(menu: .pin, isSheetOpen: isOpen) {
+            }
+        } else {
+            Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 125)) {
+                VStack(spacing: 0) {
+                    ThemeBottomSheetButton(menu: .detail, isSheetOpen: isOpen) {
                         Task {
-                            await makeBasicThemeDefault()
+                            await openBasicThemeSheet()
+                        }
+                    }
+                    
+                    ThemeBottomSheetButton(menu: isDefault ?? false ? .unpin : .pin, isSheetOpen: isOpen) {
+                        Task {
+                                isDefault ?? false ? await undoBasicThemeDefault() : await makeBasicThemeDefault()
                         }
                     }
                 }
@@ -95,9 +83,9 @@ struct ThemeBottomSheet: View {
 struct ThemeBottomSheetButton: View {
     let menu: ThemeMenu
     var isSheetOpen: Bool = false
-
+    
     let action: () -> Void
-
+    
     var body: some View {
         Button {
             action()
@@ -124,6 +112,7 @@ struct ThemeBottomSheetButton: View {
 extension ThemeBottomSheetButton {
     enum ThemeMenu {
         case detail
+        case edit
         case pin
         case unpin
         case copy
@@ -132,6 +121,7 @@ extension ThemeBottomSheetButton {
         var imageName: String {
             switch self {
             case .detail: return "sheet.palette"
+            case .edit: return "sheet.palette"
             case .pin: return "theme.pin.on"
             case .unpin: return "theme.pin.off"
             case .copy: return "menu.duplicate"
@@ -141,7 +131,8 @@ extension ThemeBottomSheetButton {
 
         var text: String {
             switch self {
-            case .detail: return "상세 수정"
+            case .detail: return "상세 보기"
+            case .edit: return "상세 수정"
             case .pin: return "기본 테마로 지정"
             case .unpin: return "기본 테마 해제"
             case .copy: return "테마 복제"

@@ -17,6 +17,7 @@ enum ThemeRouter: Router {
     case copyTheme(themeId: String)
     case deleteTheme(themeId: String)
     case makeBasicThemeDefault(themeType: Int)
+    case undoBasicThemeDefault(themeType: Int)
     case makeCustomThemeDefault(themeId: String)
     case undoCustomThemeDefault(themeId: String)
 
@@ -34,6 +35,8 @@ enum ThemeRouter: Router {
             return .delete
         case .makeBasicThemeDefault:
             return .post
+        case .undoBasicThemeDefault:
+            return .delete
         case .makeCustomThemeDefault:
             return .post
         case .undoCustomThemeDefault:
@@ -56,6 +59,8 @@ enum ThemeRouter: Router {
             return "\(themeId)"
         case let .makeBasicThemeDefault(themeType):
             return "/basic/\(themeType)/default"
+        case let .undoBasicThemeDefault(themeType):
+            return "/basic/\(themeType)/default"
         case let .makeCustomThemeDefault(themeId):
             return "/\(themeId)/default"
         case let .undoCustomThemeDefault(themeId):
@@ -76,6 +81,8 @@ enum ThemeRouter: Router {
         case .deleteTheme:
             return nil
         case .makeBasicThemeDefault:
+            return nil
+        case .undoBasicThemeDefault:
             return nil
         case .makeCustomThemeDefault:
             return nil

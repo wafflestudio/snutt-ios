@@ -44,25 +44,17 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
-        if (theme.isDefault) {
-            do {
-                try await services.themeService.makeCustomThemeDefault(themeId: theme.id)
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
-        } else {
-            do {
-                try await services.themeService.undoCustomThemeDefault(themeId: theme.id)
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
+        do {
+            theme.isDefault ? try await services.themeService.makeCustomThemeDefault(themeId: theme.id) : try await services.themeService.undoCustomThemeDefault(themeId: theme.id)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
         }
     }
     
     func saveBasicTheme(theme: Theme) async {
-        if (theme.isDefault) {
+        if let themeType = theme.theme {
             do {
-                try await services.themeService.makeBasicThemeDefault(themeType: theme.theme?.rawValue ?? 0)
+                theme.isDefault ? try await services.themeService.makeBasicThemeDefault(themeType: themeType.rawValue) : try await services.themeService.undoBasicThemeDefault(themeType: themeType.rawValue)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }

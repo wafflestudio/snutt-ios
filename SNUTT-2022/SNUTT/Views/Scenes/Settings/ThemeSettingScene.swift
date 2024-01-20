@@ -44,12 +44,18 @@ struct ThemeSettingScene: View {
                                     } label: {
                                         VStack {
                                             ThemeIcon(theme: theme)
-                                            Text(theme.name)
-                                                .padding(.horizontal, 10)
-                                                .padding(.vertical, 5)
-                                                .font(STFont.detailLabel)
+                                                .overlay(
+                                                    theme.isDefault ? Image("theme.pin")
+                                                        .offset(x: -8, y: -8) : nil
+                                                    , alignment: .topLeading)
+                                            HStack(spacing: 0) {
+                                                Text(theme.name)
+                                                    .font(STFont.detailLabel)
+                                                Image("theme.chevron.right")
+                                            }
+                                            .padding(.horizontal, 10)
+                                            .padding(.vertical, 5)
                                         }
-
                                     }
                                 }
                             }
@@ -69,10 +75,17 @@ struct ThemeSettingScene: View {
                                     } label: {
                                         VStack {
                                             Image(theme.theme?.imageName ?? "")
-                                            Text(theme.name)
-                                                .padding(.horizontal, 10)
-                                                .padding(.vertical, 5)
-                                                .font(STFont.detailLabel)
+                                                .overlay(
+                                                    theme.isDefault ? Image("theme.pin")
+                                                        .offset(x: -8, y: -8) : nil
+                                                    , alignment: .topLeading)
+                                            HStack(spacing: 0) {
+                                                Text(theme.name)
+                                                    .font(STFont.detailLabel)
+                                                Image("theme.chevron.right")
+                                            }
+                                            .padding(.horizontal, 10)
+                                            .padding(.vertical, 5)
                                         }
                                     }
                                 }
@@ -82,7 +95,7 @@ struct ThemeSettingScene: View {
                     .padding(.vertical, 10)
                 }
             }
-            ThemeBottomSheet(isOpen: $viewModel.isBottomSheetOpen, theme: viewModel.targetTheme ?? viewModel.newTheme, openCustomThemeSheet: viewModel.openCustomThemeSheet, makeCustomThemeDefault: viewModel.makeCustomThemeDefault, undoCustomThemeDefault: viewModel.undoCustomThemeDefault, copyTheme: viewModel.copyTheme, deleteTheme: viewModel.deleteTheme, openBasicThemeSheet: viewModel.openBasicThemeSheet, makeBasicThemeDefault: viewModel.makeBasicThemeDefault)
+            ThemeBottomSheet(isOpen: $viewModel.isBottomSheetOpen, isCustom: viewModel.targetTheme?.isCustom, isDefault: viewModel.targetTheme?.isDefault, openCustomThemeSheet: viewModel.openCustomThemeSheet, makeCustomThemeDefault: viewModel.makeCustomThemeDefault, undoCustomThemeDefault: viewModel.undoCustomThemeDefault, copyTheme: viewModel.copyTheme, deleteTheme: viewModel.deleteTheme, openBasicThemeSheet: viewModel.openBasicThemeSheet, makeBasicThemeDefault: viewModel.makeBasicThemeDefault, undoBasicThemeDefault: viewModel.undoBasicThemeDefault)
         }
         .navigationTitle("시간표 테마")
         .navigationBarTitleDisplayMode(.inline)

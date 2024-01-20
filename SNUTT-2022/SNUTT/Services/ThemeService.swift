@@ -26,6 +26,7 @@ protocol ThemeServiceProtocol: Sendable {
     func copyTheme(themeId: String) async throws
     func deleteTheme(themeId: String) async throws
     func makeBasicThemeDefault(themeType: Int) async throws
+    func undoBasicThemeDefault(themeType: Int) async throws
     func makeCustomThemeDefault(themeId: String) async throws
     func undoCustomThemeDefault(themeId: String) async throws
 }
@@ -87,7 +88,6 @@ struct ThemeService: ThemeServiceProtocol {
     func addTheme(theme: Theme) async throws {
         let dto = try await themeRepository.addTheme(name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0)})
         let theme = Theme(from: dto)
-        appState.theme.bottomSheetTarget = theme
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList
@@ -118,6 +118,15 @@ struct ThemeService: ThemeServiceProtocol {
     
     func makeBasicThemeDefault(themeType: Int) async throws {
         let dto = try await themeRepository.makeBasicThemeDefault(themeType: themeType)
+        let defaultTheme = Theme(from: dto)
+        appState.theme.bottomSheetTarget = defaultTheme
+        let dtos = try await themeRepository.getThemeList()
+        let themeList = dtos.map { Theme(from: $0) }
+        appState.theme.themeList = themeList
+    }
+    
+    func undoBasicThemeDefault(themeType: Int) async throws {
+        let dto = try await themeRepository.undoBasicThemeDefault(themeType: themeType)
         let defaultTheme = Theme(from: dto)
         appState.theme.bottomSheetTarget = defaultTheme
         let dtos = try await themeRepository.getThemeList()
@@ -164,6 +173,7 @@ struct FakeThemeService: ThemeServiceProtocol {
     func copyTheme(themeId: String) async throws {}
     func deleteTheme(themeId: String) async throws {}
     func makeBasicThemeDefault(themeType: Int) async throws {}
+    func undoBasicThemeDefault(themeType: Int) async throws {}
     func makeCustomThemeDefault(themeId: String) async throws {}
     func undoCustomThemeDefault(themeId: String) async throws {}
 }

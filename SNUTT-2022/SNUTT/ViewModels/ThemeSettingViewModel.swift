@@ -65,7 +65,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
     }
     
     var newTheme: Theme {
-        let theme: Theme = .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(fg: "#ffffff", bg: "#1BD0C8"), ThemeColorDto(fg: "#ffffff", bg: "#1BD0C8")], isDefault: false, isCustom: true))
+        let theme: Theme = .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: "#1BD0C8", fg: "#ffffff"), ThemeColorDto(bg: "#1BD0C8", fg: "#ffffff")], isDefault: false, isCustom: true))
         return theme
     }
     
@@ -110,6 +110,15 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         guard let themeType = targetTheme?.theme else { return }
         do {
             try await services.themeService.makeBasicThemeDefault(themeType: themeType.rawValue)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+    
+    func undoBasicThemeDefault() async {
+        guard let themeType = targetTheme?.theme else { return }
+        do {
+            try await services.themeService.undoBasicThemeDefault(themeType: themeType.rawValue)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

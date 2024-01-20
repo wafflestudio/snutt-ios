@@ -15,6 +15,7 @@ protocol ThemeRepositoryProtocol {
     func copyTheme(themeId: String) async throws -> ThemeDto
     func deleteTheme(themeId: String) async throws
     func makeBasicThemeDefault(themeType: Int) async throws -> ThemeDto
+    func undoBasicThemeDefault(themeType: Int) async throws -> ThemeDto
     func makeCustomThemeDefault(themeId: String) async throws -> ThemeDto
     func undoCustomThemeDefault(themeId: String) async throws -> ThemeDto
 }
@@ -64,6 +65,13 @@ class ThemeRepository: ThemeRepositoryProtocol {
     func makeBasicThemeDefault(themeType: Int) async throws -> ThemeDto {
         return try await session
             .request(ThemeRouter.makeBasicThemeDefault(themeType: themeType))
+            .serializingDecodable(ThemeDto.self)
+            .handlingError()
+    }
+    
+    func undoBasicThemeDefault(themeType: Int) async throws -> ThemeDto {
+        return try await session
+            .request(ThemeRouter.undoBasicThemeDefault(themeType: themeType))
             .serializingDecodable(ThemeDto.self)
             .handlingError()
     }

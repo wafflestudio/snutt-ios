@@ -17,14 +17,14 @@ struct ThemeDto: Codable {
 }
 
 struct ThemeColorDto: Codable {
-    let fg: String
     let bg: String
+    let fg: String
 }
 
 extension ThemeColorDto {
     init(from model: LectureColor) {
-        fg = model.fg.toHex()
         bg = model.bg.toHex()
+        fg = model.fg.toHex()
     }
 }
 

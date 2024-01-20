@@ -33,6 +33,7 @@ struct ThemeDetailScene: View {
                     case .custom, .new:
                         EditableTextField(text: $theme.name)
                     }
+                    Spacer()
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 15)
@@ -245,6 +246,6 @@ struct ThemeDetailScene: View {
 
 struct ThemeDetailScene_Previews: PreviewProvider {
     static var previews: some View {
-        ThemeDetailScene(viewModel: .init(container: .preview), theme: .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(fg: "#ffffff", bg: "#1BD0C8"), ThemeColorDto(fg: "#ffffff", bg: "#1BD0C8")], isDefault: false, isCustom: true)), themeType: .new)
+        ThemeDetailScene(viewModel: .init(container: .preview), theme: .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: "#1BD0C8", fg: "#ffffff"), ThemeColorDto(bg: "#1BD0C8", fg: "#ffffff")], isDefault: false, isCustom: true)), themeType: .new)
     }
 }
