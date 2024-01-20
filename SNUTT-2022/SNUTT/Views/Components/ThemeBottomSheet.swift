@@ -23,6 +23,7 @@ struct ThemeBottomSheet: View {
     let undoBasicThemeDefault: @MainActor () async -> Void
     
     @State private var isDeleteAlertPresented = false
+    @State private var isUndeletableAlertPresented = false
     
     var body: some View {
         if let isCustom = isCustom, isCustom {
@@ -47,15 +48,22 @@ struct ThemeBottomSheet: View {
                     }
                     
                     ThemeBottomSheetButton(menu: .delete, isSheetOpen: isOpen) {
-                        isDeleteAlertPresented = true
+                        if let isDefault = isDefault, !isDefault {
+                            isDeleteAlertPresented = true
+                        } else {
+                            isUndeletableAlertPresented = true
+                        }
                     }
-                    .alert("테마를 삭제하시겠습니까?", isPresented: $isDeleteAlertPresented) {
+                    .alert("테마를 삭제하시겠습니까? 이 테마가 지정된 시간표의 강의 색상은 유지됩니다.", isPresented: $isDeleteAlertPresented) {
                         Button("취소", role: .cancel, action: {})
                         Button("삭제", role: .destructive) {
                             Task {
                                 await deleteTheme()
                             }
                         }
+                    }
+                    .alert("기본 테마는 삭제할 수 없습니다.", isPresented: $isUndeletableAlertPresented) {
+                        Button("확인", role: .cancel, action: {})
                     }
                 }
                 .transformEffect(.identity)

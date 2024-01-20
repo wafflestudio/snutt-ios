@@ -31,7 +31,7 @@ struct MenuSheetScene: View {
                               deleteTimetable: viewModel.deleteTimetable)
 
             MenuThemeSheet(isOpen: $viewModel.isThemeSheetOpen,
-                           selectedTheme: viewModel.selectedTheme ?? viewModel.newTheme, themes: viewModel.themes,
+                           selectedTheme: viewModel.selectedTheme, themes: viewModel.themes,
                            cancel: viewModel.closeThemeSheet,
                            confirm: viewModel.applyThemeSheet,
                            select: viewModel.selectTheme, newTheme: viewModel.openNewThemeSheet)

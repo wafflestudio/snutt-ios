@@ -100,7 +100,6 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         guard let themeId = targetTheme?.id else { return }
         do {
             try await services.themeService.deleteTheme(themeId: themeId)
-            services.themeService.closeBottomSheet()
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
