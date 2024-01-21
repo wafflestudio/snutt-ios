@@ -58,8 +58,8 @@ struct LectureColorDto: Codable {
 struct TimePlaceDto: Codable {
     let _id: String?
     let day: Int
-    let start_time: String
-    let end_time: String
+    let startMinute: Int
+    let endMinute: Int
     let place: String
 }
 
@@ -91,8 +91,8 @@ extension TimePlaceDto {
     init(from model: TimePlace) {
         _id = model.isTemporary ? nil : model.id
         day = model.day.rawValue
-        start_time = model.startTime
-        end_time = model.endTime
+        startMinute = model.startMinute
+        endMinute = model.endMinute
         place = model.place
     }
 }
