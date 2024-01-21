@@ -146,8 +146,7 @@ struct TimetableCompactRightView: View {
     var body: some View {
         VStack {
             GeometryReader { _ in
-                if let upcomingLectureTimesResult = entry.currentTimetable?.getUpcomingLectureTimes()
-                {
+                if let upcomingLectureTimesResult = entry.currentTimetable?.getUpcomingLectureTimes() {
                     VStack(alignment: .leading, spacing: 5) {
                         Text(upcomingLectureTimesResult.date.localizedDateString(dateStyle: .long, timeStyle: .none))
                             .font(.system(size: 13, weight: .medium))

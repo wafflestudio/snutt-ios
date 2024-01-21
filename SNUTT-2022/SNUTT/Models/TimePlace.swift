@@ -11,10 +11,10 @@ struct TimePlace: Identifiable {
     let id: String
 
     var day: Weekday
-    
+
     var startTime: TimeUtils.Time
     var endTime: TimeUtils.Time
-    
+
     var startMinute: Int
     var endMinute: Int
 

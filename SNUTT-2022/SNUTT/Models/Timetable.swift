@@ -178,7 +178,7 @@ extension Timetable {
                 }
         }
         return remaining.sorted { lectureTime1, lectureTime2 in
-            return lectureTime1.timePlace.startMinute < lectureTime2.timePlace.startMinute
+            lectureTime1.timePlace.startMinute < lectureTime2.timePlace.startMinute
         }
     }
 

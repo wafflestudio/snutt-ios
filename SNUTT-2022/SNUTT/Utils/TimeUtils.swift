@@ -16,7 +16,7 @@ struct TimeUtils {
             return "\(String(format: "%02d", hour)):\(String(format: "%02d", minute))"
         }
     }
-    
+
     static func getDate(from time: Time) -> Date? {
         return Calendar.current.date(from: DateComponents(hour: time.hour, minute: time.minute))
     }
