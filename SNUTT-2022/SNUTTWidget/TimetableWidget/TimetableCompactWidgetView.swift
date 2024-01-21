@@ -208,7 +208,7 @@ struct TimePlaceListItem: View {
 
     private var displayTime: String {
         guard let timePlace = displayItem?.timePlace else { return "" }
-        return "\(timePlace.startTime) - \(timePlace.endTime)"
+        return "\(timePlace.startTime.toString()) - \(timePlace.endTime.toString())"
     }
 
     private var displayPlace: String? {

@@ -53,12 +53,12 @@ struct Timetable {
             }
     }
 
-    var earliestStartTime: Double? {
-        aggregatedTimePlaces.min(by: { $0.startTimeDouble < $1.startTimeDouble })?.startTimeDouble
+    var earliestStartHour: Int? {
+        aggregatedTimePlaces.min(by: { $0.startMinute < $1.startMinute })?.startTime.hour
     }
 
-    var lastEndTime: Double? {
-        aggregatedTimePlaces.max(by: { $0.endTimeDouble < $1.endTimeDouble })?.endTimeDouble
+    var lastEndHour: Int? {
+        aggregatedTimePlaces.max(by: { $0.endMinute < $1.endMinute })?.endTime.hour
     }
 
     var lastWeekDay: Weekday? {
@@ -166,10 +166,8 @@ extension Timetable {
                 .filter { timePlace in
                     let filterByTime = {
                         switch filter {
-                        case .startTime:
-                            return TimeUtils.getTime(from: timePlace.startTime)
-                        case .endTime:
-                            return TimeUtils.getTime(from: timePlace.endTime)
+                        case .startTime: return timePlace.startTime
+                        case .endTime: return timePlace.endTime
                         }
                     }()
                     return nowTime.hour < filterByTime.hour ||
@@ -180,9 +178,7 @@ extension Timetable {
                 }
         }
         return remaining.sorted { lectureTime1, lectureTime2 in
-            let startTime1 = TimeUtils.getTimeInDouble(from: lectureTime1.timePlace.startTime)
-            let startTime2 = TimeUtils.getTimeInDouble(from: lectureTime2.timePlace.startTime)
-            return startTime1 < startTime2
+            return lectureTime1.timePlace.startMinute < lectureTime2.timePlace.startMinute
         }
     }
 

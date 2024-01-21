@@ -11,10 +11,12 @@ struct TimePlace: Identifiable {
     let id: String
 
     var day: Weekday
-
-    var startTime: String
-
-    var endTime: String
+    
+    var startTime: TimeUtils.Time
+    var endTime: TimeUtils.Time
+    
+    var startMinute: Int
+    var endMinute: Int
 
     var place: String
 
@@ -24,53 +26,50 @@ struct TimePlace: Identifiable {
     /// This flag is necessary in order to remove `_id` field for newly created objects, before comitting to the server.
     var isTemporary: Bool = false
 
-    var startTimeDouble: Double {
-        return TimeUtils.getTimeInDouble(from: startTime)
-    }
-
-    var endTimeDouble: Double {
-        endTimeDouble(compactMode: false)
-    }
-
-    func duration(compactMode: Bool) -> Double {
-        return endTimeDouble(compactMode: compactMode) - startTimeDouble
+    func duration(compactMode: Bool) -> CGFloat {
+        return CGFloat(roundedEndMinute(compactMode: compactMode) - startMinute) / 60
     }
 
     func isOverlapped(with timeplace: TimePlace) -> Bool {
-        return day == timeplace.day && endTime > timeplace.startTime && startTime < timeplace.endTime && id != timeplace.id
+        return day == timeplace.day && endMinute > timeplace.startMinute && startMinute < timeplace.endMinute && id != timeplace.id
     }
 
     var preciseTimeString: String {
-        return "\(day.veryShortSymbol)(\(startTime)~\(endTime))"
+        return "\(day.veryShortSymbol)(\(startTime.toString())~\(endTime.toString()))"
     }
 
-    private func endTimeDouble(compactMode: Bool) -> Double {
+    private func roundedEndMinute(compactMode: Bool) -> Int {
         if compactMode && !isCustom {
-            return TimeUtils.getTimeInDouble(from: endTime.roundUpForCompactMode())
+            let rounded = endTime.roundUpForCompactMode()
+            return rounded.hour * 60 + rounded.minute
         } else {
-            return TimeUtils.getTimeInDouble(from: endTime)
+            return endMinute
         }
     }
 }
 
-private extension String {
-    func roundUpForCompactMode() -> String {
-        var time = TimeUtils.getTime(from: self)
+extension TimeUtils.Time {
+    func roundUpForCompactMode() -> Self {
+        var time = self
         if time.minute > 0 && time.minute < 30 {
             time.minute = 30
         } else if time.minute > 30 {
             time.hour += 1
             time.minute = 0
         }
-        return time.toString()
+        return time
     }
 }
 
 extension TimePlace {
     init(from dto: TimePlaceDto, isCustom: Bool) {
         id = dto._id ?? UUID().description
-        startTime = dto.start_time
-        endTime = dto.end_time
+        let start = dto.startMinute.quotientAndRemainder(dividingBy: 60)
+        let end = dto.endMinute.quotientAndRemainder(dividingBy: 60)
+        startMinute = dto.startMinute
+        endMinute = dto.endMinute
+        startTime = .init(hour: start.0, minute: start.1)
+        endTime = .init(hour: end.0, minute: end.1)
         place = dto.place
         day = .init(rawValue: dto.day) ?? .mon
         self.isCustom = isCustom
@@ -81,11 +80,9 @@ extension TimePlace {
 
 extension TimePlace {
     func toDates() -> [Date] {
-        let start = TimeUtils.getTime(from: startTime)
-        let end = TimeUtils.getTime(from: endTime)
         let today = Date()
         let calendar = Calendar.current
-        return [start, end].map { time in
+        return [startTime, endTime].map { time in
             calendar.date(bySettingHour: time.hour, minute: time.minute, second: 0, of: today)!
         }
     }
@@ -95,27 +92,18 @@ extension TimePlace {
     extension TimePlace {
         static var preview: Self {
             let place = "\(Int.random(in: 100 ... 999))-\(Int.random(in: 100 ... 999))"
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm"
-
             let startHour = Int.random(in: 8 ... 21) // generate a random start hour between 8am and 9pm
             let endHour = Int.random(in: (startHour + 1) ... 22) // generate a random end hour that is at least 1 hour after startHour, but before 10pm
 
             let startMinute = Int.random(in: 0 ... 59) // generate a random start minute
             let endMinute = Int.random(in: 0 ... 59) // generate a random end minute
 
-            let startTime = DateComponents(hour: startHour, minute: startMinute)
-            let endTime = DateComponents(hour: endHour, minute: endMinute)
-
-            let startTimeDate = Calendar.current.date(from: startTime)!
-            let endTimeDate = Calendar.current.date(from: endTime)!
-
-            let startTimeString = dateFormatter.string(from: startTimeDate)
-            let endTimeString = dateFormatter.string(from: endTimeDate)
             return TimePlace(id: UUID().uuidString,
                              day: .init(rawValue: Int.random(in: 0 ... 6))!,
-                             startTime: startTimeString,
-                             endTime: endTimeString,
+                             startTime: .init(hour: startHour, minute: startMinute),
+                             endTime: .init(hour: endHour, minute: endMinute),
+                             startMinute: startHour * 60 + startMinute,
+                             endMinute: endHour * 60 + endMinute,
                              place: place,
                              isCustom: Bool.random())
         }
