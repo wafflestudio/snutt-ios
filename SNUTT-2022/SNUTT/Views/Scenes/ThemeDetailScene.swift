@@ -12,7 +12,14 @@ struct ThemeDetailScene: View {
     @ObservedObject var viewModel: ThemeDetailViewModel
     @State var theme: Theme
     var themeType: ThemeType
-    @State var openPickerIndex: Int? = nil
+    @State var openPickerIndex: Int?
+    
+    init(viewModel: ThemeDetailViewModel, theme: Theme, themeType: ThemeType, openPickerIndex: Int? = nil) {
+        self.viewModel = viewModel
+        self._theme = State(initialValue: theme)
+        self.themeType = themeType
+        self._openPickerIndex = State(initialValue: theme.colors.count - 1)
+    }
     
     enum ThemeType {
         case basic
@@ -31,7 +38,8 @@ struct ThemeDetailScene: View {
                     case .basic:
                         DetailLabel(text: "\(theme.name)")
                     case .custom, .new:
-                        EditableTextField(text: $theme.name)
+                        EditableTextField(text: $theme.name, readOnly: false)
+                            .environment(\.editMode, Binding.constant(.active))
                     }
                     Spacer()
                 }
@@ -94,6 +102,7 @@ struct ThemeDetailScene: View {
                                     
                                     Button {
                                         theme = viewModel.copyThemeColor(theme: theme, index: index)
+                                        openPickerIndex = nil
                                     } label: {
                                         Image("menu.duplicate")
                                             .resizable()
@@ -142,6 +151,7 @@ struct ThemeDetailScene: View {
                     
                     Button {
                         theme = viewModel.getThemeNewColor(theme: theme)
+                        openPickerIndex = theme.colors.count - 1
                     } label: {
                         Text("+ 색상 추가")
                             .font(.system(size: 16))
@@ -170,10 +180,6 @@ struct ThemeDetailScene: View {
             
             VStack(spacing: 0) {
                 TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
-                    .animation(.customSpring, value: viewModel.configuration.minHour)
-                    .animation(.customSpring, value: viewModel.configuration.maxHour)
-                    .animation(.customSpring, value: viewModel.configuration.weekCount)
-                    .animation(.customSpring, value: viewModel.configuration.autoFit)
                     .frame(height: 500)
                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous)

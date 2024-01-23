@@ -94,6 +94,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+        services.themeService.closeBottomSheet()
     }
     
     func deleteTheme() async {
@@ -103,6 +104,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+        services.themeService.closeBottomSheet()
     }
     
     func makeBasicThemeDefault() async {
@@ -112,6 +114,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+        services.themeService.closeBottomSheet()
     }
     
     func undoBasicThemeDefault() async {
@@ -121,6 +124,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+        services.themeService.closeBottomSheet()
     }
     
     func makeCustomThemeDefault() async {
@@ -130,6 +134,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+        services.themeService.closeBottomSheet()
     }
     
     func undoCustomThemeDefault() async {
@@ -139,5 +144,6 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+        services.themeService.closeBottomSheet()
     }
 }

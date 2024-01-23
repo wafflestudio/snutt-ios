@@ -23,6 +23,10 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         appState.theme
     }
     
+    var targetTheme: Theme? {
+        themeState.bottomSheetTarget
+    }
+    
     func addTheme(theme: Theme) async {
         do {
             try await services.themeService.addTheme(theme: theme)
@@ -39,8 +43,9 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
     }
     
     func updateTheme(theme: Theme) async {
+        guard let themeId = targetTheme?.id else { return }
         do {
-            try await services.themeService.updateTheme(theme: theme)
+            try await services.themeService.updateTheme(themeId: themeId, theme: theme)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

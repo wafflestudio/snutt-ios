@@ -22,7 +22,7 @@ protocol ThemeServiceProtocol: Sendable {
     
     func getThemeList() async throws
     func addTheme(theme: Theme) async throws
-    func updateTheme(theme: Theme) async throws
+    func updateTheme(themeId: String, theme: Theme) async throws
     func copyTheme(themeId: String) async throws
     func deleteTheme(themeId: String) async throws
     func makeBasicThemeDefault(themeType: Int) async throws
@@ -37,8 +37,8 @@ struct ThemeService: ThemeServiceProtocol {
     var localRepositories: AppEnvironment.LocalRepositories
     
     func openBottomSheet(for theme: Theme) {
-        appState.theme.isBottomSheetOpen = true
         appState.theme.bottomSheetTarget = theme
+        appState.theme.isBottomSheetOpen = true
     }
     
     func closeBottomSheet() {
@@ -47,8 +47,8 @@ struct ThemeService: ThemeServiceProtocol {
     }
     
     func openNewThemeSheet(for theme: Theme) {
+        appState.theme.bottomSheetTarget = theme
         appState.theme.isNewThemeSheetOpen = true
-        appState.theme.detailSheetTarget = theme
     }
     
     func closeNewThemeSheet() {
@@ -57,25 +57,21 @@ struct ThemeService: ThemeServiceProtocol {
     
     func openBasicThemeSheet(for theme: Theme) {
         appState.theme.isBasicThemeSheetOpen = true
-        appState.theme.detailSheetTarget = theme
         appState.theme.isBottomSheetOpen = false
     }
     
     func closeBasicThemeSheet() {
         appState.theme.isBasicThemeSheetOpen = false
-        appState.theme.detailSheetTarget = nil
         appState.theme.bottomSheetTarget = nil
     }
     
     func openCustomThemeSheet(for theme: Theme) {
         appState.theme.isCustomThemeSheetOpen = true
-        appState.theme.detailSheetTarget = theme
         appState.theme.isBottomSheetOpen = false
     }
     
     func closeCustomThemeSheet() {
         appState.theme.isCustomThemeSheetOpen = false
-        appState.theme.detailSheetTarget = nil
         appState.theme.bottomSheetTarget = nil
     }
     
@@ -93,8 +89,8 @@ struct ThemeService: ThemeServiceProtocol {
         appState.theme.themeList = themeList
     }
     
-    func updateTheme(theme: Theme) async throws {
-        let dto = try await themeRepository.updateTheme(themeId: theme.id, name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0)})
+    func updateTheme(themeId: String, theme: Theme) async throws {
+        let dto = try await themeRepository.updateTheme(themeId: themeId, name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0)})
         let theme = Theme(from: dto)
         appState.theme.bottomSheetTarget = theme
         let dtos = try await themeRepository.getThemeList()
@@ -169,7 +165,7 @@ struct FakeThemeService: ThemeServiceProtocol {
     
     func getThemeList() async throws {}
     func addTheme(theme: Theme) async throws {}
-    func updateTheme(theme: Theme) async throws {}
+    func updateTheme(themeId: String, theme: Theme) async throws {}
     func copyTheme(themeId: String) async throws {}
     func deleteTheme(themeId: String) async throws {}
     func makeBasicThemeDefault(themeType: Int) async throws {}

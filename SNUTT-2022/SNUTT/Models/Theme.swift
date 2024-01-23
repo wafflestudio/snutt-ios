@@ -20,7 +20,7 @@ struct Theme {
 extension Theme {
     init(from dto: ThemeDto) {
         id = dto.id ?? UUID().uuidString
-        theme = BasicTheme(rawValue: dto.theme)
+        theme = dto.theme.flatMap { BasicTheme(rawValue: $0) }
         name = dto.name
         colors = dto.colors?.map { .init(fg: Color(hex: $0.fg), bg: Color(hex: $0.bg)) } ?? []
         isDefault = dto.isDefault

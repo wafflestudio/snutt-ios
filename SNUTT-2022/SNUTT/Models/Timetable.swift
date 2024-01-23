@@ -19,7 +19,7 @@ struct Timetable {
     let year: Int
     let semester: Int
     let updatedAt: String
-    let themeId: String
+    let themeId: String?
 
     /// 강의를 검색하는 동안 추가할 강의를 선택했을 때 임시로 나타나는 강의
     var selectedLecture: Lecture?
@@ -82,7 +82,7 @@ extension Timetable {
         semester = dto.semester
         updatedAt = dto.updated_at
         isPrimary = dto.isPrimary ?? false
-        themeId = dto.themeId ?? ""
+        themeId = dto.themeId
 
         let theme: BasicTheme = .init(rawValue: dto.theme) ?? .snutt
         self.theme = theme

@@ -27,7 +27,10 @@ struct ThemeBottomSheet: View {
     
     var body: some View {
         if let isCustom = isCustom, isCustom {
-            Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 225)) {
+            Sheet(isOpen: $isOpen,
+                  orientation: .bottom(maxHeight: 225),
+                  disableBackgroundTap: false,
+                  disableDragGesture: true) {
                 VStack(spacing: 0) {
                     ThemeBottomSheetButton(menu: .edit, isSheetOpen: isOpen) {
                         Task {
@@ -54,7 +57,7 @@ struct ThemeBottomSheet: View {
                             isUndeletableAlertPresented = true
                         }
                     }
-                    .alert("테마를 삭제하시겠습니까? 이 테마가 지정된 시간표의 강의 색상은 유지됩니다.", isPresented: $isDeleteAlertPresented) {
+                    .alert("테마를 삭제하시겠습니까?\n이 테마가 지정된 시간표의 강의 색상은 유지됩니다.", isPresented: $isDeleteAlertPresented) {
                         Button("취소", role: .cancel, action: {})
                         Button("삭제", role: .destructive) {
                             Task {
@@ -66,10 +69,12 @@ struct ThemeBottomSheet: View {
                         Button("확인", role: .cancel, action: {})
                     }
                 }
-                .transformEffect(.identity)
             }
         } else {
-            Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 125)) {
+            Sheet(isOpen: $isOpen,
+                  orientation: .bottom(maxHeight: 125),
+                  disableBackgroundTap: false,
+                  disableDragGesture: true) {
                 VStack(spacing: 0) {
                     ThemeBottomSheetButton(menu: .detail, isSheetOpen: isOpen) {
                         Task {
@@ -85,6 +90,7 @@ struct ThemeBottomSheet: View {
                 }
             }
         }
+        
     }
 }
 

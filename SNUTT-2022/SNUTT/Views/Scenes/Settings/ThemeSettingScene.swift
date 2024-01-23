@@ -30,12 +30,12 @@ struct ThemeSettingScene: View {
                                         Image("nav.plus")
                                     }
                                 }
-                                .padding(.top, 10)
                                 Text("새 테마")
                                     .padding(.horizontal, 10)
                                     .padding(.vertical, 5)
                                     .font(STFont.detailLabel)
                             }
+                            
                             ForEach(viewModel.themes, id: \.id) {
                                 theme in
                                 if(theme.isCustom) {
@@ -53,7 +53,6 @@ struct ThemeSettingScene: View {
                                                     .font(STFont.detailLabel)
                                                 Image("theme.chevron.right")
                                             }
-                                            .padding(.horizontal, 10)
                                             .padding(.vertical, 5)
                                         }
                                     }
@@ -95,7 +94,17 @@ struct ThemeSettingScene: View {
                     .padding(.vertical, 10)
                 }
             }
-            ThemeBottomSheet(isOpen: $viewModel.isBottomSheetOpen, isCustom: viewModel.targetTheme?.isCustom, isDefault: viewModel.targetTheme?.isDefault, openCustomThemeSheet: viewModel.openCustomThemeSheet, makeCustomThemeDefault: viewModel.makeCustomThemeDefault, undoCustomThemeDefault: viewModel.undoCustomThemeDefault, copyTheme: viewModel.copyTheme, deleteTheme: viewModel.deleteTheme, openBasicThemeSheet: viewModel.openBasicThemeSheet, makeBasicThemeDefault: viewModel.makeBasicThemeDefault, undoBasicThemeDefault: viewModel.undoBasicThemeDefault)
+            ThemeBottomSheet(isOpen: $viewModel.isBottomSheetOpen,
+                             isCustom: viewModel.targetTheme?.isCustom,
+                             isDefault: viewModel.targetTheme?.isDefault,
+                             openCustomThemeSheet: viewModel.openCustomThemeSheet,
+                             makeCustomThemeDefault: viewModel.makeCustomThemeDefault,
+                             undoCustomThemeDefault: viewModel.undoCustomThemeDefault,
+                             copyTheme: viewModel.copyTheme,
+                             deleteTheme: viewModel.deleteTheme,
+                             openBasicThemeSheet: viewModel.openBasicThemeSheet,
+                             makeBasicThemeDefault: viewModel.makeBasicThemeDefault,
+                             undoBasicThemeDefault: viewModel.undoBasicThemeDefault)
         }
         .navigationTitle("시간표 테마")
         .navigationBarTitleDisplayMode(.inline)

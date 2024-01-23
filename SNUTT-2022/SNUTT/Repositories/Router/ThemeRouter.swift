@@ -56,7 +56,7 @@ enum ThemeRouter: Router {
         case let .copyTheme(themeId):
             return "/\(themeId)/copy"
         case let .deleteTheme(themeId):
-            return "\(themeId)"
+            return "/\(themeId)"
         case let .makeBasicThemeDefault(themeType):
             return "/basic/\(themeType)/default"
         case let .undoBasicThemeDefault(themeType):
@@ -73,9 +73,11 @@ enum ThemeRouter: Router {
         case .getThemeList:
             return nil
         case let .addTheme(name, colors):
-            return ["name": name, "colors": colors]
+            var dict = colors.encodeColors()
+            return ["name": name, "colors": dict]
         case let .updateTheme(_, name, colors):
-            return ["name": name, "colors": colors]
+            var dict = colors.encodeColors()
+            return ["name": name, "colors": dict]
         case .copyTheme:
             return nil
         case .deleteTheme:
@@ -89,5 +91,12 @@ enum ThemeRouter: Router {
         case .undoCustomThemeDefault:
             return nil
         }
+    }
+}
+
+public extension Encodable {
+    func encodeColors() -> [[String: String]]? {
+        guard let data = asJSONData() else { return nil }
+        return try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: String]]
     }
 }
