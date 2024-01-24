@@ -28,7 +28,7 @@ struct NotificationDto: Decodable {
         created_at = try container.decode(String.self, forKey: .created_at)
         user_id = try? container.decode(String.self, forKey: .user_id)
         type = try container.decode(Int.self, forKey: .type)
-        
+
         let type = NotificationType(rawValue: type) ?? .normal
         var title = try container.decode(String.self, forKey: .title)
         if title.isEmpty {
