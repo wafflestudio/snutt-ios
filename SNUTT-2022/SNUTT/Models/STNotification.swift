@@ -13,7 +13,6 @@ struct STNotification: Hashable {
     let created_at: String
     let type: NotificationType
     let user_id: String?
-    var detail: NotificationDto.Detail?
     var link: String?
 
     var dateString: String {
@@ -49,17 +48,6 @@ extension STNotification {
         created_at = dto.created_at
         type = NotificationType(rawValue: dto.type) ?? .normal
         user_id = dto.user_id
-        detail = nil
-        link = nil
-
-        switch type {
-        case .normal, .courseBook:
-            detail = nil
-        case .lectureRemove, .lectureUpdate:
-            detail = dto.detail as? NotificationDto.Detail
-        case .lectureVacancy, .friend, .newFeature:
-            link = dto.detail as? String
-        }
     }
 }
 
