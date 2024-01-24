@@ -31,10 +31,12 @@ struct MenuSheetScene: View {
                               deleteTimetable: viewModel.deleteTimetable)
 
             MenuThemeSheet(isOpen: $viewModel.isThemeSheetOpen,
-                           selectedTheme: viewModel.selectedTheme, themes: viewModel.themes,
+                           selectedTheme: viewModel.selectedTheme,
+                           themes: viewModel.themes,
                            cancel: viewModel.closeThemeSheet,
                            confirm: viewModel.applyThemeSheet,
-                           select: viewModel.selectTheme, newTheme: viewModel.openNewThemeSheet)
+                           select: viewModel.selectTheme,
+                           newTheme: viewModel.openNewThemeSheet)
 
             MenuRenameSheet(isOpen: $viewModel.isRenameSheetOpen,
                             titleText: $viewModel.renameTitle,

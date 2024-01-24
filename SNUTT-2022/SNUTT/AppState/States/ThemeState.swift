@@ -16,4 +16,16 @@ class ThemeState {
     @Published var isNewThemeSheetOpen = false
     @Published var isBasicThemeSheetOpen = false
     @Published var isCustomThemeSheetOpen = false
+    
+    func findTheme(themeId: String?, themeType: Int?) -> Theme? {
+        return themeList.last { theme in
+            if let id = themeId {
+                return theme.id == id
+            } else if let type = themeType {
+                return theme.theme?.rawValue == type
+            } else {
+                return false
+            }
+        }
+    }
 }

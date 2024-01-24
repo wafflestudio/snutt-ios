@@ -26,4 +26,13 @@ extension Theme {
         isDefault = dto.isDefault
         isCustom = dto.isCustom
     }
+    
+    init(rawValue: Int) {
+        id = ""
+        theme = BasicTheme(rawValue: rawValue)
+        name = theme?.name ?? ""
+        colors = theme?.getLectureColorList() ?? []
+        isDefault = false
+        isCustom = false
+    }
 }

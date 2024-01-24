@@ -38,31 +38,36 @@ struct Lecture: Identifiable {
     var wasFull: Bool
 
     /// A property which is populated by the client.
-    var theme: BasicTheme?
+    var theme: Theme?
 
-    func withTheme(theme: BasicTheme) -> Self {
+    func withTheme(theme: Theme) -> Self {
         var lecture = self
         lecture.theme = theme
         return lecture
     }
 
-    func getColor(with theme: BasicTheme? = nil) -> LectureColor {
+    func getColor(with theme: Theme? = nil) -> LectureColor {
         // use custom color if colorIndex is zero
         if colorIndex == 0, let color = color {
             return color
         }
+        
+        // use custom color list if theme is custom
+        if let colors = theme?.colors {
+            let color = colors[(colorIndex-1) % colors.count]
+            return color
+        }
 
         // use color specified by colorIndex, where theme is given by parameter
-        if let color = theme?.getColor(at: colorIndex) {
+        if let color = theme?.theme?.getColor(at: colorIndex) {
             return color
         }
 
         // use the theme colors of `self`
-        if let color = self.theme?.getColor(at: colorIndex) {
+        if let color = self.theme?.theme?.getColor(at: colorIndex) {
             return color
         }
-
-        // fallback
+        
         return .temporary
     }
 

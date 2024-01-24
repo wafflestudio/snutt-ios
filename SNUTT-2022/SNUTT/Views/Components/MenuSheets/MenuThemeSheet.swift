@@ -60,10 +60,11 @@ struct MenuThemeSheet: View {
                                         Image(theme.theme?.imageName ?? "")
                                     }
                                     Text(theme.name)
+                                        .frame(width: 60, height: 15)
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
                                         .font(STFont.detailLabel)
-                                        .background(selectedTheme?.id == theme.id ? Color(uiColor: .tertiarySystemFill) : .clear)
+                                        .background((selectedTheme?.id == theme.id) ? Color(uiColor: .tertiarySystemFill) : .clear)
                                         .clipShape(Capsule())
                                 }
                             }

@@ -10,7 +10,7 @@ import SwiftUI
 struct TimetableBlock: View {
     let lecture: Lecture
     let timePlace: TimePlace
-    let theme: BasicTheme
+    let theme: Theme
 
     var body: some View {
         ZStack {

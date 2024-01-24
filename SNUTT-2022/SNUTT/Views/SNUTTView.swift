@@ -58,6 +58,9 @@ struct SNUTTView: View, Sendable {
                 .onLoad {
                     await withTaskGroup(of: Void.self, body: { group in
                         group.addTask {
+                            await viewModel.getThemeList()
+                        }
+                        group.addTask {
                             await viewModel.fetchTimetableList()
                         }
                         group.addTask {
@@ -172,6 +175,16 @@ extension SNUTTView {
 
         func preloadWebViews() {
             services.globalUIService.preloadWebViews()
+        }
+        
+        func getThemeList() async {
+            func getThemeList() async {
+                do {
+                    try await services.themeService.getThemeList()
+                } catch {
+                    services.globalUIService.presentErrorAlert(error: error)
+                }
+            }
         }
 
         func fetchTimetableList() async {

@@ -53,6 +53,7 @@ struct ThemeSettingScene: View {
                                                     .font(STFont.detailLabel)
                                                 Image("theme.chevron.right")
                                             }
+                                            .frame(width: 70, height: 15)
                                             .padding(.vertical, 5)
                                         }
                                     }

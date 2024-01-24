@@ -82,10 +82,10 @@ extension TimetableDto {
         semester = model.semester
         title = model.title
         lecture_list = model.lectures.map { LectureDto(from: $0) }
-        theme = model.theme.rawValue
+        theme = model.theme.theme?.rawValue ?? 0
         isPrimary = model.isPrimary
         updated_at = model.updatedAt
-        themeId = model.themeId
+        themeId = model.theme.id
     }
 }
 

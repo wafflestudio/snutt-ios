@@ -79,11 +79,13 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
     
     func openBasicThemeSheet() {
         guard let theme = targetTheme else { return }
+        services.timetableService.selectTimetableTheme(theme: theme)
         services.themeService.openBasicThemeSheet(for: theme)
     }
     
     func openCustomThemeSheet() {
         guard let theme = targetTheme else { return }
+        services.timetableService.selectTimetableTheme(theme: theme) //??????
         services.themeService.openCustomThemeSheet(for: theme)
     }
     

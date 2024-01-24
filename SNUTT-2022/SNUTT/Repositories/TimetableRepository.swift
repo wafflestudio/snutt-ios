@@ -94,8 +94,7 @@ class TimetableRepository: TimetableRepositoryProtocol {
 
     func updateTimetableTheme(withTimetableId id: String, withTheme theme: Theme) async throws -> TimetableDto {
         return try await session
-            .request(TimetableRouter.updateTheme(id: id, theme: theme.theme?.rawValue, themeId: theme.id))
-            .validate()
+            .request(TimetableRouter.updateTheme(id: id, theme: theme.isCustom ? nil : theme.theme?.rawValue, themeId: theme.isCustom ? theme.id : nil))
             .serializingDecodable(TimetableDto.self)
             .handlingError()
     }

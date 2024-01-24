@@ -13,13 +13,12 @@ struct Timetable {
     let id: String
     var title: String
     let lectures: [Lecture]
-    var theme: BasicTheme
+    var theme: Theme
     var isPrimary: Bool
     let userId: String
     let year: Int
     let semester: Int
     let updatedAt: String
-    let themeId: String?
 
     /// 강의를 검색하는 동안 추가할 강의를 선택했을 때 임시로 나타나는 강의
     var selectedLecture: Lecture?
@@ -82,11 +81,13 @@ extension Timetable {
         semester = dto.semester
         updatedAt = dto.updated_at
         isPrimary = dto.isPrimary ?? false
-        themeId = dto.themeId
-
-        let theme: BasicTheme = .init(rawValue: dto.theme) ?? .snutt
-        self.theme = theme
-        lectures = dto.lecture_list.map { .init(from: $0).withTheme(theme: theme) }
+        
+        let themeState = ThemeState()
+        let foundTheme = themeState.findTheme(themeId: dto.themeId, themeType: dto.theme) ?? Theme(rawValue: dto.theme)
+        
+        theme = foundTheme
+        selectedTheme = foundTheme
+        lectures = dto.lecture_list.map { .init(from: $0).withTheme(theme: foundTheme) }
     }
 }
 
@@ -97,13 +98,12 @@ extension Timetable {
                 id: UUID().uuidString,
                 title: "나의 시간표",
                 lectures: [.preview, .preview, .preview],
-                theme: .snutt,
+                theme: Theme(rawValue: 0),
                 isPrimary: false,
                 userId: "1234",
                 year: 2022,
                 semester: 1,
-                updatedAt: "2022-04-02T16:35:53.652Z",
-                themeId: ""
+                updatedAt: "2022-04-02T16:35:53.652Z"
             )
         }
     }
