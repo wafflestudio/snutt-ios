@@ -61,6 +61,26 @@ struct TimePlaceDto: Codable {
     let startMinute: Int
     let endMinute: Int
     let place: String
+    let lectureBuilding: LectureBuidingDto?
+}
+
+struct LectureBuidingDto: Codable {
+    let id: String
+    let buildingNumber: String
+    let buildingNameKor: String
+    let buildingNameEng: String
+    let locationInDMS: Location
+    let locationInDecimal: Location
+    let campus: String
+}
+
+struct Location: Codable {
+    let latitude: Double
+    let longitude: Double
+}
+
+enum Campus: String, Codable {
+    case GWANAK, YEONGEON, PYEONGCHANG
 }
 
 struct TimetableMetadataDto: Codable {
@@ -94,6 +114,17 @@ extension TimePlaceDto {
         startMinute = model.startMinute
         endMinute = model.endMinute
         place = model.place
+        guard let building = model.building else {
+            lectureBuilding = nil
+            return
+        }
+        lectureBuilding = .init(id: building.id,
+                                buildingNumber: building.number,
+                                buildingNameKor: building.nameKor,
+                                buildingNameEng: building.nameEng,
+                                locationInDMS: building.locationInDMS,
+                                locationInDecimal: building.locationInDecimal,
+                                campus: building.campus.rawValue)
     }
 }
 
