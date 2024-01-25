@@ -17,6 +17,8 @@ struct TimePlace: Identifiable {
     var endTime: String
 
     var place: String
+    
+    var building: Building?
 
     let isCustom: Bool
 
@@ -74,6 +76,17 @@ extension TimePlace {
         place = dto.place
         day = .init(rawValue: dto.day) ?? .mon
         self.isCustom = isCustom
+        guard let building = dto.lectureBuilding else {
+            self.building = nil
+            return
+        }
+        self.building = .init(id: building.id,
+                              number: building.buildingNumber,
+                              nameKor: building.buildingNameKor,
+                              nameEng: building.buildingNameEng,
+                              locationInDMS: building.locationInDMS,
+                              locationInDecimal: building.locationInDecimal,
+                              campus: Campus(rawValue: building.campus) ?? .GWANAK)
     }
 }
 
@@ -113,10 +126,17 @@ extension TimePlace {
             let startTimeString = dateFormatter.string(from: startTimeDate)
             let endTimeString = dateFormatter.string(from: endTimeDate)
             return TimePlace(id: UUID().uuidString,
-                             day: .init(rawValue: Int.random(in: 0 ... 6))!,
+                             day: Weekday.init(rawValue: Int.random(in: 0 ... 6))!,
                              startTime: startTimeString,
                              endTime: endTimeString,
                              place: place,
+                             building: .init(id: "12",
+                                             number: "500",
+                                             nameKor: "자연과학대학(500)",
+                                             nameEng: "College of Natural Sciences(500)",
+                                             locationInDMS: .init(latitude: 37.4592190840394, longitude: 126.94812006718699),
+                                             locationInDecimal: .init(latitude: 488525.0, longitude: 1099948.0),
+                                             campus: .GWANAK),
                              isCustom: Bool.random())
         }
     }

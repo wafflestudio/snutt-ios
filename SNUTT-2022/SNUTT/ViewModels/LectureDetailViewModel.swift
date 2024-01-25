@@ -150,6 +150,7 @@ extension LectureDetailScene {
                                             startTime: "9:00",
                                             endTime: "10:00",
                                             place: "",
+                                            building: nil,
                                             isCustom: lecture.isCustom,
                                             isTemporary: true))
             return lecture
