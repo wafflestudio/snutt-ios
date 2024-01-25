@@ -31,7 +31,7 @@ struct ThemeSettingScene: View {
                                     }
                                 }
                                 Text("새 테마")
-                                    .padding(.horizontal, 10)
+                                    .padding(.horizontal, 5)
                                     .padding(.vertical, 5)
                                     .font(STFont.detailLabel)
                             }
@@ -66,7 +66,7 @@ struct ThemeSettingScene: View {
                 
                 Section(header: Text("제공 테마")) {
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 20) {
+                        HStack(spacing: 10) {
                             ForEach(viewModel.themes, id: \.id) {
                                 theme in
                                 if(!theme.isCustom) {
@@ -79,20 +79,23 @@ struct ThemeSettingScene: View {
                                                     theme.isDefault ? Image("theme.pin")
                                                         .offset(x: -8, y: -8) : nil
                                                     , alignment: .topLeading)
+                                                .frame(width: 88, height: 90)
+                                            
                                             HStack(spacing: 0) {
                                                 Text(theme.name)
                                                     .font(STFont.detailLabel)
                                                 Image("theme.chevron.right")
                                             }
                                             .padding(.horizontal, 10)
-                                            .padding(.vertical, 5)
+                                            .padding(.bottom, 5)
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                    .padding(.vertical, 10)
+                    .padding(.top, 5)
+                    .padding(.bottom, 10)
                 }
             }
             ThemeBottomSheet(isOpen: $viewModel.isBottomSheetOpen,

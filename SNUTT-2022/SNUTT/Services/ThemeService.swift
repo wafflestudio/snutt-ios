@@ -61,6 +61,7 @@ struct ThemeService: ThemeServiceProtocol {
     }
     
     func closeBasicThemeSheet() {
+        appState.timetable.current?.selectedTheme = nil
         appState.theme.isBasicThemeSheetOpen = false
         appState.theme.bottomSheetTarget = nil
     }
@@ -71,6 +72,7 @@ struct ThemeService: ThemeServiceProtocol {
     }
     
     func closeCustomThemeSheet() {
+        appState.timetable.current?.selectedTheme = nil
         appState.theme.isCustomThemeSheetOpen = false
         appState.theme.bottomSheetTarget = nil
     }

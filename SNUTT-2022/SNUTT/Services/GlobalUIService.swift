@@ -93,6 +93,7 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
         appState.menu.isOpen = false
         appState.menu.isEllipsisSheetOpen = false
         appState.menu.isThemeSheetOpen = true
+        appState.timetable.current?.selectedTheme = appState.timetable.current?.displayTheme
     }
 
     func closeThemeSheet() {

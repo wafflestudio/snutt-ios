@@ -37,34 +37,21 @@ struct Lecture: Identifiable {
     var registrationCount: Int?
     var wasFull: Bool
 
-    /// A property which is populated by the client.
-    var theme: Theme?
-
-    func withTheme(theme: Theme) -> Self {
-        var lecture = self
-        lecture.theme = theme
-        return lecture
-    }
+    var lectureIndex: Int
 
     func getColor(with theme: Theme? = nil) -> LectureColor {
-        // use custom color if colorIndex is zero
-        if colorIndex == 0, let color = color {
+        // use custom color list if theme is custom
+        if let theme = theme, !theme.colors.isEmpty {
+            return theme.colors[(lectureIndex-1) % theme.colors.count]
+        }
+        
+        // use color specified by colorIndex, where theme is given by parameter
+        if let color = theme?.theme?.getColor(at: lectureIndex) {
             return color
         }
         
-        // use custom color list if theme is custom
-        if let colors = theme?.colors {
-            let color = colors[(colorIndex-1) % colors.count]
-            return color
-        }
-
-        // use color specified by colorIndex, where theme is given by parameter
-        if let color = theme?.theme?.getColor(at: colorIndex) {
-            return color
-        }
-
-        // use the theme colors of `self`
-        if let color = self.theme?.theme?.getColor(at: colorIndex) {
+        // use custom color if colorIndex is zero
+        if colorIndex == 0, let color = color {
             return color
         }
         
@@ -119,7 +106,7 @@ struct LectureColor: Hashable {
 }
 
 extension Lecture {
-    init(from dto: LectureDto) {
+    init(from dto: LectureDto, index: Int? = nil) {
         id = dto._id
         lectureId = dto.lecture_id
         title = dto.course_title
@@ -146,6 +133,7 @@ extension Lecture {
         freshmanQuota = dto.freshmanQuota ?? 0
         registrationCount = dto.registrationCount
         wasFull = dto.wasFull ?? false
+        lectureIndex = (index ?? 0) + 1
     }
 }
 
@@ -179,7 +167,7 @@ extension Lecture {
                            freshmanQuota: Int.random(in: 1 ... 10),
                            registrationCount: Int.random(in: 10 ... 100),
                            wasFull: false,
-                           theme: nil)
+                           lectureIndex: 0)
         }
     }
 #endif

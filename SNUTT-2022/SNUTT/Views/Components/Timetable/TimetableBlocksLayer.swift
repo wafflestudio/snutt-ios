@@ -12,7 +12,7 @@ struct TimetableBlocksLayer: View {
     let config: TimetableConfiguration
 
     var displayedTheme: Theme {
-        current?.selectedTheme ?? (current?.theme ?? Theme(rawValue: 0))
+        current?.selectedTheme ?? (current?.displayTheme ?? Theme(rawValue: 0))
     }
 
     var body: some View {

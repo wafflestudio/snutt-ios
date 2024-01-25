@@ -214,5 +214,9 @@ extension LectureDetailScene {
         func isVacancyNotificationEnabled(lecture: Lecture) -> Bool {
             return vacancyNotificationLectures.contains(where: { $0.isEquivalent(with: lecture) })
         }
+        
+        var theme: Theme {
+            appState.timetable.current?.displayTheme ?? Theme(rawValue: 0)
+        }
     }
 }

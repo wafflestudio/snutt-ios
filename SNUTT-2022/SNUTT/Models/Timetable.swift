@@ -12,8 +12,9 @@ import SwiftUI
 struct Timetable {
     let id: String
     var title: String
-    let lectures: [Lecture]
-    var theme: Theme
+    var lectures: [Lecture]
+    var theme: BasicTheme?
+    let themeId: String?
     var isPrimary: Bool
     let userId: String
     let year: Int
@@ -25,6 +26,7 @@ struct Timetable {
 
     /// 테마를 선택했을 때 임시로 사용할 테마
     var selectedTheme: Theme?
+    var displayTheme: Theme?
 
     var totalCredit: Int {
         lectures.reduce(0) { $0 + $1.credit }
@@ -81,13 +83,12 @@ extension Timetable {
         semester = dto.semester
         updatedAt = dto.updated_at
         isPrimary = dto.isPrimary ?? false
+        themeId = dto.themeId
+        theme = (themeId != nil) ? nil : BasicTheme(rawValue: dto.theme)
         
-        let themeState = ThemeState()
-        let foundTheme = themeState.findTheme(themeId: dto.themeId, themeType: dto.theme) ?? Theme(rawValue: dto.theme)
-        
-        theme = foundTheme
-        selectedTheme = foundTheme
-        lectures = dto.lecture_list.map { .init(from: $0).withTheme(theme: foundTheme) }
+        lectures = dto.lecture_list.enumerated().map { index, dto in
+                Lecture(from: dto, index: index)
+        }
     }
 }
 
@@ -98,7 +99,8 @@ extension Timetable {
                 id: UUID().uuidString,
                 title: "나의 시간표",
                 lectures: [.preview, .preview, .preview],
-                theme: Theme(rawValue: 0),
+                theme: BasicTheme(rawValue: 0),
+                themeId: "",
                 isPrimary: false,
                 userId: "1234",
                 year: 2022,

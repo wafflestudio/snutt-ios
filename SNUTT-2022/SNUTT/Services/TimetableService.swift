@@ -41,7 +41,9 @@ struct TimetableService: TimetableServiceProtocol {
     func fetchTimetable(timetableId: String) async throws {
         let dto = try await timetableRepository.fetchTimetable(withTimetableId: timetableId)
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
-        appState.timetable.current = Timetable(from: dto)
+        var timetable = Timetable(from: dto)
+        timetable.displayTheme = appState.theme.themeList.first { $0.id == timetable.themeId || $0.theme == timetable.theme}
+        appState.timetable.current = timetable
     }
 
     func fetchRecentTimetable() async throws {
@@ -55,7 +57,9 @@ struct TimetableService: TimetableServiceProtocol {
         }
         let dto = try await timetableRepository.fetchRecentTimetable()
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
-        appState.timetable.current = Timetable(from: dto)
+        var timetable = Timetable(from: dto)
+        timetable.displayTheme = appState.theme.themeList.first { $0.id == timetable.themeId || $0.theme == timetable.theme}
+        appState.timetable.current = timetable
     }
 
     func fetchTimetableList() async throws {
@@ -88,7 +92,8 @@ struct TimetableService: TimetableServiceProtocol {
     func updateTimetableTheme(timetableId: String) async throws {
         guard let theme = appState.timetable.current?.selectedTheme else { return }
         let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: theme)
-        let timetable = Timetable(from: dto)
+        var timetable = Timetable(from: dto)
+        timetable.displayTheme = theme
         if appState.timetable.current?.id == timetableId {
             appState.timetable.current = timetable
         }

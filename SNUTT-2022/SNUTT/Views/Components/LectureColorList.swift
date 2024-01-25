@@ -115,7 +115,7 @@ struct LectureColorList: View {
             @State var lecture: Lecture = .preview
             var body: some View {
                 NavigationView {
-                    LectureColorList(theme: lecture.theme ?? Theme(rawValue: 0), colorIndex: $lecture.colorIndex, customColor: $lecture.color)
+                    LectureColorList(theme: Theme(rawValue: 0), colorIndex: $lecture.colorIndex, customColor: $lecture.color)
                 }
             }
         }

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Theme {
+struct Theme: Equatable {
     var id: String
     var theme: BasicTheme?
     var name: String

@@ -64,7 +64,7 @@ struct MenuThemeSheet: View {
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
                                         .font(STFont.detailLabel)
-                                        .background((selectedTheme?.id == theme.id) ? Color(uiColor: .tertiarySystemFill) : .clear)
+                                        .background((selectedTheme == theme) ? Color(uiColor: .tertiarySystemFill) : .clear)
                                         .clipShape(Capsule())
                                 }
                             }
