@@ -11,6 +11,8 @@
 		731DA001297BC54B0027BA25 /* BookmarkDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA000297BC54B0027BA25 /* BookmarkDto.swift */; };
 		731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA002297BC5740027BA25 /* BookmarkRouter.swift */; };
 		731DA005297BC8990027BA25 /* BookmarkScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA004297BC8990027BA25 /* BookmarkScene.swift */; };
+		B84A4EA12B6035EE00C1E1A0 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84A4EA02B6035EE00C1E1A0 /* Building.swift */; };
+		B84A4EA22B6259FF00C1E1A0 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84A4EA02B6035EE00C1E1A0 /* Building.swift */; };
 		B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85B244C295BF36F00E6577E /* FindLocalIdView.swift */; };
 		B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */; };
 		B86C4CCF294DCA150019CE51 /* VerificationCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */; };
@@ -320,6 +322,7 @@
 		731DA000297BC54B0027BA25 /* BookmarkDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkDto.swift; sourceTree = "<group>"; };
 		731DA002297BC5740027BA25 /* BookmarkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRouter.swift; sourceTree = "<group>"; };
 		731DA004297BC8990027BA25 /* BookmarkScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkScene.swift; sourceTree = "<group>"; };
+		B84A4EA02B6035EE00C1E1A0 /* Building.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
 		B85B244C295BF36F00E6577E /* FindLocalIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocalIdView.swift; sourceTree = "<group>"; };
 		B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordScene.swift; sourceTree = "<group>"; };
 		B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeView.swift; sourceTree = "<group>"; };
@@ -940,6 +943,7 @@
 				B87DF6E82914F8FC008BB95B /* Popup.swift */,
 				B88D16FC28AE2E1E00E2D652 /* User.swift */,
 				731D9FFC297BC5060027BA25 /* Bookmark.swift */,
+				B84A4EA02B6035EE00C1E1A0 /* Building.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1345,6 +1349,7 @@
 				BE419B98288B8FDC00FA9590 /* STFont.swift in Sources */,
 				CEB5A71E29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift in Sources */,
 				BE98A07F288B046400C2CE95 /* TimetableWidget.swift in Sources */,
+				B84A4EA22B6259FF00C1E1A0 /* Building.swift in Sources */,
 				BE77D0A528AEADE30067A9D8 /* CourseBookDto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1470,6 +1475,7 @@
 				BE9413CA28C21F1300171060 /* NotificationList.swift in Sources */,
 				CEDDCA822A6AF66D00474D4E /* VacancyState.swift in Sources */,
 				BE9413B728BE8A2200171060 /* CircleBadgeModifier.swift in Sources */,
+				B84A4EA12B6035EE00C1E1A0 /* Building.swift in Sources */,
 				CEDDCA802A6AF57400474D4E /* VacancyService.swift in Sources */,
 				BE77D0A728AEB0650067A9D8 /* CourseBookService.swift in Sources */,
 				BE1D2B38280142EB008F9134 /* TimetableGridLayer.swift in Sources */,
