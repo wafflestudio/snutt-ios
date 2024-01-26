@@ -177,6 +177,17 @@ struct LectureDetailScene: View {
                                     .animation(.customSpring, value: lecture.timePlaces.count)
                             }
                             .padding(.top, 5)
+                        } 
+                        else {
+                            if let location = lecture.timePlaces.first?.building?.locationInDMS {
+                                Button {
+                                    let _ = viewModel.openInExternalApp(location: location)
+                                } label: {
+                                    Text("open app")
+                                        .font(.system(size: 16))
+                                        .foregroundColor(.black)
+                                }
+                            }
                         }
                     }
                     .padding()
@@ -432,14 +443,3 @@ struct RectangleButtonStyle: ButtonStyle {
             .background(configuration.isPressed ? STColor.buttonPressed : (color ?? .clear))
     }
 }
-
-#if DEBUG
-//    struct LectureDetailList_Previews: PreviewProvider {
-//        static var previews: some View {
-//            NavigationView {
-//                LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview, displayMode: .normal)
-//                    .navigationBarTitleDisplayMode(.inline)
-//            }
-//        }
-//    }
-#endif
