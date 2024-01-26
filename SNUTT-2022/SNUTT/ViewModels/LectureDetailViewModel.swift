@@ -216,7 +216,7 @@ extension LectureDetailScene {
         }
         
         var theme: Theme {
-            appState.timetable.current?.displayTheme ?? Theme(rawValue: 0)
+            Theme(rawValue: 0)
         }
     }
 }

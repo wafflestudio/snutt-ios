@@ -43,8 +43,7 @@ struct LectureService: LectureServiceProtocol {
     func addLecture(lecture: Lecture, isForced: Bool = false) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id, isForced: isForced)
-        var timetable = Timetable(from: dto)
-        timetable.displayTheme = appState.theme.themeList.first { $0.id == timetable.themeId || $0.theme == timetable.theme}
+        let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
         appState.search.selectedLecture = nil
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
@@ -57,8 +56,7 @@ struct LectureService: LectureServiceProtocol {
         var lectureDto = LectureDto(from: lecture)
         lectureDto.class_time_mask = nil
         let dto = try await lectureRepository.addCustomLecture(timetableId: currentTimetable.id, lecture: lectureDto, isForced: isForced)
-        var timetable = Timetable(from: dto)
-        timetable.displayTheme = appState.theme.themeList.first { $0.id == timetable.themeId || $0.theme == timetable.theme}
+        let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
@@ -68,8 +66,7 @@ struct LectureService: LectureServiceProtocol {
 
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture), isForced: isForced)
-        var timetable = Timetable(from: dto)
-        timetable.displayTheme = appState.theme.themeList.first { $0.id == timetable.themeId || $0.theme == timetable.theme}
+        let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
@@ -79,8 +76,7 @@ struct LectureService: LectureServiceProtocol {
               let timetableLecture = currentTimetable.lectures.first(where: { $0.isEquivalent(with: lecture) })
         else { return }
         let dto = try await lectureRepository.deleteLecture(timetableId: currentTimetable.id, lectureId: timetableLecture.id)
-        var timetable = Timetable(from: dto)
-        timetable.displayTheme = appState.theme.themeList.first { $0.id == timetable.themeId || $0.theme == timetable.theme}
+        let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
@@ -88,8 +84,7 @@ struct LectureService: LectureServiceProtocol {
     func resetLecture(lecture: Lecture) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.resetLecture(timetableId: currentTimetable.id, lectureId: lecture.id)
-        var timetable = Timetable(from: dto)
-        timetable.displayTheme = appState.theme.themeList.first { $0.id == timetable.themeId || $0.theme == timetable.theme}
+        let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }

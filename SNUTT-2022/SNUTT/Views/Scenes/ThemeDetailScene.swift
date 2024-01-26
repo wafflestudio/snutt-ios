@@ -198,6 +198,9 @@ struct ThemeDetailScene: View {
             
             Spacer(minLength: 30)
         }
+        .onChange(of: theme) { newTheme in
+            viewModel.currentTimetable?.selectedTheme = newTheme
+        }
         .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(themeType == .basic ? "제공 테마" : "커스텀 테마")

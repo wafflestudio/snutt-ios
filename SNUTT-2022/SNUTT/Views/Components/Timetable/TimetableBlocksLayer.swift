@@ -11,15 +11,14 @@ struct TimetableBlocksLayer: View {
     let current: Timetable?
     let config: TimetableConfiguration
 
-    var displayedTheme: Theme {
-        current?.selectedTheme ?? (current?.displayTheme ?? Theme(rawValue: 0))
+    var displayedTheme: Theme? {
+        current?.selectedTheme
     }
 
     var body: some View {
         ForEach(current?.lectures ?? []) { lecture in
             LectureBlocks(current: current, lecture: lecture, theme: displayedTheme, config: config)
         }
-        .animation(.customSpring, value: displayedTheme.id)
 
         if let selectedLecture = current?.selectedLecture {
             LectureBlocks(current: current, lecture: selectedLecture.withTemporaryColor(), theme: displayedTheme, config: config)

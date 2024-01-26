@@ -17,6 +17,9 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         super.init(container: container)
         appState.timetable.$current.assign(to: &$currentTimetable)
         appState.timetable.$configuration.assign(to: &$configuration)
+        appState.timetable.current?.selectedTheme.map { selectedTheme in
+            currentTimetable?.selectedTheme = selectedTheme
+        }
     }
     
     var themeState: ThemeState {

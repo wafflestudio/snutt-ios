@@ -66,7 +66,7 @@ struct LectureDetailScene: View {
                                     LectureColorList(theme: viewModel.theme, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
                                 } label: {
                                     HStack {
-                                        LectureColorPreview(lectureColor: lecture.getColor(with: viewModel.theme))
+                                        LectureColorPreview(lectureColor: lecture.getColor())
                                             .frame(height: 25)
                                         Spacer()
                                         if editMode.isEditing {

@@ -26,7 +26,6 @@ struct Timetable {
 
     /// 테마를 선택했을 때 임시로 사용할 테마
     var selectedTheme: Theme?
-    var displayTheme: Theme?
 
     var totalCredit: Int {
         lectures.reduce(0) { $0 + $1.credit }
@@ -86,8 +85,10 @@ extension Timetable {
         themeId = dto.themeId
         theme = (themeId != nil) ? nil : BasicTheme(rawValue: dto.theme)
         
-        lectures = dto.lecture_list.enumerated().map { index, dto in
-                Lecture(from: dto, index: index)
+        lectures = dto.lecture_list.enumerated().map { index, lectureDto in
+            let lecture = Lecture(from: lectureDto, index: index)
+            let lectureWithTheme = lecture.withTheme(theme: dto.theme)
+            return lectureWithTheme
         }
     }
 }
