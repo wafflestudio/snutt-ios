@@ -26,7 +26,7 @@ extension Theme {
         isDefault = dto.isDefault
         isCustom = dto.isCustom
     }
-    
+
     init(rawValue: Int) {
         id = ""
         theme = BasicTheme(rawValue: rawValue)

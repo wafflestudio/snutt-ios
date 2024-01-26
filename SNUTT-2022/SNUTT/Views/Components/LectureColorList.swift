@@ -33,9 +33,9 @@ struct LectureColorList: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                if (theme.isCustom) {
+                if theme.isCustom {
                     ForEach(colorList.indices, id: \.self) { index in
-                        makePickerButton(lectureColor: colorList[index], displayTick: colorList[index] == customColor, title: "\(theme.name)\(index+1)") {
+                        makePickerButton(lectureColor: colorList[index], displayTick: colorList[index] == customColor, title: "\(theme.name)\(index + 1)") {
                             customColor = colorList[index]
                         }
                     }
@@ -43,27 +43,29 @@ struct LectureColorList: View {
                     ForEach(colorList.indices.dropFirst(1), id: \.self) { index in
                         makePickerButton(lectureColor: colorList[index],
                                          displayTick: index == colorIndex,
-                                         title: "\(theme.name) \(index)") {
+                                         title: "\(theme.name) \(index)")
+                        {
                             colorIndex = index
                         }
-                        
+
                         Divider()
                             .frame(height: 1)
                             .padding(.leading, 20)
                     }
                 }
-                
+
                 if !theme.isCustom {
                     VStack(spacing: 0) {
                         makePickerButton(lectureColor: customColor ?? .temporary,
                                          displayTick: colorIndex == 0,
-                                         title: "직접 선택하기") {
+                                         title: "직접 선택하기")
+                        {
                             colorIndex = 0
                             selectedColor.bg = customColor?.bg ?? LectureColor.temporary.bg
                             selectedColor.fg = customColor?.fg ?? LectureColor.temporary.fg
                         }
                     }
-                    
+
                     if colorIndex == 0 {
                         Divider()
                             .frame(height: 1)
@@ -90,8 +92,7 @@ struct LectureColorList: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    @ViewBuilder
-    func makePickerButton(lectureColor: LectureColor, displayTick: Bool, title: String, action: @escaping () -> Void) -> some View {
+    @ViewBuilder func makePickerButton(lectureColor: LectureColor, displayTick: Bool, title: String, action: @escaping () -> Void) -> some View {
         Button {
             withAnimation(.customSpring) {
                 action()

@@ -117,8 +117,7 @@ extension AppEnvironment {
                      etcRepository: etcRepository,
                      vacancyRepository: vacancyRepository,
                      configRepository: configRepository,
-                     themeRepository: themeRepository
-        )
+                     themeRepository: themeRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -152,8 +151,7 @@ extension AppEnvironment {
                      etcService: etcService,
                      vacancyService: vacancyService,
                      friendsService: friendsService,
-                     themeService: themeService
-        )
+                     themeService: themeService)
     }
 }
 
@@ -183,8 +181,7 @@ extension EnvironmentValues {
                   etcService: FakeEtcService(),
                   vacancyService: FakeVacancyService(),
                   friendsService: FakeFriendsService(),
-                  themeService: FakeThemeService()
-            )
+                  themeService: FakeThemeService())
         }
     }
 #endif

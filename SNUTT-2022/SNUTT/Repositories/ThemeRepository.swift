@@ -47,7 +47,7 @@ class ThemeRepository: ThemeRepositoryProtocol {
             .serializingDecodable(ThemeDto.self)
             .handlingError()
     }
-    
+
     func copyTheme(themeId: String) async throws -> ThemeDto {
         return try await session
             .request(ThemeRouter.copyTheme(themeId: themeId))
@@ -68,7 +68,7 @@ class ThemeRepository: ThemeRepositoryProtocol {
             .serializingDecodable(ThemeDto.self)
             .handlingError()
     }
-    
+
     func undoBasicThemeDefault(themeType: Int) async throws -> ThemeDto {
         return try await session
             .request(ThemeRouter.undoBasicThemeDefault(themeType: themeType))

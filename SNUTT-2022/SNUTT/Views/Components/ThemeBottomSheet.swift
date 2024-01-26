@@ -11,45 +11,46 @@ struct ThemeBottomSheet: View {
     @Binding var isOpen: Bool
     var isCustom: Bool?
     var isDefault: Bool?
-    
+
     let openCustomThemeSheet: @MainActor () async -> Void
     let makeCustomThemeDefault: @MainActor () async -> Void
     let undoCustomThemeDefault: @MainActor () async -> Void
     let copyTheme: @MainActor () async -> Void
     let deleteTheme: @MainActor () async -> Void
-    
+
     let openBasicThemeSheet: @MainActor () async -> Void
     let makeBasicThemeDefault: @MainActor () async -> Void
     let undoBasicThemeDefault: @MainActor () async -> Void
-    
+
     @State private var isDeleteAlertPresented = false
     @State private var isUndeletableAlertPresented = false
-    
+
     var body: some View {
         if let isCustom = isCustom, isCustom {
             Sheet(isOpen: $isOpen,
                   orientation: .bottom(maxHeight: 225),
                   disableBackgroundTap: false,
-                  disableDragGesture: true) {
+                  disableDragGesture: true)
+            {
                 VStack(spacing: 0) {
                     ThemeBottomSheetButton(menu: .edit, isSheetOpen: isOpen) {
                         Task {
                             await openCustomThemeSheet()
                         }
                     }
-                    
+
                     ThemeBottomSheetButton(menu: isDefault ?? false ? .unpin : .pin, isSheetOpen: isOpen) {
                         Task {
                             isDefault ?? false ? await undoCustomThemeDefault() : await makeCustomThemeDefault()
                         }
                     }
-                    
+
                     ThemeBottomSheetButton(menu: .copy, isSheetOpen: isOpen) {
                         Task {
                             await copyTheme()
                         }
                     }
-                    
+
                     ThemeBottomSheetButton(menu: .delete, isSheetOpen: isOpen) {
                         if let isDefault = isDefault, !isDefault {
                             isDeleteAlertPresented = true
@@ -74,32 +75,32 @@ struct ThemeBottomSheet: View {
             Sheet(isOpen: $isOpen,
                   orientation: .bottom(maxHeight: 125),
                   disableBackgroundTap: false,
-                  disableDragGesture: true) {
+                  disableDragGesture: true)
+            {
                 VStack(spacing: 0) {
                     ThemeBottomSheetButton(menu: .detail, isSheetOpen: isOpen) {
                         Task {
                             await openBasicThemeSheet()
                         }
                     }
-                    
+
                     ThemeBottomSheetButton(menu: isDefault ?? false ? .unpin : .pin, isSheetOpen: isOpen) {
                         Task {
-                                isDefault ?? false ? await undoBasicThemeDefault() : await makeBasicThemeDefault()
+                            isDefault ?? false ? await undoBasicThemeDefault() : await makeBasicThemeDefault()
                         }
                     }
                 }
             }
         }
-        
     }
 }
 
 struct ThemeBottomSheetButton: View {
     let menu: ThemeMenu
     var isSheetOpen: Bool = false
-    
+
     let action: () -> Void
-    
+
     var body: some View {
         Button {
             action()

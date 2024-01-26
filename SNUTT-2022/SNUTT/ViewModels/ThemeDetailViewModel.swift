@@ -5,14 +5,13 @@
 //  Created by 이채민 on 2024/01/17.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 class ThemeDetailViewModel: BaseViewModel, ObservableObject {
-    
     @Published var currentTimetable: Timetable?
     @Published var configuration: TimetableConfiguration = .init()
-    
+
     override init(container: DIContainer) {
         super.init(container: container)
         appState.timetable.$current.assign(to: &$currentTimetable)
@@ -21,22 +20,22 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
             currentTimetable?.selectedTheme = selectedTheme
         }
     }
-    
+
     var themeState: ThemeState {
         appState.theme
     }
-    
+
     var targetTheme: Theme? {
         themeState.bottomSheetTarget
     }
-    
+
     func addTheme(theme: Theme) async {
         do {
             try await services.themeService.addTheme(theme: theme)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
-        if (theme.isDefault) {
+        if theme.isDefault {
             do {
                 try await services.themeService.makeCustomThemeDefault(themeId: theme.id)
             } catch {
@@ -44,7 +43,7 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
             }
         }
     }
-    
+
     func updateTheme(theme: Theme) async {
         guard let themeId = targetTheme?.id else { return }
         do {
@@ -58,7 +57,7 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func saveBasicTheme(theme: Theme) async {
         if let themeType = theme.theme {
             do {
@@ -68,21 +67,21 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
             }
         }
     }
-    
+
     func getThemeNewColor(theme: Theme) -> Theme {
         var theme = theme
-        if (theme.colors.count == 9) { return theme }
+        if theme.colors.count == 9 { return theme }
         theme.colors.append(.init(fg: Color(hex: "#ffffff"), bg: Color(hex: "#1BD0C8")))
         return theme
     }
-    
+
     func copyThemeColor(theme: Theme, index: Int) -> Theme {
         var theme = theme
-        if (theme.colors.count == 9) { return theme }
+        if theme.colors.count == 9 { return theme }
         theme.colors.insert(theme.colors[index], at: index)
         return theme
     }
-    
+
     func deleteThemeColor(theme: Theme, index: Int) -> Theme {
         var theme = theme
         theme.colors.remove(at: index)

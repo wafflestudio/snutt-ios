@@ -93,7 +93,7 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
         appState.menu.isOpen = false
         appState.menu.isEllipsisSheetOpen = false
         appState.menu.isThemeSheetOpen = true
-        appState.timetable.current?.selectedTheme = appState.theme.themeList.first { $0.id == appState.timetable.current?.themeId || $0.theme == appState.timetable.current?.theme}
+        appState.timetable.current?.selectedTheme = appState.theme.themeList.first { $0.id == appState.timetable.current?.themeId || $0.theme == appState.timetable.current?.theme }
     }
 
     func closeThemeSheet() {

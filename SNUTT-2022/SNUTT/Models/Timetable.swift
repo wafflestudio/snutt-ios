@@ -84,7 +84,7 @@ extension Timetable {
         isPrimary = dto.isPrimary ?? false
         themeId = dto.themeId
         theme = (themeId != nil) ? nil : BasicTheme(rawValue: dto.theme)
-        
+
         lectures = dto.lecture_list.enumerated().map { index, lectureDto in
             let lecture = Lecture(from: lectureDto, index: index)
             let lectureWithTheme = lecture.withTheme(theme: dto.theme)

@@ -32,10 +32,10 @@ struct SettingScene: View {
                 SettingsLinkItem(title: "시간표 설정") {
                     TimetableSettingScene(viewModel: .init(container: viewModel.container))
                 }
-                
+
                 SettingsLinkItem(title: "시간표 테마") {
                     ThemeSettingScene(viewModel:
-                            .init(container: viewModel.container))
+                        .init(container: viewModel.container))
                 }
             } header: {
                 Text("디스플레이")

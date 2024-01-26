@@ -39,7 +39,7 @@ struct Lecture: Identifiable {
 
     var basicTheme: BasicTheme?
     var lectureIndex: Int
-    
+
     func withTheme(theme: Int?) -> Lecture {
         var lecture = self
         lecture.basicTheme = BasicTheme(rawValue: theme ?? 0)
@@ -47,26 +47,25 @@ struct Lecture: Identifiable {
     }
 
     func getColor(with theme: Theme? = nil) -> LectureColor {
-        
         // use custom color list if theme is custom
         if let theme = theme, !theme.colors.isEmpty {
-            return theme.colors[(lectureIndex-1) % theme.colors.count]
+            return theme.colors[(lectureIndex - 1) % theme.colors.count]
         }
-        
+
         // use color specified by colorIndex, where theme is given by parameter
         if let color = theme?.theme?.getColor(at: lectureIndex) {
             return color
         }
-        
+
         // use custom color if colorIndex is zero
         if colorIndex == 0, let color = color {
             return color
         }
-        
-        if let color = self.basicTheme?.getColor(at: colorIndex) {
+
+        if let color = basicTheme?.getColor(at: colorIndex) {
             return color
         }
-        
+
         return .temporary
     }
 

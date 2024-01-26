@@ -98,7 +98,7 @@ class SettingViewModel: BaseViewModel, ObservableObject {
             return false
         }
     }
-    
+
     func getThemeList() async {
         do {
             try await services.themeService.getThemeList()

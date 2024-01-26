@@ -41,7 +41,6 @@ enum ThemeRouter: Router {
             return .post
         case .undoCustomThemeDefault:
             return .delete
-        
         }
     }
 

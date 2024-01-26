@@ -13,22 +13,22 @@ struct ThemeDetailScene: View {
     @State var theme: Theme
     var themeType: ThemeType
     @State var openPickerIndex: Int?
-    
-    init(viewModel: ThemeDetailViewModel, theme: Theme, themeType: ThemeType, openPickerIndex: Int? = nil) {
+
+    init(viewModel: ThemeDetailViewModel, theme: Theme, themeType: ThemeType, openPickerIndex _: Int? = nil) {
         self.viewModel = viewModel
-        self._theme = State(initialValue: theme)
+        _theme = State(initialValue: theme)
         self.themeType = themeType
-        self._openPickerIndex = State(initialValue: theme.colors.count - 1)
+        _openPickerIndex = State(initialValue: theme.colors.count - 1)
     }
-    
+
     enum ThemeType {
         case basic
         case custom
         case new
     }
-    
+
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
@@ -49,7 +49,7 @@ struct ThemeDetailScene: View {
             .background(STColor.groupForeground)
             .border(Color.black.opacity(0.1), width: 0.5)
             .padding(.vertical, 20)
-            
+
             switch themeType {
             case .basic:
                 VStack(spacing: 0) {
@@ -63,7 +63,7 @@ struct ThemeDetailScene: View {
                         }
                         .padding(.horizontal, 20)
                         .padding(.vertical, 10)
-                        
+
                         Divider()
                             .frame(height: 1)
                     }
@@ -71,7 +71,7 @@ struct ThemeDetailScene: View {
                 .background(STColor.groupForeground)
                 .border(Color.black.opacity(0.1), width: 0.5)
                 .padding(.vertical, 10)
-                
+
             case .custom, .new:
                 VStack(spacing: 0) {
                     HStack {
@@ -79,16 +79,16 @@ struct ThemeDetailScene: View {
                         Spacer()
                     }
                     .padding(.horizontal, 20)
-                    
+
                     VStack {
                         Spacer(minLength: 5)
                         ForEach(theme.colors.indices, id: \.self) { index in
-                            
+
                             VStack {
                                 HStack {
                                     DetailLabel(text: "색상 \(index + 1)")
                                     Button {
-                                        if (openPickerIndex == index) {
+                                        if openPickerIndex == index {
                                             openPickerIndex = nil
                                         } else {
                                             openPickerIndex = index
@@ -97,9 +97,9 @@ struct ThemeDetailScene: View {
                                         LectureColorPreview(lectureColor: theme.colors[index])
                                             .frame(height: 25)
                                     }
-                                    
+
                                     Spacer()
-                                    
+
                                     Button {
                                         theme = viewModel.copyThemeColor(theme: theme, index: index)
                                         openPickerIndex = nil
@@ -110,7 +110,7 @@ struct ThemeDetailScene: View {
                                             .frame(width: 30)
                                             .opacity(0.5)
                                     }
-                                    
+
                                     Button {
                                         theme = viewModel.deleteThemeColor(theme: theme, index: index)
                                     } label: {
@@ -124,8 +124,8 @@ struct ThemeDetailScene: View {
                                 }
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 5)
-                                
-                                if (openPickerIndex == index) {
+
+                                if openPickerIndex == index {
                                     VStack {
                                         Group {
                                             ColorPicker("글꼴색", selection: $theme.colors[index].fg, supportsOpacity: false)
@@ -139,7 +139,7 @@ struct ThemeDetailScene: View {
                                     .padding(.vertical, 10)
                                     .transition(.move(edge: .top).combined(with: .opacity))
                                 }
-                                
+
                                 Divider()
                                     .frame(height: 1)
                             }
@@ -148,7 +148,7 @@ struct ThemeDetailScene: View {
                     .background(STColor.groupForeground)
                     .border(Color.black.opacity(0.1), width: 0.5)
                     .padding(.vertical, 10)
-                    
+
                     Button {
                         theme = viewModel.getThemeNewColor(theme: theme)
                         openPickerIndex = theme.colors.count - 1
@@ -161,7 +161,7 @@ struct ThemeDetailScene: View {
                     .padding(.top, 10)
                 }
             }
-            
+
             VStack(spacing: 0) {
                 Toggle("기본 테마로 지정", isOn: $theme.isDefault)
                     .animation(.easeInOut, value: theme.isDefault)
@@ -171,13 +171,13 @@ struct ThemeDetailScene: View {
             .background(STColor.groupForeground)
             .border(Color.black.opacity(0.1), width: 0.5)
             .padding(.vertical, 10)
-            
+
             HStack {
                 DetailLabel(text: "미리보기")
                 Spacer()
             }
             .padding(.horizontal, 24)
-            
+
             VStack(spacing: 0) {
                 TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
                     .frame(height: 500)
@@ -195,7 +195,7 @@ struct ThemeDetailScene: View {
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             .padding(.bottom, 15)
             .padding(.horizontal, 10)
-            
+
             Spacer(minLength: 30)
         }
         .onChange(of: theme) { newTheme in
@@ -212,7 +212,6 @@ struct ThemeDetailScene: View {
                     Text("취소")
                         .foregroundColor(Color(uiColor: .label))
                 }
-                
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 switch themeType {
@@ -246,7 +245,6 @@ struct ThemeDetailScene: View {
                         Text("저장")
                             .foregroundColor(Color(uiColor: .label))
                     }
-                    
                 }
             }
         }

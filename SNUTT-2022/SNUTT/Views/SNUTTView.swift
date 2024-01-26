@@ -176,7 +176,7 @@ extension SNUTTView {
         func preloadWebViews() {
             services.globalUIService.preloadWebViews()
         }
-        
+
         func getThemeList() async {
             func getThemeList() async {
                 do {

@@ -39,7 +39,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.closeThemeSheet()
         } // close-only;
     }
-    
+
     @Published private var _isNewThemeSheetOpen: Bool = false
     var isNewThemeSheetOpen: Bool {
         get { _isNewThemeSheetOpen }
@@ -125,7 +125,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     var targetTimetable: TimetableMetadata? {
         menuState.ellipsisTarget
     }
-    
+
     func getThemeList() async {
         do {
             try await services.themeService.getThemeList()
@@ -142,12 +142,12 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         }
         services.globalUIService.openThemeSheet()
     }
-    
+
     var newTheme: Theme {
         let theme: Theme = .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: "#1BD0C8", fg: "#ffffff"), ThemeColorDto(bg: "#1BD0C8", fg: "#ffffff")], isDefault: false, isCustom: true))
         return theme
     }
-    
+
     func openNewThemeSheet() {
         services.themeService.openNewThemeSheet(for: newTheme)
         services.globalUIService.closeThemeSheet()

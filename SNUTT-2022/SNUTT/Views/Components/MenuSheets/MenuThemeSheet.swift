@@ -16,7 +16,7 @@ struct MenuThemeSheet: View {
     var confirm: @MainActor () async -> Void
     var select: @MainActor (Theme) -> Void
     var newTheme: @MainActor () -> Void
-    
+
     @State private var pushToNewThemeScene = false
 
     var body: some View {
@@ -48,13 +48,13 @@ struct MenuThemeSheet: View {
                                 .padding(.vertical, 5)
                                 .font(STFont.detailLabel)
                         }
-                        
+
                         ForEach(themes, id: \.id) { theme in
                             Button {
                                 select(theme)
                             } label: {
                                 VStack {
-                                    if (theme.isCustom) {
+                                    if theme.isCustom {
                                         ThemeIcon(theme: theme)
                                     } else {
                                         Image(theme.theme?.imageName ?? "")

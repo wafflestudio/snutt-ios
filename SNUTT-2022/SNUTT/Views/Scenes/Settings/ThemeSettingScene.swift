@@ -11,7 +11,7 @@ import UIKit
 
 struct ThemeSettingScene: View {
     @ObservedObject var viewModel: ThemeSettingViewModel
-    
+
     var body: some View {
         ZStack {
             Form {
@@ -35,10 +35,10 @@ struct ThemeSettingScene: View {
                                     .padding(.vertical, 5)
                                     .font(STFont.detailLabel)
                             }
-                            
+
                             ForEach(viewModel.themes, id: \.id) {
                                 theme in
-                                if(theme.isCustom) {
+                                if theme.isCustom {
                                     Button {
                                         viewModel.openBottomSheet(for: theme)
                                     } label: {
@@ -46,8 +46,9 @@ struct ThemeSettingScene: View {
                                             ThemeIcon(theme: theme)
                                                 .overlay(
                                                     theme.isDefault ? Image("theme.pin")
-                                                        .offset(x: -8, y: -8) : nil
-                                                    , alignment: .topLeading)
+                                                        .offset(x: -8, y: -8) : nil,
+                                                    alignment: .topLeading
+                                                )
                                             HStack(spacing: 0) {
                                                 Text(theme.name)
                                                     .font(STFont.detailLabel)
@@ -63,13 +64,13 @@ struct ThemeSettingScene: View {
                         }
                     }
                 }
-                
+
                 Section(header: Text("제공 테마")) {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
                             ForEach(viewModel.themes, id: \.id) {
                                 theme in
-                                if(!theme.isCustom) {
+                                if !theme.isCustom {
                                     Button {
                                         viewModel.openBottomSheet(for: theme)
                                     } label: {
@@ -77,10 +78,11 @@ struct ThemeSettingScene: View {
                                             Image(theme.theme?.imageName ?? "")
                                                 .overlay(
                                                     theme.isDefault ? Image("theme.pin")
-                                                        .offset(x: -8, y: -8) : nil
-                                                    , alignment: .topLeading)
+                                                        .offset(x: -8, y: -8) : nil,
+                                                    alignment: .topLeading
+                                                )
                                                 .frame(width: 88, height: 90)
-                                            
+
                                             HStack(spacing: 0) {
                                                 Text(theme.name)
                                                     .font(STFont.detailLabel)
@@ -144,7 +146,7 @@ struct ThemeButton: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             VStack {
-                if (theme.isCustom) {
+                if theme.isCustom {
                     ThemeIcon(theme: theme)
                 } else {
                     Image(theme.theme?.imageName ?? "")
@@ -156,7 +158,7 @@ struct ThemeButton: View {
                     Image("vacancy.chevron.right")
                 }
             }
-            if(theme.isDefault) {
+            if theme.isDefault {
                 Image("theme.pin")
                     .offset(x: -5, y: -5)
             }
