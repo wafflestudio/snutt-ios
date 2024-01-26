@@ -25,6 +25,37 @@ extension LectureDetailScene {
             appState.vacancy.$lectures.assign(to: &$vacancyNotificationLectures)
         }
 
+        private let bundleID: String = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
+        
+        func openInExternalApp(location: Location) -> Bool {
+            if !openNaverMap(location: location) {
+                if !openKakaoMap(location: location) {
+                    return false
+                }
+            }
+            return true
+        }
+
+        private func openNaverMap(location: Location) -> Bool {
+            guard let url = URL(string: "nmap://map?lat=\(location.latitude)&lng=\(location.longitude)&zoom=20&appname=" + bundleID) else { return false }
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        private func openKakaoMap(location: Location) -> Bool {
+            guard let url = URL(string: "kakaomap://look?p=\(location.latitude),\(location.longitude)") else { return false }
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+                return true
+            } else {
+                return false
+            }
+        }
+
         var lectureService: LectureServiceProtocol {
             services.lectureService
         }
