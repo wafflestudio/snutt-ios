@@ -27,33 +27,43 @@ struct LectureColorList: View {
     }
 
     private var colorList: [LectureColor] {
-        theme.theme?.getLectureColorList() ?? theme.colors
+        theme.isCustom ? theme.colors : (theme.theme?.getLectureColorList() ?? [])
     }
 
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                ForEach(colorList.indices.dropFirst(1), id: \.self) { index in
-                    makePickerButton(lectureColor: colorList[index],
-                                     displayTick: index == colorIndex,
-                                     title: "\(theme.name) \(index)") {
-                        colorIndex = index
+                if (theme.isCustom) {
+                    ForEach(colorList.indices, id: \.self) { index in
+                        makePickerButton(lectureColor: colorList[index], displayTick: colorList[index] == customColor, title: "\(theme.name)\(index+1)") {
+                            customColor = colorList[index]
+                        }
                     }
-
-                    Divider()
-                        .frame(height: 1)
-                        .padding(.leading, 20)
+                } else {
+                    ForEach(colorList.indices.dropFirst(1), id: \.self) { index in
+                        makePickerButton(lectureColor: colorList[index],
+                                         displayTick: index == colorIndex,
+                                         title: "\(theme.name) \(index)") {
+                            colorIndex = index
+                        }
+                        
+                        Divider()
+                            .frame(height: 1)
+                            .padding(.leading, 20)
+                    }
                 }
-
-                VStack(spacing: 0) {
-                    makePickerButton(lectureColor: customColor ?? .temporary,
-                                     displayTick: colorIndex == 0,
-                                     title: "직접 선택하기") {
-                        colorIndex = 0
-                        selectedColor.bg = customColor?.bg ?? LectureColor.temporary.bg
-                        selectedColor.fg = customColor?.fg ?? LectureColor.temporary.fg
+                
+                if !theme.isCustom {
+                    VStack(spacing: 0) {
+                        makePickerButton(lectureColor: customColor ?? .temporary,
+                                         displayTick: colorIndex == 0,
+                                         title: "직접 선택하기") {
+                            colorIndex = 0
+                            selectedColor.bg = customColor?.bg ?? LectureColor.temporary.bg
+                            selectedColor.fg = customColor?.fg ?? LectureColor.temporary.fg
+                        }
                     }
-
+                    
                     if colorIndex == 0 {
                         Divider()
                             .frame(height: 1)
