@@ -17,12 +17,14 @@ extension LectureDetailScene {
         @Published var vacancyNotificationLectures: [Lecture] = []
         var errorTitle: String = ""
         var errorMessage: String = ""
+        var supportForMapViewEnabled: Bool = true
 
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$selectedTab.assign(to: &$_selectedTab)
             appState.timetable.$bookmark.compactMap { $0?.lectures }.assign(to: &$bookmarkedLectures)
             appState.vacancy.$lectures.assign(to: &$vacancyNotificationLectures)
+            supportForMapViewEnabled = !(appState.system.configs?.disableMapFeature ?? false)
         }
 
         var lectureService: LectureServiceProtocol {

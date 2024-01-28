@@ -194,7 +194,8 @@ struct LectureDetailScene: View {
                             }
                             .padding(.top, 5)
                         } else {
-                            if !buildings.isEmpty && isGwanak {
+                            if viewModel.supportForMapViewEnabled &&
+                                !buildings.isEmpty && isGwanak {
                                 if showMapView {
                                     LectureMapView(draw: $showMapView,
                                                    buildings: buildingDictList)
