@@ -35,6 +35,12 @@ struct LectureDetailScene: View {
     @State private var reviewId: String? = ""
     @State private var syllabusURL: String = ""
     @State private var showSyllabusWebView = false
+    
+    // replace with userDefaults
+    @State private var showMapView: Bool = true
+    var buildings: [Building] {
+        lecture.timePlaces.compactMap({ $0.building }).flatMap({ $0 })
+    }
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
@@ -177,15 +183,47 @@ struct LectureDetailScene: View {
                                     .animation(.customSpring, value: lecture.timePlaces.count)
                             }
                             .padding(.top, 5)
-                        } 
-                        else {
-                            if let location = lecture.timePlaces.first?.building?.locationInDMS {
-                                Button {
-                                    let _ = viewModel.openInExternalApp(location: location)
-                                } label: {
-                                    Text("open app")
-                                        .font(.system(size: 16))
-                                        .foregroundColor(.black)
+                        } else {
+                            if !buildings.isEmpty {
+                                if showMapView {
+                                    let locations = buildings.map { $0.locationInDMS }
+                                    LectureMapView(draw: $showMapView,
+                                                   locations: locations,
+                                                   label: buildings.first!.nameKor)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 256)
+                                    
+                                    Button {
+                                        showMapView.toggle()
+                                    } label: {
+                                        HStack(spacing: 0) {
+                                            Spacer()
+                                            Text("지도 닫기")
+                                                .font(.system(size: 14))
+                                                .foregroundColor(STColor.darkGray)
+                                            Spacer().frame(width: 4)
+                                            Image("chevron.down").rotationEffect(.init(degrees: 180.0))
+                                            Spacer()
+                                        }
+                                    }
+                                    .padding(.top, 8)
+                                } else {
+                                    Button {
+                                        showMapView.toggle()
+                                    } label: {
+                                        HStack(spacing: 0) {
+                                            Spacer()
+                                            Image("map.open")
+                                            Spacer().frame(width: 8)
+                                            Text("지도에서 보기")
+                                                .font(.system(size: 14))
+                                                .foregroundColor(STColor.darkGray)
+                                            Spacer().frame(width: 4)
+                                            Image("chevron.down")
+                                            Spacer()
+                                        }
+                                    }
+                                    .padding(.top, 8)
                                 }
                             }
                         }

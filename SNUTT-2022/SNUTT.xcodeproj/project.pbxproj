@@ -11,6 +11,8 @@
 		731DA001297BC54B0027BA25 /* BookmarkDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA000297BC54B0027BA25 /* BookmarkDto.swift */; };
 		731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA002297BC5740027BA25 /* BookmarkRouter.swift */; };
 		731DA005297BC8990027BA25 /* BookmarkScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA004297BC8990027BA25 /* BookmarkScene.swift */; };
+		B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */; };
+		B82EA54E2B6393190029FDF3 /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */; };
 		B84A4EA12B6035EE00C1E1A0 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84A4EA02B6035EE00C1E1A0 /* Building.swift */; };
 		B84A4EA22B6259FF00C1E1A0 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84A4EA02B6035EE00C1E1A0 /* Building.swift */; };
 		B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85B244C295BF36F00E6577E /* FindLocalIdView.swift */; };
@@ -323,6 +325,8 @@
 		731DA000297BC54B0027BA25 /* BookmarkDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkDto.swift; sourceTree = "<group>"; };
 		731DA002297BC5740027BA25 /* BookmarkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRouter.swift; sourceTree = "<group>"; };
 		731DA004297BC8990027BA25 /* BookmarkScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkScene.swift; sourceTree = "<group>"; };
+		B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureMapView.swift; sourceTree = "<group>"; };
+		B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
 		B84A4EA02B6035EE00C1E1A0 /* Building.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
 		B85B244C295BF36F00E6577E /* FindLocalIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocalIdView.swift; sourceTree = "<group>"; };
 		B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordScene.swift; sourceTree = "<group>"; };
@@ -1066,6 +1070,8 @@
 				BEE86515289E212D00D3D0E4 /* MenuSheets */,
 				BE1D2B3228012059008F9134 /* Timetable */,
 				BE682BC528845CDB009EBCB7 /* UITextEditor.swift */,
+				B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */,
+				B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1375,9 +1381,11 @@
 				BE1B610E289E000B00401361 /* EllipsisSheetButton.swift in Sources */,
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
 				BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */,
+				B82EA54E2B6393190029FDF3 /* KakaoMapView.swift in Sources */,
 				BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */,
 				B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */,
 				CEDDCA7E2A6AEF2200474D4E /* VacancyLectureList.swift in Sources */,
+				B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */,
 				BE8BB3AD285D763B00070A66 /* SearchLectureScene.swift in Sources */,
 				BE682C0528881852009EBCB7 /* SearchService.swift in Sources */,
 				BE9C90EB2948EA1800003AA6 /* ColorScheme.swift in Sources */,
