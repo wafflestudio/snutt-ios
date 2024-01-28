@@ -25,7 +25,7 @@ struct STColor {
 
     /// Hex #A6A6A6
     static let gray30: Color = .init(hex: "#A6A6A6")
-    
+
     /// Hex #777777
     static let darkGray: Color = .init(hex: "#777777")
 
