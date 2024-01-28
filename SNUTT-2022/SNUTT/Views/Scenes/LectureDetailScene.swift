@@ -38,8 +38,19 @@ struct LectureDetailScene: View {
     
     // replace with userDefaults
     @State private var showMapView: Bool = true
+    
     var buildings: [Building] {
         lecture.timePlaces.compactMap({ $0.building }).flatMap({ $0 })
+    }
+    
+    var buildingDictList: [Location: String] {
+        var dict: [Location: String] = [:]
+        buildings.forEach { dict[$0.locationInDMS] = $0.nameKor }
+        return dict
+    }
+    
+    var isGwanak: Bool {
+        buildings.allSatisfy { $0.campus == .GWANAK }
     }
 
     @Environment(\.colorScheme) var colorScheme
@@ -184,14 +195,13 @@ struct LectureDetailScene: View {
                             }
                             .padding(.top, 5)
                         } else {
-                            if !buildings.isEmpty {
+                            if !buildings.isEmpty && isGwanak {
                                 if showMapView {
-                                    let locations = buildings.map { $0.locationInDMS }
                                     LectureMapView(draw: $showMapView,
-                                                   locations: locations,
-                                                   label: buildings.first!.nameKor)
+                                                   buildings: buildingDictList)
                                         .frame(maxWidth: .infinity)
                                         .frame(height: 256)
+                                        .padding(.top, 4)
                                     
                                     Button {
                                         showMapView.toggle()
