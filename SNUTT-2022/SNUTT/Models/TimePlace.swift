@@ -76,7 +76,7 @@ extension TimePlace {
         place = dto.place
         day = .init(rawValue: dto.day) ?? .mon
         self.isCustom = isCustom
-        guard let buildingDto = dto.lectureBuilding else {
+        guard let buildingDto = dto.lectureBuildings else {
             self.building = nil
             return
         }
