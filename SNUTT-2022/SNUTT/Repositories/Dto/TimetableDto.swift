@@ -61,7 +61,7 @@ struct TimePlaceDto: Codable {
     let startMinute: Int
     let endMinute: Int
     let place: String
-    let lectureBuilding: [LectureBuidingDto]?
+    let lectureBuildings: [LectureBuidingDto]?
 }
 
 struct LectureBuidingDto: Codable {
@@ -115,10 +115,10 @@ extension TimePlaceDto {
         endMinute = model.endMinute
         place = model.place
         guard let building = model.building else {
-            lectureBuilding = nil
+            lectureBuildings = nil
             return
         }
-        lectureBuilding = building.map { .init(id: $0.id,
+        lectureBuildings = building.map { .init(id: $0.id,
                                                buildingNumber: $0.number,
                                                buildingNameKor: $0.nameKor,
                                                buildingNameEng: $0.nameEng,
