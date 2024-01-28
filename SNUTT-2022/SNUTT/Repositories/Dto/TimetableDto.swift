@@ -61,7 +61,7 @@ struct TimePlaceDto: Codable {
     let start_time: String
     let end_time: String
     let place: String
-    let lectureBuilding: LectureBuidingDto?
+    let lectureBuilding: [LectureBuidingDto]?
 }
 
 struct LectureBuidingDto: Codable {
@@ -74,7 +74,7 @@ struct LectureBuidingDto: Codable {
     let campus: String
 }
 
-struct Location: Codable {
+struct Location: Codable, Hashable {
     let latitude: Double
     let longitude: Double
 }
@@ -118,13 +118,13 @@ extension TimePlaceDto {
             lectureBuilding = nil
             return
         }
-        lectureBuilding = .init(id: building.id,
-                                buildingNumber: building.number,
-                                buildingNameKor: building.nameKor,
-                                buildingNameEng: building.nameEng,
-                                locationInDMS: building.locationInDMS,
-                                locationInDecimal: building.locationInDecimal,
-                                campus: building.campus.rawValue)
+        lectureBuilding = building.map { .init(id: $0.id,
+                                               buildingNumber: $0.number,
+                                               buildingNameKor: $0.nameKor,
+                                               buildingNameEng: $0.nameEng,
+                                               locationInDMS: $0.locationInDMS,
+                                               locationInDecimal: $0.locationInDecimal,
+                                               campus: $0.campus.rawValue) }
     }
 }
 

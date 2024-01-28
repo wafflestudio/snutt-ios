@@ -18,7 +18,7 @@ struct TimePlace: Identifiable {
 
     var place: String
     
-    var building: Building?
+    var building: [Building]?
 
     let isCustom: Bool
 
@@ -76,17 +76,19 @@ extension TimePlace {
         place = dto.place
         day = .init(rawValue: dto.day) ?? .mon
         self.isCustom = isCustom
-        guard let building = dto.lectureBuilding else {
+        guard let buildingDto = dto.lectureBuilding else {
             self.building = nil
             return
         }
-        self.building = .init(id: building.id,
-                              number: building.buildingNumber,
-                              nameKor: building.buildingNameKor,
-                              nameEng: building.buildingNameEng,
-                              locationInDMS: building.locationInDMS,
-                              locationInDecimal: building.locationInDecimal,
-                              campus: Campus(rawValue: building.campus) ?? .GWANAK)
+        self.building = buildingDto.map {
+            .init(id: $0.id,
+                  number: $0.buildingNumber,
+                  nameKor: $0.buildingNameKor,
+                  nameEng: $0.buildingNameEng,
+                  locationInDMS: $0.locationInDMS,
+                  locationInDecimal: $0.locationInDecimal,
+                  campus: Campus(rawValue: $0.campus) ?? .GWANAK)
+        }
     }
 }
 
@@ -130,13 +132,13 @@ extension TimePlace {
                              startTime: startTimeString,
                              endTime: endTimeString,
                              place: place,
-                             building: .init(id: "12",
+                             building: [.init(id: "12",
                                              number: "500",
                                              nameKor: "자연과학대학(500)",
                                              nameEng: "College of Natural Sciences(500)",
                                              locationInDMS: .init(latitude: 37.4592190840394, longitude: 126.94812006718699),
                                              locationInDecimal: .init(latitude: 488525.0, longitude: 1099948.0),
-                                             campus: .GWANAK),
+                                             campus: .GWANAK)],
                              isCustom: Bool.random())
         }
     }

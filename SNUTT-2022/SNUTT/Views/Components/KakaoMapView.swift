@@ -1,0 +1,194 @@
+//
+//  KakaoMapView.swift
+//  SNUTT
+//
+//  Created by 최유림 on 2024/01/26.
+//
+
+import SwiftUI
+import KakaoMapsSDK
+
+struct KakaoMapView: UIViewRepresentable {
+    @Binding var draw: Bool
+    @Binding var isMapNotInstalledAlertPresented: Bool
+    let locations: [Location]
+    let label: String
+    
+    /// UIView를 상속한 KMViewContainer를 생성한다.
+    /// 뷰 생성과 함께 KMControllerDelegate를 구현한 Coordinator를 생성하고, 엔진을 생성 및 초기화한다.
+    func makeUIView(context: Self.Context) -> KMViewContainer {
+        let view: KMViewContainer = KMViewContainer()
+        view.sizeToFit()
+        context.coordinator.createController(view)
+        context.coordinator.controller?.initEngine()
+        return view
+    }
+
+    /// Updates the presented `UIView` (and coordinator) to the latest configuration.
+    func updateUIView(_ uiView: KMViewContainer, context: Self.Context) {
+        DispatchQueue.main.async {
+            if draw {
+                context.coordinator.controller?.startEngine()
+                context.coordinator.controller?.startRendering()
+            } else {
+                context.coordinator.controller?.stopRendering()
+                context.coordinator.controller?.stopEngine()
+            }
+        }
+    }
+    
+    func makeCoordinator() -> KakaoMapCoordinator {
+        return KakaoMapCoordinator($isMapNotInstalledAlertPresented, locations: locations, label: label)
+    }
+
+    /// Cleans up the presented `UIView` (and coordinator) in anticipation of their removal.
+    static func dismantleUIView(_ uiView: KMViewContainer, coordinator: KakaoMapCoordinator) {}
+    
+    /// Coordinator 구현. KMControllerDelegate를 adopt한다.
+    class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
+        var controller: KMController?
+        var first: Bool
+        var location: Location
+        var locations: [Location]
+        var label: String
+        var pois: [Poi] = []
+        
+        @Binding var isMapNotInstalledAlertPresented: Bool
+
+        init(_ isMapNotInstalledAlertPresented: Binding<Bool>, locations: [Location], label: String) {
+            self.location = locations.first!
+            self.locations = locations
+            self.label = label
+            first = true
+            _isMapNotInstalledAlertPresented = isMapNotInstalledAlertPresented
+            super.init()
+        }
+        
+        var mapView: KakaoMap? {
+            controller?.getView("mapview") as? KakaoMap
+        }
+        
+        func createController(_ view: KMViewContainer) {
+            controller = KMController(viewContainer: view)
+            controller?.delegate = self
+        }
+        
+        /// 엔진 생성 및 초기화 이후, 렌더링 준비가 완료되면 아래 addViews를 호출한다.
+        func addViews() {
+            let defaultPosition: MapPoint = MapPoint(longitude: location.longitude, latitude: location.latitude)
+            let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 19)
+            
+            if controller?.addView(mapviewInfo) == Result.OK {
+                guard let mapView = mapView else {
+                    return
+                }
+                mapView.eventDelegate = self
+                mapView.dimScreen.color = UIColor(white: 0, alpha: 0.3)
+                mapView.dimScreen.cover = .map
+                mapView.cameraAnimationEnabled = true
+                
+                disableAllGestures(mapView)
+                createLabelLayer()
+                createPoiStyle()
+                createPois()
+            }
+        }
+        
+        func terrainDidTapped(kakaoMap: KakaoMap, position: MapPoint) {
+            kakaoMap.dimScreen.isEnabled.toggle()
+        }
+        
+        func poiDidTapped(kakaoMap: KakaoMap, layerID: String, poiID: String, position: MapPoint) {
+            guard let mapView = mapView else { return }
+            let manager = mapView.getLabelManager()
+            let poi = manager.getLabelLayer(layerID: "poi")?.getPoi(poiID: poiID)
+            if let coordinate = poi?.position.wgsCoord {
+                openInExternalApp(coordinate: coordinate)
+            }
+        }
+
+        /// KMViewContainer 리사이징 될 때 호출.
+        func containerDidResized(_ size: CGSize) {
+            mapView?.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
+            if first {
+                let cameraUpdate: CameraUpdate = CameraUpdate.make(target: MapPoint(longitude: location.longitude, latitude: location.latitude), zoomLevel: 17, mapView: mapView!)
+                mapView?.moveCamera(cameraUpdate)
+                first = false
+            }
+        }
+        
+        func createLabelLayer() {
+            guard let mapView = mapView else { return }
+            let manager = mapView.getLabelManager()
+            let layerOption = LabelLayerOptions(layerID: "poi", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 0)
+            let _ = manager.addLabelLayer(option: layerOption)
+        }
+        
+        func createPoiStyle() {
+            guard let mapView = mapView else { return }
+            let manager = mapView.getLabelManager()
+            let poiIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin"))
+            let textStyle =  TextStyle(fontSize: 16, fontColor: .black)
+            let poiTextStyle = PoiTextStyle(textLineStyles: [
+                PoiTextLineStyle(textStyle: textStyle)
+            ])
+            let poiStyle = PoiStyle(styleID: "poiStyle", styles: [
+                PerLevelPoiStyle(iconStyle: poiIconStyle, textStyle: poiTextStyle, level: 0)
+            ])
+            manager.addPoiStyle(poiStyle)
+        }
+        
+        func createPois() {
+            guard let mapView = mapView else { return }
+            let manager = mapView.getLabelManager()
+            let layer = manager.getLabelLayer(layerID: "poi")
+            let poiOption = PoiOptions(styleID: "poiStyle")
+            poiOption.rank = 5
+            poiOption.clickable = true
+            poiOption.addText(PoiText(text: label, styleIndex: 0))
+
+            pois = Set(locations).compactMap { layer?.addPoi(option: poiOption, at: .init(longitude: $0.longitude, latitude: $0.latitude)) }
+            let _ = pois.map { $0.show() }
+        }
+        
+        private func disableAllGestures(_ mapView: KakaoMap) {
+            mapView.setGestureEnable(type: .doubleTapZoomIn, enable: false)
+            mapView.setGestureEnable(type: .longTapAndDrag, enable: false)
+            mapView.setGestureEnable(type: .oneFingerZoom, enable: false)
+            mapView.setGestureEnable(type: .pan, enable: false)
+            mapView.setGestureEnable(type: .rotate, enable: false)
+            mapView.setGestureEnable(type: .rotateZoom, enable: false)
+            mapView.setGestureEnable(type: .tilt, enable: false)
+            mapView.setGestureEnable(type: .twoFingerTapZoomOut, enable: false)
+            mapView.setGestureEnable(type: .zoom, enable: false)
+        }
+        
+        private func toggleDimScreen() {
+            guard let mapView = mapView else { return }
+            mapView.dimScreen.isEnabled.toggle()
+        }
+        
+        func openInExternalApp(coordinate: GeoCoordinate) {
+            guard let naverMapURL = naverMapURL(coordinate: coordinate) else { return }
+            guard let kakaoMapURL = kakaoMapURL(coordinate: coordinate) else { return }
+            if UIApplication.shared.canOpenURL(naverMapURL) {
+                UIApplication.shared.open(naverMapURL)
+            } else if UIApplication.shared.canOpenURL(kakaoMapURL) {
+                UIApplication.shared.open(kakaoMapURL)
+            } else {
+                isMapNotInstalledAlertPresented = true
+            }
+        }
+
+        private func naverMapURL(coordinate: GeoCoordinate) -> URL? {
+            let bundleID = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
+            guard let url = URL(string: "nmap://map?lat=\(coordinate.latitude)&lng=\(coordinate.longitude)&zoom=17&appname=" + bundleID) else { return nil }
+            return url
+        }
+        
+        private func kakaoMapURL(coordinate: GeoCoordinate) -> URL? {
+            guard let url = URL(string: "kakaomap://look?p=\(coordinate.latitude),\(coordinate.longitude)") else { return nil }
+            return url
+        }
+    }
+}
