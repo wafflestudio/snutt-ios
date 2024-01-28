@@ -215,5 +215,13 @@ extension LectureDetailScene {
         func isVacancyNotificationEnabled(lecture: Lecture) -> Bool {
             return vacancyNotificationLectures.contains(where: { $0.isEquivalent(with: lecture) })
         }
+        
+        func setOpenLectureMapViewState(_ open: Bool) {
+            lectureService.setOpenLectureMapViewState(open)
+        }
+        
+        func shouldOpenLectureMapView() -> Bool {
+            lectureService.shouldOpenLectureMapView()
+        }
     }
 }
