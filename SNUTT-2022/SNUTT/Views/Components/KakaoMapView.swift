@@ -11,6 +11,7 @@ import KakaoMapsSDK
 struct KakaoMapView: UIViewRepresentable {
     @Binding var draw: Bool
     @Binding var isMapNotInstalledAlertPresented: Bool
+    let colorScheme: ColorScheme
     let buildings: [Location: String]
     
     /// UIView를 상속한 KMViewContainer를 생성한다.
@@ -37,7 +38,7 @@ struct KakaoMapView: UIViewRepresentable {
     }
     
     func makeCoordinator() -> KakaoMapCoordinator {
-        return KakaoMapCoordinator($isMapNotInstalledAlertPresented, buildings: buildings)
+        return KakaoMapCoordinator($isMapNotInstalledAlertPresented, buildings: buildings, colorScheme: colorScheme)
     }
 
     /// Cleans up the presented `UIView` (and coordinator) in anticipation of their removal.
@@ -51,14 +52,16 @@ struct KakaoMapView: UIViewRepresentable {
         var pois: [Poi] = []
         let defaultPoint: Location
         
+        let colorScheme: ColorScheme
         @Binding var isMapNotInstalledAlertPresented: Bool
 
-        init(_ isMapNotInstalledAlertPresented: Binding<Bool>, buildings: [Location: String]) {
+        init(_ isMapNotInstalledAlertPresented: Binding<Bool>, buildings: [Location: String], colorScheme: ColorScheme) {
             self.buildings = buildings
             first = true
             _isMapNotInstalledAlertPresented = isMapNotInstalledAlertPresented
             defaultPoint = .init(latitude: buildings.keys.reduce(Double(0), { $0 + $1.latitude }) / Double(buildings.count),
                                  longitude: buildings.keys.reduce(Double(0), { $0 + $1.longitude }) / Double(buildings.count))
+            self.colorScheme = colorScheme
             super.init()
         }
         
@@ -82,7 +85,11 @@ struct KakaoMapView: UIViewRepresentable {
                 }
                 mapView.eventDelegate = self
                 
-                mapView.dimScreen.color = UIColor(white: 0, alpha: 0.4)
+                if colorScheme == .light {
+                    mapView.dimScreen.color = UIColor(white: 0, alpha: 0.4)
+                } else {
+                    mapView.dimScreen.color = UIColor(white: 0, alpha: 0.15)
+                }
                 mapView.dimScreen.cover = .map
                 
                 disableAllGestures(mapView)
