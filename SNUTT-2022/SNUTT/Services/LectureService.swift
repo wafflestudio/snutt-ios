@@ -19,6 +19,8 @@ protocol LectureServiceProtocol: Sendable {
     func fetchIsFirstBookmark()
     func bookmarkLecture(lecture: Lecture) async throws
     func undoBookmarkLecture(lecture: Lecture) async throws
+    func setOpenLectureMapViewState(_ open: Bool)
+    func shouldOpenLectureMapView() -> Bool
 }
 
 extension LectureServiceProtocol {
@@ -115,6 +117,14 @@ struct LectureService: LectureServiceProtocol {
         appState.timetable.bookmark = bookmark
         appState.search.selectedLecture = nil
     }
+    
+    func setOpenLectureMapViewState(_ open: Bool) {
+        userDefaultsRepository.set(Bool.self, key: .openLectureMapView, value: open)
+    }
+    
+    func shouldOpenLectureMapView() -> Bool {
+        userDefaultsRepository.get(Bool.self, key: .openLectureMapView, defaultValue: false)
+    }
 
     private var lectureRepository: LectureRepositoryProtocol {
         webRepositories.lectureRepository
@@ -151,4 +161,6 @@ class FakeLectureService: LectureServiceProtocol {
     func undoBookmarkLecture(lecture _: Lecture) async throws {}
     func fetchIsFirstBookmark() {}
     func fetchReviewId(courseNumber _: String, instructor _: String) async throws -> String { return "" }
+    func setOpenLectureMapViewState(_ open: Bool) {}
+    func shouldOpenLectureMapView() -> Bool { return false }
 }

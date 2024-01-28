@@ -35,9 +35,8 @@ struct LectureDetailScene: View {
     @State private var reviewId: String? = ""
     @State private var syllabusURL: String = ""
     @State private var showSyllabusWebView = false
-    
-    // replace with userDefaults
-    @State private var showMapView: Bool = true
+    @State private var showMapView: Bool = false
+    @State private var initialShowMapViewValue: Bool = false
     
     var buildings: [Building] {
         lecture.timePlaces.compactMap({ $0.building }).flatMap({ $0 })
@@ -323,6 +322,15 @@ struct LectureDetailScene: View {
             .animation(.customSpring, value: lecture.timePlaces.count)
             .animation(.customSpring, value: editMode.isEditing)
             .padding(.vertical, 20)
+        }
+        .onAppear {
+            showMapView = viewModel.shouldOpenLectureMapView()
+            initialShowMapViewValue = showMapView
+        }
+        .onDisappear {
+            if initialShowMapViewValue != showMapView {
+                viewModel.setOpenLectureMapViewState(showMapView)
+            }
         }
         .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
