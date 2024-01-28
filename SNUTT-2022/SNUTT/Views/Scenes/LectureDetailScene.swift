@@ -37,17 +37,17 @@ struct LectureDetailScene: View {
     @State private var showSyllabusWebView = false
     @State private var showMapView: Bool = false
     @State private var initialShowMapViewValue: Bool = false
-    
+
     var buildings: [Building] {
-        lecture.timePlaces.compactMap({ $0.building }).flatMap({ $0 })
+        lecture.timePlaces.compactMap { $0.building }.flatMap { $0 }
     }
-    
+
     var buildingDictList: [Location: String] {
         var dict: [Location: String] = [:]
         buildings.forEach { dict[$0.locationInDMS] = $0.nameKor }
         return dict
     }
-    
+
     var isGwanak: Bool {
         buildings.allSatisfy { $0.campus == .GWANAK }
     }
@@ -195,14 +195,15 @@ struct LectureDetailScene: View {
                             .padding(.top, 5)
                         } else {
                             if viewModel.supportForMapViewEnabled &&
-                                !buildings.isEmpty && isGwanak {
+                                !buildings.isEmpty && isGwanak
+                            {
                                 if showMapView {
                                     LectureMapView(draw: $showMapView,
                                                    buildings: buildingDictList)
                                         .frame(maxWidth: .infinity)
                                         .frame(height: 256)
                                         .padding(.top, 4)
-                                    
+
                                     Button {
                                         showMapView.toggle()
                                     } label: {

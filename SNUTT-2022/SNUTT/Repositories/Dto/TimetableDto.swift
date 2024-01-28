@@ -119,12 +119,12 @@ extension TimePlaceDto {
             return
         }
         lectureBuildings = building.map { .init(id: $0.id,
-                                               buildingNumber: $0.number,
-                                               buildingNameKor: $0.nameKor,
-                                               buildingNameEng: $0.nameEng,
-                                               locationInDMS: $0.locationInDMS,
-                                               locationInDecimal: $0.locationInDecimal,
-                                               campus: $0.campus.rawValue) }
+                                                buildingNumber: $0.number,
+                                                buildingNameKor: $0.nameKor,
+                                                buildingNameEng: $0.nameEng,
+                                                locationInDMS: $0.locationInDMS,
+                                                locationInDecimal: $0.locationInDecimal,
+                                                campus: $0.campus.rawValue) }
     }
 }
 
