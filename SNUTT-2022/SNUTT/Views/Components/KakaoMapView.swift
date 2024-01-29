@@ -70,7 +70,7 @@ struct KakaoMapView: UIViewRepresentable {
         var mapView: KakaoMap? {
             controller?.getView("mapview") as? KakaoMap
         }
-        
+
         var locations: [Location] {
             buildings.map { $0.element.key }
         }
@@ -119,7 +119,8 @@ struct KakaoMapView: UIViewRepresentable {
             let manager = mapView.getLabelManager()
             let poi = manager.getLabelLayer(layerID: layerID)?.getPoi(poiID: poiID)
             if let coordinate = poi?.position.wgsCoord,
-               let matchingPoi = pois.first(where: { $0.key == poi }) {
+               let matchingPoi = pois.first(where: { $0.key == poi })
+            {
                 openInExternalApp(coordinate: coordinate, label: matchingPoi.value)
             }
         }
@@ -137,7 +138,7 @@ struct KakaoMapView: UIViewRepresentable {
         private func createLabelLayer() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            buildings.forEach { building in
+            for building in buildings {
                 let layerOption = LabelLayerOptions(layerID: "poi\(building.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000 + building.offset)
                 let _ = manager.addLabelLayer(option: layerOption)
             }
@@ -176,7 +177,7 @@ struct KakaoMapView: UIViewRepresentable {
             let manager = mapView.getLabelManager()
             var poiOptionList: [PoiOptions] = []
 
-            buildings.forEach { building in
+            for building in buildings {
                 let poiOption = PoiOptions(styleID: "notFocused")
                 poiOption.rank = 0
                 poiOption.clickable = true
@@ -184,14 +185,15 @@ struct KakaoMapView: UIViewRepresentable {
                 poiOptionList.append(poiOption)
 
                 let layer = manager.getLabelLayer(layerID: "poi\(building.offset)")
-                if let poi = layer?.addPoi(option: poiOptionList[building.offset], 
+                if let poi = layer?.addPoi(option: poiOptionList[building.offset],
                                            at: .init(longitude: building.element.key.longitude,
-                                                     latitude: building.element.key.latitude)) {
+                                                     latitude: building.element.key.latitude))
+                {
                     pois[poi] = building.element.value
                     poi.show()
                 }
             }
-            
+
             if shouldResizeCamera() {
                 let cameraUpdate = CameraUpdate.make(area: AreaRect(points: locations.map { .init(longitude: $0.longitude, latitude: $0.latitude) }))
                 DispatchQueue.main.async {
@@ -247,7 +249,7 @@ struct KakaoMapView: UIViewRepresentable {
             guard let url = URL(string: "kakaomap://look?p=\(coordinate.latitude),\(coordinate.longitude)") else { return nil }
             return url
         }
-        
+
         private func shouldResizeCamera() -> Bool {
             if pois.count == 1 { return false }
             guard let location = locations.first else { return false }
