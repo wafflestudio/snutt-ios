@@ -18,7 +18,7 @@ struct TimePlace: Identifiable {
     var startMinute: Int {
         startTime.hour * 60 + startTime.minute
     }
-    
+
     var endMinute: Int {
         endTime.hour * 60 + endTime.minute
     }
