@@ -15,8 +15,13 @@ struct TimePlace: Identifiable {
     var startTime: TimeUtils.Time
     var endTime: TimeUtils.Time
 
-    var startMinute: Int
-    var endMinute: Int
+    var startMinute: Int {
+        startTime.hour * 60 + startTime.minute
+    }
+    
+    var endMinute: Int {
+        endTime.hour * 60 + endTime.minute
+    }
 
     var place: String
 
@@ -66,8 +71,6 @@ extension TimePlace {
         id = dto._id ?? UUID().description
         let start = dto.startMinute.quotientAndRemainder(dividingBy: 60)
         let end = dto.endMinute.quotientAndRemainder(dividingBy: 60)
-        startMinute = dto.startMinute
-        endMinute = dto.endMinute
         startTime = .init(hour: start.0, minute: start.1)
         endTime = .init(hour: end.0, minute: end.1)
         place = dto.place
@@ -102,8 +105,6 @@ extension TimePlace {
                              day: .init(rawValue: Int.random(in: 0 ... 6))!,
                              startTime: .init(hour: startHour, minute: startMinute),
                              endTime: .init(hour: endHour, minute: endMinute),
-                             startMinute: startHour * 60 + startMinute,
-                             endMinute: endHour * 60 + endMinute,
                              place: place,
                              isCustom: Bool.random())
         }

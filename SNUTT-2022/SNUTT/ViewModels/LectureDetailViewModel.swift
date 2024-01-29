@@ -149,8 +149,6 @@ extension LectureDetailScene {
                                             day: .mon,
                                             startTime: .init(hour: 9, minute: 0),
                                             endTime: .init(hour: 10, minute: 0),
-                                            startMinute: 540,
-                                            endMinute: 600,
                                             place: "",
                                             isCustom: lecture.isCustom,
                                             isTemporary: true))
