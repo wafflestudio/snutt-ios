@@ -1239,11 +1239,11 @@
 			);
 			mainGroup = DC860F3C27E5C87D0068C94B;
 			packageReferences = (
-				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
+				BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 				BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				CE1F49AF2A8DB5A400B81E4E /* XCRemoteSwiftPackageReference "ios-rn-prebuilt" */,
-				B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM.git" */,
+				B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
 			);
 			productRefGroup = DC860F3C27E5C87D0068C94B;
 			projectDirPath = "";
@@ -2233,7 +2233,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM.git" */ = {
+		B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
 			requirement = {
@@ -2257,7 +2257,7 @@
 				minimumVersion = 15.0.0;
 			};
 		};
-		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
+		BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -2278,7 +2278,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		B8B7501C2B6274A5004F6272 /* KakaoMapsSDK_SPM */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM.git" */;
+			package = B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
 			productName = KakaoMapsSDK_SPM;
 		};
 		BE4CD86028F5A56200BA9BBC /* FirebaseAnalytics */ = {
@@ -2308,7 +2308,7 @@
 		};
 		BEDE34D32879A59B00525014 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
+			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 		CE1F49B02A8DB5A400B81E4E /* ReactNativeKit */ = {
