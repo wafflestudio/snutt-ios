@@ -48,7 +48,7 @@ struct KakaoMapView: UIViewRepresentable {
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
         var controller: KMController?
         var first: Bool
-        
+
         /// enumerated & sorted building locations (rightTop to leftBottom)
         let buildings: EnumeratedSequence<[Dictionary<Location, String>.Element]>
         let defaultPoint: Location
@@ -126,8 +126,8 @@ struct KakaoMapView: UIViewRepresentable {
         private func createLabelLayer() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            buildings.forEach {
-                let layerOption = LabelLayerOptions(layerID: "poi\($0.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000 + $0.offset)
+            for building in buildings {
+                let layerOption = LabelLayerOptions(layerID: "poi\(building.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000 + building.offset)
                 let _ = manager.addLabelLayer(option: layerOption)
             }
         }
@@ -135,7 +135,7 @@ struct KakaoMapView: UIViewRepresentable {
         private func createPoiStyle() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            
+
             // not focused
             let notFocusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin"))
             let notFocusedTextStyle = TextStyle(fontSize: 24, fontColor: .black, strokeThickness: 2, strokeColor: .white)
@@ -145,7 +145,7 @@ struct KakaoMapView: UIViewRepresentable {
             let notFocusedPoiStyle = PoiStyle(styleID: "notFocused", styles: [
                 PerLevelPoiStyle(iconStyle: notFocusedIconStyle, textStyle: poiNotFocusedTextStyle, level: 0),
             ])
-            
+
             // focused(dim)
             let focusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin.dim"))
             let focusedTextStyle = TextStyle(fontSize: 26, fontColor: .white, strokeThickness: 1, strokeColor: .init(.init(hex: "#8A8A8A")))
@@ -155,7 +155,7 @@ struct KakaoMapView: UIViewRepresentable {
             let focusedPoiStyle = PoiStyle(styleID: "focused", styles: [
                 PerLevelPoiStyle(iconStyle: focusedIconStyle, textStyle: poiFocusedTextStyle, level: 0),
             ])
-            
+
             manager.addPoiStyle(notFocusedPoiStyle)
             manager.addPoiStyle(focusedPoiStyle)
         }
@@ -165,15 +165,15 @@ struct KakaoMapView: UIViewRepresentable {
             let manager = mapView.getLabelManager()
             var poiOptionList: [PoiOptions] = []
 
-            buildings.forEach {
+            for building in buildings {
                 let poiOption = PoiOptions(styleID: "notFocused")
                 poiOption.rank = 0
                 poiOption.clickable = true
-                poiOption.addText(PoiText(text: $0.element.value, styleIndex: 0))
+                poiOption.addText(PoiText(text: building.element.value, styleIndex: 0))
                 poiOptionList.append(poiOption)
-                
-                let layer = manager.getLabelLayer(layerID: "poi\($0.offset)")
-                if let poi = layer?.addPoi(option: poiOptionList[$0.offset], at: .init(longitude: $0.element.key.longitude, latitude: $0.element.key.latitude)) {
+
+                let layer = manager.getLabelLayer(layerID: "poi\(building.offset)")
+                if let poi = layer?.addPoi(option: poiOptionList[building.offset], at: .init(longitude: building.element.key.longitude, latitude: building.element.key.latitude)) {
                     poi.show()
                 }
             }
@@ -195,8 +195,8 @@ struct KakaoMapView: UIViewRepresentable {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
             mapView.dimScreen.isEnabled.toggle()
-            buildings.forEach {
-                let layer = manager.getLabelLayer(layerID: "poi\($0.offset)")
+            for building in buildings {
+                let layer = manager.getLabelLayer(layerID: "poi\(building.offset)")
                 layer?.getAllPois()?.forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
             }
         }
