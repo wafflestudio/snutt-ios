@@ -45,7 +45,7 @@ struct KakaoMapView: UIViewRepresentable {
     static func dismantleUIView(_: KMViewContainer, coordinator _: KakaoMapCoordinator) {}
 
     /// Coordinator 구현. KMControllerDelegate를 adopt한다.
-    class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate, GuiEventDelegate {
+    class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
         var controller: KMController?
         var first: Bool
         let buildings: [Location: String]
@@ -132,15 +132,29 @@ struct KakaoMapView: UIViewRepresentable {
         private func createPoiStyle() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            let poiIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin"))
-            let textStyle = TextStyle(fontSize: 24, fontColor: .black, strokeThickness: 2, strokeColor: .white)
-            let poiTextStyle = PoiTextStyle(textLineStyles: [
-                PoiTextLineStyle(textStyle: textStyle),
+            
+            // not focused
+            let notFocusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin"))
+            let notFocusedTextStyle = TextStyle(fontSize: 24, fontColor: .black, strokeThickness: 2, strokeColor: .white)
+            let poiNotFocusedTextStyle = PoiTextStyle(textLineStyles: [
+                PoiTextLineStyle(textStyle: notFocusedTextStyle),
             ])
             let notFocusedPoiStyle = PoiStyle(styleID: "notFocused", styles: [
-                PerLevelPoiStyle(iconStyle: poiIconStyle, textStyle: poiTextStyle, level: 0),
+                PerLevelPoiStyle(iconStyle: notFocusedIconStyle, textStyle: poiNotFocusedTextStyle, level: 0),
             ])
+            
+            // focused(dim)
+            let focusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin.dim"))
+            let focusedTextStyle = TextStyle(fontSize: 26, fontColor: .white, strokeThickness: 1, strokeColor: .init(.init(hex: "#8A8A8A")))
+            let poiFocusedTextStyle = PoiTextStyle(textLineStyles: [
+                PoiTextLineStyle(textStyle: focusedTextStyle),
+            ])
+            let focusedPoiStyle = PoiStyle(styleID: "focused", styles: [
+                PerLevelPoiStyle(iconStyle: focusedIconStyle, textStyle: poiFocusedTextStyle, level: 0),
+            ])
+            
             manager.addPoiStyle(notFocusedPoiStyle)
+            manager.addPoiStyle(focusedPoiStyle)
         }
 
         private func createPois() {
@@ -175,7 +189,12 @@ struct KakaoMapView: UIViewRepresentable {
 
         private func toggleDimScreen() {
             guard let mapView = mapView else { return }
+            let manager = mapView.getLabelManager()
+            let layer = manager.getLabelLayer(layerID: "poi")
+            let pois = layer?.getAllPois()
+            
             mapView.dimScreen.isEnabled.toggle()
+            pois?.forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
         }
 
         func openInExternalApp(coordinate: GeoCoordinate) {
