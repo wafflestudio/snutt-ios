@@ -203,9 +203,13 @@ struct LectureDetailScene: View {
                                         .frame(maxWidth: .infinity)
                                         .frame(height: 256)
                                         .padding(.top, 4)
-
+                                        .animation(.linear(duration: 0.3), value: showMapView)
+                                        .transition(.asymmetric(insertion: .opacity, removal: .identity))
+                                        
                                     Button {
-                                        showMapView.toggle()
+                                        withAnimation(.easeInOut(duration: 0.2)) {
+                                            showMapView.toggle()
+                                        }
                                     } label: {
                                         HStack(spacing: 0) {
                                             Spacer()
@@ -218,9 +222,12 @@ struct LectureDetailScene: View {
                                         }
                                     }
                                     .padding(.top, 8)
+                                    
                                 } else {
                                     Button {
-                                        showMapView.toggle()
+                                        withAnimation(.easeOut(duration: 0.3)) {
+                                            showMapView.toggle()
+                                        }
                                     } label: {
                                         HStack(spacing: 0) {
                                             Spacer()
