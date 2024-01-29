@@ -48,15 +48,16 @@ struct KakaoMapView: UIViewRepresentable {
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
         var controller: KMController?
         var first: Bool
-        let buildings: [Location: String]
-        var pois: [Poi] = []
+        
+        /// enumerated & sorted building locations (rightTop to leftBottom)
+        let buildings: EnumeratedSequence<[Dictionary<Location, String>.Element]>
         let defaultPoint: Location
 
         let colorScheme: ColorScheme
         @Binding var isMapNotInstalledAlertPresented: Bool
 
         init(_ isMapNotInstalledAlertPresented: Binding<Bool>, buildings: [Location: String], colorScheme: ColorScheme) {
-            self.buildings = buildings
+            self.buildings = buildings.sorted { $0.key.latitude > $1.key.latitude || $0.key.longitude > $1.key.longitude }.enumerated()
             first = true
             _isMapNotInstalledAlertPresented = isMapNotInstalledAlertPresented
             defaultPoint = .init(latitude: buildings.keys.reduce(Double(0)) { $0 + $1.latitude } / Double(buildings.count),
@@ -103,10 +104,10 @@ struct KakaoMapView: UIViewRepresentable {
             toggleDimScreen()
         }
 
-        func poiDidTapped(kakaoMap _: KakaoMap, layerID _: String, poiID: String, position _: MapPoint) {
+        func poiDidTapped(kakaoMap _: KakaoMap, layerID: String, poiID: String, position _: MapPoint) {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            let poi = manager.getLabelLayer(layerID: "poi")?.getPoi(poiID: poiID)
+            let poi = manager.getLabelLayer(layerID: layerID)?.getPoi(poiID: poiID)
             if let coordinate = poi?.position.wgsCoord {
                 openInExternalApp(coordinate: coordinate)
             }
@@ -125,8 +126,10 @@ struct KakaoMapView: UIViewRepresentable {
         private func createLabelLayer() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            let layerOption = LabelLayerOptions(layerID: "poi", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000)
-            let _ = manager.addLabelLayer(option: layerOption)
+            buildings.forEach {
+                let layerOption = LabelLayerOptions(layerID: "poi\($0.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000 + $0.offset)
+                let _ = manager.addLabelLayer(option: layerOption)
+            }
         }
 
         private func createPoiStyle() {
@@ -160,19 +163,20 @@ struct KakaoMapView: UIViewRepresentable {
         private func createPois() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            let layer = manager.getLabelLayer(layerID: "poi")
             var poiOptionList: [PoiOptions] = []
 
             buildings.forEach {
                 let poiOption = PoiOptions(styleID: "notFocused")
                 poiOption.rank = 0
                 poiOption.clickable = true
-                poiOption.addText(PoiText(text: $0.value, styleIndex: 0))
+                poiOption.addText(PoiText(text: $0.element.value, styleIndex: 0))
                 poiOptionList.append(poiOption)
+                
+                let layer = manager.getLabelLayer(layerID: "poi\($0.offset)")
+                if let poi = layer?.addPoi(option: poiOptionList[$0.offset], at: .init(longitude: $0.element.key.longitude, latitude: $0.element.key.latitude)) {
+                    poi.show()
+                }
             }
-
-            pois = layer?.addPois(options: poiOptionList, at: buildings.keys.map { .init(longitude: $0.longitude, latitude: $0.latitude) }) ?? []
-            let _ = pois.map { $0.show() }
         }
 
         private func disableAllGestures(_ mapView: KakaoMap) {
@@ -190,11 +194,11 @@ struct KakaoMapView: UIViewRepresentable {
         private func toggleDimScreen() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            let layer = manager.getLabelLayer(layerID: "poi")
-            let pois = layer?.getAllPois()
-            
             mapView.dimScreen.isEnabled.toggle()
-            pois?.forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
+            buildings.forEach {
+                let layer = manager.getLabelLayer(layerID: "poi\($0.offset)")
+                layer?.getAllPois()?.forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
+            }
         }
 
         func openInExternalApp(coordinate: GeoCoordinate) {
