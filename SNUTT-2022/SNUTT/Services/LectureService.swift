@@ -119,11 +119,16 @@ struct LectureService: LectureServiceProtocol {
     }
 
     func setOpenLectureMapViewState(_ open: Bool) {
+        appState.system.shouldOpenMapView = open
         userDefaultsRepository.set(Bool.self, key: .openLectureMapView, value: open)
     }
 
     func shouldOpenLectureMapView() -> Bool {
-        userDefaultsRepository.get(Bool.self, key: .openLectureMapView, defaultValue: false)
+        if let shouldOpenMapView = appState.system.shouldOpenMapView {
+            shouldOpenMapView
+        } else {
+            userDefaultsRepository.get(Bool.self, key: .openLectureMapView, defaultValue: false)
+        }
     }
 
     private var lectureRepository: LectureRepositoryProtocol {
