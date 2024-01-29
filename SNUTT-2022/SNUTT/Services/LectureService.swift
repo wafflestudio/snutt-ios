@@ -140,8 +140,8 @@ struct LectureService: LectureServiceProtocol {
 
     /// Check if `Lecture` itself has overlapping `TimePlace`
     private func checkIfTimeplaceOverlapped(_ lecture: Lecture) throws {
-        try lecture.timePlaces.forEach { lhs in
-            try lecture.timePlaces.forEach { rhs in
+        for lhs in lecture.timePlaces {
+            for rhs in lecture.timePlaces {
                 if lhs.isOverlapped(with: rhs) {
                     throw STError(.INVALID_LECTURE_TIME)
                 }
