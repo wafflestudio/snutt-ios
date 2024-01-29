@@ -19,6 +19,7 @@ class SystemState {
     @Published var preferredColorScheme: ColorScheme? = nil
 
     @Published var selectedTab: TabType = .timetable
-
+    
+    var shouldOpenMapView: Bool?
     var configs: ConfigsDto?
 }
