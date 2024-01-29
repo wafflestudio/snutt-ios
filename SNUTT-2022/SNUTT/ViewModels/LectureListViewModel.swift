@@ -21,8 +21,8 @@ class LectureListViewModel: BaseViewModel, ObservableObject {
         lecture.theme = appState.timetable.current?.theme ?? .snutt
         lecture.timePlaces.append(.init(id: UUID().uuidString,
                                         day: .mon,
-                                        startTime: "09:00",
-                                        endTime: "10:00",
+                                        startTime: .init(hour: 9, minute: 0),
+                                        endTime: .init(hour: 10, minute: 0),
                                         place: "",
                                         building: nil,
                                         isCustom: true,
