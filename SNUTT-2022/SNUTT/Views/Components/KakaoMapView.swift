@@ -51,6 +51,7 @@ struct KakaoMapView: UIViewRepresentable {
 
         /// enumerated & sorted building locations (rightTop to leftBottom)
         let buildings: EnumeratedSequence<[Dictionary<Location, String>.Element]>
+        var pois: [Poi: String] = [:]
         let defaultPoint: Location
 
         let colorScheme: ColorScheme
@@ -69,6 +70,10 @@ struct KakaoMapView: UIViewRepresentable {
         var mapView: KakaoMap? {
             controller?.getView("mapview") as? KakaoMap
         }
+        
+        var locations: [Location] {
+            buildings.map { $0.element.key }
+        }
 
         func createController(_ view: KMViewContainer) {
             controller = KMController(viewContainer: view)
@@ -85,6 +90,7 @@ struct KakaoMapView: UIViewRepresentable {
                     return
                 }
                 mapView.eventDelegate = self
+                mapView.setMargins(.init(top: 24, left: 24, bottom: 48, right: 24))
 
                 if colorScheme == .light {
                     mapView.dimScreen.color = UIColor(white: 0, alpha: 0.4)
@@ -107,12 +113,14 @@ struct KakaoMapView: UIViewRepresentable {
         func poiDidTapped(kakaoMap _: KakaoMap, layerID: String, poiID: String, position _: MapPoint) {
             if layerID == "place" {
                 toggleDimScreen()
+                return
             }
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
             let poi = manager.getLabelLayer(layerID: layerID)?.getPoi(poiID: poiID)
-            if let coordinate = poi?.position.wgsCoord {
-                openInExternalApp(coordinate: coordinate)
+            if let coordinate = poi?.position.wgsCoord,
+               let matchingPoi = pois.first(where: { $0.key == poi }) {
+                openInExternalApp(coordinate: coordinate, label: matchingPoi.value)
             }
         }
 
@@ -129,7 +137,7 @@ struct KakaoMapView: UIViewRepresentable {
         private func createLabelLayer() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            for building in buildings {
+            buildings.forEach { building in
                 let layerOption = LabelLayerOptions(layerID: "poi\(building.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000 + building.offset)
                 let _ = manager.addLabelLayer(option: layerOption)
             }
@@ -168,7 +176,7 @@ struct KakaoMapView: UIViewRepresentable {
             let manager = mapView.getLabelManager()
             var poiOptionList: [PoiOptions] = []
 
-            for building in buildings {
+            buildings.forEach { building in
                 let poiOption = PoiOptions(styleID: "notFocused")
                 poiOption.rank = 0
                 poiOption.clickable = true
@@ -176,8 +184,18 @@ struct KakaoMapView: UIViewRepresentable {
                 poiOptionList.append(poiOption)
 
                 let layer = manager.getLabelLayer(layerID: "poi\(building.offset)")
-                if let poi = layer?.addPoi(option: poiOptionList[building.offset], at: .init(longitude: building.element.key.longitude, latitude: building.element.key.latitude)) {
+                if let poi = layer?.addPoi(option: poiOptionList[building.offset], 
+                                           at: .init(longitude: building.element.key.longitude,
+                                                     latitude: building.element.key.latitude)) {
+                    pois[poi] = building.element.value
                     poi.show()
+                }
+            }
+            
+            if shouldResizeCamera() {
+                let cameraUpdate = CameraUpdate.make(area: AreaRect(points: locations.map { .init(longitude: $0.longitude, latitude: $0.latitude) }))
+                DispatchQueue.main.async {
+                    mapView.animateCamera(cameraUpdate: cameraUpdate, options: CameraAnimationOptions(autoElevation: true, consecutive: true, durationInMillis: 2000))
                 }
             }
         }
@@ -204,8 +222,8 @@ struct KakaoMapView: UIViewRepresentable {
             }
         }
 
-        func openInExternalApp(coordinate: GeoCoordinate) {
-            guard let naverMapURL = naverMapURL(coordinate: coordinate) else { return }
+        func openInExternalApp(coordinate: GeoCoordinate, label: String?) {
+            guard let naverMapURL = naverMapURL(coordinate: coordinate, label: label) else { return }
             guard let kakaoMapURL = kakaoMapURL(coordinate: coordinate) else { return }
             if UIApplication.shared.canOpenURL(naverMapURL) {
                 UIApplication.shared.open(naverMapURL)
@@ -216,15 +234,26 @@ struct KakaoMapView: UIViewRepresentable {
             }
         }
 
-        private func naverMapURL(coordinate: GeoCoordinate) -> URL? {
+        private func naverMapURL(coordinate: GeoCoordinate, label: String?) -> URL? {
+            guard let label = label else { return nil }
             let bundleID = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
-            guard let url = URL(string: "nmap://map?lat=\(coordinate.latitude)&lng=\(coordinate.longitude)&zoom=17&appname=" + bundleID) else { return nil }
+            let urlString = "nmap://place?lat=\(coordinate.latitude)&lng=\(coordinate.longitude)&name=\(label)&appname=" + bundleID
+            guard let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                  let url = URL(string: encodedString) else { return nil }
             return url
         }
 
         private func kakaoMapURL(coordinate: GeoCoordinate) -> URL? {
             guard let url = URL(string: "kakaomap://look?p=\(coordinate.latitude),\(coordinate.longitude)") else { return nil }
             return url
+        }
+        
+        private func shouldResizeCamera() -> Bool {
+            if pois.count == 1 { return false }
+            guard let location = locations.first else { return false }
+            let latDistance = location.latitude.distance(to: defaultPoint.latitude)
+            let lngDistance = location.longitude.distance(to: defaultPoint.longitude)
+            return latDistance > 0.002 || lngDistance > 0.002
         }
     }
 }
