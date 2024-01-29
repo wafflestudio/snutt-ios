@@ -105,6 +105,9 @@ struct KakaoMapView: UIViewRepresentable {
         }
 
         func poiDidTapped(kakaoMap _: KakaoMap, layerID: String, poiID: String, position _: MapPoint) {
+            if layerID == "place" {
+                toggleDimScreen()
+            }
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
             let poi = manager.getLabelLayer(layerID: layerID)?.getPoi(poiID: poiID)
