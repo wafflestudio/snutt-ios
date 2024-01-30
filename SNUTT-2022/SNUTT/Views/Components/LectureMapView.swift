@@ -8,23 +8,23 @@
 import SwiftUI
 
 struct LectureMapView: View {
-    @Binding var draw: Bool
     let buildings: [Location: String]
 
+    @State private var showMapView: Bool = true
     @State private var isMapNotInstalledAlertPresented: Bool = false
 
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            KakaoMapView(draw: $draw,
+            KakaoMapView(showMapView: $showMapView,
                          isMapNotInstalledAlertPresented: $isMapNotInstalledAlertPresented,
                          colorScheme: colorScheme,
                          buildings: buildings)
                 .onAppear {
-                    self.draw = true
+                    showMapView = true
                 }.onDisappear {
-                    self.draw = false
+                    showMapView = false
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 

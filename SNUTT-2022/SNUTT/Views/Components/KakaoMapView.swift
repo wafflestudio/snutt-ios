@@ -9,12 +9,11 @@ import KakaoMapsSDK
 import SwiftUI
 
 struct KakaoMapView: UIViewRepresentable {
-    @Binding var draw: Bool
+    @Binding var showMapView: Bool
     @Binding var isMapNotInstalledAlertPresented: Bool
     let colorScheme: ColorScheme
     let buildings: [Location: String]
 
-    /// UIView를 상속한 KMViewContainer를 생성한다.
     /// 뷰 생성과 함께 KMControllerDelegate를 구현한 Coordinator를 생성하고, 엔진을 생성 및 초기화한다.
     func makeUIView(context: Self.Context) -> KMViewContainer {
         let view = KMViewContainer()
@@ -27,7 +26,7 @@ struct KakaoMapView: UIViewRepresentable {
     /// Updates the presented `UIView` (and coordinator) to the latest configuration.
     func updateUIView(_: KMViewContainer, context: Self.Context) {
         DispatchQueue.main.async {
-            if draw {
+            if showMapView {
                 context.coordinator.controller?.startEngine()
                 context.coordinator.controller?.startRendering()
             } else {
@@ -42,24 +41,27 @@ struct KakaoMapView: UIViewRepresentable {
     }
 
     /// Cleans up the presented `UIView` (and coordinator) in anticipation of their removal.
-    static func dismantleUIView(_: KMViewContainer, coordinator _: KakaoMapCoordinator) {}
+    static func dismantleUIView(_: KMViewContainer, coordinator: KakaoMapCoordinator) {
+        coordinator.controller?.stopRendering()
+        coordinator.controller?.stopEngine()
+    }
 
-    /// Coordinator 구현. KMControllerDelegate를 adopt한다.
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
         var controller: KMController?
-        var first: Bool
+        private var isFirstOpen: Bool = true
 
         /// enumerated & sorted building locations (rightTop to leftBottom)
-        let buildings: EnumeratedSequence<[Dictionary<Location, String>.Element]>
-        var pois: [Poi: String] = [:]
-        let defaultPoint: Location
+        private let buildings: EnumeratedSequence<[Dictionary<Location, String>.Element]>
+        private var pois: [Poi: String] = [:]
+        private let defaultPoint: Location
 
-        let colorScheme: ColorScheme
+        private let colorScheme: ColorScheme
         @Binding var isMapNotInstalledAlertPresented: Bool
 
-        init(_ isMapNotInstalledAlertPresented: Binding<Bool>, buildings: [Location: String], colorScheme: ColorScheme) {
+        init(_ isMapNotInstalledAlertPresented: Binding<Bool>, 
+             buildings: [Location: String],
+             colorScheme: ColorScheme) {
             self.buildings = buildings.sorted { $0.key.latitude > $1.key.latitude || $0.key.longitude > $1.key.longitude }.enumerated()
-            first = true
             _isMapNotInstalledAlertPresented = isMapNotInstalledAlertPresented
             defaultPoint = .init(latitude: buildings.keys.reduce(Double(0)) { $0 + $1.latitude } / Double(buildings.count),
                                  longitude: buildings.keys.reduce(Double(0)) { $0 + $1.longitude } / Double(buildings.count))
@@ -67,11 +69,11 @@ struct KakaoMapView: UIViewRepresentable {
             super.init()
         }
 
-        var mapView: KakaoMap? {
+        private var mapView: KakaoMap? {
             controller?.getView("mapview") as? KakaoMap
         }
 
-        var locations: [Location] {
+        private var locations: [Location] {
             buildings.map { $0.element.key }
         }
 
@@ -80,10 +82,10 @@ struct KakaoMapView: UIViewRepresentable {
             controller?.delegate = self
         }
 
-        /// 엔진 생성 및 초기화 이후, 렌더링 준비가 완료되면 아래 addViews를 호출한다.
+        /// automatically called after running startEngine() and preparing for view rendering
         func addViews() {
             let defaultPosition = MapPoint(longitude: defaultPoint.longitude, latitude: defaultPoint.latitude)
-            let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 16)
+            let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 15)
 
             if controller?.addView(mapviewInfo) == Result.OK {
                 guard let mapView = mapView else {
@@ -124,14 +126,14 @@ struct KakaoMapView: UIViewRepresentable {
                 openInExternalApp(coordinate: coordinate, label: matchingPoi.value)
             }
         }
-
+        
         /// KMViewContainer 리사이징 될 때 호출.
         func containerDidResized(_ size: CGSize) {
             mapView?.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
-            if first {
-                let cameraUpdate: CameraUpdate = .make(target: MapPoint(longitude: defaultPoint.longitude, latitude: defaultPoint.latitude), zoomLevel: 16, mapView: mapView!)
+            if isFirstOpen {
+                let cameraUpdate: CameraUpdate = .make(target: MapPoint(longitude: defaultPoint.longitude, latitude: defaultPoint.latitude), zoomLevel: 15, mapView: mapView!)
                 mapView?.moveCamera(cameraUpdate)
-                first = false
+                isFirstOpen = false
             }
         }
 
@@ -218,13 +220,13 @@ struct KakaoMapView: UIViewRepresentable {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
             mapView.dimScreen.isEnabled.toggle()
-            for building in buildings {
+            buildings.forEach { building in
                 let layer = manager.getLabelLayer(layerID: "poi\(building.offset)")
                 layer?.getAllPois()?.forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
             }
         }
 
-        func openInExternalApp(coordinate: GeoCoordinate, label: String?) {
+        private func openInExternalApp(coordinate: GeoCoordinate, label: String?) {
             guard let naverMapURL = naverMapURL(coordinate: coordinate, label: label) else { return }
             guard let kakaoMapURL = kakaoMapURL(coordinate: coordinate) else { return }
             if UIApplication.shared.canOpenURL(naverMapURL) {
