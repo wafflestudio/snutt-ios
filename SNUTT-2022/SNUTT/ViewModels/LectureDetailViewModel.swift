@@ -218,12 +218,12 @@ extension LectureDetailScene {
             return vacancyNotificationLectures.contains(where: { $0.isEquivalent(with: lecture) })
         }
 
-        func setOpenLectureMapViewState(_ open: Bool) {
-            lectureService.setOpenLectureMapViewState(open)
+        func setIsMapViewExpanded(_ expand: Bool) {
+            lectureService.setIsMapViewExpanded(expand)
         }
 
         func shouldOpenLectureMapView() -> Bool {
-            lectureService.shouldOpenLectureMapView()
+            lectureService.shouldExpandLectureMapView()
         }
     }
 }
