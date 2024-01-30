@@ -24,7 +24,7 @@ enum STDefaultsKey: String {
     case currentTimetable
     case timetableConfig
 
-    case openLectureMapView
+    case expandLectureMapView
 
     case popupList
 
