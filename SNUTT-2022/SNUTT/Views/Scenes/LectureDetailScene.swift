@@ -51,11 +51,11 @@ struct LectureDetailScene: View {
         buildings.allSatisfy { $0.campus == .GWANAK }
     }
     
-    private var didPlaceEdited: Bool {
+    private var showMapMismatchWarning: Bool {
         !lecture.timePlaces.allSatisfy { timeplace in
             if let building = timeplace.building {
                 return building.allSatisfy {
-                    $0.number == timeplace.place.split(separator: "-").first!
+                    timeplace.place.hasPrefix($0.number)
                 }
             }
             return timeplace.place.isEmpty
@@ -156,7 +156,7 @@ struct LectureDetailScene: View {
                         .padding()
                     }
 
-                    VStack(alignment: .leading) {
+                    VStack {
                         Text("시간 및 장소")
                             .font(STFont.detailLabel)
                             .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
@@ -207,6 +207,7 @@ struct LectureDetailScene: View {
                             if viewModel.supportForMapViewEnabled &&
                                 !buildings.isEmpty && isGwanak
                             {
+                                
                                 if isMapViewExpanded {
                                     Group {
                                         LectureMapView(buildings: buildingDictList)
@@ -214,11 +215,17 @@ struct LectureDetailScene: View {
                                             .frame(height: 256)
                                             .padding(.top, 4)
                                         
-                                        if didPlaceEdited {
-                                            Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
-                                                .font(.system(size: 13))
-                                                .foregroundColor(STColor.darkGray.opacity(0.6))
-                                                .padding(.top, 8)
+                                        if showMapMismatchWarning {
+                                            HStack {
+                                                Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
+                                                    .font(.system(size: 13))
+                                                    .foregroundColor(colorScheme == .dark
+                                                                     ? STColor.gray30.opacity(0.6)
+                                                                     : STColor.darkGray.opacity(0.6))
+                                                    .padding(.top, 8)
+                                                
+                                                Spacer()
+                                            }
                                         }
                                     }
                                     .animation(.linear(duration: 0.2), value: isMapViewExpanded)
@@ -229,16 +236,13 @@ struct LectureDetailScene: View {
                                             isMapViewExpanded.toggle()
                                         }
                                     } label: {
-                                        HStack(spacing: 0) {
-                                            Spacer()
+                                        HStack(spacing: 4) {
                                             Text("지도 닫기")
                                                 .font(.system(size: 14))
                                                 .foregroundColor(colorScheme == .dark
                                                     ? STColor.gray30
                                                     : STColor.darkGray)
-                                            Spacer().frame(width: 4)
                                             Image("chevron.down").rotationEffect(.init(degrees: 180.0))
-                                            Spacer()
                                         }
                                     }
                                     .padding(.top, 8)
@@ -250,7 +254,6 @@ struct LectureDetailScene: View {
                                         }
                                     } label: {
                                         HStack(spacing: 0) {
-                                            Spacer()
                                             Image("map.open")
                                             Spacer().frame(width: 8)
                                             Text("지도에서 보기")
@@ -260,7 +263,6 @@ struct LectureDetailScene: View {
                                                     : STColor.darkGray)
                                             Spacer().frame(width: 4)
                                             Image("chevron.down")
-                                            Spacer()
                                         }
                                     }
                                     .padding(.top, 8)

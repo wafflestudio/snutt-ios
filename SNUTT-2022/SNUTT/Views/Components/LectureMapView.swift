@@ -21,9 +21,7 @@ struct LectureMapView: View {
                          isMapNotInstalledAlertPresented: $isMapNotInstalledAlertPresented,
                          colorScheme: colorScheme,
                          buildings: buildings)
-                .onAppear {
-                    showMapView = true
-                }.onDisappear {
+                .onDisappear {
                     showMapView = false
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
