@@ -24,7 +24,8 @@ struct ThemeBottomSheet: View {
 
     @State private var isDeleteAlertPresented = false
     @State private var isUndeletableAlertPresented = false
-
+    @State private var isUndoDefaultAlertPresented = false
+    
     var body: some View {
         if let isCustom = isCustom, isCustom {
             Sheet(isOpen: $isOpen,
@@ -40,8 +41,12 @@ struct ThemeBottomSheet: View {
                     }
 
                     ThemeBottomSheetButton(menu: isDefault ?? false ? .unpin : .pin, isSheetOpen: isOpen) {
-                        Task {
-                            isDefault ?? false ? await undoCustomThemeDefault() : await makeCustomThemeDefault()
+                        if let isDefault = isDefault, !isDefault {
+                            Task {
+                                await makeCustomThemeDefault()
+                            }
+                        } else {
+                            isUndoDefaultAlertPresented = true
                         }
                     }
 
@@ -69,6 +74,14 @@ struct ThemeBottomSheet: View {
                     .alert("기본 테마는 삭제할 수 없습니다.", isPresented: $isUndeletableAlertPresented) {
                         Button("확인", role: .cancel, action: {})
                     }
+                    .alert("기본 테마를 해제하시겠습니까?\n기본 테마는 SNUTT로 변경됩니다.", isPresented: $isUndoDefaultAlertPresented) {
+                        Button("취소", role: .cancel, action: {})
+                        Button("해제", role: .destructive) {
+                            Task {
+                                await undoCustomThemeDefault()
+                            }
+                        }
+                    }
                 }
             }
         } else {
@@ -86,7 +99,21 @@ struct ThemeBottomSheet: View {
 
                     ThemeBottomSheetButton(menu: isDefault ?? false ? .unpin : .pin, isSheetOpen: isOpen) {
                         Task {
-                            isDefault ?? false ? await undoBasicThemeDefault() : await makeBasicThemeDefault()
+                            if let isDefault = isDefault, !isDefault {
+                                Task {
+                                    await makeBasicThemeDefault()
+                                }
+                            } else {
+                                isUndoDefaultAlertPresented = true
+                            }
+                        }
+                    }
+                    .alert("기본 테마를 해제하시겠습니까?\n기본 테마는 SNUTT로 변경됩니다.", isPresented: $isUndoDefaultAlertPresented) {
+                        Button("취소", role: .cancel, action: {})
+                        Button("해제", role: .destructive) {
+                            Task {
+                                await undoBasicThemeDefault()
+                            }
                         }
                     }
                 }

@@ -37,6 +37,7 @@ struct Lecture: Identifiable {
     var registrationCount: Int?
     var wasFull: Bool
 
+    /// init 시에 ThemeDto의 theme 정보를 lecture에 저장
     var basicTheme: BasicTheme?
     var lectureIndex: Int
 

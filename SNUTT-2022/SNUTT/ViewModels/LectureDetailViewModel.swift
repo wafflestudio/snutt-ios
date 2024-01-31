@@ -216,7 +216,9 @@ extension LectureDetailScene {
         }
 
         var theme: Theme {
-            appState.theme.themeList.first { $0.id == appState.timetable.current?.themeId || $0.theme == appState.timetable.current?.theme } ?? Theme(rawValue: 0)
+            if let currentTimetable = appState.timetable.current {
+                return appState.theme.themeList.first(where: { $0.id == currentTimetable.themeId || $0.theme == currentTimetable.theme }) ?? Theme(rawValue: 0)
+            } else { return Theme(rawValue: 0) }
         }
     }
 }

@@ -48,8 +48,7 @@ struct MenuThemeSheet: View {
                                 .padding(.vertical, 5)
                                 .font(STFont.detailLabel)
                         }
-
-                        ForEach(themes, id: \.id) { theme in
+                        ForEach(themes.sorted { $0.isCustom && !$1.isCustom }) { theme in
                             Button {
                                 select(theme)
                             } label: {
@@ -64,7 +63,7 @@ struct MenuThemeSheet: View {
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
                                         .font(STFont.detailLabel)
-                                        .background((selectedTheme == theme) ? Color(uiColor: .tertiarySystemFill) : .clear)
+                                        .background(selectedTheme == theme ? Color(uiColor: .tertiarySystemFill) : .clear)
                                         .clipShape(Capsule())
                                 }
                             }

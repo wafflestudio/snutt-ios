@@ -70,8 +70,8 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
 
     func getThemeNewColor(theme: Theme) -> Theme {
         var theme = theme
-        if theme.colors.count == 9 { return theme }
-        theme.colors.append(.init(fg: Color(hex: "#ffffff"), bg: Color(hex: "#1BD0C8")))
+        if (theme.colors.count == 9) { return theme }
+        theme.colors.append(LectureColor(fg: Color.white, bg: STColor.cyan))
         return theme
     }
 

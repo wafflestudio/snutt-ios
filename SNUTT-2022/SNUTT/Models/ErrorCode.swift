@@ -96,6 +96,7 @@ enum ErrorCode: Int {
     case CANT_CHANGE_OTHERS_THEME = 0x5001
     case INVALID_LECTURE_TIME = 0x5002
     case INVALID_RN_BUNDLE = 0x5003
+    case DUPLICATE_THEME_NAME = 40904
 
     /* 409 - Conflicts (Email Verification related) */
     case ALREADY_VERIFIED_ACCOUNT = 0x9000
@@ -168,7 +169,8 @@ enum ErrorCode: Int {
              .INVALID_TIMEJSON,
              .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION,
              .INVALID_NICKNAME,
-             .NO_LOCAL_ID:
+             .NO_LOCAL_ID,
+             .DUPLICATE_THEME_NAME:
             return "잘못된 요청"
         case .LECTURE_TIME_OVERLAP,
              .INVALID_LECTURE_TIME:
@@ -316,6 +318,8 @@ enum ErrorCode: Int {
             return "해당 학기의 빈자리 알림 신청 기간이 종료되었습니다."
         case .EXCESSIVE_EMAIL_VERIFICATION_REQUEST:
             return "인증 요청 횟수가 초과되었습니다. 3분 후 인증 요청을 다시 해주시기 바랍니다."
+        case .DUPLICATE_THEME_NAME:
+            return "중복된 테마 이름입니다."
         }
     }
 }

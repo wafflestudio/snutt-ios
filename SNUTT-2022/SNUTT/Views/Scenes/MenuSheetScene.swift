@@ -54,10 +54,8 @@ struct MenuSheetScene: View {
             await viewModel.getThemeList()
         }
         .sheet(isPresented: $viewModel.isNewThemeSheetOpen, content: {
-            ZStack {
-                NavigationView {
-                    ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.newTheme, themeType: .new)
-                }
+            NavigationView {
+                ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.newTheme, themeType: .new)
             }
             .accentColor(Color(UIColor.label))
         })

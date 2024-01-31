@@ -36,7 +36,9 @@ struct ThemeDetailScene: View {
                     DetailLabel(text: "테마명")
                     switch themeType {
                     case .basic:
-                        DetailLabel(text: "\(theme.name)")
+                        Text("\(theme.name)")
+                            .font(.system(size: 16, weight: .regular))
+                            .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.6)))
                     case .custom, .new:
                         EditableTextField(text: $theme.name, readOnly: false)
                             .environment(\.editMode, Binding.constant(.active))
@@ -156,7 +158,6 @@ struct ThemeDetailScene: View {
                         Text("+ 색상 추가")
                             .font(.system(size: 16))
                             .foregroundColor(STColor.disabled)
-                            .animation(.customSpring, value: theme.colors.count)
                     }
                     .padding(.top, 10)
                 }
@@ -207,6 +208,7 @@ struct ThemeDetailScene: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
+                    
                     dismiss()
                 } label: {
                     Text("취소")
@@ -214,37 +216,18 @@ struct ThemeDetailScene: View {
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                switch themeType {
-                case .basic:
-                    Button {
-                        Task {
-                            await viewModel.saveBasicTheme(theme: theme)
-                            dismiss()
+                Button {
+                    Task {
+                        switch themeType {
+                            case .basic: await viewModel.saveBasicTheme(theme: theme)
+                            case .custom: await viewModel.updateTheme(theme: theme)
+                            case .new: await viewModel.addTheme(theme: theme)
                         }
-                    } label: {
-                        Text("저장")
-                            .foregroundColor(Color(uiColor: .label))
+                        dismiss()
                     }
-                case .custom:
-                    Button {
-                        Task {
-                            await viewModel.updateTheme(theme: theme)
-                            dismiss()
-                        }
-                    } label: {
-                        Text("저장")
-                            .foregroundColor(Color(uiColor: .label))
-                    }
-                case .new:
-                    Button {
-                        Task {
-                            await viewModel.addTheme(theme: theme)
-                            dismiss()
-                        }
-                    } label: {
-                        Text("저장")
-                            .foregroundColor(Color(uiColor: .label))
-                    }
+                } label: {
+                    Text("저장")
+                        .foregroundColor(Color(uiColor: .label))
                 }
             }
         }
@@ -253,6 +236,6 @@ struct ThemeDetailScene: View {
 
 struct ThemeDetailScene_Previews: PreviewProvider {
     static var previews: some View {
-        ThemeDetailScene(viewModel: .init(container: .preview), theme: .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: "#1BD0C8", fg: "#ffffff"), ThemeColorDto(bg: "#1BD0C8", fg: "#ffffff")], isDefault: false, isCustom: true)), themeType: .new)
+        ThemeDetailScene(viewModel: .init(container: .preview), theme: .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: STColor.cyan.toHex(), fg: Color.white.toHex())], isDefault: false, isCustom: true)), themeType: .new)
     }
 }

@@ -41,13 +41,13 @@ struct TimetableService: TimetableServiceProtocol {
     func fetchTimetable(timetableId: String) async throws {
         let dto = try await timetableRepository.fetchTimetable(withTimetableId: timetableId)
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
-        var timetable = Timetable(from: dto)
+        let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
     }
 
     func fetchRecentTimetable() async throws {
         if let localData = userDefaultsRepository.get(TimetableDto.self, key: .currentTimetable) {
-            var localTimetable = Timetable(from: localData)
+            let localTimetable = Timetable(from: localData)
             if appState.user.userId == localTimetable.userId {
                 appState.timetable.current = localTimetable // 일단 저장된 시간표로 상태 업데이트
                 try await fetchTimetable(timetableId: localTimetable.id) // API 요청을 통해 시간표 최신화
@@ -56,7 +56,7 @@ struct TimetableService: TimetableServiceProtocol {
         }
         let dto = try await timetableRepository.fetchRecentTimetable()
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
-        var timetable = Timetable(from: dto)
+        let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
     }
 
@@ -90,7 +90,7 @@ struct TimetableService: TimetableServiceProtocol {
     func updateTimetableTheme(timetableId: String) async throws {
         guard let theme = appState.timetable.current?.selectedTheme else { return }
         let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: theme)
-        var timetable = Timetable(from: dto)
+        let timetable = Timetable(from: dto)
         if appState.timetable.current?.id == timetableId {
             appState.timetable.current = timetable
         }
