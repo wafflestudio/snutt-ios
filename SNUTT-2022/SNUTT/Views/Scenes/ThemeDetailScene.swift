@@ -13,6 +13,7 @@ struct ThemeDetailScene: View {
     @State var theme: Theme
     var themeType: ThemeType
     @State var openPickerIndex: Int?
+    @State private var isUndoDefaultAlertPresented = false
 
     init(viewModel: ThemeDetailViewModel, theme: Theme, themeType: ThemeType, openPickerIndex _: Int? = nil) {
         self.viewModel = viewModel

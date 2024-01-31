@@ -22,13 +22,7 @@ struct ThemeSettingScene: View {
                                 Button {
                                     viewModel.openNewThemeSheet()
                                 } label: {
-                                    ZStack {
-                                        Rectangle()
-                                            .fill(STColor.gray)
-                                            .frame(width: 80, height: 78)
-                                            .cornerRadius(6)
-                                        Image("nav.plus")
-                                    }
+                                    Image("theme.new")
                                 }
                                 Text("새 테마")
                                     .padding(.horizontal, 5)

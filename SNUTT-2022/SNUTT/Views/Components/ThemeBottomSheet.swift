@@ -74,9 +74,9 @@ struct ThemeBottomSheet: View {
                     .alert("기본 테마는 삭제할 수 없습니다.", isPresented: $isUndeletableAlertPresented) {
                         Button("확인", role: .cancel, action: {})
                     }
-                    .alert("기본 테마를 해제하시겠습니까?\n기본 테마는 SNUTT로 변경됩니다.", isPresented: $isUndoDefaultAlertPresented) {
+                    .alert("기본 테마 지정을 취소하시겠습니까?\n'SNUTT'테마가 기본 적용됩니다.", isPresented: $isUndoDefaultAlertPresented) {
                         Button("취소", role: .cancel, action: {})
-                        Button("해제", role: .destructive) {
+                        Button("확인", role: .destructive) {
                             Task {
                                 await undoCustomThemeDefault()
                             }
@@ -108,9 +108,9 @@ struct ThemeBottomSheet: View {
                             }
                         }
                     }
-                    .alert("기본 테마를 해제하시겠습니까?\n기본 테마는 SNUTT로 변경됩니다.", isPresented: $isUndoDefaultAlertPresented) {
+                    .alert("기본 테마 지정을 취소하시겠습니까?\n'SNUTT'테마가 기본 적용됩니다.", isPresented: $isUndoDefaultAlertPresented) {
                         Button("취소", role: .cancel, action: {})
-                        Button("해제", role: .destructive) {
+                        Button("확인", role: .destructive) {
                             Task {
                                 await undoBasicThemeDefault()
                             }
