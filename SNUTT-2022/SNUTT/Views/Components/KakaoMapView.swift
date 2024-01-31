@@ -48,7 +48,6 @@ struct KakaoMapView: UIViewRepresentable {
 
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
         var controller: KMController?
-        private var isFirstOpen: Bool = true
 
         /// enumerated & sorted building locations (rightTop to leftBottom)
         private let buildings: EnumeratedSequence<[Dictionary<Location, String>.Element]>
@@ -77,6 +76,14 @@ struct KakaoMapView: UIViewRepresentable {
         private var locations: [Location] {
             buildings.map { $0.element.key }
         }
+        
+        private var shouldZoomOut: Bool {
+            if buildings.reduce(0, { count, _ in count + 1 }) == 1 { return false }
+            guard let location = locations.first else { return false }
+            let latDistance = abs(location.latitude.distance(to: defaultPoint.latitude))
+            let lngDistance = abs(location.longitude.distance(to: defaultPoint.longitude))
+            return latDistance > 0.002 || lngDistance > 0.002
+        }
 
         func createController(_ view: KMViewContainer) {
             controller = KMController(viewContainer: view)
@@ -86,16 +93,13 @@ struct KakaoMapView: UIViewRepresentable {
         /// automatically called after running startEngine() and preparing for view rendering
         func addViews() {
             let defaultPosition = MapPoint(longitude: defaultPoint.longitude, latitude: defaultPoint.latitude)
-            let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 15)
+            let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: shouldZoomOut ? 14 : 15)
 
             if controller?.addView(mapviewInfo) == Result.OK {
                 guard let mapView = mapView else {
                     return
                 }
                 mapView.eventDelegate = self
-                mapView.setMargins(.init(top: 24, left: 24, bottom: 48, right: 24))
-
-                mapView.setLogoPosition(origin: GuiAlignment(vAlign: .bottom, hAlign: .right), position: CGPoint(x: -12.0, y: -36.0))
 
                 if colorScheme == .light {
                     mapView.dimScreen.color = UIColor(white: 0, alpha: 0.4)
@@ -132,19 +136,20 @@ struct KakaoMapView: UIViewRepresentable {
 
         /// KMViewContainer 리사이징 될 때 호출.
         func containerDidResized(_ size: CGSize) {
-            mapView?.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
-            if isFirstOpen {
-                let cameraUpdate: CameraUpdate = .make(target: MapPoint(longitude: defaultPoint.longitude, latitude: defaultPoint.latitude), zoomLevel: 15, mapView: mapView!)
-                mapView?.moveCamera(cameraUpdate)
-                isFirstOpen = false
-            }
+            guard let mapView = mapView else { return }
+            mapView.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
         }
 
         private func createLabelLayer() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
+            
+            // layer for blur-effect background
+            let blurLayerOption = LabelLayerOptions(layerID: "blurBackground", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000)
+            let _ = manager.addLabelLayer(option: blurLayerOption)
+            
             buildings.forEach { building in
-                let layerOption = LabelLayerOptions(layerID: "poi\(building.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000 + building.offset)
+                let layerOption = LabelLayerOptions(layerID: "poi\(building.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1100 + building.offset)
                 let _ = manager.addLabelLayer(option: layerOption)
             }
         }
@@ -152,6 +157,12 @@ struct KakaoMapView: UIViewRepresentable {
         private func createPoiStyle() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
+            
+            // blur
+            let blurIconStyle = PoiIconStyle(symbol: UIImage(named: "map.blur.background"))
+            let blurPoiStyle = PoiStyle(styleID: "blur", styles: [
+                PerLevelPoiStyle(iconStyle: blurIconStyle, level: 0),
+            ])
 
             // not focused
             let notFocusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin"))
@@ -164,7 +175,7 @@ struct KakaoMapView: UIViewRepresentable {
             ])
 
             // focused(dim)
-            let focusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin.dim"))
+            let focusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin.dim"), anchorPoint: .init(x: 0.5, y: 0.6))
             let focusedTextStyle = TextStyle(fontSize: 26, fontColor: .white, strokeThickness: 1, strokeColor: .init(.init(hex: "#8A8A8A")))
             let poiFocusedTextStyle = PoiTextStyle(textLineStyles: [
                 PoiTextLineStyle(textStyle: focusedTextStyle),
@@ -173,6 +184,7 @@ struct KakaoMapView: UIViewRepresentable {
                 PerLevelPoiStyle(iconStyle: focusedIconStyle, textStyle: poiFocusedTextStyle, level: 0),
             ])
 
+            manager.addPoiStyle(blurPoiStyle)
             manager.addPoiStyle(notFocusedPoiStyle)
             manager.addPoiStyle(focusedPoiStyle)
         }
@@ -181,28 +193,35 @@ struct KakaoMapView: UIViewRepresentable {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
             var poiOptionList: [PoiOptions] = []
+            
+            // blur
+            let blurPoiOption = PoiOptions(styleID: "blur")
+            blurPoiOption.rank = 0
+            blurPoiOption.clickable = true
+            let blurLayer = manager.getLabelLayer(layerID: "blurBackground")
 
+            // marker
             buildings.forEach { building in
-                let poiOption = PoiOptions(styleID: "notFocused")
-                poiOption.rank = 0
-                poiOption.clickable = true
-                poiOption.addText(PoiText(text: building.element.value, styleIndex: 0))
-                poiOptionList.append(poiOption)
+                let markerPoiOption = PoiOptions(styleID: "notFocused")
+                markerPoiOption.rank = 0
+                markerPoiOption.clickable = true
+                markerPoiOption.addText(PoiText(text: building.element.value, styleIndex: 0))
+                poiOptionList.append(markerPoiOption)
 
-                let layer = manager.getLabelLayer(layerID: "poi\(building.offset)")
-                if let poi = layer?.addPoi(option: poiOptionList[building.offset],
+                let markerLayer = manager.getLabelLayer(layerID: "poi\(building.offset)")
+                if let blurPoi = blurLayer?.addPoi(option: blurPoiOption,
+                                           at: .init(longitude: building.element.key.longitude,
+                                                     latitude: building.element.key.latitude - 0.0007))
+                {
+                    blurPoi.show()
+                }
+                
+                if let markerPoi = markerLayer?.addPoi(option: poiOptionList[building.offset],
                                            at: .init(longitude: building.element.key.longitude,
                                                      latitude: building.element.key.latitude))
                 {
-                    pois[poi] = building.element.value
-                    poi.show()
-                }
-            }
-
-            if shouldResizeCamera() {
-                let cameraUpdate = CameraUpdate.make(area: AreaRect(points: locations.map { .init(longitude: $0.longitude, latitude: $0.latitude) }))
-                DispatchQueue.main.async {
-                    mapView.animateCamera(cameraUpdate: cameraUpdate, options: CameraAnimationOptions(autoElevation: true, consecutive: true, durationInMillis: 2000))
+                    pois[markerPoi] = building.element.value
+                    markerPoi.show()
                 }
             }
         }
@@ -223,6 +242,12 @@ struct KakaoMapView: UIViewRepresentable {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
             mapView.dimScreen.isEnabled.toggle()
+            
+            // blur
+            let blurLayer = manager.getLabelLayer(layerID: "blurBackground")
+            mapView.dimScreen.isEnabled ? blurLayer?.hideAllPois() : blurLayer?.showAllPois()
+            
+            // marker
             buildings.forEach { building in
                 let layer = manager.getLabelLayer(layerID: "poi\(building.offset)")
                 layer?.getAllPois()?.forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
@@ -253,14 +278,6 @@ struct KakaoMapView: UIViewRepresentable {
         private func kakaoMapURL(coordinate: GeoCoordinate) -> URL? {
             guard let url = URL(string: "kakaomap://look?p=\(coordinate.latitude),\(coordinate.longitude)") else { return nil }
             return url
-        }
-
-        private func shouldResizeCamera() -> Bool {
-            if pois.count == 1 { return false }
-            guard let location = locations.first else { return false }
-            let latDistance = location.latitude.distance(to: defaultPoint.latitude)
-            let lngDistance = location.longitude.distance(to: defaultPoint.longitude)
-            return latDistance > 0.002 || lngDistance > 0.002
         }
     }
 }
