@@ -93,6 +93,8 @@ struct KakaoMapView: UIViewRepresentable {
                 }
                 mapView.eventDelegate = self
                 mapView.setMargins(.init(top: 24, left: 24, bottom: 48, right: 24))
+                
+                mapView.setLogoPosition(origin: GuiAlignment(vAlign: .bottom, hAlign: .right), position: CGPoint(x: -12.0, y: -36.0))
 
                 if colorScheme == .light {
                     mapView.dimScreen.color = UIColor(white: 0, alpha: 0.4)
@@ -140,7 +142,7 @@ struct KakaoMapView: UIViewRepresentable {
         private func createLabelLayer() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            for building in buildings {
+            buildings.forEach { building in
                 let layerOption = LabelLayerOptions(layerID: "poi\(building.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000 + building.offset)
                 let _ = manager.addLabelLayer(option: layerOption)
             }
@@ -179,7 +181,7 @@ struct KakaoMapView: UIViewRepresentable {
             let manager = mapView.getLabelManager()
             var poiOptionList: [PoiOptions] = []
 
-            for building in buildings {
+            buildings.forEach { building in
                 let poiOption = PoiOptions(styleID: "notFocused")
                 poiOption.rank = 0
                 poiOption.clickable = true
