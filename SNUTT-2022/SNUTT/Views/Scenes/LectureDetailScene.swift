@@ -50,7 +50,7 @@ struct LectureDetailScene: View {
     private var isGwanak: Bool {
         buildings.allSatisfy { $0.campus == .GWANAK }
     }
-    
+
     private var showMapMismatchWarning: Bool {
         !lecture.timePlaces.allSatisfy { timeplace in
             if let building = timeplace.building {
@@ -207,30 +207,29 @@ struct LectureDetailScene: View {
                             if viewModel.supportForMapViewEnabled &&
                                 !buildings.isEmpty && isGwanak
                             {
-                                
                                 if isMapViewExpanded {
                                     Group {
                                         LectureMapView(buildings: buildingDictList)
                                             .frame(maxWidth: .infinity)
                                             .frame(height: 256)
                                             .padding(.top, 4)
-                                        
+
                                         if showMapMismatchWarning {
                                             HStack {
                                                 Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
                                                     .font(.system(size: 13))
                                                     .foregroundColor(colorScheme == .dark
-                                                                     ? STColor.gray30.opacity(0.6)
-                                                                     : STColor.darkGray.opacity(0.6))
+                                                        ? STColor.gray30.opacity(0.6)
+                                                        : STColor.darkGray.opacity(0.6))
                                                     .padding(.top, 8)
-                                                
+
                                                 Spacer()
                                             }
                                         }
                                     }
                                     .animation(.linear(duration: 0.2), value: isMapViewExpanded)
                                     .transition(.asymmetric(insertion: .opacity, removal: .identity))
-                                        
+
                                     Button {
                                         withAnimation {
                                             isMapViewExpanded.toggle()
@@ -246,7 +245,7 @@ struct LectureDetailScene: View {
                                         }
                                     }
                                     .padding(.top, 8)
-                                    
+
                                 } else {
                                     Button {
                                         withAnimation(.easeOut(duration: 0.3)) {

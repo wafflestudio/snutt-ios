@@ -58,9 +58,10 @@ struct KakaoMapView: UIViewRepresentable {
         private let colorScheme: ColorScheme
         @Binding var isMapNotInstalledAlertPresented: Bool
 
-        init(_ isMapNotInstalledAlertPresented: Binding<Bool>, 
+        init(_ isMapNotInstalledAlertPresented: Binding<Bool>,
              buildings: [Location: String],
-             colorScheme: ColorScheme) {
+             colorScheme: ColorScheme)
+        {
             self.buildings = buildings.sorted { $0.key.latitude > $1.key.latitude || $0.key.longitude > $1.key.longitude }.enumerated()
             _isMapNotInstalledAlertPresented = isMapNotInstalledAlertPresented
             defaultPoint = .init(latitude: buildings.keys.reduce(Double(0)) { $0 + $1.latitude } / Double(buildings.count),
@@ -93,7 +94,7 @@ struct KakaoMapView: UIViewRepresentable {
                 }
                 mapView.eventDelegate = self
                 mapView.setMargins(.init(top: 24, left: 24, bottom: 48, right: 24))
-                
+
                 mapView.setLogoPosition(origin: GuiAlignment(vAlign: .bottom, hAlign: .right), position: CGPoint(x: -12.0, y: -36.0))
 
                 if colorScheme == .light {
@@ -128,7 +129,7 @@ struct KakaoMapView: UIViewRepresentable {
                 openInExternalApp(coordinate: coordinate, label: matchingPoi.value)
             }
         }
-        
+
         /// KMViewContainer 리사이징 될 때 호출.
         func containerDidResized(_ size: CGSize) {
             mapView?.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
