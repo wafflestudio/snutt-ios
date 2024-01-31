@@ -76,7 +76,7 @@ struct KakaoMapView: UIViewRepresentable {
         private var locations: [Location] {
             buildings.map { $0.element.key }
         }
-        
+
         private var shouldZoomOut: Bool {
             if buildings.reduce(0, { count, _ in count + 1 }) == 1 { return false }
             guard let location = locations.first else { return false }
@@ -143,12 +143,12 @@ struct KakaoMapView: UIViewRepresentable {
         private func createLabelLayer() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            
+
             // layer for blur-effect background
             let blurLayerOption = LabelLayerOptions(layerID: "blurBackground", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000)
             let _ = manager.addLabelLayer(option: blurLayerOption)
-            
-            buildings.forEach { building in
+
+            for building in buildings {
                 let layerOption = LabelLayerOptions(layerID: "poi\(building.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1100 + building.offset)
                 let _ = manager.addLabelLayer(option: layerOption)
             }
@@ -157,7 +157,7 @@ struct KakaoMapView: UIViewRepresentable {
         private func createPoiStyle() {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
-            
+
             // blur
             let blurIconStyle = PoiIconStyle(symbol: UIImage(named: "map.blur.background"))
             let blurPoiStyle = PoiStyle(styleID: "blur", styles: [
@@ -193,7 +193,7 @@ struct KakaoMapView: UIViewRepresentable {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
             var poiOptionList: [PoiOptions] = []
-            
+
             // blur
             let blurPoiOption = PoiOptions(styleID: "blur")
             blurPoiOption.rank = 0
@@ -201,7 +201,7 @@ struct KakaoMapView: UIViewRepresentable {
             let blurLayer = manager.getLabelLayer(layerID: "blurBackground")
 
             // marker
-            buildings.forEach { building in
+            for building in buildings {
                 let markerPoiOption = PoiOptions(styleID: "notFocused")
                 markerPoiOption.rank = 0
                 markerPoiOption.clickable = true
@@ -210,15 +210,15 @@ struct KakaoMapView: UIViewRepresentable {
 
                 let markerLayer = manager.getLabelLayer(layerID: "poi\(building.offset)")
                 if let blurPoi = blurLayer?.addPoi(option: blurPoiOption,
-                                           at: .init(longitude: building.element.key.longitude,
-                                                     latitude: building.element.key.latitude - 0.0007))
+                                                   at: .init(longitude: building.element.key.longitude,
+                                                             latitude: building.element.key.latitude - 0.0007))
                 {
                     blurPoi.show()
                 }
-                
+
                 if let markerPoi = markerLayer?.addPoi(option: poiOptionList[building.offset],
-                                           at: .init(longitude: building.element.key.longitude,
-                                                     latitude: building.element.key.latitude))
+                                                       at: .init(longitude: building.element.key.longitude,
+                                                                 latitude: building.element.key.latitude))
                 {
                     pois[markerPoi] = building.element.value
                     markerPoi.show()
@@ -242,13 +242,13 @@ struct KakaoMapView: UIViewRepresentable {
             guard let mapView = mapView else { return }
             let manager = mapView.getLabelManager()
             mapView.dimScreen.isEnabled.toggle()
-            
+
             // blur
             let blurLayer = manager.getLabelLayer(layerID: "blurBackground")
             mapView.dimScreen.isEnabled ? blurLayer?.hideAllPois() : blurLayer?.showAllPois()
-            
+
             // marker
-            buildings.forEach { building in
+            for building in buildings {
                 let layer = manager.getLabelLayer(layerID: "poi\(building.offset)")
                 layer?.getAllPois()?.forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
             }
