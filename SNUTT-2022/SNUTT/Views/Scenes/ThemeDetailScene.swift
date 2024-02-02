@@ -224,7 +224,6 @@ struct ThemeDetailScene: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    
                     dismiss()
                 } label: {
                     Text("취소")
@@ -235,9 +234,9 @@ struct ThemeDetailScene: View {
                 Button {
                     Task {
                         switch themeType {
-                            case .basic: await viewModel.saveBasicTheme(theme: theme)
-                            case .custom: await viewModel.updateTheme(theme: theme)
-                            case .new: await viewModel.addTheme(theme: theme)
+                        case .basic: await viewModel.saveBasicTheme(theme: theme)
+                        case .custom: await viewModel.updateTheme(theme: theme)
+                        case .new: await viewModel.addTheme(theme: theme)
                         }
                         dismiss()
                     }

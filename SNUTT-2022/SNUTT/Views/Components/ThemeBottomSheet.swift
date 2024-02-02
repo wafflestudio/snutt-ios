@@ -25,7 +25,7 @@ struct ThemeBottomSheet: View {
     @State private var isDeleteAlertPresented = false
     @State private var isUndeletableAlertPresented = false
     @State private var isUndoDefaultAlertPresented = false
-    
+
     var body: some View {
         if let isCustom = isCustom, isCustom {
             Sheet(isOpen: $isOpen,

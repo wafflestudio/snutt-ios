@@ -10,17 +10,17 @@ import SwiftUI
 
 struct Theme: Equatable, Identifiable {
     var id: String
-    
+
     /// 제공 테마라면 그 종류 (커스텀 테마의 경우 .snutt로 저장)
     var theme: BasicTheme?
-    
+
     var name: String
-    
+
     var colors: [LectureColor]
-    
+
     /// 기본 테마: 앞으로 생성되는 시간표에 모두 적용
     var isDefault: Bool
-    
+
     /// 사용자 생성 커스텀 테마
     var isCustom: Bool
 }

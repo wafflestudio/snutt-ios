@@ -106,7 +106,7 @@ class SettingViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func closeBottomSheet() {
         services.themeService.closeBottomSheet()
     }
