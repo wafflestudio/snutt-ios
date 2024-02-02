@@ -146,6 +146,7 @@ struct ThemeDetailScene: View {
                                 Divider()
                                     .frame(height: 1)
                             }
+                            .animation(nil, value: theme.colors.count)
                         }
                     }
                     .background(STColor.groupForeground)
@@ -159,6 +160,7 @@ struct ThemeDetailScene: View {
                         Text("+ 색상 추가")
                             .font(.system(size: 16))
                             .foregroundColor(STColor.disabled)
+                            .animation(.customSpring, value: theme.colors.count)
                     }
                     .padding(.top, 10)
                 }
@@ -169,10 +171,23 @@ struct ThemeDetailScene: View {
                     .animation(.easeInOut, value: theme.isDefault)
                     .padding(.horizontal, 28)
                     .padding(.vertical, 10)
+                    .onChange(of: theme.isDefault) { newValue in
+                        if newValue == false {
+                            isUndoDefaultAlertPresented = true
+                        }
+                    }
             }
             .background(STColor.groupForeground)
             .border(Color.black.opacity(0.1), width: 0.5)
             .padding(.vertical, 10)
+            .alert("기본 테마 지정을 취소하시겠습니까?\n'SNUTT'테마가 기본 적용됩니다.", isPresented: $isUndoDefaultAlertPresented) {
+                Button("취소", role: .cancel) {
+                    theme.isDefault = true
+                }
+                Button("확인", role: .destructive) {
+                    theme.isDefault = false
+                }
+            }
 
             HStack {
                 DetailLabel(text: "미리보기")
