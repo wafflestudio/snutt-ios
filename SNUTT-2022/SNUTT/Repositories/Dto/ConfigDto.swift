@@ -12,6 +12,7 @@ struct ConfigsDto: Codable {
     let vacancySugangSnuUrl: VacancySugangSnuUrlDto?
     let settingsBadge: SettingsBadgeDto?
     let reactNativeBundleFriends: ReactNativeBundleFriendsDto?
+    let disableMapFeature: Bool?
 }
 
 extension ConfigsDto {

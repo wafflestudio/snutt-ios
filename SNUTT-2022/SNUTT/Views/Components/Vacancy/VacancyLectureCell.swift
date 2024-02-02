@@ -71,7 +71,7 @@ struct VacancyLectureCell: View {
 #if DEBUG
     struct VacancyLectureCell_Previews: PreviewProvider {
         static var previewLecture: Lecture {
-            var previewLecture = Lecture.preview
+            let previewLecture = Lecture.preview
             return previewLecture
         }
 

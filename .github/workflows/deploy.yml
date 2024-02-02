@@ -23,9 +23,9 @@ jobs:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
       GIT_PAT_READONLY: ${{ secrets.GIT_PAT_READONLY }}
       GIT_TAG_NAME: ${{ github.ref_name }}
-      XCODE_VERSION: '14.1'
+      XCODE_VERSION: '15.1'
 
-    runs-on: macos-12
+    runs-on: macos-13
 
     steps:
       - name: Parse tag name
@@ -52,7 +52,9 @@ jobs:
           echo "BUILD_NUMBER=${{ steps.regex.outputs.group6 }}" >> $GITHUB_ENV
 
       - name: Install Ruby Dependencies
-        run: bundle install
+        run: | 
+          bundle install
+          bundle update fastlane
 
       - name: Setup git ssh - repo mapping
         uses: shaunco/ssh-agent@git-repo-mapping

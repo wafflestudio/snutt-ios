@@ -17,12 +17,14 @@ extension LectureDetailScene {
         @Published var vacancyNotificationLectures: [Lecture] = []
         var errorTitle: String = ""
         var errorMessage: String = ""
+        var supportForMapViewEnabled: Bool = true
 
         override init(container: DIContainer) {
             super.init(container: container)
             appState.system.$selectedTab.assign(to: &$_selectedTab)
             appState.timetable.$bookmark.compactMap { $0?.lectures }.assign(to: &$bookmarkedLectures)
             appState.vacancy.$lectures.assign(to: &$vacancyNotificationLectures)
+            supportForMapViewEnabled = !(appState.system.configs?.disableMapFeature ?? false)
         }
 
         var lectureService: LectureServiceProtocol {
@@ -147,9 +149,10 @@ extension LectureDetailScene {
             var lecture = lecture
             lecture.timePlaces.append(.init(id: UUID().description,
                                             day: .mon,
-                                            startTime: "9:00",
-                                            endTime: "10:00",
+                                            startTime: .init(hour: 9, minute: 0),
+                                            endTime: .init(hour: 10, minute: 0),
                                             place: "",
+                                            building: nil,
                                             isCustom: lecture.isCustom,
                                             isTemporary: true))
             return lecture
@@ -219,6 +222,13 @@ extension LectureDetailScene {
             if let currentTimetable = appState.timetable.current {
                 return appState.theme.themeList.first(where: { $0.id == currentTimetable.themeId || $0.theme == currentTimetable.theme }) ?? Theme(rawValue: 0)
             } else { return Theme(rawValue: 0) }
+
+        func setIsMapViewExpanded(_ expand: Bool) {
+            lectureService.setIsMapViewExpanded(expand)
+        }
+
+        func shouldOpenLectureMapView() -> Bool {
+            lectureService.shouldExpandLectureMapView()
         }
     }
 }

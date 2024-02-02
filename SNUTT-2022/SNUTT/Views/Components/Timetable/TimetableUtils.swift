@@ -32,17 +32,17 @@ struct TimetablePainter {
             return nil
         }
 
-        if timePlace.startTimeDouble >= Double(getEndingHour(current: current, config: config)) + 1 {
+        if timePlace.startTime.hour >= getEndingHour(current: current, config: config) + 1 {
             return nil
         }
 
-        let minHour = Double(getStartingHour(current: current, config: config))
+        let minHour = getStartingHour(current: current, config: config)
 
-        if timePlace.endTimeDouble < minHour {
+        if timePlace.endTime.hour < minHour {
             return nil
         }
 
-        let hourIndex = max(timePlace.startTimeDouble - minHour, 0)
+        let hourIndex = max(Double(timePlace.startMinute - minHour * 60) / 60, 0)
         guard let weekdayIndex = getVisibleWeeks(current: current, config: config).firstIndex(of: timePlace.day) else { return nil }
 
         let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: getWeekCount(current: current, config: config))
@@ -57,7 +57,7 @@ struct TimetablePainter {
         let minHour = getStartingHour(current: current, config: config)
 
         /// 시간표의 시작 시각보다 강의 시작이 이른 경우, 그만큼의 시간을 차감해서 높이를 계산한다.
-        let timeBlockCropAdjustment = abs(min(timePlace.startTimeDouble - Double(minHour), 0))
+        let timeBlockCropAdjustment = abs(min(CGFloat(timePlace.startMinute - minHour * 60) / 60, 0))
         return (timePlace.duration(compactMode: config.compactMode) - timeBlockCropAdjustment) * getHourHeight(in: containerSize, hourCount: hourCount)
     }
 
@@ -73,11 +73,11 @@ struct TimetablePainter {
             return 9
         }
 
-        guard let startTime = current?.earliestStartTime else {
+        guard let startTime = current?.earliestStartHour else {
             return config.minHour
         }
 
-        return Int(min(startTime.rounded(.down), 9))
+        return min(startTime, 9)
     }
 
     /// `autoFit`을 고려한 시간표의 종료 시각. 빈 시간표인 경우 기본 17시이다.
@@ -90,12 +90,12 @@ struct TimetablePainter {
             return 17
         }
 
-        guard let endTime = current?.lastEndTime else {
+        guard let endTime = current?.lastEndHour else {
             return config.maxHour
         }
 
         let startTime = getStartingHour(current: current, config: config)
-        return max(Int((endTime - 1).rounded(.up)), startTime + 8) // autofit을 사용한다면 최소 8시간의 간격은 유지한다.
+        return max(endTime, startTime + 8) // autofit을 사용한다면 최소 8시간의 간격은 유지한다.
     }
 
     /// `autoFit`을 고려한 시간표의 세로 칸 수

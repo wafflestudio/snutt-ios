@@ -19,6 +19,8 @@ protocol LectureServiceProtocol: Sendable {
     func fetchIsFirstBookmark()
     func bookmarkLecture(lecture: Lecture) async throws
     func undoBookmarkLecture(lecture: Lecture) async throws
+    func setIsMapViewExpanded(_ open: Bool)
+    func shouldExpandLectureMapView() -> Bool
 }
 
 extension LectureServiceProtocol {
@@ -116,6 +118,21 @@ struct LectureService: LectureServiceProtocol {
         appState.search.selectedLecture = nil
     }
 
+    func setIsMapViewExpanded(_ expand: Bool) {
+        appState.system.isMapViewExpanded = expand
+        userDefaultsRepository.set(Bool.self, key: .expandLectureMapView, value: expand)
+    }
+
+    func shouldExpandLectureMapView() -> Bool {
+        if let isMapViewExpanded = appState.system.isMapViewExpanded {
+            return isMapViewExpanded
+        } else {
+            let isMapViewExpanded = userDefaultsRepository.get(Bool.self, key: .expandLectureMapView, defaultValue: false)
+            appState.system.isMapViewExpanded = isMapViewExpanded
+            return isMapViewExpanded
+        }
+    }
+
     private var lectureRepository: LectureRepositoryProtocol {
         webRepositories.lectureRepository
     }
@@ -130,8 +147,8 @@ struct LectureService: LectureServiceProtocol {
 
     /// Check if `Lecture` itself has overlapping `TimePlace`
     private func checkIfTimeplaceOverlapped(_ lecture: Lecture) throws {
-        try lecture.timePlaces.forEach { lhs in
-            try lecture.timePlaces.forEach { rhs in
+        for lhs in lecture.timePlaces {
+            for rhs in lecture.timePlaces {
                 if lhs.isOverlapped(with: rhs) {
                     throw STError(.INVALID_LECTURE_TIME)
                 }
@@ -151,4 +168,6 @@ class FakeLectureService: LectureServiceProtocol {
     func undoBookmarkLecture(lecture _: Lecture) async throws {}
     func fetchIsFirstBookmark() {}
     func fetchReviewId(courseNumber _: String, instructor _: String) async throws -> String { return "" }
+    func setIsMapViewExpanded(_: Bool) {}
+    func shouldExpandLectureMapView() -> Bool { return false }
 }

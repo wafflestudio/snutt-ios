@@ -35,6 +35,32 @@ struct LectureDetailScene: View {
     @State private var reviewId: String? = ""
     @State private var syllabusURL: String = ""
     @State private var showSyllabusWebView = false
+    @State private var isMapViewExpanded: Bool = false
+
+    private var buildings: [Building] {
+        lecture.timePlaces.compactMap { $0.building }.flatMap { $0 }
+    }
+
+    private var buildingDictList: [Location: String] {
+        var dict: [Location: String] = [:]
+        buildings.forEach { dict[$0.locationInDMS] = $0.number + "동" }
+        return dict
+    }
+
+    private var isGwanak: Bool {
+        buildings.allSatisfy { $0.campus == .GWANAK }
+    }
+
+    private var showMapMismatchWarning: Bool {
+        !lecture.timePlaces.allSatisfy { timeplace in
+            if let building = timeplace.building {
+                return building.allSatisfy {
+                    timeplace.place.hasPrefix($0.number)
+                }
+            }
+            return timeplace.place.isEmpty
+        }
+    }
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
@@ -177,6 +203,70 @@ struct LectureDetailScene: View {
                                     .animation(.customSpring, value: lecture.timePlaces.count)
                             }
                             .padding(.top, 5)
+                        } else {
+                            if viewModel.supportForMapViewEnabled &&
+                                !buildings.isEmpty && isGwanak
+                            {
+                                if isMapViewExpanded {
+                                    Group {
+                                        LectureMapView(buildings: buildingDictList)
+                                            .frame(maxWidth: .infinity)
+                                            .frame(height: 256)
+                                            .padding(.top, 4)
+
+                                        if showMapMismatchWarning {
+                                            HStack {
+                                                Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
+                                                    .font(.system(size: 13))
+                                                    .foregroundColor(colorScheme == .dark
+                                                        ? STColor.gray30.opacity(0.6)
+                                                        : STColor.darkGray.opacity(0.6))
+                                                    .padding(.top, 8)
+
+                                                Spacer()
+                                            }
+                                        }
+                                    }
+                                    .animation(.linear(duration: 0.2), value: isMapViewExpanded)
+                                    .transition(.asymmetric(insertion: .opacity, removal: .identity))
+
+                                    Button {
+                                        withAnimation {
+                                            isMapViewExpanded.toggle()
+                                        }
+                                    } label: {
+                                        HStack(spacing: 4) {
+                                            Text("지도 닫기")
+                                                .font(.system(size: 14))
+                                                .foregroundColor(colorScheme == .dark
+                                                    ? STColor.gray30
+                                                    : STColor.darkGray)
+                                            Image("chevron.down").rotationEffect(.init(degrees: 180.0))
+                                        }
+                                    }
+                                    .padding(.top, 8)
+
+                                } else {
+                                    Button {
+                                        withAnimation(.easeOut(duration: 0.3)) {
+                                            isMapViewExpanded.toggle()
+                                        }
+                                    } label: {
+                                        HStack(spacing: 0) {
+                                            Image("map.open")
+                                            Spacer().frame(width: 8)
+                                            Text("지도에서 보기")
+                                                .font(.system(size: 14))
+                                                .foregroundColor(colorScheme == .dark
+                                                    ? STColor.gray30
+                                                    : STColor.darkGray)
+                                            Spacer().frame(width: 4)
+                                            Image("chevron.down")
+                                        }
+                                    }
+                                    .padding(.top, 8)
+                                }
+                            }
                         }
                     }
                     .padding()
@@ -264,6 +354,12 @@ struct LectureDetailScene: View {
             .animation(.customSpring, value: lecture.timePlaces.count)
             .animation(.customSpring, value: editMode.isEditing)
             .padding(.vertical, 20)
+        }
+        .onAppear {
+            isMapViewExpanded = viewModel.shouldOpenLectureMapView()
+        }
+        .onChange(of: isMapViewExpanded) {
+            viewModel.setIsMapViewExpanded($0)
         }
         .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
@@ -432,14 +528,3 @@ struct RectangleButtonStyle: ButtonStyle {
             .background(configuration.isPressed ? STColor.buttonPressed : (color ?? .clear))
     }
 }
-
-#if DEBUG
-//    struct LectureDetailList_Previews: PreviewProvider {
-//        static var previews: some View {
-//            NavigationView {
-//                LectureDetailScene(viewModel: .init(container: .preview), lecture: .preview, displayMode: .normal)
-//                    .navigationBarTitleDisplayMode(.inline)
-//            }
-//        }
-//    }
-#endif

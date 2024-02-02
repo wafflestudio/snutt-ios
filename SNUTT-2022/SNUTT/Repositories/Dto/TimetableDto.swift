@@ -59,9 +59,29 @@ struct LectureColorDto: Codable {
 struct TimePlaceDto: Codable {
     let _id: String?
     let day: Int
-    let start_time: String
-    let end_time: String
+    let startMinute: Int
+    let endMinute: Int
     let place: String
+    let lectureBuildings: [LectureBuidingDto]?
+}
+
+struct LectureBuidingDto: Codable {
+    let id: String
+    let buildingNumber: String
+    let buildingNameKor: String
+    let buildingNameEng: String
+    let locationInDMS: Location
+    let locationInDecimal: Location
+    let campus: String
+}
+
+struct Location: Codable, Hashable {
+    let latitude: Double
+    let longitude: Double
+}
+
+enum Campus: String, Codable {
+    case GWANAK, YEONGEON, PYEONGCHANG
 }
 
 struct TimetableMetadataDto: Codable {
@@ -93,9 +113,20 @@ extension TimePlaceDto {
     init(from model: TimePlace) {
         _id = model.isTemporary ? nil : model.id
         day = model.day.rawValue
-        start_time = model.startTime
-        end_time = model.endTime
+        startMinute = model.startMinute
+        endMinute = model.endMinute
         place = model.place
+        guard let building = model.building else {
+            lectureBuildings = nil
+            return
+        }
+        lectureBuildings = building.map { .init(id: $0.id,
+                                                buildingNumber: $0.number,
+                                                buildingNameKor: $0.nameKor,
+                                                buildingNameEng: $0.nameEng,
+                                                locationInDMS: $0.locationInDMS,
+                                                locationInDecimal: $0.locationInDecimal,
+                                                campus: $0.campus.rawValue) }
     }
 }
 
