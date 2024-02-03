@@ -90,9 +90,7 @@ struct ThemeService: ThemeServiceProtocol {
     }
 
     func updateTheme(themeId: String, theme: Theme) async throws {
-        let dto = try await themeRepository.updateTheme(themeId: themeId, name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
-        let theme = Theme(from: dto)
-        appState.theme.bottomSheetTarget = theme
+        let _ = try await themeRepository.updateTheme(themeId: themeId, name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList
@@ -113,36 +111,28 @@ struct ThemeService: ThemeServiceProtocol {
     }
 
     func makeBasicThemeDefault(themeType: Int) async throws {
-        let dto = try await themeRepository.makeBasicThemeDefault(themeType: themeType)
-        let defaultTheme = Theme(from: dto)
-        appState.theme.bottomSheetTarget = defaultTheme
+        let _ = try await themeRepository.makeBasicThemeDefault(themeType: themeType)
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList
     }
 
     func undoBasicThemeDefault(themeType: Int) async throws {
-        let dto = try await themeRepository.undoBasicThemeDefault(themeType: themeType)
-        let defaultTheme = Theme(from: dto)
-        appState.theme.bottomSheetTarget = defaultTheme
+        let _ = try await themeRepository.undoBasicThemeDefault(themeType: themeType)
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList
     }
 
     func makeCustomThemeDefault(themeId: String) async throws {
-        let dto = try await themeRepository.makeCustomThemeDefault(themeId: themeId)
-        let defaultTheme = Theme(from: dto)
-        appState.theme.bottomSheetTarget = defaultTheme
+        let _ = try await themeRepository.makeCustomThemeDefault(themeId: themeId)
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList
     }
 
     func undoCustomThemeDefault(themeId: String) async throws {
-        let dto = try await themeRepository.undoCustomThemeDefault(themeId: themeId)
-        let defaultTheme = Theme(from: dto)
-        appState.theme.bottomSheetTarget = defaultTheme
+        let _ = try await themeRepository.undoCustomThemeDefault(themeId: themeId)
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList
