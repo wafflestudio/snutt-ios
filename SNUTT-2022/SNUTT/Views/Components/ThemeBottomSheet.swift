@@ -27,12 +27,11 @@ struct ThemeBottomSheet: View {
     @State private var isUndoDefaultAlertPresented = false
 
     var body: some View {
-        if let isCustom = isCustom, isCustom {
-            Sheet(isOpen: $isOpen,
-                  orientation: .bottom(maxHeight: 225),
-                  disableBackgroundTap: false,
-                  disableDragGesture: true)
-            {
+        Sheet(isOpen: $isOpen,
+              orientation: .bottom(maxHeight: (isCustom ?? true) ? 225 : 125),
+              disableBackgroundTap: false,
+              disableDragGesture: true) {
+            if let isCustom = isCustom, isCustom {
                 VStack(spacing: 0) {
                     ThemeBottomSheetButton(menu: .edit, isSheetOpen: isOpen) {
                         Task {
@@ -83,13 +82,7 @@ struct ThemeBottomSheet: View {
                         }
                     }
                 }
-            }
-        } else {
-            Sheet(isOpen: $isOpen,
-                  orientation: .bottom(maxHeight: 125),
-                  disableBackgroundTap: false,
-                  disableDragGesture: true)
-            {
+            } else {
                 VStack(spacing: 0) {
                     ThemeBottomSheetButton(menu: .detail, isSheetOpen: isOpen) {
                         Task {
