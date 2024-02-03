@@ -246,6 +246,9 @@ struct ThemeDetailScene: View {
                 }
             }
         }
+        .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
+            Text(viewModel.errorMessage)
+        }
     }
 }
 

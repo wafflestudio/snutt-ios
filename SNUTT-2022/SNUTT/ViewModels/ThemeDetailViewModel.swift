@@ -9,6 +9,10 @@ import Combine
 import SwiftUI
 
 class ThemeDetailViewModel: BaseViewModel, ObservableObject {
+    @Published var isErrorAlertPresented: Bool = false
+    var errorTitle: String = ""
+    var errorMessage: String = ""
+    
     @Published var currentTimetable: Timetable?
     @Published var configuration: TimetableConfiguration = .init()
 
@@ -32,6 +36,10 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
     func addTheme(theme: Theme) async {
         do {
             try await services.themeService.addTheme(theme: theme)
+        } catch let error as STError where error.code == .DUPLICATE_THEME_NAME {
+            isErrorAlertPresented = true
+            errorTitle = error.title
+            errorMessage = error.content
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
@@ -48,6 +56,10 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         guard let themeId = targetTheme?.id else { return }
         do {
             try await services.themeService.updateTheme(themeId: themeId, theme: theme)
+        } catch let error as STError where error.code == .DUPLICATE_THEME_NAME {
+            isErrorAlertPresented = true
+            errorTitle = error.title
+            errorMessage = error.content
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
