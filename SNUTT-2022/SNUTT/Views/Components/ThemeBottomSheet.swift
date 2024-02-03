@@ -30,7 +30,8 @@ struct ThemeBottomSheet: View {
         Sheet(isOpen: $isOpen,
               orientation: .bottom(maxHeight: (isCustom ?? true) ? 225 : 125),
               disableBackgroundTap: false,
-              disableDragGesture: true) {
+              disableDragGesture: true)
+        {
             if let isCustom = isCustom, isCustom {
                 VStack(spacing: 0) {
                     ThemeBottomSheetButton(menu: .edit, isSheetOpen: isOpen) {
