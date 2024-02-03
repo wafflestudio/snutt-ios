@@ -12,7 +12,7 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
     @Published var isErrorAlertPresented: Bool = false
     var errorTitle: String = ""
     var errorMessage: String = ""
-    
+
     @Published var currentTimetable: Timetable?
     @Published var configuration: TimetableConfiguration = .init()
 
