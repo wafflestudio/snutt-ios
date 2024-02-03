@@ -72,10 +72,10 @@ enum ThemeRouter: Router {
         case .getThemeList:
             return nil
         case let .addTheme(name, colors):
-            var dict = colors.encodeColors()
+            let dict = colors.encodeColors()
             return ["name": name, "colors": dict]
         case let .updateTheme(_, name, colors):
-            var dict = colors.encodeColors()
+            let dict = colors.encodeColors()
             return ["name": name, "colors": dict]
         case .copyTheme:
             return nil
