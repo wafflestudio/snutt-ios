@@ -175,7 +175,7 @@ struct KakaoMapView: UIViewRepresentable {
             ])
 
             // focused(dim)
-            let focusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin.dim"), anchorPoint: .init(x: 0.5, y: 0.6))
+            let focusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin.dim"))
             let focusedTextStyle = TextStyle(fontSize: 26, fontColor: .white, strokeThickness: 1, strokeColor: .init(.init(hex: "#8A8A8A")))
             let poiFocusedTextStyle = PoiTextStyle(textLineStyles: [
                 PoiTextLineStyle(textStyle: focusedTextStyle),
