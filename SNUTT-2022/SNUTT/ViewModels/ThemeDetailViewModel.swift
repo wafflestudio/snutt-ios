@@ -33,9 +33,10 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         themeState.bottomSheetTarget
     }
 
-    func addTheme(theme: Theme) async {
+    func addTheme(theme: Theme) async -> Bool {
         do {
             try await services.themeService.addTheme(theme: theme)
+            return true
         } catch let error as STError where error.code == .DUPLICATE_THEME_NAME {
             isErrorAlertPresented = true
             errorTitle = error.title
@@ -43,12 +44,14 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+        return false
     }
 
-    func updateTheme(theme: Theme) async {
-        guard let themeId = targetTheme?.id else { return }
+    func updateTheme(theme: Theme) async -> Bool {
+        guard let themeId = targetTheme?.id else { return false }
         do {
             try await services.themeService.updateTheme(themeId: themeId, theme: theme)
+            return true
         } catch let error as STError where error.code == .DUPLICATE_THEME_NAME {
             isErrorAlertPresented = true
             errorTitle = error.title
@@ -56,16 +59,19 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
+        return false
     }
 
-    func saveBasicTheme(theme: Theme) async {
+    func saveBasicTheme(theme: Theme) async -> Bool {
         if let themeType = theme.theme {
             do {
                 theme.isDefault ? try await services.themeService.makeBasicThemeDefault(themeType: themeType.rawValue) : try await services.themeService.undoBasicThemeDefault(themeType: themeType.rawValue)
+                return true
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
+        return false
     }
 
     func getThemeNewColor(theme: Theme) -> Theme {

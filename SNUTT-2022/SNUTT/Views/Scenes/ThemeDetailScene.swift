@@ -234,11 +234,19 @@ struct ThemeDetailScene: View {
                 Button {
                     Task {
                         switch themeType {
-                        case .basic: await viewModel.saveBasicTheme(theme: theme)
-                        case .custom: await viewModel.updateTheme(theme: theme)
-                        case .new: await viewModel.addTheme(theme: theme)
+                        case .basic: let success = await viewModel.saveBasicTheme(theme: theme)
+                            if success {
+                                dismiss()
+                            }
+                        case .custom: let success = await viewModel.updateTheme(theme: theme)
+                            if success {
+                                dismiss()
+                            }
+                        case .new: let success = await viewModel.addTheme(theme: theme)
+                            if success {
+                                dismiss()
+                            }
                         }
-                        dismiss()
                     }
                 } label: {
                     Text("저장")
@@ -246,7 +254,9 @@ struct ThemeDetailScene: View {
                 }
             }
         }
-        .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
+        .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented) {
+            Button("확인", role: .cancel) {}
+        } message: {
             Text(viewModel.errorMessage)
         }
     }
