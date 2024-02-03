@@ -43,13 +43,6 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
-        if theme.isDefault {
-            do {
-                try await services.themeService.makeCustomThemeDefault(themeId: theme.id)
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
-        }
     }
 
     func updateTheme(theme: Theme) async {
@@ -60,11 +53,6 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
             isErrorAlertPresented = true
             errorTitle = error.title
             errorMessage = error.content
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-        do {
-            theme.isDefault ? try await services.themeService.makeCustomThemeDefault(themeId: theme.id) : try await services.themeService.undoCustomThemeDefault(themeId: theme.id)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
