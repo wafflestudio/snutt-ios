@@ -150,7 +150,6 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
 
     func openNewThemeSheet() {
         services.themeService.openNewThemeSheet(for: newTheme)
-        services.globalUIService.closeThemeSheet()
     }
 
     func openRenameSheet() {
