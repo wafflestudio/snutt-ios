@@ -83,8 +83,7 @@ struct ThemeService: ThemeServiceProtocol {
     }
 
     func addTheme(theme: Theme) async throws {
-        let dto = try await themeRepository.addTheme(name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
-        let theme = Theme(from: dto)
+        let _ = try await themeRepository.addTheme(name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList
