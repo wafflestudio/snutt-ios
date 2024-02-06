@@ -34,13 +34,13 @@ struct ThemeBottomSheet: View {
         {
             if let isCustom = isCustom, isCustom {
                 VStack(spacing: 0) {
-                    ThemeBottomSheetButton(menu: .edit, isSheetOpen: isOpen) {
+                    ThemeBottomSheetButton(menu: .edit) {
                         Task {
                             await openCustomThemeSheet()
                         }
                     }
 
-                    ThemeBottomSheetButton(menu: isDefault ?? false ? .unpin : .pin, isSheetOpen: isOpen) {
+                    ThemeBottomSheetButton(menu: isDefault ?? false ? .unpin : .pin) {
                         if let isDefault = isDefault, !isDefault {
                             Task {
                                 await makeCustomThemeDefault()
@@ -50,13 +50,13 @@ struct ThemeBottomSheet: View {
                         }
                     }
 
-                    ThemeBottomSheetButton(menu: .copy, isSheetOpen: isOpen) {
+                    ThemeBottomSheetButton(menu: .copy) {
                         Task {
                             await copyTheme()
                         }
                     }
 
-                    ThemeBottomSheetButton(menu: .delete, isSheetOpen: isOpen) {
+                    ThemeBottomSheetButton(menu: .delete) {
                         if let isDefault = isDefault, !isDefault {
                             isDeleteAlertPresented = true
                         } else {
@@ -85,18 +85,16 @@ struct ThemeBottomSheet: View {
                 }
             } else {
                 VStack(spacing: 0) {
-                    ThemeBottomSheetButton(menu: .detail, isSheetOpen: isOpen) {
+                    ThemeBottomSheetButton(menu: .detail) {
                         Task {
                             await openBasicThemeSheet()
                         }
                     }
 
-                    ThemeBottomSheetButton(menu: isDefault ?? false ? .unpin : .pin, isSheetOpen: isOpen) {
+                    ThemeBottomSheetButton(menu: isDefault ?? false ? .unpin : .pin) {
                         Task {
                             if let isDefault = isDefault, !isDefault {
-                                Task {
-                                    await makeBasicThemeDefault()
-                                }
+                                await makeBasicThemeDefault()
                             } else {
                                 isUndoDefaultAlertPresented = true
                             }
@@ -118,8 +116,6 @@ struct ThemeBottomSheet: View {
 
 struct ThemeBottomSheetButton: View {
     let menu: ThemeMenu
-    var isSheetOpen: Bool = false
-
     let action: () -> Void
 
     var body: some View {
@@ -139,7 +135,6 @@ struct ThemeBottomSheetButton: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(10)
-            .animation(.customSpring, value: isSheetOpen)
         }
         .buttonStyle(RectangleButtonStyle())
     }
