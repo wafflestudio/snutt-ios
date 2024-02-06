@@ -37,7 +37,7 @@ struct SettingScene: View {
                     ThemeSettingScene(viewModel:
                         .init(container: viewModel.container))
                 }
-
+                .onDisappear(perform: viewModel.closeBottomSheet)
             } header: {
                 Text("디스플레이")
             }

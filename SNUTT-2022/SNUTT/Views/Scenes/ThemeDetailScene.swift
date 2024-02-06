@@ -13,6 +13,7 @@ struct ThemeDetailScene: View {
     @State var theme: Theme
     var themeType: ThemeType
     @State var openPickerIndex: Int?
+    @State private var unDidDefault = false
     @State private var isUndoDefaultAlertPresented = false
 
     init(viewModel: ThemeDetailViewModel, theme: Theme, themeType: ThemeType, openPickerIndex _: Int? = nil) {
@@ -173,21 +174,13 @@ struct ThemeDetailScene: View {
                     .padding(.vertical, 10)
                     .onChange(of: theme.isDefault) { newValue in
                         if newValue == false {
-                            isUndoDefaultAlertPresented = true
+                            unDidDefault = true
                         }
                     }
             }
             .background(STColor.groupForeground)
             .border(Color.black.opacity(0.1), width: 0.5)
             .padding(.vertical, 10)
-            .alert("기본 테마 지정을 취소하시겠습니까?\n'SNUTT'테마가 기본 적용됩니다.", isPresented: $isUndoDefaultAlertPresented) {
-                Button("취소", role: .cancel) {
-                    theme.isDefault = true
-                }
-                Button("확인", role: .destructive) {
-                    theme.isDefault = false
-                }
-            }
 
             HStack {
                 DetailLabel(text: "미리보기")
@@ -234,15 +227,22 @@ struct ThemeDetailScene: View {
                 Button {
                     Task {
                         switch themeType {
-                        case .basic: let success = await viewModel.saveBasicTheme(theme: theme)
-                            if success {
-                                dismiss()
+                        case .basic:
+                            if unDidDefault { isUndoDefaultAlertPresented = true } else {
+                                let success = await viewModel.saveBasicTheme(theme: theme)
+                                if success {
+                                    dismiss()
+                                }
                             }
-                        case .custom: let success = await viewModel.updateTheme(theme: theme)
-                            if success {
-                                dismiss()
+                        case .custom:
+                            if unDidDefault { isUndoDefaultAlertPresented = true } else {
+                                let success = await viewModel.updateTheme(theme: theme)
+                                if success {
+                                    dismiss()
+                                }
                             }
-                        case .new: let success = await viewModel.addTheme(theme: theme)
+                        case .new:
+                            let success = await viewModel.addTheme(theme: theme)
                             if success {
                                 dismiss()
                             }
@@ -251,6 +251,17 @@ struct ThemeDetailScene: View {
                 } label: {
                     Text("저장")
                         .foregroundColor(Color(uiColor: .label))
+                }
+            }
+        }
+        .alert("기본 테마 지정을 취소하시겠습니까?\n'SNUTT'테마가 기본 적용됩니다.", isPresented: $isUndoDefaultAlertPresented) {
+            Button("취소", role: .cancel) {}
+            Button("확인", role: .destructive) {
+                Task {
+                    let success = await theme.isCustom ? viewModel.updateTheme(theme: theme) : viewModel.saveBasicTheme(theme: theme)
+                    if success {
+                        dismiss()
+                    }
                 }
             }
         }
