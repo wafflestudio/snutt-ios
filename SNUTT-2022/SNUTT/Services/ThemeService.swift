@@ -46,11 +46,12 @@ struct ThemeService: ThemeServiceProtocol {
     }
 
     func openNewThemeSheet(for theme: Theme) {
-        appState.theme.bottomSheetTarget = theme
+        appState.timetable.current?.selectedTheme = theme
         appState.theme.isNewThemeSheetOpen = true
     }
 
     func closeNewThemeSheet() {
+        appState.timetable.current?.selectedTheme = nil
         appState.theme.isNewThemeSheetOpen = false
     }
 
