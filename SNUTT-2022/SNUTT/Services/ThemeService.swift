@@ -46,6 +46,7 @@ struct ThemeService: ThemeServiceProtocol {
     }
 
     func openNewThemeSheet(for theme: Theme) {
+        appState.theme.bottomSheetTarget = theme
         appState.timetable.current?.selectedTheme = theme
         appState.theme.isNewThemeSheetOpen = true
     }
@@ -53,6 +54,7 @@ struct ThemeService: ThemeServiceProtocol {
     func closeNewThemeSheet() {
         appState.timetable.current?.selectedTheme = nil
         appState.theme.isNewThemeSheetOpen = false
+        appState.theme.bottomSheetTarget = nil
     }
 
     func openBasicThemeSheet(for _: Theme) {
@@ -98,7 +100,6 @@ struct ThemeService: ThemeServiceProtocol {
         let dto = try await themeRepository.updateTheme(themeId: themeId, name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
         let themeData = Theme(from: dto)
         let _ = theme.isDefault ? try await themeRepository.makeCustomThemeDefault(themeId: themeData.id) : try await themeRepository.undoCustomThemeDefault(themeId: themeData.id)
-        appState.theme.bottomSheetTarget = theme
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList
