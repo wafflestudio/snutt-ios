@@ -14,15 +14,15 @@ struct ThemeDetailScene: View {
     var themeType: ThemeType
     @State var openPickerIndex: Int?
 
-    @State private var unDidDefault = false
+    private var defaultInitialValue: Bool
     @State private var isUndoDefaultAlertPresented = false
-    @State private var isDefaultChanged = false
 
     init(viewModel: ThemeDetailViewModel, theme: Theme, themeType: ThemeType, openPickerIndex _: Int? = nil) {
         self.viewModel = viewModel
         _theme = State(initialValue: theme)
         self.themeType = themeType
         _openPickerIndex = State(initialValue: theme.colors.count - 1)
+        defaultInitialValue = theme.isDefault
     }
 
     enum ThemeType {
@@ -174,12 +174,6 @@ struct ThemeDetailScene: View {
                     .animation(.easeInOut, value: theme.isDefault)
                     .padding(.horizontal, 28)
                     .padding(.vertical, 10)
-                    .onChange(of: theme.isDefault) { newValue in
-                        if newValue == false {
-                            unDidDefault = true
-                        }
-                        isDefaultChanged = true
-                    }
             }
             .background(STColor.groupForeground)
             .border(Color.black.opacity(0.1), width: 0.5)
@@ -231,7 +225,9 @@ struct ThemeDetailScene: View {
                     Task {
                         switch themeType {
                         case .basic:
-                            if unDidDefault { isUndoDefaultAlertPresented = true } else if isDefaultChanged {
+                            if defaultInitialValue && !theme.isDefault {
+                                isUndoDefaultAlertPresented = true
+                            } else if defaultInitialValue != theme.isDefault {
                                 let success = await viewModel.saveBasicTheme(theme: theme)
                                 if success {
                                     dismiss()
@@ -240,7 +236,9 @@ struct ThemeDetailScene: View {
                                 dismiss()
                             }
                         case .custom:
-                            if unDidDefault { isUndoDefaultAlertPresented = true } else {
+                            if defaultInitialValue && !theme.isDefault {
+                                isUndoDefaultAlertPresented = true
+                            } else {
                                 let success = await viewModel.updateTheme(theme: theme)
                                 if success {
                                     dismiss()
