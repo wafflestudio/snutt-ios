@@ -13,7 +13,7 @@ struct ThemeDetailScene: View {
     @State var theme: Theme
     var themeType: ThemeType
     @State var openPickerIndex: Int?
-    
+
     @State private var unDidDefault = false
     @State private var isUndoDefaultAlertPresented = false
     @State private var isDefaultChanged = false
