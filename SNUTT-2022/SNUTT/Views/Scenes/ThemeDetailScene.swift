@@ -13,8 +13,10 @@ struct ThemeDetailScene: View {
     @State var theme: Theme
     var themeType: ThemeType
     @State var openPickerIndex: Int?
+    
     @State private var unDidDefault = false
     @State private var isUndoDefaultAlertPresented = false
+    @State private var isDefaultChanged = false
 
     init(viewModel: ThemeDetailViewModel, theme: Theme, themeType: ThemeType, openPickerIndex _: Int? = nil) {
         self.viewModel = viewModel
@@ -176,6 +178,7 @@ struct ThemeDetailScene: View {
                         if newValue == false {
                             unDidDefault = true
                         }
+                        isDefaultChanged = true
                     }
             }
             .background(STColor.groupForeground)
@@ -228,11 +231,13 @@ struct ThemeDetailScene: View {
                     Task {
                         switch themeType {
                         case .basic:
-                            if unDidDefault { isUndoDefaultAlertPresented = true } else {
+                            if unDidDefault { isUndoDefaultAlertPresented = true } else if isDefaultChanged {
                                 let success = await viewModel.saveBasicTheme(theme: theme)
                                 if success {
                                     dismiss()
                                 }
+                            } else {
+                                dismiss()
                             }
                         case .custom:
                             if unDidDefault { isUndoDefaultAlertPresented = true } else {

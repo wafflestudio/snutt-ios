@@ -99,7 +99,11 @@ struct ThemeService: ThemeServiceProtocol {
     func updateTheme(themeId: String, theme: Theme) async throws {
         let dto = try await themeRepository.updateTheme(themeId: themeId, name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
         let themeData = Theme(from: dto)
-        let _ = theme.isDefault ? try await themeRepository.makeCustomThemeDefault(themeId: themeData.id) : try await themeRepository.undoCustomThemeDefault(themeId: themeData.id)
+        if (theme.isDefault && !themeData.isDefault) {
+            let _ = try await themeRepository.makeCustomThemeDefault(themeId: themeData.id)
+        } else if (!theme.isDefault && themeData.isDefault) {
+            let _ = try await themeRepository.undoCustomThemeDefault(themeId: themeData.id)
+        }
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList
