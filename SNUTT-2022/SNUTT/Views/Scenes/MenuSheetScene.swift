@@ -32,9 +32,11 @@ struct MenuSheetScene: View {
 
             MenuThemeSheet(isOpen: $viewModel.isThemeSheetOpen,
                            selectedTheme: viewModel.selectedTheme,
+                           themes: viewModel.themes,
                            cancel: viewModel.closeThemeSheet,
                            confirm: viewModel.applyThemeSheet,
-                           select: viewModel.selectTheme)
+                           select: viewModel.selectTheme,
+                           newTheme: viewModel.openNewThemeSheet)
 
             MenuRenameSheet(isOpen: $viewModel.isRenameSheetOpen,
                             titleText: $viewModel.renameTitle,
@@ -48,6 +50,15 @@ struct MenuSheetScene: View {
                             cancel: viewModel.closeCreateSheet,
                             confirm: viewModel.applyCreateSheet)
         }
+        .task {
+            await viewModel.getThemeList()
+        }
+        .sheet(isPresented: $viewModel.isNewThemeSheetOpen, content: {
+            NavigationView {
+                ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.newTheme, themeType: .new)
+            }
+            .accentColor(Color(UIColor.label))
+        })
     }
 }
 

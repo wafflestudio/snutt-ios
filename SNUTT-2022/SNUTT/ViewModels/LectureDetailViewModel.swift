@@ -218,6 +218,12 @@ extension LectureDetailScene {
             return vacancyNotificationLectures.contains(where: { $0.isEquivalent(with: lecture) })
         }
 
+        var theme: Theme {
+            if let currentTimetable = appState.timetable.current {
+                return appState.theme.themeList.first(where: { $0.id == currentTimetable.themeId || $0.theme == currentTimetable.theme }) ?? Theme(rawValue: 0)
+            } else { return Theme(rawValue: 0) }
+        }
+
         func setIsMapViewExpanded(_ expand: Bool) {
             lectureService.setIsMapViewExpanded(expand)
         }

@@ -9,11 +9,15 @@ import SwiftUI
 
 struct MenuThemeSheet: View {
     @Binding var isOpen: Bool
-    var selectedTheme: Theme
+    var selectedTheme: Theme?
+    var themes: [Theme]
 
     var cancel: @MainActor () -> Void
     var confirm: @MainActor () async -> Void
     var select: @MainActor (Theme) -> Void
+    var newTheme: @MainActor () -> Void
+
+    @State private var pushToNewThemeScene = false
 
     var body: some View {
         Sheet(isOpen: $isOpen,
@@ -27,13 +31,29 @@ struct MenuThemeSheet: View {
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
-                        ForEach(Theme.allCases, id: \.rawValue) { theme in
+                        VStack {
+                            Button {
+                                newTheme()
+                            } label: {
+                                Image("theme.new")
+                            }
+                            Text("새 테마")
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .font(STFont.detailLabel)
+                        }
+                        ForEach(themes.sorted { $0.isCustom && !$1.isCustom }) { theme in
                             Button {
                                 select(theme)
                             } label: {
                                 VStack {
-                                    Image(theme.imageName)
+                                    if theme.isCustom {
+                                        ThemeIcon(theme: theme)
+                                    } else {
+                                        Image(theme.theme?.imageName ?? "")
+                                    }
                                     Text(theme.name)
+                                        .frame(width: 60, height: 15)
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
                                         .font(STFont.detailLabel)
@@ -49,15 +69,6 @@ struct MenuThemeSheet: View {
 
                 Spacer()
             }
-        }
-    }
-}
-
-struct MenuThemeSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Color.gray.ignoresSafeArea()
-            MenuThemeSheet(isOpen: .constant(true), selectedTheme: .snutt, cancel: {}, confirm: {}, select: { _ in })
         }
     }
 }

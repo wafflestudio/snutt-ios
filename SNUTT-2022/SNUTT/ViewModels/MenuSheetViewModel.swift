@@ -11,6 +11,7 @@ import SwiftUI
 class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published var currentTimetable: Timetable?
     @Published var metadataList: [TimetableMetadata]?
+    @Published var themes: [Theme] = []
 
     @Published private var _isMenuSheetOpen: Bool = false
     var isMenuSheetOpen: Bool {
@@ -36,6 +37,15 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         set {
             _isThemeSheetOpen = false
             services.globalUIService.closeThemeSheet()
+        } // close-only;
+    }
+
+    @Published private var _isNewThemeSheetOpen: Bool = false
+    var isNewThemeSheetOpen: Bool {
+        get { _isNewThemeSheetOpen }
+        set {
+            _isNewThemeSheetOpen = false
+            services.themeService.closeNewThemeSheet()
         } // close-only;
     }
 
@@ -88,6 +98,8 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         appState.menu.$renameTitle.assign(to: &$_renameTitle)
         appState.menu.$createTitle.assign(to: &$_createTitle)
         appState.menu.$createQuarter.assign(to: &$_createQuarter)
+        appState.theme.$themeList.assign(to: &$themes)
+        appState.theme.$isNewThemeSheetOpen.assign(to: &$_isNewThemeSheetOpen)
     }
 
     var menuState: MenuState {
@@ -114,6 +126,14 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         menuState.ellipsisTarget
     }
 
+    func getThemeList() async {
+        do {
+            try await services.themeService.getThemeList()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+
     func openThemeSheet() {
         if targetTimetable?.id != appState.timetable.current?.id {
             services.globalUIService.presentErrorAlert(error: .CANT_CHANGE_OTHERS_THEME)
@@ -121,6 +141,15 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
             return
         }
         services.globalUIService.openThemeSheet()
+    }
+
+    var newTheme: Theme {
+        let theme: Theme = .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: STColor.cyan.toHex(), fg: Color.white.toHex())], isDefault: false, isCustom: true))
+        return theme
+    }
+
+    func openNewThemeSheet() {
+        services.themeService.openNewThemeSheet(for: newTheme)
     }
 
     func openRenameSheet() {
@@ -230,9 +259,9 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
         services.timetableService.selectTimetableTheme(theme: theme)
     }
 
-    var selectedTheme: Theme {
-        guard let current = appState.timetable.current else { return .snutt }
-        return current.selectedTheme ?? current.theme
+    var selectedTheme: Theme? {
+        guard let current = appState.timetable.current else { return nil }
+        return current.selectedTheme
     }
 
     var availableCourseBooks: [Quarter] {

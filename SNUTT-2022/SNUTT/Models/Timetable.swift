@@ -12,8 +12,9 @@ import SwiftUI
 struct Timetable {
     let id: String
     var title: String
-    let lectures: [Lecture]
-    var theme: Theme
+    var lectures: [Lecture]
+    var theme: BasicTheme?
+    let themeId: String?
     var isPrimary: Bool
     let userId: String
     let year: Int
@@ -81,10 +82,14 @@ extension Timetable {
         semester = dto.semester
         updatedAt = dto.updated_at
         isPrimary = dto.isPrimary ?? false
+        themeId = dto.themeId
+        theme = (themeId != nil) ? nil : BasicTheme(rawValue: dto.theme)
 
-        let theme: Theme = .init(rawValue: dto.theme) ?? .snutt
-        self.theme = theme
-        lectures = dto.lecture_list.map { .init(from: $0).withTheme(theme: theme) }
+        lectures = dto.lecture_list.enumerated().map { index, lectureDto in
+            let lecture = Lecture(from: lectureDto, index: index)
+            let lectureWithTheme = lecture.withTheme(theme: dto.theme)
+            return lectureWithTheme
+        }
     }
 }
 
@@ -95,7 +100,8 @@ extension Timetable {
                 id: UUID().uuidString,
                 title: "나의 시간표",
                 lectures: [.preview, .preview, .preview],
-                theme: .snutt,
+                theme: BasicTheme(rawValue: 0),
+                themeId: "",
                 isPrimary: false,
                 userId: "1234",
                 year: 2022,

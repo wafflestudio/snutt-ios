@@ -89,7 +89,7 @@ struct LectureDetailScene: View {
                             HStack {
                                 DetailLabel(text: "색")
                                 NavigationLink {
-                                    LectureColorList(theme: lecture.theme ?? .snutt, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
+                                    LectureColorList(theme: viewModel.theme, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
                                 } label: {
                                     HStack {
                                         LectureColorPreview(lectureColor: lecture.getColor())

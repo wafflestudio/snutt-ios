@@ -52,7 +52,7 @@ class TimetableRepositoryTests: XCTestCase {
     func testUpdateTimetableTheme() async throws {
         let newThemeIndex = 2
 
-        let _ = try await repository.updateTimetableTheme(withTimetableId: testTimetable!._id, withTheme: newThemeIndex)
+        let _ = try await repository.updateTimetableTheme(withTimetableId: testTimetable!._id, withTheme: Theme(rawValue: newThemeIndex))
 
         let updatedTimetable = try await repository.fetchTimetable(withTimetableId: testTimetable!._id)
 

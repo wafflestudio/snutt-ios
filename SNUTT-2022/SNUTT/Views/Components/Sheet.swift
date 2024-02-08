@@ -22,7 +22,7 @@ struct Sheet<Content>: View where Content: View {
     @State private var backgroundOpacity: CGFloat = 0
 
     private var dragGesture: some Gesture {
-        DragGesture().updating(self.$translation) { value, state, _ in
+        DragGesture().updating($translation) { value, state, _ in
             if !disableDragGesture {
                 state = orientation.getTranslation(from: value)
             }
@@ -59,7 +59,11 @@ struct Sheet<Content>: View where Content: View {
                     .background(.thinMaterial)
                     .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                     .ignoresSafeArea()
-                self.content()
+
+                VStack(spacing: 0) {
+                    self.content()
+                }
+                .transformEffect(.identity)
             }
             .frame(width: orientation.getFrame(reader: reader).width, height: orientation.getFrame(reader: reader).height)
             .offset(orientation.getOffset(isOpen: isOpen, translation: translation, reader: reader))
