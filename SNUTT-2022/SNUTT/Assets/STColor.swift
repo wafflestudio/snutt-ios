@@ -31,7 +31,7 @@ struct STColor {
 
     /// Hex #EBEBEB
     static let divider: Color = .init(hex: "#EBEBEB")
-    
+
     /// Hex #505050
     static let darkDivider: Color = .init(hex: "#505050")
 
