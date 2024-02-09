@@ -9,11 +9,12 @@ import SwiftUI
 
 struct NotificationList: View {
     @ObservedObject var viewModel: ViewModel
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         List {
             ForEach(viewModel.notifications, id: \.hashValue) { notification in
-                NotificationListCell(notification: notification)
+                NotificationListCell(notification: notification, colorScheme: colorScheme)
                     .task {
                         if notification.hashValue == viewModel.notifications.last?.hashValue {
                             await viewModel.fetchMoreNotifications()
