@@ -13,15 +13,21 @@ struct STColor {
 
     /// Used in banner.
     static let secondaryCyan: Color = .init("cyan.secondary")
+    
     static let red: Color = .init(hex: "#E54459")
 
     static let vacancyBlue: Color = .init(hex: "#446CC2")
     static let vacancyRed: Color = .init(hex: "#ED6C58")
     static let vacancyRedBackground: Color = vacancyRed.opacity(0.05)
 
-    /// RGB 196-196-196 /
+    /// Hex #B3B3B3
+    static let gray2: Color = .init(hex: "#B3B3B3")
+    
+    /// Hex #DADADA
+    static let gray10: Color = .init(hex: "#DADADA")
+    
     /// Hex #C4C4C4
-    static let gray: Color = .init(hex: "#C4C4C4")
+    static let gray20: Color = .init(hex: "#C4C4C4")
 
     /// Hex #A6A6A6
     static let gray30: Color = .init(hex: "#A6A6A6")

@@ -64,12 +64,13 @@ struct SearchService: SearchServiceProtocol {
     private func _fetchSearchResult() async throws {
         guard let currentTimetable = timetableState.current else { return }
         let tagList = searchState.selectedTagList
-        let mask = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .empty }) ? currentTimetable.reversedTimeMasks : nil
+        let excludedTimeList = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .empty }) ? currentTimetable.searchTimeMask : nil
         let offset = searchState.perPage * searchState.pageNum
         let dtos = try await searchRepository.fetchSearchResult(query: searchState.searchText,
                                                                 quarter: currentTimetable.quarter,
                                                                 tagList: tagList,
-                                                                mask: mask,
+                                                                timeList: nil,
+                                                                excludedTimeList: excludedTimeList,
                                                                 offset: offset,
                                                                 limit: searchState.perPage)
         let models: [Lecture] = dtos.map { Lecture(from: $0) }

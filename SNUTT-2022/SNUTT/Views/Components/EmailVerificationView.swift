@@ -54,7 +54,7 @@ struct EmailVerificationView: View {
                         .frame(maxWidth: .infinity)
                         .frame(height: 40)
                 }
-                .tint(STColor.gray)
+                .tint(STColor.gray20)
             }
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.roundedRectangle(radius: 0))

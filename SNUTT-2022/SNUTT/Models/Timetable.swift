@@ -34,16 +34,9 @@ struct Timetable {
     var quarter: Quarter {
         Quarter(year: year, semester: .init(rawValue: semester) ?? .first)
     }
-
-    private var aggregatedTimeMasks: [Int] {
-        lectures.reduce([0, 0, 0, 0, 0, 0, 0]) { mask, lecture in
-            zip(mask, lecture.timeMasks).map { $0 | $1 }
-        }
-    }
-
-    /// 빈 시간대 찾기에 사용되는 마스크
-    var reversedTimeMasks: [Int] {
-        aggregatedTimeMasks.map { 0x3FFF_FFFF ^ $0 }
+    
+    var searchTimeMask: [SearchTimeMaskDto] {
+        lectures.flatMap { $0.timePlaces }.map { SearchTimeMaskDto(day: $0.day.rawValue, startMinute: $0.startMinute, endMinute: $0.endMinute) }
     }
 
     private var aggregatedTimePlaces: [TimePlace] {

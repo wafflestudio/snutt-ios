@@ -26,6 +26,8 @@
 		738407082B579F9200007E62 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406ED2B57107C00007E62 /* Theme.swift */; };
 		738407092B57B10000007E62 /* ThemeDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406F02B5710C200007E62 /* ThemeDto.swift */; };
 		738407102B6060F800007E62 /* ThemeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406F82B57154400007E62 /* ThemeState.swift */; };
+		B800A38B2B76132C008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
+		B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */; };
 		B82EA54E2B6393190029FDF3 /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */; };
 		B84A4EA12B6035EE00C1E1A0 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84A4EA02B6035EE00C1E1A0 /* Building.swift */; };
@@ -352,6 +354,7 @@
 		738407002B571D8E00007E62 /* ThemeIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeIcon.swift; sourceTree = "<group>"; };
 		738407022B571E6200007E62 /* ThemeBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeBottomSheet.swift; sourceTree = "<group>"; };
 		738407042B577E9000007E62 /* ThemeDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDetailScene.swift; sourceTree = "<group>"; };
+		B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTimeMaskDto.swift; sourceTree = "<group>"; };
 		B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureMapView.swift; sourceTree = "<group>"; };
 		B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
 		B84A4EA02B6035EE00C1E1A0 /* Building.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
@@ -949,6 +952,7 @@
 			children = (
 				DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */,
 				BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */,
+				B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */,
 				BE682BEE288722A5009EBCB7 /* ErrorDto.swift */,
 				BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */,
 				BE9413BE28C2157600171060 /* NotificationDto.swift */,
@@ -1363,6 +1367,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */,
 				BE419B95288B8FA600FA9590 /* LectureBlocks.swift in Sources */,
 				738407092B57B10000007E62 /* ThemeDto.swift in Sources */,
 				CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */,
@@ -1524,6 +1529,7 @@
 				BEB3B6B328D4D4F500E56062 /* DetailButton.swift in Sources */,
 				738406FD2B57179100007E62 /* ThemeSettingViewModel.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
+				B800A38B2B76132C008E8D84 /* SearchTimeMaskDto.swift in Sources */,
 				B87DF6ED2914FAFB008BB95B /* PopupRouter.swift in Sources */,
 				BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */,
 				BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */,
