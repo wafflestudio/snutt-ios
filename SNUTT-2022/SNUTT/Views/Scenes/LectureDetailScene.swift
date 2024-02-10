@@ -294,6 +294,9 @@ struct LectureDetailScene: View {
                         .alert(viewModel.errorTitle, isPresented: $viewModel.isEmailVerifyAlertPresented, actions: {
                             Button("확인") {
                                 viewModel.selectedTab = .review
+                                if displayMode == .preview {
+                                    dismiss()
+                                }
                             }
                             Button("취소", role: .cancel) {}
                         }, message: {
