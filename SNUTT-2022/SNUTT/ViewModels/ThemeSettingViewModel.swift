@@ -59,7 +59,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         super.init(container: container)
         appState.theme.$themeList
             .map { themes in
-                themes.sorted { (first, second) -> Bool in
+                themes.sorted { first, second -> Bool in
                     if first.isDefault {
                         return true
                     } else if second.isDefault {

@@ -130,9 +130,8 @@ private struct ThemeButton: View {
             }
         }
     }
-    
-    @ViewBuilder
-    private var themeIconView: some View {
+
+    @ViewBuilder private var themeIconView: some View {
         if theme.isCustom {
             ThemeIcon(theme: theme)
                 .frame(width: 80, height: 78)
