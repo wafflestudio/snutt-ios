@@ -212,6 +212,7 @@ struct ThemeDetailScene: View {
         .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(themeType == .basic ? "제공 테마" : "커스텀 테마")
+        .animation(.customSpring, value: theme.colors.count)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
