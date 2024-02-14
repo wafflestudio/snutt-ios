@@ -46,6 +46,7 @@ struct ThemeDetailScene: View {
                     case .custom, .new:
                         EditableTextField(text: $theme.name, readOnly: false)
                             .environment(\.editMode, Binding.constant(.active))
+                            .submitLabel(.done)
                     }
                     Spacer()
                 }
