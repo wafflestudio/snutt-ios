@@ -58,16 +58,8 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
     override init(container: DIContainer) {
         super.init(container: container)
         appState.theme.$themeList
-            .map { themes in
-                themes.sorted { first, second -> Bool in
-                    if first.isDefault {
-                        return true
-                    } else if second.isDefault {
-                        return false
-                    } else {
-                        return false
-                    }
-                }
+            .map { themes in 
+                themes.sorted { $0.isDefault && !$1.isDefault }
             }
             .assign(to: &$themes)
         appState.theme.$isBottomSheetOpen.assign(to: &$_isBottomSheetOpen)
