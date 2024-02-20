@@ -58,7 +58,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
     override init(container: DIContainer) {
         super.init(container: container)
         appState.theme.$themeList
-            .map { themes in 
+            .map { themes in
                 themes.sorted { $0.isDefault && !$1.isDefault }
             }
             .assign(to: &$themes)
