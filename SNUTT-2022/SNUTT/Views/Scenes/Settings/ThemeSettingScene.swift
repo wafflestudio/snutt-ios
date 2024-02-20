@@ -5,9 +5,7 @@
 //  Created by 이채민 on 2024/01/17.
 //
 
-import Combine
 import SwiftUI
-import UIKit
 
 struct ThemeSettingScene: View {
     @ObservedObject var viewModel: ThemeSettingViewModel
