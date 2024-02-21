@@ -46,6 +46,7 @@ struct ThemeDetailScene: View {
                     case .custom, .new:
                         EditableTextField(text: $theme.name, readOnly: false)
                             .environment(\.editMode, Binding.constant(.active))
+                            .submitLabel(.done)
                     }
                     Spacer()
                 }
@@ -161,11 +162,11 @@ struct ThemeDetailScene: View {
                         openPickerIndex = theme.colors.count - 1
                     } label: {
                         Text("+ 색상 추가")
-                            .font(.system(size: 16))
+                            .font(.system(size: 14))
                             .foregroundColor(STColor.disabled)
                             .animation(.customSpring, value: theme.colors.count)
                     }
-                    .padding(.top, 10)
+                    .padding(.top, 8)
                 }
             }
 
@@ -177,7 +178,7 @@ struct ThemeDetailScene: View {
             }
             .background(STColor.groupForeground)
             .border(Color.black.opacity(0.1), width: 0.5)
-            .padding(.vertical, 10)
+            .padding(.vertical, 12)
 
             HStack {
                 DetailLabel(text: "미리보기")
@@ -211,6 +212,7 @@ struct ThemeDetailScene: View {
         .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(themeType == .basic ? "제공 테마" : "커스텀 테마")
+        .animation(.customSpring, value: theme.colors.count)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {

@@ -5,9 +5,7 @@
 //  Created by 이채민 on 2024/01/17.
 //
 
-import Combine
 import SwiftUI
-import UIKit
 
 struct ThemeSettingScene: View {
     @ObservedObject var viewModel: ThemeSettingViewModel
@@ -16,82 +14,17 @@ struct ThemeSettingScene: View {
         ZStack {
             Form {
                 Section(header: Text("커스텀 테마")) {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 20) {
-                            VStack {
-                                Button {
-                                    viewModel.openNewThemeSheet()
-                                } label: {
-                                    Image("theme.new")
-                                }
-                                Text("새 테마")
-                                    .padding(.horizontal, 5)
-                                    .padding(.vertical, 5)
-                                    .font(STFont.detailLabel)
-                            }
-
-                            ForEach(viewModel.themes, id: \.id) {
-                                theme in
-                                if theme.isCustom {
-                                    Button {
-                                        viewModel.openBottomSheet(for: theme)
-                                    } label: {
-                                        VStack {
-                                            ThemeIcon(theme: theme)
-                                                .overlay(
-                                                    theme.isDefault ? Image("theme.pin")
-                                                        .offset(x: -8, y: -8) : nil,
-                                                    alignment: .topLeading
-                                                )
-                                            HStack(spacing: 0) {
-                                                Text(theme.name)
-                                                    .font(STFont.detailLabel)
-                                                Image("theme.chevron.right")
-                                            }
-                                            .frame(width: 70, height: 15)
-                                            .padding(.vertical, 5)
-                                        }
-                                    }
-                                }
-                            }
-                            .padding(.vertical, 10)
-                        }
+                    ThemeScrollView(themes: viewModel.customThemes) {
+                        viewModel.openNewThemeSheet()
+                    } action: { theme in
+                        viewModel.openBottomSheet(for: theme)
                     }
                 }
 
                 Section(header: Text("제공 테마")) {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10) {
-                            ForEach(viewModel.themes, id: \.id) {
-                                theme in
-                                if !theme.isCustom {
-                                    Button {
-                                        viewModel.openBottomSheet(for: theme)
-                                    } label: {
-                                        VStack {
-                                            Image(theme.theme?.imageName ?? "")
-                                                .overlay(
-                                                    theme.isDefault ? Image("theme.pin")
-                                                        .offset(x: -8, y: -8) : nil,
-                                                    alignment: .topLeading
-                                                )
-                                                .frame(width: 88, height: 90)
-
-                                            HStack(spacing: 0) {
-                                                Text(theme.name)
-                                                    .font(STFont.detailLabel)
-                                                Image("theme.chevron.right")
-                                            }
-                                            .padding(.horizontal, 10)
-                                            .padding(.bottom, 5)
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    ThemeScrollView(themes: viewModel.basicThemes) { theme in
+                        viewModel.openBottomSheet(for: theme)
                     }
-                    .padding(.top, 5)
-                    .padding(.bottom, 10)
                 }
             }
             ThemeBottomSheet(isOpen: $viewModel.isBottomSheetOpen,
@@ -135,27 +68,93 @@ struct ThemeSettingScene: View {
     }
 }
 
-struct ThemeButton: View {
-    var theme: Theme
+private struct ThemeScrollView: View {
+    let themes: [Theme]
+    var openNewThemeSheet: (() -> Void)? = nil
+    let action: (Theme) -> Void
+
     var body: some View {
-        ZStack(alignment: .topLeading) {
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    if let openNewThemeSheet {
+                        Button {
+                            openNewThemeSheet()
+                        } label: {
+                            VStack {
+                                Image("theme.new")
+                                Text("새 테마")
+                                    .font(STFont.detailLabel)
+                                    .padding(.top, 5)
+                            }
+                        }
+                    }
+
+                    ForEach(themes, id: \.id) { theme in
+                        ThemeButton(theme: theme, action: { action(theme) })
+                            .id(theme.id)
+                    }
+                }
+                .padding(.vertical, 10)
+                .padding(.horizontal, 8)
+            }
+            .onChange(of: themes) { [oldValue = themes] newValue in
+                updateScrollPosition(proxy: proxy, oldThemes: oldValue, newThemes: newValue)
+            }
+        }
+    }
+
+    private func updateScrollPosition(proxy: ScrollViewProxy, oldThemes: [Theme], newThemes: [Theme]) {
+        let oldDefault = oldThemes.first(where: { $0.isDefault })
+        let newDefault = newThemes.first(where: { $0.isDefault })
+        if oldDefault?.id != newDefault?.id, let newDefaultId = newDefault?.id {
+            withAnimation(.customSpring) {
+                proxy.scrollTo(newDefaultId, anchor: .center)
+            }
+        }
+    }
+}
+
+private struct ThemeButton: View {
+    let theme: Theme
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
             VStack {
-                if theme.isCustom {
-                    ThemeIcon(theme: theme)
-                } else {
-                    Image(theme.theme?.imageName ?? "")
-                }
-                HStack {
-                    Text(theme.name)
-                        .padding(.vertical, 5)
-                        .font(STFont.detailLabel)
-                    Image("vacancy.chevron.right")
-                }
+                themeIconView
+                themeInfoView
+                    .padding(.top, 5)
             }
-            if theme.isDefault {
-                Image("theme.pin")
-                    .offset(x: -5, y: -5)
+        }
+    }
+
+    @ViewBuilder private var themeIconView: some View {
+        if theme.isCustom {
+            ThemeIcon(theme: theme)
+                .frame(width: 80, height: 78)
+                .overlay(
+                    theme.isDefault ? Image("theme.pin").offset(x: -8, y: -8) : nil,
+                    alignment: .topLeading
+                )
+        } else {
+            Image(theme.theme?.imageName ?? "")
+                .frame(width: 80, height: 78)
+                .overlay(
+                    theme.isDefault ? Image("theme.pin").offset(x: -8, y: -8) : nil,
+                    alignment: .topLeading
+                )
+        }
+    }
+
+    private var themeInfoView: some View {
+        VStack {
+            HStack(spacing: 0) {
+                Text(theme.name)
+                    .font(STFont.detailLabel)
+                Image("theme.chevron.right")
             }
+            .frame(width: 70, height: 15)
         }
     }
 }

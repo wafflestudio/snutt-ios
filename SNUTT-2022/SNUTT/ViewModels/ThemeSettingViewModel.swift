@@ -9,7 +9,15 @@ import Combine
 import SwiftUI
 
 class ThemeSettingViewModel: BaseViewModel, ObservableObject {
-    @Published var themes: [Theme] = []
+    @Published private var themes: [Theme] = []
+
+    var customThemes: [Theme] {
+        themes.filter { $0.isCustom }
+    }
+
+    var basicThemes: [Theme] {
+        themes.filter { !$0.isCustom }
+    }
 
     @Published private var _isBottomSheetOpen: Bool = false
     var isBottomSheetOpen: Bool {
@@ -49,7 +57,11 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
 
     override init(container: DIContainer) {
         super.init(container: container)
-        appState.theme.$themeList.assign(to: &$themes)
+        appState.theme.$themeList
+            .map { themes in
+                themes.sorted { $0.isDefault && !$1.isDefault }
+            }
+            .assign(to: &$themes)
         appState.theme.$isBottomSheetOpen.assign(to: &$_isBottomSheetOpen)
         appState.theme.$isNewThemeSheetOpen.assign(to: &$_isNewThemeSheetOpen)
         appState.theme.$isBasicThemeSheetOpen.assign(to: &$_isBasicThemeSheetOpen)
