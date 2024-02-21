@@ -278,8 +278,10 @@ struct ThemeDetailScene: View {
     }
 }
 
-struct ThemeDetailScene_Previews: PreviewProvider {
-    static var previews: some View {
-        ThemeDetailScene(viewModel: .init(container: .preview), theme: .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: STColor.cyan.toHex(), fg: Color.white.toHex())], isDefault: false, isCustom: true)), themeType: .new)
+#if DEBUG
+    struct ThemeDetailScene_Previews: PreviewProvider {
+        static var previews: some View {
+            ThemeDetailScene(viewModel: .init(container: .preview), theme: .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: STColor.cyan.toHex(), fg: Color.white.toHex())], isDefault: false, isCustom: true)), themeType: .new)
+        }
     }
-}
+#endif
