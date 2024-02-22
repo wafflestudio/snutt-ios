@@ -33,6 +33,16 @@ struct TimetableConfiguration: Codable {
         this.autoFit = true
         return this
     }
+    
+    func withTimeRangeSelectionMode() -> Self {
+        var this = self
+        this.visibleWeeks = [.mon, .tue, .wed, .thu, .fri]
+        this.autoFit = false
+        this.compactMode = true
+        this.minHour = 8
+        this.maxHour = 22
+        return this
+    }
 
     var isWidget: Bool {
         #if WIDGET

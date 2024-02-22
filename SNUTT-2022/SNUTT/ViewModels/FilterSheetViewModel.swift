@@ -19,6 +19,10 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
             services.searchService.setIsFilterOpen(newValue)
         }
     }
+    
+    var currentTimetable: Timetable? {
+        appState.timetable.current
+    }
 
     override init(container: DIContainer) {
         super.init(container: container)

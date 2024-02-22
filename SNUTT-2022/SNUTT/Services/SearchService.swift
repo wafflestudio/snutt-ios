@@ -64,7 +64,7 @@ struct SearchService: SearchServiceProtocol {
     private func _fetchSearchResult() async throws {
         guard let currentTimetable = timetableState.current else { return }
         let tagList = searchState.selectedTagList
-        let excludedTimeList = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .empty }) ? currentTimetable.searchTimeMask : nil
+        let excludedTimeList = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .empty }) ? currentTimetable.timeMask : nil
         let offset = searchState.perPage * searchState.pageNum
         let dtos = try await searchRepository.fetchSearchResult(query: searchState.searchText,
                                                                 quarter: currentTimetable.quarter,
