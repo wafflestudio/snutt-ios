@@ -14,7 +14,6 @@ struct Lecture: Identifiable {
     var title: String
     var instructor: String
     var timePlaces: [TimePlace]
-    let timeMasks: [Int]
     var courseNumber: String
     var lectureNumber: String
     var credit: Int
@@ -76,6 +75,20 @@ struct Lecture: Identifiable {
         lecture.colorIndex = 0
         return lecture
     }
+    
+    func withOccupiedColor(colorScheme: ColorScheme) -> Self {
+        var lecture = self
+        lecture.color = colorScheme == .dark ? .occupiedDark : .occupiedLight
+        lecture.colorIndex = 0
+        return lecture
+    }
+    
+    func withSelectedColor() -> Self {
+        var lecture = self
+        lecture.color = .selected
+        lecture.colorIndex = 0
+        return lecture
+    }
 
     var preciseTimeString: String {
         if timePlaces.isEmpty {
@@ -114,7 +127,14 @@ struct LectureColor: Hashable {
     var fg: Color
     var bg: Color
 
-    static var temporary: Self = .init(fg: .black, bg: .init(red: 196 / 255, green: 196 / 255, blue: 196 / 255))
+    static let temporary: Self = .init(fg: .black, bg: .init(red: 196 / 255, green: 196 / 255, blue: 196 / 255))
+    
+    static let occupiedLight: Self = .init(fg: .white, bg: STColor.gray10.opacity(0.7))
+    
+    static let occupiedDark: Self = .init(fg: STColor.darkGray, bg: STColor.darkerGray.opacity(0.7))
+    
+    /// SNUTT cyan (light)
+    static let selected: Self = .init(fg: .clear, bg: .init(hex: "#1BD0C8").opacity(0.6))
 }
 
 extension Lecture {
@@ -124,7 +144,6 @@ extension Lecture {
         title = dto.course_title
         instructor = dto.instructor
         timePlaces = dto.class_time_json.map { .init(from: $0, isCustom: dto.isCustom) }
-        timeMasks = dto.class_time_mask ?? []
         isCustom = dto.isCustom
         courseNumber = dto.course_number ?? ""
         lectureNumber = dto.lecture_number ?? ""
@@ -161,7 +180,6 @@ extension Lecture {
                            title: titles.randomElement()!,
                            instructor: instructors.randomElement()!,
                            timePlaces: [.preview, .preview, .preview, .preview, .preview],
-                           timeMasks: [],
                            courseNumber: "400.313",
                            lectureNumber: "001",
                            credit: Int.random(in: 0 ... 4),

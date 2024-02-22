@@ -142,7 +142,6 @@ extension LectureDto {
         credit = model.credit
         class_time = nil
         class_time_json = model.timePlaces.map { .init(from: $0) }
-        class_time_mask = model.timeMasks
         instructor = model.instructor
         quota = model.quota
         freshmanQuota = model.freshmanQuota

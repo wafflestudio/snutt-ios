@@ -66,6 +66,7 @@
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
+		B8E65A742B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E65A732B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift */; };
 		B8EE0C2C2A7DEDCE00CCFFAC /* WIPFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE0C2B2A7DEDCE00CCFFAC /* WIPFriendsView.swift */; };
 		B8F0B2302A4B27A500A2E15E /* UIDevice+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */; };
 		B8F0B2322A540A5300A2E15E /* EmailVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0B2312A540A5300A2E15E /* EmailVerificationView.swift */; };
@@ -393,6 +394,7 @@
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
 		B8E51E6728B615140065248E /* WebErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebErrorView.swift; sourceTree = "<group>"; };
 		B8E51E6A28B769680065248E /* ReviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRouter.swift; sourceTree = "<group>"; };
+		B8E65A732B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRangeSelectionSheet.swift; sourceTree = "<group>"; };
 		B8EE0C2B2A7DEDCE00CCFFAC /* WIPFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIPFriendsView.swift; sourceTree = "<group>"; };
 		B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Ext.swift"; sourceTree = "<group>"; };
 		B8F0B2312A540A5300A2E15E /* EmailVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationView.swift; sourceTree = "<group>"; };
@@ -1113,6 +1115,7 @@
 				BE682BC528845CDB009EBCB7 /* UITextEditor.swift */,
 				B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */,
 				B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */,
+				B8E65A732B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1619,6 +1622,7 @@
 				BE804BEA288B9EF700782F16 /* TimetableConfiguration.swift in Sources */,
 				B8F0B2302A4B27A500A2E15E /* UIDevice+Ext.swift in Sources */,
 				BE9413CE28C2207D00171060 /* NotificationState.swift in Sources */,
+				B8E65A742B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift in Sources */,
 				731D9FFD297BC5060027BA25 /* Bookmark.swift in Sources */,
 				B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */,
 				BE8BB3B5285D97A600070A66 /* FilterSheetScene.swift in Sources */,

@@ -10,6 +10,7 @@ import SwiftUI
 struct FilterSheetContent: View {
     @ObservedObject var viewModel: FilterSheetViewModel
     @State private var selectedCategory: SearchTagType = .classification
+    @State private var isTimeRangeSheetOpen: Bool = false
 
     struct FilterButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
@@ -50,6 +51,9 @@ struct FilterSheetContent: View {
                             ForEach(viewModel.filterTags(with: selectedCategory)) { tag in
                                 Button {
                                     viewModel.toggle(tag)
+                                    if tag.text == TimeType.range.rawValue && viewModel.isSelected(tag: tag) {
+                                        isTimeRangeSheetOpen = true
+                                    }
                                 } label: {
                                     HStack {
                                         Image("checkmark.circle.\(viewModel.isSelected(tag: tag) ? "tick" : "untick")")
@@ -95,6 +99,11 @@ struct FilterSheetContent: View {
             }
             .buttonStyle(FilterButtonStyle())
             .padding(.top, 10)
+        }
+        .sheet(isPresented: $isTimeRangeSheetOpen) {
+            if let timetable = viewModel.currentTimetable {
+                TimeRangeSelectionSheet(currentTimetable: timetable)
+            }
         }
     }
 }
