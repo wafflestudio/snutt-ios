@@ -28,7 +28,7 @@ extension SearchTagList {
                   let tagType = SearchTagType(rawValue: key) else { continue }
             searchTags.append(contentsOf: tagStrings.map { SearchTag(type: tagType, text: $0) })
         }
-        
+
         // 시간
         searchTags.append(.init(type: .time, text: TimeType.empty.rawValue))
         searchTags.append(.init(type: .time, text: TimeType.range.rawValue))

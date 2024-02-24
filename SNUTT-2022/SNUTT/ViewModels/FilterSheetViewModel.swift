@@ -20,12 +20,12 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
             services.searchService.setIsFilterOpen(newValue)
         }
     }
-    
+
     var selectedTimeRange: [SearchTimeMaskDto] {
         get { _selectedTimeRange }
         set { services.searchService.updateSelectedTimeRange(to: newValue) }
     }
-    
+
     var currentTimetable: Timetable? {
         appState.timetable.current
     }
