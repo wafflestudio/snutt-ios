@@ -102,7 +102,7 @@ struct FilterSheetContent: View {
         }
         .sheet(isPresented: $isTimeRangeSheetOpen) {
             if let timetable = viewModel.currentTimetable {
-                TimeRangeSelectionSheet(currentTimetable: timetable)
+                TimeRangeSelectionSheet(currentTimetable: timetable, selectedTimeRange: $viewModel.selectedTimeRange)
             }
         }
     }

@@ -10,6 +10,7 @@ import SwiftUI
 class FilterSheetViewModel: BaseViewModel, ObservableObject {
     @Published var selectedTagList: [SearchTag] = []
     @Published var searchTagList: SearchTagList?
+    @Published private var _selectedTimeRange: [SearchTimeMaskDto] = []
     @Published private var _isFilterOpen: Bool = false
 
     var isFilterOpen: Bool {
@@ -20,6 +21,11 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
         }
     }
     
+    var selectedTimeRange: [SearchTimeMaskDto] {
+        get { _selectedTimeRange }
+        set { services.searchService.updateSelectedTimeRange(to: newValue) }
+    }
+    
     var currentTimetable: Timetable? {
         appState.timetable.current
     }
@@ -28,6 +34,7 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
         super.init(container: container)
 
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
+        appState.search.$selectedTimeRange.assign(to: &$_selectedTimeRange)
         appState.search.$searchTagList.assign(to: &$searchTagList)
         appState.search.$isFilterOpen.assign(to: &$_isFilterOpen)
     }

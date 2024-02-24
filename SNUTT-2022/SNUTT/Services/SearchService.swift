@@ -15,6 +15,7 @@ protocol SearchServiceProtocol: Sendable {
     func fetchTags(quarter: Quarter) async throws
     func fetchInitialSearchResult() async throws
     func fetchMoreSearchResult() async throws
+    func updateSelectedTimeRange(to range: [SearchTimeMaskDto])
     func setIsFilterOpen(_ value: Bool)
     func setSearchText(_ value: String)
     func setSelectedLecture(_ value: Lecture?)
@@ -64,12 +65,13 @@ struct SearchService: SearchServiceProtocol {
     private func _fetchSearchResult() async throws {
         guard let currentTimetable = timetableState.current else { return }
         let tagList = searchState.selectedTagList
+        let timeList = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .range }) ? searchState.selectedTimeRange : nil
         let excludedTimeList = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .empty }) ? currentTimetable.timeMask : nil
         let offset = searchState.perPage * searchState.pageNum
         let dtos = try await searchRepository.fetchSearchResult(query: searchState.searchText,
                                                                 quarter: currentTimetable.quarter,
                                                                 tagList: tagList,
-                                                                timeList: nil,
+                                                                timeList: timeList,
                                                                 excludedTimeList: excludedTimeList,
                                                                 offset: offset,
                                                                 limit: searchState.perPage)
@@ -105,6 +107,10 @@ struct SearchService: SearchServiceProtocol {
             searchState.selectedTagList.remove(at: index)
             return
         }
+    }
+    
+    func updateSelectedTimeRange(to range: [SearchTimeMaskDto]) {
+        searchState.selectedTimeRange = range
     }
 
     func setIsFilterOpen(_ value: Bool) {
@@ -145,6 +151,7 @@ class FakeSearchService: SearchServiceProtocol {
     func fetchTags(quarter _: Quarter) async throws {}
     func fetchInitialSearchResult() async throws {}
     func fetchMoreSearchResult() async throws {}
+    func updateSelectedTimeRange(to range: [SearchTimeMaskDto]) {}
     func setIsFilterOpen(_: Bool) {}
     func toggleFilterSheet() {}
     func setSearchText(_: String) {}
