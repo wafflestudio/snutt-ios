@@ -9,12 +9,13 @@ import SwiftUI
 
 struct TimeRangeSelectionSheet: View {
     let currentTimetable: Timetable
+    let initialTimeRange: [SearchTimeMaskDto]
     let config = TimetableConfiguration().withTimeRangeSelectionMode()
 
     @Binding var selectedTimeRange: [SearchTimeMaskDto]
-    @State private var selectedBitMask: [Bool] = Array(repeating: false, count: 150)
+    @State private var selectedBlockMask: [Bool] = Array(repeating: false, count: 150)
     
-    @State private var temporaryBitMask: [Bool] = Array(repeating: false, count: 150)
+    @State private var temporaryBlockMask: [Bool] = Array(repeating: false, count: 150)
     @State private var temporaryTimeRange: [SearchTimeMaskDto] = []
 
     @State private var timetablePreviewSize: CGSize = .zero
@@ -31,6 +32,7 @@ struct TimeRangeSelectionSheet: View {
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         _selectedTimeRange = selectedTimeRange
+        initialTimeRange = selectedTimeRange.wrappedValue
     }
     
     var body: some View {
@@ -59,10 +61,8 @@ struct TimeRangeSelectionSheet: View {
                         )
                         
                         Button {
-                            selectedBitMask = Array(repeating: false, count: 150)
-                            temporaryBitMask = Array(repeating: false, count: 150)
-                            temporaryTimeRange = []
-                            selectedTimeRange = []
+                            resetTemporary()
+                            resetSelected()
                         } label: {
                             HStack(spacing: 0) {
                                 Image("timerange.reset")
@@ -98,41 +98,38 @@ struct TimeRangeSelectionSheet: View {
                         DragGesture()
                             .onChanged { gesture in
                                 let start = gesture.startLocation
-                                
                                 if start.x < TimetablePainter.hourWidth || start.y < TimetablePainter.weekdayHeight {
                                     return
                                 }
 
-                                let bitMask = TimetablePainter.toggleBitMask(at: gesture.location, in: reader.size)
+                                let currentBlockMask = TimetablePainter.toggleOnBlockMask(at: gesture.location, in: reader.size)
                                 
-                                temporaryBitMask = temporaryBitMask.enumerated().map {
-                                    $0.element || bitMask[$0.offset]
+                                temporaryBlockMask = temporaryBlockMask.enumerated().map {
+                                    $0.element || currentBlockMask[$0.offset]
                                 }
                                 
-                                temporaryTimeRange = TimetablePainter.getSelectedTimeRange(from: temporaryBitMask)
+                                temporaryTimeRange = TimetablePainter.getSelectedTimeRange(from: temporaryBlockMask)
                             }
                             .onEnded { gesture in
                                 let start = gesture.startLocation
-
                                 if start.x < TimetablePainter.hourWidth || start.y < TimetablePainter.weekdayHeight {
                                     return
                                 }
                                 
-                                selectMode = !TimetablePainter.isSelected(point: start, bitMask: selectedBitMask, in: reader.size)
+                                selectMode = !TimetablePainter.isSelected(point: start, blockMask: selectedBlockMask, in: reader.size)
                                 
                                 if selectMode {
-                                    selectedBitMask = selectedBitMask.enumerated().map {
-                                        return $0.element || temporaryBitMask[$0.offset]
+                                    selectedBlockMask = selectedBlockMask.enumerated().map {
+                                        $0.element || temporaryBlockMask[$0.offset]
                                     }
                                 } else {
-                                    selectedBitMask = selectedBitMask.enumerated().map {
-                                        return $0.element && !temporaryBitMask[$0.offset]
+                                    selectedBlockMask = selectedBlockMask.enumerated().map {
+                                        $0.element && !temporaryBlockMask[$0.offset]
                                     }
                                 }
 
-                                selectedTimeRange = TimetablePainter.getSelectedTimeRange(from: selectedBitMask)
-                                temporaryBitMask = Array(repeating: false, count: 150)
-                                temporaryTimeRange = []
+                                selectedTimeRange = TimetablePainter.getSelectedTimeRange(from: selectedBlockMask)
+                                resetTemporary()
                             }
                     )
                 }
@@ -141,7 +138,7 @@ struct TimeRangeSelectionSheet: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
-                        selectedTimeRange = []
+                        selectedTimeRange = initialTimeRange
                         dismiss()
                     } label: {
                         Text("취소")
@@ -196,5 +193,15 @@ struct TimeRangeSelectionSheet: View {
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
             }
         }
+    }
+    
+    private func resetTemporary() {
+        temporaryBlockMask = Array(repeating: false, count: 150)
+        temporaryTimeRange = []
+    }
+    
+    private func resetSelected() {
+        selectedBlockMask = Array(repeating: false, count: 150)
+        selectedTimeRange = []
     }
 }
