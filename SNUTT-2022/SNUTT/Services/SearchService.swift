@@ -108,7 +108,7 @@ struct SearchService: SearchServiceProtocol {
             return
         }
     }
-    
+
     func updateSelectedTimeRange(to range: [SearchTimeMaskDto]) {
         searchState.selectedTimeRange = range
     }
@@ -151,7 +151,7 @@ class FakeSearchService: SearchServiceProtocol {
     func fetchTags(quarter _: Quarter) async throws {}
     func fetchInitialSearchResult() async throws {}
     func fetchMoreSearchResult() async throws {}
-    func updateSelectedTimeRange(to range: [SearchTimeMaskDto]) {}
+    func updateSelectedTimeRange(to _: [SearchTimeMaskDto]) {}
     func setIsFilterOpen(_: Bool) {}
     func toggleFilterSheet() {}
     func setSearchText(_: String) {}

@@ -17,7 +17,7 @@ struct TimetableConfiguration: Codable {
 
     var visibleWeeksSorted: [Weekday] {
         var weekdayOrder: [Weekday: Int] = [:]
-        Weekday.allCases.enumerated().forEach { offset, element in
+        for (offset, element) in Weekday.allCases.enumerated() {
             weekdayOrder[element] = offset
         }
         return visibleWeeks
@@ -33,7 +33,7 @@ struct TimetableConfiguration: Codable {
         this.autoFit = true
         return this
     }
-    
+
     func withTimeRangeSelectionMode() -> Self {
         var this = self
         this.visibleWeeks = [.mon, .tue, .wed, .thu, .fri]

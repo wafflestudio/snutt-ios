@@ -75,14 +75,14 @@ struct Lecture: Identifiable {
         lecture.colorIndex = 0
         return lecture
     }
-    
+
     func withOccupiedColor(colorScheme: ColorScheme) -> Self {
         var lecture = self
         lecture.color = colorScheme == .dark ? .occupiedDark : .occupiedLight
         lecture.colorIndex = 0
         return lecture
     }
-    
+
     func withSelectedColor() -> Self {
         var lecture = self
         lecture.color = .selected
@@ -128,11 +128,11 @@ struct LectureColor: Hashable {
     var bg: Color
 
     static let temporary: Self = .init(fg: .black, bg: .init(red: 196 / 255, green: 196 / 255, blue: 196 / 255))
-    
+
     static let occupiedLight: Self = .init(fg: .white, bg: STColor.gray10.opacity(0.7))
-    
+
     static let occupiedDark: Self = .init(fg: STColor.darkGray, bg: STColor.darkerGray.opacity(0.7))
-    
+
     /// SNUTT cyan (light)
     static let selected: Self = .init(fg: .clear, bg: .init(hex: "#1BD0C8").opacity(0.6))
 }

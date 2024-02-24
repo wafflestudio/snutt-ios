@@ -34,7 +34,7 @@ struct Timetable {
     var quarter: Quarter {
         Quarter(year: year, semester: .init(rawValue: semester) ?? .first)
     }
-    
+
     var timeMask: [SearchTimeMaskDto] {
         lectures.flatMap { $0.timePlaces }.map { SearchTimeMaskDto(day: $0.day.rawValue, startMinute: $0.startMinute, endMinute: $0.endMinute) }
     }

@@ -44,7 +44,7 @@ enum SearchRouter: Router {
                 "department": [],
                 "academic_year": [],
             ]
-            
+
             let tagParams: [String: Any] = Dictionary(grouping: tagList, by: { $0.type.rawValue })
                 .mapValues { tags in
                     switch tags[0].type {
@@ -56,13 +56,13 @@ enum SearchRouter: Router {
                         return tags.map { $0.text }
                     }
                 }
-            
+
             var parameters = defaultParams.merging(tagParams, uniquingKeysWith: { $1 })
-            
+
             if let timeList = timeList {
                 parameters["times"] = timeList.map { $0.asDictionary() }
             }
-            
+
             if let excludedTimeList = excludedTimeList {
                 parameters["timesToExclude"] = excludedTimeList.map { $0.asDictionary() }
             }

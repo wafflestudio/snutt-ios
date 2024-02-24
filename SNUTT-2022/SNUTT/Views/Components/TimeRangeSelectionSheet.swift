@@ -14,16 +14,16 @@ struct TimeRangeSelectionSheet: View {
 
     @Binding var selectedTimeRange: [SearchTimeMaskDto]
     @State private var selectedBlockMask: [Bool] = Array(repeating: false, count: 150)
-    
+
     @State private var temporaryBlockMask: [Bool] = Array(repeating: false, count: 150)
     @State private var temporaryTimeRange: [SearchTimeMaskDto] = []
 
     @State private var timetablePreviewSize: CGSize = .zero
     @State private var selectMode: Bool = true
-    
+
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
-    
+
     init(currentTimetable: Timetable, selectedTimeRange: Binding<[SearchTimeMaskDto]>) {
         self.currentTimetable = currentTimetable
         let appearance = UINavigationBarAppearance()
@@ -34,12 +34,12 @@ struct TimeRangeSelectionSheet: View {
         _selectedTimeRange = selectedTimeRange
         initialTimeRange = selectedTimeRange.wrappedValue
     }
-    
+
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer().frame(height: 10)
-                
+
                 Group {
                     HStack(spacing: 8) {
                         Button {
@@ -59,7 +59,7 @@ struct TimeRangeSelectionSheet: View {
                             .cornerRadius(6)
                             .foregroundColor(colorScheme == .dark ? STColor.darkerGray : STColor.gray2)
                         )
-                        
+
                         Button {
                             resetTemporary()
                             resetSelected()
@@ -73,17 +73,17 @@ struct TimeRangeSelectionSheet: View {
                         }
                         .buttonStyle(DefaultButtonStyle())
                     }
-                    
+
                     Spacer().frame(height: 16)
-                    
+
                     Text("드래그하여 시간대를 선택해보세요.")
                         .font(.system(size: 14))
                         .foregroundColor(colorScheme == .dark ? STColor.darkGray : STColor.gray20)
                 }
                 .padding(.horizontal, 10)
-                
+
                 Spacer().frame(height: 10)
-                
+
                 GeometryReader { reader in
                     ZStack(alignment: .topLeading) {
                         TimetableGridLayer(current: currentTimetable, config: config)
@@ -103,11 +103,11 @@ struct TimeRangeSelectionSheet: View {
                                 }
 
                                 let currentBlockMask = TimetablePainter.toggleOnBlockMask(at: gesture.location, in: reader.size)
-                                
+
                                 temporaryBlockMask = temporaryBlockMask.enumerated().map {
                                     $0.element || currentBlockMask[$0.offset]
                                 }
-                                
+
                                 temporaryTimeRange = TimetablePainter.getSelectedTimeRange(from: temporaryBlockMask)
                             }
                             .onEnded { gesture in
@@ -115,9 +115,9 @@ struct TimeRangeSelectionSheet: View {
                                 if start.x < TimetablePainter.hourWidth || start.y < TimetablePainter.weekdayHeight {
                                     return
                                 }
-                                
+
                                 selectMode = !TimetablePainter.isSelected(point: start, blockMask: selectedBlockMask, in: reader.size)
-                                
+
                                 if selectMode {
                                     selectedBlockMask = selectedBlockMask.enumerated().map {
                                         $0.element || temporaryBlockMask[$0.offset]
@@ -144,7 +144,7 @@ struct TimeRangeSelectionSheet: View {
                         Text("취소")
                     }
                 }
-                
+
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         dismiss()
@@ -159,14 +159,14 @@ struct TimeRangeSelectionSheet: View {
         .interactiveDismissDisabled()
         .ignoresSafeArea(.keyboard)
     }
-    
+
     private var GrayScaledTimetableBlocksLayer: some View {
         ForEach(currentTimetable.lectures) { lecture in
             LectureBlocks(current: currentTimetable, lecture: lecture.withOccupiedColor(colorScheme: colorScheme), theme: .snutt, config: config)
                 .environment(\.dependencyContainer, nil)
         }
     }
-    
+
     private var SelectedTimeRangeBlocksLayer: some View {
         ForEach(selectedTimeRange, id: \.self) { time in
             if let offsetPoint = TimetablePainter.getOffset(of: time, in: timetablePreviewSize) {
@@ -180,7 +180,7 @@ struct TimeRangeSelectionSheet: View {
             }
         }
     }
-    
+
     private var TemporaryTimeRangeBlocksLayer: some View {
         ForEach(temporaryTimeRange, id: \.self) { time in
             if let offsetPoint = TimetablePainter.getOffset(of: time, in: timetablePreviewSize) {
@@ -194,12 +194,12 @@ struct TimeRangeSelectionSheet: View {
             }
         }
     }
-    
+
     private func resetTemporary() {
         temporaryBlockMask = Array(repeating: false, count: 150)
         temporaryTimeRange = []
     }
-    
+
     private func resetSelected() {
         selectedBlockMask = Array(repeating: false, count: 150)
         selectedTimeRange = []

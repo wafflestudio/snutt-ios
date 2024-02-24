@@ -13,7 +13,7 @@ class SearchState {
     @Published var searchTagList: SearchTagList?
     @Published var selectedTagList: [SearchTag] = []
     @Published var selectedTimeRange: [SearchTimeMaskDto] = []
-    
+
     @Published var displayMode: SearchDisplayMode = .search
 
     /// If `nil`, the user had never started searching.
