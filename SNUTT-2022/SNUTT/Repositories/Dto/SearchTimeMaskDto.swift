@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchTimeMaskDto: Codable {
+struct SearchTimeMaskDto: Codable, Hashable {
     let day: Int
     let startMinute: Int
     let endMinute: Int
