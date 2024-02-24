@@ -95,7 +95,7 @@ struct TimeRangeSelectionSheet: View {
                         timetablePreviewSize = size
                     }
                     .gesture(
-                        DragGesture()
+                        DragGesture(minimumDistance: 0)
                             .onChanged { gesture in
                                 let start = gesture.startLocation
                                 if start.x < TimetablePainter.hourWidth || start.y < TimetablePainter.weekdayHeight {
