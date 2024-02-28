@@ -135,11 +135,23 @@ struct TimetablePainter {
 
     // MARK: TimeRange Selection
 
-    /// `blockMask`를 `[SearchTimeMaskDto]`로 변환한다.
-    static func getSelectedTimeRange(from blockMask: [Bool]) -> [SearchTimeMaskDto] {
+    /// 첫날, 첫 시간대를 시작으로 하여 30분 단위로 시간대가 선택되었는지를 나타내는 마스크
+    typealias BlockMask = [Bool]
+
+    /// `BlockMask` 배열의 크기 (`weekCount` \* `halfHourCount`)
+    static let blockMaskSize = weekCount * halfHourCount
+
+    /// 시간대 선택은 월~금까지 지원
+    static let weekCount = 5
+
+    /// 시간대 선택은 8시부터 22시 59분까지 지원
+    static let halfHourCount = 30
+
+    /// `BlockMask`를 `[SearchTimeMaskDto]`로 변환한다.
+    static func getSelectedTimeRange(from blockMask: BlockMask) -> [SearchTimeMaskDto] {
         var result: [SearchTimeMaskDto] = []
-        let strided = stride(from: 0, to: 150, by: halfHourCount).map {
-            Array(blockMask[$0 ..< min($0 + halfHourCount, 150)])
+        let strided = stride(from: 0, to: blockMaskSize, by: 30).map {
+            Array(blockMask[$0 ..< min($0 + halfHourCount, blockMaskSize)])
         }
         var isCounting = false
         var (count, start) = (0, 0)
@@ -163,52 +175,57 @@ struct TimetablePainter {
         return result
     }
 
-    /// 좌표(오프셋)에 해당하는 `BlockMask`를 `true`로 전환한다.
-    static func toggleOnBlockMask(at point: CGPoint, in containerSize: CGSize) -> [Bool] {
+    /// 좌표(오프셋)에 해당하는 인덱스가 `true`로 설정된 `BlockMask`를 반환한다.
+    static func toggleOnBlockMask(at point: CGPoint, in containerSize: CGSize) -> BlockMask {
         let (rowIndex, columnIndex) = getIndex(of: point, in: containerSize)
 
-        var bitMask = Array(repeating: false, count: 150)
-        if columnIndex < 0 || columnIndex > 4 || rowIndex < 0 || rowIndex > 29 {
-            return bitMask
+        var blockMask = Array(repeating: false, count: blockMaskSize)
+        if columnIndex < 0 || columnIndex > (weekCount - 1) || rowIndex < 0 || rowIndex > (halfHourCount - 1) {
+            return blockMask
         }
 
-        bitMask[rowIndex + columnIndex * halfHourCount] = true
-        return bitMask
+        blockMask[rowIndex + columnIndex * halfHourCount] = true
+        return blockMask
     }
 
     /// 좌표(오프셋)가 선택된 시간대인지 확인한다.
-    static func isSelected(point: CGPoint, blockMask: [Bool], in containerSize: CGSize) -> Bool {
+    static func isSelected(point: CGPoint, blockMask: BlockMask, in containerSize: CGSize) -> Bool {
         let (rowIndex, columnIndex) = getIndex(of: point, in: containerSize)
         return blockMask[rowIndex + columnIndex * halfHourCount]
     }
 
-    /// 시간의 길이를 고려하여 블록의 높이를 구한다.
-    static func getHeight(in containerSize: CGSize, duration: Int) -> CGFloat {
-        getSingleBlockHeight(in: containerSize) * ceil(Double(duration) / Double(halfHourCount))
-    }
-
-    /// 주어진 `TimeMask`의 좌표(오프셋)를 구한다.
-    static func getOffset(of time: SearchTimeMaskDto, in containerSize: CGSize) -> CGPoint? {
+    /// 주어진 `BlockMask`의 인덱스로 좌표(오프셋)를 구한다.
+    static func getOffset(of blockMaskIndex: Int, in containerSize: CGSize) -> CGPoint? {
         if containerSize == .zero {
             return nil
         }
 
-        let x = hourWidth + CGFloat(time.day) * getWeekWidth(in: containerSize, weekCount: weekCount)
-        let y = weekdayHeight + floor(CGFloat((time.startMinute - 480) / halfHourCount)) * getSingleBlockHeight(in: containerSize)
+        let dayIndex = blockMaskIndex / halfHourCount
+        let halfHourIndex = blockMaskIndex % halfHourCount
 
+        let x = hourWidth + CGFloat(dayIndex) * getWeekWidth(in: containerSize, weekCount: weekCount)
+        let y = weekdayHeight + CGFloat(halfHourIndex) * getSingleBlockHeight(in: containerSize)
         return CGPoint(x: x, y: y)
     }
 
-    private static let weekCount = 5
-
-    private static let halfHourCount = 30
+    /// 시간대 `TimeMask`를 `BlockMask`로 변환한다.
+    static func toBlockMask(from timeMask: [SearchTimeMaskDto]) -> BlockMask {
+        var blockMask = Array(repeating: false, count: blockMaskSize)
+        for time in timeMask {
+            for minute in stride(from: time.startMinute, to: time.endMinute, by: 30) {
+                let halfHourIndex = Int(floor(Double(minute - 480) / 30.0))
+                blockMask[time.day * halfHourCount + halfHourIndex] = true
+            }
+        }
+        return blockMask
+    }
 
     /// 30분 단위 블록 하나의 높이를 구한다.
-    private static func getSingleBlockHeight(in containerSize: CGSize) -> CGFloat {
+    static func getSingleBlockHeight(in containerSize: CGSize) -> CGFloat {
         (containerSize.height - weekdayHeight) / CGFloat(halfHourCount)
     }
 
-    /// 좌표(오프셋)에 해당하는 `BitMask` 상의 인덱스를 구한다.
+    /// 좌표(오프셋)에 해당하는 `BlockMask`에서의 인덱스를 구한다.
     private static func getIndex(of point: CGPoint, in containerSize: CGSize) -> (Int, Int) {
         let weekWidth = getWeekWidth(in: containerSize, weekCount: weekCount)
 

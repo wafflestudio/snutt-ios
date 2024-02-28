@@ -89,7 +89,7 @@ enum SearchTagType: String, CaseIterable {
 }
 
 enum TimeType: String {
-    case empty = "빈 시간대"
+    case empty = "빈 시간대로 검색"
     case range = "시간대 직접 선택"
 }
 
