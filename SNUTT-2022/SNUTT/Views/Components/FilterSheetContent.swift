@@ -51,20 +51,36 @@ struct FilterSheetContent: View {
                             ForEach(viewModel.filterTags(with: selectedCategory)) { tag in
                                 Button {
                                     viewModel.toggle(tag)
-                                    if tag.text == TimeType.range.rawValue && viewModel.isSelected(tag: tag) {
-                                        isTimeRangeSheetOpen = true
-                                    }
                                 } label: {
-                                    HStack {
+                                    HStack(alignment: .top) {
                                         Image("checkmark.circle.\(viewModel.isSelected(tag: tag) ? "tick" : "untick")")
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 16)
                                             .padding(.trailing, 3)
-                                        Text(tag.text)
-                                            .font(STFont.detailLabel)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .contentShape(Rectangle())
+                                        VStack(alignment: .leading, spacing: 6) {
+                                            Text(tag.text)
+                                                .font(STFont.detailLabel)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .contentShape(Rectangle())
+
+                                            if tag.text == TimeType.range.rawValue {
+                                                Group {
+                                                    if !$viewModel.selectedTimeRange.isEmpty {
+                                                        Text(viewModel.selectedTimeRange.map {
+                                                            $0.preciseTimeString
+                                                        }.joined(separator: "\n"))
+                                                            .underline()
+                                                    } else {
+                                                        Text("눌러서 선택하기")
+                                                            .underline()
+                                                    }
+                                                }
+                                                .font(STFont.details)
+                                                .foregroundColor(STColor.darkGray)
+                                                .onTapGesture { isTimeRangeSheetOpen = true }
+                                            }
+                                        }
                                     }
                                     .padding(.horizontal, 20)
                                     .padding(.vertical, 7)

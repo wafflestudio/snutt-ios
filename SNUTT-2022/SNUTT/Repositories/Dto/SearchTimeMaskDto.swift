@@ -12,3 +12,9 @@ struct SearchTimeMaskDto: Codable, Hashable {
     let startMinute: Int
     let endMinute: Int
 }
+
+extension SearchTimeMaskDto {
+    var preciseTimeString: String {
+        return "\(Weekday(rawValue: day)!.veryShortSymbol) \(TimeUtils.Time(hour: startMinute / 60, minute: startMinute % 60).toString())-\(TimeUtils.Time(hour: endMinute / 60, minute: endMinute % 60).toString())"
+    }
+}

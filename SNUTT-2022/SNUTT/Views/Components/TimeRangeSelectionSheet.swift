@@ -9,16 +9,13 @@ import SwiftUI
 
 struct TimeRangeSelectionSheet: View {
     let currentTimetable: Timetable
-    let initialTimeRange: [SearchTimeMaskDto]
     let config = TimetableConfiguration().withTimeRangeSelectionMode()
 
     @Binding var selectedTimeRange: [SearchTimeMaskDto]
-    @State private var selectedBlockMask: [Bool] = Array(repeating: false, count: 150)
 
-    @State private var temporaryBlockMask: [Bool] = Array(repeating: false, count: 150)
-    @State private var temporaryTimeRange: [SearchTimeMaskDto] = []
+    @State private var selectedBlockMask: TimetablePainter.BlockMask
+    @State private var temporaryBlockMask: TimetablePainter.BlockMask = Array(repeating: false, count: TimetablePainter.blockMaskSize)
 
-    @State private var timetablePreviewSize: CGSize = .zero
     @State private var selectMode: Bool = true
 
     @Environment(\.colorScheme) private var colorScheme
@@ -32,7 +29,7 @@ struct TimeRangeSelectionSheet: View {
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         _selectedTimeRange = selectedTimeRange
-        initialTimeRange = selectedTimeRange.wrappedValue
+        _selectedBlockMask = State(initialValue: TimetablePainter.toBlockMask(from: selectedTimeRange.wrappedValue))
     }
 
     var body: some View {
@@ -43,7 +40,7 @@ struct TimeRangeSelectionSheet: View {
                 Group {
                     HStack(spacing: 8) {
                         Button {
-                            selectedTimeRange = currentTimetable.timeMask.filter { $0.day < 5 }
+                            selectedBlockMask = TimetablePainter.toBlockMask(from: currentTimetable.timeMask.filter { $0.day < 5 })
                         } label: {
                             HStack(spacing: 0) {
                                 Image("timerange.magicwand")
@@ -88,36 +85,29 @@ struct TimeRangeSelectionSheet: View {
                     ZStack(alignment: .topLeading) {
                         TimetableGridLayer(current: currentTimetable, config: config)
                         GrayScaledTimetableBlocksLayer
-                        SelectedTimeRangeBlocksLayer
-                        TemporaryTimeRangeBlocksLayer
-                    }
-                    .onChange(of: reader.size) { size in
-                        timetablePreviewSize = size
+                        selectedTimeRangeBlocksLayer(in: reader.size)
+                        temporaryTimeRangeBlocksLayer(in: reader.size)
                     }
                     .gesture(
                         DragGesture(minimumDistance: 0)
                             .onChanged { gesture in
                                 let start = gesture.startLocation
-                                if start.x < TimetablePainter.hourWidth || start.y < TimetablePainter.weekdayHeight {
+                                if outOfBounds(point: start, in: reader.size) {
                                     return
                                 }
 
                                 let currentBlockMask = TimetablePainter.toggleOnBlockMask(at: gesture.location, in: reader.size)
-
                                 temporaryBlockMask = temporaryBlockMask.enumerated().map {
                                     $0.element || currentBlockMask[$0.offset]
                                 }
-
-                                temporaryTimeRange = TimetablePainter.getSelectedTimeRange(from: temporaryBlockMask)
                             }
                             .onEnded { gesture in
                                 let start = gesture.startLocation
-                                if start.x < TimetablePainter.hourWidth || start.y < TimetablePainter.weekdayHeight {
+                                if outOfBounds(point: start, in: reader.size) {
                                     return
                                 }
 
                                 selectMode = !TimetablePainter.isSelected(point: start, blockMask: selectedBlockMask, in: reader.size)
-
                                 if selectMode {
                                     selectedBlockMask = selectedBlockMask.enumerated().map {
                                         $0.element || temporaryBlockMask[$0.offset]
@@ -128,7 +118,6 @@ struct TimeRangeSelectionSheet: View {
                                     }
                                 }
 
-                                selectedTimeRange = TimetablePainter.getSelectedTimeRange(from: selectedBlockMask)
                                 resetTemporary()
                             }
                     )
@@ -138,7 +127,6 @@ struct TimeRangeSelectionSheet: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
-                        selectedTimeRange = initialTimeRange
                         dismiss()
                     } label: {
                         Text("취소")
@@ -147,6 +135,7 @@ struct TimeRangeSelectionSheet: View {
 
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
+                        selectedTimeRange = TimetablePainter.getSelectedTimeRange(from: selectedBlockMask)
                         dismiss()
                     } label: {
                         Text("완료")
@@ -162,46 +151,47 @@ struct TimeRangeSelectionSheet: View {
 
     private var GrayScaledTimetableBlocksLayer: some View {
         ForEach(currentTimetable.lectures) { lecture in
-            LectureBlocks(current: currentTimetable, lecture: lecture.withOccupiedColor(colorScheme: colorScheme), theme: .snutt, config: config)
+            LectureBlocks(current: currentTimetable, lecture: lecture.withOccupiedColor(colorScheme: colorScheme), theme: nil, config: config)
                 .environment(\.dependencyContainer, nil)
         }
     }
 
-    private var SelectedTimeRangeBlocksLayer: some View {
-        ForEach(selectedTimeRange, id: \.self) { time in
-            if let offsetPoint = TimetablePainter.getOffset(of: time, in: timetablePreviewSize) {
+    @ViewBuilder private func selectedTimeRangeBlocksLayer(in size: CGSize) -> some View {
+        let width = TimetablePainter.getWeekWidth(in: size, weekCount: TimetablePainter.weekCount)
+        let height = TimetablePainter.getSingleBlockHeight(in: size)
+        ForEach(Array(zip(selectedBlockMask.indices, selectedBlockMask)), id: \.0) { index, selected in
+            if selected, let offsetPoint = TimetablePainter.getOffset(of: index, in: size) {
                 Rectangle()
                     .fill(Color(hex: "#1BD0C8").opacity(0.6))
-                    .border(Color.black.opacity(0.1), width: 0.5)
-                    .frame(width: TimetablePainter.getWeekWidth(in: timetablePreviewSize, weekCount: 5),
-                           height: TimetablePainter.getHeight(in: timetablePreviewSize, duration: time.endMinute - time.startMinute),
-                           alignment: .top)
+                    .frame(width: width, height: height, alignment: .top)
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
             }
         }
     }
 
-    private var TemporaryTimeRangeBlocksLayer: some View {
-        ForEach(temporaryTimeRange, id: \.self) { time in
-            if let offsetPoint = TimetablePainter.getOffset(of: time, in: timetablePreviewSize) {
+    @ViewBuilder private func temporaryTimeRangeBlocksLayer(in size: CGSize) -> some View {
+        let width = TimetablePainter.getWeekWidth(in: size, weekCount: TimetablePainter.weekCount)
+        let height = TimetablePainter.getSingleBlockHeight(in: size)
+        ForEach(Array(zip(temporaryBlockMask.indices, temporaryBlockMask)), id: \.0) { index, selected in
+            if selected, let offsetPoint = TimetablePainter.getOffset(of: index, in: size) {
                 Rectangle()
                     .fill(Color(hex: "#1BD0C8").opacity(0.6))
-                    .border(Color.black.opacity(0.1), width: 0.5)
-                    .frame(width: TimetablePainter.getWeekWidth(in: timetablePreviewSize, weekCount: 5),
-                           height: TimetablePainter.getHeight(in: timetablePreviewSize, duration: time.endMinute - time.startMinute),
-                           alignment: .top)
+                    .frame(width: width, height: height, alignment: .top)
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
             }
         }
     }
 
     private func resetTemporary() {
-        temporaryBlockMask = Array(repeating: false, count: 150)
-        temporaryTimeRange = []
+        temporaryBlockMask = Array(repeating: false, count: TimetablePainter.blockMaskSize)
     }
 
     private func resetSelected() {
-        selectedBlockMask = Array(repeating: false, count: 150)
-        selectedTimeRange = []
+        selectedBlockMask = Array(repeating: false, count: TimetablePainter.blockMaskSize)
+    }
+
+    private func outOfBounds(point: CGPoint, in containerSize: CGSize) -> Bool {
+        point.x < TimetablePainter.hourWidth || point.x > containerSize.width
+            || point.y < TimetablePainter.weekdayHeight || point.y > containerSize.height
     }
 }
