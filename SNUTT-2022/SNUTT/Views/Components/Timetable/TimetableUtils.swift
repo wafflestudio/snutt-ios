@@ -180,11 +180,8 @@ struct TimetablePainter {
         let (rowIndex, columnIndex) = getIndex(of: point, in: containerSize)
 
         var blockMask = Array(repeating: false, count: blockMaskSize)
-        if columnIndex < 0 || columnIndex > (weekCount - 1) || rowIndex < 0 || rowIndex > (halfHourCount - 1) {
-            return blockMask
-        }
-
         blockMask[rowIndex + columnIndex * halfHourCount] = true
+
         return blockMask
     }
 
