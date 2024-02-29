@@ -94,7 +94,7 @@ struct TimeRangeSelectionSheet: View {
                             .onChanged { gesture in
                                 let start = gesture.startLocation
                                 let current = gesture.location
-                                if outOfBounds(point: start, in: reader.size) || outOfBounds(point: current, in: reader.size){
+                                if outOfBounds(point: start, in: reader.size) || outOfBounds(point: current, in: reader.size) {
                                     return
                                 }
 
