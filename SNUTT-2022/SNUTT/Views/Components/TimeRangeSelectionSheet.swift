@@ -88,11 +88,13 @@ struct TimeRangeSelectionSheet: View {
                         selectedTimeRangeBlocksLayer(in: reader.size)
                         temporaryTimeRangeBlocksLayer(in: reader.size)
                     }
+                    .contentShape(Rectangle())
                     .gesture(
                         DragGesture(minimumDistance: 0)
                             .onChanged { gesture in
                                 let start = gesture.startLocation
-                                if outOfBounds(point: start, in: reader.size) {
+                                let current = gesture.location
+                                if outOfBounds(point: start, in: reader.size) || outOfBounds(point: current, in: reader.size){
                                     return
                                 }
 
@@ -103,7 +105,8 @@ struct TimeRangeSelectionSheet: View {
                             }
                             .onEnded { gesture in
                                 let start = gesture.startLocation
-                                if outOfBounds(point: start, in: reader.size) {
+                                let end = gesture.location
+                                if outOfBounds(point: start, in: reader.size) || outOfBounds(point: end, in: reader.size) {
                                     return
                                 }
 
@@ -117,7 +120,6 @@ struct TimeRangeSelectionSheet: View {
                                         $0.element && !temporaryBlockMask[$0.offset]
                                     }
                                 }
-
                                 resetTemporary()
                             }
                     )
@@ -191,7 +193,7 @@ struct TimeRangeSelectionSheet: View {
     }
 
     private func outOfBounds(point: CGPoint, in containerSize: CGSize) -> Bool {
-        point.x < TimetablePainter.hourWidth || point.x > containerSize.width
-            || point.y < TimetablePainter.weekdayHeight || point.y > containerSize.height
+        point.x <= TimetablePainter.hourWidth || point.x >= containerSize.width
+            || point.y <= TimetablePainter.weekdayHeight || point.y >= containerSize.height
     }
 }
