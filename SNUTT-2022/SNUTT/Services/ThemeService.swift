@@ -20,7 +20,7 @@ protocol ThemeServiceProtocol: Sendable {
     func closeCustomThemeSheet()
 
     func getThemeList() async throws
-    func addTheme(theme: Theme) async throws
+    func addTheme(theme: Theme, apply: Bool) async throws
     func updateTheme(themeId: String, theme: Theme) async throws
     func copyTheme(themeId: String) async throws
     func deleteTheme(themeId: String) async throws
@@ -85,11 +85,19 @@ struct ThemeService: ThemeServiceProtocol {
         appState.theme.themeList = themeList
     }
 
-    func addTheme(theme: Theme) async throws {
+    func addTheme(theme: Theme, apply: Bool) async throws {
         let dto = try await themeRepository.addTheme(name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
         let themeData = Theme(from: dto)
         if theme.isDefault {
             let _ = try await themeRepository.makeCustomThemeDefault(themeId: themeData.id)
+        }
+        if apply {
+            guard let timetableId = appState.timetable.current?.id else { return }
+            let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: themeData)
+            let timetable = Timetable(from: dto)
+            if appState.timetable.current?.id == timetableId {
+                appState.timetable.current = timetable
+            }
         }
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
@@ -154,6 +162,10 @@ struct ThemeService: ThemeServiceProtocol {
     private var themeRepository: ThemeRepositoryProtocol {
         webRepositories.themeRepository
     }
+    
+    private var timetableRepository: TimetableRepositoryProtocol {
+        webRepositories.timetableRepository
+    }
 }
 
 struct FakeThemeService: ThemeServiceProtocol {
@@ -167,7 +179,7 @@ struct FakeThemeService: ThemeServiceProtocol {
     func closeCustomThemeSheet() {}
 
     func getThemeList() async throws {}
-    func addTheme(theme _: Theme) async throws {}
+    func addTheme(theme _: Theme, apply _: Bool) async throws {}
     func updateTheme(themeId _: String, theme _: Theme) async throws {}
     func copyTheme(themeId _: String) async throws {}
     func deleteTheme(themeId _: String) async throws {}

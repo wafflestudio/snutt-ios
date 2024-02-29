@@ -33,9 +33,9 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         themeState.bottomSheetTarget
     }
 
-    func addTheme(theme: Theme) async -> Bool {
+    func addTheme(theme: Theme, apply: Bool) async -> Bool {
         do {
-            try await services.themeService.addTheme(theme: theme)
+            try await services.themeService.addTheme(theme: theme, apply: apply)
             return true
         } catch let error as STError where error.code == .DUPLICATE_THEME_NAME {
             isErrorAlertPresented = true

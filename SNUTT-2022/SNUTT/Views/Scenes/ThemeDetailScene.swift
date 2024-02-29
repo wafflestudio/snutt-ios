@@ -16,6 +16,7 @@ struct ThemeDetailScene: View {
 
     private var defaultInitialValue: Bool
     @State private var isUndoDefaultAlertPresented = false
+    @State private var isNewThemeCreated = false
 
     init(viewModel: ThemeDetailViewModel, theme: Theme, themeType: ThemeType, openPickerIndex _: Int? = nil) {
         self.viewModel = viewModel
@@ -247,10 +248,7 @@ struct ThemeDetailScene: View {
                                 }
                             }
                         case .new:
-                            let success = await viewModel.addTheme(theme: theme)
-                            if success {
-                                dismiss()
-                            }
+                            isNewThemeCreated = true
                         }
                     }
                 } label: {
@@ -264,6 +262,24 @@ struct ThemeDetailScene: View {
             Button("확인", role: .destructive) {
                 Task {
                     let success = await theme.isCustom ? viewModel.updateTheme(theme: theme) : viewModel.saveBasicTheme(theme: theme)
+                    if success {
+                        dismiss()
+                    }
+                }
+            }
+        }
+        .alert("새 테마를 현재 시간표에 적용하시겠습니까?", isPresented: $isNewThemeCreated) {
+            Button("취소", role: .cancel) {
+                Task {
+                    let success = await viewModel.addTheme(theme: theme, apply: false)
+                    if success {
+                        dismiss()
+                    }
+                }
+            }
+            Button("확인", role: .destructive) {
+                Task {
+                    let success = await viewModel.addTheme(theme: theme, apply: true)
                     if success {
                         dismiss()
                     }
