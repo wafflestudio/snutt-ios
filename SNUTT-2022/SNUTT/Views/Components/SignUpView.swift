@@ -33,6 +33,8 @@ struct SignUpView: View {
     @State private var pushToCodeVerificationView: Bool = false
     @State private var showCompletionAlert: Bool = false
     @Binding var pushToTimetableScene: Bool
+    
+    @Environment(\.dismiss) private var dismiss
 
     var isPasswordIncomplete: Bool {
         password.isEmpty || password2.isEmpty || password != password2
@@ -103,7 +105,11 @@ struct SignUpView: View {
         .navigationTitle(displayMode.rawValue)
         .alert("완료", isPresented: $showCompletionAlert) {
             Button {
-                pushToEmailVerificationView = true
+                if displayMode == .register {
+                    pushToEmailVerificationView = true
+                } else {
+                    dismiss()
+                }
             } label: {
                 Text("확인")
             }
