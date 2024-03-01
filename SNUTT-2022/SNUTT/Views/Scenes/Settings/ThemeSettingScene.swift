@@ -74,7 +74,7 @@ private func infoView() -> some View {
         Text("시간표 적용은 시간표 목록 > 더보기 버튼 > 테마 설정에서 개별적으로 적용할 수 있어요.")
             .font(STFont.details)
             .foregroundColor(.secondary)
-        Spacer()
+            .lineSpacing(1.4)
     }
     .padding(.top, 25)
     .padding(.horizontal, -12)
@@ -132,20 +132,21 @@ private struct ThemeButton: View {
         if theme.isCustom {
             ThemeIcon(theme: theme)
                 .frame(width: 80, height: 78)
+                .overlay(
+                    Image("theme.ellipsis").offset(x: 4, y: -4),
+                    alignment: .topTrailing
+                )
         } else {
             Image(theme.theme?.imageName ?? "")
                 .frame(width: 80, height: 78)
         }
     }
-
+    
     private var themeInfoView: some View {
         VStack {
-            HStack(spacing: 0) {
-                Text(theme.name)
-                    .font(STFont.detailLabel)
-                Image("theme.chevron.right")
-            }
-            .frame(width: 70, height: 15)
+            Text(theme.name)
+                .font(STFont.detailLabel)
+                .frame(width: 70, height: 15)
         }
     }
 }
