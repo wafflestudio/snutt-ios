@@ -9,13 +9,13 @@ import SwiftUI
 
 struct ThemeBottomSheet: View {
     @Binding var isOpen: Bool
-    
+
     let openCustomThemeSheet: @MainActor () async -> Void
     let copyTheme: @MainActor () async -> Void
     let deleteTheme: @MainActor () async -> Void
-    
+
     @State private var isDeleteAlertPresented = false
-    
+
     var body: some View {
         Sheet(isOpen: $isOpen,
               orientation: .bottom(maxHeight: 170),
@@ -28,13 +28,13 @@ struct ThemeBottomSheet: View {
                         await openCustomThemeSheet()
                     }
                 }
-                
+
                 ThemeBottomSheetButton(menu: .copy) {
                     Task {
                         await copyTheme()
                     }
                 }
-                
+
                 ThemeBottomSheetButton(menu: .delete) {
                     isDeleteAlertPresented = true
                 }

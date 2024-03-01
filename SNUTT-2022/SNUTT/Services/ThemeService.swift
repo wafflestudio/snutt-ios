@@ -122,7 +122,7 @@ struct ThemeService: ThemeServiceProtocol {
     private var themeRepository: ThemeRepositoryProtocol {
         webRepositories.themeRepository
     }
-    
+
     private var timetableRepository: TimetableRepositoryProtocol {
         webRepositories.timetableRepository
     }
