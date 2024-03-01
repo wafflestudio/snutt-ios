@@ -60,8 +60,7 @@ struct ThemeSettingScene: View {
     }
 }
 
-@ViewBuilder
-private func infoView() -> some View {
+@ViewBuilder private func infoView() -> some View {
     VStack(alignment: .leading) {
         HStack {
             Image("vacancy.info")
@@ -86,7 +85,7 @@ private struct ThemeScrollView: View {
     let action: (Theme) -> Void
 
     var body: some View {
-        ScrollViewReader { proxy in
+        ScrollViewReader { _ in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
                     if let openNewThemeSheet {
