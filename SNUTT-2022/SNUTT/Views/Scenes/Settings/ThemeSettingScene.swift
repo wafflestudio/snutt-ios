@@ -140,7 +140,7 @@ private struct ThemeButton: View {
                 .frame(width: 80, height: 78)
         }
     }
-    
+
     private var themeInfoView: some View {
         VStack {
             Text(theme.name)
