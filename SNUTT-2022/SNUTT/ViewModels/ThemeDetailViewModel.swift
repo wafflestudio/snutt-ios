@@ -62,18 +62,6 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         return false
     }
 
-    func saveBasicTheme(theme: Theme) async -> Bool {
-        if let themeType = theme.theme {
-            do {
-                theme.isDefault ? try await services.themeService.makeBasicThemeDefault(themeType: themeType.rawValue) : try await services.themeService.undoBasicThemeDefault(themeType: themeType.rawValue)
-                return true
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
-        }
-        return false
-    }
-
     func getThemeNewColor(theme: Theme) -> Theme {
         var theme = theme
         if theme.colors.count == 9 { return theme }

@@ -20,24 +20,16 @@ struct ThemeSettingScene: View {
                         viewModel.openBottomSheet(for: theme)
                     }
                 }
-
-                Section(header: Text("제공 테마")) {
+                Section(header: Text("제공 테마"), footer: infoView()) {
                     ThemeScrollView(themes: viewModel.basicThemes) { theme in
-                        viewModel.openBottomSheet(for: theme)
+                        viewModel.openBasicThemeSheet(for: theme)
                     }
                 }
             }
             ThemeBottomSheet(isOpen: $viewModel.isBottomSheetOpen,
-                             isCustom: viewModel.targetTheme?.isCustom,
-                             isDefault: viewModel.targetTheme?.isDefault,
                              openCustomThemeSheet: viewModel.openCustomThemeSheet,
-                             makeCustomThemeDefault: viewModel.makeCustomThemeDefault,
-                             undoCustomThemeDefault: viewModel.undoCustomThemeDefault,
                              copyTheme: viewModel.copyTheme,
-                             deleteTheme: viewModel.deleteTheme,
-                             openBasicThemeSheet: viewModel.openBasicThemeSheet,
-                             makeBasicThemeDefault: viewModel.makeBasicThemeDefault,
-                             undoBasicThemeDefault: viewModel.undoBasicThemeDefault)
+                             deleteTheme: viewModel.deleteTheme)
         }
         .navigationTitle("시간표 테마")
         .navigationBarTitleDisplayMode(.inline)
@@ -66,6 +58,26 @@ struct ThemeSettingScene: View {
             .accentColor(Color(UIColor.label))
         })
     }
+}
+
+@ViewBuilder
+private func infoView() -> some View {
+    VStack(alignment: .leading) {
+        HStack {
+            Image("vacancy.info")
+                .resizable()
+                .frame(width: 14, height: 14)
+            Text("테마는 어떻게 적용하나요?")
+                .font(STFont.detailsSemibold)
+                .foregroundColor(.secondary)
+        }
+        Text("시간표 적용은 시간표 목록 > 더보기 버튼 > 테마 설정에서 개별적으로 적용할 수 있어요.")
+            .font(STFont.details)
+            .foregroundColor(.secondary)
+        Spacer()
+    }
+    .padding(.top, 25)
+    .padding(.horizontal, -12)
 }
 
 private struct ThemeScrollView: View {
@@ -98,19 +110,6 @@ private struct ThemeScrollView: View {
                 .padding(.vertical, 10)
                 .padding(.horizontal, 8)
             }
-            .onChange(of: themes) { [oldValue = themes] newValue in
-                updateScrollPosition(proxy: proxy, oldThemes: oldValue, newThemes: newValue)
-            }
-        }
-    }
-
-    private func updateScrollPosition(proxy: ScrollViewProxy, oldThemes: [Theme], newThemes: [Theme]) {
-        let oldDefault = oldThemes.first(where: { $0.isDefault })
-        let newDefault = newThemes.first(where: { $0.isDefault })
-        if oldDefault?.id != newDefault?.id, let newDefaultId = newDefault?.id {
-            withAnimation(.customSpring) {
-                proxy.scrollTo(newDefaultId, anchor: .center)
-            }
         }
     }
 }
@@ -133,17 +132,9 @@ private struct ThemeButton: View {
         if theme.isCustom {
             ThemeIcon(theme: theme)
                 .frame(width: 80, height: 78)
-                .overlay(
-                    theme.isDefault ? Image("theme.pin").offset(x: -8, y: -8) : nil,
-                    alignment: .topLeading
-                )
         } else {
             Image(theme.theme?.imageName ?? "")
                 .frame(width: 80, height: 78)
-                .overlay(
-                    theme.isDefault ? Image("theme.pin").offset(x: -8, y: -8) : nil,
-                    alignment: .topLeading
-                )
         }
     }
 

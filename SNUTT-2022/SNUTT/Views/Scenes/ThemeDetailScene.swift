@@ -14,8 +14,6 @@ struct ThemeDetailScene: View {
     var themeType: ThemeType
     @State var openPickerIndex: Int?
 
-    private var defaultInitialValue: Bool
-    @State private var isUndoDefaultAlertPresented = false
     @State private var isNewThemeCreated = false
 
     init(viewModel: ThemeDetailViewModel, theme: Theme, themeType: ThemeType, openPickerIndex _: Int? = nil) {
@@ -23,7 +21,6 @@ struct ThemeDetailScene: View {
         _theme = State(initialValue: theme)
         self.themeType = themeType
         _openPickerIndex = State(initialValue: theme.colors.count - 1)
-        defaultInitialValue = theme.isDefault
     }
 
     enum ThemeType {
@@ -171,21 +168,12 @@ struct ThemeDetailScene: View {
                 }
             }
 
-            VStack(spacing: 0) {
-                Toggle("기본 테마로 지정", isOn: $theme.isDefault)
-                    .animation(.easeInOut, value: theme.isDefault)
-                    .padding(.horizontal, 28)
-                    .padding(.vertical, 10)
-            }
-            .background(STColor.groupForeground)
-            .border(Color.black.opacity(0.1), width: 0.5)
-            .padding(.vertical, 12)
-
             HStack {
                 DetailLabel(text: "미리보기")
                 Spacer()
             }
             .padding(.horizontal, 24)
+            .padding(.top, 30)
 
             VStack(spacing: 0) {
                 TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
@@ -224,46 +212,32 @@ struct ThemeDetailScene: View {
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    Task {
-                        switch themeType {
-                        case .basic:
-                            if defaultInitialValue && !theme.isDefault {
-                                isUndoDefaultAlertPresented = true
-                            } else if defaultInitialValue != theme.isDefault {
-                                let success = await viewModel.saveBasicTheme(theme: theme)
-                                if success {
-                                    dismiss()
-                                }
-                            } else {
+                switch themeType {
+                case .basic:
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("확인")
+                            .foregroundColor(Color(uiColor: .label))
+                    }
+                case .custom:
+                    Button {
+                        Task {
+                            let success = await viewModel.updateTheme(theme: theme)
+                            if success {
                                 dismiss()
                             }
-                        case .custom:
-                            if defaultInitialValue && !theme.isDefault {
-                                isUndoDefaultAlertPresented = true
-                            } else {
-                                let success = await viewModel.updateTheme(theme: theme)
-                                if success {
-                                    dismiss()
-                                }
-                            }
-                        case .new:
-                            isNewThemeCreated = true
                         }
+                    } label: {
+                        Text("저장")
+                            .foregroundColor(Color(uiColor: .label))
                     }
-                } label: {
-                    Text("저장")
-                        .foregroundColor(Color(uiColor: .label))
-                }
-            }
-        }
-        .alert("기본 테마 지정을 취소하시겠습니까?\n'SNUTT'테마가 기본 적용됩니다.", isPresented: $isUndoDefaultAlertPresented) {
-            Button("취소", role: .cancel) {}
-            Button("확인", role: .destructive) {
-                Task {
-                    let success = await theme.isCustom ? viewModel.updateTheme(theme: theme) : viewModel.saveBasicTheme(theme: theme)
-                    if success {
-                        dismiss()
+                case .new:
+                    Button {
+                        isNewThemeCreated = true
+                    } label: {
+                        Text("저장")
+                            .foregroundColor(Color(uiColor: .label))
                     }
                 }
             }

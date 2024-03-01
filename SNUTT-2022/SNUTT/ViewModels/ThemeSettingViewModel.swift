@@ -57,11 +57,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
 
     override init(container: DIContainer) {
         super.init(container: container)
-        appState.theme.$themeList
-            .map { themes in
-                themes.sorted { $0.isDefault && !$1.isDefault }
-            }
-            .assign(to: &$themes)
+        appState.theme.$themeList.assign(to: &$themes)
         appState.theme.$isBottomSheetOpen.assign(to: &$_isBottomSheetOpen)
         appState.theme.$isNewThemeSheetOpen.assign(to: &$_isNewThemeSheetOpen)
         appState.theme.$isBasicThemeSheetOpen.assign(to: &$_isBasicThemeSheetOpen)
@@ -89,8 +85,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         services.themeService.openNewThemeSheet(for: newTheme)
     }
 
-    func openBasicThemeSheet() {
-        guard let theme = targetTheme else { return }
+    func openBasicThemeSheet(for theme: Theme) {
         services.timetableService.selectTimetableTheme(theme: theme)
         services.themeService.openBasicThemeSheet(for: theme)
     }
@@ -115,46 +110,6 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         guard let themeId = targetTheme?.id else { return }
         do {
             try await services.themeService.deleteTheme(themeId: themeId)
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-        services.themeService.closeBottomSheet()
-    }
-
-    func makeBasicThemeDefault() async {
-        guard let themeType = targetTheme?.theme else { return }
-        do {
-            try await services.themeService.makeBasicThemeDefault(themeType: themeType.rawValue)
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-        services.themeService.closeBottomSheet()
-    }
-
-    func undoBasicThemeDefault() async {
-        guard let themeType = targetTheme?.theme else { return }
-        do {
-            try await services.themeService.undoBasicThemeDefault(themeType: themeType.rawValue)
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-        services.themeService.closeBottomSheet()
-    }
-
-    func makeCustomThemeDefault() async {
-        guard let themeId = targetTheme?.id else { return }
-        do {
-            try await services.themeService.makeCustomThemeDefault(themeId: themeId)
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-        services.themeService.closeBottomSheet()
-    }
-
-    func undoCustomThemeDefault() async {
-        guard let themeId = targetTheme?.id else { return }
-        do {
-            try await services.themeService.undoCustomThemeDefault(themeId: themeId)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

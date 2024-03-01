@@ -24,10 +24,6 @@ protocol ThemeServiceProtocol: Sendable {
     func updateTheme(themeId: String, theme: Theme) async throws
     func copyTheme(themeId: String) async throws
     func deleteTheme(themeId: String) async throws
-    func makeBasicThemeDefault(themeType: Int) async throws
-    func undoBasicThemeDefault(themeType: Int) async throws
-    func makeCustomThemeDefault(themeId: String) async throws
-    func undoCustomThemeDefault(themeId: String) async throws
 }
 
 struct ThemeService: ThemeServiceProtocol {
@@ -57,7 +53,8 @@ struct ThemeService: ThemeServiceProtocol {
         appState.theme.bottomSheetTarget = nil
     }
 
-    func openBasicThemeSheet(for _: Theme) {
+    func openBasicThemeSheet(for theme: Theme) {
+        appState.theme.bottomSheetTarget = theme
         appState.theme.isBasicThemeSheetOpen = true
         appState.theme.isBottomSheetOpen = false
     }
@@ -88,9 +85,6 @@ struct ThemeService: ThemeServiceProtocol {
     func addTheme(theme: Theme, apply: Bool) async throws {
         let dto = try await themeRepository.addTheme(name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
         let themeData = Theme(from: dto)
-        if theme.isDefault {
-            let _ = try await themeRepository.makeCustomThemeDefault(themeId: themeData.id)
-        }
         if apply {
             guard let timetableId = appState.timetable.current?.id else { return }
             let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: themeData)
@@ -105,13 +99,7 @@ struct ThemeService: ThemeServiceProtocol {
     }
 
     func updateTheme(themeId: String, theme: Theme) async throws {
-        let dto = try await themeRepository.updateTheme(themeId: themeId, name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
-        let themeData = Theme(from: dto)
-        if theme.isDefault && !themeData.isDefault {
-            let _ = try await themeRepository.makeCustomThemeDefault(themeId: themeData.id)
-        } else if !theme.isDefault && themeData.isDefault {
-            let _ = try await themeRepository.undoCustomThemeDefault(themeId: themeData.id)
-        }
+        let _ = try await themeRepository.updateTheme(themeId: themeId, name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList
@@ -126,34 +114,6 @@ struct ThemeService: ThemeServiceProtocol {
 
     func deleteTheme(themeId: String) async throws {
         try await themeRepository.deleteTheme(themeId: themeId)
-        let dtos = try await themeRepository.getThemeList()
-        let themeList = dtos.map { Theme(from: $0) }
-        appState.theme.themeList = themeList
-    }
-
-    func makeBasicThemeDefault(themeType: Int) async throws {
-        let _ = try await themeRepository.makeBasicThemeDefault(themeType: themeType)
-        let dtos = try await themeRepository.getThemeList()
-        let themeList = dtos.map { Theme(from: $0) }
-        appState.theme.themeList = themeList
-    }
-
-    func undoBasicThemeDefault(themeType: Int) async throws {
-        let _ = try await themeRepository.undoBasicThemeDefault(themeType: themeType)
-        let dtos = try await themeRepository.getThemeList()
-        let themeList = dtos.map { Theme(from: $0) }
-        appState.theme.themeList = themeList
-    }
-
-    func makeCustomThemeDefault(themeId: String) async throws {
-        let _ = try await themeRepository.makeCustomThemeDefault(themeId: themeId)
-        let dtos = try await themeRepository.getThemeList()
-        let themeList = dtos.map { Theme(from: $0) }
-        appState.theme.themeList = themeList
-    }
-
-    func undoCustomThemeDefault(themeId: String) async throws {
-        let _ = try await themeRepository.undoCustomThemeDefault(themeId: themeId)
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList
@@ -183,8 +143,4 @@ struct FakeThemeService: ThemeServiceProtocol {
     func updateTheme(themeId _: String, theme _: Theme) async throws {}
     func copyTheme(themeId _: String) async throws {}
     func deleteTheme(themeId _: String) async throws {}
-    func makeBasicThemeDefault(themeType _: Int) async throws {}
-    func undoBasicThemeDefault(themeType _: Int) async throws {}
-    func makeCustomThemeDefault(themeId _: String) async throws {}
-    func undoCustomThemeDefault(themeId _: String) async throws {}
 }
