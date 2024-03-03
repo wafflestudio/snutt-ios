@@ -99,7 +99,7 @@ private struct ThemeScrollView: View {
                         }
                     }
                 }
-                
+
                 ForEach(themes, id: \.id) { theme in
                     ThemeButton(theme: theme, action: { action(theme) })
                         .id(theme.id)
