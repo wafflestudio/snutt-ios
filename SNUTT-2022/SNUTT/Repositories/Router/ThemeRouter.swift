@@ -16,10 +16,6 @@ enum ThemeRouter: Router {
     case updateTheme(themeId: String, name: String, colors: [ThemeColorDto])
     case copyTheme(themeId: String)
     case deleteTheme(themeId: String)
-    case makeBasicThemeDefault(themeType: Int)
-    case undoBasicThemeDefault(themeType: Int)
-    case makeCustomThemeDefault(themeId: String)
-    case undoCustomThemeDefault(themeId: String)
 
     var method: HTTPMethod {
         switch self {
@@ -32,14 +28,6 @@ enum ThemeRouter: Router {
         case .copyTheme:
             return .post
         case .deleteTheme:
-            return .delete
-        case .makeBasicThemeDefault:
-            return .post
-        case .undoBasicThemeDefault:
-            return .delete
-        case .makeCustomThemeDefault:
-            return .post
-        case .undoCustomThemeDefault:
             return .delete
         }
     }
@@ -56,14 +44,6 @@ enum ThemeRouter: Router {
             return "/\(themeId)/copy"
         case let .deleteTheme(themeId):
             return "/\(themeId)"
-        case let .makeBasicThemeDefault(themeType):
-            return "/basic/\(themeType)/default"
-        case let .undoBasicThemeDefault(themeType):
-            return "/basic/\(themeType)/default"
-        case let .makeCustomThemeDefault(themeId):
-            return "/\(themeId)/default"
-        case let .undoCustomThemeDefault(themeId):
-            return "/\(themeId)/default"
         }
     }
 
@@ -80,14 +60,6 @@ enum ThemeRouter: Router {
         case .copyTheme:
             return nil
         case .deleteTheme:
-            return nil
-        case .makeBasicThemeDefault:
-            return nil
-        case .undoBasicThemeDefault:
-            return nil
-        case .makeCustomThemeDefault:
-            return nil
-        case .undoCustomThemeDefault:
             return nil
         }
     }

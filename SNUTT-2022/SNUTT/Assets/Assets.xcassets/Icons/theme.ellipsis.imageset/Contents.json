@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "push_pin_off.png",
+      "filename" : "Group 86.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Group 153.png",
+      "filename" : "Group 87.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "push_pin_off@2x.png",
+      "filename" : "Group 86@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Group 153@2x.png",
+      "filename" : "Group 86@2x 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "push_pin_off@3x.png",
+      "filename" : "Group 86@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Group 153@3x.png",
+      "filename" : "Group 86@3x 1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

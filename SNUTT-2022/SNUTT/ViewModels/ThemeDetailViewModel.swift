@@ -33,9 +33,9 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         themeState.bottomSheetTarget
     }
 
-    func addTheme(theme: Theme) async -> Bool {
+    func addTheme(theme: Theme, apply: Bool) async -> Bool {
         do {
-            try await services.themeService.addTheme(theme: theme)
+            try await services.themeService.addTheme(theme: theme, apply: apply)
             return true
         } catch let error as STError where error.code == .DUPLICATE_THEME_NAME {
             isErrorAlertPresented = true
@@ -58,18 +58,6 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
             errorMessage = error.content
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
-        }
-        return false
-    }
-
-    func saveBasicTheme(theme: Theme) async -> Bool {
-        if let themeType = theme.theme {
-            do {
-                theme.isDefault ? try await services.themeService.makeBasicThemeDefault(themeType: themeType.rawValue) : try await services.themeService.undoBasicThemeDefault(themeType: themeType.rawValue)
-                return true
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
         }
         return false
     }

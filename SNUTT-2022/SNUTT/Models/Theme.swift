@@ -18,9 +18,6 @@ struct Theme: Equatable, Identifiable {
 
     var colors: [LectureColor]
 
-    /// 기본 테마: 앞으로 생성되는 시간표에 모두 적용
-    var isDefault: Bool
-
     /// 사용자 생성 커스텀 테마
     var isCustom: Bool
 }
@@ -31,7 +28,6 @@ extension Theme {
         theme = .init(rawValue: dto.theme)
         name = dto.name
         colors = dto.colors?.map { .init(fg: Color(hex: $0.fg), bg: Color(hex: $0.bg)) } ?? []
-        isDefault = dto.isDefault
         isCustom = dto.isCustom
     }
 
@@ -40,7 +36,6 @@ extension Theme {
         theme = BasicTheme(rawValue: rawValue)
         name = theme?.name ?? ""
         colors = theme?.getLectureColorList() ?? []
-        isDefault = false
         isCustom = false
     }
 }

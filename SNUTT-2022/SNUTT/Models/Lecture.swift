@@ -54,7 +54,7 @@ struct Lecture: Identifiable {
         }
 
         // use color specified by colorIndex, where theme is given by parameter
-        if let color = theme?.theme?.getColor(at: lectureIndex) {
+        if let color = theme?.theme?.getColor(at: lectureIndex % 9) {
             return color
         }
 

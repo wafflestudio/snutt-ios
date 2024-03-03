@@ -34,7 +34,7 @@ extension ThemeDto {
         theme = model.theme?.rawValue ?? 0
         name = model.name
         colors = model.colors.map { ThemeColorDto(from: $0) }
-        isDefault = model.isDefault
+        isDefault = false
         isCustom = model.isCustom
     }
 }
