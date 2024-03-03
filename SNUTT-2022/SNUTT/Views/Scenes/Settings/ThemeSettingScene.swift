@@ -85,30 +85,28 @@ private struct ThemeScrollView: View {
     let action: (Theme) -> Void
 
     var body: some View {
-        ScrollViewReader { _ in
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
-                    if let openNewThemeSheet {
-                        Button {
-                            openNewThemeSheet()
-                        } label: {
-                            VStack {
-                                Image("theme.new")
-                                Text("새 테마")
-                                    .font(STFont.detailLabel)
-                                    .padding(.top, 5)
-                            }
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 20) {
+                if let openNewThemeSheet {
+                    Button {
+                        openNewThemeSheet()
+                    } label: {
+                        VStack {
+                            Image("theme.new")
+                            Text("새 테마")
+                                .font(STFont.detailLabel)
+                                .padding(.top, 5)
                         }
                     }
-
-                    ForEach(themes, id: \.id) { theme in
-                        ThemeButton(theme: theme, action: { action(theme) })
-                            .id(theme.id)
-                    }
                 }
-                .padding(.vertical, 10)
-                .padding(.horizontal, 8)
+                
+                ForEach(themes, id: \.id) { theme in
+                    ThemeButton(theme: theme, action: { action(theme) })
+                        .id(theme.id)
+                }
             }
+            .padding(.vertical, 10)
+            .padding(.horizontal, 8)
         }
     }
 }
