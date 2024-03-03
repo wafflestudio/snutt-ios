@@ -251,7 +251,7 @@ struct ThemeDetailScene: View {
                     }
                 }
             }
-            Button("확인", role: .destructive) {
+            Button("확인") {
                 Task {
                     let success = await viewModel.addTheme(theme: theme, apply: true)
                     if success {
