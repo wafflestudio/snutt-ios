@@ -71,6 +71,7 @@ jobs:
 
       - name: Install imageMagick dependency (for adding badge to app icon)
         run: |
+          brew install libsodium
           brew install imagemagick
 
       - name: Inject secret file dependencies
