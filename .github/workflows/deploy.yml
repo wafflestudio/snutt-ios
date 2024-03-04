@@ -9,11 +9,11 @@ on:
 jobs:
   deploy:
     name: Execute fastlane for testflight / appstore
-    
+
     defaults:
       run:
         working-directory: ./SNUTT-2022
-    
+
     env:
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
@@ -23,9 +23,9 @@ jobs:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
       GIT_PAT_READONLY: ${{ secrets.GIT_PAT_READONLY }}
       GIT_TAG_NAME: ${{ github.ref_name }}
-      XCODE_VERSION: '15.1'
+      XCODE_VERSION: "15.1"
 
-    runs-on: macos-13
+    runs-on: macos-14
 
     steps:
       - name: Parse tag name
@@ -34,12 +34,12 @@ jobs:
         with:
           text: ${{ github.ref_name }}
           regex: '^(testflight|appstore)\/v(\d+)\.(\d+)\.(\d+)-(release|debug)\.(\d+)$'
-      
+
       - if: ${{ steps.regex.outputs.group1 == 'appstore' && steps.regex.outputs.group5 == 'debug' }}
         run: |
           echo "you can't upload debug build to appstore!"
           exit 1
-      
+
       - uses: actions/checkout@v3
 
       - run: |
@@ -52,7 +52,7 @@ jobs:
           echo "BUILD_NUMBER=${{ steps.regex.outputs.group6 }}" >> $GITHUB_ENV
 
       - name: Install Ruby Dependencies
-        run: | 
+        run: |
           bundle install
           bundle update fastlane
 
@@ -61,7 +61,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.MATCH_DEPLOY_KEY }}
           repo-mappings: github.com/wafflestudio/wafflestudio-apple-certificates
-      
+
       - name: Configure ssh agent
         env:
           GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
@@ -94,7 +94,7 @@ jobs:
         if: ${{ steps.regex.outputs.group1 == 'testflight' && steps.regex.outputs.group5 == 'release' }}
         run: |
           bundle exec fastlane beta --env prod
-      
+
       - name: Upload prod app to App Store
         if: ${{ steps.regex.outputs.group1 == 'appstore' && steps.regex.outputs.group5 == 'release' }}
         run: |
