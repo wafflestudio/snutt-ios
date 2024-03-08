@@ -166,10 +166,15 @@ struct TimetablePainter {
                 } else {
                     if isCounting {
                         isCounting = false
-                        result.append(.init(day: day, startMinute: start * halfHourCount + 480, endMinute: (start + count) * halfHourCount + 480))
+                        result.append(.init(day: day, startMinute: start * halfHourCount + 480, endMinute: (start + count) * halfHourCount + 479))
                         count = 0
                     }
                 }
+            }
+            if isCounting {
+                isCounting = false
+                result.append(.init(day: day, startMinute: start * halfHourCount + 480, endMinute: (start + count) * halfHourCount + 479))
+                count = 0
             }
         }
         return result
@@ -206,12 +211,13 @@ struct TimetablePainter {
     }
 
     /// 시간대 `TimeMask`를 `BlockMask`로 변환한다.
-    static func toBlockMask(from timeMask: [SearchTimeMaskDto]) -> BlockMask {
-        var blockMask = Array(repeating: false, count: blockMaskSize)
+    /// `reverse`: `true`인 경우 `TimeMask`를 제외한 시간대를 `BlockMask`로 변환한다.
+    static func toBlockMask(from timeMask: [SearchTimeMaskDto], reverse: Bool = false) -> BlockMask {
+        var blockMask = Array(repeating: reverse, count: blockMaskSize)
         for time in timeMask {
             for minute in stride(from: time.startMinute, to: time.endMinute, by: 30) {
                 let halfHourIndex = Int(floor(Double(minute - 480) / 30.0))
-                blockMask[time.day * halfHourCount + halfHourIndex] = true
+                blockMask[time.day * halfHourCount + halfHourIndex] = !reverse
             }
         }
         return blockMask
