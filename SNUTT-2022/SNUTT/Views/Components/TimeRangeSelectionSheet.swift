@@ -40,7 +40,7 @@ struct TimeRangeSelectionSheet: View {
                 Group {
                     HStack(spacing: 8) {
                         Button {
-                            selectedBlockMask = TimetablePainter.toBlockMask(from: currentTimetable.timeMask.filter { $0.day < 5 })
+                            selectedBlockMask = TimetablePainter.toBlockMask(from: currentTimetable.timeMask.filter { $0.day < 5 }, reverse: true)
                         } label: {
                             HStack(spacing: 0) {
                                 Image("timerange.magicwand")
