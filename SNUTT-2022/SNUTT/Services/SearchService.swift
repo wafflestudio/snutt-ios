@@ -12,6 +12,7 @@ import SwiftUI
 protocol SearchServiceProtocol: Sendable {
     func toggle(_ tag: SearchTag)
     func deselectTag(_ tag: SearchTag)
+    func selectTimeRangeTag()
     func fetchTags(quarter: Quarter) async throws
     func fetchInitialSearchResult() async throws
     func fetchMoreSearchResult() async throws
@@ -108,6 +109,12 @@ struct SearchService: SearchServiceProtocol {
             return
         }
     }
+    
+    func selectTimeRangeTag() {
+        if let tag = searchState.searchTagList?.tagList.first(where: { $0.type == .time && $0.text == TimeType.range.rawValue }) {
+            searchState.selectedTagList.append(tag)
+        }
+    }
 
     func updateSelectedTimeRange(to range: [SearchTimeMaskDto]) {
         searchState.selectedTimeRange = range
@@ -148,6 +155,7 @@ struct SearchService: SearchServiceProtocol {
 class FakeSearchService: SearchServiceProtocol {
     func toggle(_: SearchTag) {}
     func deselectTag(_: SearchTag) {}
+    func selectTimeRangeTag() {}
     func fetchTags(quarter _: Quarter) async throws {}
     func fetchInitialSearchResult() async throws {}
     func fetchMoreSearchResult() async throws {}

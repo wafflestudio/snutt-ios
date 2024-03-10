@@ -71,6 +71,7 @@ struct FilterSheetContent: View {
                                                             $0.preciseTimeString
                                                         }.joined(separator: "\n"))
                                                             .underline()
+                                                            .lineSpacing(4)
                                                     } else {
                                                         Text("눌러서 선택하기")
                                                             .underline()
@@ -118,7 +119,9 @@ struct FilterSheetContent: View {
         }
         .sheet(isPresented: $isTimeRangeSheetOpen) {
             if let timetable = viewModel.currentTimetable {
-                TimeRangeSelectionSheet(currentTimetable: timetable, selectedTimeRange: $viewModel.selectedTimeRange)
+                TimeRangeSelectionSheet(currentTimetable: timetable, selectedTimeRange: $viewModel.selectedTimeRange) {
+                    viewModel.selectTimeRangeTag()
+                }
             }
         }
     }

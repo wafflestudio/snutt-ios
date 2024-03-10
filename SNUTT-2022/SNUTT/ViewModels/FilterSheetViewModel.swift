@@ -47,6 +47,10 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
     func toggle(_ tag: SearchTag) {
         services.searchService.toggle(tag)
     }
+    
+    func selectTimeRangeTag() {
+        services.searchService.selectTimeRangeTag()
+    }
 
     func fetchInitialSearchResult() async {
         do {
