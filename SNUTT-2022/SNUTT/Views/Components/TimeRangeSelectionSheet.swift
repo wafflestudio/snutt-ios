@@ -10,6 +10,7 @@ import SwiftUI
 struct TimeRangeSelectionSheet: View {
     let currentTimetable: Timetable
     let config = TimetableConfiguration().withTimeRangeSelectionMode()
+    let selectTimeRangeTag: (() -> Void)
 
     @Binding var selectedTimeRange: [SearchTimeMaskDto]
 
@@ -21,7 +22,7 @@ struct TimeRangeSelectionSheet: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
-    init(currentTimetable: Timetable, selectedTimeRange: Binding<[SearchTimeMaskDto]>) {
+    init(currentTimetable: Timetable, selectedTimeRange: Binding<[SearchTimeMaskDto]>, selectTimeRangeTag: @escaping (() -> Void)) {
         self.currentTimetable = currentTimetable
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor(STColor.systemBackground)
@@ -30,6 +31,7 @@ struct TimeRangeSelectionSheet: View {
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         _selectedTimeRange = selectedTimeRange
         _selectedBlockMask = State(initialValue: TimetablePainter.toBlockMask(from: selectedTimeRange.wrappedValue))
+        self.selectTimeRangeTag = selectTimeRangeTag
     }
 
     var body: some View {
@@ -138,6 +140,7 @@ struct TimeRangeSelectionSheet: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         selectedTimeRange = TimetablePainter.getSelectedTimeRange(from: selectedBlockMask)
+                        selectTimeRangeTag()
                         dismiss()
                     } label: {
                         Text("완료")
