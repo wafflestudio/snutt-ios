@@ -10,7 +10,7 @@ import SwiftUI
 struct TimeRangeSelectionSheet: View {
     let currentTimetable: Timetable
     let config = TimetableConfiguration().withTimeRangeSelectionMode()
-    let selectTimeRangeTag: (() -> Void)
+    let selectTimeRangeTag: () -> Void
 
     @Binding var selectedTimeRange: [SearchTimeMaskDto]
 
