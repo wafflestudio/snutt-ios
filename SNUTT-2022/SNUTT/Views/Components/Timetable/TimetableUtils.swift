@@ -146,10 +146,10 @@ struct TimetablePainter {
 
     /// 시간대 선택은 8시부터 22시 59분까지 지원
     static let halfHourCount = 30
-    
+
     /// 시간대 선택은 8시부터 시작
     static let startHourOffset = 8 * 60
-    
+
     /// 시간대 선택은 30분 단위로 지원
     static let halfHour = 30
 
@@ -159,13 +159,13 @@ struct TimetablePainter {
         let strided = stride(from: 0, to: blockMaskSize, by: halfHour).map {
             Array(blockMask[$0 ..< min($0 + halfHourCount, blockMaskSize)])
         }
-        
+
         /// `BlockMask`의 연속적인 `true`를 `SearchTimeMaskDto`로 변환 중임을 나타낸다.
         var isContinuousTimeRange = false
-        
+
         /// `BlockMask`에서 연속적인 `true`가 시작되는 인덱스
         var startHalfHourIndex = 0
-        
+
         for (dayIndex, dayBitMask) in strided.enumerated() {
             for (halfHourIndex, selectedIndex) in dayBitMask.enumerated() {
                 if selectedIndex {
@@ -180,7 +180,7 @@ struct TimetablePainter {
                     }
                 }
             }
-            
+
             // 다음 날로 넘어가기 전 선택된 시간대를 22:59로 마감한다.
             if isContinuousTimeRange {
                 isContinuousTimeRange = false
