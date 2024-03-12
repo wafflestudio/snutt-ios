@@ -146,35 +146,45 @@ struct TimetablePainter {
 
     /// 시간대 선택은 8시부터 22시 59분까지 지원
     static let halfHourCount = 30
+    
+    /// 시간대 선택은 8시부터 시작
+    static let startHourOffset = 8 * 60
+    
+    /// 시간대 선택은 30분 단위로 지원
+    static let halfHour = 30
 
     /// `BlockMask`를 `[SearchTimeMaskDto]`로 변환한다.
     static func getSelectedTimeRange(from blockMask: BlockMask) -> [SearchTimeMaskDto] {
         var result: [SearchTimeMaskDto] = []
-        let strided = stride(from: 0, to: blockMaskSize, by: 30).map {
+        let strided = stride(from: 0, to: blockMaskSize, by: halfHour).map {
             Array(blockMask[$0 ..< min($0 + halfHourCount, blockMaskSize)])
         }
-        var isCounting = false
-        var (count, start) = (0, 0)
-        for (day, dayBitMask) in strided.enumerated() {
-            for (minute, selected) in dayBitMask.enumerated() {
-                if selected {
-                    count += 1
-                    if !isCounting {
-                        isCounting = true
-                        start = minute
+        
+        /// `BlockMask`의 연속적인 `true`를 `SearchTimeMaskDto`로 변환 중임을 나타낸다.
+        var isContinuousTimeRange = false
+        
+        /// `BlockMask`에서 연속적인 `true`가 시작되는 인덱스
+        var startHalfHourIndex = 0
+        
+        for (dayIndex, dayBitMask) in strided.enumerated() {
+            for (halfHourIndex, selectedIndex) in dayBitMask.enumerated() {
+                if selectedIndex {
+                    if !isContinuousTimeRange {
+                        isContinuousTimeRange = true
+                        startHalfHourIndex = halfHourIndex
                     }
                 } else {
-                    if isCounting {
-                        isCounting = false
-                        result.append(.init(day: day, startMinute: start * halfHourCount + 480, endMinute: (start + count) * halfHourCount + 479))
-                        count = 0
+                    if isContinuousTimeRange {
+                        isContinuousTimeRange = false
+                        result.append(.init(day: dayIndex, startMinute: startHalfHourIndex * halfHourCount + startHourOffset, endMinute: halfHourIndex * halfHourCount + startHourOffset - 1))
                     }
                 }
             }
-            if isCounting {
-                isCounting = false
-                result.append(.init(day: day, startMinute: start * halfHourCount + 480, endMinute: (start + count) * halfHourCount + 479))
-                count = 0
+            
+            // 다음 날로 넘어가기 전 선택된 시간대를 22:59로 마감한다.
+            if isContinuousTimeRange {
+                isContinuousTimeRange = false
+                result.append(.init(day: dayIndex, startMinute: startHalfHourIndex * halfHourCount + startHourOffset, endMinute: halfHour * halfHourCount + startHourOffset - 1))
             }
         }
         return result
@@ -215,8 +225,8 @@ struct TimetablePainter {
     static func toBlockMask(from timeMask: [SearchTimeMaskDto], reverse: Bool = false) -> BlockMask {
         var blockMask = Array(repeating: reverse, count: blockMaskSize)
         for time in timeMask {
-            for minute in stride(from: time.startMinute, to: time.endMinute, by: 30) {
-                let halfHourIndex = Int(floor(Double(minute - 480) / 30.0))
+            for minute in stride(from: time.startMinute, to: time.endMinute, by: halfHour) {
+                let halfHourIndex = Int(floor(Double(minute - startHourOffset) / Double(halfHour)))
                 blockMask[time.day * halfHourCount + halfHourIndex] = !reverse
             }
         }

@@ -111,7 +111,10 @@ struct SearchService: SearchServiceProtocol {
     }
 
     func selectTimeRangeTag() {
-        if let tag = searchState.searchTagList?.tagList.first(where: { $0.type == .time && $0.text == TimeType.range.rawValue }) {
+        guard let tag = searchState.searchTagList?.tagList.first(where: { $0.type == .time && $0.text == TimeType.range.rawValue }) else {
+            return
+        }
+        if searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) == nil {
             searchState.selectedTagList.append(tag)
         }
     }
