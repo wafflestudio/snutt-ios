@@ -15,6 +15,7 @@ struct SearchLectureScene: View {
     }
 
     @State private var reloadSearchList: Int = 0
+    @FocusState private var isSearchBarFocused: Bool
 
     var body: some View {
         ZStack {
@@ -36,6 +37,7 @@ struct SearchLectureScene: View {
                       isFilterOpen: $viewModel.isFilterOpen,
                       displayMode: $viewModel.displayMode,
                       action: viewModel.fetchInitialSearchResult)
+                .focused($isSearchBarFocused)
                 .frame(height: Design.searchBarHeight)
         }
         .task {
@@ -52,6 +54,11 @@ struct SearchLectureScene: View {
         .onChange(of: viewModel.isLoading) { _ in
             withAnimation(.customSpring) {
                 reloadSearchList += 1
+            }
+        }
+        .onChange(of: isSearchBarFocused) { isSearching in
+            if isSearching {
+                viewModel.selectedLecture = nil
             }
         }
 
