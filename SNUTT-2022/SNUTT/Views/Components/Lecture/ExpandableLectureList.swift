@@ -28,7 +28,6 @@ struct ExpandableLectureList: View {
                         isInCurrentTimetable: viewModel.isInCurrentTimetable(lecture: lecture),
                         isVacancyNotificationEnabled: viewModel.isVacancyNotificationEnabled(lecture: lecture)
                     )
-
                     .task {
                         if lecture.id == lectures.last?.id {
                             await fetchMoreLectures?()

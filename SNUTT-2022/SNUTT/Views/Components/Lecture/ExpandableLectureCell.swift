@@ -129,6 +129,11 @@ struct ExpandableLectureCell: View {
             .padding(.vertical, 10)
             .padding(.horizontal, 15)
         }
+        .onChange(of: isSelected) { isSelected in
+            if isSelected {
+                resignFirstResponder()
+            }
+        }
         .alert(viewModel.errorTitle, isPresented: $viewModel.isEmailVerifyAlertPresented, actions: {
             Button("확인") {
                 viewModel.selectedTab = .review
