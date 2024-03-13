@@ -132,9 +132,6 @@ struct LectureColor: Hashable {
     static let occupiedLight: Self = .init(fg: .white, bg: STColor.gray10.opacity(0.7))
 
     static let occupiedDark: Self = .init(fg: STColor.darkGray, bg: STColor.darkerGray.opacity(0.7))
-
-    /// SNUTT cyan (light)
-    static let selected: Self = .init(fg: .clear, bg: .init(hex: "#1BD0C8").opacity(0.6))
 }
 
 extension Lecture {

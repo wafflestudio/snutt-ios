@@ -167,7 +167,7 @@ struct TimeRangeSelectionSheet: View {
         ForEach(Array(zip(selectedBlockMask.indices, selectedBlockMask)), id: \.0) { index, selected in
             if selected, let offsetPoint = TimetablePainter.getOffset(of: index, in: size) {
                 Rectangle()
-                    .fill(Color(hex: "#1BD0C8").opacity(0.6))
+                    .fill(STColor.translucentCyan)
                     .frame(width: width, height: height, alignment: .top)
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
             }
@@ -180,7 +180,7 @@ struct TimeRangeSelectionSheet: View {
         ForEach(Array(zip(temporaryBlockMask.indices, temporaryBlockMask)), id: \.0) { index, selected in
             if selected, let offsetPoint = TimetablePainter.getOffset(of: index, in: size) {
                 Rectangle()
-                    .fill(Color(hex: "#1BD0C8").opacity(0.6))
+                    .fill(STColor.translucentCyan)
                     .frame(width: width, height: height, alignment: .top)
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
             }

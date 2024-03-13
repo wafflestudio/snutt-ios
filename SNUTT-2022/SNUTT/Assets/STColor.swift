@@ -10,6 +10,10 @@ import SwiftUI
 
 struct STColor {
     static let cyan: Color = .init("cyan")
+    
+    /// SNUTT cyan (light)
+    /// Hex "#1BD0C8"
+    static let translucentCyan: Color = .init(hex: "#1BD0C8").opacity(0.6)
 
     /// Used in banner.
     static let secondaryCyan: Color = .init("cyan.secondary")
