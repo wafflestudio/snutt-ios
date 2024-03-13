@@ -83,13 +83,6 @@ struct Lecture: Identifiable {
         return lecture
     }
 
-    func withSelectedColor() -> Self {
-        var lecture = self
-        lecture.color = .selected
-        lecture.colorIndex = 0
-        return lecture
-    }
-
     var preciseTimeString: String {
         if timePlaces.isEmpty {
             return ""
