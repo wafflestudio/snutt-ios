@@ -167,8 +167,8 @@ struct TimetablePainter {
         var startHalfHourIndex = 0
 
         for (dayIndex, dayBitMask) in strided.enumerated() {
-            for (halfHourIndex, selectedIndex) in dayBitMask.enumerated() {
-                if selectedIndex {
+            for (halfHourIndex, isSelected) in dayBitMask.enumerated() {
+                if isSelected {
                     if !isContinuousTimeRange {
                         isContinuousTimeRange = true
                         startHalfHourIndex = halfHourIndex
