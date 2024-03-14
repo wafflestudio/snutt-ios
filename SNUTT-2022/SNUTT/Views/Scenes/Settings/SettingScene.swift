@@ -36,9 +36,9 @@ struct SettingScene: View {
                 SettingsLinkItem(title: "시간표 테마") {
                     ThemeSettingScene(viewModel:
                         .init(container: viewModel.container))
-                    .onDisappear {
-                        viewModel.closeBottomSheet()
-                    }
+                        .onDisappear {
+                            viewModel.closeBottomSheet()
+                        }
                 }
             } header: {
                 Text("디스플레이")
