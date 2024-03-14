@@ -46,7 +46,7 @@ struct TimetableScene: View, Sendable {
                 )
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItem(placement: .principal) {
+                    ToolbarItemGroup(placement: .principal) {
                         HStack {
                             NavBarButton(imageName: "nav.menu") {
                                 viewModel.setIsMenuOpen(true)
