@@ -61,7 +61,7 @@ struct ThemeSettingScene: View {
 }
 
 @ViewBuilder private func infoView() -> some View {
-    VStack(alignment: .leading) {
+    VStack(alignment: .leading, spacing: 6) {
         HStack {
             Image("vacancy.info")
                 .resizable()
@@ -73,7 +73,10 @@ struct ThemeSettingScene: View {
         Text("시간표 적용은 시간표 목록 > 더보기 버튼 > 테마 설정에서 개별적으로 적용할 수 있어요.")
             .font(STFont.details)
             .foregroundColor(.secondary)
-            .lineSpacing(1.4)
+            .lineSpacing(1.3)
+        Text("새로운 시간표에는 가장 최근 편집한 커스텀 테마가 적용돼요.")
+            .font(STFont.details)
+            .foregroundColor(.secondary)
     }
     .padding(.top, 25)
     .padding(.horizontal, -12)
@@ -140,11 +143,14 @@ private struct ThemeButton: View {
     }
 
     private var themeInfoView: some View {
-        VStack {
+        HStack(spacing: 2) {
             Text(theme.name)
                 .font(STFont.detailLabel)
-                .frame(width: 70, height: 15)
+            if !theme.isCustom {
+                Image("theme.chevron")
+            }
         }
+        .frame(width: 70, height: 15)
     }
 }
 
