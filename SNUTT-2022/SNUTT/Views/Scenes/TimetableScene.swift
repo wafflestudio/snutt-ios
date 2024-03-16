@@ -46,38 +46,38 @@ struct TimetableScene: View, Sendable {
                 )
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItemGroup(placement: .principal) {
+                    ToolbarItemGroup(placement: .topBarLeading) {
                         HStack {
                             NavBarButton(imageName: "nav.menu") {
                                 viewModel.setIsMenuOpen(true)
                             }
                             .circleBadge(condition: viewModel.isNewCourseBookAvailable)
-
+                            
                             Text(viewModel.timetableTitle)
                                 .font(STFont.title)
                                 .minimumScaleFactor(0.9)
                                 .lineLimit(1)
-
+                            
                             Text("(\(viewModel.totalCredit)학점)")
                                 .font(STFont.details)
                                 .foregroundColor(Color(UIColor.secondaryLabel))
-
-                            Spacer()
-
-                            NavBarButton(imageName: "nav.list") {
-                                pushToListScene = true
-                            }
-
-                            NavBarButton(imageName: "nav.share") {
-                                screenshot = self.timetable.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
-                                isShareSheetOpened = true
-                            }
-
-                            NavBarButton(imageName: "nav.alarm.off") {
-                                pushToNotiScene = true
-                            }
-                            .circleBadge(condition: viewModel.unreadCount > 0)
                         }
+                    }
+                    ToolbarItem { Spacer() }
+                    ToolbarItemGroup(placement: .topBarTrailing) {
+                        NavBarButton(imageName: "nav.list") {
+                            pushToListScene = true
+                        }
+                        
+                        NavBarButton(imageName: "nav.share") {
+                            screenshot = self.timetable.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
+                            isShareSheetOpened = true
+                        }
+                        
+                        NavBarButton(imageName: "nav.alarm.off") {
+                            pushToNotiScene = true
+                        }
+                        .circleBadge(condition: viewModel.unreadCount > 0)
                     }
                 }
                 .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
