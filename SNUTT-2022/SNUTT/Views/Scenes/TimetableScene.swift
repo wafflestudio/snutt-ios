@@ -52,12 +52,12 @@ struct TimetableScene: View, Sendable {
                                 viewModel.setIsMenuOpen(true)
                             }
                             .circleBadge(condition: viewModel.isNewCourseBookAvailable)
-                            
+
                             Text(viewModel.timetableTitle)
                                 .font(STFont.title)
                                 .minimumScaleFactor(0.9)
                                 .lineLimit(1)
-                            
+
                             Text("(\(viewModel.totalCredit)학점)")
                                 .font(STFont.details)
                                 .foregroundColor(Color(UIColor.secondaryLabel))
@@ -68,12 +68,12 @@ struct TimetableScene: View, Sendable {
                             NavBarButton(imageName: "nav.list") {
                                 pushToListScene = true
                             }
-                            
+
                             NavBarButton(imageName: "nav.share") {
                                 screenshot = self.timetable.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
                                 isShareSheetOpened = true
                             }
-                            
+
                             NavBarButton(imageName: "nav.alarm.off") {
                                 pushToNotiScene = true
                             }
