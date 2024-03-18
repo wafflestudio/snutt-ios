@@ -63,21 +63,22 @@ struct TimetableScene: View, Sendable {
                                 .foregroundColor(Color(UIColor.secondaryLabel))
                         }
                     }
-                    ToolbarItem { Spacer() }
                     ToolbarItemGroup(placement: .topBarTrailing) {
-                        NavBarButton(imageName: "nav.list") {
-                            pushToListScene = true
+                        HStack {
+                            NavBarButton(imageName: "nav.list") {
+                                pushToListScene = true
+                            }
+                            
+                            NavBarButton(imageName: "nav.share") {
+                                screenshot = self.timetable.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
+                                isShareSheetOpened = true
+                            }
+                            
+                            NavBarButton(imageName: "nav.alarm.off") {
+                                pushToNotiScene = true
+                            }
+                            .circleBadge(condition: viewModel.unreadCount > 0)
                         }
-                        
-                        NavBarButton(imageName: "nav.share") {
-                            screenshot = self.timetable.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
-                            isShareSheetOpened = true
-                        }
-                        
-                        NavBarButton(imageName: "nav.alarm.off") {
-                            pushToNotiScene = true
-                        }
-                        .circleBadge(condition: viewModel.unreadCount > 0)
                     }
                 }
                 .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
