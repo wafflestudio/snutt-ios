@@ -125,6 +125,7 @@ private struct ThemeButton: View {
                 themeInfoView
                     .padding(.top, 5)
             }
+            .frame(width: 80)
         }
     }
 
@@ -146,11 +147,11 @@ private struct ThemeButton: View {
         HStack(spacing: 2) {
             Text(theme.name)
                 .font(STFont.detailLabel)
+                .lineLimit(1)
             if !theme.isCustom {
                 Image("theme.chevron")
             }
         }
-        .frame(width: 70, height: 15)
     }
 }
 
