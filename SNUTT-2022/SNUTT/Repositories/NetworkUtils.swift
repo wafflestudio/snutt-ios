@@ -145,7 +145,11 @@ extension DataTask {
 
         let requestInfo = await collectRequestInfo()
         Crashlytics.crashlytics().record(error: NSError(domain: "UNKNOWN_ERROR", code: -1, userInfo: requestInfo))
-        throw STError(.SERVER_FAULT)
+        if let responseString = requestInfo["ResponseBody"] as? String {
+            throw STError(.SERVER_FAULT, content: responseString)
+        } else {
+            throw STError(.SERVER_FAULT)
+        }
     }
 
     private func collectRequestInfo() async -> [String: Any] {
