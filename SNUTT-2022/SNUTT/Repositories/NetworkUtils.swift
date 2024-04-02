@@ -22,10 +22,9 @@ final class Interceptor: RequestInterceptor {
 
         urlRequest.setValue(userState.accessToken, forHTTPHeaderField: "x-access-token")
 
-        AppMetadata.allCases
-            .forEach { header in
-                urlRequest.setValue(header.value, forHTTPHeaderField: header.key)
-            }
+        for header in AppMetadata.allCases {
+            urlRequest.setValue(header.value, forHTTPHeaderField: header.key)
+        }
 
         completion(.success(urlRequest))
     }
