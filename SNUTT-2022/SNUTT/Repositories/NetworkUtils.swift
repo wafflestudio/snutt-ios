@@ -121,20 +121,27 @@ extension DataTask {
     /// Extract DTO from `DataTask`, or throw error parsed from the response body.
     @discardableResult func handlingError() async throws -> Value {
         if let data = await response.data,
-           let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data),
-           let errCode = ErrorCode(rawValue: errDto.errcode)
+           let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data)
         {
-            var requestInfo = await collectRequestInfo()
-            requestInfo["ErrorMessage"] = errCode.errorMessage
+            if let errCode = ErrorCode(rawValue: errDto.errcode) {
+                var requestInfo = await collectRequestInfo()
+                requestInfo["ErrorMessage"] = errCode.errorMessage
 
-            if errCode == .SERVER_FAULT {
-                Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: requestInfo))
-            }
+                if errCode == .SERVER_FAULT {
+                    Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: requestInfo))
+                }
 
-            if let serverMessage = errDto.ext?.first?.1 {
-                throw STError(errCode, content: serverMessage)
+                if let serverMessage = errDto.ext?.first?.1 {
+                    throw STError(errCode, content: serverMessage)
+                } else {
+                    throw STError(errCode)
+                }
             } else {
-                throw STError(errCode)
+                if let serverMessage = errDto.ext?.first?.1 {
+                    throw STError(.SERVER_FAULT, content: serverMessage)
+                } else {
+                    throw STError(.SERVER_FAULT)
+                }
             }
         }
 
@@ -144,11 +151,7 @@ extension DataTask {
 
         let requestInfo = await collectRequestInfo()
         Crashlytics.crashlytics().record(error: NSError(domain: "UNKNOWN_ERROR", code: -1, userInfo: requestInfo))
-        if let responseString = requestInfo["ResponseBody"] as? String {
-            throw STError(.SERVER_FAULT, content: responseString)
-        } else {
-            throw STError(.SERVER_FAULT)
-        }
+        throw STError(.SERVER_FAULT)
     }
 
     private func collectRequestInfo() async -> [String: Any] {
