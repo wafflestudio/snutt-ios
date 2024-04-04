@@ -126,7 +126,7 @@ extension DataTask {
             let errCode = ErrorCode(rawValue: errDto.errcode)
             var requestInfo = await collectRequestInfo()
             requestInfo["ErrorMessage"] = errCode?.errorMessage
-            
+
             if let errCode, errCode == .SERVER_FAULT {
                 Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: requestInfo))
             }
