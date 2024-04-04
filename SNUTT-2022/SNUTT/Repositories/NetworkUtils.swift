@@ -130,14 +130,14 @@ extension DataTask {
             if let errCode, errCode == .SERVER_FAULT {
                 Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: requestInfo))
             }
-            
+
             if let serverMessage = errDto.ext?.first?.1 {
                 throw STError(errCode ?? .SERVER_FAULT, content: serverMessage)
             } else {
                 throw STError(errCode ?? .SERVER_FAULT)
             }
         }
-        
+
         if let dto = try? await value {
             return dto
         }
