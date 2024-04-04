@@ -123,28 +123,21 @@ extension DataTask {
         if let data = await response.data,
            let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data)
         {
-            if let errCode = ErrorCode(rawValue: errDto.errcode) {
-                var requestInfo = await collectRequestInfo()
-                requestInfo["ErrorMessage"] = errCode.errorMessage
-
-                if errCode == .SERVER_FAULT {
-                    Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: requestInfo))
-                }
-
-                if let serverMessage = errDto.ext?.first?.1 {
-                    throw STError(errCode, content: serverMessage)
-                } else {
-                    throw STError(errCode)
-                }
+            let errCode = ErrorCode(rawValue: errDto.errcode) ?? ErrorCode.SERVER_FAULT
+            var requestInfo = await collectRequestInfo()
+            requestInfo["ErrorMessage"] = errCode.errorMessage
+            
+            if errCode == .SERVER_FAULT {
+                Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: requestInfo))
+            }
+            
+            if let serverMessage = errDto.ext?.first?.1 {
+                throw STError(errCode, content: serverMessage)
             } else {
-                if let serverMessage = errDto.ext?.first?.1 {
-                    throw STError(.SERVER_FAULT, content: serverMessage)
-                } else {
-                    throw STError(.SERVER_FAULT)
-                }
+                throw STError(errCode)
             }
         }
-
+        
         if let dto = try? await value {
             return dto
         }
