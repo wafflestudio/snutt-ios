@@ -30,7 +30,6 @@ class LectureListViewModel: BaseViewModel, ObservableObject {
                                         startTime: .init(hour: 9, minute: 0),
                                         endTime: .init(hour: 10, minute: 0),
                                         place: "",
-                                        building: nil,
                                         isCustom: true,
                                         isTemporary: true))
         return lecture

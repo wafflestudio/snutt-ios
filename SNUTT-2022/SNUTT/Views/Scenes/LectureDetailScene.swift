@@ -15,6 +15,7 @@ struct LectureDetailScene: View {
 
     @State private var editMode: EditMode
     @State private var tempLecture: Lecture?
+    @State private var buildings: [Building] = []
 
     init(viewModel: ViewModel, lecture: Lecture, displayMode: DisplayMode) {
         self.viewModel = viewModel
@@ -37,10 +38,6 @@ struct LectureDetailScene: View {
     @State private var showSyllabusWebView = false
     @State private var isMapViewExpanded: Bool = false
 
-    private var buildings: [Building] {
-        lecture.timePlaces.compactMap { $0.building }.flatMap { $0 }
-    }
-
     private var buildingDictList: [Location: String] {
         var dict: [Location: String] = [:]
         buildings.forEach { dict[$0.locationInDMS] = $0.number + "동" }
@@ -53,12 +50,9 @@ struct LectureDetailScene: View {
 
     private var showMapMismatchWarning: Bool {
         !lecture.timePlaces.allSatisfy { timeplace in
-            if let building = timeplace.building {
-                return building.allSatisfy {
-                    timeplace.place.hasPrefix($0.number)
-                }
+            return buildings.allSatisfy {
+                timeplace.place.hasPrefix($0.number)
             }
-            return timeplace.place.isEmpty
         }
     }
 
@@ -357,6 +351,9 @@ struct LectureDetailScene: View {
             .animation(.customSpring, value: lecture.timePlaces.count)
             .animation(.customSpring, value: editMode.isEditing)
             .padding(.vertical, 20)
+        }
+        .onLoad {
+            buildings = await viewModel.getBuildingInfo(of: lecture)
         }
         .onAppear {
             isMapViewExpanded = viewModel.shouldOpenLectureMapView()
