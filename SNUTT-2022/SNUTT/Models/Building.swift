@@ -19,12 +19,12 @@ struct Building {
 
 extension Building {
     init(from dto: BuildingDto) {
-        self.id = dto.id
-        self.number = dto.buildingNumber
-        self.nameKor = dto.buildingNameKor
-        self.nameEng = dto.buildingNameEng
-        self.locationInDMS = dto.locationInDMS
-        self.locationInDecimal = dto.locationInDecimal
-        self.campus = .init(rawValue: dto.campus) ?? .GWANAK
+        id = dto.id
+        number = dto.buildingNumber
+        nameKor = dto.buildingNameKor
+        nameEng = dto.buildingNameEng
+        locationInDMS = dto.locationInDMS
+        locationInDecimal = dto.locationInDecimal
+        campus = .init(rawValue: dto.campus) ?? .GWANAK
     }
 }

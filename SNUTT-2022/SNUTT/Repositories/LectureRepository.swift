@@ -18,7 +18,7 @@ protocol LectureRepositoryProtocol {
     func getBookmark(quarter: Quarter) async throws -> BookmarkDto
     func bookmarkLecture(lectureId: String) async throws
     func undoBookmarkLecture(lectureId: String) async throws
-    
+
     func getBuildingList(places: String) async throws -> BuildingListDto
 }
 
@@ -84,7 +84,7 @@ class LectureRepository: LectureRepositoryProtocol {
             .serializingString(emptyResponseCodes: [200])
             .handlingError()
     }
-    
+
     func getBuildingList(places: String) async throws -> BuildingListDto {
         return try await session
             .request(BuildingRouter.getBuildingInfo(places: places))

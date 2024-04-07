@@ -137,7 +137,7 @@ extension LectureDetailScene {
                 return ""
             }
         }
-        
+
         func getBuildingList(of lecture: Lecture) async -> [Building] {
             do {
                 return try await lectureService.getBuildingList(of: lecture)
