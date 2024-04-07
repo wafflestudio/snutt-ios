@@ -62,10 +62,14 @@ struct TimePlaceDto: Codable {
     let startMinute: Int
     let endMinute: Int
     let place: String
-    let lectureBuildings: [LectureBuidingDto]?
 }
 
-struct LectureBuidingDto: Codable {
+struct BuildingListDto: Decodable {
+    let content: [BuildingDto]
+    let totalCount: Int
+}
+
+struct BuildingDto: Decodable {
     let id: String
     let buildingNumber: String
     let buildingNameKor: String
@@ -116,17 +120,6 @@ extension TimePlaceDto {
         startMinute = model.startMinute
         endMinute = model.endMinute
         place = model.place
-        guard let building = model.building else {
-            lectureBuildings = nil
-            return
-        }
-        lectureBuildings = building.map { .init(id: $0.id,
-                                                buildingNumber: $0.number,
-                                                buildingNameKor: $0.nameKor,
-                                                buildingNameEng: $0.nameEng,
-                                                locationInDMS: $0.locationInDMS,
-                                                locationInDecimal: $0.locationInDecimal,
-                                                campus: $0.campus.rawValue) }
     }
 }
 

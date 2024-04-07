@@ -15,9 +15,14 @@ protocol LectureServiceProtocol: Sendable {
     func deleteLecture(lecture: Lecture) async throws
     func resetLecture(lecture: Lecture) async throws
     func fetchReviewId(courseNumber: String, instructor: String) async throws -> String
+    func getBuildingInfo(of lecture: Lecture) async throws -> [Building]
+    
+    // MARK: Bookmark
     func fetchIsFirstBookmark()
     func bookmarkLecture(lecture: Lecture) async throws
     func undoBookmarkLecture(lecture: Lecture) async throws
+    
+    // MARK: Map
     func setIsMapViewExpanded(_ open: Bool)
     func shouldExpandLectureMapView() -> Bool
 }
@@ -93,6 +98,12 @@ struct LectureService: LectureServiceProtocol {
     func fetchReviewId(courseNumber: String, instructor: String) async throws -> String {
         return try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
     }
+    
+    func getBuildingInfo(of lecture: Lecture) async throws -> [Building] {
+        let joinedPlaces = lecture.timePlaces.map { $0.place }.joined(separator: ",")
+        let dto = try await lectureRepository.getBuildingList(places: joinedPlaces)
+        return dto.content.compactMap { Building(from: $0) }
+    }
 
     func fetchIsFirstBookmark() {
         appState.timetable.isFirstBookmark = userDefaultsRepository.get(Bool.self, key: .isFirstBookmark, defaultValue: true)
@@ -167,6 +178,7 @@ class FakeLectureService: LectureServiceProtocol {
     func undoBookmarkLecture(lecture _: Lecture) async throws {}
     func fetchIsFirstBookmark() {}
     func fetchReviewId(courseNumber _: String, instructor _: String) async throws -> String { return "" }
+    func getBuildingInfo(of lecture: Lecture) async throws -> [Building] { return [] }
     func setIsMapViewExpanded(_: Bool) {}
     func shouldExpandLectureMapView() -> Bool { return false }
 }

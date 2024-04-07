@@ -137,6 +137,15 @@ extension LectureDetailScene {
                 return ""
             }
         }
+        
+        func getBuildingInfo(of lecture: Lecture) async -> [Building] {
+            do {
+                return try await lectureService.getBuildingInfo(of: lecture)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+                return []
+            }
+        }
 
         func getLecture(lecture: Lecture, without timePlace: TimePlace) -> Lecture {
             var lecture = lecture
@@ -152,7 +161,6 @@ extension LectureDetailScene {
                                             startTime: .init(hour: 9, minute: 0),
                                             endTime: .init(hour: 10, minute: 0),
                                             place: "",
-                                            building: nil,
                                             isCustom: lecture.isCustom,
                                             isTemporary: true))
             return lecture
