@@ -50,7 +50,7 @@ struct LectureDetailScene: View {
 
     private var showMapMismatchWarning: Bool {
         !lecture.timePlaces.allSatisfy { timeplace in
-            return buildings.allSatisfy {
+            buildings.allSatisfy {
                 timeplace.place.hasPrefix($0.number)
             }
         }
