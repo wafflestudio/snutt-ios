@@ -353,7 +353,7 @@ struct LectureDetailScene: View {
             .padding(.vertical, 20)
         }
         .onLoad {
-            buildings = await viewModel.getBuildingInfo(of: lecture)
+            buildings = await viewModel.getBuildingList(of: lecture)
         }
         .onAppear {
             isMapViewExpanded = viewModel.shouldOpenLectureMapView()

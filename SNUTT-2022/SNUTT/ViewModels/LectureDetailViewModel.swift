@@ -138,9 +138,9 @@ extension LectureDetailScene {
             }
         }
         
-        func getBuildingInfo(of lecture: Lecture) async -> [Building] {
+        func getBuildingList(of lecture: Lecture) async -> [Building] {
             do {
-                return try await lectureService.getBuildingInfo(of: lecture)
+                return try await lectureService.getBuildingList(of: lecture)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
                 return []
