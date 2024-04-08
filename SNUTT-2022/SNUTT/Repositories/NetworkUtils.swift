@@ -22,10 +22,9 @@ final class Interceptor: RequestInterceptor {
 
         urlRequest.setValue(userState.accessToken, forHTTPHeaderField: "x-access-token")
 
-        AppMetadata.allCases
-            .forEach { header in
-                urlRequest.setValue(header.value, forHTTPHeaderField: header.key)
-            }
+        for header in AppMetadata.allCases {
+            urlRequest.setValue(header.value, forHTTPHeaderField: header.key)
+        }
 
         completion(.success(urlRequest))
     }
@@ -122,20 +121,20 @@ extension DataTask {
     /// Extract DTO from `DataTask`, or throw error parsed from the response body.
     @discardableResult func handlingError() async throws -> Value {
         if let data = await response.data,
-           let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data),
-           let errCode = ErrorCode(rawValue: errDto.errcode)
+           let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data)
         {
+            let errCode = ErrorCode(rawValue: errDto.errcode)
             var requestInfo = await collectRequestInfo()
-            requestInfo["ErrorMessage"] = errCode.errorMessage
+            requestInfo["ErrorMessage"] = errCode?.errorMessage
 
-            if errCode == .SERVER_FAULT {
+            if let errCode, errCode == .SERVER_FAULT {
                 Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: requestInfo))
             }
 
             if let serverMessage = errDto.ext?.first?.1 {
-                throw STError(errCode, content: serverMessage)
+                throw STError(errCode ?? .SERVER_FAULT, content: serverMessage)
             } else {
-                throw STError(errCode)
+                throw STError(errCode ?? .SERVER_FAULT)
             }
         }
 
