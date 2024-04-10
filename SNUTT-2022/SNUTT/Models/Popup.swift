@@ -20,8 +20,7 @@ struct Popup: Identifiable {
         }
         guard let lastUpdate = dismissedAt else { return true }
         guard let hiddenDays = hiddenDays else { return false }
-        if hiddenDays == 0 { return true }
-        return Date().daysFrom(lastUpdate) > hiddenDays
+        return Date().daysFrom(lastUpdate) >= hiddenDays
     }
 }
 
