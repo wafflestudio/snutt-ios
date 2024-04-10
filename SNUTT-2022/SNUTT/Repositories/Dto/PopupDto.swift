@@ -13,18 +13,18 @@ struct PopupResponseDto: Codable {
 
 struct PopupDto: Codable {
     let key: String
-    let image_url: String
-    let hidden_days: Int?
-    let dismissed_at: Date?
-    let dont_show_for_while: Bool?
+    let imageUri: String
+    let hiddenDays: Int?
+    let dismissedAt: Date?
+    let dontShowForWhile: Bool?
 }
 
 extension PopupDto {
     init(from model: Popup) {
         key = model.id
-        image_url = model.imageURL
-        hidden_days = model.hiddenDays
-        dismissed_at = model.dismissedAt
-        dont_show_for_while = model.dontShowForWhile
+        imageUri = model.imageURL
+        hiddenDays = model.hiddenDays
+        dismissedAt = model.dismissedAt
+        dontShowForWhile = model.dontShowForWhile
     }
 }
