@@ -27,4 +27,19 @@ extension PopupDto {
         dismissedAt = model.dismissedAt
         dontShowForWhile = model.dontShowForWhile
     }
+    
+    init(from metadata: PopupMetadata, imageUri: String) {
+        key = metadata.key
+        hiddenDays = metadata.hiddenDays
+        dismissedAt = metadata.dismissedAt
+        dontShowForWhile = metadata.dontShowForWhile
+        self.imageUri = imageUri
+    }
+}
+
+struct PopupMetadata: Codable {
+    let key: String
+    let hiddenDays: Int?
+    let dismissedAt: Date?
+    let dontShowForWhile: Bool?
 }

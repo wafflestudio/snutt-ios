@@ -29,7 +29,7 @@ struct PopupService: PopupServiceProtocol {
 
     func getRecentPopupList() async throws {
         let remotePopupDtos = try await popupRepository.getRecentPopupList()
-        let localPopupDtos = userDefaultsRepository.get([PopupDto].self, key: .popupList, defaultValue: [])
+        let localPopupDtos = userDefaultsRepository.get([PopupMetadata].self, key: .popupList, defaultValue: [])
         let mergedPopupDtos = mergePopups(local: localPopupDtos, into: remotePopupDtos)
         appState.popup.currentList = mergedPopupDtos.map {
             var popup = Popup(from: $0)
@@ -53,7 +53,7 @@ struct PopupService: PopupServiceProtocol {
 }
 
 extension PopupService {
-    private func mergePopups(local: [PopupDto], into remote: [PopupDto]) -> [PopupDto] {
+    private func mergePopups(local: [PopupMetadata], into remote: [PopupDto]) -> [PopupDto] {
         let localPopupByKey = Dictionary(grouping: local, by: { $0.key })
         return remote.map { popupDto in
             guard let localPopup = localPopupByKey[popupDto.key]?.first else {
@@ -62,7 +62,7 @@ extension PopupService {
             if popupDto.hiddenDays != localPopup.hiddenDays {
                 return popupDto
             }
-            return localPopup
+            return .init(from: localPopup, imageUri: popupDto.imageUri)
         }
     }
 }
