@@ -27,7 +27,7 @@ extension PopupDto {
         dismissedAt = model.dismissedAt
         dontShowForWhile = model.dontShowForWhile
     }
-    
+
     init(from metadata: PopupMetadata, imageUri: String) {
         key = metadata.key
         hiddenDays = metadata.hiddenDays
