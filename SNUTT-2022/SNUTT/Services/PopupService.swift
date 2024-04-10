@@ -59,7 +59,7 @@ extension PopupService {
             guard let localPopup = localPopupByKey[popupDto.key]?.first else {
                 return popupDto
             }
-            if popupDto.hidden_days != localPopup.hidden_days {
+            if popupDto.hiddenDays != localPopup.hiddenDays {
                 return popupDto
             }
             return localPopup

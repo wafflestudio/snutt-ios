@@ -20,6 +20,7 @@ struct Popup: Identifiable {
         }
         guard let lastUpdate = dismissedAt else { return true }
         guard let hiddenDays = hiddenDays else { return false }
+        if hiddenDays == 0 { return true }
         return Date().daysFrom(lastUpdate) > hiddenDays
     }
 }
@@ -27,9 +28,9 @@ struct Popup: Identifiable {
 extension Popup {
     init(from dto: PopupDto) {
         id = dto.key
-        imageURL = dto.image_url
-        hiddenDays = dto.hidden_days
-        dismissedAt = dto.dismissed_at
-        dontShowForWhile = dto.dont_show_for_while ?? false
+        imageURL = dto.imageUri
+        hiddenDays = dto.hiddenDays
+        dismissedAt = dto.dismissedAt
+        dontShowForWhile = dto.dontShowForWhile ?? false
     }
 }
