@@ -85,14 +85,6 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
         }
     }
 
-    func getBookmark() async {
-        do {
-            try await services.searchService.getBookmark()
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-    }
-
     func fetchMoreSearchResult() async {
         do {
             try await services.searchService.fetchMoreSearchResult()

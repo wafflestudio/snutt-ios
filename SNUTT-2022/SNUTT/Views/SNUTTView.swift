@@ -81,6 +81,9 @@ struct SNUTTView: View, Sendable {
                         group.addTask {
                             await viewModel.fetchNotificationsCount()
                         }
+                        group.addTask {
+                            await viewModel.getBookmark()
+                        }
                     })
                 }
 
@@ -245,6 +248,14 @@ extension SNUTTView {
 
         func initializeSearchState() {
             services.searchService.initializeSearchState()
+        }
+
+        func getBookmark() async {
+            do {
+                try await services.searchService.getBookmark()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
         }
     }
 }
