@@ -13,6 +13,7 @@ struct NotificationDto: Decodable {
     let created_at: String
     let type: Int
     let user_id: String?
+    let deeplink: String?
 
     enum CodingKeys: String, CodingKey {
         case title
@@ -20,6 +21,7 @@ struct NotificationDto: Decodable {
         case created_at
         case type
         case user_id
+        case deeplink
     }
 
     init(from decoder: Decoder) throws {
@@ -28,6 +30,7 @@ struct NotificationDto: Decodable {
         created_at = try container.decode(String.self, forKey: .created_at)
         user_id = try? container.decode(String.self, forKey: .user_id)
         type = try container.decode(Int.self, forKey: .type)
+        deeplink = try? container.decode(String.self, forKey: .deeplink)
 
         let type = NotificationType(rawValue: type) ?? .normal
         var title = try container.decode(String.self, forKey: .title)

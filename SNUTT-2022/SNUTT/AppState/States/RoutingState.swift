@@ -11,6 +11,7 @@ import Foundation
 class ViewRoutingState {
     @Published var settingScene = SettingScene.RoutingState()
     @Published var timetableScene = TimetableScene.RoutingState()
+    @Published var notificationList = NotificationList.RoutingState()
 }
 
 extension SettingScene {
@@ -22,5 +23,27 @@ extension SettingScene {
 extension TimetableScene {
     struct RoutingState {
         var pushToNotification = false
+    }
+}
+
+extension NotificationList {
+    struct RoutingState {
+        var lectureDetailRoutingInfo = LectureDetailRoutingInfo()
+
+        mutating func routeToLectureDetail(with lecture: Lecture, timetableId: String? = nil) {
+            var info = LectureDetailRoutingInfo()
+            info.pushToLectureDetail = true
+            info.lecture = lecture
+            info.timetableId = timetableId
+            lectureDetailRoutingInfo = info
+        }
+    }
+}
+
+extension NotificationList.RoutingState {
+    struct LectureDetailRoutingInfo {
+        var pushToLectureDetail = false
+        var lecture: Lecture?
+        var timetableId: String?
     }
 }

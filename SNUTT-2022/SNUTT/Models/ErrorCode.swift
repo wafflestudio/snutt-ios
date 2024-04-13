@@ -97,6 +97,7 @@ enum ErrorCode: Int {
     case INVALID_LECTURE_TIME = 0x5002
     case INVALID_RN_BUNDLE = 0x5003
     case DUPLICATE_THEME_NAME = 40904
+    case CANT_PROCRESS_DEEPLINK = 0x5004
 
     /* 409 - Conflicts (Email Verification related) */
     case ALREADY_VERIFIED_ACCOUNT = 0x9000
@@ -129,7 +130,8 @@ enum ErrorCode: Int {
              .NO_PASSWORD_RESET_REQUEST,
              .CANT_CHANGE_OTHERS_THEME,
              .INVALID_RN_BUNDLE,
-             .EXPIRED_PASSWORD_RESET_CODE:
+             .EXPIRED_PASSWORD_RESET_CODE,
+             .CANT_PROCRESS_DEEPLINK:
             return "요청 실패"
         case .EMAIL_NOT_VERIFIED:
             return "인증 필요"
@@ -250,6 +252,8 @@ enum ErrorCode: Int {
             return "올바른 이메일을 입력해주세요."
         case .INVALID_NOTIFICATION_DETAIL:
             return "알림을 불러올 수 없습니다. 잠시 후 다시 시도해주세요."
+        case .CANT_PROCRESS_DEEPLINK:
+            return "존재하지 않는 정보입니다."
         case .DUPLICATE_ID:
             return "이미 존재하는 ID입니다."
         case .DUPLICATE_TIMETABLE_TITLE:

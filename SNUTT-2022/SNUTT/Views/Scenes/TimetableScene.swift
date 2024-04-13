@@ -66,7 +66,7 @@ struct TimetableScene: View, Sendable {
                     ToolbarItemGroup(placement: .topBarTrailing) {
                         HStack {
                             NavBarButton(imageName: "nav.list") {
-                                pushToListScene = true
+                                viewModel.routingState.pushToNotification = true
                             }
 
                             NavBarButton(imageName: "nav.share") {
@@ -75,7 +75,7 @@ struct TimetableScene: View, Sendable {
                             }
 
                             NavBarButton(imageName: "nav.alarm.off") {
-                                pushToNotiScene = true
+                                viewModel.routingState.pushToNotification = true
                             }
                             .circleBadge(condition: viewModel.unreadCount > 0)
                         }
@@ -84,10 +84,6 @@ struct TimetableScene: View, Sendable {
                 .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
                     ActivityViewController(activityItems: [screenshot, linkMetadata])
                 }
-        }
-        .background {
-            NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
-                           isActive: $pushToNotiScene) { EmptyView() }
         }
         .background {
             NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),

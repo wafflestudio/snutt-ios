@@ -13,7 +13,7 @@ struct STNotification: Hashable {
     let created_at: String
     let type: NotificationType
     let user_id: String?
-    var link: String?
+    var deeplink: String?
 
     var dateString: String {
         let date = DateFormatter.parse(string: created_at)
@@ -48,6 +48,7 @@ extension STNotification {
         created_at = dto.created_at
         type = NotificationType(rawValue: dto.type) ?? .normal
         user_id = dto.user_id
+        deeplink = dto.deeplink
     }
 }
 

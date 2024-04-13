@@ -27,6 +27,7 @@ protocol LectureServiceProtocol: Sendable {
 
     func setIsMapViewExpanded(_ open: Bool)
     func shouldExpandLectureMapView() -> Bool
+    func fetchBookmark(quarter: Quarter) async throws -> Bookmark
 }
 
 extension LectureServiceProtocol {
@@ -145,6 +146,11 @@ struct LectureService: LectureServiceProtocol {
         }
     }
 
+    func fetchBookmark(quarter: Quarter) async throws -> Bookmark {
+        let bookmarkDto = try await lectureRepository.getBookmark(quarter: quarter)
+        return .init(from: bookmarkDto)
+    }
+
     private var lectureRepository: LectureRepositoryProtocol {
         webRepositories.lectureRepository
     }
@@ -183,4 +189,7 @@ class FakeLectureService: LectureServiceProtocol {
     func getBuildingList(of _: Lecture) async throws -> [Building] { return [] }
     func setIsMapViewExpanded(_: Bool) {}
     func shouldExpandLectureMapView() -> Bool { return false }
+    func fetchBookmark(quarter: Quarter) async throws -> Bookmark {
+        throw STError.init(.UNKNOWN_APP)
+    }
 }
