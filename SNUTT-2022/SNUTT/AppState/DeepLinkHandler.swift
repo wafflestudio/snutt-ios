@@ -26,7 +26,6 @@ struct DeepLinkHandler {
         dependency.lectureService
     }
 
-
     struct Dependency {
         let appState: AppState
         let timetableService: TimetableServiceProtocol
@@ -85,12 +84,12 @@ extension DeepLinkHandler {
               let lectureId = parameters?["lectureId"],
               let year = Int(yearString),
               let semesterInt = Int(semesterString),
-              let semester = Semester(rawValue: semesterInt) 
+              let semester = Semester(rawValue: semesterInt)
         else { throw STError(.CANT_PROCRESS_DEEPLINK) }
         let quarter = Quarter(year: year, semester: semester)
         let bookmark = try await lectureService.fetchBookmark(quarter: quarter)
-        guard let lecture = bookmark.lectures.first(where: { $0.id == lectureId }) 
-        else { throw STError(.CANT_PROCRESS_DEEPLINK)}
+        guard let lecture = bookmark.lectures.first(where: { $0.id == lectureId })
+        else { throw STError(.CANT_PROCRESS_DEEPLINK) }
         if !appState.routing.timetableScene.pushToNotification {
             appState.routing.timetableScene.pushToNotification = true
         }
@@ -103,6 +102,3 @@ extension DeepLinkHandler.Parameters {
         first { $0.name == key }?.value
     }
 }
-
-
-

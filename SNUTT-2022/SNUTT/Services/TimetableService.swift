@@ -156,9 +156,10 @@ struct TimetableService: TimetableServiceProtocol {
 struct FakeTimetableService: TimetableServiceProtocol {
     func fetchRecentTimetable() async throws {}
     func fetchTimetableList() {}
-    func fetchTimetableData(timetableId: String) async throws -> Timetable {
+    func fetchTimetableData(timetableId _: String) async throws -> Timetable {
         return .preview
     }
+
     func fetchTimetable(timetableId _: String) {}
     func loadTimetableConfig() {}
     func copyTimetable(timetableId _: String) {}

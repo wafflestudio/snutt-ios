@@ -112,7 +112,7 @@ struct LectureDetailScene: View {
                             Text("취소")
                         }
                     }
-                case .preview(let shouldHideDismissButton):
+                case let .preview(shouldHideDismissButton):
                     if !shouldHideDismissButton {
                         Button {
                             dismiss()
@@ -140,25 +140,25 @@ struct LectureDetailScene: View {
                             Button {
                                 Task {
                                     isVacancyNotificationEnabled
-                                    ? await viewModel.deleteVacancyLecture(lecture: lecture)
-                                    : await viewModel.addVacancyLecture(lecture: lecture)
+                                        ? await viewModel.deleteVacancyLecture(lecture: lecture)
+                                        : await viewModel.addVacancyLecture(lecture: lecture)
                                 }
                             } label: {
                                 isVacancyNotificationEnabled
-                                ? Image("nav.vacancy.on")
-                                : Image("nav.vacancy.off")
+                                    ? Image("nav.vacancy.on")
+                                    : Image("nav.vacancy.off")
                             }
 
                             Button {
                                 Task {
                                     isBookmarked
-                                    ? await viewModel.undoBookmarkLecture(lecture: lecture)
-                                    : await viewModel.bookmarkLecture(lecture: lecture)
+                                        ? await viewModel.undoBookmarkLecture(lecture: lecture)
+                                        : await viewModel.bookmarkLecture(lecture: lecture)
                                 }
                             } label: {
                                 isBookmarked
-                                ? Image("nav.bookmark.on")
-                                : Image("nav.bookmark")
+                                    ? Image("nav.bookmark.on")
+                                    : Image("nav.bookmark")
                             }
                         }
                         if displayMode == .normal {
@@ -405,8 +405,8 @@ struct LectureDetailScene: View {
                                     Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
                                         .font(.system(size: 13))
                                         .foregroundColor(colorScheme == .dark
-                                                         ? STColor.gray30.opacity(0.6)
-                                                         : STColor.darkGray.opacity(0.6))
+                                            ? STColor.gray30.opacity(0.6)
+                                            : STColor.darkGray.opacity(0.6))
                                         .padding(.top, 8)
 
                                     Spacer()
@@ -425,8 +425,8 @@ struct LectureDetailScene: View {
                                 Text("지도 닫기")
                                     .font(.system(size: 14))
                                     .foregroundColor(colorScheme == .dark
-                                                     ? STColor.gray30
-                                                     : STColor.darkGray)
+                                        ? STColor.gray30
+                                        : STColor.darkGray)
                                 Image("chevron.down").rotationEffect(.init(degrees: 180.0))
                             }
                         }
@@ -444,8 +444,8 @@ struct LectureDetailScene: View {
                                 Text("지도에서 보기")
                                     .font(.system(size: 14))
                                     .foregroundColor(colorScheme == .dark
-                                                     ? STColor.gray30
-                                                     : STColor.darkGray)
+                                        ? STColor.gray30
+                                        : STColor.darkGray)
                                 Spacer().frame(width: 4)
                                 Image("chevron.down")
                             }

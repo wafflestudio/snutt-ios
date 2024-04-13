@@ -14,10 +14,10 @@ struct FloatingButton: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 5) {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 14))
-                        .scaledToFit()
-                        .foregroundColor(.white)
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 14))
+                    .scaledToFit()
+                    .foregroundColor(.white)
                 Text(text)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.white)
@@ -44,10 +44,8 @@ private struct FloatingButtonStyle: ButtonStyle {
     }
 }
 
-
 #Preview {
     ZStack {
-        FloatingButton(text: "시간표로 이동") {
-        }
+        FloatingButton(text: "시간표로 이동") {}
     }
 }

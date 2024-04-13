@@ -49,7 +49,8 @@ struct NotificationList: View {
                 isActive: $viewModel.routingState.lectureDetailRoutingInfo.pushToLectureDetail,
                 label: {
                     EmptyView()
-                })
+                }
+            )
         }
     }
 
@@ -149,22 +150,22 @@ struct NavigationUtil {
 }
 
 #if DEBUG
-struct NotificationList_Previews: PreviewProvider {
-    static var notifications: [STNotification] {
-        return [
-            .init(title: "공지", message: "공지예시 1", created_at: "2022-04-30T08:11:04.200Z", type: .normal, user_id: ""),
-            .init(title: "공지", message: "공지예시 2", created_at: "2022-04-30T08:11:04.201Z", type: .normal, user_id: ""),
-            .init(title: "공지", message: "공지예시 3", created_at: "2022-04-30T08:11:04.202Z", type: .normal, user_id: ""),
-        ]
-    }
+    struct NotificationList_Previews: PreviewProvider {
+        static var notifications: [STNotification] {
+            return [
+                .init(title: "공지", message: "공지예시 1", created_at: "2022-04-30T08:11:04.200Z", type: .normal, user_id: ""),
+                .init(title: "공지", message: "공지예시 2", created_at: "2022-04-30T08:11:04.201Z", type: .normal, user_id: ""),
+                .init(title: "공지", message: "공지예시 3", created_at: "2022-04-30T08:11:04.202Z", type: .normal, user_id: ""),
+            ]
+        }
 
-    static var previews: some View {
-        let container: DIContainer = {
-            let container = DIContainer.preview
-            container.appState.notification.notifications = Self.notifications
-            return container
-        }()
-        NotificationList(viewModel: .init(container: container))
+        static var previews: some View {
+            let container: DIContainer = {
+                let container = DIContainer.preview
+                container.appState.notification.notifications = Self.notifications
+                return container
+            }()
+            NotificationList(viewModel: .init(container: container))
+        }
     }
-}
 #endif
