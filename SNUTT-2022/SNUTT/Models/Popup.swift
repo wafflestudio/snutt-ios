@@ -15,11 +15,10 @@ struct Popup: Identifiable {
     var dontShowForWhile: Bool
 
     var shouldShow: Bool {
-        if !dontShowForWhile {
-            return dismissedAt == nil
-        }
+        if !dontShowForWhile { return dismissedAt == nil }
         guard let lastUpdate = dismissedAt else { return true }
         guard let hiddenDays = hiddenDays else { return false }
+        if hiddenDays == 0 { return dismissedAt == nil }
         return Date().daysFrom(lastUpdate) >= hiddenDays
     }
 }
@@ -29,7 +28,15 @@ extension Popup {
         id = dto.key
         imageURL = dto.imageUri
         hiddenDays = dto.hiddenDays
-        dismissedAt = dto.dismissedAt
-        dontShowForWhile = dto.dontShowForWhile ?? false
+        dismissedAt = nil
+        dontShowForWhile = false
+    }
+
+    init(from metadata: PopupMetadata, imageUri: String) {
+        id = metadata.key
+        imageURL = imageUri
+        hiddenDays = metadata.hiddenDays
+        dismissedAt = metadata.hiddenDays == 0 ? nil : metadata.dismissedAt
+        dontShowForWhile = metadata.dontShowForWhile ?? false
     }
 }

@@ -32,13 +32,12 @@ struct PopupService: PopupServiceProtocol {
         let localPopupDtos = userDefaultsRepository.get([PopupMetadata].self, key: .popupList, defaultValue: [])
         let mergedPopupDtos = mergePopups(local: localPopupDtos, into: remotePopupDtos)
         appState.popup.currentList = mergedPopupDtos.map {
-            var popup = Popup(from: $0)
+            var popup = $0
             if !popup.dontShowForWhile {
                 popup.dismissedAt = nil
             }
             return popup
         }
-        userDefaultsRepository.set([PopupDto].self, key: .popupList, value: mergedPopupDtos)
     }
 
     func dismissPopup(popup: Popup, dontShowForWhile: Bool) {
@@ -47,20 +46,20 @@ struct PopupService: PopupServiceProtocol {
         currentPopupList[firstPopupIndex].dismissedAt = Date()
         currentPopupList[firstPopupIndex].dontShowForWhile = dontShowForWhile
         appState.popup.currentList = currentPopupList
-        let currentPopupListDto = currentPopupList.compactMap { PopupDto(from: $0) }
-        userDefaultsRepository.set([PopupDto].self, key: .popupList, value: currentPopupListDto)
+        let currentPopupMetadataList = currentPopupList.compactMap { PopupMetadata(from: $0) }
+        userDefaultsRepository.set([PopupMetadata].self, key: .popupList, value: currentPopupMetadataList)
     }
 }
 
 extension PopupService {
-    private func mergePopups(local: [PopupMetadata], into remote: [PopupDto]) -> [PopupDto] {
+    private func mergePopups(local: [PopupMetadata], into remote: [PopupDto]) -> [Popup] {
         let localPopupByKey = Dictionary(grouping: local, by: { $0.key })
         return remote.map { popupDto in
             guard let localPopup = localPopupByKey[popupDto.key]?.first else {
-                return popupDto
+                return .init(from: popupDto)
             }
             if popupDto.hiddenDays != localPopup.hiddenDays {
-                return popupDto
+                return .init(from: popupDto)
             }
             return .init(from: localPopup, imageUri: popupDto.imageUri)
         }
