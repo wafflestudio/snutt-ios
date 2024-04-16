@@ -7,34 +7,14 @@
 
 import Foundation
 
-struct PopupResponseDto: Codable {
+struct PopupResponseDto: Decodable {
     let content: [PopupDto]
 }
 
-struct PopupDto: Codable {
+struct PopupDto: Decodable {
     let key: String
     let imageUri: String
     let hiddenDays: Int?
-    let dismissedAt: Date?
-    let dontShowForWhile: Bool?
-}
-
-extension PopupDto {
-    init(from model: Popup) {
-        key = model.id
-        imageUri = model.imageURL
-        hiddenDays = model.hiddenDays
-        dismissedAt = model.dismissedAt
-        dontShowForWhile = model.dontShowForWhile
-    }
-
-    init(from metadata: PopupMetadata, imageUri: String) {
-        key = metadata.key
-        hiddenDays = metadata.hiddenDays
-        dismissedAt = metadata.dismissedAt
-        dontShowForWhile = metadata.dontShowForWhile
-        self.imageUri = imageUri
-    }
 }
 
 struct PopupMetadata: Codable {
@@ -42,4 +22,13 @@ struct PopupMetadata: Codable {
     let hiddenDays: Int?
     let dismissedAt: Date?
     let dontShowForWhile: Bool?
+}
+
+extension PopupMetadata {
+    init(from model: Popup) {
+        key = model.id
+        hiddenDays = model.hiddenDays
+        dismissedAt = model.dismissedAt
+        dontShowForWhile = model.dontShowForWhile
+    }
 }
