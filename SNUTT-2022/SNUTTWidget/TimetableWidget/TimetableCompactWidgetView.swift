@@ -14,18 +14,15 @@ struct TimetableCompactWidgetView: View {
     @Environment(\.widgetFamily) private var family
 
     var body: some View {
-        ZStack {
-            STColor.systemBackground
-            HStack {
-                TimetableCompactLeftView(entry: entry)
+        HStack {
+            TimetableCompactLeftView(entry: entry)
 
-                if family == .systemMedium && !isTimetableEmpty && !isLoginRequired {
-                    TimetableCompactRightView(entry: entry)
-                        .padding(.leading, 5)
-                }
+            if family == .systemMedium && !isTimetableEmpty && !isLoginRequired {
+                TimetableCompactRightView(entry: entry)
+                    .padding(.leading, 5)
             }
-            .padding(.horizontal, 16)
         }
+        .padding(.horizontal, 16)
     }
 }
 

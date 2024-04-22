@@ -23,6 +23,7 @@ struct TimetableWidget: Widget {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: SNUTTWidgetProvider()) { entry in
             TimetableWidgetEntryView(entry: entry)
         }
+        .contentMarginsDisabled()
         .configurationDisplayName("WEEKLY_TIMETABLE".localized)
         .description("주간 시간표입니다.")
         .supportedFamilies(supportedFamilies)
