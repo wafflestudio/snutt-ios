@@ -51,6 +51,8 @@ struct SearchTips: View {
 
             Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .contentShape(Rectangle())
         .foregroundColor(STColor.whiteTranslucent)
     }
 }
