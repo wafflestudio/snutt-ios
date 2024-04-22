@@ -89,6 +89,9 @@ struct SearchLectureScene: View {
                         .frame(maxHeight: .infinity, alignment: .center)
                 } else if viewModel.searchResult == nil {
                     SearchTips()
+                        .onTapGesture {
+                            isSearchBarFocused = false
+                        }
                 } else if viewModel.searchResult?.count == 0 {
                     EmptySearchResult()
                 } else if let searchResult = viewModel.searchResult {
