@@ -66,7 +66,7 @@ struct TimetableScene: View, Sendable {
                     ToolbarItemGroup(placement: .topBarTrailing) {
                         HStack {
                             NavBarButton(imageName: "nav.list") {
-                                viewModel.routingState.pushToNotification = true
+                                pushToListScene = true
                             }
 
                             NavBarButton(imageName: "nav.share") {

@@ -63,7 +63,7 @@ struct NotificationList: View {
                     if let timetableId = routingInfo.timetableId {
                         VStack {
                             Spacer()
-                            FloatingButton(text: "시간표로 이동") {
+                            FloatingButton(text: "해당 시간표로 이동") {
                                 Task {
                                     await viewModel.goToTimetableScene(with: timetableId)
                                 }
