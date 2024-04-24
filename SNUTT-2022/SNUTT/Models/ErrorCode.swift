@@ -138,7 +138,7 @@ enum ErrorCode: Int {
              .DEEPLINK_TIMETABLE_NOT_FOUND,
              .DEEPLINK_BOOKMARK_NOT_FOUND,
              .DEEPLINK_PROCESS_FAILED
-            :
+             :
             return "요청 실패"
         case .EMAIL_NOT_VERIFIED:
             return "인증 필요"

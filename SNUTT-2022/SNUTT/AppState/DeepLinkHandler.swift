@@ -85,12 +85,12 @@ extension DeepLinkHandler {
               let lectureId = parameters?["lectureId"],
               let year = Int(yearString),
               let semesterInt = Int(semesterString),
-              let semester = Semester(rawValue: semesterInt) 
+              let semester = Semester(rawValue: semesterInt)
         else { throw STError(.DEEPLINK_PROCESS_FAILED) }
         let quarter = Quarter(year: year, semester: semester)
         let bookmark = try await lectureService.fetchBookmark(quarter: quarter)
-        guard let lecture = bookmark.lectures.first(where: { $0.id == lectureId }) 
-        else { throw STError(.DEEPLINK_BOOKMARK_NOT_FOUND)}
+        guard let lecture = bookmark.lectures.first(where: { $0.id == lectureId })
+        else { throw STError(.DEEPLINK_BOOKMARK_NOT_FOUND) }
         if !appState.routing.timetableScene.pushToNotification {
             appState.routing.timetableScene.pushToNotification = true
         }
