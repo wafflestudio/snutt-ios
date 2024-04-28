@@ -23,6 +23,7 @@ struct TimetableCompactWidgetView: View {
             }
         }
         .padding(.horizontal, 16)
+        .background(STColor.systemBackground)
     }
 }
 
