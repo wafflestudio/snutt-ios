@@ -15,7 +15,12 @@ struct SNUTTApp: App {
 
     init() {
         appEnvironment = AppEnvironment.bootstrap()
-        deepLinkHandler = DeepLinkHandler(appState: appEnvironment.container.appState)
+        deepLinkHandler = DeepLinkHandler(dependency: .init(
+            appState: appEnvironment.container.appState,
+            timetableService: appEnvironment.container.services.timetableService,
+            lectureService: appEnvironment.container.services.lectureService
+        )
+        )
     }
 
     var body: some Scene {
@@ -23,7 +28,13 @@ struct SNUTTApp: App {
             SNUTTView(viewModel: .init(container: appEnvironment.container))
                 .environment(\.dependencyContainer, appEnvironment.container)
                 .onOpenURL { url in
-                    deepLinkHandler.open(url: url)
+                    Task {
+                        do {
+                            try await deepLinkHandler.open(url: url)
+                        } catch {
+                            appEnvironment.container.services.globalUIService.presentErrorAlert(error: error)
+                        }
+                    }
                 }
         }
     }

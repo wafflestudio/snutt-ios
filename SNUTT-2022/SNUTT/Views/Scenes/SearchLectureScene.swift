@@ -43,9 +43,6 @@ struct SearchLectureScene: View {
         .task {
             await viewModel.fetchTags()
         }
-        .task {
-            await viewModel.getBookmark()
-        }
         .navigationBarHidden(true)
         .animation(.customSpring, value: viewModel.searchResult?.count)
         .animation(.customSpring, value: viewModel.isLoading)

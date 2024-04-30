@@ -280,6 +280,7 @@
 		CEEAB49329C5EA41005497B0 /* Collection+Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */; };
 		CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */; };
 		CEF4200F2A62ADE3005C2B1F /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4200E2A62ADE3005C2B1F /* FriendsViewModel.swift */; };
+		CEF630942BC690DF00D26999 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF630932BC690DF00D26999 /* FloatingButton.swift */; };
 		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
 		DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
 		DC1E0ED12877381F005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
@@ -580,6 +581,7 @@
 		CEDDCA832A6AFBF700474D4E /* VacancyDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyDto.swift; sourceTree = "<group>"; };
 		CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableFullWidgetView.swift; sourceTree = "<group>"; };
 		CEF4200E2A62ADE3005C2B1F /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
+		CEF630932BC690DF00D26999 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRepository.swift; sourceTree = "<group>"; };
 		DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
 		DC1E0ED02877381F005632A3 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -1116,6 +1118,7 @@
 				BEE86515289E212D00D3D0E4 /* MenuSheets */,
 				BE1D2B3228012059008F9134 /* Timetable */,
 				BE682BC528845CDB009EBCB7 /* UITextEditor.swift */,
+				CEF630932BC690DF00D26999 /* FloatingButton.swift */,
 				B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */,
 				B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */,
 				B8E65A732B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift */,
@@ -1537,6 +1540,7 @@
 				738406FD2B57179100007E62 /* ThemeSettingViewModel.swift in Sources */,
 				BEDF506B27EB73EE00CDCC13 /* LectureListCell.swift in Sources */,
 				B800A38B2B76132C008E8D84 /* SearchTimeMaskDto.swift in Sources */,
+				CEF630942BC690DF00D26999 /* FloatingButton.swift in Sources */,
 				B87DF6ED2914FAFB008BB95B /* PopupRouter.swift in Sources */,
 				BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */,
 				BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */,

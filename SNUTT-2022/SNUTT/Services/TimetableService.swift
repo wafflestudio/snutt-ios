@@ -12,6 +12,7 @@ import SwiftUI
 protocol TimetableServiceProtocol: Sendable {
     func fetchRecentTimetable() async throws
     func fetchTimetableList() async throws
+    func fetchTimetableData(timetableId: String) async throws -> Timetable
     func fetchTimetable(timetableId: String) async throws
     func loadTimetableConfig()
     func copyTimetable(timetableId: String) async throws
@@ -36,6 +37,11 @@ struct TimetableService: TimetableServiceProtocol {
 
     var userDefaultsRepository: UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
+    }
+
+    func fetchTimetableData(timetableId: String) async throws -> Timetable {
+        let dto = try await timetableRepository.fetchTimetable(withTimetableId: timetableId)
+        return Timetable(from: dto)
     }
 
     func fetchTimetable(timetableId: String) async throws {
@@ -150,6 +156,7 @@ struct TimetableService: TimetableServiceProtocol {
 struct FakeTimetableService: TimetableServiceProtocol {
     func fetchRecentTimetable() async throws {}
     func fetchTimetableList() {}
+    func fetchTimetableData(timetableId _: String) async throws -> Timetable { .preview }
     func fetchTimetable(timetableId _: String) {}
     func loadTimetableConfig() {}
     func copyTimetable(timetableId _: String) {}

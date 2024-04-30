@@ -119,7 +119,7 @@ struct ExpandableLectureCell: View {
                             LectureDetailScene(
                                 viewModel: .init(container: viewModel.container),
                                 lecture: lecture,
-                                displayMode: .preview
+                                displayMode: .preview(shouldHideDismissButton: false)
                             )
                         }
                     }
