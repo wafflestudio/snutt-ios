@@ -1,4 +1,5 @@
 {
+  "originHash" : "7c222e4a86eb2e1fd5319b24f556a74c30a45b6bea0ee72a523d512d16abc2e9",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -86,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/wafflestudio/ios-rn-prebuilt",
       "state" : {
-        "revision" : "324e49b12837fd7180ce9a2b5b7620a4c6586c07",
-        "version" : "0.6.0"
+        "revision" : "a6db1cb6eb0f95da7c717bda825c96db3e837a1f",
+        "version" : "0.10.0"
       }
     },
     {
@@ -136,5 +137,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

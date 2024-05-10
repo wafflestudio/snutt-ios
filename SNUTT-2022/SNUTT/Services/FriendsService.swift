@@ -7,6 +7,14 @@
 
 import Alamofire
 import Foundation
+import ReactNativeKit
+
+#if DEBUG
+enum RNEvent: String, SupportedEvent {
+    case addFriendKakao = "add-friend-kakao"
+}
+#endif
+
 
 @MainActor
 protocol FriendsServiceProtocol: Sendable {
@@ -17,6 +25,9 @@ struct FriendsService: FriendsServiceProtocol, ConfigsProvidable {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
     var localRepositories: AppEnvironment.LocalRepositories
+    #if DEBUG
+    static let eventEmitter: EventEmitter<RNEvent> = .init()
+    #endif
 
     private let rnBundlePath = "ReactNativeBundles"
 
@@ -33,8 +44,6 @@ struct FriendsService: FriendsServiceProtocol, ConfigsProvidable {
     }
 
     // MARK: RN Bundle Management
-
-    // TODO: refactor with modularization; move to infra layer
 
     func fetchReactNativeBundleUrl() async throws -> URL {
         let configsDto = try await fetchConfigs()
