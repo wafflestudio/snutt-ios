@@ -34,9 +34,9 @@ struct FriendsScene: View {
         }
         .task {
             #if DEBUG
-            // 네이티브 <-> RN 이벤트 전달 테스트용
-            try? await Task.sleep(nanoseconds: NSEC_PER_SEC * 1)  // 혹시 몰라서 sleep 줘봄
-            FriendsService.eventEmitter.emitEvent(.addFriendKakao, payload: ["test": "test"])
+                // 네이티브 <-> RN 이벤트 전달 테스트용
+                try? await Task.sleep(nanoseconds: NSEC_PER_SEC * 1) // 혹시 몰라서 sleep 줘봄
+                FriendsService.eventEmitter.emitEvent(.addFriendKakao, payload: ["test": "test"])
             #endif
         }
     }

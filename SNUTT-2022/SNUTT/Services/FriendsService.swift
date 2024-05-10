@@ -10,11 +10,10 @@ import Foundation
 import ReactNativeKit
 
 #if DEBUG
-enum RNEvent: String, SupportedEvent {
-    case addFriendKakao = "add-friend-kakao"
-}
+    enum RNEvent: String, SupportedEvent {
+        case addFriendKakao = "add-friend-kakao"
+    }
 #endif
-
 
 @MainActor
 protocol FriendsServiceProtocol: Sendable {
@@ -26,7 +25,7 @@ struct FriendsService: FriendsServiceProtocol, ConfigsProvidable {
     var webRepositories: AppEnvironment.WebRepositories
     var localRepositories: AppEnvironment.LocalRepositories
     #if DEBUG
-    static let eventEmitter: EventEmitter<RNEvent> = .init()
+        static let eventEmitter: EventEmitter<RNEvent> = .init()
     #endif
 
     private let rnBundlePath = "ReactNativeBundles"
