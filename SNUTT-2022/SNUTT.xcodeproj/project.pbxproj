@@ -244,7 +244,6 @@
 		CE17DF8B2A7E96E1000432B8 /* ConfigDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF8A2A7E96E1000432B8 /* ConfigDto.swift */; };
 		CE17DF912A7F43E0000432B8 /* VacancySugangSnuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */; };
 		CE17DF932A7FCB32000432B8 /* VacancyGuidePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */; };
-		CE1F49B12A8DB5A400B81E4E /* ReactNativeKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE1F49B02A8DB5A400B81E4E /* ReactNativeKit */; };
 		CE3384BA2A86704100437CC5 /* FriendsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3384B92A86704100437CC5 /* FriendsService.swift */; };
 		CE3384BC2A893F1B00437CC5 /* FriendsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3384BB2A893F1B00437CC5 /* FriendsScene.swift */; };
 		CE3F37A929C4CBC6009EDCCC /* TimetableCompactWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */; };
@@ -281,6 +280,7 @@
 		CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEAB49429C5EAA8005497B0 /* TimetableFullWidgetView.swift */; };
 		CEF4200F2A62ADE3005C2B1F /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4200E2A62ADE3005C2B1F /* FriendsViewModel.swift */; };
 		CEF630942BC690DF00D26999 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF630932BC690DF00D26999 /* FloatingButton.swift */; };
+		CEF992F72BF3B8FC00F0FFA4 /* ReactNativeKit in Frameworks */ = {isa = PBXBuildFile; productRef = CEF992F62BF3B8FC00F0FFA4 /* ReactNativeKit */; };
 		DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECB28771B32005632A3 /* TimetableRepository.swift */; };
 		DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */; };
 		DC1E0ED12877381F005632A3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E0ED02877381F005632A3 /* Router.swift */; };
@@ -622,7 +622,7 @@
 				B8B7501D2B6274A5004F6272 /* KakaoMapsSDK_SPM in Frameworks */,
 				BE4CD86328F5A56200BA9BBC /* FirebaseAnalyticsSwift in Frameworks */,
 				BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */,
-				CE1F49B12A8DB5A400B81E4E /* ReactNativeKit in Frameworks */,
+				CEF992F72BF3B8FC00F0FFA4 /* ReactNativeKit in Frameworks */,
 				BE4CD86528F5A56200BA9BBC /* FirebaseCrashlytics in Frameworks */,
 				BEDE34D42879A59B00525014 /* Alamofire in Frameworks */,
 				BE4CD86128F5A56200BA9BBC /* FirebaseAnalytics in Frameworks */,
@@ -1211,8 +1211,8 @@
 				BE4CD86228F5A56200BA9BBC /* FirebaseAnalyticsSwift */,
 				BE4CD86428F5A56200BA9BBC /* FirebaseCrashlytics */,
 				BE4CD86628F5A56200BA9BBC /* FirebaseMessaging */,
-				CE1F49B02A8DB5A400B81E4E /* ReactNativeKit */,
 				B8B7501C2B6274A5004F6272 /* KakaoMapsSDK_SPM */,
+				CEF992F62BF3B8FC00F0FFA4 /* ReactNativeKit */,
 			);
 			productName = SNUTT;
 			productReference = BE682BB22879E24D009EBCB7 /* SNUTT.app */;
@@ -2342,7 +2342,7 @@
 			repositoryURL = "https://github.com/wafflestudio/ios-rn-prebuilt";
 			requirement = {
 				kind = exactVersion;
-				version = 0.14.0;
+				version = 0.17.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -2383,7 +2383,7 @@
 			package = BEDE34D22879A59B00525014 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
-		CE1F49B02A8DB5A400B81E4E /* ReactNativeKit */ = {
+		CEF992F62BF3B8FC00F0FFA4 /* ReactNativeKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CE1F49AF2A8DB5A400B81E4E /* XCRemoteSwiftPackageReference "ios-rn-prebuilt" */;
 			productName = ReactNativeKit;
