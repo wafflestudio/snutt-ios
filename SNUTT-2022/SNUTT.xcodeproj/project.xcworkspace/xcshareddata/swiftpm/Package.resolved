@@ -87,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/wafflestudio/ios-rn-prebuilt",
       "state" : {
-        "revision" : "cc70915aa1b40b81233f73c61a0c3f968374e508",
-        "version" : "0.12.0"
+        "revision" : "e4f861a6fb59d66318ad3806aedd1b64a6bbef8a",
+        "version" : "0.14.0"
       }
     },
     {
