@@ -23,9 +23,9 @@ struct Popup: Identifiable {
         }
         return Date().daysFrom(dismissedAt) >= hiddenDays
     }
-    
+
     mutating func markAsDismissed(dontShowForWhile: Bool) {
-        self.dismissedAt = Date()
+        dismissedAt = Date()
         // if `hiddenDays` is 0, always show the popup next time
         if hiddenDays == 0 {
             self.dontShowForWhile = false
@@ -33,7 +33,7 @@ struct Popup: Identifiable {
         }
         self.dontShowForWhile = dontShowForWhile
     }
-    
+
     mutating func resetDismissedAt() -> Self {
         if dontShowForWhile { return self }
         dismissedAt = nil
