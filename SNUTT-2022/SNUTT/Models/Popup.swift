@@ -11,15 +11,33 @@ struct Popup: Identifiable {
     let id: String
     let imageURL: String
     let hiddenDays: Int?
-    var dismissedAt: Date?
-    var dontShowForWhile: Bool
+    private(set) var dismissedAt: Date?
+    private(set) var dontShowForWhile: Bool
 
     var shouldShow: Bool {
         if !dontShowForWhile { return dismissedAt == nil }
-        guard let lastUpdate = dismissedAt else { return true }
-        guard let hiddenDays = hiddenDays else { return false }
-        if hiddenDays == 0 { return dismissedAt == nil }
-        return Date().daysFrom(lastUpdate) >= hiddenDays
+        guard let dismissedAt = dismissedAt else { return true }
+        guard let hiddenDays = hiddenDays else {
+            // if `hiddenDays` is nil, never show the popup again
+            return false
+        }
+        return Date().daysFrom(dismissedAt) >= hiddenDays
+    }
+    
+    mutating func markAsDismissed(dontShowForWhile: Bool) {
+        self.dismissedAt = Date()
+        // if `hiddenDays` is 0, always show the popup next time
+        if hiddenDays == 0 {
+            self.dontShowForWhile = false
+            return
+        }
+        self.dontShowForWhile = dontShowForWhile
+    }
+    
+    mutating func resetDismissedAt() -> Self {
+        if dontShowForWhile { return self }
+        dismissedAt = nil
+        return self
     }
 }
 
@@ -36,7 +54,7 @@ extension Popup {
         id = metadata.key
         imageURL = imageUri
         hiddenDays = metadata.hiddenDays
-        dismissedAt = metadata.hiddenDays == 0 ? nil : metadata.dismissedAt
+        dismissedAt = metadata.dismissedAt
         dontShowForWhile = metadata.dontShowForWhile ?? false
     }
 }

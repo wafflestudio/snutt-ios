@@ -33,20 +33,14 @@ struct PopupService: PopupServiceProtocol {
         let mergedPopupDtos = mergePopups(local: localPopupDtos, into: remotePopupDtos)
         appState.popup.currentList = mergedPopupDtos.map {
             var popup = $0
-            if !popup.dontShowForWhile {
-                popup.dismissedAt = nil
-            }
-            return popup
+            return popup.resetDismissedAt()
         }
     }
 
     func dismissPopup(popup: Popup, dontShowForWhile: Bool) {
-        var currentPopupList = appState.popup.currentList
-        guard let firstPopupIndex = currentPopupList.firstIndex(where: { $0.id == popup.id }) else { return }
-        currentPopupList[firstPopupIndex].dismissedAt = Date()
-        currentPopupList[firstPopupIndex].dontShowForWhile = dontShowForWhile
-        appState.popup.currentList = currentPopupList
-        let currentPopupMetadataList = currentPopupList.compactMap { PopupMetadata(from: $0) }
+        guard let firstPopupIndex = appState.popup.currentList.firstIndex(where: { $0.id == popup.id }) else { return }
+        appState.popup.currentList[firstPopupIndex].markAsDismissed(dontShowForWhile: dontShowForWhile)
+        let currentPopupMetadataList = appState.popup.currentList.compactMap { PopupMetadata(from: $0) }
         userDefaultsRepository.set([PopupMetadata].self, key: .popupList, value: currentPopupMetadataList)
     }
 }
