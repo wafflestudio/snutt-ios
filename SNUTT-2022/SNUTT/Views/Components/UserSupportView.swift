@@ -37,7 +37,7 @@ struct UserSupportView: View {
                     .foregroundColor(hasEmail ? .secondary : .primary)
                     .disabled(hasEmail)
             }
-            Section(header: Text("문의 내용"), footer: Text("불편한 점이나 버그를 제보해주세요.")) {
+            Section(header: Text("문의 내용"), footer: Text("불편한 점이나 버그를 제보해주세요.\n더 나은 SNUTT를 위한 아이디어도 환영해요.")) {
                 TextEditor(text: $content)
                     .frame(minHeight: 300)
                     .focused($isFocused)
