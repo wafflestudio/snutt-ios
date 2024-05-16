@@ -16,8 +16,11 @@ struct Popup: Identifiable {
 
     var shouldShow: Bool {
         if !dontShowForWhile { return dismissedAt == nil }
-        guard let dismissedAt = dismissedAt else { return true }
-        guard let hiddenDays = hiddenDays else {
+        guard let dismissedAt else {
+            assertionFailure()
+            return true
+        }
+        guard let hiddenDays else {
             // if `hiddenDays` is nil, never show the popup again
             return false
         }
