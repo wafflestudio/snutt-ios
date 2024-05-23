@@ -91,13 +91,6 @@ struct MenuSheet: View {
                         .padding(.top, 20)
                         .animation(.customSpring, value: metadataList)
                     }
-                    // TODO: 새로운 시간표 생성했을 때 해당 위치로 스크롤하기
-//                    .onChange(of: menuState.onCreateToggle) { _ in
-//                        // due to Apple's bug, customSpring animation doesn't work for now
-//                        withAnimation(.customSpring) {
-//                            reader.scrollTo(timetableState.current?.quarter.hashValue, anchor: .bottom)
-//                        }
-//                    }
                 }
             }
         }
