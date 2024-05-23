@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2022/06/18.
 //
 
-import SwiftUI
 import UIKit
+import SwiftUI
 
 struct SearchBar: View {
     @AppStorage("isNewToBookmark") var isNewToBookmark: Bool = true
