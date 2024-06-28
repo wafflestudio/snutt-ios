@@ -44,6 +44,10 @@ struct OnboardScene: View {
                         SignInButton(label: "Apple로 계속하기", imageName: "apple") {
                             viewModel.performAppleSignIn()
                         }
+                        
+                        SignInButton(label: "Google로 계속하기", imageName: "apple") {
+                                                   viewModel.performGoogleSignIn()
+                                               }
                     }
                     .padding(.horizontal, 20)
                     Spacer()

@@ -53,6 +53,16 @@ extension OnboardScene.ViewModel: FacebookLoginProtocol {
     }
 }
 
+extension OnboardScene.ViewModel: GoogleLoginProtocol {
+    func handleGoogleToken(googleToken: String) async {
+        do {
+            try await services.authService.loginWithGoogle(googleToken: googleToken)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+}
+
 extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
     func authorizationController(controller _: ASAuthorizationController,
                                  didCompleteWithAuthorization authorization: ASAuthorization)

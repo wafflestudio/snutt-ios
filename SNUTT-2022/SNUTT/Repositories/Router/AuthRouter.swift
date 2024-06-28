@@ -15,7 +15,8 @@ enum AuthRouter: Router {
         case .getLinkedEmail,
              .sendVerificationCode,
              .checkVerificationCode,
-             .resetPassword:
+             .resetPassword,
+             .loginWithGoogle:
             return URL(string: NetworkConfiguration.serverV1BaseURL + "/auth")!
         default:
             return URL(string: NetworkConfiguration.serverBaseURL + "/auth")!
@@ -28,6 +29,7 @@ enum AuthRouter: Router {
     case loginWithLocalId(localId: String, localPassword: String)
     case loginWithFacebook(fbId: String, fbToken: String)
     case loginWithApple(appleToken: String)
+    case loginWithGoogle(googleToken: String)
     case findLocalId(email: String)
     case getLinkedEmail(localId: String)
     case sendVerificationCode(email: String)
@@ -44,6 +46,8 @@ enum AuthRouter: Router {
         case .loginWithFacebook:
             return .post
         case .loginWithApple:
+            return .post
+        case .loginWithGoogle:
             return .post
         case .findLocalId:
             return .post
@@ -70,6 +74,8 @@ enum AuthRouter: Router {
             return "/login_fb"
         case .loginWithApple:
             return "/login_apple"
+        case .loginWithGoogle:
+            return "/login_google"
         case .findLocalId:
             return "/id/find"
         case .getLinkedEmail:
@@ -95,6 +101,8 @@ enum AuthRouter: Router {
             return ["fb_id": fbId, "fb_token": fbToken]
         case let .loginWithApple(appleToken):
             return ["apple_token": appleToken]
+        case let .loginWithGoogle(googleToken):
+            return ["token": googleToken]
         case let .findLocalId(email: email):
             return ["email": email]
         case let .getLinkedEmail(localId: localId):

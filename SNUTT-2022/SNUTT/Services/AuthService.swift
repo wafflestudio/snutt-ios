@@ -14,6 +14,7 @@ protocol AuthServiceProtocol: Sendable {
     func loginWithLocalId(localId: String, localPassword: String) async throws
     func loginWithApple(appleToken: String) async throws
     func loginWithFacebook(fbId: String, fbToken: String) async throws
+    func loginWithGoogle(googleToken: String) async throws
     func registerWithLocalId(localId: String, localPassword: String, email: String) async throws
     func findLocalId(email: String) async throws
     func getLinkedEmail(localId: String) async throws -> String
@@ -84,6 +85,12 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
+    
+    func loginWithGoogle(googleToken: String) async throws {
+        let dto = try await authRepository.loginWithGoogle(googleToken: googleToken)
+        saveAccessTokenFromLoginResponse(dto: dto)
+        try await registerFCMToken()
+    }
 
     func findLocalId(email: String) async throws {
         let _ = try await authRepository.findLocalId(email: email)
@@ -140,6 +147,7 @@ class FakeAuthService: AuthServiceProtocol {
     func loginWithLocalId(localId _: String, localPassword _: String) async throws {}
     func loginWithApple(appleToken _: String) async throws {}
     func loginWithFacebook(fbId _: String, fbToken _: String) async throws {}
+    func loginWithGoogle(googleToken _: String) async throws {}
     func registerWithLocalId(localId _: String, localPassword _: String, email _: String) async throws {}
     func findLocalId(email _: String) async throws {}
     func getLinkedEmail(localId _: String) async throws -> String { return "" }

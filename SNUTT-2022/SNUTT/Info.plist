@@ -61,5 +61,16 @@
 	<string>https://${SNUEV_WEB_URL}</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Save Screenshots to Photo Library</string>
+    <key>GIDClientID</key>
+    <string>472833977397-1nt0j2573hp38618qf0i01ceiidk94bs.apps.googleusercontent.com</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.472833977397-1nt0j2573hp38618qf0i01ceiidk94bs</string>
+        </array>
+      </dict>
+    </array>
 </dict>
 </plist>

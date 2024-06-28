@@ -12,6 +12,7 @@ protocol AuthRepositoryProtocol {
     func registerWithLocalId(localId: String, localPassword: String, email: String) async throws -> LoginResponseDto
     func loginWithApple(appleToken: String) async throws -> LoginResponseDto
     func loginWithFacebook(fbId: String, fbToken: String) async throws -> LoginResponseDto
+    func loginWithGoogle(googleToken: String) async throws -> LoginResponseDto
     func loginWithLocalId(localId: String, localPassword: String) async throws -> LoginResponseDto
     func findLocalId(email: String) async throws -> SendLocalIdDto
     func getLinkedEmail(localId: String) async throws -> LinkedEmailDto
@@ -45,6 +46,13 @@ class AuthRepository: AuthRepositoryProtocol {
     func loginWithFacebook(fbId: String, fbToken: String) async throws -> LoginResponseDto {
         return try await session
             .request(AuthRouter.loginWithFacebook(fbId: fbId, fbToken: fbToken))
+            .serializingDecodable(LoginResponseDto.self)
+            .handlingError()
+    }
+    
+    func loginWithGoogle(googleToken: String) async throws -> LoginResponseDto {
+        return try await session
+            .request(AuthRouter.loginWithGoogle(googleToken: googleToken))
             .serializingDecodable(LoginResponseDto.self)
             .handlingError()
     }
