@@ -62,13 +62,13 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Save Screenshots to Photo Library</string>
     <key>GIDClientID</key>
-    <string>472833977397-1nt0j2573hp38618qf0i01ceiidk94bs.apps.googleusercontent.com</string>
+    <string>$(GOOGLE_CLIENT_ID)</string>
     <key>CFBundleURLTypes</key>
     <array>
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.googleusercontent.apps.472833977397-1nt0j2573hp38618qf0i01ceiidk94bs</string>
+          <string>$(GOOGLE_REVERSED_CLIENT_ID)</string>
         </array>
       </dict>
     </array>
