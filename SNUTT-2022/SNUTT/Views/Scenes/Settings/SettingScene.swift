@@ -75,7 +75,7 @@ struct SettingScene: View {
                 SettingsLinkItem(title: "서비스 약관") {
                     TermsOfServiceView()
                 }
-                SettingsLinkItem(title: "개인정보 처리방침") {
+                SettingsLinkItem(title: "개인정보처리방침") {
                     PrivacyPolicyView()
                 }
             }
