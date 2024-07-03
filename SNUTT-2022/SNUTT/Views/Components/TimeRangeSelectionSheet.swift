@@ -35,123 +35,119 @@ struct TimeRangeSelectionSheet: View {
     }
 
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 0) {
-                Spacer().frame(height: 10)
+        VStack(alignment: .leading, spacing: 0) {
+            Spacer().frame(height: 10)
 
-                Group {
-                    HStack(spacing: 8) {
-                        Button {
-                            selectedBlockMask = TimetablePainter.toBlockMask(from: currentTimetable.timeMask.filter { $0.day < 5 }, reverse: true)
-                        } label: {
-                            HStack(spacing: 0) {
-                                Image("timerange.magicwand")
-                                Text("빈시간대 선택하기")
-                                    .font(.system(size: 13, weight: .medium))
-                                    .foregroundColor(colorScheme == .dark ? STColor.gray20 : .white)
-                            }
-                            .padding(.leading, 6)
-                            .padding(.trailing, 8)
+            Group {
+                HStack(spacing: 8) {
+                    Button {
+                        selectedBlockMask = TimetablePainter.toBlockMask(from: currentTimetable.timeMask.filter { $0.day < 5 }, reverse: true)
+                    } label: {
+                        HStack(spacing: 0) {
+                            Image("timerange.magicwand")
+                            Text("빈시간대 선택하기")
+                                .font(.system(size: 13, weight: .medium))
+                                .foregroundColor(colorScheme == .dark ? STColor.gray20 : .white)
                         }
-                        .background(Rectangle()
-                            .frame(height: 24)
-                            .cornerRadius(6)
-                            .foregroundColor(colorScheme == .dark ? STColor.darkerGray : STColor.gray2)
-                        )
-
-                        Button {
-                            resetTemporary()
-                            resetSelected()
-                        } label: {
-                            HStack(spacing: 0) {
-                                Image("timerange.reset")
-                                Text("초기화")
-                                    .font(.system(size: 14))
-                                    .foregroundColor(colorScheme == .dark ? STColor.gray30 : STColor.gray20)
-                            }
-                        }
-                        .buttonStyle(DefaultButtonStyle())
+                        .padding(.leading, 6)
+                        .padding(.trailing, 8)
                     }
-
-                    Spacer().frame(height: 16)
-
-                    Text("드래그하여 시간대를 선택해보세요.")
-                        .font(.system(size: 14))
-                        .foregroundColor(colorScheme == .dark ? STColor.darkGray : STColor.gray20)
-                }
-                .padding(.horizontal, 10)
-
-                Spacer().frame(height: 10)
-
-                GeometryReader { reader in
-                    ZStack(alignment: .topLeading) {
-                        TimetableGridLayer(current: currentTimetable, config: config)
-                        GrayScaledTimetableBlocksLayer
-                        selectedTimeRangeBlocksLayer(in: reader.size)
-                        temporaryTimeRangeBlocksLayer(in: reader.size)
-                    }
-                    .contentShape(Rectangle())
-                    .gesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { gesture in
-                                let start = gesture.startLocation
-                                let current = gesture.location
-                                if outOfBounds(point: start, in: reader.size) || outOfBounds(point: current, in: reader.size) {
-                                    return
-                                }
-
-                                let currentBlockMask = TimetablePainter.toggleOnBlockMask(at: gesture.location, in: reader.size)
-                                temporaryBlockMask = temporaryBlockMask.enumerated().map {
-                                    $0.element || currentBlockMask[$0.offset]
-                                }
-                            }
-                            .onEnded { gesture in
-                                let start = gesture.startLocation
-                                let end = gesture.location
-                                if outOfBounds(point: start, in: reader.size) || outOfBounds(point: end, in: reader.size) {
-                                    return
-                                }
-
-                                selectMode = !TimetablePainter.isSelected(point: start, blockMask: selectedBlockMask, in: reader.size)
-                                if selectMode {
-                                    selectedBlockMask = selectedBlockMask.enumerated().map {
-                                        $0.element || temporaryBlockMask[$0.offset]
-                                    }
-                                } else {
-                                    selectedBlockMask = selectedBlockMask.enumerated().map {
-                                        $0.element && !temporaryBlockMask[$0.offset]
-                                    }
-                                }
-                                resetTemporary()
-                            }
+                    .background(Rectangle()
+                        .frame(height: 24)
+                        .cornerRadius(6)
+                        .foregroundColor(colorScheme == .dark ? STColor.darkerGray : STColor.gray2)
                     )
-                }
-            }
-            .padding(.horizontal, 20)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
+
                     Button {
-                        dismiss()
+                        resetTemporary()
+                        resetSelected()
                     } label: {
-                        Text("취소")
+                        HStack(spacing: 0) {
+                            Image("timerange.reset")
+                            Text("초기화")
+                                .font(.system(size: 14))
+                                .foregroundColor(colorScheme == .dark ? STColor.gray30 : STColor.gray20)
+                        }
                     }
+                    .buttonStyle(DefaultButtonStyle())
                 }
 
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        selectedTimeRange = TimetablePainter.getSelectedTimeRange(from: selectedBlockMask)
-                        selectTimeRangeTag()
-                        dismiss()
-                    } label: {
-                        Text("완료")
-                    }
+                Spacer().frame(height: 16)
+
+                Text("드래그하여 시간대를 선택해보세요.")
+                    .font(.system(size: 14))
+                    .foregroundColor(colorScheme == .dark ? STColor.darkGray : STColor.gray20)
+            }
+            .padding(.horizontal, 10)
+
+            Spacer().frame(height: 10)
+
+            GeometryReader { reader in
+                ZStack(alignment: .topLeading) {
+                    TimetableGridLayer(current: currentTimetable, config: config)
+                    GrayScaledTimetableBlocksLayer
+                    selectedTimeRangeBlocksLayer(in: reader.size)
+                    temporaryTimeRangeBlocksLayer(in: reader.size)
+                }
+                .contentShape(Rectangle())
+                .gesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged { gesture in
+                            let start = gesture.startLocation
+                            let current = gesture.location
+                            if outOfBounds(point: start, in: reader.size) || outOfBounds(point: current, in: reader.size) {
+                                return
+                            }
+
+                            let currentBlockMask = TimetablePainter.toggleOnBlockMask(at: gesture.location, in: reader.size)
+                            temporaryBlockMask = temporaryBlockMask.enumerated().map {
+                                $0.element || currentBlockMask[$0.offset]
+                            }
+                        }
+                        .onEnded { gesture in
+                            let start = gesture.startLocation
+                            let end = gesture.location
+                            if outOfBounds(point: start, in: reader.size) || outOfBounds(point: end, in: reader.size) {
+                                return
+                            }
+
+                            selectMode = !TimetablePainter.isSelected(point: start, blockMask: selectedBlockMask, in: reader.size)
+                            if selectMode {
+                                selectedBlockMask = selectedBlockMask.enumerated().map {
+                                    $0.element || temporaryBlockMask[$0.offset]
+                                }
+                            } else {
+                                selectedBlockMask = selectedBlockMask.enumerated().map {
+                                    $0.element && !temporaryBlockMask[$0.offset]
+                                }
+                            }
+                            resetTemporary()
+                        }
+                )
+            }
+        }
+        .padding(.horizontal, 20)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button {
+                    dismiss()
+                } label: {
+                    Text("취소")
                 }
             }
-            .background(STColor.systemBackground)
+
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    selectedTimeRange = TimetablePainter.getSelectedTimeRange(from: selectedBlockMask)
+                    selectTimeRangeTag()
+                    dismiss()
+                } label: {
+                    Text("완료")
+                }
+            }
         }
-        .foregroundColor(.primary)
-        .interactiveDismissDisabled()
-        .ignoresSafeArea(.keyboard)
+        .padding(.bottom, 16)
+        .background(STColor.systemBackground)
     }
 
     private var GrayScaledTimetableBlocksLayer: some View {
