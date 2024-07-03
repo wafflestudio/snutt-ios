@@ -119,9 +119,15 @@ struct FilterSheetContent: View {
         }
         .sheet(isPresented: $isTimeRangeSheetOpen) {
             if let timetable = viewModel.currentTimetable {
-                TimeRangeSelectionSheet(currentTimetable: timetable, selectedTimeRange: $viewModel.selectedTimeRange) {
-                    viewModel.selectTimeRangeTag()
+                NavigationView {
+                    TimeRangeSelectionSheet(currentTimetable: timetable, selectedTimeRange: $viewModel.selectedTimeRange) {
+                        viewModel.selectTimeRangeTag()
+                    }
+                    .navigationBarTitleDisplayMode(.inline)
                 }
+                .foregroundColor(.primary)
+                .interactiveDismissDisabled()
+                .ignoresSafeArea(.keyboard)
             }
         }
     }
