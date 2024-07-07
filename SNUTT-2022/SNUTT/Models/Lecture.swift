@@ -35,7 +35,7 @@ struct Lecture: Identifiable {
     var freshmanQuota: Int
     var registrationCount: Int?
     var wasFull: Bool
-    
+
     var evLecture: EvLecture?
 
     /// init 시에 ThemeDto의 theme 정보를 lecture에 저장
@@ -109,9 +109,9 @@ struct Lecture: Identifiable {
         guard let current = registrationCount else { return false }
         return wasFull && current < quota
     }
-    
+
     mutating func updateEvLecture(to newValue: EvLecture) {
-        self.evLecture = newValue
+        evLecture = newValue
     }
 
     func isEquivalent(with lecture: Lecture) -> Bool {
@@ -133,11 +133,11 @@ struct EvLecture {
             return "--"
         }
     }
-    
+
     init(from dto: EvLectureDto) {
-        self.evLectureId = dto.evLectureId
-        self.evaluationCount = dto.evaluationCount ?? 0
-        self.avgRating = dto.avgRating
+        evLectureId = dto.evLectureId
+        evaluationCount = dto.evaluationCount ?? 0
+        avgRating = dto.avgRating
     }
 }
 
@@ -183,7 +183,7 @@ extension Lecture {
         if let evLecture = dto.snuttEvLecture {
             self.evLecture = .init(from: evLecture)
         } else {
-            self.evLecture = nil
+            evLecture = nil
         }
     }
 }

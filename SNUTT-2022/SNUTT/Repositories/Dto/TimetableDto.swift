@@ -60,9 +60,9 @@ struct EvLectureDto: Codable {
 
 extension EvLectureDto {
     init(from model: EvLecture) {
-        self.evLectureId = model.evLectureId
-        self.avgRating = model.avgRating
-        self.evaluationCount = model.evaluationCount
+        evLectureId = model.evLectureId
+        avgRating = model.avgRating
+        evaluationCount = model.evaluationCount
     }
 }
 
@@ -164,9 +164,9 @@ extension LectureDto {
         registrationCount = model.registrationCount
         wasFull = model.wasFull
         if let evLecture = model.evLecture {
-            self.snuttEvLecture = .init(from: evLecture)
+            snuttEvLecture = .init(from: evLecture)
         } else {
-            self.snuttEvLecture = nil
+            snuttEvLecture = nil
         }
     }
 }
