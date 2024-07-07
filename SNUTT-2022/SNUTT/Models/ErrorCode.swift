@@ -81,7 +81,6 @@ enum ErrorCode: Int {
     case IS_CUSTOM_LECTURE = 0x300D
     case USER_HAS_NO_FCM_KEY = 0x300E
     case INVALID_EMAIL = 0x300F
-    case EMAIL_NOT_VERIFIED = 0x3011
 
     /* 404 - NOT found */
     case TAG_NOT_FOUND = 0x4000
@@ -140,8 +139,6 @@ enum ErrorCode: Int {
              .DEEPLINK_PROCESS_FAILED
              :
             return "요청 실패"
-        case .EMAIL_NOT_VERIFIED:
-            return "인증 필요"
         case .NO_USER_TOKEN,
              .WRONG_API_KEY,
              .WRONG_USER_TOKEN,
@@ -315,8 +312,6 @@ enum ErrorCode: Int {
             return "알 수 없는 오류가 발생했습니다."
         case .WRONG_APPLE_TOKEN:
             return "애플 계정으로 로그인하지 못했습니다."
-        case .EMAIL_NOT_VERIFIED:
-            return "강의평 확인을 위해 이메일 인증이 필요합니다. 이메일 인증을 진행하시겠습니까?"
         case .NO_PASSWORD_RESET_REQUEST:
             return "비밀번호 재설정을 다시 시도해주세요."
         case .EXPIRED_PASSWORD_RESET_CODE:

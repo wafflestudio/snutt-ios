@@ -41,13 +41,6 @@ extension LectureDetailScene {
             set { services.globalUIService.setSelectedTab(newValue) }
         }
 
-        func presentEmailVerifyAlert() {
-            let emailVerifyError = STError(.EMAIL_NOT_VERIFIED)
-            errorTitle = emailVerifyError.title
-            errorMessage = emailVerifyError.content
-            isEmailVerifyAlertPresented = true
-        }
-
         func addCustomLecture(lecture: Lecture, isForced: Bool = false) async -> Bool {
             do {
                 try await lectureService.addCustomLecture(lecture: lecture, isForced: isForced)
@@ -113,16 +106,14 @@ extension LectureDetailScene {
             }
             return nil
         }
-
-        func fetchReviewId(of lecture: Lecture) async -> String? {
+        
+        func getEvLectureInfo(of lecture: Lecture) async -> EvLecture? {
+            if lecture.isCustom { return nil }
             do {
-                return try await lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
-            } catch let error as STError where error.code == .EMAIL_NOT_VERIFIED {
-                // noop
+                return try await services.lectureService.getEvLecture(of: lecture)
             } catch {
-                services.globalUIService.presentErrorAlert(error: error)
+                return nil
             }
-            return nil
         }
 
         func fetchSyllabusURL(of lecture: Lecture) async -> String {
@@ -175,7 +166,7 @@ extension LectureDetailScene {
             return lecture
         }
 
-        func reloadDetailWebView(detailId: String?) {
+        func reloadDetailWebView(detailId: Int?) {
             guard let detailId = detailId else { return }
             services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: detailId).url)
         }

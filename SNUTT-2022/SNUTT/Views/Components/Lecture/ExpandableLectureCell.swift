@@ -20,7 +20,7 @@ struct ExpandableLectureCell: View {
     @State private var isDetailPagePresented = false
     @State private var isReviewWebViewPresented = false
     @State private var isRemoveBookmarkAlertPresented = false
-    @State private var reviewDetailId: String? = nil
+    @State private var reviewDetailId: Int?
 
     var body: some View {
         ZStack {
@@ -30,11 +30,20 @@ struct ExpandableLectureCell: View {
 
             VStack(spacing: 8) {
                 LectureHeaderRow(lecture: lecture)
-
-                if lecture.isCustom {
-                    LectureDetailRow(imageName: "tag.white", text: "")
-                } else {
-                    LectureDetailRow(imageName: "tag.white", text: "\(lecture.department), \(lecture.academicYear)")
+                HStack {
+                    if lecture.isCustom {
+                        LectureDetailRow(imageName: "tag.white", text: "")
+                    } else {
+                        LectureDetailRow(imageName: "tag.white", text: "\(lecture.department), \(lecture.academicYear)")
+                    }
+                    HStack(spacing: 2) {
+                        Image("search.rating.star")
+                        if let evLecture = lecture.evLecture {
+                            Text("\(evLecture.avgRatingString) (\(evLecture.evaluationCount))")
+                                .foregroundColor(.white.opacity(0.7))
+                                .font(STFont.details)
+                        }
+                    }
                 }
                 LectureDetailRow(imageName: "clock.white", text: lecture.preciseTimeString)
 
@@ -57,8 +66,7 @@ struct ExpandableLectureCell: View {
                             icon: .asset(name: "search.evaluation"),
                             text: "강의평"
                         ) {
-                            reviewDetailId = await viewModel.fetchReviewDetailId(lecture: lecture)
-                            if let reviewId = reviewDetailId {
+                            if let reviewId = lecture.evLecture?.evLectureId {
                                 viewModel.reloadReviewWebView(reviewId: reviewId)
                                 isReviewWebViewPresented = true
                             }
@@ -259,20 +267,7 @@ extension ExpandableLectureCell.ViewModel {
         }
     }
 
-    func fetchReviewDetailId(lecture: Lecture) async -> String? {
-        do {
-            return try await services.lectureService.fetchReviewId(courseNumber: lecture.courseNumber, instructor: lecture.instructor)
-        } catch let error as STError where error.code == .EMAIL_NOT_VERIFIED {
-            errorTitle = error.title
-            errorMessage = error.content
-            isEmailVerifyAlertPresented = true
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
-        }
-        return nil
-    }
-
-    func reloadReviewWebView(reviewId: String) {
+    func reloadReviewWebView(reviewId: Int) {
         services.globalUIService.sendDetailWebViewReloadSignal(
             url: WebViewType.reviewDetail(id: reviewId).url
         )
