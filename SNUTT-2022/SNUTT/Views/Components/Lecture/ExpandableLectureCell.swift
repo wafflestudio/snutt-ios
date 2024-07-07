@@ -66,8 +66,8 @@ struct ExpandableLectureCell: View {
                             icon: .asset(name: "search.evaluation"),
                             text: "강의평"
                         ) {
-                            if let reviewId = lecture.evLecture?.evLectureId {
-                                viewModel.reloadReviewWebView(reviewId: reviewId)
+                            if let evLectureId = lecture.evLecture?.evLectureId {
+                                viewModel.reloadReviewWebView(evLectureId: evLectureId)
                                 isReviewWebViewPresented = true
                             }
                         }
@@ -142,14 +142,6 @@ struct ExpandableLectureCell: View {
                 resignFirstResponder()
             }
         }
-        .alert(viewModel.errorTitle, isPresented: $viewModel.isEmailVerifyAlertPresented, actions: {
-            Button("확인") {
-                viewModel.selectedTab = .review
-            }
-            Button("취소", role: .cancel) {}
-        }, message: {
-            Text(viewModel.errorMessage)
-        })
         .alert(viewModel.errorTitle, isPresented: $viewModel.isLectureOverlapped) {
             Button {
                 Task {
@@ -178,7 +170,6 @@ extension ExpandableLectureCell {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isLectureOverlapped: Bool = false
         @Published var isFirstBookmarkAlertPresented: Bool = false
-        @Published var isEmailVerifyAlertPresented = false
         var errorTitle: String = ""
         var errorMessage: String = ""
 
@@ -267,9 +258,9 @@ extension ExpandableLectureCell.ViewModel {
         }
     }
 
-    func reloadReviewWebView(reviewId: Int) {
+    func reloadReviewWebView(evLectureId: Int) {
         services.globalUIService.sendDetailWebViewReloadSignal(
-            url: WebViewType.reviewDetail(id: reviewId).url
+            url: WebViewType.reviewDetail(id: evLectureId).url
         )
     }
 
