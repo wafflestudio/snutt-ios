@@ -106,7 +106,7 @@ extension LectureDetailScene {
             }
             return nil
         }
-        
+
         func getEvLectureInfo(of lecture: Lecture) async -> EvLecture? {
             if lecture.isCustom { return nil }
             do {

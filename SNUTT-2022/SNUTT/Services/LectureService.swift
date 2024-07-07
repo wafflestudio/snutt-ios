@@ -97,7 +97,7 @@ struct LectureService: LectureServiceProtocol {
         appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
-    
+
     func getEvLecture(of lecture: Lecture) async throws -> EvLecture? {
         if let lectureId = lecture.lectureId {
             let dto = try await reviewRepository.fetchEvLectureInfo(lectureId: lectureId)

@@ -61,7 +61,7 @@ struct LectureDetailScene: View {
             }
         }
     }
-    
+
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
 
@@ -288,7 +288,7 @@ struct LectureDetailScene: View {
         }
         .padding()
     }
-    
+
     private var ratingSection: some View {
         HStack {
             DetailLabel(text: "강의평점")
