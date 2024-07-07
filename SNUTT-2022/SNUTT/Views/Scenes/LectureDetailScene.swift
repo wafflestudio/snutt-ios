@@ -40,7 +40,6 @@ struct LectureDetailScene: View {
     @State private var isResetAlertPresented = false
     @State private var isDeleteAlertPresented = false
     @State private var showReviewWebView = false
-    @State private var reviewId: String? = ""
     @State private var syllabusURL: String = ""
     @State private var showSyllabusWebView = false
     @State private var isMapViewExpanded: Bool = false
@@ -62,7 +61,7 @@ struct LectureDetailScene: View {
             }
         }
     }
-
+    
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
 
@@ -71,6 +70,9 @@ struct LectureDetailScene: View {
             VStack(spacing: 20) {
                 Group {
                     firstDetailSection
+                    if !lecture.isCustom {
+                        ratingSection
+                    }
                     secondDetailSection
                     timePlaceSection
                     buttonsSection
@@ -286,6 +288,26 @@ struct LectureDetailScene: View {
         }
         .padding()
     }
+    
+    private var ratingSection: some View {
+        HStack {
+            DetailLabel(text: "강의평점")
+            HStack(spacing: 2) {
+                Image("rating.star")
+                Group {
+                    if let evLecture = lecture.evLecture {
+                        Text("\(evLecture.avgRatingString) ")
+                            .foregroundColor(.primary)
+                        Text("(\(evLecture.evaluationCount)개)")
+                            .foregroundColor(STColor.gray2)
+                    }
+                }
+                .font(.system(size: 16))
+                Spacer()
+            }
+        }
+        .padding()
+    }
 
     private var secondDetailSection: some View {
         Group {
@@ -474,36 +496,19 @@ struct LectureDetailScene: View {
                 }
 
                 DetailButton(text: "강의평") {
-                    if reviewId == nil {
-                        viewModel.presentEmailVerifyAlert()
-                    } else {
-                        showReviewWebView = true
-                    }
+                    showReviewWebView = true
                 }
-                .alert(viewModel.errorTitle, isPresented: $viewModel.isEmailVerifyAlertPresented, actions: {
-                    Button("확인") {
-                        viewModel.selectedTab = .review
-                        if displayMode.isPreview {
-                            dismiss()
-                        }
-                    }
-                    Button("취소", role: .cancel) {}
-                }, message: {
-                    Text(viewModel.errorMessage)
-                })
                 .onAppear {
                     Task {
-                        reviewId = await viewModel.fetchReviewId(of: lecture)
+                        if let evLecture = await viewModel.getEvLectureInfo(of: lecture) {
+                            lecture.updateEvLecture(to: evLecture)
+                            viewModel.reloadDetailWebView(detailId: evLecture.evLectureId)
+                        }
                     }
                 }
-                .onChange(of: reviewId) { newValue in
-                    guard let reviewId = newValue else { return }
-                    viewModel.reloadDetailWebView(detailId: reviewId)
-                }
                 .sheet(isPresented: $showReviewWebView) {
-                    ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: false, detailId: reviewId)
+                    ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: false, detailId: lecture.evLecture?.evLectureId)
                         .id(colorScheme)
-                        .id(reviewId)
                 }
             }
 

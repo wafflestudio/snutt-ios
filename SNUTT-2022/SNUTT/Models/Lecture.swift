@@ -35,6 +35,8 @@ struct Lecture: Identifiable {
     var freshmanQuota: Int
     var registrationCount: Int?
     var wasFull: Bool
+    
+    var evLecture: EvLecture?
 
     /// init 시에 ThemeDto의 theme 정보를 lecture에 저장
     var basicTheme: BasicTheme?
@@ -107,12 +109,35 @@ struct Lecture: Identifiable {
         guard let current = registrationCount else { return false }
         return wasFull && current < quota
     }
+    
+    mutating func updateEvLecture(to newValue: EvLecture) {
+        self.evLecture = newValue
+    }
 
     func isEquivalent(with lecture: Lecture) -> Bool {
         if isCustom {
             return id == lecture.id
         }
         return courseNumber == lecture.courseNumber && lectureNumber == lecture.lectureNumber
+    }
+}
+
+struct EvLecture {
+    let evLectureId: Int
+    let avgRating: Double?
+    let evaluationCount: Int
+    var avgRatingString: String {
+        if let avgRating = avgRating {
+            return String(format: "%.1f", avgRating)
+        } else {
+            return "--"
+        }
+    }
+    
+    init(from dto: EvLectureDto) {
+        self.evLectureId = dto.evLectureId
+        self.evaluationCount = dto.evaluationCount ?? 0
+        self.avgRating = dto.avgRating
     }
 }
 
@@ -155,6 +180,11 @@ extension Lecture {
         registrationCount = dto.registrationCount
         wasFull = dto.wasFull ?? false
         lectureIndex = (index ?? 0) + 1
+        if let evLecture = dto.snuttEvLecture {
+            self.evLecture = .init(from: evLecture)
+        } else {
+            self.evLecture = nil
+        }
     }
 }
 
@@ -187,6 +217,7 @@ extension Lecture {
                            freshmanQuota: Int.random(in: 1 ... 10),
                            registrationCount: Int.random(in: 10 ... 100),
                            wasFull: false,
+                           evLecture: nil,
                            lectureIndex: 0)
         }
     }

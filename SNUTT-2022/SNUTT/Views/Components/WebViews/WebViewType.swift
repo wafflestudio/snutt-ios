@@ -17,7 +17,7 @@ enum WebViewType {
     case termsOfService
     case privacyPolicy
     case review
-    case reviewDetail(id: String)
+    case reviewDetail(id: Int)
 
     var baseURL: String {
         switch self {

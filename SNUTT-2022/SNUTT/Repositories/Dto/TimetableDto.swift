@@ -41,6 +41,7 @@ struct LectureDto: Codable {
     let color: LectureColorDto?
     let colorIndex: Int?
     let wasFull: Bool?
+    let snuttEvLecture: EvLectureDto?
 
     let quota: Int?
     let registrationCount: Int?
@@ -48,6 +49,20 @@ struct LectureDto: Codable {
 
     var isCustom: Bool {
         course_number == nil || course_number == ""
+    }
+}
+
+struct EvLectureDto: Codable {
+    let evLectureId: Int
+    let avgRating: Double?
+    let evaluationCount: Int?
+}
+
+extension EvLectureDto {
+    init(from model: EvLecture) {
+        self.evLectureId = model.evLectureId
+        self.avgRating = model.avgRating
+        self.evaluationCount = model.evaluationCount
     }
 }
 
@@ -148,5 +163,10 @@ extension LectureDto {
         color = .init(fg: model.color?.fg.toHex(), bg: model.color?.bg.toHex())
         registrationCount = model.registrationCount
         wasFull = model.wasFull
+        if let evLecture = model.evLecture {
+            self.snuttEvLecture = .init(from: evLecture)
+        } else {
+            self.snuttEvLecture = nil
+        }
     }
 }
