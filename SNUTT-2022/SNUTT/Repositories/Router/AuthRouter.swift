@@ -16,7 +16,9 @@ enum AuthRouter: Router {
              .sendVerificationCode,
              .checkVerificationCode,
              .resetPassword,
-             .loginWithGoogle:
+             .loginWithFacebook,
+             .loginWithGoogle,
+             .loginWithKakao:
             return URL(string: NetworkConfiguration.serverV1BaseURL + "/auth")!
         default:
             return URL(string: NetworkConfiguration.serverBaseURL + "/auth")!
@@ -27,9 +29,10 @@ enum AuthRouter: Router {
 
     case registerWithLocalId(localId: String, localPassword: String, email: String)
     case loginWithLocalId(localId: String, localPassword: String)
-    case loginWithFacebook(fbId: String, fbToken: String)
+    case loginWithFacebook(facebookToken: String)
     case loginWithApple(appleToken: String)
     case loginWithGoogle(googleToken: String)
+    case loginWithKakao(kakaoToken: String)
     case findLocalId(email: String)
     case getLinkedEmail(localId: String)
     case sendVerificationCode(email: String)
@@ -48,6 +51,8 @@ enum AuthRouter: Router {
         case .loginWithApple:
             return .post
         case .loginWithGoogle:
+            return .post
+        case .loginWithKakao:
             return .post
         case .findLocalId:
             return .post
@@ -71,11 +76,13 @@ enum AuthRouter: Router {
         case .registerWithLocalId:
             return "/register_local"
         case .loginWithFacebook:
-            return "/login_fb"
+            return "/login/facebook"
         case .loginWithApple:
             return "/login_apple"
         case .loginWithGoogle:
-            return "/login_google"
+            return "/login/google"
+        case .loginWithKakao:
+            return "/login/kakao"
         case .findLocalId:
             return "/id/find"
         case .getLinkedEmail:
@@ -97,12 +104,14 @@ enum AuthRouter: Router {
             return ["id": localId, "password": localPassword]
         case let .registerWithLocalId(localId, localPassword, email):
             return ["id": localId, "password": localPassword, "email": email]
-        case let .loginWithFacebook(fbId, fbToken):
-            return ["fb_id": fbId, "fb_token": fbToken]
+        case let .loginWithFacebook(facebookToken):
+            return ["token": facebookToken]
         case let .loginWithApple(appleToken):
             return ["apple_token": appleToken]
         case let .loginWithGoogle(googleToken):
             return ["token": googleToken]
+        case let .loginWithKakao(kakaoToken):
+            return ["token": kakaoToken]
         case let .findLocalId(email: email):
             return ["email": email]
         case let .getLinkedEmail(localId: localId):

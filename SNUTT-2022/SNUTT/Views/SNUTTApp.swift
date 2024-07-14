@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import KakaoSDKCommon
+import KakaoSDKAuth
 
 @main
 struct SNUTTApp: App {
@@ -21,6 +23,7 @@ struct SNUTTApp: App {
             lectureService: appEnvironment.container.services.lectureService
         )
         )
+        KakaoSDK.initSDK(appKey: "NATIVE_APP_KEY")
     }
 
     var body: some Scene {
@@ -28,6 +31,9 @@ struct SNUTTApp: App {
             SNUTTView(viewModel: .init(container: appEnvironment.container))
                 .environment(\.dependencyContainer, appEnvironment.container)
                 .onOpenURL { url in
+                    if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                        AuthController.handleOpenUrl(url: url)
+                    }
                     Task {
                         do {
                             try await deepLinkHandler.open(url: url)

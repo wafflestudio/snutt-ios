@@ -13,8 +13,9 @@ protocol AuthServiceProtocol: Sendable {
     func loadAccessTokenDuringBootstrap()
     func loginWithLocalId(localId: String, localPassword: String) async throws
     func loginWithApple(appleToken: String) async throws
-    func loginWithFacebook(fbId: String, fbToken: String) async throws
+    func loginWithFacebook(facebookToken: String) async throws
     func loginWithGoogle(googleToken: String) async throws
+    func loginWithKakao(kakaoToken: String) async throws
     func registerWithLocalId(localId: String, localPassword: String, email: String) async throws
     func findLocalId(email: String) async throws
     func getLinkedEmail(localId: String) async throws -> String
@@ -80,14 +81,20 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         try await registerFCMToken()
     }
 
-    func loginWithFacebook(fbId: String, fbToken: String) async throws {
-        let dto = try await authRepository.loginWithFacebook(fbId: fbId, fbToken: fbToken)
+    func loginWithFacebook(facebookToken: String) async throws {
+        let dto = try await authRepository.loginWithFacebook(facebookToken: facebookToken)
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
     
     func loginWithGoogle(googleToken: String) async throws {
         let dto = try await authRepository.loginWithGoogle(googleToken: googleToken)
+        saveAccessTokenFromLoginResponse(dto: dto)
+        try await registerFCMToken()
+    }
+    
+    func loginWithKakao(kakaoToken: String) async throws {
+        let dto = try await authRepository.loginWithKakao(kakaoToken: kakaoToken)
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
@@ -146,8 +153,9 @@ class FakeAuthService: AuthServiceProtocol {
     func loadAccessTokenDuringBootstrap() {}
     func loginWithLocalId(localId _: String, localPassword _: String) async throws {}
     func loginWithApple(appleToken _: String) async throws {}
-    func loginWithFacebook(fbId _: String, fbToken _: String) async throws {}
+    func loginWithFacebook(facebookToken _: String) async throws {}
     func loginWithGoogle(googleToken _: String) async throws {}
+    func loginWithKakao(kakaoToken _: String) async throws {}
     func registerWithLocalId(localId _: String, localPassword _: String, email _: String) async throws {}
     func findLocalId(email _: String) async throws {}
     func getLinkedEmail(localId _: String) async throws -> String { return "" }
