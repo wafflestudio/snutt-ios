@@ -23,35 +23,78 @@ struct OnboardScene: View {
             if isActivated {
                 VStack(spacing: 15) {
                     Spacer()
+                        .frame(height: 200)
 
                     Logo(orientation: .vertical)
                         .matchedGeometryEffect(id: logoId, in: launchScreenAnimation)
 
-                    Spacer()
-
                     VStack {
-                        SignInButton(label: "로그인") {
+                        Spacer()
+                        
+                        Button {
                             pushToLoginScene = true
-                        }
-                        SignInButton(label: "가입하기") {
-                            pushToSignUpScene = true
-                        }
-
-                        SignInButton(label: "Facebook으로 계속하기", imageName: "facebook") {
-                            viewModel.performFacebookSignIn()
-                        }
-
-                        SignInButton(label: "Apple로 계속하기", imageName: "apple") {
-                            viewModel.performAppleSignIn()
+                        } label: {
+                            Text("로그인")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 137)
+                                .padding(.vertical, 12)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                        .foregroundColor(STColor.cyan)
+                                )
                         }
                         
-                        SignInButton(label: "Google로 계속하기", imageName: "apple") {
-                                                   viewModel.performGoogleSignIn()
-                                               }
+                        Button {
+                            pushToSignUpScene = true
+                        } label: {
+                            Text("회원가입")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.init(uiColor: .label))
+                                .padding(.top, 12)
+                                .padding(.bottom, 40)
+                        }
+                        
+                        HStack(spacing: 10) {
+                            Rectangle()
+                                .fill(STColor.gray20)
+                                .frame(height: 1)
+                            Text("SNS 계정으로 계속하기")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(STColor.gray20)
+                                .fixedSize(horizontal: true, vertical: false)
+                            Rectangle()
+                                .fill(STColor.gray20)
+                                .frame(height: 1)
+                        }
+                        .padding(.bottom, 24)
+                        
+                        HStack(spacing: 12) {
+                            Button {
+                                viewModel.performKakaoSignIn()
+                            } label: {
+                                Image("sns.kakao")
+                            }
+                            Button {
+                                viewModel.performGoogleSignIn()
+                            } label: {
+                                Image("sns.google")
+                            }
+                            Button {
+                                viewModel.performFacebookSignIn()
+                            } label: {
+                                Image("sns.facebook")
+                            }
+                            Button {
+                                viewModel.performAppleSignIn()
+                            } label: {
+                                Image("sns.apple")
+                            }
+                        }
+                        
+                        Spacer()
                     }
-                    .padding(.horizontal, 20)
-                    Spacer()
-                        .frame(height: 20)
+                    .padding(.horizontal, 12)
                 }
                 .transition(.scale(scale: 1))
             } else {
@@ -81,45 +124,10 @@ struct OnboardScene: View {
     }
 }
 
-struct SignInButton: View {
-    let label: String
-    var imageName: String? = nil
-    var borderColor: Color = .init(uiColor: .tertiaryLabel)
-    var fontColor: Color = .init(uiColor: .label)
-    var action: (() -> Void)? = nil
-
-    var body: some View {
-        Button {
-            action?()
-        } label: {
-            Text(label)
-                .font(.system(size: 17, weight: .semibold))
-                .frame(maxWidth: .infinity)
-                .foregroundColor(fontColor)
-                .contentShape(Rectangle())
-                .padding(.vertical, 10)
-                .overlay(HStack {
-                    if let imageName = imageName {
-                        Image(imageName)
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .padding()
-                    }
-                    Spacer()
-                })
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .stroke(borderColor, lineWidth: 1)
-                )
-        }
-        .buttonStyle(.plain)
-    }
-}
-
 #if DEBUG
-    struct OnboardScene_Previews: PreviewProvider {
-        static var previews: some View {
-            OnboardScene(viewModel: .init(container: .preview), pushToTimetableScene: .constant(true))
+struct OnboardScene_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardScene(viewModel: .init(container: .preview), pushToTimetableScene: .constant(true))
         }
     }
 #endif

@@ -46,7 +46,7 @@ extension OnboardScene {
 extension OnboardScene.ViewModel: FacebookLoginProtocol {
     func handleFacebookToken(fbId: String, fbToken: String) async {
         do {
-            try await services.authService.loginWithFacebook(fbId: fbId, fbToken: fbToken)
+            try await services.authService.loginWithFacebook(facebookToken: fbToken)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
@@ -57,6 +57,16 @@ extension OnboardScene.ViewModel: GoogleLoginProtocol {
     func handleGoogleToken(googleToken: String) async {
         do {
             try await services.authService.loginWithGoogle(googleToken: googleToken)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+}
+
+extension OnboardScene.ViewModel: KakaoLoginProtocol {
+    func handleKakaoToken(kakaoToken: String) async {
+        do {
+            try await services.authService.loginWithKakao(kakaoToken: kakaoToken)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
