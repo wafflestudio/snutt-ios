@@ -41,7 +41,6 @@ struct ReviewScene: View {
         ZStack {
             ReviewWebView(preloadedWebView: viewModel.getPreloadedWebView(isMain: isMainWebView))
                 .navigationBarHidden(true)
-                .edgesIgnoringSafeArea(.bottom)
                 .background(STColor.systemBackground)
 
             if viewModel.connectionState == .error {
