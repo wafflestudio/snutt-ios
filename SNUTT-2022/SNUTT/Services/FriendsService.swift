@@ -6,14 +6,13 @@
 //
 
 import Alamofire
+import Combine
 import Foundation
 import ReactNativeKit
 
-#if DEBUG
-    enum RNEvent: String, SupportedEvent {
-        case addFriendKakao = "add-friend-kakao"
-    }
-#endif
+enum RNEvent: String, SupportedEvent {
+    case addFriendKakao = "add-friend-kakao"
+}
 
 @MainActor
 protocol FriendsServiceProtocol: Sendable {
@@ -24,9 +23,6 @@ struct FriendsService: FriendsServiceProtocol, ConfigsProvidable {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
     var localRepositories: AppEnvironment.LocalRepositories
-    #if DEBUG
-        static let eventEmitter: EventEmitter<RNEvent> = .init()
-    #endif
 
     private let rnBundlePath = "ReactNativeBundles"
 
@@ -41,6 +37,8 @@ struct FriendsService: FriendsServiceProtocol, ConfigsProvidable {
     private var userDefaultsRepository: any UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
     }
+
+    // MARK: Kakao Friend Request
 
     // MARK: RN Bundle Management
 

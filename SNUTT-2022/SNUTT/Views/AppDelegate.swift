@@ -8,6 +8,7 @@
 import FacebookCore
 import FirebaseCore
 import FirebaseMessaging
+import KakaoSDKCommon
 import SwiftUI
 import UIKit
 
@@ -43,6 +44,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
             Messaging.messaging().delegate = self
         }
+
+        KakaoSDK.initSDK(appKey: Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String)
 
         // configure facebook sdk
         return ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
