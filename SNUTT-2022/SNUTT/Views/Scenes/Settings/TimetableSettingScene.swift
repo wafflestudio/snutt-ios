@@ -40,7 +40,6 @@ struct TimetableSettingScene: View {
                 Text("정보가 많을 경우 일부 텍스트가 표시되지 않을 수 있습니다.")
             }
 
-
             if !viewModel.timetableConfig.autoFit {
                 Section(header: Text("시간표 범위 설정")) {
                     SettingsLinkItem(title: "요일", detail: viewModel.visibleWeekdaysPreview) {

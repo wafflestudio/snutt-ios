@@ -54,7 +54,6 @@ struct TimetableConfiguration: Codable, Equatable {
     }
 }
 
-
 extension TimetableConfiguration {
     struct VisibilityOptions: Codable, OptionSet {
         var rawValue: Int8
@@ -72,47 +71,47 @@ extension TimetableConfiguration {
         static let instructor = Self(rawValue: 1 << 3)
 
         var isLectureTitleEnabled: Bool {
-                get { contains(.lectureTitle) }
-                set {
-                    if newValue {
-                        insert(.lectureTitle)
-                    } else {
-                        remove(.lectureTitle)
-                    }
+            get { contains(.lectureTitle) }
+            set {
+                if newValue {
+                    insert(.lectureTitle)
+                } else {
+                    remove(.lectureTitle)
                 }
             }
+        }
 
-            var isPlaceEnabled: Bool {
-                get { contains(.place) }
-                set {
-                    if newValue {
-                        insert(.place)
-                    } else {
-                        remove(.place)
-                    }
+        var isPlaceEnabled: Bool {
+            get { contains(.place) }
+            set {
+                if newValue {
+                    insert(.place)
+                } else {
+                    remove(.place)
                 }
             }
+        }
 
-            var isLectureNumberEnabled: Bool {
-                get { contains(.lectureNumber) }
-                set {
-                    if newValue {
-                        insert(.lectureNumber)
-                    } else {
-                        remove(.lectureNumber)
-                    }
+        var isLectureNumberEnabled: Bool {
+            get { contains(.lectureNumber) }
+            set {
+                if newValue {
+                    insert(.lectureNumber)
+                } else {
+                    remove(.lectureNumber)
                 }
             }
+        }
 
-            var isInstructorEnabled: Bool {
-                get { contains(.instructor) }
-                set {
-                    if newValue {
-                        insert(.instructor)
-                    } else {
-                        remove(.instructor)
-                    }
+        var isInstructorEnabled: Bool {
+            get { contains(.instructor) }
+            set {
+                if newValue {
+                    insert(.instructor)
+                } else {
+                    remove(.instructor)
                 }
             }
+        }
     }
 }

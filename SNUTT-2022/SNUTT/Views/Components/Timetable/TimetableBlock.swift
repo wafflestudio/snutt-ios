@@ -77,7 +77,7 @@ struct TimetableBlock: View {
             (.lectureTitle, lecture.title, .systemFont(ofSize: 11, weight: .regular)),
             (.place, timePlace.place, .systemFont(ofSize: 12, weight: .semibold)),
             (.lectureNumber, "(\(lecture.lectureNumber))", .systemFont(ofSize: 12)),
-            (.instructor, lecture.instructor, .systemFont(ofSize: 11))
+            (.instructor, lecture.instructor, .systemFont(ofSize: 11)),
         ]
 
         for (option, text, font) in elements {

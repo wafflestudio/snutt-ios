@@ -33,8 +33,7 @@ struct LectureBlocks: View {
                                            timePlace: timePlace,
                                            theme: theme,
                                            idealHeight: blockHeight,
-                                           visibilityOptions: config.visibilityOptions
-                            )
+                                           visibilityOptions: config.visibilityOptions)
                         #else
                             if let container = container {
                                 NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture, displayMode: .normal)) {
@@ -42,8 +41,7 @@ struct LectureBlocks: View {
                                                    timePlace: timePlace,
                                                    theme: theme,
                                                    idealHeight: blockHeight,
-                                                   visibilityOptions: config.visibilityOptions
-                                    )
+                                                   visibilityOptions: config.visibilityOptions)
                                 }
                                 .buttonStyle(.plain)
                             } else {
@@ -51,8 +49,7 @@ struct LectureBlocks: View {
                                                timePlace: timePlace,
                                                theme: theme,
                                                idealHeight: blockHeight,
-                                               visibilityOptions: config.visibilityOptions
-                                )
+                                               visibilityOptions: config.visibilityOptions)
                             }
                         #endif
                     }
