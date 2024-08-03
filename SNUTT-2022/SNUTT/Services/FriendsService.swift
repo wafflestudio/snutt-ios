@@ -6,9 +6,9 @@
 //
 
 import Alamofire
+import Combine
 import Foundation
 import ReactNativeKit
-import Combine
 
 enum RNEvent: String, SupportedEvent {
     case addFriendKakao = "add-friend-kakao"
@@ -39,7 +39,7 @@ struct FriendsService: FriendsServiceProtocol, ConfigsProvidable {
     }
 
     // MARK: Kakao Friend Request
-    
+
     // MARK: RN Bundle Management
 
     func fetchReactNativeBundleUrl() async throws -> URL {

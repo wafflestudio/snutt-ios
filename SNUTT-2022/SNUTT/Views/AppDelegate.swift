@@ -8,9 +8,9 @@
 import FacebookCore
 import FirebaseCore
 import FirebaseMessaging
+import KakaoSDKCommon
 import SwiftUI
 import UIKit
-import KakaoSDKCommon
 
 /// Required to integrate Firebase SDK and Facebook SDK.
 ///

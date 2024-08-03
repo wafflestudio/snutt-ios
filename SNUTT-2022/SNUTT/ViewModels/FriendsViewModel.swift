@@ -5,20 +5,19 @@
 //  Created by 박신홍 on 2023/07/15.
 //
 
-import Foundation
 import Combine
-import ReactNativeKit
-import KakaoSDKShare
+import Foundation
 import KakaoSDKCommon
+import KakaoSDKShare
 import KakaoSDKTemplate
+import ReactNativeKit
 import UIKit
 
 class FriendsViewModel: BaseViewModel, ObservableObject {
     private let eventEmitter: EventEmitter<RNEvent> = .init()
     private var cancellables = Set<AnyCancellable>()
-    
-    @Published
-    private(set) var friendRequestError: FriendRequestError?
+
+    @Published private(set) var friendRequestError: FriendRequestError?
 
     var isErrorAlertPresented: Bool {
         get { friendRequestError != nil }
@@ -41,7 +40,6 @@ class FriendsViewModel: BaseViewModel, ObservableObject {
                 }
             }
             .store(in: &cancellables)
-
     }
 
     var accessToken: String? {
@@ -116,11 +114,11 @@ extension FriendsViewModel {
         let params = ["type": RNEvent.addFriendKakao.rawValue, "requestToken": requestToken]
         let link = Link(androidExecutionParams: params, iosExecutionParams: params)
         let button = Button(title: "수락하기", link: link)
-        let feedTemplate = FeedTemplate(content: .init(title: "SNUTT : 서울대학교 시간표 앱",imageUrl: URL(string: "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource122/v4/f0/c6/58/f0c6581d-dd41-3bad-9d9a-516561d35af1/0d1dfc21-5d2e-4dcf-8cff-c6eb25fe7284_2_2.png/460x0w.webp"), description: "스누티티 친구 초대가 도착했어요", link: link), buttons: [button])
+        let feedTemplate = FeedTemplate(content: .init(title: "SNUTT : 서울대학교 시간표 앱", imageUrl: URL(string: "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource122/v4/f0/c6/58/f0c6581d-dd41-3bad-9d9a-516561d35af1/0d1dfc21-5d2e-4dcf-8cff-c6eb25fe7284_2_2.png/460x0w.webp"), description: "스누티티 친구 초대가 도착했어요", link: link), buttons: [button])
         let feedTemplateJsonData = try SdkJSONEncoder.custom.encode(feedTemplate)
         guard let templateJsonObject = SdkUtils.toJsonObject(feedTemplateJsonData) else { throw FriendRequestError.preparationFailed }
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
-            ShareApi.shared.shareDefault(templateObject:templateJsonObject) {(sharingResult, error) in
+            ShareApi.shared.shareDefault(templateObject: templateJsonObject) { sharingResult, error in
                 if let error = error {
                     continuation.resume(throwing: error)
                     return
@@ -134,6 +132,5 @@ extension FriendsViewModel {
                 }
             }
         }
-
     }
 }

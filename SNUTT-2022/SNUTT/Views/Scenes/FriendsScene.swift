@@ -28,7 +28,7 @@ struct FriendsScene: View {
         }
         .alert(isPresented: $viewModel.isErrorAlertPresented, error: viewModel.friendRequestError, actions: { _ in
             Button("확인", role: .none, action: {})
-        }, message: { error in Text(error.recoverySuggestion ?? "")})
+        }, message: { error in Text(error.recoverySuggestion ?? "") })
         .task {
             // bundleUrl = URL(string: "http://localhost:8081/index.bundle?platform=ios")!
             bundleUrl = await viewModel.fetchReactNativeBundleUrl()
