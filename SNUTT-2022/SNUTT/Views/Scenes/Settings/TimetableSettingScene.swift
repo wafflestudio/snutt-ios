@@ -15,15 +15,29 @@ struct TimetableSettingScene: View {
     var body: some View {
         Form {
             Section {
-                Toggle("자동 맞춤", isOn: $viewModel.timetableConfig.autoFit)
-                    .animation(.easeInOut, value: viewModel.timetableConfig.autoFit)
-
-                Toggle("꽉 찬 시간표", isOn: $viewModel.timetableConfig.compactMode)
-                    .animation(.easeInOut, value: viewModel.timetableConfig.compactMode)
+                Group {
+                    Toggle("자동 맞춤", isOn: $viewModel.timetableConfig.autoFit)
+                    Toggle("꽉 찬 시간표", isOn: $viewModel.timetableConfig.compactMode)
+                }
+                .animation(.easeInOut, value: viewModel.timetableConfig)
             } footer: {
                 if viewModel.timetableConfig.compactMode {
                     Text("꽉 찬 시간표를 표시합니다. 직접 추가한 강의와 일부 겹치는 현상이 발생할 수 있습니다.")
                 }
+            }
+
+            Section {
+                Group {
+                    Toggle("강의명", isOn: $viewModel.timetableConfig.visibilityOptions.isLectureTitleEnabled)
+                    Toggle("장소", isOn: $viewModel.timetableConfig.visibilityOptions.isPlaceEnabled)
+                    Toggle("분반번호", isOn: $viewModel.timetableConfig.visibilityOptions.isLectureNumberEnabled)
+                    Toggle("교수", isOn: $viewModel.timetableConfig.visibilityOptions.isInstructorEnabled)
+                }
+                .animation(.easeInOut, value: viewModel.timetableConfig)
+            } header: {
+                Text("강의 정보 표시")
+            } footer: {
+                Text("정보가 많을 경우 일부 텍스트가 표시되지 않을 수 있습니다.")
             }
 
             if !viewModel.timetableConfig.autoFit {
@@ -62,6 +76,7 @@ struct TimetableSettingScene: View {
                     .animation(.customSpring, value: viewModel.timetableConfig.maxHour)
                     .animation(.customSpring, value: viewModel.timetableConfig.weekCount)
                     .animation(.customSpring, value: viewModel.timetableConfig.autoFit)
+                    .animation(.customSpring, value: viewModel.timetableConfig.visibilityOptions)
                     .frame(height: 500)
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous)
