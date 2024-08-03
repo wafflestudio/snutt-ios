@@ -10,6 +10,7 @@ import FirebaseCore
 import FirebaseMessaging
 import SwiftUI
 import UIKit
+import KakaoSDKCommon
 
 /// Required to integrate Firebase SDK and Facebook SDK.
 ///
@@ -43,6 +44,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
             Messaging.messaging().delegate = self
         }
+
+        KakaoSDK.initSDK(appKey: Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String)
 
         // configure facebook sdk
         return ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
