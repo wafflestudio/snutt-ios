@@ -91,12 +91,10 @@ struct LectureDetailScene: View {
         .onAppear {
             isMapViewExpanded = viewModel.shouldOpenLectureMapView()
         }
-        .onAppear {
-            Task {
-                if let evLecture = await viewModel.getEvLectureInfo(of: lecture) {
-                    lecture.updateEvLecture(to: evLecture)
-                    viewModel.reloadDetailWebView(detailId: evLecture.evLectureId)
-                }
+        .task {
+            if let evLecture = await viewModel.getEvLectureInfo(of: lecture) {
+                lecture.updateEvLecture(to: evLecture)
+                viewModel.reloadDetailWebView(detailId: evLecture.evLectureId)
             }
         }
         .onChange(of: isMapViewExpanded) {
