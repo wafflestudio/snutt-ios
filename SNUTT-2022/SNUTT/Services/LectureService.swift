@@ -99,11 +99,9 @@ struct LectureService: LectureServiceProtocol {
     }
 
     func getEvLecture(of lecture: Lecture) async throws -> EvLecture? {
-        if let lectureId = lecture.lectureId {
-            let dto = try await reviewRepository.fetchEvLectureInfo(lectureId: lectureId)
-            return .init(from: dto)
-        }
-        return nil
+        let lectureId = lecture.lectureId ?? lecture.id
+        let dto = try await reviewRepository.fetchEvLectureInfo(lectureId: lectureId)
+        return .init(from: dto)
     }
 
     func getBuildingList(of lecture: Lecture) async throws -> [Building] {

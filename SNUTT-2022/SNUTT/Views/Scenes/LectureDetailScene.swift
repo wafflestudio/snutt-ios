@@ -91,6 +91,14 @@ struct LectureDetailScene: View {
         .onAppear {
             isMapViewExpanded = viewModel.shouldOpenLectureMapView()
         }
+        .onAppear {
+            Task {
+                if let evLecture = await viewModel.getEvLectureInfo(of: lecture) {
+                    lecture.updateEvLecture(to: evLecture)
+                    viewModel.reloadDetailWebView(detailId: evLecture.evLectureId)
+                }
+            }
+        }
         .onChange(of: isMapViewExpanded) {
             viewModel.setIsMapViewExpanded($0)
         }
@@ -497,14 +505,6 @@ struct LectureDetailScene: View {
 
                 DetailButton(text: "강의평") {
                     showReviewWebView = true
-                }
-                .onAppear {
-                    Task {
-                        if let evLecture = await viewModel.getEvLectureInfo(of: lecture) {
-                            lecture.updateEvLecture(to: evLecture)
-                            viewModel.reloadDetailWebView(detailId: evLecture.evLectureId)
-                        }
-                    }
                 }
                 .sheet(isPresented: $showReviewWebView) {
                     ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: false, detailId: lecture.evLecture?.evLectureId)
