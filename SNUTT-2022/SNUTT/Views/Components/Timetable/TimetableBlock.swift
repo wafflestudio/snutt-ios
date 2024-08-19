@@ -52,7 +52,7 @@ struct TimetableBlock: View {
             .lectureTitle(text: lecture.title),
             .place(text: timePlace.place),
             .lectureNumber(text: "(\(lecture.lectureNumber))"),
-            .instructor(text: lecture.instructor)
+            .instructor(text: lecture.instructor),
         ]
     }
 
@@ -74,13 +74,13 @@ struct TimetableBlock: View {
 private enum BlockInformationType: Identifiable {
     var id: String {
         switch self {
-        case .lectureTitle(let text):
+        case let .lectureTitle(text):
             "lectureTitle-\(text)"
-        case .place(let text):
+        case let .place(text):
             "place-\(text)"
-        case .lectureNumber(let text):
+        case let .lectureNumber(text):
             "lectureNumber-\(text)"
-        case .instructor(let text):
+        case let .instructor(text):
             "instructor-\(text)"
         }
     }
@@ -108,11 +108,11 @@ private enum BlockInformationType: Identifiable {
         case .lectureTitle:
             .lectureTitle
         case .place:
-                .place
+            .place
         case .lectureNumber:
-                .lectureNumber
+            .lectureNumber
         case .instructor:
-                .instructor
+            .instructor
         }
     }
 
@@ -121,18 +121,18 @@ private enum BlockInformationType: Identifiable {
         case .lectureTitle:
             1
         case .place,
-        .lectureNumber,
-        .instructor:
+             .lectureNumber,
+             .instructor:
             0.8
         }
     }
 
     var text: String {
         switch self {
-        case .lectureTitle(let text),
-        .place(let text),
-        .lectureNumber(let text),
-        .instructor(let text):
+        case let .lectureTitle(text),
+             let .place(text),
+             let .lectureNumber(text),
+             let .instructor(text):
             text.trimmingCharacters(in: .whitespacesAndNewlines)
         }
     }
@@ -142,9 +142,9 @@ private enum BlockInformationType: Identifiable {
         case .lectureTitle:
             0
         case .place,
-        .lectureNumber,
-        .instructor:
-                2
+             .lectureNumber,
+             .instructor:
+            2
         }
     }
 
@@ -178,5 +178,3 @@ private enum BlockInformationType: Identifiable {
         return AttributedString(string, attributes: container)
     }
 }
-
-

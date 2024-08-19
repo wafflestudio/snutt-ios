@@ -14,7 +14,7 @@ struct MenuSection<Content>: View where Content: View {
     let isEmptyQuarter: Bool
     var content: () -> Content
 
-    @State var isExpanded: Bool = false
+    @State var isExpanded = false
 
     var body: some View {
         VStack {

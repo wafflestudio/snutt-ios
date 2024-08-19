@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 2022/03/30.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 struct STFont {
     /// 시간표 이름 등의 제목 (17, Bold)
