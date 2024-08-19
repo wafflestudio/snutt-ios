@@ -34,7 +34,7 @@ struct TimetableBlock: View {
                         if type.needsDisplay(by: visibilityOptions) {
                             Text(type.attributedString)
                                 .foregroundColor(lecture.getColor(with: theme).fg)
-                                .padding(.top, informationTypes.first?.id == type.id ? 0 : 2)
+                                .padding(.top, type.topPadding)
                                 .minimumScaleFactor(type.minimumScaleFactor)
                         }
                     }
