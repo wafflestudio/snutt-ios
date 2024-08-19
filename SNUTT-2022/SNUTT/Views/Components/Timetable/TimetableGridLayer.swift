@@ -76,7 +76,7 @@ struct TimetableGridLayer: View {
             let visibleWeeksSorted = Painter.getVisibleWeeks(current: current, config: config)
             ForEach(visibleWeeksSorted) { week in
                 Text(week.shortSymbol)
-                    .font(STFont.details)
+                    .font(STFont.details.font)
                     .foregroundColor(Color(UIColor.secondaryLabel))
                     .frame(maxWidth: .infinity)
                     .frame(height: Painter.weekdayHeight)
@@ -92,7 +92,7 @@ struct TimetableGridLayer: View {
         return VStack(spacing: 0) {
             ForEach(minHour ... maxHour, id: \.self) { hour in
                 Text(String(hour))
-                    .font(STFont.details)
+                    .font(STFont.details.font)
                     .foregroundColor(Color(UIColor.secondaryLabel))
                     .padding(.top, 5)
                     .frame(width: Painter.hourWidth)

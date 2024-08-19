@@ -20,7 +20,7 @@ struct FindLocalIdView: View {
 
             Text("아이디를 찾기 위해\n연동된 이메일 주소가 필요합니다.")
                 .fixedSize()
-                .font(STFont.title)
+                .font(STFont.title.font)
 
             Spacer().frame(height: 8)
 
@@ -35,7 +35,7 @@ struct FindLocalIdView: View {
                 }
             } label: {
                 Text("확인")
-                    .font(STFont.title)
+                    .font(STFont.title.font)
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
             }

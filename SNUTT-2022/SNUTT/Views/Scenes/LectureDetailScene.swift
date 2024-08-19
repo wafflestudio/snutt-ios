@@ -372,7 +372,7 @@ struct LectureDetailScene: View {
     private var timePlaceSection: some View {
         VStack {
             Text("시간 및 장소")
-                .font(STFont.detailLabel)
+                .font(STFont.detailLabel.font)
                 .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
                 .frame(maxWidth: .infinity, alignment: .leading)
 

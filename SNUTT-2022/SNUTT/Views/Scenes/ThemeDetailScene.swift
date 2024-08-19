@@ -137,7 +137,7 @@ struct ThemeDetailScene: View {
                                             ColorPicker("배경색", selection: $theme.colors[index].bg, supportsOpacity: false)
                                         }
                                         .foregroundColor(STColor.disabled)
-                                        .font(STFont.detailLabel)
+                                        .font(STFont.detailLabel.font)
                                     }
                                     .padding(.leading, 80)
                                     .padding(.trailing, 20)
