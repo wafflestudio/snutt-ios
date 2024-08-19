@@ -102,13 +102,13 @@ struct MenuSectionRow: View {
             } label: {
                 HStack {
                     Text(timetableMetadata.title)
-                        .font(STFont.detailLabel)
+                        .font(STFont.detailLabel.font)
                         .lineLimit(1)
 
                     Spacer().frame(width: 5)
 
                     Text("(\(timetableMetadata.totalCredit)학점)")
-                        .font(STFont.detailLabel)
+                        .font(STFont.detailLabel.font)
                         .foregroundColor(Color(uiColor: .secondaryLabel))
                         .lineLimit(1)
                         .layoutPriority(0.5)

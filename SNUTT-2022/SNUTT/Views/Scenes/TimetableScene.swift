@@ -54,12 +54,12 @@ struct TimetableScene: View, Sendable {
                             .circleBadge(condition: viewModel.isNewCourseBookAvailable)
 
                             Text(viewModel.timetableTitle)
-                                .font(STFont.title)
+                                .font(STFont.title.font)
                                 .minimumScaleFactor(0.9)
                                 .lineLimit(1)
 
                             Text("(\(viewModel.totalCredit)학점)")
-                                .font(STFont.details)
+                                .font(STFont.details.font)
                                 .foregroundColor(Color(UIColor.secondaryLabel))
                         }
                     }

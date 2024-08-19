@@ -41,7 +41,7 @@ struct ExpandableLectureCell: View {
                         if let evLecture = lecture.evLecture {
                             Text("\(evLecture.avgRatingString) (\(evLecture.evaluationCount))")
                                 .foregroundColor(.white.opacity(0.7))
-                                .font(STFont.details)
+                                .font(STFont.details.font)
                         }
                     }
                 }

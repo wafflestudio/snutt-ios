@@ -23,7 +23,7 @@ struct ResetPasswordScene: View {
 
             Text("비밀번호 재설정을 위해\n연동된 아이디가 필요합니다.")
                 .fixedSize()
-                .font(STFont.title)
+                .font(STFont.title.font)
 
             Spacer().frame(height: 8)
 
@@ -41,7 +41,7 @@ struct ResetPasswordScene: View {
                 }
             } label: {
                 Text("확인")
-                    .font(STFont.title)
+                    .font(STFont.title.font)
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
             }

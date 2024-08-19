@@ -43,7 +43,7 @@ struct LoginScene: View {
                                 pushToResetPasswordScene = true
                             }
                     }
-                    .font(STFont.detailLabel)
+                    .font(STFont.detailLabel.font)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
                 }
             }

@@ -16,6 +16,10 @@ struct TimetableBlock: View {
     let idealHeight: CGFloat
     let visibilityOptions: VisibilityOptions
 
+    private enum Design {
+        static let padding: CGFloat = 4
+    }
+
     var body: some View {
         ZStack {
             Rectangle()
@@ -25,71 +29,154 @@ struct TimetableBlock: View {
             VStack(spacing: 0) {
                 Group {
                     let visibilityOptions = adjustedVisibilityOptions()
-
-                    if visibilityOptions.contains(.lectureTitle) {
-                        Text(attributedString(for: lecture.title, font: .systemFont(ofSize: 11, weight: .regular)))
-                            .foregroundColor(lecture.getColor(with: theme).fg)
-                            .font(STFont.lectureBlockTitle)
-                    }
-
-                    if !timePlace.place.isEmpty, visibilityOptions.contains(.place) {
-                        Text(attributedString(for: timePlace.place, font: .systemFont(ofSize: 12, weight: .semibold)))
-                            .padding(.top, 2)
-                            .minimumScaleFactor(0.8)
-                    }
-
-                    if !lecture.lectureNumber.isEmpty, visibilityOptions.contains(.lectureNumber) {
-                        Text(attributedString(for: "(\(lecture.lectureNumber))", font: .systemFont(ofSize: 12)))
-                            .padding(.top, 2)
-                            .minimumScaleFactor(0.8)
-                    }
-
-                    if !lecture.instructor.isEmpty, visibilityOptions.contains(.instructor) {
-                        Text(attributedString(for: lecture.instructor, font: .systemFont(ofSize: 11)))
-                            .padding(.top, 2)
-                            .minimumScaleFactor(0.8)
+                    let informationTypes = allInformationTypes()
+                    ForEach(informationTypes) { type in
+                        if type.needsDisplay(by: visibilityOptions) {
+                            Text(type.attributedString)
+                                .foregroundColor(lecture.getColor(with: theme).fg)
+                                .padding(.top, informationTypes.first?.id == type.id ? 0 : 2)
+                                .minimumScaleFactor(type.minimumScaleFactor)
+                        }
                     }
                 }
                 .multilineTextAlignment(.center)
                 .foregroundColor(lecture.getColor(with: theme).fg)
             }
             .animation(.customSpring, value: visibilityOptions)
-            .padding(4)
+            .padding(Design.padding)
         }
     }
 
-    private func attributedString(for string: String, font: UIFont) -> AttributedString {
-        var container = AttributeContainer()
-        container.font = font
-        return AttributedString(string, attributes: container)
-    }
-
-    private func height(for string: String, font: UIFont) -> CGFloat {
-        let attrString = attributedString(for: string, font: font)
-        return NSAttributedString(attrString).size().height
+    private func allInformationTypes() -> [BlockInformationType] {
+        [
+            .lectureTitle(text: lecture.title),
+            .place(text: timePlace.place),
+            .lectureNumber(text: "(\(lecture.lectureNumber))"),
+            .instructor(text: lecture.instructor)
+        ]
     }
 
     private func adjustedVisibilityOptions() -> VisibilityOptions {
         var estimatedHeight: CGFloat = 0
         var newOptions = VisibilityOptions()
-
-        let elements: [(VisibilityOptions, String, UIFont)] = [
-            (.lectureTitle, lecture.title, .systemFont(ofSize: 11, weight: .regular)),
-            (.place, timePlace.place, .systemFont(ofSize: 12, weight: .semibold)),
-            (.lectureNumber, "(\(lecture.lectureNumber))", .systemFont(ofSize: 12)),
-            (.instructor, lecture.instructor, .systemFont(ofSize: 11)),
-        ]
-
-        for (option, text, font) in elements {
-            if visibilityOptions.contains(option) {
-                estimatedHeight += height(for: text, font: font)
-                if estimatedHeight >= idealHeight {
-                    return newOptions
-                } else {
-                    newOptions.insert(option)
-                }
+        for type in allInformationTypes() where type.needsDisplay(by: visibilityOptions) {
+            estimatedHeight += (type.height + type.topPadding)
+            if estimatedHeight > idealHeight - Design.padding * 2 {
+                return newOptions
+            } else {
+                newOptions.insert(type.asVisibilityOption())
             }
         }
         return newOptions
     }
 }
+
+private enum BlockInformationType: Identifiable {
+    var id: String {
+        switch self {
+        case .lectureTitle(let text):
+            "lectureTitle-\(text)"
+        case .place(let text):
+            "place-\(text)"
+        case .lectureNumber(let text):
+            "lectureNumber-\(text)"
+        case .instructor(let text):
+            "instructor-\(text)"
+        }
+    }
+
+    case lectureTitle(text: String)
+    case place(text: String)
+    case lectureNumber(text: String)
+    case instructor(text: String)
+
+    var font: UIFont {
+        switch self {
+        case .lectureTitle:
+            STFont.lectureBlockTitle
+        case .place:
+            STFont.lectureBlockPlace
+        case .lectureNumber:
+            .systemFont(ofSize: 12)
+        case .instructor:
+            .systemFont(ofSize: 11)
+        }
+    }
+
+    func asVisibilityOption() -> TimetableConfiguration.VisibilityOptions {
+        switch self {
+        case .lectureTitle:
+            .lectureTitle
+        case .place:
+                .place
+        case .lectureNumber:
+                .lectureNumber
+        case .instructor:
+                .instructor
+        }
+    }
+
+    var minimumScaleFactor: CGFloat {
+        switch self {
+        case .lectureTitle:
+            1
+        case .place,
+        .lectureNumber,
+        .instructor:
+            0.8
+        }
+    }
+
+    var text: String {
+        switch self {
+        case .lectureTitle(let text),
+        .place(let text),
+        .lectureNumber(let text),
+        .instructor(let text):
+            text.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+    }
+
+    var topPadding: CGFloat {
+        switch self {
+        case .lectureTitle:
+            0
+        case .place,
+        .lectureNumber,
+        .instructor:
+                2
+        }
+    }
+
+    func needsDisplay(by visibilityOptions: TimetableConfiguration.VisibilityOptions) -> Bool {
+        if text.isEmpty {
+            return false
+        }
+        return switch self {
+        case .lectureTitle:
+            visibilityOptions.contains(.lectureTitle)
+        case .place:
+            visibilityOptions.contains(.place)
+        case .lectureNumber:
+            visibilityOptions.contains(.lectureNumber)
+        case .instructor:
+            visibilityOptions.contains(.instructor)
+        }
+    }
+
+    var attributedString: AttributedString {
+        Self.attributedString(for: text, font: font)
+    }
+
+    var height: CGFloat {
+        return NSAttributedString(attributedString).size().height
+    }
+
+    private static func attributedString(for string: String, font: UIFont) -> AttributedString {
+        var container = AttributeContainer()
+        container.font = font
+        return AttributedString(string, attributes: container)
+    }
+}
+
+
