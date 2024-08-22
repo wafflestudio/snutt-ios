@@ -55,10 +55,8 @@ struct LectureDetailScene: View {
     }
 
     private var showMapMismatchWarning: Bool {
-        !lecture.timePlaces.allSatisfy { timeplace in
-            buildings.allSatisfy {
-                timeplace.place.hasPrefix($0.number)
-            }
+        !lecture.timePlaces.map { $0.place }.allSatisfy { place in
+            buildings.first(where: { place.hasPrefix($0.number) }) != nil
         }
     }
 
@@ -85,7 +83,7 @@ struct LectureDetailScene: View {
             .padding(.vertical, 20)
             .padding(.bottom, 40)
         }
-        .onLoad {
+        .task {
             buildings = await viewModel.getBuildingList(of: lecture)
         }
         .onAppear {
@@ -436,7 +434,6 @@ struct LectureDetailScene: View {
                                             ? STColor.gray30.opacity(0.6)
                                             : STColor.darkGray.opacity(0.6))
                                         .padding(.top, 8)
-
                                     Spacer()
                                 }
                             }
