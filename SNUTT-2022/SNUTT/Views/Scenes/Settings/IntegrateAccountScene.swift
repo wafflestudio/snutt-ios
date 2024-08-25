@@ -13,15 +13,6 @@ struct IntegrateAccountScene: View {
     
     var body: some View {
         List {
-                SettingsButtonItem(title: "카카오 계정 연동") {
-                    
-                }
-                SettingsButtonItem(title: "구글 계정 연동") {
-                    
-                }
-                SettingsButtonItem(title: "애플 계정 연동") {
-                    
-                }
                 if let facebookName = viewModel.currentUser?.fbName {
                     SettingsTextItem(title: "페이스북 이름", detail: facebookName)
                     SettingsButtonItem(title: "페이스북 계정 연동 해제", role: .destructive) {
