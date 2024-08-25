@@ -23,7 +23,8 @@ struct SNUTTApp: App {
             lectureService: appEnvironment.container.services.lectureService
         )
         )
-        KakaoSDK.initSDK(appKey: "NATIVE_APP_KEY")
+        let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
+        KakaoSDK.initSDK(appKey: kakaoAppKey)
     }
 
     var body: some Scene {
