@@ -36,14 +36,14 @@ struct LectureHeaderRow: View {
         HStack {
             Group {
                 Text(lecture.title)
-                    .font(STFont.subheading)
+                    .font(STFont.subheading.font)
                 Spacer()
                 if lecture.instructor.isEmpty {
                     Text("\(lecture.credit)학점")
-                        .font(STFont.details)
+                        .font(STFont.details.font)
                 } else {
                     Text("\(lecture.instructor) / \(lecture.credit)학점")
-                        .font(STFont.details)
+                        .font(STFont.details.font)
                 }
             }
         }
@@ -60,7 +60,7 @@ struct LectureDetailRow: View {
                 .resizable()
                 .frame(width: 15, height: 15)
             Text(text.isEmpty ? "-" : text)
-                .font(STFont.details)
+                .font(STFont.details.font)
                 .lineLimit(1)
                 .opacity(text.isEmpty ? 0.5 : 1)
             Spacer()

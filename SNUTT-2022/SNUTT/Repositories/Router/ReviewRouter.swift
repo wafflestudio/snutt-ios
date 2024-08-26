@@ -10,31 +10,31 @@ import Foundation
 
 enum ReviewRouter: Router {
     var baseURL: URL {
-        URL(string: NetworkConfiguration.serverBaseURL + "/ev-service/v1")!
+        URL(string: NetworkConfiguration.serverV1BaseURL + "/ev")!
     }
 
     static var shouldAddToken: Bool { true }
 
-    case getReviewId(courseNumber: String, instructor: String)
+    case getEvLectureInfo(lectureId: String)
 
     var method: HTTPMethod {
         switch self {
-        case .getReviewId:
+        case .getEvLectureInfo:
             return .get
         }
     }
 
     var path: String {
         switch self {
-        case .getReviewId:
-            return "/lectures/id"
+        case let .getEvLectureInfo(lectureId):
+            return "/lectures/\(lectureId)/summary"
         }
     }
 
     var parameters: Parameters? {
         switch self {
-        case let .getReviewId(courseNumber, instructor):
-            return ["course_number": courseNumber, "instructor": instructor]
+        case .getEvLectureInfo:
+            return nil
         }
     }
 }

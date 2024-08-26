@@ -40,7 +40,7 @@ struct AnimatedTextField: View {
     var body: some View {
         VStack {
             Text(label)
-                .font(STFont.detailLabel)
+                .font(STFont.detailLabel.font)
                 .foregroundColor(Color(uiColor: .secondaryLabel))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -56,7 +56,7 @@ struct AnimatedTextField: View {
                 .keyboardType(keyboardType)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
-                .font(STFont.detailLabel)
+                .font(STFont.detailLabel.font)
                 .frame(height: 20)
 
                 // TextField with Timer
@@ -76,7 +76,7 @@ struct AnimatedTextField: View {
                                 .foregroundColor(STColor.red)
                         }
                     }
-                    .font(STFont.subheading)
+                    .font(STFont.subheading.font)
                     .padding(.horizontal, 16)
                 }
             }

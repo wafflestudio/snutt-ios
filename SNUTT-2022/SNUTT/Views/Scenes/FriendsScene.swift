@@ -18,12 +18,10 @@ struct FriendsScene: View {
         let _ = debugChanges()
         Group {
             if let token = viewModel.accessToken, let bundleUrl {
-                ZStack {
-                    STColor.systemBackground
-                        .ignoresSafeArea()
-                    RNFriendsView(accessToken: token, bundleUrl: bundleUrl, colorScheme: colorScheme)
-                        .id(colorScheme)
-                }
+                RNFriendsView(accessToken: token, bundleUrl: bundleUrl, colorScheme: colorScheme)
+                    .id(colorScheme)
+                    .navigationBarHidden(true)
+                    .background(STColor.systemBackground)
             } else {
                 ProgressView()
             }

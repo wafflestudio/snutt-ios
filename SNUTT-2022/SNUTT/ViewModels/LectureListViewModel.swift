@@ -23,7 +23,7 @@ class LectureListViewModel: BaseViewModel, ObservableObject {
     }
 
     var placeholderLecture: Lecture {
-        var lecture: Lecture = .init(from: .init(_id: UUID().uuidString, lecture_id: nil, classification: nil, department: nil, academic_year: nil, course_title: "새로운 강의", credit: 0, class_time: nil, class_time_json: [], class_time_mask: [], instructor: "", remark: nil, category: nil, course_number: nil, lecture_number: nil, created_at: nil, updated_at: nil, color: theme.isCustom ? LectureColorDto(fg: theme.colors[0].fg.toHex(), bg: theme.colors[0].bg.toHex()) : nil, colorIndex: theme.isCustom ? 0 : 1, wasFull: false, quota: nil, registrationCount: nil, freshmanQuota: nil))
+        var lecture: Lecture = .init(from: .init(_id: UUID().uuidString, lecture_id: nil, classification: nil, department: nil, academic_year: nil, course_title: "새로운 강의", credit: 0, class_time: nil, class_time_json: [], class_time_mask: [], instructor: "", remark: nil, category: nil, course_number: nil, lecture_number: nil, created_at: nil, updated_at: nil, color: theme.isCustom ? LectureColorDto(fg: theme.colors[0].fg.toHex(), bg: theme.colors[0].bg.toHex()) : nil, colorIndex: theme.isCustom ? 0 : 1, wasFull: false, snuttEvLecture: nil, quota: nil, registrationCount: nil, freshmanQuota: nil))
         if !theme.isCustom { lecture = lecture.withTheme(theme: theme.theme?.rawValue) }
         lecture.timePlaces.append(.init(id: UUID().uuidString,
                                         day: .mon,

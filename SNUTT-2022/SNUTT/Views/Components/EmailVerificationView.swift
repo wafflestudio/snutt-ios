@@ -20,12 +20,12 @@ struct EmailVerificationView: View {
 
             Text("강의평 서비스를 이용하기 위해\n이메일 인증이 필요합니다.\n\(email)에 대한 이메일 인증을\n진행하시겠습니까?")
                 .fixedSize()
-                .font(STFont.title)
+                .font(STFont.title.font)
 
             Spacer().frame(height: 18)
 
             Text("\"나중에 하기\"를 선택하더라도 강의평 서비스를 제외한 SNUTT의 모든 기능을 이용할 수 있습니다.")
-                .font(STFont.detailLabel)
+                .font(STFont.detailLabel.font)
 
             Spacer().frame(height: 68)
 
@@ -36,7 +36,7 @@ struct EmailVerificationView: View {
                     }
                 } label: {
                     Text("확인")
-                        .font(STFont.title)
+                        .font(STFont.title.font)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 40)
@@ -49,7 +49,7 @@ struct EmailVerificationView: View {
                     skipVerification()
                 } label: {
                     Text("나중에 하기")
-                        .font(STFont.title)
+                        .font(STFont.title.font)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 40)

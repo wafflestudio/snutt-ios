@@ -49,7 +49,7 @@ struct VerificationCodeView: View {
 
             Text("\(email)으로 전송된\n인증코드를 입력해주세요.")
                 .fixedSize()
-                .font(STFont.title)
+                .font(STFont.title.font)
 
             Spacer().frame(height: 8)
 
@@ -85,7 +85,7 @@ struct VerificationCodeView: View {
                 }
             } label: {
                 Text("확인")
-                    .font(STFont.title)
+                    .font(STFont.title.font)
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
             }

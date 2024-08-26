@@ -21,7 +21,7 @@ struct SignUpView: View {
     }
 
     enum DisplayMode: String {
-        case register = "계정 만들기"
+        case register = "회원가입"
         case attach = "계정 추가하기"
     }
 
@@ -56,7 +56,7 @@ struct SignUpView: View {
                     HStack {
                         AnimatedTextField(label: "이메일", placeholder: "서울대학교 메일 주소를 입력하세요", text: $email, keyboardType: .asciiCapable)
                         Text(domain)
-                            .font(STFont.detailLabel)
+                            .font(STFont.detailLabel.font)
                             .foregroundColor(.primary)
                             .alignmentGuide(VerticalAlignment.center) { _ in 0 }
                     }
@@ -89,7 +89,7 @@ struct SignUpView: View {
                         }
                     }
                 } label: {
-                    Text(displayMode == .register ? "계속하기" : displayMode.rawValue)
+                    Text(displayMode == .register ? "계정 만들기" : displayMode.rawValue)
                         .padding(.vertical, 5)
                         .font(.system(size: 17, weight: .semibold))
                         .frame(maxWidth: .infinity)

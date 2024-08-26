@@ -10,14 +10,14 @@ import SwiftUI
 
 struct ReviewScene: View {
     @ObservedObject var viewModel: ViewModel
-    var detailId: String?
+    var detailId: Int?
 
     private var isMainWebView: Bool
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
 
-    init(viewModel: ViewModel, isMainWebView: Bool, detailId: String? = nil) {
+    init(viewModel: ViewModel, isMainWebView: Bool, detailId: Int? = nil) {
         self.viewModel = viewModel
         self.detailId = detailId
         self.isMainWebView = isMainWebView
@@ -41,7 +41,6 @@ struct ReviewScene: View {
         ZStack {
             ReviewWebView(preloadedWebView: viewModel.getPreloadedWebView(isMain: isMainWebView))
                 .navigationBarHidden(true)
-                .edgesIgnoringSafeArea(.bottom)
                 .background(STColor.systemBackground)
 
             if viewModel.connectionState == .error {

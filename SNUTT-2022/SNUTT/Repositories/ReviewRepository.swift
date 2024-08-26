@@ -8,22 +8,20 @@
 import Alamofire
 import Foundation
 
-protocol ReviewRepositoryProtocol {
-    func fetchReviewId(courseNumber: String, instructor: String) async throws -> String
+protocol ReviewRepositoryProtocol: Sendable {
+    func fetchEvLectureInfo(lectureId: String) async throws -> EvLectureDto
 }
 
-class ReviewRepository: ReviewRepositoryProtocol {
+final class ReviewRepository: ReviewRepositoryProtocol {
     private let session: Session
 
     init(session: Session) {
         self.session = session
     }
 
-    func fetchReviewId(courseNumber: String, instructor: String) async throws -> String {
-        return try await session.request(ReviewRouter.getReviewId(courseNumber: courseNumber, instructor: instructor))
-            .serializingDecodable([String: Int].self)
+    func fetchEvLectureInfo(lectureId: String) async throws -> EvLectureDto {
+        return try await session.request(ReviewRouter.getEvLectureInfo(lectureId: lectureId))
+            .serializingDecodable(EvLectureDto.self)
             .handlingError()
-            .compactMap { String($0.value) }
-            .first!
     }
 }

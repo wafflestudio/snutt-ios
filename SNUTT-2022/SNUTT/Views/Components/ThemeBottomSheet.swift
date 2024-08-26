@@ -68,7 +68,7 @@ struct ThemeBottomSheetButton: View {
                 Spacer().frame(width: 9)
 
                 Text(menu.text)
-                    .font(STFont.detailLabel)
+                    .font(STFont.detailLabel.font)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(10)

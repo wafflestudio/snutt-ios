@@ -14,7 +14,7 @@ protocol LectureServiceProtocol: Sendable {
     func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool) async throws
     func deleteLecture(lecture: Lecture) async throws
     func resetLecture(lecture: Lecture) async throws
-    func fetchReviewId(courseNumber: String, instructor: String) async throws -> String
+    func getEvLecture(of lecture: Lecture) async throws -> EvLecture?
     func getBuildingList(of lecture: Lecture) async throws -> [Building]
 
     // MARK: Bookmark
@@ -98,8 +98,10 @@ struct LectureService: LectureServiceProtocol {
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
     }
 
-    func fetchReviewId(courseNumber: String, instructor: String) async throws -> String {
-        return try await reviewRepository.fetchReviewId(courseNumber: courseNumber, instructor: instructor)
+    func getEvLecture(of lecture: Lecture) async throws -> EvLecture? {
+        let lectureId = lecture.lectureId ?? lecture.id
+        let dto = try await reviewRepository.fetchEvLectureInfo(lectureId: lectureId)
+        return .init(from: dto)
     }
 
     func getBuildingList(of lecture: Lecture) async throws -> [Building] {
@@ -185,7 +187,7 @@ class FakeLectureService: LectureServiceProtocol {
     func bookmarkLecture(lecture _: Lecture) async throws {}
     func undoBookmarkLecture(lecture _: Lecture) async throws {}
     func fetchIsFirstBookmark() {}
-    func fetchReviewId(courseNumber _: String, instructor _: String) async throws -> String { return "" }
+    func getEvLecture(of _: Lecture) async throws -> EvLecture? { return nil }
     func getBuildingList(of _: Lecture) async throws -> [Building] { return [] }
     func setIsMapViewExpanded(_: Bool) {}
     func shouldExpandLectureMapView() -> Bool { return false }

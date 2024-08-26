@@ -40,7 +40,6 @@ struct LectureDetailScene: View {
     @State private var isResetAlertPresented = false
     @State private var isDeleteAlertPresented = false
     @State private var showReviewWebView = false
-    @State private var reviewId: String? = ""
     @State private var syllabusURL: String = ""
     @State private var showSyllabusWebView = false
     @State private var isMapViewExpanded: Bool = false
@@ -56,10 +55,8 @@ struct LectureDetailScene: View {
     }
 
     private var showMapMismatchWarning: Bool {
-        !lecture.timePlaces.allSatisfy { timeplace in
-            buildings.allSatisfy {
-                timeplace.place.hasPrefix($0.number)
-            }
+        !lecture.timePlaces.map { $0.place }.allSatisfy { place in
+            buildings.first(where: { place.hasPrefix($0.number) }) != nil
         }
     }
 
@@ -71,6 +68,9 @@ struct LectureDetailScene: View {
             VStack(spacing: 20) {
                 Group {
                     firstDetailSection
+                    if !lecture.isCustom {
+                        ratingSection
+                    }
                     secondDetailSection
                     timePlaceSection
                     buttonsSection
@@ -83,11 +83,17 @@ struct LectureDetailScene: View {
             .padding(.vertical, 20)
             .padding(.bottom, 40)
         }
-        .onLoad {
+        .task {
             buildings = await viewModel.getBuildingList(of: lecture)
         }
         .onAppear {
             isMapViewExpanded = viewModel.shouldOpenLectureMapView()
+        }
+        .task {
+            if let evLecture = await viewModel.getEvLectureInfo(of: lecture) {
+                lecture.updateEvLecture(to: evLecture)
+                viewModel.reloadDetailWebView(detailId: evLecture.evLectureId)
+            }
         }
         .onChange(of: isMapViewExpanded) {
             viewModel.setIsMapViewExpanded($0)
@@ -287,6 +293,26 @@ struct LectureDetailScene: View {
         .padding()
     }
 
+    private var ratingSection: some View {
+        HStack {
+            DetailLabel(text: "강의평점")
+            HStack(spacing: 2) {
+                Image("rating.star")
+                Group {
+                    if let evLecture = lecture.evLecture {
+                        Text("\(evLecture.avgRatingString) ")
+                            .foregroundColor(.primary)
+                        Text("(\(evLecture.evaluationCount)개)")
+                            .foregroundColor(STColor.gray2)
+                    }
+                }
+                .font(.system(size: 16))
+                Spacer()
+            }
+        }
+        .padding()
+    }
+
     private var secondDetailSection: some View {
         Group {
             if !lecture.isCustom {
@@ -344,7 +370,7 @@ struct LectureDetailScene: View {
     private var timePlaceSection: some View {
         VStack {
             Text("시간 및 장소")
-                .font(STFont.detailLabel)
+                .font(STFont.detailLabel.font)
                 .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -408,7 +434,6 @@ struct LectureDetailScene: View {
                                             ? STColor.gray30.opacity(0.6)
                                             : STColor.darkGray.opacity(0.6))
                                         .padding(.top, 8)
-
                                     Spacer()
                                 }
                             }
@@ -474,36 +499,11 @@ struct LectureDetailScene: View {
                 }
 
                 DetailButton(text: "강의평") {
-                    if reviewId == nil {
-                        viewModel.presentEmailVerifyAlert()
-                    } else {
-                        showReviewWebView = true
-                    }
-                }
-                .alert(viewModel.errorTitle, isPresented: $viewModel.isEmailVerifyAlertPresented, actions: {
-                    Button("확인") {
-                        viewModel.selectedTab = .review
-                        if displayMode.isPreview {
-                            dismiss()
-                        }
-                    }
-                    Button("취소", role: .cancel) {}
-                }, message: {
-                    Text(viewModel.errorMessage)
-                })
-                .onAppear {
-                    Task {
-                        reviewId = await viewModel.fetchReviewId(of: lecture)
-                    }
-                }
-                .onChange(of: reviewId) { newValue in
-                    guard let reviewId = newValue else { return }
-                    viewModel.reloadDetailWebView(detailId: reviewId)
+                    showReviewWebView = true
                 }
                 .sheet(isPresented: $showReviewWebView) {
-                    ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: false, detailId: reviewId)
+                    ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: false, detailId: lecture.evLecture?.evLectureId)
                         .id(colorScheme)
-                        .id(reviewId)
                 }
             }
 
