@@ -30,7 +30,7 @@ struct OnboardScene: View {
 
                     VStack {
                         Spacer()
-                        
+
                         Button {
                             pushToLoginScene = true
                         } label: {
@@ -44,7 +44,7 @@ struct OnboardScene: View {
                                         .foregroundColor(STColor.cyan)
                                 )
                         }
-                        
+
                         Button {
                             pushToSignUpScene = true
                         } label: {
@@ -54,7 +54,7 @@ struct OnboardScene: View {
                                 .padding(.top, 12)
                                 .padding(.bottom, 40)
                         }
-                        
+
                         HStack(spacing: 10) {
                             Rectangle()
                                 .fill(STColor.gray20)
@@ -68,7 +68,7 @@ struct OnboardScene: View {
                                 .frame(height: 1)
                         }
                         .padding(.bottom, 24)
-                        
+
                         HStack(spacing: 12) {
                             Button {
                                 viewModel.performKakaoSignIn()
@@ -91,7 +91,7 @@ struct OnboardScene: View {
                                 Image("sns.apple")
                             }
                         }
-                        
+
                         Spacer()
                     }
                     .padding(.horizontal, 12)
@@ -125,9 +125,9 @@ struct OnboardScene: View {
 }
 
 #if DEBUG
-struct OnboardScene_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardScene(viewModel: .init(container: .preview), pushToTimetableScene: .constant(true))
+    struct OnboardScene_Previews: PreviewProvider {
+        static var previews: some View {
+            OnboardScene(viewModel: .init(container: .preview), pushToTimetableScene: .constant(true))
         }
     }
 #endif

@@ -11,13 +11,13 @@ import SwiftUI
 extension IntegrateAccountScene {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var currentUser: User?
-        
+
         override init(container: DIContainer) {
             super.init(container: container)
-            
+
             appState.user.$current.assign(to: &$currentUser)
         }
-        
+
         func detachFacebook() async {
             do {
                 try await services.userService.disconnectFacebook()

@@ -50,14 +50,14 @@ class AuthRepository: AuthRepositoryProtocol {
             .serializingDecodable(LoginResponseDto.self)
             .handlingError()
     }
-    
+
     func loginWithGoogle(googleToken: String) async throws -> LoginResponseDto {
         return try await session
             .request(AuthRouter.loginWithGoogle(googleToken: googleToken))
             .serializingDecodable(LoginResponseDto.self)
             .handlingError()
     }
-    
+
     func loginWithKakao(kakaoToken: String) async throws -> LoginResponseDto {
         return try await session
             .request(AuthRouter.loginWithKakao(kakaoToken: kakaoToken))

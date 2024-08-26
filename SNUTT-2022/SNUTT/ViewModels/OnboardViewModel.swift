@@ -44,7 +44,7 @@ extension OnboardScene {
 }
 
 extension OnboardScene.ViewModel: FacebookLoginProtocol {
-    func handleFacebookToken(fbId: String, fbToken: String) async {
+    func handleFacebookToken(fbId _: String, fbToken: String) async {
         do {
             try await services.authService.loginWithFacebook(facebookToken: fbToken)
         } catch {

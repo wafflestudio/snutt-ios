@@ -86,13 +86,13 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
-    
+
     func loginWithGoogle(googleToken: String) async throws {
         let dto = try await authRepository.loginWithGoogle(googleToken: googleToken)
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
-    
+
     func loginWithKakao(kakaoToken: String) async throws {
         let dto = try await authRepository.loginWithKakao(kakaoToken: kakaoToken)
         saveAccessTokenFromLoginResponse(dto: dto)

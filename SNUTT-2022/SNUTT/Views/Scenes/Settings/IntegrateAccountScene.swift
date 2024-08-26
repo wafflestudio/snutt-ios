@@ -10,20 +10,19 @@ import SwiftUI
 struct IntegrateAccountScene: View {
     @ObservedObject var viewModel: ViewModel
     @State private var isDisconnectFBAlertPresented: Bool = false
-    
+
     var body: some View {
         List {
-                if let facebookName = viewModel.currentUser?.fbName {
-                    SettingsTextItem(title: "페이스북 이름", detail: facebookName)
-                    SettingsButtonItem(title: "페이스북 계정 연동 해제", role: .destructive) {
-                        isDisconnectFBAlertPresented = true
-                    }
-                } else {
-                    SettingsButtonItem(title: "페이스북 계정 연동") {
-                        viewModel.performFacebookSignIn()
-                    }
+            if let facebookName = viewModel.currentUser?.fbName {
+                SettingsTextItem(title: "페이스북 이름", detail: facebookName)
+                SettingsButtonItem(title: "페이스북 계정 연동 해제", role: .destructive) {
+                    isDisconnectFBAlertPresented = true
                 }
-            
+            } else {
+                SettingsButtonItem(title: "페이스북 계정 연동") {
+                    viewModel.performFacebookSignIn()
+                }
+            }
         }
         .alert("페이스북 계정 연동 해제", isPresented: $isDisconnectFBAlertPresented) {
             Button("취소", role: .cancel, action: {})

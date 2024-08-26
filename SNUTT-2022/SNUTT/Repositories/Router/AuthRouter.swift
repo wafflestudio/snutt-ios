@@ -1,5 +1,5 @@
 //
-//  STAuthRouter.swift
+//  AuthRouter.swift
 //  SNUTT
 //
 //  Created by Rajin on 2016. 1. 13..

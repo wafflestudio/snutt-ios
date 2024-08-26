@@ -5,9 +5,9 @@
 //  Created by Jinsup Keum on 2022/03/19.
 //
 
-import SwiftUI
-import KakaoSDKCommon
 import KakaoSDKAuth
+import KakaoSDKCommon
+import SwiftUI
 
 @main
 struct SNUTTApp: App {
@@ -32,7 +32,7 @@ struct SNUTTApp: App {
             SNUTTView(viewModel: .init(container: appEnvironment.container))
                 .environment(\.dependencyContainer, appEnvironment.container)
                 .onOpenURL { url in
-                    if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                    if AuthApi.isKakaoTalkLoginUrl(url) {
                         AuthController.handleOpenUrl(url: url)
                     }
                     Task {
