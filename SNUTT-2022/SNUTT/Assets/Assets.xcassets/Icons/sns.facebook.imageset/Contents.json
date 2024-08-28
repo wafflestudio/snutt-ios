@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "페이스북_로고_심볼형_RGB 1.png",
+      "filename" : "sns.facebook.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "페이스북_로고_심볼형_RGB 1@2x.png",
+      "filename" : "sns.facebook.2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "페이스북_로고_심볼형_RGB 1@3x.png",
+      "filename" : "sns.facebook.3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
