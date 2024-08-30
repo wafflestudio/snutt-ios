@@ -20,8 +20,8 @@ struct SearchTagList {
 }
 
 extension SearchTagList {
-    init(from dto: SearchTagListDto) {
-        let dtoDict = dto.asDictionary()! // TODO: remove force unwrapping
+    init?(from dto: SearchTagListDto) {
+        guard let dtoDict = dto.asDictionary() else { return nil }
         var searchTags: [SearchTag] = []
         for (key, value) in dtoDict {
             guard let tagStrings = value as? [String],
@@ -43,6 +43,7 @@ extension SearchTagList {
 }
 
 enum SearchTagType: String, CaseIterable {
+    case sortCriteria
     case classification
     case department
     case academicYear = "academic_year"
@@ -53,30 +54,33 @@ enum SearchTagType: String, CaseIterable {
 
     var tagColor: Color {
         switch self {
-        case .academicYear: return Color(hex: "#dc2f45")
-        case .classification: return Color(hex: "#e5731c")
-        case .credit: return Color(hex: "#8bbb1a")
-        case .department: return Color(hex: "#0cada6")
+        case .sortCriteria: return Color(hex: "#DC2F45")
+        case .academicYear: return Color(hex: "#DC2F45")
+        case .classification: return Color(hex: "#E5731C")
+        case .credit: return Color(hex: "#8BBB1A")
+        case .department: return Color(hex: "#0CADA6")
         case .time: return Color(hex: "#5BA0D7")
-        case .category: return Color(hex: "#9c45a0")
+        case .category: return Color(hex: "#9C45A0")
         case .etc: return Color(hex: "#AF56B3")
         }
     }
 
     var tagLightColor: Color {
         switch self {
-        case .academicYear: return Color(hex: "#e54459")
-        case .classification: return Color(hex: "#f58d3d")
-        case .credit: return Color(hex: "#a6d930")
-        case .department: return Color(hex: "#1bd0c9")
+        case .sortCriteria: return Color(hex: "#E54459")
+        case .academicYear: return Color(hex: "#E54459")
+        case .classification: return Color(hex: "#F58D3D")
+        case .credit: return Color(hex: "#A6D930")
+        case .department: return Color(hex: "#1BD0C9")
         case .time: return Color(hex: "#1D99E8")
-        case .category: return Color(hex: "#af56b3")
+        case .category: return Color(hex: "#AF56B3")
         case .etc: return Color(hex: "#AF56B3")
         }
     }
 
     var typeStr: String {
         switch self {
+        case .sortCriteria: return "정렬 기준"
         case .academicYear: return "학년"
         case .classification: return "분류"
         case .credit: return "학점"
