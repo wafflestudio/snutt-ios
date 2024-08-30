@@ -8,6 +8,7 @@
 import Foundation
 
 struct SearchTagListDto: Codable {
+    var sortCriteria: [String]
     var classification: [String]
     var department: [String]
     var academic_year: [String]
