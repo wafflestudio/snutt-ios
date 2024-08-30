@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FilterSheetContent: View {
     @ObservedObject var viewModel: FilterSheetViewModel
-    @State private var selectedCategory: SearchTagType = .classification
+    @State private var selectedCategory: SearchTagType = .sortCriteria
     @State private var isTimeRangeSheetOpen: Bool = false
 
     struct FilterButtonStyle: ButtonStyle {
