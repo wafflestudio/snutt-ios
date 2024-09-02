@@ -37,13 +37,13 @@ struct OnboardScene: View {
                             Text("로그인")
                                 .font(.system(size: 14, weight: .semibold))
                                 .foregroundColor(.white)
-                                .padding(.horizontal, 137)
-                                .padding(.vertical, 12)
+                                .frame(maxWidth: .infinity, maxHeight: 41)
                                 .background(
                                     RoundedRectangle(cornerRadius: 10, style: .continuous)
                                         .foregroundColor(STColor.cyan)
                                 )
                         }
+                        .padding(.horizontal, 32)
 
                         Button {
                             pushToSignUpScene = true
