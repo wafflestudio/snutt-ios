@@ -35,7 +35,7 @@ struct SearchTagsScrollView: View {
                             })
                             .buttonStyle(.borderedProminent)
                             .buttonBorderShape(.capsule)
-                            .tint(tag.type.tagLightColor)
+                            .tint(tag.type.tagColor)
                             .id(tag.id)
                         }
                     }
