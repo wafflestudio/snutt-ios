@@ -54,26 +54,13 @@ enum SearchTagType: String, CaseIterable {
 
     var tagColor: Color {
         switch self {
-        case .sortCriteria: return Color(hex: "#DC2F45")
-        case .academicYear: return Color(hex: "#DC2F45")
-        case .classification: return Color(hex: "#E5731C")
-        case .credit: return Color(hex: "#8BBB1A")
-        case .department: return Color(hex: "#0CADA6")
-        case .time: return Color(hex: "#5BA0D7")
-        case .category: return Color(hex: "#9C45A0")
-        case .etc: return Color(hex: "#AF56B3")
-        }
-    }
-
-    var tagLightColor: Color {
-        switch self {
-        case .sortCriteria: return Color(hex: "#E54459")
+        case .sortCriteria: return Color(hex: "#A6A6A6")
         case .academicYear: return Color(hex: "#E54459")
         case .classification: return Color(hex: "#F58D3D")
         case .credit: return Color(hex: "#A6D930")
-        case .department: return Color(hex: "#1BD0C9")
+        case .department: return Color(hex: "#1BD0C8")
         case .time: return Color(hex: "#1D99E8")
-        case .category: return Color(hex: "#AF56B3")
+        case .category: return Color(hex: "#4F48C4")
         case .etc: return Color(hex: "#AF56B3")
         }
     }
