@@ -13,6 +13,7 @@ struct TimetableScene: View, Sendable {
     @State private var pushToListScene = false
     @State private var isShareSheetOpened = false
     @State private var screenshot: UIImage = .init()
+    @State private var screenSize: CGSize = .zero
     @ObservedObject var viewModel: TimetableViewModel
 
     /// Provide title for `UIActivityViewController`.
@@ -22,6 +23,7 @@ struct TimetableScene: View, Sendable {
 
     var body: some View {
         VStack(spacing: 0) {
+            customToolBar
             if viewModel.isVacancyBannerVisible {
                 VacancyBanner {
                     viewModel.goToVacancyPage()
@@ -33,6 +35,46 @@ struct TimetableScene: View, Sendable {
         .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
         let _ = debugChanges()
     }
+    
+    var customToolBar: some View {
+        HStack(spacing: 0) {
+            HStack {
+                NavBarButton(imageName: "nav.menu") {
+                    viewModel.setIsMenuOpen(true)
+                }
+                .circleBadge(condition: viewModel.isNewCourseBookAvailable)
+
+                Text(viewModel.timetableTitle)
+                    .font(STFont.title.font)
+                    .minimumScaleFactor(0.9)
+                    .lineLimit(1)
+
+                Text("(\(viewModel.totalCredit)학점)")
+                    .font(STFont.details.font)
+                    .foregroundColor(Color(UIColor.secondaryLabel))
+            }
+            
+            Spacer()
+            
+            HStack {
+                NavBarButton(imageName: "nav.list") {
+                    pushToListScene = true
+                }
+
+                NavBarButton(imageName: "nav.share") {
+                    screenshot = self.timetable.takeScreenshot(size: screenSize, preferredColorScheme: colorScheme)
+                    isShareSheetOpened = true
+                }
+
+                NavBarButton(imageName: "nav.alarm.off") {
+                    viewModel.routingState.pushToNotification = true
+                }
+                .circleBadge(condition: viewModel.unreadCount > 0)
+            }
+        }
+        .frame(height: 44)
+        .padding(.horizontal, 16)
+    }
 
     var timetable: some View {
         GeometryReader { reader in
@@ -42,52 +84,18 @@ struct TimetableScene: View, Sendable {
                 .background(
                     Group {
                         NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
+                        
+                        NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
+                                       isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
                     }
                 )
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItemGroup(placement: .topBarLeading) {
-                        HStack {
-                            NavBarButton(imageName: "nav.menu") {
-                                viewModel.setIsMenuOpen(true)
-                            }
-                            .circleBadge(condition: viewModel.isNewCourseBookAvailable)
-
-                            Text(viewModel.timetableTitle)
-                                .font(STFont.title.font)
-                                .minimumScaleFactor(0.9)
-                                .lineLimit(1)
-
-                            Text("(\(viewModel.totalCredit)학점)")
-                                .font(STFont.details.font)
-                                .foregroundColor(Color(UIColor.secondaryLabel))
-                        }
-                    }
-                    ToolbarItemGroup(placement: .topBarTrailing) {
-                        HStack {
-                            NavBarButton(imageName: "nav.list") {
-                                pushToListScene = true
-                            }
-
-                            NavBarButton(imageName: "nav.share") {
-                                screenshot = self.timetable.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
-                                isShareSheetOpened = true
-                            }
-
-                            NavBarButton(imageName: "nav.alarm.off") {
-                                viewModel.routingState.pushToNotification = true
-                            }
-                            .circleBadge(condition: viewModel.unreadCount > 0)
-                        }
-                    }
+                .onAppear {
+                    screenSize = reader.size
                 }
+                .navigationBarTitleDisplayMode(.inline)
                 .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
                     ActivityViewController(activityItems: [screenshot, linkMetadata])
                 }
-        }
-        .background {
-            NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
-                           isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
         }
     }
 }
