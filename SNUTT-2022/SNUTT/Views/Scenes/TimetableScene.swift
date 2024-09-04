@@ -35,7 +35,7 @@ struct TimetableScene: View, Sendable {
         .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
         let _ = debugChanges()
     }
-    
+
     var customToolBar: some View {
         HStack(spacing: 0) {
             HStack {
@@ -53,9 +53,9 @@ struct TimetableScene: View, Sendable {
                     .font(STFont.details.font)
                     .foregroundColor(Color(UIColor.secondaryLabel))
             }
-            
+
             Spacer()
-            
+
             HStack {
                 NavBarButton(imageName: "nav.list") {
                     pushToListScene = true
@@ -84,7 +84,7 @@ struct TimetableScene: View, Sendable {
                 .background(
                     Group {
                         NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
-                        
+
                         NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
                                        isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
                     }
