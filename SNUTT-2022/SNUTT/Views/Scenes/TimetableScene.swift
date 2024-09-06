@@ -13,56 +13,60 @@ struct TimetableScene: View, Sendable {
     @State private var pushToListScene = false
     @State private var isShareSheetOpened = false
     @State private var screenshot: UIImage = .init()
-    @State private var screenSize: CGSize = .zero
     @ObservedObject var viewModel: TimetableViewModel
 
     /// Provide title for `UIActivityViewController`.
     private let linkMetadata = LinkMetadata()
+    private let toolBarHeight: CGFloat = 44
 
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        VStack(spacing: 0) {
-            customToolBar
-            if viewModel.isVacancyBannerVisible {
-                VacancyBanner {
-                    viewModel.goToVacancyPage()
+        GeometryReader { proxy in
+            VStack(spacing: 0) {
+                customToolBar(proxy.size)
+                if viewModel.isVacancyBannerVisible {
+                    VacancyBanner {
+                        viewModel.goToVacancyPage()
+                    }
+                    .transition(.move(edge: .trailing))
                 }
-                .transition(.move(edge: .trailing))
+                timetable
             }
-            timetable
+            .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
         }
-        .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
         let _ = debugChanges()
     }
-
-    var customToolBar: some View {
-        HStack(spacing: 0) {
-            HStack {
+    
+    @ViewBuilder private func customToolBar(_ screenSize: CGSize) -> some View {
+        HStack {
+            Group {
                 NavBarButton(imageName: "nav.menu") {
                     viewModel.setIsMenuOpen(true)
                 }
                 .circleBadge(condition: viewModel.isNewCourseBookAvailable)
 
-                Text(viewModel.timetableTitle)
-                    .font(STFont.title.font)
-                    .minimumScaleFactor(0.9)
-                    .lineLimit(1)
+                HStack(spacing: 8) {
+                    Text(viewModel.timetableTitle)
+                        .font(STFont.title.font)
+                        .minimumScaleFactor(0.9)
+                        .lineLimit(1)
 
-                Text("(\(viewModel.totalCredit)학점)")
-                    .font(STFont.details.font)
-                    .foregroundColor(Color(UIColor.secondaryLabel))
+                    Text("(\(viewModel.totalCredit)학점)")
+                        .font(STFont.details.font)
+                        .foregroundColor(Color(UIColor.secondaryLabel))
+                }
             }
-
+            
             Spacer()
-
-            HStack {
+            
+            Group {
                 NavBarButton(imageName: "nav.list") {
                     pushToListScene = true
                 }
 
                 NavBarButton(imageName: "nav.share") {
-                    screenshot = self.timetable.takeScreenshot(size: screenSize, preferredColorScheme: colorScheme)
+                    screenshot = self.timetable.takeScreenshot(size: .init(width: screenSize.width, height: screenSize.height - toolBarHeight), preferredColorScheme: colorScheme)
                     isShareSheetOpened = true
                 }
 
@@ -72,31 +76,26 @@ struct TimetableScene: View, Sendable {
                 .circleBadge(condition: viewModel.unreadCount > 0)
             }
         }
-        .frame(height: 44)
+        .frame(height: toolBarHeight)
         .padding(.horizontal, 16)
     }
-
+    
     var timetable: some View {
-        GeometryReader { reader in
-            TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
-                .animation(.customSpring, value: viewModel.currentTimetable?.id)
-                // navigate programmatically, because NavigationLink inside toolbar doesn't work
-                .background(
-                    Group {
-                        NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
+        TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
+            .animation(.customSpring, value: viewModel.currentTimetable?.id)
+            // navigate programmatically, because NavigationLink inside toolbar doesn't work
+            .background(
+                Group {
+                    NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
 
-                        NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
-                                       isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
-                    }
-                )
-                .onAppear {
-                    screenSize = reader.size
+                    NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
+                                   isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
                 }
-                .navigationBarTitleDisplayMode(.inline)
-                .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
-                    ActivityViewController(activityItems: [screenshot, linkMetadata])
-                }
-        }
+            )
+            .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
+                ActivityViewController(activityItems: [screenshot, linkMetadata])
+            }
     }
 }
 
