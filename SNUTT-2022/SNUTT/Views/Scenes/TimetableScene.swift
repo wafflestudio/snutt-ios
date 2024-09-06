@@ -37,7 +37,7 @@ struct TimetableScene: View, Sendable {
         }
         let _ = debugChanges()
     }
-    
+
     @ViewBuilder private func customToolBar(_ screenSize: CGSize) -> some View {
         HStack {
             Group {
@@ -57,9 +57,9 @@ struct TimetableScene: View, Sendable {
                         .foregroundColor(Color(UIColor.secondaryLabel))
                 }
             }
-            
+
             Spacer()
-            
+
             Group {
                 NavBarButton(imageName: "nav.list") {
                     pushToListScene = true
@@ -79,7 +79,7 @@ struct TimetableScene: View, Sendable {
         .frame(height: toolBarHeight)
         .padding(.horizontal, 16)
     }
-    
+
     var timetable: some View {
         TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
             .animation(.customSpring, value: viewModel.currentTimetable?.id)
