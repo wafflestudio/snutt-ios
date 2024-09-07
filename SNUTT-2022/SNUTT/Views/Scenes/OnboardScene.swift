@@ -35,7 +35,7 @@ struct OnboardScene: View {
                             pushToLoginScene = true
                         } label: {
                             Text("로그인")
-                                .font(.system(size: 14, weight: .semibold))
+                                .font(.system(size: 14, weight: .bold))
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity, maxHeight: 41)
                                 .background(
