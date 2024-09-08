@@ -13,6 +13,7 @@ struct FriendsScene: View {
     @State private var bundleUrl: URL?
 
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.scenePhase) private var phase
 
     var body: some View {
         let _ = debugChanges()
@@ -33,8 +34,16 @@ struct FriendsScene: View {
             // bundleUrl = URL(string: "http://localhost:8081/index.bundle?platform=ios")!
             bundleUrl = await viewModel.fetchReactNativeBundleUrl()
         }
-        .task {
-            await viewModel.bindEventEmitter()
+        .onAppear {
+            viewModel.startListeningEvents()
+        }
+        .onChange(of: phase) { newPhase in
+            switch newPhase {
+            case .active:
+                viewModel.startListeningEvents()
+            default:
+                return
+            }
         }
     }
 }

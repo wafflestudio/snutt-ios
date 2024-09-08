@@ -46,6 +46,12 @@ class FriendsViewModel: BaseViewModel, ObservableObject {
         appState.user.accessToken
     }
 
+    func startListeningEvents() {
+        Task {
+            await listenJSEventStream()
+        }
+    }
+
     func fetchReactNativeBundleUrl() async -> URL? {
         do {
             return try await services.friendsService.fetchReactNativeBundleUrl()
@@ -89,27 +95,25 @@ extension FriendsViewModel {
         }
     }
 
-    func bindEventEmitter() async {
-        await eventEmitter.jsEventPublisher
-            .sink { event in
-                switch event.name {
-                case RNEvent.addFriendKakao.rawValue:
-                    guard let requestToken = event.payload?["requestToken"] as? String else { return }
-                    Task { @MainActor in
-                        do {
-                            try await self.sendKakaoMessage(with: requestToken)
-                        } catch let error as FriendRequestError {
-                            self.friendRequestError = error
-                        }
-                    }
-                default:
-                    return
+    func listenJSEventStream() async {
+        for await event in await eventEmitter.jsEventStream {
+            switch event.name {
+            case RNEvent.addFriendKakao.rawValue:
+                guard let requestToken = event.payload?["requestToken"] as? String else { return }
+                do {
+                    try self.sendKakaoMessage(with: requestToken)
+                } catch let error as FriendRequestError {
+                    self.friendRequestError = error
+                } catch {
+                    assertionFailure(error.localizedDescription)
                 }
+            default:
+                continue
             }
-            .store(in: &cancellables)
+        }
     }
 
-    func sendKakaoMessage(with requestToken: String) async throws {
+    func sendKakaoMessage(with requestToken: String) throws {
         guard ShareApi.isKakaoTalkSharingAvailable() else { throw FriendRequestError.shareUnavailable }
         let params = ["type": RNEvent.addFriendKakao.rawValue, "requestToken": requestToken]
         let link = Link(androidExecutionParams: params, iosExecutionParams: params)
@@ -117,19 +121,10 @@ extension FriendsViewModel {
         let feedTemplate = FeedTemplate(content: .init(title: "SNUTT : 서울대학교 시간표 앱", imageUrl: URL(string: "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource122/v4/f0/c6/58/f0c6581d-dd41-3bad-9d9a-516561d35af1/0d1dfc21-5d2e-4dcf-8cff-c6eb25fe7284_2_2.png/460x0w.webp"), description: "스누티티 친구 초대가 도착했어요", link: link), buttons: [button])
         let feedTemplateJsonData = try SdkJSONEncoder.custom.encode(feedTemplate)
         guard let templateJsonObject = SdkUtils.toJsonObject(feedTemplateJsonData) else { throw FriendRequestError.preparationFailed }
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
-            ShareApi.shared.shareDefault(templateObject: templateJsonObject) { sharingResult, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                    return
-                }
-                if let sharingResult {
-                    UIApplication.shared.open(sharingResult.url,
-                                              options: [:], completionHandler: nil)
-                    continuation.resume(returning: ())
-                } else {
-                    continuation.resume(throwing: FriendRequestError.unknownError)
-                }
+        ShareApi.shared.shareDefault(templateObject: templateJsonObject) { sharingResult, error in
+            if let sharingResult {
+                UIApplication.shared.open(sharingResult.url,
+                                          options: [:], completionHandler: nil)
             }
         }
     }
