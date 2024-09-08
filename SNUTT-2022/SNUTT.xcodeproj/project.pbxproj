@@ -2359,7 +2359,7 @@
 			repositoryURL = "https://github.com/wafflestudio/ios-rn-prebuilt";
 			requirement = {
 				kind = exactVersion;
-				version = 0.21.0;
+				version = 0.22.0;
 			};
 		};
 		CE8590162C5E1B5C00ECFE9E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
