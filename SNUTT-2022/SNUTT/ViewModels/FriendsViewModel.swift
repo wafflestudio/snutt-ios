@@ -101,7 +101,7 @@ extension FriendsViewModel {
             case RNEvent.addFriendKakao.rawValue:
                 guard let requestToken = event.payload?["requestToken"] as? String else { return }
                 do {
-                    try self.sendKakaoMessage(with: requestToken)
+                    try sendKakaoMessage(with: requestToken)
                 } catch let error as FriendRequestError {
                     self.friendRequestError = error
                 } catch {
@@ -121,7 +121,7 @@ extension FriendsViewModel {
         let feedTemplate = FeedTemplate(content: .init(title: "SNUTT : 서울대학교 시간표 앱", imageUrl: URL(string: "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource122/v4/f0/c6/58/f0c6581d-dd41-3bad-9d9a-516561d35af1/0d1dfc21-5d2e-4dcf-8cff-c6eb25fe7284_2_2.png/460x0w.webp"), description: "스누티티 친구 초대가 도착했어요", link: link), buttons: [button])
         let feedTemplateJsonData = try SdkJSONEncoder.custom.encode(feedTemplate)
         guard let templateJsonObject = SdkUtils.toJsonObject(feedTemplateJsonData) else { throw FriendRequestError.preparationFailed }
-        ShareApi.shared.shareDefault(templateObject: templateJsonObject) { sharingResult, error in
+        ShareApi.shared.shareDefault(templateObject: templateJsonObject) { sharingResult, _ in
             if let sharingResult {
                 UIApplication.shared.open(sharingResult.url,
                                           options: [:], completionHandler: nil)
