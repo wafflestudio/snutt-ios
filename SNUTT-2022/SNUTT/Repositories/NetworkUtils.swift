@@ -126,18 +126,18 @@ extension DataTask {
             let errCode = ErrorCode(rawValue: errDto.errcode)
             var requestInfo = await collectRequestInfo()
             requestInfo["ErrorMessage"] = errCode?.errorMessage
-            
+
             let socialProviderMapping: [String: String] = [
                 "LOCAL": "SNUTT",
                 "FACEBOOK": "페이스북",
                 "APPLE": "애플",
                 "GOOGLE": "구글",
-                "KAKAO": "카카오"
+                "KAKAO": "카카오",
             ]
-            
+
             let socialProviderKey = errDto.detail?["socialProvider"]
             let socialProviderName = socialProviderMapping[socialProviderKey ?? ""] ?? socialProviderKey
-            
+
             if let errCode, errCode == .SERVER_FAULT {
                 Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: requestInfo))
             }
