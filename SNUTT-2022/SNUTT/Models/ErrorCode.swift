@@ -45,6 +45,8 @@ enum ErrorCode: Int {
     case NO_LECTURE_TITLE = 0x100B
     case INVALID_TIMEJSON = 0x100C
     case INVALID_NOTIFICATION_DETAIL = 0x100D
+    case NO_GOOGLE_TOKEN = 0x100E
+    case NO_KAKAO_TOKEN = 0x100F
     case NO_LOCAL_ID = 0x1015
     case NO_EMAIL = 0x1018
     case INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION = 40005
@@ -117,6 +119,8 @@ enum ErrorCode: Int {
         case .NO_NETWORK:
             return "네트워크 오류"
         case .NO_FB_ID_OR_TOKEN,
+             .NO_GOOGLE_TOKEN,
+             .NO_KAKAO_TOKEN,
              .NO_YEAR_OR_SEMESTER,
              .NOT_ENOUGH_TO_CREATE_TIMETABLE,
              .NO_LECTURE_INPUT,
@@ -206,6 +210,10 @@ enum ErrorCode: Int {
             return "로그인 정보가 없습니다."
         case .NO_FB_ID_OR_TOKEN:
             return "페이스북 로그인 정보에 문제가 생겼습니다."
+        case .NO_GOOGLE_TOKEN:
+            return "구글 로그인 정보에 문제가 생겼습니다."
+        case .NO_KAKAO_TOKEN:
+            return "카카오 로그인 정보에 문제가 생겼습니다."
         case .NO_YEAR_OR_SEMESTER:
             return "올바른 연도와 학기를 정해주세요."
         case .NOT_ENOUGH_TO_CREATE_TIMETABLE:

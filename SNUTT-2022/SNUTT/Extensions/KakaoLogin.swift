@@ -18,16 +18,16 @@ extension KakaoLoginProtocol {
     func performKakaoSignIn() {
         if UserApi.isKakaoTalkLoginAvailable() {
             UserApi.shared.loginWithKakaoTalk { oauthToken, error in
-                if let error = error {
+                if error != nil {
                     Task { @MainActor in
-                        //                    self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
+                        self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
                     }
                     return
                 }
 
                 guard let accessToken = oauthToken?.accessToken else {
                     Task { @MainActor in
-                        //                    self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
+                        self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
                     }
                     return
                 }
@@ -38,15 +38,15 @@ extension KakaoLoginProtocol {
             }
         } else {
             UserApi.shared.loginWithKakaoAccount { oauthToken, error in
-                if let error = error {
+                if error != nil {
                     Task { @MainActor in
-                        //                    self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
+                        self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
                     }
                 }
 
                 guard let accessToken = oauthToken?.accessToken else {
                     Task { @MainActor in
-                        //                    self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
+                        self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
                     }
                     return
                 }
