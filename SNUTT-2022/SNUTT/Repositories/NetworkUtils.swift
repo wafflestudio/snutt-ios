@@ -143,7 +143,7 @@ extension DataTask {
             }
 
             if let displayMessage = errDto.displayMessage {
-                let serverMessage = "\(socialProviderName ?? "") 계정에서 " + displayMessage
+                let serverMessage = displayMessage + " \(socialProviderName ?? "") 계정으로 시도해 보세요."
                 throw STError(errCode ?? .SERVER_FAULT, content: serverMessage)
             } else {
                 throw STError(errCode ?? .SERVER_FAULT)
