@@ -82,5 +82,7 @@
 	<string>https://${SNUEV_WEB_URL}</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>THEME_WEB_URL</key>
+	<string>https://${THEME_WEB_URL}</string>
 </dict>
 </plist>

@@ -52,6 +52,9 @@ struct SettingScene: View {
                 SettingsLinkItem(title: "빈자리 알림", isActive: $viewModel.routingState.pushToVacancy) {
                     VacancyScene(viewModel: .init(container: viewModel.container))
                 }
+                SettingsLinkItem(title: "테마 마켓") {
+                    ThemeMarketView()
+                }
             } header: {
                 Text("서비스")
             }

@@ -12,7 +12,8 @@ struct NetworkConfiguration {
     static let serverBaseURL: String = Bundle.main.infoDictionary?["API_SERVER_URL"] as! String
     static let serverV1BaseURL: String = serverBaseURL + "/v1"
     static let snuevBaseURL: String = Bundle.main.infoDictionary?["SNUEV_WEB_URL"] as! String
-
+    static let themeBaseURL: String = Bundle.main.infoDictionary?["THEME_WEB_URL"] as! String
+    
     static func getCookie(name: String, value: String) -> HTTPCookie? {
         return HTTPCookie(properties: [
             .domain: NetworkConfiguration.snuevBaseURL.replacingOccurrences(of: "https://", with: ""),
