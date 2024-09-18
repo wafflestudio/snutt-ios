@@ -24,7 +24,6 @@ struct TimetableScene: View, Sendable {
     var body: some View {
         GeometryReader { proxy in
             VStack(spacing: 0) {
-                customToolBar(proxy.size)
                 if viewModel.isVacancyBannerVisible {
                     VacancyBanner {
                         viewModel.goToVacancyPage()
@@ -34,50 +33,45 @@ struct TimetableScene: View, Sendable {
                 timetable
             }
             .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
+            .toolbar {
+                ToolbarItemGroup(placement: .principal) {
+                    HStack {
+                        NavBarButton(imageName: "nav.menu") {
+                            viewModel.setIsMenuOpen(true)
+                        }
+                        .circleBadge(condition: viewModel.isNewCourseBookAvailable)
+
+                        HStack(spacing: 8) {
+                            Text(viewModel.timetableTitle)
+                                .font(STFont.title.font)
+                                .minimumScaleFactor(0.9)
+                                .lineLimit(1)
+
+                            Text("(\(viewModel.totalCredit)학점)")
+                                .font(STFont.details.font)
+                                .foregroundColor(Color(UIColor.secondaryLabel))
+                        }
+                        
+                        Spacer()
+                        
+                        NavBarButton(imageName: "nav.list") {
+                            pushToListScene = true
+                        }
+
+                        NavBarButton(imageName: "nav.share") {
+                            screenshot = self.timetable.takeScreenshot(size: .init(width: proxy.size.width, height: proxy.size.height - toolBarHeight), preferredColorScheme: colorScheme)
+                            isShareSheetOpened = true
+                        }
+
+                        NavBarButton(imageName: "nav.alarm.off") {
+                            viewModel.routingState.pushToNotification = true
+                        }
+                        .circleBadge(condition: viewModel.unreadCount > 0)
+                    }
+                }
+            }
         }
         let _ = debugChanges()
-    }
-
-    @ViewBuilder private func customToolBar(_ screenSize: CGSize) -> some View {
-        HStack {
-            Group {
-                NavBarButton(imageName: "nav.menu") {
-                    viewModel.setIsMenuOpen(true)
-                }
-                .circleBadge(condition: viewModel.isNewCourseBookAvailable)
-
-                HStack(spacing: 8) {
-                    Text(viewModel.timetableTitle)
-                        .font(STFont.title.font)
-                        .minimumScaleFactor(0.9)
-                        .lineLimit(1)
-
-                    Text("(\(viewModel.totalCredit)학점)")
-                        .font(STFont.details.font)
-                        .foregroundColor(Color(UIColor.secondaryLabel))
-                }
-            }
-
-            Spacer()
-
-            Group {
-                NavBarButton(imageName: "nav.list") {
-                    pushToListScene = true
-                }
-
-                NavBarButton(imageName: "nav.share") {
-                    screenshot = self.timetable.takeScreenshot(size: .init(width: screenSize.width, height: screenSize.height - toolBarHeight), preferredColorScheme: colorScheme)
-                    isShareSheetOpened = true
-                }
-
-                NavBarButton(imageName: "nav.alarm.off") {
-                    viewModel.routingState.pushToNotification = true
-                }
-                .circleBadge(condition: viewModel.unreadCount > 0)
-            }
-        }
-        .frame(height: toolBarHeight)
-        .padding(.horizontal, 16)
     }
 
     var timetable: some View {
