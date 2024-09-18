@@ -51,9 +51,9 @@ struct TimetableScene: View, Sendable {
                                 .font(STFont.details.font)
                                 .foregroundColor(Color(UIColor.secondaryLabel))
                         }
-                        
+
                         Spacer()
-                        
+
                         NavBarButton(imageName: "nav.list") {
                             pushToListScene = true
                         }
