@@ -18,7 +18,7 @@ extension OnboardScene {
                 "GOOGLE": "구글",
                 "KAKAO": "카카오",
             ]
-            
+
             if let stError = error as? STError, let underlyingError = stError.underlyingError {
                 let socialProviderKey = underlyingError["socialProvider"]
                 let socialProviderName = socialProviderMapping[socialProviderKey ?? ""] ?? socialProviderKey
@@ -29,7 +29,7 @@ extension OnboardScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func registerWith(id: String, password: String, email: String) async -> Bool {
             // TODO: Validation
             do {
