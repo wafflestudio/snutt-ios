@@ -17,78 +17,85 @@ struct TimetableScene: View, Sendable {
 
     /// Provide title for `UIActivityViewController`.
     private let linkMetadata = LinkMetadata()
+    private let toolBarHeight: CGFloat = 44
 
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        VStack(spacing: 0) {
-            if viewModel.isVacancyBannerVisible {
-                VacancyBanner {
-                    viewModel.goToVacancyPage()
+        GeometryReader { proxy in
+            VStack(spacing: 0) {
+                customToolBar(proxy.size)
+                if viewModel.isVacancyBannerVisible {
+                    VacancyBanner {
+                        viewModel.goToVacancyPage()
+                    }
+                    .transition(.move(edge: .trailing))
                 }
-                .transition(.move(edge: .trailing))
+                timetable
             }
-            timetable
+            .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
         }
-        .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
         let _ = debugChanges()
     }
 
+    @ViewBuilder private func customToolBar(_ screenSize: CGSize) -> some View {
+        HStack {
+            Group {
+                NavBarButton(imageName: "nav.menu") {
+                    viewModel.setIsMenuOpen(true)
+                }
+                .circleBadge(condition: viewModel.isNewCourseBookAvailable)
+
+                HStack(spacing: 8) {
+                    Text(viewModel.timetableTitle)
+                        .font(STFont.title.font)
+                        .minimumScaleFactor(0.9)
+                        .lineLimit(1)
+
+                    Text("(\(viewModel.totalCredit)학점)")
+                        .font(STFont.details.font)
+                        .foregroundColor(Color(UIColor.secondaryLabel))
+                }
+            }
+
+            Spacer()
+
+            Group {
+                NavBarButton(imageName: "nav.list") {
+                    pushToListScene = true
+                }
+
+                NavBarButton(imageName: "nav.share") {
+                    screenshot = self.timetable.takeScreenshot(size: .init(width: screenSize.width, height: screenSize.height - toolBarHeight), preferredColorScheme: colorScheme)
+                    isShareSheetOpened = true
+                }
+
+                NavBarButton(imageName: "nav.alarm.off") {
+                    viewModel.routingState.pushToNotification = true
+                }
+                .circleBadge(condition: viewModel.unreadCount > 0)
+            }
+        }
+        .frame(height: toolBarHeight)
+        .padding(.horizontal, 16)
+    }
+
     var timetable: some View {
-        GeometryReader { reader in
-            TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
-                .animation(.customSpring, value: viewModel.currentTimetable?.id)
-                // navigate programmatically, because NavigationLink inside toolbar doesn't work
-                .background(
-                    Group {
-                        NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
-                    }
-                )
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItemGroup(placement: .topBarLeading) {
-                        HStack {
-                            NavBarButton(imageName: "nav.menu") {
-                                viewModel.setIsMenuOpen(true)
-                            }
-                            .circleBadge(condition: viewModel.isNewCourseBookAvailable)
+        TimetableZStack(current: viewModel.currentTimetable, config: viewModel.configuration)
+            .animation(.customSpring, value: viewModel.currentTimetable?.id)
+            // navigate programmatically, because NavigationLink inside toolbar doesn't work
+            .background(
+                Group {
+                    NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
 
-                            Text(viewModel.timetableTitle)
-                                .font(STFont.title)
-                                .minimumScaleFactor(0.9)
-                                .lineLimit(1)
-
-                            Text("(\(viewModel.totalCredit)학점)")
-                                .font(STFont.details)
-                                .foregroundColor(Color(UIColor.secondaryLabel))
-                        }
-                    }
-                    ToolbarItemGroup(placement: .topBarTrailing) {
-                        HStack {
-                            NavBarButton(imageName: "nav.list") {
-                                pushToListScene = true
-                            }
-
-                            NavBarButton(imageName: "nav.share") {
-                                screenshot = self.timetable.takeScreenshot(size: reader.size, preferredColorScheme: colorScheme)
-                                isShareSheetOpened = true
-                            }
-
-                            NavBarButton(imageName: "nav.alarm.off") {
-                                viewModel.routingState.pushToNotification = true
-                            }
-                            .circleBadge(condition: viewModel.unreadCount > 0)
-                        }
-                    }
+                    NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
+                                   isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
                 }
-                .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
-                    ActivityViewController(activityItems: [screenshot, linkMetadata])
-                }
-        }
-        .background {
-            NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
-                           isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
-        }
+            )
+            .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
+                ActivityViewController(activityItems: [screenshot, linkMetadata])
+            }
     }
 }
 
