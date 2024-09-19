@@ -10,6 +10,26 @@ import SwiftUI
 
 extension OnboardScene {
     class ViewModel: BaseViewModel, ObservableObject {
+        private func handleSocialLoginError(_ error: Error) {
+            let socialProviderMapping: [String: String] = [
+                "LOCAL": "SNUTT",
+                "FACEBOOK": "페이스북",
+                "APPLE": "애플",
+                "GOOGLE": "구글",
+                "KAKAO": "카카오",
+            ]
+            
+            if let stError = error as? STError, let underlyingError = stError.underlyingError {
+                let socialProviderKey = underlyingError["socialProvider"]
+                let socialProviderName = socialProviderMapping[socialProviderKey ?? ""] ?? socialProviderKey
+                let updatedContent = stError.content + "\n\(socialProviderName ?? "") 계정으로 시도해 보세요."
+                let newError = STError(stError.code, content: updatedContent, detail: nil)
+                services.globalUIService.presentErrorAlert(error: newError)
+            } else {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+        
         func registerWith(id: String, password: String, email: String) async -> Bool {
             // TODO: Validation
             do {
@@ -48,7 +68,7 @@ extension OnboardScene.ViewModel: FacebookLoginProtocol {
         do {
             try await services.authService.loginWithFacebook(facebookToken: fbToken)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            handleSocialLoginError(error)
         }
     }
 }
@@ -58,7 +78,7 @@ extension OnboardScene.ViewModel: GoogleLoginProtocol {
         do {
             try await services.authService.loginWithGoogle(googleToken: googleToken)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            handleSocialLoginError(error)
         }
     }
 }
@@ -68,7 +88,7 @@ extension OnboardScene.ViewModel: KakaoLoginProtocol {
         do {
             try await services.authService.loginWithKakao(kakaoToken: kakaoToken)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            handleSocialLoginError(error)
         }
     }
 }
@@ -106,7 +126,7 @@ extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
         do {
             try await services.authService.loginWithApple(appleToken: token)
         } catch {
-            services.globalUIService.presentErrorAlert(error: error)
+            handleSocialLoginError(error)
         }
     }
 }

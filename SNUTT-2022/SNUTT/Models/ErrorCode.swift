@@ -12,17 +12,20 @@ struct STError: Error {
     let code: ErrorCode
     let title: String
     let content: String
+    let underlyingError: [String: String]?
 
     init(_ errorCode: ErrorCode) {
         title = errorCode.errorTitle
         content = errorCode.errorMessage
         code = errorCode
+        underlyingError = nil
     }
 
-    init(_ errorCode: ErrorCode, content: String) {
+    init(_ errorCode: ErrorCode, content: String, detail: [String: String]?) {
         title = errorCode.errorTitle
         self.content = content
         code = errorCode
+        underlyingError = detail
     }
 }
 
