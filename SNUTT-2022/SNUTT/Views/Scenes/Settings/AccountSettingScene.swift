@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AccountSettingScene: View {
     @ObservedObject var viewModel: ViewModel
-    @State private var isDisconnectFBAlertPresented: Bool = false
     @State private var isDeleteAccountAlertPresented: Bool = false
     @State private var isNicknameCopiedToPasteboard: Bool = false
 
@@ -50,18 +49,9 @@ struct AccountSettingScene: View {
                 }
             }
 
-            if let facebookName = viewModel.currentUser?.fbName {
-                Section {
-                    SettingsTextItem(title: "페이스북 이름", detail: facebookName)
-                    SettingsButtonItem(title: "페이스북 연동 해제", role: .destructive) {
-                        isDisconnectFBAlertPresented = true
-                    }
-                }
-            } else {
-                Section {
-                    SettingsButtonItem(title: "페이스북 연동") {
-                        viewModel.performFacebookSignIn()
-                    }
+            Section {
+                SettingsLinkItem(title: "SNS 계정 연동 및 해제") {
+                    IntegrateAccountScene(viewModel: .init(container: viewModel.container))
                 }
             }
 
@@ -81,16 +71,6 @@ struct AccountSettingScene: View {
         .navigationBarTitleDisplayMode(.inline)
         .alert("닉네임이 클립보드에 복사되었습니다.", isPresented: $isNicknameCopiedToPasteboard) {
             Button("확인") {}
-        }
-        .alert("페이스북 연동 해제", isPresented: $isDisconnectFBAlertPresented) {
-            Button("취소", role: .cancel, action: {})
-            Button("해제", role: .destructive, action: {
-                Task {
-                    await viewModel.detachFacebook()
-                }
-            })
-        } message: {
-            Text("페이스북 연동을 해제하시겠습니까?")
         }
         .alert("회원 탈퇴", isPresented: $isDeleteAccountAlertPresented) {
             Button("회원 탈퇴", role: .destructive) {

@@ -26,14 +26,6 @@ extension AccountSettingScene {
             }
         }
 
-        func detachFacebook() async {
-            do {
-                try await services.userService.disconnectFacebook()
-            } catch {
-                services.globalUIService.presentErrorAlert(error: error)
-            }
-        }
-
         func attachLocalId(localId: String, localPassword: String) async -> Bool {
             do {
                 try await services.userService.addLocalId(localId: localId, localPassword: localPassword)
@@ -62,16 +54,6 @@ extension AccountSettingScene {
                 services.globalUIService.presentErrorAlert(error: error)
                 return false
             }
-        }
-    }
-}
-
-extension AccountSettingScene.ViewModel: FacebookLoginProtocol {
-    func handleFacebookToken(fbId: String, fbToken: String) async {
-        do {
-            try await services.userService.connectFacebook(fbId: fbId, fbToken: fbToken)
-        } catch {
-            services.globalUIService.presentErrorAlert(error: error)
         }
     }
 }
