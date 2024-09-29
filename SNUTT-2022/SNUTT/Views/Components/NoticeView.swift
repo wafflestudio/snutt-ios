@@ -20,11 +20,11 @@ struct NoticeView: View {
             VStack(spacing: 8) {
                 if let title = title {
                     Text(title)
-                        .font(STFont.title.font)
+                        .font(STFont.title)
                 }
                 if let content = content {
                     Text(content)
-                        .font(STFont.detailLabel.font)
+                        .font(STFont.detailLabel)
                         .multilineTextAlignment(.center)
                 }
                 Spacer().frame(height: 4)
