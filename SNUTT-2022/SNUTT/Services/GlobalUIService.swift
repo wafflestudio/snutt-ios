@@ -45,15 +45,17 @@ protocol GlobalUIServiceProtocol: Sendable {
 
     func setRoutingState<V>(_ key: WritableKeyPath<ViewRoutingState, V>, value: V)
     func hasNewBadge(settingName: String) -> Bool
+
+    func showNoticeViewIfNeeded() async throws
 }
 
-struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
+struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvidable {
     var appState: AppState
     var localRepositories: AppEnvironment.LocalRepositories
-    var webRepositories: AppEnvironment.WebRepositories?
+    var webRepositories: AppEnvironment.WebRepositories
 
     var configRepository: ConfigRepositoryProtocol? {
-        webRepositories?.configRepository
+        webRepositories.configRepository
     }
 
     func setColorScheme(_ colorScheme: ColorScheme?) {
@@ -163,6 +165,13 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler {
         appState.menu.isLectureTimeSheetOpen = value
     }
 
+    // MARK: Show Notice View
+
+    func showNoticeViewIfNeeded() async throws {
+        let configs = try await configRepository?.fetchConfigs()
+        appState.system.noticeViewInfo = configs?.notice
+    }
+
     // MARK: Error Handling
 
     func presentErrorAlert(error: Error) {
@@ -194,4 +203,44 @@ extension GlobalUIService {
     func setRoutingState<V>(_ key: WritableKeyPath<ViewRoutingState, V>, value: V) {
         appState.routing[keyPath: key] = value
     }
+}
+
+class FakeGlobalUIService: GlobalUIServiceProtocol {
+    func setColorScheme(_: ColorScheme?) {}
+    func loadColorSchemeDuringBootstrap() {}
+
+    func setSelectedTab(_: TabType) {}
+    func setIsErrorAlertPresented(_: Bool) {}
+    func setIsMenuOpen(_: Bool) {}
+
+    func openEllipsis(for _: TimetableMetadata) {}
+    func closeEllipsis() {}
+
+    func openThemeSheet() {}
+    func closeThemeSheet() {}
+
+    func openRenameSheet() {}
+    func closeRenameSheet() {}
+
+    func openCreateSheet(withPicker _: Bool) {}
+    func closeCreateSheet() {}
+
+    func setRenameTitle(_: String) {}
+    func setCreateTitle(_: String) {}
+    func setCreateQuarter(_: Quarter?) {}
+
+    func setIsLectureTimeSheetOpen(_: Bool, modifying _: TimePlace?, action _: ((TimePlace) -> Void)?) {}
+
+    func presentErrorAlert(error _: STError?) {}
+    func presentErrorAlert(error _: ErrorCode) {}
+    func presentErrorAlert(error _: Error) {}
+
+    func preloadWebViews() {}
+    func sendMainWebViewReloadSignal() {}
+    func sendDetailWebViewReloadSignal(url _: URL) {}
+
+    func setRoutingState<V>(_: WritableKeyPath<ViewRoutingState, V>, value _: V) {}
+    func hasNewBadge(settingName _: String) -> Bool { return true }
+
+    func showNoticeViewIfNeeded() async throws {}
 }

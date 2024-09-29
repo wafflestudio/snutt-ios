@@ -73,6 +73,7 @@
 		B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B22D1529311F6200AB88F3 /* EmptyLectureList.swift */; };
 		B8B7501D2B6274A5004F6272 /* KakaoMapsSDK_SPM in Frameworks */ = {isa = PBXBuildFile; productRef = B8B7501C2B6274A5004F6272 /* KakaoMapsSDK_SPM */; };
 		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
+		B8C4F3352CA8F48E006B6BAD /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
@@ -404,6 +405,7 @@
 		B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationUtils.swift; sourceTree = "<group>"; };
 		B8B22D1529311F6200AB88F3 /* EmptyLectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLectureList.swift; sourceTree = "<group>"; };
 		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
+		B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
@@ -1140,6 +1142,7 @@
 				B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */,
 				B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */,
 				B8E65A732B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift */,
+				B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1521,6 +1524,7 @@
 				BED04D2F28EA6FA600937E4C /* SettingsMenuItem.swift in Sources */,
 				738406FF2B5718C600007E62 /* ThemeDetailViewModel.swift in Sources */,
 				B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */,
+				B8C4F3352CA8F48E006B6BAD /* NoticeView.swift in Sources */,
 				BE28036228E884F400B2B1AB /* ReviewWebView.swift in Sources */,
 				BEB3B6A528CDE1FD00E56062 /* TimeUtils.swift in Sources */,
 				BE2CB3632959C0CC00FCF0F0 /* ReviewState.swift in Sources */,
