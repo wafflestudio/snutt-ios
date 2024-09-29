@@ -169,7 +169,7 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
 
     func showNoticeViewIfNeeded() async throws {
         let configs = try await configRepository?.fetchConfigs()
-        appState.system.noticeViewInfo = configs?.notices
+        appState.system.noticeViewInfo = configs?.notice
     }
 
     // MARK: Error Handling
