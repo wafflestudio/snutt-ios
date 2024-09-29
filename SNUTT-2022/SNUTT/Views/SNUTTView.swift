@@ -33,7 +33,13 @@ struct SNUTTView: View, Sendable {
 
     var body: some View {
         ZStack {
-            if viewModel.isAuthenticated && pushToTimetableScene {
+            if let noticeViewInfo = viewModel.noticeViewInfo, noticeViewInfo.visible {
+                NavigationView {
+                    NoticeView(title: noticeViewInfo.title, 
+                               content: noticeViewInfo.content,
+                               sendFeedback: viewModel.sendFeedback)
+                }
+            } else if viewModel.isAuthenticated && pushToTimetableScene {
                 TabView(selection: selected) {
                     TabScene(tabType: .timetable) {
                         TimetableScene(viewModel: .init(container: viewModel.container))
@@ -112,6 +118,9 @@ struct SNUTTView: View, Sendable {
             setTabBarStyle()
             setNavBarStyle()
         }
+        .onLoad {
+            await viewModel.showNoticeViewIfNeeded()
+        }
         let _ = debugChanges()
     }
 
@@ -137,6 +146,8 @@ extension SNUTTView {
         @Published var accessToken: String? = nil
         @Published var preferredColorScheme: ColorScheme? = nil
         @Published private var error: STError? = nil
+        @Published var noticeViewInfo: ConfigsDto.NoticeViewInfoDto?
+        
 
         @Published private var _isErrorAlertPresented = false
         var isErrorAlertPresented: Bool {
@@ -162,6 +173,7 @@ extension SNUTTView {
             appState.user.$accessToken.assign(to: &$accessToken)
             appState.system.$preferredColorScheme.assign(to: &$preferredColorScheme)
             appState.system.$selectedTab.assign(to: &$_selectedTab)
+            appState.system.$noticeViewInfo.assign(to: &$noticeViewInfo)
         }
 
         var errorTitle: String {
@@ -181,12 +193,10 @@ extension SNUTTView {
         }
 
         func getThemeList() async {
-            func getThemeList() async {
-                do {
-                    try await services.themeService.getThemeList()
-                } catch {
-                    services.globalUIService.presentErrorAlert(error: error)
-                }
+            do {
+                try await services.themeService.getThemeList()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
             }
         }
 
@@ -209,6 +219,14 @@ extension SNUTTView {
         func fetchRecentTimetable() async {
             do {
                 try await services.timetableService.fetchRecentTimetable()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+        
+        func showNoticeViewIfNeeded() async {
+            do {
+                try await services.globalUIService.showNoticeViewIfNeeded()
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
@@ -255,6 +273,20 @@ extension SNUTTView {
                 try await services.searchService.getBookmark()
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+        
+        func sendFeedback(email: String, message: String) async -> Bool {
+            if !Validation.check(email: email) {
+                services.globalUIService.presentErrorAlert(error: .INVALID_EMAIL)
+                return false
+            }
+            do {
+                try await services.etcService.sendFeedback(email: email, message: message)
+                return true
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+                return false
             }
         }
     }

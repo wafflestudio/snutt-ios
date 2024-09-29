@@ -173,7 +173,7 @@ extension EnvironmentValues {
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),
                   searchService: FakeSearchService(),
-                  globalUIService: GlobalUIService(appState: appState, localRepositories: .init(userDefaultsRepository: UserDefaultsRepository(storage: .preview)), webRepositories: nil),
+                  globalUIService: FakeGlobalUIService(),
                   courseBookService: FakeCourseBookService(),
                   authService: FakeAuthService(),
                   notificationService: FakeNotificationService(),
