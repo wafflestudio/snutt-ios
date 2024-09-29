@@ -168,7 +168,7 @@ extension EnvironmentValues {
 
 #if DEBUG
     extension AppEnvironment.Services {
-        @MainActor static func preview(appState: AppState) -> Self {
+        @MainActor static func preview(appState _: AppState) -> Self {
             .init(timetableService: FakeTimetableService(),
                   userService: FakeUserService(),
                   lectureService: FakeLectureService(),

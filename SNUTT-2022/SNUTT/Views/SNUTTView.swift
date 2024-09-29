@@ -35,7 +35,7 @@ struct SNUTTView: View, Sendable {
         ZStack {
             if let noticeViewInfo = viewModel.noticeViewInfo, noticeViewInfo.visible {
                 NavigationView {
-                    NoticeView(title: noticeViewInfo.title, 
+                    NoticeView(title: noticeViewInfo.title,
                                content: noticeViewInfo.content,
                                sendFeedback: viewModel.sendFeedback)
                 }
@@ -147,7 +147,6 @@ extension SNUTTView {
         @Published var preferredColorScheme: ColorScheme? = nil
         @Published private var error: STError? = nil
         @Published var noticeViewInfo: ConfigsDto.NoticeViewInfoDto?
-        
 
         @Published private var _isErrorAlertPresented = false
         var isErrorAlertPresented: Bool {
@@ -223,7 +222,7 @@ extension SNUTTView {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func showNoticeViewIfNeeded() async {
             do {
                 try await services.globalUIService.showNoticeViewIfNeeded()
@@ -275,7 +274,7 @@ extension SNUTTView {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func sendFeedback(email: String, message: String) async -> Bool {
             if !Validation.check(email: email) {
                 services.globalUIService.presentErrorAlert(error: .INVALID_EMAIL)

@@ -36,7 +36,7 @@ extension ConfigsDto {
             src["ios"]
         }
     }
-    
+
     struct NoticeViewInfoDto: Codable {
         let title: String
         let content: String

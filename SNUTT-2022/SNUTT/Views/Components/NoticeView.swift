@@ -11,9 +11,9 @@ struct NoticeView: View {
     let title: String?
     let content: String?
     let sendFeedback: (String, String) async -> Bool
-    
+
     @State private var pushToFeedBackView = false
-    
+
     var body: some View {
         VStack(spacing: 32) {
             Image("warning.cat")
