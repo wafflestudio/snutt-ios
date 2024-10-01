@@ -26,7 +26,7 @@ struct SearchTagsScrollView: View {
                             }, label: {
                                 HStack {
                                     Text(tag.text)
-                                        .font(STFont.detailLabel)
+                                        .font(STFont.detailLabel.font)
                                     Image("xmark.white")
                                         .resizable()
                                         .scaledToFit()
@@ -35,7 +35,7 @@ struct SearchTagsScrollView: View {
                             })
                             .buttonStyle(.borderedProminent)
                             .buttonBorderShape(.capsule)
-                            .tint(tag.type.tagLightColor)
+                            .tint(tag.type.tagColor)
                             .id(tag.id)
                         }
                     }

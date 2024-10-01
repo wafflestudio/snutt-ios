@@ -7,10 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		731C244E2C4442590015877B /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 731C244D2C4442590015877B /* KakaoSDK */; };
+		731C24502C4442590015877B /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 731C244F2C4442590015877B /* KakaoSDKAuth */; };
+		731C24522C4442590015877B /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 731C24512C4442590015877B /* KakaoSDKCommon */; };
 		731D9FFD297BC5060027BA25 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731D9FFC297BC5060027BA25 /* Bookmark.swift */; };
 		731DA001297BC54B0027BA25 /* BookmarkDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA000297BC54B0027BA25 /* BookmarkDto.swift */; };
 		731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA002297BC5740027BA25 /* BookmarkRouter.swift */; };
 		731DA005297BC8990027BA25 /* BookmarkScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA004297BC8990027BA25 /* BookmarkScene.swift */; };
+		734A831F2C2FD41200D6CB95 /* KakaoLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A831E2C2FD41200D6CB95 /* KakaoLogin.swift */; };
+		736AF84C2C2F275E00ED9C1A /* GoogleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736AF84B2C2F275E00ED9C1A /* GoogleLogin.swift */; };
+		736AF84F2C2F279900ED9C1A /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 736AF84E2C2F279900ED9C1A /* GoogleSignIn */; };
+		736AF8512C2F279900ED9C1A /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 736AF8502C2F279900ED9C1A /* GoogleSignInSwift */; };
 		738406EE2B57107C00007E62 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406ED2B57107C00007E62 /* Theme.swift */; };
 		738406F12B5710C200007E62 /* ThemeDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406F02B5710C200007E62 /* ThemeDto.swift */; };
 		738406F32B57119100007E62 /* ThemeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406F22B57119100007E62 /* ThemeRepository.swift */; };
@@ -26,6 +33,8 @@
 		738407082B579F9200007E62 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406ED2B57107C00007E62 /* Theme.swift */; };
 		738407092B57B10000007E62 /* ThemeDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406F02B5710C200007E62 /* ThemeDto.swift */; };
 		738407102B6060F800007E62 /* ThemeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406F82B57154400007E62 /* ThemeState.swift */; };
+		73AB84D22C35128B0075DE83 /* IntegrateAccountScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */; };
+		73AB84D42C3514080075DE83 /* IntegrateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */; };
 		B800A38B2B76132C008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */; };
@@ -64,11 +73,11 @@
 		B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B22D1529311F6200AB88F3 /* EmptyLectureList.swift */; };
 		B8B7501D2B6274A5004F6272 /* KakaoMapsSDK_SPM in Frameworks */ = {isa = PBXBuildFile; productRef = B8B7501C2B6274A5004F6272 /* KakaoMapsSDK_SPM */; };
 		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
+		B8C4F3352CA8F48E006B6BAD /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
 		B8E65A742B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E65A732B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift */; };
-		B8EE0C2C2A7DEDCE00CCFFAC /* WIPFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE0C2B2A7DEDCE00CCFFAC /* WIPFriendsView.swift */; };
 		B8F0B2302A4B27A500A2E15E /* UIDevice+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */; };
 		B8F0B2322A540A5300A2E15E /* EmailVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0B2312A540A5300A2E15E /* EmailVerificationView.swift */; };
 		B8F40EA9289809C60021A2A9 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EA8289809C60021A2A9 /* LicenseView.swift */; };
@@ -349,6 +358,8 @@
 		731DA000297BC54B0027BA25 /* BookmarkDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkDto.swift; sourceTree = "<group>"; };
 		731DA002297BC5740027BA25 /* BookmarkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRouter.swift; sourceTree = "<group>"; };
 		731DA004297BC8990027BA25 /* BookmarkScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkScene.swift; sourceTree = "<group>"; };
+		734A831E2C2FD41200D6CB95 /* KakaoLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLogin.swift; sourceTree = "<group>"; };
+		736AF84B2C2F275E00ED9C1A /* GoogleLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLogin.swift; sourceTree = "<group>"; };
 		738406ED2B57107C00007E62 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		738406F02B5710C200007E62 /* ThemeDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDto.swift; sourceTree = "<group>"; };
 		738406F22B57119100007E62 /* ThemeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeRepository.swift; sourceTree = "<group>"; };
@@ -361,6 +372,8 @@
 		738407002B571D8E00007E62 /* ThemeIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeIcon.swift; sourceTree = "<group>"; };
 		738407022B571E6200007E62 /* ThemeBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeBottomSheet.swift; sourceTree = "<group>"; };
 		738407042B577E9000007E62 /* ThemeDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDetailScene.swift; sourceTree = "<group>"; };
+		73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateAccountScene.swift; sourceTree = "<group>"; };
+		73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateAccountViewModel.swift; sourceTree = "<group>"; };
 		B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTimeMaskDto.swift; sourceTree = "<group>"; };
 		B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureMapView.swift; sourceTree = "<group>"; };
 		B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
@@ -396,13 +409,13 @@
 		B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationUtils.swift; sourceTree = "<group>"; };
 		B8B22D1529311F6200AB88F3 /* EmptyLectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLectureList.swift; sourceTree = "<group>"; };
 		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
+		B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
 		B8E51E6728B615140065248E /* WebErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebErrorView.swift; sourceTree = "<group>"; };
 		B8E51E6A28B769680065248E /* ReviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRouter.swift; sourceTree = "<group>"; };
 		B8E65A732B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRangeSelectionSheet.swift; sourceTree = "<group>"; };
-		B8EE0C2B2A7DEDCE00CCFFAC /* WIPFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIPFriendsView.swift; sourceTree = "<group>"; };
 		B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Ext.swift"; sourceTree = "<group>"; };
 		B8F0B2312A540A5300A2E15E /* EmailVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationView.swift; sourceTree = "<group>"; };
 		B8F40EA8289809C60021A2A9 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
@@ -623,17 +636,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				731C24522C4442590015877B /* KakaoSDKCommon in Frameworks */,
 				BE4CD86728F5A56200BA9BBC /* FirebaseMessaging in Frameworks */,
+				731C244E2C4442590015877B /* KakaoSDK in Frameworks */,
 				B8B7501D2B6274A5004F6272 /* KakaoMapsSDK_SPM in Frameworks */,
 				BE4CD86328F5A56200BA9BBC /* FirebaseAnalyticsSwift in Frameworks */,
 				CE85901C2C5E21D600ECFE9E /* KakaoSDKTemplate in Frameworks */,
 				BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */,
 				CEF992F72BF3B8FC00F0FFA4 /* ReactNativeKit in Frameworks */,
+				736AF8512C2F279900ED9C1A /* GoogleSignInSwift in Frameworks */,
 				BE4CD86528F5A56200BA9BBC /* FirebaseCrashlytics in Frameworks */,
 				BEDE34D42879A59B00525014 /* Alamofire in Frameworks */,
 				BE4CD86128F5A56200BA9BBC /* FirebaseAnalytics in Frameworks */,
 				CE85901A2C5E219C00ECFE9E /* KakaoSDKCommon in Frameworks */,
 				CE8590182C5E1B5C00ECFE9E /* KakaoSDKShare in Frameworks */,
+				736AF84F2C2F279900ED9C1A /* GoogleSignIn in Frameworks */,
+				731C24502C4442590015877B /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,6 +699,7 @@
 				BE9C90EC2948F4BE00003AA6 /* ColorSchemeSettingScene.swift */,
 				B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */,
 				738406FA2B57173400007E62 /* ThemeSettingScene.swift */,
+				73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -730,6 +749,8 @@
 				BE9C90EA2948EA1800003AA6 /* ColorScheme.swift */,
 				CE3F37AC29C5D452009EDCCC /* Collection+Getter.swift */,
 				B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */,
+				736AF84B2C2F275E00ED9C1A /* GoogleLogin.swift */,
+				734A831E2C2FD41200D6CB95 /* KakaoLogin.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1094,7 +1115,6 @@
 			children = (
 				BE98A009288A90C000C2CE95 /* Logo.swift */,
 				BEDF506C27EB740E00CDCC13 /* LectureList.swift */,
-				B8EE0C2B2A7DEDCE00CCFFAC /* WIPFriendsView.swift */,
 				B8B22D1529311F6200AB88F3 /* EmptyLectureList.swift */,
 				BE779B1B28E72622009960EB /* AnimatedTextField.swift */,
 				BEDF506A27EB73EE00CDCC13 /* LectureListCell.swift */,
@@ -1131,6 +1151,7 @@
 				B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */,
 				B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */,
 				B8E65A732B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift */,
+				B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1151,6 +1172,7 @@
 				BED04D3428EA966100937E4C /* OnboardViewModel.swift */,
 				738406FC2B57179100007E62 /* ThemeSettingViewModel.swift */,
 				738406FE2B5718C600007E62 /* ThemeDetailViewModel.swift */,
+				73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1222,8 +1244,12 @@
 				BE4CD86628F5A56200BA9BBC /* FirebaseMessaging */,
 				B8B7501C2B6274A5004F6272 /* KakaoMapsSDK_SPM */,
 				CEF992F62BF3B8FC00F0FFA4 /* ReactNativeKit */,
+				736AF84E2C2F279900ED9C1A /* GoogleSignIn */,
+				736AF8502C2F279900ED9C1A /* GoogleSignInSwift */,
+				731C244D2C4442590015877B /* KakaoSDK */,
+				731C244F2C4442590015877B /* KakaoSDKAuth */,
+				731C24512C4442590015877B /* KakaoSDKCommon */,
 				CE8590172C5E1B5C00ECFE9E /* KakaoSDKShare */,
-				CE8590192C5E219C00ECFE9E /* KakaoSDKCommon */,
 				CE85901B2C5E21D600ECFE9E /* KakaoSDKTemplate */,
 			);
 			productName = SNUTT;
@@ -1308,7 +1334,8 @@
 				BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				CE1F49AF2A8DB5A400B81E4E /* XCRemoteSwiftPackageReference "ios-rn-prebuilt" */,
 				B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
-				CE8590162C5E1B5C00ECFE9E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				736AF84D2C2F279900ED9C1A /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				734A83172C2FD39600D6CB95 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = DC860F3C27E5C87D0068C94B;
 			projectDirPath = "";
@@ -1446,6 +1473,7 @@
 				BE9413C128C219AD00171060 /* STNotification.swift in Sources */,
 				B87B317328D81447005C170B /* UserDto.swift in Sources */,
 				BE060BD928DF4C1E00A2F1B9 /* OnboardScene.swift in Sources */,
+				73AB84D22C35128B0075DE83 /* IntegrateAccountScene.swift in Sources */,
 				BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */,
 				B8F40EA9289809C60021A2A9 /* LicenseView.swift in Sources */,
 				BEDF506D27EB740F00CDCC13 /* LectureList.swift in Sources */,
@@ -1464,6 +1492,7 @@
 				BE9C90EB2948EA1800003AA6 /* ColorScheme.swift in Sources */,
 				CE5BA50A2B2ED4BC00F15D10 /* ExpandableLectureList.swift in Sources */,
 				CE9820522A0A0BE9001037F5 /* NetworkLogEntryView.swift in Sources */,
+				736AF84C2C2F275E00ED9C1A /* GoogleLogin.swift in Sources */,
 				BEE86519289E287400D3D0E4 /* MenuRenameSheet.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				CEDDCA842A6AFBF700474D4E /* VacancyDto.swift in Sources */,
@@ -1503,11 +1532,11 @@
 				BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */,
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
 				B88D170128AF71E300E2D652 /* UserSupportView.swift in Sources */,
-				B8EE0C2C2A7DEDCE00CCFFAC /* WIPFriendsView.swift in Sources */,
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
 				BED04D2F28EA6FA600937E4C /* SettingsMenuItem.swift in Sources */,
 				738406FF2B5718C600007E62 /* ThemeDetailViewModel.swift in Sources */,
 				B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */,
+				B8C4F3352CA8F48E006B6BAD /* NoticeView.swift in Sources */,
 				BE28036228E884F400B2B1AB /* ReviewWebView.swift in Sources */,
 				BEB3B6A528CDE1FD00E56062 /* TimeUtils.swift in Sources */,
 				BE2CB3632959C0CC00FCF0F0 /* ReviewState.swift in Sources */,
@@ -1604,6 +1633,7 @@
 				BE9413C328C21D1000171060 /* NotificationRepository.swift in Sources */,
 				B87B315E28D5A70F005C170B /* SearchState.swift in Sources */,
 				BE060BD728DF43AC00A2F1B9 /* AuthService.swift in Sources */,
+				734A831F2C2FD41200D6CB95 /* KakaoLogin.swift in Sources */,
 				BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */,
 				731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */,
 				738407052B577E9000007E62 /* ThemeDetailScene.swift in Sources */,
@@ -1625,6 +1655,7 @@
 				731DA001297BC54B0027BA25 /* BookmarkDto.swift in Sources */,
 				738407032B571E6200007E62 /* ThemeBottomSheet.swift in Sources */,
 				BE682BF92887FB59009EBCB7 /* SearchRouter.swift in Sources */,
+				73AB84D42C3514080075DE83 /* IntegrateAccountViewModel.swift in Sources */,
 				BE9413CC28C21F1E00171060 /* NotificationListCell.swift in Sources */,
 				CEDDCA7B2A6AE62B00474D4E /* VacancyLectureCell.swift in Sources */,
 				BEEBDFB62868BA6D00DB5976 /* FilterSheetContent.swift in Sources */,
@@ -2322,6 +2353,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		734A83172C2FD39600D6CB95 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.22.3;
+			};
+		};
+		736AF84D2C2F279900ED9C1A /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.1.0;
+			};
+		};
 		B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
@@ -2373,6 +2420,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		731C244D2C4442590015877B /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 734A83172C2FD39600D6CB95 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
+		};
+		731C244F2C4442590015877B /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 734A83172C2FD39600D6CB95 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		731C24512C4442590015877B /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 734A83172C2FD39600D6CB95 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		736AF84E2C2F279900ED9C1A /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 736AF84D2C2F279900ED9C1A /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		736AF8502C2F279900ED9C1A /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 736AF84D2C2F279900ED9C1A /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
 		B8B7501C2B6274A5004F6272 /* KakaoMapsSDK_SPM */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;

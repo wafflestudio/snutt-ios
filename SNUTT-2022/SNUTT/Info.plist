@@ -15,17 +15,16 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>$(GOOGLE_REVERSED_CLIENT_ID)</string>
 				<string>fb$(FACEBOOK_APP_ID)</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>$(BUNDLE_ID)</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>$(URL_SCHEME)</string>
+				<string>kakao$(KAKAO_APP_KEY)</string>
 			</array>
 		</dict>
 		<dict>
@@ -47,6 +46,8 @@
 	<string>$(FACEBOOK_DISPLAY_NAME)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
+	<key>GIDClientID</key>
+	<string>$(GOOGLE_CLIENT_ID)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>KAKAO_APP_KEY</key>
@@ -57,6 +58,7 @@
 	<array>
 		<string>nmap</string>
 		<string>kakaomap</string>
+		<string>kakaokompassauth</string>
 		<string>kakaolink</string>
 	</array>
 	<key>NMFClientId</key>

@@ -40,7 +40,7 @@ struct MenuThemeSheet: View {
                             Text("새 테마")
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 5)
-                                .font(STFont.detailLabel)
+                                .font(STFont.detailLabel.font)
                         }
                         ForEach(themes.sorted { $0.isCustom && !$1.isCustom }) { theme in
                             Button {
@@ -56,7 +56,7 @@ struct MenuThemeSheet: View {
                                         .frame(width: 60, height: 15)
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
-                                        .font(STFont.detailLabel)
+                                        .font(STFont.detailLabel.font)
                                         .background(selectedTheme == theme ? Color(uiColor: .tertiarySystemFill) : .clear)
                                         .clipShape(Capsule())
                                 }

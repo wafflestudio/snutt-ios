@@ -43,6 +43,7 @@ enum SearchRouter: Router {
                 "etc": [],
                 "department": [],
                 "academic_year": [],
+                "sortCriteria": "",
             ]
 
             let tagParams: [String: Any] = Dictionary(grouping: tagList, by: { $0.type.rawValue })
@@ -52,6 +53,8 @@ enum SearchRouter: Router {
                         return tags.map { Int($0.text.trimmingCharacters(in: CharacterSet.decimalDigits.inverted)) }.compactMap { $0 }
                     case .etc:
                         return tags.map { EtcType(rawValue: $0.text)?.code }.compactMap { $0 }
+                    case .sortCriteria:
+                        return tags.first?.text ?? ""
                     default:
                         return tags.map { $0.text }
                     }

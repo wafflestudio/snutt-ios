@@ -18,7 +18,7 @@ struct VacancyLectureCell: View {
             HStack {
                 Spacer()
                 Text("\(lecture.registrationCount?.description ?? "-")명 / \(lecture.quota)명")
-                    .font(STFont.details)
+                    .font(STFont.details.font)
                     .foregroundStyle(STColor.vacancyBlue)
             }
             .padding(.bottom, -7)
@@ -50,7 +50,7 @@ struct VacancyLectureCell: View {
         HStack {
             Group {
                 Text(lecture.title)
-                    .font(STFont.subheading)
+                    .font(STFont.subheading.font)
                     .lineLimit(1)
                 if lecture.hasVacancy {
                     vacancyBadge
@@ -58,10 +58,10 @@ struct VacancyLectureCell: View {
                 Spacer()
                 if lecture.instructor.isEmpty {
                     Text("\(lecture.credit)학점")
-                        .font(STFont.details)
+                        .font(STFont.details.font)
                 } else {
                     Text("\(lecture.instructor) / \(lecture.credit)학점")
-                        .font(STFont.details)
+                        .font(STFont.details.font)
                 }
             }
         }

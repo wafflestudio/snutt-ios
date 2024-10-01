@@ -5,6 +5,8 @@
 //  Created by Jinsup Keum on 2022/03/19.
 //
 
+import KakaoSDKAuth
+import KakaoSDKCommon
 import SwiftUI
 
 @main
@@ -21,6 +23,8 @@ struct SNUTTApp: App {
             lectureService: appEnvironment.container.services.lectureService
         )
         )
+        let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
+        KakaoSDK.initSDK(appKey: kakaoAppKey)
     }
 
     var body: some Scene {
@@ -28,6 +32,9 @@ struct SNUTTApp: App {
             SNUTTView(viewModel: .init(container: appEnvironment.container))
                 .environment(\.dependencyContainer, appEnvironment.container)
                 .onOpenURL { url in
+                    if AuthApi.isKakaoTalkLoginUrl(url) {
+                        AuthController.handleOpenUrl(url: url)
+                    }
                     Task {
                         do {
                             try await deepLinkHandler.open(url: url)

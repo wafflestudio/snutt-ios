@@ -10,5 +10,7 @@ import Foundation
 struct ErrorDto: Codable {
     let errcode: Int
     let message: String
+    let displayMessage: String?
+    let detail: [String: String]?
     let ext: [String: String]?
 }

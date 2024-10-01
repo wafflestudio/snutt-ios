@@ -12,6 +12,7 @@ struct ConfigsDto: Codable {
     let vacancySugangSnuUrl: VacancySugangSnuUrlDto?
     let settingsBadge: SettingsBadgeDto?
     let reactNativeBundleFriends: ReactNativeBundleFriendsDto?
+    let notice: NoticeViewInfoDto?
     let disableMapFeature: Bool?
 }
 
@@ -34,5 +35,11 @@ extension ConfigsDto {
         var iosBundleSrc: String? {
             src["ios"]
         }
+    }
+
+    struct NoticeViewInfoDto: Codable {
+        let title: String
+        let content: String
+        let visible: Bool
     }
 }

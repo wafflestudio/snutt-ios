@@ -55,10 +55,8 @@ struct LectureDetailScene: View {
     }
 
     private var showMapMismatchWarning: Bool {
-        !lecture.timePlaces.allSatisfy { timeplace in
-            buildings.allSatisfy {
-                timeplace.place.hasPrefix($0.number)
-            }
+        !lecture.timePlaces.map { $0.place }.allSatisfy { place in
+            buildings.first(where: { place.hasPrefix($0.number) }) != nil
         }
     }
 
@@ -85,11 +83,17 @@ struct LectureDetailScene: View {
             .padding(.vertical, 20)
             .padding(.bottom, 40)
         }
-        .onLoad {
+        .task {
             buildings = await viewModel.getBuildingList(of: lecture)
         }
         .onAppear {
             isMapViewExpanded = viewModel.shouldOpenLectureMapView()
+        }
+        .task {
+            if let evLecture = await viewModel.getEvLectureInfo(of: lecture) {
+                lecture.updateEvLecture(to: evLecture)
+                viewModel.reloadDetailWebView(detailId: evLecture.evLectureId)
+            }
         }
         .onChange(of: isMapViewExpanded) {
             viewModel.setIsMapViewExpanded($0)
@@ -366,7 +370,7 @@ struct LectureDetailScene: View {
     private var timePlaceSection: some View {
         VStack {
             Text("시간 및 장소")
-                .font(STFont.detailLabel)
+                .font(STFont.detailLabel.font)
                 .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -430,7 +434,6 @@ struct LectureDetailScene: View {
                                             ? STColor.gray30.opacity(0.6)
                                             : STColor.darkGray.opacity(0.6))
                                         .padding(.top, 8)
-
                                     Spacer()
                                 }
                             }
@@ -497,14 +500,6 @@ struct LectureDetailScene: View {
 
                 DetailButton(text: "강의평") {
                     showReviewWebView = true
-                }
-                .onAppear {
-                    Task {
-                        if let evLecture = await viewModel.getEvLectureInfo(of: lecture) {
-                            lecture.updateEvLecture(to: evLecture)
-                            viewModel.reloadDetailWebView(detailId: evLecture.evLectureId)
-                        }
-                    }
                 }
                 .sheet(isPresented: $showReviewWebView) {
                     ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: false, detailId: lecture.evLecture?.evLectureId)

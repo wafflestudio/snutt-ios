@@ -20,6 +20,8 @@ class SystemState {
 
     @Published var selectedTab: TabType = .timetable
 
+    @Published var noticeViewInfo: ConfigsDto.NoticeViewInfoDto?
+
     var isMapViewExpanded: Bool?
     var configs: ConfigsDto?
 }

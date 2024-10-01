@@ -99,6 +99,9 @@ struct SearchService: SearchServiceProtocol {
             searchState.selectedTagList.remove(at: index)
             return
         }
+        if tag.type == .sortCriteria {
+            searchState.selectedTagList.removeAll(where: { $0.type == .sortCriteria })
+        }
         searchState.selectedTagList.append(tag)
     }
 

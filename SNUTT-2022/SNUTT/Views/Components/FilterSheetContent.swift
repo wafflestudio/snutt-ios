@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FilterSheetContent: View {
     @ObservedObject var viewModel: FilterSheetViewModel
-    @State private var selectedCategory: SearchTagType = .classification
+    @State private var selectedCategory: SearchTagType = .sortCriteria
     @State private var isTimeRangeSheetOpen: Bool = false
 
     struct FilterButtonStyle: ButtonStyle {
@@ -60,7 +60,7 @@ struct FilterSheetContent: View {
                                             .padding(.trailing, 3)
                                         VStack(alignment: .leading, spacing: 6) {
                                             Text(tag.text)
-                                                .font(STFont.detailLabel)
+                                                .font(STFont.detailLabel.font)
                                                 .frame(maxWidth: .infinity, alignment: .leading)
                                                 .contentShape(Rectangle())
 
@@ -77,7 +77,7 @@ struct FilterSheetContent: View {
                                                             .underline()
                                                     }
                                                 }
-                                                .font(STFont.details)
+                                                .font(STFont.details.font)
                                                 .foregroundColor(STColor.darkGray)
                                                 .onTapGesture { isTimeRangeSheetOpen = true }
                                             }
@@ -110,7 +110,7 @@ struct FilterSheetContent: View {
             } label: {
                 Text("필터 적용")
                     .foregroundColor(.white)
-                    .font(STFont.title)
+                    .font(STFont.title.font)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
             }
