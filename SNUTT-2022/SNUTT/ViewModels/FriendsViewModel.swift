@@ -101,7 +101,7 @@ extension FriendsViewModel {
             case RNEvent.addFriendKakao.rawValue:
                 guard let requestToken = event.payload?["requestToken"] as? String else { return }
                 do {
-                    try sendKakaoMessage(with: requestToken)
+                    try await sendKakaoMessage(with: requestToken)
                 } catch let error as FriendRequestError {
                     self.friendRequestError = error
                 } catch {
@@ -113,7 +113,8 @@ extension FriendsViewModel {
         }
     }
 
-    func sendKakaoMessage(with requestToken: String) throws {
+    func sendKakaoMessage(with requestToken: String) async throws {
+        await eventEmitter.emitEvent(RNEvent.closeModal)
         guard ShareApi.isKakaoTalkSharingAvailable() else { throw FriendRequestError.shareUnavailable }
         let params = ["type": RNEvent.addFriendKakao.rawValue, "requestToken": requestToken]
         let link = Link(androidExecutionParams: params, iosExecutionParams: params)
