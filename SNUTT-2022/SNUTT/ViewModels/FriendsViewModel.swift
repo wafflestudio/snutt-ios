@@ -73,9 +73,9 @@ extension FriendsViewModel {
         var errorDescription: String? {
             switch self {
             case .shareUnavailable:
-                "카카오톡 초대 기능을 사용할 수 없습니다."
+                "카카오톡 초대 기능을 사용할 수 없습니다"
             case .preparationFailed, .unknownError:
-                "알 수 없는 오류가 발생했습니다."
+                "알 수 없는 오류가 발생했습니다"
             }
         }
 
@@ -114,7 +114,7 @@ extension FriendsViewModel {
     }
 
     func sendKakaoMessage(with requestToken: String) async throws {
-        await eventEmitter.emitEvent(RNEvent.closeModal)
+        try await Task.sleep(nanoseconds: 500_000_000)
         guard ShareApi.isKakaoTalkSharingAvailable() else { throw FriendRequestError.shareUnavailable }
         let params = ["type": RNEvent.addFriendKakao.rawValue, "requestToken": requestToken]
         let link = Link(androidExecutionParams: params, iosExecutionParams: params)

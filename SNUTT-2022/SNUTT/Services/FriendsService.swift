@@ -12,7 +12,6 @@ import ReactNativeKit
 
 enum RNEvent: String, SupportedEvent {
     case addFriendKakao = "add-friend-kakao"
-    case closeModal = "close-modal"
 }
 
 @MainActor
