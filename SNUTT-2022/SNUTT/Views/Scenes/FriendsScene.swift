@@ -9,10 +9,11 @@ import ReactNativeKit
 import SwiftUI
 
 struct FriendsScene: View {
-    var viewModel: FriendsViewModel
+    @StateObject var viewModel: FriendsViewModel
     @State private var bundleUrl: URL?
 
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.scenePhase) private var phase
 
     var body: some View {
         let _ = debugChanges()
@@ -26,15 +27,23 @@ struct FriendsScene: View {
                 ProgressView()
             }
         }
+        .alert(isPresented: $viewModel.isErrorAlertPresented, error: viewModel.friendRequestError, actions: { _ in
+            Button("확인", role: .none, action: {})
+        }, message: { error in Text(error.recoverySuggestion ?? "") })
         .task {
             // bundleUrl = URL(string: "http://localhost:8081/index.bundle?platform=ios")!
             bundleUrl = await viewModel.fetchReactNativeBundleUrl()
         }
-        .task {
-            #if DEBUG
-                // 네이티브 <-> RN 이벤트 전달 테스트용
-                await FriendsService.eventEmitter.emitEvent(.addFriendKakao, payload: ["test": "test"])
-            #endif
+        .onAppear {
+            viewModel.startListeningEvents()
+        }
+        .onChange(of: phase) { newPhase in
+            switch newPhase {
+            case .active:
+                viewModel.startListeningEvents()
+            default:
+                return
+            }
         }
     }
 }

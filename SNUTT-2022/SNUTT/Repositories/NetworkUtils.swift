@@ -99,20 +99,12 @@ final class Logger: EventMonitor {
     }
 
     // Event called when any type of Request is resumed.
-    func requestDidResume(_ request: Request) {
-        debugPrint("Resuming: \(request)")
-    }
+    func requestDidResume(_: Request) {}
 
     // Event called whenever a DataRequest has parsed a response.
     func request<Value>(_: DataRequest, didParseResponse response: DataResponse<Value, AFError>) {
         Task {
             await logStore?.log(response: response)
-        }
-
-        if response.error == nil {
-            debugPrint("Finished: \(response)")
-        } else {
-            debugPrint("Error: \(response)")
         }
     }
 }
