@@ -28,7 +28,7 @@ struct OnboardScene: View {
 
                         Logo(orientation: .vertical)
                             .matchedGeometryEffect(id: logoId, in: launchScreenAnimation)
-                        
+
                         Spacer().frame(height: proxy.size.height * 0.16)
 
                         VStack(spacing: 0) {
@@ -47,7 +47,7 @@ struct OnboardScene: View {
                                         )
                                 }
                                 .padding(.horizontal, 20)
-                                
+
                                 Button {
                                     pushToSignUpScene = true
                                 } label: {
@@ -56,7 +56,7 @@ struct OnboardScene: View {
                                         .foregroundColor(STColor.darkerGray)
                                 }
                             }
-                            
+
                             Spacer().frame(height: proxy.size.height * 0.07)
 
                             HStack(spacing: 10) {
@@ -71,7 +71,7 @@ struct OnboardScene: View {
                                     .fill(STColor.gray20)
                                     .frame(height: 1)
                             }
-                            
+
                             Spacer().frame(height: 24)
 
                             HStack(spacing: 12) {
@@ -98,7 +98,7 @@ struct OnboardScene: View {
                             }
 
                             Spacer().frame(height: proxy.size.height * 0.06)
-                            
+
                             Button {
                                 pushToFeedbackView = true
                             } label: {
@@ -108,7 +108,7 @@ struct OnboardScene: View {
                             }
                         }
                         .padding(.horizontal, 12)
-                        
+
                         Spacer().frame(height: proxy.size.height * 0.05)
                     }
                     .transition(.scale(scale: 1))
@@ -130,7 +130,7 @@ struct OnboardScene: View {
                 NavigationLink(destination: SignUpView(registerLocalId: viewModel.registerWith(id:password:email:), sendVerificationCode: viewModel.sendVerificationCode(email:), checkVerificationCode: viewModel.submitVerificationCode(code:), pushToTimetableScene: $pushToTimetableScene), isActive: $pushToSignUpScene) { EmptyView() }
 
                 NavigationLink(destination: LoginScene(viewModel: .init(container: viewModel.container), moveToTimetableScene: $pushToTimetableScene), isActive: $pushToLoginScene) { EmptyView() }
-                
+
                 NavigationLink(destination: UserSupportView(email: nil, sendFeedback: viewModel.sendFeedback(email:message:)), isActive: $pushToFeedbackView) { EmptyView() }
             }
         )
