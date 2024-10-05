@@ -1,0 +1,31 @@
+/*
+ Localizable.strings
+ This file is used to manage localizable strings for the feature module in English.
+
+ How to use:
+ - Add your localized strings here in the format "key" = "value";
+ - The key is what you will use in your code, and the value is the translated string.
+
+ Examples:
+ "welcome_message" = "Welcome to the app!";
+ "error_message" = "An error has occurred. Please try again.";
+
+ Usage in code with Tuist synthesized strings:
+ let welcomeMessage = AuthStrings.welcomeMessage
+ let errorMessage = AuthStrings.errorMessage
+
+ Note:
+ - Ensure that each key is unique within this file.
+ - Add comments to provide context for translators.
+*/
+
+/* Add your translations below */
+
+"onboard.login.button" = "로그인";
+"onboard.register.button" = "가입하기";
+"onboard.login.localID" = "아이디";
+"onboard.login.localPassword" = "비밀번호";
+"onboard.login.localID.placeholder" = "아이디를 입력하세요";
+"onboard.login.localPassword.placeHolder" = "비밀번호를 입력하세요";
+"onboard.login.findLocalID.button" = "아이디 찾기";
+"onboard.login.resetLocalPassword.button" = "비밀번호 재설정";
