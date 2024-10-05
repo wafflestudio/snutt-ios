@@ -5,9 +5,9 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Security
-import Foundation
 import AuthInterface
+import Foundation
+import Security
 
 public struct AuthKeychainRepository: AuthSecureRepository {
     private let accessTokenKey = "accessToken"
@@ -19,7 +19,7 @@ public struct AuthKeychainRepository: AuthSecureRepository {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: accessTokenKey,
-            kSecValueData as String: data
+            kSecValueData as String: data,
         ]
         SecItemDelete(query as CFDictionary)
         let status = SecItemAdd(query as CFDictionary, nil)
@@ -33,7 +33,7 @@ public struct AuthKeychainRepository: AuthSecureRepository {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: accessTokenKey,
             kSecReturnData as String: kCFBooleanTrue!,
-            kSecMatchLimit as String: kSecMatchLimitOne
+            kSecMatchLimit as String: kSecMatchLimitOne,
         ]
 
         var dataTypeRef: AnyObject?
@@ -48,7 +48,7 @@ public struct AuthKeychainRepository: AuthSecureRepository {
     public func clear() throws {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: accessTokenKey
+            kSecAttrAccount as String: accessTokenKey,
         ]
         let status = SecItemDelete(query as CFDictionary)
         if status != errSecSuccess && status != errSecItemNotFound {

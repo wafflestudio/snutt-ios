@@ -5,9 +5,9 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
-import SharedUIComponents
 import MemberwiseInit
+import SharedUIComponents
+import SwiftUI
 
 public struct OnboardScene: View {
     @StateObject private var viewModel = OnboardViewModel()

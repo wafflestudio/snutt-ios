@@ -5,13 +5,12 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import TimetableInterface
-import SharedUIComponents
-import UIKit
 import Combine
-import UIKitUtility
+import SharedUIComponents
 import SwiftUI
-
+import TimetableInterface
+import UIKit
+import UIKitUtility
 
 final class ExpandableLectureCell: UICollectionViewCell {
     var cancellables = Set<AnyCancellable>()
@@ -32,7 +31,7 @@ final class ExpandableLectureCell: UICollectionViewCell {
         clipsToBounds = true
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -98,13 +97,12 @@ private struct LectureActionButton: View {
     enum Design {
         static let buttonFont: UIFont = .systemFont(ofSize: 11)
     }
+
     var body: some View {
         AnimatableButton(
             animationOptions: .identity.impact().scale(0.95).backgroundColor(touchDown: .black.opacity(0.04)),
             layoutOptions: [.respectIntrinsicHeight, .expandHorizontally]
-        ) {
-
-        } configuration: { button in
+        ) {} configuration: { _ in
             var config = UIButton.Configuration.plain()
             config.imagePlacement = .top
             config.imagePadding = 2
@@ -116,7 +114,6 @@ private struct LectureActionButton: View {
         }
     }
 }
-
 
 private struct LectureHeaderRow: View {
     let lecture: any Lecture
@@ -145,7 +142,6 @@ private struct LectureHeaderRow: View {
     }
 }
 
-
 private struct LectureDetailRow: View {
     let type: DetailLabelType
     let lecture: any Lecture
@@ -171,7 +167,6 @@ private struct LectureDetailRow: View {
         }
     }
 }
-
 
 enum ActionButtonType: String, CaseIterable, Identifiable {
     var id: String {
@@ -199,7 +194,7 @@ enum ActionButtonType: String, CaseIterable, Identifiable {
         }
     }
 
-    func text(isSelected: Bool) -> String {
+    func text(isSelected _: Bool) -> String {
         switch self {
         case .detail:
             "자세히"

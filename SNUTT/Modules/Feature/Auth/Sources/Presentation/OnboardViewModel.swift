@@ -5,10 +5,10 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import AuthInterface
 import Combine
 import Dependencies
 import struct SwiftUI.NavigationPath
-import AuthInterface
 import UIKit
 
 @MainActor
@@ -24,7 +24,6 @@ final class OnboardViewModel: ObservableObject {
         }
     }
 }
-
 
 enum OnboardDetailSceneTypes {
     case loginLocal

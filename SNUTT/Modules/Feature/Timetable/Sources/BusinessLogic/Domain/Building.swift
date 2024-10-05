@@ -5,9 +5,9 @@
 ////  Copyright © 2024 wafflestudio.com. All rights reserved.
 ////
 //
-//import Foundation
+// import Foundation
 //
-//struct Building {
+// struct Building {
 //    let id: String
 //    let number: String
 //    let nameKor: String
@@ -15,9 +15,9 @@
 //    let locationInDMS: Location
 //    let locationInDecimal: Location
 //    let campus: Campus
-//}
+// }
 //
-//extension Building {
+// extension Building {
 //    init(from dto: BuildingDto) {
 //        id = dto.id
 //        number = dto.buildingNumber
@@ -27,4 +27,4 @@
 //        locationInDecimal = dto.locationInDecimal
 //        campus = .init(rawValue: dto.campus) ?? .GWANAK
 //    }
-//}
+// }

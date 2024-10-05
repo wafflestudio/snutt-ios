@@ -1,14 +1,14 @@
 //
-//  AuthAPIRepository.swift
+//  AuthRepository.swift
 //  SNUTT
 //
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
 import APIClientInterface
-import Spyable
 import Dependencies
 import MemberwiseInit
+import Spyable
 
 @Spyable
 public protocol AuthRepository: Sendable {
@@ -31,7 +31,6 @@ public struct LoginResponse: Sendable {
     public let userID: String
 }
 
-
 extension AuthRepositorySpy: @unchecked Sendable {}
 
 public enum AuthRepositoryKey: TestDependencyKey {
@@ -42,8 +41,8 @@ public enum AuthRepositoryKey: TestDependencyKey {
     }()
 }
 
-extension DependencyValues {
-    public var authRepository: any AuthRepository {
+public extension DependencyValues {
+    var authRepository: any AuthRepository {
         get { self[AuthRepositoryKey.self] }
         set { self[AuthRepositoryKey.self] = newValue }
     }

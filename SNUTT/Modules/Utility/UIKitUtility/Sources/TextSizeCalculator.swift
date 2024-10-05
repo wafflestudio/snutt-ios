@@ -24,7 +24,7 @@ public final class TextSizeCalculator: NSObject, @unchecked Sendable {
         textLayoutManager.textViewportLayoutController.delegate = self
     }
 
-    public static nonisolated func sizeThatFits(
+    public nonisolated static func sizeThatFits(
         attributedText: NSAttributedString,
         maxWidth: CGFloat,
         maxHeight: CGFloat? = nil
@@ -84,12 +84,12 @@ public final class TextSizeCalculator: NSObject, @unchecked Sendable {
 }
 
 extension TextSizeCalculator: NSTextViewportLayoutControllerDelegate {
-    public func viewportBounds(for textViewportLayoutController: NSTextViewportLayoutController) -> CGRect {
+    public func viewportBounds(for _: NSTextViewportLayoutController) -> CGRect {
         .init(origin: .zero, size: textContainerSize)
     }
 
     public func textViewportLayoutController(
-        _ textViewportLayoutController: NSTextViewportLayoutController,
-        configureRenderingSurfaceFor textLayoutFragment: NSTextLayoutFragment
+        _: NSTextViewportLayoutController,
+        configureRenderingSurfaceFor _: NSTextLayoutFragment
     ) {}
 }

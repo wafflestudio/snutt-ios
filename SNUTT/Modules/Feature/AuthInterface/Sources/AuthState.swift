@@ -5,10 +5,10 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import Combine
 import Dependencies
 import Foundation
 import Spyable
-import Combine
 
 @Spyable
 public protocol AuthState: Sendable, ObservableObject, AnyObject {
@@ -40,8 +40,8 @@ public enum AuthStateKey: TestDependencyKey {
     }()
 }
 
-extension DependencyValues {
-    public var authState: any AuthState {
+public extension DependencyValues {
+    var authState: any AuthState {
         get { self[AuthStateKey.self] }
         set { self[AuthStateKey.self] = newValue }
     }

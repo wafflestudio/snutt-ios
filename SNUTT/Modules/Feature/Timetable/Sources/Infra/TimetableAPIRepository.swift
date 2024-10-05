@@ -7,15 +7,15 @@
 
 import APIClientInterface
 import Dependencies
-import TimetableInterface
 import Foundation
+import TimetableInterface
 
 public struct TimetableAPIRepository: TimetableRepository {
     @Dependency(\.apiClient) private var apiClient
 
     public init() {}
 
-    public func fetchTimetable(timetableID: String) async throws -> any Timetable {
+    public func fetchTimetable(timetableID _: String) async throws -> any Timetable {
         fatalError()
     }
 
@@ -29,11 +29,11 @@ public struct TimetableAPIRepository: TimetableRepository {
         fatalError()
     }
 
-    public func updateTimetableTitle(timetableID: String, title: String) async throws -> [any Timetable] {
+    public func updateTimetableTitle(timetableID _: String, title _: String) async throws -> [any Timetable] {
         fatalError()
     }
 
-    public func setPrimaryTimetable(timetableID: String) async throws {
+    public func setPrimaryTimetable(timetableID _: String) async throws {
         fatalError()
     }
 }
@@ -70,7 +70,7 @@ extension Components.Schemas.TimetableLectureLegacyDto: @retroactive Lecture {
         guard let snuttEvLecture else { return nil }
         return .init(evLectureID: snuttEvLecture.evLectureId.asInt(), avgRating: nil, evaluationCount: nil)
     }
-    
+
     public var courseNumber: String? {
         course_number
     }
@@ -97,18 +97,18 @@ extension Components.Schemas.TimetableLectureLegacyDto: @retroactive Lecture {
         class_time_json
             .enumerated()
             .compactMap { index, json in
-            guard let weekday = Weekday(rawValue: json.day.rawValue) else { return nil }
-            let start = json.startMinute.asInt().quotientAndRemainder(dividingBy: 60)
-            let end = json.endMinute.asInt().quotientAndRemainder(dividingBy: 60)
-            return TimePlace(
-                id: "\(index)-\(start)-\(end)-\(json.place ?? "")-\(isCustom)", // FIXME
-                day: weekday,
-                startTime: .init(hour: start.quotient, minute: start.remainder),
-                endTime: .init(hour: end.quotient, minute: end.remainder),
-                place: json.place ?? "",
-                isCustom: isCustom
-            )
-        }
+                guard let weekday = Weekday(rawValue: json.day.rawValue) else { return nil }
+                let start = json.startMinute.asInt().quotientAndRemainder(dividingBy: 60)
+                let end = json.endMinute.asInt().quotientAndRemainder(dividingBy: 60)
+                return TimePlace(
+                    id: "\(index)-\(start)-\(end)-\(json.place ?? "")-\(isCustom)", // FIXME:
+                    day: weekday,
+                    startTime: .init(hour: start.quotient, minute: start.remainder),
+                    endTime: .init(hour: end.quotient, minute: end.remainder),
+                    place: json.place ?? "",
+                    isCustom: isCustom
+                )
+            }
     }
 }
 
@@ -118,8 +118,8 @@ extension Int64 {
     }
 }
 
-extension Int32 {
-    fileprivate func asInt() -> Int {
+private extension Int32 {
+    func asInt() -> Int {
         Int(self)
     }
 }

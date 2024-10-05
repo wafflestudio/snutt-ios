@@ -6,8 +6,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Dependencies
 import AuthInterface
+import Dependencies
 
 struct AuthUseCase {
     @Dependency(\.authRepository) private var authRepository
@@ -23,7 +23,7 @@ struct AuthUseCase {
 }
 
 extension AuthUseCase: DependencyKey {
-    static let liveValue: AuthUseCase = AuthUseCase()
+    static let liveValue: AuthUseCase = .init()
 }
 
 extension DependencyValues {

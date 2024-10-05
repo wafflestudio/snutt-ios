@@ -9,7 +9,6 @@ import Foundation
 import MemberwiseInit
 
 public struct TimePlace: Sendable, Codable, Equatable, Identifiable, CustomStringConvertible {
-
     public let id: String
     public let day: Weekday
     public let startTime: Time

@@ -5,10 +5,10 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
-import UIKit
-import TimetableInterface
 import SharedUIComponents
+import SwiftUI
+import TimetableInterface
+import UIKit
 
 struct SearchResultListView: View {
     @ObservedObject var viewModel: LectureSearchViewModel
@@ -61,14 +61,13 @@ enum ShortcutType: Int, CaseIterable, Identifiable {
     var image: UIImage {
         switch self {
         case .manualAdd:
-                UIImage(systemName: "text.badge.plus")!
+            UIImage(systemName: "text.badge.plus")!
         case .vacancy:
             UIImage(systemName: "cursorarrow.rays")!
         case .bookmark:
             UIImage(systemName: "bookmark.circle.fill")!
         }
     }
-
 }
 
 struct ShortcutsScrollView: View {
@@ -77,9 +76,7 @@ struct ShortcutsScrollView: View {
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(ShortcutType.allCases) { shortcutType in
-                        AnimatableButton {
-
-                        } configuration: { button in
+                        AnimatableButton {} configuration: { _ in
                             var config = UIButton.Configuration.plain()
                             config.attributedTitle = .init(shortcutType.title, attributes: .init([.font: UIFont.systemFont(ofSize: 12, weight: .semibold)]))
                             config.attributedSubtitle = .init(shortcutType.subtitle, attributes: .init([.font: UIFont.systemFont(ofSize: 11), .foregroundColor: UIColor.white.withAlphaComponent(0.6)]))
@@ -117,4 +114,3 @@ struct ShortcutsScrollView: View {
         ShortcutsScrollView()
     }
 }
-

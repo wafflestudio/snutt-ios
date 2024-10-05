@@ -6,10 +6,10 @@ private let category = ModuleCategory.shared(ui: false)
 private let template = Template(
     description: "A template for a new feature module.",
     attributes: [
-        name
+        name,
     ],
     items: [
         .file(path: "Modules/\(category.directoryName)/\(name)/Sources/\(name).swift", templatePath: "Shared.stencil"),
-        .file(path: "Modules/\(category.directoryName)/\(name)/Tests/\(name)Tests.swift", templatePath: "SharedTests.stencil")
+        .file(path: "Modules/\(category.directoryName)/\(name)/Tests/\(name)Tests.swift", templatePath: "SharedTests.stencil"),
     ]
 )

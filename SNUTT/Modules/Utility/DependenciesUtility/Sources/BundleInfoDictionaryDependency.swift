@@ -8,10 +8,10 @@
 import Foundation
 @_spi(Internals) import DependenciesAdditionsBasics
 
-extension DependencyValues {
-    public var infoPlist: BundleInfoDictionary {
-      get { self[BundleInfoDictionary.self] }
-      set { self[BundleInfoDictionary.self] = newValue }
+public extension DependencyValues {
+    var infoPlist: BundleInfoDictionary {
+        get { self[BundleInfoDictionary.self] }
+        set { self[BundleInfoDictionary.self] = newValue }
     }
 }
 
@@ -22,10 +22,11 @@ public struct BundleInfoDictionary: Sendable {
 }
 
 extension BundleInfoDictionary: DependencyKey {
-    static public var liveValue: BundleInfoDictionary {
+    public static var liveValue: BundleInfoDictionary {
         BundleInfoDictionary()
     }
-    static public var testValue: BundleInfoDictionary {
+
+    public static var testValue: BundleInfoDictionary {
         BundleInfoDictionary()
     }
 }

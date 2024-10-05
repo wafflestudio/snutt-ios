@@ -1,7 +1,7 @@
-import SwiftUI
 import Dependencies
-import WindowReader
 import SharedUIComponents
+import SwiftUI
+import WindowReader
 
 @main
 struct SNUTTApp: App {

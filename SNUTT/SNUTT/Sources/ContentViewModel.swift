@@ -5,9 +5,9 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Dependencies
 import AuthInterface
 import Combine
+import Dependencies
 import Foundation
 
 class ContentViewModel: ObservableObject {
@@ -23,5 +23,4 @@ class ContentViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$isAuthenticated)
     }
-
 }

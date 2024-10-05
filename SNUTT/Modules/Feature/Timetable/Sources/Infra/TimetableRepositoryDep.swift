@@ -5,10 +5,10 @@
 ////  Created by Jinsup Keum on 2022/07/07.
 ////
 //
-//import Alamofired
-//import Foundation
+// import Alamofired
+// import Foundation
 //
-//protocol TimetableRepositoryProtocol {
+// protocol TimetableRepositoryProtocol {
 //    func fetchTimetable(withTimetableId: String) async throws -> TimetableDto
 //    func fetchRecentTimetable() async throws -> TimetableDto
 //    func fetchTimetableList() async throws -> [TimetableMetadataDto]
@@ -19,9 +19,9 @@
 //    func copyTimetable(withTimetableId id: String) async throws -> [TimetableMetadataDto]
 //    func updateTimetableTheme(withTimetableId id: String, withTheme theme: Theme) async throws -> TimetableDto
 //    func createTimetable(title: String, year: Int, semester: Int) async throws -> [TimetableMetadataDto]
-//}
+// }
 //
-//class TimetableRepository: TimetableRepositoryProtocol {
+// class TimetableRepository: TimetableRepositoryProtocol {
 //    private let session: Session
 //
 //    init(session: Session) {
@@ -98,4 +98,4 @@
 //            .serializingDecodable(TimetableDto.self)
 //            .handlingError()
 //    }
-//}
+// }

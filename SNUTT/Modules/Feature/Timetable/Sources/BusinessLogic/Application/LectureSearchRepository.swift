@@ -5,9 +5,9 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import TimetableInterface
 import Foundation
 import Spyable
+import TimetableInterface
 
 @Spyable
 protocol LectureSearchRepository: Sendable {

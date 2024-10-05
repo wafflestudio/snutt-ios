@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 
 struct SignInButton: View {
     let label: String
@@ -19,15 +19,15 @@ struct SignInButton: View {
             layoutOptions: [.expandHorizontally, .respectIntrinsicHeight]
         ) {
             action?()
-            } configuration: { button in
-                var configuration = UIButton.Configuration.plain()
-                configuration.title = label
-                configuration.baseForegroundColor = .label
-                configuration.image = image
-                configuration.cornerStyle = .large
-                configuration.background.strokeColor = .tertiaryLabel
-                return configuration
-            }
+        } configuration: { _ in
+            var configuration = UIButton.Configuration.plain()
+            configuration.title = label
+            configuration.baseForegroundColor = .label
+            configuration.image = image
+            configuration.cornerStyle = .large
+            configuration.background.strokeColor = .tertiaryLabel
+            return configuration
+        }
     }
 }
 

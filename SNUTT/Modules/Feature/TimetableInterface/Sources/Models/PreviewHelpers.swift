@@ -16,8 +16,8 @@ public struct PreviewTimetable: Timetable {
     public let lectures: [any Lecture]
     public let userID: String
 
-    public func encode(to encoder: any Encoder) throws {}
-    public init(from decoder: any Decoder) throws { fatalError() }
+    public func encode(to _: any Encoder) throws {}
+    public init(from _: any Decoder) throws { fatalError() }
 
     public static var preview: any Timetable {
         let previewLectures: [any Lecture] = [
@@ -39,7 +39,7 @@ public struct PreviewTimetable: Timetable {
                         startTime: Time(hour: 9, minute: 0),
                         endTime: Time(hour: 10, minute: 30),
                         place: "Room 101"
-                    )
+                    ),
                 ],
                 lectureNumber: "001",
                 instructor: "Prof. Smith",
@@ -65,7 +65,7 @@ public struct PreviewTimetable: Timetable {
                         startTime: Time(hour: 11, minute: 0),
                         endTime: Time(hour: 12, minute: 30),
                         place: "Room 202"
-                    )
+                    ),
                 ],
                 lectureNumber: "002",
                 instructor: "Dr. Johnson",
@@ -85,7 +85,7 @@ public struct PreviewTimetable: Timetable {
                         startTime: Time(hour: 14, minute: 0),
                         endTime: Time(hour: 15, minute: 30),
                         place: "Room 303"
-                    )
+                    ),
                 ],
                 lectureNumber: "003",
                 instructor: "Prof. Lee",
@@ -106,7 +106,7 @@ public struct PreviewTimetable: Timetable {
                         startTime: Time(hour: 14, minute: 0),
                         endTime: Time(hour: 15, minute: 30),
                         place: "Room 303"
-                    )
+                    ),
                 ],
                 lectureNumber: "003",
                 instructor: "박찬국",
@@ -115,7 +115,7 @@ public struct PreviewTimetable: Timetable {
                 academicYear: "Freshman",
                 evLecture: .init(evLectureID: 2, avgRating: 3.2, evaluationCount: 20),
                 remark: "Korean only."
-            )
+            ),
         ]
 
         return PreviewTimetable(
@@ -141,5 +141,3 @@ private struct PreviewLecture: Lecture, Codable {
     var evLecture: EvLecture?
     var remark: String? = nil
 }
-
-

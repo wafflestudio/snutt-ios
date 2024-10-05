@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 @MainActor
 public protocol HudPresenterProtocol: Sendable {
@@ -26,6 +26,6 @@ public class HudPresenter: HudPresenterProtocol {
     }
 }
 
-extension EnvironmentValues {
-    @Entry public var hudPresenter: (any HudPresenterProtocol)?
+public extension EnvironmentValues {
+    @Entry var hudPresenter: (any HudPresenterProtocol)?
 }

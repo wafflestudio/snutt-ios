@@ -6,10 +6,10 @@
 //
 
 import AuthInterface
-import Foundation
 import Combine
 import Dependencies
 import DependenciesAdditions
+import Foundation
 
 public class AuthUserState: AuthState, @unchecked Sendable {
     @Dependency(\.userDefaults) private var userDefaults
@@ -18,7 +18,7 @@ public class AuthUserState: AuthState, @unchecked Sendable {
 
     public init() {}
 
-    @Published private(set) public var isAuthenticated = false
+    @Published public private(set) var isAuthenticated = false
     public var isAuthenticatedPublisher: AnyPublisher<Bool, Never> {
         $isAuthenticated.eraseToAnyPublisher()
     }
@@ -55,10 +55,9 @@ public class AuthUserState: AuthState, @unchecked Sendable {
     }
 }
 
-extension NSRecursiveLock {
-    @discardableResult
-    fileprivate func sync<R>(work: () throws -> R) rethrows -> R {
-        self.lock()
+private extension NSRecursiveLock {
+    @discardableResult func sync<R>(work: () throws -> R) rethrows -> R {
+        lock()
         defer { self.unlock() }
         return try work()
     }

@@ -7,8 +7,8 @@
 
 import Dependencies
 import DependenciesAdditions
-import TimetableInterface
 import Foundation
+import TimetableInterface
 
 struct TimetableUserDefaultsRepository<ConcreteTimetable: Timetable>: TimetableLocalRepository {
     @Dependency(\.userDefaults) private var userDefaults

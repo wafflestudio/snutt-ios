@@ -178,7 +178,6 @@ private enum BlockInformationType: Identifiable {
     }
 }
 
-
 #Preview {
     let preview = PreviewTimetable.preview
     let lecture = preview.lectures.first!

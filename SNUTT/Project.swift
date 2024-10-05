@@ -5,7 +5,7 @@ let project = Project.app(
     name: "SNUTT",
     destinations: .iOS,
     swiftPackages: [
-        .remote(url: "https://github.com/apple/swift-openapi-generator", requirement: .upToNextMajor(from: "1.0.0"))
+        .remote(url: "https://github.com/apple/swift-openapi-generator", requirement: .upToNextMajor(from: "1.0.0")),
     ],
     moduleDependencies: [
         // Feature
@@ -18,23 +18,26 @@ let project = Project.app(
                 .target(name: "AuthInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
-                .external(name: "Dependencies")
-            ]),
+                .external(name: "Dependencies"),
+            ]
+        ),
         .module(
             name: "Auth",
             category: .feature,
             dependencies: [
                 .target(name: "AuthInterface"),
-                .external(name: "WindowReader")
-            ]),
+                .external(name: "WindowReader"),
+            ]
+        ),
         .module(
             name: "AuthInterface",
             category: .featureInterface,
             dependencies: [
                 .target(name: "APIClientInterface"),
                 .external(name: "Dependencies"),
-                .external(name: "MemberwiseInit")
-            ]),
+                .external(name: "MemberwiseInit"),
+            ]
+        ),
         // FeatureInterface
         .module(
             name: "TimetableInterface",
@@ -42,7 +45,7 @@ let project = Project.app(
             dependencies: [
                 .external(name: "Spyable"),
                 .external(name: "Dependencies"),
-                .external(name: "MemberwiseInit")
+                .external(name: "MemberwiseInit"),
             ]
         ),
         .module(
@@ -65,27 +68,29 @@ let project = Project.app(
             dependencies: [
                 .target(name: "SwiftUIUtility"),
                 .target(name: "UIKitUtility"),
-                .external(name: "MemberwiseInit")
-            ]),
+                .external(name: "MemberwiseInit"),
+            ]
+        ),
         .module(
             name: "SharedAppMetadata",
             category: .shared(ui: false),
             dependencies: [
                 .external(name: "Dependencies"),
-                .target(name: "DependenciesUtility")
-            ]),
+                .target(name: "DependenciesUtility"),
+            ]
+        ),
         // Utility
         .module(name: "DependenciesUtility", category: .utility(ui: false), dependencies: [
             .external(name: "Dependencies"),
-            .external(name: "DependenciesAdditions")
+            .external(name: "DependenciesAdditions"),
         ]),
         .module(name: "SwiftUIUtility", category: .utility(ui: true), dependencies: []),
         .module(name: "UIKitUtility", category: .utility(ui: true), dependencies: [
             .external(name: "SnapKit"),
-        ])
+        ]),
     ],
     externalDependencies: [
-        .external(name: "WindowReader")
+        .external(name: "WindowReader"),
     ],
     deploymentTargets: .iOS("16.0.0")
 )

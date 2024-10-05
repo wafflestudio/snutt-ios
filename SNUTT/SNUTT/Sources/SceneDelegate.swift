@@ -5,35 +5,30 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import UIKit
 import SwiftUI
 import Timetable
+import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var keyWindow: UIWindow?
     var hudWindow: UIWindow?
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
             keyWindow = windowScene.keyWindow
             setupHudWindow(in: windowScene)
         }
     }
 
-    func sceneDidDisconnect(_ scene: UIScene) {
-    }
+    func sceneDidDisconnect(_: UIScene) {}
 
-    func sceneDidBecomeActive(_ scene: UIScene) {
-    }
+    func sceneDidBecomeActive(_: UIScene) {}
 
-    func sceneWillResignActive(_ scene: UIScene) {
-    }
+    func sceneWillResignActive(_: UIScene) {}
 
-    func sceneWillEnterForeground(_ scene: UIScene) {
-    }
+    func sceneWillEnterForeground(_: UIScene) {}
 
-    func sceneDidEnterBackground(_ scene: UIScene) {
-    }
+    func sceneDidEnterBackground(_: UIScene) {}
 }
 
 extension SceneDelegate {

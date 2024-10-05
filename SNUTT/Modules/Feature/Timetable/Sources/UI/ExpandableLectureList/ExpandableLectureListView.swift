@@ -1,25 +1,25 @@
 //
-//  ExpandableLectureListViewController.swift
+//  ExpandableLectureListView.swift
 //  SNUTT
 //
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import UIKit
-import SnapKit
-import TimetableInterface
 import Combine
-import SwiftUI
-import SharedUIComponents
 import Dependencies
+import SharedUIComponents
+import SnapKit
+import SwiftUI
+import TimetableInterface
+import UIKit
 
 struct ExpandableLectureListView: UIViewControllerRepresentable {
     let viewModel: any ExpandableLectureListViewModel
-    func makeUIViewController(context: Context) -> some UIViewController {
+    func makeUIViewController(context _: Context) -> some UIViewController {
         ExpandableLectureListViewController(viewModel: viewModel)
     }
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-    }
+
+    func updateUIViewController(_: UIViewControllerType, context _: Context) {}
 }
 
 private final class ExpandableLectureListViewController: UIViewController {
@@ -29,7 +29,7 @@ private final class ExpandableLectureListViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -41,6 +41,7 @@ private final class ExpandableLectureListViewController: UIViewController {
         layout.minimumLineSpacing = 0
         return layout
     }()
+
     private lazy var collectionView: UICollectionView = {
         let collectionView = ExpandableLectureCollectionView(frame: .zero, collectionViewLayout: flowLayout)
         return collectionView
@@ -59,7 +60,7 @@ private final class ExpandableLectureListViewController: UIViewController {
         }
     }
 
-    public override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
         bindViewModel()
@@ -68,13 +69,13 @@ private final class ExpandableLectureListViewController: UIViewController {
     private func applyDataSource(_ lectures: [any Lecture], animated: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(lectures.map({ $0.id }))
+        snapshot.appendItems(lectures.map { $0.id })
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
 
     private func reconfigureItem(_ lectures: [any Lecture]) {
         var snapshot = dataSource.snapshot()
-        let lectureSet = Set(lectures.map({ $0.id }))
+        let lectureSet = Set(lectures.map { $0.id })
         snapshot.reconfigureItems(Array(lectureSet))
         dataSource.apply(snapshot, animatingDifferences: false)
     }
@@ -102,7 +103,7 @@ extension ExpandableLectureListViewController {
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Int, LectureID>
     private typealias DataSource = UICollectionViewDiffableDataSource<Int, LectureID>
     private func createDataSource() -> DataSource {
-        let cellRegistration =  UICollectionView.CellRegistration<ExpandableLectureCell, LectureID> { [weak self] cell, indexPath, item in
+        let cellRegistration = UICollectionView.CellRegistration<ExpandableLectureCell, LectureID> { [weak self] cell, indexPath, _ in
             guard let self else { return }
             let lecture = viewModel.lectures[indexPath.row]
             cell.contentConfiguration = UIHostingConfiguration(content: {
@@ -123,7 +124,7 @@ extension ExpandableLectureListViewController: UICollectionViewDelegateFlowLayou
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let lecture = viewModel.lectures[indexPath.row]
         let isSelected = viewModel.isSelected(lecture: lecture)
         return .init(width: collectionView.bounds.width, height: isSelected ? 175 : 125)
@@ -132,7 +133,7 @@ extension ExpandableLectureListViewController: UICollectionViewDelegateFlowLayou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let lecture = viewModel.lectures[indexPath.row]
         viewModel.selectLecture(lecture)
-        self.flowLayout.invalidateLayout()
+        flowLayout.invalidateLayout()
         UIView.animateSpring {
             collectionView.layoutIfNeeded()
         }
@@ -161,7 +162,7 @@ private final class ExpandableLectureCollectionView: UICollectionView {
 @available(iOS 17, *)
 #Preview {
     let viewModel = LectureSearchViewModel()
-    let _  = Task {
+    _ = Task {
         await viewModel.fetchInitialSearchResult()
     }
     ZStack {

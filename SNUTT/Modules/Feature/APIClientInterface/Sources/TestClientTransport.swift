@@ -5,10 +5,10 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import Foundation
+import HTTPTypes
 import OpenAPIRuntime
 import OpenAPIURLSession
-import HTTPTypes
-import Foundation
 
 /// A test implementation of the `ClientTransport` protocol.
 ///
@@ -26,7 +26,6 @@ import Foundation
 /// let client = APIClient(transport: testTransport)
 /// ```
 public struct TestClientTransport: ClientTransport {
-
     /// A typealias representing a call handler closure for processing client requests.
     public typealias CallHandler = @Sendable (HTTPRequest, HTTPBody?, URL, String) async throws -> (
         HTTPResponse, HTTPBody?

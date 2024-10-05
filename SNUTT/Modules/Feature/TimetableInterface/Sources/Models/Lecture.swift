@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import MemberwiseInit
+import SwiftUI
 
 public protocol Lecture: Identifiable, Equatable, Sendable, Codable {
     var id: String { get }
@@ -20,7 +20,7 @@ public protocol Lecture: Identifiable, Equatable, Sendable, Codable {
     var department: String? { get }
     var academicYear: String? { get }
     var remark: String? { get }
-    var evLecture: (EvLecture)? { get }
+    var evLecture: EvLecture? { get }
 }
 
 @MemberwiseInit(.public)
@@ -30,8 +30,8 @@ public struct EvLecture: Sendable, Equatable, Codable {
     public let evaluationCount: Int?
 }
 
-extension Lecture {
-    public var isCustom: Bool {
+public extension Lecture {
+    var isCustom: Bool {
         courseNumber == nil || courseNumber == ""
     }
 }

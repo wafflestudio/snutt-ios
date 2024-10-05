@@ -5,7 +5,6 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-
 import Foundation
 import TimetableInterface
 

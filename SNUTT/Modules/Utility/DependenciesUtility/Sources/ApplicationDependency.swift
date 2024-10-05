@@ -8,9 +8,8 @@
 import DependenciesAdditions
 import UIKit
 
-extension Application {
-    @MainActor
-    public func dismissKeyboard() {
+public extension Application {
+    @MainActor func dismissKeyboard() {
         _ = sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

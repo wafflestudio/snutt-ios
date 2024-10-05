@@ -15,14 +15,13 @@ struct TimetableLectureBlockGroup: View {
     var body: some View {
         GeometryReader { reader in
             ForEach(lecture.timePlaces) { timePlace in
-                if let offsetPoint = viewModel.getOffset(of: timePlace, in: reader.size)
-                {
+                if let offsetPoint = viewModel.getOffset(of: timePlace, in: reader.size) {
                     Group {
                         let blockHeight = viewModel.getHeight(of: timePlace, in: reader.size)
                         TimetableLectureBlock(lecture: lecture,
-                                       timePlace: timePlace,
-                                       idealHeight: blockHeight,
-                                    visibilityOptions: viewModel.configuration.visibilityOptions)
+                                              timePlace: timePlace,
+                                              idealHeight: blockHeight,
+                                              visibilityOptions: viewModel.configuration.visibilityOptions)
                     }
                     .frame(width: viewModel.getWeekWidth(in: reader.size, weekCount: viewModel.weekCount),
                            height: viewModel.getHeight(of: timePlace, in: reader.size),

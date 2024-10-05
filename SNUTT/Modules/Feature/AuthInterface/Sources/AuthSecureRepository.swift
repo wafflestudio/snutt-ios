@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Spyable
 import Dependencies
+import Spyable
 
 @Spyable
 public protocol AuthSecureRepository: Sendable {
@@ -26,8 +26,8 @@ public enum AuthSecureRepositoryKey: TestDependencyKey {
     public static let testValue: any AuthSecureRepository = AuthSecureRepositorySpy()
 }
 
-extension DependencyValues {
-    public var authSecureRepository: any AuthSecureRepository {
+public extension DependencyValues {
+    var authSecureRepository: any AuthSecureRepository {
         get { self[AuthSecureRepositoryKey.self] }
         set { self[AuthSecureRepositoryKey.self] = newValue }
     }

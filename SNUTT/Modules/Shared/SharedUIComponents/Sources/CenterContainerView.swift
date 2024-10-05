@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 public final class CenterContainerView<ContentView: UIView>: UIView {
     let contentView: ContentView
@@ -19,10 +19,10 @@ public final class CenterContainerView<ContentView: UIView>: UIView {
         setupContentView()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupContentView() {
         addSubview(contentView)
         if !layoutOptions.expandsVertically {
@@ -42,13 +42,13 @@ public final class CenterContainerView<ContentView: UIView>: UIView {
         }
     }
 
-    public override var intrinsicContentSize: CGSize {
+    override public var intrinsicContentSize: CGSize {
         let respectsHeight = layoutOptions.contains(.respectIntrinsicHeight)
         let respectsWidth = layoutOptions.contains(.respectIntrinsicWidth)
         return .init(width: respectsWidth ? contentView.intrinsicContentSize.width : Self.noIntrinsicMetric, height: respectsHeight ? contentView.intrinsicContentSize.height : Self.noIntrinsicMetric)
     }
 
-    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    override public func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
         return view == self ? contentView : view
     }
@@ -75,4 +75,3 @@ public struct LayoutOptions: OptionSet, Sendable {
         contains(.expandVertically)
     }
 }
-

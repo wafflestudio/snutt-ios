@@ -5,13 +5,13 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Dependencies
-import SharedAppMetadata
-import AuthInterface
 import APIClientInterface
+import AuthInterface
+import Dependencies
 import Foundation
 import OpenAPIRuntime
 import OpenAPIURLSession
+import SharedAppMetadata
 
 public struct APIClientProvider: Sendable {
     @Dependency(\.appMetadata) private var appMetadata
@@ -32,7 +32,7 @@ public struct APIClientProvider: Sendable {
                         try? secureRepository.clear()
                     }
                 ),
-                LoggingMiddleware()
+                LoggingMiddleware(),
             ]
         )
     }

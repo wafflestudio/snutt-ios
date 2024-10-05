@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import UIKit
 import SharedUIComponents
+import UIKit
 
 enum TabItem: CaseIterable, SharedUIComponents.TabItem {
     case timetable

@@ -6,8 +6,8 @@
 //
 
 import Combine
-import SwiftUI
 import Dependencies
+import SwiftUI
 import TimetableInterface
 
 @MainActor
@@ -20,8 +20,7 @@ class LectureSearchViewModel: ObservableObject {
     private var isLoading = false
     private var canFetchMore = true
     private var searchResults = CurrentValueSubject<[any Lecture], Never>([])
-    @Published
-    private(set) var selectedLecture: (any Lecture)?
+    @Published private(set) var selectedLecture: (any Lecture)?
 
     private func fetchSearchResult(at page: Int) async throws -> [any Lecture] {
         let offset = pageLimit * page
@@ -64,7 +63,6 @@ class LectureSearchViewModel: ObservableObject {
     }
 }
 
-
 extension LectureSearchViewModel: ExpandableLectureListViewModel {
     var lectures: [any Lecture] {
         searchResults.value
@@ -77,23 +75,23 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
     func selectLecture(_ lecture: any Lecture) {
         selectedLecture = lecture
     }
-    
+
     func isSelected(lecture: any Lecture) -> Bool {
         selectedLecture?.id == lecture.id
     }
-    
-    func isBookmarked(lecture: any Lecture) -> Bool {
+
+    func isBookmarked(lecture _: any Lecture) -> Bool {
         false
     }
-    
-    func isInCurrentTimetable(lecture: any Lecture) -> Bool {
+
+    func isInCurrentTimetable(lecture _: any Lecture) -> Bool {
         false
     }
-    
-    func isVacancyNotificationEnabled(lecture: any Lecture) -> Bool {
+
+    func isVacancyNotificationEnabled(lecture _: any Lecture) -> Bool {
         false
     }
-    
+
     func fetchMoreLectures() async {
         await fetchMoreSearchResult()
     }

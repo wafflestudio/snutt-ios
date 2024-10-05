@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import Dependencies
+import SwiftUI
 import TimetableInterface
 
 public struct TimetableScene: View {
@@ -72,7 +72,7 @@ public struct TimetableScene: View {
                     await timetableViewModel.loadTimetable()
                 }
                 group.addTask {
-                    try await LectureSearchAPIRepository().fetchTags(quarter: TimetableInterface.Quarter.init(year: 2024, semester: Semester.first))
+                    try await LectureSearchAPIRepository().fetchTags(quarter: TimetableInterface.Quarter(year: 2024, semester: Semester.first))
                 }
             }
         }
@@ -97,9 +97,8 @@ public struct TimetableScene: View {
 
     private var timetableToolbarView: some View {
         HStack(spacing: 0) {
-            ToolbarButton(image: TimetableAsset.navMenu.image) {
-            }
-            .padding(.leading, -8)
+            ToolbarButton(image: TimetableAsset.navMenu.image) {}
+                .padding(.leading, -8)
             Text(timetableViewModel.timetableTitle)
                 .font(.system(size: 17, weight: .bold))
                 .minimumScaleFactor(0.9)
@@ -109,8 +108,7 @@ public struct TimetableScene: View {
                 .font(.system(size: 12))
                 .foregroundColor(Color(UIColor.secondaryLabel))
             Spacer()
-            ToolbarButton(image: TimetableAsset.navAlarmOff.image) {
-            }
+            ToolbarButton(image: TimetableAsset.navAlarmOff.image) {}
         }
     }
 
@@ -143,11 +141,13 @@ public struct TimetableScene: View {
             if edge == .top {
                 AnyTransition.asymmetric(
                     insertion: AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .top))),
-                    removal: AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .bottom))))
+                    removal: AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .bottom)))
+                )
             } else {
                 AnyTransition.asymmetric(
                     insertion: AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .bottom))),
-                    removal: AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .top))))
+                    removal: AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .top)))
+                )
             }
         } else {
             AnyTransition.move(edge: edge).combined(with: .opacity)
@@ -185,7 +185,6 @@ extension View {
         modifier(CircleBadgeModifier(condition: condition, color: color))
     }
 }
-
 
 #Preview {
     TimetableScene()

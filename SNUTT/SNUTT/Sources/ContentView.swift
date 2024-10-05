@@ -1,10 +1,10 @@
-import SwiftUI
-import Timetable
 import APIClientInterface
+import Auth
+import AuthInterface
 import Dependencies
 import SharedUIComponents
-import AuthInterface
-import Auth
+import SwiftUI
+import Timetable
 
 struct ContentView: View {
     @StateObject private var viewModel = ContentViewModel()

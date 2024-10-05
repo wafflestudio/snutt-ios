@@ -6,8 +6,8 @@
 //
 
 import Dependencies
-import TimetableInterface
 import Spyable
+import TimetableInterface
 
 protocol TimetableLocalRepository: Sendable {
     associatedtype ConcreteTimetable

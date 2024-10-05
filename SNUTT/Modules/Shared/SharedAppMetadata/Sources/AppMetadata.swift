@@ -5,13 +5,13 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Foundation
 import Dependencies
-import DependenciesUtility
 import DependenciesAdditions
+import DependenciesUtility
+import Foundation
 
-extension DependencyValues {
-    public var appMetadata: AppMetadata {
+public extension DependencyValues {
+    var appMetadata: AppMetadata {
         get { self[AppMetadata.self] }
         set { self[AppMetadata.self] = newValue }
     }
@@ -29,9 +29,9 @@ public struct AppMetadata: Sendable {
             version
         case .appType:
             #if DEBUG
-            "debug"
+                "debug"
             #else
-            "release"
+                "release"
             #endif
         case .osType:
             "ios"

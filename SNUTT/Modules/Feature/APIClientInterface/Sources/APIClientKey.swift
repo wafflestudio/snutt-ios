@@ -1,19 +1,20 @@
 //
-//  Composition.swift
+//  APIClientKey.swift
 //  SNUTT
 //
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
 import Dependencies
-import OpenAPIRuntime
 import Foundation
+import OpenAPIRuntime
 import OpenAPIURLSession
 
 public enum APIClientKey: TestDependencyKey {
     public static var testValue: any APIProtocol {
-        Self.previewValue
+        previewValue
     }
+
     public static let previewValue: any APIProtocol = Client(
         serverURL: URL(string: "https://mock")!,
         configuration: .init(dateTranscoder: .iso8601WithFractionalSeconds),
@@ -22,9 +23,9 @@ public enum APIClientKey: TestDependencyKey {
     )
 }
 
-extension DependencyValues {
-  public var apiClient: any APIProtocol {
-    get { self[APIClientKey.self] }
-    set { self[APIClientKey.self] = newValue }
-  }
+public extension DependencyValues {
+    var apiClient: any APIProtocol {
+        get { self[APIClientKey.self] }
+        set { self[APIClientKey.self] = newValue }
+    }
 }

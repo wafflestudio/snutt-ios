@@ -5,7 +5,7 @@
 ////  Created by 박신홍 on 2022/07/11.
 ////
 //
-//enum BasicTheme: Int, CaseIterable {
+// enum BasicTheme: Int, CaseIterable {
 //    case snutt = 0
 //    case fall = 1
 //    case modern = 2
@@ -71,4 +71,4 @@
 //            return "잔디"
 //        }
 //    }
-//}
+// }

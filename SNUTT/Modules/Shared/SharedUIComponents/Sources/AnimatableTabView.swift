@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITabBarControllerDelegate {
     private let tabItems: [T]
@@ -39,10 +39,11 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
         return view
     }()
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    public override func viewDidLoad() {
+
+    override public func viewDidLoad() {
         super.viewDidLoad()
         setupTabBar()
     }
@@ -94,7 +95,7 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
     }
 
     private func updateAllTabButtonConfigurations() {
-        tabButtons.values.forEach { button in
+        for button in tabButtons.values {
             button.setNeedsUpdateConfiguration()
         }
     }
@@ -106,7 +107,8 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
     ) -> (any UIViewControllerAnimatedTransitioning)? {
         guard let viewControllers = tabBarController.viewControllers,
               let fromIndex = viewControllers.firstIndex(of: fromVC),
-              let toIndex = viewControllers.firstIndex(of: toVC) else {
+              let toIndex = viewControllers.firstIndex(of: toVC)
+        else {
             isTransitionInProgress = false
             return nil
         }
@@ -117,12 +119,12 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
     }
 }
 
-
 private class SlideTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     enum Direction {
         case left
         case right
     }
+
     private let direction: Direction
     private let completion: () -> Void
     init(direction: Direction, completion: @escaping () -> Void) {
@@ -130,13 +132,14 @@ private class SlideTransitionAnimator: NSObject, UIViewControllerAnimatedTransit
         self.completion = completion
     }
 
-    func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
+    func transitionDuration(using _: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
         return 0.3
     }
 
     func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
         guard let fromView = transitionContext.view(forKey: .from),
-              let toView = transitionContext.view(forKey: .to) else {
+              let toView = transitionContext.view(forKey: .to)
+        else {
             transitionContext.completeTransition(false)
             completion()
             return
@@ -151,15 +154,16 @@ private class SlideTransitionAnimator: NSObject, UIViewControllerAnimatedTransit
             withDuration: transitionDuration(using: transitionContext),
             delay: 0,
             usingSpringWithDamping: 1,
-            initialSpringVelocity: 10) {
-                fromView.transform = .init(translationX: -offset / 2, y: 0)
-                toView.transform = .identity
-                toView.alpha = 1
-            } completion: { _ in
-                fromView.transform = .identity
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-                self.completion()
-            }
+            initialSpringVelocity: 10
+        ) {
+            fromView.transform = .init(translationX: -offset / 2, y: 0)
+            toView.transform = .identity
+            toView.alpha = 1
+        } completion: { _ in
+            fromView.transform = .identity
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+            self.completion()
+        }
     }
 }
 
@@ -168,16 +172,15 @@ public struct AnimatableTabView<T: TabItem>: UIViewControllerRepresentable {
     let tabScenes: () -> [TabScene<T>]
 
     public init(selectedTab: Binding<T>, @TabSceneBuilder tabScenes: @escaping () -> [TabScene<T>]) {
-        self._selectedTab = selectedTab
+        _selectedTab = selectedTab
         self.tabScenes = tabScenes
     }
 
-    public func makeUIViewController(context: Context) -> AnimatableUITabBarController<T> {
+    public func makeUIViewController(context _: Context) -> AnimatableUITabBarController<T> {
         return AnimatableUITabBarController(selectedTabItem: $selectedTab, tabScenes: tabScenes())
     }
 
-    public func updateUIViewController(_ uiViewController: AnimatableUITabBarController<T>, context: Context) {
-    }
+    public func updateUIViewController(_: AnimatableUITabBarController<T>, context _: Context) {}
 }
 
 public protocol TabItem: Hashable {
@@ -208,20 +211,20 @@ public struct ColorView: View {
     public init(color: Color) {
         self.color = color
     }
+
     public var body: some View {
         ZStack {
             color
                 .ignoresSafeArea()
             Text("\(color)")
         }
-
     }
 }
 
 #Preview {
     enum PreviewTabItem: TabItem {
         case timetable, search, friends, review, settings
-        func image(isSelected: Bool) -> UIImage {
+        func image(isSelected _: Bool) -> UIImage {
             UIImage.checkmark
         }
     }
@@ -240,6 +243,3 @@ public struct ColorView: View {
     }
     return PreviewWrapper()
 }
-
-
-

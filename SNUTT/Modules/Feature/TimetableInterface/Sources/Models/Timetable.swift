@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import MemberwiseInit
 import Foundation
+import MemberwiseInit
 
 public protocol Timetable: Identifiable, Sendable, Codable {
     var title: String { get }

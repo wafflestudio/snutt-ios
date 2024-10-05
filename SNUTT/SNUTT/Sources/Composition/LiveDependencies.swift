@@ -5,12 +5,12 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import APIClientInterface
+import Auth
+import AuthInterface
 import Dependencies
 import Timetable
 import TimetableInterface
-import Auth
-import AuthInterface
-import APIClientInterface
 
 extension APIClientKey: @retroactive DependencyKey {
     public static let liveValue: any APIProtocol = APIClientProvider().apiClient()

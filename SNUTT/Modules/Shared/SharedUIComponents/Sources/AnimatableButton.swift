@@ -1,13 +1,13 @@
 //
-//  AnimatableUIButton.swift
+//  AnimatableButton.swift
 //  SNUTT
 //
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 import UIKitUtility
-import SwiftUI
 
 public struct AnimatableButton: UIViewRepresentable {
     private let animationOptions: AnimationHandlerOptions
@@ -27,7 +27,7 @@ public struct AnimatableButton: UIViewRepresentable {
         self.configuration = configuration
     }
 
-    public func makeUIView(context: Context) -> UIView {
+    public func makeUIView(context _: Context) -> UIView {
         let button = AnimatableUIButton(animationOptions: animationOptions)
         let view = CenterContainerView(contentView: button, layoutOptions: layoutOptions)
         button.configuration = configuration(button)
@@ -37,7 +37,7 @@ public struct AnimatableButton: UIViewRepresentable {
         return view
     }
 
-    public func updateUIView(_ uiView: UIView, context: Context) {
+    public func updateUIView(_ uiView: UIView, context _: Context) {
         guard let button = (uiView as? CenterContainerView<AnimatableUIButton>)?.contentView else { return }
         button.configuration = configuration(button)
     }
@@ -105,7 +105,7 @@ public class AnimatableUIButton: UIButton {
         addEvents()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -122,10 +122,11 @@ public class AnimatableUIButton: UIButton {
         UIView.animate(
             withDuration: 0.1,
             delay: 0,
-            options: [.beginFromCurrentState, .allowUserInteraction]) { [weak self] in
-                guard let self else { return }
-                animationOptions.handler(self, event)
-            }
+            options: [.beginFromCurrentState, .allowUserInteraction]
+        ) { [weak self] in
+            guard let self else { return }
+            animationOptions.handler(self, event)
+        }
     }
 }
 
@@ -143,7 +144,6 @@ public class AnimatableUIButton: UIButton {
     PreviewView()
 }
 
-
 @available(iOS 17.0, *)
 private struct PreviewView: View {
     @State var binding = 0 {
@@ -159,7 +159,7 @@ private struct PreviewView: View {
             ) {
                 binding += 1
                 print(binding)
-            } configuration: { button in
+            } configuration: { _ in
                 var config = UIButton.Configuration.plain()
                 if binding % 2 == 0 {
                     config.image = UIImage(systemName: "button.horizontal.top.press")
@@ -171,4 +171,3 @@ private struct PreviewView: View {
         }
     }
 }
-

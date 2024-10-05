@@ -7,9 +7,9 @@
 
 import Combine
 import Dependencies
-import TimetableInterface
 import DependenciesAdditions
 import SharedUIComponents
+import TimetableInterface
 
 @MainActor
 class TimetableViewModel: ObservableObject {

@@ -5,23 +5,19 @@
 ////  Copyright © 2024 wafflestudio.com. All rights reserved.
 ////
 
-import SwiftUI
 import MemberwiseInit
+import SwiftUI
 
 @MemberwiseInit(.public)
 public struct AnimatableTextField: View {
     public let label: String
-    @Init(default: "")
-    public let placeholder: String
+    @Init(default: "") public let placeholder: String
 
-    @Init(default: false)
-    public let secure: Bool
+    @Init(default: false) public let secure: Bool
 
-    @Init(default: UIKeyboardType.default)
-    public let keyboardType: UIKeyboardType
+    @Init(default: UIKeyboardType.default) public let keyboardType: UIKeyboardType
 
-    @Init(default: SubmitLabel.return)
-    public let submitLabel: SubmitLabel
+    @Init(default: SubmitLabel.return) public let submitLabel: SubmitLabel
 
     @InitWrapper(type: Binding<String>)
     @Binding public var text: String

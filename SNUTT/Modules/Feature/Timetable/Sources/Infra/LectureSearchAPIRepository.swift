@@ -5,10 +5,10 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Dependencies
-import TimetableInterface
-import Foundation
 import APIClientInterface
+import Dependencies
+import Foundation
+import TimetableInterface
 
 struct LectureSearchAPIRepository: LectureSearchRepository {
     @Dependency(\.apiClient) private var apiClient
@@ -16,7 +16,7 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
     func fetchSearchResult(
         query: String,
         quarter: Quarter,
-        filters: [SearchFilter],
+        filters _: [SearchFilter],
         offset: Int,
         limit: Int
     ) async throws -> [any Lecture] {
@@ -71,7 +71,7 @@ extension Components.Schemas.LectureDto: @retroactive Lecture {
     public var academicYear: String? {
         academic_year
     }
-    
+
     public var courseNumber: String? {
         course_number
     }
@@ -83,19 +83,19 @@ extension Components.Schemas.LectureDto: @retroactive Lecture {
         }
         return _id
     }
-    
+
     public var lectureID: String? {
         nil
     }
-    
+
     public var courseTitle: String {
         course_title
     }
-    
+
     public var timePlaces: [TimetableInterface.TimePlace] {
         []
     }
-    
+
     public var lectureNumber: String? {
         lecture_number
     }
@@ -103,7 +103,8 @@ extension Components.Schemas.LectureDto: @retroactive Lecture {
 
 private func toDictionary<T: Codable>(_ object: T) -> [String: Any]? {
     guard let data = try? JSONEncoder().encode(object),
-          let dictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else {
+          let dictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]
+    else {
         return nil
     }
     return dictionary

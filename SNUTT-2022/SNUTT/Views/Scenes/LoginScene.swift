@@ -85,7 +85,6 @@ struct LoginScene: View {
 
 extension LoginScene {
     class ViewModel: BaseViewModel, ObservableObject {
-
         func loginWithLocalId(localId: String, localPassword: String) async {
             do {
                 try await services.authService.loginWithLocalId(localId: localId, localPassword: localPassword)

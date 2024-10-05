@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import TimetableInterface
 import CoreGraphics
+import TimetableInterface
 
 @MainActor
 protocol TimetablePainter: Sendable {
@@ -162,13 +162,12 @@ extension TimetablePainter {
     }
 }
 
-
-extension TimetableInterface.Time {
-    fileprivate var absoluteMinutes: Int { hour * 60 + minute }
-    fileprivate func roundUpForCompactMode() -> Self {
+private extension TimetableInterface.Time {
+    var absoluteMinutes: Int { hour * 60 + minute }
+    func roundUpForCompactMode() -> Self {
         var hour = self.hour
         var minute = self.minute
-        if (1...30).contains(minute) {
+        if (1 ... 30).contains(minute) {
             minute = 30
         } else if minute > 30 {
             hour += 1
@@ -178,12 +177,12 @@ extension TimetableInterface.Time {
     }
 }
 
-extension [Lecture] {
-    fileprivate var aggregatedTimePlaces: [TimePlace] {
+private extension [Lecture] {
+    var aggregatedTimePlaces: [TimePlace] {
         compactMap { $0 }
-        .reduce(into: []) { partialResult, lecture in
-            partialResult.append(contentsOf: lecture.timePlaces)
-        }
+            .reduce(into: []) { partialResult, lecture in
+                partialResult.append(contentsOf: lecture.timePlaces)
+            }
     }
 }
 
@@ -202,7 +201,6 @@ extension TimePlace {
         }
     }
 }
-
 
 // MARK: TimeRange Selection
 

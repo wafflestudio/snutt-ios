@@ -5,14 +5,14 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Dependencies
-import DependenciesAdditions
-import Foundation
-import DependenciesUtility
-import TimetableInterface
 import APIClientInterface
 import AuthInterface
+import Dependencies
+import DependenciesAdditions
+import DependenciesUtility
+import Foundation
 import Spyable
+import TimetableInterface
 
 @Spyable
 protocol TimetableUseCaseProtocol: Sendable {
@@ -40,13 +40,12 @@ struct TimetableUseCase: TimetableUseCaseProtocol {
 }
 
 private struct TimetableUseCaseKey: DependencyKey {
-    static let liveValue: any TimetableUseCaseProtocol = {
-        withDependencies {
-            $0.userDefaults = .init(suitename: "group.\($0.bundleInfo.bundleIdentifier)") ?? .standard
-        } operation: {
-            TimetableUseCase()
-        }
-    }()
+    static let liveValue: any TimetableUseCaseProtocol = withDependencies {
+        $0.userDefaults = .init(suitename: "group.\($0.bundleInfo.bundleIdentifier)") ?? .standard
+    } operation: {
+        TimetableUseCase()
+    }
+
     static let previewValue: any TimetableUseCaseProtocol = {
         let spy = TimetableUseCaseProtocolSpy()
         spy.loadRecentTimetableReturnValue = PreviewTimetable.preview

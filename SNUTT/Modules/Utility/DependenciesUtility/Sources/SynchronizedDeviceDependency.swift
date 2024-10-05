@@ -1,8 +1,8 @@
 @_spi(Internals) import DependenciesAdditionsBasics
 import UIKit.UIDevice
 
-extension DependencyValues {
-    public var syncDevice: SynchronizedDevice {
+public extension DependencyValues {
+    var syncDevice: SynchronizedDevice {
         get { self[SynchronizedDeviceKey.self] }
         set { self[SynchronizedDeviceKey.self] = newValue }
     }
@@ -12,9 +12,11 @@ enum SynchronizedDeviceKey: DependencyKey {
     public static var liveValue: SynchronizedDevice {
         .current
     }
+
     public static var testValue: SynchronizedDevice {
         .unimplemented
     }
+
     static var previewValue: SynchronizedDevice {
         .current
     }
@@ -31,19 +33,19 @@ public struct SynchronizedDevice: Sendable, ConfigurableProxy {
     }
 
     public var name: String {
-        self._implementation.name
+        _implementation.name
     }
 
     public var systemName: String {
-        self._implementation.systemName
+        _implementation.systemName
     }
 
     public var systemVersion: String {
-        self._implementation.systemVersion
+        _implementation.systemVersion
     }
 
     public var identifierForVendor: String? {
-        self._implementation.systemVersion
+        _implementation.systemVersion
     }
 
     public nonisolated static var current: SynchronizedDevice {

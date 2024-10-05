@@ -33,13 +33,13 @@ import PackageDescription
 let package = Package(
     name: "SNUTT",
     dependencies: [
-         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.3.0"),
-         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.4.0"),
-         .package(url: "https://github.com/apple/swift-openapi-urlsession", from: "1.0.1"),
-         .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.7.1")),
-         .package(url: "https://github.com/shp7724/swift-spyable", branch: "main"),
-         .package(url: "https://github.com/gohanlon/swift-memberwise-init-macro", from: "0.5.0"),
-         .package(url: "https://github.com/divadretlaw/WindowReader", from: "2.0.0"),
-         .package(url: "https://github.com/tgrapperon/swift-dependencies-additions", from: "1.1.1")
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.3.0"),
+        .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.4.0"),
+        .package(url: "https://github.com/apple/swift-openapi-urlsession", from: "1.0.1"),
+        .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.7.1")),
+        .package(url: "https://github.com/shp7724/swift-spyable", branch: "main"),
+        .package(url: "https://github.com/gohanlon/swift-memberwise-init-macro", from: "0.5.0"),
+        .package(url: "https://github.com/divadretlaw/WindowReader", from: "2.0.0"),
+        .package(url: "https://github.com/tgrapperon/swift-dependencies-additions", from: "1.1.1"),
     ]
 )
