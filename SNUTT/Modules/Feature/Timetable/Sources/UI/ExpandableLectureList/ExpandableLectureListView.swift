@@ -159,14 +159,14 @@ private final class ExpandableLectureCollectionView: UICollectionView {
     }
 }
 
-@available(iOS 17, *)
-#Preview {
-    let viewModel = LectureSearchViewModel()
-    _ = Task {
-        await viewModel.fetchInitialSearchResult()
-    }
-    ZStack {
-        TimetableAsset.searchlistBackground.swiftUIColor
-        ExpandableLectureListView(viewModel: viewModel)
-    }
-}
+//@available(iOS 17, *)
+//#Preview {
+//    let viewModel = LectureSearchViewModel()
+//    _ = Task {
+//        await viewModel.fetchInitialSearchResult()
+//    }
+//    ZStack {
+//        TimetableAsset.searchlistBackground.swiftUIColor
+//        ExpandableLectureListView(viewModel: viewModel)
+//    }
+//}
