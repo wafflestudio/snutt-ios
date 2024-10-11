@@ -159,8 +159,8 @@ private final class ExpandableLectureCollectionView: UICollectionView {
     }
 }
 
-//@available(iOS 17, *)
-//#Preview {
+// @available(iOS 17, *)
+// #Preview {
 //    let viewModel = LectureSearchViewModel()
 //    _ = Task {
 //        await viewModel.fetchInitialSearchResult()
@@ -169,4 +169,4 @@ private final class ExpandableLectureCollectionView: UICollectionView {
 //        TimetableAsset.searchlistBackground.swiftUIColor
 //        ExpandableLectureListView(viewModel: viewModel)
 //    }
-//}
+// }
