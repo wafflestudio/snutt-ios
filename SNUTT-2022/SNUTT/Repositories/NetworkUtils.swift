@@ -115,6 +115,7 @@ extension DataTask {
         if let data = await response.data,
            let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data)
         {
+            try Task.checkCancellation()
             let errCode = ErrorCode(rawValue: errDto.errcode)
             var requestInfo = await collectRequestInfo()
             requestInfo["ErrorMessage"] = errCode?.errorMessage
@@ -129,13 +130,13 @@ extension DataTask {
                 throw STError(errCode ?? .SERVER_FAULT)
             }
         }
-
         if let dto = try? await value {
             return dto
         }
-
+        try Task.checkCancellation()
         let requestInfo = await collectRequestInfo()
         Crashlytics.crashlytics().record(error: NSError(domain: "UNKNOWN_ERROR", code: -1, userInfo: requestInfo))
+        try Task.checkCancellation()
         throw STError(.SERVER_FAULT)
     }
 
