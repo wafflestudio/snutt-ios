@@ -36,6 +36,7 @@ class FriendsViewModel: BaseViewModel, ObservableObject {
                 Task { @MainActor [weak self] in
                     guard let self else { return }
                     appState.friend.pendingFriendRequestToken = nil
+                    try await Task.sleep(nanoseconds: 500_000_000)
                     await eventEmitter.emitEvent(.addFriendKakao, payload: ["requestToken": token])
                 }
             }
