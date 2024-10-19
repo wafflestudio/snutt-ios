@@ -5,8 +5,8 @@
 //  Created by 박신홍 on 10/19/24.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 final class WebBottomNavigationView: UIView {
     private var buttons = [ButtonType: UIButton]()
@@ -22,7 +22,7 @@ final class WebBottomNavigationView: UIView {
         setupButtons()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -61,7 +61,7 @@ final class WebBottomNavigationView: UIView {
             divider.topAnchor.constraint(equalTo: blurView.topAnchor),
             divider.leadingAnchor.constraint(equalTo: blurView.leadingAnchor),
             divider.trailingAnchor.constraint(equalTo: blurView.trailingAnchor),
-            divider.heightAnchor.constraint(equalToConstant: 1)
+            divider.heightAnchor.constraint(equalToConstant: 1),
         ])
         return blurView
     }()
@@ -92,7 +92,7 @@ final class WebBottomNavigationView: UIView {
     }
 }
 
-extension WebBottomNavigationView{
+extension WebBottomNavigationView {
     enum ButtonType: CaseIterable {
         case back
         case forward

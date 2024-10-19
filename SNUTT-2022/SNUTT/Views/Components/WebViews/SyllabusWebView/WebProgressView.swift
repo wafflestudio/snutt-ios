@@ -20,7 +20,7 @@ final class WebProgressView: UIView {
         setupView()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError()
     }
 
@@ -48,7 +48,7 @@ final class WebProgressView: UIView {
                 self.progressBar.alpha = 0
             }
         } else {
-            self.progressBar.alpha = 1
+            progressBar.alpha = 1
         }
     }
 

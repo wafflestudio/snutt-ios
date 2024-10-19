@@ -5,11 +5,11 @@
 //  Created by 최유림 on 2022/10/11.
 //
 
-import SwiftUI
-import WebKit
-import UIKit
 import Combine
 import QuickLook
+import SwiftUI
+import UIKit
+import WebKit
 
 struct SyllabusWebView: UIViewControllerRepresentable {
     let lectureTitle: String
@@ -37,9 +37,11 @@ final class SyllabusWebViewController: UIViewController {
         static let homeURL = URL(string: "https://sugang.snu.ac.kr")!
         static let referer = "https://sugang.snu.ac.kr/sugang/cc/cc100InterfaceExcel.action"
     }
+
     private enum Design {
         static let bottomViewHeight = 50.0
     }
+
     private let entryURL: URL
     private lazy var webView: WKWebView = {
         let config = WKWebViewConfiguration()
@@ -59,7 +61,7 @@ final class SyllabusWebViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -132,11 +134,11 @@ final class SyllabusWebViewController: UIViewController {
 }
 
 extension SyllabusWebViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+    func webView(_: WKWebView, decidePolicyFor _: WKNavigationAction) async -> WKNavigationActionPolicy {
         return .allow
     }
 
-    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse) async -> WKNavigationResponsePolicy {
+    func webView(_: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse) async -> WKNavigationResponsePolicy {
         guard let mimeType = navigationResponse.response.mimeType else { return .cancel }
         if mimeType == "text/html" {
             return .allow
@@ -144,13 +146,13 @@ extension SyllabusWebViewController: WKNavigationDelegate {
         return .download
     }
 
-    func webView(_ webView: WKWebView, navigationResponse: WKNavigationResponse, didBecome download: WKDownload) {
+    func webView(_: WKWebView, navigationResponse _: WKNavigationResponse, didBecome download: WKDownload) {
         download.delegate = self
     }
 }
 
 extension SyllabusWebViewController: WKDownloadDelegate {
-    func download(_ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String) async -> URL? {
+    func download(_ download: WKDownload, decideDestinationUsing _: URLResponse, suggestedFilename: String) async -> URL? {
         let percentDecoded = suggestedFilename.removingPercentEncoding ?? suggestedFilename
         let fileManager = FileManager.default
         let url = fileManager.temporaryDirectory.appendingPathComponent(percentDecoded)
@@ -158,6 +160,7 @@ extension SyllabusWebViewController: WKDownloadDelegate {
         downloadLocalURLs[download] = url
         return url
     }
+
     func downloadDidFinish(_ download: WKDownload) {
         guard let localURL = downloadLocalURLs.removeValue(forKey: download) else { return }
         let previewController = SyllabusFilePreviewController(item: localURL as QLPreviewItem)
@@ -170,10 +173,9 @@ extension UIControl {
         for controlEvents: UIControl.Event = .touchUpInside,
         _ closure: @MainActor @escaping () -> Void
     ) {
-        addAction(UIAction { (action: UIAction) in closure() }, for: controlEvents)
+        addAction(UIAction { (_: UIAction) in closure() }, for: controlEvents)
     }
 }
-
 
 @available(iOS 17.0, *)
 #Preview {

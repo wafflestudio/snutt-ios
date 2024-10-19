@@ -15,17 +15,17 @@ final class SyllabusFilePreviewController: QLPreviewController {
         dataSource = self
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension SyllabusFilePreviewController: QLPreviewControllerDataSource {
-    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+    func numberOfPreviewItems(in _: QLPreviewController) -> Int {
         1
     }
 
-    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> any QLPreviewItem {
+    func previewController(_: QLPreviewController, previewItemAt _: Int) -> any QLPreviewItem {
         item
     }
 }
