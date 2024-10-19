@@ -493,9 +493,10 @@ struct LectureDetailScene: View {
                             showSyllabusWebView = true
                         }
                     }
-                }.fullScreenCover(isPresented: $showSyllabusWebView) {
-                    SyllabusWebView(url: $syllabusURL)
-                        .edgesIgnoringSafeArea(.all)
+                }.sheet(isPresented: $showSyllabusWebView) {
+                    SyllabusWebView(lectureTitle: lecture.title, urlString: $syllabusURL)
+                        .ignoresSafeArea(edges: .bottom)
+                        .interactiveDismissDisabled()
                 }
 
                 DetailButton(text: "강의평") {
