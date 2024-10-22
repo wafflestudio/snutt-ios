@@ -18,7 +18,7 @@ struct SyllabusWebView: UIViewControllerRepresentable {
     func makeUIViewController(context _: UIViewControllerRepresentableContext<Self>) -> UIViewController {
         let webViewController = SyllabusWebViewController(entryURL: URL(string: urlString))
         let navigationController = UINavigationController(rootViewController: webViewController)
-        var appearance = UINavigationBarAppearance()
+        let appearance = UINavigationBarAppearance()
         appearance.configureWithDefaultBackground()
         navigationController.navigationBar.standardAppearance = appearance
         navigationController.navigationBar.scrollEdgeAppearance = appearance

@@ -26,10 +26,7 @@ final class WebProgressView: UIView {
 
     private func setupView() {
         progressBar.backgroundColor = .systemBlue.withAlphaComponent(0.9)
-        progressBar.layer.shadowColor = UIColor.blue.cgColor
-        progressBar.layer.shadowRadius = 10.0
-        progressBar.layer.shadowOpacity = 0.9
-        progressBar.layer.shadowOffset = CGSize(width: 0, height: 0)
+        progressBar.layer.shadowColor = UIColor.blue.withAlphaComponent(0.5).cgColor
         progressBar.layer.masksToBounds = false
         addSubview(progressBar)
         setProgress(0)
