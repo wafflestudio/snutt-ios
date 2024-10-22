@@ -282,6 +282,9 @@
 		CEB5A71E29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */; };
 		CEB5A72029DDA8B200E74C47 /* TimetableAccessoryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */; };
 		CEC91CAA2A812499008B0F15 /* VacancyEmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC91CA92A812499008B0F15 /* VacancyEmptyListView.swift */; };
+		CECDD36C2CC3E45000BB5E5B /* SyllabusFilePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECDD36B2CC3E44F00BB5E5B /* SyllabusFilePreviewController.swift */; };
+		CECDD36E2CC3E47300BB5E5B /* WebBottomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECDD36D2CC3E47000BB5E5B /* WebBottomNavigationView.swift */; };
+		CECDD3702CC3E4B400BB5E5B /* WebProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECDD36F2CC3E4B000BB5E5B /* WebProgressView.swift */; };
 		CECE96642A72D5F2003D87FA /* VacancyBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE96632A72D5F2003D87FA /* VacancyBanner.swift */; };
 		CEDDCA7B2A6AE62B00474D4E /* VacancyLectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */; };
 		CEDDCA7E2A6AEF2200474D4E /* VacancyLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */; };
@@ -591,6 +594,9 @@
 		CEB5A71D29DD9CD400E74C47 /* TimetableAccessoryRectangularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryRectangularView.swift; sourceTree = "<group>"; };
 		CEB5A71F29DDA8B200E74C47 /* TimetableAccessoryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableAccessoryInlineView.swift; sourceTree = "<group>"; };
 		CEC91CA92A812499008B0F15 /* VacancyEmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyEmptyListView.swift; sourceTree = "<group>"; };
+		CECDD36B2CC3E44F00BB5E5B /* SyllabusFilePreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabusFilePreviewController.swift; sourceTree = "<group>"; };
+		CECDD36D2CC3E47000BB5E5B /* WebBottomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebBottomNavigationView.swift; sourceTree = "<group>"; };
+		CECDD36F2CC3E4B000BB5E5B /* WebProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProgressView.swift; sourceTree = "<group>"; };
 		CECE96632A72D5F2003D87FA /* VacancyBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyBanner.swift; sourceTree = "<group>"; };
 		CEDDCA7A2A6AE62B00474D4E /* VacancyLectureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyLectureCell.swift; sourceTree = "<group>"; };
 		CEDDCA7D2A6AEF2200474D4E /* VacancyLectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyLectureList.swift; sourceTree = "<group>"; };
@@ -725,7 +731,7 @@
 				BE28036328E8850E00B2B1AB /* WebViewType.swift */,
 				BE28036128E884F400B2B1AB /* ReviewWebView.swift */,
 				BE28036528E8854D00B2B1AB /* SingleWebView.swift */,
-				B89826D028F4971000477A14 /* SyllabusWebView.swift */,
+				CECDD36A2CC3E43400BB5E5B /* SyllabusWebView */,
 				B8F40EAE28980D990021A2A9 /* DeveloperInfoView.swift */,
 				B8F40EB028980DE00021A2A9 /* TermsOfServiceView.swift */,
 				B8F40EB228980DFF0021A2A9 /* PrivacyPolicyView.swift */,
@@ -874,6 +880,17 @@
 				CE5BA5092B2ED4BC00F15D10 /* ExpandableLectureList.swift */,
 			);
 			path = Lecture;
+			sourceTree = "<group>";
+		};
+		CECDD36A2CC3E43400BB5E5B /* SyllabusWebView */ = {
+			isa = PBXGroup;
+			children = (
+				B89826D028F4971000477A14 /* SyllabusWebView.swift */,
+				CECDD36B2CC3E44F00BB5E5B /* SyllabusFilePreviewController.swift */,
+				CECDD36D2CC3E47000BB5E5B /* WebBottomNavigationView.swift */,
+				CECDD36F2CC3E4B000BB5E5B /* WebProgressView.swift */,
+			);
+			path = SyllabusWebView;
 			sourceTree = "<group>";
 		};
 		CEDDCA7C2A6AEF0E00474D4E /* Vacancy */ = {
@@ -1227,7 +1244,6 @@
 				DC860F4227E5C87D0068C94B /* Frameworks */,
 				DC860F4327E5C87D0068C94B /* Resources */,
 				BE98A073288AFC1600C2CE95 /* Embed Foundation Extensions */,
-				BEBB3C14292CCD960023F695 /* Upload dSym to Firebase */,
 			);
 			buildRules = (
 			);
@@ -1388,29 +1404,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		BEBB3C14292CCD960023F695 /* Upload dSym to Firebase */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "Upload dSym to Firebase";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\nif [ \"${CONFIGURATION}\" = \"Release\" ]; \nthen \n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run -gsp \"${PROJECT_DIR}\"/SNUTT/GoogleServiceReleaseInfo.plist\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols -gsp \"${PROJECT_DIR}\"/SNUTT/GoogleServiceReleaseInfo.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nelse\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run -gsp \"${PROJECT_DIR}\"/SNUTT/GoogleServiceDebugInfo.plist\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols -gsp \"${PROJECT_DIR}\"/SNUTT/GoogleServiceDebugInfo.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		BE98A05D288AFC1500C2CE95 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1505,6 +1498,7 @@
 				B87DF6F129150A00008BB95B /* PopupService.swift in Sources */,
 				DC29159D2865FA2800FE5F9A /* SettingViewModel.swift in Sources */,
 				DC1E0ED12877381F005632A3 /* Router.swift in Sources */,
+				CECDD36E2CC3E47300BB5E5B /* WebBottomNavigationView.swift in Sources */,
 				B87B315D28D5A70F005C170B /* UserState.swift in Sources */,
 				B87DF6F92918B7AD008BB95B /* PopupState.swift in Sources */,
 				B87B316D28D755B6005C170B /* MenuState.swift in Sources */,
@@ -1525,6 +1519,7 @@
 				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
 				BE6D893528EFD68E000607A6 /* String+Localized.swift in Sources */,
 				BEB3B6A228CDB7A400E56062 /* LectureTimePicker.swift in Sources */,
+				CECDD3702CC3E4B400BB5E5B /* WebProgressView.swift in Sources */,
 				BE77D0AC28B1384D0067A9D8 /* MenuSheetTopBar.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
@@ -1627,6 +1622,7 @@
 				BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */,
 				CE72435F2B30235300F9E0D7 /* SearchLectureSceneViewModel.swift in Sources */,
 				CEF4200F2A62ADE3005C2B1F /* FriendsViewModel.swift in Sources */,
+				CECDD36C2CC3E45000BB5E5B /* SyllabusFilePreviewController.swift in Sources */,
 				B88D16F328ABC5DD00E2D652 /* String+Ext.swift in Sources */,
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
 				BE9413D228C2458A00171060 /* DateFormatter+Parse.swift in Sources */,
