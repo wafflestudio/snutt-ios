@@ -1,0 +1,4575 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "SNUTT timetable api spec",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Local"
+    }
+  ],
+  "security": [
+    {
+      "ApiKey": []
+    },
+    {
+      "AccessToken": []
+    }
+  ],
+  "paths": {
+    "/v1/auth/find_id": {
+      "post": {
+        "operationId": "findId",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendEmailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/login/facebook": {
+      "post": {
+        "operationId": "loginFacebook",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SocialLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/login/google": {
+      "post": {
+        "operationId": "loginGoogle",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SocialLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/login/kakao": {
+      "post": {
+        "operationId": "loginKakao",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SocialLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/login_fb": {
+      "post": {
+        "operationId": "loginFacebookLegacy",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FacebookLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/login_local": {
+      "post": {
+        "operationId": "loginLocal",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocalLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/logout": {
+      "post": {
+        "operationId": "logout",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/password/reset": {
+      "post": {
+        "operationId": "resetPassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordResetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/password/reset/email/check": {
+      "post": {
+        "operationId": "getMaskedEmail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetMaskedEmailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/password/reset/email/send": {
+      "post": {
+        "operationId": "sendResetPasswordCode",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendEmailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/password/reset/verification/code": {
+      "post": {
+        "operationId": "verifyResetPasswordCode",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerificationCodeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/register_local": {
+      "post": {
+        "operationId": "registerLocal",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocalRegisterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/user/account": {
+      "delete": {
+        "operationId": "deleteAccount",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/user/device/{id}": {
+      "post": {
+        "operationId": "registerLocal_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "registerLocal_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/user/email/verification": {
+      "get": {
+        "operationId": "getEmailVerification",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailVerificationResultDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "sendVerificationEmail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendEmailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "resetEmailVerification",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailVerificationResultDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/user/email/verification/code": {
+      "post": {
+        "operationId": "confirmEmailVerification",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerificationCodeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailVerificationResultDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/user/info": {
+      "get": {
+        "description": "GET /v1/users/me 사용을 권장",
+        "operationId": "getUserInfo",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserLegacyDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/user/password": {
+      "put": {
+        "operationId": "changePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordChangeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "attachLocal",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocalLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/me": {
+      "get": {
+        "operationId": "getUserMe",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "patchUserInfo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPatchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables": {
+      "get": {
+        "operationId": "getBrief",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimetableBriefDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "addTimetable",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimetableAddRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimetableBriefDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables/recent": {
+      "get": {
+        "operationId": "getMostRecentlyUpdatedTimetables",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableLegacyDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables/{timetableId}": {
+      "get": {
+        "operationId": "getTimetable",
+        "parameters": [
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableLegacyDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "modifyTimetable",
+        "parameters": [
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimetableModifyRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimetableBriefDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteTimetable",
+        "parameters": [
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimetableBriefDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables/{timetableId}/copy": {
+      "post": {
+        "operationId": "copyTimetable",
+        "parameters": [
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimetableBriefDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables/{timetableId}/lecture": {
+      "post": {
+        "operationId": "addCustomLecture",
+        "parameters": [
+          {
+            "name": "isForced",
+            "in": "query",
+            "description": "시간 겹치는 강의 강제로 삭제 후 실행",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomTimetableLectureAddLegacyRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableLegacyDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables/{timetableId}/lecture/{lectureId}": {
+      "post": {
+        "operationId": "addLecture",
+        "parameters": [
+          {
+            "name": "isForced",
+            "in": "query",
+            "description": "시간 겹치는 강의 강제로 삭제 후 실행",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lectureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableLegacyDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables/{timetableId}/lecture/{timetableLectureId}": {
+      "put": {
+        "operationId": "modifyTimetableLecture",
+        "parameters": [
+          {
+            "name": "isForced",
+            "in": "query",
+            "description": "시간 겹치는 강의 강제로 삭제 후 실행",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timetableLectureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimetableLectureModifyLegacyRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableLegacyDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteTimetableLecture",
+        "parameters": [
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timetableLectureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableLegacyDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables/{timetableId}/lecture/{timetableLectureId}/reset": {
+      "put": {
+        "operationId": "resetTimetableLecture",
+        "parameters": [
+          {
+            "name": "isForced",
+            "in": "query",
+            "description": "시간 겹치는 강의 강제로 삭제 후 실행",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timetableLectureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableLegacyDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables/{timetableId}/primary": {
+      "post": {
+        "operationId": "setPrimary",
+        "parameters": [
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "unSetPrimary",
+        "parameters": [
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables/{timetableId}/theme": {
+      "put": {
+        "operationId": "modifyTimetableTheme",
+        "parameters": [
+          {
+            "name": "timetableId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimetableModifyThemeRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableLegacyDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tables/{year}/{semester}": {
+      "get": {
+        "operationId": "getTimetablesBySemester",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "semester",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimetableLegacyDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/search_query": {
+      "post": {
+        "operationId": "searchLecture",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchQueryLegacy"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LectureDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/buildings": {
+      "get": {
+        "operationId": "searchBuildings",
+        "parameters": [
+          {
+            "name": "places",
+            "in": "query",
+            "description": "\n                    Comma separated list of place codes.\n                    custom 강의 제외하는 것을 추천\n                ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookmarks": {
+      "get": {
+        "operationId": "getBookmark",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "semester",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookmarkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookmarks/lecture": {
+      "post": {
+        "operationId": "addLecture_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookmarkLectureModifyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteBookmark",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookmarkLectureModifyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/v1/bookmarks/lectures/{lectureId}/state": {
+      "get": {
+        "operationId": "existsBookmarkLecture",
+        "parameters": [
+          {
+            "name": "lectureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExistenceResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/notification": {
+      "get": {
+        "operationId": "getNotification",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "explicit",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/notification/count": {
+      "get": {
+        "operationId": "getUnreadCounts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationCountResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/configs/{name}": {
+      "get": {
+        "operationId": "getConfigs",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConfigResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "postConfig",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostConfigRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/configs/{name}/{id}": {
+      "delete": {
+        "operationId": "deleteConfig",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "patchConfig",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchConfigRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/images/{source}/upload-uris": {
+      "post": {
+        "operationId": "getUploadSignedUris",
+        "parameters": [
+          {
+            "name": "source",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FileUploadUriDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/insert_noti": {
+      "post": {
+        "description": "어드민 권한으로 알림 보내기",
+        "operationId": "insertNotification",
+        "requestBody": {
+          "description": "userId null이면 모든 유저에게 보냄",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InsertNotificationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/popups": {
+      "post": {
+        "operationId": "postPopup",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostPopupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PopupResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/popups/{id}": {
+      "delete": {
+        "operationId": "deletePopup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/vacancy-notifications/lectures": {
+      "get": {
+        "operationId": "getVacancyNotificationLectures",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacancyNotificationLecturesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/vacancy-notifications/lectures/{lectureId}": {
+      "post": {
+        "operationId": "addVacancyNotification",
+        "parameters": [
+          {
+            "name": "lectureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          },
+          "400": {
+            "description": "빈자리 알림 중복",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errcode": 40900,
+                  "message": "빈자리 알림 중복",
+                  "displayMessage": "빈자리 알림 중복"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "존재하지 않는 강의 id",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errcode": 16387,
+                  "message": "lecture가 없습니다.",
+                  "displayMessage": "lecture가 없습니다."
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteVacancyNotification",
+        "parameters": [
+          {
+            "name": "lectureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/v1/vacancy-notifications/lectures/{lectureId}/state": {
+      "get": {
+        "operationId": "existsVacancyNotification",
+        "parameters": [
+          {
+            "name": "lectureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExistenceResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/configs": {
+      "get": {
+        "operationId": "getConfigs_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/popups": {
+      "get": {
+        "operationId": "getPopups",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PopupsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/friends": {
+      "get": {
+        "operationId": "getFriends",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendsResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "requestFriend",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/friends/accept-link/{requestToken}": {
+      "post": {
+        "operationId": "acceptFriendByLink",
+        "parameters": [
+          {
+            "name": "requestToken",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/friends/generate-link": {
+      "get": {
+        "operationId": "generateFriendLink",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendRequestLinkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/friends/{friendId}": {
+      "delete": {
+        "operationId": "breakFriend",
+        "parameters": [
+          {
+            "name": "friendId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/v1/friends/{friendId}/accept": {
+      "post": {
+        "operationId": "acceptFriend",
+        "parameters": [
+          {
+            "name": "friendId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/v1/friends/{friendId}/coursebooks": {
+      "get": {
+        "operationId": "getCoursebooks",
+        "parameters": [
+          {
+            "name": "friendId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CoursebookDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/friends/{friendId}/decline": {
+      "post": {
+        "operationId": "declineFriend",
+        "parameters": [
+          {
+            "name": "friendId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/v1/friends/{friendId}/primary-table": {
+      "get": {
+        "operationId": "getPrimaryTable",
+        "parameters": [
+          {
+            "name": "friendId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "semester",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "v1/friends/{friendId}/display-name": {
+      "patch": {
+        "operationId": "updateFriendDisplayName",
+        "parameters": [
+          {
+            "name": "friendId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFriendDisplayNameRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/v1/themes": {
+      "get": {
+        "operationId": "getThemes",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimetableThemeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "addTheme",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimetableThemeAddRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableThemeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/themes/basic/{basicThemeTypeValue}/default": {
+      "post": {
+        "operationId": "setBasicThemeTypeDefault",
+        "parameters": [
+          {
+            "name": "basicThemeTypeValue",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableThemeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "unsetBasicThemeTypeDefault",
+        "parameters": [
+          {
+            "name": "basicThemeTypeValue",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableThemeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/themes/best": {
+      "get": {
+        "operationId": "getBestThemes",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/themes/friends": {
+      "get": {
+        "operationId": "getFriendsThemes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/themes/search": {
+      "get": {
+        "operationId": "searchThemes",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/themes/{themeId}": {
+      "delete": {
+        "operationId": "deleteTheme",
+        "parameters": [
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          }
+        }
+      },
+      "patch": {
+        "operationId": "modifyTheme",
+        "parameters": [
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimetableThemeAddRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableThemeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/themes/{themeId}/copy": {
+      "post": {
+        "operationId": "copyTheme",
+        "parameters": [
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableThemeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/themes/{themeId}/default": {
+      "post": {
+        "operationId": "setDefault",
+        "parameters": [
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableThemeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "unsetDefault",
+        "parameters": [
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableThemeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/themes/{themeId}/download": {
+      "post": {
+        "operationId": "downloadTheme",
+        "parameters": [
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/TimetableThemeDownloadRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimetableThemeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/themes/{themeId}/publish": {
+      "post": {
+        "operationId": "publishTheme",
+        "parameters": [
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/TimetableThemePublishRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/v1/tags/{year}/{semester}": {
+      "get": {
+        "operationId": "getTagList",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "semester",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tags/{year}/{semester}/update_time": {
+      "get": {
+        "operationId": "getTagListUpdateTime",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "semester",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagListUpdateTimeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/ev/lectures/{lectureId}/summary": {
+      "get": {
+        "operationId": "getLectureEvaluationSummary",
+        "parameters": [
+          {
+            "name": "lectureId",
+            "in": "path",
+            "description": "snutt lecture id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SnuttEvLectureSummaryDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/course_books": {
+      "get": {
+        "operationId": "getAllCoursebooks",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CoursebookResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/course_books/official": {
+      "get": {
+        "operationId": "getSyllabusUrl",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": 2024
+          },
+          {
+            "name": "semester",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": 3
+          },
+          {
+            "name": "course_number",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "M1522.001400"
+          },
+          {
+            "name": "lecture_number",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoursebookOfficialResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/course_books/recent": {
+      "get": {
+        "operationId": "getMostRecentCoursebook",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CoursebookResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SendEmailRequest": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "OkResponse": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "SocialLoginRequest": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginResponse": {
+        "required": [
+          "message",
+          "token",
+          "user_id"
+        ],
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "FacebookLoginRequest": {
+        "required": [
+          "fb_token"
+        ],
+        "type": "object",
+        "properties": {
+          "fb_id": {
+            "type": "string"
+          },
+          "fb_token": {
+            "type": "string"
+          }
+        }
+      },
+      "LocalLoginRequest": {
+        "required": [
+          "id",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "LogoutRequest": {
+        "required": [
+          "registration_id"
+        ],
+        "type": "object",
+        "properties": {
+          "registration_id": {
+            "type": "string"
+          }
+        }
+      },
+      "PasswordResetRequest": {
+        "required": [
+          "code",
+          "password",
+          "user_id"
+        ],
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "GetMaskedEmailRequest": {
+        "required": [
+          "user_id"
+        ],
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          }
+        }
+      },
+      "EmailResponse": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "VerificationCodeRequest": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "LocalRegisterRequest": {
+        "required": [
+          "id",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "EmailVerificationResultDto": {
+        "required": [
+          "is_email_verified"
+        ],
+        "type": "object",
+        "properties": {
+          "is_email_verified": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserLegacyDto": {
+        "required": [
+          "isAdmin",
+          "notificationCheckedAt",
+          "regDate"
+        ],
+        "type": "object",
+        "properties": {
+          "isAdmin": {
+            "type": "boolean"
+          },
+          "regDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notificationCheckedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "email": {
+            "type": "string"
+          },
+          "local_id": {
+            "type": "string"
+          },
+          "fb_name": {
+            "type": "string"
+          }
+        }
+      },
+      "TokenResponse": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "PasswordChangeRequest": {
+        "required": [
+          "new_password",
+          "old_password"
+        ],
+        "type": "object",
+        "properties": {
+          "old_password": {
+            "type": "string"
+          },
+          "new_password": {
+            "type": "string"
+          }
+        }
+      },
+      "NicknameDto": {
+        "required": [
+          "nickname",
+          "tag"
+        ],
+        "type": "object",
+        "properties": {
+          "nickname": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          }
+        }
+      },
+      "UserDto": {
+        "required": [
+          "id",
+          "isAdmin",
+          "nickname",
+          "notificationCheckedAt",
+          "regDate"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          },
+          "regDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notificationCheckedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "email": {
+            "type": "string"
+          },
+          "localId": {
+            "type": "string"
+          },
+          "fbName": {
+            "type": "string"
+          },
+          "nickname": {
+            "$ref": "#/components/schemas/NicknameDto"
+          }
+        }
+      },
+      "UserPatchRequest": {
+        "type": "object",
+        "properties": {
+          "nickname": {
+            "type": "string"
+          }
+        }
+      },
+      "TimetableBriefDto": {
+        "required": [
+          "_id",
+          "isPrimary",
+          "semester",
+          "title",
+          "total_credit",
+          "updated_at",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semester": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string"
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "total_credit": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "TimetableAddRequestDto": {
+        "required": [
+          "semester",
+          "title",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semester": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "ClassPlaceAndTimeLegacyDto": {
+        "required": [
+          "day",
+          "endMinute",
+          "end_time",
+          "len",
+          "start",
+          "startMinute",
+          "start_time"
+        ],
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "place": {
+            "type": "string"
+          },
+          "startMinute": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "endMinute": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "start_time": {
+            "type": "string"
+          },
+          "end_time": {
+            "type": "string"
+          },
+          "len": {
+            "type": "number",
+            "format": "double"
+          },
+          "start": {
+            "type": "number",
+            "format": "double"
+          },
+          "lectureBuildings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LectureBuilding"
+            }
+          }
+        }
+      },
+      "ColorSet": {
+        "type": "object",
+        "properties": {
+          "bg": {
+            "type": "string"
+          },
+          "fg": {
+            "type": "string"
+          }
+        }
+      },
+      "GeoCoordinate": {
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "LectureBuilding": {
+        "required": [
+          "buildingNameEng",
+          "buildingNameKor",
+          "buildingNumber",
+          "campus"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "buildingNumber": {
+            "type": "string"
+          },
+          "buildingNameKor": {
+            "type": "string"
+          },
+          "buildingNameEng": {
+            "type": "string"
+          },
+          "locationInDMS": {
+            "$ref": "#/components/schemas/GeoCoordinate"
+          },
+          "locationInDecimal": {
+            "$ref": "#/components/schemas/GeoCoordinate"
+          },
+          "campus": {
+            "type": "string",
+            "enum": [
+              "GWANAK",
+              "YEONGEON",
+              "PYEONGCHANG"
+            ]
+          }
+        }
+      },
+      "SnuttEvLectureIdDto": {
+        "required": [
+          "evLectureId"
+        ],
+        "type": "object",
+        "properties": {
+          "snuttId": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "evLectureId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "TimetableLectureLegacyDto": {
+        "required": [
+          "class_time_json",
+          "class_time_mask",
+          "colorIndex",
+          "course_title"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "academic_year": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "class_time_json": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClassPlaceAndTimeLegacyDto"
+            }
+          },
+          "classification": {
+            "type": "string"
+          },
+          "credit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "department": {
+            "type": "string"
+          },
+          "instructor": {
+            "type": "string"
+          },
+          "lecture_number": {
+            "type": "string"
+          },
+          "quota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "freshman_quota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "course_number": {
+            "type": "string"
+          },
+          "course_title": {
+            "type": "string"
+          },
+          "color": {
+            "$ref": "#/components/schemas/ColorSet"
+          },
+          "colorIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lecture_id": {
+            "type": "string"
+          },
+          "snuttEvLecture": {
+            "$ref": "#/components/schemas/SnuttEvLectureIdDto"
+          },
+          "class_time_mask": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "TimetableLegacyDto": {
+        "required": [
+          "isPrimary",
+          "lecture_list",
+          "semester",
+          "theme",
+          "title",
+          "updated_at",
+          "user_id",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semester": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "lecture_list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimetableLectureLegacyDto"
+            }
+          },
+          "title": {
+            "type": "string"
+          },
+          "theme": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "themeId": {
+            "type": "string"
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TimetableModifyRequestDto": {
+        "required": [
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "ClassPlaceAndTimeLegacyRequestDto": {
+        "required": [
+          "day"
+        ],
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "place": {
+            "type": "string"
+          },
+          "startMinute": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "endMinute": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "start_time": {
+            "type": "string"
+          },
+          "end_time": {
+            "type": "string"
+          },
+          "len": {
+            "type": "number",
+            "format": "double"
+          },
+          "start": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "CustomTimetableLectureAddLegacyRequestDto": {
+        "required": [
+          "class_time_json",
+          "course_title",
+          "is_forced"
+        ],
+        "type": "object",
+        "properties": {
+          "course_title": {
+            "type": "string"
+          },
+          "instructor": {
+            "type": "string"
+          },
+          "credit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "class_time_json": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClassPlaceAndTimeLegacyRequestDto"
+            }
+          },
+          "remark": {
+            "type": "string"
+          },
+          "color": {
+            "$ref": "#/components/schemas/ColorSet"
+          },
+          "colorIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "is_forced": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TimetableLectureModifyLegacyRequestDto": {
+        "required": [
+          "is_forced"
+        ],
+        "type": "object",
+        "properties": {
+          "course_title": {
+            "type": "string"
+          },
+          "academic_year": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "classification": {
+            "type": "string"
+          },
+          "instructor": {
+            "type": "string"
+          },
+          "credit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "class_time_json": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClassPlaceAndTimeLegacyRequestDto"
+            }
+          },
+          "remark": {
+            "type": "string"
+          },
+          "color": {
+            "$ref": "#/components/schemas/ColorSet"
+          },
+          "colorIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "is_forced": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Unit": {
+        "type": "object"
+      },
+      "TimetableModifyThemeRequestDto": {
+        "type": "object",
+        "properties": {
+          "theme": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "themeId": {
+            "type": "string"
+          }
+        }
+      },
+      "SearchQueryLegacy": {
+        "required": [
+          "limit",
+          "offset",
+          "page",
+          "semester",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semester": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "classification": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "credit": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "course_number": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "academic_year": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "department": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "category": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "time_mask": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "times": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchTimeDto"
+            }
+          },
+          "timesToExclude": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchTimeDto"
+            }
+          },
+          "etc": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "limit": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortCriteria": {
+            "type": "string"
+          }
+        }
+      },
+      "SearchTimeDto": {
+        "required": [
+          "day",
+          "endMinute",
+          "startMinute"
+        ],
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "startMinute": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "endMinute": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "LectureDto": {
+        "required": [
+          "class_time_json",
+          "class_time_mask",
+          "course_number",
+          "course_title",
+          "lecture_number",
+          "registrationCount",
+          "semester",
+          "wasFull",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "academic_year": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "class_time_json": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClassPlaceAndTimeLegacyDto"
+            }
+          },
+          "classification": {
+            "type": "string"
+          },
+          "credit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "department": {
+            "type": "string"
+          },
+          "instructor": {
+            "type": "string"
+          },
+          "lecture_number": {
+            "type": "string"
+          },
+          "quota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "freshmanQuota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "semester": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "course_number": {
+            "type": "string"
+          },
+          "course_title": {
+            "type": "string"
+          },
+          "registrationCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "wasFull": {
+            "type": "boolean"
+          },
+          "snuttEvLecture": {
+            "$ref": "#/components/schemas/SnuttEvLectureSummaryDto"
+          },
+          "class_time_mask": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "SnuttEvLectureSummaryDto": {
+        "required": [
+          "evLectureId",
+          "evaluationCount"
+        ],
+        "type": "object",
+        "properties": {
+          "snuttId": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "evLectureId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "avgRating": {
+            "type": "number",
+            "format": "double"
+          },
+          "evaluationCount": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "BuildingsResponse": {
+        "required": [
+          "content",
+          "totalCount"
+        ],
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LectureBuilding"
+            }
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "BookmarkLectureDto": {
+        "required": [
+          "class_time_json",
+          "class_time_mask",
+          "course_number",
+          "course_title",
+          "credit",
+          "lecture_number"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "academic_year": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "class_time_json": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClassPlaceAndTimeLegacyDto"
+            }
+          },
+          "classification": {
+            "type": "string"
+          },
+          "credit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "department": {
+            "type": "string"
+          },
+          "instructor": {
+            "type": "string"
+          },
+          "lecture_number": {
+            "type": "string"
+          },
+          "quota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "freshmanQuota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "course_number": {
+            "type": "string"
+          },
+          "course_title": {
+            "type": "string"
+          },
+          "snuttEvLecture": {
+            "$ref": "#/components/schemas/SnuttEvLectureSummaryDto"
+          },
+          "class_time_mask": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "BookmarkResponse": {
+        "required": [
+          "lectures",
+          "semester",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semester": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lectures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookmarkLectureDto"
+            }
+          }
+        }
+      },
+      "BookmarkLectureModifyRequest": {
+        "required": [
+          "lecture_id"
+        ],
+        "type": "object",
+        "properties": {
+          "lecture_id": {
+            "type": "string"
+          }
+        }
+      },
+      "ExistenceResponse": {
+        "required": [
+          "exists"
+        ],
+        "type": "object",
+        "properties": {
+          "exists": {
+            "type": "boolean"
+          }
+        }
+      },
+      "NotificationResponse": {
+        "required": [
+          "created_at",
+          "message",
+          "title",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "type": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "deeplink": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "NotificationCountResponse": {
+        "required": [
+          "count"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "ConfigResponse": {
+        "required": [
+          "data",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/JsonNode"
+          },
+          "minVersion": {
+            "$ref": "#/components/schemas/ConfigVersionDto"
+          },
+          "maxVersion": {
+            "$ref": "#/components/schemas/ConfigVersionDto"
+          }
+        }
+      },
+      "ConfigVersionDto": {
+        "required": [
+          "android",
+          "ios"
+        ],
+        "type": "object",
+        "properties": {
+          "ios": {
+            "type": "string"
+          },
+          "android": {
+            "type": "string"
+          }
+        }
+      },
+      "JsonNode": {
+        "type": "object"
+      },
+      "PostConfigRequest": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/JsonNode"
+          },
+          "minVersion": {
+            "$ref": "#/components/schemas/ConfigVersionDto"
+          },
+          "maxVersion": {
+            "$ref": "#/components/schemas/ConfigVersionDto"
+          }
+        }
+      },
+      "PatchConfigRequest": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/JsonNode"
+          },
+          "minVersion": {
+            "$ref": "#/components/schemas/ConfigVersionDto"
+          },
+          "maxVersion": {
+            "$ref": "#/components/schemas/ConfigVersionDto"
+          }
+        }
+      },
+      "FileUploadUriDto": {
+        "required": [
+          "fileOriginUri",
+          "fileUri",
+          "uploadUri"
+        ],
+        "type": "object",
+        "properties": {
+          "uploadUri": {
+            "type": "string"
+          },
+          "fileOriginUri": {
+            "type": "string"
+          },
+          "fileUri": {
+            "type": "string"
+          }
+        }
+      },
+      "InsertNotificationRequest": {
+        "required": [
+          "body",
+          "dataPayload",
+          "insertFcm",
+          "title",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "insertFcm": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "dataPayload": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PostPopupRequest": {
+        "required": [
+          "imageOriginUri",
+          "key"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "imageOriginUri": {
+            "type": "string"
+          },
+          "hiddenDays": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PopupResponse": {
+        "required": [
+          "id",
+          "imageUri",
+          "image_url",
+          "key"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "imageUri": {
+            "type": "string"
+          },
+          "image_url": {
+            "type": "string"
+          },
+          "hiddenDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hidden_days": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "VacancyNotificationLecturesResponse": {
+        "required": [
+          "lectures"
+        ],
+        "type": "object",
+        "properties": {
+          "lectures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LectureDto"
+            }
+          }
+        }
+      },
+      "PopupsResponse": {
+        "required": [
+          "content",
+          "totalCount"
+        ],
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PopupResponse"
+            }
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "FriendResponse": {
+        "required": [
+          "createdAt",
+          "id",
+          "nickname",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "nickname": {
+            "$ref": "#/components/schemas/NicknameDto"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FriendsResponse": {
+        "required": [
+          "content",
+          "totalCount"
+        ],
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FriendResponse"
+            }
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "FriendRequest": {
+        "required": [
+          "nickname"
+        ],
+        "type": "object",
+        "properties": {
+          "nickname": {
+            "type": "string"
+          }
+        }
+      },
+      "FriendRequestLinkResponse": {
+        "required": [
+          "requestToken"
+        ],
+        "type": "object",
+        "properties": {
+          "requestToken": {
+            "type": "string"
+          }
+        }
+      },
+      "CoursebookDto": {
+        "required": [
+          "semester",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semester": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          }
+        }
+      },
+      "ClassPlaceAndTimeDto": {
+        "required": [
+          "day",
+          "endMinute",
+          "startMinute"
+        ],
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "place": {
+            "type": "string"
+          },
+          "startMinute": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "endMinute": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "TimetableDto": {
+        "required": [
+          "isPrimary",
+          "lectures",
+          "semester",
+          "theme",
+          "title",
+          "updatedAt",
+          "userId",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semester": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "lectures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimetableLectureDto"
+            }
+          },
+          "title": {
+            "type": "string"
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "0",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ]
+          },
+          "themeId": {
+            "type": "string"
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TimetableLectureDto": {
+        "required": [
+          "classPlaceAndTimes",
+          "colorIndex",
+          "courseTitle"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "academicYear": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "classPlaceAndTimes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClassPlaceAndTimeDto"
+            }
+          },
+          "classification": {
+            "type": "string"
+          },
+          "credit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "department": {
+            "type": "string"
+          },
+          "instructor": {
+            "type": "string"
+          },
+          "lectureNumber": {
+            "type": "string"
+          },
+          "quota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "freshmanQuota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "courseNumber": {
+            "type": "string"
+          },
+          "courseTitle": {
+            "type": "string"
+          },
+          "color": {
+            "$ref": "#/components/schemas/ColorSet"
+          },
+          "colorIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lectureId": {
+            "type": "string"
+          },
+          "snuttEvLecture": {
+            "$ref": "#/components/schemas/SnuttEvLectureIdDto"
+          }
+        }
+      },
+      "UpdateFriendDisplayNameRequest": {
+        "required": [
+          "displayName"
+        ],
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "ThemeMarketInfoDto": {
+        "required": [
+          "authorName",
+          "downloads",
+          "publishName"
+        ],
+        "type": "object",
+        "properties": {
+          "publishName": {
+            "type": "string"
+          },
+          "authorName": {
+            "type": "string"
+          },
+          "downloads": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ThemeOrigin": {
+        "required": [
+          "authorId",
+          "originId"
+        ],
+        "type": "object",
+        "properties": {
+          "originId": {
+            "type": "string"
+          },
+          "authorId": {
+            "type": "string"
+          }
+        }
+      },
+      "TimetableThemeDto": {
+        "required": [
+          "isCustom",
+          "isDefault",
+          "name",
+          "status",
+          "theme"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "theme": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "colors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ColorSet"
+            }
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "isCustom": {
+            "type": "boolean"
+          },
+          "origin": {
+            "$ref": "#/components/schemas/ThemeOrigin"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "BASIC",
+              "DOWNLOADED",
+              "PUBLISHED",
+              "PRIVATE"
+            ]
+          },
+          "publishInfo": {
+            "$ref": "#/components/schemas/ThemeMarketInfoDto"
+          }
+        }
+      },
+      "TimetableThemeAddRequestDto": {
+        "required": [
+          "colors",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "colors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ColorSet"
+            }
+          }
+        }
+      },
+      "ThemesResponse": {
+        "required": [
+          "content",
+          "totalCount"
+        ],
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimetableThemeDto"
+            }
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "TimetableThemeDownloadRequestDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "TimetableThemePublishRequestDto": {
+        "required": [
+          "isAnonymous",
+          "publishName"
+        ],
+        "type": "object",
+        "properties": {
+          "publishName": {
+            "type": "string"
+          },
+          "isAnonymous": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TagListResponse": {
+        "required": [
+          "academic_year",
+          "category",
+          "classification",
+          "credit",
+          "department",
+          "instructor",
+          "sortCriteria",
+          "updated_at"
+        ],
+        "type": "object",
+        "properties": {
+          "classification": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "department": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "academic_year": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "credit": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "instructor": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "category": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sortCriteria": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "TagListUpdateTimeResponse": {
+        "required": [
+          "updated_at"
+        ],
+        "type": "object",
+        "properties": {
+          "updated_at": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "CoursebookResponse": {
+        "required": [
+          "semester",
+          "updated_at",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semester": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CoursebookOfficialResponse": {
+        "required": [
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "name": "x-access-apikey",
+        "in": "header"
+      },
+      "AccessToken": {
+        "type": "apiKey",
+        "name": "x-access-token",
+        "in": "header"
+      }
+    }
+  }
+}
