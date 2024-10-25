@@ -10,14 +10,30 @@ import SwiftUI
 
 extension IntegrateAccountScene {
     class ViewModel: BaseViewModel, ObservableObject {
-        @Published var currentUser: User?
+        @Published var currentSocialProvider: SocialProvider?
 
         override init(container: DIContainer) {
             super.init(container: container)
 
-            appState.user.$current.assign(to: &$currentUser)
+            appState.user.$socialProvider.assign(to: &$currentSocialProvider)
         }
-
+        
+        func detachKakao() async {
+            do {
+                try await services.userService.disconnectKakao()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+        
+        func detachGoogle() async {
+            do {
+                try await services.userService.disconnectGoogle()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+        
         func detachFacebook() async {
             do {
                 try await services.userService.disconnectFacebook()
@@ -28,10 +44,30 @@ extension IntegrateAccountScene {
     }
 }
 
-extension IntegrateAccountScene.ViewModel: FacebookLoginProtocol {
-    func handleFacebookToken(fbId: String, fbToken: String) async {
+extension IntegrateAccountScene.ViewModel: KakaoLoginProtocol {
+    func handleKakaoToken(kakaoToken: String) async {
         do {
-            try await services.userService.connectFacebook(fbId: fbId, fbToken: fbToken)
+            try await services.userService.connectKakao(kakaoToken: kakaoToken)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+}
+
+extension IntegrateAccountScene.ViewModel: GoogleLoginProtocol {
+    func handleGoogleToken(googleToken: String) async {
+        do {
+            try await services.userService.connectGoogle(googleToken: googleToken)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+}
+
+extension IntegrateAccountScene.ViewModel: FacebookLoginProtocol {
+    func handleFacebookToken(facebookId: String, facebookToken: String) async {
+        do {
+            try await services.userService.connectFacebook(facebookId: facebookId, facebookToken: facebookToken)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

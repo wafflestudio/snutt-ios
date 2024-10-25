@@ -9,31 +9,84 @@ import SwiftUI
 
 struct IntegrateAccountScene: View {
     @ObservedObject var viewModel: ViewModel
-    @State private var isDisconnectFBAlertPresented: Bool = false
+    @State private var isDisconnectKakaoAlertPresented: Bool = false
+    @State private var isDisconnectGoogleAlertPresented: Bool = false
+    @State private var isDisconnectAppleAlertPresented: Bool = false
+    @State private var isDisconnectFacebookAlertPresented: Bool = false
 
     var body: some View {
         List {
-            if let facebookName = viewModel.currentUser?.fbName {
-                SettingsTextItem(title: "페이스북 이름", detail: facebookName)
+            if (viewModel.currentSocialProvider?.kakao == true) {
+                SettingsButtonItem(title: "카카오 계정 연동 해제", role: .destructive) {
+                    isDisconnectKakaoAlertPresented = true
+                }
+            } else {
+                SettingsButtonItem(title: "카카오 계정 연동") {
+                    viewModel.performKakaoSignIn()
+                }
+            }
+            if (viewModel.currentSocialProvider?.google == true) {
+                SettingsButtonItem(title: "구글 계정 연동 해제", role: .destructive) {
+                    isDisconnectGoogleAlertPresented = true
+                }
+            } else {
+                SettingsButtonItem(title: "구글 계정 연동") {
+                    viewModel.performGoogleSignIn()
+                }
+            }
+            if (viewModel.currentSocialProvider?.apple == true) {
+                SettingsButtonItem(title: "애플 계정 연동 해제", role: .destructive) {
+                    isDisconnectAppleAlertPresented = true
+                }
+            } else {
+                SettingsButtonItem(title: "애플 계정 연동") {
+                    // 애플
+                }
+            }
+            if (viewModel.currentSocialProvider?.facebook == true) {
                 SettingsButtonItem(title: "페이스북 계정 연동 해제", role: .destructive) {
-                    isDisconnectFBAlertPresented = true
+                    isDisconnectFacebookAlertPresented = true
                 }
             } else {
                 SettingsButtonItem(title: "페이스북 계정 연동") {
                     viewModel.performFacebookSignIn()
                 }
             }
+            
         }
-        .alert("페이스북 계정 연동 해제", isPresented: $isDisconnectFBAlertPresented) {
+        .alert("카카오 계정 연동을 해제하시겠습니까?", isPresented: $isDisconnectKakaoAlertPresented) {
+            Button("취소", role: .cancel, action: {})
+            Button("해제", role: .destructive, action: {
+                Task {
+                    await viewModel.detachKakao()
+                }
+            })
+        }
+        .alert("구글 계정 연동을 해제하시겠습니까?", isPresented: $isDisconnectGoogleAlertPresented) {
+            Button("취소", role: .cancel, action: {})
+            Button("해제", role: .destructive, action: {
+                Task {
+                    await viewModel.detachGoogle()
+                }
+            })
+        }
+        .alert("애플 계정 연동을 해제하시겠습니까?", isPresented: $isDisconnectAppleAlertPresented) {
+            Button("취소", role: .cancel, action: {})
+            Button("해제", role: .destructive, action: {
+                Task {
+                    // 애플
+                }
+            })
+        }
+        .alert("페이스북 계정 연동을 해제하시겠습니까?", isPresented: $isDisconnectFacebookAlertPresented) {
             Button("취소", role: .cancel, action: {})
             Button("해제", role: .destructive, action: {
                 Task {
                     await viewModel.detachFacebook()
                 }
             })
-        } message: {
-            Text("페이스북 연동을 해제하시겠습니까?")
         }
+        .navigationTitle("SNS 계정 연동 및 해제")
     }
 }
 
