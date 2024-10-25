@@ -10,6 +10,7 @@ import SwiftUI
 class UserState {
     @Published var accessToken: String?
     @Published var current: User?
+    @Published var socialProvider: SocialProvider?
 
     /// Primary key of User. Required to logout. This is not `localId`.
     var userId: String?

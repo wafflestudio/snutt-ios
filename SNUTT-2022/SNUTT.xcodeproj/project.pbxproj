@@ -35,6 +35,7 @@
 		738407102B6060F800007E62 /* ThemeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406F82B57154400007E62 /* ThemeState.swift */; };
 		73AB84D22C35128B0075DE83 /* IntegrateAccountScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */; };
 		73AB84D42C3514080075DE83 /* IntegrateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */; };
+		73B6E0882CCB34B2006DD4F0 /* SocialProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */; };
 		B800A38B2B76132C008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */; };
@@ -377,6 +378,7 @@
 		738407042B577E9000007E62 /* ThemeDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDetailScene.swift; sourceTree = "<group>"; };
 		73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateAccountScene.swift; sourceTree = "<group>"; };
 		73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateAccountViewModel.swift; sourceTree = "<group>"; };
+		73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialProvider.swift; sourceTree = "<group>"; };
 		B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTimeMaskDto.swift; sourceTree = "<group>"; };
 		B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureMapView.swift; sourceTree = "<group>"; };
 		B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
@@ -1040,6 +1042,7 @@
 				731D9FFC297BC5060027BA25 /* Bookmark.swift */,
 				738406ED2B57107C00007E62 /* Theme.swift */,
 				B84A4EA02B6035EE00C1E1A0 /* Building.swift */,
+				73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1601,6 +1604,7 @@
 				BE9413BF28C2157600171060 /* NotificationDto.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				CE4777F32A6ADCAC00E03253 /* VacancyRepository.swift in Sources */,
+				73B6E0882CCB34B2006DD4F0 /* SocialProvider.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
 				CE3384BA2A86704100437CC5 /* FriendsService.swift in Sources */,
