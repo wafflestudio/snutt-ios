@@ -34,15 +34,15 @@ struct IntegrateAccountScene: View {
                     viewModel.performGoogleSignIn()
                 }
             }
-            if (viewModel.currentSocialProvider?.apple == true) {
-                SettingsButtonItem(title: "애플 계정 연동 해제", role: .destructive) {
-                    isDisconnectAppleAlertPresented = true
-                }
-            } else {
-                SettingsButtonItem(title: "애플 계정 연동") {
-                    // 애플
-                }
-            }
+//            if (viewModel.currentSocialProvider?.apple == true) {
+//                SettingsButtonItem(title: "애플 계정 연동 해제", role: .destructive) {
+//                    isDisconnectAppleAlertPresented = true
+//                }
+//            } else {
+//                SettingsButtonItem(title: "애플 계정 연동") {
+//
+//                }
+//            }
             if (viewModel.currentSocialProvider?.facebook == true) {
                 SettingsButtonItem(title: "페이스북 계정 연동 해제", role: .destructive) {
                     isDisconnectFacebookAlertPresented = true
@@ -70,14 +70,14 @@ struct IntegrateAccountScene: View {
                 }
             })
         }
-        .alert("애플 계정 연동을 해제하시겠습니까?", isPresented: $isDisconnectAppleAlertPresented) {
-            Button("취소", role: .cancel, action: {})
-            Button("해제", role: .destructive, action: {
-                Task {
-                    // 애플
-                }
-            })
-        }
+//        .alert("애플 계정 연동을 해제하시겠습니까?", isPresented: $isDisconnectAppleAlertPresented) {
+//            Button("취소", role: .cancel, action: {})
+//            Button("해제", role: .destructive, action: {
+//                Task {
+//
+//                }
+//            })
+//        }
         .alert("페이스북 계정 연동을 해제하시겠습니까?", isPresented: $isDisconnectFacebookAlertPresented) {
             Button("취소", role: .cancel, action: {})
             Button("해제", role: .destructive, action: {
