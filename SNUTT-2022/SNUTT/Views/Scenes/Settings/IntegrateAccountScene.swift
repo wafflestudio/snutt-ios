@@ -16,7 +16,7 @@ struct IntegrateAccountScene: View {
 
     var body: some View {
         List {
-            if (viewModel.currentSocialProvider?.kakao == true) {
+            if viewModel.currentSocialProvider?.kakao == true {
                 SettingsButtonItem(title: "카카오 계정 연동 해제", role: .destructive) {
                     isDisconnectKakaoAlertPresented = true
                 }
@@ -25,7 +25,7 @@ struct IntegrateAccountScene: View {
                     viewModel.performKakaoSignIn()
                 }
             }
-            if (viewModel.currentSocialProvider?.google == true) {
+            if viewModel.currentSocialProvider?.google == true {
                 SettingsButtonItem(title: "구글 계정 연동 해제", role: .destructive) {
                     isDisconnectGoogleAlertPresented = true
                 }
@@ -43,7 +43,7 @@ struct IntegrateAccountScene: View {
 //
 //                }
 //            }
-            if (viewModel.currentSocialProvider?.facebook == true) {
+            if viewModel.currentSocialProvider?.facebook == true {
                 SettingsButtonItem(title: "페이스북 계정 연동 해제", role: .destructive) {
                     isDisconnectFacebookAlertPresented = true
                 }
@@ -52,7 +52,6 @@ struct IntegrateAccountScene: View {
                     viewModel.performFacebookSignIn()
                 }
             }
-            
         }
         .alert("카카오 계정 연동을 해제하시겠습니까?", isPresented: $isDisconnectKakaoAlertPresented) {
             Button("취소", role: .cancel, action: {})

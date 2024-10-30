@@ -40,7 +40,7 @@ class UserRepository: UserRepositoryProtocol {
             .serializingDecodable(UserDto.self)
             .handlingError()
     }
-    
+
     func fetchSocialProvider() async throws -> SocialProviderDto {
         return try await session
             .request(UserRouter.getSocialProvider)
@@ -54,30 +54,32 @@ class UserRepository: UserRepositoryProtocol {
             .serializingDecodable(UserDto.self)
             .handlingError()
     }
-    
+
     func connectKakao(kakaoToken: String) async throws ->
-    TokenResponseDto {
+        TokenResponseDto
+    {
         return try await session
             .request(UserRouter.connectKakao(kakaoToken: kakaoToken))
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
-    
+
     func disconnectKakao() async throws -> TokenResponseDto {
         return try await session
             .request(UserRouter.disconnectKakao)
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
-    
+
     func connectGoogle(googleToken: String) async throws ->
-    TokenResponseDto {
+        TokenResponseDto
+    {
         return try await session
             .request(UserRouter.connectGoogle(googleToken: googleToken))
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
-    
+
     func disconnectGoogle() async throws -> TokenResponseDto {
         return try await session
             .request(UserRouter.disconnectKakao)

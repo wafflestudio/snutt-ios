@@ -17,7 +17,7 @@ extension IntegrateAccountScene {
 
             appState.user.$socialProvider.assign(to: &$currentSocialProvider)
         }
-        
+
         func detachKakao() async {
             do {
                 try await services.userService.disconnectKakao()
@@ -26,7 +26,7 @@ extension IntegrateAccountScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func detachGoogle() async {
             do {
                 try await services.userService.disconnectGoogle()
@@ -35,7 +35,7 @@ extension IntegrateAccountScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func detachFacebook() async {
             do {
                 try await services.userService.disconnectFacebook()

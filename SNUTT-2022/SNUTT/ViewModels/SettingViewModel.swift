@@ -77,7 +77,7 @@ class SettingViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
-    
+
     func fetchSocialProvider() async {
         do {
             try await services.userService.fetchSocialProvider()

@@ -40,7 +40,7 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
     var userDefaultsRepository: UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
     }
-    
+
     func fetchSocialProvider() async throws {
         let dto = try await userRepository.fetchSocialProvider()
         appState.user.socialProvider = SocialProvider(from: dto)
@@ -65,22 +65,22 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
         let dto = try await userRepository.addLocalId(localId: localId, localPassword: localPassword)
         try await updateToken(from: dto)
     }
-    
+
     func connectKakao(kakaoToken: String) async throws {
         let dto = try await userRepository.connectKakao(kakaoToken: kakaoToken)
         try await updateToken(from: dto)
     }
-    
+
     func disconnectKakao() async throws {
         let dto = try await userRepository.disconnectKakao()
         try await updateToken(from: dto)
     }
-    
+
     func connectGoogle(googleToken: String) async throws {
         let dto = try await userRepository.connectGoogle(googleToken: googleToken)
         try await updateToken(from: dto)
     }
-    
+
     func disconnectGoogle() async throws {
         let dto = try await userRepository.disconnectGoogle()
         try await updateToken(from: dto)
