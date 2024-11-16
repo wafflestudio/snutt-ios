@@ -56,7 +56,7 @@ struct SignUpView: View {
                     HStack {
                         AnimatedTextField(label: "이메일", placeholder: "서울대학교 메일 주소를 입력하세요", text: $email, keyboardType: .asciiCapable)
                         Text(domain)
-                            .font(STFont.detailLabel.font)
+                            .font(STFont.regular14.font)
                             .foregroundColor(.primary)
                             .alignmentGuide(VerticalAlignment.center) { _ in 0 }
                     }

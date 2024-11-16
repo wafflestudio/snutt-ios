@@ -87,9 +87,9 @@ class AuthRepository: AuthRepositoryProtocol {
     }
 
     func sendVerificationCode(email: String) async throws {
-        let _ = try await session
+        try await session
             .request(AuthRouter.sendVerificationCode(email: email))
-            .serializingString()
+            .serializingDecodable(SendVerificationCodeDto.self)
             .handlingError()
     }
 

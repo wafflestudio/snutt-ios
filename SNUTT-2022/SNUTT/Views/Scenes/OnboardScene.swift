@@ -37,7 +37,7 @@ struct OnboardScene: View {
                                     pushToLoginScene = true
                                 } label: {
                                     Text("로그인")
-                                        .font(.system(size: 15, weight: .bold))
+                                        .font(STFont.bold15.font)
                                         .foregroundColor(.white)
                                         .padding(.vertical, 12)
                                         .frame(maxWidth: .infinity)
@@ -52,7 +52,7 @@ struct OnboardScene: View {
                                     pushToSignUpScene = true
                                 } label: {
                                     Text("회원가입")
-                                        .font(.system(size: 14, weight: .semibold))
+                                        .font(STFont.semibold14.font)
                                         .foregroundColor(STColor.darkerGray)
                                 }
                             }
@@ -61,14 +61,14 @@ struct OnboardScene: View {
 
                             HStack(spacing: 10) {
                                 Rectangle()
-                                    .fill(STColor.gray20)
+                                    .fill(STColor.assistive)
                                     .frame(height: 1)
                                 Text("SNS 계정으로 계속하기")
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .foregroundColor(STColor.gray20)
+                                    .font(STFont.semibold14.font)
+                                    .foregroundColor(STColor.assistive)
                                     .fixedSize(horizontal: true, vertical: false)
                                 Rectangle()
-                                    .fill(STColor.gray20)
+                                    .fill(STColor.assistive)
                                     .frame(height: 1)
                             }
 
@@ -103,7 +103,7 @@ struct OnboardScene: View {
                                 pushToFeedbackView = true
                             } label: {
                                 Text("로그인/회원가입에 문제가 생겼나요?")
-                                    .font(.system(size: 14, weight: .semibold))
+                                    .font(STFont.semibold14.font)
                                     .foregroundStyle(STColor.gray2)
                             }
                         }

@@ -117,7 +117,7 @@ enum AuthRouter: Router {
         case let .getLinkedEmail(localId: localId):
             return ["user_id": localId]
         case let .sendVerificationCode(email: email):
-            return ["user_email": email]
+            return ["email": email]
         case let .checkVerificationCode(localId: localId, code: code):
             return ["user_id": localId, "code": code]
         case let .resetPassword(localId: localId, password: password):

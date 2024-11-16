@@ -9,33 +9,40 @@ import SwiftUI
 import UIKit
 
 struct STFont {
-    /// 시간표 이름 등의 제목 (17, Bold)
-    static let title: UIFont = .systemFont(ofSize: 17, weight: .bold)
+    static let bold17: UIFont = .systemFont(ofSize: 17, weight: .bold)
 
-    /// 비어있는 페이지에서의 제목 (16, Bold)
-    static let subtitle: UIFont = .systemFont(ofSize: 16, weight: .bold)
+    static let bold16: UIFont = .systemFont(ofSize: 16, weight: .bold)
+    
+    static let bold15: UIFont = .systemFont(ofSize: 15, weight: .bold)
+    static let semibold15: UIFont = .systemFont(ofSize: 15, weight: .semibold)
+    static let regular15: UIFont = .systemFont(ofSize: 15)
 
-    /// 강의명 등의 제목 (14, Bold)
-    static let subheading: UIFont = .systemFont(ofSize: 14, weight: .bold)
+    static let bold14: UIFont = .systemFont(ofSize: 14, weight: .bold)
+    static let semibold14: UIFont = .systemFont(ofSize: 14, weight: .semibold)
+    static let medium14: UIFont = .systemFont(ofSize: 14, weight: .medium)
+    static let regular14: UIFont = .systemFont(ofSize: 14)
+    
+    static let regular13: UIFont = .systemFont(ofSize: 13)
+    
+    static let regular12: UIFont = .systemFont(ofSize: 12)
 
-    /// 강의 상세 화면의 제목 (14, Regular)
-    static let detailLabel: UIFont = .systemFont(ofSize: 14, weight: .regular)
-
-    /// 시간표 블록의 강의명 (11, Regular)
-    static let lectureBlockTitle: UIFont = .systemFont(ofSize: 11, weight: .regular)
-
-    /// 시간표 블록의 강의 장소 (11, Bold)
-    static let lectureBlockPlace: UIFont = .systemFont(ofSize: 11, weight: .bold)
-
-    /// 상세 정보 (12, Regular)
-    static let details: UIFont = .systemFont(ofSize: 12, weight: .regular)
-
-    /// 상세 정보 (12, Semibold)
-    static let detailsSemibold: UIFont = .systemFont(ofSize: 12, weight: .semibold)
+    static let bold11: UIFont = .systemFont(ofSize: 11, weight: .bold)
+    static let regular11: UIFont = .systemFont(ofSize: 11)
 }
 
 extension UIFont {
     var font: Font {
         Font(self as CTFont)
+    }
+}
+
+extension Text {
+    /// `percentage` : 100 if 100%
+    func lineHeight(with font: UIFont, percentage: CGFloat) -> some View {
+        let roundedSpacing = ((font.pointSize * (percentage - 100) / 100) * 0.5)
+        return self
+            .font(font.font)
+            .lineSpacing(roundedSpacing.rounded(.up) + 1)
+            .padding(.vertical, roundedSpacing.rounded(.down))
     }
 }

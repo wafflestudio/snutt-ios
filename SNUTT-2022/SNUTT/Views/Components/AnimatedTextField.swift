@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct AnimatedTextField: View {
-    let label: String
+    let label: String?
     let placeholder: String
     @Binding var text: String
+    
     var keyboardType: UIKeyboardType = .default
 
     var shouldFocusOn: Bool = false
@@ -24,7 +25,11 @@ struct AnimatedTextField: View {
 
     @FocusState private var _isFocused: Bool
 
-    init(label: String, placeholder: String, text: Binding<String>, keyboardType: UIKeyboardType = .default, shouldFocusOn: Bool = false, secure: Bool = false, needsTimer: Bool = false, timeOut: Binding<Bool> = .constant(false), remainingTime: Int = 0, action: (() -> Void)? = nil) {
+    init(label: String? = nil, placeholder: String, text: Binding<String>,
+         keyboardType: UIKeyboardType = .default, shouldFocusOn: Bool = false,
+         secure: Bool = false, 
+         needsTimer: Bool = false, timeOut: Binding<Bool> = .constant(false), remainingTime: Int = 0,
+         action: (() -> Void)? = nil) {
         self.label = label
         self.placeholder = placeholder
         _text = text
@@ -38,59 +43,62 @@ struct AnimatedTextField: View {
     }
 
     var body: some View {
-        VStack {
-            Text(label)
-                .font(STFont.detailLabel.font)
-                .foregroundColor(Color(uiColor: .secondaryLabel))
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            HStack(spacing: 0) {
-                Group {
-                    if secure {
-                        SecureField(placeholder, text: $text)
-                    } else {
-                        TextField(placeholder, text: $text)
-                    }
-                }
-                .focused($_isFocused)
-                .keyboardType(keyboardType)
-                .textInputAutocapitalization(.never)
-                .disableAutocorrection(true)
-                .font(STFont.detailLabel.font)
-                .frame(height: 20)
-
-                // TextField with Timer
-                if needsTimer {
-                    Spacer().frame(width: 4)
-
+        VStack(spacing: 12) {
+            if let label = label {
+                Text(label)
+                    .font(STFont.regular14.font)
+                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 0) {
                     Group {
-                        if timeOut {
-                            Button {
-                                action?()
-                            } label: {
-                                Text("다시 요청")
-                                    .foregroundColor(STColor.cyan)
-                            }
+                        if secure {
+                            SecureField(placeholder, text: $text)
                         } else {
-                            Text(Calendar.current.date(byAdding: .second, value: remainingTime + 1, to: Date()) ?? Date(), style: .timer)
-                                .foregroundColor(STColor.red)
+                            TextField("", text: $text, prompt: Text(placeholder).foregroundColor(STColor.assistive))
                         }
                     }
-                    .font(STFont.subheading.font)
-                    .padding(.horizontal, 16)
+                    .focused($_isFocused)
+                    .keyboardType(keyboardType)
+                    .textInputAutocapitalization(.never)
+                    .disableAutocorrection(true)
+                    .font(STFont.regular15.font)
+
+                    // TextField with Timer
+                    if needsTimer {
+                        Spacer().frame(width: 4)
+
+                        Group {
+                            if timeOut {
+                                Button {
+                                    action?()
+                                } label: {
+                                    Text("다시 요청")
+                                        .foregroundColor(STColor.cyan)
+                                }
+                            } else {
+                                Text(Calendar.current.date(byAdding: .second, value: remainingTime + 1, to: Date()) ?? Date(), style: .timer)
+                                    .foregroundColor(STColor.red)
+                            }
+                        }
+                        .font(STFont.semibold15.font)
+                        .padding(.horizontal, 10)
+                    }
                 }
-            }
+                
+                ZStack(alignment: .leading) {
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(Color(uiColor: .quaternaryLabel))
 
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .frame(height: 1)
-                    .foregroundColor(Color(uiColor: .quaternaryLabel))
-
-                Rectangle()
-                    .frame(maxWidth: text.isEmpty ? 0 : .infinity, alignment: .leading)
-                    .frame(height: 1)
-                    .foregroundColor(STColor.cyan)
-                    .animation(.customSpring, value: text.isEmpty)
+                    Rectangle()
+                        .frame(maxWidth: text.isEmpty ? 0 : .infinity, alignment: .leading)
+                        .frame(height: 1)
+                        .foregroundColor(STColor.cyan)
+                        .animation(.customSpring, value: text.isEmpty)
+                }
             }
         }
         .onTapGesture(perform: {

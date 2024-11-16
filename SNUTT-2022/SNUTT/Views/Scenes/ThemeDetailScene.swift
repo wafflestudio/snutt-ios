@@ -137,7 +137,7 @@ struct ThemeDetailScene: View {
                                             ColorPicker("배경색", selection: $theme.colors[index].bg, supportsOpacity: false)
                                         }
                                         .foregroundColor(STColor.disabled)
-                                        .font(STFont.detailLabel.font)
+                                        .font(STFont.regular14.font)
                                     }
                                     .padding(.leading, 80)
                                     .padding(.trailing, 20)
@@ -160,7 +160,7 @@ struct ThemeDetailScene: View {
                         openPickerIndex = theme.colors.count - 1
                     } label: {
                         Text("+ 색상 추가")
-                            .font(.system(size: 14))
+                            .font(STFont.regular14.font)
                             .foregroundColor(STColor.disabled)
                             .animation(.customSpring, value: theme.colors.count)
                     }

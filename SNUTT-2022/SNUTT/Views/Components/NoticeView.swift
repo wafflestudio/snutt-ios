@@ -20,11 +20,11 @@ struct NoticeView: View {
             VStack(spacing: 8) {
                 if let title = title {
                     Text(title)
-                        .font(STFont.title.font)
+                        .font(STFont.bold17.font)
                 }
                 if let content = content {
                     Text(content)
-                        .font(STFont.detailLabel.font)
+                        .font(STFont.regular14.font)
                         .multilineTextAlignment(.center)
                 }
                 Spacer().frame(height: 4)
@@ -33,7 +33,7 @@ struct NoticeView: View {
                 } label: {
                     Text("문의사항 보내기")
                         .foregroundColor(.white)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(STFont.semibold14.font)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
                         .background(
