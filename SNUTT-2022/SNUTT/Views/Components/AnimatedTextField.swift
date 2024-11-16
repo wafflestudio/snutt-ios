@@ -12,34 +12,39 @@ struct AnimatedTextField: View {
     let placeholder: String
     @Binding var text: String
     
-    var keyboardType: UIKeyboardType = .default
+    let keyboardType: UIKeyboardType
 
-    var shouldFocusOn: Bool = false
-    var secure: Bool = false
+    let shouldFocusOn: Bool
+    let secure: Bool
+    let disabled: Bool
 
     // TextField with Timer
-    var needsTimer: Bool = false
+    let needsTimer: Bool
+    let canRestart: Bool
     @Binding var timeOut: Bool
-    var remainingTime: Int = 0
-    var action: (() -> Void)?
+    @Binding var remainingTime: Int
+    let restart: (() -> Void)?
 
     @FocusState private var _isFocused: Bool
 
     init(label: String? = nil, placeholder: String, text: Binding<String>,
          keyboardType: UIKeyboardType = .default, shouldFocusOn: Bool = false,
-         secure: Bool = false, 
-         needsTimer: Bool = false, timeOut: Binding<Bool> = .constant(false), remainingTime: Int = 0,
-         action: (() -> Void)? = nil) {
+         secure: Bool = false, disabled: Bool = false,
+         needsTimer: Bool = false, canRestart: Bool = false, timeOut: Binding<Bool> = .constant(false),
+         remainingTime: Binding<Int> = .constant(0),
+         restart: (() -> Void)? = nil) {
         self.label = label
         self.placeholder = placeholder
-        _text = text
         self.keyboardType = keyboardType
         self.shouldFocusOn = shouldFocusOn
         self.secure = secure
         self.needsTimer = needsTimer
+        self.canRestart = canRestart
+        self.restart = restart
+        _text = text
+        self.disabled = disabled
         _timeOut = timeOut
-        self.action = action
-        self.remainingTime = remainingTime
+        _remainingTime = remainingTime
     }
 
     var body: some View {
@@ -58,29 +63,30 @@ struct AnimatedTextField: View {
                             SecureField(placeholder, text: $text)
                         } else {
                             TextField("", text: $text, prompt: Text(placeholder).foregroundColor(STColor.assistive))
+                                .foregroundStyle(disabled ? STColor.assistive : .primary)
+                                .disabled(disabled)
                         }
                     }
                     .focused($_isFocused)
                     .keyboardType(keyboardType)
                     .textInputAutocapitalization(.never)
-                    .disableAutocorrection(true)
+                    .autocorrectionDisabled()
                     .font(STFont.regular15.font)
 
                     // TextField with Timer
                     if needsTimer {
                         Spacer().frame(width: 4)
-
                         Group {
-                            if timeOut {
+                            if !timeOut {
+                                Text(Calendar.current.date(byAdding: .second, value: remainingTime + 1, to: Date()) ?? Date(), style: .timer)
+                                    .foregroundColor(STColor.red)
+                            } else if canRestart {
                                 Button {
-                                    action?()
+                                    restart?()
                                 } label: {
                                     Text("다시 요청")
                                         .foregroundColor(STColor.cyan)
                                 }
-                            } else {
-                                Text(Calendar.current.date(byAdding: .second, value: remainingTime + 1, to: Date()) ?? Date(), style: .timer)
-                                    .foregroundColor(STColor.red)
                             }
                         }
                         .font(STFont.semibold15.font)
@@ -94,21 +100,23 @@ struct AnimatedTextField: View {
                         .foregroundColor(Color(uiColor: .quaternaryLabel))
 
                     Rectangle()
-                        .frame(maxWidth: text.isEmpty ? 0 : .infinity, alignment: .leading)
+                        .frame(maxWidth: _isFocused ? .infinity : 0, alignment: .leading)
                         .frame(height: 1)
                         .foregroundColor(STColor.cyan)
-                        .animation(.customSpring, value: text.isEmpty)
+                        .animation(.customSpring, value: _isFocused)
                 }
             }
         }
-        .onTapGesture(perform: {
+        .onTapGesture {
             _isFocused = true
-        })
+        }
         .onAppear {
             _isFocused = shouldFocusOn
+            print("onAppear \(label): \(shouldFocusOn)")
         }
         .onChange(of: shouldFocusOn) { newValue in
             _isFocused = newValue
+            print("onChange \(label): \(newValue)")
         }
     }
 }

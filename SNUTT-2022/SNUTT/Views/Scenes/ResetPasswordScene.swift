@@ -13,6 +13,7 @@ struct ResetPasswordScene: View {
     @State private var localId: String = ""
     @State private var email: String = ""
     @State private var maskedEmail: String?
+    @State private var verificationCode: String = ""
     @State private var pushToVerificationView: Bool = false
     @State private var pushToNewPasswordView: Bool = false
     
@@ -41,12 +42,18 @@ struct ResetPasswordScene: View {
                 Text(titleLabel)
                     .lineHeight(with: STFont.bold17, percentage: 145)
 
-                // TODO: maskedEmail 이후로 disable
-                AnimatedTextField(label: "아이디", placeholder: "아이디를 입력하세요", text: $localId, shouldFocusOn: true)
+                AnimatedTextField(label: "아이디",
+                                  placeholder: "아이디를 입력하세요",
+                                  text: $localId,
+                                  shouldFocusOn: !didSubmitId,
+                                  disabled: didSubmitId)
                 
                 if let maskedEmail = maskedEmail {
                     VStack(alignment: .leading, spacing: 12) {
-                        AnimatedTextField(label: "이메일", placeholder: "전체 주소를 입력하세요", text: $email)
+                        AnimatedTextField(label: "이메일",
+                                          placeholder: "전체 주소를 입력하세요",
+                                          text: $email,
+                                          shouldFocusOn: didSubmitId)
                         Text(maskedEmail)
                             .font(STFont.regular15.font)
                             .foregroundStyle(STColor.alternative)
@@ -88,7 +95,7 @@ struct ResetPasswordScene: View {
         }
         .navigationTitle(pushToNewPasswordView
                          ? "처음으로"
-                         : (pushToVerificationView ? "로그인" : "비밀번호 재설정"))
+                         : (pushToVerificationView ? "이메일 입력" : "비밀번호 재설정"))
         .navigationBarTitleDisplayMode(.inline)
         .padding(.top, 44)
         .padding(.horizontal, 20)
@@ -99,13 +106,14 @@ struct ResetPasswordScene: View {
                                          sendVerificationCode: { _ in
                                              await viewModel.sendVerificationCode(to: email)
                                          }, checkVerificationCode: { code in
+                                             verificationCode = code
                                              pushToNewPasswordView = await viewModel.checkVerificationCode(localId: localId, code: code)
                                          }),
                     isActive: $pushToVerificationView) { EmptyView() }
 
                 NavigationLink(destination:
                                 EnterNewPasswordView(returnToEmailVerification: $pushToVerificationView) { password in
-                        await viewModel.resetPassword(localId: localId, to: password)
+                    await viewModel.resetPassword(localId: localId, to: password, code: verificationCode)
                     },
                     isActive: $pushToNewPasswordView) { EmptyView() }
             }
@@ -144,9 +152,9 @@ extension ResetPasswordScene {
             }
         }
 
-        func resetPassword(localId: String, to password: String) async -> Bool {
+        func resetPassword(localId: String, to password: String, code: String) async -> Bool {
             do {
-                try await services.authService.resetPassword(localId: localId, password: password)
+                try await services.authService.resetPassword(localId: localId, password: password, code: code)
                 return true
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)

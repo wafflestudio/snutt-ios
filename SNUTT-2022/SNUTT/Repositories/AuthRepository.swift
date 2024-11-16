@@ -19,7 +19,7 @@ protocol AuthRepositoryProtocol {
     func getLinkedEmail(localId: String) async throws -> LinkedEmailDto
     func sendVerificationCode(email: String) async throws
     func checkVerificationCode(localId: String, code: String) async throws
-    func resetPassword(localId: String, password: String) async throws
+    func resetPassword(localId: String, password: String, code: String) async throws
     func logout(userId: String, fcmToken: String) async throws -> LogoutResponseDto
 }
 
@@ -100,9 +100,9 @@ class AuthRepository: AuthRepositoryProtocol {
             .handlingError()
     }
 
-    func resetPassword(localId: String, password: String) async throws {
+    func resetPassword(localId: String, password: String, code: String) async throws {
         let _ = try await session
-            .request(AuthRouter.resetPassword(localId: localId, password: password))
+            .request(AuthRouter.resetPassword(localId: localId, password: password, code: code))
             .serializingString()
             .handlingError()
     }
