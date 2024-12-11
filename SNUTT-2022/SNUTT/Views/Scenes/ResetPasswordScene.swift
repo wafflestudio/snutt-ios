@@ -12,7 +12,7 @@ struct ResetPasswordScene: View {
 
     @State private var localId: String = ""
     @State private var email: String = ""
-    @State private var maskedEmail: String?
+    @State private var maskedEmail: String = ""
     @State private var verificationCode: String = ""
     @State private var returnToLogin: Bool = false
     @State private var pushToVerificationView: Bool = false
@@ -49,7 +49,7 @@ struct ResetPasswordScene: View {
                                   shouldFocusOn: current == .enterId,
                                   disabled: current == .enterEmail)
 
-                if let maskedEmail = maskedEmail {
+                if current == .enterEmail {
                     VStack(alignment: .leading, spacing: 12) {
                         AnimatedTextField(label: "이메일",
                                           placeholder: "전체 주소를 입력하세요",
@@ -74,19 +74,21 @@ struct ResetPasswordScene: View {
                             current = .verifyEmail
                         } else {
                             if let email = await viewModel.getLinkedEmail(localId: localId) {
-                                maskedEmail = email
                                 changeTitle = true
                                 resignFirstResponder()
-                                current = .enterEmail
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    maskedEmail = email
+                                    current = .enterEmail
+                                }
                             }
                         }
                     }
                 }
 
-                if let _ = maskedEmail {
+                if current == .enterEmail {
                     Button {
                         changeTitle = false
-                        maskedEmail = nil
+                        current = .enterId
                     } label: {
                         Text("나의 이메일 주소가 아닌가요?")
                             .foregroundStyle(STColor.assistive)
