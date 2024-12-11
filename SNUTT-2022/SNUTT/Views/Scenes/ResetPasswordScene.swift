@@ -17,24 +17,24 @@ struct ResetPasswordScene: View {
     @State private var returnToLogin: Bool = false
     @State private var pushToVerificationView: Bool = false
     @State private var pushToNewPasswordView: Bool = false
-    
+
     @State private var current: Step = .enterId
-    
+
     @Binding var showResetPasswordScene: Bool
     @Binding var changeTitle: Bool
-    
+
     @Environment(\.dismiss) private var dismiss
-    
+
     private var titleLabel: String {
         current == .enterEmail
-             ? "해당 아이디로 연동된 이메일입니다.\n전체 주소를 입력하여 인증코드를 받으세요."
-             : "비밀번호 재설정을 위해\n연동된 아이디가 필요합니다."
+            ? "해당 아이디로 연동된 이메일입니다.\n전체 주소를 입력하여 인증코드를 받으세요."
+            : "비밀번호 재설정을 위해\n연동된 아이디가 필요합니다."
     }
-    
+
     private var buttonLabel: String {
         current == .enterEmail
-             ? "인증코드 받기"
-             : "확인"
+            ? "인증코드 받기"
+            : "확인"
     }
 
     var body: some View {
@@ -48,7 +48,7 @@ struct ResetPasswordScene: View {
                                   text: $localId,
                                   shouldFocusOn: current == .enterId,
                                   disabled: current == .enterEmail)
-                
+
                 if let maskedEmail = maskedEmail {
                     VStack(alignment: .leading, spacing: 12) {
                         AnimatedTextField(label: "이메일",
@@ -66,7 +66,8 @@ struct ResetPasswordScene: View {
                 RoundedRectButton(label: buttonLabel,
                                   tracking: current == .enterEmail ? 0 : 1.6,
                                   type: .max,
-                                  disabled: current == .enterId ? localId.isEmpty : email.isEmpty) {
+                                  disabled: current == .enterId ? localId.isEmpty : email.isEmpty)
+                {
                     Task {
                         if current == .enterEmail, await viewModel.sendVerificationCode(to: email) {
                             pushToVerificationView = true
@@ -81,7 +82,7 @@ struct ResetPasswordScene: View {
                         }
                     }
                 }
-                
+
                 if let _ = maskedEmail {
                     Button {
                         changeTitle = false
@@ -110,7 +111,7 @@ struct ResetPasswordScene: View {
         .background(
             Group {
                 NavigationLink(destination:
-                                VerificationCodeView(mode: .resetPassword, email: email,
+                    VerificationCodeView(mode: .resetPassword, email: email,
                                          sendVerificationCode: { _ in
                                              await viewModel.sendVerificationCode(to: email)
                                          }, checkVerificationCode: { code in
@@ -122,8 +123,8 @@ struct ResetPasswordScene: View {
                                          }),
                     isActive: $pushToVerificationView) { EmptyView() }
                 NavigationLink(destination:
-                                EnterNewPasswordView(returnToEmailVerification: $pushToVerificationView, returnToLogin: $returnToLogin) { password in
-                    await viewModel.resetPassword(localId: localId, to: password, code: verificationCode)
+                    EnterNewPasswordView(returnToEmailVerification: $pushToVerificationView, returnToLogin: $returnToLogin) { password in
+                        await viewModel.resetPassword(localId: localId, to: password, code: verificationCode)
                     },
                     isActive: $pushToNewPasswordView) { EmptyView() }
             }
@@ -137,7 +138,7 @@ extension ResetPasswordScene {
         case enterEmail
         case verifyEmail
         case enterNewPassword
-        
+
         var navigationTitle: String {
             switch self {
             case .enterId, .enterEmail: "비밀번호 재설정"

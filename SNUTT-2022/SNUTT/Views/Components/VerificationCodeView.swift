@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct VerificationCodeView: View {
-    
     @State private var verificationCode: String = ""
     @State private var showHelpAlert: Bool = false
-    
+
     @State private var restartTimer: Bool = false
     @State private var timeOut: Bool = false
     @State private var remainingTime: Int = 0

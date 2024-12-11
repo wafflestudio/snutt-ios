@@ -41,10 +41,10 @@ struct STColor {
 
     /// Hex #505050
     static let darkerGray: Color = .init(hex: "#505050")
-    
+
     /// Hex #EBEBED
     static let neutral95: Color = .init(hex: "#EBEBED")
-    
+
     /// Hex #8A898E
     static let alternative: Color = .init(hex: "#8A898E")
 

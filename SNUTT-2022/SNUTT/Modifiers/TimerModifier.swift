@@ -9,7 +9,6 @@ import Combine
 import SwiftUI
 
 struct TimerModifier: ViewModifier {
-    
     /// Time limitation for timer. 180 seconds by default.
     var initialTime: Int = 180
     @Binding var timeOut: Bool
@@ -18,7 +17,7 @@ struct TimerModifier: ViewModifier {
 
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common)
     @State private var currentTimer: Cancellable?
-    
+
     func body(content: Content) -> some View {
         content
             .onReceive(timer) { _ in
@@ -39,7 +38,7 @@ struct TimerModifier: ViewModifier {
                 }
             }
     }
-    
+
     private func startTimer() {
         timeOut = false
         remainingTime = initialTime

@@ -11,7 +11,7 @@ struct AnimatedTextField: View {
     let label: String?
     let placeholder: String
     @Binding var text: String
-    
+
     let keyboardType: UIKeyboardType
 
     let shouldFocusOn: Bool
@@ -32,7 +32,8 @@ struct AnimatedTextField: View {
          secure: Bool = false, disabled: Bool = false,
          needsTimer: Bool = false, canRestart: Bool = false, timeOut: Binding<Bool> = .constant(false),
          remainingTime: Binding<Int> = .constant(0),
-         restart: (() -> Void)? = nil) {
+         restart: (() -> Void)? = nil)
+    {
         self.label = label
         self.placeholder = placeholder
         self.keyboardType = keyboardType
@@ -55,7 +56,7 @@ struct AnimatedTextField: View {
                     .foregroundColor(Color(uiColor: .secondaryLabel))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            
+
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 0) {
                     Group {
@@ -93,7 +94,7 @@ struct AnimatedTextField: View {
                         .padding(.horizontal, 10)
                     }
                 }
-                
+
                 ZStack(alignment: .leading) {
                     Rectangle()
                         .frame(height: 1)

@@ -8,29 +8,28 @@
 import SwiftUI
 
 struct EnterNewPasswordView: View {
-    
     @Binding var returnToEmailVerification: Bool
     @Binding var returnToLogin: Bool
-    
+
     /// new -> success
     let resetPassword: (String) async -> Bool
     let initialTime = 180
-    
+
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
-    
+
     @State private var showErrorAlert: Bool = false
     @State private var errorState: ErrorState = .none
-    
+
     @State private var timeOut: Bool = false
     @State private var remainingTime: Int = 0
-    
+
     @Environment(\.dismiss) private var dismiss
-    
+
     var disableButton: Bool {
         password.isEmpty || confirmPassword.isEmpty
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 48) {
             VStack(alignment: .leading, spacing: 40) {
@@ -45,7 +44,8 @@ struct EnterNewPasswordView: View {
             RoundedRectButton(label: "확인",
                               tracking: 1.6,
                               type: .max,
-                              disabled: disableButton) {
+                              disabled: disableButton)
+            {
                 Task {
                     if password != confirmPassword {
                         errorState = .passwordNotEqual
@@ -110,7 +110,7 @@ extension EnterNewPasswordView {
         case passwordNotValid
         case backGesture
         case none
-        
+
         var message: String {
             switch self {
             case .passwordNotEqual: "비밀번호가 일치하지 않습니다.\n다시 시도해주세요."

@@ -11,10 +11,10 @@ struct RoundedRectButton: View {
     let label: String
     var tracking: CGFloat = 0
     let type: ButtonType
-    
+
     let disabled: Bool
     let action: () -> Void
-    
+
     var body: some View {
         Button {
             action()
@@ -39,18 +39,18 @@ extension RoundedRectButton {
     enum ButtonType {
         case max
         case medium
-        
+
         var cornerRadius: CGFloat {
             return 6
         }
-        
+
         var font: Font {
             switch self {
             case .max: STFont.bold16.font
             case .medium: STFont.bold15.font
             }
         }
-        
+
         var verticalPadding: CGFloat {
             switch self {
             case .max: 14
