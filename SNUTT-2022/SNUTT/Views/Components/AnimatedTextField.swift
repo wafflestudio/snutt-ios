@@ -112,11 +112,9 @@ struct AnimatedTextField: View {
         }
         .onAppear {
             _isFocused = shouldFocusOn
-            print("onAppear \(label): \(shouldFocusOn)")
         }
         .onChange(of: shouldFocusOn) { newValue in
             _isFocused = newValue
-            print("onChange \(label): \(newValue)")
         }
     }
 }

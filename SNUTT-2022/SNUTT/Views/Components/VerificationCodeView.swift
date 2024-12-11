@@ -5,7 +5,6 @@
 //  Created by 최유림 on 2022/12/17.
 //
 
-import Combine
 import SwiftUI
 
 struct VerificationCodeView: View {
@@ -49,12 +48,14 @@ struct VerificationCodeView: View {
                         await checkVerificationCode(verificationCode)
                     }
                 }
-                Button {
-                    showHelpAlert = true
-                } label: {
-                    Text("인증번호가 오지 않나요?")
-                        .foregroundStyle(STColor.assistive)
-                        .font(STFont.medium14.font)
+                if mode == .resetPassword {
+                    Button {
+                        showHelpAlert = true
+                    } label: {
+                        Text("인증번호가 오지 않나요?")
+                            .foregroundStyle(STColor.assistive)
+                            .font(STFont.medium14.font)
+                    }
                 }
             }
             Spacer()

@@ -14,24 +14,25 @@ struct ResetPasswordScene: View {
     @State private var email: String = ""
     @State private var maskedEmail: String?
     @State private var verificationCode: String = ""
+    @State private var returnToLogin: Bool = false
     @State private var pushToVerificationView: Bool = false
     @State private var pushToNewPasswordView: Bool = false
+    
+    @State private var current: Step = .enterId
     
     @Binding var showResetPasswordScene: Bool
     @Binding var changeTitle: Bool
     
-    private var didSubmitId: Bool {
-        maskedEmail != nil
-    }
+    @Environment(\.dismiss) private var dismiss
     
     private var titleLabel: String {
-        didSubmitId
+        current == .enterEmail
              ? "해당 아이디로 연동된 이메일입니다.\n전체 주소를 입력하여 인증코드를 받으세요."
              : "비밀번호 재설정을 위해\n연동된 아이디가 필요합니다."
     }
     
     private var buttonLabel: String {
-        didSubmitId
+        current == .enterEmail
              ? "인증코드 받기"
              : "확인"
     }
@@ -45,15 +46,15 @@ struct ResetPasswordScene: View {
                 AnimatedTextField(label: "아이디",
                                   placeholder: "아이디를 입력하세요",
                                   text: $localId,
-                                  shouldFocusOn: !didSubmitId,
-                                  disabled: didSubmitId)
+                                  shouldFocusOn: current == .enterId,
+                                  disabled: current == .enterEmail)
                 
                 if let maskedEmail = maskedEmail {
                     VStack(alignment: .leading, spacing: 12) {
                         AnimatedTextField(label: "이메일",
                                           placeholder: "전체 주소를 입력하세요",
                                           text: $email,
-                                          shouldFocusOn: didSubmitId)
+                                          shouldFocusOn: current == .enterEmail)
                         Text(maskedEmail)
                             .font(STFont.regular15.font)
                             .foregroundStyle(STColor.alternative)
@@ -63,17 +64,19 @@ struct ResetPasswordScene: View {
             Spacer().frame(height: 48)
             VStack(spacing: 20) {
                 RoundedRectButton(label: buttonLabel,
-                                  tracking: didSubmitId ? 0 : 1.6,
+                                  tracking: current == .enterEmail ? 0 : 1.6,
                                   type: .max,
-                                  disabled: didSubmitId ? email.isEmpty : localId.isEmpty) {
+                                  disabled: current == .enterId ? localId.isEmpty : email.isEmpty) {
                     Task {
-                        if didSubmitId, await viewModel.sendVerificationCode(to: email) {
+                        if current == .enterEmail, await viewModel.sendVerificationCode(to: email) {
                             pushToVerificationView = true
+                            current = .verifyEmail
                         } else {
                             if let email = await viewModel.getLinkedEmail(localId: localId) {
                                 maskedEmail = email
                                 changeTitle = true
                                 resignFirstResponder()
+                                current = .enterEmail
                             }
                         }
                     }
@@ -90,34 +93,58 @@ struct ResetPasswordScene: View {
                     }
                 }
             }
-
             Spacer()
         }
-        .navigationTitle(pushToNewPasswordView
-                         ? "처음으로"
-                         : (pushToVerificationView ? "이메일 입력" : "비밀번호 재설정"))
+        .navigationTitle(current.navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .padding(.top, 44)
         .padding(.horizontal, 20)
+        .onChange(of: returnToLogin) { returnToLogin in
+            if returnToLogin {
+                dismiss()
+            }
+        }
+        .onAppear {
+            current = .enterId
+        }
         .background(
             Group {
                 NavigationLink(destination:
-                    VerificationCodeView(mode: .resetPassword, email: email,
+                                VerificationCodeView(mode: .resetPassword, email: email,
                                          sendVerificationCode: { _ in
                                              await viewModel.sendVerificationCode(to: email)
                                          }, checkVerificationCode: { code in
                                              verificationCode = code
                                              pushToNewPasswordView = await viewModel.checkVerificationCode(localId: localId, code: code)
+                                             if pushToNewPasswordView {
+                                                 current = .enterNewPassword
+                                             }
                                          }),
                     isActive: $pushToVerificationView) { EmptyView() }
-
                 NavigationLink(destination:
-                                EnterNewPasswordView(returnToEmailVerification: $pushToVerificationView) { password in
+                                EnterNewPasswordView(returnToEmailVerification: $pushToVerificationView, returnToLogin: $returnToLogin) { password in
                     await viewModel.resetPassword(localId: localId, to: password, code: verificationCode)
                     },
                     isActive: $pushToNewPasswordView) { EmptyView() }
             }
         )
+    }
+}
+
+extension ResetPasswordScene {
+    private enum Step {
+        case enterId
+        case enterEmail
+        case verifyEmail
+        case enterNewPassword
+        
+        var navigationTitle: String {
+            switch self {
+            case .enterId, .enterEmail: "비밀번호 재설정"
+            case .verifyEmail: "이메일 입력"
+            case .enterNewPassword: "아이디 입력"
+            }
+        }
     }
 }
 
