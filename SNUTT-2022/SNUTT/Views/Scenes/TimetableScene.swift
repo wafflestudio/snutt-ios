@@ -40,7 +40,7 @@ struct TimetableScene: View, Sendable {
                         Text("(\(viewModel.totalCredit)학점)")
                             .font(STFont.regular12.font)
                             .foregroundColor(Color(UIColor.secondaryLabel))
-                      
+
                         Spacer()
                     }
 
