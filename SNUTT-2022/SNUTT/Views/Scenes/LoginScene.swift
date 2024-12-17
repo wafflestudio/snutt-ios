@@ -77,8 +77,13 @@ struct LoginScene: View {
                     FindLocalIdView(sendEmail: viewModel.findLocalId(with:)),
                     isActive: $pushToFindLocalIdView) { EmptyView() }
 
-                NavigationLink(destination: ResetPasswordScene(viewModel: .init(container: viewModel.container), showResetPasswordScene: $pushToResetPasswordScene, changeTitle: $changeTitle),
-                               isActive: $pushToResetPasswordScene) { EmptyView() }
+                NavigationLink(destination: ResetPasswordScene(viewModel: .init(container: viewModel.container),
+                                                               returnToLogin: $pushToResetPasswordScene,
+                                                               changeTitle: $changeTitle)
+                               ,
+                               isActive: $pushToResetPasswordScene) {
+                    EmptyView()
+                }
             }
         )
     }

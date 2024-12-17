@@ -14,15 +14,14 @@ struct ResetPasswordScene: View {
     @State private var email: String = ""
     @State private var maskedEmail: String = ""
     @State private var verificationCode: String = ""
-    @State private var returnToLogin: Bool = false
-    @State private var pushToVerificationView: Bool = false
-    @State private var pushToNewPasswordView: Bool = false
-
+    
     @State private var current: Step = .enterId
-
     @State private var isLoading: Bool = false
 
-    @Binding var showResetPasswordScene: Bool
+    @State private var pushToVerificationView: Bool = false
+    @State private var pushToNewPasswordView: Bool = false
+    
+    @Binding var returnToLogin: Bool
     @Binding var changeTitle: Bool
 
     @Environment(\.dismiss) private var dismiss
@@ -106,13 +105,9 @@ struct ResetPasswordScene: View {
         .navigationBarTitleDisplayMode(.inline)
         .padding(.top, 44)
         .padding(.horizontal, 20)
-        .onChange(of: returnToLogin) { returnToLogin in
-            if returnToLogin {
-                dismiss()
-            }
-        }
         .onAppear {
             current = .enterId
+            changeTitle = false
         }
         .background(
             Group {
@@ -129,10 +124,12 @@ struct ResetPasswordScene: View {
                                          }),
                     isActive: $pushToVerificationView) { EmptyView() }
                 NavigationLink(destination:
-                    EnterNewPasswordView(returnToEmailVerification: $pushToVerificationView, returnToLogin: $returnToLogin) { password in
+                                EnterNewPasswordView(returnToEmailVerification: $pushToVerificationView, showCurrentView: $returnToLogin) { password in
                         await viewModel.resetPassword(localId: localId, to: password, code: verificationCode)
                     },
-                    isActive: $pushToNewPasswordView) { EmptyView() }
+                               isActive: $pushToNewPasswordView) {
+                    EmptyView()
+                }
             }
         )
     }
@@ -202,7 +199,7 @@ extension ResetPasswordScene {
     struct FindPasswordView_Previews: PreviewProvider {
         static var previews: some View {
             NavigationView {
-                ResetPasswordScene(viewModel: .init(container: .preview), showResetPasswordScene: .constant(true), changeTitle: .constant(false))
+                ResetPasswordScene(viewModel: .init(container: .preview), returnToLogin: .constant(true), changeTitle: .constant(false))
             }
         }
     }

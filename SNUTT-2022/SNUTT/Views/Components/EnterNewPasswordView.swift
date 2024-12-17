@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EnterNewPasswordView: View {
     @Binding var returnToEmailVerification: Bool
-    @Binding var returnToLogin: Bool
+    @Binding var showCurrentView: Bool
 
     /// new -> success
     let resetPassword: (String) async -> Bool
@@ -83,8 +83,9 @@ struct EnterNewPasswordView: View {
         .padding(.horizontal, 20)
         .alert("", isPresented: $showErrorAlert) {
             Button("확인") {
-                if errorState == .none || errorState == .backGesture {
-                    returnToLogin = true
+                if errorState == .none {
+                    showCurrentView = false
+                } else if errorState == .backGesture {
                     dismiss()
                 }
             }
