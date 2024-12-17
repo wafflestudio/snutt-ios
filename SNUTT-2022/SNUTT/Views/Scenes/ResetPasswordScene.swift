@@ -19,6 +19,8 @@ struct ResetPasswordScene: View {
     @State private var pushToNewPasswordView: Bool = false
 
     @State private var current: Step = .enterId
+    
+    @State private var isLoading: Bool = false
 
     @Binding var showResetPasswordScene: Bool
     @Binding var changeTitle: Bool
@@ -68,6 +70,7 @@ struct ResetPasswordScene: View {
                                   type: .max,
                                   disabled: current == .enterId ? localId.isEmpty : email.isEmpty)
                 {
+                    isLoading = true
                     Task {
                         if current == .enterEmail, await viewModel.sendVerificationCode(to: email) {
                             pushToVerificationView = true
@@ -82,8 +85,9 @@ struct ResetPasswordScene: View {
                                 }
                             }
                         }
+                        isLoading = false
                     }
-                }
+                }.disabled(isLoading)
 
                 if current == .enterEmail {
                     Button {
