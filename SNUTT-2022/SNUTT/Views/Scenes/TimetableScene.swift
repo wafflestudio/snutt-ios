@@ -30,20 +30,20 @@ struct TimetableScene: View, Sendable {
                         viewModel.setIsMenuOpen(true)
                     }
                     .circleBadge(condition: viewModel.isNewCourseBookAvailable)
-                
+
                     HStack(spacing: 8) {
                         Text(viewModel.timetableTitle)
                             .font(STFont.title.font)
                             .minimumScaleFactor(0.9)
                             .lineLimit(1)
-                        
+
                         Text("(\(viewModel.totalCredit)학점)")
                             .font(STFont.details.font)
                             .foregroundColor(Color(UIColor.secondaryLabel))
-                        
+
                         Spacer()
                     }
-                    
+
                     HStack(spacing: 6) {
                         NavBarButton(imageName: "nav.list") {
                             pushToListScene = true
@@ -63,10 +63,10 @@ struct TimetableScene: View, Sendable {
                 .frame(height: toolBarHeight)
                 .padding(.leading, 16)
                 .padding(.trailing, 12)
-                
+
                 Rectangle().frame(height: 0.5)
                     .foregroundStyle(STColor.divider)
-                
+
                 if viewModel.isVacancyBannerVisible {
                     VacancyBanner {
                         viewModel.goToVacancyPage()
