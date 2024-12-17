@@ -24,36 +24,27 @@ struct TimetableScene: View, Sendable {
     var body: some View {
         GeometryReader { proxy in
             VStack(spacing: 0) {
-                if viewModel.isVacancyBannerVisible {
-                    VacancyBanner {
-                        viewModel.goToVacancyPage()
+                // toolbar
+                HStack(spacing: 12) {
+                    NavBarButton(imageName: "nav.menu") {
+                        viewModel.setIsMenuOpen(true)
                     }
-                    .transition(.move(edge: .trailing))
-                }
-                timetable
-            }
-            .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
-            .toolbar {
-                ToolbarItemGroup(placement: .principal) {
-                    HStack {
-                        NavBarButton(imageName: "nav.menu") {
-                            viewModel.setIsMenuOpen(true)
-                        }
-                        .circleBadge(condition: viewModel.isNewCourseBookAvailable)
+                    .circleBadge(condition: viewModel.isNewCourseBookAvailable)
 
-                        HStack(spacing: 8) {
-                            Text(viewModel.timetableTitle)
-                                .font(STFont.bold17.font)
-                                .minimumScaleFactor(0.9)
-                                .lineLimit(1)
+                    HStack(spacing: 8) {
+                        Text(viewModel.timetableTitle)
+                            .font(STFont.bold17.font)
+                            .minimumScaleFactor(0.9)
+                            .lineLimit(1)
 
-                            Text("(\(viewModel.totalCredit)학점)")
-                                .font(STFont.regular12.font)
-                                .foregroundColor(Color(UIColor.secondaryLabel))
-                        }
-
+                        Text("(\(viewModel.totalCredit)학점)")
+                            .font(STFont.regular12.font)
+                            .foregroundColor(Color(UIColor.secondaryLabel))
+                      
                         Spacer()
+                    }
 
+                    HStack(spacing: 6) {
                         NavBarButton(imageName: "nav.list") {
                             pushToListScene = true
                         }
@@ -69,7 +60,22 @@ struct TimetableScene: View, Sendable {
                         .circleBadge(condition: viewModel.unreadCount > 0)
                     }
                 }
+                .frame(height: toolBarHeight)
+                .padding(.leading, 16)
+                .padding(.trailing, 12)
+
+                Rectangle().frame(height: 0.5)
+                    .foregroundStyle(STColor.divider)
+
+                if viewModel.isVacancyBannerVisible {
+                    VacancyBanner {
+                        viewModel.goToVacancyPage()
+                    }
+                    .transition(.move(edge: .trailing))
+                }
+                timetable
             }
+            .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
         }
         let _ = debugChanges()
     }
