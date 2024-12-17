@@ -79,9 +79,10 @@ struct LoginScene: View {
 
                 NavigationLink(destination: ResetPasswordScene(viewModel: .init(container: viewModel.container),
                                                                returnToLogin: $pushToResetPasswordScene,
-                                                               changeTitle: $changeTitle)
-                               ,
-                               isActive: $pushToResetPasswordScene) {
+                                                               changeTitle: $changeTitle),
+
+                               isActive: $pushToResetPasswordScene)
+                {
                     EmptyView()
                 }
             }

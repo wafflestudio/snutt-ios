@@ -14,13 +14,13 @@ struct ResetPasswordScene: View {
     @State private var email: String = ""
     @State private var maskedEmail: String = ""
     @State private var verificationCode: String = ""
-    
+
     @State private var current: Step = .enterId
     @State private var isLoading: Bool = false
 
     @State private var pushToVerificationView: Bool = false
     @State private var pushToNewPasswordView: Bool = false
-    
+
     @Binding var returnToLogin: Bool
     @Binding var changeTitle: Bool
 
@@ -124,10 +124,11 @@ struct ResetPasswordScene: View {
                                          }),
                     isActive: $pushToVerificationView) { EmptyView() }
                 NavigationLink(destination:
-                                EnterNewPasswordView(returnToEmailVerification: $pushToVerificationView, showCurrentView: $returnToLogin) { password in
+                    EnterNewPasswordView(returnToEmailVerification: $pushToVerificationView, showCurrentView: $returnToLogin) { password in
                         await viewModel.resetPassword(localId: localId, to: password, code: verificationCode)
                     },
-                               isActive: $pushToNewPasswordView) {
+                    isActive: $pushToNewPasswordView)
+                {
                     EmptyView()
                 }
             }
