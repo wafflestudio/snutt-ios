@@ -19,7 +19,7 @@ struct ResetPasswordScene: View {
     @State private var pushToNewPasswordView: Bool = false
 
     @State private var current: Step = .enterId
-    
+
     @State private var isLoading: Bool = false
 
     @Binding var showResetPasswordScene: Bool
