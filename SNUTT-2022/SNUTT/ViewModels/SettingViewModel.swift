@@ -78,6 +78,14 @@ class SettingViewModel: BaseViewModel, ObservableObject {
         }
     }
 
+    func fetchSocialProvider() async {
+        do {
+            try await services.userService.fetchSocialProvider()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+
     var versionString: String {
         let appVersion = AppMetadata.appVersion.value
         let buildNumber = AppMetadata.buildNumber.value
