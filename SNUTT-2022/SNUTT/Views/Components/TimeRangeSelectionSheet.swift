@@ -47,7 +47,7 @@ struct TimeRangeSelectionSheet: View {
                             Image("timerange.magicwand")
                             Text("빈시간대 선택하기")
                                 .font(.system(size: 13, weight: .medium))
-                                .foregroundColor(colorScheme == .dark ? STColor.gray20 : .white)
+                                .foregroundColor(colorScheme == .dark ? STColor.assistive : .white)
                         }
                         .padding(.leading, 6)
                         .padding(.trailing, 8)
@@ -65,8 +65,8 @@ struct TimeRangeSelectionSheet: View {
                         HStack(spacing: 0) {
                             Image("timerange.reset")
                             Text("초기화")
-                                .font(.system(size: 14))
-                                .foregroundColor(colorScheme == .dark ? STColor.gray30 : STColor.gray20)
+                                .font(STFont.regular14.font)
+                                .foregroundColor(colorScheme == .dark ? STColor.gray30 : STColor.assistive)
                         }
                     }
                     .buttonStyle(DefaultButtonStyle())
@@ -75,8 +75,8 @@ struct TimeRangeSelectionSheet: View {
                 Spacer().frame(height: 16)
 
                 Text("드래그하여 시간대를 선택해보세요.")
-                    .font(.system(size: 14))
-                    .foregroundColor(colorScheme == .dark ? STColor.darkGray : STColor.gray20)
+                    .font(STFont.regular14.font)
+                    .foregroundColor(colorScheme == .dark ? STColor.darkGray : STColor.assistive)
             }
             .padding(.horizontal, 10)
 

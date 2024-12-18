@@ -33,13 +33,13 @@ struct TimetableScene: View, Sendable {
 
                     HStack(spacing: 8) {
                         Text(viewModel.timetableTitle)
-                            .font(STFont.title.font)
+                            .font(STFont.bold17.font)
                             .minimumScaleFactor(0.9)
                             .lineLimit(1)
 
                         Text("(\(viewModel.totalCredit)학점)")
-                            .font(STFont.details.font)
-                            .foregroundColor(Color(UIColor.secondaryLabel))
+                            .font(STFont.regular12.font)
+                            .foregroundStyle(STColor.assistive)
 
                         Spacer()
                     }

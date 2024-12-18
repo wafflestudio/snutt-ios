@@ -50,7 +50,7 @@ struct ChangeNicknameView: View {
                 .listRowBackground(STColor.groupForeground)
             } header: {
                 Text("닉네임 (공백 포함 한/영/숫자 10자 이내)")
-                    .font(STFont.details.font)
+                    .font(STFont.regular12.font)
             } footer: {
                 VStack(alignment: .leading) {
                     Spacer().frame(height: 8)
@@ -62,7 +62,7 @@ struct ChangeNicknameView: View {
                     Text("**닉네임 조건**\n\u{2022} 불완전한 한글(예: ㄱ, ㅏ)은 포함될 수 없습니다.\n\u{2022} 영문 대/소문자는 구분됩니다.\n\u{2022} 상대에게 불쾌감을 주는 등 부적절한 닉네임은 관리자에 의해 안내 없이 수정될 수 있습니다.".markdown)
                         .lineSpacing(4)
                 }
-                .font(STFont.details.font)
+                .font(STFont.regular12.font)
             }
         }
         .navigationTitle(Text("닉네임 변경"))

@@ -93,9 +93,9 @@ private enum BlockInformationType: Identifiable {
     var font: UIFont {
         switch self {
         case .lectureTitle:
-            STFont.lectureBlockTitle
+            STFont.regular11
         case .place:
-            STFont.lectureBlockPlace
+            STFont.bold11
         case .lectureNumber:
             .systemFont(ofSize: 12)
         case .instructor:

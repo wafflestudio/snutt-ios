@@ -60,7 +60,7 @@ struct FilterSheetContent: View {
                                             .padding(.trailing, 3)
                                         VStack(alignment: .leading, spacing: 6) {
                                             Text(tag.text)
-                                                .font(STFont.detailLabel.font)
+                                                .font(STFont.regular14.font)
                                                 .frame(maxWidth: .infinity, alignment: .leading)
                                                 .contentShape(Rectangle())
 
@@ -77,7 +77,7 @@ struct FilterSheetContent: View {
                                                             .underline()
                                                     }
                                                 }
-                                                .font(STFont.details.font)
+                                                .font(STFont.regular12.font)
                                                 .foregroundColor(STColor.darkGray)
                                                 .onTapGesture { isTimeRangeSheetOpen = true }
                                             }
@@ -110,7 +110,7 @@ struct FilterSheetContent: View {
             } label: {
                 Text("필터 적용")
                     .foregroundColor(.white)
-                    .font(STFont.title.font)
+                    .font(STFont.bold17.font)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
             }

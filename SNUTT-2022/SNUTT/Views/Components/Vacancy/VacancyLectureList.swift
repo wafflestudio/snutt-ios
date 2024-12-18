@@ -54,7 +54,7 @@ struct VacancyLectureList: View {
                 .contentShape(Rectangle())
                 .foregroundColor(.white)
         }
-        .background(selection.isEmpty ? STColor.gray20 : STColor.cyan)
+        .background(selection.isEmpty ? STColor.assistive : STColor.cyan)
         .disabled(selection.isEmpty)
         .foregroundColor(Color(uiColor: .systemBackground))
         .alert(Text("목록에서 삭제"), isPresented: $isDeleteConfirmAlertPresented) {

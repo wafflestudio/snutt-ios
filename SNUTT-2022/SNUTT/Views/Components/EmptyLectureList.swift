@@ -19,10 +19,10 @@ struct UnavailableView: View {
 
             Spacer().frame(height: 16)
             Text(title)
-                .font(.system(size: 16, weight: .bold))
+                .font(STFont.bold16.font)
             Spacer().frame(height: 6)
             Text(subtitle)
-                .font(.system(size: 14))
+                .font(STFont.regular14.font)
                 .multilineTextAlignment(.center)
         }
         .padding(.horizontal, 40)

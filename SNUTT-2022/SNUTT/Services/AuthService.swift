@@ -21,7 +21,7 @@ protocol AuthServiceProtocol: Sendable {
     func getLinkedEmail(localId: String) async throws -> String
     func sendVerificationCode(email: String) async throws
     func checkVerificationCode(localId: String, code: String) async throws
-    func resetPassword(localId: String, password: String) async throws
+    func resetPassword(localId: String, password: String, code: String) async throws
     func logout() async throws
 }
 
@@ -115,8 +115,8 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
         try await authRepository.checkVerificationCode(localId: localId, code: code)
     }
 
-    func resetPassword(localId: String, password: String) async throws {
-        try await authRepository.resetPassword(localId: localId, password: password)
+    func resetPassword(localId: String, password: String, code: String) async throws {
+        try await authRepository.resetPassword(localId: localId, password: password, code: code)
     }
 
     func logout() async throws {
@@ -161,6 +161,6 @@ class FakeAuthService: AuthServiceProtocol {
     func getLinkedEmail(localId _: String) async throws -> String { return "" }
     func sendVerificationCode(email _: String) async throws {}
     func checkVerificationCode(localId _: String, code _: String) async throws {}
-    func resetPassword(localId _: String, password _: String) async throws {}
+    func resetPassword(localId _: String, password _: String, code _: String) async throws {}
     func logout() async throws {}
 }
