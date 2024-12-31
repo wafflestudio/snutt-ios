@@ -5,9 +5,9 @@
 //  Created by Jinsup Keum on 2022/03/19.
 //
 
+import KakaoMapsSDK
 import KakaoSDKAuth
 import KakaoSDKCommon
-import KakaoMapsSDK
 import SwiftUI
 
 @main

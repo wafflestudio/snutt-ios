@@ -97,8 +97,8 @@ struct KakaoMapView: UIViewRepresentable {
             let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: shouldZoomOut ? 14 : 15)
             controller?.addView(mapviewInfo)
         }
-        
-        func addViewSucceeded(_ viewName: String, viewInfoName: String) {
+
+        func addViewSucceeded(_: String, viewInfoName _: String) {
             guard let mapView = mapView else {
                 return
             }
