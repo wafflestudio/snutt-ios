@@ -71,8 +71,8 @@
 		B8A72A022A8F1ED000094FAA /* ChangeNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A72A012A8F1ED000094FAA /* ChangeNicknameView.swift */; };
 		B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */; };
 		B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B22D1529311F6200AB88F3 /* EmptyLectureList.swift */; };
-		B8B7501D2B6274A5004F6272 /* KakaoMapsSDK_SPM in Frameworks */ = {isa = PBXBuildFile; productRef = B8B7501C2B6274A5004F6272 /* KakaoMapsSDK_SPM */; };
 		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
+		B8C3F0192D23E29500DEB8C0 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = B8C3F0182D23E29500DEB8C0 /* KakaoMapsSDK-SPM */; };
 		B8C4F3352CA8F48E006B6BAD /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
@@ -645,11 +645,11 @@
 				731C24522C4442590015877B /* KakaoSDKCommon in Frameworks */,
 				BE4CD86728F5A56200BA9BBC /* FirebaseMessaging in Frameworks */,
 				731C244E2C4442590015877B /* KakaoSDK in Frameworks */,
-				B8B7501D2B6274A5004F6272 /* KakaoMapsSDK_SPM in Frameworks */,
 				BE4CD86328F5A56200BA9BBC /* FirebaseAnalyticsSwift in Frameworks */,
 				CE85901C2C5E21D600ECFE9E /* KakaoSDKTemplate in Frameworks */,
 				BE779B1828E3DD5B009960EB /* FacebookLogin in Frameworks */,
 				CEF992F72BF3B8FC00F0FFA4 /* ReactNativeKit in Frameworks */,
+				B8C3F0192D23E29500DEB8C0 /* KakaoMapsSDK-SPM in Frameworks */,
 				736AF8512C2F279900ED9C1A /* GoogleSignInSwift in Frameworks */,
 				BE4CD86528F5A56200BA9BBC /* FirebaseCrashlytics in Frameworks */,
 				BEDE34D42879A59B00525014 /* Alamofire in Frameworks */,
@@ -1258,7 +1258,6 @@
 				BE4CD86228F5A56200BA9BBC /* FirebaseAnalyticsSwift */,
 				BE4CD86428F5A56200BA9BBC /* FirebaseCrashlytics */,
 				BE4CD86628F5A56200BA9BBC /* FirebaseMessaging */,
-				B8B7501C2B6274A5004F6272 /* KakaoMapsSDK_SPM */,
 				CEF992F62BF3B8FC00F0FFA4 /* ReactNativeKit */,
 				736AF84E2C2F279900ED9C1A /* GoogleSignIn */,
 				736AF8502C2F279900ED9C1A /* GoogleSignInSwift */,
@@ -1267,6 +1266,7 @@
 				731C24512C4442590015877B /* KakaoSDKCommon */,
 				CE8590172C5E1B5C00ECFE9E /* KakaoSDKShare */,
 				CE85901B2C5E21D600ECFE9E /* KakaoSDKTemplate */,
+				B8C3F0182D23E29500DEB8C0 /* KakaoMapsSDK-SPM */,
 			);
 			productName = SNUTT;
 			productReference = BE682BB22879E24D009EBCB7 /* SNUTT.app */;
@@ -1349,9 +1349,9 @@
 				BE779B1628E3DD5B009960EB /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 				BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				CE1F49AF2A8DB5A400B81E4E /* XCRemoteSwiftPackageReference "ios-rn-prebuilt" */,
-				B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
 				736AF84D2C2F279900ED9C1A /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				734A83172C2FD39600D6CB95 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				B8C3F0172D23E29500DEB8C0 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
 			);
 			productRefGroup = DC860F3C27E5C87D0068C94B;
 			projectDirPath = "";
@@ -2365,12 +2365,12 @@
 				minimumVersion = 7.1.0;
 			};
 		};
-		B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
+		B8C3F0172D23E29500DEB8C0 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.3;
+				minimumVersion = 2.12.3;
 			};
 		};
 		BE4CD85F28F5A56200BA9BBC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -2441,10 +2441,10 @@
 			package = 736AF84D2C2F279900ED9C1A /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
 		};
-		B8B7501C2B6274A5004F6272 /* KakaoMapsSDK_SPM */ = {
+		B8C3F0182D23E29500DEB8C0 /* KakaoMapsSDK-SPM */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B8B7501B2B6274A5004F6272 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
-			productName = KakaoMapsSDK_SPM;
+			package = B8C3F0172D23E29500DEB8C0 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
+			productName = "KakaoMapsSDK-SPM";
 		};
 		BE4CD86028F5A56200BA9BBC /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

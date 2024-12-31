@@ -5,6 +5,7 @@
 //  Created by Jinsup Keum on 2022/03/19.
 //
 
+import KakaoMapsSDK
 import KakaoSDKAuth
 import KakaoSDKCommon
 import SwiftUI
@@ -25,6 +26,7 @@ struct SNUTTApp: App {
         )
         let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
         KakaoSDK.initSDK(appKey: kakaoAppKey)
+        SDKInitializer.InitSDK(appKey: kakaoAppKey)
     }
 
     var body: some Scene {
@@ -33,7 +35,7 @@ struct SNUTTApp: App {
                 .environment(\.dependencyContainer, appEnvironment.container)
                 .onOpenURL { url in
                     if AuthApi.isKakaoTalkLoginUrl(url) {
-                        AuthController.handleOpenUrl(url: url)
+                        _ = AuthController.handleOpenUrl(url: url)
                     }
                     Task {
                         do {
