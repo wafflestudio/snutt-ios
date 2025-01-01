@@ -108,6 +108,7 @@ struct SettingScene: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.fetchUser()
+            await viewModel.fetchSocialProvider()
             await viewModel.getThemeList()
         }
 
