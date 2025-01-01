@@ -8,9 +8,10 @@
 import Foundation
 import MemberwiseInit
 import TimetableInterface
+import FoundationUtility
 
 @MemberwiseInit(.public)
-public struct TimetableConfiguration: Codable, Equatable {
+public struct TimetableConfiguration: Codable, Equatable, Sendable {
     @Init(.public) var minHour: Int = 9
     @Init(.public) var maxHour: Int = 18
     @Init(.public) var autoFit: Bool = true
@@ -54,7 +55,7 @@ public struct TimetableConfiguration: Codable, Equatable {
 }
 
 public extension TimetableConfiguration {
-    struct VisibilityOptions: Codable, OptionSet {
+    struct VisibilityOptions: Codable, OptionSet, Sendable {
         public var rawValue: Int8
         public init(rawValue: Int8) {
             self.rawValue = rawValue

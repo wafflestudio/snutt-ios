@@ -28,3 +28,19 @@
 "timetable.semester2" = "2학기";
 "timetable.semesterWinter" = "겨울학기";
 "timetable.semesterSummer" = "여름학기";
+"sheet.ellipsis.editTitle" = "이름 변경";
+"sheet.ellipsis.primary.enable" = "학기 대표 시간표로 지정";
+"sheet.ellipsis.primary.disable" = "학기 대표 시간표 해제";
+"sheet.ellipsis.theme" = "시간표 테마 설정";
+"sheet.ellipsis.delete" = "시간표 삭제";
+
+"search.filter.sortCriteria" = "정렬 기준";
+"search.filter.classification" = "분류";
+"search.filter.department" = "학과";
+"search.filter.academicYear" = "학년";
+"search.filter.credit" = "학점";
+"search.filter.instructor" = "교수";
+"search.filter.category" = "교양분류";
+"search.filter.time" = "시간";
+"search.filter.etc" = "기타";
+"search.filter.apply" = "필터 적용";

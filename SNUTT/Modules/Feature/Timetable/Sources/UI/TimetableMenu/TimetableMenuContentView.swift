@@ -55,7 +55,7 @@ struct TimetableMenuContentView: View {
                 dismiss()
             } configuration: { _ in
                 var configuration = UIButton.Configuration.plain()
-                configuration.image = TimetableAsset.xmarkBlack.image
+                configuration.image = TimetableAsset.xmark.image
                 return configuration
             }
         }
@@ -113,7 +113,7 @@ struct TimetableMenuContentView: View {
 #Preview {
     let viewModel = TimetableViewModel()
     let _ = Task {
-        try await Task.sleep(for: .seconds(1))
+        try await Task.sleep(for: .milliseconds(200))
         try await viewModel.loadTimetable()
         try await viewModel.loadTimetableList()
     }

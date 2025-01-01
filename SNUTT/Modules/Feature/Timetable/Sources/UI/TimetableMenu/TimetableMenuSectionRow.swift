@@ -13,7 +13,8 @@ struct TimetableMenuSectionRow: View {
     let timetableMetadata: any TimetableMetadata
     let isSelected: Bool
 
-    @State private var isLoading: Bool = false
+    @State private var isLoadingTimetable = false
+    @State private var isEllipsisMenuPresented = false
 
     private enum Design {
         static let detailFont = Font.system(size: 12)
@@ -22,7 +23,7 @@ struct TimetableMenuSectionRow: View {
     var body: some View {
         HStack(spacing: 0) {
             Group {
-                if isLoading {
+                if isLoadingTimetable {
                     ProgressView()
                         .scaleEffect(0.7)
                 } else {
@@ -38,10 +39,10 @@ struct TimetableMenuSectionRow: View {
 
             Button {
                 Task {
-                    guard !isLoading else { return }
-                    isLoading = true
+                    guard !isLoadingTimetable else { return }
+                    isLoadingTimetable = true
                     defer {
-                        isLoading = false
+                        isLoadingTimetable = false
                     }
                     try await viewModel.selectTimetable(timetableID: timetableMetadata.id)
                 }
@@ -85,12 +86,17 @@ struct TimetableMenuSectionRow: View {
 
             Spacer().frame(width: 12)
 
-            Button {} label: {
+            Button {
+                isEllipsisMenuPresented = true
+            } label: {
                 TimetableAsset.menuEllipsis.swiftUIImage
                     .resizable()
                     .scaledToFit()
                     .frame(width: 30)
                     .opacity(0.5)
+            }
+            .sheet(isPresented: $isEllipsisMenuPresented) {
+                MenuEllipsisSheet(viewModel: viewModel)
             }
         }
         .animation(.defaultSpring, value: isSelected)

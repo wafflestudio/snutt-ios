@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import SwiftUIIntrospect
+import SharedUIComponents
 
 struct ExpandableLectureListView: View {
     let viewModel: any ExpandableLectureListViewModel
@@ -13,9 +15,15 @@ struct ExpandableLectureListView: View {
 
     var body: some View {
         ScrollView {
-            LazyVStack {
+            LazyVStack(spacing: 0) {
                 ForEach(viewModel.lectures, id: \.id) { lecture in
                     ExpandableLectureCell(viewModel: viewModel, lecture: lecture)
+                    if viewModel.renderingOptions.contains(.showsDivider) {
+                        Divider()
+                            .frame(height: 1)
+                            .padding(.leading, 10)
+                            .padding(.top, 5)
+                    }
                 }
             }
             .scrollTargetLayout()
@@ -23,16 +31,19 @@ struct ExpandableLectureListView: View {
         }
         .scrollPosition(id: $scrolledID, anchor: .bottom)
         .onChange(of: scrolledID) { _, newValue in
-            let index = viewModel.lectures.firstIndex(where: { $0.id == newValue })
             if viewModel.lectures.suffix(5).map({ $0.id }).contains(scrolledID) {
                 Task {
                     await viewModel.fetchMoreLectures()
                 }
             }
         }
+        .introspect(.scrollView, on: .iOS(.v17, .v18)) { scrollView in
+            scrollView.makeTouchResponsive()
+        }
     }
 }
 
 #Preview {
     ExpandableLectureListView(viewModel: LectureSearchViewModel())
+        .foregroundStyle(.black)
 }

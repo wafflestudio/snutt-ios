@@ -13,6 +13,7 @@ struct TimetableLectureBlock: View {
     typealias VisibilityOptions = TimetableConfiguration.VisibilityOptions
 
     let lecture: any Lecture
+    let lectureColor: LectureColor
     let timePlace: TimePlace
     let idealHeight: CGFloat
     let visibilityOptions: VisibilityOptions
@@ -24,7 +25,7 @@ struct TimetableLectureBlock: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color.cyan)
+                .fill(lectureColor.bg)
                 .border(Color.black.opacity(0.1), width: 0.5)
 
             VStack(spacing: 0) {
@@ -34,13 +35,13 @@ struct TimetableLectureBlock: View {
                     ForEach(informationTypes) { type in
                         if type.needsDisplay(by: visibilityOptions) {
                             Text(type.attributedString)
-                                .foregroundColor(Color.red)
                                 .padding(.top, type.topPadding)
                                 .minimumScaleFactor(type.minimumScaleFactor)
                         }
                     }
                 }
                 .multilineTextAlignment(.center)
+                .foregroundStyle(lectureColor.fg)
             }
             .animation(.defaultSpring, value: visibilityOptions)
             .padding(Design.padding)
@@ -180,11 +181,11 @@ private enum BlockInformationType: Identifiable {
 }
 
 #Preview {
-    let preview = PreviewHelpers.preview(with: "1")
+    let preview = PreviewHelpers.preview(id: "1")
     let lecture = preview.lectures.first!
     let timePlace = lecture.timePlaces.first!
     let height = 100.0
     let width = 80.0
-    TimetableLectureBlock(lecture: lecture, timePlace: timePlace, idealHeight: height, visibilityOptions: .default)
+    TimetableLectureBlock(lecture: lecture, lectureColor: .temporary, timePlace: timePlace, idealHeight: height, visibilityOptions: .default)
         .frame(width: width, height: height)
 }

@@ -8,13 +8,14 @@
 import Foundation
 import GameKit
 import MemberwiseInit
+import FoundationUtility
 
 public enum PreviewHelpers {
     public static var preview: any Timetable {
-        preview(with: "1")
+        preview(id: "1")
     }
 
-    public static func preview(with id: String) -> any Timetable {
+    public static func preview(id: String) -> any Timetable {
         let seed = {
             var hasher = Hasher()
             hasher.combine(id)
@@ -25,7 +26,7 @@ public enum PreviewHelpers {
             id: id,
             title: timetableTitles.randomElement(using: &generator)!,
             quarter: quarters.randomElement(using: &generator)!,
-            lectures: (3 ... Int.random(in: 4 ... 6, using: &generator)).map { _ in previewLecture(using: &generator) },
+            previewLectures: (3 ... Int.random(in: 4 ... 6, using: &generator)).map { _ in previewLecture(using: &generator) },
             userID: "user123"
         )
     }
@@ -55,10 +56,15 @@ public enum PreviewHelpers {
             lectureNumber: "00\(Int.random(in: 1 ... 9, using: &generator))",
             instructor: instructorNames.randomElement(using: &generator)!,
             credit: Int64.random(in: 1 ... 4, using: &generator),
+            courseNumber: "123",
             department: departments.randomElement(using: &generator)!,
             academicYear: "\(Int.random(in: 1 ... 4, using: &generator))학년",
             evLecture: .init(evLectureID: 2, avgRating: 3.2, evaluationCount: 20),
-            remark: remarks.randomElement(using: &generator)!
+            remark: remarks.randomElement(using: &generator)!,
+            classification: "분류",
+            category: "구분",
+            quota: Int32.random(in: 10 ... 100, using: &generator),
+            freshmenQuota: 10
         )
     }
 
@@ -137,26 +143,40 @@ public struct PreviewTimetable: Timetable {
     public var id: String = UUID().uuidString
     public let title: String
     public let quarter: Quarter
-    public let lectures: [any Lecture]
+    public let previewLectures: [PreviewLecture]
+    public var lectures: [any Lecture] { previewLectures }
     public let userID: String
-
-    public func encode(to _: any Encoder) throws {}
-    public init(from _: any Decoder) throws { fatalError() }
+    public var defaultTheme: Theme? {
+        .init(
+            id: UUID().uuidString,
+            name: "snutt",
+            colors: ["#ffffff", "#E54459", "#F58D3D", "#FAC42D", "#A6D930", "#2BC267", "#1BD0C8", "#1D99E8", "#4F48C4", "#AF56B3"]
+                .map({ LectureColor(fgHex: "#ffffff", bgHex: $0)}),
+            isCustom: false)
+    }
 }
 
-private struct PreviewLecture: Lecture, Codable {
-    var id: String
-    var lectureID: String?
-    var courseTitle: String
-    var timePlaces: [TimePlace]
-    var lectureNumber: String?
-    var instructor: String?
-    var credit: Int64?
-    var courseNumber: String?
-    var department: String?
-    var academicYear: String?
-    var evLecture: EvLecture?
-    var remark: String? = nil
+@MemberwiseInit(.public)
+public struct PreviewLecture: Lecture, Codable {
+    public var id: String
+    public var lectureID: String?
+    public var courseTitle: String
+    public var timePlaces: [TimePlace]
+    public var lectureNumber: String?
+    public var instructor: String?
+    public var credit: Int64?
+    public var courseNumber: String?
+    public var department: String?
+    public var academicYear: String?
+    public var evLecture: EvLecture?
+    public var remark: String? = nil
+    public var customColor: LectureColor? {
+         nil
+    }
+    public var classification: String?
+    public var category: String?
+    public var quota: Int32?
+    public var freshmenQuota: Int32?
 }
 
 public struct PreviewTimetableMetadata: TimetableMetadata {

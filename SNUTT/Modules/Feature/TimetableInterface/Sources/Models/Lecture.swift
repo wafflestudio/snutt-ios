@@ -21,6 +21,14 @@ public protocol Lecture: Identifiable, Equatable, Sendable, Codable {
     var academicYear: String? { get }
     var remark: String? { get }
     var evLecture: EvLecture? { get }
+    var customColor: LectureColor? { get }
+
+    /// "분류" (전공, 전선, 전필, 일선, 교양, ...)
+    var classification: String? { get }
+    var category: String? { get }
+
+    var quota: Int32? { get }
+    var freshmenQuota: Int32? { get }
 }
 
 @MemberwiseInit(.public)

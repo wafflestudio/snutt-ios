@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MemberwiseInit
 
 public protocol Timetable: Identifiable, Sendable, Codable {
     var id: String { get }
@@ -14,6 +13,7 @@ public protocol Timetable: Identifiable, Sendable, Codable {
     var quarter: Quarter { get }
     var lectures: [any Lecture] { get }
     var userID: String { get }
+    var defaultTheme: Theme? { get }
 }
 
 public protocol TimetableMetadata: Identifiable, Sendable, Codable, Equatable {
@@ -28,7 +28,6 @@ public enum Semester: Int, Sendable, Codable, Equatable {
     case first = 1, summer, second, winter
 }
 
-@MemberwiseInit(.public)
 public struct Quarter: Sendable, Codable, Equatable, Comparable, Identifiable, Hashable {
     public var id: String {
         "\(year)-\(semester.rawValue)"
@@ -36,6 +35,11 @@ public struct Quarter: Sendable, Codable, Equatable, Comparable, Identifiable, H
 
     public let year: Int
     public let semester: Semester
+
+    public init(year: Int, semester: Semester) {
+        self.year = year
+        self.semester = semester
+    }
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(year)

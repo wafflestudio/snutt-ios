@@ -40,6 +40,15 @@ class TimetableViewModel {
         currentTimetable?.title ?? ""
     }
 
+    func makePainter(selectedLecture: (any Lecture)? = nil) -> TimetablePainter {
+        TimetablePainter(
+            currentTimetable: currentTimetable, 
+            selectedLecture: selectedLecture,
+            selectedTheme: currentTimetable?.defaultTheme ?? .snutt,
+            configuration: configuration
+        )
+    }
+
     func loadTimetable() async {
         do {
             currentTimetable = try await timetableUseCase.loadRecentTimetable()
@@ -65,8 +74,25 @@ extension TimetableViewModel {
     }
 }
 
-enum TimetableDetailSceneTypes {
+enum TimetableDetailSceneTypes: Hashable, Equatable {
     case lectureList
-}
+    case notificationList
+    case lectureDetail(any Lecture)
 
-extension TimetableViewModel: TimetablePainter {}
+    static func == (lhs: TimetableDetailSceneTypes, rhs: TimetableDetailSceneTypes) -> Bool {
+        switch (lhs, rhs) {
+        case (.lectureList, .lectureList):
+            true
+        case (.notificationList, .notificationList):
+            true
+        case (.lectureDetail(let lhs), .lectureDetail(let rhs)):
+            lhs.id == rhs.id
+        default:
+            false
+        }
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self)
+    }
+}

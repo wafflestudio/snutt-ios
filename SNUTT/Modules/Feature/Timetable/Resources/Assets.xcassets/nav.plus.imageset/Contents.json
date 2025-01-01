@@ -26,7 +26,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "add@2x 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -42,7 +41,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "add@3x 1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

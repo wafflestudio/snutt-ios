@@ -7,6 +7,7 @@
 
 import MemberwiseInit
 import SwiftUI
+import SwiftUIUtility
 
 @MemberwiseInit(.public)
 public struct AnimatableTextField: View {

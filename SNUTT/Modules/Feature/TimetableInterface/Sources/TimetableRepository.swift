@@ -22,11 +22,11 @@ public enum TimetableRepositoryKey: TestDependencyKey {
 
     public static let previewValue: any TimetableRepository = {
         let spy = TimetableRepositorySpy()
-        spy.fetchRecentTimetableReturnValue = PreviewHelpers.preview(with: "1")
+        spy.fetchRecentTimetableReturnValue = PreviewHelpers.preview(id: "1")
         spy.fetchTimetableMetadataListReturnValue = (1 ... 10).map { PreviewHelpers.previewMetadata(with: "\($0)") }
         spy.fetchTimetableTimetableIDClosure = { id in
             try await Task.sleep(for: .milliseconds(200))
-            return PreviewHelpers.preview(with: id)
+            return PreviewHelpers.preview(id: id)
         }
         return spy
     }()

@@ -6,15 +6,10 @@
 //
 
 import Dependencies
-import Observation
 import TimetableInterface
 
-@Observable
 @MainActor
-final class TimetableMenuViewModel {
-    @ObservationIgnored
-    @Dependency(\.timetableUseCase) private var timetableUseCase
-
+struct TimetableMenuViewModel {
     private let timetableViewModel: TimetableViewModel
 
     init(timetableViewModel: TimetableViewModel) {

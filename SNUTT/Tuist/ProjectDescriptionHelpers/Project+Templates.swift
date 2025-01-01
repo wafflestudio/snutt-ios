@@ -96,6 +96,7 @@ extension Project {
             infoPlist: .extendingDefault(with: infoPlist),
             sources: ["\(name)/Sources/**"],
             resources: ["\(name)/Resources/**", "OpenAPI/**"],
+            entitlements: "Supporting Files/SNUTT.entitlements",
             dependencies: dependencies,
             settings: makeSettings()
         )
@@ -187,10 +188,10 @@ extension Project {
                 name: "\(name) Widget",
                 shared: true,
                 buildAction: .buildAction(targets: [.target(name), .target("\(name)WidgetExtension")]),
-                runAction: .runAction(configuration: .dev, executable: .target("\(name)WidgetExtension")),
+                runAction: .runAction(configuration: .dev, executable: nil),
                 archiveAction: .archiveAction(configuration: .dev),
-                profileAction: .profileAction(configuration: .prod, executable: .target("\(name)WidgetExtension")),
-                analyzeAction: .analyzeAction(configuration: .dev)
+                profileAction: nil,
+                analyzeAction: nil
             )
         ]
     }

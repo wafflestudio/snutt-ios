@@ -15,15 +15,15 @@ struct ContentView: View {
             if viewModel.isAuthenticated {
                 mainView
                     .transition(.identity)
-
             } else {
                 onboardScene
                     .transition(onboardTransition)
                     .zIndex(1)
             }
         }
+        .observeErrors()
         .animation(.easeInOut, value: viewModel.isAuthenticated)
-        .accentColor(Color(uiColor: .label))
+        .tint(.label)
     }
 
     private var mainView: some View {
@@ -37,10 +37,12 @@ struct ContentView: View {
             }
             .ignoresSafeArea()
 
-            sheetPresentationContext?.makeSheet()
+            sheetPresentationContext?.makeHUDView()
         }
         .onPreferenceChange(SheetPresentationKey.self) { value in
-            sheetPresentationContext = value
+            Task { @MainActor in
+                sheetPresentationContext = value
+            }
         }
     }
 

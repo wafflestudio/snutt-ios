@@ -6,14 +6,22 @@
 //
 
 import SwiftUI
+import SharedUIComponents
 
 struct LectureListScene: View {
     let viewModel: TimetableViewModel
     var body: some View {
-        EmptyView()
+        ExpandableLectureListView(viewModel: LectureListViewModel(timetableViewModel: viewModel))
+            .foregroundStyle(Color.label)
     }
 }
 
 #Preview {
-    LectureListScene(viewModel: .init())
+    let viewModel = TimetableViewModel()
+    let _ = Task {
+        await viewModel.loadTimetable()
+    }
+    ZStack {
+        LectureListScene(viewModel: viewModel)
+    }
 }

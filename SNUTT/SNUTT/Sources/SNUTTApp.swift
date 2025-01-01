@@ -1,7 +1,6 @@
 import Dependencies
 import SharedUIComponents
 import SwiftUI
-import WindowReader
 
 @main
 struct SNUTTApp: App {
@@ -15,10 +14,7 @@ struct SNUTTApp: App {
 
     var body: some Scene {
         WindowGroup {
-            WindowReader { window in
-                ContentView()
-                    .environment(\.hudPresenter, HudPresenter(windowScene: window.windowScene))
-            }
+            ContentView()
         }
     }
 }

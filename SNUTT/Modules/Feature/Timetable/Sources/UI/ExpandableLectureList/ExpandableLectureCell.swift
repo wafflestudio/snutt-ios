@@ -15,6 +15,7 @@ import UIKitUtility
 struct ExpandableLectureCell: View {
     let viewModel: any ExpandableLectureListViewModel
     let lecture: any Lecture
+
     var body: some View {
         let isSelected = viewModel.isSelected(lecture: lecture)
         ZStack(alignment: .top) {
@@ -36,11 +37,11 @@ struct ExpandableLectureCell: View {
 
                 if isSelected {
                     HStack {
-                        LectureActionButton(type: .detail, isSelected: false)
-                        LectureActionButton(type: .review, isSelected: false)
-                        LectureActionButton(type: .bookmark, isSelected: false)
-                        LectureActionButton(type: .vacancy, isSelected: false)
-                        LectureActionButton(type: .add, isSelected: false)
+                        LectureActionButton(viewModel: viewModel, lecture: lecture, type: .detail)
+                        LectureActionButton(viewModel: viewModel, lecture: lecture, type: .review)
+                        LectureActionButton(viewModel: viewModel, lecture: lecture, type: .bookmark)
+                        LectureActionButton(viewModel: viewModel, lecture: lecture, type: .vacancy)
+                        LectureActionButton(viewModel: viewModel, lecture: lecture, type: .add)
                     }
                     .transition(.opacity)
                 }
@@ -48,18 +49,21 @@ struct ExpandableLectureCell: View {
             .padding(.top, 10)
             .padding(.bottom, 5)
             .padding(.horizontal, 15)
-        }
-        .foregroundStyle(.white)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            viewModel.selectLecture(lecture)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                viewModel.selectLecture(lecture)
+            }
         }
     }
 }
 
 private struct LectureActionButton: View {
+    let viewModel: any ExpandableLectureListViewModel
+    let lecture: any Lecture
     let type: ActionButtonType
-    let isSelected: Bool
+
+    var isSelected: Bool = false
+
     enum Design {
         static let buttonFont: UIFont = .systemFont(ofSize: 11)
     }
@@ -68,7 +72,9 @@ private struct LectureActionButton: View {
         AnimatableButton(
             animationOptions: .identity.impact().scale(0.95).backgroundColor(touchDown: .black.opacity(0.04)),
             layoutOptions: [.respectIntrinsicHeight, .expandHorizontally]
-        ) {} configuration: { _ in
+        ) {
+            viewModel.toggleAction(lecture: lecture, type: type)
+        } configuration: { button in
             var config = UIButton.Configuration.plain()
             config.imagePlacement = .top
             config.imagePadding = 2
@@ -76,6 +82,7 @@ private struct LectureActionButton: View {
             config.attributedTitle = .init(type.text(isSelected: isSelected), attributes: .init([.font: Design.buttonFont]))
             config.baseForegroundColor = .white
             config.contentInsets = .init(top: 5, leading: 0, bottom: 5, trailing: 0)
+            button.tintAdjustmentMode = .normal
             return config
         }
     }
@@ -124,6 +131,7 @@ private struct LectureDetailRow: View {
         HStack {
             type.image
                 .resizable()
+                .renderingMode(.template)
                 .frame(width: 15, height: 15)
             Text(text.isEmpty ? "-" : text)
                 .font(Design.detail)
@@ -134,17 +142,7 @@ private struct LectureDetailRow: View {
     }
 }
 
-enum ActionButtonType: String, CaseIterable, Identifiable {
-    var id: String {
-        rawValue
-    }
-
-    case detail
-    case review
-    case bookmark
-    case vacancy
-    case add
-
+extension ActionButtonType {
     func image(isSelected: Bool) -> UIImage {
         switch self {
         case .detail:
@@ -185,13 +183,13 @@ private enum DetailLabelType: CaseIterable {
     var image: Image {
         switch self {
         case .department:
-            TimetableAsset.tagWhite.swiftUIImage
+            TimetableAsset.lectureTag.swiftUIImage
         case .time:
-            TimetableAsset.clockWhite.swiftUIImage
+            TimetableAsset.lectureClock.swiftUIImage
         case .place:
-            TimetableAsset.mapWhite.swiftUIImage
+            TimetableAsset.lectureMap.swiftUIImage
         case .remark:
-            TimetableAsset.ellipsisWhite.swiftUIImage
+            TimetableAsset.lectureEllipsis.swiftUIImage
         }
     }
 
