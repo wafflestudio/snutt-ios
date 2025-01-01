@@ -33,7 +33,7 @@ struct SearchService: SearchServiceProtocol {
     var searchRepository: SearchRepositoryProtocol {
         webRepositories.searchRepository
     }
-    
+
     var userDefaultsRepository: UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
     }
@@ -69,7 +69,7 @@ struct SearchService: SearchServiceProtocol {
         guard let recentTagNames = userDefaultsRepository.get([String].self, key: .recentDepartmentTags) else { return }
         appState.search.pinnedTagList = model?.tagList.filter { $0.type == .department && recentTagNames.contains($0.text) } ?? []
     }
-    
+
     private func _saveDepartmentTagsToUserDefaults(from tagList: [SearchTag]) async throws {
         let departmentTags = tagList.filter { tag in tag.type == .department &&
             !appState.search.pinnedTagList.contains { $0.text == tag.text }

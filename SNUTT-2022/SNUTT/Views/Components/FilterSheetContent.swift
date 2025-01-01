@@ -45,7 +45,7 @@ struct FilterSheetContent: View {
 
                 ScrollView {
                     LazyVStack {
-                        if (selectedCategory == .department) {
+                        if selectedCategory == .department {
                             ForEach(viewModel.pinnedTagList) {
                                 tag in FilterTagButton(tag: tag, isPinned: true, viewModel: viewModel, isTimeRangeSheetOpen: $isTimeRangeSheetOpen)
                             }
@@ -102,7 +102,7 @@ struct FilterTagButton: View {
     let isPinned: Bool
     @ObservedObject var viewModel: FilterSheetViewModel
     @Binding var isTimeRangeSheetOpen: Bool
-    
+
     var body: some View {
         Button {
             viewModel.toggle(tag)
@@ -118,15 +118,15 @@ struct FilterTagButton: View {
                         .font(STFont.detailLabel.font)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
-                    
+
                     if tag.text == TimeType.range.rawValue {
                         Group {
                             if !viewModel.selectedTimeRange.isEmpty {
                                 Text(viewModel.selectedTimeRange.map {
                                     $0.preciseTimeString
                                 }.joined(separator: "\n"))
-                                .underline()
-                                .lineSpacing(4)
+                                    .underline()
+                                    .lineSpacing(4)
                             } else {
                                 Text("눌러서 선택하기")
                                     .underline()
@@ -137,7 +137,7 @@ struct FilterTagButton: View {
                         .onTapGesture { isTimeRangeSheetOpen = true }
                     }
                 }
-                if (isPinned) {
+                if isPinned {
                     Image("department.xmark")
                         .onTapGesture { viewModel.removePin(tag: tag) }
                 }

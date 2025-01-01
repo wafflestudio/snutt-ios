@@ -65,7 +65,7 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
     func isSelected(tag: SearchTag) -> Bool {
         return appState.search.selectedTagList.contains(where: { $0.id == tag.id })
     }
-    
+
     func removePin(tag: SearchTag) {
         guard let index = appState.search.pinnedTagList.firstIndex(where: { $0.id == tag.id }) else { return }
         appState.search.pinnedTagList.remove(at: index)
