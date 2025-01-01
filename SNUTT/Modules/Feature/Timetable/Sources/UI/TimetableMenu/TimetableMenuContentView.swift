@@ -112,7 +112,7 @@ struct TimetableMenuContentView: View {
 
 #Preview {
     let viewModel = TimetableViewModel()
-    _ = Task {
+    let _ = Task {
         try await Task.sleep(for: .seconds(1))
         try await viewModel.loadTimetable()
         try await viewModel.loadTimetableList()
