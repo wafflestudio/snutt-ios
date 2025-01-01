@@ -18,22 +18,21 @@ struct KakaoMapView: UIViewRepresentable {
         let view = KMViewContainer()
         view.sizeToFit()
         context.coordinator.createController(view)
-        context.coordinator.controller?.prepareEngine()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            context.coordinator.controller?.prepareEngine()
+        }
         return view
     }
 
     /// Updates the presented `UIView` (and coordinator) to the latest configuration.
     func updateUIView(_: KMViewContainer, context: Self.Context) {
-        DispatchQueue.main.async {
-            if showMapView {
-                if context.coordinator.controller?.isEnginePrepared == false {
-                    context.coordinator.controller?.prepareEngine()
-                }
+        if showMapView {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 context.coordinator.controller?.activateEngine()
-            } else {
-                context.coordinator.controller?.pauseEngine()
-                context.coordinator.controller?.resetEngine()
             }
+        } else {
+            context.coordinator.controller?.pauseEngine()
+            context.coordinator.controller?.resetEngine()
         }
     }
 
@@ -43,8 +42,6 @@ struct KakaoMapView: UIViewRepresentable {
 
     /// Cleans up the presented `UIView` (and coordinator) in anticipation of their removal.
     static func dismantleUIView(_: KMViewContainer, coordinator: KakaoMapCoordinator) {
-        coordinator.controller?.pauseEngine()
-        coordinator.controller?.resetEngine()
     }
 
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
@@ -105,9 +102,9 @@ struct KakaoMapView: UIViewRepresentable {
             mapView.eventDelegate = self
 
             if colorScheme == .light {
-                mapView.dimScreen.color = UIColor(white: 0, alpha: 0.4)
+                mapView.dimScreen.color = .init(white: 0, alpha: 0.4)
             } else {
-                mapView.dimScreen.color = UIColor(white: 0, alpha: 0.15)
+                mapView.dimScreen.color = .init(white: 0, alpha: 0.15)
             }
             mapView.dimScreen.cover = .map
 
