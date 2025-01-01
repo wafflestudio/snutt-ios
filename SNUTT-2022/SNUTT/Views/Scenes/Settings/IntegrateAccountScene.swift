@@ -57,7 +57,7 @@ struct IntegrateAccountScene: View {
             Button("취소", role: .cancel, action: {})
             Button("해제", role: .destructive, action: {
                 Task {
-                    await viewModel.detachKakao()
+                    await viewModel.disconnectKakao()
                 }
             })
         }
@@ -65,7 +65,7 @@ struct IntegrateAccountScene: View {
             Button("취소", role: .cancel, action: {})
             Button("해제", role: .destructive, action: {
                 Task {
-                    await viewModel.detachGoogle()
+                    await viewModel.disconnectGoogle()
                 }
             })
         }
@@ -81,7 +81,7 @@ struct IntegrateAccountScene: View {
             Button("취소", role: .cancel, action: {})
             Button("해제", role: .destructive, action: {
                 Task {
-                    await viewModel.detachFacebook()
+                    await viewModel.disconnectFacebook()
                 }
             })
         }

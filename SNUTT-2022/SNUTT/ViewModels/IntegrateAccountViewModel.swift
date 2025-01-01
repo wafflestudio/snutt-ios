@@ -18,7 +18,7 @@ extension IntegrateAccountScene {
             appState.user.$socialProvider.assign(to: &$currentSocialProvider)
         }
 
-        func detachKakao() async {
+        func disconnectKakao() async {
             do {
                 try await services.userService.disconnectKakao()
                 try await services.userService.fetchSocialProvider()
@@ -27,7 +27,7 @@ extension IntegrateAccountScene {
             }
         }
 
-        func detachGoogle() async {
+        func disconnectGoogle() async {
             do {
                 try await services.userService.disconnectGoogle()
                 try await services.userService.fetchSocialProvider()
@@ -36,7 +36,7 @@ extension IntegrateAccountScene {
             }
         }
 
-        func detachFacebook() async {
+        func disconnectFacebook() async {
             do {
                 try await services.userService.disconnectFacebook()
                 try await services.userService.fetchSocialProvider()
