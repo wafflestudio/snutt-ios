@@ -115,7 +115,7 @@ struct FilterTagButton: View {
                     .padding(.trailing, 3)
                 VStack(alignment: .leading, spacing: 6) {
                     Text(tag.text)
-                        .font(STFont.detailLabel.font)
+                        .font(STFont.regular14.font)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
 
@@ -132,7 +132,7 @@ struct FilterTagButton: View {
                                     .underline()
                             }
                         }
-                        .font(STFont.details.font)
+                        .font(STFont.regular12.font)
                         .foregroundColor(STColor.darkGray)
                         .onTapGesture { isTimeRangeSheetOpen = true }
                     }
