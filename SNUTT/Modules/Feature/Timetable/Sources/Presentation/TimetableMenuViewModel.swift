@@ -5,9 +5,9 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import Dependencies
 import Observation
 import TimetableInterface
-import Dependencies
 
 @Observable
 @MainActor
@@ -33,7 +33,7 @@ final class TimetableMenuViewModel {
         switch metadataLoadingState {
         case .loading:
             return []
-        case .loaded(let metadataList):
+        case let .loaded(metadataList):
             let dict = Dictionary(grouping: metadataList, by: { $0.quarter })
             var groups = [TimetableGroup]()
             for (quarter, items) in dict {

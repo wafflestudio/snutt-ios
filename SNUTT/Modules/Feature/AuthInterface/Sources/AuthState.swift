@@ -13,8 +13,7 @@ import Spyable
 @Spyable
 public protocol AuthState: Sendable, ObservableObject, AnyObject {
     var isAuthenticated: Bool { get }
-    @MainActor
-    var isAuthenticatedPublisher: AnyPublisher<Bool, Never> { get }
+    @MainActor var isAuthenticatedPublisher: AnyPublisher<Bool, Never> { get }
     func set(_ type: AuthStateType, value: String)
     func get(_ type: AuthStateType) -> String?
     func clear()

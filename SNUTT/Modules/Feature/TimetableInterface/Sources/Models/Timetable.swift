@@ -33,6 +33,7 @@ public struct Quarter: Sendable, Codable, Equatable, Comparable, Identifiable, H
     public var id: String {
         "\(year)-\(semester.rawValue)"
     }
+
     public let year: Int
     public let semester: Semester
 

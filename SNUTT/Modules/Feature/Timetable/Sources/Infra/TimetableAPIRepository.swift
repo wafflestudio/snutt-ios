@@ -74,11 +74,11 @@ extension Components.Schemas.TimetableBriefDto: @retroactive TimetableMetadata {
             semester: semester
         )
     }
-    
+
     public var totalCredit: Int {
         Int(total_credit)
     }
-    
+
     public var id: String {
         _id
     }

@@ -7,8 +7,8 @@
 
 import Combine
 import CoreGraphics
-import TimetableInterface
 import Observation
+import TimetableInterface
 
 @MainActor
 protocol ExpandableLectureListViewModel: Sendable {

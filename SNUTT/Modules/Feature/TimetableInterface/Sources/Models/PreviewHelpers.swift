@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import MemberwiseInit
 import GameKit
+import MemberwiseInit
 
 public enum PreviewHelpers {
     public static var preview: any Timetable {
@@ -25,8 +25,9 @@ public enum PreviewHelpers {
             id: id,
             title: timetableTitles.randomElement(using: &generator)!,
             quarter: quarters.randomElement(using: &generator)!,
-            lectures: (3...Int.random(in: 4...6, using: &generator)).map { _ in previewLecture(using: &generator) },
-            userID: "user123")
+            lectures: (3 ... Int.random(in: 4 ... 6, using: &generator)).map { _ in previewLecture(using: &generator) },
+            userID: "user123"
+        )
     }
 
     public static func previewMetadata(with id: String) -> any TimetableMetadata {
@@ -40,7 +41,7 @@ public enum PreviewHelpers {
             id: id,
             title: timetableTitles.randomElement(using: &generator)!,
             quarter: quarters.randomElement(using: &generator)!,
-            totalCredit: Int.random(in: 6...18, using: &generator),
+            totalCredit: Int.random(in: 6 ... 18, using: &generator),
             isPrimary: Bool.random(using: &generator)
         )
     }
@@ -50,12 +51,12 @@ public enum PreviewHelpers {
             id: UUID().uuidString,
             lectureID: UUID().uuidString,
             courseTitle: courseTitles.randomElement(using: &generator)!,
-            timePlaces: (1...Int.random(in: 1...3, using: &generator)).map { _ in previewTimeplace(using: &generator) },
-            lectureNumber: "00\(Int.random(in: 1...9, using: &generator))",
+            timePlaces: (1 ... Int.random(in: 1 ... 3, using: &generator)).map { _ in previewTimeplace(using: &generator) },
+            lectureNumber: "00\(Int.random(in: 1 ... 9, using: &generator))",
             instructor: instructorNames.randomElement(using: &generator)!,
-            credit: Int64.random(in: 1...4, using: &generator),
+            credit: Int64.random(in: 1 ... 4, using: &generator),
             department: departments.randomElement(using: &generator)!,
-            academicYear: "\(Int.random(in: 1...4, using: &generator))학년",
+            academicYear: "\(Int.random(in: 1 ... 4, using: &generator))학년",
             evLecture: .init(evLectureID: 2, avgRating: 3.2, evaluationCount: 20),
             remark: remarks.randomElement(using: &generator)!
         )
@@ -64,7 +65,7 @@ public enum PreviewHelpers {
     private static func previewTimeplace<T: RandomNumberGenerator>(using generator: inout T) -> TimePlace {
         let day = Weekday.allCases.randomElement(using: &generator)!
         let startTime = Time(hour: Int.random(in: 9 ... 18, using: &generator), minute: [0, 15, 30, 45].randomElement(using: &generator)!)
-        let endTime = Time(hour: startTime.hour + Int.random(in: 1...3, using: &generator), minute: [0, 15, 30, 45].randomElement(using: &generator)!)
+        let endTime = Time(hour: startTime.hour + Int.random(in: 1 ... 3, using: &generator), minute: [0, 15, 30, 45].randomElement(using: &generator)!)
         let places = ["Room 101", "Room 202", "Room 303"]
         return TimePlace(
             id: UUID().uuidString,
@@ -95,7 +96,7 @@ public enum PreviewHelpers {
         "Timetable",
         "망한시간표",
         "후보 1",
-        "후보 2"
+        "후보 2",
     ]
 
     private static let instructorNames = [
@@ -104,7 +105,7 @@ public enum PreviewHelpers {
         "김민수",
         "박신홍",
         "최유림",
-        "이채민"
+        "이채민",
     ]
 
     private static let courseTitles = [

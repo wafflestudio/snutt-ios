@@ -6,8 +6,8 @@
 //
 
 import ActivityKit
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 struct SNUTTWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
@@ -56,24 +56,24 @@ struct SNUTTWidgetLiveActivity: Widget {
     }
 }
 
-extension SNUTTWidgetAttributes {
-    fileprivate static var preview: SNUTTWidgetAttributes {
+private extension SNUTTWidgetAttributes {
+    static var preview: SNUTTWidgetAttributes {
         SNUTTWidgetAttributes(name: "World")
     }
 }
 
-extension SNUTTWidgetAttributes.ContentState {
-    fileprivate static var smiley: SNUTTWidgetAttributes.ContentState {
+private extension SNUTTWidgetAttributes.ContentState {
+    static var smiley: SNUTTWidgetAttributes.ContentState {
         SNUTTWidgetAttributes.ContentState(emoji: "😀")
-     }
-     
-     fileprivate static var starEyes: SNUTTWidgetAttributes.ContentState {
-         SNUTTWidgetAttributes.ContentState(emoji: "🤩")
-     }
+    }
+
+    static var starEyes: SNUTTWidgetAttributes.ContentState {
+        SNUTTWidgetAttributes.ContentState(emoji: "🤩")
+    }
 }
 
 #Preview("Notification", as: .content, using: SNUTTWidgetAttributes.preview) {
-   SNUTTWidgetLiveActivity()
+    SNUTTWidgetLiveActivity()
 } contentStates: {
     SNUTTWidgetAttributes.ContentState.smiley
     SNUTTWidgetAttributes.ContentState.starEyes

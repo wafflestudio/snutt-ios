@@ -36,7 +36,7 @@ struct ContentView: View {
                 TabScene(tabItem: TabItem.settings, rootView: ColorView(color: .purple))
             }
             .ignoresSafeArea()
-            
+
             sheetPresentationContext?.makeSheet()
         }
         .onPreferenceChange(SheetPresentationKey.self) { value in
@@ -47,7 +47,8 @@ struct ContentView: View {
     private var isSearchMode: Binding<Bool> {
         .init(
             get: { viewModel.selectedTab == .search },
-            set: { isSearchMode in viewModel.selectedTab = isSearchMode ? .search : .timetable })
+            set: { isSearchMode in viewModel.selectedTab = isSearchMode ? .search : .timetable }
+        )
     }
 
     private var onboardScene: some View {

@@ -15,7 +15,7 @@ import TimetableInterface
 class LectureSearchViewModel {
     @ObservationIgnored
     @Dependency(\.lectureSearchRepository) private var searchRepository
-    
+
     var searchQuery = ""
     private let pageLimit = 20
     private var currentPage = 0

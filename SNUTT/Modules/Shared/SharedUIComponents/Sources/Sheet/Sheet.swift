@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import MemberwiseInit
+import SwiftUI
 
 public struct Sheet<Content>: View where Content: View {
     @Binding private var isPresented: Bool
@@ -22,8 +22,8 @@ public struct Sheet<Content>: View where Content: View {
         configuration: SheetConfiguration,
         content: @escaping () -> Content
     ) {
-        self._isPresented = isPresented
-        self.config = configuration
+        _isPresented = isPresented
+        config = configuration
         self.content = content
     }
 
@@ -78,8 +78,8 @@ public struct Sheet<Content>: View where Content: View {
     }
 }
 
-extension EnvironmentValues {
-    @Entry public var sheetDismiss: SheetDismissAction = .init(action: nil)
+public extension EnvironmentValues {
+    @Entry var sheetDismiss: SheetDismissAction = .init(action: nil)
 }
 
 @MainActor
@@ -116,7 +116,7 @@ public enum SheetOrientation {
 
     func getIsOpen(from value: DragGesture.Value) -> Bool {
         switch self {
-        case .left(let maxWidth):
+        case let .left(maxWidth):
             return value.translation.width > -maxWidth / 5
         case .bottom:
             return value.translation.height < 0
@@ -125,7 +125,7 @@ public enum SheetOrientation {
 
     func getIsOpen(from value: CGFloat) -> Bool {
         switch self {
-        case .left(let maxWidth):
+        case let .left(maxWidth):
             return value > -maxWidth / 5
         case .bottom:
             return value < 0

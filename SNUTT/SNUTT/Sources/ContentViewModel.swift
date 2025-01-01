@@ -19,7 +19,7 @@ class ContentViewModel {
     private var cancellables: Set<AnyCancellable> = []
 
     init() {
-        self.authState = Dependency(\.authState).wrappedValue
+        authState = Dependency(\.authState).wrappedValue
         isAuthenticated = authState.isAuthenticated
         authState.isAuthenticatedPublisher
             .receive(on: DispatchQueue.main)

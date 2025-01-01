@@ -104,7 +104,7 @@ let project = Project.app(
     ],
     widgetDependencies: [
         .external(name: "Dependencies"),
-        .target(name: "DependenciesUtility")
+        .target(name: "DependenciesUtility"),
     ],
     deploymentTargets: .iOS("17.0.0")
 )

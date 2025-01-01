@@ -22,7 +22,7 @@ struct ExpandableLectureListView: View {
             .animation(.defaultSpring, value: viewModel.selectedLecture?.id)
         }
         .scrollPosition(id: $scrolledID, anchor: .bottom)
-        .onChange(of: scrolledID) { oldValue, newValue in
+        .onChange(of: scrolledID) { _, newValue in
             let index = viewModel.lectures.firstIndex(where: { $0.id == newValue })
             if viewModel.lectures.suffix(5).map({ $0.id }).contains(scrolledID) {
                 Task {

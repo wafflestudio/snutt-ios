@@ -74,8 +74,7 @@ struct TimetableMenuSectionRow: View {
             Spacer()
 
             Button {
-                Task {
-                }
+                Task {}
             } label: {
                 TimetableAsset.menuDuplicate.swiftUIImage
                     .resizable()
@@ -86,8 +85,7 @@ struct TimetableMenuSectionRow: View {
 
             Spacer().frame(width: 12)
 
-            Button {
-            } label: {
+            Button {} label: {
                 TimetableAsset.menuEllipsis.swiftUIImage
                     .resizable()
                     .scaledToFit()

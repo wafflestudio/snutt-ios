@@ -5,24 +5,24 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 
 extension View {
     func timetableMenuSheet(
         isPresented: Binding<Bool>,
         viewModel: TimetableViewModel
     ) -> some View {
-        self
-            .customSheet(
-                isPresented: isPresented,
-                configuration: .init(
-                    orientation: .left(maxWidth: 320),
-                    cornerRadius: 0,
-                    sheetOpacity: 0.7
-                )) {
-                    TimetableMenuContentView(timetableViewModel: viewModel)
-                }
+        customSheet(
+            isPresented: isPresented,
+            configuration: .init(
+                orientation: .left(maxWidth: 320),
+                cornerRadius: 0,
+                sheetOpacity: 0.7
+            )
+        ) {
+            TimetableMenuContentView(timetableViewModel: viewModel)
+        }
     }
 }
 
@@ -30,7 +30,7 @@ extension View {
     @Previewable @State var isPresented = false
     @Previewable @State var context: SheetPresentationContext?
     let viewModel = TimetableViewModel()
-    let _ = Task {
+    _ = Task {
         try await viewModel.loadTimetableList()
     }
 

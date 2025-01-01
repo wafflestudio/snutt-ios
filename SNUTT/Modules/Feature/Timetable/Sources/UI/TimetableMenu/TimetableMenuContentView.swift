@@ -1,18 +1,18 @@
 //
-//  TimetableMenuContent.swift
+//  TimetableMenuContentView.swift
 //  SNUTT
 //
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 import TimetableInterface
 
 struct TimetableMenuContentView: View {
     private let viewModel: TimetableMenuViewModel
     init(timetableViewModel: TimetableViewModel) {
-        self.viewModel = .init(timetableViewModel: timetableViewModel)
+        viewModel = .init(timetableViewModel: timetableViewModel)
     }
 
     @Environment(\.sheetDismiss) private var dismiss
@@ -53,7 +53,7 @@ struct TimetableMenuContentView: View {
                 layoutOptions: [.respectIntrinsicHeight, .respectIntrinsicWidth]
             ) {
                 dismiss()
-            } configuration: { configuration in
+            } configuration: { _ in
                 var configuration = UIButton.Configuration.plain()
                 configuration.image = TimetableAsset.xmarkBlack.image
                 return configuration
@@ -68,8 +68,7 @@ struct TimetableMenuContentView: View {
                 .font(Design.detailFont)
                 .foregroundColor(Color(uiColor: .secondaryLabel))
             Spacer()
-            Button {
-            } label: {
+            Button {} label: {
                 TimetableAsset.navPlus.swiftUIImage
                     .resizable()
                     .frame(width: 25, height: 25)
@@ -93,9 +92,10 @@ struct TimetableMenuContentView: View {
             TimetableMenuSection(
                 quarter: group.quarter,
                 current: viewModel.currentTimetable,
-                isEmptyQuarter: isEmptyQuarter) {
-                    timetableSectionContent(for: group.metadataList)
-                }
+                isEmptyQuarter: isEmptyQuarter
+            ) {
+                timetableSectionContent(for: group.metadataList)
+            }
         }
     }
 
@@ -104,15 +104,15 @@ struct TimetableMenuContentView: View {
             TimetableMenuSectionRow(
                 viewModel: viewModel,
                 timetableMetadata: timetable,
-                isSelected: viewModel.currentTimetable?.id == timetable.id)
+                isSelected: viewModel.currentTimetable?.id == timetable.id
+            )
         }
     }
-
 }
 
 #Preview {
     let viewModel = TimetableViewModel()
-    let _ = Task {
+    _ = Task {
         try await Task.sleep(for: .seconds(1))
         try await viewModel.loadTimetable()
         try await viewModel.loadTimetableList()

@@ -11,8 +11,7 @@ import SwiftUI
 
 @MemberwiseInit
 struct LoginScene: View {
-    @Init(.internal)
-    private let viewModel: OnboardViewModel
+    @Init(.internal) private let viewModel: OnboardViewModel
     @State private var localID = ""
     @State private var localPassword = ""
     @FocusState private var focusedField: TextFieldType?

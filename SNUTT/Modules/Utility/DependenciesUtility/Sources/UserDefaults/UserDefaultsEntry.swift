@@ -5,11 +5,11 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Foundation
 import DependenciesAdditions
+import Foundation
 
-extension UserDefaults.Dependency {
-    public subscript<Value>(
+public extension UserDefaults.Dependency {
+    subscript<Value>(
         keyPath: KeyPath<UserDefaultsEntryDefinitions, UserDefaultsEntry<Value>>
     ) -> Value {
         get {
@@ -35,5 +35,4 @@ public struct UserDefaultsEntry<Value: Codable & Sendable> {
     }
 }
 
-public struct UserDefaultsEntryDefinitions: Sendable {
-}
+public struct UserDefaultsEntryDefinitions: Sendable {}

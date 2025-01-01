@@ -31,8 +31,7 @@ struct PreviewPainter: TimetablePainter {
     let configuration: TimetableConfiguration
 }
 
-@MainActor
-func makePreviewPainter() -> PreviewPainter {
+@MainActor func makePreviewPainter() -> PreviewPainter {
     let timetable: any Timetable = PreviewHelpers.preview(with: "1")
     var painter = PreviewPainter(configuration: TimetableConfiguration())
     painter.currentTimetable = timetable

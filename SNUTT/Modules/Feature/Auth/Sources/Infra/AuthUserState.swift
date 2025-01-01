@@ -9,8 +9,8 @@ import AuthInterface
 import Combine
 import Dependencies
 import DependenciesAdditions
-import Foundation
 import DependenciesUtility
+import Foundation
 import os
 
 public final class AuthUserState: AuthState {
@@ -25,14 +25,12 @@ public final class AuthUserState: AuthState {
     public var isAuthenticated: Bool {
         isAuthenticatedLocked.withLock { $0 }
     }
+
     private let isAuthenticatedLocked = OSAllocatedUnfairLock(initialState: false)
-    @MainActor
-    private let isAuthenticatedSubject = PassthroughSubject<Bool, Never>()
-    @MainActor
-    public var isAuthenticatedPublisher: AnyPublisher<Bool, Never> {
+    @MainActor private let isAuthenticatedSubject = PassthroughSubject<Bool, Never>()
+    @MainActor public var isAuthenticatedPublisher: AnyPublisher<Bool, Never> {
         isAuthenticatedSubject.eraseToAnyPublisher()
     }
-
 
     public func set(_ type: AuthStateType, value: String) {
         store.withLock { $0[type] = value }

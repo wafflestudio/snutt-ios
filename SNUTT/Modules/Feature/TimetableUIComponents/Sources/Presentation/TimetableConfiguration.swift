@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import TimetableInterface
 import MemberwiseInit
+import TimetableInterface
 
 @MemberwiseInit(.public)
 public struct TimetableConfiguration: Codable, Equatable {
@@ -53,8 +53,8 @@ public struct TimetableConfiguration: Codable, Equatable {
     }
 }
 
-extension TimetableConfiguration {
-    public struct VisibilityOptions: Codable, OptionSet {
+public extension TimetableConfiguration {
+    struct VisibilityOptions: Codable, OptionSet {
         public var rawValue: Int8
         public init(rawValue: Int8) {
             self.rawValue = rawValue
@@ -67,12 +67,15 @@ extension TimetableConfiguration {
         static var lectureTitle: Self {
             Self(rawValue: 1 << 0)
         }
+
         static var place: Self {
             Self(rawValue: 1 << 1)
         }
+
         static var lectureNumber: Self {
             Self(rawValue: 1 << 2)
         }
+
         static var instructor: Self {
             Self(rawValue: 1 << 3)
         }

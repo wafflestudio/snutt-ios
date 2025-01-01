@@ -8,9 +8,9 @@
 import Combine
 import Dependencies
 import DependenciesAdditions
+import Observation
 import SharedUIComponents
 import TimetableInterface
-import Observation
 import TimetableUIComponents
 
 @Observable

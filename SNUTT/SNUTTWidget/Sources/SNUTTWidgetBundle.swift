@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 @main
 struct SNUTTWidgetBundle: WidgetBundle {

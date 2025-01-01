@@ -23,6 +23,7 @@ public struct TimetableScene: View {
             isSearchBarFocused = isSearchMode
         }
     }
+
     @FocusState private var isSearchBarFocused
 
     public init(isSearchMode: Binding<Bool>) {

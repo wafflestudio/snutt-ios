@@ -16,6 +16,7 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
             updateAllTabButtonConfigurations()
         }
     }
+
     private var tabButtons = [T: UIButton]()
 
     private func selectTab(_ tab: T) {
@@ -209,9 +210,9 @@ public struct TabScene<T: TabItem> {
         self.rootView = AnyView(rootView)
     }
 
-    public init(tabItem: T){
+    public init(tabItem: T) {
         self.tabItem = tabItem
-        self.rootView = nil
+        rootView = nil
     }
 }
 
@@ -236,6 +237,7 @@ public struct ColorView: View {
         func image(isSelected _: Bool) -> UIImage {
             UIImage.checkmark
         }
+
         func viewIndex() -> Int {
             switch self {
             case .timetable, .search: 0
