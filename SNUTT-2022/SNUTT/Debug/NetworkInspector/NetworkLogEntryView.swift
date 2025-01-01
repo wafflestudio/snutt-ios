@@ -91,7 +91,7 @@
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.system(size: 13, weight: .regular, design: .monospaced))
                     .padding(5)
-                    .background(STColor.gray20.opacity(isExpanded ? 0.2 : 0))
+                    .background(STColor.assistive.opacity(isExpanded ? 0.2 : 0))
                     .onTapGesture {
                         isExpanded.toggle()
                     }
@@ -124,7 +124,7 @@
         func body(content: Content) -> some View {
             content
                 .font(.system(size: 11, weight: .regular, design: .monospaced))
-                .foregroundColor(STColor.gray20)
+                .foregroundColor(STColor.assistive)
         }
     }
 

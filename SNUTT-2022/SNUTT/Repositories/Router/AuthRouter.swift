@@ -37,7 +37,7 @@ enum AuthRouter: Router {
     case getLinkedEmail(localId: String)
     case sendVerificationCode(email: String)
     case checkVerificationCode(localId: String, code: String)
-    case resetPassword(localId: String, password: String)
+    case resetPassword(localId: String, password: String, code: String)
     case logout(userId: String, fcmToken: String)
 
     var method: HTTPMethod {
@@ -117,11 +117,11 @@ enum AuthRouter: Router {
         case let .getLinkedEmail(localId: localId):
             return ["user_id": localId]
         case let .sendVerificationCode(email: email):
-            return ["user_email": email]
+            return ["email": email]
         case let .checkVerificationCode(localId: localId, code: code):
             return ["user_id": localId, "code": code]
-        case let .resetPassword(localId: localId, password: password):
-            return ["user_id": localId, "password": password]
+        case let .resetPassword(localId: localId, password: password, code: code):
+            return ["user_id": localId, "password": password, "code": code]
         case let .logout(userId, fcmToken):
             return ["user_id": userId, "registration_id": fcmToken]
         }

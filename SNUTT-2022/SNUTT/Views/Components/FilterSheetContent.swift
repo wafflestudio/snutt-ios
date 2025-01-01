@@ -54,7 +54,6 @@ struct FilterSheetContent: View {
                         ForEach(viewModel.filterTags(with: selectedCategory)) { tag in
                             FilterTagButton(tag: tag, isPinned: false, viewModel: viewModel, isTimeRangeSheetOpen: $isTimeRangeSheetOpen)
                         }
-                        
                     }
                 }
                 .id(selectedCategory) // rerender on change of category
@@ -75,7 +74,7 @@ struct FilterSheetContent: View {
             } label: {
                 Text("필터 적용")
                     .foregroundColor(.white)
-                    .font(STFont.title.font)
+                    .font(STFont.bold17.font)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
             }

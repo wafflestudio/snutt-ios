@@ -21,7 +21,7 @@ struct WebErrorView: View {
             } label: {
                 Text("다시 불러오기")
                     .bold()
-                    .font(.system(size: 15))
+                    .font(STFont.regular15.font)
                     .foregroundColor(.white)
             }
             .frame(width: 130, height: 38)

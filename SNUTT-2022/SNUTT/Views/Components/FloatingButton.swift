@@ -15,11 +15,11 @@ struct FloatingButton: View {
         Button(action: action) {
             HStack(spacing: 5) {
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 14))
+                    .font(STFont.regular14.font)
                     .scaledToFit()
                     .foregroundColor(.white)
                 Text(text)
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(STFont.semibold14.font)
                     .foregroundColor(.white)
             }
             .padding(.vertical, 8)
