@@ -1,0 +1,30 @@
+/*
+ Localizable.strings
+ This file is used to manage localizable strings for the feature module in English.
+
+ How to use:
+ - Add your localized strings here in the format "key" = "value";
+ - The key is what you will use in your code, and the value is the translated string.
+
+ Examples:
+ "welcome_message" = "Welcome to the app!";
+ "error_message" = "An error has occurred. Please try again.";
+
+ Usage in code with Tuist synthesized strings:
+ let welcomeMessage = TimetableStrings.welcomeMessage
+ let errorMessage = TimetableStrings.errorMessage
+
+ Note:
+ - Ensure that each key is unique within this file.
+ - Add comments to provide context for translators.
+*/
+
+/* Add your translations below */
+
+"timetable.toolbar.totalCredit" = "(%d학점)";
+"timetable.menu.myTimetable" = "나의 시간표";
+"timetable.quarter" = "%@년 %@";
+"timetable.semester1" = "1학기";
+"timetable.semester2" = "2학기";
+"timetable.semesterWinter" = "겨울학기";
+"timetable.semesterSummer" = "여름학기";
