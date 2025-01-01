@@ -26,7 +26,7 @@ struct LectureSearchResultScene: View {
 
 #Preview {
     let viewModel = LectureSearchViewModel()
-    _ = Task {
+    let _ = Task {
         await viewModel.fetchInitialSearchResult()
     }
     LectureSearchResultScene(viewModel: viewModel)
