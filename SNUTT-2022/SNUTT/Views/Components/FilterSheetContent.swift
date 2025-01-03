@@ -33,8 +33,8 @@ struct FilterSheetContent: View {
                             Text(tag.typeStr)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .contentShape(Rectangle())
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(isSelected ? Color(uiColor: .label) : Color(uiColor: .label.withAlphaComponent(0.5)))
+                                .font(.system(size: 17, weight: .bold))
+                                .foregroundColor(isSelected ? Color(uiColor: .label) : STColor.assistive)
                         }
                         .buttonStyle(.plain)
                     }
@@ -44,12 +44,19 @@ struct FilterSheetContent: View {
                 .padding(.vertical, 5)
 
                 ScrollView {
-                    LazyVStack {
+                    LazyVStack(alignment: .leading) {
                         if selectedCategory == .department {
-                            ForEach(viewModel.pinnedTagList) {
-                                tag in FilterTagButton(tag: tag, isPinned: true, viewModel: viewModel, isTimeRangeSheetOpen: $isTimeRangeSheetOpen)
+                            if !viewModel.pinnedTagList.isEmpty {
+                                Text("최근 찾아본 학과")
+                                    .font(STFont.regular13.font)
+                                    .foregroundColor(STColor.alternative)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 7)
+                                ForEach(viewModel.pinnedTagList) {
+                                    tag in FilterTagButton(tag: tag, isPinned: true, viewModel: viewModel, isTimeRangeSheetOpen: $isTimeRangeSheetOpen)
+                                }
+                                Divider()
                             }
-                            Divider()
                         }
                         ForEach(viewModel.filterTags(with: selectedCategory)) { tag in
                             FilterTagButton(tag: tag, isPinned: false, viewModel: viewModel, isTimeRangeSheetOpen: $isTimeRangeSheetOpen)
