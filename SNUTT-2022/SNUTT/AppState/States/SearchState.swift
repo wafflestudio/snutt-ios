@@ -12,6 +12,7 @@ class SearchState {
     @Published var isFilterOpen = false
     @Published var searchTagList: SearchTagList?
     @Published var selectedTagList: [SearchTag] = []
+    @Published var pinnedTagList: [SearchTag] = []
     @Published var selectedTimeRange: [SearchTimeMaskDto] = []
 
     @Published var displayMode: SearchDisplayMode = .search
