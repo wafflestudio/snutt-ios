@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -256,6 +256,7 @@
 		CE17DF8B2A7E96E1000432B8 /* ConfigDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF8A2A7E96E1000432B8 /* ConfigDto.swift */; };
 		CE17DF912A7F43E0000432B8 /* VacancySugangSnuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */; };
 		CE17DF932A7FCB32000432B8 /* VacancyGuidePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */; };
+		CE2D13682D296C2B00F26FE6 /* ChangeBaseURLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2D13672D296C2B00F26FE6 /* ChangeBaseURLView.swift */; };
 		CE3384BA2A86704100437CC5 /* FriendsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3384B92A86704100437CC5 /* FriendsService.swift */; };
 		CE3384BC2A893F1B00437CC5 /* FriendsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3384BB2A893F1B00437CC5 /* FriendsScene.swift */; };
 		CE3F37A929C4CBC6009EDCCC /* TimetableCompactWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */; };
@@ -576,6 +577,7 @@
 		CE17DF8A2A7E96E1000432B8 /* ConfigDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDto.swift; sourceTree = "<group>"; };
 		CE17DF902A7F43E0000432B8 /* VacancySugangSnuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancySugangSnuButton.swift; sourceTree = "<group>"; };
 		CE17DF922A7FCB32000432B8 /* VacancyGuidePopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VacancyGuidePopup.swift; sourceTree = "<group>"; };
+		CE2D13672D296C2B00F26FE6 /* ChangeBaseURLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeBaseURLView.swift; sourceTree = "<group>"; };
 		CE3384B92A86704100437CC5 /* FriendsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsService.swift; sourceTree = "<group>"; };
 		CE3384BB2A893F1B00437CC5 /* FriendsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsScene.swift; sourceTree = "<group>"; };
 		CE3F37A829C4CBC6009EDCCC /* TimetableCompactWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableCompactWidgetView.swift; sourceTree = "<group>"; };
@@ -633,10 +635,6 @@
 		DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableViewModel.swift; sourceTree = "<group>"; };
 		DCD41A7427E5CEA500CF380E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		CE2D135C2D2924C700F26FE6 /* ChangeBaseURL */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ChangeBaseURL; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BE98A05E288AFC1500C2CE95 /* Frameworks */ = {
@@ -868,7 +866,7 @@
 		CE076DFD2A0964B700C9430B /* Debug */ = {
 			isa = PBXGroup;
 			children = (
-				CE2D135C2D2924C700F26FE6 /* ChangeBaseURL */,
+				CE2D13692D296C4800F26FE6 /* ChangeBaseURL */,
 				CE076DFE2A09659200C9430B /* NetworkInspector */,
 			);
 			path = Debug;
@@ -883,6 +881,14 @@
 				CE9820512A0A0BE9001037F5 /* NetworkLogEntryView.swift */,
 			);
 			path = NetworkInspector;
+			sourceTree = "<group>";
+		};
+		CE2D13692D296C4800F26FE6 /* ChangeBaseURL */ = {
+			isa = PBXGroup;
+			children = (
+				CE2D13672D296C2B00F26FE6 /* ChangeBaseURLView.swift */,
+			);
+			path = ChangeBaseURL;
 			sourceTree = "<group>";
 		};
 		CE5BA5062B2EBF5600F15D10 /* Lecture */ = {
@@ -1264,9 +1270,6 @@
 			dependencies = (
 				BE98A071288AFC1600C2CE95 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				CE2D135C2D2924C700F26FE6 /* ChangeBaseURL */,
-			);
 			name = SNUTT;
 			packageProductDependencies = (
 				BEDE34D32879A59B00525014 /* Alamofire */,
@@ -1603,6 +1606,7 @@
 				BE98A00A288A90C000C2CE95 /* Logo.swift in Sources */,
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
+				CE2D13682D296C2B00F26FE6 /* ChangeBaseURLView.swift in Sources */,
 				BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */,
 				CE076E002A09661400C9430B /* NetworkLogEntry.swift in Sources */,
 				BE9413CA28C21F1300171060 /* NotificationList.swift in Sources */,
