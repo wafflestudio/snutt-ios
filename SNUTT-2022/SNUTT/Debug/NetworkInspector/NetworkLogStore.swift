@@ -16,14 +16,14 @@ class NetworkLogStore {
     private let maxLogEntries = 10000
 
     func log<Value>(response: DataResponse<Value, AFError>) {
-        guard let urlRequest = response.request,
-              let urlResponse = response.response else { return }
+        guard let urlRequest = response.request else { return }
+        let urlResponse = response.response
         let logEntry = NetworkLogEntry(id: UUID(),
                                        url: urlRequest.url,
-                                       statusCode: urlResponse.statusCode,
+                                       statusCode: urlResponse?.statusCode ?? 0,
                                        httpMethod: urlRequest.httpMethod,
                                        requestHeaders: urlRequest.headers,
-                                       responseHeaders: urlResponse.headers,
+                                       responseHeaders: urlResponse?.headers ?? [:],
                                        requestData: urlRequest.httpBody,
                                        responseData: response.data,
                                        metrics: response.metrics)

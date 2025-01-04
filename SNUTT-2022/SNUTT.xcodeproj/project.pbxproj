@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -634,6 +634,10 @@
 		DCD41A7427E5CEA500CF380E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		CE2D135C2D2924C700F26FE6 /* ChangeBaseURL */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ChangeBaseURL; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		BE98A05E288AFC1500C2CE95 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -864,6 +868,7 @@
 		CE076DFD2A0964B700C9430B /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				CE2D135C2D2924C700F26FE6 /* ChangeBaseURL */,
 				CE076DFE2A09659200C9430B /* NetworkInspector */,
 			);
 			path = Debug;
@@ -1258,6 +1263,9 @@
 			);
 			dependencies = (
 				BE98A071288AFC1600C2CE95 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CE2D135C2D2924C700F26FE6 /* ChangeBaseURL */,
 			);
 			name = SNUTT;
 			packageProductDependencies = (

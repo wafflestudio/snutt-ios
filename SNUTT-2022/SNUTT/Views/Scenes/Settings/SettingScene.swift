@@ -85,6 +85,9 @@ struct SettingScene: View {
                     SettingsLinkItem(title: "네트워크 로그") {
                         NetworkLogListScene(viewModel: .init(container: viewModel.container))
                     }
+                    SettingsLinkItem(title: "Base URL 변경") {
+                        ChangeBaseURLView()
+                    }
                 }
             #endif
 
