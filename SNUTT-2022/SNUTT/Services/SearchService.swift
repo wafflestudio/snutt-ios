@@ -74,7 +74,7 @@ struct SearchService: SearchServiceProtocol {
         let departmentTags = tagList.filter { tag in tag.type == .department &&
             !appState.search.pinnedTagList.contains { $0.text == tag.text }
         }
-        var updatedTags = appState.search.pinnedTagList + departmentTags
+        var updatedTags = departmentTags + appState.search.pinnedTagList
         if updatedTags.count > 5 {
             updatedTags = Array(updatedTags.suffix(5))
         }

@@ -11,6 +11,7 @@ struct FilterSheetContent: View {
     @ObservedObject var viewModel: FilterSheetViewModel
     @State private var selectedCategory: SearchTagType = .sortCriteria
     @State private var isTimeRangeSheetOpen: Bool = false
+    @State private var dragTranslation: CGFloat = 0
 
     struct FilterButtonStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
@@ -71,6 +72,9 @@ struct FilterSheetContent: View {
                     .init(color: .black, location: 0.97),
                     .init(color: .clear, location: 1),
                 ]), startPoint: .top, endPoint: .bottom))
+                .sheetGesture($dragTranslation) {
+                    dismissView()
+                }
             }
 
             Button {
@@ -101,6 +105,11 @@ struct FilterSheetContent: View {
                 .ignoresSafeArea(.keyboard)
             }
         }
+    }
+    
+    @MainActor
+    private func dismissView() {
+        viewModel.isFilterOpen = false
     }
 }
 
