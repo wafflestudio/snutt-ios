@@ -106,9 +106,8 @@ struct FilterSheetContent: View {
             }
         }
     }
-    
-    @MainActor
-    private func dismissView() {
+
+    @MainActor private func dismissView() {
         viewModel.isFilterOpen = false
     }
 }
