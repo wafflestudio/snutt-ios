@@ -14,10 +14,10 @@ extension View {
             gesture(SheetGestureRecognizer(translation: translation, dismiss: dismiss))
         } else {
             highPriorityGesture(DragGesture().onChanged { value in
-                translation.wrappedValue = value.translation.width
+                translation.wrappedValue = value.translation.height
             }.onEnded { value in
                 translation.wrappedValue = 0
-                if value.velocity.width < -500 || value.translation.width < -100 {
+                if value.velocity.height < -500 || value.translation.height < -100 {
                     dismiss()
                 }
             })
@@ -51,7 +51,7 @@ private struct SheetGestureRecognizer: UIGestureRecognizerRepresentable {
         @objc func handlePan(_ recognizer: UIPanGestureRecognizer) {
             switch recognizer.state {
             case .changed:
-                translation = recognizer.translation(in: recognizer.view).x
+                translation = recognizer.translation(in: recognizer.view).y
             case .ended:
                 if shouldDismiss(recognizer) {
                     dismiss()
@@ -63,8 +63,8 @@ private struct SheetGestureRecognizer: UIGestureRecognizerRepresentable {
         }
 
         private func shouldDismiss(_ recognizer: UIPanGestureRecognizer) -> Bool {
-            let velocity = recognizer.velocity(in: recognizer.view).x
-            let translation = recognizer.translation(in: recognizer.view).x
+            let velocity = recognizer.velocity(in: recognizer.view).y
+            let translation = recognizer.translation(in: recognizer.view).y
             return velocity < -500 || translation < -100
         }
     }
