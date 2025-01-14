@@ -23,7 +23,7 @@ jobs:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
       GIT_PAT_READONLY: ${{ secrets.GIT_PAT_READONLY }}
       GIT_TAG_NAME: ${{ github.ref_name }}
-      XCODE_VERSION: "16.0"
+      XCODE_VERSION: "16.2"
 
     runs-on: macos-15
 
