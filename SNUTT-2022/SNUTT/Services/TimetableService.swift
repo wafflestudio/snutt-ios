@@ -13,7 +13,7 @@ protocol TimetableServiceProtocol: Sendable {
     func fetchRecentTimetable() async throws
     func fetchTimetableList() async throws
     func fetchTimetableData(timetableId: String) async throws -> Timetable
-    func fetchTimetable(timetableId: String) async throws
+    func fetchTimetable(timetableId: String) async throws -> Bool
     func loadTimetableConfig()
     func copyTimetable(timetableId: String) async throws
     func updateTimetableTitle(timetableId: String, title: String) async throws
@@ -44,11 +44,12 @@ struct TimetableService: TimetableServiceProtocol {
         return Timetable(from: dto)
     }
 
-    func fetchTimetable(timetableId: String) async throws {
+    func fetchTimetable(timetableId: String) async throws -> Bool {
         let dto = try await timetableRepository.fetchTimetable(withTimetableId: timetableId)
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
         let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
+        return true
     }
 
     func fetchRecentTimetable() async throws {
@@ -56,7 +57,7 @@ struct TimetableService: TimetableServiceProtocol {
             let localTimetable = Timetable(from: localData)
             if appState.user.userId == localTimetable.userId {
                 appState.timetable.current = localTimetable // 일단 저장된 시간표로 상태 업데이트
-                try await fetchTimetable(timetableId: localTimetable.id) // API 요청을 통해 시간표 최신화
+                let _ = try await fetchTimetable(timetableId: localTimetable.id) // API 요청을 통해 시간표 최신화
                 return
             }
         }
@@ -125,7 +126,7 @@ struct TimetableService: TimetableServiceProtocol {
 
         if timetableId == currentTimetableId {
             let nextIndex = min(originalIndex, timetables.count - 1)
-            try await fetchTimetable(timetableId: timetables[nextIndex].id)
+            let _ = try await fetchTimetable(timetableId: timetables[nextIndex].id)
         }
     }
 
@@ -157,7 +158,7 @@ struct FakeTimetableService: TimetableServiceProtocol {
     func fetchRecentTimetable() async throws {}
     func fetchTimetableList() {}
     func fetchTimetableData(timetableId _: String) async throws -> Timetable { fatalError() }
-    func fetchTimetable(timetableId _: String) {}
+    func fetchTimetable(timetableId _: String) -> Bool { return true }
     func loadTimetableConfig() {}
     func copyTimetable(timetableId _: String) {}
     func updateTimetableTitle(timetableId _: String, title _: String) {}
