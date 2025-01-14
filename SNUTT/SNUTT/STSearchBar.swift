@@ -15,13 +15,13 @@ class STSearchBar: UISearchBar, UISearchBarDelegate {
     var isEditingTag: Bool = false {
         didSet {
             if isEditingTag {
-                self.returnKeyType = .done
-                self.reloadInputViews()
-                self.setImage(UIImage(named: "icon_tag_gray"), for: .search, state: UIControl.State())
+                returnKeyType = .done
+                reloadInputViews()
+                setImage(UIImage(named: "icon_tag_gray"), for: .search, state: UIControl.State())
             } else {
-                self.returnKeyType = .search
-                self.reloadInputViews()
-                self.setImage(nil, for: .search, state: UIControl.State())
+                returnKeyType = .search
+                reloadInputViews()
+                setImage(nil, for: .search, state: UIControl.State())
             }
         }
     }

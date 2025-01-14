@@ -59,7 +59,6 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
         case (0, 3): return .color
         case (0, 4): return custom ? .editLecture(attribute: .credit) : .padding
         case (0, 5): return .padding
-
         case (1, _):
             if custom {
                 switch indexPath.row {
@@ -85,12 +84,9 @@ class STLectureDetailTableViewController: STSingleLectureTableViewController {
             }
         case (2, 0):
             return .singleClassTitle
-
         case (2, currentLecture.classList.count + 1):
             return editable && custom ? .addButton(section: 2) : .padding
-
         case (2, _): return .singleClass
-
         case (3, 0):
             if custom {
                 return .deleteButton

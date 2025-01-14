@@ -35,9 +35,9 @@ class STNotificationTableViewCell: UITableViewCell {
             iconImageView.image = notification.image
 
             if case .Link = notification.type {
-                self.selectionStyle = .gray
+                selectionStyle = .gray
             } else {
-                self.selectionStyle = .none
+                selectionStyle = .none
             }
         }
     }

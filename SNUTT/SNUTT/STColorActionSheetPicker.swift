@@ -87,7 +87,7 @@ class STColorActionSheetPicker: NSObject, ActionSheetCustomPickerDelegate {
         cancelBlock?()
     }
 
-    internal static func showWithColor(_ colorIndex: Int, doneBlock: ((Int) -> Void)?, cancelBlock: (() -> Void)?, selectedBlock: ((Int) -> Void)?, origin _: AnyObject!) {
+    static func showWithColor(_ colorIndex: Int, doneBlock: ((Int) -> Void)?, cancelBlock: (() -> Void)?, selectedBlock: ((Int) -> Void)?, origin _: AnyObject!) {
         let colorPickerDelegate = STColorActionSheetPicker(initialColorIndex: colorIndex, doneBlock: doneBlock, cancelBlock: cancelBlock, selectedBlock: selectedBlock)
         let actionSheetPicker = ActionSheetCustomPicker()
 

@@ -46,15 +46,12 @@ class STAddCustomLectureTableViewController: STSingleLectureTableViewController 
         case (0, 1): return .editLecture(attribute: .instructor)
         case (0, 2): return .color
         case (0, 3): return .editLecture(attribute: .credit)
-
         case (1, 0): return .padding
         case (1, 1): return .remark
         case (1, 2): return .padding
-
         case (2, 0): return .singleClassTitle
         case (2, currentLecture.classList.count + 1): return .addButton(section: 2)
         case (2, _): return .singleClass
-
         default: return .padding // Never Reach
         }
     }

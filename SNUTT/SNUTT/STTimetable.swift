@@ -49,8 +49,8 @@ class STTimetable {
         theme = STTheme(rawValue: json["theme"].intValue)
         totalCredit = json["total_credit"].intValue
         let lectures = json["lecture_list"].arrayValue
-        lectures.forEach { data in
-            self.addLecture(STLecture(json: data))
+        for data in lectures {
+            addLecture(STLecture(json: data))
         }
     }
 

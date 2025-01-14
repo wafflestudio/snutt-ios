@@ -13,7 +13,7 @@ class STUtil {
     static func getRangeFromNSRange(_ string: String, range: NSRange) -> Range<String.Index> {
         let startIndex = string.characters.index(string.startIndex, offsetBy: range.location)
         let endIndex = string.characters.index(startIndex, offsetBy: range.length)
-        return (startIndex ..< endIndex)
+        return startIndex ..< endIndex
     }
 
     static func validateEmail(_ candidate: String) -> Bool {
@@ -76,7 +76,7 @@ extension String {
 
     func isEnglish() -> Bool {
         let characterSet = CharacterSet.alphanumerics.inverted
-        return (rangeOfCharacter(from: characterSet) != nil)
+        return rangeOfCharacter(from: characterSet) != nil
     }
 
     func convertToDate() -> Date? {

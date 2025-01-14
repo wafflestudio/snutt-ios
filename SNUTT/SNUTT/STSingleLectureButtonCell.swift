@@ -1,5 +1,5 @@
 //
-//  STLectureTimeAddButtonCell.swift
+//  STSingleLectureButtonCell.swift
 //  SNUTT
 //
 //  Created by Rajin on 2016. 5. 21..

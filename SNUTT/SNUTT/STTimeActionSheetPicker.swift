@@ -96,7 +96,7 @@ class STTimeActionSheetPicker: NSObject, ActionSheetCustomPickerDelegate {
         cancelBlock?()
     }
 
-    internal static func showWithTime(_ time: STTime, doneBlock: ((STTime) -> Void)?, cancelBlock: (() -> Void)?, origin: AnyObject!) {
+    static func showWithTime(_ time: STTime, doneBlock: ((STTime) -> Void)?, cancelBlock: (() -> Void)?, origin: AnyObject!) {
         let timePickerDelegate = STTimeActionSheetPicker(initialTime: time, doneBlock: doneBlock, cancelBlock: cancelBlock)
         let title = "시간"
         ActionSheetCustomPicker.show(withTitle: title, delegate: timePickerDelegate, showCancelButton: true, origin: origin)

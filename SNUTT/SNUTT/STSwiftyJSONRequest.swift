@@ -69,8 +69,7 @@ public extension DataRequest {
     /// - parameter completionHandler: A closure to be executed once the request has finished.
     ///
     /// - returns: The request.
-    @discardableResult
-    func responseSwiftyJSON(
+    @discardableResult func responseSwiftyJSON(
         queue: DispatchQueue? = nil,
         options: JSONSerialization.ReadingOptions = .allowFragments,
         completionHandler: @escaping (DataResponse<JSON>) -> Void

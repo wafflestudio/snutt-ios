@@ -1,5 +1,5 @@
 //
-//  STTimetableCollectionViewController.swift
+//  STTimetableCollectionView.swift
 //  SNUTT
 //
 //  Created by 김진형 on 2015. 7. 2..

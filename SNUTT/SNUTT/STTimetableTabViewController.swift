@@ -247,17 +247,17 @@ class STTimetableTabViewController: UIViewController {
             newLecture?.color = nil
             STTimetableManager.sharedInstance.updateLecture(
                 oldLecture, newLecture: newLecture!, done: {}, failure: {
-                    cellList.forEach { cell in
+                    for cell in cellList {
                         cell?.setColorByLecture(lecture: oldLecture)
                     }
                 }
             )
         }, cancelBlock: {
-            cellList.forEach { cell in
+            for cell in cellList {
                 cell?.setColorByLecture(lecture: oldLecture)
             }
         }, selectedBlock: { colorIndex in
-            cellList.forEach { _ in
+            for _ in cellList {
                 let color = STColorManager.sharedInstance.colorList.colorList[colorIndex - 1]
                 //                    cell?.setColor(color: color)
             }
