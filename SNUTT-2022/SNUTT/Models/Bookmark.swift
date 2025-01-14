@@ -8,8 +8,8 @@
 import Foundation
 
 struct Bookmark {
-    var year: Int
-    var semester: Int
+    let year: Int
+    let semester: Int
     var lectures: [Lecture]
 }
 

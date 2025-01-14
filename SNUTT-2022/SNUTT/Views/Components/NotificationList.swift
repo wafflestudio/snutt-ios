@@ -113,7 +113,7 @@ extension NotificationList {
 
         func goToTimetableScene(with timetableId: String) async {
             do {
-                try await services.timetableService.fetchTimetable(timetableId: timetableId)
+                let _ = try await services.timetableService.fetchTimetable(timetableId: timetableId)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
