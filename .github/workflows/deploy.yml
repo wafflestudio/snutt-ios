@@ -23,9 +23,9 @@ jobs:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
       GIT_PAT_READONLY: ${{ secrets.GIT_PAT_READONLY }}
       GIT_TAG_NAME: ${{ github.ref_name }}
-      XCODE_VERSION: "15.1"
+      XCODE_VERSION: "16.0"
 
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
       - name: Parse tag name
