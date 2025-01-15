@@ -95,9 +95,15 @@ struct Lecture: Identifiable {
         if timePlaces.isEmpty {
             return ""
         }
-        let places = timePlaces
-            .compactMap { $0.place.isEmpty ? nil : $0.place }
-            .reduce(into: Set<String>()) { $0.insert($1) }
+        var places: [String] = []
+        timePlaces
+            .sorted { $0.day.rawValue < $1.day.rawValue && $0.startMinute < $1.startMinute }
+            .compactMap { $0.place == " " ? nil : $0.place }
+            .forEach { place in
+                if !places.contains(where: { $0 == place }) {
+                    places.append(place)
+                }
+            }
         if places.isEmpty {
             return ""
         }
