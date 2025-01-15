@@ -20,6 +20,7 @@ enum STDefaultsKey: String {
     case userDto
     case fcmToken
     case preferredColorScheme
+    case recentDepartmentTags
 
     case currentTimetable
     case timetableConfig
