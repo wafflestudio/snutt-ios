@@ -52,3 +52,11 @@ struct SendVerificationCodeDto: Decodable {
 struct EmailVerifiedDto: Decodable {
     let is_email_verified: Bool
 }
+
+struct SocialProviderDto: Codable {
+    let local: Bool
+    let facebook: Bool
+    let google: Bool
+    let kakao: Bool
+    let apple: Bool
+}

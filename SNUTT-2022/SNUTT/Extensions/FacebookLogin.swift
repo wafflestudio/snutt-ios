@@ -9,7 +9,7 @@ import FacebookLogin
 
 protocol FacebookLoginProtocol: BaseViewModelProtocol {
     func performFacebookSignIn()
-    func handleFacebookToken(fbId: String, fbToken: String) async
+    func handleFacebookToken(facebookId: String, facebookToken: String) async
 }
 
 extension FacebookLoginProtocol {
@@ -44,7 +44,7 @@ extension FacebookLoginProtocol {
             }
 
             Task { @MainActor in
-                await self.handleFacebookToken(fbId: fbUserId, fbToken: fbToken)
+                await self.handleFacebookToken(facebookId: fbUserId, facebookToken: fbToken)
             }
         }
     }

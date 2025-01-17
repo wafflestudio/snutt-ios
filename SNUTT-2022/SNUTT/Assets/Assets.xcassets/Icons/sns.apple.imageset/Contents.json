@@ -5,12 +5,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "appleid_button@2x 1@2x.png",
+      "filename" : "apple_x2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "appleid_button@2x 1@3x.png",
+      "filename" : "apple_x3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
