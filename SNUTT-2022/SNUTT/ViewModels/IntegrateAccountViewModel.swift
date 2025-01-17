@@ -5,6 +5,7 @@
 //  Created by 이채민 on 7/3/24.
 //
 
+import AuthenticationServices
 import Combine
 import SwiftUI
 
@@ -79,6 +80,41 @@ extension IntegrateAccountScene.ViewModel: GoogleLoginProtocol {
 }
 
 extension IntegrateAccountScene.ViewModel: AppleLoginProtocol {
+    
+    func authorizationController(controller _: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization)
+    {
+        Task {
+            await loginWithApple(successResult: authorization)
+        }
+    }
+    
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {
+        services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
+    }
+    
+    func performAppleSignIn() {
+        let provider = ASAuthorizationAppleIDProvider()
+        let request = provider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self
+        controller.performRequests()
+    }
+    
+    private func loginWithApple(successResult: ASAuthorization) async {
+        guard let credentail = successResult.credential as? ASAuthorizationAppleIDCredential,
+              let tokenData = credentail.identityToken,
+              let token = String(data: tokenData, encoding: .utf8)
+        else {
+            services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
+            return
+        }
+        Task {
+            await handleAppleToken(appleToken: token)
+        }
+    }
+    
     func handleAppleToken(appleToken: String) async {
         do {
             try await services.userService.connectApple(appleToken: appleToken)
