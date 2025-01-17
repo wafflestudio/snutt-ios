@@ -88,7 +88,7 @@ class UserRepository: UserRepositoryProtocol {
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
-    
+
     func connectApple(appleToken: String) async throws ->
         TokenResponseDto
     {

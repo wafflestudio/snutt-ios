@@ -35,7 +35,7 @@ extension IntegrateAccountScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
-        
+
         func disconnectApple() async {
             do {
                 try await services.userService.disconnectApple()

@@ -87,7 +87,7 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
         let dto = try await userRepository.disconnectGoogle()
         try await updateToken(from: dto)
     }
-    
+
     func connectApple(appleToken: String) async throws {
         let dto = try await userRepository.connectApple(appleToken: appleToken)
         try await updateToken(from: dto)

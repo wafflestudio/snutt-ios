@@ -34,7 +34,7 @@ struct IntegrateAccountScene: View {
                     viewModel.performGoogleSignIn()
                 }
             }
-            if (viewModel.currentSocialProvider?.apple == true) {
+            if viewModel.currentSocialProvider?.apple == true {
                 SettingsButtonItem(title: "애플 계정 연동 해제", role: .destructive) {
                     isDisconnectAppleAlertPresented = true
                 }
