@@ -16,6 +16,8 @@ protocol UserRepositoryProtocol {
     func disconnectKakao() async throws -> TokenResponseDto
     func connectGoogle(googleToken: String) async throws -> TokenResponseDto
     func disconnectGoogle() async throws -> TokenResponseDto
+    func connectApple(appleToken: String) async throws -> TokenResponseDto
+    func disconnectApple() async throws -> TokenResponseDto
     func connectFacebook(facebookId: String, facebookToken: String) async throws -> TokenResponseDto
     func disconnectFacebook() async throws -> TokenResponseDto
     func changePassword(from oldPassword: String, to newPassword: String) async throws -> TokenResponseDto
@@ -82,7 +84,23 @@ class UserRepository: UserRepositoryProtocol {
 
     func disconnectGoogle() async throws -> TokenResponseDto {
         return try await session
-            .request(UserRouter.disconnectKakao)
+            .request(UserRouter.disconnectGoogle)
+            .serializingDecodable(TokenResponseDto.self)
+            .handlingError()
+    }
+    
+    func connectApple(appleToken: String) async throws ->
+        TokenResponseDto
+    {
+        return try await session
+            .request(UserRouter.connectApple(appleToken: appleToken))
+            .serializingDecodable(TokenResponseDto.self)
+            .handlingError()
+    }
+
+    func disconnectApple() async throws -> TokenResponseDto {
+        return try await session
+            .request(UserRouter.disconnectApple)
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }

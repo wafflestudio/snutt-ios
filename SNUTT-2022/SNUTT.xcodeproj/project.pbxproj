@@ -36,6 +36,7 @@
 		73AB84D22C35128B0075DE83 /* IntegrateAccountScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */; };
 		73AB84D42C3514080075DE83 /* IntegrateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */; };
 		73B6E0882CCB34B2006DD4F0 /* SocialProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */; };
+		73EF6E682D3A5F330050D5C4 /* AppleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF6E672D3A5F2D0050D5C4 /* AppleLogin.swift */; };
 		B800A38B2B76132C008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */; };
@@ -379,6 +380,7 @@
 		73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateAccountScene.swift; sourceTree = "<group>"; };
 		73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateAccountViewModel.swift; sourceTree = "<group>"; };
 		73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialProvider.swift; sourceTree = "<group>"; };
+		73EF6E672D3A5F2D0050D5C4 /* AppleLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLogin.swift; sourceTree = "<group>"; };
 		B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTimeMaskDto.swift; sourceTree = "<group>"; };
 		B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureMapView.swift; sourceTree = "<group>"; };
 		B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
@@ -759,6 +761,7 @@
 				B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */,
 				736AF84B2C2F275E00ED9C1A /* GoogleLogin.swift */,
 				734A831E2C2FD41200D6CB95 /* KakaoLogin.swift */,
+				73EF6E672D3A5F2D0050D5C4 /* AppleLogin.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1560,6 +1563,7 @@
 				B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */,
 				738406FB2B57173400007E62 /* ThemeSettingScene.swift in Sources */,
 				B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */,
+				73EF6E682D3A5F330050D5C4 /* AppleLogin.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				738406F92B57154400007E62 /* ThemeState.swift in Sources */,
 				BE28036A28E93EEF00B2B1AB /* LoginScene.swift in Sources */,

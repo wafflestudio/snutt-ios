@@ -29,6 +29,8 @@ enum UserRouter: Router {
     case disconnectKakao
     case connectGoogle(googleToken: String)
     case disconnectGoogle
+    case connectApple(appleToken: String)
+    case disconnectApple
     case connectFacebook(facebookId: String, facebookToken: String)
     case disconnectFacebook
     case getFB
@@ -57,6 +59,10 @@ enum UserRouter: Router {
         case .connectGoogle:
             return .post
         case .disconnectGoogle:
+            return .delete
+        case .connectApple:
+            return .post
+        case .disconnectApple:
             return .delete
         case .connectFacebook:
             return .post
@@ -89,6 +95,8 @@ enum UserRouter: Router {
             return "/kakao"
         case .connectGoogle, .disconnectGoogle:
             return "/google"
+        case .connectApple, .disconnectApple:
+            return "/apple"
         case .connectFacebook, .disconnectFacebook, .getFB:
             return "/facebook"
         case let .addDevice(fcmToken):
@@ -123,6 +131,10 @@ enum UserRouter: Router {
         case let .connectGoogle(googleToken):
             return ["token": googleToken]
         case .disconnectGoogle:
+            return nil
+        case let .connectApple(appleToken):
+            return ["token": appleToken]
+        case .disconnectApple:
             return nil
         case let .connectFacebook(facebookId, facebookToken):
             return ["fb_id": facebookId, "fb_token": facebookToken]

@@ -5,7 +5,6 @@
 //  Created by 박신홍 on 2022/10/03.
 //
 
-import AuthenticationServices
 import SwiftUI
 
 extension OnboardScene {
@@ -107,38 +106,10 @@ extension OnboardScene.ViewModel: KakaoLoginProtocol {
     }
 }
 
-extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
-    func authorizationController(controller _: ASAuthorizationController,
-                                 didCompleteWithAuthorization authorization: ASAuthorization)
-    {
-        Task {
-            await loginWithApple(successResult: authorization)
-        }
-    }
-
-    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {
-        services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
-    }
-
-    func performAppleSignIn() {
-        let provider = ASAuthorizationAppleIDProvider()
-        let request = provider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        let controller = ASAuthorizationController(authorizationRequests: [request])
-        controller.delegate = self
-        controller.performRequests()
-    }
-
-    private func loginWithApple(successResult: ASAuthorization) async {
-        guard let credentail = successResult.credential as? ASAuthorizationAppleIDCredential,
-              let tokenData = credentail.identityToken,
-              let token = String(data: tokenData, encoding: .utf8)
-        else {
-            services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
-            return
-        }
+extension OnboardScene.ViewModel: AppleLoginProtocol {
+    func handleAppleToken(appleToken: String) async {
         do {
-            try await services.authService.loginWithApple(appleToken: token)
+            try await services.authService.loginWithApple(appleToken: appleToken)
         } catch {
             handleSocialLoginError(error)
         }

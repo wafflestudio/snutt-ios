@@ -35,6 +35,15 @@ extension IntegrateAccountScene {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
+        
+        func disconnectApple() async {
+            do {
+                try await services.userService.disconnectApple()
+                try await services.userService.fetchSocialProvider()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
 
         func disconnectFacebook() async {
             do {
@@ -62,6 +71,17 @@ extension IntegrateAccountScene.ViewModel: GoogleLoginProtocol {
     func handleGoogleToken(googleToken: String) async {
         do {
             try await services.userService.connectGoogle(googleToken: googleToken)
+            try await services.userService.fetchSocialProvider()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
+}
+
+extension IntegrateAccountScene.ViewModel: AppleLoginProtocol {
+    func handleAppleToken(appleToken: String) async {
+        do {
+            try await services.userService.connectApple(appleToken: appleToken)
             try await services.userService.fetchSocialProvider()
         } catch {
             services.globalUIService.presentErrorAlert(error: error)

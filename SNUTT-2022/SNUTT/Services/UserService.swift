@@ -19,6 +19,8 @@ protocol UserServiceProtocol: Sendable {
     func disconnectKakao() async throws
     func connectGoogle(googleToken: String) async throws
     func disconnectGoogle() async throws
+    func connectApple(appleToken: String) async throws
+    func disconnectApple() async throws
     func connectFacebook(facebookId: String, facebookToken: String) async throws
     func disconnectFacebook() async throws
     func addDevice(fcmToken: String) async throws
@@ -83,6 +85,16 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
 
     func disconnectGoogle() async throws {
         let dto = try await userRepository.disconnectGoogle()
+        try await updateToken(from: dto)
+    }
+    
+    func connectApple(appleToken: String) async throws {
+        let dto = try await userRepository.connectApple(appleToken: appleToken)
+        try await updateToken(from: dto)
+    }
+
+    func disconnectApple() async throws {
+        let dto = try await userRepository.disconnectApple()
         try await updateToken(from: dto)
     }
 
@@ -153,6 +165,8 @@ class FakeUserService: UserServiceProtocol {
     func disconnectKakao() async throws {}
     func connectGoogle(googleToken _: String) async throws {}
     func disconnectGoogle() async throws {}
+    func connectApple(appleToken _: String) async throws {}
+    func disconnectApple() async throws {}
     func connectFacebook(facebookId _: String, facebookToken _: String) async throws {}
     func disconnectFacebook() async throws {}
     func addDevice(fcmToken _: String) async throws {}
