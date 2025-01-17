@@ -80,7 +80,6 @@ extension IntegrateAccountScene.ViewModel: GoogleLoginProtocol {
 }
 
 extension IntegrateAccountScene.ViewModel: AppleLoginProtocol {
-    
     func authorizationController(controller _: ASAuthorizationController,
                                  didCompleteWithAuthorization authorization: ASAuthorization)
     {
@@ -88,11 +87,11 @@ extension IntegrateAccountScene.ViewModel: AppleLoginProtocol {
             await loginWithApple(successResult: authorization)
         }
     }
-    
+
     func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {
         services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
     }
-    
+
     func performAppleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
@@ -101,7 +100,7 @@ extension IntegrateAccountScene.ViewModel: AppleLoginProtocol {
         controller.delegate = self
         controller.performRequests()
     }
-    
+
     private func loginWithApple(successResult: ASAuthorization) async {
         guard let credentail = successResult.credential as? ASAuthorizationAppleIDCredential,
               let tokenData = credentail.identityToken,
@@ -114,7 +113,7 @@ extension IntegrateAccountScene.ViewModel: AppleLoginProtocol {
             await handleAppleToken(appleToken: token)
         }
     }
-    
+
     func handleAppleToken(appleToken: String) async {
         do {
             try await services.userService.connectApple(appleToken: appleToken)

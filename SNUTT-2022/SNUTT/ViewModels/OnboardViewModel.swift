@@ -108,7 +108,6 @@ extension OnboardScene.ViewModel: KakaoLoginProtocol {
 }
 
 extension OnboardScene.ViewModel: AppleLoginProtocol {
-    
     func authorizationController(controller _: ASAuthorizationController,
                                  didCompleteWithAuthorization authorization: ASAuthorization)
     {
@@ -116,11 +115,11 @@ extension OnboardScene.ViewModel: AppleLoginProtocol {
             await loginWithApple(successResult: authorization)
         }
     }
-    
+
     func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {
         services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
     }
-    
+
     func performAppleSignIn() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
@@ -129,7 +128,7 @@ extension OnboardScene.ViewModel: AppleLoginProtocol {
         controller.delegate = self
         controller.performRequests()
     }
-    
+
     private func loginWithApple(successResult: ASAuthorization) async {
         guard let credentail = successResult.credential as? ASAuthorizationAppleIDCredential,
               let tokenData = credentail.identityToken,
@@ -142,7 +141,7 @@ extension OnboardScene.ViewModel: AppleLoginProtocol {
             await handleAppleToken(appleToken: token)
         }
     }
-    
+
     func handleAppleToken(appleToken: String) async {
         do {
             try await services.authService.loginWithApple(appleToken: appleToken)

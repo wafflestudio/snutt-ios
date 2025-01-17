@@ -11,4 +11,3 @@ protocol AppleLoginProtocol: BaseViewModelProtocol, ASAuthorizationControllerDel
     func performAppleSignIn()
     func handleAppleToken(appleToken: String) async
 }
-
