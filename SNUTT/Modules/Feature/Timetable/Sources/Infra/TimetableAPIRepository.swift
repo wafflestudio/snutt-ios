@@ -47,6 +47,14 @@ public struct TimetableAPIRepository: TimetableRepository {
     public func deleteTimetable(timetableID: String) async throws -> [any TimetableMetadata] {
         try await apiClient.deleteTimetable(.init(path: .init(timetableId: timetableID))).ok.body.json
     }
+
+    public func addLecture(timetableID: String, lectureID: String) async throws -> any Timetable {
+        try await apiClient.addLecture(path: .init(timetableId: timetableID, lectureId: lectureID)).ok.body.json
+    }
+
+    public func removeLecture(timetableID: String, lectureID: String) async throws -> any Timetable {
+        try await apiClient.deleteTimetableLecture(.init(path: .init(timetableId: timetableID, timetableLectureId: lectureID))).ok.body.json
+    }
 }
 
 extension Components.Schemas.TimetableLegacyDto: @retroactive Timetable {

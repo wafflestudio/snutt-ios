@@ -36,6 +36,18 @@ struct TimetableUseCase {
         try timetableLocalRepository.storeSelectedTimetable(timetable)
         return timetable
     }
+
+    func addLecture(timetableID: String, lectureID: String) async throws -> any Timetable {
+        let timetable = try await timetableRepository.addLecture(timetableID: timetableID, lectureID: lectureID)
+        try timetableLocalRepository.storeSelectedTimetable(timetable)
+        return timetable
+    }
+
+    func removeLecture(timetableID: String, lectureID: String) async throws -> any Timetable {
+        let timetable = try await timetableRepository.removeLecture(timetableID: timetableID, lectureID: lectureID)
+        try timetableLocalRepository.storeSelectedTimetable(timetable)
+        return timetable
+    }
 }
 
 private struct TimetableUseCaseKey: DependencyKey {

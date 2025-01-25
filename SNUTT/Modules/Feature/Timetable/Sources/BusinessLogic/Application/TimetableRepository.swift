@@ -19,6 +19,8 @@ public protocol TimetableRepository: Sendable {
     func unsetPrimaryTimetable(timetableID: String) async throws
     func copyTimetable(timetableID: String) async throws -> [any TimetableMetadata]
     func deleteTimetable(timetableID: String) async throws -> [any TimetableMetadata]
+    func addLecture(timetableID: String, lectureID: String) async throws -> any Timetable
+    func removeLecture(timetableID: String, lectureID: String) async throws -> any Timetable
 }
 
 public enum TimetableRepositoryKey: TestDependencyKey {

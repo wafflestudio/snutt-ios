@@ -69,8 +69,8 @@ struct LectureSearchResultScene: View {
 }
 
 #Preview {
-    let viewModel = LectureSearchViewModel()
-    _ = Task {
+    let viewModel = LectureSearchViewModel(timetableViewModel: .init())
+    let _ = Task {
         await viewModel.fetchInitialSearchResult()
     }
     ZStack {

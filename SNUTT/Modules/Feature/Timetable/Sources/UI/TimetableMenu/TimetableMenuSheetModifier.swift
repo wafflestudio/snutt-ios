@@ -30,7 +30,7 @@ extension View {
     @Previewable @State var isPresented = false
     @Previewable @State var context: SheetPresentationContext?
     let viewModel = TimetableViewModel()
-    _ = Task {
+    let _ = Task {
         try await viewModel.loadTimetableList()
     }
 

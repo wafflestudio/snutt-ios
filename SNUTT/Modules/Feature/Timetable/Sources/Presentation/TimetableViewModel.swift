@@ -22,8 +22,7 @@ class TimetableViewModel {
     @ObservationIgnored
     @Dependency(\.timetableRepository) private var timetableRepository
 
-    var currentTimetable: (any Timetable)?
-    var selectedLecture: (any Lecture)?
+    private(set) var currentTimetable: (any Timetable)?
     private(set) var metadataLoadState: MetadataLoadState = .loading
 
     var paths = [TimetableDetailSceneTypes]()
@@ -80,6 +79,26 @@ class TimetableViewModel {
     func unsetPrimaryTimetable(timetableID: String) async throws {
         try await timetableRepository.unsetPrimaryTimetable(timetableID: timetableID)
         try await loadTimetableList()
+    }
+
+    func isLectureInCurrentTimetable(lecture: any Lecture) -> Bool {
+        if let timetableLectureID = lecture.lectureID {
+            currentTimetable?.lectures.contains(where: { $0.lectureID == timetableLectureID }) ?? false
+        } else {
+            currentTimetable?.lectures.contains(where: { $0.lectureID == lecture.id }) ?? false
+        }
+    }
+
+    func addLecture(lecture: any Lecture) async throws {
+        guard let currentTimetable else { return }
+        self.currentTimetable = try await timetableUseCase.addLecture(timetableID: currentTimetable.id, lectureID: lecture.id)
+    }
+
+    func removeLecture(lecture: any Lecture) async throws {
+        guard let currentTimetable,
+              let timetableLectureID = currentTimetable.lectures.first(where: { $0.lectureID == (lecture.lectureID ?? lecture.id) })?.id
+        else { return }
+        self.currentTimetable = try await timetableUseCase.removeLecture(timetableID: currentTimetable.id, lectureID: timetableLectureID)
     }
 
     func renameTimetable(timetableID: String, title: String) async throws {

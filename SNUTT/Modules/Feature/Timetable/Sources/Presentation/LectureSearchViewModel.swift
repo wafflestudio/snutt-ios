@@ -16,6 +16,12 @@ class LectureSearchViewModel {
     @ObservationIgnored
     @Dependency(\.lectureSearchRepository) private var searchRepository
 
+    private let timetableViewModel: TimetableViewModel
+
+    init(timetableViewModel: TimetableViewModel) {
+        self.timetableViewModel = timetableViewModel
+    }
+
     var searchQuery = ""
     var searchingQuarter: Quarter?
     var searchDisplayMode: SearchDisplayMode = .search
@@ -23,7 +29,7 @@ class LectureSearchViewModel {
     var targetForLectureDetailSheet: (any Lecture)?
 
     private let dataSource = LectureSearchResultDataSource()
-    private(set) var selectedLecture: (any Lecture)?
+    var selectedLecture: (any Lecture)?
 
     private(set) var availablePredicates: [SearchFilterCategory: [SearchPredicate]] = [:]
     var selectedCategory: SearchFilterCategory = .sortCriteria
@@ -61,6 +67,21 @@ class LectureSearchViewModel {
 }
 
 extension LectureSearchViewModel: ExpandableLectureListViewModel {
+    func isToggled(lecture: any Lecture, type: ActionButtonType) -> Bool {
+        switch type {
+        case .detail:
+            false
+        case .review:
+            false
+        case .bookmark:
+            false
+        case .vacancy:
+            false
+        case .add:
+            timetableViewModel.isLectureInCurrentTimetable(lecture: lecture)
+        }
+    }
+    
     var lectures: [any Lecture] {
         dataSource.searchResults
     }
@@ -73,25 +94,24 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         selectedLecture?.id == lecture.id
     }
 
-    func toggleAction(lecture: any Lecture, type: ActionButtonType) {
+    func toggleAction(lecture: any Lecture, type: ActionButtonType) async throws {
         switch type {
         case .detail:
             targetForLectureDetailSheet = lecture
-        default:
-            return
+        case .review:
+            break
+        case .bookmark:
+            break
+        case .vacancy:
+            break
+        case .add:
+            if !isToggled(lecture: lecture, type: type) {
+                try await timetableViewModel.addLecture(lecture: lecture)
+            } else {
+                try await timetableViewModel.removeLecture(lecture: lecture)
+            }
+            selectedLecture = nil
         }
-    }
-
-    func isBookmarked(lecture _: any Lecture) -> Bool {
-        false
-    }
-
-    func isInCurrentTimetable(lecture _: any Lecture) -> Bool {
-        false
-    }
-
-    func isVacancyNotificationEnabled(lecture _: any Lecture) -> Bool {
-        false
     }
 
     func fetchMoreLectures() async {

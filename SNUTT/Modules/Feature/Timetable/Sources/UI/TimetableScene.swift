@@ -13,13 +13,16 @@ import TimetableUIComponents
 
 public struct TimetableScene: View {
     @Dependency(\.application) private var application
-    @State private(set) var timetableViewModel = TimetableViewModel()
-    @State private(set) var searchViewModel = LectureSearchViewModel()
+    @State private(set) var timetableViewModel: TimetableViewModel
+    @State private(set) var searchViewModel: LectureSearchViewModel
     @Binding private(set) var isSearchMode: Bool
     @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     public init(isSearchMode: Binding<Bool>) {
         _isSearchMode = isSearchMode
+        let timetableViewModel = TimetableViewModel()
+        _timetableViewModel = State(initialValue: timetableViewModel)
+        _searchViewModel = State(initialValue: LectureSearchViewModel(timetableViewModel: timetableViewModel))
     }
 
     public var body: some View {
@@ -59,6 +62,9 @@ public struct TimetableScene: View {
         .onChange(of: isSearchMode) { _, newValue in
             if newValue, !timetableViewModel.paths.isEmpty {
                 timetableViewModel.paths = []
+            }
+            if !newValue {
+                searchViewModel.selectedLecture = nil
             }
         }
         .onChange(of: timetableViewModel.currentTimetable?.quarter) { _, newValue in

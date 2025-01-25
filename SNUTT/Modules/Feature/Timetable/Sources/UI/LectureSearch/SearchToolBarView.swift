@@ -40,5 +40,5 @@ struct SearchToolBarView: View {
 }
 
 #Preview {
-    SearchToolBarView(searchViewModel: .init())
+    SearchToolBarView(searchViewModel: .init(timetableViewModel: .init()))
 }

@@ -18,11 +18,9 @@ protocol ExpandableLectureListViewModel: Sendable {
     var selectedLecture: (any Lecture)? { get }
     func selectLecture(_: any Lecture)
     func isSelected(lecture: any Lecture) -> Bool
-    func isBookmarked(lecture: any Lecture) -> Bool
-    func isInCurrentTimetable(lecture: any Lecture) -> Bool
-    func isVacancyNotificationEnabled(lecture: any Lecture) -> Bool
     func fetchMoreLectures() async
-    func toggleAction(lecture: any Lecture, type: ActionButtonType)
+    func toggleAction(lecture: any Lecture, type: ActionButtonType) async throws
+    func isToggled(lecture: any Lecture, type: ActionButtonType) -> Bool
 }
 
 enum ActionButtonType: String, CaseIterable, Identifiable {

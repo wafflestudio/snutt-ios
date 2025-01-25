@@ -18,7 +18,7 @@ struct LectureListScene: View {
 
 #Preview {
     let viewModel = TimetableViewModel()
-    _ = Task {
+    let _ = Task {
         try await viewModel.loadTimetable()
     }
     ZStack {

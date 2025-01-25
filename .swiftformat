@@ -4,3 +4,4 @@
 --varattributes same-line
 --funcattributes same-line
 --typeattributes prev-line
+--disable redundantLet

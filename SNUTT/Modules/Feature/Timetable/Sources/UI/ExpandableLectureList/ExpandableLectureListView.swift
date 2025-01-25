@@ -44,6 +44,6 @@ struct ExpandableLectureListView: View {
 }
 
 #Preview {
-    ExpandableLectureListView(viewModel: LectureSearchViewModel())
+    ExpandableLectureListView(viewModel: LectureSearchViewModel(timetableViewModel: .init()))
         .foregroundStyle(.black)
 }

@@ -32,7 +32,7 @@ extension LectureListViewModel {
         timetableViewModel.paths.append(.lectureDetail(lecture))
     }
 
-    func toggleAction(lecture _: any TimetableInterface.Lecture, type _: ActionButtonType) {
+    func toggleAction(lecture _: any TimetableInterface.Lecture, type _: ActionButtonType) async throws {
         // noop
     }
 
@@ -40,19 +40,11 @@ extension LectureListViewModel {
         false
     }
 
-    func isBookmarked(lecture _: any Lecture) -> Bool {
-        false
-    }
-
-    func isInCurrentTimetable(lecture _: any Lecture) -> Bool {
-        false
-    }
-
-    func isVacancyNotificationEnabled(lecture _: any Lecture) -> Bool {
-        false
-    }
-
     func fetchMoreLectures() async {
         // noop
+    }
+
+    func isToggled(lecture: any Lecture, type: ActionButtonType) -> Bool {
+        false
     }
 }

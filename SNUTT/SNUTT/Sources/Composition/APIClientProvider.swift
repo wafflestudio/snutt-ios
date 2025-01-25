@@ -33,8 +33,8 @@ public struct APIClientProvider: Sendable {
                         try? secureRepository.clear()
                     }
                 ),
-                LoggingMiddleware(),
                 ErrorDecodingMiddleware(),
+                LoggingMiddleware(),
             ]
         )
     }

@@ -128,6 +128,6 @@ struct SearchFilterSheet: View {
     }
     .ignoresSafeArea()
     .sheet(isPresented: $isPresented) {
-        SearchFilterSheet(viewModel: .init())
+        SearchFilterSheet(viewModel: .init(timetableViewModel: .init()))
     }
 }

@@ -62,18 +62,26 @@ private struct LectureActionButton: View {
     let lecture: any Lecture
     let type: ActionButtonType
 
-    var isSelected: Bool = false
+    var isSelected: Bool {
+        viewModel.isToggled(lecture: lecture, type: type)
+    }
 
     enum Design {
         static let buttonFont: UIFont = .systemFont(ofSize: 11)
     }
+
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     var body: some View {
         AnimatableButton(
             animationOptions: .identity.impact().scale(0.95).backgroundColor(touchDown: .black.opacity(0.04)),
             layoutOptions: [.respectIntrinsicHeight, .expandHorizontally]
         ) {
-            viewModel.toggleAction(lecture: lecture, type: type)
+            Task {
+                await errorAlertHandler.withAlert {
+                    try await viewModel.toggleAction(lecture: lecture, type: type)
+                }
+            }
         } configuration: { button in
             var config = UIButton.Configuration.plain()
             config.imagePlacement = .top
@@ -158,7 +166,7 @@ extension ActionButtonType {
         }
     }
 
-    func text(isSelected _: Bool) -> String {
+    func text(isSelected: Bool) -> String {
         switch self {
         case .detail:
             "자세히"
@@ -169,7 +177,7 @@ extension ActionButtonType {
         case .vacancy:
             "빈자리알림"
         case .add:
-            "추가하기"
+            isSelected ? "제거하기" : "추가하기"
         }
     }
 }
