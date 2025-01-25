@@ -8,10 +8,14 @@
 import SharedUIComponents
 import SwiftUI
 import SwiftUIUtility
+import TimetableInterface
 
 struct MenuEllipsisSheet: View {
     let viewModel: TimetableMenuViewModel
+    let metadata: any TimetableMetadata
 
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
+    @Environment(\.dismiss) private var dismiss
     @State private var isRenameMenuPresented = false
 
     var body: some View {
@@ -21,12 +25,31 @@ struct MenuEllipsisSheet: View {
                     isRenameMenuPresented = true
                 }
                 .sheet(isPresented: $isRenameMenuPresented) {
-                    MenuRenameSheet(viewModel: viewModel)
+                    MenuRenameSheet(viewModel: viewModel, metadata: metadata)
                 }
 
-                EllipsisSheetButton(menu: .primary(isOn: false)) {}
-                EllipsisSheetButton(menu: .theme) {}
-                EllipsisSheetButton(menu: .delete) {}
+                EllipsisSheetButton(menu: .primary(isOn: metadata.isPrimary)) {
+                    dismiss()
+                    Task {
+                        await errorAlertHandler.withAlert {
+                            if metadata.isPrimary {
+                                try await viewModel.unsetPrimaryTimetable(timetableID: metadata.id)
+                            } else {
+                                try await viewModel.setPrimaryTimetable(timetableID: metadata.id)
+                            }
+                        }
+                    }
+                }
+                EllipsisSheetButton(menu: .theme) {
+                }
+                EllipsisSheetButton(menu: .delete) {
+                    dismiss()
+                    Task {
+                        await errorAlertHandler.withAlert {
+                            try await viewModel.deleteTimetable(timetableID: metadata.id)
+                        }
+                    }
+                }
                 Spacer()
             }
             .padding(.vertical, 10)
@@ -100,6 +123,6 @@ extension EllipsisSheetButton {
     }
     .ignoresSafeArea()
     .sheet(isPresented: $isPresented) {
-        MenuEllipsisSheet(viewModel: .init(timetableViewModel: .init()))
+        MenuEllipsisSheet(viewModel: .init(timetableViewModel: .init()), metadata: PreviewHelpers.previewMetadata(with: "1"))
     }
 }

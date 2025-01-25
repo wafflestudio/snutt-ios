@@ -13,8 +13,11 @@ public protocol TimetableRepository: Sendable {
     func fetchTimetable(timetableID: String) async throws -> any Timetable
     func fetchRecentTimetable() async throws -> any Timetable
     func fetchTimetableMetadataList() async throws -> [any TimetableMetadata]
-    func updateTimetableTitle(timetableID: String, title: String) async throws -> [any Timetable]
+    func updateTimetableTitle(timetableID: String, title: String) async throws -> [any TimetableMetadata]
     func setPrimaryTimetable(timetableID: String) async throws
+    func unsetPrimaryTimetable(timetableID: String) async throws
+    func copyTimetable(timetableID: String) async throws -> [any TimetableMetadata]
+    func deleteTimetable(timetableID: String) async throws -> [any TimetableMetadata]
 }
 
 public enum TimetableRepositoryKey: TestDependencyKey {

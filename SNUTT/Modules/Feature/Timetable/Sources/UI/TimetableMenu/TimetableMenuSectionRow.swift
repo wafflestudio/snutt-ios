@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TimetableInterface
+import SharedUIComponents
 
 struct TimetableMenuSectionRow: View {
     let viewModel: TimetableMenuViewModel
@@ -15,6 +16,9 @@ struct TimetableMenuSectionRow: View {
 
     @State private var isLoadingTimetable = false
     @State private var isEllipsisMenuPresented = false
+    @State private var isCopyingTimetable = false
+
+    @Environment(\.errorAlertHandler) private var errorHandler
 
     private enum Design {
         static let detailFont = Font.system(size: 12)
@@ -68,6 +72,7 @@ struct TimetableMenuSectionRow: View {
                             .layoutPriority(1)
                     }
                 }
+                .animation(.defaultSpring, value: timetableMetadata.isPrimary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
             }
@@ -75,13 +80,29 @@ struct TimetableMenuSectionRow: View {
             Spacer()
 
             Button {
-                Task {}
+                Task {
+                    guard !isCopyingTimetable else { return }
+                    isCopyingTimetable = true
+                    defer {
+                        isCopyingTimetable = false
+                    }
+                    await errorHandler.withAlert {
+                        try await viewModel.copyTimetable(timetableID: timetableMetadata.id)
+                    }
+                }
             } label: {
-                TimetableAsset.menuDuplicate.swiftUIImage
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30)
-                    .opacity(0.5)
+                if isCopyingTimetable {
+                    ProgressView()
+                        .frame(width: 30, height: 30)
+                        .scaleEffect(0.7)
+                        .opacity(0.7)
+                } else {
+                    TimetableAsset.menuDuplicate.swiftUIImage
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 30)
+                        .opacity(0.5)
+                }
             }
 
             Spacer().frame(width: 12)
@@ -96,7 +117,7 @@ struct TimetableMenuSectionRow: View {
                     .opacity(0.5)
             }
             .sheet(isPresented: $isEllipsisMenuPresented) {
-                MenuEllipsisSheet(viewModel: viewModel)
+                MenuEllipsisSheet(viewModel: viewModel, metadata: timetableMetadata)
             }
         }
         .animation(.defaultSpring, value: isSelected)

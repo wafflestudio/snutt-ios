@@ -9,12 +9,14 @@ import Dependencies
 import SwiftUI
 import TimetableInterface
 import TimetableUIComponents
+import SharedUIComponents
 
 public struct TimetableScene: View {
     @Dependency(\.application) private var application
     @State private(set) var timetableViewModel = TimetableViewModel()
     @State private(set) var searchViewModel = LectureSearchViewModel()
     @Binding private(set) var isSearchMode: Bool
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     public init(isSearchMode: Binding<Bool>) {
         _isSearchMode = isSearchMode
@@ -44,7 +46,9 @@ public struct TimetableScene: View {
             .task {
                 await withThrowingTaskGroup(of: Void.self) { group in
                     group.addTask {
-                        await timetableViewModel.loadTimetable()
+                        await errorAlertHandler.withAlert {
+                            try await timetableViewModel.loadTimetable()
+                        }
                     }
                     group.addTask {
                         try await timetableViewModel.loadTimetableList()
@@ -81,16 +85,6 @@ public struct TimetableScene: View {
                 .environment(\.lectureTapAction, LectureTapAction(action: { lecture in
                     timetableViewModel.paths.append(.lectureDetail(lecture))
                 }))
-        }
-        .task {
-            await withThrowingTaskGroup(of: Void.self) { group in
-                group.addTask {
-                    await timetableViewModel.loadTimetable()
-                }
-                group.addTask {
-                    try await LectureSearchAPIRepository().fetchSearchPredicates(quarter: TimetableInterface.Quarter(year: 2024, semester: Semester.first))
-                }
-            }
         }
     }
 }

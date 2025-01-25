@@ -28,12 +28,24 @@ public struct TimetableAPIRepository: TimetableRepository {
         try await apiClient.getBrief().ok.body.json
     }
 
-    public func updateTimetableTitle(timetableID _: String, title _: String) async throws -> [any Timetable] {
-        fatalError()
+    public func updateTimetableTitle(timetableID: String, title: String) async throws -> [any TimetableMetadata] {
+        try await apiClient.modifyTimetable(path: .init(timetableId: timetableID), body: .json(.init(title: title))).ok.body.json
     }
 
-    public func setPrimaryTimetable(timetableID _: String) async throws {
-        fatalError()
+    public func setPrimaryTimetable(timetableID: String) async throws {
+        _ = try await apiClient.setPrimary(path: .init(timetableId: timetableID)).ok
+    }
+
+    public func unsetPrimaryTimetable(timetableID: String) async throws {
+        _ = try await apiClient.unSetPrimary(path: .init(timetableId: timetableID)).ok
+    }
+
+    public func copyTimetable(timetableID: String) async throws -> [any TimetableMetadata] {
+        try await apiClient.copyTimetable(.init(path: .init(timetableId: timetableID))).ok.body.json
+    }
+
+    public func deleteTimetable(timetableID: String) async throws -> [any TimetableMetadata] {
+        try await apiClient.deleteTimetable(.init(path: .init(timetableId: timetableID))).ok.body.json
     }
 }
 

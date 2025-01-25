@@ -49,12 +49,8 @@ class TimetableViewModel {
         )
     }
 
-    func loadTimetable() async {
-        do {
-            currentTimetable = try await timetableUseCase.loadRecentTimetable()
-        } catch {
-            print(error)
-        }
+    func loadTimetable() async throws {
+        currentTimetable = try await timetableUseCase.loadRecentTimetable()
     }
 
     func loadTimetableList() async throws {
@@ -64,6 +60,31 @@ class TimetableViewModel {
 
     func selectTimetable(timetableID: String) async throws {
         currentTimetable = try await timetableUseCase.selectTimetable(timetableID: timetableID)
+    }
+
+    func copyTimetable(timetableID: String) async throws {
+        let metadataList = try await timetableRepository.copyTimetable(timetableID: timetableID)
+        metadataLoadState = .loaded(metadataList)
+    }
+
+    func deleteTimetable(timetableID: String) async throws {
+        let metadataList = try await timetableRepository.deleteTimetable(timetableID: timetableID)
+        metadataLoadState = .loaded(metadataList)
+    }
+
+    func setPrimaryTimetable(timetableID: String) async throws {
+        try await timetableRepository.setPrimaryTimetable(timetableID: timetableID)
+        try await loadTimetableList()
+    }
+
+    func unsetPrimaryTimetable(timetableID: String) async throws {
+        try await timetableRepository.unsetPrimaryTimetable(timetableID: timetableID)
+        try await loadTimetableList()
+    }
+
+    func renameTimetable(timetableID: String, title: String) async throws {
+        let metadataList = try await timetableRepository.updateTimetableTitle(timetableID: timetableID, title: title)
+        metadataLoadState = .loaded(metadataList)
     }
 }
 

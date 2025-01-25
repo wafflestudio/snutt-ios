@@ -31,12 +31,13 @@ struct TimetableMenuContentView: View {
             switch viewModel.metadataLoadingState {
             case .loading:
                 loadingView
-            case .loaded:
+            case .loaded(let metadataList):
                 ScrollView {
                     VStack(spacing: 15) {
                         headerView
                         timetableListView
                     }
+                    .animation(.defaultSpring, value: metadataList.map(\.id))
                     .padding(.top, 20)
                 }
             }
@@ -112,7 +113,7 @@ struct TimetableMenuContentView: View {
 
 #Preview {
     let viewModel = TimetableViewModel()
-    _ = Task {
+    let _ = Task {
         try await Task.sleep(for: .milliseconds(200))
         try await viewModel.loadTimetable()
         try await viewModel.loadTimetableList()
