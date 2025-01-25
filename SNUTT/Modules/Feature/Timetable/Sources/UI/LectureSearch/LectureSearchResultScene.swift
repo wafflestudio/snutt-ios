@@ -59,8 +59,8 @@ struct LectureSearchResultScene: View {
 
     private var searchContentView: some View {
         ExpandableLectureListView(viewModel: viewModel)
-        .ignoresSafeArea(edges: .bottom)
-        .foregroundStyle(.white)
+            .ignoresSafeArea(edges: .bottom)
+            .foregroundStyle(.white)
     }
 
     private var bookmarkContentView: some View {
@@ -70,7 +70,7 @@ struct LectureSearchResultScene: View {
 
 #Preview {
     let viewModel = LectureSearchViewModel()
-    let _ = Task {
+    _ = Task {
         await viewModel.fetchInitialSearchResult()
     }
     ZStack {

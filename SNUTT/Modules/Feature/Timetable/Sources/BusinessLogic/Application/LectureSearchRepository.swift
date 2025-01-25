@@ -20,4 +20,3 @@ protocol LectureSearchRepository: Sendable {
         limit: Int
     ) async throws -> [any Lecture]
 }
-

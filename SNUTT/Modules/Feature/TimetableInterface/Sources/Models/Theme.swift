@@ -5,10 +5,10 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import Foundation
+import MemberwiseInit
 import SwiftUI
 import SwiftUIUtility
-import MemberwiseInit
-import Foundation
 
 @MemberwiseInit(.public)
 public struct Theme: Identifiable, Sendable, Codable {
@@ -19,7 +19,6 @@ public struct Theme: Identifiable, Sendable, Codable {
     /// 사용자 생성 커스텀 테마
     public let isCustom: Bool
 }
-
 
 @MemberwiseInit(.public)
 public struct LectureColor: Hashable, Sendable, Codable {

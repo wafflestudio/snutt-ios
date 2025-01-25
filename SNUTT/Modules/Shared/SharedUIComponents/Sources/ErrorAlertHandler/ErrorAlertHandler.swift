@@ -10,7 +10,7 @@ import SwiftUI
 @Observable
 @MainActor
 public final class ErrorAlertHandler: Sendable {
-    fileprivate var currentError: (AnyLocalizedError)?
+    fileprivate var currentError: AnyLocalizedError?
     fileprivate var isErrorAlertPresented: Binding<Bool> {
         .init(get: {
             self.currentError != nil
@@ -49,19 +49,22 @@ private struct AnyLocalizedError: LocalizedError {
     var localizedError: (any LocalizedError)? {
         wrappedError as? any LocalizedError
     }
+
     var errorDescription: String? {
         localizedError?.errorDescription ?? wrappedError.localizedDescription
     }
+
     var failureReason: String? {
         localizedError?.failureReason
     }
+
     var recoverySuggestion: String? {
         localizedError?.recoverySuggestion
     }
 }
 
-extension View {
-    public func observeErrors() -> some View {
+public extension View {
+    func observeErrors() -> some View {
         modifier(ErrorAlertModifier())
     }
 }
@@ -78,8 +81,6 @@ private struct ErrorAlertModifier: ViewModifier {
     }
 }
 
-extension EnvironmentValues {
-    @Entry public var errorAlertHandler: ErrorAlertHandler = .init()
+public extension EnvironmentValues {
+    @Entry var errorAlertHandler: ErrorAlertHandler = .init()
 }
-
-

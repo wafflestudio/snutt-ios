@@ -5,10 +5,10 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
-import SharedUIComponents
-import SwiftUIIntrospect
 import FoundationUtility
+import SharedUIComponents
+import SwiftUI
+import SwiftUIIntrospect
 
 struct SearchFilterSheet: View {
     @Bindable var viewModel: LectureSearchViewModel
@@ -106,7 +106,7 @@ struct SearchFilterSheet: View {
             Task {
                 await viewModel.fetchInitialSearchResult()
             }
-        } configuration: { button in
+        } configuration: { _ in
             var config = UIButton.Configuration.borderedProminent()
             config.baseBackgroundColor = TimetableAsset.cyan.color
             config.attributedTitle = .init(TimetableStrings.searchFilterApply, font: .systemFont(ofSize: 17, weight: .semibold))

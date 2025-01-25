@@ -5,9 +5,9 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import DependenciesUtility
 import Dependencies
 import DependenciesAdditions
+import DependenciesUtility
 import Foundation
 import TimetableInterface
 import TimetableUIComponents

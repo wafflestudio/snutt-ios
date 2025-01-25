@@ -16,6 +16,7 @@ public struct HUDPresentationKey<Content: View>: PreferenceKey {
             content: nil
         )
     }
+
     public static func reduce(value: inout Value, nextValue: () -> Value) {
         value = if value.content == nil || !value.isPresented.wrappedValue {
             nextValue()
@@ -31,8 +32,7 @@ public struct HUDPresentationContext<Content: View>: Equatable, Sendable {
     let content: (@MainActor () -> Content)?
 
     @MainActor
-    @ViewBuilder
-    public func makeHUDView() -> some View {
+    @ViewBuilder public func makeHUDView() -> some View {
         if isPresented.wrappedValue, let content {
             content()
         } else {

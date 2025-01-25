@@ -5,11 +5,11 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
-import TimetableInterface
 import FoundationUtility
-import SwiftUIUtility
 import SharedUIComponents
+import SwiftUI
+import SwiftUIUtility
+import TimetableInterface
 
 struct DateTimeEditor: View {
     @Environment(LectureEditDetailViewModel.self) private var viewModel
@@ -22,7 +22,6 @@ struct DateTimeEditor: View {
 
     @State private var temporaryTimePlace: TimePlace
     @State private var isPickerPresented = false
-
 
     var body: some View {
         Text("\(timePlace.day.shortSymbol) \(timePlace.startTime.description) ~ \(timePlace.endTime.description)")
@@ -123,22 +122,22 @@ private struct LectureTimePicker: View {
                     datePicker.minuteInterval = 5
                 }
         }
-        .onChange(of: startTime, { oldValue, newValue in
+        .onChange(of: startTime) { _, _ in
             if !endRange.contains(end.wrappedValue) {
                 end.wrappedValue = endRange.lowerBound
             }
-        })
+        }
     }
 }
 
-extension Time {
-    fileprivate func toDate(from calendar: Calendar) -> Date {
+private extension Time {
+    func toDate(from calendar: Calendar) -> Date {
         calendar.date(from: .init(hour: hour, minute: minute)) ?? .distantPast
     }
 }
 
-extension Date {
-    fileprivate func toTime(from calendar: Calendar) -> Time {
+private extension Date {
+    func toTime(from calendar: Calendar) -> Time {
         let hour = calendar.component(.hour, from: self)
         let minute = calendar.component(.minute, from: self)
         return .init(hour: hour, minute: minute)

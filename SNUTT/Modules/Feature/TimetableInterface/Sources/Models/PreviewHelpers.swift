@@ -6,9 +6,9 @@
 //
 
 import Foundation
+import FoundationUtility
 import GameKit
 import MemberwiseInit
-import FoundationUtility
 
 public enum PreviewHelpers {
     public static var preview: any Timetable {
@@ -151,8 +151,9 @@ public struct PreviewTimetable: Timetable {
             id: UUID().uuidString,
             name: "snutt",
             colors: ["#ffffff", "#E54459", "#F58D3D", "#FAC42D", "#A6D930", "#2BC267", "#1BD0C8", "#1D99E8", "#4F48C4", "#AF56B3"]
-                .map({ LectureColor(fgHex: "#ffffff", bgHex: $0)}),
-            isCustom: false)
+                .map { LectureColor(fgHex: "#ffffff", bgHex: $0) },
+            isCustom: false
+        )
     }
 }
 
@@ -171,8 +172,9 @@ public struct PreviewLecture: Lecture, Codable {
     public var evLecture: EvLecture?
     public var remark: String? = nil
     public var customColor: LectureColor? {
-         nil
+        nil
     }
+
     public var classification: String?
     public var category: String?
     public var quota: Int32?

@@ -37,7 +37,6 @@ struct SearchToolBarView: View {
             TimetableAsset.navBookmarkOn.image
         }
     }
-
 }
 
 #Preview {

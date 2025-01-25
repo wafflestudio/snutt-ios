@@ -6,9 +6,9 @@
 //
 
 import CoreGraphics
-import TimetableInterface
-import MemberwiseInit
 import FoundationUtility
+import MemberwiseInit
+import TimetableInterface
 
 @MemberwiseInit(.public)
 public struct TimetablePainter: Sendable {

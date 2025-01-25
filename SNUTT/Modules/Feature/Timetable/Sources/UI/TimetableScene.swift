@@ -52,24 +52,23 @@ public struct TimetableScene: View {
                 }
             }
         }
-        .onChange(of: isSearchMode) { oldValue, newValue in
+        .onChange(of: isSearchMode) { _, newValue in
             if newValue, !timetableViewModel.paths.isEmpty {
                 timetableViewModel.paths = []
             }
         }
-        .onChange(of: timetableViewModel.currentTimetable?.quarter) { oldValue, newValue in
+        .onChange(of: timetableViewModel.currentTimetable?.quarter) { _, newValue in
             if let newValue {
                 searchViewModel.searchingQuarter = newValue
             }
         }
     }
 
-    @ViewBuilder
-    private func detailScene(for type: TimetableDetailSceneTypes) -> some View {
+    @ViewBuilder private func detailScene(for type: TimetableDetailSceneTypes) -> some View {
         switch type {
         case .lectureList:
             LectureListScene(viewModel: timetableViewModel)
-        case .lectureDetail(let lecture):
+        case let .lectureDetail(lecture):
             LectureEditDetailScene(entryLecture: lecture, displayMode: .normal)
         case .notificationList:
             EmptyView()

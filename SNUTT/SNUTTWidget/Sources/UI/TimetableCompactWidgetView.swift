@@ -5,10 +5,10 @@
 //  Created by 박신홍 on 2023/03/18.
 //
 
-import SwiftUI
-import WidgetKit
 import FoundationUtility
+import SwiftUI
 import TimetableInterface
+import WidgetKit
 
 struct TimetableCompactWidgetView: View {
     var entry: TimelineProvider.Entry

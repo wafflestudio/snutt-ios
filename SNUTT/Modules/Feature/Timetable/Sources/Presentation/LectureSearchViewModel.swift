@@ -61,7 +61,6 @@ class LectureSearchViewModel {
 }
 
 extension LectureSearchViewModel: ExpandableLectureListViewModel {
-    
     var lectures: [any Lecture] {
         dataSource.searchResults
     }
@@ -181,20 +180,20 @@ extension SearchPredicate {
 
     var localizedDescription: String {
         switch self {
-        case .sortCriteria(let value),
-                .department(let value),
-                .academicYear(let value),
-                .category(let value),
-                .instructor(let value),
-                .classification(let value):
+        case let .sortCriteria(value),
+             let .department(value),
+             let .academicYear(value),
+             let .category(value),
+             let .instructor(value),
+             let .classification(value):
             value
-        case .credit(let value):
+        case let .credit(value):
             "\(value)학점"
-        case .timeInclude(_):
+        case .timeInclude:
             ""
-        case .timeExclude(_):
+        case .timeExclude:
             ""
-        case .etc(let value):
+        case let .etc(value):
             ""
         }
     }

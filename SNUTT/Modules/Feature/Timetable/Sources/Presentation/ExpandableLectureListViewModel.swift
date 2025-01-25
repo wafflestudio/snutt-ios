@@ -23,7 +23,6 @@ protocol ExpandableLectureListViewModel: Sendable {
     func isVacancyNotificationEnabled(lecture: any Lecture) -> Bool
     func fetchMoreLectures() async
     func toggleAction(lecture: any Lecture, type: ActionButtonType)
-
 }
 
 enum ActionButtonType: String, CaseIterable, Identifiable {

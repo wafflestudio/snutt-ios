@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 import SwiftUIUtility
 
 struct MenuEllipsisSheet: View {
@@ -24,12 +24,9 @@ struct MenuEllipsisSheet: View {
                     MenuRenameSheet(viewModel: viewModel)
                 }
 
-                EllipsisSheetButton(menu: .primary(isOn: false)) {
-                }
-                EllipsisSheetButton(menu: .theme) {
-                }
-                EllipsisSheetButton(menu: .delete) {
-                }
+                EllipsisSheetButton(menu: .primary(isOn: false)) {}
+                EllipsisSheetButton(menu: .theme) {}
+                EllipsisSheetButton(menu: .delete) {}
                 Spacer()
             }
             .padding(.vertical, 10)

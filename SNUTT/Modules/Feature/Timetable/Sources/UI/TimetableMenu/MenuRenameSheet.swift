@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 
 struct MenuRenameSheet: View {
     let viewModel: TimetableMenuViewModel
@@ -21,9 +21,7 @@ struct MenuRenameSheet: View {
             VStack(spacing: 20) {
                 SheetTopBar(cancel: {
                     dismiss()
-                }, confirm: {
-
-                })
+                }, confirm: {})
 
                 AnimatableTextField(label: "시간표 제목", placeholder: "시간표 제목을 입력하세요", text: $title)
                     .focused($searchFocus)

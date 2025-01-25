@@ -5,10 +5,10 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import TimetableInterface
 import Foundation
-import TimetableUIComponents
 import FoundationUtility
+import TimetableInterface
+import TimetableUIComponents
 
 extension Timetable {
     typealias LectureTime = (lecture: any Lecture, timePlace: TimePlace)

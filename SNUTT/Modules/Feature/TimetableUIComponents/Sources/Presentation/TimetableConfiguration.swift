@@ -6,9 +6,9 @@
 //
 
 import Foundation
+import FoundationUtility
 import MemberwiseInit
 import TimetableInterface
-import FoundationUtility
 
 @MemberwiseInit(.public)
 public struct TimetableConfiguration: Codable, Equatable, Sendable {

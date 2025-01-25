@@ -5,8 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 
 struct LectureListScene: View {
     let viewModel: TimetableViewModel
@@ -18,7 +18,7 @@ struct LectureListScene: View {
 
 #Preview {
     let viewModel = TimetableViewModel()
-    let _ = Task {
+    _ = Task {
         await viewModel.loadTimetable()
     }
     ZStack {

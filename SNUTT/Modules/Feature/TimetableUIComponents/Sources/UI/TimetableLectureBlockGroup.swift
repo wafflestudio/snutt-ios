@@ -5,9 +5,9 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import MemberwiseInit
 import SwiftUI
 import TimetableInterface
-import MemberwiseInit
 
 struct TimetableLectureBlockGroup: View {
     let painter: TimetablePainter
@@ -31,7 +31,6 @@ struct TimetableLectureBlockGroup: View {
                                                   visibilityOptions: painter.configuration.visibilityOptions)
                         }
                         .buttonStyle(.plain)
-
                     }
                     .frame(width: painter.getWeekWidth(in: reader.size, weekCount: painter.weekCount),
                            height: painter.getHeight(of: timePlace, in: reader.size),
@@ -46,8 +45,8 @@ struct TimetableLectureBlockGroup: View {
     }
 }
 
-extension EnvironmentValues {
-    @Entry public var lectureTapAction: LectureTapAction = LectureTapAction(action: nil)
+public extension EnvironmentValues {
+    @Entry var lectureTapAction: LectureTapAction = .init(action: nil)
 }
 
 public struct LectureTapAction {
@@ -55,6 +54,7 @@ public struct LectureTapAction {
     public init(action: ((any Lecture) -> Void)?) {
         self.action = action
     }
+
     public func callAsFunction(lecture: any Lecture) {
         action?(lecture)
     }

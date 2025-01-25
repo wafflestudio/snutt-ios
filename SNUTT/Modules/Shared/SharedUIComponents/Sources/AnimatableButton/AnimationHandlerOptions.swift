@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 public struct AnimationHandlerOptions: Sendable {
     typealias AnimationHandler = @Sendable @MainActor (AnimatableUIButton, UIControl.Event) -> Void

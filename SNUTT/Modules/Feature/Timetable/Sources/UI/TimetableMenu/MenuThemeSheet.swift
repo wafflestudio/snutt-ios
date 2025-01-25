@@ -5,9 +5,9 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 import TimetableInterface
-import SharedUIComponents
 
 struct MenuThemeSheet: View {
     var themes: [Theme]
@@ -18,15 +18,12 @@ struct MenuThemeSheet: View {
             VStack(spacing: 20) {
                 SheetTopBar(cancel: {
                     dismiss()
-                }, confirm: {
-
-                })
+                }, confirm: {})
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
                         VStack {
-                            Button {
-                            } label: {
+                            Button {} label: {
                                 Image("theme.new")
                             }
                             Text("새 테마")
@@ -35,8 +32,7 @@ struct MenuThemeSheet: View {
                                 .font(.system(size: 14))
                         }
                         ForEach(themes.sorted { $0.isCustom && !$1.isCustom }) { theme in
-                            Button {
-                            } label: {
+                            Button {} label: {
                                 VStack {
                                     if theme.isCustom {
                                         ThemeIcon(theme: theme)
@@ -165,4 +161,3 @@ struct ThreeColorBox: View {
         }
     }
 }
-

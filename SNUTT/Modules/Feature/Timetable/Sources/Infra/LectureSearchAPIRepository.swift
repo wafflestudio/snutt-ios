@@ -8,8 +8,8 @@
 import APIClientInterface
 import Dependencies
 import Foundation
-import TimetableInterface
 import RegexBuilder
+import TimetableInterface
 
 struct LectureSearchAPIRepository: LectureSearchRepository {
     @Dependency(\.apiClient) private var apiClient
@@ -33,29 +33,29 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
 
         for predicate in predicates {
             switch predicate {
-            case .sortCriteria(let string):
+            case let .sortCriteria(string):
                 sortCriteria = string
-            case .classification(let string):
+            case let .classification(string):
                 classification.append(string)
-            case .department(let string):
+            case let .department(string):
                 department.append(string)
-            case .academicYear(let string):
+            case let .academicYear(string):
                 academicYear.append(string)
-            case .credit(let int):
+            case let .credit(int):
                 credit.append(Int32(int))
-            case .instructor(let string):
+            case let .instructor(string):
                 continue // not supported
-            case .category(let string):
+            case let .category(string):
                 category.append(string)
-            case .timeInclude(let searchTimeRange):
+            case let .timeInclude(searchTimeRange):
                 if let day = Components.Schemas.SearchTimeDto.dayPayload(rawValue: searchTimeRange.day) {
                     times.append(.init(day: day, startMinute: Int32(searchTimeRange.startMinute), endMinute: Int32(searchTimeRange.endMinute)))
                 }
-            case .timeExclude(let searchTimeRange):
+            case let .timeExclude(searchTimeRange):
                 if let day = Components.Schemas.SearchTimeDto.dayPayload(rawValue: searchTimeRange.day) {
                     timesToExclude.append(.init(day: day, startMinute: Int32(searchTimeRange.startMinute), endMinute: Int32(searchTimeRange.endMinute)))
                 }
-            case .etc(let etcType):
+            case let .etc(etcType):
                 etc.append(etcType.code)
             }
         }
@@ -69,7 +69,7 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
             academic_year: academicYear,
             department: department,
             category: category,
-            times:times,
+            times: times,
             timesToExclude: timesToExclude,
             etc: etc.nilIfEmpty(),
             page: 20,
@@ -108,11 +108,11 @@ extension Components.Schemas.LectureDto: @retroactive Lecture {
     public var freshmenQuota: Int32? {
         freshmanQuota
     }
-    
+
     public var customColor: TimetableInterface.LectureColor? {
         .temporary
     }
-    
+
     public var evLecture: EvLecture? {
         guard let snuttEvLecture else { return nil }
         return .init(evLectureID: snuttEvLecture.evLectureId.asInt(), avgRating: snuttEvLecture.avgRating, evaluationCount: snuttEvLecture.evaluationCount.asInt())
@@ -155,8 +155,8 @@ extension Components.Schemas.LectureDto: @retroactive Lecture {
     }
 }
 
-extension Array {
-    fileprivate func nilIfEmpty() -> Self? {
+private extension Array {
+    func nilIfEmpty() -> Self? {
         isEmpty ? nil : self
     }
 }

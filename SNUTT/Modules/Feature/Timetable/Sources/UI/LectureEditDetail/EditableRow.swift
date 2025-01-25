@@ -5,12 +5,12 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
-import MemberwiseInit
-import SwiftUIIntrospect
 import FoundationUtility
-import TimetableInterface
+import MemberwiseInit
+import SwiftUI
+import SwiftUIIntrospect
 import SwiftUIUtility
+import TimetableInterface
 
 @MemberwiseInit
 struct EditableRow<Value: Sendable>: View {
@@ -78,6 +78,7 @@ extension ValueContainer where T == String? {
     var bindingNonOptional: Binding<String> {
         .init(get: { binding.wrappedValue ?? "" }, set: { binding.wrappedValue = $0 })
     }
+
     var placeholderText: String {
         initialValue?.emptyToNil ?? "(없음)"
     }
@@ -85,7 +86,7 @@ extension ValueContainer where T == String? {
 
 extension ValueContainer where T == Int64? {
     var placeholderText: String {
-        initialValue.flatMap({ "\($0)" }) ?? "(없음)"
+        initialValue.flatMap { "\($0)" } ?? "(없음)"
     }
 }
 

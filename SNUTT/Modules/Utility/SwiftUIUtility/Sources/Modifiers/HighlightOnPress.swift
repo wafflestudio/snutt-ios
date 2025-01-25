@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-extension View {
-    public func highlightOnPress(scale: CGFloat = 0.98) -> some View {
+public extension View {
+    func highlightOnPress(scale: CGFloat = 0.98) -> some View {
         modifier(HighlightModifier(scale: scale))
     }
 }
@@ -29,6 +29,5 @@ private struct HighlightModifier: ViewModifier {
             .onLongPressGesture(minimumDuration: 0, perform: {}, onPressingChanged: {
                 isPressed = $0
             })
-
     }
 }

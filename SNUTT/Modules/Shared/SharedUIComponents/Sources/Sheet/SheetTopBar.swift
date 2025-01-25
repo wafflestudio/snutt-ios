@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import MemberwiseInit
+import SwiftUI
 import SwiftUIUtility
 
 @MemberwiseInit(.public)
@@ -48,7 +48,7 @@ private struct SheetTopBarButton: View {
                 await action()
                 isLoading = false
             }
-        } configuration: { button in
+        } configuration: { _ in
             var config = UIButton.Configuration.plain()
             config.title = label
             config.baseForegroundColor = .label

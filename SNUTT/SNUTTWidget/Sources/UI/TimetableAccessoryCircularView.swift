@@ -12,30 +12,30 @@ struct TimetableAccessoryCircularView: View {
     var entry: TimelineProvider.Entry
 
     var body: some View {
-            ZStack {
-                AccessoryWidgetBackground()
-                VStack(spacing: 0) {
-                    Image("logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 13)
-                        .padding(.bottom, 3)
-                    Group {
-                        if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date, by: .startTime),
-                           let firstLectureTime = lectureTimes.get(at: 0)
-                        {
-                            Text(firstLectureTime.timePlace.startTime.description)
-                        } else if isLoginRequired {
-                            loginRequiredView
-                        } else if isTimetableEmpty {
-                            emptyTimetableView
-                        } else {
-                            emptyRemainingLecturesView
-                        }
+        ZStack {
+            AccessoryWidgetBackground()
+            VStack(spacing: 0) {
+                Image("logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 13)
+                    .padding(.bottom, 3)
+                Group {
+                    if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date, by: .startTime),
+                       let firstLectureTime = lectureTimes.get(at: 0)
+                    {
+                        Text(firstLectureTime.timePlace.startTime.description)
+                    } else if isLoginRequired {
+                        loginRequiredView
+                    } else if isTimetableEmpty {
+                        emptyTimetableView
+                    } else {
+                        emptyRemainingLecturesView
                     }
-                    .font(.body.bold())
                 }
+                .font(.body.bold())
             }
+        }
     }
 }
 

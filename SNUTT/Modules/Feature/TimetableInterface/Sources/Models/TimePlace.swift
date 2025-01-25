@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import MemberwiseInit
 import FoundationUtility
+import MemberwiseInit
 
 public struct TimePlace: Sendable, Codable, Equatable, Identifiable, CustomStringConvertible {
     public let id: String

@@ -5,9 +5,9 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
-import SharedUIComponents
 import FoundationUtility
+import SharedUIComponents
+import SwiftUI
 
 struct SearchPredicateScrollView: View {
     let selectedTagList: [SearchPredicate]
@@ -63,8 +63,8 @@ struct SearchPredicateScrollView: View {
     }
 }
 
-extension SearchFilterCategory {
-    fileprivate var backgroundColor: Color {
+private extension SearchFilterCategory {
+    var backgroundColor: Color {
         switch self {
         case .sortCriteria: return Color(hex: "#A6A6A6")
         case .academicYear: return Color(hex: "#E54459")

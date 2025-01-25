@@ -16,7 +16,7 @@ final class LectureEditDetailViewModel {
 
     init(entryLecture: any Lecture) {
         self.entryLecture = Self.makeEditableLecture(from: entryLecture)
-        self.editableLecture = Self.makeEditableLecture(from: entryLecture)
+        editableLecture = Self.makeEditableLecture(from: entryLecture)
     }
 
     private static func makeEditableLecture(from entryLecture: any Lecture) -> EditableLecture {
@@ -43,7 +43,6 @@ final class LectureEditDetailViewModel {
 }
 
 struct EditableLecture: Lecture {
-    
     var id: String
     var lectureID: String?
     var courseTitle: String
@@ -70,6 +69,6 @@ struct EditableLecture: Lecture {
             }
             return nil
         }
-        set { }
+        set {}
     }
 }

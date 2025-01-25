@@ -52,7 +52,7 @@ struct SearchInputTextField: View {
 }
 
 #Preview {
-    @Previewable @State var query: String = "컴퓨터"
+    @Previewable @State var query = "컴퓨터"
     @Previewable @State var queryLong = String(repeating: "컴퓨터 ", count: 10)
     SearchInputTextField(query: $query, isFilterOpen: .constant(false))
     SearchInputTextField(query: $queryLong, isFilterOpen: .constant(false))

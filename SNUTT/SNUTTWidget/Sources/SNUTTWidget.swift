@@ -5,12 +5,12 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
-import WidgetKit
 import DependenciesAdditions
-import TimetableUIComponents
-import TimetableInterface
 import MemberwiseInit
+import SwiftUI
+import TimetableInterface
+import TimetableUIComponents
+import WidgetKit
 
 struct TimelineProvider: AppIntentTimelineProvider {
     typealias Entry = TimetableEntry
@@ -46,8 +46,7 @@ struct TimelineProvider: AppIntentTimelineProvider {
             Entry(date: $0,
                   configuration: configuration,
                   currentTimetable: currentTimetable,
-                  timetableConfiguration: timetableConfiguration
-            )
+                  timetableConfiguration: timetableConfiguration)
         }
 
         return Timeline(entries: entries, policy: .atEnd)
@@ -123,12 +122,14 @@ func makePreviewTimeline() -> [TimetableEntry] {
             date: .now,
             configuration: ConfigurationAppIntent(),
             currentTimetable: nil,
-            timetableConfiguration: .init()),
+            timetableConfiguration: .init()
+        ),
         TimetableEntry(
             date: .now,
             configuration: ConfigurationAppIntent(),
             currentTimetable: PreviewHelpers.preview(id: "1"),
-            timetableConfiguration: .init())
+            timetableConfiguration: .init()
+        ),
     ]
 }
 

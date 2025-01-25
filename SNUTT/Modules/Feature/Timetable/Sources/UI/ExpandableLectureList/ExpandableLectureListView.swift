@@ -5,9 +5,9 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 import SwiftUIIntrospect
-import SharedUIComponents
 
 struct ExpandableLectureListView: View {
     let viewModel: any ExpandableLectureListViewModel
@@ -30,7 +30,7 @@ struct ExpandableLectureListView: View {
             .animation(.defaultSpring, value: viewModel.selectedLecture?.id)
         }
         .scrollPosition(id: $scrolledID, anchor: .bottom)
-        .onChange(of: scrolledID) { _, newValue in
+        .onChange(of: scrolledID) { _, _ in
             if viewModel.lectures.suffix(5).map({ $0.id }).contains(scrolledID) {
                 Task {
                     await viewModel.fetchMoreLectures()

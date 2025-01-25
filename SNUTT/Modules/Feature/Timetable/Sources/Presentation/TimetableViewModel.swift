@@ -42,7 +42,7 @@ class TimetableViewModel {
 
     func makePainter(selectedLecture: (any Lecture)? = nil) -> TimetablePainter {
         TimetablePainter(
-            currentTimetable: currentTimetable, 
+            currentTimetable: currentTimetable,
             selectedLecture: selectedLecture,
             selectedTheme: currentTimetable?.defaultTheme ?? .snutt,
             configuration: configuration
@@ -85,7 +85,7 @@ enum TimetableDetailSceneTypes: Hashable, Equatable {
             true
         case (.notificationList, .notificationList):
             true
-        case (.lectureDetail(let lhs), .lectureDetail(let rhs)):
+        case let (.lectureDetail(lhs), .lectureDetail(rhs)):
             lhs.id == rhs.id
         default:
             false

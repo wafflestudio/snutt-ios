@@ -8,8 +8,8 @@
 import APIClientInterface
 import Dependencies
 import Foundation
-import TimetableInterface
 import FoundationUtility
+import TimetableInterface
 
 public struct TimetableAPIRepository: TimetableRepository {
     @Dependency(\.apiClient) private var apiClient
@@ -107,7 +107,7 @@ extension Components.Schemas.TimetableLectureLegacyDto: @retroactive Lecture {
     public var freshmenQuota: Int32? {
         freshman_quota
     }
-    
+
     public var customColor: TimetableInterface.LectureColor? {
         if colorIndex == 0,
            let fg = color?.fg,
@@ -117,7 +117,7 @@ extension Components.Schemas.TimetableLectureLegacyDto: @retroactive Lecture {
         }
         return nil
     }
-    
+
     public var evLecture: EvLecture? {
         guard let snuttEvLecture else { return nil }
         return .init(evLectureID: snuttEvLecture.evLectureId.asInt(), avgRating: nil, evaluationCount: nil)

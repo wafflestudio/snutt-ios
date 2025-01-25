@@ -5,13 +5,13 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
-import MemberwiseInit
-import TimetableInterface
-import SharedUIComponents
 import DependenciesAdditions
 import DependenciesUtility
+import MemberwiseInit
+import SharedUIComponents
+import SwiftUI
 import SwiftUIIntrospect
+import TimetableInterface
 
 struct LectureEditDetailScene: View {
     @Dependency(\.application) private var application
@@ -63,8 +63,7 @@ struct LectureEditDetailScene: View {
         .toolbarBackground(.visible, for: .navigationBar)
     }
 
-    @ViewBuilder
-    private var cancelButton: some View {
+    @ViewBuilder private var cancelButton: some View {
         switch displayMode {
         case .normal where editMode.isEditing:
             Button {
@@ -80,7 +79,7 @@ struct LectureEditDetailScene: View {
             } label: {
                 Text("취소")
             }
-        case .preview(let shouldHideDismissButton) where !shouldHideDismissButton:
+        case let .preview(shouldHideDismissButton) where !shouldHideDismissButton:
             Button {
                 dismiss()
             } label: {
@@ -91,8 +90,7 @@ struct LectureEditDetailScene: View {
         }
     }
 
-    @ViewBuilder
-    private var editOrSaveButton: some View {
+    @ViewBuilder private var editOrSaveButton: some View {
         switch displayMode {
         case .normal:
             Button {
@@ -111,7 +109,7 @@ struct LectureEditDetailScene: View {
             } label: {
                 Text("저장")
             }
-        case .preview(let shouldHideDismissButton):
+        case let .preview(shouldHideDismissButton):
             EmptyView()
         }
     }
@@ -151,7 +149,7 @@ struct LectureEditDetailScene: View {
                 .foregroundColor(.label.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            ForEach(0..<viewModel.editableLecture.timePlaces.count, id: \.self) { index in
+            ForEach(0 ..< viewModel.editableLecture.timePlaces.count, id: \.self) { index in
                 VStack(spacing: 5) {
                     EditableRow(label: "시간", keyPath: \.timePlaces[index])
                     EditableRow(label: "장소", keyPath: \.timePlaces[index].place)
@@ -175,7 +173,6 @@ extension LectureEditDetailScene {
         }
     }
 }
-
 
 #Preview {
     NavigationStack {
