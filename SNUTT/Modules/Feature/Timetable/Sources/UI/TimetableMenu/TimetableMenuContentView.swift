@@ -31,7 +31,7 @@ struct TimetableMenuContentView: View {
             switch viewModel.metadataLoadingState {
             case .loading:
                 loadingView
-            case .loaded(let metadataList):
+            case let .loaded(metadataList):
                 ScrollView {
                     VStack(spacing: 15) {
                         headerView
@@ -113,7 +113,7 @@ struct TimetableMenuContentView: View {
 
 #Preview {
     let viewModel = TimetableViewModel()
-    let _ = Task {
+    _ = Task {
         try await Task.sleep(for: .milliseconds(200))
         try await viewModel.loadTimetable()
         try await viewModel.loadTimetableList()

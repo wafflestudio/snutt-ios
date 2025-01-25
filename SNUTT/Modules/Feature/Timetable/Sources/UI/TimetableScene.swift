@@ -6,10 +6,10 @@
 //
 
 import Dependencies
+import SharedUIComponents
 import SwiftUI
 import TimetableInterface
 import TimetableUIComponents
-import SharedUIComponents
 
 public struct TimetableScene: View {
     @Dependency(\.application) private var application

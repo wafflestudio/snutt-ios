@@ -34,7 +34,7 @@ public struct APIClientProvider: Sendable {
                     }
                 ),
                 LoggingMiddleware(),
-                ErrorDecodingMiddleware()
+                ErrorDecodingMiddleware(),
             ]
         )
     }

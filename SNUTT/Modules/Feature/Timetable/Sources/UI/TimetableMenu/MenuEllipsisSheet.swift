@@ -40,8 +40,7 @@ struct MenuEllipsisSheet: View {
                         }
                     }
                 }
-                EllipsisSheetButton(menu: .theme) {
-                }
+                EllipsisSheetButton(menu: .theme) {}
                 EllipsisSheetButton(menu: .delete) {
                     dismiss()
                     Task {

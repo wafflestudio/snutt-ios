@@ -26,12 +26,10 @@ public final class ErrorAlertHandler: Sendable {
     ) async -> T? {
         do {
             return try await operation()
-        }
-        catch let error as ErrorWrapper {
+        } catch let error as ErrorWrapper {
             currentError = .init(underlyingError: error.underlyingError)
             return nil
-        }
-        catch {
+        } catch {
             currentError = .init(underlyingError: error)
             return nil
         }
@@ -42,12 +40,10 @@ public final class ErrorAlertHandler: Sendable {
     ) -> T? {
         do {
             return try operation()
-        }
-        catch let error as ErrorWrapper {
+        } catch let error as ErrorWrapper {
             currentError = .init(underlyingError: error.underlyingError)
             return nil
-        }
-        catch {
+        } catch {
             currentError = .init(underlyingError: error)
             return nil
         }
@@ -79,9 +75,9 @@ private struct AnyLocalizedError: LocalizedError {
     var errorMessage: String? {
         let messages = [
             failureReason,
-            recoverySuggestion
+            recoverySuggestion,
         ]
-        .compactMap({ $0 })
+        .compactMap { $0 }
         return if messages.isEmpty {
             nil
         } else {
@@ -102,7 +98,7 @@ private struct ErrorAlertModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .environment(\.errorAlertHandler, errorAlertHandler)
-            .alert(isPresented: errorAlertHandler.isErrorAlertPresented, error: errorAlertHandler.currentError) { error in
+            .alert(isPresented: errorAlertHandler.isErrorAlertPresented, error: errorAlertHandler.currentError) { _ in
                 Button(SharedUIComponentsStrings.errorDismiss, role: .cancel) {}
             } message: { error in
                 Text(error.errorMessage ?? SharedUIComponentsStrings.errorUnknownMessage)
@@ -145,5 +141,5 @@ private struct PreviewError: LocalizedError {
 
 #Preview {
     ErrorPreview()
-    .observeErrors()
+        .observeErrors()
 }
