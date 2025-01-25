@@ -57,6 +57,7 @@ struct MenuEllipsisSheet: View {
             .presentationDetents([.height(225)])
             .presentationCornerRadius(15)
         }
+        .observeErrors()
     }
 }
 

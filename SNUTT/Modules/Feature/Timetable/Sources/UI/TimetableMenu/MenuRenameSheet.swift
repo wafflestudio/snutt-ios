@@ -44,6 +44,7 @@ struct MenuRenameSheet: View {
             }
         }
         .presentationDetents([.height(130)])
+        .observeErrors()
     }
 }
 

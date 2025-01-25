@@ -7,6 +7,7 @@
 
 import Dependencies
 import Spyable
+import TimetableInterface
 
 @Spyable
 public protocol TimetableRepository: Sendable {

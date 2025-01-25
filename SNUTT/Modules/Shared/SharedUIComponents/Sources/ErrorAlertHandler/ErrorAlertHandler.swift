@@ -26,8 +26,13 @@ public final class ErrorAlertHandler: Sendable {
     ) async -> T? {
         do {
             return try await operation()
-        } catch {
-            currentError = .init(wrappedError: error)
+        }
+        catch let error as ErrorWrapper {
+            currentError = .init(underlyingError: error.underlyingError)
+            return nil
+        }
+        catch {
+            currentError = .init(underlyingError: error)
             return nil
         }
     }
@@ -37,21 +42,30 @@ public final class ErrorAlertHandler: Sendable {
     ) -> T? {
         do {
             return try operation()
-        } catch {
-            currentError = .init(wrappedError: error)
+        }
+        catch let error as ErrorWrapper {
+            currentError = .init(underlyingError: error.underlyingError)
+            return nil
+        }
+        catch {
+            currentError = .init(underlyingError: error)
             return nil
         }
     }
 }
 
+public protocol ErrorWrapper {
+    var underlyingError: any Error { get }
+}
+
 private struct AnyLocalizedError: LocalizedError {
-    let wrappedError: any Error
+    let underlyingError: any Error
     var localizedError: (any LocalizedError)? {
-        wrappedError as? any LocalizedError
+        underlyingError as? any LocalizedError
     }
 
     var errorDescription: String? {
-        localizedError?.errorDescription ?? wrappedError.localizedDescription
+        localizedError?.errorDescription ?? SharedUIComponentsStrings.errorUnknownTitle
     }
 
     var failureReason: String? {
@@ -60,6 +74,19 @@ private struct AnyLocalizedError: LocalizedError {
 
     var recoverySuggestion: String? {
         localizedError?.recoverySuggestion
+    }
+
+    var errorMessage: String? {
+        let messages = [
+            failureReason,
+            recoverySuggestion
+        ]
+        .compactMap({ $0 })
+        return if messages.isEmpty {
+            nil
+        } else {
+            messages.joined(separator: " ")
+        }
     }
 }
 
@@ -75,12 +102,48 @@ private struct ErrorAlertModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .environment(\.errorAlertHandler, errorAlertHandler)
-            .alert(isPresented: errorAlertHandler.isErrorAlertPresented, error: errorAlertHandler.currentError) {
-                Button("확인", role: .cancel) {}
+            .alert(isPresented: errorAlertHandler.isErrorAlertPresented, error: errorAlertHandler.currentError) { error in
+                Button(SharedUIComponentsStrings.errorDismiss, role: .cancel) {}
+            } message: { error in
+                Text(error.errorMessage ?? SharedUIComponentsStrings.errorUnknownMessage)
             }
     }
 }
 
 public extension EnvironmentValues {
     @Entry var errorAlertHandler: ErrorAlertHandler = .init()
+}
+
+// MARK: Preview
+
+struct ErrorPreview: View {
+    @Environment(\.errorAlertHandler) var errorHandler
+    var body: some View {
+        VStack {
+            Button("Show Error") {
+                errorHandler.withAlert {
+                    throw PreviewError()
+                }
+            }
+        }
+    }
+}
+
+private struct PreviewError: LocalizedError {
+    var errorDescription: String? {
+        "errorDescription."
+    }
+
+    var failureReason: String? {
+        "failureReason."
+    }
+
+    var recoverySuggestion: String? {
+        "recoverSuggestion."
+    }
+}
+
+#Preview {
+    ErrorPreview()
+    .observeErrors()
 }

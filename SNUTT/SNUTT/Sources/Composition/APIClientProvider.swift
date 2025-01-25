@@ -12,6 +12,7 @@ import Foundation
 import OpenAPIRuntime
 import OpenAPIURLSession
 import SharedAppMetadata
+import SharedUIComponents
 
 public struct APIClientProvider: Sendable {
     @Dependency(\.appMetadata) private var appMetadata
@@ -33,7 +34,10 @@ public struct APIClientProvider: Sendable {
                     }
                 ),
                 LoggingMiddleware(),
+                ErrorDecodingMiddleware()
             ]
         )
     }
 }
+
+extension ClientError: @retroactive ErrorWrapper {}

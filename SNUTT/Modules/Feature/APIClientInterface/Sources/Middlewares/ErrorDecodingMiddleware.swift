@@ -1,15 +1,15 @@
 //
-//  LoggingMiddleware.swift
+//  ErrorDecodingMiddleware.swift
 //  SNUTT
 //
-//  Copyright © 2024 wafflestudio.com. All rights reserved.
+//  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
 import Foundation
 import HTTPTypes
 import OpenAPIRuntime
 
-public struct LoggingMiddleware: ClientMiddleware {
+public struct ErrorDecodingMiddleware: ClientMiddleware {
     public init() {}
 
     public func intercept(
@@ -21,11 +21,11 @@ public struct LoggingMiddleware: ClientMiddleware {
     ) async throws -> (HTTPResponse, HTTPBody?) {
         let (response, body) = try await next(request, body, baseURL)
         let data = try await Data(collecting: body!, upTo: .max)
-        if let json = try? JSONSerialization.jsonObject(with: data, options: []),
-           let prettyData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted),
-           let prettyString = String(data: prettyData, encoding: .utf8)
-        {
-            print(prettyString)
+        guard let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        else { return (response, HTTPBody(data)) }
+        if let error = jsonData["errcode"] as? Int,
+           let knownError = LocalizedErrorCode(rawValue: error) {
+            throw knownError
         }
         return (response, HTTPBody(data))
     }

@@ -75,7 +75,7 @@ let project = Project.app(
                 .target(name: "SharedAppMetadata"),
                 .external(name: "Spyable"),
             ],
-            additionalResources: ["OpenAPI/**"]
+            additionalResources: ["OpenAPI/**", "Modules/Feature/APIClientInterface/Resources/**"]
         ),
         // Shared
         .module(

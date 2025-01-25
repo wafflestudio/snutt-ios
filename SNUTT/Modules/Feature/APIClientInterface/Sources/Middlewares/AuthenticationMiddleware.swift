@@ -5,7 +5,6 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Dependencies
 import Foundation
 import HTTPTypes
 import OpenAPIRuntime
@@ -43,10 +42,13 @@ public struct AuthenticationMiddleware: ClientMiddleware {
                   let headerKey = HTTPField.Name(key) else { continue }
             request.headerFields[headerKey] = appMetadata[item]
         }
-        let (response, body) = try await next(request, body, baseURL)
-        if response.status.kind == .clientError {
+        do {
+            return try await next(request, body, baseURL)
+        } catch let error as LocalizedErrorCode where [.wrongUserToken, .noUserToken].contains(error) {
             handleUnauthenticated()
+            throw error
+        } catch {
+            throw error
         }
-        return (response, body)
     }
 }
