@@ -44,7 +44,7 @@ extension LectureListViewModel {
         // noop
     }
 
-    func isToggled(lecture: any Lecture, type: ActionButtonType) -> Bool {
+    func isToggled(lecture _: any Lecture, type _: ActionButtonType) -> Bool {
         false
     }
 }

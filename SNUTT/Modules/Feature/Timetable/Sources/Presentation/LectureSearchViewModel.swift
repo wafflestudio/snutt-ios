@@ -81,7 +81,7 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
             timetableViewModel.isLectureInCurrentTimetable(lecture: lecture)
         }
     }
-    
+
     var lectures: [any Lecture] {
         dataSource.searchResults
     }
