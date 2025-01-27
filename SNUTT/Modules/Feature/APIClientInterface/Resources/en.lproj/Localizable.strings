@@ -1,0 +1,154 @@
+"error.description.serverFault" = "Server Error";
+"error.failureReason.serverFault" = "A server error has occurred.";
+"error.recoverySuggestion.serverFault" = "Please try again later.";
+
+"error.description.noNetwork" = "Network Error";
+"error.failureReason.noNetwork" = "The network is unstable.";
+"error.recoverySuggestion.noNetwork" = "Please check your connection and try again.";
+
+"error.description.unknownError" = "Unknown Error";
+"error.failureReason.unknownError" = "An unknown error has occurred.";
+"error.recoverySuggestion.unknownError" = "Please restart the app or contact support.";
+
+"error.description.noToken" = "Login Error";
+"error.failureReason.noToken" = "There is an issue with the login information.";
+"error.recoverySuggestion.noToken" = "Please check your login details and try again.";
+
+"error.description.invalidSemester" = "Semester Error";
+"error.failureReason.invalidSemester" = "The semester information is invalid.";
+"error.recoverySuggestion.invalidSemester" = "Please check the semester information and try again.";
+
+"error.description.noLecture" = "Lecture Error";
+"error.failureReason.noLecture" = "Lecture information is missing.";
+"error.recoverySuggestion.noLecture" = "Please check the lecture information and try again.";
+
+"error.description.modifyIdentity" = "Modification Not Allowed";
+"error.failureReason.modifyIdentity" = "You cannot modify the lecture identity.";
+"error.recoverySuggestion.modifyIdentity" = "Please modify other information.";
+
+"error.description.timetableTitle" = "Timetable Title Error";
+"error.failureReason.timetableTitle" = "The timetable title is invalid.";
+"error.recoverySuggestion.timetableTitle" = "Please enter a valid title.";
+
+"error.description.duplicateTimetableTitle" = "Duplicate Timetable Title";
+"error.failureReason.duplicateTimetableTitle" = "The timetable title is duplicated.";
+"error.recoverySuggestion.duplicateTimetableTitle" = "Please use a different title.";
+
+"error.description.noRegistrationId" = "Registration Error";
+"error.failureReason.noRegistrationId" = "Registration information is missing.";
+"error.recoverySuggestion.noRegistrationId" = "Please check the registration information and try again.";
+
+"error.description.invalidTimemask" = "Time Format Error";
+"error.failureReason.invalidTimemask" = "The time format is invalid.";
+"error.recoverySuggestion.invalidTimemask" = "Please enter a valid format.";
+
+"error.description.invalidColor" = "Color Error";
+"error.failureReason.invalidColor" = "The color is invalid.";
+"error.recoverySuggestion.invalidColor" = "Please enter a valid color.";
+
+"error.description.invalidTime" = "Time Error";
+"error.failureReason.invalidTime" = "The time information is invalid.";
+"error.recoverySuggestion.invalidTime" = "Please check the time information and try again.";
+
+"error.description.invalidNotification" = "Notification Error";
+"error.failureReason.invalidNotification" = "The notification information is invalid.";
+"error.recoverySuggestion.invalidNotification" = "Please check the notification information and try again.";
+
+"error.description.id" = "ID Error";
+"error.failureReason.id" = "The ID information is invalid.";
+"error.recoverySuggestion.id" = "Please enter a valid ID.";
+
+"error.description.email" = "Email Error";
+"error.failureReason.email" = "The email information is invalid.";
+"error.recoverySuggestion.email" = "Please enter a valid email.";
+
+"error.description.invalidNickname" = "Nickname Error";
+"error.failureReason.invalidNickname" = "The nickname is invalid.";
+"error.recoverySuggestion.invalidNickname" = "Please enter a valid nickname.";
+
+"error.description.wrongApiKey" = "API Key Error";
+"error.failureReason.wrongApiKey" = "The API key is invalid.";
+
+"error.description.userToken" = "User Token Error";
+"error.failureReason.userToken" = "The user token is invalid.";
+"error.recoverySuggestion.userToken" = "Please check your user token and try again.";
+
+"error.description.adminPrivilege" = "Privilege Error";
+"error.failureReason.adminPrivilege" = "Administrator privileges are required.";
+"error.recoverySuggestion.adminPrivilege" = "Please check your privileges and try again.";
+
+"error.description.login" = "Login Error";
+"error.failureReason.login" = "The login information is invalid.";
+"error.recoverySuggestion.login" = "Please check your login details and try again.";
+
+"error.description.unknownApp" = "App Error";
+"error.failureReason.unknownApp" = "The app information is invalid.";
+"error.recoverySuggestion.unknownApp" = "Please check the app information and try again.";
+
+"error.description.passwordReset" = "Password Reset Error";
+"error.failureReason.passwordReset" = "The password reset information is invalid.";
+"error.recoverySuggestion.passwordReset" = "Please check the reset information and try again.";
+
+"error.description.invalidCredentials" = "Credentials Error";
+"error.failureReason.invalidCredentials" = "The credentials are invalid.";
+"error.recoverySuggestion.invalidCredentials" = "Please enter valid credentials.";
+
+"error.description.alreadyAccount" = "Account Error";
+"error.failureReason.alreadyAccount" = "An account already exists.";
+"error.recoverySuggestion.alreadyAccount" = "Please use the existing account.";
+
+"error.description.notAccount" = "No Account";
+"error.failureReason.notAccount" = "No account exists.";
+"error.recoverySuggestion.notAccount" = "Please create an account and try again.";
+
+"error.description.fbIdWithSomeoneElse" = "Facebook ID Error";
+"error.failureReason.fbIdWithSomeoneElse" = "The Facebook ID is linked to another account.";
+"error.recoverySuggestion.fbIdWithSomeoneElse" = "Please use a different Facebook ID.";
+
+"error.description.customLecture" = "Lecture Error";
+"error.failureReason.customLecture" = "The lecture information is invalid.";
+"error.recoverySuggestion.customLecture" = "Please check the lecture information and try again.";
+
+"error.description.noFCMKey" = "FCM Key Error";
+"error.failureReason.noFCMKey" = "The FCM key is invalid.";
+"error.recoverySuggestion.noFCMKey" = "Please enter a valid FCM key.";
+
+"error.description.notFound" = "Not Found";
+"error.failureReason.notFound" = "The requested information cannot be found.";
+"error.recoverySuggestion.notFound" = "Please check the information and try again.";
+
+"error.description.cantChangeTheme" = "Theme Change Error";
+"error.failureReason.cantChangeTheme" = "You cannot change other timetable's theme.";
+"error.recoverySuggestion.cantChangeTheme" = "Please try again after changing the timetable.";
+
+"error.description.invalidRnBundle" = "Resource Error";
+"error.failureReason.invalidRnBundle" = "The resource bundle is invalid.";
+"error.recoverySuggestion.invalidRnBundle" = "Please check the resources and try again.";
+
+"error.description.duplicateThemeName" = "Duplicate Theme Name";
+"error.failureReason.duplicateThemeName" = "The theme name is duplicated.";
+"error.recoverySuggestion.duplicateThemeName" = "Please use a different theme name.";
+
+"error.description.deeplinkNotFound" = "Deeplink Error";
+"error.failureReason.deeplinkNotFound" = "The deeplink information cannot be found.";
+"error.recoverySuggestion.deeplinkNotFound" = "Please check the deeplink information and try again.";
+
+"error.description.deeplinkProcessFailed" = "Deeplink Processing Error";
+"error.failureReason.deeplinkProcessFailed" = "Failed to process the deeplink.";
+"error.recoverySuggestion.deeplinkProcessFailed" = "Please check the deeplink information and try again.";
+
+"error.description.alreadyVerified" = "Verification Error";
+"error.failureReason.alreadyVerified" = "The account is already verified.";
+
+"error.description.duplicateVacancyNotification" = "Duplicate Vacancy Notification";
+"error.failureReason.duplicateVacancyNotification" = "A vacancy notification is already set.";
+
+"error.description.excessiveEmailVerification" = "Excessive Email Verification Requests";
+"error.failureReason.excessiveEmailVerification" = "Email verification requests have been exceeded.";
+"error.recoverySuggestion.excessiveEmailVerification" = "Please try again 3 minutes later.";
+
+"error.description.invalidSemesterForVacancyNotification" = "Semester Error";
+"error.failureReason.invalidSemesterForVacancyNotification" = "The vacancy notification period for this semester has ended.";
+
+"error.description.duplicateLecture" = "Duplicate Lecture";
+"error.failureReason.duplicateLecture" = "The lecture has already been added.";

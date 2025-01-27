@@ -39,9 +39,11 @@ extension View {
             isPresented.toggle()
         }
         .timetableMenuSheet(isPresented: $isPresented, viewModel: viewModel)
-        context?.makeSheet()
+        context?.makeHUDView()
     }
     .onPreferenceChange(SheetPresentationKey.self) { value in
-        context = value
+        Task { @MainActor in
+            context = value
+        }
     }
 }

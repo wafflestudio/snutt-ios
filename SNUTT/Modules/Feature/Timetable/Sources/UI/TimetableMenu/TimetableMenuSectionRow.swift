@@ -5,6 +5,7 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 import TimetableInterface
 
@@ -13,7 +14,11 @@ struct TimetableMenuSectionRow: View {
     let timetableMetadata: any TimetableMetadata
     let isSelected: Bool
 
-    @State private var isLoading: Bool = false
+    @State private var isLoadingTimetable = false
+    @State private var isEllipsisMenuPresented = false
+    @State private var isCopyingTimetable = false
+
+    @Environment(\.errorAlertHandler) private var errorHandler
 
     private enum Design {
         static let detailFont = Font.system(size: 12)
@@ -22,7 +27,7 @@ struct TimetableMenuSectionRow: View {
     var body: some View {
         HStack(spacing: 0) {
             Group {
-                if isLoading {
+                if isLoadingTimetable {
                     ProgressView()
                         .scaleEffect(0.7)
                 } else {
@@ -38,10 +43,10 @@ struct TimetableMenuSectionRow: View {
 
             Button {
                 Task {
-                    guard !isLoading else { return }
-                    isLoading = true
+                    guard !isLoadingTimetable else { return }
+                    isLoadingTimetable = true
                     defer {
-                        isLoading = false
+                        isLoadingTimetable = false
                     }
                     try await viewModel.selectTimetable(timetableID: timetableMetadata.id)
                 }
@@ -67,6 +72,7 @@ struct TimetableMenuSectionRow: View {
                             .layoutPriority(1)
                     }
                 }
+                .animation(.defaultSpring, value: timetableMetadata.isPrimary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
             }
@@ -74,23 +80,44 @@ struct TimetableMenuSectionRow: View {
             Spacer()
 
             Button {
-                Task {}
+                Task {
+                    guard !isCopyingTimetable else { return }
+                    isCopyingTimetable = true
+                    defer {
+                        isCopyingTimetable = false
+                    }
+                    await errorHandler.withAlert {
+                        try await viewModel.copyTimetable(timetableID: timetableMetadata.id)
+                    }
+                }
             } label: {
-                TimetableAsset.menuDuplicate.swiftUIImage
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30)
-                    .opacity(0.5)
+                if isCopyingTimetable {
+                    ProgressView()
+                        .frame(width: 30, height: 30)
+                        .scaleEffect(0.7)
+                        .opacity(0.7)
+                } else {
+                    TimetableAsset.menuDuplicate.swiftUIImage
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 30)
+                        .opacity(0.5)
+                }
             }
 
             Spacer().frame(width: 12)
 
-            Button {} label: {
+            Button {
+                isEllipsisMenuPresented = true
+            } label: {
                 TimetableAsset.menuEllipsis.swiftUIImage
                     .resizable()
                     .scaledToFit()
                     .frame(width: 30)
                     .opacity(0.5)
+            }
+            .sheet(isPresented: $isEllipsisMenuPresented) {
+                MenuEllipsisSheet(viewModel: viewModel, metadata: timetableMetadata)
             }
         }
         .animation(.defaultSpring, value: isSelected)

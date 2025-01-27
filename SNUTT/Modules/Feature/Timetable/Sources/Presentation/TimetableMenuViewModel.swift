@@ -6,15 +6,10 @@
 //
 
 import Dependencies
-import Observation
 import TimetableInterface
 
-@Observable
 @MainActor
-final class TimetableMenuViewModel {
-    @ObservationIgnored
-    @Dependency(\.timetableUseCase) private var timetableUseCase
-
+struct TimetableMenuViewModel {
     private let timetableViewModel: TimetableViewModel
 
     init(timetableViewModel: TimetableViewModel) {
@@ -45,6 +40,26 @@ final class TimetableMenuViewModel {
 
     func selectTimetable(timetableID: String) async throws {
         try await timetableViewModel.selectTimetable(timetableID: timetableID)
+    }
+
+    func copyTimetable(timetableID: String) async throws {
+        try await timetableViewModel.copyTimetable(timetableID: timetableID)
+    }
+
+    func deleteTimetable(timetableID: String) async throws {
+        try await timetableViewModel.deleteTimetable(timetableID: timetableID)
+    }
+
+    func setPrimaryTimetable(timetableID: String) async throws {
+        try await timetableViewModel.setPrimaryTimetable(timetableID: timetableID)
+    }
+
+    func unsetPrimaryTimetable(timetableID: String) async throws {
+        try await timetableViewModel.unsetPrimaryTimetable(timetableID: timetableID)
+    }
+
+    func renameTimetable(timetableID: String, title: String) async throws {
+        try await timetableViewModel.renameTimetable(timetableID: timetableID, title: title)
     }
 }
 

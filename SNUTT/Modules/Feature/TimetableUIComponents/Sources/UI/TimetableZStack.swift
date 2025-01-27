@@ -5,13 +5,14 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import MemberwiseInit
 import SwiftUI
 import TimetableInterface
 
 public struct TimetableZStack: View {
-    let painter: any TimetablePainter
+    let painter: TimetablePainter
 
-    public init(painter: any TimetablePainter) {
+    public init(painter: TimetablePainter) {
         self.painter = painter
     }
 
@@ -20,23 +21,21 @@ public struct TimetableZStack: View {
             TimetableGridLayer(painter: painter)
             TimetableBlocksLayer(painter: painter)
         }
+        .animation(.defaultSpring, value: painter.currentTimetable?.id)
+        .animation(.defaultSpring, value: painter.selectedLecture?.id)
     }
 }
 
 // MARK: Preview
 
-struct PreviewPainter: TimetablePainter {
-    var currentTimetable: (any TimetableInterface.Timetable)?
-    var selectedLecture: (any TimetableInterface.Lecture)?
-    let configuration: TimetableConfiguration
-}
-
-@MainActor func makePreviewPainter() -> PreviewPainter {
-    let timetable: any Timetable = PreviewHelpers.preview(with: "1")
-    var painter = PreviewPainter(configuration: TimetableConfiguration())
-    painter.currentTimetable = timetable
-    painter.selectedLecture = timetable.lectures.first
-    return painter
+@MainActor func makePreviewPainter() -> TimetablePainter {
+    let timetable: any Timetable = PreviewHelpers.preview(id: "1")
+    return TimetablePainter(
+        currentTimetable: timetable,
+        selectedLecture: nil,
+        selectedTheme: .snutt,
+        configuration: TimetableConfiguration()
+    )
 }
 
 #Preview {

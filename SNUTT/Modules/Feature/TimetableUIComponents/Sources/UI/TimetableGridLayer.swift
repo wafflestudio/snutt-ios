@@ -9,7 +9,7 @@ import SwiftUI
 import TimetableInterface
 
 struct TimetableGridLayer: View {
-    let painter: any TimetablePainter
+    let painter: TimetablePainter
 
     var body: some View {
         GeometryReader { reader in

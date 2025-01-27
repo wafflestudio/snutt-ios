@@ -1,5 +1,5 @@
 {
-  "originHash" : "ea7be65cf2ab0fe64659b6f84c94172256565941107bdb92f6f888e363f79cc4",
+  "originHash" : "fe070bc6f140ff3152099ca781c83afe9871a1aa7ab2af9894e3d5638d75465d",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -119,12 +119,12 @@
       }
     },
     {
-      "identity" : "windowreader",
+      "identity" : "swiftui-introspect",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/divadretlaw/WindowReader",
+      "location" : "https://github.com/siteline/swiftui-introspect",
       "state" : {
-        "revision" : "295d4e6c1aacd3c6a79e47c70f7b2745b8e0399e",
-        "version" : "2.0.1"
+        "revision" : "807f73ce09a9b9723f12385e592b4e0aaebd3336",
+        "version" : "1.3.0"
       }
     },
     {

@@ -12,4 +12,4 @@ NAVER_MAP_CLIENT_ID = 5ldy8yk1dt
 KAKAO_APP_KEY = 27523c83d8671e63c0d578fc17cff810
 
 URL_SCHEME = snutt-dev
-PRODUCT_BUNDLE_IDENTIFIER = com.shp7724.snutt.dev
+PRODUCT_BUNDLE_IDENTIFIER = com.wafflestudio.snutt.dev
