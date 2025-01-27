@@ -25,9 +25,9 @@ class LectureSearchResultDataSource {
     private var predicates: [SearchPredicate]?
     private(set) var searchResults = [any Lecture]()
 
-    private func fetchSearchResult(at page: Int, quarter: Quarter, predicates: [SearchPredicate]) async throws -> [any Lecture] {
+    private func fetchSearchResult(query: String, at page: Int, quarter: Quarter, predicates: [SearchPredicate]) async throws -> [any Lecture] {
         let offset = pageLimit * page
-        let response = try await searchRepository.fetchSearchResult(query: searchQuery, quarter: quarter, predicates: predicates, offset: offset, limit: pageLimit)
+        let response = try await searchRepository.fetchSearchResult(query: query, quarter: quarter, predicates: predicates, offset: offset, limit: pageLimit)
         if response.count < pageLimit {
             canFetchMore = false
         }
@@ -35,36 +35,27 @@ class LectureSearchResultDataSource {
         return response
     }
 
-    func fetchInitialSearchResult(query: String, quarter: Quarter, predicates: [SearchPredicate]) async {
+    func fetchInitialSearchResult(query: String, quarter: Quarter, predicates: [SearchPredicate]) async throws {
         guard !isLoading else { return }
         isLoading = true
         defer {
             isLoading = false
         }
-        do {
-            searchQuery = query
-            self.quarter = quarter
-            self.predicates = predicates
-            let lectures = try await fetchSearchResult(at: 0, quarter: quarter, predicates: predicates)
-            searchResults = lectures
-        } catch {
-            // TODO: handle error
-//            assertionFailure()
-        }
+        let lectures = try await fetchSearchResult(query: query, at: 0, quarter: quarter, predicates: predicates)
+        searchQuery = query
+        self.quarter = quarter
+        self.predicates = predicates
+        searchResults = lectures
     }
 
-    func fetchMoreSearchResult() async {
+    func fetchMoreSearchResult() async throws {
         guard !isLoading, canFetchMore, let quarter, let predicates else { return }
         isLoading = true
         defer {
             isLoading = false
         }
-        do {
-            let lectures = try await fetchSearchResult(at: currentPage + 1, quarter: quarter, predicates: predicates)
-            searchResults.append(contentsOf: lectures)
-        } catch {
-//            assertionFailure()
-        }
+        let lectures = try await fetchSearchResult(query: searchQuery, at: currentPage + 1, quarter: quarter, predicates: predicates)
+        searchResults.append(contentsOf: lectures)
     }
 
     func reset() {

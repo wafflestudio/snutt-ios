@@ -196,8 +196,8 @@ extension Int64 {
     }
 }
 
-private extension Int32 {
-    func asInt() -> Int {
+extension Int32 {
+    fileprivate func asInt() -> Int {
         Int(self)
     }
 }

@@ -8,8 +8,8 @@
 import DependenciesAdditions
 import Foundation
 
-public extension UserDefaults.Dependency {
-    subscript<Value>(
+extension UserDefaults.Dependency {
+    public subscript<Value>(
         keyPath: KeyPath<UserDefaultsEntryDefinitions, UserDefaultsEntry<Value>>
     ) -> Value {
         get {

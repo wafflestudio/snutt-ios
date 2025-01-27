@@ -1,12 +1,12 @@
 //
-//  Lecture+LocalizedStrings.swift
+//  TimetableInterface+Descriptions.swift
 //  SNUTT
 //
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import TimetableInterface
 import Foundation
+import TimetableInterface
 
 extension Lecture {
     var placesDescription: String? {

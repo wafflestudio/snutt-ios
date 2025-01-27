@@ -104,7 +104,7 @@ struct SearchFilterSheet: View {
         ) {
             dismiss()
             Task {
-                await viewModel.fetchInitialSearchResult()
+                try await viewModel.fetchInitialSearchResult()
             }
         } configuration: { _ in
             var config = UIButton.Configuration.borderedProminent()

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-public extension View {
-    func highlightOnPress(scale: CGFloat = 0.98) -> some View {
+extension View {
+    public func highlightOnPress(scale: CGFloat = 0.98) -> some View {
         modifier(HighlightModifier(scale: scale))
     }
 }

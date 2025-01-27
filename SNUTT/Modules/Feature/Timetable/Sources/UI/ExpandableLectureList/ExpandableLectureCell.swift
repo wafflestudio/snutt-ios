@@ -86,7 +86,7 @@ private struct LectureActionButton: View {
             var config = UIButton.Configuration.plain()
             config.imagePlacement = .top
             config.imagePadding = 2
-            config.image = type.image(isSelected: isSelected)
+            config.image = type.image(isSelected: isSelected).resized(to: .init(width: 19, height: 19))
             config.attributedTitle = .init(type.text(isSelected: isSelected), attributes: .init([.font: Design.buttonFont]))
             config.baseForegroundColor = .white
             config.contentInsets = .init(top: 5, leading: 0, bottom: 5, trailing: 0)

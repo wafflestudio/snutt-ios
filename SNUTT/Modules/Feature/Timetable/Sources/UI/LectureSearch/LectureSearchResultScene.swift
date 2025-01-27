@@ -19,7 +19,6 @@ struct LectureSearchResultScene: View {
                 SearchPredicateScrollView(selectedTagList: viewModel.selectedPredicates, deselect: { viewModel.deselectPredicate(predicate: $0)
                 })
             }
-
             if viewModel.lectures.isEmpty {
                 SearchTipsView()
             } else {
@@ -71,7 +70,9 @@ struct LectureSearchResultScene: View {
 #Preview {
     let viewModel = LectureSearchViewModel(timetableViewModel: .init())
     let _ = Task {
-        await viewModel.fetchInitialSearchResult()
+        viewModel.searchingQuarter = .init(year: 2024, semester: .winter)
+        try await Task.sleep(for: .milliseconds(500))
+        try await viewModel.fetchInitialSearchResult()
     }
     ZStack {
         Color.black.opacity(0.5)

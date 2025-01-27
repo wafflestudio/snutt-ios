@@ -5,6 +5,7 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import APIClientInterface
 import Combine
 import Dependencies
 import DependenciesAdditions
@@ -67,8 +68,15 @@ class TimetableViewModel {
     }
 
     func deleteTimetable(timetableID: String) async throws {
-        let metadataList = try await timetableRepository.deleteTimetable(timetableID: timetableID)
-        metadataLoadState = .loaded(metadataList)
+        guard case let .loaded(metadataList) = metadataLoadState,
+              let originalIndex = metadataList.firstIndex(where: { $0.id == timetableID })
+        else { throw LocalizedErrorCode.timetableNotFound }
+        let newMetadataList = try await timetableRepository.deleteTimetable(timetableID: timetableID)
+        metadataLoadState = .loaded(newMetadataList)
+        if timetableID == currentTimetable?.id {
+            let nextIndex = min(originalIndex, newMetadataList.count - 1)
+            try await selectTimetable(timetableID: newMetadataList[nextIndex].id)
+        }
     }
 
     func setPrimaryTimetable(timetableID: String) async throws {

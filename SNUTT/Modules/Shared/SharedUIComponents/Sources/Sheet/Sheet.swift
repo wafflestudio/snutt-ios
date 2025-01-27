@@ -79,8 +79,8 @@ public struct Sheet<Content>: View where Content: View {
     }
 }
 
-public extension EnvironmentValues {
-    @Entry var sheetDismiss: SheetDismissAction = .init(action: nil)
+extension EnvironmentValues {
+    @Entry public var sheetDismiss: SheetDismissAction = .init(action: nil)
 }
 
 @MainActor

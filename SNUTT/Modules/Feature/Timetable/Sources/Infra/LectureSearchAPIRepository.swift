@@ -155,8 +155,8 @@ extension Components.Schemas.LectureDto: @retroactive Lecture {
     }
 }
 
-private extension Array {
-    func nilIfEmpty() -> Self? {
+extension Array {
+    fileprivate func nilIfEmpty() -> Self? {
         isEmpty ? nil : self
     }
 }

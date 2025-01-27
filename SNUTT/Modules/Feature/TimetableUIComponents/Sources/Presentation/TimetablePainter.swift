@@ -185,8 +185,8 @@ extension TimetableInterface.Time {
     }
 }
 
-private extension [Lecture] {
-    var aggregatedTimePlaces: [TimePlace] {
+extension [Lecture] {
+    fileprivate var aggregatedTimePlaces: [TimePlace] {
         compactMap { $0 }
             .reduce(into: []) { partialResult, lecture in
                 partialResult.append(contentsOf: lecture.timePlaces)
