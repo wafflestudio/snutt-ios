@@ -1,5 +1,5 @@
 {
-  "originHash" : "7c222e4a86eb2e1fd5319b24f556a74c30a45b6bea0ee72a523d512d16abc2e9",
+  "originHash" : "e3f78a64b4b7fece33ed06e67497191dc7168ae60bfe1531c7f381853782d0e8",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -15,8 +15,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Alamofire/Alamofire.git",
       "state" : {
-        "revision" : "bc268c28fb170f494de9e9927c371b8342979ece",
-        "version" : "5.7.1"
+        "revision" : "f455c2975872ccd2d9c81594c658af65716e9b9a",
+        "version" : "5.9.1"
+      }
+    },
+    {
+      "identity" : "appauth-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/openid/AppAuth-iOS.git",
+      "state" : {
+        "revision" : "c89ed571ae140f8eb1142735e6e23d7bb8c34cb2",
+        "version" : "1.7.5"
       }
     },
     {
@@ -56,6 +65,15 @@
       }
     },
     {
+      "identity" : "googlesignin-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/GoogleSignIn-iOS",
+      "state" : {
+        "revision" : "a7965d134c5d3567026c523e0a8a583f73b62b0d",
+        "version" : "7.1.0"
+      }
+    },
+    {
       "identity" : "googleutilities",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleUtilities.git",
@@ -78,8 +96,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/gtm-session-fetcher.git",
       "state" : {
-        "revision" : "d415594121c9e8a4f9d79cecee0965cf35e74dbd",
-        "version" : "3.1.1"
+        "revision" : "a2ab612cb980066ee56d90d60d8462992c07f24b",
+        "version" : "3.5.0"
+      }
+    },
+    {
+      "identity" : "gtmappauth",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/GTMAppAuth.git",
+      "state" : {
+        "revision" : "5d7d66f647400952b1758b230e019b07c0b4b22a",
+        "version" : "4.1.1"
       }
     },
     {
@@ -87,8 +114,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/wafflestudio/ios-rn-prebuilt",
       "state" : {
-        "revision" : "0fab694088eaca04b868a00df42ba9d153e409fd",
-        "version" : "0.17.0"
+        "revision" : "8fb1d7ee6b444d65beeca99a63f25fb57f3ec013",
+        "version" : "0.23.0"
+      }
+    },
+    {
+      "identity" : "kakao-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kakao/kakao-ios-sdk",
+      "state" : {
+        "revision" : "66b3bddc2657e8ccb7a16fa0264aac99c57be09b",
+        "version" : "2.22.5"
       }
     },
     {
@@ -96,8 +132,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git",
       "state" : {
-        "revision" : "d2b50b7ae9785f16287df49aa2d010c8e00cf6ee",
-        "version" : "2.6.3"
+        "revision" : "541ba0abe90325f041cd333c2d132f991b33fc9f",
+        "version" : "2.12.3"
       }
     },
     {

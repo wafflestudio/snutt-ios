@@ -370,7 +370,7 @@ struct LectureDetailScene: View {
     private var timePlaceSection: some View {
         VStack {
             Text("시간 및 장소")
-                .font(STFont.detailLabel.font)
+                .font(STFont.regular14.font)
                 .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.8)))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -448,7 +448,7 @@ struct LectureDetailScene: View {
                         } label: {
                             HStack(spacing: 4) {
                                 Text("지도 닫기")
-                                    .font(.system(size: 14))
+                                    .font(STFont.regular14.font)
                                     .foregroundColor(colorScheme == .dark
                                         ? STColor.gray30
                                         : STColor.darkGray)
@@ -467,7 +467,7 @@ struct LectureDetailScene: View {
                                 Image("map.open")
                                 Spacer().frame(width: 8)
                                 Text("지도에서 보기")
-                                    .font(.system(size: 14))
+                                    .font(STFont.regular14.font)
                                     .foregroundColor(colorScheme == .dark
                                         ? STColor.gray30
                                         : STColor.darkGray)
@@ -493,9 +493,10 @@ struct LectureDetailScene: View {
                             showSyllabusWebView = true
                         }
                     }
-                }.fullScreenCover(isPresented: $showSyllabusWebView) {
-                    SyllabusWebView(url: $syllabusURL)
-                        .edgesIgnoringSafeArea(.all)
+                }.sheet(isPresented: $showSyllabusWebView) {
+                    SyllabusWebView(lectureTitle: lecture.title, urlString: $syllabusURL)
+                        .ignoresSafeArea(edges: .bottom)
+                        .interactiveDismissDisabled()
                 }
 
                 DetailButton(text: "강의평") {

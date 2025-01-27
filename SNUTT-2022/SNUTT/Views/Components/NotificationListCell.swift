@@ -21,19 +21,19 @@ struct NotificationListCell: View {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(alignment: .top) {
                         Text(notification.title)
-                            .font(.system(size: 14, weight: .semibold))
+                            .font(STFont.semibold14.font)
 
                         Spacer()
 
                         Text(notification.dateString)
-                            .font(.system(size: 14))
+                            .font(STFont.regular14.font)
                             .foregroundColor(colorScheme == .dark ? STColor.darkGray : STColor.gray30)
                     }
 
                     Spacer().frame(height: 6)
 
                     Text(notification.message)
-                        .font(.system(size: 14))
+                        .font(STFont.regular14.font)
                         .padding(.trailing, 8)
                 }
                 .padding(.vertical, 7)

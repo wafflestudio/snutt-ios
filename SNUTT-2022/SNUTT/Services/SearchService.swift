@@ -143,10 +143,6 @@ struct SearchService: SearchServiceProtocol {
     }
 
     func getBookmark() async throws {
-        try await _getBookmark()
-    }
-
-    private func _getBookmark() async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)

@@ -31,7 +31,7 @@ struct STColor {
     static let gray10: Color = .init(hex: "#DADADA")
 
     /// Hex #C4C4C4
-    static let gray20: Color = .init(hex: "#C4C4C4")
+    static let assistive: Color = .init(hex: "#C4C4C4")
 
     /// Hex #A6A6A6
     static let gray30: Color = .init(hex: "#A6A6A6")
@@ -42,8 +42,14 @@ struct STColor {
     /// Hex #505050
     static let darkerGray: Color = .init(hex: "#505050")
 
+    /// Hex #EBEBED
+    static let neutral95: Color = .init(hex: "#EBEBED")
+
+    /// Hex #8A898E
+    static let alternative: Color = .init(hex: "#8A898E")
+
     /// Hex #EBEBEB
-    static let divider: Color = .init(hex: "#EBEBEB")
+    static let divider: Color = .init(hex: "#C4C4C4")
 
     /// Hex #505050
     static let darkDivider: Color = .init(hex: "#505050")

@@ -12,6 +12,7 @@ struct OnboardScene: View {
 
     @State private var pushToSignUpScene = false
     @State private var pushToLoginScene = false
+    @State private var pushToFeedbackView = false
     @Binding var pushToTimetableScene: Bool
 
     @Namespace private var launchScreenAnimation
@@ -21,35 +22,97 @@ struct OnboardScene: View {
     var body: some View {
         ZStack {
             if isActivated {
-                VStack(spacing: 15) {
-                    Spacer()
+                GeometryReader { proxy in
+                    VStack(spacing: 0) {
+                        Spacer()
 
-                    Logo(orientation: .vertical)
-                        .matchedGeometryEffect(id: logoId, in: launchScreenAnimation)
+                        Logo(orientation: .vertical)
+                            .matchedGeometryEffect(id: logoId, in: launchScreenAnimation)
 
-                    Spacer()
+                        Spacer().frame(height: proxy.size.height * 0.16)
 
-                    VStack {
-                        SignInButton(label: "로그인") {
-                            pushToLoginScene = true
+                        VStack(spacing: 0) {
+                            VStack(spacing: 14) {
+                                Button {
+                                    pushToLoginScene = true
+                                } label: {
+                                    Text("로그인")
+                                        .font(STFont.bold15.font)
+                                        .foregroundColor(.white)
+                                        .padding(.vertical, 12)
+                                        .frame(maxWidth: .infinity)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                                .foregroundColor(STColor.cyan)
+                                        )
+                                }
+                                .padding(.horizontal, 20)
+
+                                Button {
+                                    pushToSignUpScene = true
+                                } label: {
+                                    Text("회원가입")
+                                        .font(STFont.semibold14.font)
+                                        .foregroundColor(STColor.darkerGray)
+                                }
+                            }
+
+                            Spacer().frame(height: proxy.size.height * 0.07)
+
+                            HStack(spacing: 10) {
+                                Rectangle()
+                                    .fill(STColor.assistive)
+                                    .frame(height: 1)
+                                Text("SNS 계정으로 계속하기")
+                                    .font(STFont.semibold14.font)
+                                    .foregroundColor(STColor.assistive)
+                                    .fixedSize(horizontal: true, vertical: false)
+                                Rectangle()
+                                    .fill(STColor.assistive)
+                                    .frame(height: 1)
+                            }
+
+                            Spacer().frame(height: 24)
+
+                            HStack(spacing: 12) {
+                                Button {
+                                    viewModel.performKakaoSignIn()
+                                } label: {
+                                    Image("sns.kakao")
+                                }
+                                Button {
+                                    viewModel.performGoogleSignIn()
+                                } label: {
+                                    Image("sns.google")
+                                }
+                                Button {
+                                    viewModel.performFacebookSignIn()
+                                } label: {
+                                    Image("sns.facebook")
+                                }
+                                Button {
+                                    viewModel.performAppleSignIn()
+                                } label: {
+                                    Image("sns.apple")
+                                }
+                            }
+
+                            Spacer().frame(height: proxy.size.height * 0.06)
+
+                            Button {
+                                pushToFeedbackView = true
+                            } label: {
+                                Text("로그인/회원가입에 문제가 생겼나요?")
+                                    .font(STFont.semibold14.font)
+                                    .foregroundStyle(STColor.gray2)
+                            }
                         }
-                        SignInButton(label: "가입하기") {
-                            pushToSignUpScene = true
-                        }
+                        .padding(.horizontal, 12)
 
-                        SignInButton(label: "Facebook으로 계속하기", imageName: "facebook") {
-                            viewModel.performFacebookSignIn()
-                        }
-
-                        SignInButton(label: "Apple로 계속하기", imageName: "apple") {
-                            viewModel.performAppleSignIn()
-                        }
+                        Spacer().frame(height: proxy.size.height * 0.05)
                     }
-                    .padding(.horizontal, 20)
-                    Spacer()
-                        .frame(height: 20)
+                    .transition(.scale(scale: 1))
                 }
-                .transition(.scale(scale: 1))
             } else {
                 VStack {
                     Spacer()
@@ -67,6 +130,8 @@ struct OnboardScene: View {
                 NavigationLink(destination: SignUpView(registerLocalId: viewModel.registerWith(id:password:email:), sendVerificationCode: viewModel.sendVerificationCode(email:), checkVerificationCode: viewModel.submitVerificationCode(code:), pushToTimetableScene: $pushToTimetableScene), isActive: $pushToSignUpScene) { EmptyView() }
 
                 NavigationLink(destination: LoginScene(viewModel: .init(container: viewModel.container), moveToTimetableScene: $pushToTimetableScene), isActive: $pushToLoginScene) { EmptyView() }
+
+                NavigationLink(destination: UserSupportView(email: nil, sendFeedback: viewModel.sendFeedback(email:message:)), isActive: $pushToFeedbackView) { EmptyView() }
             }
         )
         .onLoad {
@@ -74,41 +139,6 @@ struct OnboardScene: View {
                 isActivated = true
             }
         }
-    }
-}
-
-struct SignInButton: View {
-    let label: String
-    var imageName: String? = nil
-    var borderColor: Color = .init(uiColor: .tertiaryLabel)
-    var fontColor: Color = .init(uiColor: .label)
-    var action: (() -> Void)? = nil
-
-    var body: some View {
-        Button {
-            action?()
-        } label: {
-            Text(label)
-                .font(.system(size: 17, weight: .semibold))
-                .frame(maxWidth: .infinity)
-                .foregroundColor(fontColor)
-                .contentShape(Rectangle())
-                .padding(.vertical, 10)
-                .overlay(HStack {
-                    if let imageName = imageName {
-                        Image(imageName)
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .padding()
-                    }
-                    Spacer()
-                })
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .stroke(borderColor, lineWidth: 1)
-                )
-        }
-        .buttonStyle(.plain)
     }
 }
 

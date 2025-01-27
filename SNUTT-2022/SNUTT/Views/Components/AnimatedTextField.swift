@@ -8,94 +8,109 @@
 import SwiftUI
 
 struct AnimatedTextField: View {
-    let label: String
+    let label: String?
     let placeholder: String
     @Binding var text: String
-    var keyboardType: UIKeyboardType = .default
 
-    var shouldFocusOn: Bool = false
-    var secure: Bool = false
+    let keyboardType: UIKeyboardType
+
+    let shouldFocusOn: Bool
+    let secure: Bool
+    let disabled: Bool
 
     // TextField with Timer
-    var needsTimer: Bool = false
+    let needsTimer: Bool
+    let canRestart: Bool
     @Binding var timeOut: Bool
-    var remainingTime: Int = 0
-    var action: (() -> Void)?
+    @Binding var remainingTime: Int
+    let restart: (() -> Void)?
 
     @FocusState private var _isFocused: Bool
 
-    init(label: String, placeholder: String, text: Binding<String>, keyboardType: UIKeyboardType = .default, shouldFocusOn: Bool = false, secure: Bool = false, needsTimer: Bool = false, timeOut: Binding<Bool> = .constant(false), remainingTime: Int = 0, action: (() -> Void)? = nil) {
+    init(label: String? = nil, placeholder: String, text: Binding<String>,
+         keyboardType: UIKeyboardType = .default, shouldFocusOn: Bool = false,
+         secure: Bool = false, disabled: Bool = false,
+         needsTimer: Bool = false, canRestart: Bool = false, timeOut: Binding<Bool> = .constant(false),
+         remainingTime: Binding<Int> = .constant(0),
+         restart: (() -> Void)? = nil)
+    {
         self.label = label
         self.placeholder = placeholder
-        _text = text
         self.keyboardType = keyboardType
         self.shouldFocusOn = shouldFocusOn
         self.secure = secure
         self.needsTimer = needsTimer
+        self.canRestart = canRestart
+        self.restart = restart
+        _text = text
+        self.disabled = disabled
         _timeOut = timeOut
-        self.action = action
-        self.remainingTime = remainingTime
+        _remainingTime = remainingTime
     }
 
     var body: some View {
-        VStack {
-            Text(label)
-                .font(STFont.detailLabel.font)
-                .foregroundColor(Color(uiColor: .secondaryLabel))
-                .frame(maxWidth: .infinity, alignment: .leading)
+        VStack(spacing: 12) {
+            if let label = label {
+                Text(label)
+                    .font(STFont.regular14.font)
+                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
 
-            HStack(spacing: 0) {
-                Group {
-                    if secure {
-                        SecureField(placeholder, text: $text)
-                    } else {
-                        TextField(placeholder, text: $text)
-                    }
-                }
-                .focused($_isFocused)
-                .keyboardType(keyboardType)
-                .textInputAutocapitalization(.never)
-                .disableAutocorrection(true)
-                .font(STFont.detailLabel.font)
-                .frame(height: 20)
-
-                // TextField with Timer
-                if needsTimer {
-                    Spacer().frame(width: 4)
-
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 0) {
                     Group {
-                        if timeOut {
-                            Button {
-                                action?()
-                            } label: {
-                                Text("다시 요청")
-                                    .foregroundColor(STColor.cyan)
-                            }
+                        if secure {
+                            SecureField(placeholder, text: $text)
                         } else {
-                            Text(Calendar.current.date(byAdding: .second, value: remainingTime + 1, to: Date()) ?? Date(), style: .timer)
-                                .foregroundColor(STColor.red)
+                            TextField("", text: $text, prompt: Text(placeholder).foregroundColor(STColor.assistive))
+                                .foregroundStyle(disabled ? STColor.assistive : .primary)
+                                .disabled(disabled)
                         }
                     }
-                    .font(STFont.subheading.font)
-                    .padding(.horizontal, 16)
+                    .focused($_isFocused)
+                    .keyboardType(keyboardType)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .font(STFont.regular15.font)
+
+                    // TextField with Timer
+                    if needsTimer {
+                        Spacer().frame(width: 4)
+                        Group {
+                            if !timeOut {
+                                Text(Calendar.current.date(byAdding: .second, value: remainingTime + 1, to: Date()) ?? Date(), style: .timer)
+                                    .foregroundColor(STColor.red)
+                            } else if canRestart {
+                                Button {
+                                    restart?()
+                                } label: {
+                                    Text("다시 요청")
+                                        .foregroundColor(STColor.cyan)
+                                }
+                            }
+                        }
+                        .font(STFont.semibold15.font)
+                        .padding(.horizontal, 10)
+                    }
+                }
+
+                ZStack(alignment: .leading) {
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(Color(uiColor: .quaternaryLabel))
+
+                    Rectangle()
+                        .frame(maxWidth: _isFocused ? .infinity : 0, alignment: .leading)
+                        .frame(height: 1)
+                        .foregroundColor(STColor.cyan)
+                        .animation(.customSpring, value: _isFocused)
                 }
             }
-
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .frame(height: 1)
-                    .foregroundColor(Color(uiColor: .quaternaryLabel))
-
-                Rectangle()
-                    .frame(maxWidth: text.isEmpty ? 0 : .infinity, alignment: .leading)
-                    .frame(height: 1)
-                    .foregroundColor(STColor.cyan)
-                    .animation(.customSpring, value: text.isEmpty)
-            }
         }
-        .onTapGesture(perform: {
+        .onTapGesture {
             _isFocused = true
-        })
+        }
         .onAppear {
             _isFocused = shouldFocusOn
         }

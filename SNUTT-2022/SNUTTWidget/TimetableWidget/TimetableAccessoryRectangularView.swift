@@ -53,7 +53,7 @@ extension TimetableAccessoryRectangularView: TimetableWidgetViewProtocol {
                     .frame(width: 6, height: 6)
 
                 Text(text)
-                    .font(.system(size: 15, weight: .regular))
+                    .font(STFont.regular15.font)
                     .foregroundColor(.gray)
                     .padding(.bottom, 2)
             }

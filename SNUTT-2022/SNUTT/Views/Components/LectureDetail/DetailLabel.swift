@@ -14,7 +14,7 @@ struct DetailLabel: View {
             Text(text)
                 .padding(.trailing, 10)
                 .padding(.top, 2.5)
-                .font(STFont.detailLabel.font)
+                .font(STFont.regular14.font)
                 .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.6)))
                 .lineLimit(1)
                 .frame(maxWidth: 84, maxHeight: .infinity, alignment: .topLeading)

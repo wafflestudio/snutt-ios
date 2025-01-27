@@ -14,6 +14,7 @@ struct LoginScene: View {
     @State private var localPassword: String = ""
     @State private var pushToFindLocalIdView: Bool = false
     @State private var pushToResetPasswordScene: Bool = false
+    @State private var changeTitle: Bool = false
 
     @Binding var moveToTimetableScene: Bool
 
@@ -43,7 +44,7 @@ struct LoginScene: View {
                                 pushToResetPasswordScene = true
                             }
                     }
-                    .font(STFont.detailLabel.font)
+                    .font(STFont.regular14.font)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
                 }
             }
@@ -68,7 +69,7 @@ struct LoginScene: View {
             .animation(.customSpring, value: isButtonDisabled)
         }
         .padding()
-        .navigationTitle("로그인")
+        .navigationTitle(changeTitle ? "아이디 입력" : "로그인")
         .navigationBarTitleDisplayMode(.inline)
         .background(
             Group {
@@ -76,8 +77,14 @@ struct LoginScene: View {
                     FindLocalIdView(sendEmail: viewModel.findLocalId(with:)),
                     isActive: $pushToFindLocalIdView) { EmptyView() }
 
-                NavigationLink(destination: ResetPasswordScene(viewModel: .init(container: viewModel.container), showResetPasswordScene: $pushToResetPasswordScene),
-                               isActive: $pushToResetPasswordScene) { EmptyView() }
+                NavigationLink(destination: ResetPasswordScene(viewModel: .init(container: viewModel.container),
+                                                               returnToLogin: $pushToResetPasswordScene,
+                                                               changeTitle: $changeTitle),
+
+                               isActive: $pushToResetPasswordScene)
+                {
+                    EmptyView()
+                }
             }
         )
     }

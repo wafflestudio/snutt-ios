@@ -99,20 +99,12 @@ final class Logger: EventMonitor {
     }
 
     // Event called when any type of Request is resumed.
-    func requestDidResume(_ request: Request) {
-        debugPrint("Resuming: \(request)")
-    }
+    func requestDidResume(_: Request) {}
 
     // Event called whenever a DataRequest has parsed a response.
     func request<Value>(_: DataRequest, didParseResponse response: DataResponse<Value, AFError>) {
         Task {
             await logStore?.log(response: response)
-        }
-
-        if response.error == nil {
-            debugPrint("Finished: \(response)")
-        } else {
-            debugPrint("Error: \(response)")
         }
     }
 }
@@ -123,6 +115,7 @@ extension DataTask {
         if let data = await response.data,
            let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data)
         {
+            try Task.checkCancellation()
             let errCode = ErrorCode(rawValue: errDto.errcode)
             var requestInfo = await collectRequestInfo()
             requestInfo["ErrorMessage"] = errCode?.errorMessage
@@ -131,19 +124,19 @@ extension DataTask {
                 Crashlytics.crashlytics().record(error: NSError(domain: errCode.errorTitle, code: errCode.rawValue, userInfo: requestInfo))
             }
 
-            if let serverMessage = errDto.ext?.first?.1 {
-                throw STError(errCode ?? .SERVER_FAULT, content: serverMessage)
+            if let displayMessage = errDto.displayMessage {
+                throw STError(errCode ?? .SERVER_FAULT, content: displayMessage, detail: errDto.detail)
             } else {
                 throw STError(errCode ?? .SERVER_FAULT)
             }
         }
-
         if let dto = try? await value {
             return dto
         }
-
+        try Task.checkCancellation()
         let requestInfo = await collectRequestInfo()
         Crashlytics.crashlytics().record(error: NSError(domain: "UNKNOWN_ERROR", code: -1, userInfo: requestInfo))
+        try Task.checkCancellation()
         throw STError(.SERVER_FAULT)
     }
 

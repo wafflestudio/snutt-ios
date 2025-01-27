@@ -1,0 +1,141 @@
+{
+  "originHash" : "ea7be65cf2ab0fe64659b6f84c94172256565941107bdb92f6f888e363f79cc4",
+  "pins" : [
+    {
+      "identity" : "combine-schedulers",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/combine-schedulers",
+      "state" : {
+        "revision" : "9fa31f4403da54855f1e2aeaeff478f4f0e40b13",
+        "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "state" : {
+        "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
+        "version" : "5.7.1"
+      }
+    },
+    {
+      "identity" : "swift-clocks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-clocks",
+      "state" : {
+        "revision" : "b9b24b69e2adda099a1fa381cda1eeec272d5b53",
+        "version" : "1.0.5"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections",
+      "state" : {
+        "revision" : "94cf62b3ba8d4bed62680a282d4c25f9c63c2efb",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "swift-concurrency-extras",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-concurrency-extras",
+      "state" : {
+        "revision" : "bb5059bde9022d69ac516803f4f227d8ac967f71",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "swift-dependencies",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-dependencies",
+      "state" : {
+        "revision" : "3ef38bb702a1a2f39c7e19fc0578403b8ee52b17",
+        "version" : "1.3.9"
+      }
+    },
+    {
+      "identity" : "swift-dependencies-additions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tgrapperon/swift-dependencies-additions",
+      "state" : {
+        "revision" : "7b1d88ec23f80b0b5d4832d51af7647fa5062d8e",
+        "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "swift-http-types",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-http-types",
+      "state" : {
+        "revision" : "9bee2fdb79cc740081abd8ebd80738063d632286",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "swift-memberwise-init-macro",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gohanlon/swift-memberwise-init-macro",
+      "state" : {
+        "revision" : "1cebd0e59ae64836dc4168045fe0f666d1dbe99a",
+        "version" : "0.5.0"
+      }
+    },
+    {
+      "identity" : "swift-openapi-runtime",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-openapi-runtime",
+      "state" : {
+        "revision" : "9a8291fa2f90cc7296f2393a99bb4824ee34f869",
+        "version" : "1.4.0"
+      }
+    },
+    {
+      "identity" : "swift-openapi-urlsession",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-openapi-urlsession",
+      "state" : {
+        "revision" : "6efbfda5276bbbc8b4fec5d744f0ecd8c784eb47",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "swift-spyable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Matejkob/swift-spyable",
+      "state" : {
+        "revision" : "f6b90c803e1f4c989ede0a75e8e456fd41dcf27f",
+        "version" : "0.8.0"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax",
+      "state" : {
+        "revision" : "515f79b522918f83483068d99c68daeb5116342d",
+        "version" : "600.0.0-prerelease-2024-09-04"
+      }
+    },
+    {
+      "identity" : "windowreader",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/divadretlaw/WindowReader",
+      "state" : {
+        "revision" : "295d4e6c1aacd3c6a79e47c70f7b2745b8e0399e",
+        "version" : "2.0.1"
+      }
+    },
+    {
+      "identity" : "xctest-dynamic-overlay",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
+      "state" : {
+        "revision" : "96beb108a57f24c8476ae1f309239270772b2940",
+        "version" : "1.2.5"
+      }
+    }
+  ],
+  "version" : 3
+}

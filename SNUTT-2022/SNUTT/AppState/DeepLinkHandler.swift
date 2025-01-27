@@ -39,6 +39,8 @@ struct DeepLinkHandler {
             try await handleTimetableLecture(parameters: urlComponents.queryItems)
         case "bookmarks":
             try await handleBookmark(parameters: urlComponents.queryItems)
+        case "kakaolink" where urlComponents.queryItems?["type"] == RNEvent.addFriendKakao.rawValue:
+            handleKakaoAddFriendRequest(parameters: urlComponents.queryItems)
         default:
             return
         }
@@ -95,6 +97,11 @@ extension DeepLinkHandler {
             appState.routing.timetableScene.pushToNotification = true
         }
         appState.routing.notificationList.routeToLectureDetail(with: lecture)
+    }
+
+    private func handleKakaoAddFriendRequest(parameters: Parameters?) {
+        appState.friend.pendingFriendRequestToken = parameters?["requestToken"]
+        appState.system.selectedTab = .friends
     }
 }
 

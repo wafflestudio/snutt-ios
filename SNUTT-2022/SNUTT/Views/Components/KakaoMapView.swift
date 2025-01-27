@@ -14,25 +14,25 @@ struct KakaoMapView: UIViewRepresentable {
     let colorScheme: ColorScheme
     let buildings: [Location: String]
 
-    /// 뷰 생성과 함께 KMControllerDelegate를 구현한 Coordinator를 생성하고, 엔진을 생성 및 초기화한다.
     func makeUIView(context: Self.Context) -> KMViewContainer {
         let view = KMViewContainer()
         view.sizeToFit()
         context.coordinator.createController(view)
-        context.coordinator.controller?.initEngine()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            context.coordinator.controller?.prepareEngine()
+        }
         return view
     }
 
     /// Updates the presented `UIView` (and coordinator) to the latest configuration.
     func updateUIView(_: KMViewContainer, context: Self.Context) {
-        DispatchQueue.main.async {
-            if showMapView {
-                context.coordinator.controller?.startEngine()
-                context.coordinator.controller?.startRendering()
-            } else {
-                context.coordinator.controller?.stopRendering()
-                context.coordinator.controller?.stopEngine()
+        if showMapView {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                context.coordinator.controller?.activateEngine()
             }
+        } else {
+            context.coordinator.controller?.pauseEngine()
+            context.coordinator.controller?.resetEngine()
         }
     }
 
@@ -42,8 +42,6 @@ struct KakaoMapView: UIViewRepresentable {
 
     /// Cleans up the presented `UIView` (and coordinator) in anticipation of their removal.
     static func dismantleUIView(_: KMViewContainer, coordinator: KakaoMapCoordinator) {
-        coordinator.controller?.stopRendering()
-        coordinator.controller?.stopEngine()
     }
 
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
@@ -94,25 +92,26 @@ struct KakaoMapView: UIViewRepresentable {
         func addViews() {
             let defaultPosition = MapPoint(longitude: defaultPoint.longitude, latitude: defaultPoint.latitude)
             let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: shouldZoomOut ? 14 : 15)
+            controller?.addView(mapviewInfo)
+        }
 
-            if controller?.addView(mapviewInfo) == Result.OK {
-                guard let mapView = mapView else {
-                    return
-                }
-                mapView.eventDelegate = self
-
-                if colorScheme == .light {
-                    mapView.dimScreen.color = UIColor(white: 0, alpha: 0.4)
-                } else {
-                    mapView.dimScreen.color = UIColor(white: 0, alpha: 0.15)
-                }
-                mapView.dimScreen.cover = .map
-
-                disableAllGestures(mapView)
-                createLabelLayer()
-                createPoiStyle()
-                createPois()
+        func addViewSucceeded(_: String, viewInfoName _: String) {
+            guard let mapView = mapView else {
+                return
             }
+            mapView.eventDelegate = self
+
+            if colorScheme == .light {
+                mapView.dimScreen.color = .init(white: 0, alpha: 0.4)
+            } else {
+                mapView.dimScreen.color = .init(white: 0, alpha: 0.15)
+            }
+            mapView.dimScreen.cover = .map
+
+            disableAllGestures(mapView)
+            createLabelLayer()
+            createPoiStyle()
+            createPois()
         }
 
         func terrainDidTapped(kakaoMap _: KakaoMap, position _: MapPoint) {

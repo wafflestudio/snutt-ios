@@ -11,13 +11,15 @@ import Foundation
 protocol AuthRepositoryProtocol {
     func registerWithLocalId(localId: String, localPassword: String, email: String) async throws -> LoginResponseDto
     func loginWithApple(appleToken: String) async throws -> LoginResponseDto
-    func loginWithFacebook(fbId: String, fbToken: String) async throws -> LoginResponseDto
+    func loginWithFacebook(facebookToken: String) async throws -> LoginResponseDto
+    func loginWithGoogle(googleToken: String) async throws -> LoginResponseDto
+    func loginWithKakao(kakaoToken: String) async throws -> LoginResponseDto
     func loginWithLocalId(localId: String, localPassword: String) async throws -> LoginResponseDto
     func findLocalId(email: String) async throws -> SendLocalIdDto
     func getLinkedEmail(localId: String) async throws -> LinkedEmailDto
     func sendVerificationCode(email: String) async throws
     func checkVerificationCode(localId: String, code: String) async throws
-    func resetPassword(localId: String, password: String) async throws
+    func resetPassword(localId: String, password: String, code: String) async throws
     func logout(userId: String, fcmToken: String) async throws -> LogoutResponseDto
 }
 
@@ -42,9 +44,23 @@ class AuthRepository: AuthRepositoryProtocol {
             .handlingError()
     }
 
-    func loginWithFacebook(fbId: String, fbToken: String) async throws -> LoginResponseDto {
+    func loginWithFacebook(facebookToken: String) async throws -> LoginResponseDto {
         return try await session
-            .request(AuthRouter.loginWithFacebook(fbId: fbId, fbToken: fbToken))
+            .request(AuthRouter.loginWithFacebook(facebookToken: facebookToken))
+            .serializingDecodable(LoginResponseDto.self)
+            .handlingError()
+    }
+
+    func loginWithGoogle(googleToken: String) async throws -> LoginResponseDto {
+        return try await session
+            .request(AuthRouter.loginWithGoogle(googleToken: googleToken))
+            .serializingDecodable(LoginResponseDto.self)
+            .handlingError()
+    }
+
+    func loginWithKakao(kakaoToken: String) async throws -> LoginResponseDto {
+        return try await session
+            .request(AuthRouter.loginWithKakao(kakaoToken: kakaoToken))
             .serializingDecodable(LoginResponseDto.self)
             .handlingError()
     }
@@ -71,9 +87,9 @@ class AuthRepository: AuthRepositoryProtocol {
     }
 
     func sendVerificationCode(email: String) async throws {
-        let _ = try await session
+        try await session
             .request(AuthRouter.sendVerificationCode(email: email))
-            .serializingString()
+            .serializingDecodable(SendVerificationCodeDto.self)
             .handlingError()
     }
 
@@ -84,9 +100,9 @@ class AuthRepository: AuthRepositoryProtocol {
             .handlingError()
     }
 
-    func resetPassword(localId: String, password: String) async throws {
+    func resetPassword(localId: String, password: String, code: String) async throws {
         let _ = try await session
-            .request(AuthRouter.resetPassword(localId: localId, password: password))
+            .request(AuthRouter.resetPassword(localId: localId, password: password, code: code))
             .serializingString()
             .handlingError()
     }
