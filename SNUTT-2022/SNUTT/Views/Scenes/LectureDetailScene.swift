@@ -309,6 +309,10 @@ struct LectureDetailScene: View {
                 .font(.system(size: 16))
                 Spacer()
             }
+            .contentShape(.rect)
+            .onTapGesture {
+                showReviewWebView = true
+            }
         }
         .padding()
     }
