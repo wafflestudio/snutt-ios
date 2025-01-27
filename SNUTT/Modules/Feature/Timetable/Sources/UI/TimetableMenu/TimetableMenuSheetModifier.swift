@@ -28,7 +28,6 @@ extension View {
 
 #Preview {
     @Previewable @State var isPresented = false
-    @Previewable @State var context: SheetPresentationContext?
     let viewModel = TimetableViewModel()
     let _ = Task {
         try await viewModel.loadTimetableList()
@@ -39,11 +38,6 @@ extension View {
             isPresented.toggle()
         }
         .timetableMenuSheet(isPresented: $isPresented, viewModel: viewModel)
-        context?.makeHUDView()
     }
-    .onPreferenceChange(SheetPresentationKey.self) { value in
-        Task { @MainActor in
-            context = value
-        }
-    }
+    .overlaySheet()
 }

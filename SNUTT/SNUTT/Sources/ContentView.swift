@@ -2,13 +2,13 @@ import APIClientInterface
 import Auth
 import AuthInterface
 import Dependencies
+import Popup
 import SharedUIComponents
 import SwiftUI
 import Timetable
 
 struct ContentView: View {
     @State private var viewModel = ContentViewModel()
-    @State private var sheetPresentationContext: SheetPresentationContext?
 
     var body: some View {
         VStack {
@@ -37,13 +37,8 @@ struct ContentView: View {
             }
             .ignoresSafeArea()
 
-            sheetPresentationContext?.makeHUDView()
         }
-        .onPreferenceChange(SheetPresentationKey.self) { value in
-            Task { @MainActor in
-                sheetPresentationContext = value
-            }
-        }
+        .overlaySheet()
     }
 
     private var isSearchMode: Binding<Bool> {
