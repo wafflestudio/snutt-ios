@@ -36,7 +36,6 @@ struct ContentView: View {
                 TabScene(tabItem: TabItem.settings, rootView: ColorView(color: .purple))
             }
             .ignoresSafeArea()
-
         }
         .overlaySheet()
         .overlayPopup()

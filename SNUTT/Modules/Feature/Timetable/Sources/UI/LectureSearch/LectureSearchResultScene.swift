@@ -16,8 +16,11 @@ struct LectureSearchResultScene: View {
     var body: some View {
         VStack(spacing: 0) {
             if !viewModel.selectedPredicates.isEmpty {
-                SearchPredicateScrollView(selectedTagList: viewModel.selectedPredicates, deselect: { viewModel.deselectPredicate(predicate: $0)
-                })
+                SearchPredicateScrollView(
+                    selectedTagList: viewModel.selectedPredicates,
+                    deselect: { viewModel.deselectPredicate(predicate: $0)
+                    }
+                )
             }
             if viewModel.lectures.isEmpty {
                 SearchTipsView()
@@ -39,10 +42,16 @@ struct LectureSearchResultScene: View {
         .sheet(isPresented: $viewModel.isSearchFilterOpen) {
             SearchFilterSheet(viewModel: viewModel)
         }
-        .sheet(isPresented: .init(get: { viewModel.targetForLectureDetailSheet != nil }, set: { _ in viewModel.targetForLectureDetailSheet = nil })) {
+        .sheet(isPresented: .init(
+            get: { viewModel.targetForLectureDetailSheet != nil },
+            set: { _ in viewModel.targetForLectureDetailSheet = nil }
+        )) {
             if let entryLecture = viewModel.targetForLectureDetailSheet {
                 NavigationStack {
-                    LectureEditDetailScene(entryLecture: entryLecture, displayMode: .preview(shouldHideDismissButton: false))
+                    LectureEditDetailScene(
+                        entryLecture: entryLecture,
+                        displayMode: .preview(shouldHideDismissButton: false)
+                    )
                 }
                 .tint(.label)
             }

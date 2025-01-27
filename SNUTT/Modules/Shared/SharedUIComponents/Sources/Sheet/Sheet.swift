@@ -55,7 +55,10 @@ public struct Sheet<Content>: View where Content: View {
                 }
                 .transformEffect(.identity)
             }
-            .frame(width: orientation.getFrame(reader: reader).width, height: orientation.getFrame(reader: reader).height)
+            .frame(
+                width: orientation.getFrame(reader: reader).width,
+                height: orientation.getFrame(reader: reader).height
+            )
             .offset(orientation.getOffset(isOpen: isOpen, translation: translation, reader: reader))
             .animation(.defaultSpring, value: isOpen)
             .animation(.defaultSpring, value: translation == 0)

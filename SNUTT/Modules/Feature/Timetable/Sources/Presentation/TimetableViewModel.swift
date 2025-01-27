@@ -99,14 +99,21 @@ class TimetableViewModel {
 
     func addLecture(lecture: any Lecture) async throws {
         guard let currentTimetable else { return }
-        self.currentTimetable = try await timetableUseCase.addLecture(timetableID: currentTimetable.id, lectureID: lecture.id)
+        self.currentTimetable = try await timetableUseCase.addLecture(
+            timetableID: currentTimetable.id,
+            lectureID: lecture.id
+        )
     }
 
     func removeLecture(lecture: any Lecture) async throws {
         guard let currentTimetable,
-              let timetableLectureID = currentTimetable.lectures.first(where: { $0.lectureID == (lecture.lectureID ?? lecture.id) })?.id
+              let timetableLectureID = currentTimetable.lectures
+              .first(where: { $0.lectureID == (lecture.lectureID ?? lecture.id) })?.id
         else { return }
-        self.currentTimetable = try await timetableUseCase.removeLecture(timetableID: currentTimetable.id, lectureID: timetableLectureID)
+        self.currentTimetable = try await timetableUseCase.removeLecture(
+            timetableID: currentTimetable.id,
+            lectureID: timetableLectureID
+        )
     }
 
     func renameTimetable(timetableID: String, title: String) async throws {

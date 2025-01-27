@@ -52,9 +52,19 @@ struct PopupModel: Sendable, Identifiable {
         isDismissed = true
         if serverPopup.hiddenDays == 0 {
             // If `hiddenDays` is 0, always show the popup next time
-            localPopup = .init(key: key, dismissInfo: .init(hiddenDays: serverPopup.hiddenDays, dismissedAt: .now, dontShowForWhile: false))
+            localPopup = .init(
+                key: key,
+                dismissInfo: .init(hiddenDays: serverPopup.hiddenDays, dismissedAt: .now, dontShowForWhile: false)
+            )
             return
         }
-        localPopup = .init(key: key, dismissInfo: .init(hiddenDays: serverPopup.hiddenDays, dismissedAt: .now, dontShowForWhile: dontShowForWhile))
+        localPopup = .init(
+            key: key,
+            dismissInfo: .init(
+                hiddenDays: serverPopup.hiddenDays,
+                dismissedAt: .now,
+                dontShowForWhile: dontShowForWhile
+            )
+        )
     }
 }

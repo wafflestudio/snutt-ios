@@ -29,7 +29,8 @@ public struct TimetableAPIRepository: TimetableRepository {
     }
 
     public func updateTimetableTitle(timetableID: String, title: String) async throws -> [any TimetableMetadata] {
-        try await apiClient.modifyTimetable(path: .init(timetableId: timetableID), body: .json(.init(title: title))).ok.body.json
+        try await apiClient.modifyTimetable(path: .init(timetableId: timetableID), body: .json(.init(title: title))).ok
+            .body.json
     }
 
     public func setPrimaryTimetable(timetableID: String) async throws {
@@ -53,7 +54,10 @@ public struct TimetableAPIRepository: TimetableRepository {
     }
 
     public func removeLecture(timetableID: String, lectureID: String) async throws -> any Timetable {
-        try await apiClient.deleteTimetableLecture(.init(path: .init(timetableId: timetableID, timetableLectureId: lectureID))).ok.body.json
+        try await apiClient.deleteTimetableLecture(.init(path: .init(
+            timetableId: timetableID,
+            timetableLectureId: lectureID
+        ))).ok.body.json
     }
 }
 

@@ -57,7 +57,10 @@ struct SearchFilterSheet: View {
                 } configuration: { button in
                     var config = UIButton.Configuration.plain()
                     config.title = category.localizedDescription
-                    config.attributedTitle = .init(category.localizedDescription, attributes: .init([.font: UIFont.systemFont(ofSize: 18, weight: .semibold)]))
+                    config.attributedTitle = .init(
+                        category.localizedDescription,
+                        attributes: .init([.font: UIFont.systemFont(ofSize: 18, weight: .semibold)])
+                    )
                     config.baseForegroundColor = isSelected ? .label : .label.withAlphaComponent(0.5)
                     button.contentHorizontalAlignment = .leading
                     return config
@@ -109,7 +112,10 @@ struct SearchFilterSheet: View {
         } configuration: { _ in
             var config = UIButton.Configuration.borderedProminent()
             config.baseBackgroundColor = TimetableAsset.cyan.color
-            config.attributedTitle = .init(TimetableStrings.searchFilterApply, font: .systemFont(ofSize: 17, weight: .semibold))
+            config.attributedTitle = .init(
+                TimetableStrings.searchFilterApply,
+                font: .systemFont(ofSize: 17, weight: .semibold)
+            )
             config.contentInsets = .init(.all(10))
             return config
         }

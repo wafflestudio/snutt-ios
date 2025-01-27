@@ -25,9 +25,17 @@ class LectureSearchResultDataSource {
     private var predicates: [SearchPredicate]?
     private(set) var searchResults = [any Lecture]()
 
-    private func fetchSearchResult(query: String, at page: Int, quarter: Quarter, predicates: [SearchPredicate]) async throws -> [any Lecture] {
+    private func fetchSearchResult(query: String, at page: Int, quarter: Quarter,
+                                   predicates: [SearchPredicate]) async throws -> [any Lecture]
+    {
         let offset = pageLimit * page
-        let response = try await searchRepository.fetchSearchResult(query: query, quarter: quarter, predicates: predicates, offset: offset, limit: pageLimit)
+        let response = try await searchRepository.fetchSearchResult(
+            query: query,
+            quarter: quarter,
+            predicates: predicates,
+            offset: offset,
+            limit: pageLimit
+        )
         if response.count < pageLimit {
             canFetchMore = false
         }
@@ -54,7 +62,12 @@ class LectureSearchResultDataSource {
         defer {
             isLoading = false
         }
-        let lectures = try await fetchSearchResult(query: searchQuery, at: currentPage + 1, quarter: quarter, predicates: predicates)
+        let lectures = try await fetchSearchResult(
+            query: searchQuery,
+            at: currentPage + 1,
+            quarter: quarter,
+            predicates: predicates
+        )
         searchResults.append(contentsOf: lectures)
     }
 

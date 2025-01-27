@@ -146,7 +146,9 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorDescriptionCustomLecture
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorDescriptionNoFCMKey
-        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound, .colorlistNotFound, .emailNotFound:
+        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound,
+             .colorlistNotFound,
+             .emailNotFound:
             APIClientInterfaceStrings.errorDescriptionNotFound
         case .cantChangeOthersTheme:
             APIClientInterfaceStrings.errorDescriptionCantChangeTheme
@@ -231,7 +233,9 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorFailureReasonCustomLecture
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorFailureReasonNoFCMKey
-        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound, .colorlistNotFound, .emailNotFound:
+        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound,
+             .colorlistNotFound,
+             .emailNotFound:
             APIClientInterfaceStrings.errorFailureReasonNotFound
         case .cantChangeOthersTheme:
             APIClientInterfaceStrings.errorFailureReasonCantChangeTheme
@@ -316,7 +320,9 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorRecoverySuggestionCustomLecture
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorRecoverySuggestionNoFCMKey
-        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound, .colorlistNotFound, .emailNotFound:
+        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound,
+             .colorlistNotFound,
+             .emailNotFound:
             APIClientInterfaceStrings.errorRecoverySuggestionNotFound
         case .cantChangeOthersTheme:
             APIClientInterfaceStrings.errorRecoverySuggestionCantChangeTheme

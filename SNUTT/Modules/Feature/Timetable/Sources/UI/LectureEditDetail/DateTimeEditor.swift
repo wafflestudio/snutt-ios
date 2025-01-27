@@ -85,7 +85,10 @@ private struct LectureTimePicker: View {
 
     var endRange: ClosedRange<Date> {
         let calendar = Calendar.current
-        return calendar.date(byAdding: .minute, value: 5, to: start.wrappedValue)! ... calendar.date(from: .init(hour: 23, minute: 59))!
+        return calendar.date(byAdding: .minute, value: 5, to: start.wrappedValue)! ... calendar.date(from: .init(
+            hour: 23,
+            minute: 59
+        ))!
     }
 
     var body: some View {
@@ -100,7 +103,8 @@ private struct LectureTimePicker: View {
                 }
                 .tint(.label)
                 .labelsHidden()
-                .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color(uiColor: .tertiarySystemFill)))
+                .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(Color(uiColor: .tertiarySystemFill)))
             }
 
             Divider()

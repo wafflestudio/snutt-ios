@@ -58,7 +58,11 @@ class LectureSearchViewModel {
 
     func fetchInitialSearchResult() async throws {
         guard let searchingQuarter else { return }
-        try await dataSource.fetchInitialSearchResult(query: searchQuery, quarter: searchingQuarter, predicates: selectedPredicates)
+        try await dataSource.fetchInitialSearchResult(
+            query: searchQuery,
+            quarter: searchingQuarter,
+            predicates: selectedPredicates
+        )
     }
 
     func resetSearchResult() {
