@@ -6,3 +6,4 @@
 --typeattributes prev-line
 --disable redundantLet
 --extensionacl on-declarations
+--maxwidth 119

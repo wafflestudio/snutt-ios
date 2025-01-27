@@ -58,6 +58,7 @@ let project = Project.app(
             dependencies: [
                 .target(name: "APIClientInterface"),
                 .target(name: "FoundationUtility"),
+                .target(name: "SwiftUIUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
                 .external(name: "Spyable"),

@@ -39,6 +39,7 @@ struct ContentView: View {
 
         }
         .overlaySheet()
+        .overlayPopup()
     }
 
     private var isSearchMode: Binding<Bool> {
