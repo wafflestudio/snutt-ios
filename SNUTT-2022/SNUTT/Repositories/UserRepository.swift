@@ -57,9 +57,7 @@ class UserRepository: UserRepositoryProtocol {
             .handlingError()
     }
 
-    func connectKakao(kakaoToken: String) async throws ->
-        TokenResponseDto
-    {
+    func connectKakao(kakaoToken: String) async throws -> TokenResponseDto {
         return try await session
             .request(UserRouter.connectKakao(kakaoToken: kakaoToken))
             .serializingDecodable(TokenResponseDto.self)
@@ -73,9 +71,7 @@ class UserRepository: UserRepositoryProtocol {
             .handlingError()
     }
 
-    func connectGoogle(googleToken: String) async throws ->
-        TokenResponseDto
-    {
+    func connectGoogle(googleToken: String) async throws -> TokenResponseDto {
         return try await session
             .request(UserRouter.connectGoogle(googleToken: googleToken))
             .serializingDecodable(TokenResponseDto.self)
@@ -89,9 +85,7 @@ class UserRepository: UserRepositoryProtocol {
             .handlingError()
     }
 
-    func connectApple(appleToken: String) async throws ->
-        TokenResponseDto
-    {
+    func connectApple(appleToken: String) async throws -> TokenResponseDto {
         return try await session
             .request(UserRouter.connectApple(appleToken: appleToken))
             .serializingDecodable(TokenResponseDto.self)

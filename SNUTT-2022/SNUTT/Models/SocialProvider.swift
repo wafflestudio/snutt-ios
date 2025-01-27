@@ -8,11 +8,11 @@
 import Foundation
 
 struct SocialProvider {
-    var local: Bool
-    var facebook: Bool
-    var google: Bool
-    var kakao: Bool
-    var apple: Bool
+    let local: Bool
+    let facebook: Bool
+    let google: Bool
+    let kakao: Bool
+    let apple: Bool
 }
 
 extension SocialProvider {
