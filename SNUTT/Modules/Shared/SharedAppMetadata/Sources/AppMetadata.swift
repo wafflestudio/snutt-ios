@@ -10,8 +10,8 @@ import DependenciesAdditions
 import DependenciesUtility
 import Foundation
 
-public extension DependencyValues {
-    var appMetadata: AppMetadata {
+extension DependencyValues {
+    public var appMetadata: AppMetadata {
         get { self[AppMetadata.self] }
         set { self[AppMetadata.self] = newValue }
     }
