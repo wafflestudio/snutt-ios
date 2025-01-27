@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum LocalizedErrorCode: Int, LocalizedError {
+public enum LocalizedErrorCode: Int, LocalizedError {
     case serverFault = 0x0000
     case noNetwork = 0x0001
     case unknownError = 0x0002
@@ -86,7 +86,7 @@ enum LocalizedErrorCode: Int, LocalizedError {
 
     case excessiveEmailVerificationRequest = 0xA000
 
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .serverFault:
             APIClientInterfaceStrings.errorDescriptionServerFault
@@ -171,7 +171,7 @@ enum LocalizedErrorCode: Int, LocalizedError {
         }
     }
 
-    var failureReason: String? {
+    public var failureReason: String? {
         switch self {
         case .serverFault:
             APIClientInterfaceStrings.errorFailureReasonServerFault
@@ -256,7 +256,7 @@ enum LocalizedErrorCode: Int, LocalizedError {
         }
     }
 
-    var recoverySuggestion: String? {
+    public var recoverySuggestion: String? {
         switch self {
         case .serverFault:
             APIClientInterfaceStrings.errorRecoverySuggestionServerFault
