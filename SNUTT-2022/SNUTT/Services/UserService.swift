@@ -10,12 +10,19 @@ import Foundation
 @MainActor
 protocol UserServiceProtocol: Sendable {
     func fetchUser() async throws
+    func fetchSocialProvider() async throws
     func changeNickname(to nickname: String) async throws
     func deleteUser() async throws
     func addLocalId(localId: String, localPassword: String) async throws
     func changePassword(from oldPassword: String, to newPassword: String) async throws
+    func connectKakao(kakaoToken: String) async throws
+    func disconnectKakao() async throws
+    func connectGoogle(googleToken: String) async throws
+    func disconnectGoogle() async throws
+    func connectApple(appleToken: String) async throws
+    func disconnectApple() async throws
+    func connectFacebook(facebookId: String, facebookToken: String) async throws
     func disconnectFacebook() async throws
-    func connectFacebook(fbId: String, fbToken: String) async throws
     func addDevice(fcmToken: String) async throws
     func deleteDevice(fcmToken: String) async throws
     func sendVerificationCode(email: String) async throws
@@ -34,6 +41,11 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
 
     var userDefaultsRepository: UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
+    }
+
+    func fetchSocialProvider() async throws {
+        let dto = try await userRepository.fetchSocialProvider()
+        appState.user.socialProvider = SocialProvider(from: dto)
     }
 
     func fetchUser() async throws {
@@ -56,8 +68,38 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
         try await updateToken(from: dto)
     }
 
-    func connectFacebook(fbId: String, fbToken: String) async throws {
-        let dto = try await userRepository.connectFacebook(fbId: fbId, fbToken: fbToken)
+    func connectKakao(kakaoToken: String) async throws {
+        let dto = try await userRepository.connectKakao(kakaoToken: kakaoToken)
+        try await updateToken(from: dto)
+    }
+
+    func disconnectKakao() async throws {
+        let dto = try await userRepository.disconnectKakao()
+        try await updateToken(from: dto)
+    }
+
+    func connectGoogle(googleToken: String) async throws {
+        let dto = try await userRepository.connectGoogle(googleToken: googleToken)
+        try await updateToken(from: dto)
+    }
+
+    func disconnectGoogle() async throws {
+        let dto = try await userRepository.disconnectGoogle()
+        try await updateToken(from: dto)
+    }
+
+    func connectApple(appleToken: String) async throws {
+        let dto = try await userRepository.connectApple(appleToken: appleToken)
+        try await updateToken(from: dto)
+    }
+
+    func disconnectApple() async throws {
+        let dto = try await userRepository.disconnectApple()
+        try await updateToken(from: dto)
+    }
+
+    func connectFacebook(facebookId: String, facebookToken: String) async throws {
+        let dto = try await userRepository.connectFacebook(facebookId: facebookId, facebookToken: facebookToken)
         try await updateToken(from: dto)
     }
 
@@ -114,12 +156,19 @@ struct UserService: UserServiceProtocol, UserAuthHandler {
 
 class FakeUserService: UserServiceProtocol {
     func fetchUser() {}
+    func fetchSocialProvider() {}
     func changeNickname(to _: String) async throws {}
     func deleteUser() async throws {}
     func addLocalId(localId _: String, localPassword _: String) async throws {}
     func changePassword(from _: String, to _: String) async throws {}
+    func connectKakao(kakaoToken _: String) async throws {}
+    func disconnectKakao() async throws {}
+    func connectGoogle(googleToken _: String) async throws {}
+    func disconnectGoogle() async throws {}
+    func connectApple(appleToken _: String) async throws {}
+    func disconnectApple() async throws {}
+    func connectFacebook(facebookId _: String, facebookToken _: String) async throws {}
     func disconnectFacebook() async throws {}
-    func connectFacebook(fbId _: String, fbToken _: String) async throws {}
     func addDevice(fcmToken _: String) async throws {}
     func deleteDevice(fcmToken _: String) async throws {}
     func sendVerificationCode(email _: String) async throws {}

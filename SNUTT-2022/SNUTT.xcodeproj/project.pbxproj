@@ -35,6 +35,8 @@
 		738407102B6060F800007E62 /* ThemeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406F82B57154400007E62 /* ThemeState.swift */; };
 		73AB84D22C35128B0075DE83 /* IntegrateAccountScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */; };
 		73AB84D42C3514080075DE83 /* IntegrateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */; };
+		73B6E0882CCB34B2006DD4F0 /* SocialProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */; };
+		73EF6E682D3A5F330050D5C4 /* AppleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF6E672D3A5F2D0050D5C4 /* AppleLogin.swift */; };
 		B800A38B2B76132C008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B80240B22CE8564500178428 /* TimerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80240B12CE8564500178428 /* TimerModifier.swift */; };
@@ -380,6 +382,8 @@
 		738407042B577E9000007E62 /* ThemeDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDetailScene.swift; sourceTree = "<group>"; };
 		73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateAccountScene.swift; sourceTree = "<group>"; };
 		73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateAccountViewModel.swift; sourceTree = "<group>"; };
+		73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialProvider.swift; sourceTree = "<group>"; };
+		73EF6E672D3A5F2D0050D5C4 /* AppleLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLogin.swift; sourceTree = "<group>"; };
 		B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTimeMaskDto.swift; sourceTree = "<group>"; };
 		B80240B12CE8564500178428 /* TimerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModifier.swift; sourceTree = "<group>"; };
 		B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureMapView.swift; sourceTree = "<group>"; };
@@ -763,6 +767,7 @@
 				B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */,
 				736AF84B2C2F275E00ED9C1A /* GoogleLogin.swift */,
 				734A831E2C2FD41200D6CB95 /* KakaoLogin.swift */,
+				73EF6E672D3A5F2D0050D5C4 /* AppleLogin.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1047,6 +1052,7 @@
 				731D9FFC297BC5060027BA25 /* Bookmark.swift */,
 				738406ED2B57107C00007E62 /* Theme.swift */,
 				B84A4EA02B6035EE00C1E1A0 /* Building.swift */,
+				73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1567,6 +1573,7 @@
 				B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */,
 				738406FB2B57173400007E62 /* ThemeSettingScene.swift in Sources */,
 				B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */,
+				73EF6E682D3A5F330050D5C4 /* AppleLogin.swift in Sources */,
 				BEDF507527F4289B00CDCC13 /* Lecture.swift in Sources */,
 				738406F92B57154400007E62 /* ThemeState.swift in Sources */,
 				BE28036A28E93EEF00B2B1AB /* LoginScene.swift in Sources */,
@@ -1612,6 +1619,7 @@
 				BE9413BF28C2157600171060 /* NotificationDto.swift in Sources */,
 				DCD41A7527E5CEA500CF380E /* AppState.swift in Sources */,
 				CE4777F32A6ADCAC00E03253 /* VacancyRepository.swift in Sources */,
+				73B6E0882CCB34B2006DD4F0 /* SocialProvider.swift in Sources */,
 				DC1E0ED4287738F2005632A3 /* TimetableRouter.swift in Sources */,
 				DC29159F28660F7800FE5F9A /* ReviewScene.swift in Sources */,
 				CE3384BA2A86704100437CC5 /* FriendsService.swift in Sources */,

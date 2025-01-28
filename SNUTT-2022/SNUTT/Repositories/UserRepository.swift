@@ -10,8 +10,15 @@ import Foundation
 
 protocol UserRepositoryProtocol {
     func fetchUser() async throws -> UserDto
+    func fetchSocialProvider() async throws -> SocialProviderDto
     func changeNickname(to nickname: String) async throws -> UserDto
-    func connectFacebook(fbId: String, fbToken: String) async throws -> TokenResponseDto
+    func connectKakao(kakaoToken: String) async throws -> TokenResponseDto
+    func disconnectKakao() async throws -> TokenResponseDto
+    func connectGoogle(googleToken: String) async throws -> TokenResponseDto
+    func disconnectGoogle() async throws -> TokenResponseDto
+    func connectApple(appleToken: String) async throws -> TokenResponseDto
+    func disconnectApple() async throws -> TokenResponseDto
+    func connectFacebook(facebookId: String, facebookToken: String) async throws -> TokenResponseDto
     func disconnectFacebook() async throws -> TokenResponseDto
     func changePassword(from oldPassword: String, to newPassword: String) async throws -> TokenResponseDto
     func addLocalId(localId: String, localPassword: String) async throws -> TokenResponseDto
@@ -36,6 +43,13 @@ class UserRepository: UserRepositoryProtocol {
             .handlingError()
     }
 
+    func fetchSocialProvider() async throws -> SocialProviderDto {
+        return try await session
+            .request(UserRouter.getSocialProvider)
+            .serializingDecodable(SocialProviderDto.self)
+            .handlingError()
+    }
+
     func changeNickname(to nickname: String) async throws -> UserDto {
         return try await session
             .request(UserRouter.changeNickname(nickname: nickname))
@@ -43,9 +57,51 @@ class UserRepository: UserRepositoryProtocol {
             .handlingError()
     }
 
-    func connectFacebook(fbId: String, fbToken: String) async throws -> TokenResponseDto {
+    func connectKakao(kakaoToken: String) async throws -> TokenResponseDto {
         return try await session
-            .request(UserRouter.connectFacebook(fbId: fbId, fbToken: fbToken))
+            .request(UserRouter.connectKakao(kakaoToken: kakaoToken))
+            .serializingDecodable(TokenResponseDto.self)
+            .handlingError()
+    }
+
+    func disconnectKakao() async throws -> TokenResponseDto {
+        return try await session
+            .request(UserRouter.disconnectKakao)
+            .serializingDecodable(TokenResponseDto.self)
+            .handlingError()
+    }
+
+    func connectGoogle(googleToken: String) async throws -> TokenResponseDto {
+        return try await session
+            .request(UserRouter.connectGoogle(googleToken: googleToken))
+            .serializingDecodable(TokenResponseDto.self)
+            .handlingError()
+    }
+
+    func disconnectGoogle() async throws -> TokenResponseDto {
+        return try await session
+            .request(UserRouter.disconnectGoogle)
+            .serializingDecodable(TokenResponseDto.self)
+            .handlingError()
+    }
+
+    func connectApple(appleToken: String) async throws -> TokenResponseDto {
+        return try await session
+            .request(UserRouter.connectApple(appleToken: appleToken))
+            .serializingDecodable(TokenResponseDto.self)
+            .handlingError()
+    }
+
+    func disconnectApple() async throws -> TokenResponseDto {
+        return try await session
+            .request(UserRouter.disconnectApple)
+            .serializingDecodable(TokenResponseDto.self)
+            .handlingError()
+    }
+
+    func connectFacebook(facebookId: String, facebookToken: String) async throws -> TokenResponseDto {
+        return try await session
+            .request(UserRouter.connectFacebook(facebookId: facebookId, facebookToken: facebookToken))
             .serializingDecodable(TokenResponseDto.self)
             .handlingError()
     }
