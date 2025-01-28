@@ -338,7 +338,7 @@ struct LectureDetailScene: View {
                         EditableTextField(text: $lecture.classification)
                     }
                     HStack {
-                        DetailLabel(text: "구분")
+                        DetailLabel(text: "교양영역")
                         EditableTextField(text: $lecture.category)
                     }
                     HStack {
