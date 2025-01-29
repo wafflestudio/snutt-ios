@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 class ThemeState {
     @Published var themeList: [Theme] = []
@@ -16,4 +15,5 @@ class ThemeState {
     @Published var isNewThemeSheetOpen = false
     @Published var isBasicThemeSheetOpen = false
     @Published var isCustomThemeSheetOpen = false
+    @Published var isDownloadedThemeSheetOpen = false
 }
