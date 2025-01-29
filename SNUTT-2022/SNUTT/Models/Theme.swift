@@ -20,6 +20,14 @@ struct Theme: Equatable, Identifiable {
 
     /// 사용자 생성 커스텀 테마
     var isCustom: Bool
+    
+    var status: ThemeStatus?
+}
+
+enum ThemeStatus: String, Codable {
+    case basic = "BASIC"
+    case downloaded = "DOWNLOADED"
+    case published = "PUBLISHED"
 }
 
 extension Theme {
@@ -29,6 +37,7 @@ extension Theme {
         name = dto.name
         colors = dto.colors?.map { .init(fg: Color(hex: $0.fg), bg: Color(hex: $0.bg)) } ?? []
         isCustom = dto.isCustom
+        status = ThemeStatus(rawValue: dto.status)
     }
 
     init(rawValue: Int) {
@@ -37,5 +46,6 @@ extension Theme {
         name = theme?.name ?? ""
         colors = theme?.getLectureColorList() ?? []
         isCustom = false
+        status = .basic
     }
 }
