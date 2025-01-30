@@ -147,10 +147,12 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
         guard let accessToken = appState.user.accessToken else { return }
         appState.review.preloadedMain.preload(url: WebViewType.review.url, accessToken: accessToken)
         appState.review.preloadedDetail.preload(url: WebViewType.review.url, accessToken: accessToken)
+        appState.theme.preloaded.preload(url: WebViewType.themeMarket.url, accessToken: accessToken)
     }
 
     func sendMainWebViewReloadSignal() {
         appState.review.preloadedMain.eventSignal?.send(.reload(url: WebViewType.review.url))
+        appState.theme.preloaded.eventSignal?.send(.reload(url: WebViewType.themeMarket.url))
     }
 
     func sendDetailWebViewReloadSignal(url: URL) {
