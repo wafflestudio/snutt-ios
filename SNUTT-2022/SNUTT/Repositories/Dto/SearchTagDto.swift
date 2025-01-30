@@ -14,6 +14,7 @@ struct SearchTagListDto: Codable {
     var academic_year: [String]
     var credit: [String]
     var category: [String]
+    var categoryPre2025: [String]
     var etc: [String]? // not given from server
     var updated_at: Int64
 }

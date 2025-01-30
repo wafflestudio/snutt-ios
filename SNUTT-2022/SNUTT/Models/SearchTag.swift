@@ -50,6 +50,7 @@ enum SearchTagType: String, CaseIterable {
     case credit
     case time
     case category
+    case categoryPre2025
     case etc
 
     var tagColor: Color {
@@ -61,6 +62,7 @@ enum SearchTagType: String, CaseIterable {
         case .department: return Color(hex: "#1BD0C8")
         case .time: return Color(hex: "#1D99E8")
         case .category: return Color(hex: "#4F48C4")
+        case .categoryPre2025: return Color(hex: "#4F48C4")
         case .etc: return Color(hex: "#AF56B3")
         }
     }
@@ -73,7 +75,8 @@ enum SearchTagType: String, CaseIterable {
         case .credit: return "학점"
         case .department: return "학과"
         case .time: return "시간"
-        case .category: return "교양분류"
+        case .category: return "교양영역"
+        case .categoryPre2025: return "구) 교양영역"
         case .etc: return "기타"
         }
     }
