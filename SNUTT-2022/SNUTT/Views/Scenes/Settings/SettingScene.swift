@@ -53,7 +53,7 @@ struct SettingScene: View {
                     VacancyScene(viewModel: .init(container: viewModel.container))
                 }
                 SettingsLinkItem(title: "테마 마켓") {
-                    ThemeMarketView()
+                    ThemeMarketScene(viewModel: .init(container: viewModel.container))
                 }
             } header: {
                 Text("서비스")
