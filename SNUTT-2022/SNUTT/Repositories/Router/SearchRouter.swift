@@ -39,11 +39,12 @@ enum SearchRouter: Router {
                 "limit": limit,
                 "classification": [],
                 "category": [],
+                "categoryPre2025": [],
                 "credit": [],
                 "etc": [],
                 "department": [],
                 "academic_year": [],
-                "sortCriteria": "",
+                "sortCriteria": ""
             ]
 
             let tagParams: [String: Any] = Dictionary(grouping: tagList, by: { $0.type.rawValue })

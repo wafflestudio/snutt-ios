@@ -22,6 +22,7 @@ struct Lecture: Identifiable {
     var colorIndex: Int
     var classification: String
     var category: String
+    var categoryPre2025: String
     var remark: String
     var isCustom: Bool
     var color: LectureColor?
@@ -173,6 +174,7 @@ extension Lecture {
         colorIndex = dto.colorIndex ?? 1
         classification = dto.classification ?? ""
         category = dto.category ?? ""
+        categoryPre2025 = dto.categoryPre2025 ?? ""
         remark = dto.remark ?? ""
         quota = dto.quota ?? 0
         freshmanQuota = dto.freshmanQuota ?? 0
@@ -213,6 +215,7 @@ extension Lecture {
                            colorIndex: Int.random(in: 1 ... 5),
                            classification: "전선",
                            category: "체육",
+                           categoryPre2025: "베리타스",
                            remark: "영어강의, 복부전생수강불가, 주전공생수강불가, 어쩌구 저쩌구",
                            isCustom: false,
                            color: nil,
