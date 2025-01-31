@@ -77,7 +77,7 @@ struct ThemeService: ThemeServiceProtocol {
         appState.theme.isCustomThemeSheetOpen = false
         appState.theme.bottomSheetTarget = nil
     }
-    
+
     func openDownloadedThemeSheet(for _: Theme) {
         appState.theme.isDownloadedThemeSheetOpen = true
         appState.theme.isBottomSheetOpen = false

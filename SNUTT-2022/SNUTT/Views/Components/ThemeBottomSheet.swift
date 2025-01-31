@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ThemeBottomSheet: View {
     @Binding var isOpen: Bool
-    
+
     let targetTheme: Theme?
     let openCustomThemeSheet: @MainActor () async -> Void
     let openDownloadedThemeSheet: @MainActor () async -> Void
@@ -25,7 +25,7 @@ struct ThemeBottomSheet: View {
               disableDragGesture: true)
         {
             VStack(spacing: 0) {
-                if (targetTheme?.status == .downloaded) {
+                if targetTheme?.status == .downloaded {
                     ThemeBottomSheetButton(menu: .detail) {
                         Task {
                             await openDownloadedThemeSheet()

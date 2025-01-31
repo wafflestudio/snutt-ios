@@ -19,7 +19,7 @@ class ThemeState {
     @Published var isBasicThemeSheetOpen = false
     @Published var isCustomThemeSheetOpen = false
     @Published var isDownloadedThemeSheetOpen = false
-    
+
     let preloaded = ThemeMarketViewPreloadManager()
 }
 
