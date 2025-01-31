@@ -23,7 +23,7 @@ class WebViewPreloadManager {
 
     func preload(url: URL, accessToken: String) {
         eventSignal = eventSignal ?? .init()
-        webView = WKWebView(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken))
+        webView = WKWebView(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken, type: "review"))
         coordinator = coordinator ?? Coordinator(eventSignal: eventSignal!)
         webView?.scrollView.bounces = false
         webView?.backgroundColor = UIColor(STColor.systemBackground)
@@ -41,7 +41,7 @@ class WebViewPreloadManager {
     }
 
     func setColorScheme(_ colorScheme: ColorScheme) {
-        webView?.setCookie(name: "theme", value: colorScheme.description)
+        webView?.setSnuevCookie(name: "theme", value: colorScheme.description)
         webView?.evaluateJavaScript("changeTheme('\(colorScheme.description)')")
     }
 

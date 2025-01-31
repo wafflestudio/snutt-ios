@@ -18,11 +18,14 @@ enum WebViewType {
     case privacyPolicy
     case review
     case reviewDetail(id: Int)
+    case themeMarket
 
     var baseURL: String {
         switch self {
         case .review, .reviewDetail:
             return NetworkConfiguration.snuevBaseURL
+        case .themeMarket:
+            return NetworkConfiguration.themeBaseURL
         default:
             return NetworkConfiguration.serverBaseURL
         }
@@ -40,6 +43,8 @@ enum WebViewType {
             return ""
         case let .reviewDetail(id):
             return "/detail/?id=\(id)&on_back=close"
+        case .themeMarket:
+            return "/download"
         }
     }
 

@@ -144,7 +144,7 @@ class MenuSheetViewModel: BaseViewModel, ObservableObject {
     }
 
     var newTheme: Theme {
-        let theme: Theme = .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: STColor.cyan.toHex(), fg: Color.white.toHex())], isDefault: false, isCustom: true))
+        let theme: Theme = .init(id: UUID().uuidString, name: "새 테마", colors: [LectureColor(fg: Color.white, bg: STColor.cyan)], isCustom: true)
         return theme
     }
 

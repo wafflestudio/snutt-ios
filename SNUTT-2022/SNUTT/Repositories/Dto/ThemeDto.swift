@@ -14,11 +14,26 @@ struct ThemeDto: Codable {
     let colors: [ThemeColorDto]?
     let isDefault: Bool
     let isCustom: Bool
+    let origin: ThemeOriginDto?
+    let status: String
+    let publishInfo: ThemePublishInfoDto?
 }
+
 
 struct ThemeColorDto: Codable {
     let bg: String
     let fg: String
+}
+
+struct ThemeOriginDto: Codable {
+    let originId: String
+    let authorId: String
+}
+
+struct ThemePublishInfoDto: Codable {
+    let publishName: String
+    let authorName: String
+    let downloads: Int
 }
 
 extension ThemeColorDto {
@@ -36,5 +51,8 @@ extension ThemeDto {
         colors = model.colors.map { ThemeColorDto(from: $0) }
         isDefault = false
         isCustom = model.isCustom
+        origin = nil
+        status = model.status?.rawValue ?? ""
+        publishInfo = nil
     }
 }

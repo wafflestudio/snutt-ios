@@ -20,6 +20,13 @@ struct ThemeSettingScene: View {
                         viewModel.openBottomSheet(for: theme)
                     }
                 }
+                if !viewModel.downloadedThemes.isEmpty {
+                    Section(header: Text("담은 테마")) {
+                        ThemeScrollView(themes: viewModel.downloadedThemes) { theme in
+                            viewModel.openBottomSheet(for: theme)
+                        }
+                    }
+                }
                 Section(header: Text("제공 테마"), footer: infoView()) {
                     ThemeScrollView(themes: viewModel.basicThemes) { theme in
                         viewModel.openBasicThemeSheet(for: theme)
@@ -27,7 +34,8 @@ struct ThemeSettingScene: View {
                 }
             }
             ThemeBottomSheet(isOpen: $viewModel.isBottomSheetOpen,
-                             openCustomThemeSheet: viewModel.openCustomThemeSheet,
+                             targetTheme: viewModel.targetTheme,
+                             openCustomThemeSheet: viewModel.openCustomThemeSheet, openDownloadedThemeSheet: viewModel.openDownloadedThemeSheet,
                              copyTheme: viewModel.copyTheme,
                              deleteTheme: viewModel.deleteTheme)
         }
@@ -53,6 +61,14 @@ struct ThemeSettingScene: View {
             ZStack {
                 NavigationView {
                     ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.targetTheme ?? viewModel.newTheme, themeType: .custom)
+                }
+            }
+            .accentColor(Color(UIColor.label))
+        })
+        .sheet(isPresented: $viewModel.isDownloadedThemeSheetOpen, content: {
+            ZStack {
+                NavigationView {
+                    ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.targetTheme ?? viewModel.newTheme, themeType: .downloaded)
                 }
             }
             .accentColor(Color(UIColor.label))

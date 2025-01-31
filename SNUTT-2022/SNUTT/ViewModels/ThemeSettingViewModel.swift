@@ -12,7 +12,11 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
     @Published private var themes: [Theme] = []
 
     var customThemes: [Theme] {
-        themes.filter { $0.isCustom }
+        themes.filter { $0.status != .downloaded && $0.isCustom }
+    }
+    
+    var downloadedThemes: [Theme] {
+        themes.filter { $0.status == .downloaded }
     }
 
     var basicThemes: [Theme] {
@@ -54,6 +58,15 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
             services.themeService.closeCustomThemeSheet()
         }
     }
+    
+    @Published private var _isDownloadedThemeSheetOpen: Bool = false
+    var isDownloadedThemeSheetOpen: Bool {
+        get { _isDownloadedThemeSheetOpen }
+        set {
+            _isDownloadedThemeSheetOpen = false
+            services.themeService.closeDownloadedThemeSheet()
+        }
+    }
 
     override init(container: DIContainer) {
         super.init(container: container)
@@ -62,6 +75,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         appState.theme.$isNewThemeSheetOpen.assign(to: &$_isNewThemeSheetOpen)
         appState.theme.$isBasicThemeSheetOpen.assign(to: &$_isBasicThemeSheetOpen)
         appState.theme.$isCustomThemeSheetOpen.assign(to: &$_isCustomThemeSheetOpen)
+        appState.theme.$isDownloadedThemeSheetOpen.assign(to: &$_isDownloadedThemeSheetOpen)
     }
 
     var themeState: ThemeState {
@@ -73,7 +87,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
     }
 
     var newTheme: Theme {
-        let theme: Theme = .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: STColor.cyan.toHex(), fg: Color.white.toHex())], isDefault: false, isCustom: true))
+        let theme: Theme = .init(id: UUID().uuidString, name: "새 테마", colors: [LectureColor(fg: Color.white, bg: STColor.cyan)], isCustom: true)
         return theme
     }
 
@@ -94,6 +108,12 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         guard let theme = targetTheme else { return }
         services.timetableService.selectTimetableTheme(theme: theme)
         services.themeService.openCustomThemeSheet(for: theme)
+    }
+    
+    func openDownloadedThemeSheet() {
+        guard let theme = targetTheme else { return }
+        services.timetableService.selectTimetableTheme(theme: theme)
+        services.themeService.openDownloadedThemeSheet(for: theme)
     }
 
     func copyTheme() async {

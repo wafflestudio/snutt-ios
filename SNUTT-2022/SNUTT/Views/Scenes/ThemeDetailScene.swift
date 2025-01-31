@@ -27,6 +27,7 @@ struct ThemeDetailScene: View {
         case basic
         case custom
         case new
+        case downloaded
     }
 
     @Environment(\.dismiss) var dismiss
@@ -37,7 +38,7 @@ struct ThemeDetailScene: View {
                 HStack {
                     DetailLabel(text: "테마명")
                     switch themeType {
-                    case .basic:
+                    case .basic, .downloaded:
                         Text("\(theme.name)")
                             .font(.system(size: 16, weight: .regular))
                             .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.6)))
@@ -88,7 +89,6 @@ struct ThemeDetailScene: View {
                     VStack {
                         Spacer(minLength: 5)
                         ForEach(theme.colors.indices, id: \.self) { index in
-
                             VStack {
                                 HStack {
                                     DetailLabel(text: "색상 \(index + 1)")
@@ -166,6 +166,26 @@ struct ThemeDetailScene: View {
                     }
                     .padding(.top, 8)
                 }
+                
+            case .downloaded:
+                VStack(spacing: 0) {
+                    ForEach(theme.colors.indices, id: \.self) { index in
+                        HStack(alignment: .center) {
+                            DetailLabel(text: "색상 \(index + 1)")
+                            LectureColorPreview(lectureColor: theme.colors[index])
+                                .frame(height: 25)
+                            Spacer()
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+
+                        Divider()
+                            .frame(height: 1)
+                    }
+                }
+                .background(STColor.groupForeground)
+                .border(Color.black.opacity(0.1), width: 0.5)
+                .padding(.vertical, 10)
             }
 
             HStack {
@@ -213,7 +233,7 @@ struct ThemeDetailScene: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 switch themeType {
-                case .basic:
+                case .basic, .downloaded:
                     Button {
                         dismiss()
                     } label: {
@@ -271,7 +291,7 @@ struct ThemeDetailScene: View {
 #if DEBUG
     struct ThemeDetailScene_Previews: PreviewProvider {
         static var previews: some View {
-            ThemeDetailScene(viewModel: .init(container: .preview), theme: .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: STColor.cyan.toHex(), fg: Color.white.toHex())], isDefault: false, isCustom: true)), themeType: .new)
+            ThemeDetailScene(viewModel: .init(container: .preview), theme: .init(id: UUID().uuidString, name: "새 테마", colors: [LectureColor(fg: Color.white, bg: STColor.cyan)], isCustom: true), themeType: .new)
         }
     }
 #endif

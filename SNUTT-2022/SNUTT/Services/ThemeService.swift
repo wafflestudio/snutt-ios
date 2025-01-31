@@ -18,6 +18,8 @@ protocol ThemeServiceProtocol: Sendable {
     func closeBasicThemeSheet()
     func openCustomThemeSheet(for theme: Theme)
     func closeCustomThemeSheet()
+    func openDownloadedThemeSheet(for theme: Theme)
+    func closeDownloadedThemeSheet()
 
     func getThemeList() async throws
     func addTheme(theme: Theme, apply: Bool) async throws
@@ -73,6 +75,17 @@ struct ThemeService: ThemeServiceProtocol {
     func closeCustomThemeSheet() {
         appState.timetable.current?.selectedTheme = nil
         appState.theme.isCustomThemeSheetOpen = false
+        appState.theme.bottomSheetTarget = nil
+    }
+    
+    func openDownloadedThemeSheet(for _: Theme) {
+        appState.theme.isDownloadedThemeSheetOpen = true
+        appState.theme.isBottomSheetOpen = false
+    }
+
+    func closeDownloadedThemeSheet() {
+        appState.timetable.current?.selectedTheme = nil
+        appState.theme.isDownloadedThemeSheetOpen = false
         appState.theme.bottomSheetTarget = nil
     }
 
@@ -137,6 +150,8 @@ struct FakeThemeService: ThemeServiceProtocol {
     func closeBasicThemeSheet() {}
     func openCustomThemeSheet(for _: Theme) {}
     func closeCustomThemeSheet() {}
+    func openDownloadedThemeSheet(for _: Theme) {}
+    func closeDownloadedThemeSheet() {}
 
     func getThemeList() async throws {}
     func addTheme(theme _: Theme, apply _: Bool) async throws {}
