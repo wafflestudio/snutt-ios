@@ -19,7 +19,6 @@ struct ThemeDto: Codable {
     let publishInfo: ThemePublishInfoDto?
 }
 
-
 struct ThemeColorDto: Codable {
     let bg: String
     let fg: String

@@ -20,7 +20,7 @@ struct Theme: Equatable, Identifiable {
 
     /// 사용자 생성 커스텀 테마
     var isCustom: Bool
-    
+
     var status: ThemeStatus?
 }
 

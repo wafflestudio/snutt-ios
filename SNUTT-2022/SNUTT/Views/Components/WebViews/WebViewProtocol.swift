@@ -41,14 +41,14 @@ extension WKWebView {
         guard let cookie = NetworkConfiguration.getSnuevCookie(name: name, value: value) else { return }
         cookieStore.setCookie(cookie)
     }
-    
+
     func setThemeCookie(name: String, value: String) {
         guard let cookie = NetworkConfiguration.getThemeCookie(name: name, value: value) else { return }
         cookieStore.setCookie(cookie)
     }
 
     func setCookies(cookies: [HTTPCookie]) {
-        cookies.forEach { cookie in
+        for cookie in cookies {
             cookieStore.setCookie(cookie)
         }
     }

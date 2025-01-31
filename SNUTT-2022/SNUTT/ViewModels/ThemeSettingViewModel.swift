@@ -14,7 +14,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
     var customThemes: [Theme] {
         themes.filter { $0.status != .downloaded && $0.isCustom }
     }
-    
+
     var downloadedThemes: [Theme] {
         themes.filter { $0.status == .downloaded }
     }
@@ -58,7 +58,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
             services.themeService.closeCustomThemeSheet()
         }
     }
-    
+
     @Published private var _isDownloadedThemeSheetOpen: Bool = false
     var isDownloadedThemeSheetOpen: Bool {
         get { _isDownloadedThemeSheetOpen }
@@ -109,7 +109,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         services.timetableService.selectTimetableTheme(theme: theme)
         services.themeService.openCustomThemeSheet(for: theme)
     }
-    
+
     func openDownloadedThemeSheet() {
         guard let theme = targetTheme else { return }
         services.timetableService.selectTimetableTheme(theme: theme)

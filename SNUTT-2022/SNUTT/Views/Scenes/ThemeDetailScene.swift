@@ -166,7 +166,7 @@ struct ThemeDetailScene: View {
                     }
                     .padding(.top, 8)
                 }
-                
+
             case .downloaded:
                 VStack(spacing: 0) {
                     ForEach(theme.colors.indices, id: \.self) { index in
