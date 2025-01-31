@@ -55,9 +55,6 @@ struct SearchService: SearchServiceProtocol {
 
     func fetchTags(quarter: Quarter) async throws {
         // TODO: get from userDefault
-        if let _ = searchState.searchTagList {
-            return
-        }
         let dto = try await searchRepository.fetchTags(quarter: quarter)
         let model = SearchTagList(from: dto)
         appState.search.searchTagList = model

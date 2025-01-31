@@ -337,9 +337,12 @@ struct LectureDetailScene: View {
                         DetailLabel(text: "교양영역")
                         EditableTextField(text: $lecture.category)
                     }
-                    HStack {
-                        DetailLabel(text: "구) 교양영역")
-                        EditableTextField(text: $lecture.categoryPre2025)
+                    // 2025년~: `구) 교양영역` 제공
+                    if let currentYear = viewModel.currentTimetable?.year, currentYear >= 2025 {
+                        HStack {
+                            DetailLabel(text: "구) 교양영역")
+                            EditableTextField(text: $lecture.categoryPre2025)
+                        }
                     }
                     HStack {
                         DetailLabel(text: "강좌번호")

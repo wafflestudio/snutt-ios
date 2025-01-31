@@ -9,10 +9,14 @@ import SwiftUI
 
 struct FilterSheetScene: View {
     @ObservedObject var viewModel: FilterSheetViewModel
+    
+    var currentYear: Int {
+        viewModel.currentTimetable?.year ?? 0
+    }
 
     var body: some View {
         Sheet(isOpen: $viewModel.isFilterOpen,
-              orientation: .bottom(maxHeight: 500),
+              orientation: .bottom(maxHeight: currentYear < 2025 ? 450 : 500),
               sheetOpacity: 1)
         {
             VStack {

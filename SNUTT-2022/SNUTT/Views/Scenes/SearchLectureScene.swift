@@ -40,7 +40,7 @@ struct SearchLectureScene: View {
                 .focused($isSearchBarFocused)
                 .frame(height: Design.searchBarHeight)
         }
-        .task {
+        .task(id: viewModel.currentTimetable?.year) {
             await viewModel.fetchTags()
         }
         .navigationBarHidden(true)

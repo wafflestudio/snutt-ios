@@ -33,6 +33,10 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
         get { _displayMode }
         set { services.searchService.setSearchDisplayMode(newValue) }
     }
+    
+    var currentTimetable: Timetable? {
+        appState.timetable.current
+    }
 
     override init(container: DIContainer) {
         super.init(container: container)
@@ -62,10 +66,7 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
     }
 
     func fetchTags() async {
-        if appState.search.searchTagList != nil {
-            return
-        }
-        guard let currentTimetable = appState.timetable.current else { return }
+        guard let currentTimetable = currentTimetable else { return }
         do {
             try await services.searchService.fetchTags(quarter: currentTimetable.quarter)
         } catch {
