@@ -28,7 +28,8 @@ struct ThemeMarketScene: View {
     var body: some View {
         ZStack {
             ThemeMarketView(preloadedWebView: viewModel.getPreloadedWebView())
-                .navigationBarHidden(true)
+                .navigationTitle("테마 마켓")
+                .navigationBarTitleDisplayMode(.inline)
                 .background(STColor.systemBackground)
 
             if viewModel.connectionState == .error {
