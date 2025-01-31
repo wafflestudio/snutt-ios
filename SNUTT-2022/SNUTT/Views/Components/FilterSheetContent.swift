@@ -27,7 +27,8 @@ struct FilterSheetContent: View {
                     ForEach(SearchTagType.allCases, id: \.self) { tag in
                         // ~2024년: `구) 교양영역` 제공X
                         if tag == .categoryPre2025,
-                           let currentYear = viewModel.currentTimetable?.year, currentYear < 2025 {
+                           let currentYear = viewModel.currentTimetable?.year, currentYear < 2025
+                        {
                             EmptyView()
                         } else {
                             let isSelected = selectedCategory == tag

@@ -33,7 +33,7 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
         get { _displayMode }
         set { services.searchService.setSearchDisplayMode(newValue) }
     }
-    
+
     var currentTimetable: Timetable? {
         appState.timetable.current
     }

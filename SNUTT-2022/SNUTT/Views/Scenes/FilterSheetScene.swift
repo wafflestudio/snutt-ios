@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FilterSheetScene: View {
     @ObservedObject var viewModel: FilterSheetViewModel
-    
+
     var currentYear: Int {
         viewModel.currentTimetable?.year ?? 0
     }
