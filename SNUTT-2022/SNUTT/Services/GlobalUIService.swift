@@ -152,7 +152,6 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
 
     func sendMainWebViewReloadSignal() {
         appState.review.preloadedMain.eventSignal?.send(.reload(url: WebViewType.review.url))
-        appState.theme.preloaded.eventSignal?.send(.reload(url: WebViewType.themeMarket.url))
     }
 
     func sendDetailWebViewReloadSignal(url: URL) {
