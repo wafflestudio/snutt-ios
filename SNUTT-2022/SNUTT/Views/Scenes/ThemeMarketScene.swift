@@ -103,7 +103,7 @@ extension ThemeMarketScene {
 
             // make sure the webview has all required cookies
             if let accessToken = appState.user.accessToken {
-                webviewManager.webView?.setCookies(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken))
+                webviewManager.webView?.setCookies(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken, type: "theme"))
             }
 
             return webviewManager
