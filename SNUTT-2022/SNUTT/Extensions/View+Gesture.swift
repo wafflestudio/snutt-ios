@@ -17,7 +17,7 @@ extension View {
                 translation.wrappedValue = value.translation.height
             }.onEnded { value in
                 translation.wrappedValue = 0
-                if value.velocity.height < -500 || value.translation.height < -100 {
+                if value.velocity.height > 300 || value.translation.height > 100 {
                     dismiss()
                 }
             })
@@ -65,7 +65,7 @@ private struct SheetGestureRecognizer: UIGestureRecognizerRepresentable {
         private func shouldDismiss(_ recognizer: UIPanGestureRecognizer) -> Bool {
             let velocity = recognizer.velocity(in: recognizer.view).y
             let translation = recognizer.translation(in: recognizer.view).y
-            return velocity < -500 || translation < -100
+            return velocity > 300 || translation > 100
         }
     }
 }
