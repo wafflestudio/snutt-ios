@@ -39,8 +39,8 @@ public enum AuthRepositoryKey: TestDependencyKey {
     }()
 }
 
-public extension DependencyValues {
-    var authRepository: any AuthRepository {
+extension DependencyValues {
+    public var authRepository: any AuthRepository {
         get { self[AuthRepositoryKey.self] }
         set { self[AuthRepositoryKey.self] = newValue }
     }

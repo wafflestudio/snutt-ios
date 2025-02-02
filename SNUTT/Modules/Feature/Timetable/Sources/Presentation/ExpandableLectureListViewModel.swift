@@ -18,7 +18,7 @@ protocol ExpandableLectureListViewModel: Sendable {
     var selectedLecture: (any Lecture)? { get }
     func selectLecture(_: any Lecture)
     func isSelected(lecture: any Lecture) -> Bool
-    func fetchMoreLectures() async
+    func fetchMoreLectures() async throws
     func toggleAction(lecture: any Lecture, type: ActionButtonType) async throws
     func isToggled(lecture: any Lecture, type: ActionButtonType) -> Bool
 }

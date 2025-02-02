@@ -18,7 +18,7 @@ struct SearchToolBarView: View {
             )
             .onSubmit {
                 Task {
-                    await searchViewModel.fetchInitialSearchResult()
+                    try await searchViewModel.fetchInitialSearchResult()
                 }
             }
             .padding(.leading, 5)

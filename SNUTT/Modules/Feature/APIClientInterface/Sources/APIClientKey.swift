@@ -23,8 +23,8 @@ public enum APIClientKey: TestDependencyKey {
     )
 }
 
-public extension DependencyValues {
-    var apiClient: any APIProtocol {
+extension DependencyValues {
+    public var apiClient: any APIProtocol {
         get { self[APIClientKey.self] }
         set { self[APIClientKey.self] = newValue }
     }

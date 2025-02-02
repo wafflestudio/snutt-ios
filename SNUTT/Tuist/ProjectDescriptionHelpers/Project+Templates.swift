@@ -15,10 +15,10 @@ extension Project {
         let mainTargetDependencies: [TargetDependency] = moduleDependencies.map { .target(name: $0.name) } + externalDependencies
         let widgetTarget = makeWidgetTarget(name: name, deploymentTargets: deploymentTargets, dependencies: widgetDependencies)
         var mainTargets = makeAppTargets(
-             name: name,
-             destinations: destinations,
-             deploymentTargets: deploymentTargets,
-             dependencies: mainTargetDependencies + [.target(name: widgetTarget.name)]
+            name: name,
+            destinations: destinations,
+            deploymentTargets: deploymentTargets,
+            dependencies: mainTargetDependencies + [.target(name: widgetTarget.name)]
         )
         let frameworkTargets = moduleDependencies.map {
             makeFrameworkTargets(module: $0, destinations: destinations, deploymentTargets: deploymentTargets)
@@ -31,9 +31,8 @@ extension Project {
                        options: .options(automaticSchemesOptions: .disabled),
                        packages: swiftPackages,
                        settings: makeSettings(),
-                       targets: allTargets.flatMap { [$0.0, $0.1]} + [widgetTarget],
-                       schemes: schemes
-        )
+                       targets: allTargets.flatMap { [$0.0, $0.1] } + [widgetTarget],
+                       schemes: schemes)
     }
 
     // MARK: - Private
@@ -56,19 +55,17 @@ extension Project {
                                     sources: ["\(directory)/\(name)/Sources/**"],
                                     resources: .resources(resources.map { .init(stringLiteral: $0) }),
                                     dependencies: module.dependencies,
-                                    settings: makeSettings()
-        )
+                                    settings: makeSettings())
         let tests = Target.target(name: "\(name)Tests",
-                                           destinations: destinations,
-                                           product: .unitTests,
-                                           bundleId: "\(domain).\(name)Tests",
-                                           deploymentTargets: deploymentTargets,
-                                           infoPlist: .default,
-                                           sources: ["\(directory)/\(name)/Tests/**"],
-                                           resources: [],
-                                           dependencies: [.target(name: name)],
-                                           settings: makeSettings()
-                                  )
+                                  destinations: destinations,
+                                  product: .unitTests,
+                                  bundleId: "\(domain).\(name)Tests",
+                                  deploymentTargets: deploymentTargets,
+                                  infoPlist: .default,
+                                  sources: ["\(directory)/\(name)/Tests/**"],
+                                  resources: [],
+                                  dependencies: [.target(name: name)],
+                                  settings: makeSettings())
         return (sources, tests)
     }
 
@@ -110,7 +107,7 @@ extension Project {
             infoPlist: .default,
             sources: ["\(name)/Tests/**"],
             dependencies: [
-                .target(name: "\(name)")
+                .target(name: "\(name)"),
             ],
             settings: makeSettings()
         )
@@ -151,11 +148,11 @@ extension Project {
             base: [:]
                 .swiftVersion("6.0")
                 .merging(["SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY": SettingValue(true)])
-                .merging(["_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES": SettingValue(true)])
-            ,
+                .merging(["_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES": SettingValue(true)]),
+
             configurations: [
                 .debug(name: .dev, settings: ["OTHER_SWIFT_FLAGS": "-DDEBUG"], xcconfig: "XCConfigs/Dev.xcconfig"),
-                .release(name: .prod, xcconfig: "XCConfigs/Prod.xcconfig")
+                .release(name: .prod, xcconfig: "XCConfigs/Prod.xcconfig"),
             ]
         )
     }
@@ -166,7 +163,7 @@ extension Project {
                 name: "\(name) Dev",
                 shared: true,
                 buildAction: .buildAction(targets: [.target(name)], preActions: [
-                    .executionAction(scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev), target: .target(name))
+                    .executionAction(scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev), target: .target(name)),
                 ]),
                 runAction: .runAction(configuration: .dev, executable: .target(name)),
                 archiveAction: .archiveAction(configuration: .dev),
@@ -177,7 +174,7 @@ extension Project {
                 name: "\(name) Prod",
                 shared: true,
                 buildAction: .buildAction(targets: [.target(name)], preActions: [
-                    .executionAction(scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev), target: .target(name)) // TODO: change to .prod
+                    .executionAction(scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev), target: .target(name)), // TODO: change to .prod
                 ]),
                 runAction: .runAction(configuration: .prod, executable: .target(name)),
                 archiveAction: .archiveAction(configuration: .prod),
@@ -192,7 +189,7 @@ extension Project {
                 archiveAction: .archiveAction(configuration: .dev),
                 profileAction: nil,
                 analyzeAction: nil
-            )
+            ),
         ]
     }
 
@@ -207,27 +204,26 @@ extension Project {
     }
 
     private static func updateOpenAPISpecSymlinkPreActionScript(configuration: ProjectDescription.ConfigurationName) -> String {
-        let apiUrl = if configuration == .dev { 
+        let apiUrl = if configuration == .dev {
             "https://snu4t-api-dev.wafflestudio.com/v3/api-docs"
         } else {
             "https://snu4t-api-dev.wafflestudio.com/v3/api-docs" // TODO: Fix
         }
         return """
-            OPENAPI_DIR="$PROJECT_DIR/OpenAPI"
-            API_URL="\(apiUrl)"
-            OPENAPI_FILE="$OPENAPI_DIR/openapi-\(configuration == .dev ? "dev" : "prod").json"
+        OPENAPI_DIR="$PROJECT_DIR/OpenAPI"
+        API_URL="\(apiUrl)"
+        OPENAPI_FILE="$OPENAPI_DIR/openapi-\(configuration == .dev ? "dev" : "prod").json"
 
-            # Download the openapi.json file from the server endpoint
-            # curl -o "$OPENAPI_FILE" "$API_URL"
+        # Download the openapi.json file from the server endpoint
+        # curl -o "$OPENAPI_FILE" "$API_URL"
 
-            # Create a symlink to the downloaded openapi.json file
-            ln -sf "$OPENAPI_FILE" "$OPENAPI_DIR/openapi.json"
+        # Create a symlink to the downloaded openapi.json file
+        ln -sf "$OPENAPI_FILE" "$OPENAPI_DIR/openapi.json"
 
-            # Output the symlink target path
-            readlink -f "$OPENAPI_DIR/openapi.json"
-            """
+        # Output the symlink target path
+        readlink -f "$OPENAPI_DIR/openapi.json"
+        """
     }
-
 }
 
 extension ProjectDescription.ConfigurationName {

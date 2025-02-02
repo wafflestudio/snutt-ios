@@ -8,19 +8,18 @@
 import SwiftUI
 
 extension View {
-    @ViewBuilder
-    func sheetGesture(_ translation: Binding<CGFloat>, dismiss: @escaping @MainActor () -> Void) -> some View {
+    @ViewBuilder func sheetGesture(_ translation: Binding<CGFloat>, dismiss: @escaping @MainActor () -> Void) -> some View {
         if #available(iOS 18.0, *) {
             gesture(SheetGestureRecognizer(translation: translation, dismiss: dismiss))
         } else {
-            highPriorityGesture(DragGesture().onChanged({ value in
+            highPriorityGesture(DragGesture().onChanged { value in
                 translation.wrappedValue = value.translation.width
-            }).onEnded({ value in
+            }.onEnded { value in
                 translation.wrappedValue = 0
                 if value.velocity.width < -300 || value.translation.width < -100 {
                     dismiss()
                 }
-            }))
+            })
         }
     }
 }
@@ -37,7 +36,7 @@ private struct SheetGestureRecognizer: UIGestureRecognizerRepresentable {
         return recognizer
     }
 
-    func makeCoordinator(converter: CoordinateSpaceConverter) -> Coordinator {
+    func makeCoordinator(converter _: CoordinateSpaceConverter) -> Coordinator {
         Coordinator()
     }
 
@@ -55,7 +54,7 @@ private struct SheetGestureRecognizer: UIGestureRecognizerRepresentable {
         }
     }
 
-    private func shouldDismiss(_ recognizer: UIGestureRecognizerType, context: Context) -> Bool {
+    private func shouldDismiss(_: UIGestureRecognizerType, context: Context) -> Bool {
         guard let velocity = context.converter.velocity(in: .local),
               let translation = context.converter.translation(in: .local)
         else { return false }
@@ -63,11 +62,11 @@ private struct SheetGestureRecognizer: UIGestureRecognizerRepresentable {
     }
 
     final class Coordinator: NSObject, UIGestureRecognizerDelegate {
-        func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
             true
         }
 
-        func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        func gestureRecognizer(_: UIGestureRecognizer, shouldRequireFailureOf _: UIGestureRecognizer) -> Bool {
             false
         }
     }

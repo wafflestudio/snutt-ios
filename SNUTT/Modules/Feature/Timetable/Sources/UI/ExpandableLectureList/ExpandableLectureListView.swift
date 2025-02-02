@@ -33,7 +33,7 @@ struct ExpandableLectureListView: View {
         .onChange(of: scrolledID) { _, _ in
             if viewModel.lectures.suffix(5).map({ $0.id }).contains(scrolledID) {
                 Task {
-                    await viewModel.fetchMoreLectures()
+                    try await viewModel.fetchMoreLectures()
                 }
             }
         }
@@ -41,9 +41,4 @@ struct ExpandableLectureListView: View {
             scrollView.makeTouchResponsive()
         }
     }
-}
-
-#Preview {
-    ExpandableLectureListView(viewModel: LectureSearchViewModel(timetableViewModel: .init()))
-        .foregroundStyle(.black)
 }

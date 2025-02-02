@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum LocalizedErrorCode: Int, LocalizedError {
+public enum LocalizedErrorCode: Int, LocalizedError {
     case serverFault = 0x0000
     case noNetwork = 0x0001
     case unknownError = 0x0002
@@ -86,7 +86,7 @@ enum LocalizedErrorCode: Int, LocalizedError {
 
     case excessiveEmailVerificationRequest = 0xA000
 
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .serverFault:
             APIClientInterfaceStrings.errorDescriptionServerFault
@@ -146,7 +146,9 @@ enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorDescriptionCustomLecture
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorDescriptionNoFCMKey
-        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound, .colorlistNotFound, .emailNotFound:
+        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound,
+             .colorlistNotFound,
+             .emailNotFound:
             APIClientInterfaceStrings.errorDescriptionNotFound
         case .cantChangeOthersTheme:
             APIClientInterfaceStrings.errorDescriptionCantChangeTheme
@@ -171,7 +173,7 @@ enum LocalizedErrorCode: Int, LocalizedError {
         }
     }
 
-    var failureReason: String? {
+    public var failureReason: String? {
         switch self {
         case .serverFault:
             APIClientInterfaceStrings.errorFailureReasonServerFault
@@ -231,7 +233,9 @@ enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorFailureReasonCustomLecture
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorFailureReasonNoFCMKey
-        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound, .colorlistNotFound, .emailNotFound:
+        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound,
+             .colorlistNotFound,
+             .emailNotFound:
             APIClientInterfaceStrings.errorFailureReasonNotFound
         case .cantChangeOthersTheme:
             APIClientInterfaceStrings.errorFailureReasonCantChangeTheme
@@ -256,7 +260,7 @@ enum LocalizedErrorCode: Int, LocalizedError {
         }
     }
 
-    var recoverySuggestion: String? {
+    public var recoverySuggestion: String? {
         switch self {
         case .serverFault:
             APIClientInterfaceStrings.errorRecoverySuggestionServerFault
@@ -316,7 +320,9 @@ enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorRecoverySuggestionCustomLecture
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorRecoverySuggestionNoFCMKey
-        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound, .colorlistNotFound, .emailNotFound:
+        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound,
+             .colorlistNotFound,
+             .emailNotFound:
             APIClientInterfaceStrings.errorRecoverySuggestionNotFound
         case .cantChangeOthersTheme:
             APIClientInterfaceStrings.errorRecoverySuggestionCantChangeTheme

@@ -63,8 +63,8 @@ struct SearchPredicateScrollView: View {
     }
 }
 
-private extension SearchFilterCategory {
-    var backgroundColor: Color {
+extension SearchFilterCategory {
+    fileprivate var backgroundColor: Color {
         switch self {
         case .sortCriteria: return Color(hex: "#A6A6A6")
         case .academicYear: return Color(hex: "#E54459")

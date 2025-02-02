@@ -86,8 +86,8 @@ private struct AnyLocalizedError: LocalizedError {
     }
 }
 
-public extension View {
-    func observeErrors() -> some View {
+extension View {
+    public func observeErrors() -> some View {
         modifier(ErrorAlertModifier())
     }
 }
@@ -106,8 +106,8 @@ private struct ErrorAlertModifier: ViewModifier {
     }
 }
 
-public extension EnvironmentValues {
-    @Entry var errorAlertHandler: ErrorAlertHandler = .init()
+extension EnvironmentValues {
+    @Entry public var errorAlertHandler: ErrorAlertHandler = .init()
 }
 
 // MARK: Preview

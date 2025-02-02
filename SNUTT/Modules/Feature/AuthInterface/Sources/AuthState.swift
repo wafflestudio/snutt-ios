@@ -38,8 +38,8 @@ public enum AuthStateKey: TestDependencyKey {
     }()
 }
 
-public extension DependencyValues {
-    var authState: any AuthState {
+extension DependencyValues {
+    public var authState: any AuthState {
         get { self[AuthStateKey.self] }
         set { self[AuthStateKey.self] = newValue }
     }

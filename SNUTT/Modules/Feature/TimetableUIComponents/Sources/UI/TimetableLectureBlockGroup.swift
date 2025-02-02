@@ -45,8 +45,8 @@ struct TimetableLectureBlockGroup: View {
     }
 }
 
-public extension EnvironmentValues {
-    @Entry var lectureTapAction: LectureTapAction = .init(action: nil)
+extension EnvironmentValues {
+    @Entry public var lectureTapAction: LectureTapAction = .init(action: nil)
 }
 
 public struct LectureTapAction {

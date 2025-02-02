@@ -8,8 +8,8 @@
 import Foundation
 @_spi(Internals) import DependenciesAdditionsBasics
 
-public extension DependencyValues {
-    var infoPlist: BundleInfoDictionary {
+extension DependencyValues {
+    public var infoPlist: BundleInfoDictionary {
         get { self[BundleInfoDictionary.self] }
         set { self[BundleInfoDictionary.self] = newValue }
     }

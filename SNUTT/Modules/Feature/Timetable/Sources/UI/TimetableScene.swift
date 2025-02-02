@@ -46,7 +46,7 @@ public struct TimetableScene: View {
             .navigationDestination(for: TimetableDetailSceneTypes.self) {
                 detailScene(for: $0)
             }
-            .task {
+            .onLoad {
                 await withThrowingTaskGroup(of: Void.self) { group in
                     group.addTask {
                         await errorAlertHandler.withAlert {

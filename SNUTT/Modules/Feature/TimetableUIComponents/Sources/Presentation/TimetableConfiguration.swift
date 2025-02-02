@@ -54,8 +54,8 @@ public struct TimetableConfiguration: Codable, Equatable, Sendable {
     }
 }
 
-public extension TimetableConfiguration {
-    struct VisibilityOptions: Codable, OptionSet, Sendable {
+extension TimetableConfiguration {
+    public struct VisibilityOptions: Codable, OptionSet, Sendable {
         public var rawValue: Int8
         public init(rawValue: Int8) {
             self.rawValue = rawValue
