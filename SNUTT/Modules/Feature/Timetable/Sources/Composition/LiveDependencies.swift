@@ -14,7 +14,7 @@ struct TimetableLocalRepositoryKey: DependencyKey {
 
     static let previewValue: any TimetableLocalRepository = {
         let spy = TimetableLocalRepositorySpy<PreviewTimetable>()
-        spy.loadSelectedTimetableReturnValue = PreviewHelpers.preview(with: "1")
+        spy.loadSelectedTimetableReturnValue = PreviewHelpers.preview(id: "1")
         return spy
     }()
 }
@@ -23,7 +23,21 @@ struct LectureSearchRepositoryKey: DependencyKey {
     static let liveValue: any LectureSearchRepository = LectureSearchAPIRepository()
     static let previewValue: any LectureSearchRepository = {
         let spy = LectureSearchRepositorySpy()
-        spy.fetchSearchResultQueryQuarterFiltersOffsetLimitReturnValue = PreviewHelpers.preview(with: "1").lectures
+        spy.fetchSearchResultQueryQuarterPredicatesOffsetLimitReturnValue = PreviewHelpers.preview(id: "1").lectures
+        spy.fetchSearchPredicatesQuarterReturnValue = [
+            .classification("교양"),
+            .classification("일반"),
+            .department("경영학과"),
+            .department("컴퓨터공학부"),
+            .credit(1),
+            .credit(2),
+            .category("과학적 사고와 실험"),
+            .category("인간과 세계"),
+            .academicYear("1학년"),
+            .academicYear("2학년"),
+            .sortCriteria("평점 높은 순"),
+            .sortCriteria("강의평 많은 순"),
+        ]
         return spy
     }()
 }

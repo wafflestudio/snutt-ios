@@ -34,6 +34,7 @@ struct LectureDto: Codable {
     let instructor: String
     let remark: String?
     let category: String?
+    let categoryPre2025: String?
     let course_number: String?
     let lecture_number: String?
     let created_at: String?
@@ -155,6 +156,7 @@ extension LectureDto {
         freshmanQuota = model.freshmanQuota
         remark = model.remark
         category = model.category
+        categoryPre2025 = model.categoryPre2025
         course_number = model.courseNumber
         lecture_number = model.lectureNumber
         created_at = model.createdAt

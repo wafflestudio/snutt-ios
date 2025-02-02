@@ -39,6 +39,7 @@ enum SearchRouter: Router {
                 "limit": limit,
                 "classification": [],
                 "category": [],
+                "categoryPre2025": [],
                 "credit": [],
                 "etc": [],
                 "department": [],

@@ -16,10 +16,12 @@ let project = Project.app(
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
                 .target(name: "SwiftUIUtility"),
+                .target(name: "FoundationUtility"),
                 .target(name: "AuthInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
+                .external(name: "SwiftUIIntrospect"),
             ]
         ),
         .module(
@@ -28,6 +30,8 @@ let project = Project.app(
             dependencies: [
                 .target(name: "TimetableInterface"),
                 .target(name: "SharedUIComponents"),
+                .target(name: "FoundationUtility"),
+                .target(name: "SwiftUIUtility"),
                 .external(name: "MemberwiseInit"),
             ]
         ),
@@ -36,7 +40,7 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "AuthInterface"),
-                .external(name: "WindowReader"),
+                .target(name: "SharedUIComponents"),
             ]
         ),
         .module(
@@ -53,6 +57,8 @@ let project = Project.app(
             name: "TimetableInterface",
             category: .featureInterface,
             dependencies: [
+                .target(name: "FoundationUtility"),
+                .target(name: "SwiftUIUtility"),
                 .external(name: "Spyable"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
@@ -69,7 +75,7 @@ let project = Project.app(
                 .target(name: "SharedAppMetadata"),
                 .external(name: "Spyable"),
             ],
-            additionalResources: ["OpenAPI/**"]
+            additionalResources: ["OpenAPI/**", "Modules/Feature/APIClientInterface/Resources/**"]
         ),
         // Shared
         .module(
@@ -98,13 +104,16 @@ let project = Project.app(
         .module(name: "UIKitUtility", category: .utility(ui: true), dependencies: [
             .external(name: "SnapKit"),
         ]),
+        .module(name: "FoundationUtility", category: .utility(ui: false), dependencies: []),
     ],
-    externalDependencies: [
-        .external(name: "WindowReader"),
-    ],
+    externalDependencies: [],
     widgetDependencies: [
-        .external(name: "Dependencies"),
+        .target(name: "TimetableInterface"),
+        .target(name: "TimetableUIComponents"),
+        .target(name: "FoundationUtility"),
         .target(name: "DependenciesUtility"),
+        .external(name: "Dependencies"),
+        .external(name: "DependenciesAdditions"),
     ],
     deploymentTargets: .iOS("17.0.0")
 )

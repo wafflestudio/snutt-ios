@@ -5,15 +5,23 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 
 struct LectureListScene: View {
     let viewModel: TimetableViewModel
     var body: some View {
-        EmptyView()
+        ExpandableLectureListView(viewModel: LectureListViewModel(timetableViewModel: viewModel))
+            .foregroundStyle(Color.label)
     }
 }
 
 #Preview {
-    LectureListScene(viewModel: .init())
+    let viewModel = TimetableViewModel()
+    let _ = Task {
+        try await viewModel.loadTimetable()
+    }
+    ZStack {
+        LectureListScene(viewModel: viewModel)
+    }
 }

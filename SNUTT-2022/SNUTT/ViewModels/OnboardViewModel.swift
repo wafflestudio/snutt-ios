@@ -78,9 +78,9 @@ extension OnboardScene {
 }
 
 extension OnboardScene.ViewModel: FacebookLoginProtocol {
-    func handleFacebookToken(fbId _: String, fbToken: String) async {
+    func handleFacebookToken(facebookId _: String, facebookToken: String) async {
         do {
-            try await services.authService.loginWithFacebook(facebookToken: fbToken)
+            try await services.authService.loginWithFacebook(facebookToken: facebookToken)
         } catch {
             handleSocialLoginError(error)
         }
@@ -107,7 +107,7 @@ extension OnboardScene.ViewModel: KakaoLoginProtocol {
     }
 }
 
-extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
+extension OnboardScene.ViewModel: AppleLoginProtocol {
     func authorizationController(controller _: ASAuthorizationController,
                                  didCompleteWithAuthorization authorization: ASAuthorization)
     {
@@ -137,8 +137,14 @@ extension OnboardScene.ViewModel: ASAuthorizationControllerDelegate {
             services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
             return
         }
+        Task {
+            await handleAppleToken(appleToken: token)
+        }
+    }
+
+    func handleAppleToken(appleToken: String) async {
         do {
-            try await services.authService.loginWithApple(appleToken: token)
+            try await services.authService.loginWithApple(appleToken: appleToken)
         } catch {
             handleSocialLoginError(error)
         }

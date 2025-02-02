@@ -16,57 +16,74 @@ class LectureSearchViewModel {
     @ObservationIgnored
     @Dependency(\.lectureSearchRepository) private var searchRepository
 
-    var searchQuery = ""
-    private let pageLimit = 20
-    private var currentPage = 0
-    private var isLoading = false
-    private var canFetchMore = true
-    private var searchResults = [any Lecture]()
-    private(set) var selectedLecture: (any Lecture)?
+    private let timetableViewModel: TimetableViewModel
 
-    private func fetchSearchResult(at page: Int) async throws -> [any Lecture] {
-        let offset = pageLimit * page
-        let response = try await searchRepository.fetchSearchResult(query: searchQuery, quarter: .init(year: 2024, semester: .second), filters: [], offset: offset, limit: pageLimit)
-        if response.count < pageLimit {
-            canFetchMore = false
+    init(timetableViewModel: TimetableViewModel) {
+        self.timetableViewModel = timetableViewModel
+    }
+
+    var searchQuery = ""
+    var searchingQuarter: Quarter?
+    var searchDisplayMode: SearchDisplayMode = .search
+    var isSearchFilterOpen = false
+    var targetForLectureDetailSheet: (any Lecture)?
+
+    private let dataSource = LectureSearchResultDataSource()
+    var selectedLecture: (any Lecture)?
+
+    private(set) var availablePredicates: [SearchFilterCategory: [SearchPredicate]] = [:]
+    var selectedCategory: SearchFilterCategory = .sortCriteria
+    private(set) var selectedPredicates: [SearchPredicate] = []
+
+    func fetchAvailablePredicates(quarter: Quarter) async throws {
+        let predicates = try await searchRepository.fetchSearchPredicates(quarter: quarter)
+        availablePredicates = Dictionary(grouping: predicates, by: { $0.category })
+    }
+
+    func togglePredicate(predicate: SearchPredicate) {
+        if selectedPredicates.contains(predicate) {
+            selectedPredicates.removeAll { $0 == predicate }
+            return
         }
-        currentPage = page
-        return response
+        if predicate.category == .sortCriteria {
+            selectedPredicates.removeAll(where: { $0.category == .sortCriteria })
+        }
+        selectedPredicates.append(predicate)
+    }
+
+    func deselectPredicate(predicate: SearchPredicate) {
+        selectedPredicates.removeAll(where: { $0 == predicate })
     }
 
     func fetchInitialSearchResult() async {
-        guard !isLoading else { return }
-        isLoading = true
-        defer {
-            isLoading = false
-        }
-        do {
-            let lectures = try await fetchSearchResult(at: 0)
-            searchResults = lectures
-        } catch {
-            // TODO: handle error
-//            assertionFailure()
-        }
+        guard let searchingQuarter else { return }
+        await dataSource.fetchInitialSearchResult(query: searchQuery, quarter: searchingQuarter, predicates: selectedPredicates)
     }
 
-    private func fetchMoreSearchResult() async {
-        guard !isLoading, canFetchMore else { return }
-        isLoading = true
-        defer {
-            isLoading = false
-        }
-        do {
-            let lectures = try await fetchSearchResult(at: currentPage + 1)
-            searchResults.append(contentsOf: lectures)
-        } catch {
-//            assertionFailure()
-        }
+    func resetSearchResult() {
+        dataSource.reset()
+        selectedLecture = nil
     }
 }
 
 extension LectureSearchViewModel: ExpandableLectureListViewModel {
+    func isToggled(lecture: any Lecture, type: ActionButtonType) -> Bool {
+        switch type {
+        case .detail:
+            false
+        case .review:
+            false
+        case .bookmark:
+            false
+        case .vacancy:
+            false
+        case .add:
+            timetableViewModel.isLectureInCurrentTimetable(lecture: lecture)
+        }
+    }
+
     var lectures: [any Lecture] {
-        searchResults
+        dataSource.searchResults
     }
 
     func selectLecture(_ lecture: any Lecture) {
@@ -77,19 +94,127 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         selectedLecture?.id == lecture.id
     }
 
-    func isBookmarked(lecture _: any Lecture) -> Bool {
-        false
-    }
-
-    func isInCurrentTimetable(lecture _: any Lecture) -> Bool {
-        false
-    }
-
-    func isVacancyNotificationEnabled(lecture _: any Lecture) -> Bool {
-        false
+    func toggleAction(lecture: any Lecture, type: ActionButtonType) async throws {
+        switch type {
+        case .detail:
+            targetForLectureDetailSheet = lecture
+        case .review:
+            break
+        case .bookmark:
+            break
+        case .vacancy:
+            break
+        case .add:
+            if !isToggled(lecture: lecture, type: type) {
+                try await timetableViewModel.addLecture(lecture: lecture)
+            } else {
+                try await timetableViewModel.removeLecture(lecture: lecture)
+            }
+            selectedLecture = nil
+        }
     }
 
     func fetchMoreLectures() async {
-        await fetchMoreSearchResult()
+        await dataSource.fetchMoreSearchResult()
+    }
+}
+
+enum SearchDisplayMode {
+    case search
+    case bookmark
+
+    mutating func toggle() {
+        switch self {
+        case .search:
+            self = .bookmark
+        case .bookmark:
+            self = .search
+        }
+    }
+}
+
+enum SearchFilterCategory: String, Sendable, CaseIterable {
+    case sortCriteria
+    case classification
+    case department
+    case academicYear
+    case credit
+    case instructor
+    case category
+    case time
+    case etc
+
+    static var supportedCases: [SearchFilterCategory] {
+        var allCases = allCases
+        allCases.removeAll(where: { $0 == .instructor })
+        return allCases
+    }
+
+    var localizedDescription: String {
+        switch self {
+        case .sortCriteria:
+            TimetableStrings.searchFilterSortCriteria
+        case .classification:
+            TimetableStrings.searchFilterClassification
+        case .department:
+            TimetableStrings.searchFilterDepartment
+        case .academicYear:
+            TimetableStrings.searchFilterAcademicYear
+        case .credit:
+            TimetableStrings.searchFilterCredit
+        case .instructor:
+            TimetableStrings.searchFilterInstructor
+        case .category:
+            TimetableStrings.searchFilterCategory
+        case .time:
+            TimetableStrings.searchFilterTime
+        case .etc:
+            TimetableStrings.searchFilterEtc
+        }
+    }
+}
+
+extension SearchPredicate {
+    var category: SearchFilterCategory {
+        switch self {
+        case .sortCriteria:
+            .sortCriteria
+        case .classification:
+            .classification
+        case .department:
+            .department
+        case .academicYear:
+            .academicYear
+        case .credit:
+            .credit
+        case .instructor:
+            .instructor
+        case .category:
+            .category
+        case .timeExclude, .timeInclude:
+            .time
+        case .etc:
+            .etc
+        }
+    }
+
+    var localizedDescription: String {
+        switch self {
+        case let .sortCriteria(value),
+             let .department(value),
+             let .academicYear(value),
+             let .category(value),
+             let .instructor(value),
+             let .classification(value):
+            value
+        case let .credit(value):
+            "\(value)학점"
+        case .timeInclude:
+            ""
+        case .timeExclude:
+            ""
+        case let .etc(value):
+            ""
+        }
     }
 }

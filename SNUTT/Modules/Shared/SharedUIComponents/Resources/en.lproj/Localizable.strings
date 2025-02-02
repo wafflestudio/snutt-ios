@@ -21,4 +21,6 @@
 
 /* Add your translations below */
 
-"hello_world" = "Hello, world!";
+"error.unknown.title" = "Unknown Error";
+"error.unknown.message" = "An unknown error has occurred. Please try again later.";
+"error.dismiss" = "Dismiss";

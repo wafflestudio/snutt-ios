@@ -7,6 +7,7 @@
 
 import MemberwiseInit
 import SwiftUI
+import SwiftUIUtility
 
 public struct Sheet<Content>: View where Content: View {
     @Binding private var isPresented: Bool
@@ -91,7 +92,7 @@ public struct SheetDismissAction {
 }
 
 @MemberwiseInit(.public)
-public struct SheetConfiguration {
+public struct SheetConfiguration: Sendable {
     @Init(.public) let orientation: SheetOrientation
     @Init(.public) var cornerRadius: CGFloat = 20
     @Init(.public) var sheetColor: Color = .white
@@ -101,7 +102,7 @@ public struct SheetConfiguration {
     @Init(.public) var onDismiss: (@MainActor () -> Void)? = nil
 }
 
-public enum SheetOrientation {
+public enum SheetOrientation: Sendable {
     case left(maxWidth: CGFloat)
     case bottom(maxHeight: CGFloat)
 

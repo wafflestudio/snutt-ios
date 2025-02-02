@@ -9,7 +9,7 @@ import SwiftUI
 import TimetableInterface
 
 struct TimetableBlocksLayer: View {
-    let painter: any TimetablePainter
+    let painter: TimetablePainter
 
     var body: some View {
         ForEach(painter.currentTimetable?.lectures ?? [], id: \.id) { lecture in

@@ -25,18 +25,24 @@ struct FilterSheetContent: View {
             HStack(spacing: 0) {
                 VStack(spacing: 25) {
                     ForEach(SearchTagType.allCases, id: \.self) { tag in
-                        let isSelected = selectedCategory == tag
-                        Button {
-                            selectedCategory = tag
-                        } label: {
-                            Spacer()
-                            Text(tag.typeStr)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .contentShape(Rectangle())
-                                .font(.system(size: 17, weight: .bold))
-                                .foregroundColor(isSelected ? Color(uiColor: .label) : STColor.assistive)
+                        if tag == .categoryPre2025,
+                           let currentYear = viewModel.currentTimetable?.year, currentYear < 2025
+                        {
+                            EmptyView()
+                        } else {
+                            let isSelected = selectedCategory == tag
+                            Button {
+                                selectedCategory = tag
+                            } label: {
+                                Spacer()
+                                Text(tag.typeStr)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .contentShape(Rectangle())
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .foregroundColor(isSelected ? Color(uiColor: .label) : Color(uiColor: .label.withAlphaComponent(0.5)))
+                            }
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
                     }
                 }
                 .frame(maxWidth: 110, maxHeight: .infinity, alignment: .topLeading)

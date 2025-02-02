@@ -31,12 +31,13 @@ struct TimetableMenuContentView: View {
             switch viewModel.metadataLoadingState {
             case .loading:
                 loadingView
-            case .loaded:
+            case let .loaded(metadataList):
                 ScrollView {
                     VStack(spacing: 15) {
                         headerView
                         timetableListView
                     }
+                    .animation(.defaultSpring, value: metadataList.map(\.id))
                     .padding(.top, 20)
                 }
             }
@@ -55,7 +56,7 @@ struct TimetableMenuContentView: View {
                 dismiss()
             } configuration: { _ in
                 var configuration = UIButton.Configuration.plain()
-                configuration.image = TimetableAsset.xmarkBlack.image
+                configuration.image = TimetableAsset.xmark.image
                 return configuration
             }
         }
@@ -113,7 +114,7 @@ struct TimetableMenuContentView: View {
 #Preview {
     let viewModel = TimetableViewModel()
     let _ = Task {
-        try await Task.sleep(for: .seconds(1))
+        try await Task.sleep(for: .milliseconds(200))
         try await viewModel.loadTimetable()
         try await viewModel.loadTimetableList()
     }

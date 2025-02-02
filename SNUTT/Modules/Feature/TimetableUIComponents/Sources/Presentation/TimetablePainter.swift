@@ -6,13 +6,16 @@
 //
 
 import CoreGraphics
+import FoundationUtility
+import MemberwiseInit
 import TimetableInterface
 
-@MainActor
-public protocol TimetablePainter: Sendable {
-    var currentTimetable: (any Timetable)? { get }
-    var selectedLecture: (any Lecture)? { get }
-    var configuration: TimetableConfiguration { get }
+@MemberwiseInit(.public)
+public struct TimetablePainter: Sendable {
+    public let currentTimetable: (any Timetable)?
+    public let selectedLecture: (any Lecture)?
+    public let selectedTheme: Theme
+    public let configuration: TimetableConfiguration
 }
 
 extension TimetablePainter {
@@ -142,7 +145,12 @@ extension TimetablePainter {
     }
 
     private var aggregatedTimePlaces: [TimePlace] {
-        (currentTimetable?.lectures ?? [])
+        let aggregatedLectures = if let currentTimetable {
+            currentTimetable.lectures + [selectedLecture]
+        } else {
+            [selectedLecture]
+        }
+        return aggregatedLectures
             .compactMap { $0 }
             .reduce(into: []) { partialResult, lecture in
                 partialResult.append(contentsOf: lecture.timePlaces)
@@ -162,8 +170,8 @@ extension TimetablePainter {
     }
 }
 
-private extension TimetableInterface.Time {
-    var absoluteMinutes: Int { hour * 60 + minute }
+extension TimetableInterface.Time {
+    public var absoluteMinutes: Int { hour * 60 + minute }
     func roundUpForCompactMode() -> Self {
         var hour = self.hour
         var minute = self.minute

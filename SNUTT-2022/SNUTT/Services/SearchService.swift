@@ -60,9 +60,6 @@ struct SearchService: SearchServiceProtocol {
 
     func fetchTags(quarter: Quarter) async throws {
         // TODO: get from userDefault
-        if let _ = searchState.searchTagList {
-            return
-        }
         let dto = try await searchRepository.fetchTags(quarter: quarter)
         let model = SearchTagList(from: dto)
         appState.search.searchTagList = model
@@ -164,10 +161,6 @@ struct SearchService: SearchServiceProtocol {
     }
 
     func getBookmark() async throws {
-        try await _getBookmark()
-    }
-
-    private func _getBookmark() async throws {
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)

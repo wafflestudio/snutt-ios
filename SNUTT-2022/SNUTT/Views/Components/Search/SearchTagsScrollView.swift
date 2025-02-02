@@ -25,8 +25,14 @@ struct SearchTagsScrollView: View {
                                 }
                             }, label: {
                                 HStack {
-                                    Text(tag.text)
-                                        .font(STFont.regular14.font)
+                                    Group {
+                                        if tag.type == .categoryPre2025 {
+                                            Text("구) \(tag.text)")
+                                        } else {
+                                            Text(tag.text)
+                                        }
+                                    }
+                                    .font(STFont.regular14.font)
                                     Image("xmark.white")
                                         .resizable()
                                         .scaledToFit()

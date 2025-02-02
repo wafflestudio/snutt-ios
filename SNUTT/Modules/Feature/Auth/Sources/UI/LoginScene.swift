@@ -15,7 +15,7 @@ struct LoginScene: View {
     @State private var localID = ""
     @State private var localPassword = ""
     @FocusState private var focusedField: TextFieldType?
-    @Environment(\.hudPresenter) private var hudPresenter
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     private enum TextFieldType: Hashable {
         case localID
@@ -65,11 +65,9 @@ struct LoginScene: View {
     }
 
     private func submit() async {
-        do {
+        await errorAlertHandler.withAlert {
             try await viewModel.loginWithLocalId(localID: localID, localPassword: localPassword)
             focusedField = nil
-        } catch {
-            hudPresenter?.presentAlert(error: error)
         }
     }
 }

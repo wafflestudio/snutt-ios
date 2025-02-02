@@ -5,7 +5,6 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Dependencies
 import Foundation
 import HTTPTypes
 import OpenAPIRuntime
@@ -22,11 +21,11 @@ public struct LoggingMiddleware: ClientMiddleware {
     ) async throws -> (HTTPResponse, HTTPBody?) {
         let (response, body) = try await next(request, body, baseURL)
         let data = try await Data(collecting: body!, upTo: .max)
-        if let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers),
+        if let json = try? JSONSerialization.jsonObject(with: data, options: []),
            let prettyData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted),
            let prettyString = String(data: prettyData, encoding: .utf8)
         {
-//            print(prettyString)
+            print(prettyString)
         }
         return (response, HTTPBody(data))
     }

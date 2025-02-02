@@ -8,6 +8,7 @@
 import APIClientInterface
 import Dependencies
 import Foundation
+import FoundationUtility
 import TimetableInterface
 
 public struct TimetableAPIRepository: TimetableRepository {
@@ -27,12 +28,32 @@ public struct TimetableAPIRepository: TimetableRepository {
         try await apiClient.getBrief().ok.body.json
     }
 
-    public func updateTimetableTitle(timetableID _: String, title _: String) async throws -> [any Timetable] {
-        fatalError()
+    public func updateTimetableTitle(timetableID: String, title: String) async throws -> [any TimetableMetadata] {
+        try await apiClient.modifyTimetable(path: .init(timetableId: timetableID), body: .json(.init(title: title))).ok.body.json
     }
 
-    public func setPrimaryTimetable(timetableID _: String) async throws {
-        fatalError()
+    public func setPrimaryTimetable(timetableID: String) async throws {
+        _ = try await apiClient.setPrimary(path: .init(timetableId: timetableID)).ok
+    }
+
+    public func unsetPrimaryTimetable(timetableID: String) async throws {
+        _ = try await apiClient.unSetPrimary(path: .init(timetableId: timetableID)).ok
+    }
+
+    public func copyTimetable(timetableID: String) async throws -> [any TimetableMetadata] {
+        try await apiClient.copyTimetable(.init(path: .init(timetableId: timetableID))).ok.body.json
+    }
+
+    public func deleteTimetable(timetableID: String) async throws -> [any TimetableMetadata] {
+        try await apiClient.deleteTimetable(.init(path: .init(timetableId: timetableID))).ok.body.json
+    }
+
+    public func addLecture(timetableID: String, lectureID: String) async throws -> any Timetable {
+        try await apiClient.addLecture(path: .init(timetableId: timetableID, lectureId: lectureID)).ok.body.json
+    }
+
+    public func removeLecture(timetableID: String, lectureID: String) async throws -> any Timetable {
+        try await apiClient.deleteTimetableLecture(.init(path: .init(timetableId: timetableID, timetableLectureId: lectureID))).ok.body.json
     }
 }
 
@@ -61,6 +82,24 @@ extension Components.Schemas.TimetableLegacyDto: @retroactive Timetable {
     public var lectures: [any TimetableInterface.Lecture] {
         lecture_list
     }
+
+    public var defaultTheme: Theme? {
+        guard themeId == nil else { return nil }
+        return switch theme {
+        case ._0:
+            .snutt
+        case ._1:
+            .fall
+        case ._2:
+            .modern
+        case ._3:
+            .cherryBlossom
+        case ._4:
+            .ice
+        case ._5:
+            .lawn
+        }
+    }
 }
 
 extension Components.Schemas.TimetableBriefDto: @retroactive TimetableMetadata {
@@ -85,6 +124,20 @@ extension Components.Schemas.TimetableBriefDto: @retroactive TimetableMetadata {
 }
 
 extension Components.Schemas.TimetableLectureLegacyDto: @retroactive Lecture {
+    public var freshmenQuota: Int32? {
+        freshman_quota
+    }
+
+    public var customColor: TimetableInterface.LectureColor? {
+        if colorIndex == 0,
+           let fg = color?.fg,
+           let bg = color?.bg
+        {
+            return .init(fgHex: fg, bgHex: bg)
+        }
+        return nil
+    }
+
     public var evLecture: EvLecture? {
         guard let snuttEvLecture else { return nil }
         return .init(evLectureID: snuttEvLecture.evLectureId.asInt(), avgRating: nil, evaluationCount: nil)
@@ -116,18 +169,24 @@ extension Components.Schemas.TimetableLectureLegacyDto: @retroactive Lecture {
         class_time_json
             .enumerated()
             .compactMap { index, json in
-                guard let weekday = Weekday(rawValue: json.day.rawValue) else { return nil }
-                let start = json.startMinute.asInt().quotientAndRemainder(dividingBy: 60)
-                let end = json.endMinute.asInt().quotientAndRemainder(dividingBy: 60)
-                return TimePlace(
-                    id: "\(index)-\(start)-\(end)-\(json.place ?? "")-\(isCustom)", // FIXME:
-                    day: weekday,
-                    startTime: .init(hour: start.quotient, minute: start.remainder),
-                    endTime: .init(hour: end.quotient, minute: end.remainder),
-                    place: json.place ?? "",
-                    isCustom: isCustom
-                )
+                TimePlace(dto: json, index: index, isCustom: isCustom)
             }
+    }
+}
+
+extension TimePlace {
+    init?(dto: Components.Schemas.ClassPlaceAndTimeLegacyDto, index: Int, isCustom: Bool) {
+        guard let weekday = Weekday(rawValue: dto.day.rawValue) else { return nil }
+        let start = dto.startMinute.asInt().quotientAndRemainder(dividingBy: 60)
+        let end = dto.endMinute.asInt().quotientAndRemainder(dividingBy: 60)
+        self.init(
+            id: "\(index)-\(start)-\(end)-\(dto.place ?? "")-\(isCustom)", // FIXME:
+            day: weekday,
+            startTime: .init(hour: start.quotient, minute: start.remainder),
+            endTime: .init(hour: end.quotient, minute: end.remainder),
+            place: dto.place ?? "",
+            isCustom: isCustom
+        )
     }
 }
 

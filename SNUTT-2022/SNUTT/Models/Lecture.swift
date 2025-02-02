@@ -22,6 +22,7 @@ struct Lecture: Identifiable {
     var colorIndex: Int
     var classification: String
     var category: String
+    var categoryPre2025: String
     var remark: String
     var isCustom: Bool
     var color: LectureColor?
@@ -95,9 +96,15 @@ struct Lecture: Identifiable {
         if timePlaces.isEmpty {
             return ""
         }
-        let places = timePlaces
-            .compactMap { $0.place.isEmpty ? nil : $0.place }
-            .reduce(into: Set<String>()) { $0.insert($1) }
+        var places: [String] = []
+        timePlaces
+            .sorted { $0.day.rawValue < $1.day.rawValue && $0.startMinute < $1.startMinute }
+            .compactMap { $0.place == " " ? nil : $0.place }
+            .forEach { place in
+                if !places.contains(where: { $0 == place }) {
+                    places.append(place)
+                }
+            }
         if places.isEmpty {
             return ""
         }
@@ -167,6 +174,7 @@ extension Lecture {
         colorIndex = dto.colorIndex ?? 1
         classification = dto.classification ?? ""
         category = dto.category ?? ""
+        categoryPre2025 = dto.categoryPre2025 ?? ""
         remark = dto.remark ?? ""
         quota = dto.quota ?? 0
         freshmanQuota = dto.freshmanQuota ?? 0
@@ -207,6 +215,7 @@ extension Lecture {
                            colorIndex: Int.random(in: 1 ... 5),
                            classification: "전선",
                            category: "체육",
+                           categoryPre2025: "베리타스",
                            remark: "영어강의, 복부전생수강불가, 주전공생수강불가, 어쩌구 저쩌구",
                            isCustom: false,
                            color: nil,
