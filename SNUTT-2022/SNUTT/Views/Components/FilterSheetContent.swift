@@ -25,7 +25,6 @@ struct FilterSheetContent: View {
             HStack(spacing: 0) {
                 VStack(spacing: 25) {
                     ForEach(SearchTagType.allCases, id: \.self) { tag in
-                        // ~2024년: `구) 교양영역` 제공X
                         if tag == .categoryPre2025,
                            let currentYear = viewModel.currentTimetable?.year, currentYear < 2025
                         {
@@ -50,53 +49,24 @@ struct FilterSheetContent: View {
                 .padding(.horizontal, 10)
                 .padding(.vertical, 5)
 
-                Divider()
-
                 ScrollView {
-                    LazyVStack {
-                        Group {
-                            ForEach(viewModel.filterTags(with: selectedCategory)) { tag in
-                                Button {
-                                    viewModel.toggle(tag)
-                                } label: {
-                                    HStack(alignment: .top) {
-                                        Image("checkmark.circle.\(viewModel.isSelected(tag: tag) ? "tick" : "untick")")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 16)
-                                            .padding(.trailing, 3)
-                                        VStack(alignment: .leading, spacing: 6) {
-                                            Text(tag.text)
-                                                .font(STFont.regular14.font)
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                                .contentShape(Rectangle())
-
-                                            if tag.text == TimeType.range.rawValue {
-                                                Group {
-                                                    if !$viewModel.selectedTimeRange.isEmpty {
-                                                        Text(viewModel.selectedTimeRange.map {
-                                                            $0.preciseTimeString
-                                                        }.joined(separator: "\n"))
-                                                            .underline()
-                                                            .lineSpacing(4)
-                                                    } else {
-                                                        Text("눌러서 선택하기")
-                                                            .underline()
-                                                    }
-                                                }
-                                                .font(STFont.regular12.font)
-                                                .foregroundColor(STColor.darkGray)
-                                                .onTapGesture { isTimeRangeSheetOpen = true }
-                                            }
-                                        }
-                                    }
+                    LazyVStack(alignment: .leading) {
+                        if selectedCategory == .department {
+                            if !viewModel.pinnedTagList.isEmpty {
+                                Text("최근 찾아본 학과")
+                                    .font(STFont.regular13.font)
+                                    .foregroundColor(STColor.alternative)
                                     .padding(.horizontal, 20)
                                     .padding(.vertical, 7)
+                                ForEach(viewModel.pinnedTagList) {
+                                    tag in FilterTagButton(tag: tag, isPinned: true, viewModel: viewModel, isTimeRangeSheetOpen: $isTimeRangeSheetOpen)
                                 }
-                                .buttonStyle(.plain)
+                                Divider()
                             }
                         }
-                        .frame(maxWidth: .infinity)
+                        ForEach(viewModel.filterTags(with: selectedCategory)) { tag in
+                            FilterTagButton(tag: tag, isPinned: false, viewModel: viewModel, isTimeRangeSheetOpen: $isTimeRangeSheetOpen)
+                        }
                     }
                 }
                 .id(selectedCategory) // rerender on change of category
@@ -137,6 +107,62 @@ struct FilterSheetContent: View {
                 .ignoresSafeArea(.keyboard)
             }
         }
+    }
+
+    @MainActor private func dismissView() {
+        viewModel.isFilterOpen = false
+    }
+}
+
+struct FilterTagButton: View {
+    let tag: SearchTag
+    let isPinned: Bool
+    @ObservedObject var viewModel: FilterSheetViewModel
+    @Binding var isTimeRangeSheetOpen: Bool
+
+    var body: some View {
+        Button {
+            viewModel.toggle(tag)
+        } label: {
+            HStack(alignment: .top) {
+                Image("checkmark.circle.\(viewModel.isSelected(tag: tag) ? "tick" : "untick")")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 16)
+                    .padding(.trailing, 3)
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(tag.text)
+                        .font(STFont.regular14.font)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+
+                    if tag.text == TimeType.range.rawValue {
+                        Group {
+                            if !viewModel.selectedTimeRange.isEmpty {
+                                Text(viewModel.selectedTimeRange.map {
+                                    $0.preciseTimeString
+                                }.joined(separator: "\n"))
+                                    .underline()
+                                    .lineSpacing(4)
+                            } else {
+                                Text("눌러서 선택하기")
+                                    .underline()
+                            }
+                        }
+                        .font(STFont.regular12.font)
+                        .foregroundColor(STColor.darkGray)
+                        .onTapGesture { isTimeRangeSheetOpen = true }
+                    }
+                }
+                if isPinned {
+                    Image("department.xmark")
+                        .onTapGesture { viewModel.removePin(tag: tag) }
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 7)
+        }
+        .buttonStyle(.plain)
     }
 }
 
