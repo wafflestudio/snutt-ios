@@ -20,6 +20,7 @@ struct LectureEditDetailScene: View {
     
     @State private var isMapViewExpanded: Bool = true
 
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
 
     let displayMode: DisplayMode
@@ -187,7 +188,10 @@ struct LectureEditDetailScene: View {
                     if showMapMismatchWarning {
                         HStack {
                             Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
-                                .font(.system(size: 13))
+                                .font(SNUTTFont.regular13.font)
+                                .foregroundStyle(colorScheme == .dark
+                                                  ? SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.6)
+                                                  : SharedUIComponentsAsset.darkGray.swiftUIColor.opacity(0.6))
                                 .padding(.top, 8)
                             Spacer()
                         }
@@ -203,6 +207,10 @@ struct LectureEditDetailScene: View {
                 } label: {
                     HStack(spacing: 4) {
                         Text("지도 닫기")
+                            .font(SNUTTFont.regular14.font)
+                            .foregroundStyle(colorScheme == .dark
+                                              ? SharedUIComponentsAsset.gray30.swiftUIColor
+                                              : SharedUIComponentsAsset.darkGray.swiftUIColor)
                         TimetableAsset.chevronDown.swiftUIImage
                             .rotationEffect(.init(degrees: 180.0))
                     }
@@ -218,6 +226,10 @@ struct LectureEditDetailScene: View {
                         TimetableAsset.mapOpen.swiftUIImage
                         Spacer().frame(width: 8)
                         Text("지도에서 보기")
+                            .font(SNUTTFont.regular14.font)
+                            .foregroundStyle(colorScheme == .dark
+                                              ? SharedUIComponentsAsset.gray30.swiftUIColor
+                                              : SharedUIComponentsAsset.darkGray.swiftUIColor)
                         Spacer().frame(width: 4)
                         TimetableAsset.chevronDown.swiftUIImage
                     }

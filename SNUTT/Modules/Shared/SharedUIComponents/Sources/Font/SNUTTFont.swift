@@ -8,30 +8,30 @@
 import SwiftUI
 import UIKit
 
-struct SNUTTFont {
-    static let bold17: UIFont = .systemFont(ofSize: 17, weight: .bold)
+public struct SNUTTFont {
+    public static let bold17: UIFont = .systemFont(ofSize: 17, weight: .bold)
 
-    static let semibold16: UIFont = .systemFont(ofSize: 16, weight: .semibold)
-    static let regular16: UIFont = .systemFont(ofSize: 16)
+    public static let semibold16: UIFont = .systemFont(ofSize: 16, weight: .semibold)
+    public static let regular16: UIFont = .systemFont(ofSize: 16)
 
-    static let semibold15: UIFont = .systemFont(ofSize: 15, weight: .semibold)
-    static let regular15: UIFont = .systemFont(ofSize: 15)
+    public static let semibold15: UIFont = .systemFont(ofSize: 15, weight: .semibold)
+    public static let regular15: UIFont = .systemFont(ofSize: 15)
 
-    static let bold14: UIFont = .systemFont(ofSize: 14, weight: .bold)
-    static let semibold14: UIFont = .systemFont(ofSize: 14, weight: .semibold)
-    static let medium14: UIFont = .systemFont(ofSize: 14, weight: .medium)
-    static let regular14: UIFont = .systemFont(ofSize: 14)
+    public static let bold14: UIFont = .systemFont(ofSize: 14, weight: .bold)
+    public static let semibold14: UIFont = .systemFont(ofSize: 14, weight: .semibold)
+    public static let medium14: UIFont = .systemFont(ofSize: 14, weight: .medium)
+    public static let regular14: UIFont = .systemFont(ofSize: 14)
 
-    static let regular13: UIFont = .systemFont(ofSize: 13)
+    public static let regular13: UIFont = .systemFont(ofSize: 13)
 
-    static let regular12: UIFont = .systemFont(ofSize: 12)
+    public static let regular12: UIFont = .systemFont(ofSize: 12)
 
-    static let bold11: UIFont = .systemFont(ofSize: 11, weight: .bold)
-    static let regular11: UIFont = .systemFont(ofSize: 11)
+    public static let bold11: UIFont = .systemFont(ofSize: 11, weight: .bold)
+    public static let regular11: UIFont = .systemFont(ofSize: 11)
 }
 
 extension UIFont {
-    var font: Font {
+    public var font: Font {
         Font(self as CTFont)
     }
 }
