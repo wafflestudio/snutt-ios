@@ -49,7 +49,7 @@ extension Project {
         let resources: [String] = (module.category.hasResources ? ["\(directory)/\(name)/Resources/**"] : []) + module.additionalResources
         let sources = Target.target(name: name,
                                     destinations: destinations,
-                                    product: name == "APIClientInterface" ? .framework : productType(),
+                                    product: productType(name),
                                     bundleId: "\(domain).\(name)",
                                     deploymentTargets: deploymentTargets,
                                     infoPlist: .default,
@@ -85,6 +85,7 @@ extension Project {
             "UILaunchStoryboardName": "LaunchScreen",
             "API_SERVER_URL": "$(API_SERVER_URL)",
             "API_KEY": "$(API_KEY)",
+            "KAKAO_APP_KEY": "$(KAKAO_APP_KEY)"
         ]
 
         let mainTarget = Target.target(
@@ -138,11 +139,16 @@ extension Project {
         )
     }
 
-    private static func productType() -> Product {
-        if case let .string(productType) = Environment.productType {
-            return productType == "static-library" ? .staticLibrary : .framework
-        } else {
-            return .framework
+    private static func productType(_ name: String) -> Product {
+        switch name {
+        case "APIClientInterface": return .framework
+        case "Timetable": return .staticFramework
+        default:
+            if case let .string(productType) = Environment.productType {
+                return productType == "static-library" ? .staticLibrary : .framework
+            } else {
+                return .framework
+            }
         }
     }
 

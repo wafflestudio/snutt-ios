@@ -22,6 +22,7 @@ let project = Project.app(
                 .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
                 .external(name: "SwiftUIIntrospect"),
+                .external(name: "KakaoMapsSDK-SPM"),
             ]
         ),
         .module(

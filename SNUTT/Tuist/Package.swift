@@ -21,6 +21,7 @@ import PackageDescription
             "DependenciesAdditionsBasics": .framework,
             "UserDefaultsDependency": .framework,
             "IssueReporting": .framework,
+            "KakaoMapsSDK-SPM": .staticFramework,
         ],
         baseSettings: .settings(configurations: [
             .debug(name: .dev),
@@ -40,5 +41,6 @@ let package = Package(
         .package(url: "https://github.com/gohanlon/swift-memberwise-init-macro", from: "0.5.0"),
         .package(url: "https://github.com/tgrapperon/swift-dependencies-additions", from: "1.1.1"),
         .package(url: "https://github.com/siteline/swiftui-introspect", from: "1.3.0"),
+        .package(url: "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git", .upToNextMajor(from: "2.12.4")),
     ]
 )

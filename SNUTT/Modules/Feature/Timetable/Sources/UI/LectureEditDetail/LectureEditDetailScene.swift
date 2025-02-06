@@ -17,14 +17,35 @@ struct LectureEditDetailScene: View {
     @Dependency(\.application) private var application
     @State private var viewModel: LectureEditDetailViewModel
     @State private var editMode: EditMode = .inactive
+    
+    @State private var isMapViewExpanded: Bool = true
 
     @Environment(\.dismiss) var dismiss
 
     let displayMode: DisplayMode
 
+    private var buildingDictList: [Location: String] {
+        var dict: [Location: String] = [:]
+//        viewModel.entryLecture.buildings.forEach { dict[$0.locationInDMS] = $0.number + "동" }
+        return dict
+    }
+
+    private var isGwanak: Bool {
+        true
+//        buildings.allSatisfy { $0.campus == .GWANAK }
+    }
+
+    private var showMapMismatchWarning: Bool {
+        true
+//        !viewModel.entryLecture.timePlaces.map { $0.place }.allSatisfy { place in
+//            buildings.first(where: { place.hasPrefix($0.number) }) != nil
+//        }
+    }
+    
     init(entryLecture: any Lecture, displayMode: DisplayMode) {
         _viewModel = .init(initialValue: .init(entryLecture: entryLecture))
         self.displayMode = displayMode
+        print(entryLecture)
     }
 
     var body: some View {
@@ -154,6 +175,54 @@ struct LectureEditDetailScene: View {
                     EditableRow(label: "시간", keyPath: \.timePlaces[index])
                     EditableRow(label: "장소", keyPath: \.timePlaces[index].place)
                 }
+            }
+            
+            if isMapViewExpanded {
+                Group {
+                    LectureMapView(buildings: buildingDictList)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 256)
+                        .padding(.top, 4)
+
+                    if showMapMismatchWarning {
+                        HStack {
+                            Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
+                                .font(.system(size: 13))
+                                .padding(.top, 8)
+                            Spacer()
+                        }
+                    }
+                }
+                .animation(.linear(duration: 0.2), value: isMapViewExpanded)
+                .transition(.asymmetric(insertion: .opacity, removal: .identity))
+
+                Button {
+                    withAnimation {
+                        isMapViewExpanded.toggle()
+                    }
+                } label: {
+                    HStack(spacing: 4) {
+                        Text("지도 닫기")
+                        TimetableAsset.chevronDown.swiftUIImage
+                            .rotationEffect(.init(degrees: 180.0))
+                    }
+                }
+                .padding(.top, 8)
+            } else {
+                Button {
+                    withAnimation(.easeOut(duration: 0.3)) {
+                        isMapViewExpanded.toggle()
+                    }
+                } label: {
+                    HStack(spacing: 0) {
+                        TimetableAsset.mapOpen.swiftUIImage
+                        Spacer().frame(width: 8)
+                        Text("지도에서 보기")
+                        Spacer().frame(width: 4)
+                        TimetableAsset.chevronDown.swiftUIImage
+                    }
+                }
+                .padding(.top, 8)
             }
         }
     }
