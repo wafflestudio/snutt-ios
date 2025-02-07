@@ -17,7 +17,7 @@ struct LectureEditDetailScene: View {
     @Dependency(\.application) private var application
     @State private var viewModel: LectureEditDetailViewModel
     @State private var editMode: EditMode = .inactive
-    
+
     @State private var isMapViewExpanded: Bool = true
 
     @Environment(\.colorScheme) var colorScheme
@@ -26,7 +26,7 @@ struct LectureEditDetailScene: View {
     let displayMode: DisplayMode
 
     private var buildings: [Building] { viewModel.lectureBuildings }
-    
+
     private var buildingDictList: [Location: String] {
         var dict: [Location: String] = [:]
         buildings.forEach { dict[$0.locationInDMS] = $0.number + "동" }
@@ -42,7 +42,7 @@ struct LectureEditDetailScene: View {
             buildings.first(where: { place.hasPrefix($0.number) }) != nil
         }
     }
-    
+
     init(entryLecture: any Lecture, displayMode: DisplayMode) {
         _viewModel = .init(initialValue: .init(entryLecture: entryLecture))
         self.displayMode = displayMode
@@ -179,9 +179,8 @@ struct LectureEditDetailScene: View {
                     EditableRow(label: "장소", keyPath: \.timePlaces[index].place)
                 }
             }
-            
+
             if editMode.isEditing {
-                
             } else {
                 // TODO: needs `supportForMapViewEnabled` flag
                 if !buildingDictList.isEmpty && isGwanak {
@@ -197,8 +196,8 @@ struct LectureEditDetailScene: View {
                                     Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
                                         .font(SNUTTFont.regular13.font)
                                         .foregroundStyle(colorScheme == .dark
-                                                          ? SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.6)
-                                                          : SharedUIComponentsAsset.darkGray.swiftUIColor.opacity(0.6))
+                                            ? SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.6)
+                                            : SharedUIComponentsAsset.darkGray.swiftUIColor.opacity(0.6))
                                         .padding(.top, 8)
                                     Spacer()
                                 }
@@ -216,8 +215,8 @@ struct LectureEditDetailScene: View {
                                 Text("지도 닫기")
                                     .font(SNUTTFont.regular14.font)
                                     .foregroundStyle(colorScheme == .dark
-                                                      ? SharedUIComponentsAsset.gray30.swiftUIColor
-                                                      : SharedUIComponentsAsset.darkGray.swiftUIColor)
+                                        ? SharedUIComponentsAsset.gray30.swiftUIColor
+                                        : SharedUIComponentsAsset.darkGray.swiftUIColor)
                                 TimetableAsset.chevronDown.swiftUIImage
                                     .rotationEffect(.init(degrees: 180.0))
                             }
@@ -235,8 +234,8 @@ struct LectureEditDetailScene: View {
                                 Text("지도에서 보기")
                                     .font(SNUTTFont.regular14.font)
                                     .foregroundStyle(colorScheme == .dark
-                                                      ? SharedUIComponentsAsset.gray30.swiftUIColor
-                                                      : SharedUIComponentsAsset.darkGray.swiftUIColor)
+                                        ? SharedUIComponentsAsset.gray30.swiftUIColor
+                                        : SharedUIComponentsAsset.darkGray.swiftUIColor)
                                 Spacer().frame(width: 4)
                                 TimetableAsset.chevronDown.swiftUIImage
                             }

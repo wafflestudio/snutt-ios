@@ -30,8 +30,8 @@ public struct SNUTTFont {
     public static let regular11: UIFont = .systemFont(ofSize: 11)
 }
 
-extension UIFont {
-    public var font: Font {
+public extension UIFont {
+    var font: Font {
         Font(self as CTFont)
     }
 }

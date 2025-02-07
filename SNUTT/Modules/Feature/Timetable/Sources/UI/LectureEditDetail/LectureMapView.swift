@@ -6,9 +6,9 @@
 //
 
 import KakaoMapsSDK
-import TimetableUIComponents
 import SwiftUI
 import TimetableInterface
+import TimetableUIComponents
 
 struct LectureMapView: View {
     let buildings: [Location: String]
@@ -64,8 +64,7 @@ private struct KakaoMapView: UIViewRepresentable {
     }
 
     /// Cleans up the presented `UIView` (and coordinator) in anticipation of their removal.
-    static func dismantleUIView(_: KMViewContainer, coordinator: KakaoMapCoordinator) {
-    }
+    static func dismantleUIView(_: KMViewContainer, coordinator _: KakaoMapCoordinator) {}
 
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, @preconcurrency KakaoMapEventDelegate {
         var controller: KMController?

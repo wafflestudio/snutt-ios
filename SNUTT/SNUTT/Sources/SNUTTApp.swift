@@ -1,7 +1,7 @@
 import Dependencies
+import KakaoMapsSDK
 import SharedUIComponents
 import SwiftUI
-import KakaoMapsSDK
 
 @main
 struct SNUTTApp: App {
@@ -11,7 +11,7 @@ struct SNUTTApp: App {
 
     init() {
         bootstrap()
-        
+
         // Kakao Map
         let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
         SDKInitializer.InitSDK(appKey: kakaoAppKey)
