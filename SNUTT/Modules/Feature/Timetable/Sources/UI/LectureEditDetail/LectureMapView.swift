@@ -6,6 +6,7 @@
 //
 
 import KakaoMapsSDK
+import TimetableUIComponents
 import SwiftUI
 import TimetableInterface
 
@@ -26,7 +27,7 @@ struct LectureMapView: View {
                 showMapView = false
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .alert("실행 가능한 지도 어플리케이션이 없습니다.", isPresented: $isMapNotInstalledAlertPresented, actions: {})
+            .alert("실행 가능한 지도 애플리케이션이 없습니다.", isPresented: $isMapNotInstalledAlertPresented, actions: {})
     }
 }
 
@@ -180,13 +181,13 @@ private struct KakaoMapView: UIViewRepresentable {
             let manager = mapView.getLabelManager()
 
             // blur
-            let blurIconStyle = PoiIconStyle(symbol: UIImage(named: "map.blur.background"))
+            let blurIconStyle = PoiIconStyle(symbol: TimetableAsset.mapBlurBackground.image)
             let blurPoiStyle = PoiStyle(styleID: "blur", styles: [
                 PerLevelPoiStyle(iconStyle: blurIconStyle, level: 0),
             ])
 
             // not focused
-            let notFocusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin"))
+            let notFocusedIconStyle = PoiIconStyle(symbol: TimetableAsset.mapPin.image)
             let notFocusedTextStyle = TextStyle(fontSize: 24, fontColor: .black, strokeThickness: 2, strokeColor: .white)
             let poiNotFocusedTextStyle = PoiTextStyle(textLineStyles: [
                 PoiTextLineStyle(textStyle: notFocusedTextStyle),
@@ -196,7 +197,7 @@ private struct KakaoMapView: UIViewRepresentable {
             ])
 
             // focused(dim)
-            let focusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin.dim"))
+            let focusedIconStyle = PoiIconStyle(symbol: TimetableAsset.mapPinDim.image)
             let focusedTextStyle = TextStyle(fontSize: 26, fontColor: .white, strokeThickness: 1, strokeColor: .init(.init(hex: "#8A8A8A")))
             let poiFocusedTextStyle = PoiTextStyle(textLineStyles: [
                 PoiTextLineStyle(textStyle: focusedTextStyle),

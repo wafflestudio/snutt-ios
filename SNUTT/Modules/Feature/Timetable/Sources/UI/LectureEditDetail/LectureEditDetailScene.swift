@@ -25,28 +25,27 @@ struct LectureEditDetailScene: View {
 
     let displayMode: DisplayMode
 
+    private var buildings: [Building] { viewModel.lectureBuildings }
+    
     private var buildingDictList: [Location: String] {
         var dict: [Location: String] = [:]
-//        viewModel.entryLecture.buildings.forEach { dict[$0.locationInDMS] = $0.number + "동" }
+        buildings.forEach { dict[$0.locationInDMS] = $0.number + "동" }
         return dict
     }
 
     private var isGwanak: Bool {
-        true
-//        buildings.allSatisfy { $0.campus == .GWANAK }
+        buildings.allSatisfy { $0.campus == .GWANAK }
     }
 
     private var showMapMismatchWarning: Bool {
-        true
-//        !viewModel.entryLecture.timePlaces.map { $0.place }.allSatisfy { place in
-//            buildings.first(where: { place.hasPrefix($0.number) }) != nil
-//        }
+        !viewModel.entryLecture.timePlaces.map { $0.place }.allSatisfy { place in
+            buildings.first(where: { place.hasPrefix($0.number) }) != nil
+        }
     }
     
     init(entryLecture: any Lecture, displayMode: DisplayMode) {
         _viewModel = .init(initialValue: .init(entryLecture: entryLecture))
         self.displayMode = displayMode
-        print(entryLecture)
     }
 
     var body: some View {
@@ -67,6 +66,9 @@ struct LectureEditDetailScene: View {
         .introspect(.scrollView, on: .iOS(.v17, .v18), customize: { scrollView in
             scrollView.makeTouchResponsive()
         })
+        .task {
+            await viewModel.fetchBuildingList()
+        }
         .background(TimetableAsset.groupBackground.swiftUIColor)
         .environment(\.editMode, $editMode)
         .environment(viewModel)
@@ -178,63 +180,70 @@ struct LectureEditDetailScene: View {
                 }
             }
             
-            if isMapViewExpanded {
-                Group {
-                    LectureMapView(buildings: buildingDictList)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 256)
-                        .padding(.top, 4)
-
-                    if showMapMismatchWarning {
-                        HStack {
-                            Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
-                                .font(SNUTTFont.regular13.font)
-                                .foregroundStyle(colorScheme == .dark
-                                                  ? SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.6)
-                                                  : SharedUIComponentsAsset.darkGray.swiftUIColor.opacity(0.6))
-                                .padding(.top, 8)
-                            Spacer()
-                        }
-                    }
-                }
-                .animation(.linear(duration: 0.2), value: isMapViewExpanded)
-                .transition(.asymmetric(insertion: .opacity, removal: .identity))
-
-                Button {
-                    withAnimation {
-                        isMapViewExpanded.toggle()
-                    }
-                } label: {
-                    HStack(spacing: 4) {
-                        Text("지도 닫기")
-                            .font(SNUTTFont.regular14.font)
-                            .foregroundStyle(colorScheme == .dark
-                                              ? SharedUIComponentsAsset.gray30.swiftUIColor
-                                              : SharedUIComponentsAsset.darkGray.swiftUIColor)
-                        TimetableAsset.chevronDown.swiftUIImage
-                            .rotationEffect(.init(degrees: 180.0))
-                    }
-                }
-                .padding(.top, 8)
+            if editMode.isEditing {
+                
             } else {
-                Button {
-                    withAnimation(.easeOut(duration: 0.3)) {
-                        isMapViewExpanded.toggle()
-                    }
-                } label: {
-                    HStack(spacing: 0) {
-                        TimetableAsset.mapOpen.swiftUIImage
-                        Spacer().frame(width: 8)
-                        Text("지도에서 보기")
-                            .font(SNUTTFont.regular14.font)
-                            .foregroundStyle(colorScheme == .dark
-                                              ? SharedUIComponentsAsset.gray30.swiftUIColor
-                                              : SharedUIComponentsAsset.darkGray.swiftUIColor)
-                        Spacer().frame(width: 4)
-                        TimetableAsset.chevronDown.swiftUIImage
+                // TODO: needs `supportForMapViewEnabled` flag
+                if !buildingDictList.isEmpty && isGwanak {
+                    if isMapViewExpanded {
+                        Group {
+                            LectureMapView(buildings: buildingDictList)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 256)
+                                .padding(.top, 4)
+
+                            if showMapMismatchWarning {
+                                HStack {
+                                    Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
+                                        .font(SNUTTFont.regular13.font)
+                                        .foregroundStyle(colorScheme == .dark
+                                                          ? SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.6)
+                                                          : SharedUIComponentsAsset.darkGray.swiftUIColor.opacity(0.6))
+                                        .padding(.top, 8)
+                                    Spacer()
+                                }
+                            }
+                        }
+                        .animation(.linear(duration: 0.2), value: isMapViewExpanded)
+                        .transition(.asymmetric(insertion: .opacity, removal: .identity))
+
+                        Button {
+                            withAnimation {
+                                isMapViewExpanded.toggle()
+                            }
+                        } label: {
+                            HStack(spacing: 4) {
+                                Text("지도 닫기")
+                                    .font(SNUTTFont.regular14.font)
+                                    .foregroundStyle(colorScheme == .dark
+                                                      ? SharedUIComponentsAsset.gray30.swiftUIColor
+                                                      : SharedUIComponentsAsset.darkGray.swiftUIColor)
+                                TimetableAsset.chevronDown.swiftUIImage
+                                    .rotationEffect(.init(degrees: 180.0))
+                            }
+                        }
+                        .padding(.top, 8)
+                    } else {
+                        Button {
+                            withAnimation(.easeOut(duration: 0.3)) {
+                                isMapViewExpanded.toggle()
+                            }
+                        } label: {
+                            HStack(spacing: 0) {
+                                TimetableAsset.mapOpen.swiftUIImage
+                                Spacer().frame(width: 8)
+                                Text("지도에서 보기")
+                                    .font(SNUTTFont.regular14.font)
+                                    .foregroundStyle(colorScheme == .dark
+                                                      ? SharedUIComponentsAsset.gray30.swiftUIColor
+                                                      : SharedUIComponentsAsset.darkGray.swiftUIColor)
+                                Spacer().frame(width: 4)
+                                TimetableAsset.chevronDown.swiftUIImage
+                            }
+                        }
+                        .padding(.top, 8)
                     }
                 }
-                .padding(.top, 8)
             }
         }
     }

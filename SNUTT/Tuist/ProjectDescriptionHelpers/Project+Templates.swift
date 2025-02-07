@@ -85,7 +85,7 @@ extension Project {
             "UILaunchStoryboardName": "LaunchScreen",
             "API_SERVER_URL": "$(API_SERVER_URL)",
             "API_KEY": "$(API_KEY)",
-            "KAKAO_APP_KEY": "$(KAKAO_APP_KEY)"
+            "KAKAO_APP_KEY": "$(KAKAO_APP_KEY)",
         ]
 
         let mainTarget = Target.target(

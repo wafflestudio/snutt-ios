@@ -19,6 +19,15 @@ struct TimetableLocalRepositoryKey: DependencyKey {
     }()
 }
 
+struct LectureRepositoryKey: DependencyKey {
+    static let liveValue: any LectureRepository = LectureAPIRepository()
+    
+    public static let previewValue: any LectureRepository = {
+        let spy = LectureRepositorySpy()
+        return spy
+    }()
+}
+
 struct LectureSearchRepositoryKey: DependencyKey {
     static let liveValue: any LectureSearchRepository = LectureSearchAPIRepository()
     static let previewValue: any LectureSearchRepository = {
@@ -46,6 +55,11 @@ extension DependencyValues {
     var timetableLocalRepository: any TimetableLocalRepository {
         get { self[TimetableLocalRepositoryKey.self] }
         set { self[TimetableLocalRepositoryKey.self] = newValue }
+    }
+    
+    var lectureRepository: any LectureRepository {
+        get { self[LectureRepositoryKey.self] }
+        set { self[LectureRepositoryKey.self] = newValue }
     }
 
     var lectureSearchRepository: any LectureSearchRepository {

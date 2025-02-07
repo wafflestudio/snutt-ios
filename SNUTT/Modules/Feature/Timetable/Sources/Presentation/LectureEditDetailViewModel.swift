@@ -5,18 +5,36 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import Dependencies
 import Observation
 import TimetableInterface
 
 @MainActor
 @Observable
 final class LectureEditDetailViewModel {
+    
+    @ObservationIgnored
+    @Dependency(\.lectureRepository) private var lectureRepository
+    
     let entryLecture: EditableLecture
     var editableLecture: EditableLecture
+    
+    var lectureBuildings: [Building] = []
 
     init(entryLecture: any Lecture) {
         self.entryLecture = Self.makeEditableLecture(from: entryLecture)
         editableLecture = Self.makeEditableLecture(from: entryLecture)
+    }
+    
+    // TODO: supportForMapViewEnabled = appState.system.configs?.disableMapFeature
+    
+    func fetchBuildingList() async {
+        let joinedPlaces = entryLecture.timePlaces.map { $0.place }.joined(separator: ",")
+        do {
+            lectureBuildings = try await lectureRepository.fetchBuildingList(places: joinedPlaces)
+        } catch {
+            print(error)
+        }
     }
 
     private static func makeEditableLecture(from entryLecture: any Lecture) -> EditableLecture {
