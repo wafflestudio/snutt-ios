@@ -67,7 +67,7 @@ struct SearchService: SearchServiceProtocol {
         appState.search.pinnedTagList = model?.tagList.filter { $0.type == .department && recentTagNames.contains($0.text) } ?? []
     }
 
-    private func _saveDepartmentTagsToUserDefaults(from tagList: [SearchTag]) async throws {
+    private func _saveDepartmentTagsToUserDefaults(from tagList: [SearchTag]) {
         let departmentTags = tagList.filter { tag in tag.type == .department &&
             !appState.search.pinnedTagList.contains { $0.text == tag.text }
         }
@@ -83,7 +83,7 @@ struct SearchService: SearchServiceProtocol {
     private func _fetchSearchResult() async throws {
         guard let currentTimetable = timetableState.current else { return }
         let tagList = searchState.selectedTagList
-        try await _saveDepartmentTagsToUserDefaults(from: tagList)
+        _saveDepartmentTagsToUserDefaults(from: tagList)
         let timeList = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .range }) ? searchState.selectedTimeRange : nil
         let excludedTimeList = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .empty }) ? currentTimetable.timeMask : nil
         let offset = searchState.perPage * searchState.pageNum
