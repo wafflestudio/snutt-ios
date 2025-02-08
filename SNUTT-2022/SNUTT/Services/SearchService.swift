@@ -73,7 +73,7 @@ struct SearchService: SearchServiceProtocol {
         }
         var updatedTags = departmentTags + appState.search.pinnedTagList
         if updatedTags.count > 5 {
-            updatedTags = Array(updatedTags.suffix(5))
+            updatedTags = Array(updatedTags.prefix(5))
         }
         appState.search.pinnedTagList = updatedTags
         let savedTags = updatedTags.map { $0.text }
