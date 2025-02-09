@@ -302,7 +302,6 @@ struct LectureDetailScene: View {
             Button {
                 showReviewWebView = true
                 if #available(iOS 17.0, *) {
-                    print(Self.dismissedPopoverTip.donations)
                     Self.dismissedPopoverTip.sendDonation()
                 }
             } label: {
