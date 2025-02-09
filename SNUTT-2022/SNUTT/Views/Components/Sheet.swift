@@ -18,26 +18,8 @@ struct Sheet<Content>: View where Content: View {
     var onBackgroundTap: (@MainActor () -> Void)?
     @ViewBuilder var content: () -> Content
 
-    @GestureState private var translation: CGFloat = 0
+    @State private var translation: CGFloat = 0
     @State private var backgroundOpacity: CGFloat = 0
-
-    private var dragGesture: some Gesture {
-        DragGesture().updating($translation) { value, state, _ in
-            if !disableDragGesture {
-                state = orientation.getTranslation(from: value)
-            }
-        }
-        .onChanged { value in
-            if !disableDragGesture {
-                backgroundOpacity = orientation.getOpacity(from: value)
-            }
-        }
-        .onEnded { value in
-            if !disableDragGesture {
-                self.isOpen = orientation.getIsOpen(from: value)
-            }
-        }
-    }
 
     var body: some View {
         GeometryReader { reader in
@@ -62,6 +44,7 @@ struct Sheet<Content>: View where Content: View {
 
                 VStack(spacing: 0) {
                     self.content()
+                        .simultaneousGesture(DragGesture())
                 }
                 .transformEffect(.identity)
             }
@@ -69,9 +52,7 @@ struct Sheet<Content>: View where Content: View {
             .offset(orientation.getOffset(isOpen: isOpen, translation: translation, reader: reader))
             .animation(.customSpring, value: isOpen)
         }
-        .highPriorityGesture(
-            dragGesture
-        )
+        .sheetGesture($translation, dismiss: { isOpen = false })
         .onChange(of: isOpen, perform: { newValue in
             withAnimation(.easeInOut(duration: 0.2)) {
                 backgroundOpacity = newValue ? 1 : 0

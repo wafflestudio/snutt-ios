@@ -129,7 +129,7 @@ extension AppEnvironment {
         let timetableService = TimetableService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let userService = UserService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
-        let searchService = SearchService(appState: appState, webRepositories: webRepositories)
+        let searchService = SearchService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
         let globalUIService = GlobalUIService(appState: appState, localRepositories: localRepositories, webRepositories: webRepositories)
         let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
         let authService = AuthService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)

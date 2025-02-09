@@ -15,6 +15,7 @@
 		731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA002297BC5740027BA25 /* BookmarkRouter.swift */; };
 		731DA005297BC8990027BA25 /* BookmarkScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA004297BC8990027BA25 /* BookmarkScene.swift */; };
 		734A831F2C2FD41200D6CB95 /* KakaoLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A831E2C2FD41200D6CB95 /* KakaoLogin.swift */; };
+		734B0DE02D2CF23E00A0BAB9 /* View+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734B0DDF2D2CF23600A0BAB9 /* View+Gesture.swift */; };
 		736AF84C2C2F275E00ED9C1A /* GoogleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736AF84B2C2F275E00ED9C1A /* GoogleLogin.swift */; };
 		736AF84F2C2F279900ED9C1A /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 736AF84E2C2F279900ED9C1A /* GoogleSignIn */; };
 		736AF8512C2F279900ED9C1A /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 736AF8502C2F279900ED9C1A /* GoogleSignInSwift */; };
@@ -367,6 +368,7 @@
 		731DA002297BC5740027BA25 /* BookmarkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRouter.swift; sourceTree = "<group>"; };
 		731DA004297BC8990027BA25 /* BookmarkScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkScene.swift; sourceTree = "<group>"; };
 		734A831E2C2FD41200D6CB95 /* KakaoLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLogin.swift; sourceTree = "<group>"; };
+		734B0DDF2D2CF23600A0BAB9 /* View+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Gesture.swift"; sourceTree = "<group>"; };
 		736AF84B2C2F275E00ED9C1A /* GoogleLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLogin.swift; sourceTree = "<group>"; };
 		738406ED2B57107C00007E62 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		738406F02B5710C200007E62 /* ThemeDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDto.swift; sourceTree = "<group>"; };
@@ -752,6 +754,7 @@
 		BE419B8B288B8C4900FA9590 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				734B0DDF2D2CF23600A0BAB9 /* View+Gesture.swift */,
 				BE419B8C288B8C5A00FA9590 /* View+Debug.swift */,
 				BEB3B6B028D4D4D900E56062 /* View+ResignResponder.swift */,
 				B87DF6F229152649008BB95B /* View+Screenshot.swift */,
@@ -1558,6 +1561,7 @@
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
 				BEB3B6B128D4D4D900E56062 /* View+ResignResponder.swift in Sources */,
+				734B0DE02D2CF23E00A0BAB9 /* View+Gesture.swift in Sources */,
 				CE4777F72A6AE41C00E03253 /* VacancyScene.swift in Sources */,
 				B87DF6F329152649008BB95B /* View+Screenshot.swift in Sources */,
 				DCD41A6027E5CC7700CF380E /* Timetable.swift in Sources */,
