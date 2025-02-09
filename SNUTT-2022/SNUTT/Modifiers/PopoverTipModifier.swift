@@ -15,9 +15,8 @@ extension View {
 }
 
 private struct PopoverTipModifier: ViewModifier {
-    
     let message: String
-    
+
     func body(content: Content) -> some View {
         if #available(iOS 17.0, *) {
             content
@@ -30,9 +29,8 @@ private struct PopoverTipModifier: ViewModifier {
 
 @available(iOS 17.0, *)
 private struct MessageTip: Tip {
-    
     static let dismissed: Event = .init(id: "dismissedPopoverTip")
-    
+
     var title: Text { Text("") }
     var message: Text? { Text(_message) }
     var rules: [Rule] {
@@ -40,9 +38,10 @@ private struct MessageTip: Tip {
             $0.donations.count < 1
         }
     }
+
     var options: [any Option] {
         IgnoresDisplayFrequency(true)
     }
-    
+
     let _message: String
 }

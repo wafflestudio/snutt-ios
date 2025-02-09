@@ -17,9 +17,8 @@ struct LectureDetailScene: View {
     @State private var editMode: EditMode
     @State private var tempLecture: Lecture?
     @State private var buildings: [Building] = []
-    
-    @available(iOS 17.0, *)
-    private static let dismissedPopoverTip = Tips.Event(id: "dismissedPopoverTip")
+
+    @available(iOS 17.0, *) private static let dismissedPopoverTip = Tips.Event(id: "dismissedPopoverTip")
 
     init(viewModel: ViewModel, lecture: Lecture, displayMode: DisplayMode) {
         self.viewModel = viewModel
@@ -312,7 +311,7 @@ struct LectureDetailScene: View {
                     if let evLecture = lecture.evLecture {
                         Group {
                             Text("\(evLecture.avgRatingString)".toUnderlinedString(textColor: .primary)) +
-                            Text(" (\(evLecture.evaluationCount)개)".toUnderlinedString(textColor: STColor.gray2))
+                                Text(" (\(evLecture.evaluationCount)개)".toUnderlinedString(textColor: STColor.gray2))
                         }
                         .font(STFont.regular16.font)
                         .popoverTipIfAvailable("이제 이 곳을 눌러 강의평을 바로 확인할 수 있어요.")

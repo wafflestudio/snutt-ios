@@ -28,7 +28,7 @@ struct SNUTTApp: App {
         let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
         KakaoSDK.initSDK(appKey: kakaoAppKey)
         SDKInitializer.InitSDK(appKey: kakaoAppKey)
-        
+
         /// Configuring `Tip` for `LectureDetailScene`
         if #available(iOS 17.0, *) {
             try? Tips.configure([.datastoreLocation(.applicationDefault)])
