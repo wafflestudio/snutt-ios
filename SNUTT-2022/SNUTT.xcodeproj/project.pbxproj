@@ -38,6 +38,7 @@
 		B800A38B2B76132C008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B80240B22CE8564500178428 /* TimerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80240B12CE8564500178428 /* TimerModifier.swift */; };
+		B824C7A72D50E39B002C3C71 /* PopoverTipModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B824C7A62D50E39B002C3C71 /* PopoverTipModifier.swift */; };
 		B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */; };
 		B82EA54E2B6393190029FDF3 /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */; };
 		B84A4EA12B6035EE00C1E1A0 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84A4EA02B6035EE00C1E1A0 /* Building.swift */; };
@@ -382,6 +383,7 @@
 		73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateAccountViewModel.swift; sourceTree = "<group>"; };
 		B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTimeMaskDto.swift; sourceTree = "<group>"; };
 		B80240B12CE8564500178428 /* TimerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModifier.swift; sourceTree = "<group>"; };
+		B824C7A62D50E39B002C3C71 /* PopoverTipModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverTipModifier.swift; sourceTree = "<group>"; };
 		B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureMapView.swift; sourceTree = "<group>"; };
 		B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
 		B84A4EA02B6035EE00C1E1A0 /* Building.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
@@ -774,6 +776,7 @@
 				BEBCC29B28EF4C6100732304 /* OnLoadModifier.swift */,
 				CE7243602B30240D00F9E0D7 /* InteractiveDismissKeyboardModifier.swift */,
 				B80240B12CE8564500178428 /* TimerModifier.swift */,
+				B824C7A62D50E39B002C3C71 /* PopoverTipModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -1644,6 +1647,7 @@
 				BE682C012888173B009EBCB7 /* TagRouter.swift in Sources */,
 				731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */,
 				738407052B577E9000007E62 /* ThemeDetailScene.swift in Sources */,
+				B824C7A72D50E39B002C3C71 /* PopoverTipModifier.swift in Sources */,
 				CE3384BC2A893F1B00437CC5 /* FriendsScene.swift in Sources */,
 				BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */,
 				CE17DF932A7FCB32000432B8 /* VacancyGuidePopup.swift in Sources */,
