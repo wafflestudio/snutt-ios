@@ -33,13 +33,13 @@ struct LectureMapView: View {
                 .frame(height: 256)
                 .padding(.top, 20)
                 .alert("실행 가능한 지도 애플리케이션이 없습니다.", isPresented: $isMapNotInstalledAlertPresented, actions: {})
-            
+
             if showMismatchWarning {
                 Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
                     .font(.system(size: 13))
                     .foregroundStyle(colorScheme == .dark
-                                     ? SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.6)
-                                     : SharedUIComponentsAsset.darkGray.swiftUIColor.opacity(0.6))
+                        ? SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.6)
+                        : SharedUIComponentsAsset.darkGray.swiftUIColor.opacity(0.6))
                     .padding(.bottom, 2)
                     .padding(.top, 6)
             }
@@ -96,7 +96,7 @@ private struct KakaoMapView: UIViewRepresentable {
         {
             self.buildings = buildings.sorted {
                 $0.locationInDMS.latitude > $1.locationInDMS.latitude
-                || $0.locationInDMS.longitude > $1.locationInDMS.longitude
+                    || $0.locationInDMS.longitude > $1.locationInDMS.longitude
             }
             _isMapNotInstalledAlertPresented = isMapNotInstalledAlertPresented
             defaultPoint = .init(latitude: buildings.reduce(Double(0)) { $0 + $1.locationInDMS.latitude } / Double(buildings.count),
@@ -108,7 +108,7 @@ private struct KakaoMapView: UIViewRepresentable {
         private var mapView: KakaoMap? {
             controller?.getView("mapview") as? KakaoMap
         }
-        
+
         private var shouldZoomOut: Bool {
             guard let location = buildings.first?.locationInDMS else { return false }
             if buildings.count == 1 { return false }

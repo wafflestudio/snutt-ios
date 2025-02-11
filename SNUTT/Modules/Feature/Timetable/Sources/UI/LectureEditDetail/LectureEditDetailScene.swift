@@ -15,7 +15,7 @@ import TimetableInterface
 
 struct LectureEditDetailScene: View {
     @Dependency(\.application) private var application
-    
+
     @State private var viewModel: LectureEditDetailViewModel
     @State private var editMode: EditMode = .inactive
     @State private var isMapViewOpened: Bool = true

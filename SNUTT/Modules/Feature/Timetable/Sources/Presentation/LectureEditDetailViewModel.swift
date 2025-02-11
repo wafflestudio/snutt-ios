@@ -19,11 +19,11 @@ final class LectureEditDetailViewModel {
     var editableLecture: EditableLecture
 
     var buildings: [Building] = []
-    
+
     var showMapView: Bool {
         !buildings.isEmpty && isGwanak
     }
-    
+
     var showMapMismatchWarning: Bool {
         !entryLecture.timePlaces.map { $0.place }.allSatisfy { place in
             buildings.contains { place.hasPrefix($0.number) }

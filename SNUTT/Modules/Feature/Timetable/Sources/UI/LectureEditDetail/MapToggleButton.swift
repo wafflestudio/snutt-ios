@@ -9,12 +9,11 @@ import SharedUIComponents
 import SwiftUI
 
 struct MapToggleButton: View {
-    
     @Binding var isOpen: Bool
     let action: () -> Void
-    
+
     @Environment(\.colorScheme) var colorScheme
-    
+
     var body: some View {
         Button {
             action()
