@@ -6,12 +6,14 @@
 //
 
 import KakaoMapsSDK
+import SharedUIComponents
 import SwiftUI
 import TimetableInterface
 import TimetableUIComponents
 
 struct LectureMapView: View {
-    let buildings: [Location: String]
+    let buildings: [Building]
+    let showMismatchWarning: Bool
 
     @State private var showMapView: Bool = true
     @State private var isMapNotInstalledAlertPresented: Bool = false
@@ -19,15 +21,29 @@ struct LectureMapView: View {
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        KakaoMapView(showMapView: $showMapView,
-                     isMapNotInstalledAlertPresented: $isMapNotInstalledAlertPresented,
-                     colorScheme: colorScheme,
-                     buildings: buildings)
-            .onDisappear {
-                showMapView = false
+        VStack(alignment: .leading, spacing: 0) {
+            KakaoMapView(showMapView: $showMapView,
+                         isMapNotInstalledAlertPresented: $isMapNotInstalledAlertPresented,
+                         colorScheme: colorScheme,
+                         buildings: buildings)
+                .onDisappear {
+                    showMapView = false
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 256)
+                .padding(.top, 20)
+                .alert("실행 가능한 지도 애플리케이션이 없습니다.", isPresented: $isMapNotInstalledAlertPresented, actions: {})
+            
+            if showMismatchWarning {
+                Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
+                    .font(.system(size: 13))
+                    .foregroundStyle(colorScheme == .dark
+                                     ? SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.6)
+                                     : SharedUIComponentsAsset.darkGray.swiftUIColor.opacity(0.6))
+                    .padding(.bottom, 2)
+                    .padding(.top, 6)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .alert("실행 가능한 지도 애플리케이션이 없습니다.", isPresented: $isMapNotInstalledAlertPresented, actions: {})
+        }
     }
 }
 
@@ -35,7 +51,7 @@ private struct KakaoMapView: UIViewRepresentable {
     @Binding var showMapView: Bool
     @Binding var isMapNotInstalledAlertPresented: Bool
     let colorScheme: ColorScheme
-    let buildings: [Location: String]
+    let buildings: [Building]
 
     func makeUIView(context: Self.Context) -> KMViewContainer {
         let view = KMViewContainer()
@@ -63,14 +79,11 @@ private struct KakaoMapView: UIViewRepresentable {
         return KakaoMapCoordinator($isMapNotInstalledAlertPresented, buildings: buildings, colorScheme: colorScheme)
     }
 
-    /// Cleans up the presented `UIView` (and coordinator) in anticipation of their removal.
-    static func dismantleUIView(_: KMViewContainer, coordinator _: KakaoMapCoordinator) {}
-
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, @preconcurrency KakaoMapEventDelegate {
         var controller: KMController?
 
-        /// enumerated & sorted building locations (rightTop to leftBottom)
-        private let buildings: EnumeratedSequence<[Dictionary<Location, String>.Element]>
+        /// sorted building locations (rightTop to leftBottom)
+        private let buildings: [Building]
         private var pois: [Poi: String] = [:]
         private let defaultPoint: Location
 
@@ -78,13 +91,16 @@ private struct KakaoMapView: UIViewRepresentable {
         @Binding var isMapNotInstalledAlertPresented: Bool
 
         init(_ isMapNotInstalledAlertPresented: Binding<Bool>,
-             buildings: [Location: String],
+             buildings: [Building],
              colorScheme: ColorScheme)
         {
-            self.buildings = buildings.sorted { $0.key.latitude > $1.key.latitude || $0.key.longitude > $1.key.longitude }.enumerated()
+            self.buildings = buildings.sorted {
+                $0.locationInDMS.latitude > $1.locationInDMS.latitude
+                || $0.locationInDMS.longitude > $1.locationInDMS.longitude
+            }
             _isMapNotInstalledAlertPresented = isMapNotInstalledAlertPresented
-            defaultPoint = .init(latitude: buildings.keys.reduce(Double(0)) { $0 + $1.latitude } / Double(buildings.count),
-                                 longitude: buildings.keys.reduce(Double(0)) { $0 + $1.longitude } / Double(buildings.count))
+            defaultPoint = .init(latitude: buildings.reduce(Double(0)) { $0 + $1.locationInDMS.latitude } / Double(buildings.count),
+                                 longitude: buildings.reduce(Double(0)) { $0 + $1.locationInDMS.longitude } / Double(buildings.count))
             self.colorScheme = colorScheme
             super.init()
         }
@@ -92,14 +108,10 @@ private struct KakaoMapView: UIViewRepresentable {
         private var mapView: KakaoMap? {
             controller?.getView("mapview") as? KakaoMap
         }
-
-        private var locations: [Location] {
-            buildings.map { $0.element.key }
-        }
-
+        
         private var shouldZoomOut: Bool {
-            if buildings.reduce(0, { count, _ in count + 1 }) == 1 { return false }
-            guard let location = locations.first else { return false }
+            guard let location = buildings.first?.locationInDMS else { return false }
+            if buildings.count == 1 { return false }
             let latDistance = abs(location.latitude.distance(to: defaultPoint.latitude))
             let lngDistance = abs(location.longitude.distance(to: defaultPoint.longitude))
             return latDistance > 0.002 || lngDistance > 0.002
@@ -169,7 +181,7 @@ private struct KakaoMapView: UIViewRepresentable {
             let blurLayerOption = LabelLayerOptions(layerID: "blurBackground", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000)
             let _ = manager.addLabelLayer(option: blurLayerOption)
 
-            for building in buildings {
+            for building in buildings.enumerated() {
                 let layerOption = LabelLayerOptions(layerID: "poi\(building.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1100 + building.offset)
                 let _ = manager.addLabelLayer(option: layerOption)
             }
@@ -222,26 +234,26 @@ private struct KakaoMapView: UIViewRepresentable {
             let blurLayer = manager.getLabelLayer(layerID: "blurBackground")
 
             // marker
-            for building in buildings {
+            for (offset, building) in buildings.enumerated() {
                 let markerPoiOption = PoiOptions(styleID: "notFocused")
                 markerPoiOption.rank = 0
                 markerPoiOption.clickable = true
-                markerPoiOption.addText(PoiText(text: building.element.value, styleIndex: 0))
+                markerPoiOption.addText(PoiText(text: building.number + "동", styleIndex: 0))
                 poiOptionList.append(markerPoiOption)
 
-                let markerLayer = manager.getLabelLayer(layerID: "poi\(building.offset)")
+                let markerLayer = manager.getLabelLayer(layerID: "poi\(offset)")
                 if let blurPoi = blurLayer?.addPoi(option: blurPoiOption,
-                                                   at: .init(longitude: building.element.key.longitude,
-                                                             latitude: building.element.key.latitude - 0.0007))
+                                                   at: .init(longitude: building.locationInDMS.longitude,
+                                                             latitude: building.locationInDMS.latitude - 0.0007))
                 {
                     blurPoi.show()
                 }
 
-                if let markerPoi = markerLayer?.addPoi(option: poiOptionList[building.offset],
-                                                       at: .init(longitude: building.element.key.longitude,
-                                                                 latitude: building.element.key.latitude))
+                if let markerPoi = markerLayer?.addPoi(option: poiOptionList[offset],
+                                                       at: .init(longitude: building.locationInDMS.longitude,
+                                                                 latitude: building.locationInDMS.latitude))
                 {
-                    pois[markerPoi] = building.element.value
+                    pois[markerPoi] = building.number
                     markerPoi.show()
                 }
             }
@@ -269,7 +281,7 @@ private struct KakaoMapView: UIViewRepresentable {
             mapView.dimScreen.isEnabled ? blurLayer?.hideAllPois() : blurLayer?.showAllPois()
 
             // marker
-            for building in buildings {
+            for building in buildings.enumerated() {
                 let layer = manager.getLabelLayer(layerID: "poi\(building.offset)")
                 layer?.getAllPois()?.forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
             }

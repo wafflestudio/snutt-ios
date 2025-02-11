@@ -18,7 +18,21 @@ final class LectureEditDetailViewModel {
     let entryLecture: EditableLecture
     var editableLecture: EditableLecture
 
-    var lectureBuildings: [Building] = []
+    var buildings: [Building] = []
+    
+    var showMapView: Bool {
+        !buildings.isEmpty && isGwanak
+    }
+    
+    var showMapMismatchWarning: Bool {
+        !entryLecture.timePlaces.map { $0.place }.allSatisfy { place in
+            buildings.contains { place.hasPrefix($0.number) }
+        }
+    }
+
+    private var isGwanak: Bool {
+        buildings.allSatisfy { $0.campus == .GWANAK }
+    }
 
     init(entryLecture: any Lecture) {
         self.entryLecture = Self.makeEditableLecture(from: entryLecture)
@@ -28,9 +42,9 @@ final class LectureEditDetailViewModel {
     // TODO: supportForMapViewEnabled = appState.system.configs?.disableMapFeature
 
     func fetchBuildingList() async {
-        let joinedPlaces = entryLecture.timePlaces.map { $0.place }.joined(separator: ",")
+        let lecturePlaces = entryLecture.timePlaces.map { $0.place }
         do {
-            lectureBuildings = try await lectureRepository.fetchBuildingList(places: joinedPlaces)
+            buildings = try await lectureRepository.fetchBuildingList(places: lecturePlaces)
         } catch {
             print(error)
         }

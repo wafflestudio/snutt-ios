@@ -15,8 +15,9 @@ public struct LectureAPIRepository: LectureRepository {
 
     public init() {}
 
-    public func fetchBuildingList(places: String) async throws -> [Building] {
-        let response = try await apiClient.searchBuildings(query: .init(places: places)).ok.body.json.content
+    public func fetchBuildingList(places: [LectureBuilding]) async throws -> [Building] {
+        let joinedPlaces = places.joined(separator: ",")
+        let response = try await apiClient.searchBuildings(query: .init(places: joinedPlaces)).ok.body.json.content
         return response.compactMap { Building(dto: $0) }
     }
 }

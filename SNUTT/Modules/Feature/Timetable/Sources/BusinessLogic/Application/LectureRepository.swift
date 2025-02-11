@@ -11,5 +11,6 @@ import TimetableInterface
 
 @Spyable
 public protocol LectureRepository: Sendable {
-    func fetchBuildingList(places: String) async throws -> [Building]
+    typealias LectureBuilding = String
+    func fetchBuildingList(places: [LectureBuilding]) async throws -> [Building]
 }
