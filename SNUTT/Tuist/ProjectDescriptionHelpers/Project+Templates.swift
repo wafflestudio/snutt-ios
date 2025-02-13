@@ -14,7 +14,7 @@ extension Project {
     ) -> Project {
         let mainTargetDependencies: [TargetDependency] = moduleDependencies.map { .target(name: $0.name) } + externalDependencies
         let widgetTarget = makeWidgetTarget(name: name, deploymentTargets: deploymentTargets, dependencies: widgetDependencies)
-        var mainTargets = makeAppTargets(
+        let mainTargets = makeAppTargets(
              name: name,
              destinations: destinations,
              deploymentTargets: deploymentTargets,
@@ -49,7 +49,7 @@ extension Project {
         let resources: [String] = (module.category.hasResources ? ["\(directory)/\(name)/Resources/**"] : []) + module.additionalResources
         let sources = Target.target(name: name,
                                     destinations: destinations,
-                                    product: productType(name),
+                                    product: module.productType ?? productType(name),
                                     bundleId: "\(domain).\(name)",
                                     deploymentTargets: deploymentTargets,
                                     infoPlist: .default,
@@ -140,15 +140,10 @@ extension Project {
     }
 
     private static func productType(_ name: String) -> Product {
-        switch name {
-        case "APIClientInterface": return .framework
-        case "Timetable": return .staticFramework
-        default:
-            if case let .string(productType) = Environment.productType {
-                return productType == "static-library" ? .staticLibrary : .framework
-            } else {
-                return .framework
-            }
+        if case let .string(productType) = Environment.productType {
+            productType == "static-library" ? .staticLibrary : .framework
+        } else {
+            .framework
         }
     }
 

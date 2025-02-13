@@ -21,7 +21,7 @@ import PackageDescription
             "DependenciesAdditionsBasics": .framework,
             "UserDefaultsDependency": .framework,
             "IssueReporting": .framework,
-            "KakaoMapsSDK-SPM": .staticFramework,
+            "KakaoMapsSDK-SPM": .staticLibrary,
         ],
         baseSettings: .settings(configurations: [
             .debug(name: .dev),

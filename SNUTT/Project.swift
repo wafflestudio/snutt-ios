@@ -12,6 +12,7 @@ let project = Project.app(
         .module(
             name: "Timetable",
             category: .feature,
+            productType: .staticFramework,
             dependencies: [
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
@@ -68,6 +69,7 @@ let project = Project.app(
         .module(
             name: "APIClientInterface",
             category: .featureInterface,
+            productType: .framework,
             dependencies: [
                 .external(name: "OpenAPIRuntime"),
                 .external(name: "OpenAPIURLSession"),
