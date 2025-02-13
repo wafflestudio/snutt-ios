@@ -99,8 +99,10 @@ private struct KakaoMapView: UIViewRepresentable {
                     || $0.locationInDMS.longitude > $1.locationInDMS.longitude
             }
             _isMapNotInstalledAlertPresented = isMapNotInstalledAlertPresented
-            defaultPoint = .init(latitude: buildings.reduce(Double(0)) { $0 + $1.locationInDMS.latitude } / Double(buildings.count),
-                                 longitude: buildings.reduce(Double(0)) { $0 + $1.locationInDMS.longitude } / Double(buildings.count))
+            defaultPoint = .init(
+                latitude: buildings.reduce(Double(0)) { $0 + $1.locationInDMS.latitude } / Double(buildings.count),
+                longitude: buildings.reduce(Double(0)) { $0 + $1.locationInDMS.longitude } / Double(buildings.count)
+            )
             self.colorScheme = colorScheme
             super.init()
         }
@@ -125,7 +127,12 @@ private struct KakaoMapView: UIViewRepresentable {
         /// automatically called after running startEngine() and preparing for view rendering
         func addViews() {
             let defaultPosition = MapPoint(longitude: defaultPoint.longitude, latitude: defaultPoint.latitude)
-            let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: shouldZoomOut ? 14 : 15)
+            let mapviewInfo = MapviewInfo(
+                viewName: "mapview",
+                viewInfoName: "map",
+                defaultPosition: defaultPosition,
+                defaultLevel: shouldZoomOut ? 14 : 15
+            )
             controller?.addView(mapviewInfo)
         }
 
@@ -178,11 +185,23 @@ private struct KakaoMapView: UIViewRepresentable {
             let manager = mapView.getLabelManager()
 
             // layer for blur-effect background
-            let blurLayerOption = LabelLayerOptions(layerID: "blurBackground", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000)
+            let blurLayerOption = LabelLayerOptions(
+                layerID: "blurBackground",
+                competitionType: .none,
+                competitionUnit: .symbolFirst,
+                orderType: .rank,
+                zOrder: 1000
+            )
             let _ = manager.addLabelLayer(option: blurLayerOption)
 
             for building in buildings.enumerated() {
-                let layerOption = LabelLayerOptions(layerID: "poi\(building.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1100 + building.offset)
+                let layerOption = LabelLayerOptions(
+                    layerID: "poi\(building.offset)",
+                    competitionType: .none,
+                    competitionUnit: .symbolFirst,
+                    orderType: .rank,
+                    zOrder: 1100 + building.offset
+                )
                 let _ = manager.addLabelLayer(option: layerOption)
             }
         }
@@ -199,7 +218,12 @@ private struct KakaoMapView: UIViewRepresentable {
 
             // not focused
             let notFocusedIconStyle = PoiIconStyle(symbol: TimetableAsset.mapPin.image)
-            let notFocusedTextStyle = TextStyle(fontSize: 24, fontColor: .black, strokeThickness: 2, strokeColor: .white)
+            let notFocusedTextStyle = TextStyle(
+                fontSize: 24,
+                fontColor: .black,
+                strokeThickness: 2,
+                strokeColor: .white
+            )
             let poiNotFocusedTextStyle = PoiTextStyle(textLineStyles: [
                 PoiTextLineStyle(textStyle: notFocusedTextStyle),
             ])
@@ -209,7 +233,12 @@ private struct KakaoMapView: UIViewRepresentable {
 
             // focused(dim)
             let focusedIconStyle = PoiIconStyle(symbol: TimetableAsset.mapPinDim.image)
-            let focusedTextStyle = TextStyle(fontSize: 26, fontColor: .white, strokeThickness: 1, strokeColor: .init(.init(hex: "#8A8A8A")))
+            let focusedTextStyle = TextStyle(
+                fontSize: 26,
+                fontColor: .white,
+                strokeThickness: 1,
+                strokeColor: .init(.init(hex: "#8A8A8A"))
+            )
             let poiFocusedTextStyle = PoiTextStyle(textLineStyles: [
                 PoiTextLineStyle(textStyle: focusedTextStyle),
             ])
@@ -283,7 +312,8 @@ private struct KakaoMapView: UIViewRepresentable {
             // marker
             for building in buildings.enumerated() {
                 let layer = manager.getLabelLayer(layerID: "poi\(building.offset)")
-                layer?.getAllPois()?.forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
+                layer?.getAllPois()?
+                    .forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
             }
         }
 
@@ -302,14 +332,16 @@ private struct KakaoMapView: UIViewRepresentable {
         private func naverMapURL(coordinate: GeoCoordinate, label: String?) -> URL? {
             guard let label = label else { return nil }
             let bundleID = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
-            let urlString = "nmap://place?lat=\(coordinate.latitude)&lng=\(coordinate.longitude)&name=\(label)&appname=" + bundleID
+            let urlString =
+                "nmap://place?lat=\(coordinate.latitude)&lng=\(coordinate.longitude)&name=\(label)&appname=" + bundleID
             guard let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
                   let url = URL(string: encodedString) else { return nil }
             return url
         }
 
         private func kakaoMapURL(coordinate: GeoCoordinate) -> URL? {
-            guard let url = URL(string: "kakaomap://look?p=\(coordinate.latitude),\(coordinate.longitude)") else { return nil }
+            guard let url = URL(string: "kakaomap://look?p=\(coordinate.latitude),\(coordinate.longitude)")
+            else { return nil }
             return url
         }
     }

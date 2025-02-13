@@ -10,7 +10,8 @@ import Dependencies
 import TimetableInterface
 
 struct TimetableLocalRepositoryKey: DependencyKey {
-    static let liveValue: any TimetableLocalRepository = TimetableUserDefaultsRepository<Components.Schemas.TimetableLegacyDto>()
+    static let liveValue: any TimetableLocalRepository =
+        TimetableUserDefaultsRepository<Components.Schemas.TimetableLegacyDto>()
 
     static let previewValue: any TimetableLocalRepository = {
         let spy = TimetableLocalRepositorySpy<PreviewTimetable>()
