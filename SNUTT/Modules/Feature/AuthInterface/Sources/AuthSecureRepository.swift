@@ -24,8 +24,8 @@ public enum AuthSecureRepositoryKey: TestDependencyKey {
     public static let testValue: any AuthSecureRepository = AuthSecureRepositorySpy()
 }
 
-public extension DependencyValues {
-    var authSecureRepository: any AuthSecureRepository {
+extension DependencyValues {
+    public var authSecureRepository: any AuthSecureRepository {
         get { self[AuthSecureRepositoryKey.self] }
         set { self[AuthSecureRepositoryKey.self] = newValue }
     }

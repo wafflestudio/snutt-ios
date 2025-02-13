@@ -10,6 +10,7 @@ import SwiftUI
 class FilterSheetViewModel: BaseViewModel, ObservableObject {
     @Published var selectedTagList: [SearchTag] = []
     @Published var searchTagList: SearchTagList?
+    @Published var pinnedTagList: [SearchTag] = []
     @Published private var _selectedTimeRange: [SearchTimeMaskDto] = []
     @Published private var _isFilterOpen: Bool = false
 
@@ -36,6 +37,7 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
         appState.search.$selectedTimeRange.assign(to: &$_selectedTimeRange)
         appState.search.$searchTagList.assign(to: &$searchTagList)
+        appState.search.$pinnedTagList.assign(to: &$pinnedTagList)
         appState.search.$isFilterOpen.assign(to: &$_isFilterOpen)
     }
 
@@ -62,5 +64,10 @@ class FilterSheetViewModel: BaseViewModel, ObservableObject {
 
     func isSelected(tag: SearchTag) -> Bool {
         return appState.search.selectedTagList.contains(where: { $0.id == tag.id })
+    }
+
+    func removePin(tag: SearchTag) {
+        guard let index = appState.search.pinnedTagList.firstIndex(where: { $0.id == tag.id }) else { return }
+        appState.search.pinnedTagList.remove(at: index)
     }
 }

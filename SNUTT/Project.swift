@@ -54,6 +54,27 @@ let project = Project.app(
                 .external(name: "MemberwiseInit"),
             ]
         ),
+        .module(
+            name: "Popup",
+            category: .feature,
+            dependencies: [
+                .target(name: "APIClientInterface"),
+                .target(name: "FoundationUtility"),
+                .target(name: "SwiftUIUtility"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+                .external(name: "Spyable"),
+            ]
+        ),
+        .module(
+            name: "Notifications",
+            category: .feature,
+            dependencies: [
+                .target(name: "APIClientInterface"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+            ]
+        ),
         // FeatureInterface
         .module(
             name: "TimetableInterface",

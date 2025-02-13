@@ -38,8 +38,8 @@ public enum TimetableRepositoryKey: TestDependencyKey {
     }()
 }
 
-public extension DependencyValues {
-    var timetableRepository: any TimetableRepository {
+extension DependencyValues {
+    public var timetableRepository: any TimetableRepository {
         get { self[TimetableRepositoryKey.self] }
         set { self[TimetableRepositoryKey.self] = newValue }
     }

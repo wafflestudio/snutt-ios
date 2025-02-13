@@ -28,7 +28,8 @@ extension UIScrollView {
     private static func swizzleTouchesShouldCancel() {
         guard !hasSwizzled,
               let originalMethod = class_getInstanceMethod(UIScrollView.self, #selector(touchesShouldCancel(in:))),
-              let swizzledMethod = class_getInstanceMethod(UIScrollView.self, #selector(swizzled_touchesShouldCancel(in:))) else {
+              let swizzledMethod = class_getInstanceMethod(UIScrollView.self, #selector(swizzled_touchesShouldCancel(in:)))
+        else {
             return
         }
 

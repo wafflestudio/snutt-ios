@@ -56,18 +56,18 @@ struct SNUTTWidgetLiveActivity: Widget {
     }
 }
 
-private extension SNUTTWidgetAttributes {
-    static var preview: SNUTTWidgetAttributes {
+extension SNUTTWidgetAttributes {
+    fileprivate static var preview: SNUTTWidgetAttributes {
         SNUTTWidgetAttributes(name: "World")
     }
 }
 
-private extension SNUTTWidgetAttributes.ContentState {
-    static var smiley: SNUTTWidgetAttributes.ContentState {
+extension SNUTTWidgetAttributes.ContentState {
+    fileprivate static var smiley: SNUTTWidgetAttributes.ContentState {
         SNUTTWidgetAttributes.ContentState(emoji: "😀")
     }
 
-    static var starEyes: SNUTTWidgetAttributes.ContentState {
+    fileprivate static var starEyes: SNUTTWidgetAttributes.ContentState {
         SNUTTWidgetAttributes.ContentState(emoji: "🤩")
     }
 }

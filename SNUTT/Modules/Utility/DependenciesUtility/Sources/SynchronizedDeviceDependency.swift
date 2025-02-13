@@ -1,8 +1,8 @@
 @_spi(Internals) import DependenciesAdditionsBasics
 import UIKit.UIDevice
 
-public extension DependencyValues {
-    var syncDevice: SynchronizedDevice {
+extension DependencyValues {
+    public var syncDevice: SynchronizedDevice {
         get { self[SynchronizedDeviceKey.self] }
         set { self[SynchronizedDeviceKey.self] = newValue }
     }

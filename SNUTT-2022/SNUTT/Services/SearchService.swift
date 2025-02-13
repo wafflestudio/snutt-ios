@@ -28,9 +28,14 @@ protocol SearchServiceProtocol: Sendable {
 struct SearchService: SearchServiceProtocol {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
+    var localRepositories: AppEnvironment.LocalRepositories
 
     var searchRepository: SearchRepositoryProtocol {
         webRepositories.searchRepository
+    }
+
+    var userDefaultsRepository: UserDefaultsRepositoryProtocol {
+        localRepositories.userDefaultsRepository
     }
 
     var searchState: SearchState {
@@ -58,11 +63,27 @@ struct SearchService: SearchServiceProtocol {
         let dto = try await searchRepository.fetchTags(quarter: quarter)
         let model = SearchTagList(from: dto)
         appState.search.searchTagList = model
+        guard let recentTagNames = userDefaultsRepository.get([String].self, key: .recentDepartmentTags) else { return }
+        appState.search.pinnedTagList = model?.tagList.filter { $0.type == .department && recentTagNames.contains($0.text) } ?? []
+    }
+
+    private func _saveDepartmentTagsToUserDefaults(from tagList: [SearchTag]) {
+        let departmentTags = tagList.filter { tag in tag.type == .department &&
+            !appState.search.pinnedTagList.contains { $0.text == tag.text }
+        }
+        var updatedTags = departmentTags + appState.search.pinnedTagList
+        if updatedTags.count > 5 {
+            updatedTags = Array(updatedTags.prefix(5))
+        }
+        appState.search.pinnedTagList = updatedTags
+        let savedTags = updatedTags.map { $0.text }
+        userDefaultsRepository.set([String].self, key: .recentDepartmentTags, value: savedTags)
     }
 
     private func _fetchSearchResult() async throws {
         guard let currentTimetable = timetableState.current else { return }
         let tagList = searchState.selectedTagList
+        _saveDepartmentTagsToUserDefaults(from: tagList)
         let timeList = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .range }) ? searchState.selectedTimeRange : nil
         let excludedTimeList = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .empty }) ? currentTimetable.timeMask : nil
         let offset = searchState.perPage * searchState.pageNum

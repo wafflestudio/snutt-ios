@@ -5,6 +5,7 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import APIClientInterface
 import Combine
 import Dependencies
 import Observation
@@ -55,9 +56,13 @@ class LectureSearchViewModel {
         selectedPredicates.removeAll(where: { $0 == predicate })
     }
 
-    func fetchInitialSearchResult() async {
+    func fetchInitialSearchResult() async throws {
         guard let searchingQuarter else { return }
-        await dataSource.fetchInitialSearchResult(query: searchQuery, quarter: searchingQuarter, predicates: selectedPredicates)
+        try await dataSource.fetchInitialSearchResult(
+            query: searchQuery,
+            quarter: searchingQuarter,
+            predicates: selectedPredicates
+        )
     }
 
     func resetSearchResult() {
@@ -105,17 +110,25 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         case .vacancy:
             break
         case .add:
-            if !isToggled(lecture: lecture, type: type) {
-                try await timetableViewModel.addLecture(lecture: lecture)
-            } else {
-                try await timetableViewModel.removeLecture(lecture: lecture)
+            do {
+                if !isToggled(lecture: lecture, type: type) {
+                    try await timetableViewModel.addLecture(lecture: lecture)
+                } else {
+                    try await timetableViewModel.removeLecture(lecture: lecture)
+                }
+                selectedLecture = nil
+            } catch let error as APIClientError {
+                if let knownError = error.underlyingError as? LocalizedErrorCode,
+                   knownError == .duplicateLecture
+                {
+                    // TODO: force add
+                }
             }
-            selectedLecture = nil
         }
     }
 
-    func fetchMoreLectures() async {
-        await dataSource.fetchMoreSearchResult()
+    func fetchMoreLectures() async throws {
+        try await dataSource.fetchMoreSearchResult()
     }
 }
 
