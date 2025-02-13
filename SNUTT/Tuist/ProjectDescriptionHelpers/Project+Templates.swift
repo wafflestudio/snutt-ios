@@ -14,11 +14,11 @@ extension Project {
     ) -> Project {
         let mainTargetDependencies: [TargetDependency] = moduleDependencies.map { .target(name: $0.name) } + externalDependencies
         let widgetTarget = makeWidgetTarget(name: name, deploymentTargets: deploymentTargets, dependencies: widgetDependencies)
-        var mainTargets = makeAppTargets(
-            name: name,
-            destinations: destinations,
-            deploymentTargets: deploymentTargets,
-            dependencies: mainTargetDependencies + [.target(name: widgetTarget.name)]
+        let mainTargets = makeAppTargets(
+             name: name,
+             destinations: destinations,
+             deploymentTargets: deploymentTargets,
+             dependencies: mainTargetDependencies + [.target(name: widgetTarget.name)]
         )
         let frameworkTargets = moduleDependencies.map {
             makeFrameworkTargets(module: $0, destinations: destinations, deploymentTargets: deploymentTargets)
@@ -48,7 +48,7 @@ extension Project {
         let resources: [String] = (module.category.hasResources ? ["\(directory)/\(name)/Resources/**"] : []) + module.additionalResources
         let sources = Target.target(name: name,
                                     destinations: destinations,
-                                    product: name == "APIClientInterface" ? .framework : productType(),
+                                    product: module.productType ?? productType(),
                                     bundleId: "\(domain).\(name)",
                                     deploymentTargets: deploymentTargets,
                                     infoPlist: .default,
@@ -82,6 +82,7 @@ extension Project {
             "UILaunchStoryboardName": "LaunchScreen",
             "API_SERVER_URL": "$(API_SERVER_URL)",
             "API_KEY": "$(API_KEY)",
+            "KAKAO_APP_KEY": "$(KAKAO_APP_KEY)",
         ]
 
         let mainTarget = Target.target(
@@ -137,9 +138,9 @@ extension Project {
 
     private static func productType() -> Product {
         if case let .string(productType) = Environment.productType {
-            return productType == "static-library" ? .staticLibrary : .framework
+            productType == "static-library" ? .staticLibrary : .framework
         } else {
-            return .framework
+            .framework
         }
     }
 
