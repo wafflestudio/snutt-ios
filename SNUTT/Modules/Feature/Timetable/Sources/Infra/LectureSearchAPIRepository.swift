@@ -49,11 +49,19 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
                 category.append(string)
             case let .timeInclude(searchTimeRange):
                 if let day = Components.Schemas.SearchTimeDto.dayPayload(rawValue: searchTimeRange.day) {
-                    times.append(.init(day: day, startMinute: Int32(searchTimeRange.startMinute), endMinute: Int32(searchTimeRange.endMinute)))
+                    times.append(.init(
+                        day: day,
+                        startMinute: Int32(searchTimeRange.startMinute),
+                        endMinute: Int32(searchTimeRange.endMinute)
+                    ))
                 }
             case let .timeExclude(searchTimeRange):
                 if let day = Components.Schemas.SearchTimeDto.dayPayload(rawValue: searchTimeRange.day) {
-                    timesToExclude.append(.init(day: day, startMinute: Int32(searchTimeRange.startMinute), endMinute: Int32(searchTimeRange.endMinute)))
+                    timesToExclude.append(.init(
+                        day: day,
+                        startMinute: Int32(searchTimeRange.startMinute),
+                        endMinute: Int32(searchTimeRange.endMinute)
+                    ))
                 }
             case let .etc(etcType):
                 etc.append(etcType.code)
@@ -82,7 +90,10 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
     }
 
     func fetchSearchPredicates(quarter: Quarter) async throws -> [SearchPredicate] {
-        let response = try await apiClient.getTagList(path: .init(year: String(quarter.year), semester: String(quarter.semester.rawValue)))
+        let response = try await apiClient.getTagList(path: .init(
+            year: String(quarter.year),
+            semester: String(quarter.semester.rawValue)
+        ))
         let json = try response.ok.body.json
         var searchFilters: [SearchPredicate] = json.sortCriteria.map { .sortCriteria($0) }
         searchFilters.append(contentsOf: json.academic_year.map { .academicYear($0) })
@@ -115,7 +126,11 @@ extension Components.Schemas.LectureDto: @retroactive Lecture {
 
     public var evLecture: EvLecture? {
         guard let snuttEvLecture else { return nil }
-        return .init(evLectureID: snuttEvLecture.evLectureId.asInt(), avgRating: snuttEvLecture.avgRating, evaluationCount: snuttEvLecture.evaluationCount.asInt())
+        return .init(
+            evLectureID: snuttEvLecture.evLectureId.asInt(),
+            avgRating: snuttEvLecture.avgRating,
+            evaluationCount: snuttEvLecture.evaluationCount.asInt()
+        )
     }
 
     public var academicYear: String? {
@@ -155,8 +170,8 @@ extension Components.Schemas.LectureDto: @retroactive Lecture {
     }
 }
 
-private extension Array {
-    func nilIfEmpty() -> Self? {
+extension Array {
+    fileprivate func nilIfEmpty() -> Self? {
         isEmpty ? nil : self
     }
 }

@@ -1,5 +1,5 @@
 //
-//  SheetExample2.swift
+//  Sheet+Modifier.swift
 //  SNUTT
 //
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
@@ -7,10 +7,14 @@
 
 import SwiftUI
 
-public typealias SheetPresentationContext = HUDPresentationContext<Sheet<AnyView>>
-public typealias SheetPresentationKey = HUDPresentationKey<Sheet<AnyView>>
+private typealias SheetPresentationContext = HUDPresentationContext<Sheet<AnyView>>
+private typealias SheetPresentationKey = HUDPresentationKey<Sheet<AnyView>>
 
 extension View {
+    public func overlaySheet() -> some View {
+        modifier(HUDPresentationModifier<Sheet<AnyView>>())
+    }
+
     public func customSheet<Content: View>(
         isPresented: Binding<Bool>,
         configuration: SheetConfiguration,

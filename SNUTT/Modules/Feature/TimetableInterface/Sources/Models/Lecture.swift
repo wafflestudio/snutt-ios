@@ -43,8 +43,8 @@ public struct EvLecture: Sendable, Equatable, Codable {
     public let evaluationCount: Int?
 }
 
-public extension Lecture {
-    var isCustom: Bool {
+extension Lecture {
+    public var isCustom: Bool {
         courseNumber == nil || courseNumber == ""
     }
 }
