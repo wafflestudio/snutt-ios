@@ -66,15 +66,15 @@ let project = Project.app(
                 .external(name: "Spyable"),
             ]
         ),
-        .module(
-            name: "Notifications",
-            category: .feature,
-            dependencies: [
-                .target(name: "APIClientInterface"),
-                .external(name: "Dependencies"),
-                .external(name: "MemberwiseInit"),
-            ]
-        ),
+//        .module(
+//            name: "Notifications",
+//            category: .feature,
+//            dependencies: [
+//                .target(name: "APIClientInterface"),
+//                .external(name: "Dependencies"),
+//                .external(name: "MemberwiseInit"),
+//            ]
+//        ),
         // FeatureInterface
         .module(
             name: "TimetableInterface",
