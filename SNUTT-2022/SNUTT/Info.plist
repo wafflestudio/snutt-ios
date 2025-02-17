@@ -35,6 +35,14 @@
 				<string>kakao$(KAKAO_APP_KEY)</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>$(URL_SCHEME)</string>
+			</array>
+		</dict>
 	</array>
 	<key>FacebookAdvertiserIDCollectionEnabled</key>
 	<false/>
