@@ -1154,7 +1154,7 @@
           {
             "name": "places",
             "in": "query",
-            "description": "\n                    Comma separated list of place codes.\n                    custom 강의 제외하는 것을 추천\n                ",
+            "description": "Comma-separated list of place codes. (Only non-custom lectures recommended)",
             "required": true,
             "schema": {
               "type": "string"

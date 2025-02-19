@@ -1,4 +1,5 @@
 import Dependencies
+import KakaoMapsSDK
 import SharedUIComponents
 import SwiftUI
 
@@ -34,5 +35,13 @@ extension SNUTTApp {
         if let accessToken = secureRepository.getAccessToken() {
             authState.set(.accessToken, value: accessToken)
         }
+
+        initializeKakaoSDK()
+    }
+
+    /// for KakaoMap (TODO: initialization for "login with kakao")
+    private func initializeKakaoSDK() {
+        let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
+        SDKInitializer.InitSDK(appKey: kakaoAppKey)
     }
 }

@@ -12,6 +12,7 @@ let project = Project.app(
         .module(
             name: "Timetable",
             category: .feature,
+            productType: .staticFramework,
             dependencies: [
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
@@ -22,6 +23,7 @@ let project = Project.app(
                 .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
                 .external(name: "SwiftUIIntrospect"),
+                .external(name: "KakaoMapsSDK-SPM"),
             ]
         ),
         .module(
@@ -64,15 +66,15 @@ let project = Project.app(
                 .external(name: "Spyable"),
             ]
         ),
-        .module(
-            name: "Notifications",
-            category: .feature,
-            dependencies: [
-                .target(name: "APIClientInterface"),
-                .external(name: "Dependencies"),
-                .external(name: "MemberwiseInit"),
-            ]
-        ),
+//        .module(
+//            name: "Notifications",
+//            category: .feature,
+//            dependencies: [
+//                .target(name: "APIClientInterface"),
+//                .external(name: "Dependencies"),
+//                .external(name: "MemberwiseInit"),
+//            ]
+//        ),
         // FeatureInterface
         .module(
             name: "TimetableInterface",
@@ -88,6 +90,7 @@ let project = Project.app(
         .module(
             name: "APIClientInterface",
             category: .featureInterface,
+            productType: .framework,
             dependencies: [
                 .external(name: "OpenAPIRuntime"),
                 .external(name: "OpenAPIURLSession"),

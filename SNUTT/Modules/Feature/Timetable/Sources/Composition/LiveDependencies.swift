@@ -10,11 +10,21 @@ import Dependencies
 import TimetableInterface
 
 struct TimetableLocalRepositoryKey: DependencyKey {
-    static let liveValue: any TimetableLocalRepository = TimetableUserDefaultsRepository<Components.Schemas.TimetableLegacyDto>()
+    static let liveValue: any TimetableLocalRepository =
+        TimetableUserDefaultsRepository<Components.Schemas.TimetableLegacyDto>()
 
     static let previewValue: any TimetableLocalRepository = {
         let spy = TimetableLocalRepositorySpy<PreviewTimetable>()
         spy.loadSelectedTimetableReturnValue = PreviewHelpers.preview(id: "1")
+        return spy
+    }()
+}
+
+struct LectureRepositoryKey: DependencyKey {
+    static let liveValue: any LectureRepository = LectureAPIRepository()
+
+    public static let previewValue: any LectureRepository = {
+        let spy = LectureRepositorySpy()
         return spy
     }()
 }
@@ -46,6 +56,11 @@ extension DependencyValues {
     var timetableLocalRepository: any TimetableLocalRepository {
         get { self[TimetableLocalRepositoryKey.self] }
         set { self[TimetableLocalRepositoryKey.self] = newValue }
+    }
+
+    var lectureRepository: any LectureRepository {
+        get { self[LectureRepositoryKey.self] }
+        set { self[LectureRepositoryKey.self] = newValue }
     }
 
     var lectureSearchRepository: any LectureSearchRepository {

@@ -15,9 +15,12 @@ import TimetableInterface
 
 struct LectureEditDetailScene: View {
     @Dependency(\.application) private var application
+
     @State private var viewModel: LectureEditDetailViewModel
     @State private var editMode: EditMode = .inactive
+    @State private var isMapViewOpened: Bool = true
 
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
 
     let displayMode: DisplayMode
@@ -45,6 +48,9 @@ struct LectureEditDetailScene: View {
         .introspect(.scrollView, on: .iOS(.v17, .v18), customize: { scrollView in
             scrollView.makeTouchResponsive()
         })
+        .task {
+            await viewModel.fetchBuildingList()
+        }
         .background(TimetableAsset.groupBackground.swiftUIColor)
         .environment(\.editMode, $editMode)
         .environment(viewModel)
@@ -153,6 +159,30 @@ struct LectureEditDetailScene: View {
                 VStack(spacing: 5) {
                     EditableRow(label: "시간", keyPath: \.timePlaces[index])
                     EditableRow(label: "장소", keyPath: \.timePlaces[index].place)
+                }
+            }
+
+            if editMode.isEditing {
+                // TODO: 시간 추가 버튼
+//                Button {
+//                    lecture = viewModel.getLectureWithNewTimePlace(lecture: lecture)
+//                } label: {
+//                    Text("+ 시간 추가")
+//                        .font(.system(size: 16))
+//                        .animation(.customSpring, value: lecture.timePlaces.count)
+//                }
+//                .padding(.top, 5)
+            } else if viewModel.showMapView {
+                if isMapViewOpened {
+                    LectureMapView(
+                        buildings: viewModel.buildings,
+                        showMismatchWarning: viewModel.showMapMismatchWarning
+                    )
+                }
+                MapToggleButton(isOpen: $isMapViewOpened) {
+                    withAnimation(.defaultSpring) {
+                        isMapViewOpened.toggle()
+                    }
                 }
             }
         }
