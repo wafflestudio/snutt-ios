@@ -66,6 +66,15 @@ let project = Project.app(
                 .external(name: "Spyable"),
             ]
         ),
+        .module(
+            name: "Settings",
+            category: .feature,
+            dependencies: [
+                .target(name: "APIClientInterface"),
+                .target(name: "SharedUIComponents"),
+                .external(name: "Dependencies"),
+            ]
+        ),
 //        .module(
 //            name: "Notifications",
 //            category: .feature,
