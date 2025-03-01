@@ -5,8 +5,8 @@
 //  Created by Jinsup Keum on 2022/06/25.
 //
 
-import SwiftUI
 import FirebaseAnalytics
+import SwiftUI
 
 class UserState {
     @Published var accessToken: String?

@@ -104,7 +104,10 @@ struct SNUTTView: View, Sendable {
                 PopupScene(viewModel: .init(container: viewModel.container))
             } else {
                 NavigationView {
-                    OnboardScene(viewModel: .init(container: viewModel.container), pushToTimetableScene: $pushToTimetableScene)
+                    OnboardScene(
+                        viewModel: .init(container: viewModel.container),
+                        pushToTimetableScene: $pushToTimetableScene
+                    )
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
             }

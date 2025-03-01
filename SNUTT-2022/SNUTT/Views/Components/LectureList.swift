@@ -16,8 +16,15 @@ struct LectureList: View {
             LazyVStack(spacing: 0) {
                 ForEach(lectures) { lecture in
                     NavigationLink {
-                        LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture, displayMode: .normal)
-                            .analyticsScreen(.lectureDetail(.init(lectureID: lecture.referenceId, referrer: .lectureList)))
+                        LectureDetailScene(
+                            viewModel: .init(container: viewModel.container),
+                            lecture: lecture,
+                            displayMode: .normal
+                        )
+                        .analyticsScreen(.lectureDetail(.init(
+                            lectureID: lecture.referenceId,
+                            referrer: .lectureList
+                        )))
                     } label: {
                         VStack(spacing: 0) {
                             Divider()

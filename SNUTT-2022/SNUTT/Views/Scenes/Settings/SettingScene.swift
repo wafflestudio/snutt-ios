@@ -18,7 +18,11 @@ struct SettingScene: View {
     var body: some View {
         List {
             Section {
-                SettingsLinkItem(title: "내 계정", leadingImage: Image("account.person"), detail: viewModel.currentUser?.nickname.fullString) {
+                SettingsLinkItem(
+                    title: "내 계정",
+                    leadingImage: Image("account.person"),
+                    detail: viewModel.currentUser?.nickname.fullString
+                ) {
                     AccountSettingScene(viewModel: .init(container: viewModel.container))
                 }
                 .padding(.vertical, 12)

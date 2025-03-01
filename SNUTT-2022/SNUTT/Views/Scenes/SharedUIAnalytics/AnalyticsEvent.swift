@@ -23,6 +23,7 @@ public struct LoginParameter: Encodable {
         case facebook
         case kakao
     }
+
     let provider: Provider
 }
 
@@ -55,7 +56,7 @@ enum LectureActionReferrer: Encodable {
     func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case .search(let query):
+        case let .search(query):
             try container.encode("search=\(query)")
         case .lectureDetail:
             try container.encode("lectureDetail")
@@ -77,15 +78,15 @@ public struct SearchLectureParameter: Encodable {
 extension AnalyticsEvent {
     var extraParameters: [String: Any] {
         switch self {
-        case .login(let parameter):
+        case let .login(parameter):
             parameter.dictionary
-        case .addToBookmark(let parameter):
+        case let .addToBookmark(parameter):
             parameter.dictionary
-        case .searchLecture(let parameter):
+        case let .searchLecture(parameter):
             parameter.dictionary
-        case .addToTimetable(let parameter):
+        case let .addToTimetable(parameter):
             parameter.dictionary
-        case .addToVacancy(let parameter):
+        case let .addToVacancy(parameter):
             parameter.dictionary
         default:
             [:]

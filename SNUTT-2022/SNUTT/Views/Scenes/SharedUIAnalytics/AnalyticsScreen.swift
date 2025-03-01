@@ -46,7 +46,6 @@ public enum AnalyticsScreen: SnakeCaseConvertible {
     case onboard
 }
 
-
 public struct LectureDetailParameter: Encodable {
     typealias Referrer = DetailScreenReferrer
     let lectureID: String
@@ -74,7 +73,7 @@ enum DetailScreenReferrer: Encodable {
     func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case .search(let query):
+        case let .search(query):
             try container.encode("search=\(query)")
         case .notification:
             try container.encode("notification")
@@ -93,11 +92,11 @@ enum DetailScreenReferrer: Encodable {
 extension AnalyticsScreen {
     var extraParameters: [String: Any] {
         switch self {
-        case .lectureDetail(let parameter):
+        case let .lectureDetail(parameter):
             parameter.dictionary
-        case .reviewDetail(let parameter):
+        case let .reviewDetail(parameter):
             parameter.dictionary
-        case .lectureSyllabus(let parameter):
+        case let .lectureSyllabus(parameter):
             parameter.dictionary
         default:
             [:]

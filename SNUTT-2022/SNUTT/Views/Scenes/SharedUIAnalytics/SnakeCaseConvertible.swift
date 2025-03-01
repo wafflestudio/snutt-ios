@@ -25,16 +25,15 @@ extension SnakeCaseConvertible {
         let fullWordsPattern = "([a-z])([A-Z]|[0-9])"
         let digitsFirstPattern = "([0-9])([A-Z])"
         return string.processCamelCaseRegex(pattern: acronymPattern)?
-          .processCamelCaseRegex(pattern: fullWordsPattern)?
-          .processCamelCaseRegex(pattern:digitsFirstPattern)?.lowercased() ?? string.lowercased()
+            .processCamelCaseRegex(pattern: fullWordsPattern)?
+            .processCamelCaseRegex(pattern: digitsFirstPattern)?.lowercased() ?? string.lowercased()
     }
 }
 
-
 extension String {
     fileprivate func processCamelCaseRegex(pattern: String) -> String? {
-      let regex = try? NSRegularExpression(pattern: pattern, options: [])
-      let range = NSRange(location: 0, length: count)
-      return regex?.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "$1_$2")
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        let range = NSRange(location: 0, length: count)
+        return regex?.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "$1_$2")
     }
 }

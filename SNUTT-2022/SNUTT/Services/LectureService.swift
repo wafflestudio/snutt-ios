@@ -51,7 +51,11 @@ struct LectureService: LectureServiceProtocol {
 
     func addLecture(lecture: Lecture, isForced: Bool = false) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
-        let dto = try await lectureRepository.addLecture(timetableId: currentTimetable.id, lectureId: lecture.id, isForced: isForced)
+        let dto = try await lectureRepository.addLecture(
+            timetableId: currentTimetable.id,
+            lectureId: lecture.id,
+            isForced: isForced
+        )
         let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
         appState.search.selectedLecture = nil
@@ -64,7 +68,11 @@ struct LectureService: LectureServiceProtocol {
         guard let currentTimetable = appState.timetable.current else { return }
         var lectureDto = LectureDto(from: lecture)
         lectureDto.class_time_mask = nil
-        let dto = try await lectureRepository.addCustomLecture(timetableId: currentTimetable.id, lecture: lectureDto, isForced: isForced)
+        let dto = try await lectureRepository.addCustomLecture(
+            timetableId: currentTimetable.id,
+            lecture: lectureDto,
+            isForced: isForced
+        )
         let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
@@ -74,7 +82,12 @@ struct LectureService: LectureServiceProtocol {
         try checkIfTimeplaceOverlapped(newLecture)
 
         guard let currentTimetable = appState.timetable.current else { return }
-        let dto = try await lectureRepository.updateLecture(timetableId: currentTimetable.id, oldLecture: .init(from: oldLecture), newLecture: .init(from: newLecture), isForced: isForced)
+        let dto = try await lectureRepository.updateLecture(
+            timetableId: currentTimetable.id,
+            oldLecture: .init(from: oldLecture),
+            newLecture: .init(from: newLecture),
+            isForced: isForced
+        )
         let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
@@ -84,7 +97,10 @@ struct LectureService: LectureServiceProtocol {
         guard let currentTimetable = appState.timetable.current,
               let timetableLecture = currentTimetable.lectures.first(where: { $0.isEquivalent(with: lecture) })
         else { return }
-        let dto = try await lectureRepository.deleteLecture(timetableId: currentTimetable.id, lectureId: timetableLecture.id)
+        let dto = try await lectureRepository.deleteLecture(
+            timetableId: currentTimetable.id,
+            lectureId: timetableLecture.id
+        )
         let timetable = Timetable(from: dto)
         appState.timetable.current = timetable
         userDefaultsRepository.set(TimetableDto.self, key: .currentTimetable, value: dto)
@@ -111,7 +127,11 @@ struct LectureService: LectureServiceProtocol {
     }
 
     func fetchIsFirstBookmark() {
-        appState.timetable.isFirstBookmark = userDefaultsRepository.get(Bool.self, key: .isFirstBookmark, defaultValue: true)
+        appState.timetable.isFirstBookmark = userDefaultsRepository.get(
+            Bool.self,
+            key: .isFirstBookmark,
+            defaultValue: true
+        )
     }
 
     func bookmarkLecture(lecture: Lecture) async throws {
@@ -143,7 +163,11 @@ struct LectureService: LectureServiceProtocol {
         if let isMapViewExpanded = appState.system.isMapViewExpanded {
             return isMapViewExpanded
         } else {
-            let isMapViewExpanded = userDefaultsRepository.get(Bool.self, key: .expandLectureMapView, defaultValue: false)
+            let isMapViewExpanded = userDefaultsRepository.get(
+                Bool.self,
+                key: .expandLectureMapView,
+                defaultValue: false
+            )
             appState.system.isMapViewExpanded = isMapViewExpanded
             return isMapViewExpanded
         }

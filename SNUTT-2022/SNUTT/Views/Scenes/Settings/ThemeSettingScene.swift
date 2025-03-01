@@ -37,8 +37,12 @@ struct ThemeSettingScene: View {
         .sheet(isPresented: $viewModel.isNewThemeSheetOpen, content: {
             ZStack {
                 NavigationView {
-                    ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.newTheme, themeType: .new)
-                        .analyticsScreen(.themeCustomNew)
+                    ThemeDetailScene(
+                        viewModel: .init(container: viewModel.container),
+                        theme: viewModel.newTheme,
+                        themeType: .new
+                    )
+                    .analyticsScreen(.themeCustomNew)
                 }
             }
             .accentColor(Color(UIColor.label))
@@ -46,8 +50,12 @@ struct ThemeSettingScene: View {
         .sheet(isPresented: $viewModel.isBasicThemeSheetOpen, content: {
             ZStack {
                 NavigationView {
-                    ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.targetTheme ?? viewModel.newTheme, themeType: .basic)
-                        .analyticsScreen(.themeBasicDetail)
+                    ThemeDetailScene(
+                        viewModel: .init(container: viewModel.container),
+                        theme: viewModel.targetTheme ?? viewModel.newTheme,
+                        themeType: .basic
+                    )
+                    .analyticsScreen(.themeBasicDetail)
                 }
             }
             .accentColor(Color(UIColor.label))
@@ -55,8 +63,12 @@ struct ThemeSettingScene: View {
         .sheet(isPresented: $viewModel.isCustomThemeSheetOpen, content: {
             ZStack {
                 NavigationView {
-                    ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.targetTheme ?? viewModel.newTheme, themeType: .custom)
-                        .analyticsScreen(.themeCustomEdit)
+                    ThemeDetailScene(
+                        viewModel: .init(container: viewModel.container),
+                        theme: viewModel.targetTheme ?? viewModel.newTheme,
+                        themeType: .custom
+                    )
+                    .analyticsScreen(.themeCustomEdit)
                 }
             }
             .accentColor(Color(UIColor.label))

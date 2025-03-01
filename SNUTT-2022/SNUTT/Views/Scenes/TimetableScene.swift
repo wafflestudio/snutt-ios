@@ -50,7 +50,10 @@ struct TimetableScene: View, Sendable {
                         }
 
                         NavBarButton(imageName: "nav.share") {
-                            screenshot = self.timetable.takeScreenshot(size: .init(width: proxy.size.width, height: proxy.size.height - toolBarHeight), preferredColorScheme: colorScheme)
+                            screenshot = self.timetable.takeScreenshot(
+                                size: .init(width: proxy.size.width, height: proxy.size.height - toolBarHeight),
+                                preferredColorScheme: colorScheme
+                            )
                             isShareSheetOpened = true
                         }
 
@@ -87,7 +90,10 @@ struct TimetableScene: View, Sendable {
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
                 Group {
-                    NavigationLink(destination: LectureListScene(viewModel: .init(container: viewModel.container)), isActive: $pushToListScene) { EmptyView() }
+                    NavigationLink(
+                        destination: LectureListScene(viewModel: .init(container: viewModel.container)),
+                        isActive: $pushToListScene
+                    ) { EmptyView() }
 
                     NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
                                    isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
@@ -106,12 +112,17 @@ struct TimetableScene: View, Sendable {
 private struct ActivityViewController: UIViewControllerRepresentable {
     var activityItems: [Any]
 
-    func makeUIViewController(context _: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
+    func makeUIViewController(context _: UIViewControllerRepresentableContext<ActivityViewController>)
+        -> UIActivityViewController
+    {
         let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         return controller
     }
 
-    func updateUIViewController(_: UIActivityViewController, context _: UIViewControllerRepresentableContext<ActivityViewController>) {}
+    func updateUIViewController(
+        _: UIActivityViewController,
+        context _: UIViewControllerRepresentableContext<ActivityViewController>
+    ) {}
 }
 
 private final class LinkMetadata: NSObject, UIActivityItemSource {

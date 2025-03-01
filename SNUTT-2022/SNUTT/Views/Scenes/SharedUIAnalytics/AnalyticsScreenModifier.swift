@@ -6,8 +6,8 @@
 //
 
 import FirebaseAnalytics
-import SwiftUI
 import os
+import SwiftUI
 
 let analyticsLocalLogger = os.Logger(
     subsystem: "com.wafflestudio.snutt",
@@ -21,14 +21,14 @@ struct AnalyticsScreenModifier: ViewModifier {
         content
             .analyticsScreen(name: screen.snakeCase, extraParameters: screen.extraParameters)
             .onAppear {
-                analyticsLocalLogger.trace("[AnalyticsScreen] \(screen.snakeCase) recorded with \(screen.extraParameters).")
+                analyticsLocalLogger
+                    .trace("[AnalyticsScreen] \(screen.snakeCase) recorded with \(screen.extraParameters).")
             }
     }
 }
 
 extension View {
-    @ViewBuilder
-    func analyticsScreen(_ screen: AnalyticsScreen, isVisible: Bool = true) -> some View {
+    @ViewBuilder func analyticsScreen(_ screen: AnalyticsScreen, isVisible: Bool = true) -> some View {
         if isVisible {
             modifier(AnalyticsScreenModifier(screen: screen))
         } else {

@@ -59,8 +59,15 @@ struct NotificationList: View {
         return Group {
             if let lecture = routingInfo.lecture {
                 ZStack {
-                    LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture, displayMode: .preview(shouldHideDismissButton: true))
-                        .analyticsScreen(.lectureDetail(.init(lectureID: lecture.referenceId, referrer: .notification)))
+                    LectureDetailScene(
+                        viewModel: .init(container: viewModel.container),
+                        lecture: lecture,
+                        displayMode: .preview(shouldHideDismissButton: true)
+                    )
+                    .analyticsScreen(.lectureDetail(.init(
+                        lectureID: lecture.referenceId,
+                        referrer: .notification
+                    )))
                     if let timetableId = routingInfo.timetableId {
                         VStack {
                             Spacer()
@@ -126,7 +133,9 @@ extension NotificationList {
 @available(iOS, deprecated: 16.0, message: "Use NaviationStack instead. This will be removed in the future.")
 struct NavigationUtil {
     static func popToRootView(animated: Bool = false) {
-        findNavigationController(viewController: UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }?.rootViewController)?.popToRootViewController(animated: animated)
+        findNavigationController(viewController: UIApplication.shared.connectedScenes
+            .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }?.rootViewController)?
+                    .popToRootViewController(animated: animated)
     }
 
     static func findNavigationController(viewController: UIViewController?) -> UINavigationController? {
@@ -154,9 +163,27 @@ struct NavigationUtil {
     struct NotificationList_Previews: PreviewProvider {
         static var notifications: [STNotification] {
             return [
-                .init(title: "공지", message: "공지예시 1", created_at: "2022-04-30T08:11:04.200Z", type: .normal, user_id: ""),
-                .init(title: "공지", message: "공지예시 2", created_at: "2022-04-30T08:11:04.201Z", type: .normal, user_id: ""),
-                .init(title: "공지", message: "공지예시 3", created_at: "2022-04-30T08:11:04.202Z", type: .normal, user_id: ""),
+                .init(
+                    title: "공지",
+                    message: "공지예시 1",
+                    created_at: "2022-04-30T08:11:04.200Z",
+                    type: .normal,
+                    user_id: ""
+                ),
+                .init(
+                    title: "공지",
+                    message: "공지예시 2",
+                    created_at: "2022-04-30T08:11:04.201Z",
+                    type: .normal,
+                    user_id: ""
+                ),
+                .init(
+                    title: "공지",
+                    message: "공지예시 3",
+                    created_at: "2022-04-30T08:11:04.202Z",
+                    type: .normal,
+                    user_id: ""
+                ),
             ]
         }
 

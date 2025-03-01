@@ -176,9 +176,14 @@ struct LectureDetailScene: View {
                                     guard let tempLecture = tempLecture else { return }
                                     // save
                                     Task {
-                                        let success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture)
+                                        let success = await viewModel.updateLecture(
+                                            oldLecture: tempLecture,
+                                            newLecture: lecture
+                                        )
 
-                                        if success, let updatedLecture = viewModel.findLectureInCurrentTimetable(lecture) {
+                                        if success,
+                                           let updatedLecture = viewModel.findLectureInCurrentTimetable(lecture)
+                                        {
                                             lecture = updatedLecture
                                             editMode = .inactive
                                             resignFirstResponder()
@@ -193,7 +198,8 @@ struct LectureDetailScene: View {
                                             return
                                         }
 
-                                        // in case of duplicate failures, delegate the rollback operation to lecture overlap alert.
+                                        // in case of duplicate failures, delegate the rollback operation to lecture
+                                        // overlap alert.
                                     }
                                 } else {
                                     // edit
@@ -232,7 +238,11 @@ struct LectureDetailScene: View {
                     case .create:
                         success = await viewModel.addCustomLecture(lecture: lecture, isForced: true)
                     case .normal:
-                        success = await viewModel.updateLecture(oldLecture: tempLecture, newLecture: lecture, isForced: true)
+                        success = await viewModel.updateLecture(
+                            oldLecture: tempLecture,
+                            newLecture: lecture,
+                            isForced: true
+                        )
                     case .preview:
                         return
                     }
@@ -278,7 +288,11 @@ struct LectureDetailScene: View {
                 HStack {
                     DetailLabel(text: "색")
                     NavigationLink {
-                        LectureColorList(theme: viewModel.theme, colorIndex: $lecture.colorIndex, customColor: $lecture.color)
+                        LectureColorList(
+                            theme: viewModel.theme,
+                            colorIndex: $lecture.colorIndex,
+                            customColor: $lecture.color
+                        )
                     } label: {
                         HStack {
                             LectureColorPreview(lectureColor: lecture.getColor())
@@ -364,7 +378,10 @@ struct LectureDetailScene: View {
                     }
                     HStack {
                         DetailLabel(text: "정원(재학생)")
-                        EditableTextField(text: .constant("\(lecture.quota)(\(lecture.nonFreshmanQuota))"), readOnly: true)
+                        EditableTextField(
+                            text: .constant("\(lecture.quota)(\(lecture.nonFreshmanQuota))"),
+                            readOnly: true
+                        )
                     }
                     HStack {
                         DetailLabel(text: "비고")
@@ -521,9 +538,16 @@ struct LectureDetailScene: View {
                     showReviewWebView = true
                 }
                 .sheet(isPresented: $showReviewWebView) {
-                    ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: false, detailId: lecture.evLecture?.evLectureId)
-                        .analyticsScreen(.reviewDetail(.init(lectureID: lecture.referenceId, referrer: .lectureDetail)))
-                        .id(colorScheme)
+                    ReviewScene(
+                        viewModel: .init(container: viewModel.container),
+                        isMainWebView: false,
+                        detailId: lecture.evLecture?.evLectureId
+                    )
+                    .analyticsScreen(.reviewDetail(.init(
+                        lectureID: lecture.referenceId,
+                        referrer: .lectureDetail
+                    )))
+                    .id(colorScheme)
                 }
             }
 

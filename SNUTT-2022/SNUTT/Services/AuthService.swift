@@ -72,7 +72,11 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
 
     func registerWithLocalId(localId: String, localPassword: String, email: String) async throws {
         FirebaseAnalyticsLogger().logEvent(.signUp)
-        let dto = try await authRepository.registerWithLocalId(localId: localId, localPassword: localPassword, email: email)
+        let dto = try await authRepository.registerWithLocalId(
+            localId: localId,
+            localPassword: localPassword,
+            email: email
+        )
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
