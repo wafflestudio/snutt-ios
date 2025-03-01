@@ -75,6 +75,7 @@ struct VacancyScene: View, Sendable {
         .task {
             sugangSnuUrl = await viewModel.fetchSugangSnuUrl()
         }
+        .analyticsScreen(.vacancy)
     }
 }
 

@@ -49,6 +49,7 @@ struct SNUTTView: View, Sendable {
                     }
                     TabScene(tabType: .review) {
                         ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: true)
+                            .analyticsScreen(.reviewHome)
                     }
                     TabScene(tabType: .friends) {
                         FriendsScene(viewModel: .init(container: viewModel.container))

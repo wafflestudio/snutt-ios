@@ -70,5 +70,6 @@ struct MenuThemeSheet: View {
                 Spacer()
             }
         }
+        .analyticsScreen(.themePreview, isVisible: isOpen)
     }
 }

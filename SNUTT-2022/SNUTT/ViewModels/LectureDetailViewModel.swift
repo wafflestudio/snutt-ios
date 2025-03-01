@@ -172,6 +172,7 @@ extension LectureDetailScene {
         }
 
         func bookmarkLecture(lecture: Lecture) async {
+            FirebaseAnalyticsLogger().logEvent(.addToBookmark(.init(lectureID: lecture.referenceId, referrer: .lectureDetail)))
             do {
                 try await services.lectureService.bookmarkLecture(lecture: lecture)
             } catch {
@@ -194,6 +195,7 @@ extension LectureDetailScene {
         }
 
         func addVacancyLecture(lecture: Lecture) async {
+            FirebaseAnalyticsLogger().logEvent(.addToVacancy(.init(lectureID: lecture.referenceId, referrer: .lectureDetail)))
             do {
                 try await services.vacancyService.addLecture(lecture: lecture)
             } catch let error as STError where error.code == .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION {

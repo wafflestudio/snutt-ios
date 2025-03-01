@@ -22,6 +22,7 @@ struct LectureListScene: View {
                             lectures: viewModel.lectures)
             }
         }
+        .analyticsScreen(.lectureList)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -35,6 +36,7 @@ struct LectureListScene: View {
             ZStack {
                 NavigationView {
                     LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: viewModel.placeholderLecture, displayMode: .create)
+                        .analyticsScreen(.lectureCreate)
                 }
                 // this view is duplicated on purpose (i.e. there are 2 instances of LectureTimeSheetScene)
                 LectureTimeSheetScene(viewModel: .init(container: viewModel.container))

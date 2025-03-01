@@ -64,36 +64,42 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
     }
 
     func loginWithLocalId(localId: String, localPassword: String) async throws {
+        FirebaseAnalyticsLogger().logEvent(.login(.init(provider: .local)))
         let dto = try await authRepository.loginWithLocalId(localId: localId, localPassword: localPassword)
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
 
     func registerWithLocalId(localId: String, localPassword: String, email: String) async throws {
+        FirebaseAnalyticsLogger().logEvent(.signUp)
         let dto = try await authRepository.registerWithLocalId(localId: localId, localPassword: localPassword, email: email)
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
 
     func loginWithApple(appleToken: String) async throws {
+        FirebaseAnalyticsLogger().logEvent(.login(.init(provider: .apple)))
         let dto = try await authRepository.loginWithApple(appleToken: appleToken)
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
 
     func loginWithFacebook(facebookToken: String) async throws {
+        FirebaseAnalyticsLogger().logEvent(.login(.init(provider: .facebook)))
         let dto = try await authRepository.loginWithFacebook(facebookToken: facebookToken)
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
 
     func loginWithGoogle(googleToken: String) async throws {
+        FirebaseAnalyticsLogger().logEvent(.login(.init(provider: .google)))
         let dto = try await authRepository.loginWithGoogle(googleToken: googleToken)
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
     }
 
     func loginWithKakao(kakaoToken: String) async throws {
+        FirebaseAnalyticsLogger().logEvent(.login(.init(provider: .kakao)))
         let dto = try await authRepository.loginWithKakao(kakaoToken: kakaoToken)
         saveAccessTokenFromLoginResponse(dto: dto)
         try await registerFCMToken()
@@ -120,6 +126,7 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
     }
 
     func logout() async throws {
+        FirebaseAnalyticsLogger().logEvent(.logout)
         let fcmToken = userDefaultsRepository.get(String.self, key: .fcmToken, defaultValue: "")
         guard let userId = appState.user.userId else { throw STError(.NO_USER_TOKEN) }
         let _ = try? await authRepository.logout(userId: userId, fcmToken: fcmToken)

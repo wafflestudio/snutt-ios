@@ -60,6 +60,7 @@ struct NotificationList: View {
             if let lecture = routingInfo.lecture {
                 ZStack {
                     LectureDetailScene(viewModel: .init(container: viewModel.container), lecture: lecture, displayMode: .preview(shouldHideDismissButton: true))
+                        .analyticsScreen(.lectureDetail(.init(lectureID: lecture.referenceId, referrer: .notification)))
                     if let timetableId = routingInfo.timetableId {
                         VStack {
                             Spacer()

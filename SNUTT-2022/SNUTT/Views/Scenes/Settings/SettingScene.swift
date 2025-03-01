@@ -101,6 +101,7 @@ struct SettingScene: View {
                 }
             }
         }
+        .analyticsScreen(.settingsHome)
         .environment(\.defaultMinListHeaderHeight, 1)
         .environment(\.hasNewBadgeClosure) { name in viewModel.hasNewBadge(settingName: name) }
         .listStyle(.insetGrouped)

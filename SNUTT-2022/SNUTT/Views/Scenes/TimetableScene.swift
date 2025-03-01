@@ -76,6 +76,7 @@ struct TimetableScene: View, Sendable {
                 timetable
             }
             .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
+            .analyticsScreen(.timetableHome)
         }
         let _ = debugChanges()
     }
@@ -95,6 +96,7 @@ struct TimetableScene: View, Sendable {
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
                 ActivityViewController(activityItems: [screenshot, linkMetadata])
+                    .analyticsScreen(.timetableShare)
             }
     }
 }

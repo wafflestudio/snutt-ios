@@ -36,7 +36,7 @@ struct LectureBlocks: View {
                                            visibilityOptions: config.visibilityOptions)
                         #else
                             if let container = container {
-                                NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture, displayMode: .normal)) {
+                                NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture, displayMode: .normal).analyticsScreen(.lectureDetail(.init(lectureID: lecture.referenceId, referrer: .timetable)))) {
                                     TimetableBlock(lecture: lecture,
                                                    timePlace: timePlace,
                                                    theme: theme,

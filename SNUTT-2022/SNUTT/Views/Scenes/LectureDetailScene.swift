@@ -512,6 +512,7 @@ struct LectureDetailScene: View {
                     }
                 }.sheet(isPresented: $showSyllabusWebView) {
                     SyllabusWebView(lectureTitle: lecture.title, urlString: $syllabusURL)
+                        .analyticsScreen(.lectureSyllabus(.init(lectureID: lecture.referenceId)))
                         .ignoresSafeArea(edges: .bottom)
                         .interactiveDismissDisabled()
                 }
@@ -521,6 +522,7 @@ struct LectureDetailScene: View {
                 }
                 .sheet(isPresented: $showReviewWebView) {
                     ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: false, detailId: lecture.evLecture?.evLectureId)
+                        .analyticsScreen(.reviewDetail(.init(lectureID: lecture.referenceId, referrer: .lectureDetail)))
                         .id(colorScheme)
                 }
             }

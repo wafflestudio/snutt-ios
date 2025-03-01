@@ -88,6 +88,7 @@ struct TimetableSettingScene: View {
                     .environment(\.dependencyContainer, nil)
             }
         }
+        .analyticsScreen(.settingsTimetable)
         .navigationTitle("시간표 설정")
         .navigationBarTitleDisplayMode(.inline)
     }

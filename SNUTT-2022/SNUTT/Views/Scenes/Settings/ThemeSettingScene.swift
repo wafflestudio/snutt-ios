@@ -31,12 +31,14 @@ struct ThemeSettingScene: View {
                              copyTheme: viewModel.copyTheme,
                              deleteTheme: viewModel.deleteTheme)
         }
+        .analyticsScreen(.themeHome)
         .navigationTitle("시간표 테마")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $viewModel.isNewThemeSheetOpen, content: {
             ZStack {
                 NavigationView {
                     ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.newTheme, themeType: .new)
+                        .analyticsScreen(.themeCustomNew)
                 }
             }
             .accentColor(Color(UIColor.label))
@@ -45,6 +47,7 @@ struct ThemeSettingScene: View {
             ZStack {
                 NavigationView {
                     ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.targetTheme ?? viewModel.newTheme, themeType: .basic)
+                        .analyticsScreen(.themeBasicDetail)
                 }
             }
             .accentColor(Color(UIColor.label))
@@ -53,6 +56,7 @@ struct ThemeSettingScene: View {
             ZStack {
                 NavigationView {
                     ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.targetTheme ?? viewModel.newTheme, themeType: .custom)
+                        .analyticsScreen(.themeCustomEdit)
                 }
             }
             .accentColor(Color(UIColor.label))

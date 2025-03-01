@@ -23,6 +23,7 @@ struct FriendsScene: View {
                     .id(colorScheme)
                     .navigationBarHidden(true)
                     .background(STColor.systemBackground)
+                    .analyticsScreen(.friends)
             } else {
                 ProgressView()
             }

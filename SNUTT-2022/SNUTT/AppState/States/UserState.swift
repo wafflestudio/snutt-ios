@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAnalytics
 
 class UserState {
     @Published var accessToken: String?
@@ -13,5 +14,9 @@ class UserState {
     @Published var socialProvider: SocialProvider?
 
     /// Primary key of User. Required to logout. This is not `localId`.
-    var userId: String?
+    var userId: String? {
+        didSet {
+            Analytics.setUserID(userId)
+        }
+    }
 }

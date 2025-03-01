@@ -115,7 +115,8 @@ struct LectureService: LectureServiceProtocol {
     }
 
     func bookmarkLecture(lecture: Lecture) async throws {
-        try await lectureRepository.bookmarkLecture(lectureId: lecture.lectureId ?? lecture.id)
+        let lectureReferenceId = lecture.lectureId ?? lecture.id
+        try await lectureRepository.bookmarkLecture(lectureId: lectureReferenceId)
         guard let currentTimetable = appState.timetable.current else { return }
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)
