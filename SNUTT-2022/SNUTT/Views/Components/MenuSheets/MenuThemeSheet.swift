@@ -57,7 +57,8 @@ struct MenuThemeSheet: View {
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
                                         .font(STFont.regular14.font)
-                                        .background(selectedTheme == theme ? Color(uiColor: .tertiarySystemFill) : .clear)
+                                        .background(selectedTheme == theme ? Color(uiColor: .tertiarySystemFill) :
+                                            .clear)
                                         .clipShape(Capsule())
                                 }
                             }
@@ -70,5 +71,6 @@ struct MenuThemeSheet: View {
                 Spacer()
             }
         }
+        .analyticsScreen(.themePreview, isVisible: isOpen)
     }
 }

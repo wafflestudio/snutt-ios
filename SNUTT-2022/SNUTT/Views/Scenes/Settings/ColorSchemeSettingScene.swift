@@ -30,5 +30,6 @@ struct ColorSchemeSettingScene: View {
         }
         .listStyle(.insetGrouped)
         .navigationTitle("화면 모드")
+        .analyticsScreen(.settingsColorScheme)
     }
 }

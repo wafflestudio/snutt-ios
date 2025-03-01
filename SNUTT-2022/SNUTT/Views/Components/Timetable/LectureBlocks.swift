@@ -27,7 +27,12 @@ struct LectureBlocks: View {
                                                        config: config)
                 {
                     Group {
-                        let blockHeight = Painter.getHeight(of: timePlace, in: reader.size, current: current, config: config)
+                        let blockHeight = Painter.getHeight(
+                            of: timePlace,
+                            in: reader.size,
+                            current: current,
+                            config: config
+                        )
                         #if WIDGET
                             TimetableBlock(lecture: lecture,
                                            timePlace: timePlace,
@@ -36,7 +41,14 @@ struct LectureBlocks: View {
                                            visibilityOptions: config.visibilityOptions)
                         #else
                             if let container = container {
-                                NavigationLink(destination: LectureDetailScene(viewModel: .init(container: container), lecture: lecture, displayMode: .normal)) {
+                                NavigationLink(destination: LectureDetailScene(
+                                    viewModel: .init(container: container),
+                                    lecture: lecture,
+                                    displayMode: .normal
+                                ).analyticsScreen(.lectureDetail(.init(
+                                    lectureID: lecture.referenceId,
+                                    referrer: .timetable
+                                )))) {
                                     TimetableBlock(lecture: lecture,
                                                    timePlace: timePlace,
                                                    theme: theme,
@@ -53,9 +65,14 @@ struct LectureBlocks: View {
                             }
                         #endif
                     }
-                    .frame(width: Painter.getWeekWidth(in: reader.size, weekCount: Painter.getWeekCount(current: current, config: config)),
-                           height: Painter.getHeight(of: timePlace, in: reader.size, current: current, config: config),
-                           alignment: .top)
+                    .frame(
+                        width: Painter.getWeekWidth(
+                            in: reader.size,
+                            weekCount: Painter.getWeekCount(current: current, config: config)
+                        ),
+                        height: Painter.getHeight(of: timePlace, in: reader.size, current: current, config: config),
+                        alignment: .top
+                    )
                     .clipped()
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
                     .animation(.customSpring, value: config.compactMode)

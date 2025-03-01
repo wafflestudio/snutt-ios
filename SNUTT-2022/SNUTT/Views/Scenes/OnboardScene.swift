@@ -112,6 +112,7 @@ struct OnboardScene: View {
                         Spacer().frame(height: proxy.size.height * 0.05)
                     }
                     .transition(.scale(scale: 1))
+                    .analyticsScreen(.onboard)
                 }
             } else {
                 VStack {
@@ -127,11 +128,24 @@ struct OnboardScene: View {
         .navigationBarHidden(true)
         .background(
             Group {
-                NavigationLink(destination: SignUpView(registerLocalId: viewModel.registerWith(id:password:email:), sendVerificationCode: viewModel.sendVerificationCode(email:), checkVerificationCode: viewModel.submitVerificationCode(code:), pushToTimetableScene: $pushToTimetableScene), isActive: $pushToSignUpScene) { EmptyView() }
+                NavigationLink(
+                    destination: SignUpView(registerLocalId: viewModel.registerWith(id:password:email:),
+                                            sendVerificationCode: viewModel.sendVerificationCode(email:),
+                                            checkVerificationCode: viewModel.submitVerificationCode(code:),
+                                            pushToTimetableScene: $pushToTimetableScene),
+                    isActive: $pushToSignUpScene
+                ) { EmptyView() }
 
-                NavigationLink(destination: LoginScene(viewModel: .init(container: viewModel.container), moveToTimetableScene: $pushToTimetableScene), isActive: $pushToLoginScene) { EmptyView() }
+                NavigationLink(
+                    destination: LoginScene(viewModel: .init(container: viewModel.container),
+                                            moveToTimetableScene: $pushToTimetableScene),
+                    isActive: $pushToLoginScene
+                ) { EmptyView() }
 
-                NavigationLink(destination: UserSupportView(email: nil, sendFeedback: viewModel.sendFeedback(email:message:)), isActive: $pushToFeedbackView) { EmptyView() }
+                NavigationLink(
+                    destination: UserSupportView(email: nil, sendFeedback: viewModel.sendFeedback(email:message:)),
+                    isActive: $pushToFeedbackView
+                ) { EmptyView() }
             }
         )
         .onLoad {

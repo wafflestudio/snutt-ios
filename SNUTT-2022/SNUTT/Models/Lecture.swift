@@ -30,6 +30,11 @@ struct Lecture: Identifiable {
         quota - freshmanQuota
     }
 
+    /// DB에 저장된 강의 고유 ID
+    var referenceId: String {
+        lectureId ?? id
+    }
+
     var createdAt: String
     var updatedAt: String
     var quota: Int

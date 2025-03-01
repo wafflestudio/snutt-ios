@@ -67,6 +67,7 @@ struct UserSupportView: View {
                 }
             }
         }
+        .analyticsScreen(.settingsSupport)
         .alert("개발자 괴롭히기", isPresented: $alertSendFeedback) {
             Button("취소", role: .cancel, action: {})
             Button("전송", role: .none, action: {

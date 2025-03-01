@@ -24,6 +24,7 @@ struct BookmarkScene: View {
                 .animation(.customSpring, value: viewModel.selectedLecture?.id)
             }
         }
+        .analyticsScreen(.bookmark)
         .navigationTitle("관심강좌")
         .navigationBarTitleDisplayMode(.inline)
         .animation(.customSpring, value: viewModel.bookmarkedLectures.count)

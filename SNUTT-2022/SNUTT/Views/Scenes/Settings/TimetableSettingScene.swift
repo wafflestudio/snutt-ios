@@ -64,8 +64,11 @@ struct TimetableSettingScene: View {
                     VStack(alignment: .leading) {
                         Text("시간대")
 
-                        TimeRangeSlider(minHour: $viewModel.timetableConfig.minHour, maxHour: $viewModel.timetableConfig.maxHour)
-                            .frame(height: 40)
+                        TimeRangeSlider(
+                            minHour: $viewModel.timetableConfig.minHour,
+                            maxHour: $viewModel.timetableConfig.maxHour
+                        )
+                        .frame(height: 40)
                     }
                 }
             }
@@ -81,13 +84,13 @@ struct TimetableSettingScene: View {
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .stroke(lineWidth: 0.5)
-                        .foregroundColor(Color(UIColor.quaternaryLabel))
-                    )
+                        .foregroundColor(Color(UIColor.quaternaryLabel)))
                     .shadow(color: .black.opacity(0.05), radius: 3)
                     .padding(.vertical, 10)
                     .environment(\.dependencyContainer, nil)
             }
         }
+        .analyticsScreen(.settingsTimetable)
         .navigationTitle("시간표 설정")
         .navigationBarTitleDisplayMode(.inline)
     }

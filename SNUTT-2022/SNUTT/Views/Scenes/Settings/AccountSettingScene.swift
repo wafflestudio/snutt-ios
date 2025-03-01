@@ -64,6 +64,7 @@ struct AccountSettingScene: View {
                 }
             }
         }
+        .analyticsScreen(.settingsAccount)
         .animation(.customSpring, value: viewModel.currentUser?.fbName)
         .animation(.customSpring, value: viewModel.currentUser?.localId)
         .listStyle(.insetGrouped)

@@ -63,8 +63,10 @@ struct SearchService: SearchServiceProtocol {
         let dto = try await searchRepository.fetchTags(quarter: quarter)
         let model = SearchTagList(from: dto)
         appState.search.searchTagList = model
-        guard let recentTagNames = userDefaultsRepository.get([String].self, key: .recentDepartmentTags) else { return }
-        appState.search.pinnedTagList = model?.tagList.filter { $0.type == .department && recentTagNames.contains($0.text) } ?? []
+        guard let recentTagNames = userDefaultsRepository.get([String].self, key: .recentDepartmentTags)
+        else { return }
+        appState.search.pinnedTagList = model?.tagList
+            .filter { $0.type == .department && recentTagNames.contains($0.text) } ?? []
     }
 
     private func _saveDepartmentTagsToUserDefaults(from tagList: [SearchTag]) {
@@ -84,8 +86,12 @@ struct SearchService: SearchServiceProtocol {
         guard let currentTimetable = timetableState.current else { return }
         let tagList = searchState.selectedTagList
         _saveDepartmentTagsToUserDefaults(from: tagList)
-        let timeList = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .range }) ? searchState.selectedTimeRange : nil
-        let excludedTimeList = tagList.contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .empty }) ? currentTimetable.timeMask : nil
+        let timeList = tagList
+            .contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .range }) ? searchState
+            .selectedTimeRange : nil
+        let excludedTimeList = tagList
+            .contains(where: { $0.type == .time && TimeType(rawValue: $0.text) == .empty }) ? currentTimetable
+            .timeMask : nil
         let offset = searchState.perPage * searchState.pageNum
         let dtos = try await searchRepository.fetchSearchResult(query: searchState.searchText,
                                                                 quarter: currentTimetable.quarter,
@@ -95,6 +101,11 @@ struct SearchService: SearchServiceProtocol {
                                                                 offset: offset,
                                                                 limit: searchState.perPage)
         let models: [Lecture] = dtos.map { Lecture(from: $0) }
+        FirebaseAnalyticsLogger().logEvent(.searchLecture(.init(
+            query: searchState.searchText,
+            quarter: currentTimetable.quarter.longString(),
+            page: searchState.pageNum
+        )))
         searchState.searchResult = offset == 0 ? models : (searchState.searchResult ?? []) + models
     }
 
@@ -132,7 +143,9 @@ struct SearchService: SearchServiceProtocol {
     }
 
     func selectTimeRangeTag() {
-        guard let tag = searchState.searchTagList?.tagList.first(where: { $0.type == .time && $0.text == TimeType.range.rawValue }) else {
+        guard let tag = searchState.searchTagList?.tagList
+            .first(where: { $0.type == .time && $0.text == TimeType.range.rawValue })
+        else {
             return
         }
         if searchState.selectedTagList.firstIndex(where: { $0.id == tag.id }) == nil {

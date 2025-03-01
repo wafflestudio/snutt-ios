@@ -93,6 +93,7 @@ struct MenuSheet: View {
                     }
                 }
             }
+            .analyticsScreen(.timetableMenu, isVisible: isOpen)
         }
     }
 }

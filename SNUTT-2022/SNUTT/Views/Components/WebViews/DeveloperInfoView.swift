@@ -11,6 +11,7 @@ struct DeveloperInfoView: View {
     var body: some View {
         SingleWebView(url: WebViewType.developerInfo.url)
             .navigationTitle("개발자 정보")
+            .analyticsScreen(.settingsDevelopers)
     }
 }
 

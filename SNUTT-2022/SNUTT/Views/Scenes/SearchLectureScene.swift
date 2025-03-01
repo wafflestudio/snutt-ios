@@ -89,17 +89,22 @@ struct SearchLectureScene: View {
                         .onTapGesture {
                             isSearchBarFocused = false
                         }
+                        .analyticsScreen(.searchHome)
                 } else if viewModel.searchResult?.count == 0 {
                     EmptySearchResult()
+                        .analyticsScreen(.searchEmpty)
                 } else if let searchResult = viewModel.searchResult {
-                    ExpandableLectureList(
-                        viewModel: .init(container: viewModel.container),
-                        lectures: searchResult,
-                        selectedLecture: $viewModel.selectedLecture,
-                        fetchMoreLectures: viewModel.fetchMoreSearchResult
-                    )
+                    VStack(spacing: 0) {
+                        ExpandableLectureList(
+                            viewModel: .init(container: viewModel.container),
+                            lectures: searchResult,
+                            selectedLecture: $viewModel.selectedLecture,
+                            fetchMoreLectures: viewModel.fetchMoreSearchResult
+                        )
+                        .id(reloadSearchList) // reload everything when any of the search conditions changes
+                    }
+                    .analyticsScreen(.searchList)
                     .animation(.customSpring, value: viewModel.selectedLecture?.id)
-                    .id(reloadSearchList) // reload everything when any of the search conditions changes
                 }
             }
         }

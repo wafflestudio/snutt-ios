@@ -16,7 +16,7 @@ jobs:
       matrix:
         # see https://github.com/actions/virtual-environments/blob/main/images/macos/macos-13-Readme.md for available versions
         xcode:
-          - "16.2"
+          - "16.1"
         macos: ["macos-15"]
         command: ["build", "test"]
         scheme: ["SNUTT"]
