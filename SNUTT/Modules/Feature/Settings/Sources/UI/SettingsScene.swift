@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SharedUIComponents
 
 public struct SettingsScene: View {
     
     @State private(set) var viewModel: SettingsViewModel
+    @State private var isLogoutAlertPresented = false
     
     public init() {
         self.viewModel = .init()
@@ -19,46 +21,59 @@ public struct SettingsScene: View {
         NavigationStack {
             List {
                 Section {
-                    Text(SettingsStrings.account)
+                    SettingsNavigationItem(title: SettingsStrings.account, detail: "name", image: SettingsAsset.person.swiftUIImage, destination: ColorView(color: .orange)) {
+                        // ontap
+                    }
+                    .padding(.vertical, 12)
                 }
 
                 Section(SettingsStrings.display) {
-                    Text(SettingsStrings.displayColorMode)
-                    Text(SettingsStrings.displayLanguage)
-                    Text(SettingsStrings.displayTimetable)
-                    Text(SettingsStrings.displayTheme)
+                    SettingsNavigationItem(title: SettingsStrings.displayColorMode, detail: "자동", destination: ColorView(color: .red))
+                    SettingsNavigationItem(title: SettingsStrings.displayLanguage, detail: "한국어", destination: ColorView(color: .yellow))
+                    SettingsNavigationItem(title: SettingsStrings.displayTimetable, destination: ColorView(color: .green))
+                    SettingsNavigationItem(title: SettingsStrings.displayTheme, destination: ColorView(color: .blue))
                 }
 
                 Section(SettingsStrings.service) {
-                    Text(SettingsStrings.serviceVacancy)
+                    SettingsNavigationItem(title: SettingsStrings.serviceVacancy, destination: ColorView(color: .purple))
                 }
 
                 Section(SettingsStrings.information) {
-                    Text(SettingsStrings.informationVersion)
-                    Text(SettingsStrings.informationDevelopers)
+                    SettingsMenuItem(title: SettingsStrings.informationVersion, detail: viewModel.appVersion)
+                    SettingsNavigationItem(title: SettingsStrings.informationDevelopers, destination: ColorView(color: .orange))
                 }
 
                 Section {
-                    Text(SettingsStrings.feedback)
+                    SettingsNavigationItem(title: SettingsStrings.feedback, destination: ColorView(color: .cyan))
                 }
 
                 Section {
-                    Text(SettingsStrings.license)
-                    Text(SettingsStrings.termsService)
-                    Text(SettingsStrings.privacyPolicy)
+                    SettingsNavigationItem(title: SettingsStrings.license, destination: ColorView(color: .orange))
+                    SettingsNavigationItem(title: SettingsStrings.termsService, destination: ColorView(color: .brown))
+                    SettingsNavigationItem(title: SettingsStrings.privacyPolicy, destination: ColorView(color: .gray))
                 }
 
                 #if DEBUG
                     Section(SettingsStrings.debug) {
-                        Text(SettingsStrings.debugLog)
+                        SettingsNavigationItem(title: SettingsStrings.debugLog, destination: ColorView(color: .red))
                     }
                 #endif
 
                 Section {
-                    Text(SettingsStrings.logout)
+                    SettingsMenuItem(title: SettingsStrings.logout, destructive: true) {
+                        isLogoutAlertPresented = true
+                    }
                 }
             }
             .listStyle(.insetGrouped)
+            .navigationTitle("더보기")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        .alert(SettingsStrings.logoutAlertTitle, isPresented: $isLogoutAlertPresented) {
+            Button(SettingsStrings.logout, role: .destructive) {
+                // logout
+            }
+            Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
         }
         .task {
             
