@@ -10,7 +10,9 @@ import Foundation
 struct Popup: Identifiable {
     let id: String
     let imageURL: String
+    let linkURL: String?
     let hiddenDays: Int?
+    
     private(set) var dismissedAt: Date?
     private(set) var dontShowForWhile: Bool
 
@@ -48,14 +50,16 @@ extension Popup {
     init(from dto: PopupDto) {
         id = dto.key
         imageURL = dto.imageUri
+        linkURL = dto.linkUrl
         hiddenDays = dto.hiddenDays
         dismissedAt = nil
         dontShowForWhile = false
     }
 
-    init(from metadata: PopupMetadata, imageUri: String) {
+    init(from metadata: PopupMetadata, imageUri: String, linkUrl: String?) {
         id = metadata.key
         imageURL = imageUri
+        linkURL = linkUrl
         hiddenDays = metadata.hiddenDays
         dismissedAt = metadata.dismissedAt
         dontShowForWhile = metadata.dontShowForWhile ?? false

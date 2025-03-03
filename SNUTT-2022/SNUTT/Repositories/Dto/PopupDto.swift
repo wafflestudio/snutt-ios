@@ -14,6 +14,7 @@ struct PopupResponseDto: Decodable {
 struct PopupDto: Decodable {
     let key: String
     let imageUri: String
+    let linkUrl: String?
     let hiddenDays: Int?
 }
 

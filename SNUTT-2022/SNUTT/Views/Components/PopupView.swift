@@ -16,9 +16,19 @@ struct PopupView: View {
             switch phase {
             case let .success(popupImage):
                 VStack(spacing: 0) {
-                    popupImage
-                        .resizable()
-                        .scaledToFit()
+                    if let linkURL = popup.linkURL, let url = URL(string: linkURL) {
+                        Button {
+                            UIApplication.shared.open(url)
+                        } label: {
+                            popupImage
+                                .resizable()
+                                .scaledToFit()
+                        }
+                    } else {
+                        popupImage
+                            .resizable()
+                            .scaledToFit()
+                    }
 
                     HStack {
                         Spacer()
@@ -60,7 +70,7 @@ struct PopupView: View {
 struct PopupView_Previews: PreviewProvider {
     static var previews: some View {
         PopupView(
-            popup: .init(id: "", imageURL: "https://avatars.githubusercontent.com/u/70614553?v=4", hiddenDays: 0, dismissedAt: nil, dontShowForWhile: false),
+            popup: .init(id: "", imageURL: "https://avatars.githubusercontent.com/u/70614553?v=4", linkURL: nil, hiddenDays: 0, dismissedAt: nil, dontShowForWhile: false),
             dismiss: { _, _ in
             }
         )
