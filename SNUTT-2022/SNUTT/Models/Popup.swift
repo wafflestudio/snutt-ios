@@ -12,7 +12,7 @@ struct Popup: Identifiable {
     let imageURL: String
     let linkURL: String?
     let hiddenDays: Int?
-    
+
     private(set) var dismissedAt: Date?
     private(set) var dontShowForWhile: Bool
 

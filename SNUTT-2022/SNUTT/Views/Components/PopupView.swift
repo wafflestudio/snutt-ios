@@ -70,7 +70,14 @@ struct PopupView: View {
 struct PopupView_Previews: PreviewProvider {
     static var previews: some View {
         PopupView(
-            popup: .init(id: "", imageURL: "https://avatars.githubusercontent.com/u/70614553?v=4", linkURL: nil, hiddenDays: 0, dismissedAt: nil, dontShowForWhile: false),
+            popup: .init(
+                id: "",
+                imageURL: "https://avatars.githubusercontent.com/u/70614553?v=4",
+                linkURL: nil,
+                hiddenDays: 0,
+                dismissedAt: nil,
+                dontShowForWhile: false
+            ),
             dismiss: { _, _ in
             }
         )
