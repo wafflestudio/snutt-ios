@@ -27,6 +27,7 @@
 "account" = "내 계정";
 "account.nickname.change" = "닉네임 변경";
 "account.nickname.copy" = "닉네임 복사하기";
+"account.nickname.copy.alert" = "닉네임이 클립보드에 복사되었습니다";
 
 "account.id.add" = "아이디 / 비밀번호 추가";
 "account.id" = "아이디";
@@ -43,7 +44,8 @@
 "account.sns.facebook.disconnect" = "페이스북 계정 연동 해제";
 
 "account.email" = "이메일";
-"account.signOut" = "회원 탈퇴";
+"account.signOut" = "계정 삭제";
+"account.signOut.alert" = "SNUTT 계정을 삭제하시겠습니까?";
 
 // MARK: 디스플레이
 "display" = "디스플레이";
@@ -69,7 +71,7 @@
 "privacy.policy" = "개인정보처리방침";
 
 "logout" = "로그아웃";
-"logout.alert.title" = "로그아웃 하시겠습니까?";
+"logout.alert" = "로그아웃 하시겠습니까?";
 
 // MARK: 디버그 메뉴
 "debug" = "디버그 메뉴";

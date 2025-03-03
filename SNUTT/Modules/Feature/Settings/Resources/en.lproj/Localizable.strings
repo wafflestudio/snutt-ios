@@ -27,6 +27,7 @@
 "account" = "My Account";
 "account.nickname.change" = "Change Nickname";
 "account.nickname.copy" = "Copy Nickname";
+"account.nickname.copy.alert" = "Nickname has been copied to the clipboard";
 
 "account.id.add" = "Add ID / Password";
 "account.id" = "ID";
@@ -44,6 +45,7 @@
 
 "account.email" = "Email";
 "account.signOut" = "Delete Account";
+"account.signOut.alert" = "Would you like to delete SNUTT account?";
 
 // MARK: 디스플레이
 "display" = "Display";
@@ -69,7 +71,7 @@
 "privacy.policy" = "Privacy Policy";
 
 "logout" = "Log out";
-"logout.alert.title" = "Would you like to log out?";
+"logout.alert" = "Would you like to log out?";
 
 // MARK: 디버그 메뉴
 "debug" = "Debug";
