@@ -49,9 +49,26 @@
 
 // MARK: 디스플레이
 "display" = "Display";
+
 "display.colorMode" = "Appearance";
+"display.colorMode.system" = "System setting";
+"display.colorMode.light" = "Light";
+"display.colorMode.dark" = "Dark";
+
 "display.language" = "App Language";
-"display.timetable" = "Timetable Settings";
+
+"display.table" = "Timetable Settings";
+"display.table.autoFit" = "Auto";
+"display.table.nonCompact" = "Compact Mode";
+"display.table.nonCompact.warning" = "Displays a fully packed timetable. Some overlap may occur with manually added lectures.";
+"display.table.lectureTitle" = "Course Title";
+"display.table.place" = "Building-Room";
+"display.table.lectureNumber" = "Lecture Number";
+"display.table.instructor" = "Instructor";
+"display.table.info" = "Visibility";
+"display.table.info.warning" = "If there is a lot of information, some text may not be displayed.";
+"display.table.preview" = "Preview";
+
 "display.theme" = "Timetable Theme";
 
 // MARK: 서비스
@@ -59,9 +76,9 @@
 "service.vacancy" = "Vacancy Notification";
 
 // MARK: 정보 및 제안
-"information" = "Info & Suggestions";
-"information.version" = "Version";
-"information.developers" = "About Us";
+"info" = "Info & Suggestions";
+"info.version" = "Version";
+"info.developers" = "About Us";
 
 // MARK: 기타
 "feedback" = "Share Feedback";

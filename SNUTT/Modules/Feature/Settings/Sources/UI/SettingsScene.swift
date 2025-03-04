@@ -13,6 +13,8 @@ public struct SettingsScene: View {
     @State private(set) var viewModel: SettingsViewModel
     @State private var isLogoutAlertPresented = false
     
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
+    
     public init() {
         self.viewModel = .init()
     }
@@ -26,9 +28,7 @@ public struct SettingsScene: View {
                         leadingImage: SettingsAsset.person.swiftUIImage,
                         detail: "와플#7777",
                         destination: MyAccountScene()
-                    ) {
-                        // ontap
-                    }
+                    )
                     .padding(.vertical, 12)
                 }
 
@@ -36,7 +36,7 @@ public struct SettingsScene: View {
                     SettingsNavigationItem(
                         title: SettingsStrings.displayColorMode,
                         detail: "자동",
-                        destination: ColorView(color: .red)
+                        destination: ColorModeSettingView()
                     )
                     SettingsNavigationItem(
                         title: SettingsStrings.displayLanguage,
@@ -44,8 +44,8 @@ public struct SettingsScene: View {
                         destination: ColorView(color: .yellow)
                     )
                     SettingsNavigationItem(
-                        title: SettingsStrings.displayTimetable,
-                        destination: ColorView(color: .green)
+                        title: SettingsStrings.displayTable,
+                        destination: TimetableSettingView(makePainter: viewModel.makePainter, config: $viewModel.configuration)
                     )
                     SettingsNavigationItem(
                         title: SettingsStrings.displayTheme,
@@ -60,13 +60,13 @@ public struct SettingsScene: View {
                     )
                 }
 
-                Section(SettingsStrings.information) {
+                Section(SettingsStrings.info) {
                     SettingsMenuItem(
-                        title: SettingsStrings.informationVersion,
+                        title: SettingsStrings.infoVersion,
                         detail: viewModel.appVersion
                     )
                     SettingsNavigationItem(
-                        title: SettingsStrings.informationDevelopers,
+                        title: SettingsStrings.infoDevelopers,
                         destination: ColorView(color: .orange)
                     )
                 }
@@ -112,17 +112,27 @@ public struct SettingsScene: View {
                 }
             }
             .listStyle(.insetGrouped)
-            .navigationTitle("더보기")
+            .navigationTitle(SettingsStrings.settings)
             .navigationBarTitleDisplayMode(.inline)
         }
         .alert(SettingsStrings.logoutAlert, isPresented: $isLogoutAlertPresented) {
             Button(SettingsStrings.logout, role: .destructive) {
-                // logout
+                Task {
+                    await logout()
+                }
             }
             Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
         }
         .task {
             
+        }
+    }
+}
+
+extension SettingsScene {
+    private func logout() async {
+        await errorAlertHandler.withAlert {
+            try await viewModel.logout()
         }
     }
 }

@@ -71,7 +71,10 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "APIClientInterface"),
+                .target(name: "Auth"),
                 .target(name: "SharedUIComponents"),
+                .target(name: "Timetable"),
+                .target(name: "TimetableInterface"),
                 .external(name: "Dependencies"),
             ]
         ),

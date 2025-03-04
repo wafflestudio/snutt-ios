@@ -49,9 +49,26 @@
 
 // MARK: 디스플레이
 "display" = "디스플레이";
+
 "display.colorMode" = "색상 모드";
+"display.colorMode.system" = "시스템 설정";
+"display.colorMode.light" = "라이트 모드";
+"display.colorMode.dark" = "다크 모드";
+
 "display.language" = "언어";
-"display.timetable" = "시간표 설정";
+
+"display.table" = "시간표 설정";
+"display.table.autoFit" = "자동 맞춤";
+"display.table.nonCompact" = "꽉 찬 시간표";
+"display.table.nonCompact.warning" = "꽉 찬 시간표를 표시합니다. 직접 추가한 강의와 일부 겹치는 현상이 발생할 수 있습니다.";
+"display.table.lectureTitle" = "강의명";
+"display.table.place" = "장소";
+"display.table.lectureNumber" = "분반번호";
+"display.table.instructor" = "교수";
+"display.table.info" = "강의 정보 표시";
+"display.table.info.warning" = "정보가 많을 경우 일부 텍스트가 표시되지 않을 수 있습니다.";
+"display.table.preview" = "시간표 미리보기";
+
 "display.theme" = "시간표 테마";
 
 // MARK: 서비스
@@ -59,9 +76,9 @@
 "service.vacancy" = "빈자리 알림";
 
 // MARK: 정보 및 제안
-"information" = "정보 및 제안";
-"information.version" = "버전 정보";
-"information.developers" = "개발자 정보";
+"info" = "정보 및 제안";
+"info.version" = "버전 정보";
+"info.developers" = "개발자 정보";
 
 // MARK: 기타
 "feedback" = "개발자 괴롭히기";

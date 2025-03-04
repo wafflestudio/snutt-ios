@@ -9,7 +9,7 @@
 import AuthInterface
 import Dependencies
 
-struct AuthUseCase {
+public struct AuthUseCase: Sendable {
     @Dependency(\.authRepository) private var authRepository
     @Dependency(\.authState) private var authState
     @Dependency(\.authSecureRepository) private var secureRepository
@@ -20,14 +20,18 @@ struct AuthUseCase {
         authState.set(.accessToken, value: response.accessToken)
         authState.set(.userID, value: response.userID)
     }
+    
+    public func logout() async throws {
+        
+    }
 }
 
 extension AuthUseCase: DependencyKey {
-    static let liveValue: AuthUseCase = .init()
+    public static let liveValue: AuthUseCase = .init()
 }
 
 extension DependencyValues {
-    var authUseCase: AuthUseCase {
+    public var authUseCase: AuthUseCase {
         get { self[AuthUseCase.self] }
         set { self[AuthUseCase.self] = newValue }
     }

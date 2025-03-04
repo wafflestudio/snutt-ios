@@ -14,6 +14,8 @@ struct MyAccountScene: View {
     @State private var isNicknameCopiedAlertPresented = false
     @State private var isSignOutAlertPresented = false
     
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
+    
     public init() {
         self.viewModel = .init()
     }
@@ -87,9 +89,22 @@ struct MyAccountScene: View {
             isPresented: $isSignOutAlertPresented
         ) {
             Button(SharedUIComponentsStrings.alertDelete, role: .destructive) {
-                // sign out
+                Task {
+                    await deleteAccount()
+                }
             }
             Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
+        }
+        .task {
+            
+        }
+    }
+}
+
+extension MyAccountScene {
+    private func deleteAccount() async {
+        await errorAlertHandler.withAlert {
+            try await viewModel.deleteAccount()
         }
     }
 }

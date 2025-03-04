@@ -14,11 +14,11 @@ import TimetableInterface
 public struct TimetableConfiguration: Codable, Equatable, Sendable {
     @Init(.public) var minHour: Int = 9
     @Init(.public) var maxHour: Int = 18
-    @Init(.public) var autoFit: Bool = true
-    @Init(.public) var compactMode: Bool = false
-    @Init(.public) var visibilityOptions: VisibilityOptions = .default
+    @Init(.public) public var autoFit: Bool = true
+    @Init(.public) public var compactMode: Bool = false
+    @Init(.public) public var visibilityOptions: VisibilityOptions = .default
 
-    @Init(.public) var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
+    @Init(.public) public var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
 
     var visibleWeeksSorted: [Weekday] {
         var weekdayOrder: [Weekday: Int] = [:]
@@ -81,7 +81,7 @@ extension TimetableConfiguration {
             Self(rawValue: 1 << 3)
         }
 
-        var isLectureTitleEnabled: Bool {
+        public var isLectureTitleEnabled: Bool {
             get { contains(.lectureTitle) }
             set {
                 if newValue {
@@ -92,7 +92,7 @@ extension TimetableConfiguration {
             }
         }
 
-        var isPlaceEnabled: Bool {
+        public var isPlaceEnabled: Bool {
             get { contains(.place) }
             set {
                 if newValue {
@@ -103,7 +103,7 @@ extension TimetableConfiguration {
             }
         }
 
-        var isLectureNumberEnabled: Bool {
+        public var isLectureNumberEnabled: Bool {
             get { contains(.lectureNumber) }
             set {
                 if newValue {
@@ -114,7 +114,7 @@ extension TimetableConfiguration {
             }
         }
 
-        var isInstructorEnabled: Bool {
+        public var isInstructorEnabled: Bool {
             get { contains(.instructor) }
             set {
                 if newValue {
