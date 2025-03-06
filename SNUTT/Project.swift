@@ -142,7 +142,10 @@ let project = Project.app(
         ]),
         .module(name: "FoundationUtility", category: .utility(ui: false), dependencies: []),
     ],
-    externalDependencies: [],
+    externalDependencies: [
+        .external(name: "FirebaseCore"),
+        .external(name: "FirebaseMessaging"),
+    ],
     widgetDependencies: [
         .target(name: "TimetableInterface"),
         .target(name: "TimetableUIComponents"),

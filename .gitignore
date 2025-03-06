@@ -37,3 +37,7 @@ SNUTT-2022/SNUTT/GoogleService*.plist
 SNUTT-2022/archive
 SNUTT-2022/fastlane/report.xml
 **/*.p8
+
+# SNUTT-iOS-2025
+SNUTT/SNUTT/Resources/GoogleServiceDebugInfo.plist
+SNUTT/SNUTT/Resources/GoogleServiceReleaseInfo.plist

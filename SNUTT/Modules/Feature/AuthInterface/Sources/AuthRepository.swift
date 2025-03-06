@@ -12,6 +12,7 @@ import Spyable
 
 @Spyable
 public protocol AuthRepository: Sendable {
+    func addDevice(fcmToken: String) async throws
     func registerWithLocalID(localID: String, localPassword: String, email: String) async throws -> LoginResponse
     func loginWithLocalID(localID: String, localPassword: String) async throws -> LoginResponse
 //    func loginWithApple(appleToken: String) async throws -> LoginResponseDto
@@ -21,7 +22,7 @@ public protocol AuthRepository: Sendable {
 //    func sendVerificationCode(email: String) async throws
 //    func checkVerificationCode(localId: String, code: String) async throws
 //    func resetPassword(localId: String, password: String) async throws
-//    func logout(userId: String, fcmToken: String) async throws -> LogoutResponseDto
+    func logout(fcmToken: String) async throws
 }
 
 @MemberwiseInit(.public)

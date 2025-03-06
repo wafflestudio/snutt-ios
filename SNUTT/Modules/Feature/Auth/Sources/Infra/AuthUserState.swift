@@ -42,6 +42,8 @@ public final class AuthUserState: AuthState {
             Task { @MainActor in
                 isAuthenticatedSubject.send(true)
             }
+        case .fcmToken:
+            userDefaults[\.fcmToken] = value
         }
     }
 
@@ -51,6 +53,8 @@ public final class AuthUserState: AuthState {
             store.withLock { $0[.userID] } ?? userDefaults[\.userID]
         case .accessToken:
             store.withLock { $0[.accessToken] }
+        case .fcmToken:
+            store.withLock { $0[.fcmToken] }
         }
     }
 
@@ -67,5 +71,9 @@ public final class AuthUserState: AuthState {
 extension UserDefaultsEntryDefinitions {
     var userID: UserDefaultsEntry<String?> {
         .init(key: "userID", defaultValue: nil)
+    }
+    
+    var fcmToken: UserDefaultsEntry<String?> {
+        .init(key: "fcmToken", defaultValue: nil)
     }
 }

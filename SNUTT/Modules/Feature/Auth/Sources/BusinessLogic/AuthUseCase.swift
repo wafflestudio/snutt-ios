@@ -22,7 +22,16 @@ public struct AuthUseCase: Sendable {
     }
     
     public func logout() async throws {
-        
+        guard let fcmToken = authState.get(.fcmToken) else {
+            return
+        }
+        try await authRepository.logout(fcmToken: fcmToken)
+        authState.clear()
+    }
+    
+    public func addDevice(fcmToken: String) async throws {
+        try await authRepository.addDevice(fcmToken: fcmToken)
+        authState.set(.fcmToken, value: fcmToken)
     }
 }
 

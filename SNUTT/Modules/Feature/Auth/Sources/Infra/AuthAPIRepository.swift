@@ -10,9 +10,13 @@ import AuthInterface
 import Dependencies
 
 public struct AuthAPIRepository: AuthRepository {
-    @Dependency(\.apiClient) private var apiClient
+    @Dependency(\DependencyValues.apiClient) private var apiClient
 
     public init() {}
+    
+    public func addDevice(fcmToken: String) async throws {
+        try await apiClient.registerLocal_1(path: .init(id: fcmToken))
+    }
 
     public func registerWithLocalID(localID: String, localPassword: String, email _: String) async throws -> LoginResponse {
         let result = try await apiClient.loginLocal(body: .json(.init(id: localID, password: localPassword)))
@@ -24,5 +28,9 @@ public struct AuthAPIRepository: AuthRepository {
         let result = try await apiClient.loginLocal(body: .json(.init(id: localID, password: localPassword)))
         let json = try result.ok.body.json
         return .init(accessToken: json.token, userID: json.user_id)
+    }
+    
+    public func logout(fcmToken: String) async throws {
+        try await apiClient.logout(body: .json(.init(registration_id: fcmToken)))
     }
 }

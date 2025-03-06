@@ -8,6 +8,7 @@ struct SNUTTApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @Dependency(\.authState) private var authState
     @Dependency(\.authSecureRepository) private var secureRepository
+    @Dependency(\.authUseCase) private var authUseCase
 
     init() {
         bootstrap()
@@ -22,6 +23,7 @@ struct SNUTTApp: App {
 
 extension SNUTTApp {
     private func bootstrap() {
+        setFCMToken()
         if let userID = authState.get(.userID) {
             // If userID exists in userDefaults, store it into in-memory store
             authState.set(.userID, value: userID)
@@ -43,5 +45,16 @@ extension SNUTTApp {
     private func initializeKakaoSDK() {
         let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
         SDKInitializer.InitSDK(appKey: kakaoAppKey)
+    }
+    
+    /// Listens to the FCM token sent from `AppDelegate` and forwards it to the server.
+    private func setFCMToken() {
+        NotificationCenter.default.addObserver(forName: Notification.Name("FCMToken"), object: nil, queue: .main) { notification in
+            guard let fcmToken = notification.userInfo?["token"] as? String else { return }
+            Task {
+                try await authUseCase.addDevice(fcmToken: fcmToken)
+            }
+            print("FCM Token: \(fcmToken)")
+        }
     }
 }
