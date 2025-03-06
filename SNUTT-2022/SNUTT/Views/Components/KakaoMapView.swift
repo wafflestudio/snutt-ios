@@ -41,8 +41,7 @@ struct KakaoMapView: UIViewRepresentable {
     }
 
     /// Cleans up the presented `UIView` (and coordinator) in anticipation of their removal.
-    static func dismantleUIView(_: KMViewContainer, coordinator: KakaoMapCoordinator) {
-    }
+    static func dismantleUIView(_: KMViewContainer, coordinator _: KakaoMapCoordinator) {}
 
     class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
         var controller: KMController?
@@ -59,10 +58,13 @@ struct KakaoMapView: UIViewRepresentable {
              buildings: [Location: String],
              colorScheme: ColorScheme)
         {
-            self.buildings = buildings.sorted { $0.key.latitude > $1.key.latitude || $0.key.longitude > $1.key.longitude }.enumerated()
+            self.buildings = buildings
+                .sorted { $0.key.latitude > $1.key.latitude || $0.key.longitude > $1.key.longitude }.enumerated()
             _isMapNotInstalledAlertPresented = isMapNotInstalledAlertPresented
-            defaultPoint = .init(latitude: buildings.keys.reduce(Double(0)) { $0 + $1.latitude } / Double(buildings.count),
-                                 longitude: buildings.keys.reduce(Double(0)) { $0 + $1.longitude } / Double(buildings.count))
+            defaultPoint = .init(
+                latitude: buildings.keys.reduce(Double(0)) { $0 + $1.latitude } / Double(buildings.count),
+                longitude: buildings.keys.reduce(Double(0)) { $0 + $1.longitude } / Double(buildings.count)
+            )
             self.colorScheme = colorScheme
             super.init()
         }
@@ -91,7 +93,12 @@ struct KakaoMapView: UIViewRepresentable {
         /// automatically called after running startEngine() and preparing for view rendering
         func addViews() {
             let defaultPosition = MapPoint(longitude: defaultPoint.longitude, latitude: defaultPoint.latitude)
-            let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: shouldZoomOut ? 14 : 15)
+            let mapviewInfo = MapviewInfo(
+                viewName: "mapview",
+                viewInfoName: "map",
+                defaultPosition: defaultPosition,
+                defaultLevel: shouldZoomOut ? 14 : 15
+            )
             controller?.addView(mapviewInfo)
         }
 
@@ -144,11 +151,23 @@ struct KakaoMapView: UIViewRepresentable {
             let manager = mapView.getLabelManager()
 
             // layer for blur-effect background
-            let blurLayerOption = LabelLayerOptions(layerID: "blurBackground", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1000)
+            let blurLayerOption = LabelLayerOptions(
+                layerID: "blurBackground",
+                competitionType: .none,
+                competitionUnit: .symbolFirst,
+                orderType: .rank,
+                zOrder: 1000
+            )
             let _ = manager.addLabelLayer(option: blurLayerOption)
 
             for building in buildings {
-                let layerOption = LabelLayerOptions(layerID: "poi\(building.offset)", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 1100 + building.offset)
+                let layerOption = LabelLayerOptions(
+                    layerID: "poi\(building.offset)",
+                    competitionType: .none,
+                    competitionUnit: .symbolFirst,
+                    orderType: .rank,
+                    zOrder: 1100 + building.offset
+                )
                 let _ = manager.addLabelLayer(option: layerOption)
             }
         }
@@ -165,7 +184,12 @@ struct KakaoMapView: UIViewRepresentable {
 
             // not focused
             let notFocusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin"))
-            let notFocusedTextStyle = TextStyle(fontSize: 24, fontColor: .black, strokeThickness: 2, strokeColor: .white)
+            let notFocusedTextStyle = TextStyle(
+                fontSize: 24,
+                fontColor: .black,
+                strokeThickness: 2,
+                strokeColor: .white
+            )
             let poiNotFocusedTextStyle = PoiTextStyle(textLineStyles: [
                 PoiTextLineStyle(textStyle: notFocusedTextStyle),
             ])
@@ -175,7 +199,12 @@ struct KakaoMapView: UIViewRepresentable {
 
             // focused(dim)
             let focusedIconStyle = PoiIconStyle(symbol: UIImage(named: "map.pin.dim"))
-            let focusedTextStyle = TextStyle(fontSize: 26, fontColor: .white, strokeThickness: 1, strokeColor: .init(.init(hex: "#8A8A8A")))
+            let focusedTextStyle = TextStyle(
+                fontSize: 26,
+                fontColor: .white,
+                strokeThickness: 1,
+                strokeColor: .init(.init(hex: "#8A8A8A"))
+            )
             let poiFocusedTextStyle = PoiTextStyle(textLineStyles: [
                 PoiTextLineStyle(textStyle: focusedTextStyle),
             ])
@@ -249,7 +278,8 @@ struct KakaoMapView: UIViewRepresentable {
             // marker
             for building in buildings {
                 let layer = manager.getLabelLayer(layerID: "poi\(building.offset)")
-                layer?.getAllPois()?.forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
+                layer?.getAllPois()?
+                    .forEach { $0.changeStyle(styleID: mapView.dimScreen.isEnabled ? "focused" : "notFocused") }
             }
         }
 
@@ -257,9 +287,9 @@ struct KakaoMapView: UIViewRepresentable {
             guard let naverMapURL = naverMapURL(coordinate: coordinate, label: label) else { return }
             guard let kakaoMapURL = kakaoMapURL(coordinate: coordinate) else { return }
             if UIApplication.shared.canOpenURL(naverMapURL) {
-                UIApplication.shared.open(naverMapURL)
+                UIApplication.shared.open(naverMapURL, options: [:]) { _ in }
             } else if UIApplication.shared.canOpenURL(kakaoMapURL) {
-                UIApplication.shared.open(kakaoMapURL)
+                UIApplication.shared.open(kakaoMapURL, options: [:]) { _ in }
             } else {
                 isMapNotInstalledAlertPresented = true
             }
@@ -268,14 +298,16 @@ struct KakaoMapView: UIViewRepresentable {
         private func naverMapURL(coordinate: GeoCoordinate, label: String?) -> URL? {
             guard let label = label else { return nil }
             let bundleID = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
-            let urlString = "nmap://place?lat=\(coordinate.latitude)&lng=\(coordinate.longitude)&name=\(label)&appname=" + bundleID
+            let urlString =
+                "nmap://place?lat=\(coordinate.latitude)&lng=\(coordinate.longitude)&name=\(label)&appname=" + bundleID
             guard let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
                   let url = URL(string: encodedString) else { return nil }
             return url
         }
 
         private func kakaoMapURL(coordinate: GeoCoordinate) -> URL? {
-            guard let url = URL(string: "kakaomap://look?p=\(coordinate.latitude),\(coordinate.longitude)") else { return nil }
+            guard let url = URL(string: "kakaomap://look?p=\(coordinate.latitude),\(coordinate.longitude)")
+            else { return nil }
             return url
         }
     }
