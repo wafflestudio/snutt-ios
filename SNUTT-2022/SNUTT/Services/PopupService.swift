@@ -55,7 +55,7 @@ extension PopupService {
             if popupDto.hiddenDays != localPopup.hiddenDays {
                 return .init(from: popupDto)
             }
-            return .init(from: localPopup, imageUri: popupDto.imageUri)
+            return .init(from: localPopup, imageUri: popupDto.imageUri, linkUrl: popupDto.linkUrl)
         }
     }
 }
