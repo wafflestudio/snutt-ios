@@ -6,6 +6,7 @@ import Popup
 import SharedUIComponents
 import SwiftUI
 import Timetable
+import Settings
 
 struct ContentView: View {
     @State private var viewModel = ContentViewModel()
@@ -33,7 +34,7 @@ struct ContentView: View {
                 TabScene(tabItem: TabItem.search)
                 TabScene(tabItem: TabItem.friends, rootView: ColorView(color: .yellow))
                 TabScene(tabItem: TabItem.review, rootView: ColorView(color: .green))
-                TabScene(tabItem: TabItem.settings, rootView: ColorView(color: .purple))
+                TabScene(tabItem: TabItem.settings, rootView: SettingsScene())
             }
             .ignoresSafeArea()
         }

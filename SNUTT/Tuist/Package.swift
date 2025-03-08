@@ -21,6 +21,8 @@ import PackageDescription
             "DependenciesAdditionsBasics": .framework,
             "UserDefaultsDependency": .framework,
             "IssueReporting": .framework,
+            "FirebaseCore": .staticLibrary,
+            "FirebaseMessaging": .staticLibrary,
             "KakaoMapsSDK-SPM": .staticLibrary,
         ],
         baseSettings: .settings(configurations: [
@@ -42,5 +44,6 @@ let package = Package(
         .package(url: "https://github.com/tgrapperon/swift-dependencies-additions", from: "1.1.1"),
         .package(url: "https://github.com/siteline/swiftui-introspect", from: "1.3.0"),
         .package(url: "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git", .upToNextMajor(from: "2.12.4")),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk", .upToNextMajor(from: "11.9.0")),
     ]
 )

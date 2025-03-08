@@ -24,3 +24,5 @@
 "error.unknown.title" = "Unknown Error";
 "error.unknown.message" = "An unknown error has occurred. Please try again later.";
 "error.dismiss" = "Dismiss";
+"alert.cancel" = "Cancel";
+"alert.delete" = "Delete";
