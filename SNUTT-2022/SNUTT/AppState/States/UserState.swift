@@ -5,6 +5,7 @@
 //  Created by Jinsup Keum on 2022/06/25.
 //
 
+import FirebaseAnalytics
 import SwiftUI
 
 class UserState {
@@ -13,5 +14,9 @@ class UserState {
     @Published var socialProvider: SocialProvider?
 
     /// Primary key of User. Required to logout. This is not `localId`.
-    var userId: String?
+    var userId: String? {
+        didSet {
+            Analytics.setUserID(userId)
+        }
+    }
 }

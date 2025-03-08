@@ -65,7 +65,11 @@ extension LectureDetailScene {
             }
 
             do {
-                try await lectureService.updateLecture(oldLecture: oldLecture, newLecture: newLecture, isForced: isForced)
+                try await lectureService.updateLecture(
+                    oldLecture: oldLecture,
+                    newLecture: newLecture,
+                    isForced: isForced
+                )
                 return true
             } catch let error as STError where error.code == .LECTURE_TIME_OVERLAP {
                 isLectureOverlapped = true
@@ -172,6 +176,10 @@ extension LectureDetailScene {
         }
 
         func bookmarkLecture(lecture: Lecture) async {
+            FirebaseAnalyticsLogger().logEvent(.addToBookmark(.init(
+                lectureID: lecture.referenceId,
+                referrer: .lectureDetail
+            )))
             do {
                 try await services.lectureService.bookmarkLecture(lecture: lecture)
             } catch {
@@ -194,6 +202,10 @@ extension LectureDetailScene {
         }
 
         func addVacancyLecture(lecture: Lecture) async {
+            FirebaseAnalyticsLogger().logEvent(.addToVacancy(.init(
+                lectureID: lecture.referenceId,
+                referrer: .lectureDetail
+            )))
             do {
                 try await services.vacancyService.addLecture(lecture: lecture)
             } catch let error as STError where error.code == .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION {
@@ -219,7 +231,9 @@ extension LectureDetailScene {
 
         var theme: Theme {
             if let currentTimetable = appState.timetable.current {
-                return appState.theme.themeList.first(where: { $0.id == currentTimetable.themeId || $0.theme == currentTimetable.theme }) ?? Theme(rawValue: 0)
+                return appState.theme.themeList
+                    .first(where: { $0.id == currentTimetable.themeId || $0.theme == currentTimetable.theme }) ??
+                    Theme(rawValue: 0)
             } else { return Theme(rawValue: 0) }
         }
 

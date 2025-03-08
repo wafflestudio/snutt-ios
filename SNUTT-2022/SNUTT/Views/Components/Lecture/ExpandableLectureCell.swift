@@ -34,7 +34,10 @@ struct ExpandableLectureCell: View {
                     if lecture.isCustom {
                         LectureDetailRow(imageName: "tag.white", text: "")
                     } else {
-                        LectureDetailRow(imageName: "tag.white", text: "\(lecture.department), \(lecture.academicYear)")
+                        LectureDetailRow(
+                            imageName: "tag.white",
+                            text: "\(lecture.department), \(lecture.academicYear)"
+                        )
                     }
                     HStack(spacing: 2) {
                         Image("search.rating.star")
@@ -92,7 +95,8 @@ struct ExpandableLectureCell: View {
                         }
 
                         LectureCellActionButton(
-                            icon: .asset(name: isVacancyNotificationEnabled ? "search.vacancy.fill" : "search.vacancy"),
+                            icon: .asset(name: isVacancyNotificationEnabled ? "search.vacancy.fill" :
+                                "search.vacancy"),
                             text: "빈자리알림"
                         ) {
                             if isVacancyNotificationEnabled {
@@ -113,13 +117,18 @@ struct ExpandableLectureCell: View {
                             }
                         }
                     }
-                    /// This `sheet` modifier should be called on `HStack` to prevent animation glitch when `dismiss`ed.
+                    /// This `sheet` modifier should be called on `HStack` to prevent animation glitch when
+                    /// `dismiss`ed.
                     .sheet(isPresented: $isReviewWebViewPresented) {
                         ReviewScene(
                             viewModel: .init(container: viewModel.container),
                             isMainWebView: false,
                             detailId: reviewDetailId
                         )
+                        .analyticsScreen(.reviewDetail(.init(
+                            lectureID: lecture.referenceId,
+                            referrer: viewModel.detailReferrer
+                        )))
                         .id(reviewDetailId)
                     }
                     .sheet(isPresented: $isDetailPagePresented) {
@@ -129,6 +138,10 @@ struct ExpandableLectureCell: View {
                                 lecture: lecture,
                                 displayMode: .preview(shouldHideDismissButton: false)
                             )
+                            .analyticsScreen(.lectureDetail(.init(
+                                lectureID: lecture.referenceId,
+                                referrer: viewModel.detailReferrer
+                            )))
                         }
                     }
                 }
@@ -173,7 +186,7 @@ extension ExpandableLectureCell {
         var errorTitle: String = ""
         var errorMessage: String = ""
 
-        private var searchState: SearchState {
+        var searchState: SearchState {
             appState.search
         }
 
@@ -185,11 +198,34 @@ extension ExpandableLectureCell {
             get { appState.system.selectedTab }
             set { services.globalUIService.setSelectedTab(newValue) }
         }
+
+        var detailReferrer: LectureDetailParameter.Referrer {
+            switch searchState.displayMode {
+            case .search:
+                .search(query: searchState.searchText)
+            case .bookmark:
+                .bookmark
+            }
+        }
+
+        var lectureActionReferrer: LectureActionReferrer {
+            switch searchState.displayMode {
+            case .search:
+                return .search(query: searchState.searchText)
+            case .bookmark:
+                return .bookmark
+            }
+        }
     }
 }
 
 extension ExpandableLectureCell.ViewModel {
     func addLecture(_ lecture: Lecture) async {
+        FirebaseAnalyticsLogger().logEvent(.addToTimetable(.init(
+            lectureID: lecture.referenceId,
+            timetableID: appState.timetable.current?.id,
+            referrer: lectureActionReferrer
+        )))
         do {
             try await services.lectureService.addLecture(lecture: lecture)
         } catch {
@@ -225,6 +261,10 @@ extension ExpandableLectureCell.ViewModel {
     }
 
     func addVacancyLecture(_ lecture: Lecture) async {
+        FirebaseAnalyticsLogger().logEvent(.addToVacancy(.init(
+            lectureID: lecture.referenceId,
+            referrer: lectureActionReferrer
+        )))
         do {
             try await services.vacancyService.addLecture(lecture: lecture)
         } catch {
@@ -241,6 +281,10 @@ extension ExpandableLectureCell.ViewModel {
     }
 
     func addBookmarkLecture(_ lecture: Lecture) async {
+        FirebaseAnalyticsLogger().logEvent(.addToBookmark(.init(
+            lectureID: lecture.referenceId,
+            referrer: lectureActionReferrer
+        )))
         isFirstBookmarkAlertPresented = appState.timetable.isFirstBookmark ?? false
         do {
             try await services.lectureService.bookmarkLecture(lecture: lecture)
