@@ -46,15 +46,16 @@ extension SNUTTApp {
         let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
         SDKInitializer.InitSDK(appKey: kakaoAppKey)
     }
-    
+
     /// Listens to the FCM token sent from `AppDelegate` and forwards it to the server.
     private func setFCMToken() {
-        NotificationCenter.default.addObserver(forName: Notification.Name("FCMToken"), object: nil, queue: .main) { notification in
-            guard let fcmToken = notification.userInfo?["token"] as? String else { return }
-            Task {
-                try await authUseCase.registerFCMToken(fcmToken)
+        NotificationCenter.default
+            .addObserver(forName: Notification.Name("FCMToken"), object: nil, queue: .main) { notification in
+                guard let fcmToken = notification.userInfo?["token"] as? String else { return }
+                Task {
+                    try await authUseCase.registerFCMToken(fcmToken)
+                }
+                print("FCM Token: \(fcmToken)")
             }
-            print("FCM Token: \(fcmToken)")
-        }
     }
 }

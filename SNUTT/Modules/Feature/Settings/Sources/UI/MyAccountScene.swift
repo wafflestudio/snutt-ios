@@ -5,21 +5,20 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 
 struct MyAccountScene: View {
-    
     @State private(set) var viewModel: MyAccountViewModel
     @State private var isNicknameCopiedAlertPresented = false
     @State private var isSignOutAlertPresented = false
-    
+
     @Environment(\.errorAlertHandler) private var errorAlertHandler
-    
+
     public init() {
-        self.viewModel = .init()
+        viewModel = .init()
     }
-    
+
     var body: some View {
         List {
             Section {
@@ -36,7 +35,7 @@ struct MyAccountScene: View {
                     isNicknameCopiedAlertPresented = true
                 }
             }
-            
+
             Section {
                 if true {
                     SettingsMenuItem(
@@ -54,21 +53,21 @@ struct MyAccountScene: View {
                     )
                 }
             }
-            
+
             Section {
                 SettingsNavigationItem(
                     title: SettingsStrings.accountSns,
                     destination: ColorView(color: .green)
                 )
             }
-            
+
             Section {
                 SettingsMenuItem(
                     title: SettingsStrings.accountEmail,
                     detail: "snutt@wafflestudio.com"
                 )
             }
-            
+
             Section {
                 SettingsMenuItem(
                     title: SettingsStrings.accountSignOut,
@@ -82,8 +81,8 @@ struct MyAccountScene: View {
         .navigationTitle(SettingsStrings.account)
         .alert(
             SettingsStrings.accountNicknameCopyAlert,
-            isPresented: $isNicknameCopiedAlertPresented) {
-        }
+            isPresented: $isNicknameCopiedAlertPresented
+        ) {}
         .alert(
             SettingsStrings.accountSignOutAlert,
             isPresented: $isSignOutAlertPresented
@@ -95,9 +94,7 @@ struct MyAccountScene: View {
             }
             Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
         }
-        .task {
-            
-        }
+        .task {}
     }
 }
 

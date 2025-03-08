@@ -1,6 +1,6 @@
 
 //
-//  AuthUseCase.swift
+//  AuthMainUseCase.swift
 //  SNUTT
 //
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
@@ -13,7 +13,7 @@ public struct AuthMainUseCase: AuthUseCase {
     @Dependency(\.authRepository) private var authRepository
     @Dependency(\.authState) private var authState
     @Dependency(\.authSecureRepository) private var secureRepository
-    
+
     public init() {}
 
     public func loginWithLocalID(localID: String, localPassword: String) async throws {
@@ -22,7 +22,7 @@ public struct AuthMainUseCase: AuthUseCase {
         authState.set(.accessToken, value: response.accessToken)
         authState.set(.userID, value: response.userID)
     }
-    
+
     public func logout() async throws {
         guard let fcmToken = authState.get(.fcmToken) else {
             return
@@ -31,12 +31,12 @@ public struct AuthMainUseCase: AuthUseCase {
         try secureRepository.clear()
         authState.clear()
     }
-    
+
     public func registerFCMToken(_ token: String) async throws {
-        try await authRepository.addDevice(fcmToken:token)
+        try await authRepository.addDevice(fcmToken: token)
         authState.set(.fcmToken, value: token)
     }
-    
+
     public func deleteAccount() async throws {
         try await authRepository.deleteAccount()
         try secureRepository.clear()

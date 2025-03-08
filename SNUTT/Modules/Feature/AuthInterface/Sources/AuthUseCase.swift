@@ -17,7 +17,8 @@ public protocol AuthUseCase: Sendable {
 }
 
 public enum AuthUseCaseKey:
-    TestDependencyKey {
+    TestDependencyKey
+{
     public static let testValue: any AuthUseCase = AuthUseCaseSpy()
     public static let previewValue: any AuthUseCase = AuthUseCaseSpy()
 }

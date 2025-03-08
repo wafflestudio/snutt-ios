@@ -3,10 +3,10 @@ import Auth
 import AuthInterface
 import Dependencies
 import Popup
+import Settings
 import SharedUIComponents
 import SwiftUI
 import Timetable
-import Settings
 
 struct ContentView: View {
     @State private var viewModel = ContentViewModel()

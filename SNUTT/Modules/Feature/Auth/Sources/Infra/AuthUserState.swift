@@ -72,7 +72,7 @@ extension UserDefaultsEntryDefinitions {
     var userID: UserDefaultsEntry<String?> {
         .init(key: "userID", defaultValue: nil)
     }
-    
+
     var fcmToken: UserDefaultsEntry<String?> {
         .init(key: "fcmToken", defaultValue: nil)
     }

@@ -9,10 +9,9 @@ import SwiftUI
 import TimetableUIComponents
 
 struct TimetableSettingView: View {
-    
     let makePainter: () -> TimetablePainter
     @Binding var config: TimetableConfiguration
-    
+
     var body: some View {
         Form {
             Section {
@@ -52,17 +51,16 @@ struct TimetableSettingView: View {
             } footer: {
                 Text(SettingsStrings.displayTableInfoWarning)
             }
-            
+
             // TODO: `시간표 범위 설정` 추가
-            
+
             Section(SettingsStrings.displayTablePreview) {
                 TimetableZStack(painter: makePainter())
                     .frame(height: 500)
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .stroke(lineWidth: 0.5)
-                        .foregroundColor(Color(UIColor.quaternaryLabel))
-                    )
+                        .foregroundColor(Color(UIColor.quaternaryLabel)))
                     .shadow(color: .black.opacity(0.05), radius: 3)
                     .padding(.vertical, 10)
             }

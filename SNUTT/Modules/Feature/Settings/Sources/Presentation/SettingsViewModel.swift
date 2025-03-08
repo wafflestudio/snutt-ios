@@ -14,32 +14,31 @@ import TimetableInterface
 import TimetableUIComponents
 
 @MainActor
-@Observable final class SettingsViewModel {
-    
+@Observable
+final class SettingsViewModel {
     @ObservationIgnored
     @Dependency(\.appMetadata) private var appMetadata: AppMetadata
-    
+
     @ObservationIgnored
     @Dependency(\.authUseCase) private var authUseCase
-    
+
     // FIXME: load currentTimetable
     private(set) var currentTimetable: (any Timetable)?
-    
+
     // FIXME: use shared config
     var configuration: TimetableConfiguration = .init()
-    
+
     var appVersion: String {
         appMetadata[.appVersion]
     }
-    
+
     func fetchUser() async throws {
         do {
-            
         } catch {
             throw error
         }
     }
-    
+
     func makePainter() -> TimetablePainter {
         TimetablePainter(
             currentTimetable: currentTimetable,
@@ -48,7 +47,7 @@ import TimetableUIComponents
             configuration: configuration
         )
     }
-    
+
     func logout() async throws {
         do {
             try await authUseCase.logout()

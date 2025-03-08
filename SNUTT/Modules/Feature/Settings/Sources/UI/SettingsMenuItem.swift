@@ -5,22 +5,21 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 
 struct SettingsMenuItem: View {
-    
     let title: String
     var leadingImage: Image? = nil
-    
+
     var detail: String? = nil
     var detailImage: Image? = nil
-    
+
     var destructive: Bool = false
     var showNewBadge: Bool = false
-    
+
     var onTap: (() -> Void)? = nil
-    
+
     var body: some View {
         Button {
             onTap?()
@@ -33,8 +32,8 @@ struct SettingsMenuItem: View {
                 Text(title)
                     .font(.system(size: 16))
                     .foregroundStyle(destructive
-                                     ? SharedUIComponentsAsset.red.swiftUIColor
-                                     : Color.primary)
+                        ? SharedUIComponentsAsset.red.swiftUIColor
+                        : Color.primary)
                 if showNewBadge {
                     Spacer().frame(width: 6)
                     NewBadge()
@@ -60,16 +59,16 @@ struct SettingsMenuItem: View {
 struct SettingsNavigationItem<Destination>: View where Destination: View {
     let title: String
     var leadingImage: Image? = nil
-    
+
     var detail: String? = nil
     var detailImage: Image? = nil
-    
+
     var destructive: Bool = false
     var showNewBadge: Bool = false
     var destination: Destination
-    
+
     var onTap: (() -> Void)? = nil
-    
+
     var body: some View {
         NavigationLink {
             destination

@@ -10,10 +10,11 @@ import Dependencies
 import Observation
 
 @MainActor
-@Observable final class MyAccountViewModel {
+@Observable
+final class MyAccountViewModel {
     @ObservationIgnored
     @Dependency(\.authUseCase) private var authUseCase
-    
+
     func deleteAccount() async throws {
         do {
             try await authUseCase.deleteAccount()

@@ -5,20 +5,19 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 
 public struct SettingsScene: View {
-    
     @State private(set) var viewModel: SettingsViewModel
     @State private var isLogoutAlertPresented = false
-    
+
     @Environment(\.errorAlertHandler) private var errorAlertHandler
-    
+
     public init() {
-        self.viewModel = .init()
+        viewModel = .init()
     }
-    
+
     public var body: some View {
         NavigationStack {
             List {
@@ -45,7 +44,10 @@ public struct SettingsScene: View {
                     )
                     SettingsNavigationItem(
                         title: SettingsStrings.displayTable,
-                        destination: TimetableSettingView(makePainter: viewModel.makePainter, config: $viewModel.configuration)
+                        destination: TimetableSettingView(
+                            makePainter: viewModel.makePainter,
+                            config: $viewModel.configuration
+                        )
                     )
                     SettingsNavigationItem(
                         title: SettingsStrings.displayTheme,
@@ -126,9 +128,7 @@ public struct SettingsScene: View {
             }
             Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
         }
-        .task {
-            
-        }
+        .task {}
     }
 }
 
