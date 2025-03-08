@@ -52,7 +52,7 @@ extension SNUTTApp {
         NotificationCenter.default.addObserver(forName: Notification.Name("FCMToken"), object: nil, queue: .main) { notification in
             guard let fcmToken = notification.userInfo?["token"] as? String else { return }
             Task {
-                try await authUseCase.addDevice(fcmToken: fcmToken)
+                try await authUseCase.registerFCMToken(fcmToken)
             }
             print("FCM Token: \(fcmToken)")
         }

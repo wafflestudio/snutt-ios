@@ -12,7 +12,8 @@ import Spyable
 public protocol AuthUseCase: Sendable {
     func loginWithLocalID(localID: String, localPassword: String) async throws
     func logout() async throws
-    func addDevice(fcmToken: String) async throws
+    func registerFCMToken(_ token: String) async throws
+    func deleteAccount() async throws
 }
 
 public enum AuthUseCaseKey:

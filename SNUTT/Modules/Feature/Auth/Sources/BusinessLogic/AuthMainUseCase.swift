@@ -28,11 +28,18 @@ public struct AuthMainUseCase: AuthUseCase {
             return
         }
         try await authRepository.logout(fcmToken: fcmToken)
+        try secureRepository.clear()
         authState.clear()
     }
     
-    public func addDevice(fcmToken: String) async throws {
-        try await authRepository.addDevice(fcmToken: fcmToken)
-        authState.set(.fcmToken, value: fcmToken)
+    public func registerFCMToken(_ token: String) async throws {
+        try await authRepository.addDevice(fcmToken:token)
+        authState.set(.fcmToken, value: token)
+    }
+    
+    public func deleteAccount() async throws {
+        try await authRepository.deleteAccount()
+        try secureRepository.clear()
+        authState.clear()
     }
 }

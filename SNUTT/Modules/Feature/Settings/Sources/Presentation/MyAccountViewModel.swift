@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import AuthInterface
 import Dependencies
-import Auth
 import Observation
 
 @MainActor
@@ -16,7 +16,7 @@ import Observation
     
     func deleteAccount() async throws {
         do {
-            //try await authUseCase.deleteAccount()
+            try await authUseCase.deleteAccount()
         } catch {
             throw error
         }

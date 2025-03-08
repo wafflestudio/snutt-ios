@@ -115,7 +115,10 @@ public struct SettingsScene: View {
             .navigationTitle(SettingsStrings.settings)
             .navigationBarTitleDisplayMode(.inline)
         }
-        .alert(SettingsStrings.logoutAlert, isPresented: $isLogoutAlertPresented) {
+        .alert(
+            SettingsStrings.logoutAlert,
+            isPresented: $isLogoutAlertPresented
+        ) {
             Button(SettingsStrings.logout, role: .destructive) {
                 Task {
                     await logout()

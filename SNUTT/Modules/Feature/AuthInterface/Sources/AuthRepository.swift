@@ -23,6 +23,7 @@ public protocol AuthRepository: Sendable {
 //    func checkVerificationCode(localId: String, code: String) async throws
 //    func resetPassword(localId: String, password: String) async throws
     func logout(fcmToken: String) async throws
+    func deleteAccount() async throws
 }
 
 @MemberwiseInit(.public)
