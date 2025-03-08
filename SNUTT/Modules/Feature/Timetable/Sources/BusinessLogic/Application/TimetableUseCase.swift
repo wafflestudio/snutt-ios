@@ -14,13 +14,13 @@ import Foundation
 import Spyable
 import TimetableInterface
 
-public struct TimetableUseCase: Sendable {
+struct TimetableUseCase {
     @Dependency(\.timetableRepository) private var timetableRepository
     @Dependency(\.timetableLocalRepository) private var timetableLocalRepository
     @Dependency(\.userDefaults) private var userDefaults
     @Dependency(\.authState) private var authState
 
-    public func loadRecentTimetable() async throws -> any Timetable {
+    func loadRecentTimetable() async throws -> any Timetable {
         if let localTimetable = try? timetableLocalRepository.loadSelectedTimetable(),
            authState.get(.userID) == localTimetable.userID
         {
@@ -50,8 +50,8 @@ public struct TimetableUseCase: Sendable {
     }
 }
 
-extension TimetableUseCase: DependencyKey {
-    public static let liveValue: TimetableUseCase = withDependencies {
+private struct TimetableUseCaseKey: DependencyKey {
+    static let liveValue: TimetableUseCase = withDependencies {
         $0.userDefaults = .init(suitename: "group.\($0.bundleInfo.bundleIdentifier)") ?? .standard
     } operation: {
         TimetableUseCase()
@@ -59,8 +59,8 @@ extension TimetableUseCase: DependencyKey {
 }
 
 extension DependencyValues {
-    public var timetableUseCase: TimetableUseCase {
-        get { self[TimetableUseCase.self] }
-        set { self[TimetableUseCase.self] = newValue }
+    var timetableUseCase: TimetableUseCase {
+        get { self[TimetableUseCaseKey.self] }
+        set { self[TimetableUseCaseKey.self] = newValue }
     }
 }
