@@ -9,12 +9,14 @@
 import AuthInterface
 import Dependencies
 
-public struct AuthUseCase: Sendable {
+public struct AuthMainUseCase: AuthUseCase {
     @Dependency(\.authRepository) private var authRepository
     @Dependency(\.authState) private var authState
     @Dependency(\.authSecureRepository) private var secureRepository
+    
+    public init() {}
 
-    func loginWithLocalID(localID: String, localPassword: String) async throws {
+    public func loginWithLocalID(localID: String, localPassword: String) async throws {
         let response = try await authRepository.loginWithLocalID(localID: localID, localPassword: localPassword)
         try secureRepository.saveAccessToken(response.accessToken)
         authState.set(.accessToken, value: response.accessToken)
@@ -32,16 +34,5 @@ public struct AuthUseCase: Sendable {
     public func addDevice(fcmToken: String) async throws {
         try await authRepository.addDevice(fcmToken: fcmToken)
         authState.set(.fcmToken, value: fcmToken)
-    }
-}
-
-extension AuthUseCase: DependencyKey {
-    public static let liveValue: AuthUseCase = .init()
-}
-
-extension DependencyValues {
-    public var authUseCase: AuthUseCase {
-        get { self[AuthUseCase.self] }
-        set { self[AuthUseCase.self] = newValue }
     }
 }

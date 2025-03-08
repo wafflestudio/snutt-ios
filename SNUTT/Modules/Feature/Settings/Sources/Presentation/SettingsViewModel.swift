@@ -5,12 +5,11 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import Auth
+import AuthInterface
 import Dependencies
 import Foundation
 import Observation
 import SharedAppMetadata
-import Timetable
 import TimetableInterface
 import TimetableUIComponents
 
@@ -21,11 +20,9 @@ import TimetableUIComponents
     @Dependency(\.appMetadata) private var appMetadata: AppMetadata
     
     @ObservationIgnored
-    @Dependency(\.authUseCase) private var authUseCase: AuthUseCase
+    @Dependency(\.authUseCase) private var authUseCase
     
-    @ObservationIgnored
-    @Dependency(\.timetableUseCase) private var timetableUseCase: TimetableUseCase
-    
+    // FIXME: load currentTimetable
     private(set) var currentTimetable: (any Timetable)?
     
     // FIXME: use shared config
@@ -33,6 +30,14 @@ import TimetableUIComponents
     
     var appVersion: String {
         appMetadata[.appVersion]
+    }
+    
+    func fetchUser() async throws {
+        do {
+            
+        } catch {
+            throw error
+        }
     }
     
     func makePainter() -> TimetablePainter {
@@ -43,12 +48,12 @@ import TimetableUIComponents
             configuration: configuration
         )
     }
-
-    func loadTimetable() async throws {
-        currentTimetable = try await timetableUseCase.loadRecentTimetable()
-    }
     
     func logout() async throws {
-        try await authUseCase.logout()
+        do {
+            try await authUseCase.logout()
+        } catch {
+            throw error
+        }
     }
 }
