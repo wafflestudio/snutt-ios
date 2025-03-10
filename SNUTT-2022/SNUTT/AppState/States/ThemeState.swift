@@ -34,7 +34,7 @@ class ThemeMarketViewPreloadManager {
         eventSignal = eventSignal ?? .init()
         webView = WKWebView(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken, type: "theme"))
         coordinator = coordinator ?? Coordinator(eventSignal: eventSignal!)
-        webView?.scrollView.bounces = false
+        webView?.scrollView.bounces = true
         webView?.backgroundColor = UIColor(STColor.systemBackground)
         webView?.isOpaque = false
         webView?.configuration.userContentController.add(coordinator!, name: "snutt")
