@@ -89,6 +89,14 @@ struct ThemeSettingScene: View {
             }
             .accentColor(Color(UIColor.label))
         })
+        .sheet(isPresented: $viewModel.isDownloadedThemeSheetOpen, content: {
+            ZStack {
+                NavigationView {
+                    ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.targetTheme ?? viewModel.newTheme, themeType: .downloaded)
+                }
+            }
+            .accentColor(Color(UIColor.label))
+        })
     }
 }
 
