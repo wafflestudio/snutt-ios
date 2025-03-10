@@ -23,7 +23,7 @@ struct ThemeMarketScene: View {
         viewModel.getPreloadedWebView().eventSignal
     }
 
-    private var themeMarketUrl: URL = WebViewType.themeMarket.url
+    let themeMarketUrl: URL = WebViewType.themeMarket.url
 
     var body: some View {
         ZStack {
