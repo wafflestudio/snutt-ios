@@ -35,7 +35,8 @@ struct ThemeSettingScene: View {
             }
             ThemeBottomSheet(isOpen: $viewModel.isBottomSheetOpen,
                              targetTheme: viewModel.targetTheme,
-                             openCustomThemeSheet: viewModel.openCustomThemeSheet, openDownloadedThemeSheet: viewModel.openDownloadedThemeSheet,
+                             openCustomThemeSheet: viewModel.openCustomThemeSheet,
+                             openDownloadedThemeSheet: viewModel.openDownloadedThemeSheet,
                              copyTheme: viewModel.copyTheme,
                              deleteTheme: viewModel.deleteTheme)
         }
@@ -84,7 +85,11 @@ struct ThemeSettingScene: View {
         .sheet(isPresented: $viewModel.isDownloadedThemeSheetOpen, content: {
             ZStack {
                 NavigationView {
-                    ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.targetTheme ?? viewModel.newTheme, themeType: .downloaded)
+                    ThemeDetailScene(
+                        viewModel: .init(container: viewModel.container),
+                        theme: viewModel.targetTheme ?? viewModel.newTheme,
+                        themeType: .downloaded
+                    )
                 }
             }
             .accentColor(Color(UIColor.label))
@@ -92,7 +97,11 @@ struct ThemeSettingScene: View {
         .sheet(isPresented: $viewModel.isDownloadedThemeSheetOpen, content: {
             ZStack {
                 NavigationView {
-                    ThemeDetailScene(viewModel: .init(container: viewModel.container), theme: viewModel.targetTheme ?? viewModel.newTheme, themeType: .downloaded)
+                    ThemeDetailScene(
+                        viewModel: .init(container: viewModel.container),
+                        theme: viewModel.targetTheme ?? viewModel.newTheme,
+                        themeType: .downloaded
+                    )
                 }
             }
             .accentColor(Color(UIColor.label))

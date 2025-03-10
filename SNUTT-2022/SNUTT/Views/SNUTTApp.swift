@@ -23,8 +23,7 @@ struct SNUTTApp: App {
             appState: appEnvironment.container.appState,
             timetableService: appEnvironment.container.services.timetableService,
             lectureService: appEnvironment.container.services.lectureService
-        )
-        )
+        ))
         let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
         KakaoSDK.initSDK(appKey: kakaoAppKey)
         SDKInitializer.InitSDK(appKey: kakaoAppKey)

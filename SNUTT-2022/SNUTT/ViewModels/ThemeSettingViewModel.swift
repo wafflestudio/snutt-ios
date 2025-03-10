@@ -87,7 +87,12 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
     }
 
     var newTheme: Theme {
-        let theme: Theme = .init(id: UUID().uuidString, name: "새 테마", colors: [LectureColor(fg: Color.white, bg: STColor.cyan)], isCustom: true)
+        let theme: Theme = .init(
+            id: UUID().uuidString,
+            name: "새 테마",
+            colors: [LectureColor(fg: Color.white, bg: STColor.cyan)],
+            isCustom: true
+        )
         return theme
     }
 

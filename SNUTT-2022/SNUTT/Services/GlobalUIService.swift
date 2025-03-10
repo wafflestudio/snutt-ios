@@ -60,11 +60,18 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
 
     func setColorScheme(_ colorScheme: ColorScheme?) {
         appState.system.preferredColorScheme = colorScheme
-        localRepositories.userDefaultsRepository.set(String.self, key: .preferredColorScheme, value: colorScheme?.description)
+        localRepositories.userDefaultsRepository.set(
+            String.self,
+            key: .preferredColorScheme,
+            value: colorScheme?.description
+        )
     }
 
     func loadColorSchemeDuringBootstrap() {
-        let colorSchemeDescription = localRepositories.userDefaultsRepository.get(String.self, key: .preferredColorScheme)
+        let colorSchemeDescription = localRepositories.userDefaultsRepository.get(
+            String.self,
+            key: .preferredColorScheme
+        )
         let colorScheme = ColorScheme.from(description: colorSchemeDescription)
         appState.system.preferredColorScheme = colorScheme
     }
@@ -96,7 +103,8 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
         appState.menu.isEllipsisSheetOpen = false
         appState.menu.isThemeSheetOpen = true
         if let currentTimetable = appState.timetable.current {
-            appState.timetable.current?.selectedTheme = appState.theme.themeList.first(where: { $0.id == currentTimetable.themeId || $0.theme == currentTimetable.theme })
+            appState.timetable.current?.selectedTheme = appState.theme.themeList
+                .first(where: { $0.id == currentTimetable.themeId || $0.theme == currentTimetable.theme })
         }
     }
 

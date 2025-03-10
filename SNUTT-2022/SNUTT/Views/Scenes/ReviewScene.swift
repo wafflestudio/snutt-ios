@@ -115,7 +115,10 @@ extension ReviewScene {
 
             // make sure the webview has all required cookies
             if let accessToken = appState.user.accessToken {
-                webviewManager.webView?.setCookies(cookies: NetworkConfiguration.getCookiesFrom(accessToken: accessToken, type: "review"))
+                webviewManager.webView?.setCookies(cookies: NetworkConfiguration.getCookiesFrom(
+                    accessToken: accessToken,
+                    type: "review"
+                ))
             }
 
             return webviewManager

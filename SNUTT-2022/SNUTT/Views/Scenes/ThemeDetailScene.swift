@@ -133,8 +133,16 @@ struct ThemeDetailScene: View {
                                 if openPickerIndex == index {
                                     VStack {
                                         Group {
-                                            ColorPicker("글꼴색", selection: $theme.colors[index].fg, supportsOpacity: false)
-                                            ColorPicker("배경색", selection: $theme.colors[index].bg, supportsOpacity: false)
+                                            ColorPicker(
+                                                "글꼴색",
+                                                selection: $theme.colors[index].fg,
+                                                supportsOpacity: false
+                                            )
+                                            ColorPicker(
+                                                "배경색",
+                                                selection: $theme.colors[index].bg,
+                                                supportsOpacity: false
+                                            )
                                         }
                                         .foregroundColor(STColor.disabled)
                                         .font(STFont.regular14.font)
@@ -201,8 +209,7 @@ struct ThemeDetailScene: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous)
                         .stroke(lineWidth: 0.5)
-                        .foregroundColor(Color(UIColor.quaternaryLabel))
-                    )
+                        .foregroundColor(Color(UIColor.quaternaryLabel)))
                     .shadow(color: .black.opacity(0.05), radius: 3)
                     .padding(15)
                     .environment(\.dependencyContainer, nil)
@@ -291,7 +298,16 @@ struct ThemeDetailScene: View {
 #if DEBUG
     struct ThemeDetailScene_Previews: PreviewProvider {
         static var previews: some View {
-            ThemeDetailScene(viewModel: .init(container: .preview), theme: .init(id: UUID().uuidString, name: "새 테마", colors: [LectureColor(fg: Color.white, bg: STColor.cyan)], isCustom: true), themeType: .new)
+            ThemeDetailScene(
+                viewModel: .init(container: .preview),
+                theme: .init(
+                    id: UUID().uuidString,
+                    name: "새 테마",
+                    colors: [LectureColor(fg: Color.white, bg: STColor.cyan)],
+                    isCustom: true
+                ),
+                themeType: .new
+            )
         }
     }
 #endif

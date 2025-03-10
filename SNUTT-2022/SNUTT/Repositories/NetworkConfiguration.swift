@@ -53,6 +53,14 @@ struct NetworkConfiguration {
               let buildNumberCookie = cookieProvider(AppMetadata.buildNumber.key, AppMetadata.buildNumber.value)
         else { return [] }
 
-        return [apiKeyCookie, tokenCookie, osTypeCookie, osVersionCookie, appVersionCookie, appTypeCookie, buildNumberCookie]
+        return [
+            apiKeyCookie,
+            tokenCookie,
+            osTypeCookie,
+            osVersionCookie,
+            appVersionCookie,
+            appTypeCookie,
+            buildNumberCookie,
+        ]
     }
 }

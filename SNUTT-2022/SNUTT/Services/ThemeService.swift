@@ -96,11 +96,17 @@ struct ThemeService: ThemeServiceProtocol {
     }
 
     func addTheme(theme: Theme, apply: Bool) async throws {
-        let dto = try await themeRepository.addTheme(name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
+        let dto = try await themeRepository.addTheme(
+            name: theme.name,
+            colors: theme.colors.map { ThemeColorDto(from: $0) }
+        )
         let themeData = Theme(from: dto)
         if apply {
             guard let timetableId = appState.timetable.current?.id else { return }
-            let dto = try await timetableRepository.updateTimetableTheme(withTimetableId: timetableId, withTheme: themeData)
+            let dto = try await timetableRepository.updateTimetableTheme(
+                withTimetableId: timetableId,
+                withTheme: themeData
+            )
             let timetable = Timetable(from: dto)
             if appState.timetable.current?.id == timetableId {
                 appState.timetable.current = timetable
@@ -112,7 +118,11 @@ struct ThemeService: ThemeServiceProtocol {
     }
 
     func updateTheme(themeId: String, theme: Theme) async throws {
-        let _ = try await themeRepository.updateTheme(themeId: themeId, name: theme.name, colors: theme.colors.map { ThemeColorDto(from: $0) })
+        let _ = try await themeRepository.updateTheme(
+            themeId: themeId,
+            name: theme.name,
+            colors: theme.colors.map { ThemeColorDto(from: $0) }
+        )
         let dtos = try await themeRepository.getThemeList()
         let themeList = dtos.map { Theme(from: $0) }
         appState.theme.themeList = themeList

@@ -39,7 +39,8 @@ struct FilterSheetContent: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .contentShape(Rectangle())
                                     .font(.system(size: 18, weight: .semibold))
-                                    .foregroundColor(isSelected ? Color(uiColor: .label) : Color(uiColor: .label.withAlphaComponent(0.5)))
+                                    .foregroundColor(isSelected ? Color(uiColor: .label) :
+                                        Color(uiColor: .label.withAlphaComponent(0.5)))
                             }
                             .buttonStyle(.plain)
                         }
@@ -59,13 +60,23 @@ struct FilterSheetContent: View {
                                     .padding(.horizontal, 20)
                                     .padding(.vertical, 7)
                                 ForEach(viewModel.pinnedTagList) {
-                                    tag in FilterTagButton(tag: tag, isPinned: true, viewModel: viewModel, isTimeRangeSheetOpen: $isTimeRangeSheetOpen)
+                                    tag in FilterTagButton(
+                                        tag: tag,
+                                        isPinned: true,
+                                        viewModel: viewModel,
+                                        isTimeRangeSheetOpen: $isTimeRangeSheetOpen
+                                    )
                                 }
                                 Divider()
                             }
                         }
                         ForEach(viewModel.filterTags(with: selectedCategory)) { tag in
-                            FilterTagButton(tag: tag, isPinned: false, viewModel: viewModel, isTimeRangeSheetOpen: $isTimeRangeSheetOpen)
+                            FilterTagButton(
+                                tag: tag,
+                                isPinned: false,
+                                viewModel: viewModel,
+                                isTimeRangeSheetOpen: $isTimeRangeSheetOpen
+                            )
                         }
                     }
                 }
@@ -97,7 +108,10 @@ struct FilterSheetContent: View {
         .sheet(isPresented: $isTimeRangeSheetOpen) {
             if let timetable = viewModel.currentTimetable {
                 NavigationView {
-                    TimeRangeSelectionSheet(currentTimetable: timetable, selectedTimeRange: $viewModel.selectedTimeRange) {
+                    TimeRangeSelectionSheet(
+                        currentTimetable: timetable,
+                        selectedTimeRange: $viewModel.selectedTimeRange
+                    ) {
                         viewModel.selectTimeRangeTag()
                     }
                     .navigationBarTitleDisplayMode(.inline)

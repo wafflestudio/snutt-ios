@@ -63,13 +63,14 @@ extension AppEnvironment {
         let container = DIContainer(appState: appState, services: services)
 
         /// Listens to the FCM token sent from `AppDelegate` and forwards it to the server.
-        NotificationCenter.default.addObserver(forName: Notification.Name("FCMToken"), object: nil, queue: .main) { notification in
-            guard let fcmToken = notification.userInfo?["token"] as? String else { return }
-            Task {
-                try await services.userService.addDevice(fcmToken: fcmToken)
+        NotificationCenter.default
+            .addObserver(forName: Notification.Name("FCMToken"), object: nil, queue: .main) { notification in
+                guard let fcmToken = notification.userInfo?["token"] as? String else { return }
+                Task {
+                    try await services.userService.addDevice(fcmToken: fcmToken)
+                }
+                print("FCM Token: \(fcmToken)")
             }
-            print("FCM Token: \(fcmToken)")
-        }
 
         /// We need to load access token ASAP in order to determine which screen to show first.
         /// Note that this should run synchronously on the main thread.
@@ -125,20 +126,64 @@ extension AppEnvironment {
         return .init(userDefaultsRepository: userDefaultsRepository)
     }
 
-    private static func configuredServices(appState: AppState, webRepositories: WebRepositories, localRepositories: LocalRepositories) -> Services {
-        let timetableService = TimetableService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
-        let userService = UserService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
-        let lectureService = LectureService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
-        let searchService = SearchService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
-        let globalUIService = GlobalUIService(appState: appState, localRepositories: localRepositories, webRepositories: webRepositories)
+    private static func configuredServices(
+        appState: AppState,
+        webRepositories: WebRepositories,
+        localRepositories: LocalRepositories
+    ) -> Services {
+        let timetableService = TimetableService(
+            appState: appState,
+            webRepositories: webRepositories,
+            localRepositories: localRepositories
+        )
+        let userService = UserService(
+            appState: appState,
+            webRepositories: webRepositories,
+            localRepositories: localRepositories
+        )
+        let lectureService = LectureService(
+            appState: appState,
+            webRepositories: webRepositories,
+            localRepositories: localRepositories
+        )
+        let searchService = SearchService(
+            appState: appState,
+            webRepositories: webRepositories,
+            localRepositories: localRepositories
+        )
+        let globalUIService = GlobalUIService(
+            appState: appState,
+            localRepositories: localRepositories,
+            webRepositories: webRepositories
+        )
         let courseBookService = CourseBookService(appState: appState, webRepositories: webRepositories)
-        let authService = AuthService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
+        let authService = AuthService(
+            appState: appState,
+            webRepositories: webRepositories,
+            localRepositories: localRepositories
+        )
         let notificationService = NotificationService(appState: appState, webRepositories: webRepositories)
-        let popupService = PopupService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
+        let popupService = PopupService(
+            appState: appState,
+            webRepositories: webRepositories,
+            localRepositories: localRepositories
+        )
         let etcService = EtcService(appState: appState, webRepositories: webRepositories)
-        let vacancyService = VacancyService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
-        let friendsService = FriendsService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
-        let themeService = ThemeService(appState: appState, webRepositories: webRepositories, localRepositories: localRepositories)
+        let vacancyService = VacancyService(
+            appState: appState,
+            webRepositories: webRepositories,
+            localRepositories: localRepositories
+        )
+        let friendsService = FriendsService(
+            appState: appState,
+            webRepositories: webRepositories,
+            localRepositories: localRepositories
+        )
+        let themeService = ThemeService(
+            appState: appState,
+            webRepositories: webRepositories,
+            localRepositories: localRepositories
+        )
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
