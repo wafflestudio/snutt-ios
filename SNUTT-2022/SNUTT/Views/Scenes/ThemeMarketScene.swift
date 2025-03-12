@@ -43,15 +43,7 @@ struct ThemeMarketScene: View {
             }
         }
         .onAppear {
-            eventSignal?.send(.colorSchemeChange(to: viewModel.preferredColorScheme))
-        }
-        /// Respond to changes of preferred color scheme in `SettingScene`.
-        .onChange(of: viewModel.preferredColorScheme) { newValue in
-            eventSignal?.send(.colorSchemeChange(to: newValue))
-        }
-        /// Respond to changes of system color scheme.
-        .onChange(of: colorScheme) { newValue in
-            eventSignal?.send(.colorSchemeChange(to: newValue))
+            eventSignal?.send(.reload(url: themeMarketUrl))
         }
         .onReceive(eventSignal ?? .init()) { signal in
             switch signal {
