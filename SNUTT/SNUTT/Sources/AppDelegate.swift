@@ -22,12 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        
         // MARK: Initialize KakaoMapSDK
-        
+
         let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
         SDKInitializer.InitSDK(appKey: kakaoAppKey)
-        
+
         // MARK: Configure Firebase
 
         if let filePath = Bundle.main.path(forResource: firebaseConfigName, ofType: "plist"),

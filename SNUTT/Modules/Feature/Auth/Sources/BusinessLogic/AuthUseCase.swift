@@ -14,7 +14,7 @@ public struct AuthUseCase: AuthUseCaseProtocol {
     @Dependency(\.authSecureRepository) private var secureRepository
 
     public init() {}
-    
+
     public func syncAuthState() {
         if let userID = authState.get(.userID) {
             // If userID exists in userDefaults, store it into in-memory store
