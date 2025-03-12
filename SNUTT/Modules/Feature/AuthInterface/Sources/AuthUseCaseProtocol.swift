@@ -10,6 +10,7 @@ import Spyable
 
 @Spyable
 public protocol AuthUseCaseProtocol: Sendable {
+    func syncAuthState()
     func loginWithLocalID(localID: String, localPassword: String) async throws
     func logout() async throws
     func registerFCMToken(_ token: String) async throws

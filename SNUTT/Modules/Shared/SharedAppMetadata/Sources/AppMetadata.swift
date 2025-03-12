@@ -18,7 +18,7 @@ extension DependencyValues {
 }
 
 public struct AppMetadata: Sendable {
-    @Dependency(\.bundleInfo.shortVersion) private var version
+    @Dependency(\.bundleInfo.version) private var version
     @Dependency(\.syncDevice.systemVersion) private var systemVersion
     @Dependency(\.syncDevice.name) private var modelName
     @Dependency(\.syncDevice.identifierForVendor) private var identifierForVendor

@@ -77,8 +77,7 @@ extension Project {
         dependencies: [TargetDependency]
     ) -> (Target, Target) {
         let infoPlist: [String: Plist.Value] = [
-            "CFBundleShortVersionString": "1.0",
-            "CFBundleVersion": "1",
+            "CFBundleVersion": "1.0.0",
             "UILaunchStoryboardName": "LaunchScreen",
             "API_SERVER_URL": "$(API_SERVER_URL)",
             "API_KEY": "$(API_KEY)",

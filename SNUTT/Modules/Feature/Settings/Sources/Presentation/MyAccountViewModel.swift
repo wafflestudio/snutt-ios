@@ -16,10 +16,6 @@ final class MyAccountViewModel {
     @Dependency(\.authUseCase) private var authUseCase
 
     func deleteAccount() async throws {
-        do {
-            try await authUseCase.deleteAccount()
-        } catch {
-            throw error
-        }
+        try await authUseCase.deleteAccount()
     }
 }
