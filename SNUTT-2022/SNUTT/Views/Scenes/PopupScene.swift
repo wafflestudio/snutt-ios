@@ -21,6 +21,7 @@ struct PopupScene: View {
                     PopupView(popup: currentPopup,
                               dismiss: viewModel.dismiss(popup:dontShowForWhile:))
                         .padding(.horizontal, reader.size.width * 0.1)
+                        .analyticsScreen(.popup)
                 }
             }
         }

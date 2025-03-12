@@ -35,6 +35,7 @@ struct FilterSheetScene: View {
                 FilterSheetContent(viewModel: viewModel)
             }
         }
+        .analyticsScreen(.searchFilter, isVisible: viewModel.isFilterOpen)
         .ignoresSafeArea(.keyboard)
     }
 }

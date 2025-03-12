@@ -287,9 +287,9 @@ struct KakaoMapView: UIViewRepresentable {
             guard let naverMapURL = naverMapURL(coordinate: coordinate, label: label) else { return }
             guard let kakaoMapURL = kakaoMapURL(coordinate: coordinate) else { return }
             if UIApplication.shared.canOpenURL(naverMapURL) {
-                UIApplication.shared.open(naverMapURL)
+                UIApplication.shared.open(naverMapURL, options: [:]) { _ in }
             } else if UIApplication.shared.canOpenURL(kakaoMapURL) {
-                UIApplication.shared.open(kakaoMapURL)
+                UIApplication.shared.open(kakaoMapURL, options: [:]) { _ in }
             } else {
                 isMapNotInstalledAlertPresented = true
             }
