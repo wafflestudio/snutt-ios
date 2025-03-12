@@ -25,7 +25,7 @@ extension AuthRepositoryKey: @retroactive DependencyKey {
 }
 
 extension AuthUseCaseKey: @retroactive DependencyKey {
-    public static let liveValue: any AuthUseCase = AuthMainUseCase()
+    public static let liveValue: any AuthUseCaseProtocol = AuthUseCase()
 }
 
 extension AuthStateKey: @retroactive DependencyKey {

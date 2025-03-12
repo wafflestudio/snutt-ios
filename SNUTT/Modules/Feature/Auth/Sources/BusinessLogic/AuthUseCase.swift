@@ -1,6 +1,5 @@
-
 //
-//  AuthMainUseCase.swift
+//  AuthUseCase.swift
 //  SNUTT
 //
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
@@ -9,7 +8,7 @@
 import AuthInterface
 import Dependencies
 
-public struct AuthMainUseCase: AuthUseCase {
+public struct AuthUseCase: AuthUseCaseProtocol {
     @Dependency(\.authRepository) private var authRepository
     @Dependency(\.authState) private var authState
     @Dependency(\.authSecureRepository) private var secureRepository

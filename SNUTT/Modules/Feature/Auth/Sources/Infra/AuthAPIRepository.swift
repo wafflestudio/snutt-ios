@@ -10,7 +10,7 @@ import AuthInterface
 import Dependencies
 
 public struct AuthAPIRepository: AuthRepository {
-    @Dependency(\DependencyValues.apiClient) private var apiClient
+    @Dependency(\.apiClient) private var apiClient
 
     public init() {}
 
