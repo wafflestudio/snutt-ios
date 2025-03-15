@@ -10,7 +10,6 @@ import DependenciesUtility
 import MemberwiseInit
 import SharedUIComponents
 import SwiftUI
-import SwiftUIIntrospect
 import TimetableInterface
 
 struct LectureEditDetailScene: View {
@@ -45,9 +44,7 @@ struct LectureEditDetailScene: View {
             .padding(.vertical, 20)
             .padding(.bottom, 40)
         }
-        .introspect(.scrollView, on: .iOS(.v17, .v18), customize: { scrollView in
-            scrollView.makeTouchResponsive()
-        })
+        .withResponsiveTouch()
         .task {
             await viewModel.fetchBuildingList()
         }

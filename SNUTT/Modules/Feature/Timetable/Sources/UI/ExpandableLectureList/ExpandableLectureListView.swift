@@ -7,11 +7,10 @@
 
 import SharedUIComponents
 import SwiftUI
-import SwiftUIIntrospect
 
 struct ExpandableLectureListView: View {
     let viewModel: any ExpandableLectureListViewModel
-    @State var scrolledID: String?
+    @State private var scrolledID: String?
 
     var body: some View {
         ScrollView {
@@ -29,6 +28,7 @@ struct ExpandableLectureListView: View {
             .scrollTargetLayout()
             .animation(.defaultSpring, value: viewModel.selectedLecture?.id)
         }
+        .withResponsiveTouch()
         .scrollPosition(id: $scrolledID, anchor: .bottom)
         .onChange(of: scrolledID) { _, _ in
             if viewModel.lectures.suffix(5).map({ $0.id }).contains(scrolledID) {
@@ -36,9 +36,6 @@ struct ExpandableLectureListView: View {
                     try await viewModel.fetchMoreLectures()
                 }
             }
-        }
-        .introspect(.scrollView, on: .iOS(.v17, .v18)) { scrollView in
-            scrollView.makeTouchResponsive()
         }
     }
 }

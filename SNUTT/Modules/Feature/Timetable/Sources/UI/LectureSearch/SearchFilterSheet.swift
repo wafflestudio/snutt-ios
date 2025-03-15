@@ -8,7 +8,6 @@
 import FoundationUtility
 import SharedUIComponents
 import SwiftUI
-import SwiftUIIntrospect
 
 struct SearchFilterSheet: View {
     @Bindable var viewModel: LectureSearchViewModel
@@ -96,9 +95,7 @@ struct SearchFilterSheet: View {
                 }
             }
         }
-        .introspect(.scrollView, on: .iOS(.v17, .v18)) { scrollView in
-            scrollView.makeTouchResponsive()
-        }
+        .withResponsiveTouch()
     }
 
     private var filterApplyButton: some View {
