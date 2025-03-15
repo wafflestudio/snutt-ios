@@ -22,6 +22,16 @@ public final class ErrorAlertHandler: Sendable {
     nonisolated init() {}
 
     public func withAlert<T: Sendable>(
+        operation: @escaping () async throws -> T
+    ) {
+        Task {
+            await withAlert {
+                try await operation()
+            }
+        }
+    }
+
+    public func withAlert<T: Sendable>(
         operation: () async throws -> T
     ) async -> T? {
         do {
