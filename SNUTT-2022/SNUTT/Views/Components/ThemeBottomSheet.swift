@@ -21,7 +21,8 @@ struct ThemeBottomSheet: View {
     var body: some View {
         Sheet(isOpen: $isOpen,
               orientation: .bottom(
-                maxHeight: targetTheme?.status == .downloaded ? 120 : 170),
+                  maxHeight: targetTheme?.status == .downloaded ? 120 : 170
+              ),
               disableBackgroundTap: false,
               disableDragGesture: true)
         {

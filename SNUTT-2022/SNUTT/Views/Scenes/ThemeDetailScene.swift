@@ -23,7 +23,7 @@ struct ThemeDetailScene: View {
         self.themeType = themeType
         _openPickerIndex = State(initialValue: theme.colors.count - 1)
     }
-    
+
     private var navigationTitle: String {
         switch themeType {
         case .basic: "제공 테마"
