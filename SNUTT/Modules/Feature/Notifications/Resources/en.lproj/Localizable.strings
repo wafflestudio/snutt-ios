@@ -1,0 +1,7 @@
+"notification.type.normal" = "Notice";
+"notification.type.courseBook" = "Course Book";
+"notification.type.lectureUpdate" = "Lecture Updated";
+"notification.type.lectureRemove" = "Lecture Removed";
+"notification.type.lectureVacancy" = "Vacancy Notification";
+"notification.type.friend" = "Friend";
+"notification.type.newFeature" = "New Feature";
