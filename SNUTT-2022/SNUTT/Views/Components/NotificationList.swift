@@ -15,8 +15,7 @@ struct NotificationList: View {
         List {
             ForEach(viewModel.notifications, id: \.hashValue) { notification in
                 Button {
-                    if notification.type == .lectureUpdate,
-                       let deeplink = notification.deeplink,
+                    if let deeplink = notification.deeplink,
                        let url = URL(string: deeplink)
                     {
                         UIApplication.shared.open(url, options: [:])
