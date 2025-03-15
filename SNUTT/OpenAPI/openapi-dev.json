@@ -3063,7 +3063,6 @@
       "TimetableLectureLegacyDto": {
         "required": [
           "class_time_json",
-          "class_time_mask",
           "colorIndex",
           "course_title"
         ],
@@ -3130,13 +3129,6 @@
           "snuttEvLecture": {
             "$ref": "#/components/schemas/SnuttEvLectureIdDto"
           },
-          "class_time_mask": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         }
       },
       "TimetableLegacyDto": {
@@ -3504,7 +3496,6 @@
       "LectureDto": {
         "required": [
           "class_time_json",
-          "class_time_mask",
           "course_number",
           "course_title",
           "lecture_number",
@@ -3585,13 +3576,6 @@
           },
           "snuttEvLecture": {
             "$ref": "#/components/schemas/SnuttEvLectureSummaryDto"
-          },
-          "class_time_mask": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            }
           }
         }
       },
@@ -3642,7 +3626,6 @@
       "BookmarkLectureDto": {
         "required": [
           "class_time_json",
-          "class_time_mask",
           "course_number",
           "course_title",
           "credit",
@@ -3701,13 +3684,6 @@
           "snuttEvLecture": {
             "$ref": "#/components/schemas/SnuttEvLectureSummaryDto"
           },
-          "class_time_mask": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         }
       },
       "BookmarkResponse": {
