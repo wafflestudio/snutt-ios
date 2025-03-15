@@ -15,6 +15,7 @@ struct ThemeDetailScene: View {
     @State var openPickerIndex: Int?
 
     @State private var isNewThemeCreated = false
+    @Environment(\.dismiss) private var dismiss
 
     init(viewModel: ThemeDetailViewModel, theme: Theme, themeType: ThemeType, openPickerIndex _: Int? = nil) {
         self.viewModel = viewModel
@@ -22,15 +23,14 @@ struct ThemeDetailScene: View {
         self.themeType = themeType
         _openPickerIndex = State(initialValue: theme.colors.count - 1)
     }
-
-    enum ThemeType {
-        case basic
-        case custom
-        case new
-        case downloaded
+    
+    private var navigationTitle: String {
+        switch themeType {
+        case .basic: "제공 테마"
+        case .custom, .new: "커스텀 테마"
+        case .downloaded: "담은 테마"
+        }
     }
-
-    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -227,7 +227,7 @@ struct ThemeDetailScene: View {
         }
         .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(themeType == .basic ? "제공 테마" : "커스텀 테마")
+        .navigationTitle(navigationTitle)
         .animation(.customSpring, value: theme.colors.count)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -239,34 +239,34 @@ struct ThemeDetailScene: View {
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                switch themeType {
-                case .basic, .downloaded:
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("확인")
-                            .foregroundColor(Color(uiColor: .label))
-                    }
-                case .custom:
-                    Button {
-                        Task {
-                            let success = await viewModel.updateTheme(theme: theme)
-                            if success {
-                                dismiss()
-                            }
+                Group {
+                    switch themeType {
+                    case .basic, .downloaded:
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("확인")
                         }
-                    } label: {
-                        Text("저장")
-                            .foregroundColor(Color(uiColor: .label))
-                    }
-                case .new:
-                    Button {
-                        isNewThemeCreated = true
-                    } label: {
-                        Text("저장")
-                            .foregroundColor(Color(uiColor: .label))
+                    case .custom:
+                        Button {
+                            Task {
+                                let success = await viewModel.updateTheme(theme: theme)
+                                if success {
+                                    dismiss()
+                                }
+                            }
+                        } label: {
+                            Text("저장")
+                        }
+                    case .new:
+                        Button {
+                            isNewThemeCreated = true
+                        } label: {
+                            Text("저장")
+                        }
                     }
                 }
+                .foregroundColor(Color(uiColor: .label))
             }
         }
         .alert("새 테마를 현재 시간표에 적용하시겠습니까?", isPresented: $isNewThemeCreated) {
@@ -292,6 +292,15 @@ struct ThemeDetailScene: View {
         } message: {
             Text(viewModel.errorMessage)
         }
+    }
+}
+
+extension ThemeDetailScene {
+    enum ThemeType {
+        case basic
+        case custom
+        case new
+        case downloaded
     }
 }
 

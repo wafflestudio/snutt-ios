@@ -70,39 +70,33 @@ struct ThemeSettingScene: View {
             .accentColor(Color(UIColor.label))
         })
         .sheet(isPresented: $viewModel.isCustomThemeSheetOpen, content: {
-            ZStack {
-                NavigationView {
-                    ThemeDetailScene(
-                        viewModel: .init(container: viewModel.container),
-                        theme: viewModel.targetTheme ?? viewModel.newTheme,
-                        themeType: .custom
-                    )
-                    .analyticsScreen(.themeCustomEdit)
-                }
+            NavigationView {
+                ThemeDetailScene(
+                    viewModel: .init(container: viewModel.container),
+                    theme: viewModel.targetTheme ?? viewModel.newTheme,
+                    themeType: .custom
+                )
+                .analyticsScreen(.themeCustomEdit)
             }
             .accentColor(Color(UIColor.label))
         })
         .sheet(isPresented: $viewModel.isDownloadedThemeSheetOpen, content: {
-            ZStack {
-                NavigationView {
-                    ThemeDetailScene(
-                        viewModel: .init(container: viewModel.container),
-                        theme: viewModel.targetTheme ?? viewModel.newTheme,
-                        themeType: .downloaded
-                    )
-                }
+            NavigationView {
+                ThemeDetailScene(
+                    viewModel: .init(container: viewModel.container),
+                    theme: viewModel.targetTheme ?? viewModel.newTheme,
+                    themeType: .downloaded
+                )
             }
             .accentColor(Color(UIColor.label))
         })
         .sheet(isPresented: $viewModel.isDownloadedThemeSheetOpen, content: {
-            ZStack {
-                NavigationView {
-                    ThemeDetailScene(
-                        viewModel: .init(container: viewModel.container),
-                        theme: viewModel.targetTheme ?? viewModel.newTheme,
-                        themeType: .downloaded
-                    )
-                }
+            NavigationView {
+                ThemeDetailScene(
+                    viewModel: .init(container: viewModel.container),
+                    theme: viewModel.targetTheme ?? viewModel.newTheme,
+                    themeType: .downloaded
+                )
             }
             .accentColor(Color(UIColor.label))
         })
