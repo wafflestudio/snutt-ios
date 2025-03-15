@@ -31,7 +31,7 @@ extension Project {
                        options: .options(automaticSchemesOptions: .disabled),
                        packages: swiftPackages,
                        settings: makeSettings(),
-                       targets: allTargets.flatMap { [$0.0, $0.1] } + [widgetTarget],
+                       targets: allTargets.flatMap { [$0.0, $0.1].compactMap({ $0 }) } + [widgetTarget],
                        schemes: schemes)
     }
 
@@ -42,7 +42,7 @@ extension Project {
         module: ModuleDependency,
         destinations: Destinations,
         deploymentTargets: DeploymentTargets
-    ) -> (Target, Target) {
+    ) -> (Target, Target?) {
         let name = module.name
         let directory = "Modules/\(module.category.directoryName)"
         let resources: [String] = (module.category.hasResources ? ["\(directory)/\(name)/Resources/**"] : []) + module.additionalResources
@@ -56,6 +56,9 @@ extension Project {
                                     resources: .resources(resources.map { .init(stringLiteral: $0) }),
                                     dependencies: module.dependencies,
                                     settings: makeSettings())
+        if case .featureInterface = module.category {
+            return (sources, nil)
+        }
         let tests = Target.target(name: "\(name)Tests",
                                   destinations: destinations,
                                   product: .unitTests,
@@ -82,6 +85,12 @@ extension Project {
             "API_SERVER_URL": "$(API_SERVER_URL)",
             "API_KEY": "$(API_KEY)",
             "KAKAO_APP_KEY": "$(KAKAO_APP_KEY)",
+            "CFBundleURLTypes": [
+                [
+                    "CFBundleURLSchemes": ["$(URL_SCHEME)"],
+                    "CFBundleURLName": "$(PRODUCT_BUNDLE_IDENTIFIER)",
+                ]
+            ]
         ]
 
         let mainTarget = Target.target(
@@ -205,17 +214,23 @@ extension Project {
 
     private static func updateOpenAPISpecSymlinkPreActionScript(configuration: ProjectDescription.ConfigurationName) -> String {
         let apiUrl = if configuration == .dev {
-            "https://snu4t-api-dev.wafflestudio.com/v3/api-docs"
+            "https://snutt-api-dev.wafflestudio.com/v3/api-docs"
         } else {
-            "https://snu4t-api-dev.wafflestudio.com/v3/api-docs" // TODO: Fix
+            "https://snutt-api-dev.wafflestudio.com/v3/api-docs" // TODO: Fix
         }
         return """
+        # Disabled temporarily
+        exit 0
+        
         OPENAPI_DIR="$PROJECT_DIR/OpenAPI"
-        API_URL="\(apiUrl)"
         OPENAPI_FILE="$OPENAPI_DIR/openapi-\(configuration == .dev ? "dev" : "prod").json"
+        API_URL=\(apiUrl)
 
         # Download the openapi.json file from the server endpoint
-        # curl -o "$OPENAPI_FILE" "$API_URL"
+        curl -o "$OPENAPI_FILE" "$API_URL"
+            
+        # Replace unparsable status code strings with valid status codes
+        sed -i '' 's/"400 (1)"/"400"/g; s/"400 (2)"/"402"/g' "$OPENAPI_FILE"
 
         # Create a symlink to the downloaded openapi.json file
         ln -sf "$OPENAPI_FILE" "$OPENAPI_DIR/openapi.json"
