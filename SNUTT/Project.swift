@@ -16,13 +16,13 @@ let project = Project.app(
             dependencies: [
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
+                .target(name: "NotificationsInterface"),
                 .target(name: "SwiftUIUtility"),
                 .target(name: "FoundationUtility"),
                 .target(name: "AuthInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
-                .external(name: "SwiftUIIntrospect"),
                 .external(name: "KakaoMapsSDK-SPM"),
             ]
         ),
@@ -46,15 +46,6 @@ let project = Project.app(
             ]
         ),
         .module(
-            name: "AuthInterface",
-            category: .featureInterface,
-            dependencies: [
-                .target(name: "APIClientInterface"),
-                .external(name: "Dependencies"),
-                .external(name: "MemberwiseInit"),
-            ]
-        ),
-        .module(
             name: "Popup",
             category: .feature,
             dependencies: [
@@ -66,15 +57,33 @@ let project = Project.app(
                 .external(name: "Spyable"),
             ]
         ),
-//        .module(
-//            name: "Notifications",
-//            category: .feature,
-//            dependencies: [
-//                .target(name: "APIClientInterface"),
-//                .external(name: "Dependencies"),
-//                .external(name: "MemberwiseInit"),
-//            ]
-//        ),
+        .module(
+            name: "Notifications",
+            category: .feature,
+            dependencies: [
+                .target(name: "NotificationsInterface"),
+                .target(name: "APIClientInterface"),
+                .target(name: "SharedUIComponents"),
+                .target(name: "FoundationUtility"),
+                .target(name: "SwiftUIUtility"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+            ]
+        ),
+        .module(
+            name: "Vacancy",
+            category: .feature,
+            dependencies: [
+                .target(name: "VacancyInterface"),
+                .target(name: "TimetableInterface"),
+                .target(name: "APIClientInterface"),
+                .target(name: "SharedUIComponents"),
+                .target(name: "FoundationUtility"),
+                .target(name: "SwiftUIUtility"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+            ]
+        ),
         // FeatureInterface
         .module(
             name: "TimetableInterface",
@@ -83,6 +92,25 @@ let project = Project.app(
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
                 .external(name: "Spyable"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+            ]
+        ),
+        .module(
+            name: "VacancyInterface",
+            category: .featureInterface,
+            dependencies: []
+        ),
+        .module(
+            name: "NotificationsInterface",
+            category: .featureInterface,
+            dependencies: []
+        ),
+        .module(
+            name: "AuthInterface",
+            category: .featureInterface,
+            dependencies: [
+                .target(name: "APIClientInterface"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
             ]
@@ -124,7 +152,9 @@ let project = Project.app(
             .external(name: "Dependencies"),
             .external(name: "DependenciesAdditions"),
         ]),
-        .module(name: "SwiftUIUtility", category: .utility(ui: true), dependencies: []),
+        .module(name: "SwiftUIUtility", category: .utility(ui: true), dependencies: [
+            .external(name: "SwiftUIIntrospect")
+        ]),
         .module(name: "UIKitUtility", category: .utility(ui: true), dependencies: [
             .external(name: "SnapKit"),
         ]),
