@@ -15,6 +15,7 @@ struct ThemeDetailScene: View {
     @State var openPickerIndex: Int?
 
     @State private var isNewThemeCreated = false
+    @Environment(\.dismiss) private var dismiss
 
     init(viewModel: ThemeDetailViewModel, theme: Theme, themeType: ThemeType, openPickerIndex _: Int? = nil) {
         self.viewModel = viewModel
@@ -23,13 +24,13 @@ struct ThemeDetailScene: View {
         _openPickerIndex = State(initialValue: theme.colors.count - 1)
     }
 
-    enum ThemeType {
-        case basic
-        case custom
-        case new
+    private var navigationTitle: String {
+        switch themeType {
+        case .basic: "제공 테마"
+        case .custom, .new: "커스텀 테마"
+        case .downloaded: "담은 테마"
+        }
     }
-
-    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -37,7 +38,7 @@ struct ThemeDetailScene: View {
                 HStack {
                     DetailLabel(text: "테마명")
                     switch themeType {
-                    case .basic:
+                    case .basic, .downloaded:
                         Text("\(theme.name)")
                             .font(.system(size: 16, weight: .regular))
                             .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.6)))
@@ -88,7 +89,6 @@ struct ThemeDetailScene: View {
                     VStack {
                         Spacer(minLength: 5)
                         ForEach(theme.colors.indices, id: \.self) { index in
-
                             VStack {
                                 HStack {
                                     DetailLabel(text: "색상 \(index + 1)")
@@ -133,8 +133,16 @@ struct ThemeDetailScene: View {
                                 if openPickerIndex == index {
                                     VStack {
                                         Group {
-                                            ColorPicker("글꼴색", selection: $theme.colors[index].fg, supportsOpacity: false)
-                                            ColorPicker("배경색", selection: $theme.colors[index].bg, supportsOpacity: false)
+                                            ColorPicker(
+                                                "글꼴색",
+                                                selection: $theme.colors[index].fg,
+                                                supportsOpacity: false
+                                            )
+                                            ColorPicker(
+                                                "배경색",
+                                                selection: $theme.colors[index].bg,
+                                                supportsOpacity: false
+                                            )
                                         }
                                         .foregroundColor(STColor.disabled)
                                         .font(STFont.regular14.font)
@@ -166,6 +174,26 @@ struct ThemeDetailScene: View {
                     }
                     .padding(.top, 8)
                 }
+
+            case .downloaded:
+                VStack(spacing: 0) {
+                    ForEach(theme.colors.indices, id: \.self) { index in
+                        HStack(alignment: .center) {
+                            DetailLabel(text: "색상 \(index + 1)")
+                            LectureColorPreview(lectureColor: theme.colors[index])
+                                .frame(height: 25)
+                            Spacer()
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+
+                        Divider()
+                            .frame(height: 1)
+                    }
+                }
+                .background(STColor.groupForeground)
+                .border(Color.black.opacity(0.1), width: 0.5)
+                .padding(.vertical, 10)
             }
 
             HStack {
@@ -181,8 +209,7 @@ struct ThemeDetailScene: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous)
                         .stroke(lineWidth: 0.5)
-                        .foregroundColor(Color(UIColor.quaternaryLabel))
-                    )
+                        .foregroundColor(Color(UIColor.quaternaryLabel)))
                     .shadow(color: .black.opacity(0.05), radius: 3)
                     .padding(15)
                     .environment(\.dependencyContainer, nil)
@@ -200,7 +227,7 @@ struct ThemeDetailScene: View {
         }
         .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(themeType == .basic ? "제공 테마" : "커스텀 테마")
+        .navigationTitle(navigationTitle)
         .animation(.customSpring, value: theme.colors.count)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -212,34 +239,34 @@ struct ThemeDetailScene: View {
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                switch themeType {
-                case .basic:
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("확인")
-                            .foregroundColor(Color(uiColor: .label))
-                    }
-                case .custom:
-                    Button {
-                        Task {
-                            let success = await viewModel.updateTheme(theme: theme)
-                            if success {
-                                dismiss()
-                            }
+                Group {
+                    switch themeType {
+                    case .basic, .downloaded:
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("확인")
                         }
-                    } label: {
-                        Text("저장")
-                            .foregroundColor(Color(uiColor: .label))
-                    }
-                case .new:
-                    Button {
-                        isNewThemeCreated = true
-                    } label: {
-                        Text("저장")
-                            .foregroundColor(Color(uiColor: .label))
+                    case .custom:
+                        Button {
+                            Task {
+                                let success = await viewModel.updateTheme(theme: theme)
+                                if success {
+                                    dismiss()
+                                }
+                            }
+                        } label: {
+                            Text("저장")
+                        }
+                    case .new:
+                        Button {
+                            isNewThemeCreated = true
+                        } label: {
+                            Text("저장")
+                        }
                     }
                 }
+                .foregroundColor(Color(uiColor: .label))
             }
         }
         .alert("새 테마를 현재 시간표에 적용하시겠습니까?", isPresented: $isNewThemeCreated) {
@@ -268,10 +295,28 @@ struct ThemeDetailScene: View {
     }
 }
 
+extension ThemeDetailScene {
+    enum ThemeType {
+        case basic
+        case custom
+        case new
+        case downloaded
+    }
+}
+
 #if DEBUG
     struct ThemeDetailScene_Previews: PreviewProvider {
         static var previews: some View {
-            ThemeDetailScene(viewModel: .init(container: .preview), theme: .init(from: .init(id: UUID().uuidString, theme: 0, name: "새 테마", colors: [ThemeColorDto(bg: STColor.cyan.toHex(), fg: Color.white.toHex())], isDefault: false, isCustom: true)), themeType: .new)
+            ThemeDetailScene(
+                viewModel: .init(container: .preview),
+                theme: .init(
+                    id: UUID().uuidString,
+                    name: "새 테마",
+                    colors: [LectureColor(fg: Color.white, bg: STColor.cyan)],
+                    isCustom: true
+                ),
+                themeType: .new
+            )
         }
     }
 #endif

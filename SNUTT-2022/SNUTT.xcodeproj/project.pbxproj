@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		73194F0F2C98086C00883EA5 /* ThemeMarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73194F0E2C98086C00883EA5 /* ThemeMarketView.swift */; };
 		731C244E2C4442590015877B /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 731C244D2C4442590015877B /* KakaoSDK */; };
 		731C24502C4442590015877B /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 731C244F2C4442590015877B /* KakaoSDKAuth */; };
 		731C24522C4442590015877B /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 731C24512C4442590015877B /* KakaoSDKCommon */; };
+		73194F0F2C98086C00883EA5 /* ThemeMarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73194F0E2C98086C00883EA5 /* ThemeMarketView.swift */; };
 		731D9FFD297BC5060027BA25 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731D9FFC297BC5060027BA25 /* Bookmark.swift */; };
 		731DA001297BC54B0027BA25 /* BookmarkDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA000297BC54B0027BA25 /* BookmarkDto.swift */; };
 		731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA002297BC5740027BA25 /* BookmarkRouter.swift */; };
 		731DA005297BC8990027BA25 /* BookmarkScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA004297BC8990027BA25 /* BookmarkScene.swift */; };
+		7329BF252D4BAD4700ABAF23 /* ThemeMarketScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329BF242D4BAD3F00ABAF23 /* ThemeMarketScene.swift */; };
 		734A831F2C2FD41200D6CB95 /* KakaoLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A831E2C2FD41200D6CB95 /* KakaoLogin.swift */; };
 		734B0DE02D2CF23E00A0BAB9 /* View+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734B0DDF2D2CF23600A0BAB9 /* View+Gesture.swift */; };
 		736AF84C2C2F275E00ED9C1A /* GoogleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736AF84B2C2F275E00ED9C1A /* GoogleLogin.swift */; };
@@ -33,7 +36,6 @@
 		738407052B577E9000007E62 /* ThemeDetailScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738407042B577E9000007E62 /* ThemeDetailScene.swift */; };
 		738407082B579F9200007E62 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406ED2B57107C00007E62 /* Theme.swift */; };
 		738407092B57B10000007E62 /* ThemeDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406F02B5710C200007E62 /* ThemeDto.swift */; };
-		738407102B6060F800007E62 /* ThemeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738406F82B57154400007E62 /* ThemeState.swift */; };
 		73AB84D22C35128B0075DE83 /* IntegrateAccountScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */; };
 		73AB84D42C3514080075DE83 /* IntegrateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */; };
 		73B6E0882CCB34B2006DD4F0 /* SocialProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */; };
@@ -369,10 +371,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		73194F0E2C98086C00883EA5 /* ThemeMarketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeMarketView.swift; sourceTree = "<group>"; };
 		731D9FFC297BC5060027BA25 /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
 		731DA000297BC54B0027BA25 /* BookmarkDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkDto.swift; sourceTree = "<group>"; };
 		731DA002297BC5740027BA25 /* BookmarkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRouter.swift; sourceTree = "<group>"; };
 		731DA004297BC8990027BA25 /* BookmarkScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkScene.swift; sourceTree = "<group>"; };
+		7329BF242D4BAD3F00ABAF23 /* ThemeMarketScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeMarketScene.swift; sourceTree = "<group>"; };
 		734A831E2C2FD41200D6CB95 /* KakaoLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLogin.swift; sourceTree = "<group>"; };
 		734B0DDF2D2CF23600A0BAB9 /* View+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Gesture.swift"; sourceTree = "<group>"; };
 		736AF84B2C2F275E00ED9C1A /* GoogleLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLogin.swift; sourceTree = "<group>"; };
@@ -759,6 +763,7 @@
 				B8F40EAE28980D990021A2A9 /* DeveloperInfoView.swift */,
 				B8F40EB028980DE00021A2A9 /* TermsOfServiceView.swift */,
 				B8F40EB228980DFF0021A2A9 /* PrivacyPolicyView.swift */,
+				73194F0E2C98086C00883EA5 /* ThemeMarketView.swift */,
 			);
 			path = WebViews;
 			sourceTree = "<group>";
@@ -1166,6 +1171,7 @@
 				B87DF6FA291A4303008BB95B /* PopupScene.swift */,
 				731DA004297BC8990027BA25 /* BookmarkScene.swift */,
 				738407042B577E9000007E62 /* ThemeDetailScene.swift */,
+				7329BF242D4BAD3F00ABAF23 /* ThemeMarketScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1481,7 +1487,6 @@
 				CEEAB49329C5EA41005497B0 /* Collection+Getter.swift in Sources */,
 				BE419B94288B8FA600FA9590 /* TimetableGridLayer.swift in Sources */,
 				738407082B579F9200007E62 /* Theme.swift in Sources */,
-				738407102B6060F800007E62 /* ThemeState.swift in Sources */,
 				BE98A080288B046900C2CE95 /* TimetableWidgetEntryView.swift in Sources */,
 				BE804C062894157500782F16 /* SNUTTWidgetProvider.swift in Sources */,
 				BE419B85288B8B8F00FA9590 /* Lecture.swift in Sources */,
@@ -1510,6 +1515,7 @@
 				CEA428A22D71E3A400944DAB /* SnakeCaseConvertible.swift in Sources */,
 				BE9413C128C219AD00171060 /* STNotification.swift in Sources */,
 				B87B317328D81447005C170B /* UserDto.swift in Sources */,
+				7329BF252D4BAD4700ABAF23 /* ThemeMarketScene.swift in Sources */,
 				BE060BD928DF4C1E00A2F1B9 /* OnboardScene.swift in Sources */,
 				73AB84D22C35128B0075DE83 /* IntegrateAccountScene.swift in Sources */,
 				BE682BFF2888056C009EBCB7 /* Quarter.swift in Sources */,
@@ -1680,6 +1686,7 @@
 				B88D16F328ABC5DD00E2D652 /* String+Ext.swift in Sources */,
 				BEDE34D62879A7B800525014 /* DIContainer.swift in Sources */,
 				BE9413D228C2458A00171060 /* DateFormatter+Parse.swift in Sources */,
+				73194F0F2C98086C00883EA5 /* ThemeMarketView.swift in Sources */,
 				BE9413C328C21D1000171060 /* NotificationRepository.swift in Sources */,
 				B87B315E28D5A70F005C170B /* SearchState.swift in Sources */,
 				BE060BD728DF43AC00A2F1B9 /* AuthService.swift in Sources */,

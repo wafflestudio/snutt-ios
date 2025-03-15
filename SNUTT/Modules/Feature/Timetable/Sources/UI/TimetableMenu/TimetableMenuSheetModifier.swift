@@ -29,7 +29,7 @@ extension View {
 #Preview {
     @Previewable @State var isPresented = false
     let viewModel = TimetableViewModel()
-    let _ = Task {
+    _ = Task {
         try await viewModel.loadTimetableList()
     }
 

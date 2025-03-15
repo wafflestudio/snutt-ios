@@ -1,68 +1,49 @@
 //
-//  ReviewScene.swift
+//  ThemeMarketScene.swift
 //  SNUTT
 //
-//  Created by Jinsup Keum on 2022/06/25.
+//  Created by 이채민 on 1/30/25.
 //
 
 import Combine
 import SwiftUI
 
-struct ReviewScene: View {
+struct ThemeMarketScene: View {
     @ObservedObject var viewModel: ViewModel
-    var detailId: Int?
-
-    private var isMainWebView: Bool
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
 
-    init(viewModel: ViewModel, isMainWebView: Bool, detailId: Int? = nil) {
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
-        self.detailId = detailId
-        self.isMainWebView = isMainWebView
-
         eventSignal?.send(.colorSchemeChange(to: viewModel.preferredColorScheme))
     }
 
-    private var eventSignal: PassthroughSubject<WebViewEventType, Never>? {
-        viewModel.getPreloadedWebView(isMain: isMainWebView).eventSignal
+    private var eventSignal: PassthroughSubject<ThemeMarketViewEventType, Never>? {
+        viewModel.getPreloadedWebView().eventSignal
     }
 
-    private var reviewUrl: URL {
-        if let detailId = detailId {
-            return WebViewType.reviewDetail(id: detailId).url
-        } else {
-            return WebViewType.review.url
-        }
-    }
+    let themeMarketUrl: URL = WebViewType.themeMarket.url
 
     var body: some View {
         ZStack {
-            ReviewWebView(preloadedWebView: viewModel.getPreloadedWebView(isMain: isMainWebView))
-                .navigationBarHidden(true)
+            ThemeMarketView(preloadedWebView: viewModel.getPreloadedWebView())
+                .navigationTitle("테마 마켓")
+                .navigationBarTitleDisplayMode(.inline)
                 .background(STColor.systemBackground)
 
             if viewModel.connectionState == .error {
                 WebErrorView(refresh: {
-                    eventSignal?.send(.reload(url: reviewUrl))
+                    eventSignal?.send(.reload(url: themeMarketUrl))
                 })
-                .navigationTitle("강의평")
+                .navigationTitle("테마 마켓")
                 .navigationBarTitleDisplayMode(.inline)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(STColor.systemBackground)
             }
         }
         .onAppear {
-            eventSignal?.send(.colorSchemeChange(to: viewModel.preferredColorScheme))
-        }
-        /// Respond to changes of preferred color scheme in `SettingScene`.
-        .onChange(of: viewModel.preferredColorScheme) { newValue in
-            eventSignal?.send(.colorSchemeChange(to: newValue))
-        }
-        /// Respond to changes of system color scheme.
-        .onChange(of: colorScheme) { newValue in
-            eventSignal?.send(.colorSchemeChange(to: newValue))
+            eventSignal?.send(.reload(url: themeMarketUrl))
         }
         .onReceive(eventSignal ?? .init()) { signal in
             switch signal {
@@ -81,7 +62,7 @@ struct ReviewScene: View {
     }
 }
 
-extension ReviewScene {
+extension ThemeMarketScene {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var accessToken: String = ""
         @Published var connectionState: WebViewConnectionState = .success
@@ -110,14 +91,14 @@ extension ReviewScene {
             }.store(in: &bag)
         }
 
-        func getPreloadedWebView(isMain: Bool) -> WebViewPreloadManager {
-            let webviewManager = isMain ? appState.review.preloadedMain : appState.review.preloadedDetail
+        func getPreloadedWebView() -> ThemeMarketViewPreloadManager {
+            let webviewManager = appState.theme.preloaded
 
             // make sure the webview has all required cookies
             if let accessToken = appState.user.accessToken {
                 webviewManager.webView?.setCookies(cookies: NetworkConfiguration.getCookiesFrom(
                     accessToken: accessToken,
-                    type: "review"
+                    type: "theme"
                 ))
             }
 
