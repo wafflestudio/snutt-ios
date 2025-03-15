@@ -18,26 +18,26 @@ struct NotificationListCell: View {
                     .resizable()
                     .frame(width: 30, height: 30)
 
-                VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 6) {
                     HStack(alignment: .top) {
                         Text(notification.title)
                             .font(STFont.semibold14.font)
-
                         Spacer()
-
                         Text(notification.dateString)
                             .font(STFont.regular14.font)
                             .foregroundColor(colorScheme == .dark ? STColor.darkGray : STColor.gray30)
                     }
-
-                    Spacer().frame(height: 6)
-
-                    Text(notification.message)
-                        .font(STFont.regular14.font)
-                        .padding(.trailing, 8)
+                    
+                    HStack(spacing: 0) {
+                        Text(notification.message)
+                            .font(STFont.regular14.font)
+                        Spacer(minLength: 16)
+                        if let _ = notification.deeplink {
+                            Image("noti.chevron.right")
+                        }
+                    }
                 }
                 .padding(.vertical, 7)
-                .padding(.trailing, 2)
             }
             .padding(.vertical, 8)
 
