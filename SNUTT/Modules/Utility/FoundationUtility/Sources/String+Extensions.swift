@@ -6,7 +6,7 @@
 //
 
 extension String {
-    public var emptyToNil: String? {
+    public var nilIfEmpty: String? {
         isEmpty ? nil : self
     }
 }
