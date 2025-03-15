@@ -70,7 +70,7 @@ private struct ValueContainer<T: Sendable>: Sendable {
 
 extension ValueContainer where T == String {
     var placeholderText: String {
-        initialValue.emptyToNil ?? "(없음)"
+        initialValue.nilIfEmpty ?? "(없음)"
     }
 }
 
@@ -80,7 +80,7 @@ extension ValueContainer where T == String? {
     }
 
     var placeholderText: String {
-        initialValue?.emptyToNil ?? "(없음)"
+        initialValue?.nilIfEmpty ?? "(없음)"
     }
 }
 
