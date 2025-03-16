@@ -57,5 +57,4 @@ private struct LenientDateTranscoder: DateTranscoder, @unchecked Sendable {
     }
 }
 
-
 extension ClientError: @retroactive ErrorWrapper {}

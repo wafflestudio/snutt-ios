@@ -44,7 +44,11 @@ struct EditableRow<Value: Sendable>: View {
             Group {
                 switch container {
                 case let container as ValueContainer<String?> where multiline:
-                    PlaceholderTextEditor(label: label, text: container.bindingNonOptional, placeholder: container.placeholderText)
+                    PlaceholderTextEditor(
+                        label: label,
+                        text: container.bindingNonOptional,
+                        placeholder: container.placeholderText
+                    )
                 case let container as ValueContainer<TimePlace>:
                     DateTimeEditor(timePlace: container.binding)
                 case let container as ValueContainer<String>:
@@ -52,7 +56,12 @@ struct EditableRow<Value: Sendable>: View {
                 case let container as ValueContainer<String?>:
                     TextField(label, text: container.bindingNonOptional, prompt: Text(container.placeholderText))
                 case let container as ValueContainer<Int64?>:
-                    TextField(label, value: container.binding, formatter: NumberFormatter(), prompt: Text(container.placeholderText))
+                    TextField(
+                        label,
+                        value: container.binding,
+                        formatter: NumberFormatter(),
+                        prompt: Text(container.placeholderText)
+                    )
                 default:
                     Text("Unsupported type \(type(of: container))")
                 }

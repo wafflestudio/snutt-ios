@@ -5,9 +5,9 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import TimetableInterface
 import Dependencies
 import Spyable
+import TimetableInterface
 
 @Spyable
 protocol VacancyRepository: Sendable {
