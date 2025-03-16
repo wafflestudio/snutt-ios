@@ -84,6 +84,16 @@ let project = Project.app(
                 .external(name: "MemberwiseInit"),
             ]
         ),
+        .module(
+            name: "Configs",
+            category: .feature,
+            dependencies: [
+                .target(name: "ConfigsInterface"),
+                .target(name: "APIClientInterface"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+            ]
+        ),
         // FeatureInterface
         .module(
             name: "TimetableInterface",
@@ -105,6 +115,13 @@ let project = Project.app(
             name: "NotificationsInterface",
             category: .featureInterface,
             dependencies: []
+        ),
+        .module(
+            name: "ConfigsInterface",
+            category: .featureInterface,
+            dependencies: [
+                .external(name: "Spyable"),
+            ]
         ),
         .module(
             name: "AuthInterface",
