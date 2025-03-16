@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import Spyable
 import Dependencies
+import Spyable
 
 @Spyable
 public protocol ConfigsRepository: Sendable {

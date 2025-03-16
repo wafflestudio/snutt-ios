@@ -170,7 +170,7 @@ let project = Project.app(
             .external(name: "DependenciesAdditions"),
         ]),
         .module(name: "SwiftUIUtility", category: .utility(ui: true), dependencies: [
-            .external(name: "SwiftUIIntrospect")
+            .external(name: "SwiftUIIntrospect"),
         ]),
         .module(name: "UIKitUtility", category: .utility(ui: true), dependencies: [
             .external(name: "SnapKit"),

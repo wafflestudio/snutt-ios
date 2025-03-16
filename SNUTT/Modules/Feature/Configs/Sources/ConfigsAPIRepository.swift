@@ -1,7 +1,7 @@
-import Foundation
 import APIClientInterface
 import ConfigsInterface
 import Dependencies
+import Foundation
 
 public struct ConfigsAPIRepository: ConfigsRepository {
     @Dependency(\.apiClient) private var apiClient
@@ -14,4 +14,3 @@ public struct ConfigsAPIRepository: ConfigsRepository {
         return try JSONDecoder().decode(ConfigsModel.self, from: jsonData)
     }
 }
-
