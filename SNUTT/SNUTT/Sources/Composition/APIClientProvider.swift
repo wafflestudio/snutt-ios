@@ -22,7 +22,7 @@ public struct APIClientProvider: Sendable {
     public func apiClient() -> any APIProtocol {
         Client(
             serverURL: URL(string: "https://\(appMetadata[.apiURL])")!,
-            configuration: .init(dateTranscoder: .iso8601WithFractionalSeconds),
+            configuration: .init(dateTranscoder: LenientDateTranscoder()),
             transport: URLSessionTransport(),
             middlewares: [
                 AuthenticationMiddleware(
@@ -37,6 +37,23 @@ public struct APIClientProvider: Sendable {
                 LoggingMiddleware(),
             ]
         )
+    }
+}
+
+private struct LenientDateTranscoder: DateTranscoder, @unchecked Sendable {
+    private let transcoder: any DateTranscoder = .iso8601WithFractionalSeconds
+    private let fallbackTranscoder: any DateTranscoder = .iso8601
+
+    public func encode(_ date: Date) throws -> String {
+        try transcoder.encode(date)
+    }
+
+    public func decode(_ string: String) throws -> Date {
+        do {
+            return try transcoder.decode(string)
+        } catch {
+            return try fallbackTranscoder.decode(string)
+        }
     }
 }
 

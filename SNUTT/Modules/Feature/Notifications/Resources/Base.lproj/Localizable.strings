@@ -1,0 +1,7 @@
+"notification.type.normal" = "공지";
+"notification.type.courseBook" = "수강편람";
+"notification.type.lectureUpdate" = "업데이트 알림";
+"notification.type.lectureRemove" = "폐강 알림";
+"notification.type.lectureVacancy" = "빈자리 알림";
+"notification.type.friend" = "친구";
+"notification.type.newFeature" = "신규 기능";

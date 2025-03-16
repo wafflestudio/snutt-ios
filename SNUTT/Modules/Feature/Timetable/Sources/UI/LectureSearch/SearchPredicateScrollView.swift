@@ -44,9 +44,7 @@ struct SearchPredicateScrollView: View {
                     .padding(.horizontal, 10)
                     .padding(.vertical, 10)
                 }
-                .introspect(.scrollView, on: .iOS(.v17, .v18)) { scrollView in
-                    scrollView.makeTouchResponsive()
-                }
+                .withResponsiveTouch()
 
                 Divider()
                     .frame(height: 1)
