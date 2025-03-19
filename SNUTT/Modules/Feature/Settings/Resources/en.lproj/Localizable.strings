@@ -74,6 +74,7 @@
 // MARK: 서비스
 "service" = "Service";
 "service.vacancy" = "Vacancy Notification";
+"service.themeMarket" = "Theme Market";
 
 // MARK: 정보 및 제안
 "info" = "Info & Suggestions";

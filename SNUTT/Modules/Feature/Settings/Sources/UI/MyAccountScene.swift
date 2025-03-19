@@ -12,25 +12,19 @@ struct MyAccountScene: View {
     @State private(set) var viewModel: MyAccountViewModel
     @State private var isNicknameCopiedAlertPresented = false
     @State private var isSignOutAlertPresented = false
+    @Binding var path: [Destination]
 
     @Environment(\.errorAlertHandler) private var errorAlertHandler
 
-    public init() {
+    public init(_ path: Binding<[Destination]>) {
         viewModel = .init()
+        self._path = path
     }
-
     var body: some View {
         List {
             Section {
-                SettingsNavigationItem(
-                    title: SettingsStrings.accountNicknameChange,
-                    detail: "와플#7777",
-                    destination: ColorView(color: .red)
-                )
-                SettingsMenuItem(
-                    title: SettingsStrings.accountNicknameCopy,
-                    detailImage: Image(systemName: "square.on.square")
-                ) {
+                SettingsListCell(menu: MyAccount.changeNickname(nickname: "와플#7777"), path: $path)
+                SettingsListCell(menu: MyAccount.copyNickname, path: $path) {
                     UIPasteboard.general.string = "닉네임"
                     isNicknameCopiedAlertPresented = true
                 }
@@ -38,41 +32,23 @@ struct MyAccountScene: View {
 
             Section {
                 if true {
-                    SettingsMenuItem(
-                        title: SettingsStrings.accountId,
-                        detail: "snutt"
-                    )
-                    SettingsNavigationItem(
-                        title: SettingsStrings.accountPasswordChange,
-                        destination: ColorView(color: .yellow)
-                    )
+                    SettingsListCell(menu: MyAccount.displayId(id: "snutt"), path: $path)
+                    SettingsListCell(menu: MyAccount.changePassword, path: $path)
                 } else {
-                    SettingsNavigationItem(
-                        title: SettingsStrings.accountIdAdd,
-                        destination: ColorView(color: .orange)
-                    )
+                    SettingsListCell(menu: MyAccount.addId, path: $path)
                 }
             }
 
             Section {
-                SettingsNavigationItem(
-                    title: SettingsStrings.accountSns,
-                    destination: ColorView(color: .green)
-                )
+                SettingsListCell(menu: MyAccount.snsConnection, path: $path)
             }
 
             Section {
-                SettingsMenuItem(
-                    title: SettingsStrings.accountEmail,
-                    detail: "snutt@wafflestudio.com"
-                )
+                SettingsListCell(menu: MyAccount.displayEmail(email: "snutt@wafflestudio.com"), path: $path)
             }
 
             Section {
-                SettingsMenuItem(
-                    title: SettingsStrings.accountSignOut,
-                    destructive: true
-                ) {
+                SettingsListCell(menu: MyAccount.signOut, path: $path) {
                     isSignOutAlertPresented = true
                 }
             }
@@ -107,5 +83,5 @@ extension MyAccountScene {
 }
 
 #Preview {
-    MyAccountScene()
+    MyAccountScene(.constant([]))
 }

@@ -12,6 +12,8 @@ public struct SettingsScene: View {
     @State private(set) var viewModel: SettingsViewModel
     @State private var isLogoutAlertPresented = false
 
+    @State private var path: [Destination] = []
+
     @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     public init() {
@@ -19,96 +21,48 @@ public struct SettingsScene: View {
     }
 
     public var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             List {
                 Section {
-                    SettingsNavigationItem(
-                        title: SettingsStrings.account,
-                        leadingImage: SettingsAsset.person.swiftUIImage,
-                        detail: "와플#7777",
-                        destination: MyAccountScene()
-                    )
-                    .padding(.vertical, 12)
+                    SettingsListCell(menu: Settings.myAccount("와플#7777"), path: $path)
+                        .padding(.vertical, 12)
                 }
 
                 Section(SettingsStrings.display) {
-                    SettingsNavigationItem(
-                        title: SettingsStrings.displayColorMode,
-                        detail: "자동",
-                        destination: ColorModeSettingView()
-                    )
-                    SettingsNavigationItem(
-                        title: SettingsStrings.displayLanguage,
-                        detail: "한국어",
-                        destination: ColorView(color: .yellow)
-                    )
-                    SettingsNavigationItem(
-                        title: SettingsStrings.displayTable,
-                        destination: TimetableSettingView(
-                            makePainter: viewModel.makePainter,
-                            config: $viewModel.configuration
-                        )
-                    )
-                    SettingsNavigationItem(
-                        title: SettingsStrings.displayTheme,
-                        destination: ColorView(color: .blue)
-                    )
+                    SettingsListCell(menu: Settings.appearance("자동"), path: $path)
+                    SettingsListCell(menu: Settings.appLanguage, path: $path)
+                    SettingsListCell(menu: Settings.timetableSettings, path: $path)
+                    SettingsListCell(menu: Settings.timetableTheme, path: $path)
                 }
 
                 Section(SettingsStrings.service) {
-                    SettingsNavigationItem(
-                        title: SettingsStrings.serviceVacancy,
-                        destination: ColorView(color: .purple)
-                    )
+                    SettingsListCell(menu: Settings.vacancyNotification, path: $path)
+                    SettingsListCell(menu: Settings.themeMarket, path: $path)
                 }
 
                 Section(SettingsStrings.info) {
-                    SettingsMenuItem(
-                        title: SettingsStrings.infoVersion,
-                        detail: viewModel.appVersion
-                    )
-                    SettingsNavigationItem(
-                        title: SettingsStrings.infoDevelopers,
-                        destination: ColorView(color: .orange)
-                    )
+                    SettingsListCell(menu: Settings.version(viewModel.appVersion), path: $path)
+                    SettingsListCell(menu: Settings.developers, path: $path)
                 }
 
                 Section {
-                    SettingsNavigationItem(
-                        title: SettingsStrings.feedback,
-                        destination: ColorView(color: .cyan)
-                    )
+                    SettingsListCell(menu: Settings.shareFeedback, path: $path)
                 }
 
                 Section {
-                    SettingsNavigationItem(
-                        title: SettingsStrings.license,
-                        destination: ColorView(color: .orange)
-                    )
-                    SettingsNavigationItem(
-                        title: SettingsStrings.termsService,
-                        destination: ColorView(color: .brown)
-                    )
-                    SettingsNavigationItem(
-                        title: SettingsStrings.privacyPolicy,
-                        destination: ColorView(color: .gray)
-                    )
+                    SettingsListCell(menu: Settings.openSourceLicense, path: $path)
+                    SettingsListCell(menu: Settings.termsOfService, path: $path)
+                    SettingsListCell(menu: Settings.privacyPolicy, path: $path)
                 }
 
                 #if DEBUG
                     Section(SettingsStrings.debug) {
-                        SettingsNavigationItem(
-                            title: SettingsStrings.debugLog,
-                            destination: ColorView(color: .red)
-                        )
+                        SettingsListCell(menu: Settings.networkLogs, path: $path)
                     }
                 #endif
 
                 Section {
-                    SettingsMenuItem(
-                        title: SettingsStrings.logout,
-                        destructive: true
-                    ) {
+                    SettingsListCell(menu: Settings.logout, path: $path) {
                         isLogoutAlertPresented = true
                     }
                 }
@@ -116,6 +70,14 @@ public struct SettingsScene: View {
             .listStyle(.insetGrouped)
             .navigationTitle(SettingsStrings.settings)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: Destination.self) { destination in
+                switch destination {
+                case let .settings(menu):
+                    navigateToDestination(of: menu)
+                case let .myAccount(menu):
+                    navigateToDestination(of: menu)
+                }
+            }
         }
         .alert(
             SettingsStrings.logoutAlert,
@@ -136,6 +98,57 @@ extension SettingsScene {
     private func logout() async {
         await errorAlertHandler.withAlert {
             try await viewModel.logout()
+        }
+    }
+    
+    @ViewBuilder
+    private func navigateToDestination(of menu: Settings) -> some View {
+        switch menu {
+        case .myAccount:
+            MyAccountScene($path)
+        case .appearance:
+            ColorModeSettingView()
+        case .appLanguage:
+            ColorView(color: .yellow)
+        case .timetableSettings:
+            TimetableSettingView(
+                makePainter: viewModel.makePainter,
+                config: $viewModel.configuration
+            )
+        case .timetableTheme:
+            ColorView(color: .blue)
+        case .vacancyNotification:
+            ColorView(color: .purple)
+        case .themeMarket:
+            ColorView(color: .orange)
+        case .developers:
+            ColorView(color: .green)
+        case .shareFeedback:
+            ColorView(color: .cyan)
+        case .openSourceLicense:
+            ColorView(color: .orange)
+        case .termsOfService:
+            ColorView(color: .brown)
+        case .privacyPolicy:
+            ColorView(color: .gray)
+        case .networkLogs:
+            ColorView(color: .red)
+        default: EmptyView()
+        }
+    }
+    
+    @ViewBuilder
+    private func navigateToDestination(of menu: MyAccount) -> some View {
+        switch menu {
+        case .changeNickname:
+            ColorView(color: .blue)
+        case .addId:
+            ColorView(color: .orange)
+        case .changePassword:
+            ColorView(color: .green)
+        case .snsConnection:
+            ColorView(color: .cyan)
+        default: EmptyView()
         }
     }
 }
