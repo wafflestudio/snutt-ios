@@ -76,7 +76,7 @@ public struct SearchLectureParameter: Encodable {
 }
 
 extension AnalyticsEvent {
-    var extraParameters: [String: Any] {
+    var extraParameters: [String: Any]? {
         switch self {
         case let .login(parameter):
             parameter.dictionary
@@ -89,7 +89,7 @@ extension AnalyticsEvent {
         case let .addToVacancy(parameter):
             parameter.dictionary
         default:
-            [:]
+            nil
         }
     }
 }
