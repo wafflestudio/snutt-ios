@@ -24,3 +24,5 @@
 "error.unknown.title" = "알 수 없는 오류";
 "error.unknown.message" = "알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
 "error.dismiss" = "닫기";
+"alert.cancel" = "취소";
+"alert.delete" = "삭제";

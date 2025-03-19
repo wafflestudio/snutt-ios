@@ -3,6 +3,7 @@ import Auth
 import AuthInterface
 import Dependencies
 import Popup
+import Settings
 import SharedUIComponents
 import SwiftUI
 import Timetable
@@ -33,7 +34,7 @@ struct ContentView: View {
                 TabScene(tabItem: TabItem.search)
                 TabScene(tabItem: TabItem.friends, rootView: ColorView(color: .yellow))
                 TabScene(tabItem: TabItem.review, rootView: ColorView(color: .green))
-                TabScene(tabItem: TabItem.settings, rootView: ColorView(color: .purple))
+                TabScene(tabItem: TabItem.settings, rootView: SettingsScene())
             }
             .ignoresSafeArea()
         }
