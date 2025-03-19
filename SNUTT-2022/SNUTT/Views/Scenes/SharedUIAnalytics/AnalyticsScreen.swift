@@ -90,7 +90,7 @@ enum DetailScreenReferrer: Encodable {
 }
 
 extension AnalyticsScreen {
-    var extraParameters: [String: Any] {
+    var extraParameters: [String: Any]? {
         switch self {
         case let .lectureDetail(parameter):
             parameter.dictionary
@@ -99,7 +99,7 @@ extension AnalyticsScreen {
         case let .lectureSyllabus(parameter):
             parameter.dictionary
         default:
-            [:]
+            nil
         }
     }
 }
