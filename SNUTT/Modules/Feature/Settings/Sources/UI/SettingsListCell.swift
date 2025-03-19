@@ -11,7 +11,7 @@ import SwiftUI
 struct SettingsListCell<Menu: MenuItem>: View {
     let menu: Menu
     @Binding var path: [Destination]
-    
+
     var showNewBadge: Bool = false
     var onTap: (() -> Void)? = nil
 

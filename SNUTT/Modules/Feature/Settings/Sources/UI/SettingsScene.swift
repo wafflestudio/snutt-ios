@@ -100,9 +100,8 @@ extension SettingsScene {
             try await viewModel.logout()
         }
     }
-    
-    @ViewBuilder
-    private func navigateToDestination(of menu: Settings) -> some View {
+
+    @ViewBuilder private func navigateToDestination(of menu: Settings) -> some View {
         switch menu {
         case .myAccount:
             MyAccountScene($path)
@@ -136,9 +135,8 @@ extension SettingsScene {
         default: EmptyView()
         }
     }
-    
-    @ViewBuilder
-    private func navigateToDestination(of menu: MyAccount) -> some View {
+
+    @ViewBuilder private func navigateToDestination(of menu: MyAccount) -> some View {
         switch menu {
         case .changeNickname:
             ColorView(color: .blue)

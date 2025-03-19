@@ -18,8 +18,9 @@ struct MyAccountScene: View {
 
     public init(_ path: Binding<[Destination]>) {
         viewModel = .init()
-        self._path = path
+        _path = path
     }
+
     var body: some View {
         List {
             Section {

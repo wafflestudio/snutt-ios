@@ -17,7 +17,7 @@ enum MyAccount: MenuItem {
     case snsConnection
     case displayEmail(email: String)
     case signOut
-    
+
     var title: String {
         switch self {
         case .changeNickname:
@@ -38,20 +38,20 @@ enum MyAccount: MenuItem {
             SettingsStrings.accountSignOut
         }
     }
-    
+
     var leadingImage: Image? {
         nil
     }
-    
+
     var detail: String? {
         switch self {
-        case .changeNickname(let nickname): nickname
-        case .displayId(let id): id
-        case .displayEmail(let email): email
+        case let .changeNickname(nickname): nickname
+        case let .displayId(id): id
+        case let .displayEmail(email): email
         default: nil
         }
     }
-    
+
     var detailImage: Image? {
         switch self {
         case .copyNickname:
@@ -59,14 +59,14 @@ enum MyAccount: MenuItem {
         default: nil
         }
     }
-    
+
     var destructive: Bool {
         switch self {
         case .signOut: true
         default: false
         }
     }
-    
+
     var shouldNavigate: Bool {
         switch self {
         case .copyNickname, .displayEmail, .signOut: false

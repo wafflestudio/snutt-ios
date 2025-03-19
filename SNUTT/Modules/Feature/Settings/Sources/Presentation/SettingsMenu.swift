@@ -24,7 +24,7 @@ enum Settings: MenuItem {
     case privacyPolicy
     case networkLogs
     case logout
-    
+
     var title: String {
         switch self {
         case .myAccount:
@@ -59,34 +59,34 @@ enum Settings: MenuItem {
             SettingsStrings.logout
         }
     }
-    
+
     var leadingImage: Image? {
         switch self {
         case .myAccount: SettingsAsset.person.swiftUIImage
         default: nil
         }
     }
-    
+
     var detail: String? {
         switch self {
-        case .myAccount(let nickname): nickname
-        case .appearance(let mode): mode
-        case .version(let version): version
+        case let .myAccount(nickname): nickname
+        case let .appearance(mode): mode
+        case let .version(version): version
         default: nil
         }
     }
-    
+
     var detailImage: Image? {
         nil
     }
-    
+
     var destructive: Bool {
         switch self {
         case .logout: true
         default: false
         }
     }
-    
+
     var shouldNavigate: Bool {
         switch self {
         case .version, .logout: false
