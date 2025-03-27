@@ -5,7 +5,6 @@
 //  Created by user on 2/28/25.
 //
 
-import FirebaseAnalytics
 import os
 import SwiftUI
 
@@ -16,13 +15,12 @@ let analyticsLocalLogger = os.Logger(
 
 struct AnalyticsScreenModifier: ViewModifier {
     let screen: AnalyticsScreen
+    let firebaseLogger = FirebaseAnalyticsLogger()
 
     func body(content: Content) -> some View {
         content
-            .analyticsScreen(name: screen.snakeCase, extraParameters: screen.extraParameters)
             .onAppear {
-                analyticsLocalLogger
-                    .trace("[AnalyticsScreen] \(screen.snakeCase) recorded with \(screen.extraParameters).")
+                firebaseLogger.logScreen(screen)
             }
     }
 }
