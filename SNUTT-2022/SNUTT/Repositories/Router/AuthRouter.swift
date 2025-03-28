@@ -11,7 +11,7 @@ import Foundation
 
 enum AuthRouter: Router {
     var baseURL: URL {
-        URL(string: NetworkConfiguration.serverBaseURL + "/auth")!
+        URL(string: NetworkConfiguration.serverV1BaseURL + "/auth")!
     }
 
     static let shouldAddToken: Bool = false
