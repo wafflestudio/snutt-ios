@@ -132,8 +132,7 @@ struct AuthService: AuthServiceProtocol, UserAuthHandler {
     func logout() async throws {
         FirebaseAnalyticsLogger().logEvent(.logout)
         let fcmToken = userDefaultsRepository.get(String.self, key: .fcmToken, defaultValue: "")
-        guard let userId = appState.user.userId else { throw STError(.NO_USER_TOKEN) }
-        let _ = try? await authRepository.logout(userId: userId, fcmToken: fcmToken)
+        let _ = try? await authRepository.logout(fcmToken: fcmToken)
         clearUserInfo()
     }
 }

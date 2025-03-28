@@ -20,7 +20,7 @@ protocol AuthRepositoryProtocol {
     func sendVerificationCode(email: String) async throws
     func checkVerificationCode(localId: String, code: String) async throws
     func resetPassword(localId: String, password: String, code: String) async throws
-    func logout(userId: String, fcmToken: String) async throws -> LogoutResponseDto
+    func logout(fcmToken: String) async throws -> LogoutResponseDto
 }
 
 class AuthRepository: AuthRepositoryProtocol {
@@ -107,9 +107,9 @@ class AuthRepository: AuthRepositoryProtocol {
             .handlingError()
     }
 
-    func logout(userId: String, fcmToken: String) async throws -> LogoutResponseDto {
+    func logout(fcmToken: String) async throws -> LogoutResponseDto {
         return try await session
-            .request(AuthRouter.logout(userId: userId, fcmToken: fcmToken))
+            .request(AuthRouter.logout(fcmToken: fcmToken))
             .serializingDecodable(LogoutResponseDto.self)
             .handlingError()
     }

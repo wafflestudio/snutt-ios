@@ -11,18 +11,7 @@ import Foundation
 
 enum AuthRouter: Router {
     var baseURL: URL {
-        switch self {
-        case .getLinkedEmail,
-             .sendVerificationCode,
-             .checkVerificationCode,
-             .resetPassword,
-             .loginWithFacebook,
-             .loginWithGoogle,
-             .loginWithKakao:
-            return URL(string: NetworkConfiguration.serverV1BaseURL + "/auth")!
-        default:
-            return URL(string: NetworkConfiguration.serverBaseURL + "/auth")!
-        }
+        URL(string: NetworkConfiguration.serverBaseURL + "/auth")!
     }
 
     static let shouldAddToken: Bool = false
@@ -38,7 +27,7 @@ enum AuthRouter: Router {
     case sendVerificationCode(email: String)
     case checkVerificationCode(localId: String, code: String)
     case resetPassword(localId: String, password: String, code: String)
-    case logout(userId: String, fcmToken: String)
+    case logout(fcmToken: String)
 
     var method: HTTPMethod {
         switch self {
@@ -78,7 +67,7 @@ enum AuthRouter: Router {
         case .loginWithFacebook:
             return "/login/facebook"
         case .loginWithApple:
-            return "/login_apple"
+            return "/login/apple"
         case .loginWithGoogle:
             return "/login/google"
         case .loginWithKakao:
@@ -122,8 +111,8 @@ enum AuthRouter: Router {
             return ["user_id": localId, "code": code]
         case let .resetPassword(localId: localId, password: password, code: code):
             return ["user_id": localId, "password": password, "code": code]
-        case let .logout(userId, fcmToken):
-            return ["user_id": userId, "registration_id": fcmToken]
+        case let .logout(fcmToken):
+            return ["registration_id": fcmToken]
         }
     }
 }
