@@ -1701,7 +1701,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "object",
+                  "additionalProperties": true
                 }
               }
             }
@@ -2565,9 +2566,7 @@
   "components": {
     "schemas": {
       "SendEmailRequest": {
-        "required": [
-          "email"
-        ],
+        "required": ["email"],
         "type": "object",
         "properties": {
           "email": {
@@ -2576,9 +2575,7 @@
         }
       },
       "OkResponse": {
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object",
         "properties": {
           "message": {
@@ -2587,9 +2584,7 @@
         }
       },
       "SocialLoginRequest": {
-        "required": [
-          "token"
-        ],
+        "required": ["token"],
         "type": "object",
         "properties": {
           "token": {
@@ -2598,11 +2593,7 @@
         }
       },
       "LoginResponse": {
-        "required": [
-          "message",
-          "token",
-          "user_id"
-        ],
+        "required": ["message", "token", "user_id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -2617,9 +2608,7 @@
         }
       },
       "FacebookLoginRequest": {
-        "required": [
-          "fb_token"
-        ],
+        "required": ["fb_token"],
         "type": "object",
         "properties": {
           "fb_id": {
@@ -2631,10 +2620,7 @@
         }
       },
       "LocalLoginRequest": {
-        "required": [
-          "id",
-          "password"
-        ],
+        "required": ["id", "password"],
         "type": "object",
         "properties": {
           "id": {
@@ -2646,9 +2632,7 @@
         }
       },
       "LogoutRequest": {
-        "required": [
-          "registration_id"
-        ],
+        "required": ["registration_id"],
         "type": "object",
         "properties": {
           "registration_id": {
@@ -2657,11 +2641,7 @@
         }
       },
       "PasswordResetRequest": {
-        "required": [
-          "code",
-          "password",
-          "user_id"
-        ],
+        "required": ["code", "password", "user_id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -2676,9 +2656,7 @@
         }
       },
       "GetMaskedEmailRequest": {
-        "required": [
-          "user_id"
-        ],
+        "required": ["user_id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -2687,9 +2665,7 @@
         }
       },
       "EmailResponse": {
-        "required": [
-          "email"
-        ],
+        "required": ["email"],
         "type": "object",
         "properties": {
           "email": {
@@ -2698,9 +2674,7 @@
         }
       },
       "VerificationCodeRequest": {
-        "required": [
-          "code"
-        ],
+        "required": ["code"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -2712,10 +2686,7 @@
         }
       },
       "LocalRegisterRequest": {
-        "required": [
-          "id",
-          "password"
-        ],
+        "required": ["id", "password"],
         "type": "object",
         "properties": {
           "id": {
@@ -2730,9 +2701,7 @@
         }
       },
       "EmailVerificationResultDto": {
-        "required": [
-          "is_email_verified"
-        ],
+        "required": ["is_email_verified"],
         "type": "object",
         "properties": {
           "is_email_verified": {
@@ -2741,11 +2710,7 @@
         }
       },
       "UserLegacyDto": {
-        "required": [
-          "isAdmin",
-          "notificationCheckedAt",
-          "regDate"
-        ],
+        "required": ["isAdmin", "notificationCheckedAt", "regDate"],
         "type": "object",
         "properties": {
           "isAdmin": {
@@ -2771,9 +2736,7 @@
         }
       },
       "TokenResponse": {
-        "required": [
-          "token"
-        ],
+        "required": ["token"],
         "type": "object",
         "properties": {
           "token": {
@@ -2782,10 +2745,7 @@
         }
       },
       "PasswordChangeRequest": {
-        "required": [
-          "new_password",
-          "old_password"
-        ],
+        "required": ["new_password", "old_password"],
         "type": "object",
         "properties": {
           "old_password": {
@@ -2797,10 +2757,7 @@
         }
       },
       "NicknameDto": {
-        "required": [
-          "nickname",
-          "tag"
-        ],
+        "required": ["nickname", "tag"],
         "type": "object",
         "properties": {
           "nickname": {
@@ -2897,11 +2854,7 @@
         }
       },
       "TimetableAddRequestDto": {
-        "required": [
-          "semester",
-          "title",
-          "year"
-        ],
+        "required": ["semester", "title", "year"],
         "type": "object",
         "properties": {
           "year": {
@@ -2910,12 +2863,7 @@
           },
           "semester": {
             "type": "integer",
-            "enum": [
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [1, 2, 3, 4]
           },
           "title": {
             "type": "string"
@@ -2936,15 +2884,7 @@
         "properties": {
           "day": {
             "type": "integer",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ]
+            "enum": [0, 1, 2, 3, 4, 5, 6]
           },
           "place": {
             "type": "string"
@@ -2991,10 +2931,7 @@
         }
       },
       "GeoCoordinate": {
-        "required": [
-          "latitude",
-          "longitude"
-        ],
+        "required": ["latitude", "longitude"],
         "type": "object",
         "properties": {
           "latitude": {
@@ -3036,18 +2973,12 @@
           },
           "campus": {
             "type": "string",
-            "enum": [
-              "GWANAK",
-              "YEONGEON",
-              "PYEONGCHANG"
-            ]
+            "enum": ["GWANAK", "YEONGEON", "PYEONGCHANG"]
           }
         }
       },
       "SnuttEvLectureIdDto": {
-        "required": [
-          "evLectureId"
-        ],
+        "required": ["evLectureId"],
         "type": "object",
         "properties": {
           "snuttId": {
@@ -3061,12 +2992,7 @@
         }
       },
       "TimetableLectureLegacyDto": {
-        "required": [
-          "class_time_json",
-          "class_time_mask",
-          "colorIndex",
-          "course_title"
-        ],
+        "required": ["class_time_json", "colorIndex", "course_title"],
         "type": "object",
         "properties": {
           "_id": {
@@ -3129,13 +3055,6 @@
           },
           "snuttEvLecture": {
             "$ref": "#/components/schemas/SnuttEvLectureIdDto"
-          },
-          "class_time_mask": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            }
           }
         }
       },
@@ -3164,12 +3083,7 @@
           },
           "semester": {
             "type": "integer",
-            "enum": [
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [1, 2, 3, 4]
           },
           "lecture_list": {
             "type": "array",
@@ -3182,14 +3096,7 @@
           },
           "theme": {
             "type": "integer",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5
-            ]
+            "enum": [0, 1, 2, 3, 4, 5]
           },
           "themeId": {
             "type": "string"
@@ -3204,9 +3111,7 @@
         }
       },
       "TimetableModifyRequestDto": {
-        "required": [
-          "title"
-        ],
+        "required": ["title"],
         "type": "object",
         "properties": {
           "title": {
@@ -3215,22 +3120,12 @@
         }
       },
       "ClassPlaceAndTimeLegacyRequestDto": {
-        "required": [
-          "day"
-        ],
+        "required": ["day"],
         "type": "object",
         "properties": {
           "day": {
             "type": "integer",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ]
+            "enum": [0, 1, 2, 3, 4, 5, 6]
           },
           "place": {
             "type": "string"
@@ -3260,11 +3155,7 @@
         }
       },
       "CustomTimetableLectureAddLegacyRequestDto": {
-        "required": [
-          "class_time_json",
-          "course_title",
-          "is_forced"
-        ],
+        "required": ["class_time_json", "course_title", "is_forced"],
         "type": "object",
         "properties": {
           "course_title": {
@@ -3299,9 +3190,7 @@
         }
       },
       "TimetableLectureModifyLegacyRequestDto": {
-        "required": [
-          "is_forced"
-        ],
+        "required": ["is_forced"],
         "type": "object",
         "properties": {
           "course_title": {
@@ -3352,14 +3241,7 @@
         "properties": {
           "theme": {
             "type": "integer",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5
-            ]
+            "enum": [0, 1, 2, 3, 4, 5]
           },
           "themeId": {
             "type": "string"
@@ -3367,13 +3249,7 @@
         }
       },
       "SearchQueryLegacy": {
-        "required": [
-          "limit",
-          "offset",
-          "page",
-          "semester",
-          "year"
-        ],
+        "required": ["limit", "offset", "page", "semester", "year"],
         "type": "object",
         "properties": {
           "year": {
@@ -3382,12 +3258,7 @@
           },
           "semester": {
             "type": "integer",
-            "enum": [
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [1, 2, 3, 4]
           },
           "title": {
             "type": "string"
@@ -3472,24 +3343,12 @@
         }
       },
       "SearchTimeDto": {
-        "required": [
-          "day",
-          "endMinute",
-          "startMinute"
-        ],
+        "required": ["day", "endMinute", "startMinute"],
         "type": "object",
         "properties": {
           "day": {
             "type": "integer",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ]
+            "enum": [0, 1, 2, 3, 4, 5, 6]
           },
           "startMinute": {
             "type": "integer",
@@ -3504,7 +3363,6 @@
       "LectureDto": {
         "required": [
           "class_time_json",
-          "class_time_mask",
           "course_number",
           "course_title",
           "lecture_number",
@@ -3559,12 +3417,7 @@
           },
           "semester": {
             "type": "integer",
-            "enum": [
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [1, 2, 3, 4]
           },
           "year": {
             "type": "integer",
@@ -3585,21 +3438,11 @@
           },
           "snuttEvLecture": {
             "$ref": "#/components/schemas/SnuttEvLectureSummaryDto"
-          },
-          "class_time_mask": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            }
           }
         }
       },
       "SnuttEvLectureSummaryDto": {
-        "required": [
-          "evLectureId",
-          "evaluationCount"
-        ],
+        "required": ["evLectureId", "evaluationCount"],
         "type": "object",
         "properties": {
           "snuttId": {
@@ -3621,10 +3464,7 @@
         }
       },
       "BuildingsResponse": {
-        "required": [
-          "content",
-          "totalCount"
-        ],
+        "required": ["content", "totalCount"],
         "type": "object",
         "properties": {
           "content": {
@@ -3642,7 +3482,6 @@
       "BookmarkLectureDto": {
         "required": [
           "class_time_json",
-          "class_time_mask",
           "course_number",
           "course_title",
           "credit",
@@ -3700,22 +3539,11 @@
           },
           "snuttEvLecture": {
             "$ref": "#/components/schemas/SnuttEvLectureSummaryDto"
-          },
-          "class_time_mask": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            }
           }
         }
       },
       "BookmarkResponse": {
-        "required": [
-          "lectures",
-          "semester",
-          "year"
-        ],
+        "required": ["lectures", "semester", "year"],
         "type": "object",
         "properties": {
           "year": {
@@ -3735,9 +3563,7 @@
         }
       },
       "BookmarkLectureModifyRequest": {
-        "required": [
-          "lecture_id"
-        ],
+        "required": ["lecture_id"],
         "type": "object",
         "properties": {
           "lecture_id": {
@@ -3746,9 +3572,7 @@
         }
       },
       "ExistenceResponse": {
-        "required": [
-          "exists"
-        ],
+        "required": ["exists"],
         "type": "object",
         "properties": {
           "exists": {
@@ -3757,12 +3581,7 @@
         }
       },
       "NotificationResponse": {
-        "required": [
-          "created_at",
-          "message",
-          "title",
-          "type"
-        ],
+        "required": ["created_at", "message", "title", "type"],
         "type": "object",
         "properties": {
           "_id": {
@@ -3779,15 +3598,7 @@
           },
           "type": {
             "type": "integer",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ]
+            "enum": [0, 1, 2, 3, 4, 5, 6]
           },
           "deeplink": {
             "type": "string"
@@ -3799,9 +3610,7 @@
         }
       },
       "NotificationCountResponse": {
-        "required": [
-          "count"
-        ],
+        "required": ["count"],
         "type": "object",
         "properties": {
           "count": {
@@ -3811,10 +3620,7 @@
         }
       },
       "ConfigResponse": {
-        "required": [
-          "data",
-          "id"
-        ],
+        "required": ["data", "id"],
         "type": "object",
         "properties": {
           "id": {
@@ -3832,10 +3638,7 @@
         }
       },
       "ConfigVersionDto": {
-        "required": [
-          "android",
-          "ios"
-        ],
+        "required": ["android", "ios"],
         "type": "object",
         "properties": {
           "ios": {
@@ -3850,9 +3653,7 @@
         "type": "object"
       },
       "PostConfigRequest": {
-        "required": [
-          "data"
-        ],
+        "required": ["data"],
         "type": "object",
         "properties": {
           "data": {
@@ -3881,11 +3682,7 @@
         }
       },
       "FileUploadUriDto": {
-        "required": [
-          "fileOriginUri",
-          "fileUri",
-          "uploadUri"
-        ],
+        "required": ["fileOriginUri", "fileUri", "uploadUri"],
         "type": "object",
         "properties": {
           "uploadUri": {
@@ -3900,13 +3697,7 @@
         }
       },
       "InsertNotificationRequest": {
-        "required": [
-          "body",
-          "dataPayload",
-          "insertFcm",
-          "title",
-          "type"
-        ],
+        "required": ["body", "dataPayload", "insertFcm", "title", "type"],
         "type": "object",
         "properties": {
           "userId": {
@@ -3923,15 +3714,7 @@
           },
           "type": {
             "type": "integer",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ]
+            "enum": [0, 1, 2, 3, 4, 5, 6]
           },
           "dataPayload": {
             "type": "object",
@@ -3942,10 +3725,7 @@
         }
       },
       "PostPopupRequest": {
-        "required": [
-          "imageOriginUri",
-          "key"
-        ],
+        "required": ["imageOriginUri", "key"],
         "type": "object",
         "properties": {
           "key": {
@@ -3961,12 +3741,7 @@
         }
       },
       "PopupResponse": {
-        "required": [
-          "id",
-          "imageUri",
-          "image_url",
-          "key"
-        ],
+        "required": ["id", "imageUri", "image_url", "key"],
         "type": "object",
         "properties": {
           "id": {
@@ -3992,9 +3767,7 @@
         }
       },
       "VacancyNotificationLecturesResponse": {
-        "required": [
-          "lectures"
-        ],
+        "required": ["lectures"],
         "type": "object",
         "properties": {
           "lectures": {
@@ -4006,10 +3779,7 @@
         }
       },
       "PopupsResponse": {
-        "required": [
-          "content",
-          "totalCount"
-        ],
+        "required": ["content", "totalCount"],
         "type": "object",
         "properties": {
           "content": {
@@ -4025,12 +3795,7 @@
         }
       },
       "FriendResponse": {
-        "required": [
-          "createdAt",
-          "id",
-          "nickname",
-          "userId"
-        ],
+        "required": ["createdAt", "id", "nickname", "userId"],
         "type": "object",
         "properties": {
           "id": {
@@ -4052,10 +3817,7 @@
         }
       },
       "FriendsResponse": {
-        "required": [
-          "content",
-          "totalCount"
-        ],
+        "required": ["content", "totalCount"],
         "type": "object",
         "properties": {
           "content": {
@@ -4071,9 +3833,7 @@
         }
       },
       "FriendRequest": {
-        "required": [
-          "nickname"
-        ],
+        "required": ["nickname"],
         "type": "object",
         "properties": {
           "nickname": {
@@ -4082,9 +3842,7 @@
         }
       },
       "FriendRequestLinkResponse": {
-        "required": [
-          "requestToken"
-        ],
+        "required": ["requestToken"],
         "type": "object",
         "properties": {
           "requestToken": {
@@ -4093,10 +3851,7 @@
         }
       },
       "CoursebookDto": {
-        "required": [
-          "semester",
-          "year"
-        ],
+        "required": ["semester", "year"],
         "type": "object",
         "properties": {
           "year": {
@@ -4105,34 +3860,17 @@
           },
           "semester": {
             "type": "integer",
-            "enum": [
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [1, 2, 3, 4]
           }
         }
       },
       "ClassPlaceAndTimeDto": {
-        "required": [
-          "day",
-          "endMinute",
-          "startMinute"
-        ],
+        "required": ["day", "endMinute", "startMinute"],
         "type": "object",
         "properties": {
           "day": {
             "type": "string",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6
-            ]
+            "enum": [0, 1, 2, 3, 4, 5, 6]
           },
           "place": {
             "type": "string"
@@ -4172,12 +3910,7 @@
           },
           "semester": {
             "type": "integer",
-            "enum": [
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [1, 2, 3, 4]
           },
           "lectures": {
             "type": "array",
@@ -4190,14 +3923,7 @@
           },
           "theme": {
             "type": "string",
-            "enum": [
-              "0",
-              "1",
-              "2",
-              "3",
-              "4",
-              "5"
-            ]
+            "enum": ["0", "1", "2", "3", "4", "5"]
           },
           "themeId": {
             "type": "string"
@@ -4212,11 +3938,7 @@
         }
       },
       "TimetableLectureDto": {
-        "required": [
-          "classPlaceAndTimes",
-          "colorIndex",
-          "courseTitle"
-        ],
+        "required": ["classPlaceAndTimes", "colorIndex", "courseTitle"],
         "type": "object",
         "properties": {
           "id": {
@@ -4283,9 +4005,7 @@
         }
       },
       "UpdateFriendDisplayNameRequest": {
-        "required": [
-          "displayName"
-        ],
+        "required": ["displayName"],
         "type": "object",
         "properties": {
           "displayName": {
@@ -4294,11 +4014,7 @@
         }
       },
       "ThemeMarketInfoDto": {
-        "required": [
-          "authorName",
-          "downloads",
-          "publishName"
-        ],
+        "required": ["authorName", "downloads", "publishName"],
         "type": "object",
         "properties": {
           "publishName": {
@@ -4314,10 +4030,7 @@
         }
       },
       "ThemeOrigin": {
-        "required": [
-          "authorId",
-          "originId"
-        ],
+        "required": ["authorId", "originId"],
         "type": "object",
         "properties": {
           "originId": {
@@ -4329,13 +4042,7 @@
         }
       },
       "TimetableThemeDto": {
-        "required": [
-          "isCustom",
-          "isDefault",
-          "name",
-          "status",
-          "theme"
-        ],
+        "required": ["isCustom", "isDefault", "name", "status", "theme"],
         "type": "object",
         "properties": {
           "id": {
@@ -4343,14 +4050,7 @@
           },
           "theme": {
             "type": "integer",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5
-            ]
+            "enum": [0, 1, 2, 3, 4, 5]
           },
           "name": {
             "type": "string"
@@ -4372,12 +4072,7 @@
           },
           "status": {
             "type": "string",
-            "enum": [
-              "BASIC",
-              "DOWNLOADED",
-              "PUBLISHED",
-              "PRIVATE"
-            ]
+            "enum": ["BASIC", "DOWNLOADED", "PUBLISHED", "PRIVATE"]
           },
           "publishInfo": {
             "$ref": "#/components/schemas/ThemeMarketInfoDto"
@@ -4385,10 +4080,7 @@
         }
       },
       "TimetableThemeAddRequestDto": {
-        "required": [
-          "colors",
-          "name"
-        ],
+        "required": ["colors", "name"],
         "type": "object",
         "properties": {
           "name": {
@@ -4403,10 +4095,7 @@
         }
       },
       "ThemesResponse": {
-        "required": [
-          "content",
-          "totalCount"
-        ],
+        "required": ["content", "totalCount"],
         "type": "object",
         "properties": {
           "content": {
@@ -4422,9 +4111,7 @@
         }
       },
       "TimetableThemeDownloadRequestDto": {
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "type": "object",
         "properties": {
           "name": {
@@ -4433,10 +4120,7 @@
         }
       },
       "TimetableThemePublishRequestDto": {
-        "required": [
-          "isAnonymous",
-          "publishName"
-        ],
+        "required": ["isAnonymous", "publishName"],
         "type": "object",
         "properties": {
           "publishName": {
@@ -4509,9 +4193,7 @@
         }
       },
       "TagListUpdateTimeResponse": {
-        "required": [
-          "updated_at"
-        ],
+        "required": ["updated_at"],
         "type": "object",
         "properties": {
           "updated_at": {
@@ -4521,11 +4203,7 @@
         }
       },
       "CoursebookResponse": {
-        "required": [
-          "semester",
-          "updated_at",
-          "year"
-        ],
+        "required": ["semester", "updated_at", "year"],
         "type": "object",
         "properties": {
           "year": {
@@ -4534,12 +4212,7 @@
           },
           "semester": {
             "type": "integer",
-            "enum": [
-              1,
-              2,
-              3,
-              4
-            ]
+            "enum": [1, 2, 3, 4]
           },
           "updated_at": {
             "type": "string",
@@ -4548,9 +4221,7 @@
         }
       },
       "CoursebookOfficialResponse": {
-        "required": [
-          "url"
-        ],
+        "required": ["url"],
         "type": "object",
         "properties": {
           "url": {

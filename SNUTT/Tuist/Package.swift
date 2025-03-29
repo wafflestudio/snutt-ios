@@ -15,6 +15,7 @@ import PackageDescription
             "ConcurrencyExtras": .framework,
             "CombineSchedulers": .framework,
             "XCTestDynamicOverlay": .framework,
+            "SwiftUIIntrospect": .framework,
             "Spyable": .framework,
             "MemberwiseInit": .framework,
             "DependenciesAdditions": .framework,
@@ -35,7 +36,7 @@ import PackageDescription
 let package = Package(
     name: "SNUTT",
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.3.0"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.7.0"),
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.4.0"),
         .package(url: "https://github.com/apple/swift-openapi-urlsession", from: "1.0.1"),
         .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.7.1")),

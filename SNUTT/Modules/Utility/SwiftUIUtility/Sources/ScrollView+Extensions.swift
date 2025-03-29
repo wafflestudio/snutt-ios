@@ -10,6 +10,17 @@
 // instances more responsive to touch events.
 
 import UIKit
+import SwiftUI
+import SwiftUIIntrospect
+
+extension ScrollView {
+    @MainActor
+    public func withResponsiveTouch() -> some View {
+        introspect(.scrollView, on: .iOS(.v17, .v18)) { scrollView in
+            scrollView.makeTouchResponsive()
+        }
+    }
+}
 
 extension UIScrollView {
     @MainActor
@@ -19,7 +30,7 @@ extension UIScrollView {
 
     private static var hasSwizzled = false
 
-    public func makeTouchResponsive() {
+    fileprivate func makeTouchResponsive() {
         UIScrollView.swizzleTouchesShouldCancel()
         delaysContentTouches = false
         shouldAlwaysCancelTouches = true
