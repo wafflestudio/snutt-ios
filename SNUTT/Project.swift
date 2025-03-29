@@ -77,6 +77,7 @@ let project = Project.app(
                 .target(name: "VacancyInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "APIClientInterface"),
+                .target(name: "ConfigsInterface"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),

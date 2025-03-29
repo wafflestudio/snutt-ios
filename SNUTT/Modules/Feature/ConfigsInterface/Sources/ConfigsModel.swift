@@ -9,7 +9,7 @@ import Foundation
 
 public struct ConfigsModel: Codable, Sendable {
     public let vacancyNotificationBanner: VacancyNotificationBanner?
-    public let vacancySugangSnuUrl: VacancySugangSnuUrl?
+    public var vacancySugangSnuUrl: VacancySugangSnuUrl?
     public let settingsBadge: SettingsBadge?
     public let reactNativeBundleFriends: ReactNativeBundleFriends?
     public let notice: NoticeViewInfo?
@@ -33,7 +33,7 @@ extension ConfigsModel {
     }
 
     public struct VacancySugangSnuUrl: Codable, Sendable {
-        public let url: URL
+        public var url: URL
     }
 
     public struct SettingsBadge: Codable, Sendable {
