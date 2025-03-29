@@ -66,6 +66,17 @@ let project = Project.app(
                 .external(name: "Spyable"),
             ]
         ),
+        .module(
+            name: "Settings",
+            category: .feature,
+            dependencies: [
+                .target(name: "APIClientInterface"),
+                .target(name: "AuthInterface"),
+                .target(name: "SharedUIComponents"),
+                .target(name: "TimetableInterface"),
+                .external(name: "Dependencies"),
+            ]
+        ),
 //        .module(
 //            name: "Notifications",
 //            category: .feature,
@@ -130,7 +141,10 @@ let project = Project.app(
         ]),
         .module(name: "FoundationUtility", category: .utility(ui: false), dependencies: []),
     ],
-    externalDependencies: [],
+    externalDependencies: [
+        .external(name: "FirebaseCore"),
+        .external(name: "FirebaseMessaging"),
+    ],
     widgetDependencies: [
         .target(name: "TimetableInterface"),
         .target(name: "TimetableUIComponents"),

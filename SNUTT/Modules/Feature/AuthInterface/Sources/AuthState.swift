@@ -20,7 +20,7 @@ public protocol AuthState: Sendable, ObservableObject, AnyObject {
 }
 
 public enum AuthStateType: String, Sendable {
-    case userID, accessToken
+    case userID, accessToken, fcmToken
 }
 
 public enum AuthStateKey: TestDependencyKey {

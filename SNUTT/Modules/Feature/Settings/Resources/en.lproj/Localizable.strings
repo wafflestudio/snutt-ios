@@ -1,0 +1,96 @@
+/*
+ Localizable.strings
+ This file is used to manage localizable strings for the feature module in English.
+
+ How to use:
+ - Add your localized strings here in the format "key" = "value";
+ - The key is what you will use in your code, and the value is the translated string.
+
+ Examples:
+ "welcome_message" = "Welcome to the app!";
+ "error_message" = "An error has occurred. Please try again.";
+
+ Usage in code with Tuist synthesized strings:
+ let welcomeMessage = SettingsStrings.welcomeMessage
+ let errorMessage = SettingsStrings.errorMessage
+
+ Note:
+ - Ensure that each key is unique within this file.
+ - Add comments to provide context for translators.
+*/
+
+/* Add your translations below */
+
+"settings" = "Settings";
+
+// MARK: 내 계정
+"account" = "My Account";
+"account.nickname.change" = "Change Nickname";
+"account.nickname.copy" = "Copy Nickname";
+"account.nickname.copy.alert" = "Nickname has been copied to the clipboard";
+
+"account.id.add" = "Add ID / Password";
+"account.id" = "ID";
+"account.password.change" = "Change Password";
+
+"account.sns" = "Link & Unlink SNS Accounts";
+"account.sns.kakao.connect" = "Link Kakao Account";
+"account.sns.kakao.disconnect" = "Unlink Kakao Account";
+"account.sns.google.connect" = "Link Google Account";
+"account.sns.google.disconnect" = "Unlink Google Account";
+"account.sns.apple.connect" = "Link Apple Account";
+"account.sns.apple.disconnect" = "Unlink Apple Account";
+"account.sns.facebook.connect" = "Link Facebook Account";
+"account.sns.facebook.disconnect" = "Unlink Facebook Account";
+
+"account.email" = "Email";
+"account.signOut" = "Delete Account";
+"account.signOut.alert" = "Would you like to delete SNUTT account?";
+
+// MARK: 디스플레이
+"display" = "Display";
+
+"display.colorMode" = "Appearance";
+"display.colorMode.system" = "System setting";
+"display.colorMode.light" = "Light";
+"display.colorMode.dark" = "Dark";
+
+"display.language" = "App Language";
+
+"display.table" = "Timetable Settings";
+"display.table.autoFit" = "Auto";
+"display.table.nonCompact" = "Compact Mode";
+"display.table.nonCompact.warning" = "Displays a fully packed timetable. Some overlap may occur with manually added lectures.";
+"display.table.lectureTitle" = "Course Title";
+"display.table.place" = "Building-Room";
+"display.table.lectureNumber" = "Lecture Number";
+"display.table.instructor" = "Instructor";
+"display.table.info" = "Visibility";
+"display.table.info.warning" = "If there is a lot of information, some text may not be displayed.";
+"display.table.preview" = "Preview";
+
+"display.theme" = "Timetable Theme";
+
+// MARK: 서비스
+"service" = "Service";
+"service.vacancy" = "Vacancy Notification";
+"service.themeMarket" = "Theme Market";
+
+// MARK: 정보 및 제안
+"info" = "Info & Suggestions";
+"info.version" = "Version";
+"info.developers" = "About Us";
+
+// MARK: 기타
+"feedback" = "Share Feedback";
+
+"license" = "Open Source License";
+"terms.service" = "Terms of Service";
+"privacy.policy" = "Privacy Policy";
+
+"logout" = "Log out";
+"logout.alert" = "Would you like to log out?";
+
+// MARK: 디버그 메뉴
+"debug" = "Debug";
+"debug.log" = "Network Logs";

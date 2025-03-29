@@ -26,11 +26,6 @@ DerivedData
 #
 Pods/
 
-# SNUTT-iOS
-SNUTT/config.plist
-SNUTT/GoogleService-Info-Dev.plist
-SNUTT/GoogleService-Info-Production.plist
-
 # SNUTT-iOS-2022
 SNUTT-2022/SNUTT/*.xcconfig
 SNUTT-2022/SNUTT/GoogleService*.plist
