@@ -46,7 +46,7 @@ extension TimetableUserDefaultsRepository {
             quarter: timetable.quarter,
             previewLectures: timetable.lectures.map {
                 PreviewLecture(
-                    id: $0.id, lectureID: $0.lectureID, courseTitle: $0.courseTitle, timePlaces: $0.timePlaces, lectureNumber: $0.lectureNumber, instructor: $0.instructor, credit: $0.credit, courseNumber: $0.courseNumber, department: $0.department, academicYear: $0.academicYear, evLecture: $0.evLecture, classification: $0.classification, category: $0.category, quota: $0.quota, freshmenQuota: $0.freshmenQuota
+                    id: $0.id, lectureID: $0.lectureID, courseTitle: $0.courseTitle, timePlaces: $0.timePlaces, lectureNumber: $0.lectureNumber, instructor: $0.instructor, credit: $0.credit, courseNumber: $0.courseNumber, department: $0.department, academicYear: $0.academicYear, evLecture: $0.evLecture, classification: $0.classification, category: $0.category, quota: $0.quota, freshmenQuota: $0.freshmenQuota, registrationCount: $0.registrationCount
                 )
             },
             userID: timetable.userID

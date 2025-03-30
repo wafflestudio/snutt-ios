@@ -19,8 +19,8 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
 
     private var tabButtons = [T: UIButton]()
 
-    private func selectTab(_ tab: T) {
-        guard !isTransitionInProgress, selectedTabItem != tab else { return }
+    func selectTab(_ tab: T) {
+        guard !isTransitionInProgress else { return }
         selectedTabItem = tab
         guard selectedIndex != tab.viewIndex() else { return }
         isTransitionInProgress = true
@@ -188,7 +188,6 @@ public struct AnimatableTabView<T: TabItem>: UIViewControllerRepresentable {
     }
 
     public func updateUIViewController(_ viewController: AnimatableUITabBarController<T>, context _: Context) {
-        viewController.updateAllTabButtonConfigurations()
     }
 }
 

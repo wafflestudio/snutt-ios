@@ -17,6 +17,7 @@ struct ExpandableLectureListView: View {
             LazyVStack(spacing: 0) {
                 ForEach(viewModel.lectures, id: \.id) { lecture in
                     ExpandableLectureCell(viewModel: viewModel, lecture: lecture)
+                        .highlightOnPress(precondition: viewModel.renderingOptions.contains(.scaleOnPress))
                     if viewModel.renderingOptions.contains(.showsDivider) {
                         Divider()
                             .frame(height: 1)

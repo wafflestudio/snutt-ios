@@ -10,6 +10,7 @@ import SharedUIComponents
 import SwiftUI
 import TimetableInterface
 import TimetableUIComponents
+import NotificationsInterface
 
 public struct TimetableScene: View {
     @Dependency(\.application) private var application
@@ -17,12 +18,13 @@ public struct TimetableScene: View {
     @State private(set) var searchViewModel: LectureSearchViewModel
     @Binding private(set) var isSearchMode: Bool
     @Environment(\.errorAlertHandler) private var errorAlertHandler
+    @Environment(\.notificationsUIProvider) private var notificationsUIProvider
 
-    public init(isSearchMode: Binding<Bool>) {
+    public init(isSearchMode: Binding<Bool>, timetableRouter: TimetableRouter, lectureSearchRouter: LectureSearchRouter) {
         _isSearchMode = isSearchMode
-        let timetableViewModel = TimetableViewModel()
+        let timetableViewModel = TimetableViewModel(router: timetableRouter)
         _timetableViewModel = State(initialValue: timetableViewModel)
-        _searchViewModel = State(initialValue: LectureSearchViewModel(timetableViewModel: timetableViewModel))
+        _searchViewModel = State(initialValue: LectureSearchViewModel(timetableViewModel: timetableViewModel, router: lectureSearchRouter))
     }
 
     public var body: some View {
@@ -54,7 +56,9 @@ public struct TimetableScene: View {
                         }
                     }
                     group.addTask {
-                        try await timetableViewModel.loadTimetableList()
+                        await errorAlertHandler.withAlert {
+                            try await timetableViewModel.loadTimetableList()
+                        }
                     }
                 }
             }
@@ -81,7 +85,7 @@ public struct TimetableScene: View {
         case let .lectureDetail(lecture):
             LectureEditDetailScene(entryLecture: lecture, displayMode: .normal)
         case .notificationList:
-            EmptyView()
+            AnyView(notificationsUIProvider.makeNotificationsScene())
         }
     }
 
@@ -127,5 +131,6 @@ extension View {
 }
 
 #Preview {
-    TimetableScene(isSearchMode: .constant(false))
+    TimetableScene(isSearchMode: .constant(false), timetableRouter: .init(), lectureSearchRouter: .init())
+        .overlaySheet()
 }

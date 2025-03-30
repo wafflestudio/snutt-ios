@@ -64,7 +64,8 @@ public enum PreviewHelpers {
             classification: "분류",
             category: "구분",
             quota: Int32.random(in: 10 ... 100, using: &generator),
-            freshmenQuota: 10
+            freshmenQuota: 10,
+            registrationCount: 12
         )
     }
 
@@ -179,6 +180,8 @@ public struct PreviewLecture: Lecture, Codable {
     public var category: String?
     public var quota: Int32?
     public var freshmenQuota: Int32?
+    public var registrationCount: Int32
+    public var wasFull: Bool = false
 }
 
 public struct PreviewTimetableMetadata: TimetableMetadata {
