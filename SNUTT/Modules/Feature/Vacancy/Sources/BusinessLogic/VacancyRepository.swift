@@ -10,14 +10,18 @@ import Spyable
 import TimetableInterface
 
 @Spyable
-protocol VacancyRepository: Sendable {
+public protocol VacancyRepository: Sendable {
     func fetchVacancyLectures() async throws -> [any Lecture]
     func addVacancyLecture(lectureID: String) async throws
     func deleteVacancyLecture(lectureID: String) async throws
 }
 
-struct VacancyRepositoryKey: TestDependencyKey {
-    static let testValue: any VacancyRepository = VacancyRepositorySpy()
+public struct VacancyRepositoryKey: TestDependencyKey {
+    public static let testValue: any VacancyRepository = {
+        let spy = VacancyRepositorySpy()
+        spy.fetchVacancyLecturesReturnValue = PreviewHelpers.preview.lectures
+        return spy
+    }()
 }
 
 extension DependencyValues {
