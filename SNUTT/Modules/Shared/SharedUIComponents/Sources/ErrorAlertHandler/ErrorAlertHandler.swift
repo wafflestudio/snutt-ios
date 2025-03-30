@@ -89,7 +89,7 @@ private struct AnyLocalizedError: LocalizedError {
         ]
         .compactMap { $0 }
         #if DEBUG
-        messages.append("[DEBUG] \(underlyingError)")
+            messages.append("[DEBUG] \(underlyingError)")
         #endif
         return if messages.isEmpty {
             nil

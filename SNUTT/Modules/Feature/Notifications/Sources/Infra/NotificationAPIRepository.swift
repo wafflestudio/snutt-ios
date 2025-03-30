@@ -19,7 +19,7 @@ struct NotificationAPIRepository: NotificationRepository {
             limit: String(limit),
             explicit: String(explicit)
         )).ok.body.json.compactMap {
-            return try NotificationModel(
+            try NotificationModel(
                 id: require($0._id),
                 title: $0.title,
                 message: $0.message,

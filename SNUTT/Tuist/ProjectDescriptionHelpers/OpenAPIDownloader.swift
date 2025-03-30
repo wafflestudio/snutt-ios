@@ -1,6 +1,6 @@
-import ProjectDescription
 import Foundation
 import os
+import ProjectDescription
 
 struct OpenAPIDownloader: Sendable {
     private var fileManager: FileManager {
@@ -31,14 +31,20 @@ struct OpenAPIDownloader: Sendable {
         else { throw DownloadError("Failed to convert OpenAPI spec to data") }
         let jsonObject = try JSONSerialization.jsonObject(with: processedData, options: []) as! [String: Any]
         let validatedJsonObject = validated(jsonObject: jsonObject)
-        let prettyPrintedData = try JSONSerialization.data(withJSONObject: validatedJsonObject, options: [.prettyPrinted, .withoutEscapingSlashes, .sortedKeys])
+        let prettyPrintedData = try JSONSerialization.data(
+            withJSONObject: validatedJsonObject,
+            options: [.prettyPrinted, .withoutEscapingSlashes, .sortedKeys]
+        )
         try prettyPrintedData.write(to: fileURL, options: .atomic)
         print("✅ OpenAPI spec for \(configuration.rawValue) downloaded successfully.")
     }
 
     private func validated(jsonObject: [String: Any]) -> [String: Any] {
         var validatedObject = jsonObject
-        validatedObject.updateValueRecursively(keyPath: "paths./v1/configs.get.responses.200.content.application/json.schema", value: ["type": "object", "additionalProperties": true])
+        validatedObject.updateValueRecursively(
+            keyPath: "paths./v1/configs.get.responses.200.content.application/json.schema",
+            value: ["type": "object", "additionalProperties": true]
+        )
         validatedObject.transformJsonEnumTypesRecursively()
         return validatedObject
     }
@@ -86,7 +92,6 @@ struct OpenAPIDownloader: Sendable {
     }
 }
 
-
 extension ProjectDescription.ConfigurationName {
     var apiSpecRemoteURL: URL {
         switch self {
@@ -95,7 +100,7 @@ extension ProjectDescription.ConfigurationName {
         case .prod:
             URL(string: "https://snutt-api.wafflestudio.com/v3/api-docs")!
         default:
-            fatalError("Unknown configuration: \(self.rawValue)")
+            fatalError("Unknown configuration: \(rawValue)")
         }
     }
 
@@ -106,7 +111,7 @@ extension ProjectDescription.ConfigurationName {
         case .prod:
             "openapi-prod.json"
         default:
-            fatalError("Unknown configuration: \(self.rawValue)")
+            fatalError("Unknown configuration: \(rawValue)")
         }
     }
 }
@@ -120,7 +125,8 @@ extension Dictionary where Key == String, Value == Any {
             }
         }
         if let typeValue = self["type"] as? String, typeValue == "string",
-           let enumValue = self["enum"] as? [Any] {
+           let enumValue = self["enum"] as? [Any]
+        {
             let conversionResult = canConvertAllStringElementsToInt(enumValue)
             if conversionResult.canConvert, let intArray = conversionResult.intArray {
                 self["enum"] = intArray
@@ -128,7 +134,6 @@ extension Dictionary where Key == String, Value == Any {
             }
         }
     }
-
 
     mutating func updateValueRecursively(keyPath: String, value: Any) {
         let keys = keyPath.split(separator: ".").map(String.init).filter { !$0.isEmpty }
