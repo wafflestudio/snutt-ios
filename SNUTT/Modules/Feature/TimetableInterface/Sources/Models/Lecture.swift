@@ -37,6 +37,9 @@ public struct Lecture: Identifiable, Equatable, Sendable, Codable {
     public let registrationCount: Int32
     public let quota: Int32?
     public let freshmenQuota: Int32?
+
+    @Init(default: nil)
+    public var categoryPre2025: String?
 }
 
 @MemberwiseInit(.public)

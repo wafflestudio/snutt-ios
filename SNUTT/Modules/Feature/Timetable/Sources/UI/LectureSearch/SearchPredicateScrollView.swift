@@ -71,6 +71,7 @@ extension SearchFilterCategory {
         case .department: return Color(hex: "#1BD0C8")
         case .time: return Color(hex: "#1D99E8")
         case .category: return Color(hex: "#4F48C4")
+        case .categoryPre2025: return Color(hex: "#4F48C4")
         case .etc: return Color(hex: "#AF56B3")
         case .instructor: return Color.clear // not supported
         }

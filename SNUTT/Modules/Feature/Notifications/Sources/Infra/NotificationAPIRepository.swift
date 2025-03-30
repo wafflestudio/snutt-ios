@@ -19,13 +19,12 @@ struct NotificationAPIRepository: NotificationRepository {
             limit: String(limit),
             explicit: String(explicit)
         )).ok.body.json.compactMap {
-            guard let id = $0._id, let type = NotificationType(rawValue: $0._type.rawValue) else { return nil }
-            return NotificationModel(
-                id: id,
+            return try NotificationModel(
+                id: require($0._id),
                 title: $0.title,
                 message: $0.message,
                 createdAt: $0.created_at,
-                type: type,
+                type: require(NotificationType(rawValue: $0._type.rawValue)),
                 userID: $0.user_id,
                 deeplink: $0.deeplink.flatMap { URL(string: $0) }
             )

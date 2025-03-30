@@ -48,7 +48,9 @@ struct TimetableMenuSectionRow: View {
                     defer {
                         isLoadingTimetable = false
                     }
-                    try await viewModel.selectTimetable(timetableID: timetableMetadata.id)
+                    errorHandler.withAlert {
+                        try await viewModel.selectTimetable(timetableID: timetableMetadata.id)
+                    }
                 }
             } label: {
                 HStack {

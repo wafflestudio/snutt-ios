@@ -13,6 +13,7 @@ enum SearchPredicate: Sendable, Hashable {
     case credit(Int)
     case instructor(String)
     case category(String)
+    case categoryPre2025(String)
     case timeInclude(SearchTimeRange)
     case timeExclude(SearchTimeRange)
     case etc(EtcType)

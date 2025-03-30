@@ -83,11 +83,14 @@ private struct AnyLocalizedError: LocalizedError {
     }
 
     var errorMessage: String? {
-        let messages = [
+        var messages = [
             failureReason,
             recoverySuggestion,
         ]
         .compactMap { $0 }
+        #if DEBUG
+        messages.append("[DEBUG] \(underlyingError)")
+        #endif
         return if messages.isEmpty {
             nil
         } else {
