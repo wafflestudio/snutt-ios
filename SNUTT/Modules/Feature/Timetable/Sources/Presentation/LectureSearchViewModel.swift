@@ -18,16 +18,21 @@ class LectureSearchViewModel {
     @Dependency(\.lectureSearchRepository) private var searchRepository
 
     private let timetableViewModel: TimetableViewModel
+    private let router: LectureSearchRouter
 
-    init(timetableViewModel: TimetableViewModel) {
+    init(timetableViewModel: TimetableViewModel, router: LectureSearchRouter = .init()) {
         self.timetableViewModel = timetableViewModel
+        self.router = router
     }
 
     var searchQuery = ""
     var searchingQuarter: Quarter?
-    var searchDisplayMode: SearchDisplayMode = .search
+    var searchDisplayMode: SearchDisplayMode {
+        get { router.searchDisplayMode }
+        set { router.searchDisplayMode = newValue }
+    }
     var isSearchFilterOpen = false
-    var targetForLectureDetailSheet: (any Lecture)?
+    var targetForLectureDetail: (any Lecture)?
 
     private let dataSource = LectureSearchResultDataSource()
     var selectedLecture: (any Lecture)?
@@ -102,7 +107,7 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
     func toggleAction(lecture: any Lecture, type: ActionButtonType) async throws {
         switch type {
         case .detail:
-            targetForLectureDetailSheet = lecture
+            targetForLectureDetail = lecture
         case .review:
             break
         case .bookmark:
@@ -132,7 +137,7 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
     }
 }
 
-enum SearchDisplayMode {
+public enum SearchDisplayMode {
     case search
     case bookmark
 
@@ -145,6 +150,14 @@ enum SearchDisplayMode {
         }
     }
 }
+
+@Observable
+@MainActor
+public final class LectureSearchRouter {
+    public var searchDisplayMode: SearchDisplayMode = .search
+    public nonisolated init() {}
+}
+
 
 enum SearchFilterCategory: String, Sendable, CaseIterable {
     case sortCriteria

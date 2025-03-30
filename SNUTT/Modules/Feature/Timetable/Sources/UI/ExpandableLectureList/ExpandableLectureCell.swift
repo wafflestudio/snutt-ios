@@ -126,7 +126,7 @@ private struct LectureHeaderRow: View {
     }
 }
 
-private struct LectureDetailRow: View {
+struct LectureDetailRow: View {
     let type: DetailLabelType
     let lecture: any Lecture
 
@@ -185,12 +185,7 @@ extension ActionButtonType {
     }
 }
 
-private enum DetailLabelType: CaseIterable {
-    case department
-    case time
-    case place
-    case remark
-
+extension DetailLabelType {
     var image: Image {
         switch self {
         case .department:
