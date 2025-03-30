@@ -68,7 +68,8 @@ final class LectureEditDetailViewModel {
             classification: entryLecture.classification,
             category: entryLecture.category,
             quota: entryLecture.quota,
-            freshmenQuota: entryLecture.freshmenQuota
+            freshmenQuota: entryLecture.freshmenQuota,
+            registrationCount: entryLecture.registrationCount
         )
     }
 }
@@ -92,6 +93,8 @@ struct EditableLecture: Lecture {
 
     var quota: Int32?
     var freshmenQuota: Int32?
+    var registrationCount: Int32
+    var wasFull = false
 
     var quotaDescription: String? {
         get {

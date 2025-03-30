@@ -28,7 +28,7 @@ struct DateTimeEditor: View {
             .onTapGesture {
                 isPickerPresented = true
             }
-            .highlightOnPress()
+            .highlightOnPress(backgroundColor: .black.opacity(0.1))
             .frame(maxWidth: .infinity, alignment: .leading)
             .sheet(isPresented: $isPickerPresented) {
                 pickerSheetContent

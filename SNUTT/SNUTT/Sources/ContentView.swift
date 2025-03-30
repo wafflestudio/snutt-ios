@@ -7,9 +7,13 @@ import Settings
 import SharedUIComponents
 import SwiftUI
 import Timetable
+import Notifications
+import NotificationsInterface
+import Vacancy
 
 struct ContentView: View {
     @State private var viewModel = ContentViewModel()
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     var body: some View {
         VStack {
@@ -22,19 +26,36 @@ struct ContentView: View {
                     .zIndex(1)
             }
         }
-        .observeErrors()
+        .environment(\.configs, viewModel.configs)
         .animation(.easeInOut, value: viewModel.isAuthenticated)
         .tint(.label)
+        .onOpenURL { url in
+            errorAlertHandler.withAlert {
+                try await viewModel.handleURLScheme(url)
+            }
+        }
     }
 
     private var mainView: some View {
         ZStack {
             AnimatableTabView(selectedTab: $viewModel.selectedTab) {
-                TabScene(tabItem: TabItem.timetable, rootView: TimetableScene(isSearchMode: isSearchMode))
+                TabScene(
+                    tabItem: TabItem.timetable,
+                    rootView: TimetableScene(
+                        isSearchMode: isSearchMode,
+                        timetableRouter: viewModel.timetableRouter,
+                        lectureSearchRouter: viewModel.lectureSearchRouter
+                    )
+                        .environment(\.notificationsUIProvider, NotificationsUIProvider())
+                )
                 TabScene(tabItem: TabItem.search)
                 TabScene(tabItem: TabItem.friends, rootView: ColorView(color: .yellow))
                 TabScene(tabItem: TabItem.review, rootView: ColorView(color: .green))
-                TabScene(tabItem: TabItem.settings, rootView: SettingsScene())
+                TabScene(
+                    tabItem: TabItem.settings,
+                    rootView: SettingsScene()
+                        .environment(\.vacancyUIProvider, VacancyUIProvider())
+                )
             }
             .ignoresSafeArea()
         }
@@ -64,4 +85,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .observeErrors()
 }

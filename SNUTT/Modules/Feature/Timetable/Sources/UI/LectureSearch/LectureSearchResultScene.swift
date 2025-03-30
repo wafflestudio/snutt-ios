@@ -22,31 +22,33 @@ struct LectureSearchResultScene: View {
                     }
                 )
             }
-            if viewModel.lectures.isEmpty {
-                SearchTipsView()
-            } else {
-                VStack {
-                    switch viewModel.searchDisplayMode {
-                    case .search:
-                        searchContentView
-                            .transition(.move(edge: .leading))
-                    case .bookmark:
-                        bookmarkContentView
-                            .transition(.move(edge: .trailing))
+            VStack {
+                switch viewModel.searchDisplayMode {
+                case .search:
+                    Group {
+                        if viewModel.lectures.isEmpty {
+                            SearchTipsView()
+                        } else {
+                            searchContentView
+                        }
                     }
+                    .transition(.move(edge: .leading))
+                case .bookmark:
+                    bookmarkContentView
+                        .transition(.move(edge: .trailing))
                 }
-                .animation(.defaultSpring, value: viewModel.searchDisplayMode)
             }
+            .animation(.defaultSpring, value: viewModel.searchDisplayMode)
         }
         .animation(.defaultSpring, value: viewModel.selectedPredicates)
         .sheet(isPresented: $viewModel.isSearchFilterOpen) {
             SearchFilterSheet(viewModel: viewModel)
         }
         .sheet(isPresented: .init(
-            get: { viewModel.targetForLectureDetailSheet != nil },
-            set: { _ in viewModel.targetForLectureDetailSheet = nil }
+            get: { viewModel.targetForLectureDetail != nil },
+            set: { _ in viewModel.targetForLectureDetail = nil }
         )) {
-            if let entryLecture = viewModel.targetForLectureDetailSheet {
+            if let entryLecture = viewModel.targetForLectureDetail {
                 NavigationStack {
                     LectureEditDetailScene(
                         entryLecture: entryLecture,

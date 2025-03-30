@@ -45,4 +45,5 @@ struct ExpandableLectureListRenderingOptions: OptionSet {
     let rawValue: Int
 
     static let showsDivider = Self(rawValue: 1 << 0)
+    static let scaleOnPress = Self(rawValue: 1 << 1)
 }

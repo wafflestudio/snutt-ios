@@ -11,6 +11,10 @@ import AuthInterface
 import Dependencies
 import Timetable
 import TimetableInterface
+import Configs
+import ConfigsInterface
+import Vacancy
+import VacancyInterface
 
 extension APIClientKey: @retroactive DependencyKey {
     public static let liveValue: any APIProtocol = APIClientProvider().apiClient()
@@ -35,4 +39,17 @@ extension AuthStateKey: @retroactive DependencyKey {
 
 extension AuthSecureRepositoryKey: @retroactive DependencyKey {
     public static let liveValue: any AuthSecureRepository = AuthKeychainRepository()
+}
+
+extension TimetableUIProviderKey: @retroactive DependencyKey {
+    public static let liveValue: any TimetableUIProvidable = TimetableUIProvider()
+    public static let previewValue: any TimetableUIProvidable = TimetableUIProvider()
+}
+
+extension ConfigsRepositoryKey: @retroactive DependencyKey {
+    public static let liveValue: any ConfigsRepository = ConfigsAPIRepository()
+}
+
+extension VacancyRepositoryKey: @retroactive DependencyKey {
+    public static let liveValue: any VacancyRepository = VacancyAPIRepository()
 }

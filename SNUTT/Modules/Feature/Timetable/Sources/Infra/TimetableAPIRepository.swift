@@ -128,8 +128,16 @@ extension Components.Schemas.TimetableBriefDto: @retroactive TimetableMetadata {
 }
 
 extension Components.Schemas.TimetableLectureLegacyDto: @retroactive Lecture {
+    public var wasFull: Bool {
+        false
+    }
+    
     public var freshmenQuota: Int32? {
         freshman_quota
+    }
+
+    public var registrationCount: Int32 {
+        0
     }
 
     public var customColor: TimetableInterface.LectureColor? {

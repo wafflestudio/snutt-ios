@@ -8,19 +8,31 @@
 import SwiftUI
 
 extension View {
-    public func highlightOnPress(scale: CGFloat = 0.98) -> some View {
-        modifier(HighlightModifier(scale: scale))
+    @ViewBuilder
+    public func highlightOnPress(precondition: Bool = true, scale: CGFloat = 0.98, backgroundColor: Color = .clear) -> some View {
+        if precondition {
+            modifier(HighlightModifier(scale: scale, backgroundColor: backgroundColor))
+        } else {
+            self
+        }
     }
 }
 
 private struct HighlightModifier: ViewModifier {
     let scale: CGFloat
+    let backgroundColor: Color
     @State private var isPressed = false
 
     func body(content: Content) -> some View {
         content
             .background(
-                Color.label.opacity(isPressed ? 0.1 : 0)
+                Group {
+                    if isPressed {
+                        backgroundColor
+                    } else {
+                        Color.clear
+                    }
+                }
                     .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
                     .padding(.horizontal, -5)
             )

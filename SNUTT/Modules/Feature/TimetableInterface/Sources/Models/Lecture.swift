@@ -32,6 +32,8 @@ public protocol Lecture: Identifiable, Equatable, Sendable, Codable {
     var classification: String? { get }
     var category: String? { get }
 
+    var wasFull: Bool { get }
+    var registrationCount: Int32 { get }
     var quota: Int32? { get }
     var freshmenQuota: Int32? { get }
 }

@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import Foundation
 import Spyable
 
 @Spyable
@@ -16,6 +17,9 @@ public protocol ConfigsRepository: Sendable {
 public enum ConfigsRepositoryKey: TestDependencyKey {
     public static let testValue: any ConfigsRepository = {
         let spy = ConfigsRepositorySpy()
+        var model = ConfigsModel.empty
+        model.vacancySugangSnuUrl?.url = URL(string: "https://sugang.snu.ac.kr/sugang/cc/cc100InterfaceSrch.action")!
+        spy.fetchConfigsReturnValue = model
         return spy
     }()
 }

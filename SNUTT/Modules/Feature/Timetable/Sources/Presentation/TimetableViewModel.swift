@@ -23,10 +23,19 @@ class TimetableViewModel {
     @ObservationIgnored
     @Dependency(\.timetableRepository) private var timetableRepository
 
+    private let router: TimetableRouter
+    var paths: [TimetableDetailSceneTypes] {
+        get { router.navigationPaths }
+        set { router.navigationPaths = newValue }
+    }
+
+    init(router: TimetableRouter = .init()) {
+        self.router = router
+    }
+
     private(set) var currentTimetable: (any Timetable)?
     private(set) var metadataLoadState: MetadataLoadState = .loading
 
-    var paths = [TimetableDetailSceneTypes]()
     var isMenuPresented = false
 
     private(set) var configuration: TimetableConfiguration = .init()
@@ -129,12 +138,21 @@ extension TimetableViewModel {
     }
 }
 
-enum TimetableDetailSceneTypes: Hashable, Equatable {
+@Observable
+@MainActor
+public final class TimetableRouter {
+    public var navigationPaths: [TimetableDetailSceneTypes] = []
+    public nonisolated init() {
+
+    }
+}
+
+public enum TimetableDetailSceneTypes: Hashable, Equatable {
     case lectureList
     case notificationList
     case lectureDetail(any Lecture)
 
-    static func == (lhs: TimetableDetailSceneTypes, rhs: TimetableDetailSceneTypes) -> Bool {
+    public static func == (lhs: TimetableDetailSceneTypes, rhs: TimetableDetailSceneTypes) -> Bool {
         switch (lhs, rhs) {
         case (.lectureList, .lectureList):
             true
@@ -147,7 +165,7 @@ enum TimetableDetailSceneTypes: Hashable, Equatable {
         }
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(self)
     }
 }

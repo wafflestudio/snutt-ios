@@ -17,7 +17,7 @@ struct LectureListViewModel: ExpandableLectureListViewModel {
     }
 
     var renderingOptions: ExpandableLectureListRenderingOptions {
-        [.showsDivider]
+        [.showsDivider, .scaleOnPress]
     }
 
     let selectedLecture: (any Lecture)? = nil

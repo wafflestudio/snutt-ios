@@ -36,9 +36,7 @@ class LectureSearchResultDataSource {
             offset: offset,
             limit: pageLimit
         )
-        if response.count < pageLimit {
-            canFetchMore = false
-        }
+        canFetchMore = response.count == pageLimit
         currentPage = page
         return response
     }

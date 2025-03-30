@@ -7,6 +7,7 @@
 
 import SharedUIComponents
 import SwiftUI
+import VacancyInterface
 
 public struct SettingsScene: View {
     @State private(set) var viewModel: SettingsViewModel
@@ -15,6 +16,7 @@ public struct SettingsScene: View {
     @State private var path: [Destination] = []
 
     @Environment(\.errorAlertHandler) private var errorAlertHandler
+    @Environment(\.vacancyUIProvider) private var vacancyUIProvider
 
     public init() {
         viewModel = .init()
@@ -117,7 +119,7 @@ extension SettingsScene {
         case .timetableTheme:
             ColorView(color: .blue)
         case .vacancyNotification:
-            ColorView(color: .purple)
+            AnyView(vacancyUIProvider.makeVacancyScene())
         case .themeMarket:
             ColorView(color: .orange)
         case .developers:
