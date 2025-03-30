@@ -9,13 +9,12 @@
 // implementation of touchesShouldCancel(in:) and to make UIScrollView
 // instances more responsive to touch events.
 
-import UIKit
 import SwiftUI
 import SwiftUIIntrospect
+import UIKit
 
 extension ScrollView {
-    @MainActor
-    public func withResponsiveTouch() -> some View {
+    @MainActor public func withResponsiveTouch() -> some View {
         introspect(.scrollView, on: .iOS(.v17, .v18)) { scrollView in
             scrollView.makeTouchResponsive()
         }
@@ -39,7 +38,10 @@ extension UIScrollView {
     private static func swizzleTouchesShouldCancel() {
         guard !hasSwizzled,
               let originalMethod = class_getInstanceMethod(UIScrollView.self, #selector(touchesShouldCancel(in:))),
-              let swizzledMethod = class_getInstanceMethod(UIScrollView.self, #selector(swizzled_touchesShouldCancel(in:)))
+              let swizzledMethod = class_getInstanceMethod(
+                  UIScrollView.self,
+                  #selector(swizzled_touchesShouldCancel(in:))
+              )
         else {
             return
         }
@@ -62,7 +64,12 @@ extension UIScrollView {
             return objc_getAssociatedObject(self, &AssociatedKeys.shouldAlwaysCancelTouchesKey) as? Bool ?? false
         }
         set {
-            objc_setAssociatedObject(self, &AssociatedKeys.shouldAlwaysCancelTouchesKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(
+                self,
+                &AssociatedKeys.shouldAlwaysCancelTouchesKey,
+                newValue,
+                .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+            )
         }
     }
 }

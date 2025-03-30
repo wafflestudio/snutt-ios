@@ -84,8 +84,7 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
         let button = AnimatableUIButton(animationOptions: .identity
             .scale(0.8)
             .backgroundColor(touchDown: .black.opacity(0.1))
-            .impact()
-        )
+            .impact())
         var configuration = UIButton.Configuration.plain()
         configuration.cornerStyle = .large
         button.configuration = configuration
@@ -187,8 +186,7 @@ public struct AnimatableTabView<T: TabItem>: UIViewControllerRepresentable {
         return AnimatableUITabBarController(selectedTabItem: $selectedTab, tabScenes: tabScenes())
     }
 
-    public func updateUIViewController(_ viewController: AnimatableUITabBarController<T>, context _: Context) {
-    }
+    public func updateUIViewController(_: AnimatableUITabBarController<T>, context _: Context) {}
 }
 
 @MainActor

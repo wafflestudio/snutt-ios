@@ -6,22 +6,25 @@
 //
 
 import Foundation
+import MemberwiseInit
 
-public protocol Timetable: Identifiable, Sendable, Codable {
-    var id: String { get }
-    var title: String { get }
-    var quarter: Quarter { get }
-    var lectures: [any Lecture] { get }
-    var userID: String { get }
-    var defaultTheme: Theme? { get }
+@MemberwiseInit(.public)
+public struct Timetable: Identifiable, Sendable, Codable {
+    public let id: String
+    public let title: String
+    public let quarter: Quarter
+    public let lectures: [Lecture]
+    public let userID: String
+    public let defaultTheme: Theme?
 }
 
-public protocol TimetableMetadata: Identifiable, Sendable, Codable, Equatable {
-    var id: String { get }
-    var title: String { get }
-    var quarter: Quarter { get }
-    var totalCredit: Int { get }
-    var isPrimary: Bool { get }
+@MemberwiseInit(.public)
+public struct TimetableMetadata: Identifiable, Sendable, Codable, Equatable {
+    public let id: String
+    public let title: String
+    public let quarter: Quarter
+    public let totalCredit: Int
+    public let isPrimary: Bool
 }
 
 public enum Semester: Int, Sendable, Codable, Equatable {

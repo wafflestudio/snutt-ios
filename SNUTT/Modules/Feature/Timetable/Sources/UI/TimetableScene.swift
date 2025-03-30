@@ -6,11 +6,11 @@
 //
 
 import Dependencies
+import NotificationsInterface
 import SharedUIComponents
 import SwiftUI
 import TimetableInterface
 import TimetableUIComponents
-import NotificationsInterface
 
 public struct TimetableScene: View {
     @Dependency(\.application) private var application
@@ -20,11 +20,18 @@ public struct TimetableScene: View {
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.notificationsUIProvider) private var notificationsUIProvider
 
-    public init(isSearchMode: Binding<Bool>, timetableRouter: TimetableRouter, lectureSearchRouter: LectureSearchRouter) {
+    public init(
+        isSearchMode: Binding<Bool>,
+        timetableRouter: TimetableRouter,
+        lectureSearchRouter: LectureSearchRouter
+    ) {
         _isSearchMode = isSearchMode
         let timetableViewModel = TimetableViewModel(router: timetableRouter)
         _timetableViewModel = State(initialValue: timetableViewModel)
-        _searchViewModel = State(initialValue: LectureSearchViewModel(timetableViewModel: timetableViewModel, router: lectureSearchRouter))
+        _searchViewModel = State(initialValue: LectureSearchViewModel(
+            timetableViewModel: timetableViewModel,
+            router: lectureSearchRouter
+        ))
     }
 
     public var body: some View {

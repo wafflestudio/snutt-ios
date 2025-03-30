@@ -10,6 +10,9 @@ private let template = Template(
     ],
     items: [
         .file(path: "Modules/\(category.directoryName)/\(name)/Sources/\(name).swift", templatePath: "Shared.stencil"),
-        .file(path: "Modules/\(category.directoryName)/\(name)/Tests/\(name)Tests.swift", templatePath: "SharedTests.stencil"),
+        .file(
+            path: "Modules/\(category.directoryName)/\(name)/Tests/\(name)Tests.swift",
+            templatePath: "SharedTests.stencil"
+        ),
     ]
 )

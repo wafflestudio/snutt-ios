@@ -8,7 +8,7 @@
 import TimetableInterface
 
 extension TimetablePainter {
-    func getColor(for lecture: any Lecture) -> LectureColor {
+    func getColor(for lecture: Lecture) -> LectureColor {
         if let customColor = lecture.customColor {
             return customColor
         }

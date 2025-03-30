@@ -20,23 +20,23 @@ struct LectureListViewModel: ExpandableLectureListViewModel {
         [.showsDivider, .scaleOnPress]
     }
 
-    let selectedLecture: (any Lecture)? = nil
+    let selectedLecture: Lecture? = nil
 }
 
 extension LectureListViewModel {
-    var lectures: [any Lecture] {
+    var lectures: [Lecture] {
         timetableViewModel.currentTimetable?.lectures ?? []
     }
 
-    func selectLecture(_ lecture: any Lecture) {
+    func selectLecture(_ lecture: Lecture) {
         timetableViewModel.paths.append(.lectureDetail(lecture))
     }
 
-    func toggleAction(lecture _: any TimetableInterface.Lecture, type _: ActionButtonType) async throws {
+    func toggleAction(lecture _: TimetableInterface.Lecture, type _: ActionButtonType) async throws {
         // noop
     }
 
-    func isSelected(lecture _: any Lecture) -> Bool {
+    func isSelected(lecture _: Lecture) -> Bool {
         false
     }
 
@@ -44,7 +44,7 @@ extension LectureListViewModel {
         // noop
     }
 
-    func isToggled(lecture _: any Lecture, type _: ActionButtonType) -> Bool {
+    func isToggled(lecture _: Lecture, type _: ActionButtonType) -> Bool {
         false
     }
 }

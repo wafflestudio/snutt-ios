@@ -5,16 +5,16 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import Dependencies
 import SwiftUI
 import TimetableInterface
-import Dependencies
 
 public struct VacancyLectureListCell: View {
-    let lecture: any Lecture
+    let lecture: Lecture
     @Environment(\.timetableUIProvider) private var timetableUIProvider
     @Environment(\.editMode) private var editMode
 
-    public init(lecture: any Lecture) {
+    public init(lecture: Lecture) {
         self.lecture = lecture
     }
 
@@ -23,7 +23,6 @@ public struct VacancyLectureListCell: View {
         static let vacancyRed: Color = .init(hex: "#ED6C58")
         static let vacancyRedBackground: Color = vacancyRed.opacity(0.05)
     }
-
 
     public var body: some View {
         VStack(spacing: 2) {

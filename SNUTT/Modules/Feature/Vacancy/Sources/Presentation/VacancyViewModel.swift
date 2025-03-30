@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import Observation
 import Dependencies
+import Observation
 import TimetableInterface
 
 @MainActor
@@ -15,7 +15,7 @@ final class VacancyViewModel {
     @ObservationIgnored
     @Dependency(\.vacancyRepository) private var vacancyRepository
 
-    private(set) var vacancyLectures: [any Lecture] = []
+    private(set) var vacancyLectures: [Lecture] = []
 
     func fetchVacancyLectures() async throws {
         vacancyLectures = try await vacancyRepository.fetchVacancyLectures()

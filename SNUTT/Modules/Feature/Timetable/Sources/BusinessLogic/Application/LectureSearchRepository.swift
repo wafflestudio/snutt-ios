@@ -18,5 +18,5 @@ protocol LectureSearchRepository: Sendable {
         predicates: [SearchPredicate],
         offset: Int,
         limit: Int
-    ) async throws -> [any Lecture]
+    ) async throws -> [Lecture]
 }

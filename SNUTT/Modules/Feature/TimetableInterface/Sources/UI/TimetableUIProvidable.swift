@@ -5,12 +5,12 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import Dependencies
+import SwiftUI
 
 @MainActor
 public protocol TimetableUIProvidable: Sendable {
-    func lectureDetailRow(type: DetailLabelType, lecture: any Lecture) -> AnyView
+    func lectureDetailRow(type: DetailLabelType, lecture: Lecture) -> AnyView
 }
 
 public enum DetailLabelType: CaseIterable {
@@ -21,7 +21,7 @@ public enum DetailLabelType: CaseIterable {
 }
 
 struct EmptyTimetableUIProvider: TimetableUIProvidable {
-    func lectureDetailRow(type: DetailLabelType, lecture: any Lecture) -> AnyView {
+    func lectureDetailRow(type _: DetailLabelType, lecture _: Lecture) -> AnyView {
         AnyView(Text("Empty LectureDetailRow"))
     }
 }

@@ -23,10 +23,10 @@ class LectureSearchResultDataSource {
     private var isLoading = false
     private var canFetchMore = true
     private var predicates: [SearchPredicate]?
-    private(set) var searchResults = [any Lecture]()
+    private(set) var searchResults = [Lecture]()
 
     private func fetchSearchResult(query: String, at page: Int, quarter: Quarter,
-                                   predicates: [SearchPredicate]) async throws -> [any Lecture]
+                                   predicates: [SearchPredicate]) async throws -> [Lecture]
     {
         let offset = pageLimit * page
         let response = try await searchRepository.fetchSearchResult(

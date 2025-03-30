@@ -29,7 +29,7 @@ public struct TimetableZStack: View {
 // MARK: Preview
 
 @MainActor func makePreviewPainter() -> TimetablePainter {
-    let timetable: any Timetable = PreviewHelpers.preview(id: "1")
+    let timetable: Timetable = PreviewHelpers.preview(id: "1")
     return TimetablePainter(
         currentTimetable: timetable,
         selectedLecture: nil,

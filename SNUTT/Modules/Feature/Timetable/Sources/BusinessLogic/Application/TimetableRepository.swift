@@ -11,16 +11,16 @@ import TimetableInterface
 
 @Spyable
 public protocol TimetableRepository: Sendable {
-    func fetchTimetable(timetableID: String) async throws -> any Timetable
-    func fetchRecentTimetable() async throws -> any Timetable
-    func fetchTimetableMetadataList() async throws -> [any TimetableMetadata]
-    func updateTimetableTitle(timetableID: String, title: String) async throws -> [any TimetableMetadata]
+    func fetchTimetable(timetableID: String) async throws -> Timetable
+    func fetchRecentTimetable() async throws -> Timetable
+    func fetchTimetableMetadataList() async throws -> [TimetableMetadata]
+    func updateTimetableTitle(timetableID: String, title: String) async throws -> [TimetableMetadata]
     func setPrimaryTimetable(timetableID: String) async throws
     func unsetPrimaryTimetable(timetableID: String) async throws
-    func copyTimetable(timetableID: String) async throws -> [any TimetableMetadata]
-    func deleteTimetable(timetableID: String) async throws -> [any TimetableMetadata]
-    func addLecture(timetableID: String, lectureID: String) async throws -> any Timetable
-    func removeLecture(timetableID: String, lectureID: String) async throws -> any Timetable
+    func copyTimetable(timetableID: String) async throws -> [TimetableMetadata]
+    func deleteTimetable(timetableID: String) async throws -> [TimetableMetadata]
+    func addLecture(timetableID: String, lectureID: String) async throws -> Timetable
+    func removeLecture(timetableID: String, lectureID: String) async throws -> Timetable
 }
 
 public enum TimetableRepositoryKey: TestDependencyKey {

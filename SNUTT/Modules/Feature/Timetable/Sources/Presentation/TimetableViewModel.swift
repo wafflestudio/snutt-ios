@@ -33,7 +33,7 @@ class TimetableViewModel {
         self.router = router
     }
 
-    private(set) var currentTimetable: (any Timetable)?
+    private(set) var currentTimetable: Timetable?
     private(set) var metadataLoadState: MetadataLoadState = .loading
 
     var isMenuPresented = false
@@ -49,7 +49,7 @@ class TimetableViewModel {
         currentTimetable?.title ?? ""
     }
 
-    func makePainter(selectedLecture: (any Lecture)? = nil) -> TimetablePainter {
+    func makePainter(selectedLecture: Lecture? = nil) -> TimetablePainter {
         TimetablePainter(
             currentTimetable: currentTimetable,
             selectedLecture: selectedLecture,
@@ -98,7 +98,7 @@ class TimetableViewModel {
         try await loadTimetableList()
     }
 
-    func isLectureInCurrentTimetable(lecture: any Lecture) -> Bool {
+    func isLectureInCurrentTimetable(lecture: Lecture) -> Bool {
         if let timetableLectureID = lecture.lectureID {
             currentTimetable?.lectures.contains(where: { $0.lectureID == timetableLectureID }) ?? false
         } else {
@@ -106,7 +106,7 @@ class TimetableViewModel {
         }
     }
 
-    func addLecture(lecture: any Lecture) async throws {
+    func addLecture(lecture: Lecture) async throws {
         guard let currentTimetable else { return }
         self.currentTimetable = try await timetableUseCase.addLecture(
             timetableID: currentTimetable.id,
@@ -114,7 +114,7 @@ class TimetableViewModel {
         )
     }
 
-    func removeLecture(lecture: any Lecture) async throws {
+    func removeLecture(lecture: Lecture) async throws {
         guard let currentTimetable,
               let timetableLectureID = currentTimetable.lectures
               .first(where: { $0.lectureID == (lecture.lectureID ?? lecture.id) })?.id
@@ -134,7 +134,7 @@ class TimetableViewModel {
 extension TimetableViewModel {
     enum MetadataLoadState {
         case loading
-        case loaded([any TimetableMetadata])
+        case loaded([TimetableMetadata])
     }
 }
 
@@ -142,15 +142,13 @@ extension TimetableViewModel {
 @MainActor
 public final class TimetableRouter {
     public var navigationPaths: [TimetableDetailSceneTypes] = []
-    public nonisolated init() {
-
-    }
+    public nonisolated init() {}
 }
 
 public enum TimetableDetailSceneTypes: Hashable, Equatable {
     case lectureList
     case notificationList
-    case lectureDetail(any Lecture)
+    case lectureDetail(Lecture)
 
     public static func == (lhs: TimetableDetailSceneTypes, rhs: TimetableDetailSceneTypes) -> Bool {
         switch (lhs, rhs) {

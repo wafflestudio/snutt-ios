@@ -8,11 +8,11 @@
 import APIClientInterface
 import Auth
 import AuthInterface
+import Configs
+import ConfigsInterface
 import Dependencies
 import Timetable
 import TimetableInterface
-import Configs
-import ConfigsInterface
 import Vacancy
 import VacancyInterface
 

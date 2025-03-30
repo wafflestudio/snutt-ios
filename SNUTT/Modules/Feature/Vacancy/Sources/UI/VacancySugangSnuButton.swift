@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 
 struct VacancySugangSnuButton: View {
     let action: () -> Void

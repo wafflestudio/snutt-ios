@@ -11,7 +11,7 @@ import TimetableInterface
 import TimetableUIComponents
 
 extension Timetable {
-    typealias LectureTime = (lecture: any Lecture, timePlace: TimePlace)
+    typealias LectureTime = (lecture: Lecture, timePlace: TimePlace)
 
     /// Get the remaining `LectureTimes` on a specific date.
     func getRemainingLectureTimes(on date: Date, by filter: FilterOption) -> [LectureTime] {
@@ -50,7 +50,8 @@ extension Timetable {
         let now = Date()
         for offset in 1 ... 7 {
             guard let nextDate = Calendar.current.date(byAdding: .day, value: offset, to: now) else { continue }
-            guard let nextDateAtMidnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: nextDate) else { continue }
+            guard let nextDateAtMidnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: nextDate)
+            else { continue }
             let lectureTimes = getRemainingLectureTimes(on: nextDateAtMidnight, by: .endTime)
             if !lectureTimes.isEmpty {
                 return (date: nextDateAtMidnight, lectureTimes: lectureTimes)

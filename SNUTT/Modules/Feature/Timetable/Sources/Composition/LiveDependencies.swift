@@ -5,16 +5,15 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import APIClientInterface
 import Dependencies
 import TimetableInterface
 
 struct TimetableLocalRepositoryKey: DependencyKey {
     static let liveValue: any TimetableLocalRepository =
-        TimetableUserDefaultsRepository<Components.Schemas.TimetableLegacyDto>()
+        TimetableUserDefaultsRepository()
 
     static let previewValue: any TimetableLocalRepository = {
-        let spy = TimetableLocalRepositorySpy<PreviewTimetable>()
+        let spy = TimetableLocalRepositorySpy()
         spy.loadSelectedTimetableReturnValue = PreviewHelpers.preview(id: "1")
         return spy
     }()

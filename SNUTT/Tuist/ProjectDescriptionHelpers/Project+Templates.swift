@@ -12,13 +12,18 @@ extension Project {
         widgetDependencies: [TargetDependency],
         deploymentTargets: DeploymentTargets
     ) -> Project {
-        let mainTargetDependencies: [TargetDependency] = moduleDependencies.map { .target(name: $0.name) } + externalDependencies
-        let widgetTarget = makeWidgetTarget(name: name, deploymentTargets: deploymentTargets, dependencies: widgetDependencies)
+        let mainTargetDependencies: [TargetDependency] = moduleDependencies
+            .map { .target(name: $0.name) } + externalDependencies
+        let widgetTarget = makeWidgetTarget(
+            name: name,
+            deploymentTargets: deploymentTargets,
+            dependencies: widgetDependencies
+        )
         let mainTargets = makeAppTargets(
-             name: name,
-             destinations: destinations,
-             deploymentTargets: deploymentTargets,
-             dependencies: mainTargetDependencies + [.target(name: widgetTarget.name)]
+            name: name,
+            destinations: destinations,
+            deploymentTargets: deploymentTargets,
+            dependencies: mainTargetDependencies + [.target(name: widgetTarget.name)]
         )
         let frameworkTargets = moduleDependencies.map {
             makeFrameworkTargets(module: $0, destinations: destinations, deploymentTargets: deploymentTargets)
@@ -31,7 +36,7 @@ extension Project {
                        options: .options(automaticSchemesOptions: .disabled),
                        packages: swiftPackages,
                        settings: makeSettings(),
-                       targets: allTargets.flatMap { [$0.0, $0.1].compactMap({ $0 }) } + [widgetTarget],
+                       targets: allTargets.flatMap { [$0.0, $0.1].compactMap { $0 } } + [widgetTarget],
                        schemes: schemes)
     }
 
@@ -45,7 +50,8 @@ extension Project {
     ) -> (Target, Target?) {
         let name = module.name
         let directory = "Modules/\(module.category.directoryName)"
-        let resources: [String] = (module.category.hasResources ? ["\(directory)/\(name)/Resources/**"] : []) + module.additionalResources
+        let resources: [String] = (module.category.hasResources ? ["\(directory)/\(name)/Resources/**"] : []) + module
+            .additionalResources
         let sources = Target.target(name: name,
                                     destinations: destinations,
                                     product: module.productType ?? productType(),
@@ -89,8 +95,8 @@ extension Project {
                 [
                     "CFBundleURLSchemes": ["$(URL_SCHEME)"],
                     "CFBundleURLName": "$(PRODUCT_BUNDLE_IDENTIFIER)",
-                ]
-            ]
+                ],
+            ],
         ]
 
         let mainTarget = Target.target(
@@ -135,7 +141,9 @@ extension Project {
             product: .appExtension,
             bundleId: "$(PRODUCT_BUNDLE_IDENTIFIER).widget",
             deploymentTargets: deploymentTargets,
-            infoPlist: .extendingDefault(with: ["NSExtension": ["NSExtensionPointIdentifier": "com.apple.widgetkit-extension"]]),
+            infoPlist: .extendingDefault(
+                with: ["NSExtension": ["NSExtensionPointIdentifier": "com.apple.widgetkit-extension"]]
+            ),
             sources: ["SNUTTWidget/Sources/**"],
             resources: ["SNUTTWidget/Resources/**"],
             entitlements: "Supporting Files/SNUTT.entitlements",
@@ -172,7 +180,10 @@ extension Project {
                 name: "\(name) Dev",
                 shared: true,
                 buildAction: .buildAction(targets: [.target(name)], preActions: [
-                    .executionAction(scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev), target: .target(name)),
+                    .executionAction(
+                        scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev),
+                        target: .target(name)
+                    ),
                 ]),
                 runAction: .runAction(configuration: .dev, executable: .target(name)),
                 archiveAction: .archiveAction(configuration: .dev),
@@ -183,7 +194,10 @@ extension Project {
                 name: "\(name) Prod",
                 shared: true,
                 buildAction: .buildAction(targets: [.target(name)], preActions: [
-                    .executionAction(scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev), target: .target(name)), // TODO: change to .prod
+                    .executionAction(
+                        scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev),
+                        target: .target(name)
+                    ), // TODO: change to .prod
                 ]),
                 runAction: .runAction(configuration: .prod, executable: .target(name)),
                 archiveAction: .archiveAction(configuration: .prod),
@@ -212,7 +226,9 @@ extension Project {
         )
     }
 
-    private static func updateOpenAPISpecSymlinkPreActionScript(configuration: ProjectDescription.ConfigurationName) -> String {
+    private static func updateOpenAPISpecSymlinkPreActionScript(configuration: ProjectDescription
+        .ConfigurationName) -> String
+    {
         let apiUrl = if configuration == .dev {
             "https://snutt-api-dev.wafflestudio.com/v3/api-docs"
         } else {
@@ -221,14 +237,14 @@ extension Project {
         return """
         # Disabled temporarily
         exit 0
-        
+
         OPENAPI_DIR="$PROJECT_DIR/OpenAPI"
         OPENAPI_FILE="$OPENAPI_DIR/openapi-\(configuration == .dev ? "dev" : "prod").json"
         API_URL=\(apiUrl)
 
         # Download the openapi.json file from the server endpoint
         curl -o "$OPENAPI_FILE" "$API_URL"
-            
+
         # Replace unparsable status code strings with valid status codes
         sed -i '' 's/"400 (1)"/"400"/g; s/"400 (2)"/"402"/g' "$OPENAPI_FILE"
 

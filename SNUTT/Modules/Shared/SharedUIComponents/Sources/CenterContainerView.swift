@@ -45,7 +45,10 @@ public final class CenterContainerView<ContentView: UIView>: UIView {
     override public var intrinsicContentSize: CGSize {
         let respectsHeight = layoutOptions.contains(.respectIntrinsicHeight)
         let respectsWidth = layoutOptions.contains(.respectIntrinsicWidth)
-        return .init(width: respectsWidth ? contentView.intrinsicContentSize.width : Self.noIntrinsicMetric, height: respectsHeight ? contentView.intrinsicContentSize.height : Self.noIntrinsicMetric)
+        return .init(
+            width: respectsWidth ? contentView.intrinsicContentSize.width : Self.noIntrinsicMetric,
+            height: respectsHeight ? contentView.intrinsicContentSize.height : Self.noIntrinsicMetric
+        )
     }
 
     override public func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {

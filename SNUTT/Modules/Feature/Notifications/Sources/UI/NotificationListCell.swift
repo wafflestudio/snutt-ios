@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import FoundationUtility
+import SwiftUI
 import SwiftUIUtility
 
 struct NotificationListCell: View {
@@ -42,16 +42,16 @@ struct NotificationListCell: View {
                     Spacer().frame(height: 6)
 
                     Text(notification.message)
-                        .font(Design.messageFont)   
+                        .font(Design.messageFont)
                         .padding(.trailing, 8)
-#if DEBUG
-                    if let deeplink = notification.deeplink {
-                        Text("[DEBUG] 🔗 \(deeplink)")
-                        .font(.system(size: 10))
-                        .foregroundStyle(.tertiary)
-                        .padding(.top, 5)
-                    }
-#endif
+                    #if DEBUG
+                        if let deeplink = notification.deeplink {
+                            Text("[DEBUG] 🔗 \(deeplink)")
+                                .font(.system(size: 10))
+                                .foregroundStyle(.tertiary)
+                                .padding(.top, 5)
+                        }
+                    #endif
                 }
                 .padding(.trailing, 2)
             }

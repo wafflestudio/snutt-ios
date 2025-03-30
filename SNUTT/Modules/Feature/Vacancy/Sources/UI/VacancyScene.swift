@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import ConfigsInterface
+import SwiftUI
 
 public struct VacancyScene: View {
     @AppStorage("isNewToVacancyService") private var isNewToVacancyService: Bool = true

@@ -11,7 +11,7 @@ import TimetableInterface
 
 struct TimetableMenuSectionRow: View {
     let viewModel: TimetableMenuViewModel
-    let timetableMetadata: any TimetableMetadata
+    let timetableMetadata: TimetableMetadata
     let isSelected: Bool
 
     @State private var isLoadingTimetable = false

@@ -20,9 +20,9 @@ final class SNUTTWidgetDataSource {
         userDefaults = .init(suitename: appGroupSuiteName) ?? .standard
     }
 
-    var currentTimetable: (any Timetable)? {
-        guard let data = userDefaults.data(forKey: "widgetTimetable"),
-              let timetable = try? JSONDecoder().decode(PreviewTimetable.self, from: data)
+    var currentTimetable: Timetable? {
+        guard let data = userDefaults.data(forKey: "currentTimetable"),
+              let timetable = try? JSONDecoder().decode(Timetable.self, from: data)
         else { return nil }
         return timetable
     }

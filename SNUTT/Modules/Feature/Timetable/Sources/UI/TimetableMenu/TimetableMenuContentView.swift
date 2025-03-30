@@ -100,7 +100,7 @@ struct TimetableMenuContentView: View {
         }
     }
 
-    private func timetableSectionContent(for timetableList: [any TimetableMetadata]) -> some View {
+    private func timetableSectionContent(for timetableList: [TimetableMetadata]) -> some View {
         ForEach(timetableList, id: \.id) { timetable in
             TimetableMenuSectionRow(
                 viewModel: viewModel,

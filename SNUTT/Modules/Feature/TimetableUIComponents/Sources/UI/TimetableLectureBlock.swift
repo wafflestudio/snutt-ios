@@ -12,7 +12,7 @@ import TimetableInterface
 struct TimetableLectureBlock: View {
     typealias VisibilityOptions = TimetableConfiguration.VisibilityOptions
 
-    let lecture: any Lecture
+    let lecture: Lecture
     let lectureColor: LectureColor
     let timePlace: TimePlace
     let idealHeight: CGFloat
@@ -186,6 +186,12 @@ private enum BlockInformationType: Identifiable {
     let timePlace = lecture.timePlaces.first!
     let height = 100.0
     let width = 80.0
-    TimetableLectureBlock(lecture: lecture, lectureColor: .temporary, timePlace: timePlace, idealHeight: height, visibilityOptions: .default)
-        .frame(width: width, height: height)
+    TimetableLectureBlock(
+        lecture: lecture,
+        lectureColor: .temporary,
+        timePlace: timePlace,
+        idealHeight: height,
+        visibilityOptions: .default
+    )
+    .frame(width: width, height: height)
 }

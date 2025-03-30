@@ -31,11 +31,12 @@ class LectureSearchViewModel {
         get { router.searchDisplayMode }
         set { router.searchDisplayMode = newValue }
     }
+
     var isSearchFilterOpen = false
-    var targetForLectureDetail: (any Lecture)?
+    var targetForLectureDetail: Lecture?
 
     private let dataSource = LectureSearchResultDataSource()
-    var selectedLecture: (any Lecture)?
+    var selectedLecture: Lecture?
 
     private(set) var availablePredicates: [SearchFilterCategory: [SearchPredicate]] = [:]
     var selectedCategory: SearchFilterCategory = .sortCriteria
@@ -77,7 +78,7 @@ class LectureSearchViewModel {
 }
 
 extension LectureSearchViewModel: ExpandableLectureListViewModel {
-    func isToggled(lecture: any Lecture, type: ActionButtonType) -> Bool {
+    func isToggled(lecture: Lecture, type: ActionButtonType) -> Bool {
         switch type {
         case .detail:
             false
@@ -92,19 +93,19 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         }
     }
 
-    var lectures: [any Lecture] {
+    var lectures: [Lecture] {
         dataSource.searchResults
     }
 
-    func selectLecture(_ lecture: any Lecture) {
+    func selectLecture(_ lecture: Lecture) {
         selectedLecture = lecture
     }
 
-    func isSelected(lecture: any Lecture) -> Bool {
+    func isSelected(lecture: Lecture) -> Bool {
         selectedLecture?.id == lecture.id
     }
 
-    func toggleAction(lecture: any Lecture, type: ActionButtonType) async throws {
+    func toggleAction(lecture: Lecture, type: ActionButtonType) async throws {
         switch type {
         case .detail:
             targetForLectureDetail = lecture
@@ -157,7 +158,6 @@ public final class LectureSearchRouter {
     public var searchDisplayMode: SearchDisplayMode = .search
     public nonisolated init() {}
 }
-
 
 enum SearchFilterCategory: String, Sendable, CaseIterable {
     case sortCriteria

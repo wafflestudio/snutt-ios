@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 
 struct VacancyLectureListView: View {
     let viewModel: VacancyViewModel
@@ -55,7 +55,8 @@ struct VacancyLectureListView: View {
                 .contentShape(Rectangle())
                 .foregroundColor(.white)
         }
-        .background(selectedLectureIDs.isEmpty ? SharedUIComponentsAsset.assistive.swiftUIColor : SharedUIComponentsAsset.cyan.swiftUIColor)
+        .background(selectedLectureIDs.isEmpty ? SharedUIComponentsAsset.assistive
+            .swiftUIColor : SharedUIComponentsAsset.cyan.swiftUIColor)
         .disabled(selectedLectureIDs.isEmpty)
         .foregroundColor(Color(uiColor: .systemBackground))
         .alert(Text("목록에서 삭제"), isPresented: $isDeleteConfirmAlertPresented) {
@@ -100,7 +101,6 @@ extension EditMode {
         }
     }
 }
-
 
 #Preview {
     @Previewable @State var editMode = EditMode.inactive

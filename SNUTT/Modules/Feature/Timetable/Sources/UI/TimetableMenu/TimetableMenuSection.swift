@@ -10,7 +10,7 @@ import TimetableInterface
 
 struct TimetableMenuSection<Content>: View where Content: View {
     let quarter: Quarter
-    let current: (any Timetable)?
+    let current: Timetable?
     let isEmptyQuarter: Bool
     var content: () -> Content
 

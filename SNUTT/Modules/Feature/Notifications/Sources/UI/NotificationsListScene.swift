@@ -5,10 +5,10 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import Dependencies
+import SharedUIComponents
 import SwiftUI
 import SwiftUIUtility
-import SharedUIComponents
-import Dependencies
 
 public struct NotificationsListScene: View {
     @State private var viewModel = NotificationsViewModel()
@@ -22,8 +22,7 @@ public struct NotificationsListScene: View {
                 ForEach(viewModel.notifications) { notification in
                     NotificationListCell(notification: notification)
                         .onTapGesture {
-                            if let link = notification.deeplink
-                            {
+                            if let link = notification.deeplink {
                                 Task {
                                     await application.open(link)
                                 }
@@ -55,7 +54,6 @@ public struct NotificationsListScene: View {
         }
     }
 }
-
 
 #Preview {
     NotificationsListScene()

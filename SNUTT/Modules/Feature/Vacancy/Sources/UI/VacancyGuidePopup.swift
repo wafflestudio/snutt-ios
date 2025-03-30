@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import SharedUIComponents
+import SwiftUI
 
 struct VacancyGuidePopup: View {
     let dismiss: () -> Void
@@ -18,12 +18,12 @@ struct VacancyGuidePopup: View {
             VacancyAsset.vacancyGuide1.swiftUIImage,
             VacancyAsset.vacancyGuide2.swiftUIImage,
             VacancyAsset.vacancyGuide3.swiftUIImage,
-            VacancyAsset.vacancyGuide4.swiftUIImage
+            VacancyAsset.vacancyGuide4.swiftUIImage,
         ]
     }
 
     var imageIndices: Range<Int> {
-        0..<guideImages.count
+        0 ..< guideImages.count
     }
 
     var body: some View {
@@ -53,7 +53,7 @@ struct VacancyGuidePopup: View {
                     }
                     ZStack {
                         TabView(selection: $currentGuideIndex) {
-                            ForEach(0..<4) { imageNum in
+                            ForEach(0 ..< 4) { imageNum in
                                 VStack {
                                     guideImages[imageNum]
                                         .resizable()
@@ -69,15 +69,21 @@ struct VacancyGuidePopup: View {
 
                         HStack {
                             if currentGuideIndex != imageIndices.first {
-                                GuideNavigationButton(image: VacancyAsset.vacancyChevronLeft.swiftUIImage, updateIndex: {
-                                    currentGuideIndex = max(currentGuideIndex - 1, 1)
-                                })
+                                GuideNavigationButton(
+                                    image: VacancyAsset.vacancyChevronLeft.swiftUIImage,
+                                    updateIndex: {
+                                        currentGuideIndex = max(currentGuideIndex - 1, 1)
+                                    }
+                                )
                             }
                             Spacer()
                             if currentGuideIndex != imageIndices.last {
-                                GuideNavigationButton(image: VacancyAsset.vacancyChevronLeft.swiftUIImage, updateIndex: {
-                                    currentGuideIndex = min(currentGuideIndex + 1, imageIndices.last ?? 1)
-                                })
+                                GuideNavigationButton(
+                                    image: VacancyAsset.vacancyChevronLeft.swiftUIImage,
+                                    updateIndex: {
+                                        currentGuideIndex = min(currentGuideIndex + 1, imageIndices.last ?? 1)
+                                    }
+                                )
                             }
                         }
                         .padding(.horizontal, 5)

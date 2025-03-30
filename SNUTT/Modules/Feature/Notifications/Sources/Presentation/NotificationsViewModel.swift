@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import Observation
 import Dependencies
+import Observation
 
 @Observable
 @MainActor
@@ -26,7 +26,11 @@ class NotificationsViewModel {
         defer {
             isLoading = false
         }
-        let fetchedNotifications = try await notificationRepository.fetchNotifications(offset: 0, limit: pageLimit, markAsRead: true)
+        let fetchedNotifications = try await notificationRepository.fetchNotifications(
+            offset: 0,
+            limit: pageLimit,
+            markAsRead: true
+        )
         notifications = fetchedNotifications
         canFetchMore = fetchedNotifications.count == pageLimit
     }
@@ -37,7 +41,11 @@ class NotificationsViewModel {
         defer {
             isLoading = false
         }
-        let fetchedNotifications = try await notificationRepository.fetchNotifications(offset: (currentPage + 1) * pageLimit, limit: pageLimit, markAsRead: true)
+        let fetchedNotifications = try await notificationRepository.fetchNotifications(
+            offset: (currentPage + 1) * pageLimit,
+            limit: pageLimit,
+            markAsRead: true
+        )
         notifications.append(contentsOf: fetchedNotifications)
         canFetchMore = fetchedNotifications.count == pageLimit
         currentPage += 1
