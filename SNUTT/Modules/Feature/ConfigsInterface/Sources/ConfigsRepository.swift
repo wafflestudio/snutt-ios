@@ -7,6 +7,7 @@
 
 import Dependencies
 import Foundation
+import Spyable
 
 @Spyable
 public protocol ConfigsRepository: Sendable {
