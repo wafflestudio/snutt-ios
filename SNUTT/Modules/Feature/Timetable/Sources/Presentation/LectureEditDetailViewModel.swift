@@ -51,7 +51,6 @@ final class LectureEditDetailViewModel {
     }
 }
 
-
 extension Lecture {
     var quotaDescription: String? {
         get {
