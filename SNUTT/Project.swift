@@ -71,6 +71,18 @@ let project = Project.app(
             ]
         ),
         .module(
+            name: "Settings",
+            category: .feature,
+            dependencies: [
+                .target(name: "APIClientInterface"),
+                .target(name: "AuthInterface"),
+                .target(name: "SharedUIComponents"),
+                .target(name: "TimetableInterface"),
+                .target(name: "VacancyInterface"),
+                .external(name: "Dependencies"),
+            ]
+        ),
+        .module(
             name: "Vacancy",
             category: .feature,
             dependencies: [
