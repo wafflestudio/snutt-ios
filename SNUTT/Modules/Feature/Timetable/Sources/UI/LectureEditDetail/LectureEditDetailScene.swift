@@ -24,7 +24,7 @@ struct LectureEditDetailScene: View {
 
     let displayMode: DisplayMode
 
-    init(entryLecture: any Lecture, displayMode: DisplayMode) {
+    init(entryLecture: Lecture, displayMode: DisplayMode) {
         _viewModel = .init(initialValue: .init(entryLecture: entryLecture))
         self.displayMode = displayMode
     }

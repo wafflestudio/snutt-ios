@@ -14,13 +14,13 @@ import TimetableInterface
 protocol ExpandableLectureListViewModel: Sendable {
     var renderingOptions: ExpandableLectureListRenderingOptions { get }
 
-    var lectures: [any Lecture] { get }
-    var selectedLecture: (any Lecture)? { get }
-    func selectLecture(_: any Lecture)
-    func isSelected(lecture: any Lecture) -> Bool
+    var lectures: [Lecture] { get }
+    var selectedLecture: Lecture? { get }
+    func selectLecture(_: Lecture)
+    func isSelected(lecture: Lecture) -> Bool
     func fetchMoreLectures() async throws
-    func toggleAction(lecture: any Lecture, type: ActionButtonType) async throws
-    func isToggled(lecture: any Lecture, type: ActionButtonType) -> Bool
+    func toggleAction(lecture: Lecture, type: ActionButtonType) async throws
+    func isToggled(lecture: Lecture, type: ActionButtonType) -> Bool
 }
 
 enum ActionButtonType: String, CaseIterable, Identifiable {

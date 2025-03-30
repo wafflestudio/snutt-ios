@@ -20,7 +20,7 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
         predicates: [SearchPredicate],
         offset: Int,
         limit: Int
-    ) async throws -> [any Lecture] {
+    ) async throws -> [Lecture] {
         var classification = [String]()
         var credit = [Int32]()
         var academicYear = [String]()
@@ -86,7 +86,7 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
             sortCriteria: sortCriteria
         )
         let response = try await apiClient.searchLecture(body: .json(query))
-        return try response.ok.body.json
+        return try response.ok.body.json.map { try $0.toLecture() }
     }
 
     func fetchSearchPredicates(quarter: Quarter) async throws -> [SearchPredicate] {
@@ -115,58 +115,39 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
     }
 }
 
-extension Components.Schemas.LectureDto: @retroactive Lecture {
-    public var freshmenQuota: Int32? {
-        freshmanQuota
-    }
-
-    public var customColor: TimetableInterface.LectureColor? {
-        .temporary
-    }
-
-    public var evLecture: EvLecture? {
-        guard let snuttEvLecture else { return nil }
-        return .init(
-            evLectureID: snuttEvLecture.evLectureId.asInt(),
-            avgRating: snuttEvLecture.avgRating,
-            evaluationCount: snuttEvLecture.evaluationCount.asInt()
-        )
-    }
-
-    public var academicYear: String? {
-        academic_year
-    }
-
-    public var courseNumber: String? {
-        course_number
-    }
-
-    public var id: String {
-        guard let _id else {
-            assertionFailure("id shouldn't be nil.")
-            return UUID().uuidString
+extension Components.Schemas.LectureDto {
+    fileprivate func toLecture() throws -> Lecture {
+        let timePlaces = try class_time_json.enumerated().map { index, json in
+            try json.toTimePlace(index: index, isCustom: false)
         }
-        return _id
-    }
-
-    public var lectureID: String? {
-        nil
-    }
-
-    public var courseTitle: String {
-        course_title
-    }
-
-    public var timePlaces: [TimetableInterface.TimePlace] {
-        class_time_json
-            .enumerated()
-            .compactMap { index, json in
-                TimePlace(dto: json, index: index, isCustom: isCustom)
-            }
-    }
-
-    public var lectureNumber: String? {
-        lecture_number
+        let evLecture = snuttEvLecture.flatMap {
+            EvLecture(
+                evLectureID: $0.evLectureId.asInt(),
+                avgRating: $0.avgRating,
+                evaluationCount: $0.evaluationCount.asInt()
+            )
+        }
+        return try Lecture(
+            id: require(_id),
+            lectureID: nil,
+            courseTitle: course_title,
+            timePlaces: timePlaces,
+            lectureNumber: lecture_number,
+            instructor: instructor,
+            credit: credit,
+            courseNumber: course_number,
+            department: department,
+            academicYear: academic_year,
+            remark: remark,
+            evLecture: evLecture,
+            customColor: .temporary,
+            classification: classification,
+            category: category,
+            wasFull: wasFull,
+            registrationCount: registrationCount,
+            quota: quota,
+            freshmenQuota: freshmanQuota
+        )
     }
 }
 

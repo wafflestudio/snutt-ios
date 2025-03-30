@@ -11,7 +11,7 @@ import TimetableInterface
 
 struct MenuRenameSheet: View {
     let viewModel: TimetableMenuViewModel
-    let metadata: any TimetableMetadata
+    let metadata: TimetableMetadata
 
     @State private var title: String = ""
     @FocusState private var searchFocus: Bool

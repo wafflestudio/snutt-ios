@@ -11,7 +11,7 @@ import TimetableInterface
 
 struct TimetableLectureBlockGroup: View {
     let painter: TimetablePainter
-    let lecture: any Lecture
+    let lecture: Lecture
 
     @Environment(\.lectureTapAction) var lectureTapAction
 
@@ -50,12 +50,12 @@ extension EnvironmentValues {
 }
 
 public struct LectureTapAction {
-    public let action: ((any Lecture) -> Void)?
-    public init(action: ((any Lecture) -> Void)?) {
+    public let action: ((Lecture) -> Void)?
+    public init(action: ((Lecture) -> Void)?) {
         self.action = action
     }
 
-    public func callAsFunction(lecture: any Lecture) {
+    public func callAsFunction(lecture: Lecture) {
         action?(lecture)
     }
 }

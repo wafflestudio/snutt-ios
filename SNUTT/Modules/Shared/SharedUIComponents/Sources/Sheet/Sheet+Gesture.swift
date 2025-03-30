@@ -8,7 +8,9 @@
 import SwiftUI
 
 extension View {
-    @ViewBuilder func sheetGesture(_ translation: Binding<CGFloat>, dismiss: @escaping @MainActor () -> Void) -> some View {
+    @ViewBuilder func sheetGesture(_ translation: Binding<CGFloat>,
+                                   dismiss: @escaping @MainActor () -> Void) -> some View
+    {
         if #available(iOS 18.0, *) {
             gesture(SheetGestureRecognizer(translation: translation, dismiss: dismiss))
         } else {

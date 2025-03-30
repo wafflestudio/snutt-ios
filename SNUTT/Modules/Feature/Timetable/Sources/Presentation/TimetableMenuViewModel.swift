@@ -20,7 +20,7 @@ struct TimetableMenuViewModel {
         timetableViewModel.metadataLoadState
     }
 
-    var currentTimetable: (any Timetable)? {
+    var currentTimetable: Timetable? {
         timetableViewModel.currentTimetable
     }
 
@@ -67,6 +67,6 @@ extension TimetableMenuViewModel {
     struct TimetableGroup: Identifiable {
         var id: String { quarter.id }
         let quarter: Quarter
-        let metadataList: [any TimetableMetadata]
+        let metadataList: [TimetableMetadata]
     }
 }

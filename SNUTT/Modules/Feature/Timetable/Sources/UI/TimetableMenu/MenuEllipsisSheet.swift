@@ -12,7 +12,7 @@ import TimetableInterface
 
 struct MenuEllipsisSheet: View {
     let viewModel: TimetableMenuViewModel
-    let metadata: any TimetableMetadata
+    let metadata: TimetableMetadata
 
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.dismiss) private var dismiss
@@ -123,6 +123,9 @@ extension EllipsisSheetButton {
     }
     .ignoresSafeArea()
     .sheet(isPresented: $isPresented) {
-        MenuEllipsisSheet(viewModel: .init(timetableViewModel: .init()), metadata: PreviewHelpers.previewMetadata(with: "1"))
+        MenuEllipsisSheet(
+            viewModel: .init(timetableViewModel: .init()),
+            metadata: PreviewHelpers.previewMetadata(with: "1")
+        )
     }
 }

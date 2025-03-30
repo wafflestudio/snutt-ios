@@ -56,13 +56,13 @@ struct TimelineProvider: AppIntentTimelineProvider {
 struct TimetableEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationAppIntent
-    let currentTimetable: (any Timetable)?
+    let currentTimetable: Timetable?
     let timetableConfiguration: TimetableConfiguration
 
     init(
         date: Date,
         configuration: ConfigurationAppIntent,
-        currentTimetable: (any Timetable)?,
+        currentTimetable: Timetable?,
         timetableConfiguration: TimetableConfiguration
     ) {
         self.date = date
@@ -99,7 +99,15 @@ struct SNUTTWidget: Widget {
     let kind: String = "SNUTTWidget"
 
     private var supportedFamilies: [WidgetFamily] {
-        [.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge, .accessoryRectangular, .accessoryInline, .accessoryCircular]
+        [
+            .systemSmall,
+            .systemMedium,
+            .systemLarge,
+            .systemExtraLarge,
+            .accessoryRectangular,
+            .accessoryInline,
+            .accessoryCircular,
+        ]
     }
 
     var body: some WidgetConfiguration {

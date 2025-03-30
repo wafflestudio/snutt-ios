@@ -11,7 +11,7 @@ import TimetableInterface
 
 @Spyable
 public protocol VacancyRepository: Sendable {
-    func fetchVacancyLectures() async throws -> [any Lecture]
+    func fetchVacancyLectures() async throws -> [Lecture]
     func addVacancyLecture(lectureID: String) async throws
     func deleteVacancyLecture(lectureID: String) async throws
 }

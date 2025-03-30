@@ -14,7 +14,7 @@ import UIKitUtility
 
 struct ExpandableLectureCell: View {
     let viewModel: any ExpandableLectureListViewModel
-    let lecture: any Lecture
+    let lecture: Lecture
 
     var body: some View {
         let isSelected = viewModel.isSelected(lecture: lecture)
@@ -59,7 +59,7 @@ struct ExpandableLectureCell: View {
 
 private struct LectureActionButton: View {
     let viewModel: any ExpandableLectureListViewModel
-    let lecture: any Lecture
+    let lecture: Lecture
     let type: ActionButtonType
 
     var isSelected: Bool {
@@ -100,7 +100,7 @@ private struct LectureActionButton: View {
 }
 
 private struct LectureHeaderRow: View {
-    let lecture: any Lecture
+    let lecture: Lecture
 
     private enum Design {
         static let title: Font = .system(size: 14, weight: .bold)
@@ -128,7 +128,7 @@ private struct LectureHeaderRow: View {
 
 struct LectureDetailRow: View {
     let type: DetailLabelType
-    let lecture: any Lecture
+    let lecture: Lecture
 
     private enum Design {
         static let detail: Font = .system(size: 12)
@@ -199,7 +199,7 @@ extension DetailLabelType {
         }
     }
 
-    func text(for lecture: any Lecture) -> String {
+    func text(for lecture: Lecture) -> String {
         switch self {
         case .department:
             [lecture.department, lecture.academicYear]

@@ -12,8 +12,8 @@ import TimetableInterface
 
 @MemberwiseInit(.public)
 public struct TimetablePainter: Sendable {
-    public let currentTimetable: (any Timetable)?
-    public let selectedLecture: (any Lecture)?
+    public let currentTimetable: Timetable?
+    public let selectedLecture: Lecture?
     public let selectedTheme: Theme
     public let configuration: TimetableConfiguration
 }

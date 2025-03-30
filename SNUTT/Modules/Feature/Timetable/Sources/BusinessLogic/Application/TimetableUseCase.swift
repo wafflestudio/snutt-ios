@@ -20,7 +20,7 @@ struct TimetableUseCase {
     @Dependency(\.userDefaults) private var userDefaults
     @Dependency(\.authState) private var authState
 
-    func loadRecentTimetable() async throws -> any Timetable {
+    func loadRecentTimetable() async throws -> Timetable {
         if let localTimetable = try? timetableLocalRepository.loadSelectedTimetable(),
            authState.get(.userID) == localTimetable.userID
         {
@@ -31,19 +31,19 @@ struct TimetableUseCase {
         return timetable
     }
 
-    func selectTimetable(timetableID: String) async throws -> any Timetable {
+    func selectTimetable(timetableID: String) async throws -> Timetable {
         let timetable = try await timetableRepository.fetchTimetable(timetableID: timetableID)
         try timetableLocalRepository.storeSelectedTimetable(timetable)
         return timetable
     }
 
-    func addLecture(timetableID: String, lectureID: String) async throws -> any Timetable {
+    func addLecture(timetableID: String, lectureID: String) async throws -> Timetable {
         let timetable = try await timetableRepository.addLecture(timetableID: timetableID, lectureID: lectureID)
         try timetableLocalRepository.storeSelectedTimetable(timetable)
         return timetable
     }
 
-    func removeLecture(timetableID: String, lectureID: String) async throws -> any Timetable {
+    func removeLecture(timetableID: String, lectureID: String) async throws -> Timetable {
         let timetable = try await timetableRepository.removeLecture(timetableID: timetableID, lectureID: lectureID)
         try timetableLocalRepository.storeSelectedTimetable(timetable)
         return timetable

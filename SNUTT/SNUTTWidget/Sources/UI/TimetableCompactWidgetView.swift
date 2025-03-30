@@ -67,7 +67,8 @@ struct TimetableCompactLeftView: View {
                     }
 
                     if let item = lectureTimes.get(at: 1) {
-                        let hasEnoughSpace = lectureTimes.count <= 2 || lectureTimes.get(at: 0)?.timePlace.place.isEmpty == true
+                        let hasEnoughSpace = lectureTimes.count <= 2 || lectureTimes.get(at: 0)?.timePlace.place
+                            .isEmpty == true
                         TimePlaceListItem(items: [item],
                                           showPlace: hasEnoughSpace)
                     }
@@ -76,7 +77,11 @@ struct TimetableCompactLeftView: View {
                         let hasEnoughSpace = lectureTimes.prefix(2).reduce(true) { partialResult, item in
                             partialResult && item.timePlace.place.isEmpty
                         }
-                        TimePlaceListItem(items: Array(lectureTimes.dropFirst(2)), showTime: hasEnoughSpace, showPlace: false)
+                        TimePlaceListItem(
+                            items: Array(lectureTimes.dropFirst(2)),
+                            showTime: hasEnoughSpace,
+                            showPlace: false
+                        )
                     }
                     Spacer()
                 }

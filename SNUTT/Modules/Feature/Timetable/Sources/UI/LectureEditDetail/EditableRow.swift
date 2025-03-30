@@ -20,7 +20,7 @@ struct EditableRow<Value: Sendable>: View {
     let label: String
     @Init(default: false) let readOnly: Bool
     @Init(default: false) let multiline: Bool
-    let keyPath: WritableKeyPath<EditableLecture, Value>
+    let keyPath: WritableKeyPath<Lecture, Value>
 
     private var isEditing: Bool {
         editMode?.wrappedValue.isEditing ?? false

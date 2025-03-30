@@ -28,18 +28,28 @@ struct LoginScene: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
-            AnimatableTextField(label: AuthStrings.onboardLoginLocalID, placeholder: AuthStrings.onboardLoginLocalIDPlaceholder, text: $localID)
-                .focused($focusedField, equals: TextFieldType.localID)
-                .onSubmit {
-                    focusedField = .localPassword
+            AnimatableTextField(
+                label: AuthStrings.onboardLoginLocalID,
+                placeholder: AuthStrings.onboardLoginLocalIDPlaceholder,
+                text: $localID
+            )
+            .focused($focusedField, equals: TextFieldType.localID)
+            .onSubmit {
+                focusedField = .localPassword
+            }
+            AnimatableTextField(
+                label: AuthStrings.onboardLoginLocalPassword,
+                placeholder: AuthStrings.onboardLoginLocalPasswordPlaceHolder,
+                secure: true,
+                submitLabel: .done,
+                text: $localPassword
+            )
+            .focused($focusedField, equals: TextFieldType.localPassword)
+            .onSubmit {
+                Task {
+                    await submit()
                 }
-            AnimatableTextField(label: AuthStrings.onboardLoginLocalPassword, placeholder: AuthStrings.onboardLoginLocalPasswordPlaceHolder, secure: true, submitLabel: .done, text: $localPassword)
-                .focused($focusedField, equals: TextFieldType.localPassword)
-                .onSubmit {
-                    Task {
-                        await submit()
-                    }
-                }
+            }
 
             HStack {
                 UnderlineButton(label: AuthStrings.onboardLoginFindLocalIDButton) {
@@ -116,11 +126,15 @@ private struct ProminentButton: View {
         } configuration: { button in
             button.isEnabled = isEnabled
             var configuration = UIButton.Configuration.plain()
-            configuration.attributedTitle = .init(label, attributes: .init().font(.systemFont(ofSize: 17, weight: .semibold)))
+            configuration.attributedTitle = .init(
+                label,
+                attributes: .init().font(.systemFont(ofSize: 17, weight: .semibold))
+            )
             configuration.cornerStyle = .large
             configuration.baseForegroundColor = .white
             configuration.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
-            configuration.background.backgroundColor = isEnabled ? SharedUIComponentsAsset.cyan.color : .tertiarySystemFill
+            configuration.background.backgroundColor = isEnabled ? SharedUIComponentsAsset.cyan
+                .color : .tertiarySystemFill
             return configuration
         }
     }

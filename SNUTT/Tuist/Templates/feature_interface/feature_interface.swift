@@ -9,6 +9,9 @@ private let template = Template(
         name,
     ],
     items: [
-        .file(path: "Modules/\(category.directoryName)/\(name)/Sources/\(name).swift", templatePath: "FeatureInterface.stencil"),
+        .file(
+            path: "Modules/\(category.directoryName)/\(name)/Sources/\(name).swift",
+            templatePath: "FeatureInterface.stencil"
+        ),
     ]
 )

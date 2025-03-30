@@ -7,7 +7,7 @@
 
 import Foundation
 import HTTPTypes
-import OpenAPIRuntime 
+import OpenAPIRuntime
 
 public struct LoggingMiddleware: ClientMiddleware {
     public init() {}

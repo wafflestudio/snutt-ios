@@ -21,8 +21,11 @@ struct TimetableAccessoryCircularView: View {
                     .frame(width: 13)
                     .padding(.bottom, 3)
                 Group {
-                    if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date, by: .startTime),
-                       let firstLectureTime = lectureTimes.get(at: 0)
+                    if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(
+                        on: entry.date,
+                        by: .startTime
+                    ),
+                        let firstLectureTime = lectureTimes.get(at: 0)
                     {
                         Text(firstLectureTime.timePlace.startTime.description)
                     } else if isLoginRequired {

@@ -8,8 +8,9 @@
 import SwiftUI
 
 extension View {
-    @ViewBuilder
-    public func highlightOnPress(precondition: Bool = true, scale: CGFloat = 0.98, backgroundColor: Color = .clear) -> some View {
+    @ViewBuilder public func highlightOnPress(precondition: Bool = true, scale: CGFloat = 0.98,
+                                              backgroundColor: Color = .clear) -> some View
+    {
         if precondition {
             modifier(HighlightModifier(scale: scale, backgroundColor: backgroundColor))
         } else {
@@ -33,8 +34,8 @@ private struct HighlightModifier: ViewModifier {
                         Color.clear
                     }
                 }
-                    .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-                    .padding(.horizontal, -5)
+                .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+                .padding(.horizontal, -5)
             )
             .scaleEffect(isPressed ? scale : 1)
             .animation(.defaultSpring, value: isPressed)

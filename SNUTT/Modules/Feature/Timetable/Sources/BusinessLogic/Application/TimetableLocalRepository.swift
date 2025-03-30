@@ -11,7 +11,6 @@ import TimetableInterface
 
 @Spyable
 protocol TimetableLocalRepository: Sendable {
-    associatedtype ConcreteTimetable
-    func loadSelectedTimetable() throws -> any Timetable
-    func storeSelectedTimetable(_ timetable: any Timetable) throws
+    func loadSelectedTimetable() throws -> Timetable
+    func storeSelectedTimetable(_ timetable: Timetable) throws
 }

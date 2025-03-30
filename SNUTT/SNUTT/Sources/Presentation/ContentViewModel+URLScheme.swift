@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import Foundation
 import APIClientInterface
+import Foundation
 
 extension ContentViewModel {
     typealias QueryParameters = [URLQueryItem]
@@ -44,12 +44,11 @@ extension ContentViewModel {
         timetableRouter.navigationPaths = [.notificationList, .lectureDetail(lecture)]
     }
 
-    private func handleBookmarkScheme(_ parameters: QueryParameters?) async throws {
+    private func handleBookmarkScheme(_: QueryParameters?) async throws {
         selectedTab = .search
         lectureSearchRouter.searchDisplayMode = .bookmark
     }
 }
-
 
 extension ContentViewModel.QueryParameters {
     subscript(_ key: String) -> String? {

@@ -2,13 +2,13 @@ import APIClientInterface
 import Auth
 import AuthInterface
 import Dependencies
+import Notifications
+import NotificationsInterface
 import Popup
 import Settings
 import SharedUIComponents
 import SwiftUI
 import Timetable
-import Notifications
-import NotificationsInterface
 import Vacancy
 
 struct ContentView: View {
@@ -46,7 +46,7 @@ struct ContentView: View {
                         timetableRouter: viewModel.timetableRouter,
                         lectureSearchRouter: viewModel.lectureSearchRouter
                     )
-                        .environment(\.notificationsUIProvider, NotificationsUIProvider())
+                    .environment(\.notificationsUIProvider, NotificationsUIProvider())
                 )
                 TabScene(tabItem: TabItem.search)
                 TabScene(tabItem: TabItem.friends, rootView: ColorView(color: .yellow))

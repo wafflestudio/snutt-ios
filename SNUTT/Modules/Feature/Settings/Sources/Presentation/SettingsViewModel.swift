@@ -23,7 +23,7 @@ final class SettingsViewModel {
     @Dependency(\.authUseCase) private var authUseCase
 
     // FIXME: load currentTimetable
-    private(set) var currentTimetable: (any Timetable)?
+    private(set) var currentTimetable: Timetable?
 
     // FIXME: use shared config
     var configuration: TimetableConfiguration = .init()

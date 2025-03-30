@@ -7,11 +7,11 @@
 
 import AuthInterface
 import Combine
+import Configs
+import ConfigsInterface
 import Dependencies
 import Foundation
 import Timetable
-import ConfigsInterface
-import Configs
 
 @Observable
 @MainActor
