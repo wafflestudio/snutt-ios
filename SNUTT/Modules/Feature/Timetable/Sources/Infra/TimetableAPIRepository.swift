@@ -93,7 +93,7 @@ extension Components.Schemas.TimetableLegacyDto {
 
 extension Components.Schemas.TimetableBriefDto {
     fileprivate func toTimetableMetadata() throws -> TimetableMetadata {
-        let semester = try require(Semester(rawValue: Int(semester)))
+        let semester = try require(Semester(rawValue: semester.asInt()))
         let quarter = Quarter(year: year.asInt(), semester: semester)
         return TimetableMetadata(
             id: _id,

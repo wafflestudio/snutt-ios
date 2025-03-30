@@ -26,6 +26,7 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
         var academicYear = [String]()
         var department = [String]()
         var category = [String]()
+        var categoryPre2025 = [String]()
         var times = [Components.Schemas.SearchTimeDto]()
         var timesToExclude = [Components.Schemas.SearchTimeDto]()
         var sortCriteria: String?
@@ -43,24 +44,26 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
                 academicYear.append(string)
             case let .credit(int):
                 credit.append(Int32(int))
-            case let .instructor(string):
+            case .instructor:
                 continue // not supported
+            case let .categoryPre2025(string):
+                categoryPre2025.append(string)
             case let .category(string):
                 category.append(string)
             case let .timeInclude(searchTimeRange):
                 if let day = Components.Schemas.SearchTimeDto.dayPayload(rawValue: searchTimeRange.day) {
                     times.append(.init(
                         day: day,
-                        startMinute: Int32(searchTimeRange.startMinute),
-                        endMinute: Int32(searchTimeRange.endMinute)
+                        endMinute: Int32(searchTimeRange.endMinute),
+                        startMinute: Int32(searchTimeRange.startMinute)
                     ))
                 }
             case let .timeExclude(searchTimeRange):
                 if let day = Components.Schemas.SearchTimeDto.dayPayload(rawValue: searchTimeRange.day) {
                     timesToExclude.append(.init(
                         day: day,
-                        startMinute: Int32(searchTimeRange.startMinute),
-                        endMinute: Int32(searchTimeRange.endMinute)
+                        endMinute: Int32(searchTimeRange.endMinute),
+                        startMinute: Int32(searchTimeRange.startMinute)
                     ))
                 }
             case let .etc(etcType):
@@ -68,22 +71,24 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
             }
         }
 
-        let query = Components.Schemas.SearchQueryLegacy(
-            year: Int32(quarter.year),
-            semester: .init(rawValue: quarter.semester.rawValue)!,
-            title: query,
-            classification: classification,
-            credit: credit,
+        let query = try Components.Schemas.SearchQueryLegacy(
             academic_year: academicYear,
-            department: department,
             category: category,
+            categoryPre2025: categoryPre2025,
+            classification: classification,
+            course_number: nil,
+            credit: credit,
+            department: department,
+            etc: etc.nilIfEmpty(),
+            limit: Int32(limit),
+            offset: Int64(offset),
+            page: 20,
+            semester: require(.init(rawValue: quarter.semester.rawValue)),
+            sortCriteria: sortCriteria,
             times: times,
             timesToExclude: timesToExclude,
-            etc: etc.nilIfEmpty(),
-            page: 20,
-            offset: Int64(offset),
-            limit: Int32(limit),
-            sortCriteria: sortCriteria
+            title: query,
+            year: Int32(quarter.year)
         )
         let response = try await apiClient.searchLecture(body: .json(query))
         return try response.ok.body.json.map { try $0.toLecture() }
@@ -95,11 +100,12 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
             semester: String(quarter.semester.rawValue)
         ))
         let json = try response.ok.body.json
-        var searchFilters: [SearchPredicate] = json.sortCriteria.map { .sortCriteria($0) }
-        searchFilters.append(contentsOf: json.academic_year.map { .academicYear($0) })
-        searchFilters.append(contentsOf: json.category.map { .category($0) })
-        searchFilters.append(contentsOf: json.classification.map { .classification($0) })
-        searchFilters.append(
+        var searchPredicates: [SearchPredicate] = json.sortCriteria.map { .sortCriteria($0) }
+        searchPredicates.append(contentsOf: json.academic_year.map { .academicYear($0) })
+        searchPredicates.append(contentsOf: json.category.map { .category($0) })
+        searchPredicates.append(contentsOf: json.classification.map { .classification($0) })
+        searchPredicates.append(contentsOf: json.categoryPre2025.map { .categoryPre2025($0) })
+        searchPredicates.append(
             contentsOf: json.credit
                 .compactMap {
                     let regex = Regex { OneOrMore(.digit) }
@@ -107,11 +113,11 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
                     return output.flatMap { Int($0) }.flatMap { .credit($0) }
                 }
         )
-        searchFilters.append(contentsOf: json.department.map { .department($0) })
-        searchFilters.append(contentsOf: json.instructor.map { .instructor($0) })
-        searchFilters.append(.etc(.english))
-        searchFilters.append(.etc(.army))
-        return searchFilters
+        searchPredicates.append(contentsOf: json.department.map { .department($0) })
+        searchPredicates.append(contentsOf: json.instructor.map { .instructor($0) })
+        searchPredicates.append(.etc(.english))
+        searchPredicates.append(.etc(.army))
+        return searchPredicates
     }
 }
 

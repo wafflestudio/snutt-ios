@@ -46,7 +46,7 @@ struct SearchFilterSheet: View {
 
     private var filterCategoryColumn: some View {
         VStack {
-            ForEach(SearchFilterCategory.supportedCases, id: \.rawValue) { category in
+            ForEach(viewModel.supportedCategories, id: \.rawValue) { category in
                 let isSelected = viewModel.selectedCategory == category
                 AnimatableButton(
                     animationOptions: .backgroundColor(touchDown: .label.opacity(0.05)).scale(0.95),

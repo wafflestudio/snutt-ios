@@ -73,3 +73,6 @@ Tuist/.build
 ### Firebase ###
 SNUTT/Resources/GoogleServiceDebugInfo.plist
 SNUTT/Resources/GoogleServiceReleaseInfo.plist
+
+### OpenAPI ###
+OpenAPI/openapi.json

@@ -40,6 +40,7 @@
 "search.filter.credit" = "Credit";
 "search.filter.instructor" = "Instructor";
 "search.filter.category" = "Category";
+"search.filter.categoryPre2025" = "Category (~2024)";
 "search.filter.time" = "Time";
 "search.filter.etc" = "Others";
 "search.filter.apply" = "Apply";

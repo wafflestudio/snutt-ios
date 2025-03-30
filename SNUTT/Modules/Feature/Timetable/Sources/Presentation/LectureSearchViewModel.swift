@@ -42,6 +42,12 @@ class LectureSearchViewModel {
     var selectedCategory: SearchFilterCategory = .sortCriteria
     private(set) var selectedPredicates: [SearchPredicate] = []
 
+    var supportedCategories: [SearchFilterCategory] {
+        SearchFilterCategory.allCases
+            .filter { $0 != .instructor }
+            .filter { availablePredicates.keys.contains($0) }
+    }
+
     func fetchAvailablePredicates(quarter: Quarter) async throws {
         let predicates = try await searchRepository.fetchSearchPredicates(quarter: quarter)
         availablePredicates = Dictionary(grouping: predicates, by: { $0.category })
@@ -167,14 +173,9 @@ enum SearchFilterCategory: String, Sendable, CaseIterable {
     case credit
     case instructor
     case category
+    case categoryPre2025
     case time
     case etc
-
-    static var supportedCases: [SearchFilterCategory] {
-        var allCases = allCases
-        allCases.removeAll(where: { $0 == .instructor })
-        return allCases
-    }
 
     var localizedDescription: String {
         switch self {
@@ -192,6 +193,8 @@ enum SearchFilterCategory: String, Sendable, CaseIterable {
             TimetableStrings.searchFilterInstructor
         case .category:
             TimetableStrings.searchFilterCategory
+        case .categoryPre2025:
+            TimetableStrings.searchFilterCategoryPre2025
         case .time:
             TimetableStrings.searchFilterTime
         case .etc:
@@ -217,6 +220,8 @@ extension SearchPredicate {
             .instructor
         case .category:
             .category
+        case .categoryPre2025:
+            .categoryPre2025
         case .timeExclude, .timeInclude:
             .time
         case .etc:
@@ -230,6 +235,7 @@ extension SearchPredicate {
              let .department(value),
              let .academicYear(value),
              let .category(value),
+             let .categoryPre2025(value),
              let .instructor(value),
              let .classification(value):
             value

@@ -1,4 +1,5 @@
 import ProjectDescription
+import Foundation
 
 let domain = "com.wafflestudio"
 
@@ -12,6 +13,7 @@ extension Project {
         widgetDependencies: [TargetDependency],
         deploymentTargets: DeploymentTargets
     ) -> Project {
+        OpenAPIDownloader().main()
         let mainTargetDependencies: [TargetDependency] = moduleDependencies
             .map { .target(name: $0.name) } + externalDependencies
         let widgetTarget = makeWidgetTarget(
@@ -226,33 +228,15 @@ extension Project {
         )
     }
 
-    private static func updateOpenAPISpecSymlinkPreActionScript(configuration: ProjectDescription
-        .ConfigurationName) -> String
+    private static func updateOpenAPISpecSymlinkPreActionScript(configuration: ProjectDescription.ConfigurationName) -> String
     {
-        let apiUrl = if configuration == .dev {
-            "https://snutt-api-dev.wafflestudio.com/v3/api-docs"
-        } else {
-            "https://snutt-api-dev.wafflestudio.com/v3/api-docs" // TODO: Fix
-        }
         return """
-        # Disabled temporarily
-        exit 0
-
         OPENAPI_DIR="$PROJECT_DIR/OpenAPI"
         OPENAPI_FILE="$OPENAPI_DIR/openapi-\(configuration == .dev ? "dev" : "prod").json"
-        API_URL=\(apiUrl)
-
-        # Download the openapi.json file from the server endpoint
-        curl -o "$OPENAPI_FILE" "$API_URL"
-
-        # Replace unparsable status code strings with valid status codes
-        sed -i '' 's/"400 (1)"/"400"/g; s/"400 (2)"/"402"/g' "$OPENAPI_FILE"
-
-        # Create a symlink to the downloaded openapi.json file
-        ln -sf "$OPENAPI_FILE" "$OPENAPI_DIR/openapi.json"
-
-        # Output the symlink target path
-        readlink -f "$OPENAPI_DIR/openapi.json"
+        # If the OPENAPI_FILE already exists, create a symlink first
+        if [ -f "$OPENAPI_FILE" ]; then
+            ln -sf "$OPENAPI_FILE" "$OPENAPI_DIR/openapi.json"
+        fi
         """
     }
 }

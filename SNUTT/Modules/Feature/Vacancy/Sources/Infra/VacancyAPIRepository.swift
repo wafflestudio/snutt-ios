@@ -17,7 +17,7 @@ public struct VacancyAPIRepository: VacancyRepository {
     public init() {}
 
     public func fetchVacancyLectures() async throws -> [Lecture] {
-        try await apiClient.getVacancyNotificationLectures().ok.body.json.lectures.map { $0.toLecture() }
+        try await apiClient.getVacancyNotificationLectures().ok.body.json.lectures.map { try $0.toLecture() }
     }
 
     public func addVacancyLecture(lectureID: String) async throws {
@@ -30,11 +30,11 @@ public struct VacancyAPIRepository: VacancyRepository {
 }
 
 extension Components.Schemas.LectureDto {
-    fileprivate func toLecture() -> Lecture {
-        let timePlaces: [TimePlace] = class_time_json
+    fileprivate func toLecture() throws -> Lecture {
+        let timePlaces: [TimePlace] = try class_time_json
             .enumerated()
             .compactMap { index, json in
-                guard let day = Weekday(rawValue: json.day.rawValue) else { return nil }
+                let day = try require(Weekday(rawValue: json.day.rawValue))
                 let start = json.startMinute.quotientAndRemainder(dividingBy: 60)
                 let end = json.endMinute.quotientAndRemainder(dividingBy: 60)
                 return TimePlace(

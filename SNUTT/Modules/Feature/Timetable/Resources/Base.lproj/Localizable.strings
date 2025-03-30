@@ -40,7 +40,8 @@
 "search.filter.academicYear" = "학년";
 "search.filter.credit" = "학점";
 "search.filter.instructor" = "교수";
-"search.filter.category" = "교양분류";
+"search.filter.category" = "교양영역";
+"search.filter.categoryPre2025" = "구) 교양영역";
 "search.filter.time" = "시간";
 "search.filter.etc" = "기타";
 "search.filter.apply" = "필터 적용";
