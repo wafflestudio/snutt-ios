@@ -46,7 +46,7 @@ struct NotificationListCell: View {
                         .padding(.trailing, 8)
 #if DEBUG
                     if let deeplink = notification.deeplink {
-                        Text("\(deeplink)")
+                        Text("[DEBUG] 🔗 \(deeplink)")
                         .font(.system(size: 10))
                         .foregroundStyle(.tertiary)
                         .padding(.top, 5)
