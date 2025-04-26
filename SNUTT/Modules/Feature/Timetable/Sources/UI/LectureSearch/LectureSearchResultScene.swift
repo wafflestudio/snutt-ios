@@ -12,6 +12,7 @@ import UIKit
 
 struct LectureSearchResultScene: View {
     @Bindable var viewModel: LectureSearchViewModel
+    @Environment(\.errorAlertHandler) var errorAlertHandler
 
     var body: some View {
         VStack(spacing: 0) {
@@ -58,10 +59,16 @@ struct LectureSearchResultScene: View {
                 .tint(.label)
             }
         }
+        .onAppear {
+            errorAlertHandler.withAlert {
+                guard viewModel.availablePredicates.isEmpty, let quarter = viewModel.searchingQuarter else { return }
+                try await viewModel.fetchAvailablePredicates(quarter: quarter)
+            }
+        }
         .onChange(of: viewModel.searchingQuarter) { _, newValue in
             guard let newValue else { return }
             viewModel.resetSearchResult()
-            Task {
+            errorAlertHandler.withAlert {
                 try await viewModel.fetchAvailablePredicates(quarter: newValue)
             }
         }

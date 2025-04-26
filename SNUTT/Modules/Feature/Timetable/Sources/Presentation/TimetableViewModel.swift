@@ -13,10 +13,11 @@ import Observation
 import SharedUIComponents
 import TimetableInterface
 import TimetableUIComponents
+import ThemesInterface
 
 @Observable
 @MainActor
-class TimetableViewModel {
+public class TimetableViewModel: TimetableViewModelProtocol {
     @ObservationIgnored
     @Dependency(\.timetableUseCase) private var timetableUseCase
 
@@ -29,14 +30,16 @@ class TimetableViewModel {
         set { router.navigationPaths = newValue }
     }
 
-    init(router: TimetableRouter = .init()) {
+    public init(router: TimetableRouter = .init()) {
         self.router = router
+        currentTimetable = timetableUseCase.loadLocalRecentTimetable()
     }
 
-    private(set) var currentTimetable: Timetable?
+    public var currentTimetable: Timetable?
     private(set) var metadataLoadState: MetadataLoadState = .loading
 
     var isMenuPresented = false
+    var isThemeSheetPresented = false
 
     private(set) var configuration: TimetableConfiguration = .init()
 
@@ -49,17 +52,22 @@ class TimetableViewModel {
         currentTimetable?.title ?? ""
     }
 
-    func makePainter(selectedLecture: Lecture? = nil) -> TimetablePainter {
-        TimetablePainter(
+    func makePainter(
+        selectedLecture: Lecture? = nil,
+        selectedTheme: Theme? = nil,
+        availableThemes: [Theme] = []
+    ) -> TimetablePainter {
+        return TimetablePainter(
             currentTimetable: currentTimetable,
             selectedLecture: selectedLecture,
-            selectedTheme: currentTimetable?.defaultTheme ?? .snutt,
+            preferredTheme: selectedTheme,
+            availableThemes: availableThemes,
             configuration: configuration
         )
     }
 
     func loadTimetable() async throws {
-        currentTimetable = try await timetableUseCase.loadRecentTimetable()
+        currentTimetable = try await timetableUseCase.fetchRecentTimetable()
     }
 
     func loadTimetableList() async throws {

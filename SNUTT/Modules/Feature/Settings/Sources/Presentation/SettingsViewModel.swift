@@ -12,6 +12,7 @@ import Observation
 import SharedAppMetadata
 import TimetableInterface
 import TimetableUIComponents
+import ThemesInterface
 
 @MainActor
 @Observable
@@ -43,7 +44,8 @@ final class SettingsViewModel {
         TimetablePainter(
             currentTimetable: currentTimetable,
             selectedLecture: nil,
-            selectedTheme: currentTimetable?.defaultTheme ?? .snutt,
+            preferredTheme: nil,
+            availableThemes: [],
             configuration: configuration
         )
     }

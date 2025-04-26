@@ -13,4 +13,5 @@ import TimetableInterface
 public protocol LectureRepository: Sendable {
     typealias LectureBuilding = String
     func fetchBuildingList(places: [LectureBuilding]) async throws -> [Building]
+    func updateLecture(timetableID: String, lecture: Lecture, overrideOnConflict: Bool) async throws -> Timetable
 }

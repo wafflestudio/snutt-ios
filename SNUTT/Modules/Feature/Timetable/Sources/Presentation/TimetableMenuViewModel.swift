@@ -24,6 +24,10 @@ struct TimetableMenuViewModel {
         timetableViewModel.currentTimetable
     }
 
+    func presentThemeSheet() {
+        timetableViewModel.isThemeSheetPresented = true
+    }
+
     var groupedTimetables: [TimetableGroup] {
         switch metadataLoadingState {
         case .loading:

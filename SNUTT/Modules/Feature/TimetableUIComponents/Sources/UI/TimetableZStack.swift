@@ -8,6 +8,8 @@
 import MemberwiseInit
 import SwiftUI
 import TimetableInterface
+import Dependencies
+import ThemesInterface
 
 public struct TimetableZStack: View {
     let painter: TimetablePainter
@@ -33,7 +35,8 @@ public struct TimetableZStack: View {
     return TimetablePainter(
         currentTimetable: timetable,
         selectedLecture: nil,
-        selectedTheme: .snutt,
+        preferredTheme: nil,
+        availableThemes: [],
         configuration: TimetableConfiguration()
     )
 }

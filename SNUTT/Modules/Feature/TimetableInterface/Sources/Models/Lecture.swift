@@ -7,6 +7,7 @@
 
 import MemberwiseInit
 import SwiftUI
+import ThemesInterface
 
 @MemberwiseInit(.public)
 public struct Lecture: Identifiable, Equatable, Sendable, Codable {
@@ -27,6 +28,7 @@ public struct Lecture: Identifiable, Equatable, Sendable, Codable {
     public var academicYear: String?
     public var remark: String?
     public let evLecture: EvLecture?
+    public let colorIndex: Int
     public let customColor: LectureColor?
 
     /// "분류" (전공, 전선, 전필, 일선, 교양, ...)

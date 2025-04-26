@@ -12,10 +12,10 @@ let project = Project.app(
         .module(
             name: "Timetable",
             category: .feature,
-            productType: .staticFramework,
             dependencies: [
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
+                .target(name: "ThemesInterface"),
                 .target(name: "NotificationsInterface"),
                 .target(name: "SwiftUIUtility"),
                 .target(name: "FoundationUtility"),
@@ -23,7 +23,6 @@ let project = Project.app(
                 .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
-                .external(name: "KakaoMapsSDK-SPM"),
             ]
         ),
         .module(
@@ -31,6 +30,7 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "TimetableInterface"),
+                .target(name: "ThemesInterface"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
@@ -75,10 +75,11 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "APIClientInterface"),
+                .target(name: "TimetableInterface"),
+                .target(name: "ThemesInterface"),
+                .target(name: "VacancyInterface"),
                 .target(name: "AuthInterface"),
                 .target(name: "SharedUIComponents"),
-                .target(name: "TimetableInterface"),
-                .target(name: "VacancyInterface"),
                 .external(name: "Dependencies"),
             ]
         ),
@@ -107,11 +108,21 @@ let project = Project.app(
                 .external(name: "MemberwiseInit"),
             ]
         ),
+        .module(
+            name: "Themes",
+            category: .feature,
+            dependencies: [
+                .target(name: "APIClientInterface"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+            ]
+        ),
         // FeatureInterface
         .module(
             name: "TimetableInterface",
             category: .featureInterface,
             dependencies: [
+                .target(name: "ThemesInterface"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
                 .external(name: "Spyable"),
@@ -134,6 +145,15 @@ let project = Project.app(
             category: .featureInterface,
             dependencies: [
                 .external(name: "Spyable"),
+            ]
+        ),
+        .module(
+            name: "ThemesInterface",
+            category: .featureInterface,
+            dependencies: [
+                .target(name: "SwiftUIUtility"),
+                .external(name: "Spyable"),
+                .external(name: "MemberwiseInit"),
             ]
         ),
         .module(
@@ -193,6 +213,7 @@ let project = Project.app(
     externalDependencies: [
         .external(name: "FirebaseCore"),
         .external(name: "FirebaseMessaging"),
+        .external(name: "KakaoMapsSDK-SPM"),
     ],
     widgetDependencies: [
         .target(name: "TimetableInterface"),

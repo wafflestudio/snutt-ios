@@ -15,6 +15,8 @@ import Timetable
 import TimetableInterface
 import Vacancy
 import VacancyInterface
+import Themes
+import ThemesInterface
 
 extension APIClientKey: @retroactive DependencyKey {
     public static let liveValue: any APIProtocol = APIClientProvider().apiClient()
@@ -34,7 +36,6 @@ extension AuthUseCaseKey: @retroactive DependencyKey {
 
 extension AuthStateKey: @retroactive DependencyKey {
     public static let liveValue: any AuthState = AuthUserState()
-    public static let testValue: any AuthState = AuthUserState()
 }
 
 extension AuthSecureRepositoryKey: @retroactive DependencyKey {
@@ -43,7 +44,6 @@ extension AuthSecureRepositoryKey: @retroactive DependencyKey {
 
 extension TimetableUIProviderKey: @retroactive DependencyKey {
     public static let liveValue: any TimetableUIProvidable = TimetableUIProvider()
-    public static let previewValue: any TimetableUIProvidable = TimetableUIProvider()
 }
 
 extension ConfigsRepositoryKey: @retroactive DependencyKey {
@@ -52,4 +52,12 @@ extension ConfigsRepositoryKey: @retroactive DependencyKey {
 
 extension VacancyRepositoryKey: @retroactive DependencyKey {
     public static let liveValue: any VacancyRepository = VacancyAPIRepository()
+}
+
+extension ThemeUIProviderKey: @retroactive DependencyKey {
+    public static let liveValue: any ThemeUIProvidable = ThemeUIProvider()
+}   
+
+extension ThemeRepositoryKey: @retroactive DependencyKey {
+    public static let liveValue: any ThemeRepository = ThemeAPIRepository()
 }

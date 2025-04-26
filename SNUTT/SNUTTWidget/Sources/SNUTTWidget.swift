@@ -72,12 +72,13 @@ struct TimetableEntry: TimelineEntry {
     }
 
     func makeTimetablePainter() -> TimetablePainter {
-        TimetablePainter(
-            currentTimetable: currentTimetable,
-            selectedLecture: nil,
-            selectedTheme: .snutt,
-            configuration: timetableConfiguration
-        )
+        fatalError()
+//        TimetablePainter(
+//            currentTimetable: currentTimetable,
+//            selectedLecture: nil,
+//            resolvedTheme: .snutt,
+//            configuration: timetableConfiguration
+//        )
     }
 }
 

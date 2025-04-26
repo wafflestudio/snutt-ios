@@ -14,20 +14,21 @@ import TimetableUIComponents
 
 public struct TimetableScene: View {
     @Dependency(\.application) private var application
-    @State private(set) var timetableViewModel: TimetableViewModel
+    @Bindable var timetableViewModel: TimetableViewModel
     @State private(set) var searchViewModel: LectureSearchViewModel
     @Binding private(set) var isSearchMode: Bool
+    @Environment(\.themeViewModel) private var themeViewModel
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.notificationsUIProvider) private var notificationsUIProvider
+    @Environment(\.themeUIProvider) private var themeUIProvider
 
     public init(
         isSearchMode: Binding<Bool>,
-        timetableRouter: TimetableRouter,
+        timetableViewModel: TimetableViewModel,
         lectureSearchRouter: LectureSearchRouter
     ) {
         _isSearchMode = isSearchMode
-        let timetableViewModel = TimetableViewModel(router: timetableRouter)
-        _timetableViewModel = State(initialValue: timetableViewModel)
+        self.timetableViewModel = timetableViewModel
         _searchViewModel = State(initialValue: LectureSearchViewModel(
             timetableViewModel: timetableViewModel,
             router: lectureSearchRouter
@@ -69,6 +70,9 @@ public struct TimetableScene: View {
                     }
                 }
             }
+            .sheet(isPresented: $timetableViewModel.isThemeSheetPresented) {
+                themeUIProvider.menuThemeSelectionSheet()
+            }
         }
         .onChange(of: isSearchMode) { _, newValue in
             if newValue, !timetableViewModel.paths.isEmpty {
@@ -98,7 +102,11 @@ public struct TimetableScene: View {
 
     private var timetable: some View {
         ZStack {
-            TimetableZStack(painter: timetableViewModel.makePainter(selectedLecture: searchViewModel.selectedLecture))
+            TimetableZStack(painter: timetableViewModel.makePainter(
+                selectedLecture: searchViewModel.selectedLecture,
+                selectedTheme: themeViewModel.selectedTheme,
+                availableThemes: themeViewModel.availableThemes
+            ))
                 .environment(\.lectureTapAction, LectureTapAction(action: { lecture in
                     timetableViewModel.paths.append(.lectureDetail(lecture))
                 }))
@@ -138,6 +146,6 @@ extension View {
 }
 
 #Preview {
-    TimetableScene(isSearchMode: .constant(false), timetableRouter: .init(), lectureSearchRouter: .init())
+    TimetableScene(isSearchMode: .constant(false), timetableViewModel: .init(), lectureSearchRouter: .init())
         .overlaySheet()
 }

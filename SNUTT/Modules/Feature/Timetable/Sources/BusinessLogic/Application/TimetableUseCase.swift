@@ -13,19 +13,21 @@ import DependenciesUtility
 import Foundation
 import Spyable
 import TimetableInterface
+import ThemesInterface
 
-struct TimetableUseCase {
+public struct TimetableUseCase: Sendable{
     @Dependency(\.timetableRepository) private var timetableRepository
     @Dependency(\.timetableLocalRepository) private var timetableLocalRepository
-    @Dependency(\.userDefaults) private var userDefaults
     @Dependency(\.authState) private var authState
 
-    func loadRecentTimetable() async throws -> Timetable {
-        if let localTimetable = try? timetableLocalRepository.loadSelectedTimetable(),
-           authState.get(.userID) == localTimetable.userID
-        {
-            return localTimetable
-        }
+    func loadLocalRecentTimetable() -> Timetable? {
+        guard let timetable = try? timetableLocalRepository.loadSelectedTimetable(),
+                authState.get(.userID) == timetable.userID
+        else { return nil }
+        return timetable
+    }
+
+    func fetchRecentTimetable() async throws -> Timetable {
         let timetable = try await timetableRepository.fetchRecentTimetable()
         try timetableLocalRepository.storeSelectedTimetable(timetable)
         return timetable
@@ -48,6 +50,12 @@ struct TimetableUseCase {
         try timetableLocalRepository.storeSelectedTimetable(timetable)
         return timetable
     }
+
+    public func updateTheme(timetableID: String, theme: Theme) async throws -> Timetable {
+        let timetable = try await timetableRepository.updateTimetableTheme(timetableID: timetableID, theme: theme)
+        try timetableLocalRepository.storeSelectedTimetable(timetable)
+        return timetable
+    }
 }
 
 private struct TimetableUseCaseKey: DependencyKey {
@@ -59,7 +67,7 @@ private struct TimetableUseCaseKey: DependencyKey {
 }
 
 extension DependencyValues {
-    var timetableUseCase: TimetableUseCase {
+    public var timetableUseCase: TimetableUseCase {
         get { self[TimetableUseCaseKey.self] }
         set { self[TimetableUseCaseKey.self] = newValue }
     }

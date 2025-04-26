@@ -10,6 +10,7 @@ import Dependencies
 import Foundation
 import FoundationUtility
 import TimetableInterface
+import ThemesInterface
 
 public struct TimetableAPIRepository: TimetableRepository {
     @Dependency(\.apiClient) private var apiClient
@@ -31,6 +32,16 @@ public struct TimetableAPIRepository: TimetableRepository {
     public func updateTimetableTitle(timetableID: String, title: String) async throws -> [TimetableMetadata] {
         try await apiClient.modifyTimetable(path: .init(timetableId: timetableID), body: .json(.init(title: title))).ok
             .body.json.map { try $0.toTimetableMetadata() }
+    }
+
+    public func updateTimetableTheme(timetableID: String, theme: Theme) async throws -> Timetable {
+        let dto: Components.Schemas.TimetableModifyThemeRequestDto = switch theme.type {
+        case .builtInTheme(let theme):
+            .init(theme: .init(rawValue: theme.toPayload().rawValue))
+        case .customTheme(let themeID):
+            .init(theme: nil, themeId: themeID)
+        }
+        return try await apiClient.modifyTimetableTheme(path: .init(timetableId: timetableID), body: .json(dto)).ok.body.json.toTimetable()
     }
 
     public func setPrimaryTimetable(timetableID: String) async throws {
@@ -67,18 +78,19 @@ public struct TimetableAPIRepository: TimetableRepository {
 }
 
 extension Components.Schemas.TimetableLegacyDto {
-    fileprivate func toTimetable() throws -> Timetable {
-        let defaultTheme: Theme? = if themeId != nil {
-            nil
+    func toTimetable() throws -> Timetable {
+        let builtInTheme: Theme = switch theme {
+        case ._0: .snutt
+        case ._1: .fall
+        case ._2: .modern
+        case ._3: .cherryBlossom
+        case ._4: .ice
+        case ._5: .lawn
+        }
+        let themeType: ThemeType = if let themeId {
+            .customTheme(themeID: themeId)
         } else {
-            switch theme {
-            case ._0: .snutt
-            case ._1: .fall
-            case ._2: .modern
-            case ._3: .cherryBlossom
-            case ._4: .ice
-            case ._5: .lawn
-            }
+            .builtInTheme(builtInTheme)
         }
         return try Timetable(
             id: require(_id),
@@ -86,8 +98,29 @@ extension Components.Schemas.TimetableLegacyDto {
             quarter: Quarter(year: year.asInt(), semester: require(Semester(rawValue: semester.rawValue))),
             lectures: lecture_list.map { try $0.toLecture() },
             userID: user_id,
-            defaultTheme: defaultTheme
+            theme: themeType
         )
+    }
+}
+
+extension Theme {
+    func toPayload() -> Components.Schemas.TimetableLegacyDto.themePayload {
+        switch self {
+        case .snutt:
+            ._0
+        case .fall:
+            ._1
+        case .modern:
+            ._2
+        case .cherryBlossom:
+            ._3
+        case .ice:
+            ._4
+        case .lawn:
+            ._5
+        default:
+            ._0
+        }
     }
 }
 
@@ -137,6 +170,7 @@ extension Components.Schemas.TimetableLectureLegacyDto {
             academicYear: academic_year,
             remark: remark,
             evLecture: evLecture,
+            colorIndex: Int(colorIndex),
             customColor: customColor,
             classification: classification,
             category: category,

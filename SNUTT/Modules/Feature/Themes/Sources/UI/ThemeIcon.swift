@@ -1,78 +1,23 @@
 //
-//  MenuThemeSheet.swift
+//  ThemeIcon.swift
 //  SNUTT
 //
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SharedUIComponents
 import SwiftUI
-import TimetableInterface
-
-struct MenuThemeSheet: View {
-    var themes: [Theme]
-    @Environment(\.dismiss) var dismiss
-
-    var body: some View {
-        GeometryReader { _ in
-            VStack(spacing: 20) {
-                SheetTopBar(cancel: {
-                    dismiss()
-                }, confirm: {})
-
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 20) {
-                        VStack {
-                            Button {} label: {
-                                Image("theme.new")
-                            }
-                            Text("새 테마")
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 5)
-                                .font(.system(size: 14))
-                        }
-                        ForEach(themes.sorted { $0.isCustom && !$1.isCustom }) { theme in
-                            Button {} label: {
-                                VStack {
-                                    if theme.isCustom {
-                                        ThemeIcon(theme: theme)
-                                    } else {
-//                                        Image(theme.theme?.imageName ?? "")
-                                    }
-                                    Text(theme.name)
-                                        .frame(width: 60, height: 15)
-                                        .padding(.horizontal, 10)
-                                        .padding(.vertical, 5)
-                                        .font(.system(size: 14))
-                                        .background(false ? Color(uiColor: .tertiarySystemFill) : .clear)
-                                        .clipShape(Capsule())
-                                }
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                }
-                .padding()
-            }
-        }
-    }
-}
-
-import SwiftUI
+import ThemesInterface
 
 struct ThemeIcon: View {
     var theme: Theme
     var body: some View {
         VStack {
             ThemeBoxes(colors: theme.colors)
-                .frame(width: 80, height: 78)
-                .cornerRadius(6)
         }
     }
 }
 
-struct ThemeBoxes: View {
+private struct ThemeBoxes: View {
     var colors: [LectureColor]
     var body: some View {
         switch colors.count {
@@ -125,7 +70,7 @@ struct ThemeBoxes: View {
     }
 }
 
-struct OneColorBox: View {
+private struct OneColorBox: View {
     var color: Color
     var body: some View {
         Rectangle()
@@ -133,7 +78,7 @@ struct OneColorBox: View {
     }
 }
 
-struct TwoColorBox: View {
+private struct TwoColorBox: View {
     var color1: Color
     var color2: Color
     var body: some View {
@@ -146,7 +91,7 @@ struct TwoColorBox: View {
     }
 }
 
-struct ThreeColorBox: View {
+private struct ThreeColorBox: View {
     var color1: Color
     var color2: Color
     var color3: Color

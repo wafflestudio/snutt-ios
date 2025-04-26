@@ -24,6 +24,7 @@ public enum APIClientKey: TestDependencyKey {
 }
 
 extension DependencyValues {
+    /// SeeAlso: [SNUTT API Document](https://snutt-api-dev.wafflestudio.com/webjars/swagger-ui/index.html#/)
     public var apiClient: any APIProtocol {
         get { self[APIClientKey.self] }
         set { self[APIClientKey.self] = newValue }

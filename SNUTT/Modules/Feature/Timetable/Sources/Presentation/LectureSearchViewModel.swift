@@ -246,7 +246,12 @@ extension SearchPredicate {
         case .timeExclude:
             ""
         case let .etc(value):
-            ""
+            switch value {
+            case .english:
+                "영강"
+            case .army:
+                "군휴학"
+            }
         }
     }
 }
