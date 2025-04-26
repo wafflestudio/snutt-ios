@@ -5,8 +5,10 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import Dependencies
 import MemberwiseInit
 import SwiftUI
+import ThemesInterface
 import TimetableInterface
 
 public struct TimetableZStack: View {
@@ -33,7 +35,8 @@ public struct TimetableZStack: View {
     return TimetablePainter(
         currentTimetable: timetable,
         selectedLecture: nil,
-        selectedTheme: .snutt,
+        preferredTheme: nil,
+        availableThemes: [],
         configuration: TimetableConfiguration()
     )
 }

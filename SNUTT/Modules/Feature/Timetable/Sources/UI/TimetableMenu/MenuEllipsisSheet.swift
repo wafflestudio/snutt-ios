@@ -16,6 +16,8 @@ struct MenuEllipsisSheet: View {
 
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.sheetDismiss) private var menuSheetDismiss
+
     @State private var isRenameMenuPresented = false
 
     var body: some View {
@@ -40,7 +42,11 @@ struct MenuEllipsisSheet: View {
                         }
                     }
                 }
-                EllipsisSheetButton(menu: .theme) {}
+                EllipsisSheetButton(menu: .theme) {
+                    menuSheetDismiss()
+                    viewModel.presentThemeSheet()
+                }
+
                 EllipsisSheetButton(menu: .delete) {
                     dismiss()
                     Task {

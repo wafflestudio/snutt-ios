@@ -58,6 +58,7 @@ extension Components.Schemas.LectureDto {
             academicYear: academic_year,
             remark: remark,
             evLecture: nil,
+            colorIndex: 0,
             customColor: .temporary,
             classification: classification,
             category: category,

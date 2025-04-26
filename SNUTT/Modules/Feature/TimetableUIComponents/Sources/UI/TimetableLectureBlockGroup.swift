@@ -7,6 +7,7 @@
 
 import MemberwiseInit
 import SwiftUI
+import ThemesInterface
 import TimetableInterface
 
 struct TimetableLectureBlockGroup: View {
@@ -24,11 +25,13 @@ struct TimetableLectureBlockGroup: View {
                         Button {
                             lectureTapAction(lecture: lecture)
                         } label: {
-                            TimetableLectureBlock(lecture: lecture,
-                                                  lectureColor: painter.getColor(for: lecture),
-                                                  timePlace: timePlace,
-                                                  idealHeight: blockHeight,
-                                                  visibilityOptions: painter.configuration.visibilityOptions)
+                            TimetableLectureBlock(
+                                lecture: lecture,
+                                lectureColor: painter.resolveColor(for: lecture),
+                                timePlace: timePlace,
+                                idealHeight: blockHeight,
+                                visibilityOptions: painter.configuration.visibilityOptions
+                            )
                         }
                         .buttonStyle(.plain)
                     }

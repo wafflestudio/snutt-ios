@@ -22,8 +22,9 @@ struct TimetableLocalRepositoryKey: DependencyKey {
 struct LectureRepositoryKey: DependencyKey {
     static let liveValue: any LectureRepository = LectureAPIRepository()
 
-    public static let previewValue: any LectureRepository = {
+    static let previewValue: any LectureRepository = {
         let spy = LectureRepositorySpy()
+        spy.fetchBuildingListPlacesReturnValue = []
         return spy
     }()
 }

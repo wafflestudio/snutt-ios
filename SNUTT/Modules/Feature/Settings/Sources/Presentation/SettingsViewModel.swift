@@ -10,6 +10,7 @@ import Dependencies
 import Foundation
 import Observation
 import SharedAppMetadata
+import ThemesInterface
 import TimetableInterface
 import TimetableUIComponents
 
@@ -43,7 +44,8 @@ final class SettingsViewModel {
         TimetablePainter(
             currentTimetable: currentTimetable,
             selectedLecture: nil,
-            selectedTheme: currentTimetable?.defaultTheme ?? .snutt,
+            preferredTheme: nil,
+            availableThemes: [],
             configuration: configuration
         )
     }

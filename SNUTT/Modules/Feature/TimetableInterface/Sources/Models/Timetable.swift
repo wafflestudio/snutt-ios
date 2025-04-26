@@ -7,6 +7,7 @@
 
 import Foundation
 import MemberwiseInit
+import ThemesInterface
 
 @MemberwiseInit(.public)
 public struct Timetable: Identifiable, Sendable, Codable {
@@ -15,7 +16,7 @@ public struct Timetable: Identifiable, Sendable, Codable {
     public let quarter: Quarter
     public let lectures: [Lecture]
     public let userID: String
-    public let defaultTheme: Theme?
+    public let theme: ThemeType
 }
 
 @MemberwiseInit(.public)

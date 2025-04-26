@@ -1,0 +1,24 @@
+/*
+ Localizable.strings
+ This file is used to manage localizable strings for the feature module in English.
+
+ How to use:
+ - Add your localized strings here in the format "key" = "value";
+ - The key is what you will use in your code, and the value is the translated string.
+
+ Examples:
+ "welcome_message" = "Welcome to the app!";
+ "error_message" = "An error has occurred. Please try again.";
+
+ Usage in code with Tuist synthesized strings:
+ let welcomeMessage = ThemesStrings.welcomeMessage
+ let errorMessage = ThemesStrings.errorMessage
+
+ Note:
+ - Ensure that each key is unique within this file.
+ - Add comments to provide context for translators.
+*/
+
+/* Add your translations below */
+
+"hello_world" = "Hello, world!";

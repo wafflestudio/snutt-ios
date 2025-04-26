@@ -29,7 +29,7 @@ public enum PreviewHelpers {
             lectures: (3 ... Int.random(in: 4 ... 6, using: &generator))
                 .map { _ in previewLecture(using: &generator) },
             userID: "user123",
-            defaultTheme: nil
+            theme: .builtInTheme(.snutt)
         )
     }
 
@@ -64,7 +64,9 @@ public enum PreviewHelpers {
             academicYear: "\(Int.random(in: 1 ... 4, using: &generator))학년",
             remark: remarks.randomElement(using: &generator)!,
             evLecture: .init(evLectureID: 2, avgRating: 3.2, evaluationCount: 20),
-            customColor: .temporary, classification: "분류",
+            colorIndex: Int.random(in: 0 ... 9, using: &generator),
+            customColor: nil,
+            classification: "분류",
             category: "구분",
             wasFull: false,
             registrationCount: 10,

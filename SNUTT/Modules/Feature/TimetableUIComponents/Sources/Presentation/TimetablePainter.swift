@@ -8,13 +8,18 @@
 import CoreGraphics
 import FoundationUtility
 import MemberwiseInit
+import ThemesInterface
 import TimetableInterface
 
 @MemberwiseInit(.public)
 public struct TimetablePainter: Sendable {
     public let currentTimetable: Timetable?
     public let selectedLecture: Lecture?
-    public let selectedTheme: Theme
+    /// If `nil`, the theme of the current timetable is used.
+    /// If not, this theme will override it.
+    public let preferredTheme: Theme?
+    /// An array of available themes, including the custom themes downloaded from the server.
+    public let availableThemes: [Theme]
     public let configuration: TimetableConfiguration
 }
 

@@ -87,8 +87,12 @@ extension Project {
         deploymentTargets: DeploymentTargets,
         dependencies: [TargetDependency]
     ) -> (Target, Target) {
+        let marketingVersion: Plist.Value = "1.0.0"
+        let buildNumber: Plist.Value = "1"
+        let internalVersion = DateFormatter().string(from: Date())
         let infoPlist: [String: Plist.Value] = [
-            "CFBundleVersion": "1.0.0",
+            "CFBundleShortVersionString": marketingVersion,
+            "CFBundleVersion": buildNumber,
             "UILaunchStoryboardName": "LaunchScreen",
             "API_SERVER_URL": "$(API_SERVER_URL)",
             "API_KEY": "$(API_KEY)",

@@ -11,6 +11,8 @@ import Configs
 import ConfigsInterface
 import Dependencies
 import Foundation
+import Themes
+import ThemesInterface
 import Timetable
 
 @Observable
@@ -27,23 +29,40 @@ class ContentViewModel {
     var selectedTab: TabItem = .timetable
     private var cancellables: Set<AnyCancellable> = []
 
-    let timetableRouter: TimetableRouter = .init()
+    let timetableRouter: TimetableRouter
     let lectureSearchRouter: LectureSearchRouter = .init()
+    let themeViewModel: ThemeViewModel
+    let timetableViewModel: TimetableViewModel
 
     private(set) var configs: ConfigsModel = .empty
 
     init() {
+        let timetableUseCase = Dependency(\.timetableUseCase).wrappedValue
+        let timetableRouter = TimetableRouter()
+        let timetableViewModel = TimetableViewModel(router: timetableRouter)
+        let themeViewModel = ThemeViewModel(saveSelectedTheme: { [weak timetableViewModel] theme in
+            guard let currentTimetable = timetableViewModel?.currentTimetable else { return }
+            timetableViewModel?.currentTimetable = try await timetableUseCase.updateTheme(
+                timetableID: currentTimetable.id,
+                theme: theme
+            )
+        })
         authState = Dependency(\.authState).wrappedValue
         isAuthenticated = authState.isAuthenticated
+        self.timetableRouter = timetableRouter
+        self.timetableViewModel = timetableViewModel
+        self.themeViewModel = themeViewModel
         authState.isAuthenticatedPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.isAuthenticated = $0
             }
             .store(in: &cancellables)
-
         Task {
             try await loadConfigs()
+        }
+        Task {
+            try await themeViewModel.fetchThemes()
         }
     }
 

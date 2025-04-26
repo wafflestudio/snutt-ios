@@ -11,7 +11,7 @@ import SwiftUI
 import SwiftUIUtility
 
 @MemberwiseInit(.public)
-public struct Theme: Identifiable, Sendable, Codable {
+public struct Theme: Identifiable, Sendable, Codable, Equatable {
     public let id: String
     public let name: String
     public let colors: [LectureColor]

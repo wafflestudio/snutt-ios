@@ -20,7 +20,7 @@ public enum DetailLabelType: CaseIterable {
     case remark
 }
 
-struct EmptyTimetableUIProvider: TimetableUIProvidable {
+private struct EmptyTimetableUIProvider: TimetableUIProvidable {
     func lectureDetailRow(type _: DetailLabelType, lecture _: Lecture) -> AnyView {
         AnyView(Text("Empty LectureDetailRow"))
     }
@@ -31,7 +31,7 @@ public enum TimetableUIProviderKey: TestDependencyKey {
 }
 
 extension DependencyValues {
-    var timetableUIProvider: any TimetableUIProvidable {
+    fileprivate var timetableUIProvider: any TimetableUIProvidable {
         get { self[TimetableUIProviderKey.self] }
         set { self[TimetableUIProviderKey.self] = newValue }
     }

@@ -7,6 +7,7 @@
 
 import Dependencies
 import Spyable
+import ThemesInterface
 import TimetableInterface
 
 @Spyable
@@ -15,6 +16,7 @@ public protocol TimetableRepository: Sendable {
     func fetchRecentTimetable() async throws -> Timetable
     func fetchTimetableMetadataList() async throws -> [TimetableMetadata]
     func updateTimetableTitle(timetableID: String, title: String) async throws -> [TimetableMetadata]
+    func updateTimetableTheme(timetableID: String, theme: Theme) async throws -> Timetable
     func setPrimaryTimetable(timetableID: String) async throws
     func unsetPrimaryTimetable(timetableID: String) async throws
     func copyTimetable(timetableID: String) async throws -> [TimetableMetadata]

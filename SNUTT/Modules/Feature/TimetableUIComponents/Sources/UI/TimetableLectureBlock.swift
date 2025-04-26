@@ -7,6 +7,7 @@
 
 import SharedUIComponents
 import SwiftUI
+import ThemesInterface
 import TimetableInterface
 
 struct TimetableLectureBlock: View {
@@ -46,6 +47,7 @@ struct TimetableLectureBlock: View {
             .animation(.defaultSpring, value: visibilityOptions)
             .padding(Design.padding)
         }
+        .animation(.defaultSpring, value: lectureColor)
     }
 
     private func allInformationTypes() -> [BlockInformationType] {
