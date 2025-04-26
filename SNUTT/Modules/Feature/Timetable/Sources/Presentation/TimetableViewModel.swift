@@ -11,9 +11,9 @@ import Dependencies
 import DependenciesAdditions
 import Observation
 import SharedUIComponents
+import ThemesInterface
 import TimetableInterface
 import TimetableUIComponents
-import ThemesInterface
 
 @Observable
 @MainActor

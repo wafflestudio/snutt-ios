@@ -19,5 +19,4 @@ struct DefaultTimetableViewModel: TimetableViewModelProtocol {
 
 extension EnvironmentValues {
     @Entry public var timetableViewModel: any TimetableViewModelProtocol = DefaultTimetableViewModel()
-
 }

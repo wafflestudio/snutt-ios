@@ -107,9 +107,9 @@ public struct TimetableScene: View {
                 selectedTheme: themeViewModel.selectedTheme,
                 availableThemes: themeViewModel.availableThemes
             ))
-                .environment(\.lectureTapAction, LectureTapAction(action: { lecture in
-                    timetableViewModel.paths.append(.lectureDetail(lecture))
-                }))
+            .environment(\.lectureTapAction, LectureTapAction(action: { lecture in
+                timetableViewModel.paths.append(.lectureDetail(lecture))
+            }))
         }
     }
 }

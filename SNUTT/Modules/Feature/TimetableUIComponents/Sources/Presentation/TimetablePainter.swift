@@ -8,9 +8,8 @@
 import CoreGraphics
 import FoundationUtility
 import MemberwiseInit
-import TimetableInterface
 import ThemesInterface
-
+import TimetableInterface
 
 @MemberwiseInit(.public)
 public struct TimetablePainter: Sendable {
