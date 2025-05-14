@@ -114,6 +114,14 @@ class SettingViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
+    
+    func getPushPreference() async {
+        do {
+            try await services.pushService.getPreference()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
 
     func closeBottomSheet() {
         services.themeService.closeBottomSheet()
