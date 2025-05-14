@@ -10,10 +10,10 @@ import Foundation
 
 enum PushRouter: Router {
     var baseURL: URL { return URL(string: NetworkConfiguration.serverV1BaseURL + "/push")! }
-    
+
     case getPreference
     case updatePreference(preferences: [PushPreferenceDto])
-    
+
     var method: HTTPMethod {
         switch self {
         case .getPreference:
@@ -42,19 +42,20 @@ enum PushRouter: Router {
     }
 }
 
-public extension Encodable {
-    func asAnyDictionary() -> [String: Any]? {
+extension Encodable {
+    public func asAnyDictionary() -> [String: Any]? {
         guard let data = try? JSONEncoder().encode(self),
               let jsonObject = try? JSONSerialization.jsonObject(with: data),
-              let dictionary = jsonObject as? [String: Any] else {
+              let dictionary = jsonObject as? [String: Any]
+        else {
             return nil
         }
         return dictionary
     }
 }
 
-public extension Array where Element: Encodable {
-    func encodeToJSONArray() -> [[String: Any]]? {
-        return self.compactMap { $0.asAnyDictionary() }
+extension Array where Element: Encodable {
+    public func encodeToJSONArray() -> [[String: Any]]? {
+        return compactMap { $0.asAnyDictionary() }
     }
 }

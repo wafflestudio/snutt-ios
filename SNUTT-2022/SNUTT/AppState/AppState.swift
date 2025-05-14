@@ -36,7 +36,10 @@ final class AppState {
         static var preview: AppState {
             let state = AppState()
             state.timetable.current = .preview
-            state.search.selectedTagList = [.init(id: .init(), type: .classification, text: "예시1"), .init(id: .init(), type: .credit, text: "예시2")]
+            state.search.selectedTagList = [
+                .init(id: .init(), type: .classification, text: "예시1"),
+                .init(id: .init(), type: .credit, text: "예시2"),
+            ]
             return state
         }
     }

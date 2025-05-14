@@ -190,7 +190,8 @@ extension AppEnvironment {
         )
         let pushService = PushService(
             appState: appState,
-            webRepositories: webRepositories)
+            webRepositories: webRepositories
+        )
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
