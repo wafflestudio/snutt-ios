@@ -28,6 +28,7 @@ extension AppEnvironment {
         let vacancyService: VacancyServiceProtocol
         let friendsService: FriendsServiceProtocol
         let themeService: ThemeServiceProtocol
+        let pushService: PushServiceProtocol
     }
 }
 
@@ -46,6 +47,7 @@ extension AppEnvironment {
         let vacancyRepository: VacancyRepositoryProtocol
         let configRepository: ConfigRepositoryProtocol
         let themeRepository: ThemeRepositoryProtocol
+        let pushRepository: PushRepositoryProtocol
     }
 
     struct LocalRepositories {
@@ -105,6 +107,7 @@ extension AppEnvironment {
         let vacancyRepository = VacancyRepository(session: session)
         let configRepository = ConfigRepository(session: session)
         let themeRepository = ThemeRepository(session: session)
+        let pushRepository = PushRepository(session: session)
 
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
@@ -118,7 +121,8 @@ extension AppEnvironment {
                      etcRepository: etcRepository,
                      vacancyRepository: vacancyRepository,
                      configRepository: configRepository,
-                     themeRepository: themeRepository)
+                     themeRepository: themeRepository,
+                     pushRepository: pushRepository)
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -184,6 +188,10 @@ extension AppEnvironment {
             webRepositories: webRepositories,
             localRepositories: localRepositories
         )
+        let pushService = PushService(
+            appState: appState,
+            webRepositories: webRepositories
+        )
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
@@ -196,7 +204,8 @@ extension AppEnvironment {
                      etcService: etcService,
                      vacancyService: vacancyService,
                      friendsService: friendsService,
-                     themeService: themeService)
+                     themeService: themeService,
+                     pushService: pushService)
     }
 }
 
@@ -226,7 +235,8 @@ extension EnvironmentValues {
                   etcService: FakeEtcService(),
                   vacancyService: FakeVacancyService(),
                   friendsService: FakeFriendsService(),
-                  themeService: FakeThemeService())
+                  themeService: FakeThemeService(),
+                  pushService: FakePushService())
         }
     }
 #endif
