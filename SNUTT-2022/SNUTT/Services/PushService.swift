@@ -20,7 +20,6 @@ struct PushService: PushServiceProtocol {
 
     func getPreference() async throws {
         let dto = try await pushRepository.getPreference()
-        print("PushDto: \(dto)")
 
         var isLectureUpdatePushOn = true
         var isVacancyPushOn = true
