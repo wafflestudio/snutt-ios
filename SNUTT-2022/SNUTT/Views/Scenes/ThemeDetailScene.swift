@@ -292,6 +292,19 @@ struct ThemeDetailScene: View {
         } message: {
             Text(viewModel.errorMessage)
         }
+        .onAppear {
+            let screen: AnalyticsScreen = switch themeType {
+            case .basic:
+                .themeBasicDetail
+            case .custom:
+                .themeCustomEdit
+            case .new:
+                .themeCustomNew
+            case .downloaded:
+                .themeDownloaded
+            }
+            FirebaseAnalyticsLogger().logScreen(screen)
+        }
     }
 }
 

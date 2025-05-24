@@ -21,11 +21,15 @@ struct PopupScene: View {
                     PopupView(popup: currentPopup,
                               dismiss: viewModel.dismiss(popup:dontShowForWhile:))
                         .padding(.horizontal, reader.size.width * 0.1)
-                        .analyticsScreen(.popup)
                 }
             }
         }
         .animation(.customSpring, value: viewModel.currentPopup?.id)
+        .onChange(of: viewModel.currentPopup?.id) { newPopupId in
+           if newPopupId != nil {
+               FirebaseAnalyticsLogger().logScreen(.popup)
+           }
+       }
         .onLoad {
             await viewModel.getRecentPopupList()
         }
