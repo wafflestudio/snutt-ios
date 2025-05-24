@@ -28,7 +28,10 @@ struct AnalyticsScreenModifier: ViewModifier {
 }
 
 extension View {
-    @ViewBuilder func analyticsScreen(_ screen: AnalyticsScreen, shouldLogEvent: @autoclosure @escaping () -> Bool = { true }()) -> some View {
+    @ViewBuilder func analyticsScreen(
+        _ screen: AnalyticsScreen,
+        shouldLogEvent: @autoclosure @escaping () -> Bool = true
+    ) -> some View {
         modifier(AnalyticsScreenModifier(screen: screen, shouldLogEvent: shouldLogEvent))
     }
 }

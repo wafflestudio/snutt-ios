@@ -26,10 +26,10 @@ struct PopupScene: View {
         }
         .animation(.customSpring, value: viewModel.currentPopup?.id)
         .onChange(of: viewModel.currentPopup?.id) { newPopupId in
-           if newPopupId != nil {
-               FirebaseAnalyticsLogger().logScreen(.popup)
-           }
-       }
+            if newPopupId != nil {
+                FirebaseAnalyticsLogger().logScreen(.popup)
+            }
+        }
         .onLoad {
             await viewModel.getRecentPopupList()
         }
