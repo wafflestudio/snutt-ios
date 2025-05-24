@@ -71,8 +71,6 @@ public struct SearchLectureParameter: Encodable {
 
     /// 예: "2022년 겨울학기"
     let quarter: String
-
-    let page: Int
 }
 
 extension AnalyticsEvent {
