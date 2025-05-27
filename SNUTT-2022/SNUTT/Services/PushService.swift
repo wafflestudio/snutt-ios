@@ -21,7 +21,7 @@ struct PushService: PushServiceProtocol {
     func getPreference() async throws {
         let dto = try await pushRepository.getPreference()
         var options: PushNotificationOptions = []
-        
+
         for p in dto.pushPreferences {
             switch p.type {
             case "LECTURE_UPDATE" where p.isEnabled:
@@ -34,7 +34,7 @@ struct PushService: PushServiceProtocol {
         }
         appState.push.options = options.isEmpty ? .default : options
     }
-    
+
     func updatePreference(options: PushNotificationOptions) async throws {
         let lectureUpdate = PushPreferenceDto(
             type: "LECTURE_UPDATE",
@@ -44,7 +44,7 @@ struct PushService: PushServiceProtocol {
             type: "VACANCY_NOTIFICATION",
             isEnabled: options.contains(.vacancy)
         )
-        
+
         try await pushRepository.updatePreference(lectureUpdate: lectureUpdate, vacancy: vacancyUpdate)
     }
 

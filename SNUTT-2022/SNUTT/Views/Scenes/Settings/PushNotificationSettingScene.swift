@@ -5,8 +5,8 @@
 //  Created by 이채민 on 5/10/25.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct PushNotificationSettingScene: View {
     @ObservedObject var viewModel: ViewModel
@@ -48,10 +48,10 @@ extension PushNotificationSettingScene {
                 .assign(to: \._options, on: self)
                 .store(in: &cancellables)
         }
-        
+
         private func updateOption(_ option: PushNotificationOptions, enabled: Bool) {
             if enabled { _options.insert(option) }
-            else       { _options.remove(option) }
+            else { _options.remove(option) }
             Task { await updatePushPreference() }
         }
 
