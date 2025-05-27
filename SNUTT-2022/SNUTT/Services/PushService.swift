@@ -11,7 +11,7 @@ import SwiftUI
 @MainActor
 protocol PushServiceProtocol: Sendable {
     func getPreference() async throws
-    func updatePreference(isLectureUpdatePushOn: Bool, isVacancyPushOn: Bool) async throws
+    func updatePreference(options: PushNotificationOptions) async throws
 }
 
 struct PushService: PushServiceProtocol {
@@ -20,35 +20,32 @@ struct PushService: PushServiceProtocol {
 
     func getPreference() async throws {
         let dto = try await pushRepository.getPreference()
-
-        var isLectureUpdatePushOn = true
-        var isVacancyPushOn = true
-
-        for preference in dto.pushPreferences {
-            switch preference.type {
-            case "LECTURE_UPDATE":
-                isLectureUpdatePushOn = preference.isEnabled
-            case "VACANCY_NOTIFICATION":
-                isVacancyPushOn = preference.isEnabled
+        var options: PushNotificationOptions = []
+        
+        for p in dto.pushPreferences {
+            switch p.type {
+            case "LECTURE_UPDATE" where p.isEnabled:
+                options.insert(.lectureUpdate)
+            case "VACANCY_NOTIFICATION" where p.isEnabled:
+                options.insert(.vacancy)
             default:
                 break
             }
         }
-
-        appState.push.isLectureUpdatePushOn = isLectureUpdatePushOn
-        appState.push.isVacancyPushOn = isVacancyPushOn
+        appState.push.options = options.isEmpty ? .default : options
     }
-
-    func updatePreference(isLectureUpdatePushOn: Bool, isVacancyPushOn: Bool) async throws {
+    
+    func updatePreference(options: PushNotificationOptions) async throws {
         let lectureUpdate = PushPreferenceDto(
             type: "LECTURE_UPDATE",
-            isEnabled: isLectureUpdatePushOn
+            isEnabled: options.contains(.lectureUpdate)
         )
-        let vacancy = PushPreferenceDto(
+        let vacancyUpdate = PushPreferenceDto(
             type: "VACANCY_NOTIFICATION",
-            isEnabled: isVacancyPushOn
+            isEnabled: options.contains(.vacancy)
         )
-        try await pushRepository.updatePreference(lectureUpdate: lectureUpdate, vacancy: vacancy)
+        
+        try await pushRepository.updatePreference(lectureUpdate: lectureUpdate, vacancy: vacancyUpdate)
     }
 
     private var pushRepository: PushRepositoryProtocol {
@@ -58,5 +55,5 @@ struct PushService: PushServiceProtocol {
 
 class FakePushService: PushServiceProtocol {
     func getPreference() async throws {}
-    func updatePreference(isLectureUpdatePushOn _: Bool, isVacancyPushOn _: Bool) async throws {}
+    func updatePreference(options _: PushNotificationOptions) async throws {}
 }

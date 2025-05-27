@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct PushNotificationSettingScene: View {
     @ObservedObject var viewModel: ViewModel
@@ -27,37 +28,36 @@ struct PushNotificationSettingScene: View {
 
 extension PushNotificationSettingScene {
     class ViewModel: BaseViewModel, ObservableObject {
-        @Published private var _isLectureUpdatePushOn: Bool?
-        @Published private var _isVacancyPushOn: Bool?
+        @Published private var _options: PushNotificationOptions = .default
+        private var cancellables = Set<AnyCancellable>()
 
         var isLectureUpdatePushOn: Bool {
-            get { _isLectureUpdatePushOn ?? true }
-            set {
-                _isLectureUpdatePushOn = newValue
-                Task { await updatePushPreference() }
-            }
+            get { _options.contains(.lectureUpdate) }
+            set { updateOption(.lectureUpdate, enabled: newValue) }
         }
 
         var isVacancyPushOn: Bool {
-            get { _isVacancyPushOn ?? true }
-            set {
-                _isVacancyPushOn = newValue
-                Task { await updatePushPreference() }
-            }
+            get { _options.contains(.vacancy) }
+            set { updateOption(.vacancy, enabled: newValue) }
         }
 
         override init(container: DIContainer) {
             super.init(container: container)
-            appState.push.$isLectureUpdatePushOn.assign(to: &$_isLectureUpdatePushOn)
-            appState.push.$isVacancyPushOn.assign(to: &$_isVacancyPushOn)
+            appState.push.$options
+                .receive(on: DispatchQueue.main)
+                .assign(to: \._options, on: self)
+                .store(in: &cancellables)
+        }
+        
+        private func updateOption(_ option: PushNotificationOptions, enabled: Bool) {
+            if enabled { _options.insert(option) }
+            else       { _options.remove(option) }
+            Task { await updatePushPreference() }
         }
 
         func updatePushPreference() async {
             do {
-                try await services.pushService.updatePreference(
-                    isLectureUpdatePushOn: isLectureUpdatePushOn,
-                    isVacancyPushOn: isVacancyPushOn
-                )
+                try await services.pushService.updatePreference(options: _options)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
