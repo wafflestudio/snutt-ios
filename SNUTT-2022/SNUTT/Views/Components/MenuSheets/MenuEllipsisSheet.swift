@@ -16,9 +16,11 @@ struct MenuEllipsisSheet: View {
     let openThemeSheet: @MainActor () -> Void
     let deleteTimetable: @MainActor () async -> Void
     @State private var isDeleteAlertPresented = false
+    
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 225)) {
+        Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 260)) {
             VStack(spacing: 0) {
                 EllipsisSheetButton(menu: .edit, isSheetOpen: isOpen) {
                     openRenameSheet()
@@ -32,6 +34,9 @@ struct MenuEllipsisSheet: View {
                                 : await setPrimaryTimetable()
                         }
                     }
+                }
+                
+                EllipsisSheetButton(menu: .share) {
                 }
 
                 EllipsisSheetButton(menu: .theme, isSheetOpen: isOpen) {

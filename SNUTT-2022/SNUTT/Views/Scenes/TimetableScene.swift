@@ -17,9 +17,12 @@ struct TimetableScene: View, Sendable {
 
     /// Provide title for `UIActivityViewController`.
     private let linkMetadata = LinkMetadata()
-    private let toolBarHeight: CGFloat = 44
-
-    @Environment(\.colorScheme) var colorScheme
+    private let statusBarHeight = UIApplication.shared
+        .connectedScenes
+        .compactMap { ($0 as? UIWindowScene)?.statusBarManager?.statusBarFrame.height }
+        .first ?? 0
+    
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         GeometryReader { proxy in
@@ -51,7 +54,7 @@ struct TimetableScene: View, Sendable {
 
                         NavBarButton(imageName: "nav.share") {
                             screenshot = self.timetable.takeScreenshot(
-                                size: .init(width: proxy.size.width, height: proxy.size.height - toolBarHeight),
+                                size: .init(width: proxy.size.width, height: proxy.size.height - statusBarHeight),
                                 preferredColorScheme: colorScheme
                             )
                             isShareSheetOpened = true
@@ -63,7 +66,7 @@ struct TimetableScene: View, Sendable {
                         .circleBadge(condition: viewModel.unreadCount > 0)
                     }
                 }
-                .frame(height: toolBarHeight)
+                .frame(height: statusBarHeight)
                 .padding(.leading, 16)
                 .padding(.trailing, 12)
 
