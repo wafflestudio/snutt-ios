@@ -28,7 +28,7 @@ public struct Lecture: Identifiable, Equatable, Sendable, Codable {
     public var academicYear: String?
     public var remark: String?
     public let evLecture: EvLecture?
-    
+
     /// 0이면 `customColor`에 설정된 색상을 사용하고, 1 이상이면 테마에서 `colorIndex`에 해당하는 색상을 사용한다.
     ///
     /// - SeeAlso: `TimetablePainter.resolveColor(for:)`

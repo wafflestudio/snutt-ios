@@ -11,9 +11,9 @@ import Configs
 import ConfigsInterface
 import Dependencies
 import Foundation
-import Timetable
 import Themes
 import ThemesInterface
+import Timetable
 
 @Observable
 @MainActor

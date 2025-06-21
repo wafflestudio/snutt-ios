@@ -11,9 +11,9 @@ import Dependencies
 import DependenciesAdditions
 import Observation
 import SharedUIComponents
+import ThemesInterface
 import TimetableInterface
 import TimetableUIComponents
-import ThemesInterface
 
 @Observable
 @MainActor
@@ -75,7 +75,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     public func setCurrentTimetable(_ timetable: Timetable) throws {
         try timetableLocalRepository.storeSelectedTimetable(timetable)
-        self.currentTimetable = timetable
+        currentTimetable = timetable
     }
 
     func loadTimetableList() async throws {

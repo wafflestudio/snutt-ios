@@ -8,10 +8,7 @@
 import SwiftUI
 
 private struct LectureOverlapHandlingModifier: ViewModifier {
-
-
     public func body(content: Content) -> some View {
         content
     }
 }
-

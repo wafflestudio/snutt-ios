@@ -10,8 +10,8 @@ import DependenciesUtility
 import MemberwiseInit
 import SharedUIComponents
 import SwiftUI
-import TimetableInterface
 import ThemesInterface
+import TimetableInterface
 import TimetableUIComponents
 
 struct LectureEditDetailScene: View {
@@ -146,10 +146,11 @@ struct LectureEditDetailScene: View {
                 LectureColorPreviewButton(
                     lectureColor: resolvedColor(for: viewModel.editableLecture),
                     title: nil,
-                    trailingImage: editMode.isEditing ? TimetableAsset.chevronRight.swiftUIImage : nil) {
-                        paths.wrappedValue.append(.lectureColorSelection(viewModel))
-                    }
-                    .disabled(!editMode.isEditing)
+                    trailingImage: editMode.isEditing ? TimetableAsset.chevronRight.swiftUIImage : nil
+                ) {
+                    paths.wrappedValue.append(.lectureColorSelection(viewModel))
+                }
+                .disabled(!editMode.isEditing)
             }
         }
     }

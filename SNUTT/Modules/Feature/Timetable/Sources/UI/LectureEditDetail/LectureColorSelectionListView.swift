@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-import TimetableInterface
-import ThemesInterface
 import SwiftUIUtility
+import ThemesInterface
+import TimetableInterface
 
 struct LectureColorSelectionListView: View {
     let theme: Theme
@@ -55,8 +55,7 @@ struct LectureColorSelectionListView: View {
 }
 
 extension LectureColorSelectionListView {
-    @ViewBuilder
-    private var customColorSection: some View {
+    @ViewBuilder private var customColorSection: some View {
         if theme.isCustom {
             EmptyView()
         } else {
@@ -83,7 +82,6 @@ extension LectureColorSelectionListView {
         }
     }
 
-
     private func fgColorBinding() -> Binding<Color> {
         .init {
             (viewModel.editableLecture.customColor ?? .temporary).fg
@@ -99,9 +97,7 @@ extension LectureColorSelectionListView {
             viewModel.editableLecture.customColor?.bgHex = color.toHex()
         }
     }
-
 }
-
 
 struct LectureColorPreviewButton: View {
     let lectureColor: LectureColor
@@ -123,7 +119,6 @@ struct LectureColorPreviewButton: View {
                 trailingImage
             }
         }
-
     }
 
     private var colorPreview: some View {

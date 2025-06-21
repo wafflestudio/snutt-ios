@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import SwiftUI
 import Dependencies
+import SwiftUI
 import ThemesInterface
 
 @MainActor

@@ -40,7 +40,7 @@ public final class LectureEditDetailViewModel {
 
     init(timetableViewModel: TimetableViewModel?, entryLecture: Lecture) {
         self.timetableViewModel = timetableViewModel
-        self.lectureID = entryLecture.id
+        lectureID = entryLecture.id
         self.entryLecture = entryLecture
         editableLecture = entryLecture
     }
@@ -56,7 +56,11 @@ public final class LectureEditDetailViewModel {
         guard let timetableViewModel, let timetableID = timetableViewModel.currentTimetable?.id else { return }
         let lectureID = editableLecture.id
         do {
-            let timetable = try await lectureRepository.updateLecture(timetableID: timetableID, lecture: editableLecture, overrideOnConflict: false)
+            let timetable = try await lectureRepository.updateLecture(
+                timetableID: timetableID,
+                lecture: editableLecture,
+                overrideOnConflict: false
+            )
             try timetableViewModel.setCurrentTimetable(timetable)
             guard let updatedLecture = timetable.lectures.first(where: { $0.id == lectureID }) else { return }
             entryLecture = updatedLecture
@@ -66,7 +70,6 @@ public final class LectureEditDetailViewModel {
         }
     }
 }
-
 
 extension Lecture {
     var quotaDescription: String? {

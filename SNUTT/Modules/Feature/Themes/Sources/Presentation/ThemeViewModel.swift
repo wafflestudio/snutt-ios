@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import Observation
 import Dependencies
+import Observation
 import ThemesInterface
 
 @Observable
@@ -19,6 +19,7 @@ public final class ThemeViewModel: ThemeViewModelProtocol {
     public var availableThemes: [Theme] {
         themes
     }
+
     public private(set) var selectedTheme: Theme?
 
     private let saveSelectedTheme: @MainActor (Theme) async throws -> Void
