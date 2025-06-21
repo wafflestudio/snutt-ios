@@ -99,7 +99,7 @@ extension ValueContainer where T == Int64? {
     }
 }
 
-private struct DetailLabel: View {
+struct DetailLabel: View {
     let text: String
     var body: some View {
         VStack {

@@ -36,7 +36,7 @@ public final class ErrorAlertHandler: Sendable {
     ) async -> T? {
         do {
             return try await operation()
-        } catch let error as ErrorWrapper {
+        } catch let error as any ErrorWrapper {
             currentError = .init(underlyingError: error.underlyingError)
             return nil
         } catch {
@@ -50,7 +50,7 @@ public final class ErrorAlertHandler: Sendable {
     ) -> T? {
         do {
             return try operation()
-        } catch let error as ErrorWrapper {
+        } catch let error as any ErrorWrapper {
             currentError = .init(underlyingError: error.underlyingError)
             return nil
         } catch {

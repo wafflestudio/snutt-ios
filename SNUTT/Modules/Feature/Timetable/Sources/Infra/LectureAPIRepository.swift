@@ -24,7 +24,7 @@ public struct LectureAPIRepository: LectureRepository {
     public func updateLecture(timetableID: String, lecture: Lecture,
                               overrideOnConflict: Bool) async throws -> Timetable
     {
-        guard let lectureID = lecture.lectureID else { throw LocalizedErrorCode.lectureNotFound }
+        let lectureID = lecture.id
         let timePlaces = try lecture.timePlaces
             .map {
                 try Components.Schemas.ClassPlaceAndTimeLegacyRequestDto(

@@ -64,8 +64,7 @@ public enum LocalizedErrorCode: Int, LocalizedError {
 
     case tagNotFound = 0x4000
     case timetableNotFound = 0x4001
-    case lectureNotFound = 0x4002
-    case refLectureNotFound = 0x4003
+    case lectureNotFound = 0x4003
     case userNotFound = 0x4004
     case colorlistNotFound = 0x4005
     case emailNotFound = 0x4006
@@ -146,7 +145,7 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorDescriptionCustomLecture
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorDescriptionNoFCMKey
-        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound,
+        case .tagNotFound, .timetableNotFound, .lectureNotFound, .userNotFound,
              .colorlistNotFound,
              .emailNotFound:
             APIClientInterfaceStrings.errorDescriptionNotFound
@@ -233,7 +232,7 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorFailureReasonCustomLecture
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorFailureReasonNoFCMKey
-        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound,
+        case .tagNotFound, .timetableNotFound, .lectureNotFound, .userNotFound,
              .colorlistNotFound,
              .emailNotFound:
             APIClientInterfaceStrings.errorFailureReasonNotFound
@@ -320,7 +319,7 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorRecoverySuggestionCustomLecture
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorRecoverySuggestionNoFCMKey
-        case .tagNotFound, .timetableNotFound, .lectureNotFound, .refLectureNotFound, .userNotFound,
+        case .tagNotFound, .timetableNotFound, .lectureNotFound, .userNotFound,
              .colorlistNotFound,
              .emailNotFound:
             APIClientInterfaceStrings.errorRecoverySuggestionNotFound

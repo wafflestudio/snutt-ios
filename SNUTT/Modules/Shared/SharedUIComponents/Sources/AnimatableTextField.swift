@@ -1,9 +1,9 @@
-////
-////  AnimatableTextField.swift
-////  SNUTT
-////
-////  Copyright © 2024 wafflestudio.com. All rights reserved.
-////
+//
+//  AnimatableTextField.swift
+//  SNUTT
+//
+//  Copyright © 2024 wafflestudio.com. All rights reserved.
+//
 
 import MemberwiseInit
 import SwiftUI
@@ -20,7 +20,7 @@ public struct AnimatableTextField: View {
 
     @Init(default: SubmitLabel.return) public let submitLabel: SubmitLabel
 
-    @InitWrapper(type: Binding<String>)
+    @InitWrapper(type: Binding<String>.self)
     @Binding public var text: String
 
     private enum Design {

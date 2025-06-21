@@ -22,10 +22,10 @@ public struct Theme: Identifiable, Sendable, Codable, Equatable {
 
 @MemberwiseInit(.public)
 public struct LectureColor: Hashable, Sendable, Codable {
-    public let fgHex: String
-    public let bgHex: String
+    public var fgHex: String
+    public var bgHex: String
     public var fg: Color { Color(hex: fgHex) }
     public var bg: Color { Color(hex: bgHex) }
 
-    public static let temporary: Self = .init(fgHex: "#000000", bgHex: "#121213")
+    public static let temporary: Self = .init(fgHex: "#000000", bgHex: "#C4C4C4")
 }
