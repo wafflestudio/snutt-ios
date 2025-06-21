@@ -11,7 +11,6 @@
 		731C244E2C4442590015877B /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 731C244D2C4442590015877B /* KakaoSDK */; };
 		731C24502C4442590015877B /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 731C244F2C4442590015877B /* KakaoSDKAuth */; };
 		731C24522C4442590015877B /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 731C24512C4442590015877B /* KakaoSDKCommon */; };
-		73194F0F2C98086C00883EA5 /* ThemeMarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73194F0E2C98086C00883EA5 /* ThemeMarketView.swift */; };
 		731D9FFD297BC5060027BA25 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731D9FFC297BC5060027BA25 /* Bookmark.swift */; };
 		731DA001297BC54B0027BA25 /* BookmarkDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA000297BC54B0027BA25 /* BookmarkDto.swift */; };
 		731DA003297BC5740027BA25 /* BookmarkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731DA002297BC5740027BA25 /* BookmarkRouter.swift */; };
@@ -19,6 +18,9 @@
 		7329BF252D4BAD4700ABAF23 /* ThemeMarketScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7329BF242D4BAD3F00ABAF23 /* ThemeMarketScene.swift */; };
 		734A831F2C2FD41200D6CB95 /* KakaoLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A831E2C2FD41200D6CB95 /* KakaoLogin.swift */; };
 		734B0DE02D2CF23E00A0BAB9 /* View+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734B0DDF2D2CF23600A0BAB9 /* View+Gesture.swift */; };
+		7359E9122DCF20AB00566337 /* PushNotificationSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7359E9112DCF209500566337 /* PushNotificationSettingScene.swift */; };
+		7359E9142DCF2A9D00566337 /* PushRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7359E9132DCF2A9800566337 /* PushRouter.swift */; };
+		7359E9162DCF2C3200566337 /* PushDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7359E9152DCF2C2F00566337 /* PushDto.swift */; };
 		736AF84C2C2F275E00ED9C1A /* GoogleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736AF84B2C2F275E00ED9C1A /* GoogleLogin.swift */; };
 		736AF84F2C2F279900ED9C1A /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 736AF84E2C2F279900ED9C1A /* GoogleSignIn */; };
 		736AF8512C2F279900ED9C1A /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 736AF8502C2F279900ED9C1A /* GoogleSignInSwift */; };
@@ -39,6 +41,9 @@
 		73AB84D22C35128B0075DE83 /* IntegrateAccountScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */; };
 		73AB84D42C3514080075DE83 /* IntegrateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */; };
 		73B6E0882CCB34B2006DD4F0 /* SocialProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */; };
+		73C930E02DD0D30F0091F08C /* PushRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C930DF2DD0D3030091F08C /* PushRepository.swift */; };
+		73C930E22DD0D47F0091F08C /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C930E12DD0D47C0091F08C /* PushService.swift */; };
+		73C930E42DD0D8040091F08C /* PushState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C930E32DD0D8020091F08C /* PushState.swift */; };
 		73EF6E682D3A5F330050D5C4 /* AppleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EF6E672D3A5F2D0050D5C4 /* AppleLogin.swift */; };
 		B800A38B2B76132C008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
@@ -379,6 +384,9 @@
 		7329BF242D4BAD3F00ABAF23 /* ThemeMarketScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeMarketScene.swift; sourceTree = "<group>"; };
 		734A831E2C2FD41200D6CB95 /* KakaoLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLogin.swift; sourceTree = "<group>"; };
 		734B0DDF2D2CF23600A0BAB9 /* View+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Gesture.swift"; sourceTree = "<group>"; };
+		7359E9112DCF209500566337 /* PushNotificationSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSettingScene.swift; sourceTree = "<group>"; };
+		7359E9132DCF2A9800566337 /* PushRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushRouter.swift; sourceTree = "<group>"; };
+		7359E9152DCF2C2F00566337 /* PushDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushDto.swift; sourceTree = "<group>"; };
 		736AF84B2C2F275E00ED9C1A /* GoogleLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLogin.swift; sourceTree = "<group>"; };
 		738406ED2B57107C00007E62 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		738406F02B5710C200007E62 /* ThemeDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDto.swift; sourceTree = "<group>"; };
@@ -395,6 +403,9 @@
 		73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateAccountScene.swift; sourceTree = "<group>"; };
 		73AB84D32C3514080075DE83 /* IntegrateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrateAccountViewModel.swift; sourceTree = "<group>"; };
 		73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialProvider.swift; sourceTree = "<group>"; };
+		73C930DF2DD0D3030091F08C /* PushRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushRepository.swift; sourceTree = "<group>"; };
+		73C930E12DD0D47C0091F08C /* PushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushService.swift; sourceTree = "<group>"; };
+		73C930E32DD0D8020091F08C /* PushState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushState.swift; sourceTree = "<group>"; };
 		73EF6E672D3A5F2D0050D5C4 /* AppleLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLogin.swift; sourceTree = "<group>"; };
 		B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTimeMaskDto.swift; sourceTree = "<group>"; };
 		B80240B12CE8564500178428 /* TimerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModifier.swift; sourceTree = "<group>"; };
@@ -721,6 +732,7 @@
 				B87DF6F82918B7AD008BB95B /* PopupState.swift */,
 				CE98204A2A09FBDD001037F5 /* DebugState.swift */,
 				738406F82B57154400007E62 /* ThemeState.swift */,
+				73C930E32DD0D8020091F08C /* PushState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -734,6 +746,7 @@
 				B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */,
 				738406FA2B57173400007E62 /* ThemeSettingScene.swift */,
 				73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */,
+				7359E9112DCF209500566337 /* PushNotificationSettingScene.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -972,6 +985,7 @@
 				CE4777F42A6ADCE200E03253 /* VacancyRouter.swift */,
 				738406F42B5712BF00007E62 /* ThemeRouter.swift */,
 				B8823BC22BC2ED41003A3B69 /* BuildingRouter.swift */,
+				7359E9132DCF2A9800566337 /* PushRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -1063,6 +1077,7 @@
 				CEDDCA832A6AFBF700474D4E /* VacancyDto.swift */,
 				CE17DF8A2A7E96E1000432B8 /* ConfigDto.swift */,
 				738406F02B5710C200007E62 /* ThemeDto.swift */,
+				7359E9152DCF2C2F00566337 /* PushDto.swift */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
@@ -1107,6 +1122,7 @@
 				BE6D892B28EFC76E000607A6 /* EtcService.swift */,
 				CE3384B92A86704100437CC5 /* FriendsService.swift */,
 				738406F62B57134300007E62 /* ThemeService.swift */,
+				73C930E12DD0D47C0091F08C /* PushService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1132,6 +1148,7 @@
 				DC1E0ECE28772F13005632A3 /* NetworkUtils.swift */,
 				B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */,
 				738406F22B57119100007E62 /* ThemeRepository.swift */,
+				73C930DF2DD0D3030091F08C /* PushRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1595,6 +1612,7 @@
 				CE17DF912A7F43E0000432B8 /* VacancySugangSnuButton.swift in Sources */,
 				CE7243612B30240D00F9E0D7 /* InteractiveDismissKeyboardModifier.swift in Sources */,
 				BE1D2B3A28014527008F9134 /* Weekday.swift in Sources */,
+				73C930E22DD0D47F0091F08C /* PushService.swift in Sources */,
 				BEDE34CA28754F3100525014 /* Sheet.swift in Sources */,
 				BEB3B6B128D4D4D900E56062 /* View+ResignResponder.swift in Sources */,
 				734B0DE02D2CF23E00A0BAB9 /* View+Gesture.swift in Sources */,
@@ -1619,6 +1637,7 @@
 				BE28036A28E93EEF00B2B1AB /* LoginScene.swift in Sources */,
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
+				73C930E42DD0D8040091F08C /* PushState.swift in Sources */,
 				DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */,
 				BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */,
 				BE9413DD28C3B68F00171060 /* SearchTagsScrollView.swift in Sources */,
@@ -1626,6 +1645,7 @@
 				B88D16FB28AE2BB900E2D652 /* UserRouter.swift in Sources */,
 				BE982FC0281D762F005F71E6 /* TimetableZStack.swift in Sources */,
 				B87B316C28D755B6005C170B /* SystemState.swift in Sources */,
+				73C930E02DD0D30F0091F08C /* PushRepository.swift in Sources */,
 				B8F0B2322A540A5300A2E15E /* EmailVerificationView.swift in Sources */,
 				CE9820502A0A0BB7001037F5 /* NetworkLogListScene.swift in Sources */,
 				BE982FBC281D5227005F71E6 /* TimePlace.swift in Sources */,
@@ -1637,11 +1657,13 @@
 				CEA428A02D71E2DC00944DAB /* AnalyticsScreenModifier.swift in Sources */,
 				B800A38B2B76132C008E8D84 /* SearchTimeMaskDto.swift in Sources */,
 				CEF630942BC690DF00D26999 /* FloatingButton.swift in Sources */,
+				7359E9142DCF2A9D00566337 /* PushRouter.swift in Sources */,
 				B87DF6ED2914FAFB008BB95B /* PopupRouter.swift in Sources */,
 				BE682BE328870EBD009EBCB7 /* LectureDetailViewModel.swift in Sources */,
 				BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */,
 				BE98A00A288A90C000C2CE95 /* Logo.swift in Sources */,
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
+				7359E9122DCF20AB00566337 /* PushNotificationSettingScene.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */,
 				CE076E002A09661400C9430B /* NetworkLogEntry.swift in Sources */,
@@ -1727,6 +1749,7 @@
 				B8F40EB328980DFF0021A2A9 /* PrivacyPolicyView.swift in Sources */,
 				738407012B571D8E00007E62 /* ThemeIcon.swift in Sources */,
 				B8A72A022A8F1ED000094FAA /* ChangeNicknameView.swift in Sources */,
+				7359E9162DCF2C3200566337 /* PushDto.swift in Sources */,
 				CE98750C29CC527F007F063A /* TimeRangeSlider.swift in Sources */,
 				B8F40EB728980E7A0021A2A9 /* AccountSettingViewModel.swift in Sources */,
 				BEB3B6AF28D4D49A00E56062 /* DetailLabel.swift in Sources */,

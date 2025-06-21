@@ -49,6 +49,9 @@ struct SettingScene: View {
             }
 
             Section {
+                SettingsLinkItem(title: "푸시알림 설정") {
+                    PushNotificationSettingScene(viewModel: .init(container: viewModel.container))
+                }
                 SettingsLinkItem(title: "빈자리 알림", isActive: $viewModel.routingState.pushToVacancy) {
                     VacancyScene(viewModel: .init(container: viewModel.container))
                 }
@@ -118,6 +121,7 @@ struct SettingScene: View {
             await viewModel.fetchUser()
             await viewModel.fetchSocialProvider()
             await viewModel.getThemeList()
+            await viewModel.getPushPreference()
         }
 
         let _ = debugChanges()
