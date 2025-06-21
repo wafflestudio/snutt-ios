@@ -21,10 +21,8 @@ public struct LectureAPIRepository: LectureRepository {
         return response.compactMap { Building(dto: $0) }
     }
 
-    public func updateLecture(timetableID: String, lecture: Lecture,
-                              overrideOnConflict: Bool) async throws -> Timetable
-    {
-        guard let lectureID = lecture.lectureID else { throw LocalizedErrorCode.lectureNotFound }
+    public func updateLecture(timetableID: String, lecture: Lecture, overrideOnConflict: Bool) async throws -> Timetable {
+        let lectureID = lecture.id
         let timePlaces = try lecture.timePlaces
             .map {
                 try Components.Schemas.ClassPlaceAndTimeLegacyRequestDto(
@@ -40,7 +38,7 @@ public struct LectureAPIRepository: LectureRepository {
             categoryPre2025: lecture.categoryPre2025,
             class_time_json: timePlaces,
             classification: lecture.classification,
-            color: lecture.customColor.flatMap { .init(bg: $0.bgHex, fg: $0.fgHex) },
+            color: lecture.customColor.flatMap({ .init(bg: $0.bgHex, fg: $0.fgHex) }),
             colorIndex: Int32(lecture.colorIndex),
             course_title: lecture.courseTitle,
             credit: lecture.credit,

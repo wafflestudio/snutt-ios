@@ -11,6 +11,8 @@ import MemberwiseInit
 import SharedUIComponents
 import SwiftUI
 import TimetableInterface
+import ThemesInterface
+import TimetableUIComponents
 
 struct LectureEditDetailScene: View {
     @Dependency(\.application) private var application
@@ -21,12 +23,22 @@ struct LectureEditDetailScene: View {
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
+    @Environment(\.timetableViewModel) private var timetableViewModel
+    @Environment(\.themeViewModel) private var themeViewModel
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     let displayMode: DisplayMode
+    let paths: Binding<[TimetableDetailSceneTypes]>
 
-    init(entryLecture: Lecture, displayMode: DisplayMode) {
-        _viewModel = .init(initialValue: .init(entryLecture: entryLecture))
+    init(
+        timetableViewModel: TimetableViewModel? = nil,
+        entryLecture: Lecture,
+        displayMode: DisplayMode,
+        paths: Binding<[TimetableDetailSceneTypes]> = .constant([])
+    ) {
+        _viewModel = .init(initialValue: .init(timetableViewModel: timetableViewModel, entryLecture: entryLecture))
         self.displayMode = displayMode
+        self.paths = paths
     }
 
     var body: some View {
@@ -97,11 +109,16 @@ struct LectureEditDetailScene: View {
         switch displayMode {
         case .normal:
             Button {
-                if editMode.isEditing {
-                    // save
-                    editMode = .inactive
-                } else {
-                    editMode = .active
+                errorAlertHandler.withAlert {
+                    if editMode == .active {
+                        editMode = .transient
+                        defer {
+                            editMode = .inactive
+                        }
+                        try await viewModel.saveEditableLecture()
+                    } else {
+                        editMode = .active
+                    }
                 }
             } label: {
                 Text(editMode.isEditing ? "저장" : "편집")
@@ -117,14 +134,22 @@ struct LectureEditDetailScene: View {
         }
     }
 
-    @State private var title: String = ""
-
     private var firstDetailSection: some View {
         VStack(spacing: 20) {
             EditableRow(label: "강의명", keyPath: \.courseTitle)
             EditableRow(label: "교수", keyPath: \.instructor)
             if viewModel.entryLecture.isCustom {
                 EditableRow(label: "학점", keyPath: \.credit)
+            }
+            HStack {
+                DetailLabel(text: "색상")
+                LectureColorPreviewButton(
+                    lectureColor: resolvedColor(for: viewModel.editableLecture),
+                    title: nil,
+                    trailingImage: editMode.isEditing ? TimetableAsset.chevronRight.swiftUIImage : nil) {
+                        paths.wrappedValue.append(.lectureColorSelection(viewModel))
+                    }
+                    .disabled(!editMode.isEditing)
             }
         }
     }
@@ -199,11 +224,25 @@ extension LectureEditDetailScene {
             return false
         }
     }
+
+    private func resolvedColor(for lecture: Lecture) -> LectureColor {
+        TimetablePainter(
+            currentTimetable: timetableViewModel.currentTimetable,
+            selectedLecture: nil,
+            preferredTheme: nil,
+            availableThemes: themeViewModel.availableThemes,
+            configuration: .init()
+        )
+        .resolveColor(for: lecture)
+    }
 }
 
 #Preview {
     NavigationStack {
-        LectureEditDetailScene(entryLecture: PreviewHelpers.preview(id: "1").lectures.first!, displayMode: .normal)
+        LectureEditDetailScene(
+            timetableViewModel: .init(),
+            entryLecture: PreviewHelpers.preview(id: "1").lectures.first!, displayMode: .normal
+        )
     }
     .tint(.label)
 }

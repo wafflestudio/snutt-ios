@@ -5,11 +5,11 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Dependencies
 import MemberwiseInit
 import SwiftUI
-import ThemesInterface
 import TimetableInterface
+import Dependencies
+import ThemesInterface
 
 public struct TimetableZStack: View {
     let painter: TimetablePainter

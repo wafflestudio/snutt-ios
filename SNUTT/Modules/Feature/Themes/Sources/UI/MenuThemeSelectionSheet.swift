@@ -5,12 +5,13 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import Dependencies
+
 import SharedUIComponents
 import SwiftUI
-import SwiftUIUtility
-import ThemesInterface
 import TimetableInterface
+import ThemesInterface
+import Dependencies
+import SwiftUIUtility
 
 struct MenuThemeSelectionSheet: View {
     @Environment(\.dismiss) private var dismiss
@@ -26,7 +27,7 @@ struct MenuThemeSelectionSheet: View {
             switch self {
             case .new:
                 return "new"
-            case let .theme(theme):
+            case .theme(let theme):
                 return theme.id
             }
         }
@@ -35,7 +36,7 @@ struct MenuThemeSelectionSheet: View {
             switch self {
             case .new:
                 return nil
-            case let .theme(theme):
+            case .theme(let theme):
                 return theme
             }
         }
@@ -76,23 +77,22 @@ struct MenuThemeSelectionSheet: View {
         .presentationDetents([.height(160)])
         .observeErrors()
         .onAppear {
-            if let initialSelectedTheme = themeViewModel.availableThemes
-                .first(where: { $0.id == timetableViewModel.currentTimetable?.theme.id })
-            {
+            if let initialSelectedTheme = themeViewModel.availableThemes.first(where: { $0.id == timetableViewModel.currentTimetable?.theme.id }) {
                 themeViewModel.selectTheme(initialSelectedTheme)
             }
         }
-        .onDisappear {
+        .onDisappear() {
             themeViewModel.selectTheme(nil)
         }
     }
 
-    @ViewBuilder func selectionButton(for selection: SelectionType) -> some View {
+    @ViewBuilder
+    func selectionButton(for selection: SelectionType) -> some View {
         Button {
             switch selection {
             case .new:
                 break
-            case let .theme(theme):
+            case .theme(let theme):
                 themeViewModel.selectTheme(theme)
             }
         } label: {
@@ -103,11 +103,11 @@ struct MenuThemeSelectionSheet: View {
                         ThemesAsset.themeNew.swiftUIImage
                             .resizable()
                             .scaledToFit()
-                    case let .theme(theme):
+                    case .theme(let theme):
                         ThemeIcon(theme: theme)
                     }
                 }
-                .frame(width: 80, height: 78)
+                .frame(width: 80, height: 80)
                 .cornerRadius(6)
 
                 let selectionBackgroundColor: Color = if isSelectionHighlighted(selection) {
@@ -138,11 +138,12 @@ struct MenuThemeSelectionSheet: View {
         switch selection {
         case .new:
             return "새 테마"
-        case let .theme(theme):
+        case .theme(let theme):
             return theme.name
         }
     }
 }
+
 
 #Preview {
     @Previewable @State var isSheetPresented = false

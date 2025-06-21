@@ -10,9 +10,9 @@ import Dependencies
 import Foundation
 import Observation
 import SharedAppMetadata
-import ThemesInterface
 import TimetableInterface
 import TimetableUIComponents
+import ThemesInterface
 
 @MainActor
 @Observable

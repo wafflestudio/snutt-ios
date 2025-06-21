@@ -11,9 +11,9 @@ import Configs
 import ConfigsInterface
 import Dependencies
 import Foundation
+import Timetable
 import Themes
 import ThemesInterface
-import Timetable
 
 @Observable
 @MainActor
@@ -42,10 +42,8 @@ class ContentViewModel {
         let timetableViewModel = TimetableViewModel(router: timetableRouter)
         let themeViewModel = ThemeViewModel(saveSelectedTheme: { [weak timetableViewModel] theme in
             guard let currentTimetable = timetableViewModel?.currentTimetable else { return }
-            timetableViewModel?.currentTimetable = try await timetableUseCase.updateTheme(
-                timetableID: currentTimetable.id,
-                theme: theme
-            )
+            let timetable = try await timetableUseCase.updateTheme(timetableID: currentTimetable.id, theme: theme)
+            try timetableViewModel?.setCurrentTimetable(timetable)
         })
         authState = Dependency(\.authState).wrappedValue
         isAuthenticated = authState.isAuthenticated

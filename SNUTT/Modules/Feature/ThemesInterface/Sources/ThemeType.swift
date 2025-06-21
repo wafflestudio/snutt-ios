@@ -8,9 +8,9 @@
 public enum ThemeType: Codable, Sendable, Equatable, Identifiable {
     public var id: String {
         switch self {
-        case let .builtInTheme(theme):
+        case .builtInTheme(let theme):
             theme.id
-        case let .customTheme(themeID):
+        case .customTheme(let themeID):
             themeID
         }
     }

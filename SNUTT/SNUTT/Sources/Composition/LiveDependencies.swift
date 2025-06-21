@@ -11,12 +11,12 @@ import AuthInterface
 import Configs
 import ConfigsInterface
 import Dependencies
-import Themes
-import ThemesInterface
 import Timetable
 import TimetableInterface
 import Vacancy
 import VacancyInterface
+import Themes
+import ThemesInterface
 
 extension APIClientKey: @retroactive DependencyKey {
     public static let liveValue: any APIProtocol = APIClientProvider().apiClient()
@@ -56,7 +56,7 @@ extension VacancyRepositoryKey: @retroactive DependencyKey {
 
 extension ThemeUIProviderKey: @retroactive DependencyKey {
     public static let liveValue: any ThemeUIProvidable = ThemeUIProvider()
-}
+}   
 
 extension ThemeRepositoryKey: @retroactive DependencyKey {
     public static let liveValue: any ThemeRepository = ThemeAPIRepository()

@@ -12,17 +12,17 @@ import DependenciesAdditions
 import DependenciesUtility
 import Foundation
 import Spyable
-import ThemesInterface
 import TimetableInterface
+import ThemesInterface
 
-public struct TimetableUseCase: Sendable {
+public struct TimetableUseCase: Sendable{
     @Dependency(\.timetableRepository) private var timetableRepository
     @Dependency(\.timetableLocalRepository) private var timetableLocalRepository
     @Dependency(\.authState) private var authState
 
     func loadLocalRecentTimetable() -> Timetable? {
         guard let timetable = try? timetableLocalRepository.loadSelectedTimetable(),
-              authState.get(.userID) == timetable.userID
+                authState.get(.userID) == timetable.userID
         else { return nil }
         return timetable
     }

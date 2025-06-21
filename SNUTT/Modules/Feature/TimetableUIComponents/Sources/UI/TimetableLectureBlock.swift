@@ -7,8 +7,8 @@
 
 import SharedUIComponents
 import SwiftUI
-import ThemesInterface
 import TimetableInterface
+import ThemesInterface
 
 struct TimetableLectureBlock: View {
     typealias VisibilityOptions = TimetableConfiguration.VisibilityOptions

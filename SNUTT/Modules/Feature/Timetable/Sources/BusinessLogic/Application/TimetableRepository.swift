@@ -7,8 +7,8 @@
 
 import Dependencies
 import Spyable
-import ThemesInterface
 import TimetableInterface
+import ThemesInterface
 
 @Spyable
 public protocol TimetableRepository: Sendable {

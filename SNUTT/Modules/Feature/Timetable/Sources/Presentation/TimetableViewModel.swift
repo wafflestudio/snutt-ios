@@ -11,9 +11,9 @@ import Dependencies
 import DependenciesAdditions
 import Observation
 import SharedUIComponents
-import ThemesInterface
 import TimetableInterface
 import TimetableUIComponents
+import ThemesInterface
 
 @Observable
 @MainActor
@@ -23,6 +23,9 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     @ObservationIgnored
     @Dependency(\.timetableRepository) private var timetableRepository
+
+    @ObservationIgnored
+    @Dependency(\.timetableLocalRepository) private var timetableLocalRepository
 
     private let router: TimetableRouter
     var paths: [TimetableDetailSceneTypes] {
@@ -35,7 +38,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
         currentTimetable = timetableUseCase.loadLocalRecentTimetable()
     }
 
-    public var currentTimetable: Timetable?
+    public private(set) var currentTimetable: Timetable?
     private(set) var metadataLoadState: MetadataLoadState = .loading
 
     var isMenuPresented = false
@@ -68,6 +71,11 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     func loadTimetable() async throws {
         currentTimetable = try await timetableUseCase.fetchRecentTimetable()
+    }
+
+    public func setCurrentTimetable(_ timetable: Timetable) throws {
+        try timetableLocalRepository.storeSelectedTimetable(timetable)
+        self.currentTimetable = timetable
     }
 
     func loadTimetableList() async throws {
@@ -157,6 +165,7 @@ public enum TimetableDetailSceneTypes: Hashable, Equatable {
     case lectureList
     case notificationList
     case lectureDetail(Lecture)
+    case lectureColorSelection(LectureEditDetailViewModel)
 
     public static func == (lhs: TimetableDetailSceneTypes, rhs: TimetableDetailSceneTypes) -> Bool {
         switch (lhs, rhs) {
@@ -164,6 +173,8 @@ public enum TimetableDetailSceneTypes: Hashable, Equatable {
             true
         case (.notificationList, .notificationList):
             true
+        case let (.lectureColorSelection(lhs), .lectureColorSelection(rhs)):
+            lhs.lectureID == rhs.lectureID
         case let (.lectureDetail(lhs), .lectureDetail(rhs)):
             lhs.id == rhs.id
         default:

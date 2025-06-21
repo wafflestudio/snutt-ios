@@ -9,8 +9,8 @@ import APIClientInterface
 import Dependencies
 import Foundation
 import FoundationUtility
-import ThemesInterface
 import TimetableInterface
+import ThemesInterface
 
 public struct TimetableAPIRepository: TimetableRepository {
     @Dependency(\.apiClient) private var apiClient
@@ -36,13 +36,12 @@ public struct TimetableAPIRepository: TimetableRepository {
 
     public func updateTimetableTheme(timetableID: String, theme: Theme) async throws -> Timetable {
         let dto: Components.Schemas.TimetableModifyThemeRequestDto = switch theme.type {
-        case let .builtInTheme(theme):
+        case .builtInTheme(let theme):
             .init(theme: .init(rawValue: theme.toPayload().rawValue))
-        case let .customTheme(themeID):
+        case .customTheme(let themeID):
             .init(theme: nil, themeId: themeID)
         }
-        return try await apiClient.modifyTimetableTheme(path: .init(timetableId: timetableID), body: .json(dto)).ok
-            .body.json.toTimetable()
+        return try await apiClient.modifyTimetableTheme(path: .init(timetableId: timetableID), body: .json(dto)).ok.body.json.toTimetable()
     }
 
     public func setPrimaryTimetable(timetableID: String) async throws {

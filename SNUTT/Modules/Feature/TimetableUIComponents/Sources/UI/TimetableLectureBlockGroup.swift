@@ -7,8 +7,8 @@
 
 import MemberwiseInit
 import SwiftUI
-import ThemesInterface
 import TimetableInterface
+import ThemesInterface
 
 struct TimetableLectureBlockGroup: View {
     let painter: TimetablePainter

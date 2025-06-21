@@ -11,11 +11,15 @@ import TimetableInterface
 
 @MainActor
 @Observable
-final class LectureEditDetailViewModel {
+public final class LectureEditDetailViewModel {
     @ObservationIgnored
     @Dependency(\.lectureRepository) private var lectureRepository
 
-    let entryLecture: Lecture
+    /// Might be `nil` if write operation is not necessary.
+    private let timetableViewModel: TimetableViewModel?
+
+    let lectureID: String
+    var entryLecture: Lecture
     var editableLecture: Lecture
 
     var buildings: [Building] = []
@@ -34,7 +38,9 @@ final class LectureEditDetailViewModel {
         buildings.allSatisfy { $0.campus == .GWANAK }
     }
 
-    init(entryLecture: Lecture) {
+    init(timetableViewModel: TimetableViewModel?, entryLecture: Lecture) {
+        self.timetableViewModel = timetableViewModel
+        self.lectureID = entryLecture.id
         self.entryLecture = entryLecture
         editableLecture = entryLecture
     }
@@ -43,10 +49,20 @@ final class LectureEditDetailViewModel {
 
     func fetchBuildingList() async {
         let lecturePlaces = entryLecture.timePlaces.map { $0.place }
+        buildings = (try? await lectureRepository.fetchBuildingList(places: lecturePlaces)) ?? []
+    }
+
+    func saveEditableLecture() async throws {
+        guard let timetableViewModel, let timetableID = timetableViewModel.currentTimetable?.id else { return }
+        let lectureID = editableLecture.id
         do {
-            buildings = try await lectureRepository.fetchBuildingList(places: lecturePlaces)
+            let timetable = try await lectureRepository.updateLecture(timetableID: timetableID, lecture: editableLecture, overrideOnConflict: false)
+            try timetableViewModel.setCurrentTimetable(timetable)
+            guard let updatedLecture = timetable.lectures.first(where: { $0.id == lectureID }) else { return }
+            entryLecture = updatedLecture
         } catch {
-            print(error)
+            editableLecture = entryLecture
+            throw error
         }
     }
 }

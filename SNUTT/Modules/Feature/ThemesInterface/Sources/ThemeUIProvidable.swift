@@ -5,8 +5,8 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import Dependencies
 import SwiftUI
+import Dependencies
 
 @MainActor
 public protocol ThemeUIProvidable: Sendable {
