@@ -5,20 +5,24 @@
 //  Created by 박신홍 on 2022/08/06.
 //
 
+import LinkPresentation
 import SwiftUI
 
-struct MenuEllipsisSheet: View {
+struct MenuEllipsisSheet<TimetableView: View>: View {
     @Binding var isOpen: Bool
     var isPrimary: Bool?
+    let timetableView: TimetableView
     let openRenameSheet: @MainActor () -> Void
     let setPrimaryTimetable: @MainActor () async -> Void
     let unsetPrimaryTimetable: @MainActor () async -> Void
     let openThemeSheet: @MainActor () -> Void
     let deleteTimetable: @MainActor () async -> Void
     @State private var isDeleteAlertPresented = false
+    @State private var isShareSheetOpened = false
+    @State private var screenshot: UIImage? = nil
     
     @Environment(\.colorScheme) private var colorScheme
-
+    
     var body: some View {
         Sheet(isOpen: $isOpen, orientation: .bottom(maxHeight: 260)) {
             VStack(spacing: 0) {
@@ -37,6 +41,10 @@ struct MenuEllipsisSheet: View {
                 }
                 
                 EllipsisSheetButton(menu: .share) {
+                    self.screenshot = timetableView.takeScreenshot(
+                        preferredColorScheme: colorScheme
+                    )
+                    isShareSheetOpened = true
                 }
 
                 EllipsisSheetButton(menu: .theme, isSheetOpen: isOpen) {
@@ -57,5 +65,53 @@ struct MenuEllipsisSheet: View {
             }
             .transformEffect(.identity)
         }
+        .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
+            if let screenshot = screenshot {
+                /// Provide title for `UIActivityViewController`.
+                let linkMetadata = LinkMetadata()
+                ActivityViewController(activityItems: [screenshot, linkMetadata])
+                    .analyticsScreen(.timetableShare)
+            }
+        }
+    }
+}
+
+// MARK: ActivityViewController
+
+private struct ActivityViewController: UIViewControllerRepresentable {
+    var activityItems: [Any]
+
+    func makeUIViewController(context _: UIViewControllerRepresentableContext<ActivityViewController>)
+        -> UIActivityViewController
+    {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        return controller
+    }
+
+    func updateUIViewController(
+        _: UIActivityViewController,
+        context _: UIViewControllerRepresentableContext<ActivityViewController>
+    ) {}
+}
+
+final private class LinkMetadata: NSObject, UIActivityItemSource {
+    let linkMetadata: LPLinkMetadata
+
+    override init() {
+        linkMetadata = LPLinkMetadata()
+        linkMetadata.title = "SNUTT"
+        super.init()
+    }
+
+    func activityViewControllerPlaceholderItem(_: UIActivityViewController) -> Any {
+        return ""
+    }
+
+    func activityViewController(_: UIActivityViewController, itemForActivityType _: UIActivity.ActivityType?) -> Any? {
+        return nil
+    }
+
+    func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
+        return linkMetadata
     }
 }

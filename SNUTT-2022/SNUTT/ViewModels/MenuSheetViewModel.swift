@@ -10,6 +10,7 @@ import SwiftUI
 
 class MenuSheetViewModel: BaseViewModel, ObservableObject {
     @Published var currentTimetable: Timetable?
+    @Published private(set) var configuration: TimetableConfiguration = .init()
     @Published var metadataList: [TimetableMetadata]?
     @Published var themes: [Theme] = []
 

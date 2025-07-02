@@ -11,6 +11,10 @@ struct MenuSheetScene: View {
     @ObservedObject var viewModel: MenuSheetViewModel
 
     var body: some View {
+        let timetableView = TimetableZStack(
+            current: viewModel.currentTimetable,
+            config: viewModel.configuration
+        )
         ZStack {
             // TODO: Split these
             MenuSheet(isOpen: $viewModel.isMenuSheetOpen,
@@ -24,6 +28,7 @@ struct MenuSheetScene: View {
 
             MenuEllipsisSheet(isOpen: $viewModel.isEllipsisSheetOpen,
                               isPrimary: viewModel.targetTimetable?.isPrimary,
+                              timetableView: timetableView,
                               openRenameSheet: viewModel.openRenameSheet,
                               setPrimaryTimetable: viewModel.setPrimaryTimetable,
                               unsetPrimaryTimetable: viewModel.unsetPrimaryTimetable,
