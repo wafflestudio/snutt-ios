@@ -49,6 +49,9 @@
 		B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B80240B22CE8564500178428 /* TimerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80240B12CE8564500178428 /* TimerModifier.swift */; };
 		B824C7A72D50E39B002C3C71 /* PopoverTipModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B824C7A62D50E39B002C3C71 /* PopoverTipModifier.swift */; };
+		B825E8102DE741ED0068A4A1 /* DailyReviewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E80F2DE741E20068A4A1 /* DailyReviewListView.swift */; };
+		B825E8122DE743780068A4A1 /* DailyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E8112DE743720068A4A1 /* DailyReview.swift */; };
+		B825E8132DE743780068A4A1 /* DailyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E8112DE743720068A4A1 /* DailyReview.swift */; };
 		B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */; };
 		B82EA54E2B6393190029FDF3 /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */; };
 		B84A4EA12B6035EE00C1E1A0 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84A4EA02B6035EE00C1E1A0 /* Building.swift */; };
@@ -419,6 +422,8 @@
 		B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTimeMaskDto.swift; sourceTree = "<group>"; };
 		B80240B12CE8564500178428 /* TimerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModifier.swift; sourceTree = "<group>"; };
 		B824C7A62D50E39B002C3C71 /* PopoverTipModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverTipModifier.swift; sourceTree = "<group>"; };
+		B825E80F2DE741E20068A4A1 /* DailyReviewListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyReviewListView.swift; sourceTree = "<group>"; };
+		B825E8112DE743720068A4A1 /* DailyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyReview.swift; sourceTree = "<group>"; };
 		B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureMapView.swift; sourceTree = "<group>"; };
 		B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
 		B84A4EA02B6035EE00C1E1A0 /* Building.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
@@ -734,6 +739,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B8B53CAA2DBC047C00A3E3B2 /* DailyReview */ = {
+			isa = PBXGroup;
+			children = (
+				B825E80F2DE741E20068A4A1 /* DailyReviewListView.swift */,
+			);
+			path = DailyReview;
+			sourceTree = "<group>";
+		};
 		B8E51E6928B75E9E0065248E /* States */ = {
 			isa = PBXGroup;
 			children = (
@@ -1107,6 +1120,7 @@
 		DCD41A5E27E5CC4700CF380E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B825E8112DE743720068A4A1 /* DailyReview.swift */,
 				DCD41A5F27E5CC7700CF380E /* Timetable.swift */,
 				BE982FBB281D5227005F71E6 /* TimePlace.swift */,
 				BEDF507427F4289B00CDCC13 /* Lecture.swift */,
@@ -1192,6 +1206,7 @@
 		DCD41A6C27E5CDBE00CF380E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				B8B53CAA2DBC047C00A3E3B2 /* DailyReview */,
 				B8F40EA7289809AD0021A2A9 /* Settings */,
 				BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */,
 				BE7E230027FF20EE004DC202 /* TimetableScene.swift */,
@@ -1502,6 +1517,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */,
+				B825E8132DE743780068A4A1 /* DailyReview.swift in Sources */,
 				BE419B95288B8FA600FA9590 /* LectureBlocks.swift in Sources */,
 				738407092B57B10000007E62 /* ThemeDto.swift in Sources */,
 				CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */,
@@ -1606,6 +1622,7 @@
 				BE6D892A28EFC637000607A6 /* EtcRepository.swift in Sources */,
 				CE63A3BC2A21B06900A633FC /* RoutingState.swift in Sources */,
 				B8C0C6512CD7EAB2005563F2 /* RoundedRectButton.swift in Sources */,
+				B825E8122DE743780068A4A1 /* DailyReview.swift in Sources */,
 				BE9413BD28C2119500171060 /* NotificationRouter.swift in Sources */,
 				731DA005297BC8990027BA25 /* BookmarkScene.swift in Sources */,
 				BE28036428E8850E00B2B1AB /* WebViewType.swift in Sources */,
@@ -1631,6 +1648,7 @@
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
 				B88D170128AF71E300E2D652 /* UserSupportView.swift in Sources */,
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
+				B825E8102DE741ED0068A4A1 /* DailyReviewListView.swift in Sources */,
 				BED04D2F28EA6FA600937E4C /* SettingsMenuItem.swift in Sources */,
 				738406FF2B5718C600007E62 /* ThemeDetailViewModel.swift in Sources */,
 				B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */,

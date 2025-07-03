@@ -60,6 +60,7 @@ struct UITextEditor: UIViewRepresentable {
         NSLayoutConstraint.activate([
             placeholderView.topAnchor.constraint(equalTo: textView.topAnchor),
             placeholderView.leadingAnchor.constraint(equalTo: textView.leadingAnchor),
+            placeholderView.trailingAnchor.constraint(equalTo: textView.trailingAnchor),
         ])
         return textView
     }
