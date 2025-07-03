@@ -92,6 +92,7 @@
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
 		B8E65A742B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E65A732B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift */; };
+		B8EDF1572E16121F00FF23EB /* LectureReminderSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EDF1562E16121100FF23EB /* LectureReminderSettingScene.swift */; };
 		B8F0B2302A4B27A500A2E15E /* UIDevice+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */; };
 		B8F0B2322A540A5300A2E15E /* EmailVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0B2312A540A5300A2E15E /* EmailVerificationView.swift */; };
 		B8F40EA9289809C60021A2A9 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F40EA8289809C60021A2A9 /* LicenseView.swift */; };
@@ -453,6 +454,7 @@
 		B8E51E6728B615140065248E /* WebErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebErrorView.swift; sourceTree = "<group>"; };
 		B8E51E6A28B769680065248E /* ReviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRouter.swift; sourceTree = "<group>"; };
 		B8E65A732B4D4E3900BE4930 /* TimeRangeSelectionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRangeSelectionSheet.swift; sourceTree = "<group>"; };
+		B8EDF1562E16121100FF23EB /* LectureReminderSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReminderSettingScene.swift; sourceTree = "<group>"; };
 		B8F0B22F2A4B27A500A2E15E /* UIDevice+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Ext.swift"; sourceTree = "<group>"; };
 		B8F0B2312A540A5300A2E15E /* EmailVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationView.swift; sourceTree = "<group>"; };
 		B8F40EA8289809C60021A2A9 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
@@ -746,6 +748,7 @@
 				B8F40EAC28980D840021A2A9 /* TimetableSettingScene.swift */,
 				738406FA2B57173400007E62 /* ThemeSettingScene.swift */,
 				73AB84D12C35128B0075DE83 /* IntegrateAccountScene.swift */,
+				B8EDF1562E16121100FF23EB /* LectureReminderSettingScene.swift */,
 				7359E9112DCF209500566337 /* PushNotificationSettingScene.swift */,
 			);
 			path = Settings;
@@ -1541,6 +1544,7 @@
 				BE1B610E289E000B00401361 /* EllipsisSheetButton.swift in Sources */,
 				BEDF507727F42D1100CDCC13 /* STFont.swift in Sources */,
 				BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */,
+				B8EDF1572E16121F00FF23EB /* LectureReminderSettingScene.swift in Sources */,
 				B82EA54E2B6393190029FDF3 /* KakaoMapView.swift in Sources */,
 				BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */,
 				B8823BC32BC2ED41003A3B69 /* BuildingRouter.swift in Sources */,

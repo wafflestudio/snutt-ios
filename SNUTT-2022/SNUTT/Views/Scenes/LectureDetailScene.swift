@@ -46,6 +46,13 @@ struct LectureDetailScene: View {
     @State private var syllabusURL: String = ""
     @State private var showSyllabusWebView = false
     @State private var isMapViewExpanded: Bool = false
+    
+    private var showReminderSection: Bool {
+        displayMode == .normal &&
+        !editMode.isEditing &&
+        !lecture.isCustom &&
+        !lecture.timePlaces.isEmpty
+    }
 
     private var buildingDictList: [Location: String] {
         var dict: [Location: String] = [:]
@@ -71,6 +78,9 @@ struct LectureDetailScene: View {
             VStack(spacing: 20) {
                 Group {
                     firstDetailSection
+                    if showReminderSection {
+                        reminderSection
+                    }
                     if !lecture.isCustom {
                         ratingSection
                     }
@@ -306,6 +316,22 @@ struct LectureDetailScene: View {
                     .disabled(!editMode.isEditing)
                 }
             }
+        }
+        .padding()
+    }
+    
+    private var reminderSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("강의 리마인더")
+                .font(.system(size: 15))
+            // TODO: Fix
+            Picker("", selection: .constant(0)) {
+                Text("없음").tag(0)
+                Text("10분 전").tag(1)
+                Text("수업 시작 시").tag(2)
+                Text("10분 후").tag(3)
+            }
+            .pickerStyle(.segmented)
         }
         .padding()
     }
