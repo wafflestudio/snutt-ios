@@ -10,6 +10,9 @@ import SwiftUI
 
 struct STColor {
     static let cyan: Color = .init("cyan")
+    
+    /// Hex "#1BD0C8"
+    static let lightCyan: Color = .init(hex: "#1BD0C8")
 
     /// SNUTT cyan (light)
     /// Hex #1BD0C8
@@ -20,6 +23,12 @@ struct STColor {
     
     /// Hex #B2F6F3
     static let milkMint: Color = .init(hex: "#B2F6F3")
+    
+    /// Hex #00B8B0
+    static let darkMint1: Color = .init(hex: "#00B8B0")
+    
+    /// Hex #1CA6A0
+    static let darkMint2: Color = .init(hex: "#1CA6A0")
 
     static let red: Color = .init(hex: "#E54459")
 
@@ -48,8 +57,17 @@ struct STColor {
     /// Hex #EBEBED
     static let neutral95: Color = .init(hex: "#EBEBED")
 
+    /// Hex #F7F7F7
+    static let neutral98: Color = .init(hex: "#F7F7F7")
+
     /// Hex #8A898E
     static let alternative: Color = .init(hex: "#8A898E")
+    
+    /// Hex #DCDCDE
+    static let disabledLine: Color = .init(hex: "#DCDCDE")
+    
+    /// Hex #E4E4E5
+    static let border: Color = .init(hex: "E4E4E5")
 
     /// Hex #EBEBEB
     static let divider: Color = .init(hex: "#C4C4C4")
@@ -58,6 +76,12 @@ struct STColor {
     static let darkDivider: Color = .init(hex: "#505050")
 
     static let disabled: Color = .init(uiColor: .label.withAlphaComponent(0.6))
+    
+    /// Hex #F2F2F2
+    static let lightField: Color = .init(hex: "#F2F2F2")
+    
+    /// Hex #F5F5F5
+    static let lightest: Color = .init(hex: "#F5F5F5")
 
     static let navBackground: Color = .init("nav.background")
     static let tabBackground: Color = .init("tab.background")
