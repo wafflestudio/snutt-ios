@@ -1563,6 +1563,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */,
+				B825E8132DE743780068A4A1 /* DailyReview.swift in Sources */,
 				BE419B95288B8FA600FA9590 /* LectureBlocks.swift in Sources */,
 				738407092B57B10000007E62 /* ThemeDto.swift in Sources */,
 				CEEAB49529C5EAA8005497B0 /* TimetableFullWidgetView.swift in Sources */,
