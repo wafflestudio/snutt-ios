@@ -96,6 +96,10 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         return theme
     }
 
+    var targetTimetable: TimetableMetadata? {
+        appState.menu.ellipsisTarget
+    }
+
     func openBottomSheet(for theme: Theme) {
         services.themeService.openBottomSheet(for: theme)
     }
@@ -104,7 +108,8 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         services.themeService.openNewThemeSheet(for: newTheme)
     }
 
-    func openBasicThemeSheet(for theme: Theme) {
+    func openBasicThemeSheet() {
+        guard let theme = targetTheme else { return }
         services.timetableService.selectTimetableTheme(theme: theme)
         services.themeService.openBasicThemeSheet(for: theme)
     }
@@ -119,6 +124,19 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         guard let theme = targetTheme else { return }
         services.timetableService.selectTimetableTheme(theme: theme)
         services.themeService.openDownloadedThemeSheet(for: theme)
+    }
+
+    func applyThemeToTimetable() async {
+        guard let theme = targetTheme else { return }
+        services.timetableService.selectTimetableTheme(theme: theme)
+        services.themeService.closeBottomSheet()
+
+        guard let timetableId = targetTimetable?.id else { return }
+        do {
+            try await services.timetableService.updateTimetableTheme(timetableId: timetableId)
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
     }
 
     func copyTheme() async {

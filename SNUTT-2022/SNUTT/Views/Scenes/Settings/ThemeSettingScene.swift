@@ -29,14 +29,16 @@ struct ThemeSettingScene: View {
                 }
                 Section(header: Text("제공 테마"), footer: infoView()) {
                     ThemeScrollView(themes: viewModel.basicThemes) { theme in
-                        viewModel.openBasicThemeSheet(for: theme)
+                        viewModel.openBottomSheet(for: theme)
                     }
                 }
             }
             ThemeBottomSheet(isOpen: $viewModel.isBottomSheetOpen,
                              targetTheme: viewModel.targetTheme,
+                             openBasicThemeSheet: viewModel.openBasicThemeSheet,
                              openCustomThemeSheet: viewModel.openCustomThemeSheet,
                              openDownloadedThemeSheet: viewModel.openDownloadedThemeSheet,
+                             applyThemeToTimetable: viewModel.applyThemeToTimetable,
                              copyTheme: viewModel.copyTheme,
                              deleteTheme: viewModel.deleteTheme)
         }
@@ -163,10 +165,6 @@ private struct ThemeButton: View {
         if theme.isCustom {
             ThemeIcon(theme: theme)
                 .frame(width: 80, height: 78)
-                .overlay(
-                    Image("theme.ellipsis").offset(x: 4, y: -4),
-                    alignment: .topTrailing
-                )
         } else {
             Image(theme.theme?.imageName ?? "")
                 .frame(width: 80, height: 78)
@@ -178,9 +176,6 @@ private struct ThemeButton: View {
             Text(theme.name)
                 .font(STFont.regular14.font)
                 .lineLimit(1)
-            if !theme.isCustom {
-                Image("theme.chevron")
-            }
         }
     }
 }
