@@ -135,7 +135,7 @@ extension ThemeBottomSheetButton {
             switch self {
             case .detail: return "sheet.palette"
             case .edit: return "sheet.palette"
-            case .apply: return "sheet.palette"
+            case .apply: return "sheet.tt"
             case .copy: return "menu.duplicate"
             case .delete: return "sheet.trash"
             }
