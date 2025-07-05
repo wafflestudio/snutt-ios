@@ -18,8 +18,7 @@ struct MenuEllipsisSheet<TimetableView: View>: View {
     let openThemeSheet: @MainActor () -> Void
     let deleteTimetable: @MainActor () async -> Void
     @State private var isDeleteAlertPresented = false
-    @State private var isShareSheetOpened = false
-    @State private var screenshot: UIImage? = nil
+    @State private var screenshot: UIImage?
     
     @Environment(\.colorScheme) private var colorScheme
     
@@ -65,7 +64,10 @@ struct MenuEllipsisSheet<TimetableView: View>: View {
             }
             .transformEffect(.identity)
         }
-        .sheet(isPresented: $isShareSheetOpened) { [screenshot] in
+        .sheet(isPresented: .init(
+            get: { screenshot != nil },
+            set: { _ in screenshot = nil }
+        )) {
             if let screenshot = screenshot {
                 /// Provide title for `UIActivityViewController`.
                 let linkMetadata = LinkMetadata()

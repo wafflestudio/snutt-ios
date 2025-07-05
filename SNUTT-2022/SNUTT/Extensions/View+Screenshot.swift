@@ -15,13 +15,7 @@ extension View {
         preferredColorScheme: ColorScheme? = nil
     ) -> UIImage {
         let viewController = UIHostingController(rootView: self.ignoresSafeArea())
-        viewController.view.frame = CGRect(
-            origin: .zero,
-            size: .init(
-                width: size.width,
-                height: size.height
-            )
-        )
+        viewController.view.frame = CGRect(origin: .zero, size: size)
         viewController.overrideUserInterfaceStyle = UIUserInterfaceStyle(preferredColorScheme)
 
         let renderer = UIGraphicsImageRenderer(bounds: viewController.view.bounds)
