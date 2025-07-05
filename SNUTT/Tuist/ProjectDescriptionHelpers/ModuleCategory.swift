@@ -1,4 +1,4 @@
-public enum ModuleCategory {
+public enum ModuleCategory: Sendable {
     case feature
     case featureInterface
     case shared(ui: Bool = false)

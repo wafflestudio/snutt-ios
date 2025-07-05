@@ -25,6 +25,9 @@ import PackageDescription
             "FirebaseCore": .staticLibrary,
             "FirebaseMessaging": .staticLibrary,
             "KakaoMapsSDK-SPM": .staticLibrary,
+            "OpenAPIRuntime": .framework,
+            "OpenAPIURLSession": .framework,
+            "HTTPTypes": .framework,
         ],
         baseSettings: .settings(configurations: [
             .debug(name: .dev),
@@ -39,6 +42,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.7.0"),
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.4.0"),
         .package(url: "https://github.com/apple/swift-openapi-urlsession", from: "1.0.1"),
+        .package(url: "https://github.com/apple/swift-http-types.git", from: "1.0.0"),
         .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.7.1")),
         .package(url: "https://github.com/Matejkob/swift-spyable", .upToNextMajor(from: "0.8.0")),
         .package(url: "https://github.com/gohanlon/swift-memberwise-init-macro", from: "0.5.2"),
