@@ -5,6 +5,7 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import APIClient
 import APIClientInterface
 import AuthInterface
 import Dependencies
@@ -13,7 +14,6 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 import SharedAppMetadata
 import SharedUIComponents
-import APIClient
 
 public struct APIClientProvider: Sendable {
     @Dependency(\.appMetadata) private var appMetadata

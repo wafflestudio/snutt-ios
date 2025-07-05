@@ -219,17 +219,20 @@ let project = Project.app(
             dependencies: [
                 .external(name: "Dependencies"),
                 .external(name: "DependenciesAdditions"),
-            ]),
+            ]
+        ),
         .module(
             name: "SwiftUIUtility", category: .utility(ui: true),
             dependencies: [
-                .external(name: "SwiftUIIntrospect")
-            ]),
+                .external(name: "SwiftUIIntrospect"),
+            ]
+        ),
         .module(
             name: "UIKitUtility", category: .utility(ui: true),
             dependencies: [
-                .external(name: "SnapKit")
-            ]),
+                .external(name: "SnapKit"),
+            ]
+        ),
         .module(name: "FoundationUtility", category: .utility(ui: false), dependencies: []),
     ],
     externalDependencies: [
