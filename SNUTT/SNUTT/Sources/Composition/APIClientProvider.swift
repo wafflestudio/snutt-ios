@@ -13,6 +13,7 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 import SharedAppMetadata
 import SharedUIComponents
+import APIClient
 
 public struct APIClientProvider: Sendable {
     @Dependency(\.appMetadata) private var appMetadata

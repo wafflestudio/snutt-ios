@@ -13,7 +13,6 @@ extension Project {
         widgetDependencies: [TargetDependency],
         deploymentTargets: DeploymentTargets
     ) -> Project {
-        OpenAPIDownloader().main()
         let mainTargetDependencies: [TargetDependency] = moduleDependencies
             .map { .target(name: $0.name) } + externalDependencies
         let widgetTarget = makeWidgetTarget(

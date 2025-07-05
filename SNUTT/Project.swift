@@ -4,14 +4,13 @@ import ProjectDescriptionHelpers
 let project = Project.app(
     name: "SNUTT",
     destinations: .iOS,
-    swiftPackages: [
-        .remote(url: "https://github.com/apple/swift-openapi-generator", requirement: .upToNextMajor(from: "1.0.0")),
-    ],
+    swiftPackages: [],
     moduleDependencies: [
         // Feature
         .module(
             name: "Timetable",
             category: .feature,
+            productType: .staticLibrary,
             dependencies: [
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
@@ -23,6 +22,7 @@ let project = Project.app(
                 .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
+                .external(name: "KakaoMapsSDK-SPM"),
             ]
         ),
         .module(
@@ -52,6 +52,7 @@ let project = Project.app(
                 .target(name: "APIClientInterface"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
+                .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
                 .external(name: "Spyable"),
@@ -78,6 +79,7 @@ let project = Project.app(
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
                 .target(name: "VacancyInterface"),
+                .target(name: "TimetableUIComponents"),
                 .target(name: "AuthInterface"),
                 .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
@@ -113,8 +115,21 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "APIClientInterface"),
+                .target(name: "TimetableInterface"),
+                .target(name: "ThemesInterface"),
+                .target(name: "SharedUIComponents"),
+                .target(name: "SwiftUIUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
+            ]
+        ),
+        .module(
+            name: "APIClient",
+            category: .feature,
+            dependencies: [
+                .target(name: "APIClientInterface"),
+                .external(name: "OpenAPIRuntime"),
+                .external(name: "OpenAPIURLSession"),
             ]
         ),
         // FeatureInterface
@@ -145,6 +160,7 @@ let project = Project.app(
             category: .featureInterface,
             dependencies: [
                 .external(name: "Spyable"),
+                .external(name: "Dependencies"),
             ]
         ),
         .module(
@@ -154,6 +170,7 @@ let project = Project.app(
                 .target(name: "SwiftUIUtility"),
                 .external(name: "Spyable"),
                 .external(name: "MemberwiseInit"),
+                .external(name: "Dependencies"),
             ]
         ),
         .module(
@@ -172,7 +189,6 @@ let project = Project.app(
             dependencies: [
                 .external(name: "OpenAPIRuntime"),
                 .external(name: "OpenAPIURLSession"),
-                .package(product: "OpenAPIGenerator", type: .plugin),
                 .external(name: "Dependencies"),
                 .target(name: "SharedAppMetadata"),
                 .external(name: "Spyable"),
@@ -198,16 +214,22 @@ let project = Project.app(
             ]
         ),
         // Utility
-        .module(name: "DependenciesUtility", category: .utility(ui: false), dependencies: [
-            .external(name: "Dependencies"),
-            .external(name: "DependenciesAdditions"),
-        ]),
-        .module(name: "SwiftUIUtility", category: .utility(ui: true), dependencies: [
-            .external(name: "SwiftUIIntrospect"),
-        ]),
-        .module(name: "UIKitUtility", category: .utility(ui: true), dependencies: [
-            .external(name: "SnapKit"),
-        ]),
+        .module(
+            name: "DependenciesUtility", category: .utility(ui: false),
+            dependencies: [
+                .external(name: "Dependencies"),
+                .external(name: "DependenciesAdditions"),
+            ]),
+        .module(
+            name: "SwiftUIUtility", category: .utility(ui: true),
+            dependencies: [
+                .external(name: "SwiftUIIntrospect")
+            ]),
+        .module(
+            name: "UIKitUtility", category: .utility(ui: true),
+            dependencies: [
+                .external(name: "SnapKit")
+            ]),
         .module(name: "FoundationUtility", category: .utility(ui: false), dependencies: []),
     ],
     externalDependencies: [

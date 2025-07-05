@@ -1,0 +1,25 @@
+openapi-dev:
+    @echo "🚀 Generating OpenAPI for dev environment..."
+    @swift Scripts/OpenAPIDownloader.swift dev
+    @bash Scripts/OpenAPIGenerator.sh dev
+
+openapi-prod:
+    @echo "🚀 Generating OpenAPI for prod environment..."
+    @swift Scripts/OpenAPIDownloader.swift prod
+    @bash Scripts/OpenAPIGenerator.sh prod
+
+dev:
+    @echo "🚀 Setting up development environment..."
+    @just openapi-dev
+    @tuist generate
+
+prod:
+    @echo "🚀 Setting up production environment..."
+    @just openapi-prod
+    @tuist generate
+
+clean-build:
+    @tuist clean && tuist install && tuist build
+
+clean-generate:
+    @tuist clean && tuist install && tuist generate
