@@ -25,7 +25,7 @@ struct ThemeBottomSheet: View {
         Sheet(isOpen: $isOpen,
               orientation: .bottom(
                   maxHeight: targetTheme?.isCustom == false ? 120 :
-                             targetTheme?.status == .downloaded ? 170 : 220
+                      targetTheme?.status == .downloaded ? 170 : 220
               ),
               disableBackgroundTap: false,
               disableDragGesture: true)
@@ -37,7 +37,7 @@ struct ThemeBottomSheet: View {
                             await openBasicThemeSheet()
                         }
                     }
-                    
+
                     ThemeBottomSheetButton(menu: .apply) {
                         isApplyAlertPresented = true
                     }
@@ -47,7 +47,7 @@ struct ThemeBottomSheet: View {
                             await openDownloadedThemeSheet()
                         }
                     }
-                    
+
                     ThemeBottomSheetButton(menu: .apply) {
                         isApplyAlertPresented = true
                     }
@@ -61,7 +61,7 @@ struct ThemeBottomSheet: View {
                             await openCustomThemeSheet()
                         }
                     }
-                    
+
                     ThemeBottomSheetButton(menu: .apply) {
                         isApplyAlertPresented = true
                     }

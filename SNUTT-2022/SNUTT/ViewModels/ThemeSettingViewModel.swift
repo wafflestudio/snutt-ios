@@ -95,7 +95,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         )
         return theme
     }
-    
+
     var targetTimetable: TimetableMetadata? {
         appState.menu.ellipsisTarget
     }
@@ -125,12 +125,12 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         services.timetableService.selectTimetableTheme(theme: theme)
         services.themeService.openDownloadedThemeSheet(for: theme)
     }
-    
+
     func applyThemeToTimetable() async {
         guard let theme = targetTheme else { return }
         services.timetableService.selectTimetableTheme(theme: theme)
         services.themeService.closeBottomSheet()
-        
+
         guard let timetableId = targetTimetable?.id else { return }
         do {
             try await services.timetableService.updateTimetableTheme(timetableId: timetableId)
