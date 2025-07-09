@@ -184,12 +184,7 @@ extension Project {
             .scheme(
                 name: "\(name) Dev",
                 shared: true,
-                buildAction: .buildAction(targets: [.target(name)], preActions: [
-                    .executionAction(
-                        scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev),
-                        target: .target(name)
-                    ),
-                ]),
+                buildAction: .buildAction(targets: [.target(name)]),
                 runAction: .runAction(configuration: .dev, executable: .target(name)),
                 archiveAction: .archiveAction(configuration: .dev),
                 profileAction: .profileAction(configuration: .prod, executable: .target(name)),
@@ -198,12 +193,7 @@ extension Project {
             .scheme(
                 name: "\(name) Prod",
                 shared: true,
-                buildAction: .buildAction(targets: [.target(name)], preActions: [
-                    .executionAction(
-                        scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev),
-                        target: .target(name)
-                    ), // TODO: change to .prod
-                ]),
+                buildAction: .buildAction(targets: [.target(name)]),
                 runAction: .runAction(configuration: .prod, executable: .target(name)),
                 archiveAction: .archiveAction(configuration: .prod),
                 profileAction: .profileAction(configuration: .prod, executable: .target(name)),
@@ -229,18 +219,6 @@ extension Project {
             buildAction: .buildAction(targets: testTargets.map { .target($0.name) }),
             testAction: .targets(testableTargets, configuration: .dev)
         )
-    }
-
-    private static func updateOpenAPISpecSymlinkPreActionScript(configuration: ProjectDescription.ConfigurationName) -> String
-    {
-        return """
-        OPENAPI_DIR="$PROJECT_DIR/OpenAPI"
-        OPENAPI_FILE="$OPENAPI_DIR/openapi-\(configuration == .dev ? "dev" : "prod").json"
-        # If the OPENAPI_FILE already exists, create a symlink first
-        if [ -f "$OPENAPI_FILE" ]; then
-            ln -sf "$OPENAPI_FILE" "$OPENAPI_DIR/openapi.json"
-        fi
-        """
     }
 }
 
