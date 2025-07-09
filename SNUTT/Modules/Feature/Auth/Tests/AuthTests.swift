@@ -1,8 +1,6 @@
 import Foundation
-import XCTest
+import Testing
 
-final class AuthTests: XCTestCase {
-    func test_example() {
-        XCTAssertEqual("Auth", "Auth")
-    }
+@Test func example() {
+    #expect("Auth" == "Auth")
 }

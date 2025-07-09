@@ -1,8 +1,6 @@
 import Foundation
-import XCTest
+import Testing
 
-final class PopupTests: XCTestCase {
-    func test_example() {
-        XCTAssertEqual("Popup", "Popup")
-    }
+@Test func example() {
+    #expect("Popup" == "Popup")
 }
