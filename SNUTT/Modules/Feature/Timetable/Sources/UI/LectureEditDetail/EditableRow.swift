@@ -49,8 +49,6 @@ struct EditableRow<Value: Sendable>: View {
                         text: container.bindingNonOptional,
                         placeholder: container.placeholderText
                     )
-                case let container as ValueContainer<TimePlace>:
-                    DateTimeEditor(timePlace: container.binding)
                 case let container as ValueContainer<String>:
                     TextField(label, text: container.binding, prompt: Text(container.placeholderText))
                 case let container as ValueContainer<String?>:

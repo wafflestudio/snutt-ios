@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import Foundation
 import Observation
 import TimetableInterface
 
@@ -52,22 +53,64 @@ public final class LectureEditDetailViewModel {
         buildings = (try? await lectureRepository.fetchBuildingList(places: lecturePlaces)) ?? []
     }
 
-    func saveEditableLecture() async throws {
+    func saveEditableLecture(overrideOnConflict: Bool = false) async throws {
         guard let timetableViewModel, let timetableID = timetableViewModel.currentTimetable?.id else { return }
         let lectureID = editableLecture.id
         do {
             let timetable = try await lectureRepository.updateLecture(
                 timetableID: timetableID,
                 lecture: editableLecture,
-                overrideOnConflict: false
+                overrideOnConflict: overrideOnConflict
             )
             try timetableViewModel.setCurrentTimetable(timetable)
             guard let updatedLecture = timetable.lectures.first(where: { $0.id == lectureID }) else { return }
             entryLecture = updatedLecture
         } catch {
-            editableLecture = entryLecture
             throw error
         }
+    }
+    
+    func addCustomLecture(overrideOnConflict: Bool = false) async throws {
+        guard let timetableViewModel, let timetableID = timetableViewModel.currentTimetable?.id else { return }
+        do {
+            let timetable = try await lectureRepository.addCustomLecture(
+                timetableID: timetableID,
+                lecture: editableLecture,
+                overrideOnConflict: overrideOnConflict
+            )
+            try timetableViewModel.setCurrentTimetable(timetable)
+        } catch {
+            throw error
+        }
+    }
+    
+    func addTimePlace() {
+        let newTimePlace = TimePlace(
+            id: UUID().uuidString,
+            day: .mon,
+            startTime: Time(hour: 9, minute: 0),
+            endTime: Time(hour: 10, minute: 0),
+            place: "",
+            isCustom: editableLecture.isCustom
+        )
+        editableLecture.timePlaces.append(newTimePlace)
+    }
+    
+    func removeTimePlace(at index: Int) {
+        guard index < editableLecture.timePlaces.count else { return }
+        editableLecture.timePlaces.remove(at: index)
+    }
+    
+    var canRemoveTimePlace: Bool {
+        !editableLecture.timePlaces.isEmpty
+    }
+    
+    var hasUnsavedChanges: Bool {
+        editableLecture != entryLecture
+    }
+    
+    func cancelEdit() {
+        editableLecture = entryLecture
     }
 }
 
@@ -82,3 +125,5 @@ extension Lecture {
         set {}
     }
 }
+
+
