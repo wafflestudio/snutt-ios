@@ -24,7 +24,17 @@ public enum AuthStateType: String, Sendable {
 }
 
 public enum AuthStateKey: TestDependencyKey {
-    public static let testValue: any AuthState = AuthStateSpy()
+    public static let testValue: any AuthState = {
+        let spy = AuthStateSpy()
+        let subject = CurrentValueSubject<Bool, Never>(false)
+        spy.underlyingIsAuthenticated = false
+        spy.setValueClosure = { [weak spy] _, _ in
+            spy?.underlyingIsAuthenticated = true
+            subject.value = true
+        }
+        spy.underlyingIsAuthenticatedPublisher = subject.eraseToAnyPublisher()
+        return spy
+    }()
     public static let previewValue: any AuthState = {
         let spy = AuthStateSpy()
         let subject = CurrentValueSubject<Bool, Never>(false)
