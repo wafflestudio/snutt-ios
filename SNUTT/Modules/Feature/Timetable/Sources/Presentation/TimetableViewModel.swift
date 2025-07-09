@@ -122,11 +122,12 @@ public class TimetableViewModel: TimetableViewModelProtocol {
         }
     }
 
-    func addLecture(lecture: Lecture) async throws {
+    func addLecture(lecture: Lecture, overrideOnConflict: Bool = false) async throws {
         guard let currentTimetable else { return }
         self.currentTimetable = try await timetableUseCase.addLecture(
             timetableID: currentTimetable.id,
-            lectureID: lecture.id
+            lectureID: lecture.id,
+            overrideOnConflict: overrideOnConflict
         )
     }
 

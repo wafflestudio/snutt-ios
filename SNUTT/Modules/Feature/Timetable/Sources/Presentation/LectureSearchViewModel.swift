@@ -111,7 +111,7 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         selectedLecture?.id == lecture.id
     }
 
-    func toggleAction(lecture: Lecture, type: ActionButtonType) async throws {
+    func toggleAction(lecture: Lecture, type: ActionButtonType, overrideOnConflict: Bool) async throws {
         switch type {
         case .detail:
             targetForLectureDetail = lecture
@@ -122,20 +122,12 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         case .vacancy:
             break
         case .add:
-            do {
-                if !isToggled(lecture: lecture, type: type) {
-                    try await timetableViewModel.addLecture(lecture: lecture)
-                } else {
-                    try await timetableViewModel.removeLecture(lecture: lecture)
-                }
-                selectedLecture = nil
-            } catch let error as APIClientError {
-                if let knownError = error.underlyingError as? LocalizedErrorCode,
-                   knownError == .duplicateLecture
-                {
-                    // TODO: force add
-                }
+            if !isToggled(lecture: lecture, type: type) {
+                try await timetableViewModel.addLecture(lecture: lecture, overrideOnConflict: overrideOnConflict)
+            } else {
+                try await timetableViewModel.removeLecture(lecture: lecture)
             }
+            selectedLecture = nil
         }
     }
 
