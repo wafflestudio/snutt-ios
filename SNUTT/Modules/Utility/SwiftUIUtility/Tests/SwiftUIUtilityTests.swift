@@ -1,8 +1,6 @@
 import Foundation
-import XCTest
+import Testing
 
-final class SwiftUIUtilityTests: XCTestCase {
-    func test_example() {
-        XCTAssertEqual("SwiftUIUtility", "SwiftUIUtility")
-    }
+@Test func example() {
+    #expect("SwiftUIUtility" == "SwiftUIUtility")
 }

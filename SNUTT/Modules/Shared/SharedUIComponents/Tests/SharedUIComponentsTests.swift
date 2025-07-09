@@ -1,8 +1,6 @@
 import Foundation
-import XCTest
+import Testing
 
-final class SharedUIComponentsTests: XCTestCase {
-    func test_example() {
-        XCTAssertEqual("SharedUIComponents", "SharedUIComponents")
-    }
+@Test func example() {
+    #expect("SharedUIComponents" == "SharedUIComponents")
 }

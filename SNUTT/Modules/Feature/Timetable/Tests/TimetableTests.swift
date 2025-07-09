@@ -1,8 +1,6 @@
 import Foundation
-import XCTest
+import Testing
 
-final class TimetableTests: XCTestCase {
-    func test_example() {
-        XCTAssertEqual("Timetable", "Timetable")
-    }
+@Test func example() {
+    #expect("Timetable" == "Timetable")
 }
