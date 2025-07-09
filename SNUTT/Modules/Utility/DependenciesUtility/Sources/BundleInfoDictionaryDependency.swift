@@ -6,7 +6,8 @@
 //
 
 import Foundation
-@_spi(Internals) import DependenciesAdditionsBasics
+import DependenciesAdditions
+import Dependencies
 
 extension DependencyValues {
     public var infoPlist: BundleInfoDictionary {
