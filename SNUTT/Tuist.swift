@@ -1,7 +1,9 @@
 import ProjectDescription
 
-let config = Config(
+let config = Tuist(project: .tuist(
     compatibleXcodeVersions: .upToNextMajor("16.0.0"),
     swiftVersion: "6.0.0",
-    generationOptions: .options(enforceExplicitDependencies: true)
-)
+    plugins: [],
+    generationOptions: .options(disableSandbox: true),
+    installOptions: .options()
+))

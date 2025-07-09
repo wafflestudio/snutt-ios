@@ -10,7 +10,7 @@ let project = Project.app(
         .module(
             name: "Timetable",
             category: .feature,
-            productType: .staticLibrary,
+            productType: .staticFramework,
             dependencies: [
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
@@ -42,7 +42,12 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "AuthInterface"),
+                .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
+                .target(name: "DependenciesUtility"),
+                .external(name: "Dependencies"),
+                .external(name: "DependenciesAdditions"),
+                .external(name: "MemberwiseInit"),
             ]
         ),
         .module(
