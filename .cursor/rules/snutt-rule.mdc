@@ -1,0 +1,162 @@
+---
+alwaysApply: true
+---
+
+## Project Overview
+
+SNUTT is an iOS app for Seoul National University's timetable management system built with Swift using a modular architecture. The project uses Tuist for project management and generation.
+
+- **Language**: Swift 6.0
+- **Deployment Target**: iOS 17.0+
+- **Architecture Pattern**: Modular architecture with feature modules and interfaces
+
+## Project Structure and Migration Guidelines
+
+This workspace contains two distinct projects:
+
+### SNUTT (New Project)
+- **Location**: `/SNUTT/` directory
+- **Purpose**: Modern rewrite using latest iOS technologies
+- **Technology Stack**:
+  - iOS 17.0+ minimum deployment target
+  - Swift 6.0 with modern concurrency
+  - SwiftUI with Observation framework
+  - Swift-Testing for unit tests
+  - Tuist modular architecture
+  - Modern dependency injection patterns
+
+### SNUTT-2022 (Legacy Project)
+- **Location**: `/SNUTT-2022/` directory  
+- **Purpose**: Reference only - DO NOT MODIFY
+- **Usage**: Only for checking existing specifications, UI patterns, and feature requirements
+
+### Critical Development Rules
+
+⚠️ **NEVER modify anything in the SNUTT-2022 directory**
+- SNUTT-2022 is a legacy project and must remain untouched
+- Use it only as a reference for understanding existing features and UI patterns
+- Do not copy legacy code patterns or architectural decisions
+
+✅ **Always write modern code for SNUTT**
+- This is a complete rewrite, not a migration
+- Use modern Swift 6 conventions and patterns
+- Implement features from scratch using current best practices
+- Follow the established modular architecture patterns
+
+## Development Commands
+
+### Environment Setup
+
+```bash
+# Install prerequisites
+curl https://mise.run | sh
+brew install just
+
+# Install dependencies
+mise install
+tuist install
+
+# Setup development environment
+just dev      # Generate dev OpenAPI + project
+just prod     # Generate prod OpenAPI + project
+```
+
+### Project Generation
+
+```bash
+# Clean and regenerate
+just clean-build           # Clean build
+just clean-generate        # Clean generate
+
+# OpenAPI
+just openapi-dev           # Generate dev OpenAPI
+just openapi-prod          # Generate prod OpenAPI
+
+# Tuist commands
+tuist install              # Install dependencies
+tuist generate             # Generate project
+tuist clean                # Clean cache
+tuist test                 # Run tests
+tuist build                # Build the project
+```
+
+## Project Architecture
+
+### Module Structure
+
+The codebase follows a modular architecture pattern with three main module categories:
+
+1. **Feature Modules**: Self-contained features with their own UI, business logic, and data access layers
+   - Examples: Timetable, Auth, Settings, Vacancy, Notifications
+
+2. **Feature Interface Modules**: Interfaces/contracts that define the public API of feature modules
+   - Examples: TimetableInterface, AuthInterface, APIClientInterface
+
+3. **Utility and Shared Modules**: Reusable components and utilities
+   - **Shared**: Common UI components and app metadata
+   - **Utility**: Foundation extensions, SwiftUI utilities, etc.
+
+### Module Dependencies
+
+Features can only depend on interfaces of other features, not their implementations. This enforces loose coupling between modules. The dependency rules are:
+
+- **Feature → FeatureInterface**: A feature can only depend on interfaces of other features
+- **Feature → Utility/Shared**: Features can depend on utilities and shared components
+- **FeatureInterface → Utility**: Interfaces can depend on utilities
+- **Utility → Utility**: Utilities can depend on other utilities
+
+### Key Modules
+
+- **Timetable**: Core timetable functionality
+- **APIClient**: OpenAPI-generated API client for backend communication
+- **Auth**: Authentication and user management
+- **Themes**: Theme management for the app
+- **Settings**: App settings and preferences
+- **Vacancy**: Feature related to course vacancies
+
+### External Dependencies
+
+The project uses several third-party dependencies:
+- Dependencies (Point-Free's dependency injection)
+- OpenAPI Runtime and URLSession
+- SwiftUI Introspect
+- Firebase Core and Messaging
+- KakaoMapsSDK
+
+## Build Configurations
+
+The project has two main configurations:
+- **Dev**: Development environment
+- **Prod**: Production environment
+
+Each configuration uses its own xcconfig file located in the XCConfigs directory.
+
+## Widget Extension
+
+The project includes a widget extension for iOS home screen widgets that displays timetable information.
+
+## Development Rules and Guidelines
+
+### Code Quality and Testing
+- Always verify changes with appropriate `tuist build` or `tuist test` commands
+- Use Swift-Testing for all new test code (not XCTest)
+- Follow Swift 6 strict concurrency and modern patterns
+- Implement proper error handling and validation
+
+### Project Boundaries
+- **ABSOLUTE RULE**: Never modify files in `/SNUTT-2022/` directory
+- Always work within the `/SNUTT/` directory for new development
+- Reference legacy project only for understanding requirements and UI patterns
+- Do not copy-paste code from SNUTT-2022 to SNUTT
+
+### Architecture Guidelines
+- Follow established modular architecture patterns
+- Features should only depend on interfaces of other features
+- Use proper dependency injection through the Dependencies library
+- Maintain clear separation between feature modules and shared utilities
+
+### Modern iOS Development
+- Target iOS 17.0+ and use latest SwiftUI features
+- Prefer Observation framework over traditional state management
+- Use modern Swift concurrency (async/await) over completion handlers
+- Write code that leverages Swift 6 improvements and safety features
