@@ -1,7 +1,11 @@
-import ProjectDescription
 import Foundation
+import ProjectDescription
 
 let domain = "com.wafflestudio"
+
+// MARK: - Version Constants
+private let marketingVersion: Plist.Value = "1.0.0"
+private let buildNumber: Plist.Value = "1"
 
 extension Project {
     public static func app(
@@ -86,8 +90,6 @@ extension Project {
         deploymentTargets: DeploymentTargets,
         dependencies: [TargetDependency]
     ) -> (Target, Target) {
-        let marketingVersion: Plist.Value = "1.0.0"
-        let buildNumber: Plist.Value = "1"
         let internalVersion = DateFormatter().string(from: Date())
         let infoPlist: [String: Plist.Value] = [
             "CFBundleShortVersionString": marketingVersion,
@@ -147,7 +149,11 @@ extension Project {
             bundleId: "$(PRODUCT_BUNDLE_IDENTIFIER).widget",
             deploymentTargets: deploymentTargets,
             infoPlist: .extendingDefault(
-                with: ["NSExtension": ["NSExtensionPointIdentifier": "com.apple.widgetkit-extension"]]
+                with: [
+                    "CFBundleShortVersionString": marketingVersion,
+                    "CFBundleVersion": buildNumber,
+                    "NSExtension": ["NSExtensionPointIdentifier": "com.apple.widgetkit-extension"]
+                ]
             ),
             sources: ["SNUTTWidget/Sources/**"],
             resources: ["SNUTTWidget/Resources/**"],

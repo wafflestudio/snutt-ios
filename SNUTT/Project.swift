@@ -16,6 +16,7 @@ let project = Project.app(
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
                 .target(name: "NotificationsInterface"),
+                .target(name: "VacancyInterface"),
                 .target(name: "SwiftUIUtility"),
                 .target(name: "FoundationUtility"),
                 .target(name: "AuthInterface"),
@@ -137,6 +138,7 @@ let project = Project.app(
             name: "TimetableInterface",
             category: .featureInterface,
             dependencies: [
+                .target(name: "APIClientInterface"),
                 .target(name: "ThemesInterface"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
@@ -148,7 +150,11 @@ let project = Project.app(
         .module(
             name: "VacancyInterface",
             category: .featureInterface,
-            dependencies: []
+            dependencies: [
+                .target(name: "APIClientInterface"),
+                .external(name: "Spyable"),
+                .external(name: "Dependencies"),
+            ]
         ),
         .module(
             name: "NotificationsInterface",
@@ -187,10 +193,11 @@ let project = Project.app(
             category: .featureInterface,
             productType: .framework,
             dependencies: [
+                // DO NOT add any other feature (interface) here.
+                .target(name: "SharedAppMetadata"),
                 .external(name: "OpenAPIRuntime"),
                 .external(name: "OpenAPIURLSession"),
                 .external(name: "Dependencies"),
-                .target(name: "SharedAppMetadata"),
                 .external(name: "Spyable"),
             ],
             additionalResources: ["OpenAPI/**", "Modules/Feature/APIClientInterface/Resources/**"]
