@@ -100,6 +100,7 @@ public struct TimetableScene: View {
                 displayMode: .normal,
                 paths: $timetableViewModel.paths
             )
+            .handleLectureTimeConflict()
         case let .lectureColorSelection(viewModel):
             let currentTheme = timetableViewModel.currentTimetable?.theme
             let theme = themeViewModel.availableThemes.first(where: { $0.id == currentTheme?.id })

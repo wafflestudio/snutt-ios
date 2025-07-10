@@ -54,6 +54,34 @@ public struct LectureAPIRepository: LectureRepository {
             body: .json(requestDto)
         ).ok.body.json.toTimetable()
     }
+
+    public func addCustomLecture(timetableID: String, lecture: Lecture,
+                                 overrideOnConflict: Bool) async throws -> Timetable
+    {
+        let timePlaces = try lecture.timePlaces
+            .map {
+                try Components.Schemas.ClassPlaceAndTimeLegacyRequestDto(
+                    day: require(.init(rawValue: $0.day.rawValue)),
+                    endMinute: Int32($0.endTime.absoluteMinutes),
+                    place: $0.place,
+                    startMinute: Int32($0.startTime.absoluteMinutes)
+                )
+            }
+        let requestDto = Components.Schemas.CustomTimetableLectureAddLegacyRequestDto(
+            class_time_json: timePlaces,
+            color: lecture.customColor.flatMap { .init(bg: $0.bgHex, fg: $0.fgHex) },
+            colorIndex: Int32(lecture.colorIndex),
+            course_title: lecture.courseTitle,
+            credit: lecture.credit,
+            instructor: lecture.instructor,
+            is_forced: overrideOnConflict,
+            remark: lecture.remark
+        )
+        return try await apiClient.addCustomLecture(
+            path: .init(timetableId: timetableID),
+            body: .json(requestDto)
+        ).ok.body.json.toTimetable()
+    }
 }
 
 extension Building {

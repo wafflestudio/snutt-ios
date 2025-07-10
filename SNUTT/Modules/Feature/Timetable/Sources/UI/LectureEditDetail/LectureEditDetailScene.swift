@@ -20,12 +20,14 @@ struct LectureEditDetailScene: View {
     @State private var viewModel: LectureEditDetailViewModel
     @State private var editMode: EditMode = .inactive
     @State private var isMapViewOpened: Bool = true
+    @State private var showCancelConfirmation: Bool = false
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     @Environment(\.timetableViewModel) private var timetableViewModel
     @Environment(\.themeViewModel) private var themeViewModel
     @Environment(\.errorAlertHandler) private var errorAlertHandler
+    @Environment(\.lectureTimeConflictHandler) private var conflictHandler
 
     let displayMode: DisplayMode
     let paths: Binding<[TimetableDetailSceneTypes]>
@@ -76,15 +78,25 @@ struct LectureEditDetailScene: View {
         }
         .toolbarBackground(TimetableAsset.navBackground.swiftUIColor, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
+        .alert("변경사항을 취소하시겠습니까?", isPresented: $showCancelConfirmation) {
+            Button("취소", role: .cancel) {}
+            Button("확인") {
+                cancelEditing()
+            }
+        } message: {
+            Text("편집 중인 내용이 모두 사라집니다.")
+        }
     }
 
     @ViewBuilder private var cancelButton: some View {
         switch displayMode {
         case .normal where editMode.isEditing:
             Button {
-                viewModel.editableLecture = viewModel.entryLecture
-                editMode = .inactive
-                application.dismissKeyboard()
+                if viewModel.hasUnsavedChanges {
+                    showCancelConfirmation = true
+                } else {
+                    cancelEditing()
+                }
             } label: {
                 Text("취소")
             }
@@ -105,31 +117,54 @@ struct LectureEditDetailScene: View {
         }
     }
 
+    private func cancelEditing() {
+        viewModel.cancelEdit()
+        editMode = .inactive
+        application.dismissKeyboard()
+    }
+
     @ViewBuilder private var editOrSaveButton: some View {
         switch displayMode {
         case .normal:
             Button {
-                errorAlertHandler.withAlert {
-                    if editMode == .active {
-                        editMode = .transient
-                        defer {
+                if editMode == .active {
+                    editMode = .transient
+                    errorAlertHandler.withAlert {
+                        do {
+                            try await conflictHandler.withConflictHandling { overrideOnConflict in
+                                try await viewModel.saveEditableLecture(overrideOnConflict: overrideOnConflict)
+                            }
                             editMode = .inactive
+                        } catch {
+                            // 에러가 발생하거나 취소된 경우 변경사항 되돌리기
+                            viewModel.cancelEdit()
+                            editMode = .inactive
+                            throw error
                         }
-                        try await viewModel.saveEditableLecture()
-                    } else {
-                        editMode = .active
                     }
+                } else {
+                    editMode = .active
                 }
             } label: {
                 Text(editMode.isEditing ? "저장" : "편집")
             }
         case .create:
             Button {
-                // TODO: addCustomLecture
+                errorAlertHandler.withAlert {
+                    do {
+                        try await conflictHandler.withConflictHandling { overrideOnConflict in
+                            try await viewModel.addCustomLecture(overrideOnConflict: overrideOnConflict)
+                        }
+                        dismiss()
+                    } catch {
+                        // 에러가 발생하거나 취소된 경우
+                        throw error
+                    }
+                }
             } label: {
                 Text("저장")
             }
-        case let .preview(shouldHideDismissButton):
+        case .preview:
             EmptyView()
         }
     }
@@ -178,23 +213,34 @@ struct LectureEditDetailScene: View {
                 .foregroundColor(.label.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            ForEach(0 ..< viewModel.editableLecture.timePlaces.count, id: \.self) { index in
-                VStack(spacing: 5) {
-                    EditableRow(label: "시간", keyPath: \.timePlaces[index])
-                    EditableRow(label: "장소", keyPath: \.timePlaces[index].place)
+            ForEach(Array(viewModel.editableLecture.timePlaces.enumerated()), id: \.element.id) { index, _ in
+                HStack {
+                    TimePlaceEditableRow(timePlace: $viewModel.editableLecture.timePlaces[index])
+
+                    if editMode.isEditing && viewModel.canRemoveTimePlace {
+                        Button {
+                            withAnimation(.defaultSpring) {
+                                viewModel.removeTimePlace(at: index)
+                            }
+                        } label: {
+                            Image(systemName: "minus.circle.fill")
+                                .foregroundColor(.red)
+                        }
+                        .padding(.leading, 8)
+                    }
                 }
             }
 
             if editMode.isEditing {
-                // TODO: 시간 추가 버튼
-//                Button {
-//                    lecture = viewModel.getLectureWithNewTimePlace(lecture: lecture)
-//                } label: {
-//                    Text("+ 시간 추가")
-//                        .font(.system(size: 16))
-//                        .animation(.customSpring, value: lecture.timePlaces.count)
-//                }
-//                .padding(.top, 5)
+                Button {
+                    withAnimation(.defaultSpring) {
+                        viewModel.addTimePlace()
+                    }
+                } label: {
+                    Text("+ 시간 추가")
+                        .font(.system(size: 16))
+                }
+                .padding(.top, 5)
             } else if viewModel.showMapView {
                 if isMapViewOpened {
                     LectureMapView(

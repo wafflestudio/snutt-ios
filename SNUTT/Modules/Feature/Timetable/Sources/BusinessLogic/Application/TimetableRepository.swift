@@ -21,7 +21,7 @@ public protocol TimetableRepository: Sendable {
     func unsetPrimaryTimetable(timetableID: String) async throws
     func copyTimetable(timetableID: String) async throws -> [TimetableMetadata]
     func deleteTimetable(timetableID: String) async throws -> [TimetableMetadata]
-    func addLecture(timetableID: String, lectureID: String) async throws -> Timetable
+    func addLecture(timetableID: String, lectureID: String, overrideOnConflict: Bool) async throws -> Timetable
     func removeLecture(timetableID: String, lectureID: String) async throws -> Timetable
 }
 
