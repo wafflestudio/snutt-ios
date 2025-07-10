@@ -5,6 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import APIClientInterface
+import FoundationUtility
 import MemberwiseInit
 import SwiftUI
 import ThemesInterface
@@ -57,5 +59,60 @@ public struct EvLecture: Sendable, Equatable, Codable {
 extension Lecture {
     public var isCustom: Bool {
         courseNumber == nil || courseNumber == ""
+    }
+}
+
+// MARK: - LectureDto 변환
+
+extension Components.Schemas.LectureDto {
+    public func toLecture() throws -> Lecture {
+        let timePlaces = try class_time_json.enumerated().map { index, json in
+            try json.toTimePlace(index: index, isCustom: false)
+        }
+        let evLecture = snuttEvLecture.flatMap {
+            EvLecture(
+                evLectureID: Int($0.evLectureId),
+                avgRating: $0.avgRating,
+                evaluationCount: Int($0.evaluationCount)
+            )
+        }
+        return try Lecture(
+            id: require(_id),
+            lectureID: nil,
+            courseTitle: course_title,
+            timePlaces: timePlaces,
+            lectureNumber: lecture_number,
+            instructor: instructor,
+            credit: credit,
+            courseNumber: course_number,
+            department: department,
+            academicYear: academic_year,
+            remark: remark,
+            evLecture: evLecture,
+            colorIndex: 0,
+            customColor: .temporary,
+            classification: classification,
+            category: category,
+            wasFull: wasFull,
+            registrationCount: registrationCount,
+            quota: quota,
+            freshmenQuota: freshmanQuota
+        )
+    }
+}
+
+extension Components.Schemas.ClassPlaceAndTimeLegacyDto {
+    public func toTimePlace(index: Int, isCustom: Bool) throws -> TimePlace {
+        let weekday = try require(Weekday(rawValue: day.rawValue))
+        let start = Int(startMinute).quotientAndRemainder(dividingBy: 60)
+        let end = Int(endMinute).quotientAndRemainder(dividingBy: 60)
+        return .init(
+            id: "\(index)-\(start)-\(end)-\(place ?? "")-\(isCustom)",
+            day: weekday,
+            startTime: .init(hour: start.quotient, minute: start.remainder),
+            endTime: .init(hour: end.quotient, minute: end.remainder),
+            place: place ?? "",
+            isCustom: isCustom
+        )
     }
 }

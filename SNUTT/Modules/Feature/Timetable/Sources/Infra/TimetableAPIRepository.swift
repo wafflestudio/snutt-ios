@@ -98,7 +98,7 @@ extension Components.Schemas.TimetableLegacyDto {
         return try Timetable(
             id: require(_id),
             title: title,
-            quarter: Quarter(year: year.asInt(), semester: require(Semester(rawValue: semester.rawValue))),
+            quarter: Quarter(year: Int(year), semester: require(Semester(rawValue: semester.rawValue))),
             lectures: lecture_list.map { try $0.toLecture() },
             userID: user_id,
             theme: themeType
@@ -129,8 +129,8 @@ extension Theme {
 
 extension Components.Schemas.TimetableBriefDto {
     fileprivate func toTimetableMetadata() throws -> TimetableMetadata {
-        let semester = try require(Semester(rawValue: semester.asInt()))
-        let quarter = Quarter(year: year.asInt(), semester: semester)
+        let semester = try require(Semester(rawValue: Int(semester)))
+        let quarter = Quarter(year: Int(year), semester: semester)
         return TimetableMetadata(
             id: _id,
             title: title,
@@ -148,7 +148,7 @@ extension Components.Schemas.TimetableLectureLegacyDto {
             try json.toTimePlace(index: index, isCustom: isCustom)
         }
         let evLecture: EvLecture? = if let snuttEvLecture {
-            .init(evLectureID: snuttEvLecture.evLectureId.asInt(), avgRating: nil, evaluationCount: nil)
+            .init(evLectureID: Int(snuttEvLecture.evLectureId), avgRating: nil, evaluationCount: nil)
         } else {
             nil
         }
@@ -185,30 +185,4 @@ extension Components.Schemas.TimetableLectureLegacyDto {
     }
 }
 
-extension Components.Schemas.ClassPlaceAndTimeLegacyDto {
-    func toTimePlace(index: Int, isCustom: Bool) throws -> TimePlace {
-        let weekday = try require(Weekday(rawValue: day.rawValue))
-        let start = startMinute.asInt().quotientAndRemainder(dividingBy: 60)
-        let end = endMinute.asInt().quotientAndRemainder(dividingBy: 60)
-        return .init(
-            id: "\(index)-\(start)-\(end)-\(place ?? "")-\(isCustom)", // FIXME:
-            day: weekday,
-            startTime: .init(hour: start.quotient, minute: start.remainder),
-            endTime: .init(hour: end.quotient, minute: end.remainder),
-            place: place ?? "",
-            isCustom: isCustom
-        )
-    }
-}
 
-extension Int64 {
-    func asInt() -> Int {
-        Int(self)
-    }
-}
-
-extension Int32 {
-    fileprivate func asInt() -> Int {
-        Int(self)
-    }
-}

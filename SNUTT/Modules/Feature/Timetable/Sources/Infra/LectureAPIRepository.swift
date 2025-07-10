@@ -82,6 +82,32 @@ public struct LectureAPIRepository: LectureRepository {
             body: .json(requestDto)
         ).ok.body.json.toTimetable()
     }
+    
+    public func resetLecture(timetableID: String, lectureID: String) async throws -> Timetable {
+        try await apiClient.resetTimetableLecture(
+            path: .init(timetableId: timetableID, timetableLectureId: lectureID)
+        ).ok.body.json.toTimetable()
+    }
+    
+    public func addBookmark(lectureID: String) async throws {
+        let requestDto = Components.Schemas.BookmarkLectureModifyRequest(lecture_id: lectureID)
+        _ = try await apiClient.addLecture_1(
+            body: .json(requestDto)
+        ).ok
+    }
+    
+    public func removeBookmark(lectureID: String) async throws {
+        let requestDto = Components.Schemas.BookmarkLectureModifyRequest(lecture_id: lectureID)
+        _ = try await apiClient.deleteBookmark(
+            body: .json(requestDto)
+        ).ok
+    }
+    
+    public func isBookmarked(lectureID: String) async throws -> Bool {
+        try await apiClient.existsBookmarkLecture(
+            path: .init(lectureId: lectureID)
+        ).ok.body.json.exists
+    }
 }
 
 extension Building {
