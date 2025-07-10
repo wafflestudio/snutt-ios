@@ -5,9 +5,9 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
-import Foundation
-import DependenciesAdditions
 import Dependencies
+import DependenciesAdditions
+import Foundation
 
 extension DependencyValues {
     public var infoPlist: BundleInfoDictionary {

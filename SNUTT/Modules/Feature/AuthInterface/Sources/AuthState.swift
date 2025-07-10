@@ -35,6 +35,7 @@ public enum AuthStateKey: TestDependencyKey {
         spy.underlyingIsAuthenticatedPublisher = subject.eraseToAnyPublisher()
         return spy
     }()
+
     public static let previewValue: any AuthState = {
         let spy = AuthStateSpy()
         let subject = CurrentValueSubject<Bool, Never>(false)

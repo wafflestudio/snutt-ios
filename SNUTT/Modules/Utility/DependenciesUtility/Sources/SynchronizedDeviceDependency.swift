@@ -1,6 +1,6 @@
-import UIKit.UIDevice
-import DependenciesAdditions
 import Dependencies
+import DependenciesAdditions
+import UIKit.UIDevice
 
 extension DependencyValues {
     public var syncDevice: SynchronizedDevice {
