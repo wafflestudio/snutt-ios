@@ -1,8 +1,6 @@
 import Foundation
-import XCTest
+import Testing
 
-final class TimetableUIComponentsTests: XCTestCase {
-    func test_example() {
-        XCTAssertEqual("TimetableUIComponents", "TimetableUIComponents")
-    }
+@Test func example() {
+    #expect("TimetableUIComponents" == "TimetableUIComponents")
 }

@@ -1,8 +1,6 @@
 import Foundation
-import XCTest
+import Testing
 
-final class VacancyTests: XCTestCase {
-    func test_example() {
-        XCTAssertEqual("Vacancy", "Vacancy")
-    }
+@Test func example() {
+    #expect("Vacancy" == "Vacancy")
 }

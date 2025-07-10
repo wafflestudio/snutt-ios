@@ -1,8 +1,6 @@
 import Foundation
-import XCTest
+import Testing
 
-final class APIClientTests: XCTestCase {
-    func test_example() {
-        XCTAssertEqual("APIClient", "APIClient")
-    }
+@Test func example() {
+    #expect("APIClient" == "APIClient")
 }
