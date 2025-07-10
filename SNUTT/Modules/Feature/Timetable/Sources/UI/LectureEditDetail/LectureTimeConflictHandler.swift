@@ -19,11 +19,10 @@ public final class LectureTimeConflictHandler: Sendable {
             self.pendingOperation = nil
         })
     }
-    
+
     nonisolated init() {}
-    
-    @discardableResult
-    public func withConflictHandling<T: Sendable>(
+
+    @discardableResult public func withConflictHandling<T: Sendable>(
         operation: @escaping (_ overrideOnConflict: Bool) async throws -> T
     ) async throws -> T? {
         do {

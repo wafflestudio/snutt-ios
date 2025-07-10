@@ -12,13 +12,13 @@ import TimetableInterface
 struct TimePlaceEditableRow: View {
     @Environment(LectureEditDetailViewModel.self) private var viewModel
     @Environment(\.editMode) private var editMode
-    
+
     @Binding var timePlace: TimePlace
-    
+
     private var isEditing: Bool {
         editMode?.wrappedValue.isEditing ?? false
     }
-  
+
     var body: some View {
         VStack(spacing: 5) {
             HStack {
@@ -34,4 +34,4 @@ struct TimePlaceEditableRow: View {
             }
         }
     }
-} 
+}
