@@ -27,7 +27,7 @@ public struct VacancyAPIRepository: VacancyRepository {
     public func deleteVacancyLecture(lectureID: String) async throws {
         _ = try await apiClient.deleteVacancyNotification(path: .init(lectureId: lectureID)).ok
     }
-    
+
     public func isVacancyNotificationEnabled(lectureID: String) async throws -> Bool {
         let vacancyLectures = try await fetchVacancyLectures()
         return vacancyLectures.contains { $0._id == lectureID }

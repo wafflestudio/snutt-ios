@@ -56,7 +56,7 @@ struct LectureEditDetailScene: View {
                 .padding()
                 .padding(.horizontal, 5)
                 .background(TimetableAsset.groupForeground.swiftUIColor)
-                
+
                 Group {
                     actionButtonsSection
                 }
@@ -151,7 +151,7 @@ struct LectureEditDetailScene: View {
             EmptyView()
         }
     }
-    
+
     private func cancelEditing() {
         viewModel.cancelEdit()
         editMode = .inactive
@@ -199,17 +199,17 @@ struct LectureEditDetailScene: View {
             } label: {
                 Text("저장")
             }
-        case .preview(_):
+        case .preview:
             EmptyView()
         }
     }
-    
+
     private var shouldShowToolbarActions: Bool {
-        !viewModel.entryLecture.isCustom && 
-        !editMode.isEditing && 
-        (displayMode == .normal || displayMode.isPreview)
+        !viewModel.entryLecture.isCustom &&
+            !editMode.isEditing &&
+            (displayMode == .normal || displayMode.isPreview)
     }
-    
+
     private var toolbarActionButtons: some View {
         HStack {
             // 공석알림 버튼
@@ -218,21 +218,21 @@ struct LectureEditDetailScene: View {
                     try await viewModel.toggleVacancyNotification()
                 }
             } label: {
-                Image(uiImage: viewModel.isVacancyNotificationEnabled ? TimetableAsset.searchVacancyFill.image : TimetableAsset.searchVacancy.image)
+                Image(uiImage: viewModel.isVacancyNotificationEnabled ? TimetableAsset.searchVacancyFill
+                    .image : TimetableAsset.searchVacancy.image)
             }
-            
-            // 북마크 버튼  
+
+            // 북마크 버튼
             Button {
                 errorAlertHandler.withAlert {
                     try await viewModel.toggleBookmark()
                 }
             } label: {
-                Image(uiImage: viewModel.isBookmarked ? TimetableAsset.navBookmarkOn.image : TimetableAsset.navBookmark.image)
+                Image(uiImage: viewModel.isBookmarked ? TimetableAsset.navBookmarkOn.image : TimetableAsset.navBookmark
+                    .image)
             }
         }
     }
-
-
 
     private var firstDetailSection: some View {
         VStack(spacing: 20) {
@@ -263,12 +263,12 @@ struct LectureEditDetailScene: View {
                 EditableRow(label: "학점", keyPath: \.credit)
                 EditableRow(label: "분류", keyPath: \.classification)
                 EditableRow(label: "구분", keyPath: \.category)
-                
+
                 // 2025년부터 구)교양영역 제공
                 if let currentYear = timetableViewModel.currentTimetable?.quarter.year, currentYear >= 2025 {
                     EditableRow(label: "구) 교양영역", keyPath: \.categoryPre2025)
                 }
-                
+
                 EditableRow(label: "강좌번호", readOnly: true, keyPath: \.courseNumber)
                 EditableRow(label: "분반번호", readOnly: true, keyPath: \.lectureNumber)
                 EditableRow(label: "정원(재학생)", readOnly: true, keyPath: \.quotaDescription)
@@ -284,10 +284,10 @@ struct LectureEditDetailScene: View {
                 .foregroundColor(.label.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            ForEach(Array(viewModel.editableLecture.timePlaces.enumerated()), id: \.element.id) { index, timePlace in
+            ForEach(Array(viewModel.editableLecture.timePlaces.enumerated()), id: \.element.id) { index, _ in
                 HStack {
                     TimePlaceEditableRow(timePlace: $viewModel.editableLecture.timePlaces[index])
-                    
+
                     if editMode.isEditing && viewModel.canRemoveTimePlace {
                         Button {
                             withAnimation(.defaultSpring) {
@@ -327,7 +327,7 @@ struct LectureEditDetailScene: View {
             }
         }
     }
-    
+
     @ViewBuilder private var actionButtonsSection: some View {
         switch displayMode {
         case .normal:
@@ -342,7 +342,7 @@ struct LectureEditDetailScene: View {
                             .frame(maxWidth: .infinity)
                     }
                 }
-                
+
                 if !editMode.isEditing {
                     Button {
                         showDeleteConfirmation = true
