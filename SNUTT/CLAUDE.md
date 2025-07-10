@@ -90,6 +90,49 @@ The project uses several third-party dependencies:
 - Firebase Core and Messaging
 - KakaoMapsSDK
 
+## Dependency Injection Pattern
+
+### Interface Module Pattern
+
+Interface modules should follow this pattern to maintain clean separation between interface definitions and implementations:
+
+1. **Interface Module (e.g., VacancyInterface)**:
+   ```swift
+   @Spyable
+   public protocol SomeRepository: Sendable {
+       func someMethod() async throws -> ReturnType
+   }
+   
+   public enum SomeRepositoryKey: TestDependencyKey {
+       public static let testValue: any SomeRepository = {
+           let spy = SomeRepositorySpy()
+           spy.someMethodReturnValue = defaultValue
+           return spy
+       }()
+   }
+   
+   extension DependencyValues {
+       public var someRepository: any SomeRepository {
+           get { self[SomeRepositoryKey.self] }
+           set { self[SomeRepositoryKey.self] = newValue }
+       }
+   }
+   ```
+
+2. **Live Implementation (in LiveDependencies.swift)**:
+   ```swift
+   extension SomeRepositoryKey: @retroactive DependencyKey {
+       public static let liveValue: any SomeRepository = SomeAPIRepository()
+   }
+   ```
+
+### Key Principles
+
+- **Interface modules** only define protocols and test dependencies using `TestDependencyKey`
+- **Live implementations** are injected via `@retroactive DependencyKey` in `LiveDependencies.swift`
+- This pattern ensures interface modules don't depend on concrete implementations
+- Follows the same pattern as other modules (TimetableRepository, AuthRepository, etc.)
+
 ## Build Configurations
 
 The project has two main configurations:
