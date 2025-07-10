@@ -26,7 +26,6 @@ struct TimePlaceEditableRow: View {
                 DateTimeEditor(timePlace: $timePlace)
                     .disabled(!isEditing)
             }
-
             HStack {
                 DetailLabel(text: "장소")
                 TextField("장소", text: $timePlace.place, prompt: Text("(없음)"))

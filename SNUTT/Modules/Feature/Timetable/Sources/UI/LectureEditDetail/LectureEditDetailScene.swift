@@ -21,6 +21,8 @@ struct LectureEditDetailScene: View {
     @State private var editMode: EditMode = .inactive
     @State private var isMapViewOpened: Bool = true
     @State private var showCancelConfirmation: Bool = false
+    @State private var showResetConfirmation: Bool = false
+    @State private var showDeleteConfirmation: Bool = false
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
@@ -54,6 +56,13 @@ struct LectureEditDetailScene: View {
                 .padding()
                 .padding(.horizontal, 5)
                 .background(TimetableAsset.groupForeground.swiftUIColor)
+
+                Group {
+                    actionButtonsSection
+                }
+                .padding()
+                .padding(.horizontal, 5)
+                .background(TimetableAsset.groupForeground.swiftUIColor)
             }
             .padding(.vertical, 20)
             .padding(.bottom, 40)
@@ -73,7 +82,12 @@ struct LectureEditDetailScene: View {
                 cancelButton
             }
             ToolbarItem(placement: .topBarTrailing) {
-                editOrSaveButton
+                HStack {
+                    if shouldShowToolbarActions {
+                        toolbarActionButtons
+                    }
+                    editOrSaveButton
+                }
             }
         }
         .toolbarBackground(TimetableAsset.navBackground.swiftUIColor, for: .navigationBar)
@@ -85,6 +99,27 @@ struct LectureEditDetailScene: View {
             }
         } message: {
             Text("편집 중인 내용이 모두 사라집니다.")
+        }
+        .alert("강의 초기화", isPresented: $showResetConfirmation) {
+            Button("취소", role: .cancel) {}
+            Button("초기화", role: .destructive) {
+                errorAlertHandler.withAlert {
+                    try await viewModel.resetLecture()
+                    editMode = .inactive
+                    application.dismissKeyboard()
+                }
+            }
+        } message: {
+            Text("이 강의에 적용한 수정 사항을 모두 초기화하시겠습니까?")
+        }
+        .alert("강의를 삭제하시겠습니까?", isPresented: $showDeleteConfirmation) {
+            Button("취소", role: .cancel) {}
+            Button("삭제", role: .destructive) {
+                errorAlertHandler.withAlert {
+                    try await viewModel.deleteLecture()
+                    dismiss()
+                }
+            }
         }
     }
 
@@ -169,6 +204,36 @@ struct LectureEditDetailScene: View {
         }
     }
 
+    private var shouldShowToolbarActions: Bool {
+        !viewModel.entryLecture.isCustom &&
+            !editMode.isEditing &&
+            (displayMode == .normal || displayMode.isPreview)
+    }
+
+    private var toolbarActionButtons: some View {
+        HStack {
+            // 공석알림 버튼
+            Button {
+                errorAlertHandler.withAlert {
+                    try await viewModel.toggleVacancyNotification()
+                }
+            } label: {
+                Image(uiImage: viewModel.isVacancyNotificationEnabled ? TimetableAsset.searchVacancyFill
+                    .image : TimetableAsset.searchVacancy.image)
+            }
+
+            // 북마크 버튼
+            Button {
+                errorAlertHandler.withAlert {
+                    try await viewModel.toggleBookmark()
+                }
+            } label: {
+                Image(uiImage: viewModel.isBookmarked ? TimetableAsset.navBookmarkOn.image : TimetableAsset.navBookmark
+                    .image)
+            }
+        }
+    }
+
     private var firstDetailSection: some View {
         VStack(spacing: 20) {
             EditableRow(label: "강의명", keyPath: \.courseTitle)
@@ -198,6 +263,12 @@ struct LectureEditDetailScene: View {
                 EditableRow(label: "학점", keyPath: \.credit)
                 EditableRow(label: "분류", keyPath: \.classification)
                 EditableRow(label: "구분", keyPath: \.category)
+
+                // 2025년부터 구)교양영역 제공
+                if let currentYear = timetableViewModel.currentTimetable?.quarter.year, currentYear >= 2025 {
+                    EditableRow(label: "구) 교양영역", keyPath: \.categoryPre2025)
+                }
+
                 EditableRow(label: "강좌번호", readOnly: true, keyPath: \.courseNumber)
                 EditableRow(label: "분반번호", readOnly: true, keyPath: \.lectureNumber)
                 EditableRow(label: "정원(재학생)", readOnly: true, keyPath: \.quotaDescription)
@@ -254,6 +325,37 @@ struct LectureEditDetailScene: View {
                     }
                 }
             }
+        }
+    }
+
+    @ViewBuilder private var actionButtonsSection: some View {
+        switch displayMode {
+        case .normal:
+            VStack(spacing: 20) {
+                if !viewModel.entryLecture.isCustom && editMode.isEditing {
+                    Button {
+                        showResetConfirmation = true
+                    } label: {
+                        Text("초기화")
+                            .font(.system(size: 16))
+                            .foregroundStyle(.red)
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+
+                if !editMode.isEditing {
+                    Button {
+                        showDeleteConfirmation = true
+                    } label: {
+                        Text("삭제")
+                            .font(.system(size: 16))
+                            .foregroundStyle(.red)
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+            }
+        default:
+            EmptyView()
         }
     }
 }

@@ -128,9 +128,9 @@ extension Components.Schemas.LectureDto {
         }
         let evLecture = snuttEvLecture.flatMap {
             EvLecture(
-                evLectureID: $0.evLectureId.asInt(),
+                evLectureID: Int($0.evLectureId),
                 avgRating: $0.avgRating,
-                evaluationCount: $0.evaluationCount.asInt()
+                evaluationCount: Int($0.evaluationCount)
             )
         }
         return try Lecture(

@@ -74,7 +74,6 @@ extension View {
 
 private struct LectureTimeConflictHandlingModifier: ViewModifier {
     @State private var conflictHandler = LectureTimeConflictHandler()
-
     public func body(content: Content) -> some View {
         content
             .environment(\.lectureTimeConflictHandler, conflictHandler)
