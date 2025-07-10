@@ -39,8 +39,14 @@ public struct TimetableUseCase: Sendable {
         return timetable
     }
 
-    func addLecture(timetableID: String, lectureID: String, overrideOnConflict: Bool = false) async throws -> Timetable {
-        let timetable = try await timetableRepository.addLecture(timetableID: timetableID, lectureID: lectureID, overrideOnConflict: overrideOnConflict)
+    func addLecture(timetableID: String, lectureID: String,
+                    overrideOnConflict: Bool = false) async throws -> Timetable
+    {
+        let timetable = try await timetableRepository.addLecture(
+            timetableID: timetableID,
+            lectureID: lectureID,
+            overrideOnConflict: overrideOnConflict
+        )
         try timetableLocalRepository.storeSelectedTimetable(timetable)
         return timetable
     }

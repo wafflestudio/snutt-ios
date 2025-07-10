@@ -32,7 +32,11 @@ extension LectureListViewModel {
         timetableViewModel.paths.append(.lectureDetail(lecture))
     }
 
-    func toggleAction(lecture _: TimetableInterface.Lecture, type _: ActionButtonType, overrideOnConflict _: Bool) async throws {
+    func toggleAction(
+        lecture _: TimetableInterface.Lecture,
+        type _: ActionButtonType,
+        overrideOnConflict _: Bool
+    ) async throws {
         // noop
     }
 

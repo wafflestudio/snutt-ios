@@ -69,7 +69,7 @@ public final class LectureEditDetailViewModel {
             throw error
         }
     }
-    
+
     func addCustomLecture(overrideOnConflict: Bool = false) async throws {
         guard let timetableViewModel, let timetableID = timetableViewModel.currentTimetable?.id else { return }
         do {
@@ -83,7 +83,7 @@ public final class LectureEditDetailViewModel {
             throw error
         }
     }
-    
+
     func addTimePlace() {
         let newTimePlace = TimePlace(
             id: UUID().uuidString,
@@ -95,20 +95,20 @@ public final class LectureEditDetailViewModel {
         )
         editableLecture.timePlaces.append(newTimePlace)
     }
-    
+
     func removeTimePlace(at index: Int) {
         guard index < editableLecture.timePlaces.count else { return }
         editableLecture.timePlaces.remove(at: index)
     }
-    
+
     var canRemoveTimePlace: Bool {
         !editableLecture.timePlaces.isEmpty
     }
-    
+
     var hasUnsavedChanges: Bool {
         editableLecture != entryLecture
     }
-    
+
     func cancelEdit() {
         editableLecture = entryLecture
     }
@@ -125,5 +125,3 @@ extension Lecture {
         set {}
     }
 }
-
-

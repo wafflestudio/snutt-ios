@@ -12,13 +12,13 @@ import TimetableInterface
 struct TimePlaceEditableRow: View {
     @Environment(LectureEditDetailViewModel.self) private var viewModel
     @Environment(\.editMode) private var editMode
-    
+
     @Binding var timePlace: TimePlace
-    
+
     private var isEditing: Bool {
         editMode?.wrappedValue.isEditing ?? false
     }
-    
+
     var body: some View {
         VStack(spacing: 5) {
             HStack {
@@ -26,7 +26,7 @@ struct TimePlaceEditableRow: View {
                 DateTimeEditor(timePlace: $timePlace)
                     .disabled(!isEditing)
             }
-            
+
             HStack {
                 DetailLabel(text: "장소")
                 TextField("장소", text: $timePlace.place, prompt: Text("(없음)"))
@@ -35,4 +35,4 @@ struct TimePlaceEditableRow: View {
             }
         }
     }
-} 
+}

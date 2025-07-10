@@ -54,9 +54,9 @@ public struct LectureAPIRepository: LectureRepository {
             body: .json(requestDto)
         ).ok.body.json.toTimetable()
     }
-    
+
     public func addCustomLecture(timetableID: String, lecture: Lecture,
-                                overrideOnConflict: Bool) async throws -> Timetable
+                                 overrideOnConflict: Bool) async throws -> Timetable
     {
         let timePlaces = try lecture.timePlaces
             .map {

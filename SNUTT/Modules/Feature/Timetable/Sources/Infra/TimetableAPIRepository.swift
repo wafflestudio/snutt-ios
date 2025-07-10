@@ -65,7 +65,9 @@ public struct TimetableAPIRepository: TimetableRepository {
         }
     }
 
-    public func addLecture(timetableID: String, lectureID: String, overrideOnConflict: Bool = false) async throws -> Timetable {
+    public func addLecture(timetableID: String, lectureID: String,
+                           overrideOnConflict: Bool = false) async throws -> Timetable
+    {
         try await apiClient.addLecture(
             path: .init(timetableId: timetableID, lectureId: lectureID),
             query: .init(isForced: overrideOnConflict.description)

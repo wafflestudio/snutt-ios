@@ -116,7 +116,7 @@ struct LectureEditDetailScene: View {
             EmptyView()
         }
     }
-    
+
     private func cancelEditing() {
         viewModel.cancelEdit()
         editMode = .inactive
@@ -164,12 +164,10 @@ struct LectureEditDetailScene: View {
             } label: {
                 Text("저장")
             }
-        case .preview(_):
+        case .preview:
             EmptyView()
         }
     }
-
-
 
     private var firstDetailSection: some View {
         VStack(spacing: 20) {
@@ -215,10 +213,10 @@ struct LectureEditDetailScene: View {
                 .foregroundColor(.label.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            ForEach(Array(viewModel.editableLecture.timePlaces.enumerated()), id: \.element.id) { index, timePlace in
+            ForEach(Array(viewModel.editableLecture.timePlaces.enumerated()), id: \.element.id) { index, _ in
                 HStack {
                     TimePlaceEditableRow(timePlace: $viewModel.editableLecture.timePlaces[index])
-                    
+
                     if editMode.isEditing && viewModel.canRemoveTimePlace {
                         Button {
                             withAnimation(.defaultSpring) {
