@@ -1,4 +1,5 @@
-@_spi(Internals) import DependenciesAdditionsBasics
+import Dependencies
+import DependenciesAdditions
 import UIKit.UIDevice
 
 extension DependencyValues {
@@ -23,7 +24,7 @@ enum SynchronizedDeviceKey: DependencyKey {
 }
 
 public struct SynchronizedDevice: Sendable, ConfigurableProxy {
-    @_spi(Internals) public var _implementation: Implementation
+    public var _implementation: Implementation
 
     public struct Implementation: Sendable {
         @ReadOnlyProxy public var name: String

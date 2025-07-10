@@ -82,7 +82,11 @@ private struct LectureActionButton: View {
                 await errorAlertHandler.withAlert {
                     do {
                         try await conflictHandler.withConflictHandling { overrideOnConflict in
-                            try await viewModel.toggleAction(lecture: lecture, type: type, overrideOnConflict: overrideOnConflict)
+                            try await viewModel.toggleAction(
+                                lecture: lecture,
+                                type: type,
+                                overrideOnConflict: overrideOnConflict
+                            )
                         }
                     } catch {
                         throw error

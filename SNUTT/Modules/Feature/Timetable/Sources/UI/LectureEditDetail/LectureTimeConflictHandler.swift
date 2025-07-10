@@ -35,7 +35,7 @@ public final class LectureTimeConflictHandler: Sendable {
             throw error
         }
     }
-    
+
     private func handleConflictError<T: Sendable>(
         operation: @escaping (_ overrideOnConflict: Bool) async throws -> T,
         error: LocalizedErrorCode
@@ -75,7 +75,6 @@ extension View {
 
 private struct LectureTimeConflictHandlingModifier: ViewModifier {
     @State private var conflictHandler = LectureTimeConflictHandler()
-    
     public func body(content: Content) -> some View {
         content
             .environment(\.lectureTimeConflictHandler, conflictHandler)
@@ -97,4 +96,4 @@ private struct LectureTimeConflictHandlingModifier: ViewModifier {
 
 extension EnvironmentValues {
     @Entry public var lectureTimeConflictHandler: LectureTimeConflictHandler = .init()
-} 
+}

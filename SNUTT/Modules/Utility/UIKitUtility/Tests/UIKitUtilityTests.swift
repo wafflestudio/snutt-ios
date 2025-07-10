@@ -1,8 +1,6 @@
 import Foundation
-import XCTest
+import Testing
 
-final class UIKitUtilityTests: XCTestCase {
-    func test_example() {
-        XCTAssertEqual("UIKitUtility", "UIKitUtility")
-    }
+@Test func example() {
+    #expect("UIKitUtility" == "UIKitUtility")
 }
