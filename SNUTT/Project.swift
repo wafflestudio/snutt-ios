@@ -10,7 +10,6 @@ let project = Project.app(
         .module(
             name: "Timetable",
             category: .feature,
-            productType: .staticFramework,
             dependencies: [
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
@@ -23,7 +22,6 @@ let project = Project.app(
                 .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
-                .external(name: "KakaoMapsSDK-SPM"),
             ]
         ),
         .module(
@@ -227,22 +225,25 @@ let project = Project.app(
         ),
         // Utility
         .module(
-            name: "DependenciesUtility", category: .utility(ui: false),
+            name: "DependenciesUtility",
+            category: .utility(ui: false),
             dependencies: [
                 .external(name: "Dependencies"),
                 .external(name: "DependenciesAdditions"),
             ]
         ),
         .module(
-            name: "SwiftUIUtility", category: .utility(ui: true),
+            name: "SwiftUIUtility",
+            category: .utility(ui: true),
             dependencies: [
-                .external(name: "SwiftUIIntrospect"),
+                .external(name: "SwiftUIIntrospect")
             ]
         ),
         .module(
-            name: "UIKitUtility", category: .utility(ui: true),
+            name: "UIKitUtility",
+            category: .utility(ui: true),
             dependencies: [
-                .external(name: "SnapKit"),
+                .external(name: "SnapKit")
             ]
         ),
         .module(name: "FoundationUtility", category: .utility(ui: false), dependencies: []),

@@ -77,3 +77,6 @@ SNUTT/Resources/GoogleServiceReleaseInfo.plist
 ### OpenAPI ###
 OpenAPI/openapi.json
 **/Generated/*
+
+### Sweetpad ###
+buildServer.json

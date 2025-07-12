@@ -3,10 +3,11 @@ name: Lint
 on:
   pull_request:
     paths:
-      - ".github/workflows/lint.yml"
+      - ".github/workflows/lint-legacy.yml"
       - "**.swift"
       - ".swiftlint.yml"
       - ".swiftformat"
+      - "!SNUTT/**"
 
 jobs:
   format:
