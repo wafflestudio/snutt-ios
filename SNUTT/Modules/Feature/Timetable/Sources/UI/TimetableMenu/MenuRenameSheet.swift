@@ -22,18 +22,22 @@ struct MenuRenameSheet: View {
     var body: some View {
         GeometryReader { _ in
             VStack(spacing: 20) {
-                SheetTopBar(cancel: {
-                    dismiss()
-                }, confirm: {
-                    dismiss()
-                    isRenameLoading = true
-                    Task {
-                        await errorAlertHandler.withAlert {
-                            try await viewModel.renameTimetable(timetableID: metadata.id, title: title)
+                SheetTopBar(
+                    cancel: {
+                        dismiss()
+                    },
+                    confirm: {
+                        dismiss()
+                        isRenameLoading = true
+                        Task {
+                            await errorAlertHandler.withAlert {
+                                try await viewModel.renameTimetable(timetableID: metadata.id, title: title)
+                            }
+                            isRenameLoading = false
                         }
-                        isRenameLoading = false
-                    }
-                }, isConfirmDisabled: isRenameLoading)
+                    },
+                    isConfirmDisabled: isRenameLoading
+                )
 
                 AnimatableTextField(label: "시간표 제목", placeholder: "시간표 제목을 입력하세요", text: $title)
                     .focused($searchFocus)
