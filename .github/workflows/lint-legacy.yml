@@ -12,6 +12,10 @@ on:
 jobs:
   format:
     name: SwiftFormat
+
+    defaults:
+      run:
+        working-directory: ./SNUTT-2022
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
