@@ -34,7 +34,7 @@ struct CreateTimetableSheet: View {
                             switch presentationType {
                             case .picker:
                                 selectedQuarter
-                            case .fixed(let quarter):
+                            case let .fixed(quarter):
                                 quarter
                             }
                         guard let targetQuarter else { return }
