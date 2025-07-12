@@ -14,11 +14,13 @@ struct NotificationAPIRepository: NotificationRepository {
 
     func fetchNotifications(offset: Int, limit: Int, markAsRead: Bool) async throws -> [NotificationModel] {
         let explicit = markAsRead ? 1 : 0
-        return try await apiClient.getNotification(query: .init(
-            offset: String(offset),
-            limit: String(limit),
-            explicit: String(explicit)
-        )).ok.body.json.compactMap {
+        return try await apiClient.getNotification(
+            query: .init(
+                offset: String(offset),
+                limit: String(limit),
+                explicit: String(explicit)
+            )
+        ).ok.body.json.compactMap {
             try NotificationModel(
                 id: require($0._id),
                 title: $0.title,

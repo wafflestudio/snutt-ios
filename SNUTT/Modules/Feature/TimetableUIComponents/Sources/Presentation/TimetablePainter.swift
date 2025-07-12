@@ -74,10 +74,11 @@ extension TimetablePainter {
 
         /// 시간표의 시작 시각보다 강의 시작이 이른 경우, 그만큼의 시간을 차감해서 높이를 계산한다.
         let timeBlockCropAdjustment = abs(min(CGFloat(timePlace.startTime.absoluteMinutes - minHour * 60) / 60, 0))
-        return (timePlace.duration(compactMode: configuration.compactMode) - timeBlockCropAdjustment) * getHourHeight(
-            in: containerSize,
-            hourCount: hourCount
-        )
+        return (timePlace.duration(compactMode: configuration.compactMode) - timeBlockCropAdjustment)
+            * getHourHeight(
+                in: containerSize,
+                hourCount: hourCount
+            )
     }
 
     // MARK: Auto Fit
@@ -114,7 +115,7 @@ extension TimetablePainter {
         }
 
         let startTime = startingHour
-        return max(lastEndHour, startTime + 8) // autofit을 사용한다면 최소 8시간의 간격은 유지한다.
+        return max(lastEndHour, startTime + 8)  // autofit을 사용한다면 최소 8시간의 간격은 유지한다.
     }
 
     /// `autoFit`을 고려한 시간표의 세로 칸 수
@@ -153,12 +154,14 @@ extension TimetablePainter {
     }
 
     private var aggregatedTimePlaces: [TimePlace] {
-        let aggregatedLectures = if let currentTimetable {
-            currentTimetable.lectures + [selectedLecture]
-        } else {
-            [selectedLecture]
-        }
-        return aggregatedLectures
+        let aggregatedLectures =
+            if let currentTimetable {
+                currentTimetable.lectures + [selectedLecture]
+            } else {
+                [selectedLecture]
+            }
+        return
+            aggregatedLectures
             .compactMap { $0 }
             .reduce(into: []) { partialResult, lecture in
                 partialResult.append(contentsOf: lecture.timePlaces)
@@ -183,7 +186,7 @@ extension TimetableInterface.Time {
     func roundUpForCompactMode() -> Self {
         var hour = self.hour
         var minute = self.minute
-        if (1 ... 30).contains(minute) {
+        if (1...30).contains(minute) {
             minute = 30
         } else if minute > 30 {
             hour += 1
@@ -239,7 +242,7 @@ extension TimetablePainter {
     private func getSelectedTimeRange(from blockMask: BlockMask) -> [SearchTimeMaskDto] {
         var result: [SearchTimeMaskDto] = []
         let strided = stride(from: 0, to: blockMaskSize, by: halfHour).map {
-            Array(blockMask[$0 ..< min($0 + halfHourCount, blockMaskSize)])
+            Array(blockMask[$0..<min($0 + halfHourCount, blockMaskSize)])
         }
 
         /// `BlockMask`의 연속적인 `true`를 `SearchTimeMaskDto`로 변환 중임을 나타낸다.
@@ -258,11 +261,13 @@ extension TimetablePainter {
                 } else {
                     if isContinuousTimeRange {
                         isContinuousTimeRange = false
-                        result.append(.init(
-                            day: dayIndex,
-                            startMinute: startHalfHourIndex * halfHourCount + startHourOffset,
-                            endMinute: halfHourIndex * halfHourCount + startHourOffset - 1
-                        ))
+                        result.append(
+                            .init(
+                                day: dayIndex,
+                                startMinute: startHalfHourIndex * halfHourCount + startHourOffset,
+                                endMinute: halfHourIndex * halfHourCount + startHourOffset - 1
+                            )
+                        )
                     }
                 }
             }
@@ -270,11 +275,13 @@ extension TimetablePainter {
             // 다음 날로 넘어가기 전 선택된 시간대를 22:59로 마감한다.
             if isContinuousTimeRange {
                 isContinuousTimeRange = false
-                result.append(.init(
-                    day: dayIndex,
-                    startMinute: startHalfHourIndex * halfHourCount + startHourOffset,
-                    endMinute: halfHour * halfHourCount + startHourOffset - 1
-                ))
+                result.append(
+                    .init(
+                        day: dayIndex,
+                        startMinute: startHalfHourIndex * halfHourCount + startHourOffset,
+                        endMinute: halfHour * halfHourCount + startHourOffset - 1
+                    )
+                )
             }
         }
         return result

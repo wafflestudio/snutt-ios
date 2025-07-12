@@ -84,11 +84,12 @@ struct SearchFilterSheet: View {
                         config.baseForegroundColor = .label
                         config.imagePadding = 5
                         config.attributedTitle = .init(predicate.localizedDescription, font: .systemFont(ofSize: 14))
-                        config.image = if isSelected {
-                            TimetableAsset.checkmarkCircleTick.image
-                        } else {
-                            TimetableAsset.checkmarkCircleUntick.image
-                        }
+                        config.image =
+                            if isSelected {
+                                TimetableAsset.checkmarkCircleTick.image
+                            } else {
+                                TimetableAsset.checkmarkCircleUntick.image
+                            }
                         button.contentHorizontalAlignment = .leading
                         return config
                     }

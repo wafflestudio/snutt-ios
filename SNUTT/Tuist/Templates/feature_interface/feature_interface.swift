@@ -6,12 +6,12 @@ private let category = ModuleCategory.featureInterface
 private let template = Template(
     description: "A template for a new feature interface module.",
     attributes: [
-        name,
+        name
     ],
     items: [
         .file(
             path: "Modules/\(category.directoryName)/\(name)/Sources/\(name).swift",
             templatePath: "FeatureInterface.stencil"
-        ),
+        )
     ]
 )

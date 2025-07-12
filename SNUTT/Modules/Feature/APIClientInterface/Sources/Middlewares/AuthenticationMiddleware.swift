@@ -33,13 +33,14 @@ public struct AuthenticationMiddleware: ClientMiddleware {
     ) async throws -> (HTTPResponse, HTTPBody?) {
         var request = request
         if let accessToken = accessToken(),
-           let accessTokenKey = HTTPField.Name("x-access-token")
+            let accessTokenKey = HTTPField.Name("x-access-token")
         {
             request.headerFields[accessTokenKey] = accessToken
         }
         for item in AppMetadataKey.allCases {
             guard let key = item.keyForHeader,
-                  let headerKey = HTTPField.Name(key) else { continue }
+                let headerKey = HTTPField.Name(key)
+            else { continue }
             request.headerFields[headerKey] = appMetadata[item]
         }
         do {

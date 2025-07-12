@@ -25,7 +25,7 @@ struct TimetableCompactWidgetView: View {
             }
         }
         .padding(.horizontal, 16)
-//        .background(STColor.systemBackground)
+        //        .background(STColor.systemBackground)
     }
 }
 
@@ -67,10 +67,14 @@ struct TimetableCompactLeftView: View {
                     }
 
                     if let item = lectureTimes.get(at: 1) {
-                        let hasEnoughSpace = lectureTimes.count <= 2 || lectureTimes.get(at: 0)?.timePlace.place
-                            .isEmpty == true
-                        TimePlaceListItem(items: [item],
-                                          showPlace: hasEnoughSpace)
+                        let hasEnoughSpace =
+                            lectureTimes.count <= 2
+                            || lectureTimes.get(at: 0)?.timePlace.place
+                                .isEmpty == true
+                        TimePlaceListItem(
+                            items: [item],
+                            showPlace: hasEnoughSpace
+                        )
                     }
 
                     if lectureTimes.count > 2 {
@@ -227,14 +231,14 @@ struct TimePlaceListItem: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 0) {
             ZStack {
-                ForEach(0 ..< numberOfCircles, id: \.self) { index in
-                    if let item = items.get(at: index) {
+                ForEach(0..<numberOfCircles, id: \.self) { index in
+                    if items.get(at: index) != nil {
                         Circle()
-//                            .fill(item.lecture.getColor().bg)
+                            //                            .fill(item.lecture.getColor().bg)
                             .frame(width: 8, height: 8)
                             .overlay(
                                 Circle()
-//                                    .stroke(STColor.systemBackground, lineWidth: 1)
+                                    //                                    .stroke(STColor.systemBackground, lineWidth: 1)
                                     .opacity(isAccessoryWidget ? 0 : 1)
                             )
                             .offset(x: 5 * CGFloat(index))

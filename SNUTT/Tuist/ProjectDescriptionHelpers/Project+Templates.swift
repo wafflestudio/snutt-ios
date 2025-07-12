@@ -17,7 +17,8 @@ extension Project {
         widgetDependencies: [TargetDependency],
         deploymentTargets: DeploymentTargets
     ) -> Project {
-        let mainTargetDependencies: [TargetDependency] = moduleDependencies
+        let mainTargetDependencies: [TargetDependency] =
+            moduleDependencies
             .map { .target(name: $0.name) } + externalDependencies
         let widgetTarget = makeWidgetTarget(
             name: name,
@@ -36,13 +37,15 @@ extension Project {
         let allTargets = [mainTargets] + frameworkTargets
         let testTargets = allTargets.compactMap { _, testTarget in testTarget }
         let schemes = makeSchemes(name: name) + [makeModuleTestsScheme(testTargets: testTargets)]
-        return Project(name: name,
-                       organizationName: "wafflestudio.com",
-                       options: .options(automaticSchemesOptions: .disabled),
-                       packages: swiftPackages,
-                       settings: makeSettings(),
-                       targets: allTargets.flatMap { [$0.0, $0.1].compactMap { $0 } } + [widgetTarget],
-                       schemes: schemes)
+        return Project(
+            name: name,
+            organizationName: "wafflestudio.com",
+            options: .options(automaticSchemesOptions: .disabled),
+            packages: swiftPackages,
+            settings: makeSettings(),
+            targets: allTargets.flatMap { [$0.0, $0.1].compactMap { $0 } } + [widgetTarget],
+            schemes: schemes
+        )
     }
 
     // MARK: - Private
@@ -55,31 +58,37 @@ extension Project {
     ) -> (Target, Target?) {
         let name = module.name
         let directory = "Modules/\(module.category.directoryName)"
-        let resources: [String] = (module.category.hasResources ? ["\(directory)/\(name)/Resources/**"] : []) + module
+        let resources: [String] =
+            (module.category.hasResources ? ["\(directory)/\(name)/Resources/**"] : [])
+            + module
             .additionalResources
-        let sources = Target.target(name: name,
-                                    destinations: destinations,
-                                    product: module.productType ?? productType(),
-                                    bundleId: "\(domain).\(name)",
-                                    deploymentTargets: deploymentTargets,
-                                    infoPlist: .default,
-                                    sources: ["\(directory)/\(name)/Sources/**"],
-                                    resources: .resources(resources.map { .init(stringLiteral: $0) }),
-                                    dependencies: module.dependencies,
-                                    settings: makeSettings())
+        let sources = Target.target(
+            name: name,
+            destinations: destinations,
+            product: module.productType ?? productType(),
+            bundleId: "\(domain).\(name)",
+            deploymentTargets: deploymentTargets,
+            infoPlist: .default,
+            sources: ["\(directory)/\(name)/Sources/**"],
+            resources: .resources(resources.map { .init(stringLiteral: $0) }),
+            dependencies: module.dependencies,
+            settings: makeSettings()
+        )
         if case .featureInterface = module.category {
             return (sources, nil)
         }
-        let tests = Target.target(name: "\(name)Tests",
-                                  destinations: destinations,
-                                  product: .unitTests,
-                                  bundleId: "\(domain).\(name)Tests",
-                                  deploymentTargets: deploymentTargets,
-                                  infoPlist: .default,
-                                  sources: ["\(directory)/\(name)/Tests/**"],
-                                  resources: [],
-                                  dependencies: [.target(name: name)],
-                                  settings: makeSettings())
+        let tests = Target.target(
+            name: "\(name)Tests",
+            destinations: destinations,
+            product: .unitTests,
+            bundleId: "\(domain).\(name)Tests",
+            deploymentTargets: deploymentTargets,
+            infoPlist: .default,
+            sources: ["\(directory)/\(name)/Tests/**"],
+            resources: [],
+            dependencies: [.target(name: name)],
+            settings: makeSettings()
+        )
         return (sources, tests)
     }
 
@@ -102,7 +111,7 @@ extension Project {
                 [
                     "CFBundleURLSchemes": ["$(URL_SCHEME)"],
                     "CFBundleURLName": "$(PRODUCT_BUNDLE_IDENTIFIER)",
-                ],
+                ]
             ],
         ]
 
@@ -129,7 +138,7 @@ extension Project {
             infoPlist: .default,
             sources: ["\(name)/Tests/**"],
             dependencies: [
-                .target(name: "\(name)"),
+                .target(name: "\(name)")
             ],
             settings: makeSettings()
         )
@@ -152,7 +161,7 @@ extension Project {
                 with: [
                     "CFBundleShortVersionString": marketingVersion,
                     "CFBundleVersion": buildNumber,
-                    "NSExtension": ["NSExtensionPointIdentifier": "com.apple.widgetkit-extension"]
+                    "NSExtension": ["NSExtensionPointIdentifier": "com.apple.widgetkit-extension"],
                 ]
             ),
             sources: ["SNUTTWidget/Sources/**"],
