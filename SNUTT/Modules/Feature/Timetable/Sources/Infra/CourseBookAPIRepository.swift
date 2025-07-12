@@ -31,8 +31,8 @@ struct CourseBookAPIRepository: CourseBookRepository {
             query: .init(
                 year: String(year),
                 semester: String(semester),
-                course_number: try require(lecture.courseNumber),
-                lecture_number: try require(lecture.lectureNumber)
+                course_number: require(lecture.courseNumber),
+                lecture_number: require(lecture.lectureNumber)
             )
         )
         let syllabus = try response.ok.body.json
