@@ -1,0 +1,69 @@
+openapi-dev:
+    @echo "🚀 Generating OpenAPI for dev environment..."
+    @swift Scripts/OpenAPIDownloader.swift dev
+    @bash Scripts/OpenAPIGenerator.sh dev
+    @echo "✅ OpenAPI generation for dev environment completed!"
+
+openapi-prod:
+    @echo "🚀 Generating OpenAPI for prod environment..."
+    @swift Scripts/OpenAPIDownloader.swift prod
+    @bash Scripts/OpenAPIGenerator.sh prod
+    @echo "✅ OpenAPI generation for prod environment completed!"
+
+dev:
+    @echo "🚀 Setting up development environment..."
+    @just openapi-dev
+    @pre-commit install
+    @echo "📦 Running tuist generate..."
+    @tuist generate
+    @echo "✅ Development environment setup completed!"
+
+prod:
+    @echo "🚀 Setting up production environment..."
+    @just openapi-prod
+    @pre-commit install
+    @echo "📦 Running tuist generate..."
+    @tuist generate
+    @echo "✅ Production environment setup completed!"
+
+clean-derived-data:
+    @echo "🗑️ Cleaning DerivedData..."
+    @rm -rf ~/Library/Developer/Xcode/DerivedData/SNUTT-*
+    @echo "✅ DerivedData cleaned successfully!"
+
+clean-build:
+    @echo "🧹 Initiating clean build..."
+    @just clean-derived-data
+    @echo "🧽 Running tuist clean..."
+    @tuist clean
+    @echo "📦 Installing dependencies..."
+    @tuist install
+    @echo "🔨 Building project..."
+    @tuist generate --no-open
+    @tuist build
+    @echo "✅ Clean build completed successfully!"
+
+clean-generate:
+    @echo "🧹 Initiating clean generate..."
+    @just clean-derived-data
+    @echo "🧽 Running tuist clean..."
+    @tuist clean
+    @echo "📦 Installing dependencies..."
+    @tuist install
+    @echo "🏗️  Generating project..."
+    @tuist generate
+    @echo "✅ Clean generate completed successfully!"
+
+format:
+    @echo "🎨 Formatting Swift code..."
+    swift-format format --recursive --in-place .
+    @echo "✅ Swift code formatting completed!"
+
+check:
+    @echo "📦 Installing dependencies..."
+    @tuist install
+    @echo "🔍 Inspecting implicit imports..."
+    @tuist inspect implicit-imports
+    @echo "🎨 Checking code formatting..."
+    @just format
+    @echo "✅ All checks completed!"

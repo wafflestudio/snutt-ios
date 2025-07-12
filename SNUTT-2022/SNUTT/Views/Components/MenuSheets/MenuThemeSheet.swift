@@ -71,6 +71,6 @@ struct MenuThemeSheet: View {
                 Spacer()
             }
         }
-        .analyticsScreen(.themePreview, isVisible: isOpen)
+        .analyticsScreen(.themePreview, shouldLogEvent: isOpen)
     }
 }

@@ -12,11 +12,14 @@ import SwiftUI
 public final class ErrorAlertHandler: Sendable {
     fileprivate var currentError: AnyLocalizedError?
     fileprivate var isErrorAlertPresented: Binding<Bool> {
-        .init(get: {
-            self.currentError != nil
-        }, set: { _ in
-            self.currentError = nil
-        })
+        .init(
+            get: {
+                self.currentError != nil
+            },
+            set: { _ in
+                self.currentError = nil
+            }
+        )
     }
 
     nonisolated init() {}
@@ -36,7 +39,7 @@ public final class ErrorAlertHandler: Sendable {
     ) async -> T? {
         do {
             return try await operation()
-        } catch let error as ErrorWrapper {
+        } catch let error as any ErrorWrapper {
             currentError = .init(underlyingError: error.underlyingError)
             return nil
         } catch {
@@ -50,7 +53,7 @@ public final class ErrorAlertHandler: Sendable {
     ) -> T? {
         do {
             return try operation()
-        } catch let error as ErrorWrapper {
+        } catch let error as any ErrorWrapper {
             currentError = .init(underlyingError: error.underlyingError)
             return nil
         } catch {

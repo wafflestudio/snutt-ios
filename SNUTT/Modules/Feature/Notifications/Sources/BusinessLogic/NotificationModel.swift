@@ -18,5 +18,6 @@ struct NotificationModel: Sendable, Identifiable {
 }
 
 enum NotificationType: Int {
-    case normal = 0, courseBook, lectureUpdate, lectureRemove, lectureVacancy, friend, newFeature
+    case normal = 0
+    case courseBook, lectureUpdate, lectureRemove, lectureVacancy, friend, newFeature
 }

@@ -19,7 +19,7 @@ protocol ExpandableLectureListViewModel: Sendable {
     func selectLecture(_: Lecture)
     func isSelected(lecture: Lecture) -> Bool
     func fetchMoreLectures() async throws
-    func toggleAction(lecture: Lecture, type: ActionButtonType) async throws
+    func toggleAction(lecture: Lecture, type: ActionButtonType, overrideOnConflict: Bool) async throws
     func isToggled(lecture: Lecture, type: ActionButtonType) -> Bool
 }
 

@@ -79,7 +79,7 @@ struct TimetableScene: View, Sendable {
                 timetable
             }
             .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
-            .analyticsScreen(.timetableHome)
+            .analyticsScreen(.timetableHome, shouldLogEvent: viewModel.appState.user.accessToken != nil)
         }
         let _ = debugChanges()
     }

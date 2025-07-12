@@ -71,6 +71,7 @@ private struct LectureActionButton: View {
     }
 
     @Environment(\.errorAlertHandler) private var errorAlertHandler
+    @Environment(\.lectureTimeConflictHandler) private var conflictHandler
 
     var body: some View {
         AnimatableButton(
@@ -79,7 +80,17 @@ private struct LectureActionButton: View {
         ) {
             Task {
                 await errorAlertHandler.withAlert {
-                    try await viewModel.toggleAction(lecture: lecture, type: type)
+                    do {
+                        try await conflictHandler.withConflictHandling { overrideOnConflict in
+                            try await viewModel.toggleAction(
+                                lecture: lecture,
+                                type: type,
+                                overrideOnConflict: overrideOnConflict
+                            )
+                        }
+                    } catch {
+                        throw error
+                    }
                 }
             }
         } configuration: { button in

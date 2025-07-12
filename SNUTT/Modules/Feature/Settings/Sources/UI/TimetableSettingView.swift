@@ -58,9 +58,11 @@ struct TimetableSettingView: View {
                 TimetableZStack(painter: makePainter())
                     .frame(height: 500)
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                    .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .stroke(lineWidth: 0.5)
-                        .foregroundColor(Color(UIColor.quaternaryLabel)))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .stroke(lineWidth: 0.5)
+                            .foregroundColor(Color(UIColor.quaternaryLabel))
+                    )
                     .shadow(color: .black.opacity(0.05), radius: 3)
                     .padding(.vertical, 10)
             }

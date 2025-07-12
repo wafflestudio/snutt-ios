@@ -24,6 +24,7 @@ final class AppState {
     var routing = ViewRoutingState()
     var vacancy = VacancyState()
     var theme = ThemeState()
+    var push = PushState()
 
     #if DEBUG
         var debug = DebugState()

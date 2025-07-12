@@ -1,4 +1,5 @@
-@_spi(Internals) import DependenciesAdditionsBasics
+import Dependencies
+import DependenciesAdditions
 import UIKit.UIDevice
 
 extension DependencyValues {
@@ -23,7 +24,7 @@ enum SynchronizedDeviceKey: DependencyKey {
 }
 
 public struct SynchronizedDevice: Sendable, ConfigurableProxy {
-    @_spi(Internals) public var _implementation: Implementation
+    public var _implementation: Implementation
 
     public struct Implementation: Sendable {
         @ReadOnlyProxy public var name: String
@@ -49,29 +50,33 @@ public struct SynchronizedDevice: Sendable, ConfigurableProxy {
     }
 
     public nonisolated static var current: SynchronizedDevice {
-        .init(_implementation: .init(
-            name: .init {
-                runOnMain { UIDevice.current.name }
-            },
-            systemName: .init {
-                runOnMain { UIDevice.current.systemName }
-            },
-            systemVersion: .init {
-                runOnMain { UIDevice.current.systemVersion }
-            },
-            identifierForVendor: .init {
-                runOnMain { UIDevice.current.identifierForVendor?.uuidString }
-            }
-        ))
+        .init(
+            _implementation: .init(
+                name: .init {
+                    runOnMain { UIDevice.current.name }
+                },
+                systemName: .init {
+                    runOnMain { UIDevice.current.systemName }
+                },
+                systemVersion: .init {
+                    runOnMain { UIDevice.current.systemVersion }
+                },
+                identifierForVendor: .init {
+                    runOnMain { UIDevice.current.identifierForVendor?.uuidString }
+                }
+            )
+        )
     }
 
     public nonisolated static var unimplemented: SynchronizedDevice {
-        .init(_implementation: .init(
-            name: .unimplemented(#"@Dependency(\.syncDevice.name)"#, placeholder: ""),
-            systemName: .unimplemented(#"@Dependency(\.syncDevice.systemName)"#, placeholder: ""),
-            systemVersion: .unimplemented(#"@Dependency(\.syncDevice.systemVersion)"#, placeholder: ""),
-            identifierForVendor: .unimplemented(#"@Dependency(\.syncDevice.identifierForVendor)"#, placeholder: "")
-        ))
+        .init(
+            _implementation: .init(
+                name: .unimplemented(#"@Dependency(\.syncDevice.name)"#, placeholder: ""),
+                systemName: .unimplemented(#"@Dependency(\.syncDevice.systemName)"#, placeholder: ""),
+                systemVersion: .unimplemented(#"@Dependency(\.syncDevice.systemVersion)"#, placeholder: ""),
+                identifierForVendor: .unimplemented(#"@Dependency(\.syncDevice.identifierForVendor)"#, placeholder: "")
+            )
+        )
     }
 }
 

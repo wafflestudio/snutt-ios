@@ -80,15 +80,17 @@ private struct LectureTimePicker: View {
 
     var startRange: ClosedRange<Date> {
         let calendar = Calendar.current
-        return calendar.date(from: .init(hour: 0, minute: 0))! ... calendar.date(from: .init(hour: 23, minute: 50))!
+        return calendar.date(from: .init(hour: 0, minute: 0))!...calendar.date(from: .init(hour: 23, minute: 50))!
     }
 
     var endRange: ClosedRange<Date> {
         let calendar = Calendar.current
-        return calendar.date(byAdding: .minute, value: 5, to: start.wrappedValue)! ... calendar.date(from: .init(
-            hour: 23,
-            minute: 59
-        ))!
+        return calendar.date(byAdding: .minute, value: 5, to: start.wrappedValue)!...calendar.date(
+            from: .init(
+                hour: 23,
+                minute: 59
+            )
+        )!
     }
 
     var body: some View {
@@ -103,28 +105,34 @@ private struct LectureTimePicker: View {
                 }
                 .tint(.label)
                 .labelsHidden()
-                .background(RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(Color(uiColor: .tertiarySystemFill)))
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(Color(uiColor: .tertiarySystemFill))
+                )
             }
 
             Divider()
-            DatePicker("시작",
-                       selection: start,
-                       in: startRange,
-                       displayedComponents: [.hourAndMinute])
-                .datePickerStyle(.compact)
-                .introspect(.datePicker, on: .iOS(.v17, .v18)) { datePicker in
-                    datePicker.minuteInterval = 5
-                }
+            DatePicker(
+                "시작",
+                selection: start,
+                in: startRange,
+                displayedComponents: [.hourAndMinute]
+            )
+            .datePickerStyle(.compact)
+            .introspect(.datePicker, on: .iOS(.v17, .v18)) { datePicker in
+                datePicker.minuteInterval = 5
+            }
             Divider()
-            DatePicker("종료",
-                       selection: end,
-                       in: endRange,
-                       displayedComponents: [.hourAndMinute])
-                .datePickerStyle(.compact)
-                .introspect(.datePicker, on: .iOS(.v17, .v18)) { datePicker in
-                    datePicker.minuteInterval = 5
-                }
+            DatePicker(
+                "종료",
+                selection: end,
+                in: endRange,
+                displayedComponents: [.hourAndMinute]
+            )
+            .datePickerStyle(.compact)
+            .introspect(.datePicker, on: .iOS(.v17, .v18)) { datePicker in
+                datePicker.minuteInterval = 5
+            }
         }
         .onChange(of: startTime) { _, _ in
             if !endRange.contains(end.wrappedValue) {

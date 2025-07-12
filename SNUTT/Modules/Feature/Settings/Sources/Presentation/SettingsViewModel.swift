@@ -33,12 +33,7 @@ final class SettingsViewModel {
         appMetadata[.appVersion]
     }
 
-    func fetchUser() async throws {
-        do {
-        } catch {
-            throw error
-        }
-    }
+    func fetchUser() async throws {}
 
     func makePainter() -> TimetablePainter {
         TimetablePainter(
@@ -51,10 +46,6 @@ final class SettingsViewModel {
     }
 
     func logout() async throws {
-        do {
-            try await authUseCase.logout()
-        } catch {
-            throw error
-        }
+        try await authUseCase.logout()
     }
 }

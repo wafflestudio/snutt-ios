@@ -29,10 +29,12 @@ public struct TimetableScene: View {
     ) {
         _isSearchMode = isSearchMode
         self.timetableViewModel = timetableViewModel
-        _searchViewModel = State(initialValue: LectureSearchViewModel(
-            timetableViewModel: timetableViewModel,
-            router: lectureSearchRouter
-        ))
+        _searchViewModel = State(
+            initialValue: LectureSearchViewModel(
+                timetableViewModel: timetableViewModel,
+                router: lectureSearchRouter
+            )
+        )
     }
 
     public var body: some View {
@@ -68,6 +70,11 @@ public struct TimetableScene: View {
                             try await timetableViewModel.loadTimetableList()
                         }
                     }
+                    group.addTask {
+                        await errorAlertHandler.withAlert {
+                            try await timetableViewModel.loadCourseBooks()
+                        }
+                    }
                 }
             }
             .sheet(isPresented: $timetableViewModel.isThemeSheetPresented) {
@@ -94,7 +101,24 @@ public struct TimetableScene: View {
         case .lectureList:
             LectureListScene(viewModel: timetableViewModel)
         case let .lectureDetail(lecture):
-            LectureEditDetailScene(entryLecture: lecture, displayMode: .normal)
+            LectureEditDetailScene(
+                timetableViewModel: timetableViewModel,
+                entryLecture: lecture,
+                displayMode: .normal,
+                paths: $timetableViewModel.paths
+            )
+            .handleLectureTimeConflict()
+        case let .lectureColorSelection(viewModel):
+            let currentTheme = timetableViewModel.currentTimetable?.theme
+            let theme = themeViewModel.availableThemes.first(where: { $0.id == currentTheme?.id })
+            if let theme {
+                LectureColorSelectionListView(
+                    theme: theme,
+                    viewModel: viewModel
+                )
+            } else {
+                ProgressView()
+            }
         case .notificationList:
             AnyView(notificationsUIProvider.makeNotificationsScene())
         }
@@ -102,14 +126,19 @@ public struct TimetableScene: View {
 
     private var timetable: some View {
         ZStack {
-            TimetableZStack(painter: timetableViewModel.makePainter(
-                selectedLecture: searchViewModel.selectedLecture,
-                selectedTheme: themeViewModel.selectedTheme,
-                availableThemes: themeViewModel.availableThemes
-            ))
-            .environment(\.lectureTapAction, LectureTapAction(action: { lecture in
-                timetableViewModel.paths.append(.lectureDetail(lecture))
-            }))
+            TimetableZStack(
+                painter: timetableViewModel.makePainter(
+                    selectedLecture: searchViewModel.selectedLecture,
+                    selectedTheme: themeViewModel.selectedTheme,
+                    availableThemes: themeViewModel.availableThemes
+                )
+            )
+            .environment(
+                \.lectureTapAction,
+                LectureTapAction(action: { lecture in
+                    timetableViewModel.paths.append(.lectureDetail(lecture))
+                })
+            )
         }
     }
 }

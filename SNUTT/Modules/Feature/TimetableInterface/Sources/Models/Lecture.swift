@@ -5,6 +5,8 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import APIClientInterface
+import FoundationUtility
 import MemberwiseInit
 import SwiftUI
 import ThemesInterface
@@ -28,8 +30,12 @@ public struct Lecture: Identifiable, Equatable, Sendable, Codable {
     public var academicYear: String?
     public var remark: String?
     public let evLecture: EvLecture?
-    public let colorIndex: Int
-    public let customColor: LectureColor?
+
+    /// 0이면 `customColor`에 설정된 색상을 사용하고, 1 이상이면 테마에서 `colorIndex`에 해당하는 색상을 사용한다.
+    ///
+    /// - SeeAlso: `TimetablePainter.resolveColor(for:)`
+    public var colorIndex: Int
+    public var customColor: LectureColor?
 
     /// "분류" (전공, 전선, 전필, 일선, 교양, ...)
     public var classification: String?
@@ -53,5 +59,60 @@ public struct EvLecture: Sendable, Equatable, Codable {
 extension Lecture {
     public var isCustom: Bool {
         courseNumber == nil || courseNumber == ""
+    }
+}
+
+// MARK: - LectureDto 변환
+
+extension Components.Schemas.LectureDto {
+    public func toLecture() throws -> Lecture {
+        let timePlaces = try class_time_json.enumerated().map { index, json in
+            try json.toTimePlace(index: index, isCustom: false)
+        }
+        let evLecture = snuttEvLecture.flatMap {
+            EvLecture(
+                evLectureID: Int($0.evLectureId),
+                avgRating: $0.avgRating,
+                evaluationCount: Int($0.evaluationCount)
+            )
+        }
+        return try Lecture(
+            id: require(_id),
+            lectureID: nil,
+            courseTitle: course_title,
+            timePlaces: timePlaces,
+            lectureNumber: lecture_number,
+            instructor: instructor,
+            credit: credit,
+            courseNumber: course_number,
+            department: department,
+            academicYear: academic_year,
+            remark: remark,
+            evLecture: evLecture,
+            colorIndex: 0,
+            customColor: .temporary,
+            classification: classification,
+            category: category,
+            wasFull: wasFull,
+            registrationCount: registrationCount,
+            quota: quota,
+            freshmenQuota: freshmanQuota
+        )
+    }
+}
+
+extension Components.Schemas.ClassPlaceAndTimeLegacyDto {
+    public func toTimePlace(index: Int, isCustom: Bool) throws -> TimePlace {
+        let weekday = try require(Weekday(rawValue: day.rawValue))
+        let start = Int(startMinute).quotientAndRemainder(dividingBy: 60)
+        let end = Int(endMinute).quotientAndRemainder(dividingBy: 60)
+        return .init(
+            id: "\(index)-\(start)-\(end)-\(place ?? "")-\(isCustom)",
+            day: weekday,
+            startTime: .init(hour: start.quotient, minute: start.remainder),
+            endTime: .init(hour: end.quotient, minute: end.remainder),
+            place: place ?? "",
+            isCustom: isCustom
+        )
     }
 }

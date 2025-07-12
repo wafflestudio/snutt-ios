@@ -101,11 +101,6 @@ struct SearchService: SearchServiceProtocol {
                                                                 offset: offset,
                                                                 limit: searchState.perPage)
         let models: [Lecture] = dtos.map { Lecture(from: $0) }
-        FirebaseAnalyticsLogger().logEvent(.searchLecture(.init(
-            query: searchState.searchText,
-            quarter: currentTimetable.quarter.longString(),
-            page: searchState.pageNum
-        )))
         searchState.searchResult = offset == 0 ? models : (searchState.searchResult ?? []) + models
     }
 
@@ -116,6 +111,12 @@ struct SearchService: SearchServiceProtocol {
         }
         searchState.pageNum = 0
         try await _fetchSearchResult()
+        if let current = timetableState.current {
+            FirebaseAnalyticsLogger().logEvent(.searchLecture(.init(
+                query: searchState.searchText,
+                quarter: current.quarter.longString()
+            )))
+        }
     }
 
     func fetchMoreSearchResult() async throws {
