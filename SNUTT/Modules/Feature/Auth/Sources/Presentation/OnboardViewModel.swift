@@ -8,8 +8,9 @@
 import AuthInterface
 import Combine
 import Dependencies
-import struct SwiftUI.NavigationPath
 import UIKit
+
+import struct SwiftUI.NavigationPath
 
 @MainActor
 @Observable

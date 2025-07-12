@@ -55,8 +55,11 @@ struct VacancyLectureListView: View {
                 .contentShape(Rectangle())
                 .foregroundColor(.white)
         }
-        .background(selectedLectureIDs.isEmpty ? SharedUIComponentsAsset.assistive
-            .swiftUIColor : SharedUIComponentsAsset.cyan.swiftUIColor)
+        .background(
+            selectedLectureIDs.isEmpty
+                ? SharedUIComponentsAsset.assistive
+                    .swiftUIColor : SharedUIComponentsAsset.cyan.swiftUIColor
+        )
         .disabled(selectedLectureIDs.isEmpty)
         .foregroundColor(Color(uiColor: .systemBackground))
         .alert(Text("목록에서 삭제"), isPresented: $isDeleteConfirmAlertPresented) {

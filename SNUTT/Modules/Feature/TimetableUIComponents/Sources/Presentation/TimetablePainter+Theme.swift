@@ -5,14 +5,14 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import TimetableInterface
 import ThemesInterface
+import TimetableInterface
 
 extension TimetablePainter {
     @MainActor
     public func resolveColor(for lecture: Lecture) -> LectureColor {
         guard let lectures = currentTimetable?.lectures,
-              let lectureIndex = lectures.firstIndex(where: { $0.lectureID == lecture.lectureID })
+            let lectureIndex = lectures.firstIndex(where: { $0.lectureID == lecture.lectureID })
         else { return Theme.snutt.colors.first ?? .temporary }
         if let preferredTheme {
             return preferredTheme.color(at: lectureIndex)
@@ -33,7 +33,6 @@ extension TimetablePainter {
         }
     }
 }
-
 
 extension Theme {
     fileprivate func color(at index: Int) -> LectureColor {

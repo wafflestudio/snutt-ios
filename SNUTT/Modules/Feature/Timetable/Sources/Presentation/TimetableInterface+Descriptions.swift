@@ -10,7 +10,8 @@ import TimetableInterface
 
 extension Lecture {
     var placesDescription: String? {
-        let places = timePlaces
+        let places =
+            timePlaces
             .filter {
                 !$0.place.isEmpty
             }
@@ -47,11 +48,12 @@ extension Lecture {
 
 extension EvLecture {
     var avgRatingString: String {
-        let avgRating = if let avgRating {
-            String(format: "%.1f", avgRating)
-        } else {
-            "--"
-        }
+        let avgRating =
+            if let avgRating {
+                String(format: "%.1f", avgRating)
+            } else {
+                "--"
+            }
         return "\(avgRating) (\(evaluationCount ?? 0))"
     }
 }

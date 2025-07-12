@@ -10,12 +10,15 @@ import Combine
 import Dependencies
 import Observation
 import TimetableInterface
+import VacancyInterface
 
 @Observable
 @MainActor
 class LectureSearchViewModel {
     @ObservationIgnored
     @Dependency(\.lectureSearchRepository) private var searchRepository
+    @ObservationIgnored
+    @Dependency(\.vacancyRepository) private var vacancyRepository
 
     private let timetableViewModel: TimetableViewModel
     private let router: LectureSearchRouter
@@ -26,7 +29,15 @@ class LectureSearchViewModel {
     }
 
     var searchQuery = ""
-    var searchingQuarter: Quarter?
+    var searchingQuarter: Quarter? {
+        didSet {
+            if oldValue != searchingQuarter {
+                Task {
+                    await fetchVacancyLectures()
+                }
+            }
+        }
+    }
     var searchDisplayMode: SearchDisplayMode {
         get { router.searchDisplayMode }
         set { router.searchDisplayMode = newValue }
@@ -37,6 +48,7 @@ class LectureSearchViewModel {
 
     private let dataSource = LectureSearchResultDataSource()
     var selectedLecture: Lecture?
+    private var vacancyLectureIds: Set<String> = []
 
     private(set) var availablePredicates: [SearchFilterCategory: [SearchPredicate]] = [:]
     var selectedCategory: SearchFilterCategory = .sortCriteria
@@ -81,6 +93,15 @@ class LectureSearchViewModel {
         dataSource.reset()
         selectedLecture = nil
     }
+
+    func fetchVacancyLectures() async {
+        do {
+            let lectures = try await vacancyRepository.fetchVacancyLectures()
+            vacancyLectureIds = Set(lectures.compactMap(\._id))
+        } catch {
+            // TODO: error handling
+        }
+    }
 }
 
 extension LectureSearchViewModel: ExpandableLectureListViewModel {
@@ -93,7 +114,7 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         case .bookmark:
             false
         case .vacancy:
-            false
+            vacancyLectureIds.contains(lecture.id)
         case .add:
             timetableViewModel.isLectureInCurrentTimetable(lecture: lecture)
         }
@@ -120,7 +141,13 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         case .bookmark:
             break
         case .vacancy:
-            break
+            if isToggled(lecture: lecture, type: type) {
+                try await vacancyRepository.deleteVacancyLecture(lectureID: lecture.id)
+                vacancyLectureIds.remove(lecture.id)
+            } else {
+                try await vacancyRepository.addVacancyLecture(lectureID: lecture.id)
+                vacancyLectureIds.insert(lecture.id)
+            }
         case .add:
             if !isToggled(lecture: lecture, type: type) {
                 try await timetableViewModel.addLecture(lecture: lecture, overrideOnConflict: overrideOnConflict)
@@ -224,12 +251,12 @@ extension SearchPredicate {
     var localizedDescription: String {
         switch self {
         case let .sortCriteria(value),
-             let .department(value),
-             let .academicYear(value),
-             let .category(value),
-             let .categoryPre2025(value),
-             let .instructor(value),
-             let .classification(value):
+            let .department(value),
+            let .academicYear(value),
+            let .category(value),
+            let .categoryPre2025(value),
+            let .instructor(value),
+            let .classification(value):
             value
         case let .credit(value):
             "\(value)학점"

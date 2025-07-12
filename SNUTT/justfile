@@ -13,6 +13,7 @@ openapi-prod:
 dev:
     @echo "🚀 Setting up development environment..."
     @just openapi-dev
+    @pre-commit install
     @echo "📦 Running tuist generate..."
     @tuist generate
     @echo "✅ Development environment setup completed!"
@@ -20,6 +21,7 @@ dev:
 prod:
     @echo "🚀 Setting up production environment..."
     @just openapi-prod
+    @pre-commit install
     @echo "📦 Running tuist generate..."
     @tuist generate
     @echo "✅ Production environment setup completed!"
@@ -52,9 +54,16 @@ clean-generate:
     @tuist generate
     @echo "✅ Clean generate completed successfully!"
 
+format:
+    @echo "🎨 Formatting Swift code..."
+    swift-format format --recursive --in-place .
+    @echo "✅ Swift code formatting completed!"
+
 check:
     @echo "📦 Installing dependencies..."
     @tuist install
     @echo "🔍 Inspecting implicit imports..."
     @tuist inspect implicit-imports
-    @echo "✅ Implicit imports check completed!"
+    @echo "🎨 Checking code formatting..."
+    @just format
+    @echo "✅ All checks completed!"

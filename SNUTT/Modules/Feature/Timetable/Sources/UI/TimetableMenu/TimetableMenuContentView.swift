@@ -10,12 +10,25 @@ import SwiftUI
 import TimetableInterface
 
 struct TimetableMenuContentView: View {
-    private let viewModel: TimetableMenuViewModel
+    @State private var viewModel: TimetableMenuViewModel
     init(timetableViewModel: TimetableViewModel) {
-        viewModel = .init(timetableViewModel: timetableViewModel)
+        _viewModel = .init(initialValue: .init(timetableViewModel: timetableViewModel))
     }
 
     @Environment(\.sheetDismiss) private var dismiss
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
+
+    @State private var createTimetableSheetType: CreateTimetableSheet.PresentationType?
+    private var isCreateTimetableSheetPresented: Binding<Bool> {
+        .init(
+            get: { createTimetableSheetType != nil },
+            set: { newValue in
+                if !newValue {
+                    createTimetableSheetType = nil
+                }
+            }
+        )
+    }
 
     enum Design {
         static let detailFont = Font.system(size: 12)
@@ -41,6 +54,14 @@ struct TimetableMenuContentView: View {
                     .padding(.top, 20)
                 }
             }
+        }
+        .sheet(
+            isPresented: isCreateTimetableSheetPresented,
+            onDismiss: {
+                createTimetableSheetType = nil
+            }
+        ) {
+            CreateTimetableSheet(viewModel: viewModel, presentationType: createTimetableSheetType ?? .picker)
         }
     }
 
@@ -69,7 +90,9 @@ struct TimetableMenuContentView: View {
                 .font(Design.detailFont)
                 .foregroundColor(Color(uiColor: .secondaryLabel))
             Spacer()
-            Button {} label: {
+            Button {
+                createTimetableSheetType = .picker
+            } label: {
                 TimetableAsset.navPlus.swiftUIImage
                     .resizable()
                     .frame(width: 25, height: 25)
@@ -95,18 +118,35 @@ struct TimetableMenuContentView: View {
                 current: viewModel.currentTimetable,
                 isEmptyQuarter: isEmptyQuarter
             ) {
-                timetableSectionContent(for: group.metadataList)
+                timetableSectionContent(quarter: group.quarter, for: group.metadataList)
             }
         }
     }
 
-    private func timetableSectionContent(for timetableList: [TimetableMetadata]) -> some View {
-        ForEach(timetableList, id: \.id) { timetable in
-            TimetableMenuSectionRow(
-                viewModel: viewModel,
-                timetableMetadata: timetable,
-                isSelected: viewModel.currentTimetable?.id == timetable.id
-            )
+    private func timetableSectionContent(quarter: Quarter, for timetableList: [TimetableMetadata]) -> some View {
+        Group {
+            if timetableList.isEmpty {
+                Button {
+                    createTimetableSheetType = .fixed(quarter)
+                } label: {
+                    HStack {
+                        Text("+ 시간표 추가하기")
+                            .font(.system(size: 14))
+                    }
+                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 10)
+                }
+                .buttonStyle(.plain)
+            } else {
+                ForEach(timetableList, id: \.id) { timetable in
+                    TimetableMenuSectionRow(
+                        viewModel: viewModel,
+                        timetableMetadata: timetable,
+                        isSelected: viewModel.currentTimetable?.id == timetable.id
+                    )
+                }
+            }
         }
     }
 }

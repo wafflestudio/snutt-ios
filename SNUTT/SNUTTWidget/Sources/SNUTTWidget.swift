@@ -17,17 +17,21 @@ struct TimelineProvider: AppIntentTimelineProvider {
     private let dataSource = SNUTTWidgetDataSource()
 
     func placeholder(in _: Context) -> Entry {
-        Entry(date: Date(),
-              configuration: ConfigurationAppIntent(),
-              currentTimetable: dataSource.currentTimetable,
-              timetableConfiguration: dataSource.timetableConfiguration)
+        Entry(
+            date: Date(),
+            configuration: ConfigurationAppIntent(),
+            currentTimetable: dataSource.currentTimetable,
+            timetableConfiguration: dataSource.timetableConfiguration
+        )
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in _: Context) async -> Entry {
-        Entry(date: Date(),
-              configuration: configuration,
-              currentTimetable: dataSource.currentTimetable,
-              timetableConfiguration: dataSource.timetableConfiguration)
+        Entry(
+            date: Date(),
+            configuration: configuration,
+            currentTimetable: dataSource.currentTimetable,
+            timetableConfiguration: dataSource.timetableConfiguration
+        )
     }
 
     func timeline(for configuration: ConfigurationAppIntent, in _: Context) async -> Timeline<Entry> {
@@ -43,10 +47,12 @@ struct TimelineProvider: AppIntentTimelineProvider {
         dates = Array(Set(dates))
 
         let entries = dates.map {
-            Entry(date: $0,
-                  configuration: configuration,
-                  currentTimetable: currentTimetable,
-                  timetableConfiguration: timetableConfiguration)
+            Entry(
+                date: $0,
+                configuration: configuration,
+                currentTimetable: currentTimetable,
+                timetableConfiguration: timetableConfiguration
+            )
         }
 
         return Timeline(entries: entries, policy: .atEnd)
@@ -73,12 +79,12 @@ struct TimetableEntry: TimelineEntry {
 
     func makeTimetablePainter() -> TimetablePainter {
         fatalError()
-//        TimetablePainter(
-//            currentTimetable: currentTimetable,
-//            selectedLecture: nil,
-//            resolvedTheme: .snutt,
-//            configuration: timetableConfiguration
-//        )
+        //        TimetablePainter(
+        //            currentTimetable: currentTimetable,
+        //            selectedLecture: nil,
+        //            resolvedTheme: .snutt,
+        //            configuration: timetableConfiguration
+        //        )
     }
 }
 

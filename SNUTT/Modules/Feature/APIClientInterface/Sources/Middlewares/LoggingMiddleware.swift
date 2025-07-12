@@ -22,8 +22,8 @@ public struct LoggingMiddleware: ClientMiddleware {
         let (response, body) = try await next(request, body, baseURL)
         let data = try await Data(collecting: body!, upTo: .max)
         if let json = try? JSONSerialization.jsonObject(with: data, options: []),
-           let prettyData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted),
-           let prettyString = String(data: prettyData, encoding: .utf8)
+            let prettyData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted),
+            let prettyString = String(data: prettyData, encoding: .utf8)
         {
             print(prettyString)
         }

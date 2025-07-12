@@ -30,11 +30,12 @@ struct LectureColorSelectionListView: View {
     private var fixedColorsSection: some View {
         Section {
             ForEach(Array(theme.colors.enumerated()), id: \.offset) { index, color in
-                let isSelected = if theme.isCustom {
-                    viewModel.editableLecture.colorIndex == 0 && viewModel.editableLecture.customColor == color
-                } else {
-                    viewModel.editableLecture.colorIndex == index + 1
-                }
+                let isSelected =
+                    if theme.isCustom {
+                        viewModel.editableLecture.colorIndex == 0 && viewModel.editableLecture.customColor == color
+                    } else {
+                        viewModel.editableLecture.colorIndex == index + 1
+                    }
                 LectureColorPreviewButton(
                     lectureColor: color,
                     title: "이름",

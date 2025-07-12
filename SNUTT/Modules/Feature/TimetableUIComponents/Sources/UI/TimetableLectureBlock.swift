@@ -124,8 +124,8 @@ private enum BlockInformationType: Identifiable {
         case .lectureTitle:
             1
         case .place,
-             .lectureNumber,
-             .instructor:
+            .lectureNumber,
+            .instructor:
             0.8
         }
     }
@@ -133,9 +133,9 @@ private enum BlockInformationType: Identifiable {
     var text: String {
         switch self {
         case let .lectureTitle(text),
-             let .place(text),
-             let .lectureNumber(text),
-             let .instructor(text):
+            let .place(text),
+            let .lectureNumber(text),
+            let .instructor(text):
             text.trimmingCharacters(in: .whitespacesAndNewlines)
         }
     }
@@ -145,8 +145,8 @@ private enum BlockInformationType: Identifiable {
         case .lectureTitle:
             0
         case .place,
-             .lectureNumber,
-             .instructor:
+            .lectureNumber,
+            .instructor:
             2
         }
     }

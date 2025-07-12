@@ -29,7 +29,8 @@ public struct TimetableMetadata: Identifiable, Sendable, Codable, Equatable {
 }
 
 public enum Semester: Int, Sendable, Codable, Equatable {
-    case first = 1, summer, second, winter
+    case first = 1
+    case summer, second, winter
 }
 
 public struct Quarter: Sendable, Codable, Equatable, Comparable, Identifiable, Hashable {
