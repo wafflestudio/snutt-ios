@@ -18,11 +18,12 @@ public struct HUDPresentationKey<Content: View>: PreferenceKey {
     }
 
     public static func reduce(value: inout Value, nextValue: () -> Value) {
-        value = if value.content == nil || !value.isPresented.wrappedValue {
-            nextValue()
-        } else {
-            value
-        }
+        value =
+            if value.content == nil || !value.isPresented.wrappedValue {
+                nextValue()
+            } else {
+                value
+            }
     }
 }
 

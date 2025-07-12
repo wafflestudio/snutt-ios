@@ -6,7 +6,7 @@ private let category = ModuleCategory.feature
 private let template = Template(
     description: "A template for a new feature module.",
     attributes: [
-        name,
+        name
     ],
     items: [
         .file(

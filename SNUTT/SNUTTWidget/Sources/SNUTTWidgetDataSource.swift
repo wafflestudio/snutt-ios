@@ -22,14 +22,14 @@ final class SNUTTWidgetDataSource {
 
     var currentTimetable: Timetable? {
         guard let data = userDefaults.data(forKey: "currentTimetable"),
-              let timetable = try? JSONDecoder().decode(Timetable.self, from: data)
+            let timetable = try? JSONDecoder().decode(Timetable.self, from: data)
         else { return nil }
         return timetable
     }
 
     var timetableConfiguration: TimetableConfiguration {
         guard let data = userDefaults.data(forKey: "timetableConfiguration"),
-              let configuration = try? JSONDecoder().decode(TimetableConfiguration.self, from: data)
+            let configuration = try? JSONDecoder().decode(TimetableConfiguration.self, from: data)
         else { return .init() }
         return configuration
     }

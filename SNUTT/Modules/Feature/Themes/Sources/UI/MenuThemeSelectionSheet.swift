@@ -52,14 +52,17 @@ struct MenuThemeSelectionSheet: View {
     var body: some View {
         GeometryReader { _ in
             VStack(spacing: 0) {
-                SheetTopBar(cancel: {
-                    dismiss()
-                }, confirm: {
-                    errorAlertHandler.withAlert {
-                        try await themeViewModel.saveSelectedTheme()
+                SheetTopBar(
+                    cancel: {
                         dismiss()
+                    },
+                    confirm: {
+                        errorAlertHandler.withAlert {
+                            try await themeViewModel.saveSelectedTheme()
+                            dismiss()
+                        }
                     }
-                })
+                )
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
@@ -110,11 +113,12 @@ struct MenuThemeSelectionSheet: View {
                 .frame(width: 80, height: 80)
                 .cornerRadius(6)
 
-                let selectionBackgroundColor: Color = if isSelectionHighlighted(selection) {
-                    Color(uiColor: .tertiarySystemFill)
-                } else {
-                    .clear
-                }
+                let selectionBackgroundColor: Color =
+                    if isSelectionHighlighted(selection) {
+                        Color(uiColor: .tertiarySystemFill)
+                    } else {
+                        .clear
+                    }
 
                 Text(selectionTitle(for: selection))
                     .frame(width: 60, height: 15)
@@ -130,7 +134,6 @@ struct MenuThemeSelectionSheet: View {
 
     func isSelectionHighlighted(_ selection: SelectionType) -> Bool {
         guard let selectionTheme = selection.theme else { return false }
-        let currentTheme = timetableViewModel.currentTimetable?.theme
         return themeViewModel.selectedTheme?.id == selectionTheme.id
     }
 

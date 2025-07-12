@@ -34,9 +34,11 @@ struct SettingsListCell<Menu: MenuItem>: View {
                 }
                 Text(menu.title)
                     .font(.system(size: 16))
-                    .foregroundStyle(menu.destructive
-                        ? SharedUIComponentsAsset.red.swiftUIColor
-                        : Color.primary)
+                    .foregroundStyle(
+                        menu.destructive
+                            ? SharedUIComponentsAsset.red.swiftUIColor
+                            : Color.primary
+                    )
                 if showNewBadge {
                     Spacer().frame(width: 6)
                     NewBadge()

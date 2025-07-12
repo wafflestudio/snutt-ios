@@ -35,7 +35,7 @@ extension Theme {
 }
 
 extension Theme {
-    
+
     // Custom Themes for Preview
 
     public static let preview1: Theme = makeTheme(

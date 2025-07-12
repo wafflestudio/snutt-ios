@@ -134,7 +134,8 @@ public final class LectureEditDetailViewModel {
 
     func resetLecture() async throws {
         guard let timetableViewModel, let timetableID = timetableViewModel.currentTimetable?.id,
-              !entryLecture.isCustom else { return }
+            !entryLecture.isCustom
+        else { return }
 
         let timetable = try await lectureRepository.resetLecture(
             timetableID: timetableID,
@@ -154,8 +155,9 @@ public final class LectureEditDetailViewModel {
 
     private func fetchVacancyNotificationStatus() async {
         guard !entryLecture.isCustom else { return }
-        isVacancyNotificationEnabled = (try? await vacancyRepository
-            .isVacancyNotificationEnabled(lectureID: entryLecture.id)) ?? false
+        isVacancyNotificationEnabled =
+            (try? await vacancyRepository
+                .isVacancyNotificationEnabled(lectureID: entryLecture.id)) ?? false
     }
 
     func toggleBookmark() async throws {

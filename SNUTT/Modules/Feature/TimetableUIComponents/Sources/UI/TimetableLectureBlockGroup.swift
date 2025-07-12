@@ -35,9 +35,11 @@ struct TimetableLectureBlockGroup: View {
                         }
                         .buttonStyle(.plain)
                     }
-                    .frame(width: painter.getWeekWidth(in: reader.size, weekCount: painter.weekCount),
-                           height: painter.getHeight(of: timePlace, in: reader.size),
-                           alignment: .top)
+                    .frame(
+                        width: painter.getWeekWidth(in: reader.size, weekCount: painter.weekCount),
+                        height: painter.getHeight(of: timePlace, in: reader.size),
+                        alignment: .top
+                    )
                     .clipped()
                     .offset(x: offsetPoint.x, y: offsetPoint.y)
                     .animation(.defaultSpring, value: painter.configuration.compactMode)

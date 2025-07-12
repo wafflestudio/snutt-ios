@@ -35,7 +35,7 @@ extension ContentViewModel {
 
     private func handleTimetableLectureScheme(_ parameters: QueryParameters?) async throws {
         guard let timetableID = parameters?["timetableId"],
-              let lectureID = parameters?["lectureId"]
+            let lectureID = parameters?["lectureId"]
         else { throw LocalizedErrorCode.deeplinkProcessFailed }
         let timetable = try await timetableRepository.fetchTimetable(timetableID: timetableID)
         guard let lecture = timetable.lectures.first(where: { $0.lectureID == lectureID })

@@ -10,7 +10,9 @@ import SwiftUI
 struct ColorModeSettingView: View {
     var body: some View {
         List(ColorScheme.allCases, id: \.self) { _ in
-            Button {} label: {}
+            Button {
+            } label: {
+            }
         }
         .listStyle(.insetGrouped)
         .navigationTitle(SettingsStrings.displayColorMode)

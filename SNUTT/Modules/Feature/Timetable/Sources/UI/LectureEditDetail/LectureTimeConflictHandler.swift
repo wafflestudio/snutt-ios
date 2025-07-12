@@ -13,11 +13,14 @@ import SwiftUI
 public final class LectureTimeConflictHandler: Sendable {
     fileprivate var pendingOperation: ConflictOperation?
     fileprivate var isConflictAlertPresented: Binding<Bool> {
-        .init(get: {
-            self.pendingOperation != nil
-        }, set: { _ in
-            self.pendingOperation = nil
-        })
+        .init(
+            get: {
+                self.pendingOperation != nil
+            },
+            set: { _ in
+                self.pendingOperation = nil
+            }
+        )
     }
 
     nonisolated init() {}

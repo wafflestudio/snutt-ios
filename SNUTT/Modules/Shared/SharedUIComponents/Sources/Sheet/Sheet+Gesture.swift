@@ -8,20 +8,23 @@
 import SwiftUI
 
 extension View {
-    @ViewBuilder func sheetGesture(_ translation: Binding<CGFloat>,
-                                   dismiss: @escaping @MainActor () -> Void) -> some View
-    {
+    @ViewBuilder func sheetGesture(
+        _ translation: Binding<CGFloat>,
+        dismiss: @escaping @MainActor () -> Void
+    ) -> some View {
         if #available(iOS 18.0, *) {
             gesture(SheetGestureRecognizer(translation: translation, dismiss: dismiss))
         } else {
-            highPriorityGesture(DragGesture().onChanged { value in
-                translation.wrappedValue = value.translation.width
-            }.onEnded { value in
-                translation.wrappedValue = 0
-                if value.velocity.width < -300 || value.translation.width < -100 {
-                    dismiss()
+            highPriorityGesture(
+                DragGesture().onChanged { value in
+                    translation.wrappedValue = value.translation.width
+                }.onEnded { value in
+                    translation.wrappedValue = 0
+                    if value.velocity.width < -300 || value.translation.width < -100 {
+                        dismiss()
+                    }
                 }
-            })
+            )
         }
     }
 }
@@ -58,7 +61,7 @@ private struct SheetGestureRecognizer: UIGestureRecognizerRepresentable {
 
     private func shouldDismiss(_: UIGestureRecognizerType, context: Context) -> Bool {
         guard let velocity = context.converter.velocity(in: .local),
-              let translation = context.converter.translation(in: .local)
+            let translation = context.converter.translation(in: .local)
         else { return false }
         return velocity.x < -300 || translation.x < -100
     }

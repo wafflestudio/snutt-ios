@@ -31,7 +31,7 @@ struct TimetableGridLayer: View {
         let weekCount = painter.weekCount
         let weekWidth = painter.getWeekWidth(in: containerSize, weekCount: weekCount)
         return Path { path in
-            for i in 0 ..< weekCount {
+            for i in 0..<weekCount {
                 let x = painter.hourWidth + CGFloat(i) * weekWidth
                 path.move(to: CGPoint(x: x, y: 0))
                 path.addLine(to: CGPoint(x: x, y: containerSize.height))
@@ -47,7 +47,7 @@ struct TimetableGridLayer: View {
             path.move(to: CGPoint(x: 0, y: 0))
             path.addLine(to: CGPoint(x: containerSize.width, y: 0))
 
-            for i in 0 ... hourCount {
+            for i in 0...hourCount {
                 let y = painter.weekdayHeight + CGFloat(i) * hourHeight
                 path.move(to: CGPoint(x: 0, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))
@@ -60,7 +60,7 @@ struct TimetableGridLayer: View {
         let hourCount = painter.hourCount
         let hourHeight = painter.getHourHeight(in: containerSize, hourCount: hourCount)
         return Path { path in
-            for i in 0 ..< hourCount {
+            for i in 0..<hourCount {
                 let y = painter.weekdayHeight + CGFloat(i) * hourHeight + hourHeight / 2
                 path.move(to: CGPoint(x: 0 + painter.hourWidth, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))
@@ -90,7 +90,7 @@ struct TimetableGridLayer: View {
         let minHour = painter.startingHour
         let maxHour = painter.endingHour
         return VStack(spacing: 0) {
-            ForEach(minHour ... maxHour, id: \.self) { hour in
+            ForEach(minHour...maxHour, id: \.self) { hour in
                 Text(String(hour))
                     .font(.system(size: 12))
                     .foregroundColor(Color(UIColor.secondaryLabel))

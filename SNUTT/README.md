@@ -10,7 +10,7 @@
 ```bash
 # Install prerequisites (if not already installed)
 curl https://mise.run | sh
-brew install just
+brew install just mint pre-commit swift-format
 ```
 
 ## Quick Start
@@ -34,6 +34,10 @@ just dev                   # Generate dev OpenAPI + project
 just prod                  # Generate prod OpenAPI + project
 just clean-build           # Clean build
 just clean-generate        # Clean generate
+
+# Code Quality
+just format                # Format Swift code using swift-format
+just check                 # Run all checks (dependencies, imports, formatting)
 
 # OpenAPI
 just openapi-dev           # Generate dev OpenAPI

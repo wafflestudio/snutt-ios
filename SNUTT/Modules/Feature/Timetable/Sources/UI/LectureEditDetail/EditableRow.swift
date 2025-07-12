@@ -28,11 +28,14 @@ struct EditableRow<Value: Sendable>: View {
 
     private var container: ValueContainer<Value> {
         .init(
-            binding: Binding(get: {
-                viewModel.editableLecture[keyPath: keyPath]
-            }, set: {
-                viewModel.editableLecture[keyPath: keyPath] = $0
-            }),
+            binding: Binding(
+                get: {
+                    viewModel.editableLecture[keyPath: keyPath]
+                },
+                set: {
+                    viewModel.editableLecture[keyPath: keyPath] = $0
+                }
+            ),
             initialValue: viewModel.entryLecture[keyPath: keyPath]
         )
     }

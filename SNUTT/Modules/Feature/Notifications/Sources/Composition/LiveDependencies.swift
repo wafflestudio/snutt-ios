@@ -40,7 +40,8 @@ struct NotificationRepositoryKey: DependencyKey {
                 type: .lectureUpdate,
                 userID: nil,
                 deeplink: URL(
-                    string: "snutt-dev://timetable-lecture?timetableId=66adac5e70971558fad958ff&lectureId=6682b60e92e3ec084f94cfe2"
+                    string:
+                        "snutt-dev://timetable-lecture?timetableId=66adac5e70971558fad958ff&lectureId=6682b60e92e3ec084f94cfe2"
                 )
             ),
             .init(

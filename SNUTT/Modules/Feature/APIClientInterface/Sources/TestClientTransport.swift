@@ -48,7 +48,12 @@ public struct TestClientTransport: ClientTransport {
     ///   - operationID: The ID of the operation being performed.
     /// - Returns: The response received from the call handler.
     /// - Throws: An error if the call handler encounters an issue.
-    public func send(_ request: HTTPRequest, body: HTTPBody?, baseURL: URL, operationID: String) async throws -> (
+    public func send(
+        _ request: HTTPRequest,
+        body: HTTPBody?,
+        baseURL: URL,
+        operationID: String
+    ) async throws -> (
         HTTPResponse, HTTPBody?
     ) { try await callHandler(request, body, baseURL, operationID) }
 }

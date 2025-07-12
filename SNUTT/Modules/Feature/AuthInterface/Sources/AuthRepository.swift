@@ -15,13 +15,13 @@ public protocol AuthRepository: Sendable {
     func addDevice(fcmToken: String) async throws
     func registerWithLocalID(localID: String, localPassword: String, email: String) async throws -> LoginResponse
     func loginWithLocalID(localID: String, localPassword: String) async throws -> LoginResponse
-//    func loginWithApple(appleToken: String) async throws -> LoginResponseDto
-//    func loginWithFacebook(fbId: String, fbToken: String) async throws -> LoginResponseDto
-//    func findLocalId(email: String) async throws -> SendLocalIdDto
-//    func getLinkedEmail(localId: String) async throws -> LinkedEmailDto
-//    func sendVerificationCode(email: String) async throws
-//    func checkVerificationCode(localId: String, code: String) async throws
-//    func resetPassword(localId: String, password: String) async throws
+    //    func loginWithApple(appleToken: String) async throws -> LoginResponseDto
+    //    func loginWithFacebook(fbId: String, fbToken: String) async throws -> LoginResponseDto
+    //    func findLocalId(email: String) async throws -> SendLocalIdDto
+    //    func getLinkedEmail(localId: String) async throws -> LinkedEmailDto
+    //    func sendVerificationCode(email: String) async throws
+    //    func checkVerificationCode(localId: String, code: String) async throws
+    //    func resetPassword(localId: String, password: String) async throws
     func logout(fcmToken: String) async throws
     func deleteAccount() async throws
 }

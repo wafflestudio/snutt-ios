@@ -22,24 +22,28 @@ struct LectureMapView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            KakaoMapView(showMapView: $showMapView,
-                         isMapNotInstalledAlertPresented: $isMapNotInstalledAlertPresented,
-                         colorScheme: colorScheme,
-                         buildings: buildings)
-                .onDisappear {
-                    showMapView = false
-                }
-                .frame(maxWidth: .infinity)
-                .frame(height: 256)
-                .padding(.top, 20)
-                .alert("실행 가능한 지도 애플리케이션이 없습니다.", isPresented: $isMapNotInstalledAlertPresented, actions: {})
+            KakaoMapView(
+                showMapView: $showMapView,
+                isMapNotInstalledAlertPresented: $isMapNotInstalledAlertPresented,
+                colorScheme: colorScheme,
+                buildings: buildings
+            )
+            .onDisappear {
+                showMapView = false
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 256)
+            .padding(.top, 20)
+            .alert("실행 가능한 지도 애플리케이션이 없습니다.", isPresented: $isMapNotInstalledAlertPresented, actions: {})
 
             if showMismatchWarning {
                 Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
                     .font(.system(size: 13))
-                    .foregroundStyle(colorScheme == .dark
-                        ? SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.6)
-                        : SharedUIComponentsAsset.darkGray.swiftUIColor.opacity(0.6))
+                    .foregroundStyle(
+                        colorScheme == .dark
+                            ? SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.6)
+                            : SharedUIComponentsAsset.darkGray.swiftUIColor.opacity(0.6)
+                    )
                     .padding(.bottom, 2)
                     .padding(.top, 6)
             }
@@ -90,10 +94,11 @@ private struct KakaoMapView: UIViewRepresentable {
         private let colorScheme: ColorScheme
         @Binding var isMapNotInstalledAlertPresented: Bool
 
-        init(_ isMapNotInstalledAlertPresented: Binding<Bool>,
-             buildings: [Building],
-             colorScheme: ColorScheme)
-        {
+        init(
+            _ isMapNotInstalledAlertPresented: Binding<Bool>,
+            buildings: [Building],
+            colorScheme: ColorScheme
+        ) {
             self.buildings = buildings.sorted {
                 $0.locationInDMS.latitude > $1.locationInDMS.latitude
                     || $0.locationInDMS.longitude > $1.locationInDMS.longitude
@@ -168,7 +173,7 @@ private struct KakaoMapView: UIViewRepresentable {
             let manager = mapView.getLabelManager()
             let poi = manager.getLabelLayer(layerID: layerID)?.getPoi(poiID: poiID)
             if let coordinate = poi?.position.wgsCoord,
-               let matchingPoi = pois.first(where: { $0.key == poi })
+                let matchingPoi = pois.first(where: { $0.key == poi })
             {
                 openInExternalApp(coordinate: coordinate, label: matchingPoi.value)
             }
@@ -212,9 +217,12 @@ private struct KakaoMapView: UIViewRepresentable {
 
             // blur
             let blurIconStyle = PoiIconStyle(symbol: TimetableAsset.mapBlurBackground.image)
-            let blurPoiStyle = PoiStyle(styleID: "blur", styles: [
-                PerLevelPoiStyle(iconStyle: blurIconStyle, level: 0),
-            ])
+            let blurPoiStyle = PoiStyle(
+                styleID: "blur",
+                styles: [
+                    PerLevelPoiStyle(iconStyle: blurIconStyle, level: 0)
+                ]
+            )
 
             // not focused
             let notFocusedIconStyle = PoiIconStyle(symbol: TimetableAsset.mapPin.image)
@@ -225,11 +233,14 @@ private struct KakaoMapView: UIViewRepresentable {
                 strokeColor: .white
             )
             let poiNotFocusedTextStyle = PoiTextStyle(textLineStyles: [
-                PoiTextLineStyle(textStyle: notFocusedTextStyle),
+                PoiTextLineStyle(textStyle: notFocusedTextStyle)
             ])
-            let notFocusedPoiStyle = PoiStyle(styleID: "notFocused", styles: [
-                PerLevelPoiStyle(iconStyle: notFocusedIconStyle, textStyle: poiNotFocusedTextStyle, level: 0),
-            ])
+            let notFocusedPoiStyle = PoiStyle(
+                styleID: "notFocused",
+                styles: [
+                    PerLevelPoiStyle(iconStyle: notFocusedIconStyle, textStyle: poiNotFocusedTextStyle, level: 0)
+                ]
+            )
 
             // focused(dim)
             let focusedIconStyle = PoiIconStyle(symbol: TimetableAsset.mapPinDim.image)
@@ -240,11 +251,14 @@ private struct KakaoMapView: UIViewRepresentable {
                 strokeColor: .init(.init(hex: "#8A8A8A"))
             )
             let poiFocusedTextStyle = PoiTextStyle(textLineStyles: [
-                PoiTextLineStyle(textStyle: focusedTextStyle),
+                PoiTextLineStyle(textStyle: focusedTextStyle)
             ])
-            let focusedPoiStyle = PoiStyle(styleID: "focused", styles: [
-                PerLevelPoiStyle(iconStyle: focusedIconStyle, textStyle: poiFocusedTextStyle, level: 0),
-            ])
+            let focusedPoiStyle = PoiStyle(
+                styleID: "focused",
+                styles: [
+                    PerLevelPoiStyle(iconStyle: focusedIconStyle, textStyle: poiFocusedTextStyle, level: 0)
+                ]
+            )
 
             manager.addPoiStyle(blurPoiStyle)
             manager.addPoiStyle(notFocusedPoiStyle)
@@ -271,17 +285,23 @@ private struct KakaoMapView: UIViewRepresentable {
                 poiOptionList.append(markerPoiOption)
 
                 let markerLayer = manager.getLabelLayer(layerID: "poi\(offset)")
-                if let blurPoi = blurLayer?.addPoi(option: blurPoiOption,
-                                                   at: .init(longitude: building.locationInDMS.longitude,
-                                                             latitude: building.locationInDMS.latitude - 0.0007))
-                {
+                if let blurPoi = blurLayer?.addPoi(
+                    option: blurPoiOption,
+                    at: .init(
+                        longitude: building.locationInDMS.longitude,
+                        latitude: building.locationInDMS.latitude - 0.0007
+                    )
+                ) {
                     blurPoi.show()
                 }
 
-                if let markerPoi = markerLayer?.addPoi(option: poiOptionList[offset],
-                                                       at: .init(longitude: building.locationInDMS.longitude,
-                                                                 latitude: building.locationInDMS.latitude))
-                {
+                if let markerPoi = markerLayer?.addPoi(
+                    option: poiOptionList[offset],
+                    at: .init(
+                        longitude: building.locationInDMS.longitude,
+                        latitude: building.locationInDMS.latitude
+                    )
+                ) {
                     pois[markerPoi] = building.number
                     markerPoi.show()
                 }
@@ -335,7 +355,8 @@ private struct KakaoMapView: UIViewRepresentable {
             let urlString =
                 "nmap://place?lat=\(coordinate.latitude)&lng=\(coordinate.longitude)&name=\(label)&appname=" + bundleID
             guard let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-                  let url = URL(string: encodedString) else { return nil }
+                let url = URL(string: encodedString)
+            else { return nil }
             return url
         }
 

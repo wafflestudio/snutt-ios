@@ -133,8 +133,10 @@ private struct ProminentButton: View {
             configuration.cornerStyle = .large
             configuration.baseForegroundColor = .white
             configuration.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
-            configuration.background.backgroundColor = isEnabled ? SharedUIComponentsAsset.cyan
-                .color : .tertiarySystemFill
+            configuration.background.backgroundColor =
+                isEnabled
+                ? SharedUIComponentsAsset.cyan
+                    .color : .tertiarySystemFill
             return configuration
         }
     }

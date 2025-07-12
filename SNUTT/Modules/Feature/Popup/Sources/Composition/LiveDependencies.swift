@@ -17,7 +17,7 @@ struct PopupServerRepositoryKey: DependencyKey {
     static let previewValue: any PopupServerRepository = {
         let spy = PopupServerRepositorySpy()
         spy.fetchPopupsReturnValue = [
-            .init(key: "123", imageUri: "https://picsum.photos/200/300", hiddenDays: 3),
+            .init(key: "123", imageUri: "https://picsum.photos/200/300", hiddenDays: 3)
         ]
         return spy
     }()

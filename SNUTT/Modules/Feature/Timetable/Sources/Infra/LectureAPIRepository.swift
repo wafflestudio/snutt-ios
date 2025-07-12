@@ -21,9 +21,11 @@ public struct LectureAPIRepository: LectureRepository {
         return response.compactMap { Building(dto: $0) }
     }
 
-    public func updateLecture(timetableID: String, lecture: Lecture,
-                              overrideOnConflict: Bool) async throws -> Timetable
-    {
+    public func updateLecture(
+        timetableID: String,
+        lecture: Lecture,
+        overrideOnConflict: Bool
+    ) async throws -> Timetable {
         let lectureID = lecture.id
         let timePlaces = try lecture.timePlaces
             .map {
@@ -55,9 +57,11 @@ public struct LectureAPIRepository: LectureRepository {
         ).ok.body.json.toTimetable()
     }
 
-    public func addCustomLecture(timetableID: String, lecture: Lecture,
-                                 overrideOnConflict: Bool) async throws -> Timetable
-    {
+    public func addCustomLecture(
+        timetableID: String,
+        lecture: Lecture,
+        overrideOnConflict: Bool
+    ) async throws -> Timetable {
         let timePlaces = try lecture.timePlaces
             .map {
                 try Components.Schemas.ClassPlaceAndTimeLegacyRequestDto(
@@ -113,8 +117,8 @@ public struct LectureAPIRepository: LectureRepository {
 extension Building {
     init?(dto: Components.Schemas.LectureBuilding) {
         guard let id = dto.id,
-              let locationInDecimal = dto.locationInDecimal,
-              let locationInDMS = dto.locationInDMS
+            let locationInDecimal = dto.locationInDecimal,
+            let locationInDMS = dto.locationInDMS
         else {
             return nil
         }

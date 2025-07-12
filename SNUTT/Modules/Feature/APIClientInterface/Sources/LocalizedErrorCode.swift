@@ -146,8 +146,8 @@ public enum LocalizedErrorCode: Int, LocalizedError {
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorDescriptionNoFCMKey
         case .tagNotFound, .timetableNotFound, .lectureNotFound, .userNotFound,
-             .colorlistNotFound,
-             .emailNotFound:
+            .colorlistNotFound,
+            .emailNotFound:
             APIClientInterfaceStrings.errorDescriptionNotFound
         case .cantChangeOthersTheme:
             APIClientInterfaceStrings.errorDescriptionCantChangeTheme
@@ -233,8 +233,8 @@ public enum LocalizedErrorCode: Int, LocalizedError {
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorFailureReasonNoFCMKey
         case .tagNotFound, .timetableNotFound, .lectureNotFound, .userNotFound,
-             .colorlistNotFound,
-             .emailNotFound:
+            .colorlistNotFound,
+            .emailNotFound:
             APIClientInterfaceStrings.errorFailureReasonNotFound
         case .cantChangeOthersTheme:
             APIClientInterfaceStrings.errorFailureReasonCantChangeTheme
@@ -320,8 +320,8 @@ public enum LocalizedErrorCode: Int, LocalizedError {
         case .userHasNoFCMKey:
             APIClientInterfaceStrings.errorRecoverySuggestionNoFCMKey
         case .tagNotFound, .timetableNotFound, .lectureNotFound, .userNotFound,
-             .colorlistNotFound,
-             .emailNotFound:
+            .colorlistNotFound,
+            .emailNotFound:
             APIClientInterfaceStrings.errorRecoverySuggestionNotFound
         case .cantChangeOthersTheme:
             APIClientInterfaceStrings.errorRecoverySuggestionCantChangeTheme

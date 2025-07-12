@@ -6,10 +6,13 @@
 //
 
 import Dependencies
+import Foundation
+import Observation
 import TimetableInterface
 
+@Observable
 @MainActor
-struct TimetableMenuViewModel {
+final class TimetableMenuViewModel {
     private let timetableViewModel: TimetableViewModel
 
     init(timetableViewModel: TimetableViewModel) {
@@ -22,6 +25,10 @@ struct TimetableMenuViewModel {
 
     var currentTimetable: Timetable? {
         timetableViewModel.currentTimetable
+    }
+
+    var availableQuarters: [Quarter] {
+        timetableViewModel.availableQuarters
     }
 
     func presentThemeSheet() {
@@ -38,6 +45,13 @@ struct TimetableMenuViewModel {
             for (quarter, items) in dict {
                 groups.append(TimetableGroup(quarter: quarter, metadataList: items))
             }
+
+            if let latestQuarter = timetableViewModel.availableQuarters.first,
+                !groups.contains(where: { $0.quarter == latestQuarter })
+            {
+                groups.append(TimetableGroup(quarter: latestQuarter, metadataList: []))
+            }
+
             return groups.sorted { $0.quarter > $1.quarter }
         }
     }
@@ -64,6 +78,10 @@ struct TimetableMenuViewModel {
 
     func renameTimetable(timetableID: String, title: String) async throws {
         try await timetableViewModel.renameTimetable(timetableID: timetableID, title: title)
+    }
+
+    func createTimetable(title: String, quarter: Quarter) async throws {
+        try await timetableViewModel.createTimetable(title: title, quarter: quarter)
     }
 }
 

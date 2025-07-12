@@ -22,7 +22,7 @@ public struct TimetableUseCase: Sendable {
 
     func loadLocalRecentTimetable() -> Timetable? {
         guard let timetable = try? timetableLocalRepository.loadSelectedTimetable(),
-              authState.get(.userID) == timetable.userID
+            authState.get(.userID) == timetable.userID
         else { return nil }
         return timetable
     }
@@ -39,9 +39,11 @@ public struct TimetableUseCase: Sendable {
         return timetable
     }
 
-    func addLecture(timetableID: String, lectureID: String,
-                    overrideOnConflict: Bool = false) async throws -> Timetable
-    {
+    func addLecture(
+        timetableID: String,
+        lectureID: String,
+        overrideOnConflict: Bool = false
+    ) async throws -> Timetable {
         let timetable = try await timetableRepository.addLecture(
             timetableID: timetableID,
             lectureID: lectureID,

@@ -24,7 +24,7 @@ public struct ErrorDecodingMiddleware: ClientMiddleware {
         guard let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         else { return (response, HTTPBody(data)) }
         if let error = jsonData["errcode"] as? Int,
-           let knownError = LocalizedErrorCode(rawValue: error)
+            let knownError = LocalizedErrorCode(rawValue: error)
         {
             throw knownError
         }

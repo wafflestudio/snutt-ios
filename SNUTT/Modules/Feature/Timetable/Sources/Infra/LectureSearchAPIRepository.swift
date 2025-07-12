@@ -45,26 +45,30 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
             case let .credit(int):
                 credit.append(Int32(int))
             case .instructor:
-                continue // not supported
+                continue  // not supported
             case let .categoryPre2025(string):
                 categoryPre2025.append(string)
             case let .category(string):
                 category.append(string)
             case let .timeInclude(searchTimeRange):
                 if let day = Components.Schemas.SearchTimeDto.dayPayload(rawValue: searchTimeRange.day) {
-                    times.append(.init(
-                        day: day,
-                        endMinute: Int32(searchTimeRange.endMinute),
-                        startMinute: Int32(searchTimeRange.startMinute)
-                    ))
+                    times.append(
+                        .init(
+                            day: day,
+                            endMinute: Int32(searchTimeRange.endMinute),
+                            startMinute: Int32(searchTimeRange.startMinute)
+                        )
+                    )
                 }
             case let .timeExclude(searchTimeRange):
                 if let day = Components.Schemas.SearchTimeDto.dayPayload(rawValue: searchTimeRange.day) {
-                    timesToExclude.append(.init(
-                        day: day,
-                        endMinute: Int32(searchTimeRange.endMinute),
-                        startMinute: Int32(searchTimeRange.startMinute)
-                    ))
+                    timesToExclude.append(
+                        .init(
+                            day: day,
+                            endMinute: Int32(searchTimeRange.endMinute),
+                            startMinute: Int32(searchTimeRange.startMinute)
+                        )
+                    )
                 }
             case let .etc(etcType):
                 etc.append(etcType.code)
@@ -95,10 +99,12 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
     }
 
     func fetchSearchPredicates(quarter: Quarter) async throws -> [SearchPredicate] {
-        let response = try await apiClient.getTagList(path: .init(
-            year: String(quarter.year),
-            semester: String(quarter.semester.rawValue)
-        ))
+        let response = try await apiClient.getTagList(
+            path: .init(
+                year: String(quarter.year),
+                semester: String(quarter.semester.rawValue)
+            )
+        )
         let json = try response.ok.body.json
         var searchPredicates: [SearchPredicate] = json.sortCriteria.map { .sortCriteria($0) }
         searchPredicates.append(contentsOf: json.academic_year.map { .academicYear($0) })

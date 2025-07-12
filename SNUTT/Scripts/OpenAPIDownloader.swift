@@ -44,7 +44,8 @@ struct OpenAPIDownloader: Sendable {
         }
         try? fileManager.removeItem(at: fileURL)
         try fileManager.createDirectory(
-            at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true
+            at: fileURL.deletingLastPathComponent(),
+            withIntermediateDirectories: true
         )
         let (rawData, _) = try await URLSession.shared.data(from: specURL)
         let specString = String(data: rawData, encoding: .utf8)?
@@ -141,7 +142,7 @@ extension Dictionary where Key == String, Value == Any {
             }
         }
         if let typeValue = self["type"] as? String, typeValue == "string",
-           let enumValue = self["enum"] as? [Any]
+            let enumValue = self["enum"] as? [Any]
         {
             let conversionResult = canConvertAllStringElementsToInt(enumValue)
             if conversionResult.canConvert, let intArray = conversionResult.intArray {
@@ -179,7 +180,9 @@ extension Dictionary where Key == String, Value == Any {
     }
 }
 
-private func canConvertAllStringElementsToInt(_ array: [Any]) -> (
+private func canConvertAllStringElementsToInt(
+    _ array: [Any]
+) -> (
     canConvert: Bool, intArray: [Int]?
 ) {
     let intArray = array.compactMap { $0 as? String }.compactMap { Int($0) }

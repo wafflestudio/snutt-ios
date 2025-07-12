@@ -15,7 +15,7 @@ struct TimetableAccessoryInlineView: View {
         loadImage("logo.inline", targetHeight: 15)
 
         if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date, by: .startTime),
-           let firstLectureTime = lectureTimes.get(at: 0)
+            let firstLectureTime = lectureTimes.get(at: 0)
         {
             Text("\(firstLectureTime.lecture.courseTitle)")
         } else if isLoginRequired {
@@ -50,8 +50,8 @@ extension TimetableAccessoryInlineView {
         // try to load logo image from bundle resources,
         // because accessoryInline widget does not read images from Assets.
         guard let url = Bundle.main.url(forResource: imageName, withExtension: "png"),
-              let data = try? Data(contentsOf: url),
-              let uiImage = UIImage(data: data)
+            let data = try? Data(contentsOf: url),
+            let uiImage = UIImage(data: data)
         else {
             // fallback to default symbol
             return Image(systemName: fallback)

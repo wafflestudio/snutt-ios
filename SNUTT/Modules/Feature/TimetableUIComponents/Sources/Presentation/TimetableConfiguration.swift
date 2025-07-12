@@ -25,7 +25,8 @@ public struct TimetableConfiguration: Codable, Equatable, Sendable {
         for (offset, element) in Weekday.allCases.enumerated() {
             weekdayOrder[element] = offset
         }
-        return visibleWeeks
+        return
+            visibleWeeks
             .sorted { weekdayOrder[$0]! < weekdayOrder[$1]! }
     }
 

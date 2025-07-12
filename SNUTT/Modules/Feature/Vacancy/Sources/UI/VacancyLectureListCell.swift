@@ -71,7 +71,7 @@ public struct VacancyLectureListCell: View {
                 }
                 Spacer()
                 if let instructor = lecture.instructor,
-                   let credit = lecture.credit
+                    let credit = lecture.credit
                 {
                     Text("\(instructor) / \(credit)학점")
                         .font(.system(size: 12))

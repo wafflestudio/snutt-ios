@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: Configure Firebase
 
         if let filePath = Bundle.main.path(forResource: firebaseConfigName, ofType: "plist"),
-           let configOption = FirebaseOptions(contentsOfFile: filePath)
+            let configOption = FirebaseOptions(contentsOfFile: filePath)
         {
             FirebaseApp.configure(options: configOption)
             FirebaseConfiguration.shared.setLoggerLevel(.min)
@@ -67,30 +67,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 /// Firebase Push Notification Settings.
 extension AppDelegate: @preconcurrency UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
-                                    -> Void)
-    {
+    func userNotificationCenter(
+        _: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
+            -> Void
+    ) {
         let userInfo = notification.request.content.userInfo
         Messaging.messaging().appDidReceiveMessage(userInfo)
         completionHandler([[.banner, .sound, .list]])
     }
 
-    func userNotificationCenter(_: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void)
-    {
+    func userNotificationCenter(
+        _: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
         let userInfo = response.notification.request.content.userInfo
         Messaging.messaging().appDidReceiveMessage(userInfo)
         openUrl(from: response.notification)
         completionHandler()
     }
 
-    func application(_: UIApplication,
-                     didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void)
-    {
+    func application(
+        _: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+    ) {
         Messaging.messaging().appDidReceiveMessage(userInfo)
         completionHandler(.noData)
     }
