@@ -25,9 +25,11 @@ struct MapToggleButton: View {
                 }
                 Text(isOpen ? "지도 닫기" : "지도에서 보기")
                     .font(.system(size: 14))
-                    .foregroundStyle(colorScheme == .dark
-                        ? SharedUIComponentsAsset.gray30.swiftUIColor
-                        : SharedUIComponentsAsset.darkGray.swiftUIColor)
+                    .foregroundStyle(
+                        colorScheme == .dark
+                            ? SharedUIComponentsAsset.gray30.swiftUIColor
+                            : SharedUIComponentsAsset.darkGray.swiftUIColor
+                    )
                 Spacer().frame(width: 4)
                 TimetableAsset.chevronDown.swiftUIImage
                     .rotationEffect(.init(degrees: isOpen ? 180.0 : .zero))

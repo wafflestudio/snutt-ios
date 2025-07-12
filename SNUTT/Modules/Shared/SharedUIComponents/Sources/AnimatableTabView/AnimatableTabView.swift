@@ -36,7 +36,8 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
         tabItems = tabScenes.compactMap { $0.tabItem }
         super.init(nibName: nil, bundle: nil)
         delegate = self
-        viewControllers = tabScenes
+        viewControllers =
+            tabScenes
             .compactMap { $0.rootView }
             .map { UIHostingController(rootView: $0) }
     }
@@ -81,10 +82,12 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
     }
 
     private func makeTabButton(for tabItem: T) -> UIButton {
-        let button = AnimatableUIButton(animationOptions: .identity
-            .scale(0.8)
-            .backgroundColor(touchDown: .black.opacity(0.1))
-            .impact())
+        let button = AnimatableUIButton(
+            animationOptions: .identity
+                .scale(0.8)
+                .backgroundColor(touchDown: .black.opacity(0.1))
+                .impact()
+        )
         var configuration = UIButton.Configuration.plain()
         configuration.cornerStyle = .large
         button.configuration = configuration
@@ -112,16 +115,19 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
         to toVC: UIViewController
     ) -> (any UIViewControllerAnimatedTransitioning)? {
         guard let viewControllers = tabBarController.viewControllers,
-              let fromIndex = viewControllers.firstIndex(of: fromVC),
-              let toIndex = viewControllers.firstIndex(of: toVC)
+            let fromIndex = viewControllers.firstIndex(of: fromVC),
+            let toIndex = viewControllers.firstIndex(of: toVC)
         else {
             isTransitionInProgress = false
             return nil
         }
         let direction: SlideTransitionAnimator.Direction = toIndex > fromIndex ? .right : .left
-        return SlideTransitionAnimator(direction: direction, completion: { [weak self] in
-            self?.isTransitionInProgress = false
-        })
+        return SlideTransitionAnimator(
+            direction: direction,
+            completion: { [weak self] in
+                self?.isTransitionInProgress = false
+            }
+        )
     }
 }
 
@@ -144,7 +150,7 @@ private class SlideTransitionAnimator: NSObject, UIViewControllerAnimatedTransit
 
     func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
         guard let fromView = transitionContext.view(forKey: .from),
-              let toView = transitionContext.view(forKey: .to)
+            let toView = transitionContext.view(forKey: .to)
         else {
             transitionContext.completeTransition(false)
             completion()

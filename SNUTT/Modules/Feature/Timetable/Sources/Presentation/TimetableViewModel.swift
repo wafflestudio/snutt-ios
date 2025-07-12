@@ -27,6 +27,9 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     @ObservationIgnored
     @Dependency(\.timetableLocalRepository) private var timetableLocalRepository
 
+    @ObservationIgnored
+    @Dependency(\.courseBookRepository) private var courseBookRepository
+
     private let router: TimetableRouter
     var paths: [TimetableDetailSceneTypes] {
         get { router.navigationPaths }
@@ -40,6 +43,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     public private(set) var currentTimetable: Timetable?
     private(set) var metadataLoadState: MetadataLoadState = .loading
+    private(set) var courseBookState: CourseBookState = .loading
 
     var isMenuPresented = false
     var isThemeSheetPresented = false
@@ -53,6 +57,15 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     var timetableTitle: String {
         currentTimetable?.title ?? ""
+    }
+
+    var availableQuarters: [Quarter] {
+        switch courseBookState {
+        case let .loaded(courseBooks):
+            return courseBooks.map { $0.quarter }.sorted { $0 > $1 }
+        default:
+            return []
+        }
     }
 
     func makePainter(
@@ -94,7 +107,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     func deleteTimetable(timetableID: String) async throws {
         guard case let .loaded(metadataList) = metadataLoadState,
-              let originalIndex = metadataList.firstIndex(where: { $0.id == timetableID })
+            let originalIndex = metadataList.firstIndex(where: { $0.id == timetableID })
         else { throw LocalizedErrorCode.timetableNotFound }
         let newMetadataList = try await timetableRepository.deleteTimetable(timetableID: timetableID)
         metadataLoadState = .loaded(newMetadataList)
@@ -133,8 +146,8 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     func removeLecture(lecture: Lecture) async throws {
         guard let currentTimetable,
-              let timetableLectureID = currentTimetable.lectures
-              .first(where: { $0.lectureID == (lecture.lectureID ?? lecture.id) })?.id
+            let timetableLectureID = currentTimetable.lectures
+                .first(where: { $0.lectureID == (lecture.lectureID ?? lecture.id) })?.id
         else { return }
         self.currentTimetable = try await timetableUseCase.removeLecture(
             timetableID: currentTimetable.id,
@@ -146,12 +159,32 @@ public class TimetableViewModel: TimetableViewModelProtocol {
         let metadataList = try await timetableRepository.updateTimetableTitle(timetableID: timetableID, title: title)
         metadataLoadState = .loaded(metadataList)
     }
+
+    func createTimetable(title: String, quarter: Quarter) async throws {
+        let metadataList = try await timetableRepository.createTimetable(title: title, quarter: quarter)
+        metadataLoadState = .loaded(metadataList)
+    }
+
+    func loadCourseBooks() async throws {
+        switch courseBookState {
+        case .loading:
+            let courseBooks = try await courseBookRepository.fetchCourseBookList()
+            courseBookState = .loaded(courseBooks)
+        case .loaded:
+            return
+        }
+    }
 }
 
 extension TimetableViewModel {
     enum MetadataLoadState {
         case loading
         case loaded([TimetableMetadata])
+    }
+
+    enum CourseBookState: Equatable {
+        case loading
+        case loaded([CourseBook])
     }
 }
 

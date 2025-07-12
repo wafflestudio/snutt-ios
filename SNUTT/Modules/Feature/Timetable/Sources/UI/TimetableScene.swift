@@ -29,10 +29,12 @@ public struct TimetableScene: View {
     ) {
         _isSearchMode = isSearchMode
         self.timetableViewModel = timetableViewModel
-        _searchViewModel = State(initialValue: LectureSearchViewModel(
-            timetableViewModel: timetableViewModel,
-            router: lectureSearchRouter
-        ))
+        _searchViewModel = State(
+            initialValue: LectureSearchViewModel(
+                timetableViewModel: timetableViewModel,
+                router: lectureSearchRouter
+            )
+        )
     }
 
     public var body: some View {
@@ -66,6 +68,11 @@ public struct TimetableScene: View {
                     group.addTask {
                         await errorAlertHandler.withAlert {
                             try await timetableViewModel.loadTimetableList()
+                        }
+                    }
+                    group.addTask {
+                        await errorAlertHandler.withAlert {
+                            try await timetableViewModel.loadCourseBooks()
                         }
                     }
                 }
@@ -119,14 +126,19 @@ public struct TimetableScene: View {
 
     private var timetable: some View {
         ZStack {
-            TimetableZStack(painter: timetableViewModel.makePainter(
-                selectedLecture: searchViewModel.selectedLecture,
-                selectedTheme: themeViewModel.selectedTheme,
-                availableThemes: themeViewModel.availableThemes
-            ))
-            .environment(\.lectureTapAction, LectureTapAction(action: { lecture in
-                timetableViewModel.paths.append(.lectureDetail(lecture))
-            }))
+            TimetableZStack(
+                painter: timetableViewModel.makePainter(
+                    selectedLecture: searchViewModel.selectedLecture,
+                    selectedTheme: themeViewModel.selectedTheme,
+                    availableThemes: themeViewModel.availableThemes
+                )
+            )
+            .environment(
+                \.lectureTapAction,
+                LectureTapAction(action: { lecture in
+                    timetableViewModel.paths.append(.lectureDetail(lecture))
+                })
+            )
         }
     }
 }

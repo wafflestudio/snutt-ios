@@ -8,9 +8,11 @@
 import SwiftUI
 
 extension View {
-    @ViewBuilder public func highlightOnPress(precondition: Bool = true, scale: CGFloat = 0.98,
-                                              backgroundColor: Color = .clear) -> some View
-    {
+    @ViewBuilder public func highlightOnPress(
+        precondition: Bool = true,
+        scale: CGFloat = 0.98,
+        backgroundColor: Color = .clear
+    ) -> some View {
         if precondition {
             modifier(HighlightModifier(scale: scale, backgroundColor: backgroundColor))
         } else {
@@ -39,8 +41,12 @@ private struct HighlightModifier: ViewModifier {
             )
             .scaleEffect(isPressed ? scale : 1)
             .animation(.defaultSpring, value: isPressed)
-            .onLongPressGesture(minimumDuration: 0, perform: {}, onPressingChanged: {
-                isPressed = $0
-            })
+            .onLongPressGesture(
+                minimumDuration: 0,
+                perform: {},
+                onPressingChanged: {
+                    isPressed = $0
+                }
+            )
     }
 }

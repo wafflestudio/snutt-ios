@@ -205,9 +205,7 @@ struct LectureEditDetailScene: View {
     }
 
     private var shouldShowToolbarActions: Bool {
-        !viewModel.entryLecture.isCustom &&
-            !editMode.isEditing &&
-            (displayMode == .normal || displayMode.isPreview)
+        !viewModel.entryLecture.isCustom && !editMode.isEditing && (displayMode == .normal || displayMode.isPreview)
     }
 
     private var toolbarActionButtons: some View {
@@ -218,8 +216,11 @@ struct LectureEditDetailScene: View {
                     try await viewModel.toggleVacancyNotification()
                 }
             } label: {
-                Image(uiImage: viewModel.isVacancyNotificationEnabled ? TimetableAsset.searchVacancyFill
-                    .image : TimetableAsset.searchVacancy.image)
+                Image(
+                    uiImage: viewModel.isVacancyNotificationEnabled
+                        ? TimetableAsset.searchVacancyFill
+                            .image : TimetableAsset.searchVacancy.image
+                )
             }
 
             // 북마크 버튼
@@ -228,8 +229,12 @@ struct LectureEditDetailScene: View {
                     try await viewModel.toggleBookmark()
                 }
             } label: {
-                Image(uiImage: viewModel.isBookmarked ? TimetableAsset.navBookmarkOn.image : TimetableAsset.navBookmark
-                    .image)
+                Image(
+                    uiImage: viewModel.isBookmarked
+                        ? TimetableAsset.navBookmarkOn.image
+                        : TimetableAsset.navBookmark
+                            .image
+                )
             }
         }
     }
@@ -390,7 +395,8 @@ extension LectureEditDetailScene {
     NavigationStack {
         LectureEditDetailScene(
             timetableViewModel: .init(),
-            entryLecture: PreviewHelpers.preview(id: "1").lectures.first!, displayMode: .normal
+            entryLecture: PreviewHelpers.preview(id: "1").lectures.first!,
+            displayMode: .normal
         )
     }
     .tint(.label)

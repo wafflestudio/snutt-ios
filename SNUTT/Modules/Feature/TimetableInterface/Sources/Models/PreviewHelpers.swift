@@ -26,7 +26,7 @@ public enum PreviewHelpers {
             id: id,
             title: timetableTitles.randomElement(using: &generator)!,
             quarter: quarters.randomElement(using: &generator)!,
-            lectures: (3 ... Int.random(in: 4 ... 6, using: &generator))
+            lectures: (3...Int.random(in: 4...6, using: &generator))
                 .map { _ in previewLecture(using: &generator) },
             userID: "user123",
             theme: .builtInTheme(.snutt)
@@ -44,7 +44,7 @@ public enum PreviewHelpers {
             id: id,
             title: timetableTitles.randomElement(using: &generator)!,
             quarter: quarters.randomElement(using: &generator)!,
-            totalCredit: Int.random(in: 6 ... 18, using: &generator),
+            totalCredit: Int.random(in: 6...18, using: &generator),
             isPrimary: Bool.random(using: &generator)
         )
     }
@@ -54,17 +54,17 @@ public enum PreviewHelpers {
             id: UUID().uuidString,
             lectureID: UUID().uuidString,
             courseTitle: courseTitles.randomElement(using: &generator)!,
-            timePlaces: (1 ... Int.random(in: 1 ... 3, using: &generator))
+            timePlaces: (1...Int.random(in: 1...3, using: &generator))
                 .map { _ in previewTimeplace(using: &generator) },
             lectureNumber: "00\(Int.random(in: 1 ... 9, using: &generator))",
             instructor: instructorNames.randomElement(using: &generator)!,
-            credit: Int64.random(in: 1 ... 4, using: &generator),
+            credit: Int64.random(in: 1...4, using: &generator),
             courseNumber: "123",
             department: departments.randomElement(using: &generator)!,
             academicYear: "\(Int.random(in: 1 ... 4, using: &generator))학년",
             remark: remarks.randomElement(using: &generator)!,
             evLecture: .init(evLectureID: 2, avgRating: 3.2, evaluationCount: 20),
-            colorIndex: Int.random(in: 0 ... 9, using: &generator),
+            colorIndex: Int.random(in: 0...9, using: &generator),
             customColor: nil,
             classification: "분류",
             category: "구분",
@@ -78,11 +78,11 @@ public enum PreviewHelpers {
     private static func previewTimeplace<T: RandomNumberGenerator>(using generator: inout T) -> TimePlace {
         let day = Weekday.allCases.randomElement(using: &generator)!
         let startTime = Time(
-            hour: Int.random(in: 9 ... 18, using: &generator),
+            hour: Int.random(in: 9...18, using: &generator),
             minute: [0, 15, 30, 45].randomElement(using: &generator)!
         )
         let endTime = Time(
-            hour: startTime.hour + Int.random(in: 1 ... 3, using: &generator),
+            hour: startTime.hour + Int.random(in: 1...3, using: &generator),
             minute: [0, 15, 30, 45].randomElement(using: &generator)!
         )
         let places = ["Room 101", "Room 202", "Room 303"]

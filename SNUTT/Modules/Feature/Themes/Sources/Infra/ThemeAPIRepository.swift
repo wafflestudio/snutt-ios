@@ -25,13 +25,14 @@ public struct ThemeAPIRepository: ThemeRepository {
 
 extension Components.Schemas.TimetableThemeDto {
     fileprivate func toTheme() throws -> Theme {
-        let colors: [LectureColor] = colors?.map { color in
-            if let fg = color.fg, let bg = color.bg {
-                LectureColor(fgHex: fg, bgHex: bg)
-            } else {
-                LectureColor.temporary
-            }
-        } ?? []
+        let colors: [LectureColor] =
+            colors?.map { color in
+                if let fg = color.fg, let bg = color.bg {
+                    LectureColor(fgHex: fg, bgHex: bg)
+                } else {
+                    LectureColor.temporary
+                }
+            } ?? []
         if !isCustom {
             return switch theme {
             case ._0: .snutt

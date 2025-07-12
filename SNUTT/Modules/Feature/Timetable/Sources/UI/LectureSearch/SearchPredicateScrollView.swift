@@ -73,7 +73,7 @@ extension SearchFilterCategory {
         case .category: return Color(hex: "#4F48C4")
         case .categoryPre2025: return Color(hex: "#4F48C4")
         case .etc: return Color(hex: "#AF56B3")
-        case .instructor: return Color.clear // not supported
+        case .instructor: return Color.clear  // not supported
         }
     }
 }
