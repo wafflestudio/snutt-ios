@@ -10,17 +10,18 @@ import TipKit
 
 extension View {
     func popoverTipIfAvailable(_ message: String) -> some View {
-        modifier(PopoverTipModifier(message: message))
+        modifier(PopoverTipModifier(displayMessage: message))
     }
 }
 
 private struct PopoverTipModifier: ViewModifier {
-    let message: String
+    let displayMessage: String
 
     func body(content: Content) -> some View {
         if #available(iOS 17.0, *) {
             content
-                .popoverTip(MessageTip(_message: message), arrowEdge: .bottom)
+                .popoverTip(MessageTip(displayMessage: displayMessage), arrowEdge: .bottom)
+                .tipViewStyle(MessageTipViewStyle())
         } else {
             content
         }
@@ -32,7 +33,7 @@ private struct MessageTip: Tip {
     static let dismissed: Event = .init(id: "dismissedPopoverTip")
 
     var title: Text { Text("") }
-    var message: Text? { Text(_message) }
+    var message: Text? { Text(displayMessage) }
     var rules: [Rule] {
         #Rule(Self.dismissed) {
             $0.donations.count < 1
@@ -43,5 +44,24 @@ private struct MessageTip: Tip {
         IgnoresDisplayFrequency(true)
     }
 
-    let _message: String
+    let displayMessage: String
+}
+
+@available(iOS 17.0, *)
+private struct MessageTipViewStyle: TipViewStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(alignment: .top) {
+            configuration.message?
+                .font(.system(size: 14))
+                .lineSpacing(2)
+                .multilineTextAlignment(.leading)
+                .tint(.secondary)
+            Spacer()
+            Image(systemName: "xmark")
+                .font(.system(size: 15, weight: .medium))
+                .tint(.primary.opacity(0.3))
+        }
+        .padding(.horizontal, 16)
+        .frame(width: 272)
+    }
 }

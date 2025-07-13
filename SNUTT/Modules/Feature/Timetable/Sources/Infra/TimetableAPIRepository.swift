@@ -35,12 +35,13 @@ public struct TimetableAPIRepository: TimetableRepository {
     }
 
     public func updateTimetableTheme(timetableID: String, theme: Theme) async throws -> Timetable {
-        let dto: Components.Schemas.TimetableModifyThemeRequestDto = switch theme.type {
-        case let .builtInTheme(theme):
-            .init(theme: .init(rawValue: theme.toPayload().rawValue))
-        case let .customTheme(themeID):
-            .init(theme: nil, themeId: themeID)
-        }
+        let dto: Components.Schemas.TimetableModifyThemeRequestDto =
+            switch theme.type {
+            case let .builtInTheme(theme):
+                .init(theme: .init(rawValue: theme.toPayload().rawValue))
+            case let .customTheme(themeID):
+                .init(theme: nil, themeId: themeID)
+            }
         return try await apiClient.modifyTimetableTheme(path: .init(timetableId: timetableID), body: .json(dto)).ok
             .body.json.toTimetable()
     }
@@ -65,38 +66,68 @@ public struct TimetableAPIRepository: TimetableRepository {
         }
     }
 
-    public func addLecture(timetableID: String, lectureID: String) async throws -> Timetable {
-        try await apiClient.addLecture(path: .init(timetableId: timetableID, lectureId: lectureID)).ok.body.json
-            .toTimetable()
+    public func addLecture(
+        timetableID: String,
+        lectureID: String,
+        overrideOnConflict: Bool = false
+    ) async throws -> Timetable {
+        try await apiClient.addLecture(
+            path: .init(timetableId: timetableID, lectureId: lectureID),
+            query: .init(isForced: overrideOnConflict.description)
+        ).ok.body.json.toTimetable()
     }
 
     public func removeLecture(timetableID: String, lectureID: String) async throws -> Timetable {
-        try await apiClient.deleteTimetableLecture(.init(path: .init(
-            timetableId: timetableID,
-            timetableLectureId: lectureID
-        ))).ok.body.json.toTimetable()
+        try await apiClient.deleteTimetableLecture(
+            .init(
+                path: .init(
+                    timetableId: timetableID,
+                    timetableLectureId: lectureID
+                )
+            )
+        ).ok.body.json.toTimetable()
+    }
+
+    public func createTimetable(title: String, quarter: Quarter) async throws -> [TimetableMetadata] {
+        try await apiClient.addTimetable(
+            .init(
+                body: .json(
+                    .init(
+                        semester: try require(
+                            Components.Schemas.TimetableAddRequestDto.semesterPayload(
+                                rawValue: quarter.semester.rawValue
+                            )
+                        ),
+                        title: title,
+                        year: Int32(quarter.year)
+                    )
+                )
+            )
+        ).ok.body.json.map { try $0.toTimetableMetadata() }
     }
 }
 
 extension Components.Schemas.TimetableLegacyDto {
     func toTimetable() throws -> Timetable {
-        let builtInTheme: Theme = switch theme {
-        case ._0: .snutt
-        case ._1: .fall
-        case ._2: .modern
-        case ._3: .cherryBlossom
-        case ._4: .ice
-        case ._5: .lawn
-        }
-        let themeType: ThemeType = if let themeId {
-            .customTheme(themeID: themeId)
-        } else {
-            .builtInTheme(builtInTheme)
-        }
+        let builtInTheme: Theme =
+            switch theme {
+            case ._0: .snutt
+            case ._1: .fall
+            case ._2: .modern
+            case ._3: .cherryBlossom
+            case ._4: .ice
+            case ._5: .lawn
+            }
+        let themeType: ThemeType =
+            if let themeId {
+                .customTheme(themeID: themeId)
+            } else {
+                .builtInTheme(builtInTheme)
+            }
         return try Timetable(
             id: require(_id),
             title: title,
-            quarter: Quarter(year: year.asInt(), semester: require(Semester(rawValue: semester.rawValue))),
+            quarter: Quarter(year: Int(year), semester: require(Semester(rawValue: semester.rawValue))),
             lectures: lecture_list.map { try $0.toLecture() },
             userID: user_id,
             theme: themeType
@@ -127,8 +158,8 @@ extension Theme {
 
 extension Components.Schemas.TimetableBriefDto {
     fileprivate func toTimetableMetadata() throws -> TimetableMetadata {
-        let semester = try require(Semester(rawValue: semester.asInt()))
-        let quarter = Quarter(year: year.asInt(), semester: semester)
+        let semester = try require(Semester(rawValue: Int(semester)))
+        let quarter = Quarter(year: Int(year), semester: semester)
         return TimetableMetadata(
             id: _id,
             title: title,
@@ -145,19 +176,21 @@ extension Components.Schemas.TimetableLectureLegacyDto {
         let timePlaces = try class_time_json.enumerated().compactMap { index, json in
             try json.toTimePlace(index: index, isCustom: isCustom)
         }
-        let evLecture: EvLecture? = if let snuttEvLecture {
-            .init(evLectureID: snuttEvLecture.evLectureId.asInt(), avgRating: nil, evaluationCount: nil)
-        } else {
-            nil
-        }
-        let customColor: LectureColor? = if colorIndex == 0,
-                                            let fg = color?.fg,
-                                            let bg = color?.bg
-        {
-            .init(fgHex: fg, bgHex: bg)
-        } else {
-            nil
-        }
+        let evLecture: EvLecture? =
+            if let snuttEvLecture {
+                .init(evLectureID: Int(snuttEvLecture.evLectureId), avgRating: nil, evaluationCount: nil)
+            } else {
+                nil
+            }
+        let customColor: LectureColor? =
+            if colorIndex == 0,
+                let fg = color?.fg,
+                let bg = color?.bg
+            {
+                .init(fgHex: fg, bgHex: bg)
+            } else {
+                nil
+            }
         return Lecture(
             id: _id ?? UUID().uuidString,
             lectureID: lecture_id,
@@ -180,33 +213,5 @@ extension Components.Schemas.TimetableLectureLegacyDto {
             quota: quota,
             freshmenQuota: freshman_quota
         )
-    }
-}
-
-extension Components.Schemas.ClassPlaceAndTimeLegacyDto {
-    func toTimePlace(index: Int, isCustom: Bool) throws -> TimePlace {
-        let weekday = try require(Weekday(rawValue: day.rawValue))
-        let start = startMinute.asInt().quotientAndRemainder(dividingBy: 60)
-        let end = endMinute.asInt().quotientAndRemainder(dividingBy: 60)
-        return .init(
-            id: "\(index)-\(start)-\(end)-\(place ?? "")-\(isCustom)", // FIXME:
-            day: weekday,
-            startTime: .init(hour: start.quotient, minute: start.remainder),
-            endTime: .init(hour: end.quotient, minute: end.remainder),
-            place: place ?? "",
-            isCustom: isCustom
-        )
-    }
-}
-
-extension Int64 {
-    func asInt() -> Int {
-        Int(self)
-    }
-}
-
-extension Int32 {
-    fileprivate func asInt() -> Int {
-        Int(self)
     }
 }

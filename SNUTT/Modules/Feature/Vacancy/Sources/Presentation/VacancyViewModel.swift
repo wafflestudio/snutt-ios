@@ -18,7 +18,8 @@ final class VacancyViewModel {
     private(set) var vacancyLectures: [Lecture] = []
 
     func fetchVacancyLectures() async throws {
-        vacancyLectures = try await vacancyRepository.fetchVacancyLectures()
+        let lectureDtos = try await vacancyRepository.fetchVacancyLectures()
+        vacancyLectures = try lectureDtos.map { try $0.toLecture() }
     }
 
     func deleteVacancyLectures(lectureIDs: Set<String>) async throws {

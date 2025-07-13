@@ -7,4 +7,12 @@
 
 import OpenAPIRuntime
 
-public typealias APIClientError = ClientError
+public protocol APIClientError {
+    var localizedCode: LocalizedErrorCode? { get }
+}
+
+extension ClientError: APIClientError {
+    public var localizedCode: LocalizedErrorCode? {
+        underlyingError as? LocalizedErrorCode
+    }
+}

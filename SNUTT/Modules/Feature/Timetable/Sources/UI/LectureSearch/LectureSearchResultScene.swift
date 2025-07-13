@@ -19,7 +19,8 @@ struct LectureSearchResultScene: View {
             if !viewModel.selectedPredicates.isEmpty {
                 SearchPredicateScrollView(
                     selectedTagList: viewModel.selectedPredicates,
-                    deselect: { viewModel.deselectPredicate(predicate: $0)
+                    deselect: {
+                        viewModel.deselectPredicate(predicate: $0)
                     }
                 )
             }
@@ -42,19 +43,23 @@ struct LectureSearchResultScene: View {
             .animation(.defaultSpring, value: viewModel.searchDisplayMode)
         }
         .animation(.defaultSpring, value: viewModel.selectedPredicates)
+        .handleLectureTimeConflict()
         .sheet(isPresented: $viewModel.isSearchFilterOpen) {
             SearchFilterSheet(viewModel: viewModel)
         }
-        .sheet(isPresented: .init(
-            get: { viewModel.targetForLectureDetail != nil },
-            set: { _ in viewModel.targetForLectureDetail = nil }
-        )) {
+        .sheet(
+            isPresented: .init(
+                get: { viewModel.targetForLectureDetail != nil },
+                set: { _ in viewModel.targetForLectureDetail = nil }
+            )
+        ) {
             if let entryLecture = viewModel.targetForLectureDetail {
                 NavigationStack {
                     LectureEditDetailScene(
                         entryLecture: entryLecture,
                         displayMode: .preview(shouldHideDismissButton: false)
                     )
+                    .handleLectureTimeConflict()
                 }
                 .tint(.label)
             }

@@ -38,6 +38,7 @@ public enum AnalyticsScreen: SnakeCaseConvertible {
     case themeCustomNew
     case themeCustomEdit
     case themePreview
+    case themeDownloaded
 
     case vacancy
     case popup

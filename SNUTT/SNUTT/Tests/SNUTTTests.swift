@@ -1,8 +1,6 @@
 import Foundation
-import XCTest
+import Testing
 
-final class SNUTTTests: XCTestCase {
-    func test_twoPlusTwo_isFour() {
-        XCTAssertEqual(2 + 2, 4)
-    }
+@Test func example() {
+    #expect("SNUTT" == "SNUTT")
 }

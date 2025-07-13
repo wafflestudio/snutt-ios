@@ -51,7 +51,6 @@ struct ThemeSettingScene: View {
                         theme: viewModel.newTheme,
                         themeType: .new
                     )
-                    .analyticsScreen(.themeCustomNew)
                 }
             }
             .accentColor(Color(UIColor.label))
@@ -64,7 +63,6 @@ struct ThemeSettingScene: View {
                         theme: viewModel.targetTheme ?? viewModel.newTheme,
                         themeType: .basic
                     )
-                    .analyticsScreen(.themeBasicDetail)
                 }
             }
             .accentColor(Color(UIColor.label))
@@ -75,17 +73,6 @@ struct ThemeSettingScene: View {
                     viewModel: .init(container: viewModel.container),
                     theme: viewModel.targetTheme ?? viewModel.newTheme,
                     themeType: .custom
-                )
-                .analyticsScreen(.themeCustomEdit)
-            }
-            .accentColor(Color(UIColor.label))
-        })
-        .sheet(isPresented: $viewModel.isDownloadedThemeSheetOpen, content: {
-            NavigationView {
-                ThemeDetailScene(
-                    viewModel: .init(container: viewModel.container),
-                    theme: viewModel.targetTheme ?? viewModel.newTheme,
-                    themeType: .downloaded
                 )
             }
             .accentColor(Color(UIColor.label))

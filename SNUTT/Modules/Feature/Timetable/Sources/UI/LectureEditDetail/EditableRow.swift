@@ -28,11 +28,14 @@ struct EditableRow<Value: Sendable>: View {
 
     private var container: ValueContainer<Value> {
         .init(
-            binding: Binding(get: {
-                viewModel.editableLecture[keyPath: keyPath]
-            }, set: {
-                viewModel.editableLecture[keyPath: keyPath] = $0
-            }),
+            binding: Binding(
+                get: {
+                    viewModel.editableLecture[keyPath: keyPath]
+                },
+                set: {
+                    viewModel.editableLecture[keyPath: keyPath] = $0
+                }
+            ),
             initialValue: viewModel.entryLecture[keyPath: keyPath]
         )
     }
@@ -49,8 +52,6 @@ struct EditableRow<Value: Sendable>: View {
                         text: container.bindingNonOptional,
                         placeholder: container.placeholderText
                     )
-                case let container as ValueContainer<TimePlace>:
-                    DateTimeEditor(timePlace: container.binding)
                 case let container as ValueContainer<String>:
                     TextField(label, text: container.binding, prompt: Text(container.placeholderText))
                 case let container as ValueContainer<String?>:
@@ -99,7 +100,7 @@ extension ValueContainer where T == Int64? {
     }
 }
 
-private struct DetailLabel: View {
+struct DetailLabel: View {
     let text: String
     var body: some View {
         VStack {

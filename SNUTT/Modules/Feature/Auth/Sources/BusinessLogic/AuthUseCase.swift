@@ -49,7 +49,7 @@ public struct AuthUseCase: AuthUseCaseProtocol {
     public func registerFCMToken(_ token: String) async throws {
         authState.set(.fcmToken, value: token)
         // register fcm token only when `accessToken` exists
-        guard let _ = authState.get(.accessToken) else { return }
+        guard authState.get(.accessToken) != nil else { return }
         try await authRepository.addDevice(fcmToken: token)
     }
 

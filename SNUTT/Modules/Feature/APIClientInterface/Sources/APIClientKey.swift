@@ -15,12 +15,9 @@ public enum APIClientKey: TestDependencyKey {
         previewValue
     }
 
-    public static let previewValue: any APIProtocol = Client(
-        serverURL: URL(string: "https://mock")!,
-        configuration: .init(dateTranscoder: .iso8601WithFractionalSeconds),
-        transport: TestClientTransport(callHandler: { _, _, _, _ in throw NSError() }),
-        middlewares: []
-    )
+    public static var previewValue: any APIProtocol {
+        fatalError()
+    }
 }
 
 extension DependencyValues {

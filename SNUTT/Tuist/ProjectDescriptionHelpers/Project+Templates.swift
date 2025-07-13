@@ -1,7 +1,11 @@
-import ProjectDescription
 import Foundation
+import ProjectDescription
 
 let domain = "com.wafflestudio"
+
+// MARK: - Version Constants
+private let marketingVersion: Plist.Value = "1.0.0"
+private let buildNumber: Plist.Value = "1"
 
 extension Project {
     public static func app(
@@ -13,8 +17,8 @@ extension Project {
         widgetDependencies: [TargetDependency],
         deploymentTargets: DeploymentTargets
     ) -> Project {
-        OpenAPIDownloader().main()
-        let mainTargetDependencies: [TargetDependency] = moduleDependencies
+        let mainTargetDependencies: [TargetDependency] =
+            moduleDependencies
             .map { .target(name: $0.name) } + externalDependencies
         let widgetTarget = makeWidgetTarget(
             name: name,
@@ -33,13 +37,15 @@ extension Project {
         let allTargets = [mainTargets] + frameworkTargets
         let testTargets = allTargets.compactMap { _, testTarget in testTarget }
         let schemes = makeSchemes(name: name) + [makeModuleTestsScheme(testTargets: testTargets)]
-        return Project(name: name,
-                       organizationName: "wafflestudio.com",
-                       options: .options(automaticSchemesOptions: .disabled),
-                       packages: swiftPackages,
-                       settings: makeSettings(),
-                       targets: allTargets.flatMap { [$0.0, $0.1].compactMap { $0 } } + [widgetTarget],
-                       schemes: schemes)
+        return Project(
+            name: name,
+            organizationName: "wafflestudio.com",
+            options: .options(automaticSchemesOptions: .disabled),
+            packages: swiftPackages,
+            settings: makeSettings(),
+            targets: allTargets.flatMap { [$0.0, $0.1].compactMap { $0 } } + [widgetTarget],
+            schemes: schemes
+        )
     }
 
     // MARK: - Private
@@ -52,31 +58,37 @@ extension Project {
     ) -> (Target, Target?) {
         let name = module.name
         let directory = "Modules/\(module.category.directoryName)"
-        let resources: [String] = (module.category.hasResources ? ["\(directory)/\(name)/Resources/**"] : []) + module
+        let resources: [String] =
+            (module.category.hasResources ? ["\(directory)/\(name)/Resources/**"] : [])
+            + module
             .additionalResources
-        let sources = Target.target(name: name,
-                                    destinations: destinations,
-                                    product: module.productType ?? productType(),
-                                    bundleId: "\(domain).\(name)",
-                                    deploymentTargets: deploymentTargets,
-                                    infoPlist: .default,
-                                    sources: ["\(directory)/\(name)/Sources/**"],
-                                    resources: .resources(resources.map { .init(stringLiteral: $0) }),
-                                    dependencies: module.dependencies,
-                                    settings: makeSettings())
+        let sources = Target.target(
+            name: name,
+            destinations: destinations,
+            product: module.productType ?? productType(),
+            bundleId: "\(domain).\(name)",
+            deploymentTargets: deploymentTargets,
+            infoPlist: .default,
+            sources: ["\(directory)/\(name)/Sources/**"],
+            resources: .resources(resources.map { .init(stringLiteral: $0) }),
+            dependencies: module.dependencies,
+            settings: makeSettings()
+        )
         if case .featureInterface = module.category {
             return (sources, nil)
         }
-        let tests = Target.target(name: "\(name)Tests",
-                                  destinations: destinations,
-                                  product: .unitTests,
-                                  bundleId: "\(domain).\(name)Tests",
-                                  deploymentTargets: deploymentTargets,
-                                  infoPlist: .default,
-                                  sources: ["\(directory)/\(name)/Tests/**"],
-                                  resources: [],
-                                  dependencies: [.target(name: name)],
-                                  settings: makeSettings())
+        let tests = Target.target(
+            name: "\(name)Tests",
+            destinations: destinations,
+            product: .unitTests,
+            bundleId: "\(domain).\(name)Tests",
+            deploymentTargets: deploymentTargets,
+            infoPlist: .default,
+            sources: ["\(directory)/\(name)/Tests/**"],
+            resources: [],
+            dependencies: [.target(name: name)],
+            settings: makeSettings()
+        )
         return (sources, tests)
     }
 
@@ -87,8 +99,6 @@ extension Project {
         deploymentTargets: DeploymentTargets,
         dependencies: [TargetDependency]
     ) -> (Target, Target) {
-        let marketingVersion: Plist.Value = "1.0.0"
-        let buildNumber: Plist.Value = "1"
         let internalVersion = DateFormatter().string(from: Date())
         let infoPlist: [String: Plist.Value] = [
             "CFBundleShortVersionString": marketingVersion,
@@ -101,7 +111,7 @@ extension Project {
                 [
                     "CFBundleURLSchemes": ["$(URL_SCHEME)"],
                     "CFBundleURLName": "$(PRODUCT_BUNDLE_IDENTIFIER)",
-                ],
+                ]
             ],
         ]
 
@@ -128,7 +138,7 @@ extension Project {
             infoPlist: .default,
             sources: ["\(name)/Tests/**"],
             dependencies: [
-                .target(name: "\(name)"),
+                .target(name: "\(name)")
             ],
             settings: makeSettings()
         )
@@ -148,7 +158,11 @@ extension Project {
             bundleId: "$(PRODUCT_BUNDLE_IDENTIFIER).widget",
             deploymentTargets: deploymentTargets,
             infoPlist: .extendingDefault(
-                with: ["NSExtension": ["NSExtensionPointIdentifier": "com.apple.widgetkit-extension"]]
+                with: [
+                    "CFBundleShortVersionString": marketingVersion,
+                    "CFBundleVersion": buildNumber,
+                    "NSExtension": ["NSExtensionPointIdentifier": "com.apple.widgetkit-extension"],
+                ]
             ),
             sources: ["SNUTTWidget/Sources/**"],
             resources: ["SNUTTWidget/Resources/**"],
@@ -185,12 +199,7 @@ extension Project {
             .scheme(
                 name: "\(name) Dev",
                 shared: true,
-                buildAction: .buildAction(targets: [.target(name)], preActions: [
-                    .executionAction(
-                        scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev),
-                        target: .target(name)
-                    ),
-                ]),
+                buildAction: .buildAction(targets: [.target(name)]),
                 runAction: .runAction(configuration: .dev, executable: .target(name)),
                 archiveAction: .archiveAction(configuration: .dev),
                 profileAction: .profileAction(configuration: .prod, executable: .target(name)),
@@ -199,12 +208,7 @@ extension Project {
             .scheme(
                 name: "\(name) Prod",
                 shared: true,
-                buildAction: .buildAction(targets: [.target(name)], preActions: [
-                    .executionAction(
-                        scriptText: updateOpenAPISpecSymlinkPreActionScript(configuration: .dev),
-                        target: .target(name)
-                    ), // TODO: change to .prod
-                ]),
+                buildAction: .buildAction(targets: [.target(name)]),
                 runAction: .runAction(configuration: .prod, executable: .target(name)),
                 archiveAction: .archiveAction(configuration: .prod),
                 profileAction: .profileAction(configuration: .prod, executable: .target(name)),
@@ -230,18 +234,6 @@ extension Project {
             buildAction: .buildAction(targets: testTargets.map { .target($0.name) }),
             testAction: .targets(testableTargets, configuration: .dev)
         )
-    }
-
-    private static func updateOpenAPISpecSymlinkPreActionScript(configuration: ProjectDescription.ConfigurationName) -> String
-    {
-        return """
-        OPENAPI_DIR="$PROJECT_DIR/OpenAPI"
-        OPENAPI_FILE="$OPENAPI_DIR/openapi-\(configuration == .dev ? "dev" : "prod").json"
-        # If the OPENAPI_FILE already exists, create a symlink first
-        if [ -f "$OPENAPI_FILE" ]; then
-            ln -sf "$OPENAPI_FILE" "$OPENAPI_DIR/openapi.json"
-        fi
-        """
     }
 }
 

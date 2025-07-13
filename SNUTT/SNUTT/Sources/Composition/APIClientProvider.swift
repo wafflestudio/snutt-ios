@@ -5,6 +5,7 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import APIClient
 import APIClientInterface
 import AuthInterface
 import Dependencies

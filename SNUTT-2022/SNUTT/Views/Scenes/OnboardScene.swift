@@ -112,7 +112,7 @@ struct OnboardScene: View {
                         Spacer().frame(height: proxy.size.height * 0.05)
                     }
                     .transition(.scale(scale: 1))
-                    .analyticsScreen(.onboard)
+                    .analyticsScreen(.onboard, shouldLogEvent: viewModel.appState.user.accessToken == nil)
                 }
             } else {
                 VStack {

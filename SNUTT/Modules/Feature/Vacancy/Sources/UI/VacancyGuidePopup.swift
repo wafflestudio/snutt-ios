@@ -23,7 +23,7 @@ struct VacancyGuidePopup: View {
     }
 
     var imageIndices: Range<Int> {
-        0 ..< guideImages.count
+        0..<guideImages.count
     }
 
     var body: some View {
@@ -53,7 +53,7 @@ struct VacancyGuidePopup: View {
                     }
                     ZStack {
                         TabView(selection: $currentGuideIndex) {
-                            ForEach(0 ..< 4) { imageNum in
+                            ForEach(0..<4) { imageNum in
                                 VStack {
                                     guideImages[imageNum]
                                         .resizable()

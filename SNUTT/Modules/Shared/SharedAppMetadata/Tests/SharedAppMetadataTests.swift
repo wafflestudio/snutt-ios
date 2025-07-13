@@ -1,8 +1,6 @@
 import Foundation
-import XCTest
+import Testing
 
-final class SharedAppMetadataTests: XCTestCase {
-    func test_example() {
-        XCTAssertEqual("SharedAppMetadata", "SharedAppMetadata")
-    }
+@Test func example() {
+    #expect("SharedAppMetadata" == "SharedAppMetadata")
 }

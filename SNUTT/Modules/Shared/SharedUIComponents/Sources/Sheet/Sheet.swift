@@ -49,9 +49,12 @@ public struct Sheet<Content>: View where Content: View {
 
                 VStack(spacing: 0) {
                     self.content()
-                        .environment(\.sheetDismiss, SheetDismissAction(action: {
-                            setIsOpen(false)
-                        }))
+                        .environment(
+                            \.sheetDismiss,
+                            SheetDismissAction(action: {
+                                setIsOpen(false)
+                            })
+                        )
                 }
                 .transformEffect(.identity)
             }

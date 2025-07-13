@@ -68,7 +68,7 @@ struct LoginScene: View {
             .disabled(isButtonDisabled)
             .animation(.customSpring, value: isButtonDisabled)
         }
-        .analyticsScreen(.login)
+        .analyticsScreen(.login, shouldLogEvent: viewModel.appState.user.accessToken == nil)
         .padding()
         .navigationTitle(changeTitle ? "아이디 입력" : "로그인")
         .navigationBarTitleDisplayMode(.inline)
