@@ -73,7 +73,7 @@ struct MenuSectionRow: View {
     var isSelected: Bool
     let selectTimetable: ((String) async -> Void)?
     let duplicateTimetable: ((String) async -> Void)?
-    let openEllipsis: (@MainActor (TimetableMetadata) -> Void)?
+    let openEllipsis: (@MainActor (TimetableMetadata) async -> Void)?
     @State var isLoading: Bool = false
 
     var body: some View {
@@ -141,7 +141,9 @@ struct MenuSectionRow: View {
             Spacer().frame(width: 12)
 
             Button {
-                openEllipsis?(timetableMetadata)
+                Task {
+                    await openEllipsis?(timetableMetadata)
+                }
             } label: {
                 Image("menu.ellipsis")
                     .resizable()

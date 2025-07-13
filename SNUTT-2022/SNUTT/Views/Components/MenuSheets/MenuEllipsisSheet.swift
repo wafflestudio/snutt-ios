@@ -8,17 +8,18 @@
 import LinkPresentation
 import SwiftUI
 
-struct MenuEllipsisSheet<TimetableView: View>: View {
+struct MenuEllipsisSheet: View {
     @Binding var isOpen: Bool
     var isPrimary: Bool?
-    let timetableView: TimetableView
+    @Binding var targetTimetable: Timetable?
+    let timetableConfig: TimetableConfiguration
     let openRenameSheet: @MainActor () -> Void
     let setPrimaryTimetable: @MainActor () async -> Void
     let unsetPrimaryTimetable: @MainActor () async -> Void
     let openThemeSheet: @MainActor () -> Void
     let deleteTimetable: @MainActor () async -> Void
     @State private var isDeleteAlertPresented = false
-    @State private var screenshot: UIImage?
+    @State private var screenshotData: Data?
     
     @Environment(\.colorScheme) private var colorScheme
     
@@ -40,10 +41,13 @@ struct MenuEllipsisSheet<TimetableView: View>: View {
                 }
                 
                 EllipsisSheetButton(menu: .share) {
-                    self.screenshot = timetableView.takeScreenshot(
-                        preferredColorScheme: colorScheme
-                    )
-                    isShareSheetOpened = true
+                    if let targetTimetable = targetTimetable {
+                        screenshotData = createTimetableImage(
+                            timetable: targetTimetable,
+                            timetableConfig: timetableConfig,
+                            preferredColorScheme: colorScheme
+                        )
+                    }
                 }
 
                 EllipsisSheetButton(menu: .theme, isSheetOpen: isOpen) {
@@ -65,13 +69,13 @@ struct MenuEllipsisSheet<TimetableView: View>: View {
             .transformEffect(.identity)
         }
         .sheet(isPresented: .init(
-            get: { screenshot != nil },
-            set: { _ in screenshot = nil }
+            get: { screenshotData != nil },
+            set: { _ in screenshotData = nil }
         )) {
-            if let screenshot = screenshot {
+            if let screenshotData = screenshotData {
                 /// Provide title for `UIActivityViewController`.
                 let linkMetadata = LinkMetadata()
-                ActivityViewController(activityItems: [screenshot, linkMetadata])
+                ActivityViewController(activityItems: [screenshotData, linkMetadata])
                     .analyticsScreen(.timetableShare)
             }
         }

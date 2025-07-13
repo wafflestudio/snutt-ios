@@ -23,4 +23,21 @@ extension View {
             viewController.view.drawHierarchy(in: viewController.view.bounds, afterScreenUpdates: true)
         }
     }
+    
+    func createTimetableImage(
+        size: CGSize = UIScreen.main.bounds.size,
+        timetable: Timetable,
+        timetableConfig: TimetableConfiguration,
+        preferredColorScheme: ColorScheme? = nil
+    ) -> Data {
+        let renderer = UIGraphicsImageRenderer(bounds: .init(origin: .zero, size: size))
+        return renderer.pngData { context in
+            let timetableView = TimetableZStack(current: timetable, config: timetableConfig).ignoresSafeArea(.all)
+            let viewController = UIHostingController(rootView: timetableView)
+            viewController.view.frame = CGRect(origin: .zero, size: size)
+            viewController.overrideUserInterfaceStyle = UIUserInterfaceStyle(preferredColorScheme)
+            viewController.view.layer.render(in: context.cgContext)
+            viewController.view.drawHierarchy(in: viewController.view.bounds, afterScreenUpdates: true)
+        }
+    }
 }
