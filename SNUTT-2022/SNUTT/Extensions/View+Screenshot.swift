@@ -31,12 +31,11 @@ extension View {
         preferredColorScheme: ColorScheme? = nil
     ) -> Data {
         let renderer = UIGraphicsImageRenderer(bounds: .init(origin: .zero, size: size))
-        return renderer.pngData { context in
+        return renderer.pngData { _ in
             let timetableView = TimetableZStack(current: timetable, config: timetableConfig).ignoresSafeArea(.all)
             let viewController = UIHostingController(rootView: timetableView)
             viewController.view.frame = CGRect(origin: .zero, size: size)
             viewController.overrideUserInterfaceStyle = UIUserInterfaceStyle(preferredColorScheme)
-            viewController.view.layer.render(in: context.cgContext)
             viewController.view.drawHierarchy(in: viewController.view.bounds, afterScreenUpdates: true)
         }
     }
