@@ -15,7 +15,7 @@ struct MenuSheet: View {
     var timetablesByQuarter: [Quarter: [TimetableMetadata]]
     let selectTimetable: (String) async -> Void
     let duplicateTimetable: (String) async -> Void
-    let openEllipsis: @MainActor (TimetableMetadata) -> Void
+    let openEllipsis: @MainActor (TimetableMetadata) async -> Void
 
     var body: some View {
         Sheet(isOpen: $isOpen, orientation: .left(maxWidth: 320), cornerRadius: 0, sheetOpacity: 0.7) {

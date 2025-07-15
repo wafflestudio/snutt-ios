@@ -24,6 +24,8 @@ struct MenuSheetScene: View {
 
             MenuEllipsisSheet(isOpen: $viewModel.isEllipsisSheetOpen,
                               isPrimary: viewModel.targetTimetable?.isPrimary,
+                              targetTimetable: $viewModel.targetTimetable,
+                              timetableConfig: viewModel.configuration,
                               openRenameSheet: viewModel.openRenameSheet,
                               setPrimaryTimetable: viewModel.setPrimaryTimetable,
                               unsetPrimaryTimetable: viewModel.unsetPrimaryTimetable,

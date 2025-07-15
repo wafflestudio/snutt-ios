@@ -42,6 +42,7 @@ extension EllipsisSheetButton {
     enum Menu {
         case edit
         case primary(isOn: Bool)
+        case share
         case theme
         case delete
 
@@ -50,6 +51,7 @@ extension EllipsisSheetButton {
             case .edit: return "sheet.edit"
             case .primary(true): return "sheet.friend.off"
             case .primary(false): return "sheet.friend"
+            case .share: return "nav.share"
             case .theme: return "sheet.palette"
             case .delete: return "sheet.trash"
             }
@@ -60,6 +62,7 @@ extension EllipsisSheetButton {
             case .edit: return "이름 변경"
             case .primary(true): return "학기 대표 시간표 해제"
             case .primary(false): return "학기 대표 시간표로 지정"
+            case .share: return "시간표 이미지 공유"
             case .theme: return "시간표 테마 설정"
             case .delete: return "시간표 삭제"
             }

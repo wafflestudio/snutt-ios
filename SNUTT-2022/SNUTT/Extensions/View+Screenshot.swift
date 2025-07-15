@@ -8,15 +8,19 @@
 import SwiftUI
 
 extension View {
-    /// Take a screenshot of View. The default size is `Full-sized screen` of device. Use `GeometryReader` to get an exact-sized screenshot of View.
-    /// The origin of screenshot is `.zero`.
-    func takeScreenshot(size: CGSize = UIScreen.main.bounds.size, preferredColorScheme: ColorScheme? = nil) -> UIImage {
-        let viewController = UIHostingController(rootView: self.ignoresSafeArea(.all))
-        viewController.view.frame = CGRect(origin: .zero, size: size)
-        viewController.overrideUserInterfaceStyle = UIUserInterfaceStyle(preferredColorScheme)
-
-        let renderer = UIGraphicsImageRenderer(bounds: viewController.view.bounds)
-        return renderer.image { context in
+    /// Create a png image of the timetable. The default size is `Full-sized screen` of device.
+    func createTimetableImage(
+        size: CGSize = UIScreen.main.bounds.size,
+        timetable: Timetable,
+        timetableConfig: TimetableConfiguration,
+        preferredColorScheme: ColorScheme? = nil
+    ) -> Data {
+        let renderer = UIGraphicsImageRenderer(bounds: .init(origin: .zero, size: size))
+        return renderer.pngData { _ in
+            let timetableView = TimetableZStack(current: timetable, config: timetableConfig).ignoresSafeArea(.all)
+            let viewController = UIHostingController(rootView: timetableView)
+            viewController.view.frame = CGRect(origin: .zero, size: size)
+            viewController.overrideUserInterfaceStyle = UIUserInterfaceStyle(preferredColorScheme)
             viewController.view.drawHierarchy(in: viewController.view.bounds, afterScreenUpdates: true)
         }
     }
