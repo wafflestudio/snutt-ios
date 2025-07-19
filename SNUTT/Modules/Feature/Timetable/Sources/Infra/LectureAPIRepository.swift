@@ -112,6 +112,13 @@ public struct LectureAPIRepository: LectureRepository {
             path: .init(lectureId: lectureID)
         ).ok.body.json.exists
     }
+
+    public func fetchBookmarks(quarter: Quarter) async throws -> [Lecture] {
+        let response = try await apiClient.getBookmark(
+            query: .init(year: String(quarter.year), semester: String(quarter.semester.rawValue))
+        ).ok.body.json
+        return try response.lectures.map { try $0.toLecture() }
+    }
 }
 
 extension Building {

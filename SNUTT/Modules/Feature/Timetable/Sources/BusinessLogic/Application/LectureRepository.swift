@@ -19,4 +19,5 @@ public protocol LectureRepository: Sendable {
     func addBookmark(lectureID: String) async throws
     func removeBookmark(lectureID: String) async throws
     func isBookmarked(lectureID: String) async throws -> Bool
+    func fetchBookmarks(quarter: Quarter) async throws -> [Lecture]
 }
