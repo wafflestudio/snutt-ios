@@ -19,6 +19,8 @@ class LectureSearchViewModel {
     @Dependency(\.lectureSearchRepository) private var searchRepository
     @ObservationIgnored
     @Dependency(\.vacancyRepository) private var vacancyRepository
+    @ObservationIgnored
+    @Dependency(\.lectureRepository) private var lectureRepository
 
     private let timetableViewModel: TimetableViewModel
     private let router: LectureSearchRouter
@@ -34,6 +36,7 @@ class LectureSearchViewModel {
             if oldValue != searchingQuarter {
                 Task {
                     await fetchVacancyLectures()
+                    await fetchBookmarkedLectures()
                 }
             }
         }
@@ -45,10 +48,19 @@ class LectureSearchViewModel {
 
     var isSearchFilterOpen = false
     var targetForLectureDetail: Lecture?
+    var scrollPositions = [SearchDisplayMode: Lecture.ID]()
+    var scrollPosition: Lecture.ID? {
+        get { scrollPositions[.search] }
+        set { scrollPositions[.search] = newValue }
+    }
 
     private let dataSource = LectureSearchResultDataSource()
     var selectedLecture: Lecture?
-    private var vacancyLectureIds: Set<String> = []
+    private var vacancyLectureIds: Set<Lecture.ID> = []
+    private(set) var bookmarkedLectures: [Lecture] = []
+    private var bookmarkedLectureIds: Set<Lecture.ID> {
+        Set(bookmarkedLectures.map(\.id))
+    }
 
     private(set) var availablePredicates: [SearchFilterCategory: [SearchPredicate]] = [:]
     var selectedCategory: SearchFilterCategory = .sortCriteria
@@ -102,6 +114,15 @@ class LectureSearchViewModel {
             // TODO: error handling
         }
     }
+
+    func fetchBookmarkedLectures() async {
+        do {
+            guard let searchingQuarter else { return }
+            bookmarkedLectures = try await lectureRepository.fetchBookmarks(quarter: searchingQuarter)
+        } catch {
+            // TODO: error handling
+        }
+    }
 }
 
 extension LectureSearchViewModel: ExpandableLectureListViewModel {
@@ -112,7 +133,7 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         case .review:
             false
         case .bookmark:
-            false
+            bookmarkedLectureIds.contains(lecture.id)
         case .vacancy:
             vacancyLectureIds.contains(lecture.id)
         case .add:
@@ -139,7 +160,15 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         case .review:
             break
         case .bookmark:
-            break
+            if isToggled(lecture: lecture, type: type) {
+                try await lectureRepository.removeBookmark(lectureID: lecture.id)
+                bookmarkedLectures.removeAll { $0.id == lecture.id }
+            } else {
+                try await lectureRepository.addBookmark(lectureID: lecture.id)
+                if !bookmarkedLectures.contains(where: { $0.id == lecture.id }) {
+                    bookmarkedLectures.append(lecture)
+                }
+            }
         case .vacancy:
             if isToggled(lecture: lecture, type: type) {
                 try await vacancyRepository.deleteVacancyLecture(lectureID: lecture.id)

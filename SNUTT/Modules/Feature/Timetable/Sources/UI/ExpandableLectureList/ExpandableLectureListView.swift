@@ -31,7 +31,11 @@ struct ExpandableLectureListView: View {
         }
         .withResponsiveTouch()
         .scrollPosition(id: $scrolledID, anchor: .bottom)
+        .onAppear {
+            scrolledID = viewModel.scrollPosition
+        }
         .onChange(of: scrolledID) { _, _ in
+            viewModel.scrollPosition = scrolledID
             if viewModel.lectures.suffix(5).map({ $0.id }).contains(scrolledID) {
                 Task {
                     try await viewModel.fetchMoreLectures()

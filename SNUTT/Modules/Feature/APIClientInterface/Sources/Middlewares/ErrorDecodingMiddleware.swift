@@ -20,6 +20,9 @@ public struct ErrorDecodingMiddleware: ClientMiddleware {
         next: @Sendable (HTTPRequest, HTTPBody?, URL) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         let (response, body) = try await next(request, body, baseURL)
+        if response.status.code >= 500 {
+            throw LocalizedErrorCode.serverFault
+        }
         let data = try await Data(collecting: body!, upTo: .max)
         guard let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         else { return (response, HTTPBody(data)) }

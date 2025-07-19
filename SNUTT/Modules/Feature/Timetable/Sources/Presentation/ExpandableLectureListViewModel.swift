@@ -11,9 +11,10 @@ import Observation
 import TimetableInterface
 
 @MainActor
-protocol ExpandableLectureListViewModel: Sendable {
+protocol ExpandableLectureListViewModel: Sendable, AnyObject {
     var renderingOptions: ExpandableLectureListRenderingOptions { get }
 
+    var scrollPosition: Lecture.ID? { get set }
     var lectures: [Lecture] { get }
     var selectedLecture: Lecture? { get }
     func selectLecture(_: Lecture)
