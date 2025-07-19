@@ -80,3 +80,7 @@ OpenAPI/openapi.json
 
 ### Sweetpad ###
 buildServer.json
+
+### IDE ###
+.kiro
+cursor
