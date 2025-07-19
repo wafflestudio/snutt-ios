@@ -81,12 +81,11 @@ struct LectureSearchResultScene: View {
 
     private var searchContentView: some View {
         ExpandableLectureListView(viewModel: viewModel)
-            .ignoresSafeArea(edges: .bottom)
             .foregroundStyle(.white)
     }
 
     private var bookmarkContentView: some View {
-        EmptyView()
+        BookmarkListView(viewModel: BookmarkListViewModel(searchViewModel: viewModel))
     }
 }
 

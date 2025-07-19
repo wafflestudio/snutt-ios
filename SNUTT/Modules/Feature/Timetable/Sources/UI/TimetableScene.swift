@@ -89,6 +89,9 @@ public struct TimetableScene: View {
                 searchViewModel.selectedLecture = nil
             }
         }
+        .onLoad {
+            searchViewModel.searchingQuarter = timetableViewModel.currentTimetable?.quarter
+        }
         .onChange(of: timetableViewModel.currentTimetable?.quarter) { _, newValue in
             if let newValue {
                 searchViewModel.searchingQuarter = newValue

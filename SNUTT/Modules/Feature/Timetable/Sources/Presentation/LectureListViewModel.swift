@@ -9,7 +9,7 @@ import SwiftUI
 import TimetableInterface
 
 @MainActor
-struct LectureListViewModel: ExpandableLectureListViewModel {
+class LectureListViewModel: ExpandableLectureListViewModel {
     private let timetableViewModel: TimetableViewModel
 
     init(timetableViewModel: TimetableViewModel) {
@@ -21,6 +21,7 @@ struct LectureListViewModel: ExpandableLectureListViewModel {
     }
 
     let selectedLecture: Lecture? = nil
+    var scrollPosition: Lecture.ID? = nil
 }
 
 extension LectureListViewModel {

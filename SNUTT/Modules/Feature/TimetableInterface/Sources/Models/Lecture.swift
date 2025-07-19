@@ -101,6 +101,43 @@ extension Components.Schemas.LectureDto {
     }
 }
 
+extension Components.Schemas.BookmarkLectureDto {
+    public func toLecture() throws -> Lecture {
+        let timePlaces = try class_time_json.enumerated().map { index, json in
+            try json.toTimePlace(index: index, isCustom: false)
+        }
+        let evLecture = snuttEvLecture.flatMap {
+            EvLecture(
+                evLectureID: Int($0.evLectureId),
+                avgRating: $0.avgRating,
+                evaluationCount: Int($0.evaluationCount)
+            )
+        }
+        return try Lecture(
+            id: require(_id),
+            lectureID: nil,
+            courseTitle: course_title,
+            timePlaces: timePlaces,
+            lectureNumber: lecture_number,
+            instructor: instructor,
+            credit: credit,
+            courseNumber: course_number,
+            department: department,
+            academicYear: academic_year,
+            remark: remark,
+            evLecture: evLecture,
+            colorIndex: 0,
+            customColor: .temporary,
+            classification: classification,
+            category: category,
+            wasFull: false,
+            registrationCount: 0,
+            quota: quota,
+            freshmenQuota: freshmanQuota
+        )
+    }
+}
+
 extension Components.Schemas.ClassPlaceAndTimeLegacyDto {
     public func toTimePlace(index: Int, isCustom: Bool) throws -> TimePlace {
         let weekday = try require(Weekday(rawValue: day.rawValue))
