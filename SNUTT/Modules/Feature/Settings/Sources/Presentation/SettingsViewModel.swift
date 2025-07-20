@@ -29,6 +29,9 @@ final class SettingsViewModel {
     // FIXME: use shared config
     var configuration: TimetableConfiguration = .init()
 
+    // FIXME: load actual user nickname
+    var userNickname: String = "와플#7777"
+
     var appVersion: String {
         appMetadata[.appVersion]
     }

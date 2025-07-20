@@ -80,7 +80,7 @@ private struct ValueContainer<T: Sendable>: Sendable {
 
 extension ValueContainer where T == String {
     var placeholderText: String {
-        initialValue.nilIfEmpty ?? "(없음)"
+        initialValue.nilIfEmpty ?? TimetableStrings.editNone
     }
 }
 
@@ -90,13 +90,13 @@ extension ValueContainer where T == String? {
     }
 
     var placeholderText: String {
-        initialValue?.nilIfEmpty ?? "(없음)"
+        initialValue?.nilIfEmpty ?? TimetableStrings.editNone
     }
 }
 
 extension ValueContainer where T == Int64? {
     var placeholderText: String {
-        initialValue.flatMap { "\($0)" } ?? "(없음)"
+        initialValue.flatMap { "\($0)" } ?? TimetableStrings.editNone
     }
 }
 

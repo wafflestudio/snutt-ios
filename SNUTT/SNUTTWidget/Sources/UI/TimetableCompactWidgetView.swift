@@ -8,6 +8,7 @@
 import FoundationUtility
 import SwiftUI
 import TimetableInterface
+import TimetableUIComponents
 import WidgetKit
 
 struct TimetableCompactWidgetView: View {
@@ -104,11 +105,17 @@ struct TimetableCompactLeftView: View {
 
 extension TimetableCompactLeftView: TimetableWidgetViewProtocol {
     var emptyTimetableView: some View {
-        placeholderView(title: "빈 시간표", description: "시간표에 강의가 존재하지 않습니다.")
+        placeholderView(
+            title: TimetableUIComponentsStrings.widgetEmptyTimetable,
+            description: TimetableUIComponentsStrings.widgetEmptyTimetableDescription
+        )
     }
 
     var loginRequiredView: some View {
-        placeholderView(title: "로그인 필요", description: "먼저 로그인을 진행해주세요.")
+        placeholderView(
+            title: TimetableUIComponentsStrings.widgetLoginRequired,
+            description: TimetableUIComponentsStrings.widgetLoginRequiredDescription
+        )
     }
 
     var emptyRemainingLecturesView: some View {
@@ -118,7 +125,7 @@ extension TimetableCompactLeftView: TimetableWidgetViewProtocol {
                     .stroke(.gray.opacity(0.8), lineWidth: 1)
                     .frame(width: 6, height: 6)
 
-                Text("오늘 남은 강의 없음")
+                Text(TimetableUIComponentsStrings.widgetNoRemainingLecturesToday)
                     .font(.system(size: 13, weight: .regular))
                     .foregroundColor(.gray)
                     .padding(.bottom, 2)

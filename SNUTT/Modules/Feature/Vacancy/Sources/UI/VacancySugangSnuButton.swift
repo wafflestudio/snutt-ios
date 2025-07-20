@@ -15,7 +15,7 @@ struct VacancySugangSnuButton: View {
         Button(action: {
             action()
         }) {
-            Text("수강신청 사이트")
+            Text(VacancyStrings.sugangSiteButton)
                 .font(.system(size: 14, weight: .bold))
                 .foregroundColor(.white)
                 .padding(.horizontal, 15)

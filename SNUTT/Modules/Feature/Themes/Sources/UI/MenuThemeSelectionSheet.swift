@@ -140,7 +140,7 @@ struct MenuThemeSelectionSheet: View {
     func selectionTitle(for selection: SelectionType) -> String {
         switch selection {
         case .new:
-            return "새 테마"
+            return ThemesStrings.newTheme
         case let .theme(theme):
             return theme.name
         }

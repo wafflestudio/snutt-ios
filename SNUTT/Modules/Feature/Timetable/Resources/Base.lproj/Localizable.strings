@@ -45,3 +45,81 @@
 "search.filter.time" = "시간";
 "search.filter.etc" = "기타";
 "search.filter.apply" = "필터 적용";
+
+"search.input.placeholder" = "검색어를 입력하세요";
+"search.bookmark.empty.title" = "추가한 관심강좌가 없습니다.";
+"search.bookmark.empty.description" = "고민되는 강의를 관심강좌에 추가하여\n관리해보세요.";
+"search.tips.title" = "SNUTT 검색 꿀팁 🍯";
+"search.tips.combination.title" = "다양한 조합으로 검색해보세요.";
+"search.tips.combination.example" = "ex) 2학년 컴공 전필 / 경영 영강";
+"search.tips.abbreviation.title" = "줄임말로 검색해보세요.";
+"search.tips.abbreviation.example" = "ex) 죽음의 과학적 이해 유성호 → 죽과이 유성호";
+"search.tips.location.title" = "강의실 위치로 검색해보세요.";
+"search.tips.location.example" = "ex) 26동 / 302-108 / 대글2 43-1동";
+"search.bookmark.title" = "관심강좌";
+
+"edit.conflict.forceAdd" = "강제 추가";
+"edit.map.close" = "지도 닫기";
+"edit.map.viewOnMap" = "지도에서 보기";
+"edit.time.label" = "시간";
+"edit.place.label" = "장소";
+"edit.place.placeholder" = "(없음)";
+
+"edit.detail.title" = "세부사항";
+"edit.cancel.confirmation.title" = "변경사항을 취소하시겠습니까?";
+"edit.cancel.confirmation.message" = "편집 중인 내용이 모두 사라집니다.";
+"edit.reset.title" = "강의 초기화";
+"edit.reset.confirmation.message" = "이 강의에 적용한 수정 사항을 모두 초기화하시겠습니까?";
+"edit.delete.confirmation.title" = "강의를 삭제하시겠습니까?";
+"edit.save" = "저장";
+"edit.edit" = "편집";
+"edit.reset" = "초기화";
+"edit.confirm" = "확인";
+
+"edit.field.courseTitle" = "강의명";
+"edit.field.instructor" = "교수";
+"edit.field.credit" = "학점";
+"edit.field.color" = "색상";
+"edit.field.department" = "학과";
+"edit.field.academicYear" = "학년";
+"edit.field.classification" = "분류";
+"edit.field.category" = "구분";
+"edit.field.categoryPre2025" = "구) 교양영역";
+"edit.field.courseNumber" = "강좌번호";
+"edit.field.lectureNumber" = "분반번호";
+"edit.field.quota" = "정원(재학생)";
+"edit.field.remark" = "비고";
+
+"edit.timePlace.title" = "시간 및 장소";
+"edit.timePlace.addTime" = "+ 시간 추가";
+
+"edit.weekday" = "요일";
+"edit.startTime" = "시작";
+"edit.endTime" = "종료";
+"edit.none" = "(없음)";
+
+"edit.map.noAppAlert" = "실행 가능한 지도 애플리케이션이 없습니다.";
+"edit.map.locationWarning" = "* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.";
+"edit.map.buildingSuffix" = "동";
+
+"edit.color.title" = "색상 선택";
+"edit.color.name" = "이름";
+"edit.color.fontColor" = "글꼴색";
+"edit.color.backgroundColor" = "배경색";
+
+"timetable.menu.title.label" = "시간표 제목";
+"timetable.menu.title.placeholder" = "시간표 제목을 입력하세요";
+"timetable.menu.addTimetable" = "+ 시간표 추가하기";
+"timetable.menu.semester.picker" = "학기";
+
+"lecture.action.detail" = "자세히";
+"lecture.action.review" = "강의평";
+"lecture.action.bookmark" = "관심강좌";
+"lecture.action.vacancy" = "빈자리알림";
+"lecture.action.add" = "추가하기";
+"lecture.action.remove" = "제거하기";
+"lecture.credit.suffix" = "학점";
+
+"search.predicate.credit.suffix" = "학점";
+"search.predicate.etc.english" = "영강";
+"search.predicate.etc.army" = "군휴학";

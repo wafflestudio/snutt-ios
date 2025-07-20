@@ -51,7 +51,7 @@ public struct VacancyScene: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack(spacing: 0) {
-                    Text("빈자리 알림").font(.headline)
+                    Text(VacancyStrings.vacancyNotificationTitle).font(.headline)
                     Button {
                         isGuidePopupPresented = true
                     } label: {

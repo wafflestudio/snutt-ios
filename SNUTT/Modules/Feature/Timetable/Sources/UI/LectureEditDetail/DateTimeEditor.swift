@@ -96,7 +96,7 @@ private struct LectureTimePicker: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                Text("요일")
+                Text(TimetableStrings.editWeekday)
                 Spacer()
                 Picker("", selection: $weekday) {
                     ForEach(Weekday.allCases) { day in
@@ -113,7 +113,7 @@ private struct LectureTimePicker: View {
 
             Divider()
             DatePicker(
-                "시작",
+                TimetableStrings.editStartTime,
                 selection: start,
                 in: startRange,
                 displayedComponents: [.hourAndMinute]
@@ -124,7 +124,7 @@ private struct LectureTimePicker: View {
             }
             Divider()
             DatePicker(
-                "종료",
+                TimetableStrings.editEndTime,
                 selection: end,
                 in: endRange,
                 displayedComponents: [.hourAndMinute]

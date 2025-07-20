@@ -21,4 +21,11 @@
 
 /* Add your translations below */
 
-"hello_world" = "Hello, world!";
+"onboard.login.button" = "Sign In";
+"onboard.register.button" = "Sign Up";
+"onboard.login.localID" = "ID";
+"onboard.login.localPassword" = "Password";
+"onboard.login.localID.placeholder" = "Enter your ID";
+"onboard.login.localPassword.placeHolder" = "Enter your password";
+"onboard.login.findLocalID.button" = "Find ID";
+"onboard.login.resetLocalPassword.button" = "Reset Password";

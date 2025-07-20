@@ -30,9 +30,11 @@ public struct VacancyLectureListCell: View {
 
             HStack {
                 Spacer()
-                Text("\(lecture.registrationCount)명 / \(lecture.quota ?? 0)명")
-                    .font(.system(size: 12))
-                    .foregroundStyle(Design.vacancyBlue)
+                Text(
+                    "\(lecture.registrationCount)\(VacancyStrings.peopleCountUnit) / \(lecture.quota ?? 0)\(VacancyStrings.peopleCountUnit)"
+                )
+                .font(.system(size: 12))
+                .foregroundStyle(Design.vacancyBlue)
             }
             .padding(.bottom, -7)
 
@@ -49,7 +51,7 @@ public struct VacancyLectureListCell: View {
     }
 
     private var vacancyBadge: some View {
-        Text("취소여석")
+        Text(VacancyStrings.cancellationVacancy)
             .font(.system(size: 10))
             .padding(.vertical, 1)
             .padding(.horizontal, 3)
@@ -73,10 +75,10 @@ public struct VacancyLectureListCell: View {
                 if let instructor = lecture.instructor,
                     let credit = lecture.credit
                 {
-                    Text("\(instructor) / \(credit)학점")
+                    Text("\(instructor) / \(credit)\(VacancyStrings.creditUnit)")
                         .font(.system(size: 12))
                 } else {
-                    Text("\(lecture.credit ?? 0)학점")
+                    Text("\(lecture.credit ?? 0)\(VacancyStrings.creditUnit)")
                         .font(.system(size: 12))
                 }
             }

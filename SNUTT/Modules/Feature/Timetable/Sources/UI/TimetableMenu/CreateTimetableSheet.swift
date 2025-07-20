@@ -54,15 +54,19 @@ struct CreateTimetableSheet: View {
                         || (!hasQuarterPicker ? false : selectedQuarter == nil)
                 )
 
-                AnimatableTextField(label: "시간표 제목", placeholder: "시간표 제목을 입력하세요", text: $title)
-                    .focused($titleFocus)
-                    .onAppear {
-                        titleFocus = true
-                    }
-                    .padding(.horizontal)
+                AnimatableTextField(
+                    label: TimetableStrings.timetableMenuTitleLabel,
+                    placeholder: TimetableStrings.timetableMenuTitlePlaceholder,
+                    text: $title
+                )
+                .focused($titleFocus)
+                .onAppear {
+                    titleFocus = true
+                }
+                .padding(.horizontal)
 
                 if hasQuarterPicker, !viewModel.availableQuarters.isEmpty {
-                    Picker("학기", selection: $selectedQuarter) {
+                    Picker(TimetableStrings.timetableMenuSemesterPicker, selection: $selectedQuarter) {
                         ForEach(viewModel.availableQuarters, id: \.id) { quarter in
                             Text(quarterDisplayName(quarter)).tag(quarter as Quarter?)
                         }
@@ -84,11 +88,11 @@ struct CreateTimetableSheet: View {
     private func quarterDisplayName(_ quarter: Quarter) -> String {
         let semesterName =
             switch quarter.semester {
-            case .first: "1학기"
-            case .summer: "여름학기"
-            case .second: "2학기"
-            case .winter: "겨울학기"
+            case .first: TimetableStrings.timetableSemester1
+            case .summer: TimetableStrings.timetableSemesterSummer
+            case .second: TimetableStrings.timetableSemester2
+            case .winter: TimetableStrings.timetableSemesterWinter
             }
-        return "\(quarter.year)년 \(semesterName)"
+        return TimetableStrings.timetableQuarter(quarter.year, semesterName)
     }
 }

@@ -15,7 +15,7 @@ struct SearchTipsView: View {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 80))
 
-            Text("SNUTT 검색 꿀팁 🍯")
+            Text(TimetableStrings.searchTipsTitle)
                 .font(.system(size: 20, weight: .bold))
                 .padding(.top, 20)
 
@@ -23,9 +23,9 @@ struct SearchTipsView: View {
                 .frame(height: 5)
 
             VStack(spacing: 5) {
-                Text("다양한 조합으로 검색해보세요.")
+                Text(TimetableStrings.searchTipsCombinationTitle)
                     .font(.system(size: 16, weight: .bold))
-                Text("ex) 2학년 컴공 전필 / 경영 영강")
+                Text(TimetableStrings.searchTipsCombinationExample)
                     .font(.system(size: 16))
             }
 
@@ -33,9 +33,9 @@ struct SearchTipsView: View {
                 .frame(height: 5)
 
             VStack(spacing: 5) {
-                Text("줄임말로 검색해보세요.")
+                Text(TimetableStrings.searchTipsAbbreviationTitle)
                     .font(.system(size: 16, weight: .bold))
-                Text("ex) 죽음의 과학적 이해 유성호 → 죽과이 유성호")
+                Text(TimetableStrings.searchTipsAbbreviationExample)
                     .font(.system(size: 16))
             }
 
@@ -43,9 +43,9 @@ struct SearchTipsView: View {
                 .frame(height: 5)
 
             VStack(spacing: 5) {
-                Text("강의실 위치로 검색해보세요.")
+                Text(TimetableStrings.searchTipsLocationTitle)
                     .font(.system(size: 16, weight: .bold))
-                Text("ex) 26동 / 302-108 / 대글2 43-1동")
+                Text(TimetableStrings.searchTipsLocationExample)
                     .font(.system(size: 16))
             }
 

@@ -22,3 +22,12 @@
 /* Add your translations below */
 
 "hello_world" = "Hello, world!";
+
+/* Widget strings */
+"widget.login_required" = "로그인 필요";
+"widget.login_required_short" = "로그인";
+"widget.empty_timetable" = "빈 시간표";
+"widget.empty_timetable_description" = "시간표에 강의가 존재하지 않습니다.";
+"widget.no_remaining_lectures" = "남은 강의 없음";
+"widget.no_remaining_lectures_today" = "오늘 남은 강의 없음";
+"widget.login_required_description" = "먼저 로그인을 진행해주세요.";

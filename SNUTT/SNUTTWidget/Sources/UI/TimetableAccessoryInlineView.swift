@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TimetableInterface
+import TimetableUIComponents
 
 struct TimetableAccessoryInlineView: View {
     var entry: TimelineProvider.Entry
@@ -30,7 +31,7 @@ struct TimetableAccessoryInlineView: View {
 
 extension TimetableAccessoryInlineView: TimetableWidgetViewProtocol {
     var loginRequiredView: some View {
-        Text("로그인 필요")
+        Text(TimetableUIComponentsStrings.widgetLoginRequired)
     }
 
     var emptyTimetableView: some View {
@@ -38,7 +39,7 @@ extension TimetableAccessoryInlineView: TimetableWidgetViewProtocol {
     }
 
     var emptyRemainingLecturesView: some View {
-        Text("남은 강의 없음")
+        Text(TimetableUIComponentsStrings.widgetNoRemainingLectures)
     }
 }
 

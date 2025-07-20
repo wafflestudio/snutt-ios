@@ -26,12 +26,12 @@ public struct SettingsScene: View {
         NavigationStack(path: $path) {
             List {
                 Section {
-                    SettingsListCell(menu: Settings.myAccount("와플#7777"), path: $path)
+                    SettingsListCell(menu: Settings.myAccount(viewModel.userNickname), path: $path)
                         .padding(.vertical, 12)
                 }
 
                 Section(SettingsStrings.display) {
-                    SettingsListCell(menu: Settings.appearance("자동"), path: $path)
+                    SettingsListCell(menu: Settings.appearance(SettingsStrings.displayColorModeSystem), path: $path)
                     SettingsListCell(menu: Settings.appLanguage, path: $path)
                     SettingsListCell(menu: Settings.timetableSettings, path: $path)
                     SettingsListCell(menu: Settings.timetableTheme, path: $path)

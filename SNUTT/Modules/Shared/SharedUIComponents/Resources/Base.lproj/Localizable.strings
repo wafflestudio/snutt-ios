@@ -26,3 +26,4 @@
 "error.dismiss" = "닫기";
 "alert.cancel" = "취소";
 "alert.delete" = "삭제";
+"alert.apply" = "적용";

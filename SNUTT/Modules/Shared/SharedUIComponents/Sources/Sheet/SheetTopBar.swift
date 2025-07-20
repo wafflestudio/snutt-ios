@@ -17,13 +17,13 @@ public struct SheetTopBar: View {
 
     public var body: some View {
         HStack {
-            SheetTopBarButton(label: "취소") {
+            SheetTopBarButton(label: SharedUIComponentsStrings.alertCancel) {
                 cancel()
             }
 
             Spacer()
 
-            SheetTopBarButton(label: "적용") {
+            SheetTopBarButton(label: SharedUIComponentsStrings.alertApply) {
                 await confirm()
             }
             .disabled(isConfirmDisabled)
