@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TimetableUIComponents
 
 struct TimetableAccessoryRectangularView: View {
     var entry: TimelineProvider.Entry
@@ -34,15 +35,15 @@ struct TimetableAccessoryRectangularView: View {
 
 extension TimetableAccessoryRectangularView: TimetableWidgetViewProtocol {
     var emptyRemainingLecturesView: some View {
-        placeholderView(text: "오늘 남은 강의 없음")
+        placeholderView(text: TimetableUIComponentsStrings.widgetNoRemainingLecturesToday)
     }
 
     var emptyTimetableView: some View {
-        placeholderView(text: "빈 시간표")
+        placeholderView(text: TimetableUIComponentsStrings.widgetEmptyTimetable)
     }
 
     var loginRequiredView: some View {
-        placeholderView(text: "로그인 필요")
+        placeholderView(text: TimetableUIComponentsStrings.widgetLoginRequired)
     }
 
     @ViewBuilder private func placeholderView(text: String) -> some View {

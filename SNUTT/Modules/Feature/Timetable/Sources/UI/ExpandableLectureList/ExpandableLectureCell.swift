@@ -126,10 +126,10 @@ private struct LectureHeaderRow: View {
                     .truncationMode(.middle)
                 Spacer()
                 if lecture.instructor?.isEmpty == true, let credit = lecture.credit {
-                    Text("\(credit)학점")
+                    Text("\(credit)\(TimetableStrings.lectureCreditSuffix)")
                         .font(Design.detail)
                 } else if let credit = lecture.credit, let instructor = lecture.instructor {
-                    Text("\(instructor) / \(credit)학점")
+                    Text("\(instructor) / \(credit)\(TimetableStrings.lectureCreditSuffix)")
                         .font(Design.detail)
                 }
             }
@@ -183,15 +183,15 @@ extension ActionButtonType {
     func text(isSelected: Bool) -> String {
         switch self {
         case .detail:
-            "자세히"
+            TimetableStrings.lectureActionDetail
         case .review:
-            "강의평"
+            TimetableStrings.lectureActionReview
         case .bookmark:
-            "관심강좌"
+            TimetableStrings.lectureActionBookmark
         case .vacancy:
-            "빈자리알림"
+            TimetableStrings.lectureActionVacancy
         case .add:
-            isSelected ? "제거하기" : "추가하기"
+            isSelected ? TimetableStrings.lectureActionRemove : TimetableStrings.lectureActionAdd
         }
     }
 }

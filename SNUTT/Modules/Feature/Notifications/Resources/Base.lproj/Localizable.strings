@@ -1,3 +1,5 @@
+"notifications.title" = "알림";
+
 "notification.type.normal" = "공지";
 "notification.type.courseBook" = "수강편람";
 "notification.type.lectureUpdate" = "업데이트 알림";

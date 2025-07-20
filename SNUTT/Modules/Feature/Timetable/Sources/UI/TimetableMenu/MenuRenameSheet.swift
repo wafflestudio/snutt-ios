@@ -39,12 +39,16 @@ struct MenuRenameSheet: View {
                     isConfirmDisabled: isRenameLoading
                 )
 
-                AnimatableTextField(label: "시간표 제목", placeholder: "시간표 제목을 입력하세요", text: $title)
-                    .focused($searchFocus)
-                    .onAppear {
-                        searchFocus = true
-                    }
-                    .padding()
+                AnimatableTextField(
+                    label: TimetableStrings.timetableMenuTitleLabel,
+                    placeholder: TimetableStrings.timetableMenuTitlePlaceholder,
+                    text: $title
+                )
+                .focused($searchFocus)
+                .onAppear {
+                    searchFocus = true
+                }
+                .padding()
             }
         }
         .presentationDetents([.height(130)])

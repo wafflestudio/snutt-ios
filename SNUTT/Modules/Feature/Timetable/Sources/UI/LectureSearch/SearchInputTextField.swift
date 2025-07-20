@@ -14,7 +14,7 @@ struct SearchInputTextField: View {
     @FocusState private var isFocused
 
     var body: some View {
-        TextField("검색어를 입력하세요", text: $query)
+        TextField(TimetableStrings.searchInputPlaceholder, text: $query)
             .focused($isFocused)
             .submitLabel(.search)
             .padding(.leading, 35)

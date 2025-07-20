@@ -22,3 +22,12 @@
 /* Add your translations below */
 
 "hello_world" = "Hello, world!";
+
+/* Widget strings */
+"widget.login_required" = "Login Required";
+"widget.login_required_short" = "Login";
+"widget.empty_timetable" = "Empty Timetable";
+"widget.empty_timetable_description" = "No lectures exist in the timetable.";
+"widget.no_remaining_lectures" = "No Remaining Lectures";
+"widget.no_remaining_lectures_today" = "No Remaining Lectures Today";
+"widget.login_required_description" = "Please login first.";

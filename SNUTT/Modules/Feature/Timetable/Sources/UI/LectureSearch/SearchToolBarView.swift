@@ -28,7 +28,7 @@ struct SearchToolBarView: View {
                 .transition(.move(edge: .leading).combined(with: .opacity))
             case .bookmark:
                 HStack {
-                    Text("관심강좌")
+                    Text(TimetableStrings.searchBookmarkTitle)
                         .padding(.horizontal, 15)
                         .font(.system(.headline))
                     Spacer()

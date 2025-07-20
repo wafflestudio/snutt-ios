@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TimetableUIComponents
 import WidgetKit
 
 struct TimetableAccessoryCircularView: View {
@@ -52,6 +53,6 @@ extension TimetableAccessoryCircularView: TimetableWidgetViewProtocol {
     }
 
     var loginRequiredView: some View {
-        Text("로그인")
+        Text(TimetableUIComponentsStrings.widgetLoginRequiredShort)
     }
 }

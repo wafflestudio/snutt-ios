@@ -32,7 +32,7 @@ struct VacancyEmptyListView: View {
                         .scaledToFit()
                         .frame(height: 14)
                         .foregroundColor(Design.buttonForegroundColor)
-                    Text("자세히 보기")
+                    Text(VacancyStrings.seeMore)
                         .font(.system(size: 13))
                         .underline()
                         .foregroundColor(Design.buttonForegroundColor)

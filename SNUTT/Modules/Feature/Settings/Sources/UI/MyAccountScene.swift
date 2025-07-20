@@ -24,9 +24,9 @@ struct MyAccountScene: View {
     var body: some View {
         List {
             Section {
-                SettingsListCell(menu: MyAccount.changeNickname(nickname: "와플#7777"), path: $path)
+                SettingsListCell(menu: MyAccount.changeNickname(nickname: viewModel.userNickname), path: $path)
                 SettingsListCell(menu: MyAccount.copyNickname, path: $path) {
-                    UIPasteboard.general.string = "닉네임"
+                    UIPasteboard.general.string = viewModel.userNickname
                     isNicknameCopiedAlertPresented = true
                 }
             }

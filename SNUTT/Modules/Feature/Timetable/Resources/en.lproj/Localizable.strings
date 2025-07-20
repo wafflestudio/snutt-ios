@@ -44,3 +44,81 @@
 "search.filter.time" = "Time";
 "search.filter.etc" = "Others";
 "search.filter.apply" = "Apply";
+
+"search.input.placeholder" = "Enter search term";
+"search.bookmark.empty.title" = "No bookmarked courses.";
+"search.bookmark.empty.description" = "Add courses you're considering\nto your bookmarks to manage them.";
+"search.tips.title" = "SNUTT Search Tips 🍯";
+"search.tips.combination.title" = "Try searching with various combinations.";
+"search.tips.combination.example" = "ex) 2nd year CS required / Business English";
+"search.tips.abbreviation.title" = "Try searching with abbreviations.";
+"search.tips.abbreviation.example" = "ex) Scientific Understanding of Death Yoo Seong-ho → 죽과이 유성호";
+"search.tips.location.title" = "Try searching by classroom location.";
+"search.tips.location.example" = "ex) Building 26 / 302-108 / Daegul2 43-1";
+"search.bookmark.title" = "Bookmarks";
+
+"edit.conflict.forceAdd" = "Force Add";
+"edit.map.close" = "Close Map";
+"edit.map.viewOnMap" = "View on Map";
+"edit.time.label" = "Time";
+"edit.place.label" = "Place";
+"edit.place.placeholder" = "(None)";
+
+"edit.detail.title" = "Details";
+"edit.cancel.confirmation.title" = "Cancel changes?";
+"edit.cancel.confirmation.message" = "All editing content will be lost.";
+"edit.reset.title" = "Reset Lecture";
+"edit.reset.confirmation.message" = "Reset all modifications applied to this lecture?";
+"edit.delete.confirmation.title" = "Delete this lecture?";
+"edit.save" = "Save";
+"edit.edit" = "Edit";
+"edit.reset" = "Reset";
+"edit.confirm" = "Confirm";
+
+"edit.field.courseTitle" = "Course Title";
+"edit.field.instructor" = "Instructor";
+"edit.field.credit" = "Credit";
+"edit.field.color" = "Color";
+"edit.field.department" = "Department";
+"edit.field.academicYear" = "Academic Year";
+"edit.field.classification" = "Classification";
+"edit.field.category" = "Category";
+"edit.field.categoryPre2025" = "Category (~2024)";
+"edit.field.courseNumber" = "Course Number";
+"edit.field.lectureNumber" = "Lecture Number";
+"edit.field.quota" = "Quota (Students)";
+"edit.field.remark" = "Remark";
+
+"edit.timePlace.title" = "Time & Place";
+"edit.timePlace.addTime" = "+ Add Time";
+
+"edit.weekday" = "Weekday";
+"edit.startTime" = "Start";
+"edit.endTime" = "End";
+"edit.none" = "(None)";
+
+"edit.map.noAppAlert" = "No executable map application available.";
+"edit.map.locationWarning" = "* If you edited the location, it may be displayed differently from the actual location.";
+"edit.map.buildingSuffix" = "";
+
+"edit.color.title" = "Color Selection";
+"edit.color.name" = "Name";
+"edit.color.fontColor" = "Font Color";
+"edit.color.backgroundColor" = "Background Color";
+
+"timetable.menu.title.label" = "Timetable Title";
+"timetable.menu.title.placeholder" = "Enter timetable title";
+"timetable.menu.addTimetable" = "+ Add Timetable";
+"timetable.menu.semester.picker" = "Semester";
+
+"lecture.action.detail" = "Details";
+"lecture.action.review" = "Reviews";
+"lecture.action.bookmark" = "Bookmark";
+"lecture.action.vacancy" = "Vacancy";
+"lecture.action.add" = "Add";
+"lecture.action.remove" = "Remove";
+"lecture.credit.suffix" = "credits";
+
+"search.predicate.credit.suffix" = "credits";
+"search.predicate.etc.english" = "English";
+"search.predicate.etc.army" = "Military";

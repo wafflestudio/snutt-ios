@@ -48,7 +48,7 @@ struct VacancyLectureListView: View {
         Button {
             isDeleteConfirmAlertPresented = true
         } label: {
-            Text("선택한 강의 삭제")
+            Text(VacancyStrings.deleteSelectedLectures)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -62,16 +62,16 @@ struct VacancyLectureListView: View {
         )
         .disabled(selectedLectureIDs.isEmpty)
         .foregroundColor(Color(uiColor: .systemBackground))
-        .alert(Text("목록에서 삭제"), isPresented: $isDeleteConfirmAlertPresented) {
-            Button("취소", role: .cancel, action: {})
-            Button("삭제", role: .destructive) {
+        .alert(Text(VacancyStrings.deleteFromList), isPresented: $isDeleteConfirmAlertPresented) {
+            Button(SharedUIComponentsStrings.alertCancel, role: .cancel, action: {})
+            Button(SharedUIComponentsStrings.alertDelete, role: .destructive) {
                 errorAlertHandler.withAlert {
                     editMode = .inactive
                     try await viewModel.deleteVacancyLectures(lectureIDs: selectedLectureIDs)
                 }
             }
         } message: {
-            Text("선택한 강의의 빈자리 알림을 해제하시겠습니까?")
+            Text(VacancyStrings.deleteVacancyNotificationMessage)
         }
     }
 
@@ -90,7 +90,7 @@ struct VacancyLectureListView: View {
 
 extension EditMode {
     fileprivate var title: String {
-        self == .active ? "취소" : "편집"
+        self == .active ? SharedUIComponentsStrings.alertCancel : VacancyStrings.edit
     }
 
     fileprivate mutating func toggle() {

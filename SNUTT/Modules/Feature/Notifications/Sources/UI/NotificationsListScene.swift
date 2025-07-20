@@ -38,7 +38,7 @@ public struct NotificationsListScene: View {
             .scrollTargetLayout()
         }
         .withResponsiveTouch()
-        .navigationTitle("알림")
+        .navigationTitle(NotificationsStrings.notificationsTitle)
         .scrollPosition(id: $scrolledID, anchor: .bottom)
         .onChange(of: scrolledID) { _, _ in
             if viewModel.notifications.suffix(5).map({ $0.id }).contains(scrolledID) {

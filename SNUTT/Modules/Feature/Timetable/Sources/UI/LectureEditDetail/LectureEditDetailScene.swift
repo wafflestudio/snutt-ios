@@ -76,7 +76,7 @@ struct LectureEditDetailScene: View {
         .environment(viewModel)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(editMode.isEditing)
-        .navigationTitle(displayMode.isPreview ? "세부사항" : "")
+        .navigationTitle(displayMode.isPreview ? TimetableStrings.editDetailTitle : "")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 cancelButton
@@ -92,17 +92,17 @@ struct LectureEditDetailScene: View {
         }
         .toolbarBackground(TimetableAsset.navBackground.swiftUIColor, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
-        .alert("변경사항을 취소하시겠습니까?", isPresented: $showCancelConfirmation) {
-            Button("취소", role: .cancel) {}
-            Button("확인") {
+        .alert(TimetableStrings.editCancelConfirmationTitle, isPresented: $showCancelConfirmation) {
+            Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
+            Button(TimetableStrings.editConfirm) {
                 cancelEditing()
             }
         } message: {
-            Text("편집 중인 내용이 모두 사라집니다.")
+            Text(TimetableStrings.editCancelConfirmationMessage)
         }
-        .alert("강의 초기화", isPresented: $showResetConfirmation) {
-            Button("취소", role: .cancel) {}
-            Button("초기화", role: .destructive) {
+        .alert(TimetableStrings.editResetTitle, isPresented: $showResetConfirmation) {
+            Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
+            Button(TimetableStrings.editReset, role: .destructive) {
                 errorAlertHandler.withAlert {
                     try await viewModel.resetLecture()
                     editMode = .inactive
@@ -110,11 +110,11 @@ struct LectureEditDetailScene: View {
                 }
             }
         } message: {
-            Text("이 강의에 적용한 수정 사항을 모두 초기화하시겠습니까?")
+            Text(TimetableStrings.editResetConfirmationMessage)
         }
-        .alert("강의를 삭제하시겠습니까?", isPresented: $showDeleteConfirmation) {
-            Button("취소", role: .cancel) {}
-            Button("삭제", role: .destructive) {
+        .alert(TimetableStrings.editDeleteConfirmationTitle, isPresented: $showDeleteConfirmation) {
+            Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
+            Button(SharedUIComponentsStrings.alertDelete, role: .destructive) {
                 errorAlertHandler.withAlert {
                     try await viewModel.deleteLecture()
                     dismiss()
@@ -133,19 +133,19 @@ struct LectureEditDetailScene: View {
                     cancelEditing()
                 }
             } label: {
-                Text("취소")
+                Text(SharedUIComponentsStrings.alertCancel)
             }
         case .create:
             Button {
                 dismiss()
             } label: {
-                Text("취소")
+                Text(SharedUIComponentsStrings.alertCancel)
             }
         case let .preview(shouldHideDismissButton) where !shouldHideDismissButton:
             Button {
                 dismiss()
             } label: {
-                Text("취소")
+                Text(SharedUIComponentsStrings.alertCancel)
             }
         default:
             EmptyView()
@@ -181,7 +181,7 @@ struct LectureEditDetailScene: View {
                     editMode = .active
                 }
             } label: {
-                Text(editMode.isEditing ? "저장" : "편집")
+                Text(editMode.isEditing ? TimetableStrings.editSave : TimetableStrings.editEdit)
             }
         case .create:
             Button {
@@ -197,7 +197,7 @@ struct LectureEditDetailScene: View {
                     }
                 }
             } label: {
-                Text("저장")
+                Text(TimetableStrings.editSave)
             }
         case .preview:
             EmptyView()
@@ -241,13 +241,13 @@ struct LectureEditDetailScene: View {
 
     private var firstDetailSection: some View {
         VStack(spacing: 20) {
-            EditableRow(label: "강의명", keyPath: \.courseTitle)
-            EditableRow(label: "교수", keyPath: \.instructor)
+            EditableRow(label: TimetableStrings.editFieldCourseTitle, keyPath: \.courseTitle)
+            EditableRow(label: TimetableStrings.editFieldInstructor, keyPath: \.instructor)
             if viewModel.entryLecture.isCustom {
-                EditableRow(label: "학점", keyPath: \.credit)
+                EditableRow(label: TimetableStrings.editFieldCredit, keyPath: \.credit)
             }
             HStack {
-                DetailLabel(text: "색상")
+                DetailLabel(text: TimetableStrings.editFieldColor)
                 LectureColorPreviewButton(
                     lectureColor: resolvedColor(for: viewModel.editableLecture),
                     title: nil,
@@ -263,28 +263,28 @@ struct LectureEditDetailScene: View {
     private var secondDetailSection: some View {
         VStack(spacing: 20) {
             if !viewModel.entryLecture.isCustom {
-                EditableRow(label: "학과", keyPath: \.department)
-                EditableRow(label: "학년", keyPath: \.academicYear)
-                EditableRow(label: "학점", keyPath: \.credit)
-                EditableRow(label: "분류", keyPath: \.classification)
-                EditableRow(label: "구분", keyPath: \.category)
+                EditableRow(label: TimetableStrings.editFieldDepartment, keyPath: \.department)
+                EditableRow(label: TimetableStrings.editFieldAcademicYear, keyPath: \.academicYear)
+                EditableRow(label: TimetableStrings.editFieldCredit, keyPath: \.credit)
+                EditableRow(label: TimetableStrings.editFieldClassification, keyPath: \.classification)
+                EditableRow(label: TimetableStrings.editFieldCategory, keyPath: \.category)
 
                 // 2025년부터 구)교양영역 제공
                 if let currentYear = timetableViewModel.currentTimetable?.quarter.year, currentYear >= 2025 {
-                    EditableRow(label: "구) 교양영역", keyPath: \.categoryPre2025)
+                    EditableRow(label: TimetableStrings.editFieldCategoryPre2025, keyPath: \.categoryPre2025)
                 }
 
-                EditableRow(label: "강좌번호", readOnly: true, keyPath: \.courseNumber)
-                EditableRow(label: "분반번호", readOnly: true, keyPath: \.lectureNumber)
-                EditableRow(label: "정원(재학생)", readOnly: true, keyPath: \.quotaDescription)
+                EditableRow(label: TimetableStrings.editFieldCourseNumber, readOnly: true, keyPath: \.courseNumber)
+                EditableRow(label: TimetableStrings.editFieldLectureNumber, readOnly: true, keyPath: \.lectureNumber)
+                EditableRow(label: TimetableStrings.editFieldQuota, readOnly: true, keyPath: \.quotaDescription)
             }
-            EditableRow(label: "비고", multiline: true, keyPath: \.remark)
+            EditableRow(label: TimetableStrings.editFieldRemark, multiline: true, keyPath: \.remark)
         }
     }
 
     private var timePlaceSection: some View {
         VStack {
-            Text("시간 및 장소")
+            Text(TimetableStrings.editTimePlaceTitle)
                 .font(.system(size: 14))
                 .foregroundColor(.label.opacity(0.8))
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -313,7 +313,7 @@ struct LectureEditDetailScene: View {
                         viewModel.addTimePlace()
                     }
                 } label: {
-                    Text("+ 시간 추가")
+                    Text(TimetableStrings.editTimePlaceAddTime)
                         .font(.system(size: 16))
                 }
                 .padding(.top, 5)
@@ -341,7 +341,7 @@ struct LectureEditDetailScene: View {
                     Button {
                         showResetConfirmation = true
                     } label: {
-                        Text("초기화")
+                        Text(TimetableStrings.editReset)
                             .font(.system(size: 16))
                             .foregroundStyle(.red)
                             .frame(maxWidth: .infinity)
@@ -352,7 +352,7 @@ struct LectureEditDetailScene: View {
                     Button {
                         showDeleteConfirmation = true
                     } label: {
-                        Text("삭제")
+                        Text(SharedUIComponentsStrings.alertDelete)
                             .font(.system(size: 16))
                             .foregroundStyle(.red)
                             .frame(maxWidth: .infinity)
