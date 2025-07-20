@@ -1,3 +1,5 @@
+"notifications.title" = "Notifications";
+
 "notification.type.normal" = "Notice";
 "notification.type.courseBook" = "Course Book";
 "notification.type.lectureUpdate" = "Lecture Updated";

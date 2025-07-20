@@ -22,15 +22,19 @@ struct TimePlaceEditableRow: View {
     var body: some View {
         VStack(spacing: 5) {
             HStack {
-                DetailLabel(text: "시간")
+                DetailLabel(text: TimetableStrings.editTimeLabel)
                 DateTimeEditor(timePlace: $timePlace)
                     .disabled(!isEditing)
             }
             HStack {
-                DetailLabel(text: "장소")
-                TextField("장소", text: $timePlace.place, prompt: Text("(없음)"))
-                    .foregroundStyle(Color.label)
-                    .disabled(!isEditing)
+                DetailLabel(text: TimetableStrings.editPlaceLabel)
+                TextField(
+                    TimetableStrings.editPlaceLabel,
+                    text: $timePlace.place,
+                    prompt: Text(TimetableStrings.editPlacePlaceholder)
+                )
+                .foregroundStyle(Color.label)
+                .disabled(!isEditing)
             }
         }
     }

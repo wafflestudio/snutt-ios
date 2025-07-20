@@ -130,7 +130,7 @@ struct TimetableMenuContentView: View {
                     createTimetableSheetType = .fixed(quarter)
                 } label: {
                     HStack {
-                        Text("+ 시간표 추가하기")
+                        Text(TimetableStrings.timetableMenuAddTimetable)
                             .font(.system(size: 14))
                     }
                     .foregroundColor(Color(uiColor: .secondaryLabel))

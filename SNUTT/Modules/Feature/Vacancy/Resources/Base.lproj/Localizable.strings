@@ -22,3 +22,23 @@
 /* Add your translations below */
 
 "hello_world" = "Hello, world!";
+
+/* Vacancy Scene */
+"vacancy_notification_title" = "빈자리 알림";
+
+/* Vacancy Sugang Button */
+"sugang_site_button" = "수강신청 사이트";
+
+/* Vacancy Empty List */
+"see_more" = "자세히 보기";
+
+/* Vacancy Lecture List Cell */
+"people_count_unit" = "명";
+"credit_unit" = "학점";
+"cancellation_vacancy" = "취소여석";
+
+/* Vacancy Lecture List View */
+"delete_selected_lectures" = "선택한 강의 삭제";
+"delete_from_list" = "목록에서 삭제";
+"delete_vacancy_notification_message" = "선택한 강의의 빈자리 알림을 해제하시겠습니까?";
+"edit" = "편집";

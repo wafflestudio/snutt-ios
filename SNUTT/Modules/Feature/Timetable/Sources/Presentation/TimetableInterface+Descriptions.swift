@@ -32,7 +32,7 @@ extension Lecture {
     var creditDescription: String? {
         // TODO:
         if let credit {
-            "\(credit)학점"
+            "\(credit)\(TimetableStrings.lectureCreditSuffix)"
         } else {
             nil
         }

@@ -22,3 +22,23 @@
 /* Add your translations below */
 
 "hello_world" = "Hello, world!";
+
+/* Vacancy Scene */
+"vacancy_notification_title" = "Vacancy Notification";
+
+/* Vacancy Sugang Button */
+"sugang_site_button" = "Course Registration Site";
+
+/* Vacancy Empty List */
+"see_more" = "See More";
+
+/* Vacancy Lecture List Cell */
+"people_count_unit" = "";
+"credit_unit" = "credits";
+"cancellation_vacancy" = "vacancy";
+
+/* Vacancy Lecture List View */
+"delete_selected_lectures" = "Delete Selected Lectures";
+"delete_from_list" = "Delete from List";
+"delete_vacancy_notification_message" = "Do you want to disable vacancy notifications for the selected lectures?";
+"edit" = "Edit";

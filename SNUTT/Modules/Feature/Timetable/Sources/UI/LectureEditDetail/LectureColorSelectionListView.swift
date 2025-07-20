@@ -20,7 +20,7 @@ struct LectureColorSelectionListView: View {
             customColorSection
         }
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("색상 선택")
+        .navigationTitle(TimetableStrings.editColorTitle)
     }
 
     private var checkMarkImage: Image {
@@ -38,7 +38,7 @@ struct LectureColorSelectionListView: View {
                     }
                 LectureColorPreviewButton(
                     lectureColor: color,
-                    title: "이름",
+                    title: TimetableStrings.editColorName,
                     trailingImage: isSelected ? checkMarkImage : nil
                 ) {
                     withAnimation(.defaultSpring) {
@@ -64,13 +64,21 @@ extension LectureColorSelectionListView {
                 let isSelected = viewModel.editableLecture.colorIndex == 0
                 DisclosureGroup(isExpanded: .init(get: { isSelected }, set: { _ in })) {
                     Group {
-                        ColorPicker("글꼴색", selection: fgColorBinding(), supportsOpacity: false)
-                        ColorPicker("배경색", selection: bgColorBinding(), supportsOpacity: false)
+                        ColorPicker(
+                            TimetableStrings.editColorFontColor,
+                            selection: fgColorBinding(),
+                            supportsOpacity: false
+                        )
+                        ColorPicker(
+                            TimetableStrings.editColorBackgroundColor,
+                            selection: bgColorBinding(),
+                            supportsOpacity: false
+                        )
                     }
                 } label: {
                     LectureColorPreviewButton(
                         lectureColor: viewModel.editableLecture.customColor ?? .temporary,
-                        title: "이름",
+                        title: TimetableStrings.editColorName,
                         trailingImage: isSelected ? checkMarkImage : nil
                     ) {
                         withAnimation(.defaultSpring) {

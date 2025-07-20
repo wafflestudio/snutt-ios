@@ -23,7 +23,7 @@ struct MapToggleButton: View {
                     TimetableAsset.mapOpen.swiftUIImage
                     Spacer().frame(width: 8)
                 }
-                Text(isOpen ? "지도 닫기" : "지도에서 보기")
+                Text(isOpen ? TimetableStrings.editMapClose : TimetableStrings.editMapViewOnMap)
                     .font(.system(size: 14))
                     .foregroundStyle(
                         colorScheme == .dark

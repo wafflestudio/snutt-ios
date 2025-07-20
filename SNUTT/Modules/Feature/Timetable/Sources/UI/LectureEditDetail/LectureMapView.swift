@@ -34,10 +34,10 @@ struct LectureMapView: View {
             .frame(maxWidth: .infinity)
             .frame(height: 256)
             .padding(.top, 20)
-            .alert("실행 가능한 지도 애플리케이션이 없습니다.", isPresented: $isMapNotInstalledAlertPresented, actions: {})
+            .alert(TimetableStrings.editMapNoAppAlert, isPresented: $isMapNotInstalledAlertPresented, actions: {})
 
             if showMismatchWarning {
-                Text("* 장소를 편집한 경우, 실제 위치와 다르게 표시될 수 있습니다.")
+                Text(TimetableStrings.editMapLocationWarning)
                     .font(.system(size: 13))
                     .foregroundStyle(
                         colorScheme == .dark
@@ -281,7 +281,9 @@ private struct KakaoMapView: UIViewRepresentable {
                 let markerPoiOption = PoiOptions(styleID: "notFocused")
                 markerPoiOption.rank = 0
                 markerPoiOption.clickable = true
-                markerPoiOption.addText(PoiText(text: building.number + "동", styleIndex: 0))
+                markerPoiOption.addText(
+                    PoiText(text: building.number + TimetableStrings.editMapBuildingSuffix, styleIndex: 0)
+                )
                 poiOptionList.append(markerPoiOption)
 
                 let markerLayer = manager.getLabelLayer(layerID: "poi\(offset)")

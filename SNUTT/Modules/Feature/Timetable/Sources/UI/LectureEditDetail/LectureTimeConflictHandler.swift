@@ -6,6 +6,7 @@
 //
 
 import APIClientInterface
+import SharedUIComponents
 import SwiftUI
 
 @Observable
@@ -84,10 +85,10 @@ private struct LectureTimeConflictHandlingModifier: ViewModifier {
                 isPresented: conflictHandler.isConflictAlertPresented,
                 error: conflictHandler.pendingOperation?.error
             ) { _ in
-                Button("취소", role: .cancel) {
+                Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {
                     conflictHandler.pendingOperation?.onCancel()
                 }
-                Button("강제 추가") {
+                Button(TimetableStrings.editConflictForceAdd) {
                     conflictHandler.pendingOperation?.onConfirm()
                 }
             } message: { error in

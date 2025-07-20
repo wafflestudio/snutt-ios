@@ -288,7 +288,7 @@ extension SearchPredicate {
             let .classification(value):
             value
         case let .credit(value):
-            "\(value)학점"
+            "\(value)\(TimetableStrings.searchPredicateCreditSuffix)"
         case .timeInclude:
             ""
         case .timeExclude:
@@ -296,9 +296,9 @@ extension SearchPredicate {
         case let .etc(value):
             switch value {
             case .english:
-                "영강"
+                TimetableStrings.searchPredicateEtcEnglish
             case .army:
-                "군휴학"
+                TimetableStrings.searchPredicateEtcArmy
             }
         }
     }
