@@ -131,24 +131,24 @@ struct ExpandableLectureCell: View {
                         )))
                         .id(reviewDetailId)
                     }
-                    .sheet(isPresented: $isDetailPagePresented) {
-                        NavigationView {
-                            LectureDetailScene(
-                                viewModel: .init(container: viewModel.container),
-                                lecture: lecture,
-                                displayMode: .preview(shouldHideDismissButton: false)
-                            )
-                            .analyticsScreen(.lectureDetail(.init(
-                                lectureID: lecture.referenceId,
-                                referrer: viewModel.detailReferrer
-                            )))
-                        }
-                    }
                 }
             }
             .foregroundColor(.white)
             .padding(.vertical, 10)
             .padding(.horizontal, 15)
+        }
+        .sheet(isPresented: $isDetailPagePresented) {
+            NavigationView {
+                LectureDetailScene(
+                    viewModel: .init(container: viewModel.container),
+                    lecture: lecture,
+                    displayMode: .preview(shouldHideDismissButton: false)
+                )
+                .analyticsScreen(.lectureDetail(.init(
+                    lectureID: lecture.referenceId,
+                    referrer: viewModel.detailReferrer
+                )))
+            }
         }
         .onChange(of: isSelected) { isSelected in
             if isSelected {
