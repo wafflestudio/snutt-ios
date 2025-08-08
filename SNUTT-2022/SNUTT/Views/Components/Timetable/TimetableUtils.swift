@@ -226,6 +226,7 @@ struct TimetablePainter {
         var blockMask = Array(repeating: reverse, count: blockMaskSize)
         for time in timeMask {
             for minute in stride(from: time.startMinute, to: time.endMinute, by: halfHour) {
+                if minute < startHourOffset || minute > startHourOffset + halfHour * halfHourCount { continue }
                 let halfHourIndex = Int(floor(Double(minute - startHourOffset) / Double(halfHour)))
                 blockMask[time.day * halfHourCount + halfHourIndex] = !reverse
             }
