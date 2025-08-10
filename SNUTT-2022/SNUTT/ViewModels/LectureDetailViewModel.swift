@@ -15,6 +15,15 @@ extension LectureDetailScene {
         @Published var isEmailVerifyAlertPresented = false
         @Published private var bookmarkedLectures: [Lecture] = []
         @Published var vacancyNotificationLectures: [Lecture] = []
+        
+        @Published private var _toast: ToastType?
+        var toast: ToastType? {
+            get { _toast }
+            set { services.globalUIService.setToast(nil) }
+        }
+        
+        @Published var buttonAction: (() -> Void)?
+        
         var errorTitle: String = ""
         var errorMessage: String = ""
         var supportForMapViewEnabled: Bool = true
@@ -25,6 +34,8 @@ extension LectureDetailScene {
             appState.timetable.$bookmark.compactMap { $0?.lectures }.assign(to: &$bookmarkedLectures)
             appState.vacancy.$lectures.assign(to: &$vacancyNotificationLectures)
             supportForMapViewEnabled = !(appState.system.configs?.disableMapFeature ?? false)
+            appState.system.$toast.assign(to: &$_toast)
+            appState.system.$toastButtonAction.assign(to: &$buttonAction)
         }
 
         var lectureService: LectureServiceProtocol {
@@ -182,6 +193,7 @@ extension LectureDetailScene {
             )))
             do {
                 try await services.lectureService.bookmarkLecture(lecture: lecture)
+                services.globalUIService.setToast(.bookmark)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
@@ -208,6 +220,7 @@ extension LectureDetailScene {
             )))
             do {
                 try await services.vacancyService.addLecture(lecture: lecture)
+                services.globalUIService.setToast(.vacancy)
             } catch let error as STError where error.code == .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION {
                 isErrorAlertPresented = true
                 errorTitle = error.title

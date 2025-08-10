@@ -18,6 +18,13 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
     @Published var searchResult: [Lecture]? = nil
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
+    
+    @Published private var _toast: ToastType?
+    var toast: ToastType? {
+        get { _toast }
+        set { services.globalUIService.setToast(nil) }
+    }
+    @Published var buttonAction: (() -> Void)?
 
     var searchText: String {
         get { _searchText }
@@ -50,6 +57,8 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$searchResult.assign(to: &$searchResult)
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
         appState.search.$displayMode.assign(to: &$_displayMode)
+        appState.system.$toast.assign(to: &$_toast)
+        appState.system.$toastButtonAction.assign(to: &$buttonAction)
     }
 
     var selectedLecture: Lecture? {

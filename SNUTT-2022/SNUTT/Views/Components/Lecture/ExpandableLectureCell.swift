@@ -183,6 +183,13 @@ extension ExpandableLectureCell {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isLectureOverlapped: Bool = false
         @Published var isFirstBookmarkAlertPresented: Bool = false
+        
+        @Published private var _toast: ToastType?
+        var toast: ToastType? {
+            get { _toast }
+            set { services.globalUIService.setToast(nil) }
+        }
+        
         var errorTitle: String = ""
         var errorMessage: String = ""
 
@@ -267,6 +274,7 @@ extension ExpandableLectureCell.ViewModel {
         )))
         do {
             try await services.vacancyService.addLecture(lecture: lecture)
+            services.globalUIService.setToast(.vacancy)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
@@ -288,6 +296,7 @@ extension ExpandableLectureCell.ViewModel {
         isFirstBookmarkAlertPresented = appState.timetable.isFirstBookmark ?? false
         do {
             try await services.lectureService.bookmarkLecture(lecture: lecture)
+            services.globalUIService.setToast(.bookmark)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
