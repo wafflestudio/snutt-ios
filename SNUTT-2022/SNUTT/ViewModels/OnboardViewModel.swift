@@ -117,7 +117,7 @@ extension OnboardScene.ViewModel: AppleLoginProtocol {
     }
 
     func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {
-        services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
+        services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
     }
 
     func performAppleSignIn() {
@@ -134,7 +134,7 @@ extension OnboardScene.ViewModel: AppleLoginProtocol {
               let tokenData = credentail.identityToken,
               let token = String(data: tokenData, encoding: .utf8)
         else {
-            services.globalUIService.presentErrorAlert(error: .WRONG_APPLE_TOKEN)
+            services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
             return
         }
         Task {

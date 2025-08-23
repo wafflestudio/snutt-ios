@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - "SNUTT-2022/**"
-      - ".github/workflows/build.yml"
+      - ".github/workflows/build-legacy.yml"
 
 jobs:
   build-and-test:
@@ -14,10 +14,9 @@ jobs:
     strategy:
       fail-fast: false # if 'true' then one failed job cancels all jobs remaining
       matrix:
-        # see https://github.com/actions/virtual-environments/blob/main/images/macos/macos-13-Readme.md for available versions
-        xcode:
-          - "16.1"
-        macos: ["macos-15"]
+        # see https://github.com/actions/virtual-environments/blob/main/images/macos/macos-15-Readme.md for available versions
+        xcode: ["16.1"]
+        macos: [macos-15]
         command: ["build", "test"]
         scheme: ["SNUTT"]
 

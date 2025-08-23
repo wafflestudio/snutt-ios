@@ -37,10 +37,6 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.themeService.addTheme(theme: theme, apply: apply)
             return true
-        } catch let error as STError where error.code == .DUPLICATE_THEME_NAME {
-            isErrorAlertPresented = true
-            errorTitle = error.title
-            errorMessage = error.content
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
@@ -52,10 +48,6 @@ class ThemeDetailViewModel: BaseViewModel, ObservableObject {
         do {
             try await services.themeService.updateTheme(themeId: themeId, theme: theme)
             return true
-        } catch let error as STError where error.code == .DUPLICATE_THEME_NAME {
-            isErrorAlertPresented = true
-            errorTitle = error.title
-            errorMessage = error.content
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

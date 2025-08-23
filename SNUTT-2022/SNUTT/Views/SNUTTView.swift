@@ -180,11 +180,11 @@ extension SNUTTView {
         }
 
         var errorTitle: String {
-            (appState.system.error ?? .init(.UNKNOWN_ERROR)).title
+            (appState.system.error ?? .init(.SERVER_FAULT)).title
         }
 
         var errorMessage: String {
-            (appState.system.error ?? .init(.UNKNOWN_ERROR)).content
+            (appState.system.error ?? .init(.SERVER_FAULT)).content
         }
 
         func reloadReviewWebView() {

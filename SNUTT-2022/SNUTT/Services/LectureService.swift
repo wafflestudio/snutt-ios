@@ -217,6 +217,6 @@ class FakeLectureService: LectureServiceProtocol {
     func setIsMapViewExpanded(_: Bool) {}
     func shouldExpandLectureMapView() -> Bool { return false }
     func fetchBookmark(quarter _: Quarter) async throws -> Bookmark {
-        throw STError(.UNKNOWN_APP)
+        throw STError(.NO_NETWORK)
     }
 }
