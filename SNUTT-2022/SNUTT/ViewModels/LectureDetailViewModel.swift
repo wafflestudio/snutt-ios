@@ -49,7 +49,7 @@ extension LectureDetailScene {
                 isLectureOverlapped = true
                 errorTitle = error.title
                 errorMessage = error.content
-            } catch let error as STError where error.code == .NO_LECTURE_TITLE || error.code == .INVALID_LECTURE_TIME {
+            } catch let error as STError where error.code == .INVALID_LECTURE_TIME {
                 isErrorAlertPresented = true
                 errorTitle = error.title
                 errorMessage = error.content
@@ -75,7 +75,7 @@ extension LectureDetailScene {
                 isLectureOverlapped = true
                 errorTitle = error.title
                 errorMessage = error.content
-            } catch let error as STError where error.code == .NO_LECTURE_TITLE || error.code == .INVALID_LECTURE_TIME {
+            } catch let error as STError where error.code == .INVALID_LECTURE_TIME {
                 isErrorAlertPresented = true
                 errorTitle = error.title
                 errorMessage = error.content
@@ -208,10 +208,6 @@ extension LectureDetailScene {
             )))
             do {
                 try await services.vacancyService.addLecture(lecture: lecture)
-            } catch let error as STError where error.code == .INVALID_SEMESTER_FOR_VACANCY_NOTIFICATION {
-                isErrorAlertPresented = true
-                errorTitle = error.title
-                errorMessage = error.content
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }

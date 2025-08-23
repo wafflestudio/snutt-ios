@@ -33,6 +33,8 @@ enum ErrorCode: Int {
     /* Server-defined Errors */
     case SERVER_FAULT = 0x0000
     case NO_NETWORK = 0x0001
+    case NO_USER_TOKEN = 0x2001
+    case WRONG_USER_TOKEN = 0x2002
     case LECTURE_TIME_OVERLAP = 0x300C
     case INVALID_EMAIL = 0x300F
 
@@ -53,7 +55,8 @@ enum ErrorCode: Int {
             return "SERVER_ERROR".localized
         case .NO_NETWORK:
             return "네트워크 오류"
-        case .CANT_CHANGE_OTHERS_THEME,
+        case .INVALID_EMAIL,
+             .CANT_CHANGE_OTHERS_THEME,
              .INVALID_RN_BUNDLE,
              .DEEPLINK_LECTURE_NOT_FOUND,
              .DEEPLINK_TIMETABLE_NOT_FOUND,
@@ -61,12 +64,12 @@ enum ErrorCode: Int {
              .DEEPLINK_PROCESS_FAILED,
              .TIMETABLE_NOT_FOUND:
             return "요청 실패"
-        case .INVALID_EMAIL:
-            return "잘못된 요청"
         case .LECTURE_TIME_OVERLAP,
              .INVALID_LECTURE_TIME:
             return "시간대 겹침"
-        case .SOCIAL_LOGIN_FAILED:
+        case .NO_USER_TOKEN,
+             .WRONG_USER_TOKEN,
+             .SOCIAL_LOGIN_FAILED:
             return "로그인 실패"
         }
     }
@@ -75,6 +78,9 @@ enum ErrorCode: Int {
         switch self {
         case .SERVER_FAULT:
             return "서버에 문제가 있으니, 잠시 후 다시 시도해주세요"
+        case .NO_USER_TOKEN,
+             .WRONG_USER_TOKEN:
+            return "앱을 완전히 종료한 뒤, 로그인을 다시 시도해 주시기 바랍니다"
         case .INVALID_RN_BUNDLE:
             return "리소스를 다운로드하는 도중 문제가 발생했습니다"
         case .NO_NETWORK:
