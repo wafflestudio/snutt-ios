@@ -7,44 +7,63 @@
 
 import SwiftUI
 
-struct ToastView: ViewModifier {
+struct ToastViewModifier: ViewModifier {
   
-    @Binding var toast: ToastType?
+    @Binding var toast: Toast?
     @Binding var buttonAction: (() -> Void)?
+    
+    @State private var displayToast: Task<Void, Never>?
+    @State private var currentToast: Toast?
     
     func body(content: Content) -> some View {
         content
-            .animation(.linear(duration: 0.5), value: toast)
+            .onChange(of: toast) { newToast in
+                // Remove previous toast
+                displayToast?.cancel()
+                displayToast = nil
+                withAnimation {
+                    self.currentToast = nil
+                }
+                
+                guard let newToast else { return }
+                
+                Task { @MainActor in
+                    // Delay 0.05 sec
+                    try? await Task.sleep(nanoseconds: 50_000_000)
+                    withAnimation {
+                        self.currentToast = newToast
+                    }
+                    displayToast = Task { @MainActor in
+                        // Duration 3 sec
+                        try? await Task.sleep(nanoseconds: 3_000_000_000)
+                        withAnimation {
+                            self.toast = nil
+                            self.currentToast = nil
+                        }
+                    }
+                }
+            }
             .overlay(alignment: .bottom) {
-                if let toast = toast {
-                    Toast(
-                        label: toast.message,
-                        showButton: toast.showButton,
+                if let toast = currentToast {
+                    ToastView(
+                        label: toast.type.message,
+                        showButton: toast.type.showButton,
                         action: buttonAction
                     )
                     .padding(.horizontal, 20)
                     .padding(.bottom, 16)
-                    .transition(.opacity)
-                    .onAppear {
-                        Task { @MainActor in
-                            try await Task.sleep(nanoseconds: 3_000_000_000)
-                            withAnimation {
-                                self.toast = nil
-                            }
-                        }
-                    }
                 }
             }
     }
 }
 
 extension View {
-    func toast(_ toast: Binding<ToastType?>, _ buttonAction: Binding<(() -> Void)?>) -> some View {
-        modifier(ToastView(toast: toast, buttonAction: buttonAction))
+    func toast(_ toast: Binding<Toast?>, _ buttonAction: Binding<(() -> Void)?>) -> some View {
+        modifier(ToastViewModifier(toast: toast, buttonAction: buttonAction))
     }
 }
 
-private struct Toast: View {
+private struct ToastView: View {
     
     let label: String
     let showButton: Bool
@@ -68,8 +87,14 @@ private struct Toast: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(.black.opacity(0.5))
         .background(.ultraThinMaterial)
+        .background(.black.opacity(0.6))
         .clipShape(RoundedRectangle(cornerRadius: 10))
+        .transition(
+            .asymmetric(
+                insertion: .opacity.combined(with: .move(edge: .bottom)),
+                removal: .opacity.combined(with: .identity)
+            )
+        )
     }
 }

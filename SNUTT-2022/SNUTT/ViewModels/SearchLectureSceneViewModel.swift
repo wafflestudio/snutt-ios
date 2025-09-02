@@ -19,8 +19,8 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
     
-    @Published private var _toast: ToastType?
-    var toast: ToastType? {
+    @Published private var _toast: Toast?
+    var toast: Toast? {
         get { _toast }
         set { services.globalUIService.setToast(nil) }
     }

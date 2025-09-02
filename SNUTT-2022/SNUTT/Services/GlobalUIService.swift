@@ -157,7 +157,11 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
             default: break
             }
         }
-        appState.system.toast = toast
+        if let toast = toast {
+            appState.system.toast = .init(type: toast)
+        } else {
+            appState.system.toast = nil
+        }
     }
 
     func hasNewBadge(settingName: String) -> Bool {
