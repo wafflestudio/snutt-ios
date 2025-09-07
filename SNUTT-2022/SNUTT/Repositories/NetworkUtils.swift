@@ -112,6 +112,21 @@ final class Logger: EventMonitor {
 extension DataTask {
     /// Extract DTO from `DataTask`, or throw error parsed from the response body.
     @discardableResult func handlingError() async throws -> Value {
+        /// Network error
+        if let error = await response.error,
+           error.isSessionTaskError,
+           let urlError = error.underlyingError as? URLError
+        {
+            switch urlError.code {
+            case .networkConnectionLost,
+                 .notConnectedToInternet,
+                 .timedOut:
+                throw STError(.NO_NETWORK)
+            default:
+                break
+            }
+        }
+        
         if let data = await response.data,
            let errDto = try? JSONDecoder().decode(ErrorDto.self, from: data)
         {

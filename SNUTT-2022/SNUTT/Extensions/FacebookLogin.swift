@@ -18,14 +18,14 @@ extension FacebookLoginProtocol {
 
             if error != nil {
                 Task { @MainActor in
-                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                    self.services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
                 }
                 return
             }
 
             guard let result = result else {
                 Task { @MainActor in
-                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                    self.services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
                 }
                 return
             }
@@ -38,7 +38,7 @@ extension FacebookLoginProtocol {
                   let fbToken = result.token?.tokenString
             else {
                 Task { @MainActor in
-                    self.services.globalUIService.presentErrorAlert(error: .NO_FB_ID_OR_TOKEN)
+                    self.services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
                 }
                 return
             }

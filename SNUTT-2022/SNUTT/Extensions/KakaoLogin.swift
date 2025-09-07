@@ -20,14 +20,14 @@ extension KakaoLoginProtocol {
             UserApi.shared.loginWithKakaoTalk { oauthToken, error in
                 if error != nil {
                     Task { @MainActor in
-                        self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
+                        self.services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
                     }
                     return
                 }
 
                 guard let accessToken = oauthToken?.accessToken else {
                     Task { @MainActor in
-                        self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
+                        self.services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
                     }
                     return
                 }
@@ -40,13 +40,14 @@ extension KakaoLoginProtocol {
             UserApi.shared.loginWithKakaoAccount { oauthToken, error in
                 if error != nil {
                     Task { @MainActor in
-                        self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
+                        self.services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
                     }
+                    return
                 }
 
                 guard let accessToken = oauthToken?.accessToken else {
                     Task { @MainActor in
-                        self.services.globalUIService.presentErrorAlert(error: .NO_KAKAO_TOKEN)
+                        self.services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
                     }
                     return
                 }
