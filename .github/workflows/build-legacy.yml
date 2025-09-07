@@ -21,7 +21,7 @@ jobs:
         scheme: ["SNUTT"]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
 
@@ -38,12 +38,14 @@ jobs:
           echo "$GOOGLE_SERVICE_RELEASE_INFO" > SNUTT-2022/SNUTT/GoogleServiceReleaseInfo.plist
           echo "$DEBUG_CONFIG" > SNUTT-2022/SNUTT/DebugConfig.xcconfig
 
-      - uses: mxcl/xcodebuild@v1.9.2
+      - uses: mxcl/xcodebuild@v3
         with:
           platform: iOS
+          platform-version: '^18'
           action: ${{ matrix.command }}
-          code-coverage: true
           scheme: ${{ matrix.scheme }}
+          code-coverage: true
           verbosity: xcpretty
           configuration: Debug
           working-directory: SNUTT-2022
+          code-sign-identity: '-'
