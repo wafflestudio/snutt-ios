@@ -56,6 +56,9 @@
 		B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85B244C295BF36F00E6577E /* FindLocalIdView.swift */; };
 		B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */; };
 		B863301A2CE4D70F008E9003 /* EnterNewPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */; };
+		B8657C822E67B5F4004359E8 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8657C812E67B5F2004359E8 /* Toast.swift */; };
+		B8657C832E67B5F4004359E8 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8657C812E67B5F2004359E8 /* Toast.swift */; };
+		B86B67C52E4CA9F700682656 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86B67C42E4CA9F700682656 /* ToastView.swift */; };
 		B86C4CCF294DCA150019CE51 /* VerificationCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */; };
 		B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* BaseViewModel.swift */; };
 		B87B315D28D5A70F005C170B /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315828D5A70F005C170B /* UserState.swift */; };
@@ -416,6 +419,8 @@
 		B85B244C295BF36F00E6577E /* FindLocalIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocalIdView.swift; sourceTree = "<group>"; };
 		B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordScene.swift; sourceTree = "<group>"; };
 		B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNewPasswordView.swift; sourceTree = "<group>"; };
+		B8657C812E67B5F2004359E8 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		B86B67C42E4CA9F700682656 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeView.swift; sourceTree = "<group>"; };
 		B87431CA283B5A7300D78C59 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		B87B315828D5A70F005C170B /* UserState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
@@ -1102,6 +1107,7 @@
 				738406ED2B57107C00007E62 /* Theme.swift */,
 				B84A4EA02B6035EE00C1E1A0 /* Building.swift */,
 				73B6E0862CCB34AA006DD4F0 /* SocialProvider.swift */,
+				B8657C812E67B5F2004359E8 /* Toast.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1196,6 +1202,7 @@
 		DCD41A6D27E5CDCA00CF380E /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B86B67C42E4CA9F700682656 /* ToastView.swift */,
 				BE98A009288A90C000C2CE95 /* Logo.swift */,
 				BEDF506C27EB740E00CDCC13 /* LectureList.swift */,
 				B8B22D1529311F6200AB88F3 /* EmptyLectureList.swift */,
@@ -1493,6 +1500,7 @@
 				BE419B87288B8B8F00FA9590 /* Weekday.swift in Sources */,
 				BE419B92288B8F9F00FA9590 /* TimetableBlock.swift in Sources */,
 				BE419B93288B8FA600FA9590 /* TimetableBlocksLayer.swift in Sources */,
+				B8657C832E67B5F4004359E8 /* Toast.swift in Sources */,
 				CEB5A72029DDA8B200E74C47 /* TimetableAccessoryInlineView.swift in Sources */,
 				BE98A069288AFC1600C2CE95 /* SNUTTWidgetBundle.swift in Sources */,
 				BE419B9B288B917A00FA9590 /* TimetableUtils.swift in Sources */,
@@ -1625,6 +1633,7 @@
 				B87DF6EF2914FC02008BB95B /* PopupRepository.swift in Sources */,
 				CE98204B2A09FBDD001037F5 /* DebugState.swift in Sources */,
 				BEB3B6AD28D4D40400E56062 /* EditableFields.swift in Sources */,
+				B86B67C52E4CA9F700682656 /* ToastView.swift in Sources */,
 				CE076E022A0967E200C9430B /* NetworkLogStore.swift in Sources */,
 				B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */,
 				BE13C5B528AE4CBA0081D0AB /* UserDefaultsRepository.swift in Sources */,
@@ -1694,6 +1703,7 @@
 				BE9413BB28C20DC500171060 /* AuthDto.swift in Sources */,
 				BE1B610C289D7C2500401361 /* GlobalUIService.swift in Sources */,
 				DC2915992865D69700FE5F9A /* LectureListViewModel.swift in Sources */,
+				B8657C822E67B5F4004359E8 /* Toast.swift in Sources */,
 				BEF9233628E7EE45004AFCB2 /* SignUpView.swift in Sources */,
 				B8F40EAF28980D990021A2A9 /* DeveloperInfoView.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,

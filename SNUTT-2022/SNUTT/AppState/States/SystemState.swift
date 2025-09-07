@@ -19,6 +19,9 @@ class SystemState {
     @Published var preferredColorScheme: ColorScheme? = nil
 
     @Published var selectedTab: TabType = .timetable
+    
+    @Published var toast: Toast? = nil
+    @Published var toastButtonAction: (() -> Void)? = nil
 
     @Published var noticeViewInfo: ConfigsDto.NoticeViewInfoDto?
 
