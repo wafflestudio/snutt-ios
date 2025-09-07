@@ -37,7 +37,7 @@ extension UIFont {
     }
 }
 
-extension Text {
+extension View {
     /// `percentage` : 100 if 100%
     func lineHeight(with font: UIFont, percentage: CGFloat) -> some View {
         let roundedSpacing = ((font.pointSize * (percentage - 100) / 100) * 0.5)

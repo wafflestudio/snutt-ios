@@ -56,7 +56,7 @@ struct SettingScene: View {
                     VacancyScene(viewModel: .init(container: viewModel.container))
                 }
                 SettingsLinkItem(title: "강의 리마인더") {
-                    LectureReminderSettingScene()
+                    LectureReminderSettingScene(viewModel: .init(container: viewModel.container))
                 }
                 SettingsLinkItem(title: "테마 마켓") {
                     ThemeMarketScene(viewModel: .init(container: viewModel.container))

@@ -56,6 +56,7 @@
 		B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85B244C295BF36F00E6577E /* FindLocalIdView.swift */; };
 		B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */; };
 		B863301A2CE4D70F008E9003 /* EnterNewPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */; };
+		B8657C7E2E62BFAE004359E8 /* LectureReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8657C7D2E62BFA5004359E8 /* LectureReminderViewModel.swift */; };
 		B86C4CCF294DCA150019CE51 /* VerificationCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */; };
 		B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* BaseViewModel.swift */; };
 		B87B315D28D5A70F005C170B /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315828D5A70F005C170B /* UserState.swift */; };
@@ -417,6 +418,7 @@
 		B85B244C295BF36F00E6577E /* FindLocalIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocalIdView.swift; sourceTree = "<group>"; };
 		B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordScene.swift; sourceTree = "<group>"; };
 		B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNewPasswordView.swift; sourceTree = "<group>"; };
+		B8657C7D2E62BFA5004359E8 /* LectureReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReminderViewModel.swift; sourceTree = "<group>"; };
 		B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeView.swift; sourceTree = "<group>"; };
 		B87431CA283B5A7300D78C59 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		B87B315828D5A70F005C170B /* UserState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
@@ -1247,6 +1249,7 @@
 		DCD41A7027E5CE0800CF380E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B8657C7D2E62BFA5004359E8 /* LectureReminderViewModel.swift */,
 				B87431CA283B5A7300D78C59 /* BaseViewModel.swift */,
 				DCD41A7127E5CE1D00CF380E /* TimetableViewModel.swift */,
 				CEF4200E2A62ADE3005C2B1F /* FriendsViewModel.swift */,
@@ -1601,6 +1604,7 @@
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
 				B87DF6F52918AB5D008BB95B /* Date+Ext.swift in Sources */,
 				BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */,
+				B8657C7E2E62BFAE004359E8 /* LectureReminderViewModel.swift in Sources */,
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
 				B88D170128AF71E300E2D652 /* UserSupportView.swift in Sources */,
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
