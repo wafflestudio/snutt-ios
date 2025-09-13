@@ -14,6 +14,8 @@ struct RoundedRectButton: View {
 
     let disabled: Bool
     let action: () -> Void
+    
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         Button {
@@ -27,7 +29,11 @@ struct RoundedRectButton: View {
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: type.cornerRadius)
-                        .fill(disabled ? STColor.neutral95 : STColor.cyan)
+                        .fill(
+                            disabled
+                            ? STColor.neutral95
+                            : (colorScheme == .dark ? STColor.darkMint1 : STColor.cyan)
+                        )
                 )
                 .drawingGroup()
         }
