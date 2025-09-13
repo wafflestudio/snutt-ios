@@ -1,5 +1,5 @@
 //
-//  DailyReviewListView.swift
+//  LectureDiaryListView.swift
 //  SNUTT
 //
 //  Created by 최유림 on 5/28/25.
@@ -7,10 +7,12 @@
 
 import SwiftUI
 
-struct DailyReviewListView: View {
+struct LectureDiaryListView: View {
     
     var reviewList: [DailyReview] = []
     @State private var selectedSemester: String = ""
+    
+    @Environment(\.colorScheme) private var colorScheme
     
     var semesterList: [String] {
         Set(reviewList.map { String($0.semester) }).sorted(by: { $1 < $0 })
@@ -22,21 +24,11 @@ struct DailyReviewListView: View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
                     ForEach(semesterList, id: \.self) { semester in
-                        let isSelected = semester == selectedSemester
-                        Button {
+                        SemesterChip(
+                            semester: semester,
+                            isSelected: semester == selectedSemester
+                        ) {
                             selectedSemester = semester
-                        } label: {
-                            Text(semester)
-                                .font(
-                                    isSelected
-                                    ? .system(size: 15, weight: .semibold)
-                                    : .system(size: 15)
-                                )
-                                .foregroundStyle(isSelected ? .white : STColor.alternative)
-                                .padding(.horizontal, 24)
-                                .padding(.vertical, 8)
-                                .background(isSelected ? STColor.cyan : STColor.neutral98)
-                                .clipShape(Capsule())
                         }
                     }
                 }
@@ -59,13 +51,57 @@ struct DailyReviewListView: View {
     }
 }
 
-extension DailyReviewListView {
+extension LectureDiaryListView {
+    struct SemesterChip: View {
+        
+        let semester: String
+        let isSelected: Bool
+        let selected: () -> Void
+        
+        @Environment(\.colorScheme) private var colorScheme
+        
+        var body: some View {
+            Button {
+                selected()
+            } label: {
+                Text(semester)
+                    .font(
+                        isSelected
+                        ? .system(size: 15, weight: .semibold)
+                        : .system(size: 15)
+                    )
+                    .foregroundStyle(semesterChipForeground(isSelected))
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 8)
+                    .background(semesterChipBackground(isSelected))
+                    .clipShape(Capsule())
+            }
+        }
+        
+        private func semesterChipForeground(_ selected: Bool) -> Color {
+            selected
+            ? .white
+            : (colorScheme == .dark ? STColor.assistive : STColor.alternative)
+        }
+        
+        private func semesterChipBackground(_ selected: Bool) -> Color {
+            switch colorScheme {
+            case .dark:
+                selected ? STColor.darkMint1 : STColor.neutral5
+            default:
+                selected ? STColor.cyan : STColor.neutral98
+            }
+        }
+    }
+    
     struct ExpandableDailyReview: View {
         
         let reviewList: [DailyReview]
         @State private var isExpanded: Bool = false
         @State private var showDeleteReviewAlert: Bool = false
         @State private var selectedReview: DailyReview?
+        
+        @Environment(\.colorScheme) private var colorScheme
         
         var body: some View {
             VStack(spacing: 8) {
@@ -99,7 +135,11 @@ extension DailyReviewListView {
                                     HStack {
                                         Text(review.lectureTitle)
                                             .font(.system(size: 14))
-                                            .foregroundStyle(STColor.alternative)
+                                            .foregroundStyle(
+                                                colorScheme == .dark
+                                                ? STColor.assistive
+                                                : STColor.alternative
+                                            )
                                         Spacer()
                                         Button {
                                             selectedReview = review
@@ -118,29 +158,15 @@ extension DailyReviewListView {
                                             ReviewContentRow(title: "남기고 싶은 말", content: comment)
                                         }
                                     }
-                                    .padding([.horizontal, .top], 16)
-                                    .padding(.bottom, 20)
-                                    .background(STColor.neutral98)
-                                    .clipShape(RoundedRectangle(cornerRadius: 4))
                                 }
-                                
-                                // MARK: Edit button
-                                HStack {
-                                    Spacer()
-                                    NavigationLink {
-                                        // TODO: DailyReviewDetailView
-                                    } label: {
-                                        Text("수정하기")
-                                            .font(.system(size: 14))
-                                            .foregroundStyle(STColor.darkerGray)
-                                            .padding(.vertical, 6)
-                                            .padding(.horizontal, 16)
-                                            .background(
-                                                Capsule()
-                                                    .stroke(STColor.disabledLine, lineWidth: 1)
-                                            )
-                                    }
-                                }
+                                .padding([.horizontal, .top], 16)
+                                .padding(.bottom, 20)
+                                .background(
+                                    colorScheme == .dark
+                                    ? STColor.groupBackground
+                                    : STColor.neutral98
+                                )
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
                             }
                         }
                     }
@@ -151,7 +177,7 @@ extension DailyReviewListView {
             .padding(.horizontal, 20)
             .alert("", isPresented: $showDeleteReviewAlert) {
                 Button("취소", role: .cancel) {}
-                Button("확인") {
+                Button("확인", role: .destructive) {
                     // TODO: Delete review
                 }
             } message: {
@@ -167,15 +193,25 @@ extension DailyReviewListView {
         let title: String
         let content: String
         
+        @Environment(\.colorScheme) private var colorScheme
+        
         var body: some View {
             HStack(alignment: .top, spacing: 16) {
                 Text(title)
                     .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(STColor.assistive)
+                    .foregroundStyle(
+                        colorScheme == .dark
+                        ? STColor.alternative
+                        : STColor.assistive
+                    )
                     .frame(width: 80, alignment: .leading)
                 Text(content)
                     .font(.system(size: 14))
-                    .foregroundStyle(STColor.darkerGray)
+                    .foregroundStyle(
+                        colorScheme == .dark
+                        ? STColor.assistive
+                        : STColor.darkerGray
+                    )
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .multilineTextAlignment(.leading)
@@ -185,6 +221,6 @@ extension DailyReviewListView {
 
 #Preview {
     NavigationView {
-        DailyReviewListView(reviewList: [.debug])
+        LectureDiaryListView(reviewList: [.debug])
     }
 }
