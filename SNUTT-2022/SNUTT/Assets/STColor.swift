@@ -11,7 +11,7 @@ import SwiftUI
 struct STColor {
     static let cyan: Color = .init("cyan")
     
-    /// Hex "#1BD0C8"
+    /// Hex #1BD0C8
     static let lightCyan: Color = .init(hex: "#1BD0C8")
 
     /// SNUTT cyan (light)
@@ -53,6 +53,12 @@ struct STColor {
 
     /// Hex #505050
     static let darkerGray: Color = .init(hex: "#505050")
+    
+    /// Hex #222222
+    static let neutral5: Color = .init(hex: "#222222")
+    
+    /// Hex #3C3C3C
+    static let neutral15: Color = .init(hex: "#3C3C3C")
 
     /// Hex #EBEBED
     static let neutral95: Color = .init(hex: "#EBEBED")
