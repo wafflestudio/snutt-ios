@@ -49,7 +49,7 @@
 		B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B80240B22CE8564500178428 /* TimerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80240B12CE8564500178428 /* TimerModifier.swift */; };
 		B824C7A72D50E39B002C3C71 /* PopoverTipModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B824C7A62D50E39B002C3C71 /* PopoverTipModifier.swift */; };
-		B825E8102DE741ED0068A4A1 /* DailyReviewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E80F2DE741E20068A4A1 /* DailyReviewListView.swift */; };
+		B825E8102DE741ED0068A4A1 /* LectureDiaryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E80F2DE741E20068A4A1 /* LectureDiaryListView.swift */; };
 		B825E8122DE743780068A4A1 /* DailyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E8112DE743720068A4A1 /* DailyReview.swift */; };
 		B825E8132DE743780068A4A1 /* DailyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E8112DE743720068A4A1 /* DailyReview.swift */; };
 		B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */; };
@@ -92,6 +92,7 @@
 		B8A72A022A8F1ED000094FAA /* ChangeNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A72A012A8F1ED000094FAA /* ChangeNicknameView.swift */; };
 		B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */; };
 		B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B22D1529311F6200AB88F3 /* EmptyLectureList.swift */; };
+		B8B53CB02DBC84B800A3E3B2 /* LectureDiaryConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B53CAF2DBC84B800A3E3B2 /* LectureDiaryConfirmView.swift */; };
 		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
 		B8C0C6512CD7EAB2005563F2 /* RoundedRectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C0C6502CD7EAB2005563F2 /* RoundedRectButton.swift */; };
 		B8C3F0192D23E29500DEB8C0 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = B8C3F0182D23E29500DEB8C0 /* KakaoMapsSDK-SPM */; };
@@ -422,7 +423,7 @@
 		B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTimeMaskDto.swift; sourceTree = "<group>"; };
 		B80240B12CE8564500178428 /* TimerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModifier.swift; sourceTree = "<group>"; };
 		B824C7A62D50E39B002C3C71 /* PopoverTipModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverTipModifier.swift; sourceTree = "<group>"; };
-		B825E80F2DE741E20068A4A1 /* DailyReviewListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyReviewListView.swift; sourceTree = "<group>"; };
+		B825E80F2DE741E20068A4A1 /* LectureDiaryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDiaryListView.swift; sourceTree = "<group>"; };
 		B825E8112DE743720068A4A1 /* DailyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyReview.swift; sourceTree = "<group>"; };
 		B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureMapView.swift; sourceTree = "<group>"; };
 		B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
@@ -462,6 +463,7 @@
 		B8A72A012A8F1ED000094FAA /* ChangeNicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNicknameView.swift; sourceTree = "<group>"; };
 		B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationUtils.swift; sourceTree = "<group>"; };
 		B8B22D1529311F6200AB88F3 /* EmptyLectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLectureList.swift; sourceTree = "<group>"; };
+		B8B53CAF2DBC84B800A3E3B2 /* LectureDiaryConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDiaryConfirmView.swift; sourceTree = "<group>"; };
 		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
 		B8C0C6502CD7EAB2005563F2 /* RoundedRectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectButton.swift; sourceTree = "<group>"; };
 		B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
@@ -739,12 +741,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B8B53CAA2DBC047C00A3E3B2 /* DailyReview */ = {
+		B8B53CAA2DBC047C00A3E3B2 /* LectureDiary */ = {
 			isa = PBXGroup;
 			children = (
-				B825E80F2DE741E20068A4A1 /* DailyReviewListView.swift */,
+				B8CCCB792E75215800A0D036 /* EditLectureDiaryScene.swift */,
+				B825E80F2DE741E20068A4A1 /* LectureDiaryListView.swift */,
+				B8B53CAF2DBC84B800A3E3B2 /* LectureDiaryConfirmView.swift */,
 			);
-			path = DailyReview;
+			path = LectureDiary;
 			sourceTree = "<group>";
 		};
 		B8E51E6928B75E9E0065248E /* States */ = {
@@ -1206,7 +1210,7 @@
 		DCD41A6C27E5CDBE00CF380E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				B8B53CAA2DBC047C00A3E3B2 /* DailyReview */,
+				B8B53CAA2DBC047C00A3E3B2 /* LectureDiary */,
 				B8F40EA7289809AD0021A2A9 /* Settings */,
 				BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */,
 				BE7E230027FF20EE004DC202 /* TimetableScene.swift */,
@@ -1648,7 +1652,7 @@
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
 				B88D170128AF71E300E2D652 /* UserSupportView.swift in Sources */,
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
-				B825E8102DE741ED0068A4A1 /* DailyReviewListView.swift in Sources */,
+				B825E8102DE741ED0068A4A1 /* LectureDiaryListView.swift in Sources */,
 				BED04D2F28EA6FA600937E4C /* SettingsMenuItem.swift in Sources */,
 				738406FF2B5718C600007E62 /* ThemeDetailViewModel.swift in Sources */,
 				B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */,
@@ -1772,6 +1776,7 @@
 				BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */,
 				CE17DF932A7FCB32000432B8 /* VacancyGuidePopup.swift in Sources */,
 				BEB57C2128B6758200279EFF /* Animation+Custom.swift in Sources */,
+				B8B53CB02DBC84B800A3E3B2 /* LectureDiaryConfirmView.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
 				CE17DF872A7E9560000432B8 /* ConfigRouter.swift in Sources */,
 				BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */,
