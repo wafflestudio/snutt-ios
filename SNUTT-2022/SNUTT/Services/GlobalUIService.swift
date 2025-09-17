@@ -147,18 +147,17 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
     }
     
     func setToast(_ toast: ToastType?) {
-        appState.system.toastButtonAction = {
-            switch toast {
-            case .reminderNone,
-                 .reminder10Before,
-                 .reminderOnTime,
-                 .reminder10After:
-                setSelectedTab(.settings)
-            default: break
-            }
-        }
         if let toast = toast {
-            appState.system.toast = .init(type: toast)
+            appState.system.toast = .init(type: toast) {
+                switch toast {
+                case .reminderNone,
+                     .reminder10Before,
+                     .reminderOnTime,
+                     .reminder10After:
+                    setSelectedTab(.settings)
+                default: break
+                }
+            }
         } else {
             appState.system.toast = nil
         }

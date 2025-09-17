@@ -58,7 +58,6 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
         appState.search.$displayMode.assign(to: &$_displayMode)
         appState.system.$toast.assign(to: &$_toast)
-        appState.system.$toastButtonAction.assign(to: &$buttonAction)
     }
 
     var selectedLecture: Lecture? {

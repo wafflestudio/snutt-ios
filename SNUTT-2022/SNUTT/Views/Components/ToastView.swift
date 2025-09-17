@@ -10,74 +10,56 @@ import SwiftUI
 struct ToastViewModifier: ViewModifier {
   
     @Binding var toast: Toast?
-    @Binding var buttonAction: (() -> Void)?
-    
-    @State private var displayToast: Task<Void, Never>?
     @State private var currentToast: Toast?
     
     func body(content: Content) -> some View {
         content
-            .onChange(of: toast) { newToast in
-                // Remove previous toast
-                displayToast?.cancel()
-                displayToast = nil
+            .task(id: toast?.id, priority: .high) {
                 withAnimation {
                     self.currentToast = nil
                 }
-                
-                guard let newToast else { return }
-                
+                guard let _ = toast?.id else { return }
                 Task { @MainActor in
-                    // Delay 0.05 sec
                     try? await Task.sleep(nanoseconds: 50_000_000)
                     withAnimation {
-                        self.currentToast = newToast
+                        self.currentToast = toast
                     }
-                    displayToast = Task { @MainActor in
-                        // Duration 3 sec
-                        try? await Task.sleep(nanoseconds: 3_000_000_000)
-                        withAnimation {
-                            self.toast = nil
-                            self.currentToast = nil
-                        }
+                    try? await Task.sleep(nanoseconds: 3_000_000_000)
+                    withAnimation {
+                        self.toast = nil
+                        self.currentToast = nil
                     }
                 }
             }
             .overlay(alignment: .bottom) {
                 if let toast = currentToast {
-                    ToastView(
-                        label: toast.type.message,
-                        showButton: toast.type.showButton,
-                        action: buttonAction
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 16)
+                    ToastView(toast: toast)
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 16)
                 }
             }
     }
 }
 
 extension View {
-    func toast(_ toast: Binding<Toast?>, _ buttonAction: Binding<(() -> Void)?>) -> some View {
-        modifier(ToastViewModifier(toast: toast, buttonAction: buttonAction))
+    func toast(_ toast: Binding<Toast?>) -> some View {
+        modifier(ToastViewModifier(toast: toast))
     }
 }
 
 private struct ToastView: View {
     
-    let label: String
-    let showButton: Bool
-    let action: (() -> Void)?
+    let toast: Toast
     
     var body: some View {
         HStack {
-            Text(label)
+            Text(toast.type.message)
                 .font(.system(size: 14, weight: .medium))
                 .foregroundStyle(.white)
             Spacer()
-            if showButton {
+            if toast.type.showButton {
                 Button {
-                    action?()
+                    toast.action()
                 } label: {
                     Text("보기")
                         .font(.system(size: 14, weight: .medium))

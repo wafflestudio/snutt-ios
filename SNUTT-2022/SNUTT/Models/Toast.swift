@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct Toast: Identifiable, Equatable {
+struct Toast: Identifiable {
     let id = UUID()
     let type: ToastType
+    var action: () -> Void = {}
 }
 
 enum ToastType {

@@ -22,8 +22,6 @@ extension LectureDetailScene {
             set { services.globalUIService.setToast(nil) }
         }
         
-        @Published var buttonAction: (() -> Void)?
-        
         var errorTitle: String = ""
         var errorMessage: String = ""
         var supportForMapViewEnabled: Bool = true
@@ -35,7 +33,6 @@ extension LectureDetailScene {
             appState.vacancy.$lectures.assign(to: &$vacancyNotificationLectures)
             supportForMapViewEnabled = !(appState.system.configs?.disableMapFeature ?? false)
             appState.system.$toast.assign(to: &$_toast)
-            appState.system.$toastButtonAction.assign(to: &$buttonAction)
         }
 
         var lectureService: LectureServiceProtocol {
