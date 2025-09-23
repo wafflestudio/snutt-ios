@@ -16,6 +16,7 @@ protocol GlobalUIServiceProtocol: Sendable {
     func setSelectedTab(_ tab: TabType)
     func setIsErrorAlertPresented(_ value: Bool)
     func setIsMenuOpen(_ value: Bool)
+    func setToast(_ toast: ToastType?)
 
     func openEllipsis(for timetable: TimetableMetadata)
     func closeEllipsis()
@@ -144,6 +145,23 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
     func setCreateQuarter(_ value: Quarter?) {
         appState.menu.createQuarter = value
     }
+    
+    func setToast(_ toast: ToastType?) {
+        if let toast = toast {
+            appState.system.toast = .init(type: toast) {
+                switch toast {
+                case .reminderNone,
+                     .reminder10Before,
+                     .reminderOnTime,
+                     .reminder10After:
+                    setSelectedTab(.settings)
+                default: break
+                }
+            }
+        } else {
+            appState.system.toast = nil
+        }
+    }
 
     func hasNewBadge(settingName: String) -> Bool {
         return appState.system.configs?.settingsBadge?.new.contains { $0 == settingName } ?? false
@@ -221,6 +239,7 @@ class FakeGlobalUIService: GlobalUIServiceProtocol {
     func setSelectedTab(_: TabType) {}
     func setIsErrorAlertPresented(_: Bool) {}
     func setIsMenuOpen(_: Bool) {}
+    func setToast(_ toast: ToastType?) {}
 
     func openEllipsis(for _: TimetableMetadata) {}
     func closeEllipsis() {}
