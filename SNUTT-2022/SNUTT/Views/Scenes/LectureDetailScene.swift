@@ -101,6 +101,7 @@ struct LectureDetailScene: View {
         .onChange(of: isMapViewExpanded) {
             viewModel.setIsMapViewExpanded($0)
         }
+        .toast($viewModel.toast)
         .background(STColor.groupBackground)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(editMode.isEditing)

@@ -15,6 +15,13 @@ extension LectureDetailScene {
         @Published var isEmailVerifyAlertPresented = false
         @Published private var bookmarkedLectures: [Lecture] = []
         @Published var vacancyNotificationLectures: [Lecture] = []
+        
+        @Published private var _toast: Toast?
+        var toast: Toast? {
+            get { _toast }
+            set { services.globalUIService.setToast(nil) }
+        }
+        
         var errorTitle: String = ""
         var errorMessage: String = ""
         var supportForMapViewEnabled: Bool = true
@@ -25,6 +32,7 @@ extension LectureDetailScene {
             appState.timetable.$bookmark.compactMap { $0?.lectures }.assign(to: &$bookmarkedLectures)
             appState.vacancy.$lectures.assign(to: &$vacancyNotificationLectures)
             supportForMapViewEnabled = !(appState.system.configs?.disableMapFeature ?? false)
+            appState.system.$toast.assign(to: &$_toast)
         }
 
         var lectureService: LectureServiceProtocol {
@@ -182,6 +190,7 @@ extension LectureDetailScene {
             )))
             do {
                 try await services.lectureService.bookmarkLecture(lecture: lecture)
+                services.globalUIService.setToast(.bookmark)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
@@ -208,6 +217,7 @@ extension LectureDetailScene {
             )))
             do {
                 try await services.vacancyService.addLecture(lecture: lecture)
+                services.globalUIService.setToast(.vacancy)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
