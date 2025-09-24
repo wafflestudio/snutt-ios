@@ -175,12 +175,12 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
     }
     
     private func setBookmarkToast(_ toast: ToastType) {
-//        if appState.timetable.isFirstBookmark == true {
+        if appState.timetable.isFirstBookmark == true {
             appState.system.toast = .init(type: toast) {
                 setSelectedTab(.search)
                 appState.routing.bookmarkList.pushToBookmark = true
             }
-//        }
+        }
     }
     
     private func setVacancyToast(_ toast: ToastType) {
