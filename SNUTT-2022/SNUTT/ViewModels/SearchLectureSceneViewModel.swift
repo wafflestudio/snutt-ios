@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
     @Published private var _selectedLecture: Lecture?
@@ -19,13 +20,6 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
     @Published var selectedTagList: [SearchTag] = []
     @Published var isLoading: Bool = false
     
-    @Published private var _toast: Toast?
-    var toast: Toast? {
-        get { _toast }
-        set { services.globalUIService.setToast(nil) }
-    }
-    @Published var buttonAction: (() -> Void)?
-
     var searchText: String {
         get { _searchText }
         set { services.searchService.setSearchText(newValue) }
@@ -44,6 +38,8 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
     var currentTimetable: Timetable? {
         appState.timetable.current
     }
+    
+    private var bag = Set<AnyCancellable>()
 
     override init(container: DIContainer) {
         super.init(container: container)
@@ -57,7 +53,13 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$searchResult.assign(to: &$searchResult)
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
         appState.search.$displayMode.assign(to: &$_displayMode)
-        appState.system.$toast.assign(to: &$_toast)
+        appState.routing.$bookmarkList.map(\.pushToBookmark)
+            .filter { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.services.searchService.setSearchDisplayMode(.bookmark)
+            }
+            .store(in: &bag)
     }
 
     var selectedLecture: Lecture? {

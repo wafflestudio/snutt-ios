@@ -169,20 +169,12 @@ struct ExpandableLectureCell: View {
         } message: {
             Text(viewModel.errorMessage)
         }
-        .alert("관심강좌", isPresented: $viewModel.isFirstBookmarkAlertPresented) {
-            Button("확인", role: .cancel, action: {
-                viewModel.isFirstBookmarkAlertPresented = false
-            })
-        } message: {
-            Text("시간표 우측 상단에서 선택한 관심강좌 목록을 확인해보세요")
-        }
     }
 }
 
 extension ExpandableLectureCell {
     class ViewModel: BaseViewModel, ObservableObject {
         @Published var isLectureOverlapped: Bool = false
-        @Published var isFirstBookmarkAlertPresented: Bool = false
         
         @Published private var _toast: Toast?
         var toast: Toast? {
@@ -273,8 +265,8 @@ extension ExpandableLectureCell.ViewModel {
             referrer: lectureActionReferrer
         )))
         do {
-            try await services.vacancyService.addLecture(lecture: lecture)
             services.globalUIService.setToast(.vacancy)
+            try await services.vacancyService.addLecture(lecture: lecture)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }
@@ -293,10 +285,9 @@ extension ExpandableLectureCell.ViewModel {
             lectureID: lecture.referenceId,
             referrer: lectureActionReferrer
         )))
-        isFirstBookmarkAlertPresented = appState.timetable.isFirstBookmark ?? false
         do {
-            try await services.lectureService.bookmarkLecture(lecture: lecture)
             services.globalUIService.setToast(.bookmark)
+            try await services.lectureService.bookmarkLecture(lecture: lecture)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

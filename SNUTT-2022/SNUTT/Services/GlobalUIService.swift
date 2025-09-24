@@ -145,26 +145,51 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
     func setCreateQuarter(_ value: Quarter?) {
         appState.menu.createQuarter = value
     }
+
+    func hasNewBadge(settingName: String) -> Bool {
+        return appState.system.configs?.settingsBadge?.new.contains { $0 == settingName } ?? false
+    }
+    
+    // MARK: Toast
     
     func setToast(_ toast: ToastType?) {
         if let toast = toast {
-            appState.system.toast = .init(type: toast) {
-                switch toast {
-                case .reminderNone,
-                     .reminder10Before,
-                     .reminderOnTime,
-                     .reminder10After:
-                    setSelectedTab(.settings)
-                default: break
-                }
+            switch toast {
+            case .reminderNone,
+                 .reminder10Before,
+                 .reminderOnTime,
+                 .reminder10After:
+                setReminderToast(toast)
+            case .bookmark:
+                setBookmarkToast(toast)
+            case .vacancy:
+                setVacancyToast(toast)
             }
         } else {
             appState.system.toast = nil
         }
     }
-
-    func hasNewBadge(settingName: String) -> Bool {
-        return appState.system.configs?.settingsBadge?.new.contains { $0 == settingName } ?? false
+    
+    private func setReminderToast(_ toast: ToastType) {
+        appState.system.toast = .init(type: toast) { setSelectedTab(.settings) }
+    }
+    
+    private func setBookmarkToast(_ toast: ToastType) {
+//        if appState.timetable.isFirstBookmark == true {
+            appState.system.toast = .init(type: toast) {
+                setSelectedTab(.search)
+                appState.routing.bookmarkList.pushToBookmark = true
+            }
+//        }
+    }
+    
+    private func setVacancyToast(_ toast: ToastType) {
+        if appState.vacancy.isFirstVacancy == true {
+            appState.system.toast = .init(type: toast) {
+                setSelectedTab(.settings)
+                appState.routing.settingScene.pushToVacancy = true
+            }
+        }
     }
 
     // MARK: Preload Review WebViews
