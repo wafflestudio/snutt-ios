@@ -39,7 +39,7 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
         appState.timetable.current
     }
     
-    private var bag = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
 
     override init(container: DIContainer) {
         super.init(container: container)
