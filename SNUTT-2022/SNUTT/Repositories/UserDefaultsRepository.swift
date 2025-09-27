@@ -32,6 +32,8 @@ enum STDefaultsKey: String {
 
     case bookmark
     case isFirstBookmark
+    
+    case isFirstVacancy
 }
 
 class UserDefaultsRepository: UserDefaultsRepositoryProtocol {

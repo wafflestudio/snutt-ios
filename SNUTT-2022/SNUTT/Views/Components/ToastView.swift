@@ -54,17 +54,15 @@ private struct ToastView: View {
     var body: some View {
         HStack {
             Text(toast.type.message)
-                .font(.system(size: 14, weight: .medium))
+                .font(STFont.medium14.font)
                 .foregroundStyle(.white)
             Spacer()
-            if toast.type.showButton {
-                Button {
-                    toast.action()
-                } label: {
-                    Text("보기")
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundStyle(STColor.milkMint)
-                }
+            Button {
+                toast.action()
+            } label: {
+                Text("보기")
+                    .font(STFont.medium14.font)
+                    .foregroundStyle(STColor.milkMint)
             }
         }
         .padding(.horizontal, 16)

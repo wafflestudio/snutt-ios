@@ -31,7 +31,6 @@ struct SearchLectureScene: View {
                         .transition(.move(edge: .trailing))
                 }
             }
-            .toast($viewModel.toast)
         }
         .safeAreaInset(edge: .top, alignment: .center, spacing: 0) {
             SearchBar(text: $viewModel.searchText,

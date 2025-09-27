@@ -19,7 +19,7 @@ class WebViewPreloadManager {
     var webView: WKWebView?
     var eventSignal: PassthroughSubject<WebViewEventType, Never>?
     var coordinator: Coordinator?
-    private var bag = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
 
     func preload(url: URL, accessToken: String) {
         eventSignal = eventSignal ?? .init()
@@ -55,7 +55,7 @@ class WebViewPreloadManager {
                     return
                 }
             }
-            .store(in: &bag)
+            .store(in: &cancellables)
 
         /// The `colorScheme` value can be quite unstable, especially during the SwiftUI lifecycle.
         /// To address this, we debounce it for 0.1 seconds.
@@ -69,7 +69,7 @@ class WebViewPreloadManager {
                     return
                 }
             }
-            .store(in: &bag)
+            .store(in: &cancellables)
     }
 }
 
