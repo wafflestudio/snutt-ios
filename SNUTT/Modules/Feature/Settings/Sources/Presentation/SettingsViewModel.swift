@@ -8,11 +8,11 @@
 import AuthInterface
 import Dependencies
 import Foundation
+import FoundationUtility
 import Observation
 import SharedAppMetadata
 import ThemesInterface
 import TimetableInterface
-import TimetableUIComponents
 
 @MainActor
 @Observable
@@ -23,11 +23,7 @@ final class SettingsViewModel {
     @ObservationIgnored
     @Dependency(\.authUseCase) private var authUseCase
 
-    // FIXME: load currentTimetable
-    private(set) var currentTimetable: Timetable?
-
-    // FIXME: use shared config
-    var configuration: TimetableConfiguration = .init()
+    let timetableSettingsViewModel = TimetableSettingsViewModel()
 
     // FIXME: load actual user nickname
     var userNickname: String = "와플#7777"
@@ -37,16 +33,6 @@ final class SettingsViewModel {
     }
 
     func fetchUser() async throws {}
-
-    func makePainter() -> TimetablePainter {
-        TimetablePainter(
-            currentTimetable: currentTimetable,
-            selectedLecture: nil,
-            preferredTheme: nil,
-            availableThemes: [],
-            configuration: configuration
-        )
-    }
 
     func logout() async throws {
         try await authUseCase.logout()

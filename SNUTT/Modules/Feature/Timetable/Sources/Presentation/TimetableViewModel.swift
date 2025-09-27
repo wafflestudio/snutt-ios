@@ -39,6 +39,14 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     public init(router: TimetableRouter = .init()) {
         self.router = router
         currentTimetable = timetableUseCase.loadLocalRecentTimetable()
+        configuration = timetableLocalRepository.loadTimetableConfiguration()
+        configurationObserver = Task { [weak self] in
+            guard let stream = self?.timetableLocalRepository.configurationValues() else { return }
+            for await configuration in stream {
+                guard let self else { break }
+                self.configuration = configuration
+            }
+        }
     }
 
     public private(set) var currentTimetable: Timetable?
@@ -49,6 +57,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     var isThemeSheetPresented = false
 
     private(set) var configuration: TimetableConfiguration = .init()
+    private var configurationObserver: Task<Void, Never>?
 
     var totalCredit: Int {
         let credit = currentTimetable?.lectures.reduce(0) { $0 + ($1.credit ?? 0) } ?? 0

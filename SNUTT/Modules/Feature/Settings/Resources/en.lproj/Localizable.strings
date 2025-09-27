@@ -68,6 +68,9 @@
 "display.table.info" = "Visibility";
 "display.table.info.warning" = "If there is a lot of information, some text may not be displayed.";
 "display.table.preview" = "Preview";
+"display.table.range" = "Timetable Range";
+"display.table.timeSlot" = "Time Range";
+"display.table.daySelection" = "Day Selection";
 
 "display.theme" = "Timetable Theme";
 

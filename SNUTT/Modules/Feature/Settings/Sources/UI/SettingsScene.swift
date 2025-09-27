@@ -112,10 +112,9 @@ extension SettingsScene {
         case .appLanguage:
             ColorView(color: .yellow)
         case .timetableSettings:
-            TimetableSettingView(
-                makePainter: viewModel.makePainter,
-                config: $viewModel.configuration
-            )
+            TimetableSettingView(path: $path, viewModel: viewModel.timetableSettingsViewModel)
+        case .timetableRange:
+            TimetableRangeSelectionView(viewModel: viewModel.timetableSettingsViewModel)
         case .timetableTheme:
             ColorView(color: .blue)
         case .vacancyNotification:

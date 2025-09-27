@@ -8,7 +8,7 @@
 import SharedUIComponents
 import SwiftUI
 
-struct NewBadge: View {
+struct NewBadgeView: View {
     var body: some View {
         Text("NEW!")
             .font(.system(size: 8, weight: .bold))
@@ -20,5 +20,5 @@ struct NewBadge: View {
 }
 
 #Preview {
-    NewBadge()
+    NewBadgeView()
 }

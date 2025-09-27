@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FoundationUtility
 import SwiftUI
 
 enum Settings: MenuItem {
@@ -13,6 +14,7 @@ enum Settings: MenuItem {
     case appearance(_ mode: String)
     case appLanguage
     case timetableSettings
+    case timetableRange(_ visibleWeekdays: [Weekday])
     case timetableTheme
     case vacancyNotification
     case themeMarket
@@ -35,6 +37,8 @@ enum Settings: MenuItem {
             SettingsStrings.displayLanguage
         case .timetableSettings:
             SettingsStrings.displayTable
+        case .timetableRange:
+            "요일"
         case .timetableTheme:
             SettingsStrings.displayTheme
         case .vacancyNotification:
@@ -72,6 +76,8 @@ enum Settings: MenuItem {
         case let .myAccount(nickname): nickname
         case let .appearance(mode): mode
         case let .version(version): version
+        case .timetableRange(let visibleWeekdays):
+            visibleWeekdays.map { $0.shortSymbol }.joined(separator: " ")
         default: nil
         }
     }

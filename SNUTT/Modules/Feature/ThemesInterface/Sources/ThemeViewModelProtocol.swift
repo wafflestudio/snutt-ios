@@ -17,7 +17,7 @@ public protocol ThemeViewModelProtocol: Observable {
 }
 
 struct DefaultThemeViewModel: ThemeViewModelProtocol {
-    var availableThemes: [Theme] = []
+    var availableThemes: [Theme] = [.snutt, .cherryBlossom, .preview1, .preview2, .preview3]
     var selectedTheme: Theme? = nil
     func selectTheme(_: Theme?) {}
     func saveSelectedTheme() async throws {}
