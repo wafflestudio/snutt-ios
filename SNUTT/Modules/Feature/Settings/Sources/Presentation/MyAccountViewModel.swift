@@ -15,10 +15,52 @@ final class MyAccountViewModel {
     @ObservationIgnored
     @Dependency(\.authUseCase) private var authUseCase
 
-    // FIXME: load actual user data
-    var userNickname: String = "와플#7777"
+    @ObservationIgnored
+    @Dependency(\.authRepository) private var authRepository
+
+    private(set) var loadState: UserLoadState = .loading
+
+    init() {
+        Task {
+            do {
+                try await fetchUser()
+            } catch {
+                print(error)  // TODO
+            }
+        }
+    }
+
+    var titleDescription: String {
+        switch loadState {
+        case .loaded(let user):
+            user.nickname.description
+        case .loading:
+            "-"
+        }
+    }
+
+    private func fetchUser() async throws {
+        let user = try await authRepository.fetchUser()
+        loadState = .loaded(user)
+    }
+
+    func changeNickname(to nickname: String) async throws {
+        let user = try await authRepository.changeNickname(to: nickname)
+        loadState = .loaded(user)
+    }
 
     func deleteAccount() async throws {
         try await authUseCase.deleteAccount()
+    }
+
+    func logout() async throws {
+        try await authUseCase.logout()
+    }
+}
+
+extension MyAccountViewModel {
+    enum UserLoadState: Sendable {
+        case loaded(User)
+        case loading
     }
 }

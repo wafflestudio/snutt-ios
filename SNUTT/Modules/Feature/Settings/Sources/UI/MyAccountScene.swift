@@ -9,25 +9,25 @@ import SharedUIComponents
 import SwiftUI
 
 struct MyAccountScene: View {
-    @State private(set) var viewModel: MyAccountViewModel
+    @Bindable var viewModel: MyAccountViewModel
+    @Binding var path: [Destination]
     @State private var isNicknameCopiedAlertPresented = false
     @State private var isSignOutAlertPresented = false
-    @Binding var path: [Destination]
 
     @Environment(\.errorAlertHandler) private var errorAlertHandler
-
-    public init(_ path: Binding<[Destination]>) {
-        viewModel = .init()
-        _path = path
-    }
 
     var body: some View {
         List {
             Section {
-                SettingsListCell(menu: MyAccount.changeNickname(nickname: viewModel.userNickname), path: $path)
-                SettingsListCell(menu: MyAccount.copyNickname, path: $path) {
-                    UIPasteboard.general.string = viewModel.userNickname
-                    isNicknameCopiedAlertPresented = true
+                switch viewModel.loadState {
+                case .loaded(let user):
+                    SettingsListCell(menu: MyAccount.changeNickname(nickname: user.nickname.description), path: $path)
+                    SettingsListCell(menu: MyAccount.copyNickname, path: $path) {
+                        UIPasteboard.general.string = user.nickname.description
+                        isNicknameCopiedAlertPresented = true
+                    }
+                case .loading:
+                    Text("-")
                 }
             }
 
@@ -84,5 +84,5 @@ extension MyAccountScene {
 }
 
 #Preview {
-    MyAccountScene(.constant([]))
+    MyAccountScene(viewModel: .init(), path: .constant([]))
 }

@@ -12,7 +12,6 @@ import SwiftUI
 enum Settings: MenuItem {
     case myAccount(_ nickname: String)
     case appearance(_ mode: String)
-    case appLanguage
     case timetableSettings
     case timetableRange(_ visibleWeekdays: [Weekday])
     case timetableTheme
@@ -33,12 +32,10 @@ enum Settings: MenuItem {
             SettingsStrings.account
         case .appearance:
             SettingsStrings.displayColorMode
-        case .appLanguage:
-            SettingsStrings.displayLanguage
         case .timetableSettings:
             SettingsStrings.displayTable
         case .timetableRange:
-            "요일"
+            SettingsStrings.displayTableDaySelection
         case .timetableTheme:
             SettingsStrings.displayTheme
         case .vacancyNotification:
