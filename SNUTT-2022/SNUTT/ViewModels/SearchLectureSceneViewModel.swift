@@ -59,7 +59,7 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
             .sink { [weak self] _ in
                 self?.services.searchService.setSearchDisplayMode(.bookmark)
             }
-            .store(in: &bag)
+            .store(in: &cancellables)
     }
 
     var selectedLecture: Lecture? {

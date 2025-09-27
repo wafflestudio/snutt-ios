@@ -68,7 +68,7 @@ extension ThemeMarketScene {
         @Published var connectionState: WebViewConnectionState = .success
         @Published var preferredColorScheme = UITraitCollection.current.userInterfaceStyle.toColorScheme()
 
-        private var bag = Set<AnyCancellable>()
+        private var cancellables = Set<AnyCancellable>()
 
         override init(container: DIContainer) {
             super.init(container: container)
@@ -80,7 +80,7 @@ extension ThemeMarketScene {
                     self.connectionState = .error
                     self.accessToken = ""
                 }
-            }.store(in: &bag)
+            }.store(in: &cancellables)
 
             appState.system.$preferredColorScheme.sink { newValue in
                 if let newValue {
@@ -88,7 +88,7 @@ extension ThemeMarketScene {
                 } else {
                     self.preferredColorScheme = UITraitCollection.current.userInterfaceStyle.toColorScheme()
                 }
-            }.store(in: &bag)
+            }.store(in: &cancellables)
         }
 
         func getPreloadedWebView() -> ThemeMarketViewPreloadManager {
