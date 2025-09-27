@@ -8,11 +8,11 @@
 import Dependencies
 import TimetableInterface
 
-struct TimetableLocalRepositoryKey: DependencyKey {
-    static let liveValue: any TimetableLocalRepository =
+extension TimetableLocalRepositoryKey: @retroactive DependencyKey {
+    public static let liveValue: any TimetableLocalRepository =
         TimetableUserDefaultsRepository()
 
-    static let previewValue: any TimetableLocalRepository = {
+    public static let previewValue: any TimetableLocalRepository = {
         let spy = TimetableLocalRepositorySpy()
         spy.loadSelectedTimetableReturnValue = PreviewHelpers.preview(id: "1")
         return spy
@@ -63,11 +63,6 @@ struct CourseBookRepositoryKey: DependencyKey {
 }
 
 extension DependencyValues {
-    var timetableLocalRepository: any TimetableLocalRepository {
-        get { self[TimetableLocalRepositoryKey.self] }
-        set { self[TimetableLocalRepositoryKey.self] = newValue }
-    }
-
     var lectureRepository: any LectureRepository {
         get { self[LectureRepositoryKey.self] }
         set { self[LectureRepositoryKey.self] = newValue }

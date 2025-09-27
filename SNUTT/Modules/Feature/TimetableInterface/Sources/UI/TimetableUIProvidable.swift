@@ -7,10 +7,17 @@
 
 import Dependencies
 import SwiftUI
+import ThemesInterface
 
 @MainActor
 public protocol TimetableUIProvidable: Sendable {
     func lectureDetailRow(type: DetailLabelType, lecture: Lecture) -> AnyView
+    func timetableView(
+        timetable: Timetable,
+        configuration: TimetableConfiguration,
+        preferredTheme: Theme?,
+        availableThemes: [Theme]
+    ) -> AnyView
 }
 
 public enum DetailLabelType: CaseIterable {
@@ -23,6 +30,15 @@ public enum DetailLabelType: CaseIterable {
 private struct EmptyTimetableUIProvider: TimetableUIProvidable {
     func lectureDetailRow(type _: DetailLabelType, lecture _: Lecture) -> AnyView {
         AnyView(Text("Empty LectureDetailRow"))
+    }
+
+    func timetableView(
+        timetable _: Timetable,
+        configuration _: TimetableConfiguration,
+        preferredTheme _: Theme?,
+        availableThemes _: [Theme]
+    ) -> AnyView {
+        AnyView(Text("Empty TimetableView"))
     }
 }
 

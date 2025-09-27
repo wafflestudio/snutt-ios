@@ -83,7 +83,6 @@ let project = Project.app(
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
                 .target(name: "VacancyInterface"),
-                .target(name: "TimetableUIComponents"),
                 .target(name: "AuthInterface"),
                 .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
