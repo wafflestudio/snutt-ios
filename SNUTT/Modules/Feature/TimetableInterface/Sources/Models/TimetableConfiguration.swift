@@ -8,51 +8,16 @@
 import Foundation
 import FoundationUtility
 import MemberwiseInit
-import TimetableInterface
 
 @MemberwiseInit(.public)
 public struct TimetableConfiguration: Codable, Equatable, Sendable {
-    @Init(.public) var minHour: Int = 9
-    @Init(.public) var maxHour: Int = 18
+    @Init(.public) public var minHour: Int = 9
+    @Init(.public) public var maxHour: Int = 18
     @Init(.public) public var autoFit: Bool = true
     @Init(.public) public var compactMode: Bool = false
     @Init(.public) public var visibilityOptions: VisibilityOptions = .default
 
     @Init(.public) public var visibleWeeks: [Weekday] = [.mon, .tue, .wed, .thu, .fri]
-
-    var visibleWeeksSorted: [Weekday] {
-        var weekdayOrder: [Weekday: Int] = [:]
-        for (offset, element) in Weekday.allCases.enumerated() {
-            weekdayOrder[element] = offset
-        }
-        return
-            visibleWeeks
-            .sorted { weekdayOrder[$0]! < weekdayOrder[$1]! }
-    }
-
-    var weekCount: Int {
-        visibleWeeks.count
-    }
-
-    func withAutoFitEnabled() -> Self {
-        var this = self
-        this.autoFit = true
-        return this
-    }
-
-    func withTimeRangeSelectionMode() -> Self {
-        var this = self
-        this.visibleWeeks = [.mon, .tue, .wed, .thu, .fri]
-        this.autoFit = false
-        this.compactMode = true
-        this.minHour = 8
-        this.maxHour = 22
-        return this
-    }
-
-    var isWidget: Bool {
-        false
-    }
 }
 
 extension TimetableConfiguration {
@@ -66,19 +31,19 @@ extension TimetableConfiguration {
             [.lectureTitle, .place]
         }
 
-        static var lectureTitle: Self {
+        public static var lectureTitle: Self {
             Self(rawValue: 1 << 0)
         }
 
-        static var place: Self {
+        public static var place: Self {
             Self(rawValue: 1 << 1)
         }
 
-        static var lectureNumber: Self {
+        public static var lectureNumber: Self {
             Self(rawValue: 1 << 2)
         }
 
-        static var instructor: Self {
+        public static var instructor: Self {
             Self(rawValue: 1 << 3)
         }
 

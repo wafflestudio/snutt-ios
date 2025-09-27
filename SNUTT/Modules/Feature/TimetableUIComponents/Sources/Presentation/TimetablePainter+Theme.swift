@@ -36,6 +36,6 @@ extension TimetablePainter {
 
 extension Theme {
     fileprivate func color(at index: Int) -> LectureColor {
-        colors[index % colors.count]
+        colors.get(at: index % colors.count) ?? .temporary
     }
 }

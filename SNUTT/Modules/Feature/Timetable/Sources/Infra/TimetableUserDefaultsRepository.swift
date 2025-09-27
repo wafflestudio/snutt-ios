@@ -31,6 +31,13 @@ struct TimetableUserDefaultsRepository: TimetableLocalRepository {
         userDefaults[\.timetableConfiguration] = configuration
     }
 
+    func configurationValues() -> AsyncStream<TimetableConfiguration> {
+        userDefaults.dataValues(forKey: "timetableConfiguration").compactMap {
+            guard let data = $0 else { return nil }
+            return try? JSONDecoder().decode(TimetableConfiguration.self, from: data)
+        }.eraseToStream()
+    }
+
     private enum Keys: String {
         case currentTimetable
     }

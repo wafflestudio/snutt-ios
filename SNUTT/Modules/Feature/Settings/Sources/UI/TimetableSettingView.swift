@@ -5,26 +5,30 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import FoundationUtility
 import SwiftUI
-import TimetableUIComponents
+import ThemesInterface
+import TimetableInterface
 
 struct TimetableSettingView: View {
-    let makePainter: () -> TimetablePainter
-    @Binding var config: TimetableConfiguration
+    @Binding var path: [Destination]
+    @Bindable var viewModel: TimetableSettingsViewModel
+    @Environment(\.timetableUIProvider) private var timetableUIProvider
+    @Environment(\.themeViewModel) private var themeViewModel
 
     var body: some View {
         Form {
             Section {
                 Toggle(
                     SettingsStrings.displayTableAutoFit,
-                    isOn: $config.autoFit
+                    isOn: $viewModel.configuration.autoFit
                 )
                 Toggle(
                     SettingsStrings.displayTableNonCompact,
-                    isOn: $config.compactMode
+                    isOn: $viewModel.configuration.compactMode
                 )
             } footer: {
-                if config.compactMode {
+                if viewModel.configuration.compactMode {
                     Text(SettingsStrings.displayTableInfoWarning)
                 }
             }
@@ -32,19 +36,19 @@ struct TimetableSettingView: View {
             Section {
                 Toggle(
                     SettingsStrings.displayTableLectureTitle,
-                    isOn: $config.visibilityOptions.isLectureTitleEnabled
+                    isOn: $viewModel.configuration.visibilityOptions.isLectureTitleEnabled
                 )
                 Toggle(
                     SettingsStrings.displayTablePlace,
-                    isOn: $config.visibilityOptions.isPlaceEnabled
+                    isOn: $viewModel.configuration.visibilityOptions.isPlaceEnabled
                 )
                 Toggle(
                     SettingsStrings.displayTableLectureNumber,
-                    isOn: $config.visibilityOptions.isLectureNumberEnabled
+                    isOn: $viewModel.configuration.visibilityOptions.isLectureNumberEnabled
                 )
                 Toggle(
                     SettingsStrings.displayTableInstructor,
-                    isOn: $config.visibilityOptions.isInstructorEnabled
+                    isOn: $viewModel.configuration.visibilityOptions.isInstructorEnabled
                 )
             } header: {
                 Text(SettingsStrings.displayTableInfo)
@@ -52,22 +56,70 @@ struct TimetableSettingView: View {
                 Text(SettingsStrings.displayTableInfoWarning)
             }
 
-            // TODO: `시간표 범위 설정` 추가
+            if !viewModel.configuration.autoFit {
+                Section(SettingsStrings.displayTableRange) {
+                    SettingsListCell(menu: Settings.timetableRange(viewModel.configuration.visibleWeeks), path: $path)
 
-            Section(SettingsStrings.displayTablePreview) {
-                TimetableZStack(painter: makePainter())
+                    VStack(alignment: .leading) {
+                        Text(SettingsStrings.displayTableTimeSlot)
+
+                        TimeRangeSlider(
+                            minHour: $viewModel.configuration.minHour,
+                            maxHour: $viewModel.configuration.maxHour
+                        )
+                        .frame(height: 40)
+                    }
+                }
+            }
+
+            if let timetable = viewModel.timetable {
+                Section(SettingsStrings.displayTablePreview) {
+                    timetableUIProvider.timetableView(
+                        timetable: timetable,
+                        configuration: viewModel.configuration,
+                        preferredTheme: themeViewModel.selectedTheme,
+                        availableThemes: themeViewModel.availableThemes
+                    )
                     .frame(height: 500)
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                    .overlay(
+                    .background(
                         RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .stroke(lineWidth: 0.5)
-                            .foregroundColor(Color(UIColor.quaternaryLabel))
+                            .stroke(Color(UIColor.quaternaryLabel), lineWidth: 0.5)
+                            .fill(Color(UIColor.systemBackground))
+                            .shadow(color: .black.opacity(0.05), radius: 3)
                     )
-                    .shadow(color: .black.opacity(0.05), radius: 3)
                     .padding(.vertical, 10)
+                }
             }
         }
         .navigationTitle(SettingsStrings.displayTable)
         .navigationBarTitleDisplayMode(.inline)
     }
+}
+
+struct TimetableRangeSelectionView: View {
+    @Bindable var viewModel: TimetableSettingsViewModel
+
+    var body: some View {
+        List {
+            ForEach(Weekday.allCases) { weekday in
+                Button {
+                    viewModel.toggleWeekday(weekday: weekday)
+                } label: {
+                    HStack {
+                        Text(weekday.symbol)
+                        Spacer()
+                        if viewModel.configuration.visibleWeeks.contains(weekday) {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                }
+            }
+        }
+        .navigationTitle(SettingsStrings.displayTableDaySelection)
+    }
+}
+
+#Preview {
+    TimetableSettingView(path: .constant([]), viewModel: .init())
 }

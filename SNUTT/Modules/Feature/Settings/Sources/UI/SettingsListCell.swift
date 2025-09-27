@@ -41,7 +41,7 @@ struct SettingsListCell<Menu: MenuItem>: View {
                     )
                 if showNewBadge {
                     Spacer().frame(width: 6)
-                    NewBadge()
+                    NewBadgeView()
                 }
                 Spacer()
                 Group {
