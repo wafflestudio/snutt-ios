@@ -14,6 +14,18 @@ public struct AuthAPIRepository: AuthRepository {
 
     public init() {}
 
+    public func fetchUser() async throws -> User {
+        let result = try await apiClient.getUserMe()
+        let json = try result.ok.body.json
+        return .init(dto: json)
+    }
+
+    public func changeNickname(to nickname: String) async throws -> User {
+        let result = try await apiClient.patchUserInfo(.init(headers: .init(), body: .json(.init(nickname: nickname))))
+        let json = try result.ok.body.json
+        return .init(dto: json)
+    }
+
     public func registerWithLocalID(
         localID: String,
         localPassword: String,

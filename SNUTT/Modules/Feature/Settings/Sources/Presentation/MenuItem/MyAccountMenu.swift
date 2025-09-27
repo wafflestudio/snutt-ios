@@ -69,7 +69,7 @@ enum MyAccount: MenuItem {
 
     var shouldNavigate: Bool {
         switch self {
-        case .copyNickname, .displayEmail, .signOut: false
+        case .copyNickname, .displayEmail, .signOut, .displayId(id: _): false
         default: true
         }
     }

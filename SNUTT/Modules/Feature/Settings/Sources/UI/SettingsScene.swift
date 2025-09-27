@@ -10,7 +10,7 @@ import SwiftUI
 import VacancyInterface
 
 public struct SettingsScene: View {
-    @State private(set) var viewModel: SettingsViewModel
+    @State private(set) var viewModel: SettingsViewModel = .init()
     @State private var isLogoutAlertPresented = false
 
     @State private var path: [Destination] = []
@@ -18,21 +18,21 @@ public struct SettingsScene: View {
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.vacancyUIProvider) private var vacancyUIProvider
 
-    public init() {
-        viewModel = .init()
-    }
+    public init() {}
 
     public var body: some View {
         NavigationStack(path: $path) {
             List {
                 Section {
-                    SettingsListCell(menu: Settings.myAccount(viewModel.userNickname), path: $path)
-                        .padding(.vertical, 12)
+                    SettingsListCell(
+                        menu: Settings.myAccount(viewModel.myAccountViewModel.titleDescription),
+                        path: $path
+                    )
+                    .padding(.vertical, 12)
                 }
 
                 Section(SettingsStrings.display) {
                     SettingsListCell(menu: Settings.appearance(SettingsStrings.displayColorModeSystem), path: $path)
-                    SettingsListCell(menu: Settings.appLanguage, path: $path)
                     SettingsListCell(menu: Settings.timetableSettings, path: $path)
                     SettingsListCell(menu: Settings.timetableTheme, path: $path)
                 }
@@ -87,7 +87,9 @@ public struct SettingsScene: View {
         ) {
             Button(SettingsStrings.logout, role: .destructive) {
                 Task {
-                    await logout()
+                    await errorAlertHandler.withAlert {
+                        try await viewModel.myAccountViewModel.logout()
+                    }
                 }
             }
             Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
@@ -97,20 +99,12 @@ public struct SettingsScene: View {
 }
 
 extension SettingsScene {
-    private func logout() async {
-        await errorAlertHandler.withAlert {
-            try await viewModel.logout()
-        }
-    }
-
     @ViewBuilder private func navigateToDestination(of menu: Settings) -> some View {
         switch menu {
         case .myAccount:
-            MyAccountScene($path)
+            MyAccountScene(viewModel: viewModel.myAccountViewModel, path: $path)
         case .appearance:
             ColorModeSettingView()
-        case .appLanguage:
-            ColorView(color: .yellow)
         case .timetableSettings:
             TimetableSettingView(path: $path, viewModel: viewModel.timetableSettingsViewModel)
         case .timetableRange:
@@ -140,7 +134,7 @@ extension SettingsScene {
     @ViewBuilder private func navigateToDestination(of menu: MyAccount) -> some View {
         switch menu {
         case .changeNickname:
-            ColorView(color: .blue)
+            ChangeNicknameView(viewModel: viewModel.myAccountViewModel)
         case .addId:
             ColorView(color: .orange)
         case .changePassword:
