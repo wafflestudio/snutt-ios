@@ -12,9 +12,11 @@ import Spyable
 
 @Spyable
 public protocol AuthRepository: Sendable {
+    func fetchUser() async throws -> User
     func addDevice(fcmToken: String) async throws
     func registerWithLocalID(localID: String, localPassword: String, email: String) async throws -> LoginResponse
     func loginWithLocalID(localID: String, localPassword: String) async throws -> LoginResponse
+    func changeNickname(to nickname: String) async throws -> User
     //    func loginWithApple(appleToken: String) async throws -> LoginResponseDto
     //    func loginWithFacebook(fbId: String, fbToken: String) async throws -> LoginResponseDto
     //    func findLocalId(email: String) async throws -> SendLocalIdDto

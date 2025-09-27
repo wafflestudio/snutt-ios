@@ -24,17 +24,9 @@ final class SettingsViewModel {
     @Dependency(\.authUseCase) private var authUseCase
 
     let timetableSettingsViewModel = TimetableSettingsViewModel()
-
-    // FIXME: load actual user nickname
-    var userNickname: String = "와플#7777"
+    let myAccountViewModel = MyAccountViewModel()
 
     var appVersion: String {
         appMetadata[.appVersion]
-    }
-
-    func fetchUser() async throws {}
-
-    func logout() async throws {
-        try await authUseCase.logout()
     }
 }
