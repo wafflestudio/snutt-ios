@@ -14,6 +14,6 @@ extension String {
 
     /// Transform `String` into `AttributedString` supporting markdown
     public func asMarkdown() -> AttributedString {
-        try! AttributedString(markdown: self, options: .init(interpretedSyntax: .inlineOnly))
+        (try? AttributedString(markdown: self, options: .init(interpretedSyntax: .inlineOnly)) ?? AttributedString(self))
     }
 }
