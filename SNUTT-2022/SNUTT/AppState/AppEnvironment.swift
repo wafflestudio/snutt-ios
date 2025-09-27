@@ -80,6 +80,7 @@ extension AppEnvironment {
         services.globalUIService.loadColorSchemeDuringBootstrap()
         services.timetableService.loadTimetableConfig()
         services.lectureService.fetchIsFirstBookmark()
+        services.vacancyService.fetchIsFirstVacancy()
 
         return .init(container: container)
     }

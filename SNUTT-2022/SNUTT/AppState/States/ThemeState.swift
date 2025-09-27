@@ -28,7 +28,7 @@ class ThemeMarketViewPreloadManager {
     var webView: WKWebView?
     var eventSignal: PassthroughSubject<ThemeMarketViewEventType, Never>?
     var coordinator: Coordinator?
-    private var bag = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
 
     func preload(url: URL, accessToken: String) {
         eventSignal = eventSignal ?? .init()
@@ -64,7 +64,7 @@ class ThemeMarketViewPreloadManager {
                     return
                 }
             }
-            .store(in: &bag)
+            .store(in: &cancellables)
 
         /// The `colorScheme` value can be quite unstable, especially during the SwiftUI lifecycle.
         /// To address this, we debounce it for 0.1 seconds.
@@ -78,7 +78,7 @@ class ThemeMarketViewPreloadManager {
                     return
                 }
             }
-            .store(in: &bag)
+            .store(in: &cancellables)
     }
 }
 
