@@ -56,7 +56,10 @@ private struct LenientDateTranscoder: DateTranscoder {
         do {
             return try transcoder.decode(string)
         } catch {
-            return fallbackTranscoders.lazy.compactMap { try? $0.decode(string) }.first!
+            if let date = fallbackTranscoders.lazy.compactMap { try? $0.decode(string) }.first {
+                return date
+            }
+            throw error
         }
     }
 }
