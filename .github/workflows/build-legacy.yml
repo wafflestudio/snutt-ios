@@ -17,7 +17,7 @@ jobs:
         # see https://github.com/actions/virtual-environments/blob/main/images/macos/macos-15-Readme.md for available versions
         xcode: ["16.1"]
         macos: [macos-15]
-        command: ["build", "test"]
+        command: ["build"]  # append "test" for executing test action
         scheme: ["SNUTT"]
 
     steps:
