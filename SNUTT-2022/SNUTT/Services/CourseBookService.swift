@@ -11,7 +11,6 @@ import SwiftUI
 @MainActor
 protocol CourseBookServiceProtocol: Sendable {
     func fetchCourseBookList() async throws
-    func fetchRecentCourseBook() async throws
     func fetchSyllabusURL(quarter: Quarter, lecture: Lecture) async throws -> String
     /// 새로운 학기의 수강편람이 나와 있지만 유저가 해당 학기 시간표를 아직 만들지 않았다면 `true`를 리턴한다.
     func isNewCourseBookAvailable() -> Bool
@@ -30,11 +29,6 @@ struct CourseBookService: CourseBookServiceProtocol {
         let dtos = try await courseBookRepository.fetchAllCourseBookList()
         let quarters = dtos.map { Quarter(from: $0) }
         appState.timetable.courseBookList = quarters
-    }
-
-    func fetchRecentCourseBook() async throws {
-        let dto = try await courseBookRepository.fetchRecentCourseBook()
-        let _ = Quarter(from: dto)
     }
 
     func fetchSyllabusURL(quarter: Quarter, lecture: Lecture) async throws -> String {
@@ -62,7 +56,6 @@ struct CourseBookService: CourseBookServiceProtocol {
 
 struct FakeCourseBookService: CourseBookServiceProtocol {
     func fetchCourseBookList() async throws {}
-    func fetchRecentCourseBook() async throws {}
     func fetchSyllabusURL(quarter _: Quarter, lecture _: Lecture) async throws -> String { return "" }
     func isNewCourseBookAvailable() -> Bool { return true }
     func getLatestEmptyQuarter() -> Quarter? { return nil }

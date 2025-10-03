@@ -74,6 +74,9 @@ struct SNUTTView: View, Sendable {
                             await viewModel.fetchRecentTimetable()
                         }
                         group.addTask {
+                            await viewModel.getSemesterStatus()
+                        }
+                        group.addTask {
                             await viewModel.fetchCourseBookList()
                         }
                         group.addTask {
@@ -198,6 +201,14 @@ extension SNUTTView {
         func getThemeList() async {
             do {
                 try await services.themeService.getThemeList()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+        
+        func getSemesterStatus() async {
+            do {
+                try await services.etcService.getSemesterStatus()
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }

@@ -37,7 +37,7 @@ struct LectureReminderSettingScene: View {
                         } footer: {
                             Group {
                                 Text("강의 리마인더를 설정하면 해당 시간에 푸시 알림을 받을 수 있어요. ") +
-                                Text("최신 학기의 대표시간표 속 강의들").fontWeight(.semibold) +
+                                Text("이번 학기의 대표시간표 속 강의들").fontWeight(.semibold) +
                                 Text("에 적용 가능해요.")
                             }
                             .font(.system(size: 13))
@@ -60,14 +60,18 @@ extension LectureReminderSettingScene {
         VStack(alignment: .center, spacing: 16) {
             Image("warning.cat.red")
             
-            Text("지정된 대표시간표가 없습니다.")
+            Text("리마인더를 설정할 강의가 아직 없어요.")
                 .font(.system(size: 15, weight: .semibold))
             
             VStack(spacing: 0) {
                 Group {
                     Text("강의 리마인더는")
                     Text("이번 학기의 대표시간표 속 강의").font(.system(size: 13, weight: .semibold))+Text("들에 적용 가능해요.")
-                    Text("대표시간표를 지정하고 강의 리마인더를 설정해,\n원하는 시간에 푸시 알림을 받아보세요!")
+                    Text("\n다음과 같은 경우에는 리마인더를 만들 수 없어요:")
+                    Text("\u{2022} 이번 학기에 대표시간표가 없는 경우".markdown)
+                    Text("\u{2022} 대표시간표는 있지만 강의가 없는 경우".markdown)
+                    Text("\u{2022} 강의는 있으나 모두 시간 정보가 없는 경우".markdown)
+                    Text("\n대표시간표와 강의를 추가하고,\n원하는 시간에 푸시 알림을 받아보세요!")
                 }
                 .lineHeight(with: .systemFont(ofSize: 13), percentage: 145)
             }

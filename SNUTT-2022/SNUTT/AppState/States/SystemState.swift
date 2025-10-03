@@ -24,4 +24,5 @@ class SystemState {
 
     var isMapViewExpanded: Bool?
     var configs: ConfigsDto?
+    var semesterStatus: SemesterStatusDto?
 }

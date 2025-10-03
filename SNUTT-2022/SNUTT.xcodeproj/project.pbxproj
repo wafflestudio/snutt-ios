@@ -89,6 +89,8 @@
 		B8C0C6512CD7EAB2005563F2 /* RoundedRectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C0C6502CD7EAB2005563F2 /* RoundedRectButton.swift */; };
 		B8C3F0192D23E29500DEB8C0 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = B8C3F0182D23E29500DEB8C0 /* KakaoMapsSDK-SPM */; };
 		B8C4F3352CA8F48E006B6BAD /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */; };
+		B8C5A2252E8F68DD00E9CEA4 /* SemesterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C5A2242E8F68DA00E9CEA4 /* SemesterRouter.swift */; };
+		B8C5A2272E8F70F300E9CEA4 /* SemesterDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C5A2262E8F70DE00E9CEA4 /* SemesterDto.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
@@ -450,6 +452,8 @@
 		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
 		B8C0C6502CD7EAB2005563F2 /* RoundedRectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectButton.swift; sourceTree = "<group>"; };
 		B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
+		B8C5A2242E8F68DA00E9CEA4 /* SemesterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterRouter.swift; sourceTree = "<group>"; };
+		B8C5A2262E8F70DE00E9CEA4 /* SemesterDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterDto.swift; sourceTree = "<group>"; };
 		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
@@ -977,6 +981,7 @@
 				BE9413B828C20A4000171060 /* AuthRouter.swift */,
 				DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */,
 				BE682BD028864CA8009EBCB7 /* LectureRouter.swift */,
+				B8C5A2242E8F68DA00E9CEA4 /* SemesterRouter.swift */,
 				BE682BF82887FB59009EBCB7 /* SearchRouter.swift */,
 				BE9413BC28C2119500171060 /* NotificationRouter.swift */,
 				BE682C002888173B009EBCB7 /* TagRouter.swift */,
@@ -1074,6 +1079,7 @@
 				B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */,
 				BE682BEE288722A5009EBCB7 /* ErrorDto.swift */,
 				BE77D0A328AEAD4D0067A9D8 /* CourseBookDto.swift */,
+				B8C5A2262E8F70DE00E9CEA4 /* SemesterDto.swift */,
 				BE9413BE28C2157600171060 /* NotificationDto.swift */,
 				BE9413BA28C20DC500171060 /* AuthDto.swift */,
 				B87B317228D81447005C170B /* UserDto.swift */,
@@ -1598,6 +1604,7 @@
 				BEB3B6A228CDB7A400E56062 /* LectureTimePicker.swift in Sources */,
 				CEA4289E2D71E23A00944DAB /* AnalyticsEvent.swift in Sources */,
 				CECDD3702CC3E4B400BB5E5B /* WebProgressView.swift in Sources */,
+				B8C5A2272E8F70F300E9CEA4 /* SemesterDto.swift in Sources */,
 				CEA428A62D7208CB00944DAB /* AnalyticsLogger.swift in Sources */,
 				BE77D0AC28B1384D0067A9D8 /* MenuSheetTopBar.swift in Sources */,
 				BEDF506F27EB744A00CDCC13 /* LectureDetailScene.swift in Sources */,
@@ -1754,6 +1761,7 @@
 				B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */,
 				CE3F37AD29C5D452009EDCCC /* Collection+Getter.swift in Sources */,
 				BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */,
+				B8C5A2252E8F68DD00E9CEA4 /* SemesterRouter.swift in Sources */,
 				B8F40EB328980DFF0021A2A9 /* PrivacyPolicyView.swift in Sources */,
 				738407012B571D8E00007E62 /* ThemeIcon.swift in Sources */,
 				B8A72A022A8F1ED000094FAA /* ChangeNicknameView.swift in Sources */,

@@ -11,6 +11,7 @@ import SwiftUI
 @MainActor
 protocol EtcServiceProtocol: Sendable {
     func sendFeedback(email: String, message: String) async throws
+    func getSemesterStatus() async throws
 }
 
 struct EtcService: EtcServiceProtocol {
@@ -24,8 +25,14 @@ struct EtcService: EtcServiceProtocol {
     func sendFeedback(email: String, message: String) async throws {
         try await etcRepository.sendFeedback(email: email, message: message)
     }
+    
+    func getSemesterStatus() async throws {
+        let dto = try await etcRepository.getSemesterStatus()
+        appState.system.semesterStatus = dto
+    }
 }
 
 class FakeEtcService: EtcServiceProtocol {
     func sendFeedback(email _: String, message _: String) async throws {}
+    func getSemesterStatus() async throws {}
 }
