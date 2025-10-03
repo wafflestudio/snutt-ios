@@ -9,6 +9,7 @@ import SwiftUI
 
 @MainActor
 protocol LectureServiceProtocol: Sendable {
+    // Lecture
     func addLecture(lecture: Lecture, isForced: Bool) async throws
     func addCustomLecture(lecture: Lecture, isForced: Bool) async throws
     func updateLecture(oldLecture: Lecture, newLecture: Lecture, isForced: Bool) async throws
@@ -16,18 +17,22 @@ protocol LectureServiceProtocol: Sendable {
     func resetLecture(lecture: Lecture) async throws
     func getEvLecture(of lecture: Lecture) async throws -> EvLecture?
     func getBuildingList(of lecture: Lecture) async throws -> [Building]
+    
+    // Lecture Reminder
+    func fetchLectureReminderList() async throws
+    func getLectureReminderState(timetableId: String, lecture: Lecture) async throws -> LectureReminder
+    func changeLectureReminderState(lecture: Lecture, to state: ReminderState) async throws
+    func getCurrentOrNextSemesterPrimaryTable() -> TimetableMetadata?
 
-    // MARK: Bookmark
-
+    // Bookmark
+    func fetchBookmark(quarter: Quarter) async throws -> Bookmark
     func fetchIsFirstBookmark()
     func bookmarkLecture(lecture: Lecture) async throws
     func undoBookmarkLecture(lecture: Lecture) async throws
 
-    // MARK: Map
-
+    // MapView
     func setIsMapViewExpanded(_ open: Bool)
     func shouldExpandLectureMapView() -> Bool
-    func fetchBookmark(quarter: Quarter) async throws -> Bookmark
 }
 
 extension LectureServiceProtocol {
@@ -48,6 +53,8 @@ struct LectureService: LectureServiceProtocol {
     var appState: AppState
     var webRepositories: AppEnvironment.WebRepositories
     var localRepositories: AppEnvironment.LocalRepositories
+    
+    // MARK: Lecture
 
     func addLecture(lecture: Lecture, isForced: Bool = false) async throws {
         guard let currentTimetable = appState.timetable.current else { return }
@@ -125,6 +132,56 @@ struct LectureService: LectureServiceProtocol {
         let dto = try await lectureRepository.getBuildingList(places: joinedPlaces)
         return dto.content.compactMap { Building(from: $0) }
     }
+    
+    // MARK: Lecture Reminder
+    
+    func fetchLectureReminderList() async throws {
+        guard let targetTable = getCurrentOrNextSemesterPrimaryTable() else { return }
+        let dto = try await lectureRepository.fetchLectureReminderList(timetableId: targetTable.id)
+        appState.reminder.reminderList = dto.map { LectureReminder(from: $0) }
+    }
+    
+    func getLectureReminderState(timetableId: String, lecture: Lecture) async throws -> LectureReminder {
+        let dto = try await lectureRepository.getLectureReminderState(timetableId: timetableId, lectureId: lecture.id)
+        return .init(from: dto)
+    }
+    
+    func changeLectureReminderState(lecture: Lecture, to state: ReminderState) async throws {
+        guard let targetTable = getCurrentOrNextSemesterPrimaryTable() else { return }
+        if let offset = state.offset {
+            let dto = try await lectureRepository.changeLectureReminderState(timetableId: targetTable.id, lectureId: lecture.id, to: offset)
+            appState.reminder.reminderList.removeAll(where: { $0.timetableLectureId == lecture.id })
+            appState.reminder.reminderList.append(.init(from: dto))
+        } else {
+            try await deleteLectureReminder(lecture: lecture)
+        }
+    }
+    
+    private func deleteLectureReminder(lecture: Lecture) async throws {
+        guard let targetTable = getCurrentOrNextSemesterPrimaryTable() else { return }
+        try await lectureRepository.deleteLectureReminder(timetableId: targetTable.id, lectureId: lecture.id)
+        appState.reminder.reminderList.removeAll(where: { $0.timetableLectureId == lecture.id })
+    }
+    
+    func getCurrentOrNextSemesterPrimaryTable() -> TimetableMetadata? {
+        guard let semesterStatus = appState.system.semesterStatus else {
+            return nil
+        }
+        let targetSemester = semesterStatus.current ?? semesterStatus.next
+        guard let targetTable = appState.timetable.metadataList?.first(where: {
+            $0.isPrimary && $0.year == targetSemester.year && $0.semester == targetSemester.semester
+        }) else {
+            return nil
+        }
+        return targetTable
+    }
+    
+    // MARK: Bookmark
+    
+    func fetchBookmark(quarter: Quarter) async throws -> Bookmark {
+        let bookmarkDto = try await lectureRepository.getBookmark(quarter: quarter)
+        return .init(from: bookmarkDto)
+    }
 
     func fetchIsFirstBookmark() {
         appState.timetable.isFirstBookmark = userDefaultsRepository.get(
@@ -153,6 +210,8 @@ struct LectureService: LectureServiceProtocol {
         appState.timetable.bookmark = bookmark
         appState.search.selectedLecture = nil
     }
+    
+    // MARK: Expand MapView
 
     func setIsMapViewExpanded(_ expand: Bool) {
         appState.system.isMapViewExpanded = expand
@@ -171,11 +230,6 @@ struct LectureService: LectureServiceProtocol {
             appState.system.isMapViewExpanded = isMapViewExpanded
             return isMapViewExpanded
         }
-    }
-
-    func fetchBookmark(quarter: Quarter) async throws -> Bookmark {
-        let bookmarkDto = try await lectureRepository.getBookmark(quarter: quarter)
-        return .init(from: bookmarkDto)
     }
 
     private var lectureRepository: LectureRepositoryProtocol {
@@ -219,4 +273,8 @@ class FakeLectureService: LectureServiceProtocol {
     func fetchBookmark(quarter _: Quarter) async throws -> Bookmark {
         throw STError(.UNKNOWN_APP)
     }
+    func fetchLectureReminderList() async throws { return }
+    func getLectureReminderState(timetableId: String, lecture: Lecture) async throws -> LectureReminder { return .preview }
+    func changeLectureReminderState(lecture: Lecture, to state: ReminderState) async throws {}
+    func getCurrentOrNextSemesterPrimaryTable() -> TimetableMetadata? { nil }
 }

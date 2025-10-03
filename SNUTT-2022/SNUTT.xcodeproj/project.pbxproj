@@ -57,6 +57,7 @@
 		B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */; };
 		B863301A2CE4D70F008E9003 /* EnterNewPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */; };
 		B8657C7E2E62BFAE004359E8 /* LectureReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8657C7D2E62BFA5004359E8 /* LectureReminderViewModel.swift */; };
+		B8657C802E62D34D004359E8 /* LectureReminderRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8657C7F2E62D346004359E8 /* LectureReminderRouter.swift */; };
 		B86C4CCF294DCA150019CE51 /* VerificationCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */; };
 		B87431CB283B5A7300D78C59 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87431CA283B5A7300D78C59 /* BaseViewModel.swift */; };
 		B87B315D28D5A70F005C170B /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87B315828D5A70F005C170B /* UserState.swift */; };
@@ -91,6 +92,7 @@
 		B8C4F3352CA8F48E006B6BAD /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */; };
 		B8C5A2252E8F68DD00E9CEA4 /* SemesterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C5A2242E8F68DA00E9CEA4 /* SemesterRouter.swift */; };
 		B8C5A2272E8F70F300E9CEA4 /* SemesterDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C5A2262E8F70DE00E9CEA4 /* SemesterDto.swift */; };
+		B8C5A2292E8F890D00E9CEA4 /* LectureReminderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C5A2282E8F890800E9CEA4 /* LectureReminderState.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
@@ -421,6 +423,7 @@
 		B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordScene.swift; sourceTree = "<group>"; };
 		B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNewPasswordView.swift; sourceTree = "<group>"; };
 		B8657C7D2E62BFA5004359E8 /* LectureReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReminderViewModel.swift; sourceTree = "<group>"; };
+		B8657C7F2E62D346004359E8 /* LectureReminderRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReminderRouter.swift; sourceTree = "<group>"; };
 		B86C4CCE294DCA150019CE51 /* VerificationCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeView.swift; sourceTree = "<group>"; };
 		B87431CA283B5A7300D78C59 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		B87B315828D5A70F005C170B /* UserState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
@@ -454,6 +457,7 @@
 		B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		B8C5A2242E8F68DA00E9CEA4 /* SemesterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterRouter.swift; sourceTree = "<group>"; };
 		B8C5A2262E8F70DE00E9CEA4 /* SemesterDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterDto.swift; sourceTree = "<group>"; };
+		B8C5A2282E8F890800E9CEA4 /* LectureReminderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReminderState.swift; sourceTree = "<group>"; };
 		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
@@ -732,6 +736,7 @@
 				B87B316A28D755B6005C170B /* SystemState.swift */,
 				B87B315928D5A70F005C170B /* SearchState.swift */,
 				B87B315A28D5A70F005C170B /* TimetableState.swift */,
+				B8C5A2282E8F890800E9CEA4 /* LectureReminderState.swift */,
 				CE63A3BB2A21B06900A633FC /* RoutingState.swift */,
 				B87B315828D5A70F005C170B /* UserState.swift */,
 				CE85901D2C5E549600ECFE9E /* FriendState.swift */,
@@ -981,6 +986,7 @@
 				BE9413B828C20A4000171060 /* AuthRouter.swift */,
 				DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */,
 				BE682BD028864CA8009EBCB7 /* LectureRouter.swift */,
+				B8657C7F2E62D346004359E8 /* LectureReminderRouter.swift */,
 				B8C5A2242E8F68DA00E9CEA4 /* SemesterRouter.swift */,
 				BE682BF82887FB59009EBCB7 /* SearchRouter.swift */,
 				BE9413BC28C2119500171060 /* NotificationRouter.swift */,
@@ -1536,6 +1542,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				738406F12B5710C200007E62 /* ThemeDto.swift in Sources */,
+				B8657C802E62D34D004359E8 /* LectureReminderRouter.swift in Sources */,
 				B87B317428D816E1005C170B /* MenuSheet.swift in Sources */,
 				BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */,
 				BEE5CE10289E738900CF5ED3 /* MenuThemeSheet.swift in Sources */,
@@ -1611,6 +1618,7 @@
 				BE98A06F288AFC1600C2CE95 /* SNUTTWidget.intentdefinition in Sources */,
 				B87DF6F52918AB5D008BB95B /* Date+Ext.swift in Sources */,
 				BEE86517289E274D00D3D0E4 /* MenuEllipsisSheet.swift in Sources */,
+				B8C5A2292E8F890D00E9CEA4 /* LectureReminderState.swift in Sources */,
 				B8657C7E2E62BFAE004359E8 /* LectureReminderViewModel.swift in Sources */,
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
 				B88D170128AF71E300E2D652 /* UserSupportView.swift in Sources */,

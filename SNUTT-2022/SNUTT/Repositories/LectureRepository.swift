@@ -14,12 +14,20 @@ protocol LectureRepositoryProtocol {
     func updateLecture(timetableId: String, oldLecture: LectureDto, newLecture: LectureDto, isForced: Bool) async throws -> TimetableDto
     func deleteLecture(timetableId: String, lectureId: String) async throws -> TimetableDto
     func resetLecture(timetableId: String, lectureId: String) async throws -> TimetableDto
+    func getBuildingList(places: String) async throws -> BuildingListDto
 
+    // MARK: Bookmark
+    
     func getBookmark(quarter: Quarter) async throws -> BookmarkDto
     func bookmarkLecture(lectureId: String) async throws
     func undoBookmarkLecture(lectureId: String) async throws
-
-    func getBuildingList(places: String) async throws -> BuildingListDto
+    
+    // MARK: Lecture Reminder
+    
+    func fetchLectureReminderList(timetableId: String) async throws -> [LectureReminderDto]
+    func getLectureReminderState(timetableId: String, lectureId: String) async throws -> LectureReminderDto
+    func changeLectureReminderState(timetableId: String, lectureId: String, to offset: Int) async throws -> LectureReminderDto
+    func deleteLectureReminder(timetableId: String, lectureId: String) async throws
 }
 
 class LectureRepository: LectureRepositoryProtocol {
@@ -63,6 +71,45 @@ class LectureRepository: LectureRepositoryProtocol {
             .serializingDecodable(TimetableDto.self)
             .handlingError()
     }
+    
+    func getBuildingList(places: String) async throws -> BuildingListDto {
+        return try await session
+            .request(BuildingRouter.getBuildingInfo(places: places))
+            .serializingDecodable(BuildingListDto.self)
+            .handlingError()
+    }
+    
+    // MARK: Lecture Reminder
+    
+    func fetchLectureReminderList(timetableId: String) async throws -> [LectureReminderDto] {
+        try await session
+            .request(LectureReminderRouter.getReminderList(timetableId: timetableId))
+            .serializingDecodable([LectureReminderDto].self)
+            .handlingError()
+    }
+    
+    func getLectureReminderState(timetableId: String, lectureId: String) async throws -> LectureReminderDto {
+        try await session
+            .request(LectureReminderRouter.getReminderState(timetableId: timetableId, lectureId: lectureId))
+            .serializingDecodable(LectureReminderDto.self)
+            .handlingError()
+    }
+    
+    func changeLectureReminderState(timetableId: String, lectureId: String, to offset: Int) async throws -> LectureReminderDto {
+        try await session
+            .request(LectureReminderRouter.changeReminderState(timetableId: timetableId, lectureId: lectureId, offset: offset))
+            .serializingDecodable(LectureReminderDto.self)
+            .handlingError()
+    }
+    
+    func deleteLectureReminder(timetableId: String, lectureId: String) async throws {
+        try await session
+            .request(LectureReminderRouter.deleteReminder(timetableId: timetableId, lectureId: lectureId))
+            .serializingString()
+            .handlingError()
+    }
+    
+    // MARK: Bookmark
 
     func getBookmark(quarter: Quarter) async throws -> BookmarkDto {
         return try await session
@@ -82,13 +129,6 @@ class LectureRepository: LectureRepositoryProtocol {
         let _ = try await session
             .request(BookmarkRouter.undoBookmarkLecture(lectureId: lectureId))
             .serializingString(emptyResponseCodes: [200])
-            .handlingError()
-    }
-
-    func getBuildingList(places: String) async throws -> BuildingListDto {
-        return try await session
-            .request(BuildingRouter.getBuildingInfo(places: places))
-            .serializingDecodable(BuildingListDto.self)
             .handlingError()
     }
 }

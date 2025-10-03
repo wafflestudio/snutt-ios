@@ -67,6 +67,12 @@ extension EvLectureDto {
     }
 }
 
+struct LectureReminderDto: Decodable {
+    let id: String
+    let timetableLectureId: String
+    let offsetMinutes: Int
+}
+
 struct LectureColorDto: Codable {
     let fg: String?
     let bg: String?
