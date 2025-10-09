@@ -29,3 +29,110 @@
 "onboard.login.localPassword.placeHolder" = "Enter your password";
 "onboard.login.findLocalID.button" = "Find ID";
 "onboard.login.resetLocalPassword.button" = "Reset Password";
+
+"attach.localID.title" = "Add ID / Password";
+"attach.localID.id.label" = "ID";
+"attach.localID.id.placeholder" = "4-32 characters (letters or numbers)";
+"attach.localID.password.label" = "Password";
+"attach.localID.password.placeholder" = "6-20 characters (letters and numbers)";
+"attach.localID.password.confirm.label" = "Confirm Password";
+"attach.localID.password.confirm.placeholder" = "Enter password again";
+"attach.localID.button" = "Add Account";
+"attach.localID.success" = "ID has been added.";
+
+"change.password.title" = "Change Password";
+"change.password.old" = "Current Password";
+"change.password.new" = "New Password";
+"change.password.confirm" = "Confirm New Password";
+"change.password.success" = "Password has been changed.";
+
+"onboard.signup.button" = "Sign Up";
+"onboard.sns.continue" = "Continue with SNS Account";
+"onboard.feedback.button" = "Having trouble with login/signup?";
+
+"signup.title" = "Sign Up";
+"signup.id.label" = "ID";
+"signup.id.placeholder" = "4-32 characters (letters or numbers)";
+"signup.password.label" = "Password";
+"signup.password.placeholder" = "6-20 characters (letters and numbers)";
+"signup.password.confirm.label" = "Confirm Password";
+"signup.password.confirm.placeholder" = "Enter password again";
+"signup.email.label" = "Email";
+"signup.email.placeholder" = "Enter your email";
+"signup.button" = "Sign Up";
+"signup.terms.agreement" = "By clicking the button below, you agree to the **Terms of Service**.";
+"signup.completion.title" = "Complete";
+"signup.completion.message" = "Sign up completed successfully.";
+"signup.email.verify.question" = "Would you like to verify your email?";
+"signup.email.verify.description" = "Email verification is required to use the course review service.";
+"signup.email.verify.later" = "Later";
+
+"findid.title" = "Find ID";
+"findid.description" = "To find your ID\nyou need your linked email address.";
+"findid.email.label" = "Email";
+"findid.email.placeholder" = "Enter your email";
+"findid.button" = "Confirm";
+"findid.success.title" = "Sent Successfully";
+"findid.success.message" = "ID has been sent to %@.";
+
+"reset.password.title" = "Reset Password";
+"reset.password.id.title" = "To reset your password\nyou need your linked ID.";
+"reset.password.email.title" = "This is the email linked to this ID.\nEnter the full address to receive a verification code.";
+"reset.password.id.label" = "ID";
+"reset.password.id.placeholder" = "Enter your ID";
+"reset.password.email.label" = "Email";
+"reset.password.email.placeholder" = "Enter full address";
+"reset.password.code.button" = "Get Verification Code";
+"reset.password.not.my.email" = "Not your email address?";
+
+"verification.code.title" = "Reset Password";
+"verification.code.description" = "Enter the verification code\nsent to %@.";
+"verification.code.label" = "Verification Code";
+"verification.code.placeholder.signup" = "Enter 6-digit code";
+"verification.code.placeholder.reset" = "Enter 8-digit code";
+"verification.code.button" = "Confirm";
+"verification.code.timeout" = "Time expired. Please request again.";
+"verification.code.help.button" = "Not receiving the code?";
+"verification.code.help.message" = "Delivery may take some time.\nCheck your spam folder,\nor request again after 3 minutes.";
+
+"new.password.title" = "Reset Password";
+"new.password.description" = "Enter your new password.";
+"new.password.placeholder" = "6-20 characters (letters and numbers)";
+"new.password.confirm.placeholder" = "Enter password again";
+"new.password.button" = "Confirm";
+"new.password.timeout.title" = "Time Expired";
+"new.password.timeout.message" = "Time has expired.\nVerification code re-entry is required.";
+"new.password.not.equal" = "Passwords do not match.\nPlease try again.";
+"new.password.not.valid" = "Invalid password format.\nPlease enter 6-20 characters\nincluding letters and numbers.";
+"new.password.back.confirm" = "Stop password reset and return to the beginning?";
+"new.password.success" = "Password has been changed.";
+
+"email.verification.title" = "Email Verification";
+"email.verification.description" = "Email verification is required\nto use the course review service.\nWould you like to verify\nyour email %@?";
+"email.verification.info" = "Even if you select \"Later\", you can use all features of SNUTT except the course review service.";
+"email.verification.button" = "Confirm";
+"email.verification.later" = "Later";
+
+"feedback.title" = "Contact Us";
+"feedback.email.label" = "Email";
+"feedback.email.placeholder" = "Enter email to receive reply";
+"feedback.message.label" = "Message";
+"feedback.message.placeholder" = "Enter your inquiry";
+"feedback.button" = "Send";
+"feedback.success" = "Your inquiry has been sent.";
+
+"error.password.mismatch" = "Passwords do not match.";
+"error.password.invalid" = "Password must be 6-20 characters with letters and numbers.";
+"error.email.invalid" = "Please enter a valid email address.";
+
+"alert.confirm" = "Confirm";
+"alert.save" = "Save";
+
+"social.link.title" = "Social Account Linking";
+"social.link.kakao" = "Kakao";
+"social.link.google" = "Google";
+"social.link.apple" = "Apple";
+"social.link.facebook" = "Facebook";
+"social.link.account" = "%@ Account";
+"social.link.button" = "Link";
+"social.link.unlink.button" = "Unlink";

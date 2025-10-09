@@ -7,6 +7,7 @@
 
 import AuthInterface
 import Dependencies
+import os
 
 public struct AuthUseCase: AuthUseCaseProtocol {
     @Dependency(\.authRepository) private var authRepository
@@ -38,10 +39,11 @@ public struct AuthUseCase: AuthUseCaseProtocol {
     }
 
     public func logout() async throws {
-        guard let fcmToken = authState.get(.fcmToken) else {
-            return
+        if let fcmToken = authState.get(.fcmToken) {
+            try? await authRepository.logout(fcmToken: fcmToken)
+        } else {
+            Logger.auth.warning("FCM token is not found. Check your firebase settings.")
         }
-        try await authRepository.logout(fcmToken: fcmToken)
         try secureRepository.clear()
         authState.clear()
     }

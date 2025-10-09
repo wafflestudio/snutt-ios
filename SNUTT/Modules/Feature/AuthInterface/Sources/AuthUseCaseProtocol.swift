@@ -10,6 +10,7 @@ import Spyable
 
 @Spyable
 public protocol AuthUseCaseProtocol: Sendable {
+    /// Syncs the auth state from the local storage to the in-memory store
     func syncAuthState()
     func loginWithLocalID(localID: String, localPassword: String) async throws
     func logout() async throws
