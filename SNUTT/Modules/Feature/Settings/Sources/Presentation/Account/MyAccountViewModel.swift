@@ -18,15 +18,14 @@ final class MyAccountViewModel {
     @ObservationIgnored
     @Dependency(\.authRepository) private var authRepository
 
+    @ObservationIgnored
+    @Dependency(\.authState) private var authState
+
     private(set) var loadState: UserLoadState = .loading
 
     init() {
         Task {
-            do {
-                try await fetchUser()
-            } catch {
-                print(error)  // TODO
-            }
+            try? await fetchUser()
         }
     }
 
@@ -55,6 +54,16 @@ final class MyAccountViewModel {
 
     func logout() async throws {
         try await authUseCase.logout()
+    }
+
+    func attachLocalID(localID: String, localPassword: String) async throws {
+        let snuttToken = try await authRepository.attachLocalID(localID: localID, localPassword: localPassword)
+        authState.set(.accessToken, value: snuttToken.accessToken)
+        try await fetchUser()
+    }
+
+    func changePassword(oldPassword: String, newPassword: String) async throws {
+        _ = try await authRepository.changePassword(oldPassword: oldPassword, newPassword: newPassword)
     }
 }
 

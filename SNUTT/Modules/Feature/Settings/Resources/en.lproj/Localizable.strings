@@ -51,7 +51,7 @@
 "display" = "Display";
 
 "display.colorMode" = "Appearance";
-"display.colorMode.system" = "System setting";
+"display.colorMode.system" = "System";
 "display.colorMode.light" = "Light";
 "display.colorMode.dark" = "Dark";
 
