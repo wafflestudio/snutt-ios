@@ -51,16 +51,12 @@ class ContentViewModel {
         self.timetableViewModel = timetableViewModel
         self.themeViewModel = themeViewModel
         authState.isAuthenticatedPublisher
-            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.isAuthenticated = $0
             }
             .store(in: &cancellables)
         Task {
             try await loadConfigs()
-        }
-        Task {
-            try await themeViewModel.fetchThemes()
         }
     }
 

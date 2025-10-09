@@ -5,6 +5,7 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import FacebookCore
 import Firebase
 import KakaoMapsSDK
 import UIKit
@@ -20,12 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(
         _ application: UIApplication,
-        didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?
+        didFinishLaunchingWithOptions options: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         // MARK: Initialize KakaoMapSDK
 
         let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
-        SDKInitializer.InitSDK(appKey: kakaoAppKey)
+        KakaoMapsSDK.SDKInitializer.InitSDK(appKey: kakaoAppKey)
 
         // MARK: Configure Firebase
 
@@ -47,7 +48,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotifications()
             Messaging.messaging().delegate = self
         }
-        return true
+
+        // MARK: Facebook Login
+
+        return FacebookCore.ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: options)
     }
 
     // MARK: UISceneSession Lifecycle
