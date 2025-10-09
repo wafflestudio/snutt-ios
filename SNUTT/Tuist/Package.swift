@@ -22,9 +22,6 @@ import PackageDescription
             "DependenciesAdditionsBasics": .framework,
             "UserDefaultsDependency": .framework,
             "IssueReporting": .framework,
-            "FirebaseCore": .staticLibrary,
-            "FirebaseMessaging": .staticLibrary,
-            "KakaoMapsSDK-SPM": .staticLibrary,
             "OpenAPIRuntime": .framework,
             "OpenAPIURLSession": .framework,
             "HTTPTypes": .framework,
@@ -50,5 +47,8 @@ let package = Package(
         .package(url: "https://github.com/siteline/swiftui-introspect", from: "1.3.0"),
         .package(url: "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git", .upToNextMajor(from: "2.12.4")),
         .package(url: "https://github.com/firebase/firebase-ios-sdk", .upToNextMajor(from: "11.9.0")),
+        .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "7.0.0"),
+        .package(url: "https://github.com/facebook/facebook-ios-sdk", .upToNextMajor(from: "18.0.1")),
+        .package(url: "https://github.com/kakao/kakao-ios-sdk", .upToNextMajor(from: "2.25.0")),
     ]
 )
