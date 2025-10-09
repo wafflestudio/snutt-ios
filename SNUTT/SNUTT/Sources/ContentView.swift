@@ -5,6 +5,7 @@ import Dependencies
 import Notifications
 import NotificationsInterface
 import Popup
+import Reviews
 import Settings
 import SharedUIComponents
 import SwiftUI
@@ -14,6 +15,7 @@ import Vacancy
 struct ContentView: View {
     @State private var viewModel = ContentViewModel()
     @Environment(\.errorAlertHandler) private var errorAlertHandler
+    @AppStorage(AppStorageKeys.preferredColorScheme) private var selectedColorScheme: ColorSchemeSelection = .system
 
     var body: some View {
         VStack {
@@ -29,6 +31,7 @@ struct ContentView: View {
         .environment(\.configs, viewModel.configs)
         .animation(.easeInOut, value: viewModel.isAuthenticated)
         .tint(.label)
+        .preferredColorScheme(selectedColorScheme.colorScheme)
         .onOpenURL { url in
             errorAlertHandler.withAlert {
                 try await viewModel.handleURLScheme(url)
@@ -50,7 +53,7 @@ struct ContentView: View {
                 )
                 TabScene(tabItem: TabItem.search)
                 TabScene(tabItem: TabItem.friends, rootView: ColorView(color: .yellow))
-                TabScene(tabItem: TabItem.review, rootView: ColorView(color: .green))
+                TabScene(tabItem: TabItem.review, rootView: ReviewsScene())
                 TabScene(
                     tabItem: TabItem.settings,
                     rootView: SettingsScene()
@@ -63,6 +66,11 @@ struct ContentView: View {
         .overlayPopup()
         .environment(\.themeViewModel, viewModel.themeViewModel)
         .environment(\.timetableViewModel, viewModel.timetableViewModel)
+        .onLoad {
+            errorAlertHandler.withAlert {
+                try? await viewModel.themeViewModel.fetchThemes()
+            }
+        }
     }
 
     private var isSearchMode: Binding<Bool> {

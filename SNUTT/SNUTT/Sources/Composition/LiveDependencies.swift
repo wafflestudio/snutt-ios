@@ -58,6 +58,14 @@ extension ThemeUIProviderKey: @retroactive DependencyKey {
     public static let liveValue: any ThemeUIProvidable = ThemeUIProvider()
 }
 
+extension AuthUIProviderKey: @retroactive DependencyKey {
+    public static let liveValue: any AuthUIProvidable = AuthUIProvider()
+}
+
 extension ThemeRepositoryKey: @retroactive DependencyKey {
     public static let liveValue: any ThemeRepository = ThemeAPIRepository()
+}
+
+extension SocialAuthServiceProviderKey: @retroactive DependencyKey {
+    public static let liveValue: any SocialAuthServiceProvider = LiveSocialAuthServiceProvider()
 }

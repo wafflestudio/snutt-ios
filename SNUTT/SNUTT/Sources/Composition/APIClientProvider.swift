@@ -22,7 +22,7 @@ public struct APIClientProvider: Sendable {
 
     public func apiClient() -> any APIProtocol {
         Client(
-            serverURL: URL(string: "https://\(appMetadata[.apiURL])")!,
+            serverURL: appMetadata.apiURL,
             configuration: .init(dateTranscoder: LenientDateTranscoder()),
             transport: URLSessionTransport(),
             middlewares: [
@@ -56,7 +56,7 @@ private struct LenientDateTranscoder: DateTranscoder {
         do {
             return try transcoder.decode(string)
         } catch {
-            if let date = fallbackTranscoders.lazy.compactMap { try? $0.decode(string) }.first {
+            if let date = fallbackTranscoders.lazy.compactMap({ try? $0.decode(string) }).first {
                 return date
             }
             throw error
