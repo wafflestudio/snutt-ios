@@ -49,6 +49,10 @@ public struct AppMetadata: Sendable {
             Bundle.main.object(forInfoDictionaryKey: "API_SERVER_URL") as! String
         }
     }
+
+    public var apiURL: URL {
+        URL(string: self[.apiURL])!
+    }
 }
 
 extension AppMetadata: DependencyKey {
