@@ -31,6 +31,25 @@ public struct ErrorDecodingMiddleware: ClientMiddleware {
         {
             throw knownError
         }
+        if let unknownError = ClientUnknownServerError(jsonData: jsonData) {
+            throw unknownError
+        }
         return (response, HTTPBody(data))
+    }
+}
+
+/// Client-side representation of server errors that aren't predefined in the client.
+private struct ClientUnknownServerError: LocalizedError {
+    var errorDescription: String?
+    var failureReason: String?
+    var recoverySuggestion: String?
+
+    init?(jsonData: [String: Any]) {
+        guard jsonData["errcode"] != nil else { return nil }
+        errorDescription = jsonData["title"] as? String
+        failureReason = jsonData["displayMessage"] as? String
+
+        // Field not implemented by server, reserved for future use when added
+        recoverySuggestion = jsonData["recoveryMessage"] as? String
     }
 }
