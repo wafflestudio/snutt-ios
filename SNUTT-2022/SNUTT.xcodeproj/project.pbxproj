@@ -91,6 +91,7 @@
 		B8C0C6512CD7EAB2005563F2 /* RoundedRectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C0C6502CD7EAB2005563F2 /* RoundedRectButton.swift */; };
 		B8C3F0192D23E29500DEB8C0 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = B8C3F0182D23E29500DEB8C0 /* KakaoMapsSDK-SPM */; };
 		B8C4F3352CA8F48E006B6BAD /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */; };
+		B8D99F402E97B6050068CA03 /* ToolTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D99F3F2E97B5FD0068CA03 /* ToolTip.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
@@ -452,6 +453,7 @@
 		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
 		B8C0C6502CD7EAB2005563F2 /* RoundedRectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectButton.swift; sourceTree = "<group>"; };
 		B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
+		B8D99F3F2E97B5FD0068CA03 /* ToolTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolTip.swift; sourceTree = "<group>"; };
 		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
@@ -1202,6 +1204,7 @@
 		DCD41A6D27E5CDCA00CF380E /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B8D99F3F2E97B5FD0068CA03 /* ToolTip.swift */,
 				B86B67C42E4CA9F700682656 /* ToastView.swift */,
 				BE98A009288A90C000C2CE95 /* Logo.swift */,
 				BEDF506C27EB740E00CDCC13 /* LectureList.swift */,
@@ -1582,6 +1585,7 @@
 				DC29159B2865F95100FE5F9A /* SettingScene.swift in Sources */,
 				B88D16FD28AE2E1E00E2D652 /* User.swift in Sources */,
 				B8F40EAB28980D730021A2A9 /* AccountSettingScene.swift in Sources */,
+				B8D99F402E97B6050068CA03 /* ToolTip.swift in Sources */,
 				BE7E230327FF3C38004DC202 /* NavBarButton.swift in Sources */,
 				BE6D892A28EFC637000607A6 /* EtcRepository.swift in Sources */,
 				CE63A3BC2A21B06900A633FC /* RoutingState.swift in Sources */,

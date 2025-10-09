@@ -20,7 +20,13 @@ struct STColor {
     
     /// Hex #B2F6F3
     static let milkMint: Color = .init(hex: "#B2F6F3")
+    
+    /// Hex #00B8B0
+    static let darkMint1: Color = .init(hex: "#00B8B0")
 
+    /// Hex #0E837D
+    static let darkMintShadow: Color = .init(hex: "#0E837D")
+    
     static let red: Color = .init(hex: "#E54459")
 
     static let vacancyBlue: Color = .init(hex: "#446CC2")
