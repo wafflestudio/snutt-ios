@@ -22,6 +22,7 @@ let project = Project.app(
                 .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
+                .external(name: "KakaoMapsSDK-SPM"),
             ]
         ),
         .module(
@@ -43,10 +44,19 @@ let project = Project.app(
                 .target(name: "AuthInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
+                .target(name: "SharedUIWebKit"),
                 .target(name: "DependenciesUtility"),
+                .target(name: "FoundationUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "DependenciesAdditions"),
                 .external(name: "MemberwiseInit"),
+                .external(name: "KakaoSDKCommon"),
+                .external(name: "KakaoSDKAuth"),
+                .external(name: "KakaoSDKUser"),
+                .external(name: "FacebookCore"),
+                .external(name: "FacebookLogin"),
+                .external(name: "GoogleSignInSwift"),
+                .external(name: "GoogleSignIn"),
             ]
         ),
         .module(
@@ -85,6 +95,7 @@ let project = Project.app(
                 .target(name: "VacancyInterface"),
                 .target(name: "AuthInterface"),
                 .target(name: "SharedUIComponents"),
+                .target(name: "SharedUIWebKit"),
                 .external(name: "Dependencies"),
             ]
         ),
@@ -120,7 +131,9 @@ let project = Project.app(
                 .target(name: "APIClientInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
+                .target(name: "AuthInterface"),
                 .target(name: "SharedUIComponents"),
+                .target(name: "SharedUIWebKit"),
                 .target(name: "SwiftUIUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
@@ -133,6 +146,16 @@ let project = Project.app(
                 .target(name: "APIClientInterface"),
                 .external(name: "OpenAPIRuntime"),
                 .external(name: "OpenAPIURLSession"),
+            ]
+        ),
+        .module(
+            name: "Reviews",
+            category: .feature,
+            dependencies: [
+                .target(name: "SharedUIWebKit"),
+                .target(name: "AuthInterface"),
+                .target(name: "SharedAppMetadata"),
+                .external(name: "Dependencies"),
             ]
         ),
         // FeatureInterface
@@ -204,6 +227,11 @@ let project = Project.app(
             ],
             additionalResources: ["OpenAPI/**", "Modules/Feature/APIClientInterface/Resources/**"]
         ),
+        .module(
+            name: "ReviewsInterface",
+            category: .featureInterface,
+            dependencies: []
+        ),
         // Shared
         .module(
             name: "SharedUIComponents",
@@ -212,6 +240,13 @@ let project = Project.app(
                 .target(name: "SwiftUIUtility"),
                 .target(name: "UIKitUtility"),
                 .external(name: "MemberwiseInit"),
+            ]
+        ),
+        .module(
+            name: "SharedUIWebKit",
+            category: .shared(ui: true),
+            dependencies: [
+                .target(name: "SharedAppMetadata")
             ]
         ),
         .module(
@@ -248,9 +283,9 @@ let project = Project.app(
         .module(name: "FoundationUtility", category: .utility(ui: false), dependencies: []),
     ],
     externalDependencies: [
+        // Define dependencies exclusively for the main target.
         .external(name: "FirebaseCore"),
         .external(name: "FirebaseMessaging"),
-        .external(name: "KakaoMapsSDK-SPM"),
     ],
     widgetDependencies: [
         .target(name: "TimetableInterface"),
