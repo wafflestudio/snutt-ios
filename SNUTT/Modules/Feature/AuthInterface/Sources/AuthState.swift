@@ -11,7 +11,7 @@ import Foundation
 import Spyable
 
 @Spyable
-public protocol AuthState: Sendable, ObservableObject, AnyObject {
+public protocol AuthState: Sendable, AnyObject {
     var isAuthenticated: Bool { get }
     @MainActor var isAuthenticatedPublisher: AnyPublisher<Bool, Never> { get }
     func set(_ type: AuthStateType, value: String)

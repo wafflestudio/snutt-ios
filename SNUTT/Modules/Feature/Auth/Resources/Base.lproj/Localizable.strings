@@ -29,3 +29,110 @@
 "onboard.login.localPassword.placeHolder" = "비밀번호를 입력하세요";
 "onboard.login.findLocalID.button" = "아이디 찾기";
 "onboard.login.resetLocalPassword.button" = "비밀번호 재설정";
+
+"attach.localID.title" = "아이디 / 비밀번호 추가";
+"attach.localID.id.label" = "아이디";
+"attach.localID.id.placeholder" = "영문 혹은 숫자 4-32자 이내";
+"attach.localID.password.label" = "비밀번호";
+"attach.localID.password.placeholder" = "영문과 숫자 모두 포함 6-20자 이내";
+"attach.localID.password.confirm.label" = "비밀번호 확인";
+"attach.localID.password.confirm.placeholder" = "비밀번호를 한번 더 입력하세요";
+"attach.localID.button" = "계정 추가하기";
+"attach.localID.success" = "아이디가 추가되었습니다.";
+
+"change.password.title" = "비밀번호 변경";
+"change.password.old" = "이전 비밀번호";
+"change.password.new" = "새로운 비밀번호";
+"change.password.confirm" = "새로운 비밀번호 확인";
+"change.password.success" = "비밀번호가 변경되었습니다.";
+
+"onboard.signup.button" = "회원가입";
+"onboard.sns.continue" = "SNS 계정으로 계속하기";
+"onboard.feedback.button" = "로그인/회원가입에 문제가 생겼나요?";
+
+"signup.title" = "회원가입";
+"signup.id.label" = "아이디";
+"signup.id.placeholder" = "영문 혹은 숫자 4-32자 이내";
+"signup.password.label" = "비밀번호";
+"signup.password.placeholder" = "영문과 숫자 모두 포함 6-20자 이내";
+"signup.password.confirm.label" = "비밀번호 확인";
+"signup.password.confirm.placeholder" = "비밀번호를 한번 더 입력하세요";
+"signup.email.label" = "이메일";
+"signup.email.placeholder" = "이메일을 입력하세요";
+"signup.button" = "가입하기";
+"signup.terms.agreement" = "아래 버튼을 누르면 **일반 이용 약관**에 동의하시게 됩니다.";
+"signup.completion.title" = "완료";
+"signup.completion.message" = "회원가입이 완료되었습니다.";
+"signup.email.verify.question" = "이메일을 인증하시겠어요?";
+"signup.email.verify.description" = "강의평 서비스를 이용하기 위해서는 이메일 인증이 필요합니다.";
+"signup.email.verify.later" = "나중에 하기";
+
+"findid.title" = "아이디 찾기";
+"findid.description" = "아이디를 찾기 위해\n연동된 이메일 주소가 필요합니다.";
+"findid.email.label" = "이메일";
+"findid.email.placeholder" = "이메일을 입력하세요";
+"findid.button" = "확인";
+"findid.success.title" = "전송 완료";
+"findid.success.message" = "%@로 아이디를 전송했습니다.";
+
+"reset.password.title" = "비밀번호 재설정";
+"reset.password.id.title" = "비밀번호 재설정을 위해\n연동된 아이디가 필요합니다.";
+"reset.password.email.title" = "해당 아이디로 연동된 이메일입니다.\n전체 주소를 입력하여 인증코드를 받으세요.";
+"reset.password.id.label" = "아이디";
+"reset.password.id.placeholder" = "아이디를 입력하세요";
+"reset.password.email.label" = "이메일";
+"reset.password.email.placeholder" = "전체 주소를 입력하세요";
+"reset.password.code.button" = "인증코드 받기";
+"reset.password.not.my.email" = "나의 이메일 주소가 아닌가요?";
+
+"verification.code.title" = "비밀번호 재설정";
+"verification.code.description" = "%@으로 전송된\n인증코드를 입력해주세요.";
+"verification.code.label" = "인증코드";
+"verification.code.placeholder.signup" = "인증코드 6자리를 입력하세요";
+"verification.code.placeholder.reset" = "인증코드 8자리를 입력하세요";
+"verification.code.button" = "확인";
+"verification.code.timeout" = "시간이 초과되었습니다. 다시 요청해주세요.";
+"verification.code.help.button" = "인증번호가 오지 않나요?";
+"verification.code.help.message" = "전송에 시간이 소요될 수 있습니다.\n스팸함을 확인하거나,\n3분 초과 시 재요청을 해주세요.";
+
+"new.password.title" = "비밀번호 재설정";
+"new.password.description" = "새로운 비밀번호를 입력해주세요.";
+"new.password.placeholder" = "영문, 숫자 모두 포함 6-20자 이내";
+"new.password.confirm.placeholder" = "비밀번호를 한번 더 입력하세요";
+"new.password.button" = "확인";
+"new.password.timeout.title" = "시간 초과";
+"new.password.timeout.message" = "시간이 초과되어\n인증코드 재입력이 필요합니다.";
+"new.password.not.equal" = "비밀번호가 일치하지 않습니다.\n다시 시도해주세요.";
+"new.password.not.valid" = "조건에 맞지 않는 비밀번호입니다.\n영문, 숫자 포함 6-20자 이내로\n입력해주세요.";
+"new.password.back.confirm" = "비밀번호 초기화를 그만두고 처음으로 돌아가시겠습니까?";
+"new.password.success" = "비밀번호가 변경되었습니다.";
+
+"email.verification.title" = "이메일 인증";
+"email.verification.description" = "강의평 서비스를 이용하기 위해\n이메일 인증이 필요합니다.\n%@에 대한 이메일 인증을\n진행하시겠습니까?";
+"email.verification.info" = "\"나중에 하기\"를 선택하더라도 강의평 서비스를 제외한 SNUTT의 모든 기능을 이용할 수 있습니다.";
+"email.verification.button" = "확인";
+"email.verification.later" = "나중에 하기";
+
+"feedback.title" = "문의하기";
+"feedback.email.label" = "이메일";
+"feedback.email.placeholder" = "답변 받으실 이메일을 입력해주세요";
+"feedback.message.label" = "내용";
+"feedback.message.placeholder" = "문의 내용을 입력해주세요";
+"feedback.button" = "전송";
+"feedback.success" = "문의가 전송되었습니다.";
+
+"error.password.mismatch" = "비밀번호가 일치하지 않습니다.";
+"error.password.invalid" = "비밀번호는 영문, 숫자 포함 6-20자 이내여야 합니다.";
+"error.email.invalid" = "올바른 이메일 주소를 입력해주세요.";
+
+"alert.confirm" = "확인";
+"alert.save" = "저장";
+
+"social.link.title" = "소셜 계정 연동";
+"social.link.kakao" = "카카오";
+"social.link.google" = "구글";
+"social.link.apple" = "애플";
+"social.link.facebook" = "페이스북";
+"social.link.account" = "%@ 계정";
+"social.link.button" = "연동";
+"social.link.unlink.button" = "연동 해제";
