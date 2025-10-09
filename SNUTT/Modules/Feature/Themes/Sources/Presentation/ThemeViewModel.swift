@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import Foundation
 import Observation
 import ThemesInterface
 
@@ -28,6 +29,13 @@ public final class ThemeViewModel: ThemeViewModelProtocol {
         saveSelectedTheme: @MainActor @escaping (Theme) async throws -> Void
     ) {
         self.saveSelectedTheme = saveSelectedTheme
+        Task { [weak self] in
+            for await _ in NotificationCenter.default.notifications(named: .customThemeDidUpdate).compactMap({ _ in () }
+            ) {
+                guard let self else { return }
+                try? await fetchThemes()
+            }
+        }
     }
 
     public func fetchThemes() async throws {

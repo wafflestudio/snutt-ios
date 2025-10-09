@@ -11,10 +11,20 @@ import SwiftUI
 @MainActor
 public protocol ThemeUIProvidable: Sendable {
     func menuThemeSelectionSheet() -> AnyView
+    func themeMarketScene() -> AnyView
+    func themeSettingsScene() -> AnyView
 }
 
 private struct EmptyThemeUIProvider: ThemeUIProvidable {
     func menuThemeSelectionSheet() -> AnyView {
+        AnyView(Text("Empty ThemeUIProvider"))
+    }
+
+    func themeMarketScene() -> AnyView {
+        AnyView(Text("Empty ThemeUIProvider"))
+    }
+
+    func themeSettingsScene() -> AnyView {
         AnyView(Text("Empty ThemeUIProvider"))
     }
 }
