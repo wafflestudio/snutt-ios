@@ -1,0 +1,52 @@
+//
+//  SettingsNavigationLink.swift
+//  SNUTT
+//
+//  Copyright © 2025 wafflestudio.com. All rights reserved.
+//
+
+import SharedUIComponents
+import SwiftUI
+
+struct SettingsNavigationLink<Value: Hashable>: View {
+    let title: String
+    let value: Value
+    var leadingImage: Image?
+    var detail: String?
+    var detailImage: Image?
+    var showNewBadge: Bool = false
+    var destructive: Bool = false
+
+    var body: some View {
+        NavigationLink(value: value) {
+            HStack(spacing: 0) {
+                if let leadingImage {
+                    leadingImage
+                    Spacer().frame(width: 4)
+                }
+                Text(title)
+                    .font(.system(size: 16))
+                    .foregroundStyle(
+                        destructive
+                            ? SharedUIComponentsAsset.red.swiftUIColor
+                            : Color.primary
+                    )
+                if showNewBadge {
+                    Spacer().frame(width: 6)
+                    NewBadgeView()
+                }
+                Spacer()
+                Group {
+                    if let detailImage {
+                        detailImage
+                    }
+                    if let detail {
+                        Text(detail)
+                            .font(.system(size: 16))
+                    }
+                }
+                .foregroundStyle(.gray)
+            }
+        }
+    }
+}

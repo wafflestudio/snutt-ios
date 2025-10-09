@@ -11,6 +11,7 @@ import Foundation
 import FoundationUtility
 import Observation
 import SharedAppMetadata
+import SwiftUI
 import ThemesInterface
 import TimetableInterface
 
@@ -25,6 +26,8 @@ final class SettingsViewModel {
 
     let timetableSettingsViewModel = TimetableSettingsViewModel()
     let myAccountViewModel = MyAccountViewModel()
+
+    var path = NavigationPath()
 
     var appVersion: String {
         appMetadata[.appVersion]

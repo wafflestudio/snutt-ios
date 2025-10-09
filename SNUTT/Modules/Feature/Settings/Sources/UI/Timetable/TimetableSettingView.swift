@@ -11,7 +11,6 @@ import ThemesInterface
 import TimetableInterface
 
 struct TimetableSettingView: View {
-    @Binding var path: [Destination]
     @Bindable var viewModel: TimetableSettingsViewModel
     @Environment(\.timetableUIProvider) private var timetableUIProvider
     @Environment(\.themeViewModel) private var themeViewModel
@@ -58,7 +57,11 @@ struct TimetableSettingView: View {
 
             if !viewModel.configuration.autoFit {
                 Section(SettingsStrings.displayTableRange) {
-                    SettingsListCell(menu: Settings.timetableRange(viewModel.configuration.visibleWeeks), path: $path)
+                    SettingsNavigationLink(
+                        title: SettingsStrings.displayTableDaySelection,
+                        value: SettingsPathType.timetableRange,
+                        detail: viewModel.configuration.visibleWeeks.map { $0.shortSymbol }.joined(separator: " ")
+                    )
 
                     VStack(alignment: .leading) {
                         Text(SettingsStrings.displayTableTimeSlot)
@@ -121,5 +124,5 @@ struct TimetableRangeSelectionView: View {
 }
 
 #Preview {
-    TimetableSettingView(path: .constant([]), viewModel: .init())
+    TimetableSettingView(viewModel: .init())
 }

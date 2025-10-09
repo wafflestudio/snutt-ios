@@ -11,137 +11,103 @@ import VacancyInterface
 
 public struct SettingsScene: View {
     @State private(set) var viewModel: SettingsViewModel = .init()
-    @State private var isLogoutAlertPresented = false
-
-    @State private var path: [Destination] = []
-
-    @Environment(\.errorAlertHandler) private var errorAlertHandler
-    @Environment(\.vacancyUIProvider) private var vacancyUIProvider
+    @AppStorage(AppStorageKeys.preferredColorScheme) private var selectedColorScheme: ColorSchemeSelection = .system
 
     public init() {}
 
     public var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack(path: $viewModel.path) {
             List {
                 Section {
-                    SettingsListCell(
-                        menu: Settings.myAccount(viewModel.myAccountViewModel.titleDescription),
-                        path: $path
+                    SettingsNavigationLink(
+                        title: SettingsStrings.account,
+                        value: SettingsPathType.myAccount,
+                        leadingImage: SettingsAsset.person.swiftUIImage,
+                        detail: viewModel.myAccountViewModel.titleDescription
                     )
                     .padding(.vertical, 12)
                 }
 
                 Section(SettingsStrings.display) {
-                    SettingsListCell(menu: Settings.appearance(SettingsStrings.displayColorModeSystem), path: $path)
-                    SettingsListCell(menu: Settings.timetableSettings, path: $path)
-                    SettingsListCell(menu: Settings.timetableTheme, path: $path)
+                    SettingsNavigationLink(
+                        title: SettingsStrings.displayColorMode,
+                        value: SettingsPathType.appearance,
+                        detail: selectedColorScheme.localizedString
+                    )
+                    SettingsNavigationLink(
+                        title: SettingsStrings.displayTable,
+                        value: SettingsPathType.timetableSettings
+                    )
+                    SettingsNavigationLink(
+                        title: SettingsStrings.displayTheme,
+                        value: SettingsPathType.timetableTheme
+                    )
                 }
 
                 Section(SettingsStrings.service) {
-                    SettingsListCell(menu: Settings.vacancyNotification, path: $path)
-                    SettingsListCell(menu: Settings.themeMarket, path: $path)
+                    SettingsNavigationLink(
+                        title: SettingsStrings.serviceVacancy,
+                        value: SettingsPathType.vacancyNotification
+                    )
+                    SettingsNavigationLink(
+                        title: SettingsStrings.serviceThemeMarket,
+                        value: SettingsPathType.themeMarket
+                    )
                 }
 
                 Section(SettingsStrings.info) {
-                    SettingsListCell(menu: Settings.version(viewModel.appVersion), path: $path)
-                    SettingsListCell(menu: Settings.developers, path: $path)
+                    SettingsMenuButton(
+                        title: SettingsStrings.infoVersion,
+                        detail: viewModel.appVersion
+                    )
+                    SettingsNavigationLink(
+                        title: SettingsStrings.infoDevelopers,
+                        value: SettingsPathType.developers
+                    )
                 }
 
                 Section {
-                    SettingsListCell(menu: Settings.shareFeedback, path: $path)
+                    SettingsNavigationLink(
+                        title: SettingsStrings.feedback,
+                        value: SettingsPathType.shareFeedback
+                    )
                 }
 
                 Section {
-                    SettingsListCell(menu: Settings.openSourceLicense, path: $path)
-                    SettingsListCell(menu: Settings.termsOfService, path: $path)
-                    SettingsListCell(menu: Settings.privacyPolicy, path: $path)
+                    SettingsNavigationLink(
+                        title: SettingsStrings.termsService,
+                        value: SettingsPathType.termsOfService
+                    )
+                    SettingsNavigationLink(
+                        title: SettingsStrings.privacyPolicy,
+                        value: SettingsPathType.privacyPolicy
+                    )
                 }
 
                 #if DEBUG
                     Section(SettingsStrings.debug) {
-                        SettingsListCell(menu: Settings.networkLogs, path: $path)
+                        SettingsNavigationLink(
+                            title: SettingsStrings.debugLog,
+                            value: SettingsPathType.networkLogs
+                        )
                     }
                 #endif
 
                 Section {
-                    SettingsListCell(menu: Settings.logout, path: $path) {
-                        isLogoutAlertPresented = true
+                    LogoutButton {
+                        try await viewModel.myAccountViewModel.logout()
                     }
                 }
             }
             .listStyle(.insetGrouped)
             .navigationTitle(SettingsStrings.settings)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: Destination.self) { destination in
-                switch destination {
-                case let .settings(menu):
-                    navigateToDestination(of: menu)
-                case let .myAccount(menu):
-                    navigateToDestination(of: menu)
-                }
+            .navigationDestination(for: SettingsPathType.self) { menuItem in
+                SettingsDetails(menuItem: menuItem, viewModel: viewModel)
             }
-        }
-        .alert(
-            SettingsStrings.logoutAlert,
-            isPresented: $isLogoutAlertPresented
-        ) {
-            Button(SettingsStrings.logout, role: .destructive) {
-                Task {
-                    await errorAlertHandler.withAlert {
-                        try await viewModel.myAccountViewModel.logout()
-                    }
-                }
+            .navigationDestination(for: MyAccountPathType.self) { menuItem in
+                MyAccountDetails(menuItem: menuItem, viewModel: viewModel.myAccountViewModel)
             }
-            Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
-        }
-        .task {}
-    }
-}
-
-extension SettingsScene {
-    @ViewBuilder private func navigateToDestination(of menu: Settings) -> some View {
-        switch menu {
-        case .myAccount:
-            MyAccountScene(viewModel: viewModel.myAccountViewModel, path: $path)
-        case .appearance:
-            ColorModeSettingView()
-        case .timetableSettings:
-            TimetableSettingView(path: $path, viewModel: viewModel.timetableSettingsViewModel)
-        case .timetableRange:
-            TimetableRangeSelectionView(viewModel: viewModel.timetableSettingsViewModel)
-        case .timetableTheme:
-            ColorView(color: .blue)
-        case .vacancyNotification:
-            AnyView(vacancyUIProvider.makeVacancyScene())
-        case .themeMarket:
-            ColorView(color: .orange)
-        case .developers:
-            ColorView(color: .green)
-        case .shareFeedback:
-            ColorView(color: .cyan)
-        case .openSourceLicense:
-            ColorView(color: .orange)
-        case .termsOfService:
-            ColorView(color: .brown)
-        case .privacyPolicy:
-            ColorView(color: .gray)
-        case .networkLogs:
-            ColorView(color: .red)
-        default: EmptyView()
-        }
-    }
-
-    @ViewBuilder private func navigateToDestination(of menu: MyAccount) -> some View {
-        switch menu {
-        case .changeNickname:
-            ChangeNicknameView(viewModel: viewModel.myAccountViewModel)
-        case .addId:
-            ColorView(color: .orange)
-        case .changePassword:
-            ColorView(color: .green)
-        case .snsConnection:
-            ColorView(color: .cyan)
-        default: EmptyView()
         }
     }
 }

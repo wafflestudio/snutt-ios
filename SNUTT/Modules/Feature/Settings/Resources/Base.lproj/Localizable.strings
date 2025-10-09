@@ -51,7 +51,7 @@
 "display" = "디스플레이";
 
 "display.colorMode" = "색상 모드";
-"display.colorMode.system" = "시스템 설정";
+"display.colorMode.system" = "시스템";
 "display.colorMode.light" = "라이트 모드";
 "display.colorMode.dark" = "다크 모드";
 
