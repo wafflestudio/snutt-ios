@@ -41,29 +41,29 @@ extension Theme {
     public static let preview1: Theme = makeTheme(
         name: "preview1",
         hexColors: ["#FFADAD", "#FFD6A5", "#FDFFB6", "#CAFFBF", "#9BF6FF", "#A0C4FF", "#BDB2FF", "#FFC6FF", "#FFFFFC"],
-        isCustom: true
+        status: .customPrivate,
     )
 
     public static let preview2: Theme = makeTheme(
         name: "preview2",
         hexColors: ["#264653", "#2A9D8F", "#E9C46A", "#F4A261", "#E76F51", "#F7B267", "#70C1B3", "#FFD6BA", "#D4A5A5"],
-        isCustom: true
+        status: .customPrivate,
     )
 
     public static let preview3: Theme = makeTheme(
         name: "preview3",
         hexColors: ["#6A0572", "#AB83A1", "#C3B1E1", "#F1D4D4", "#F7E1D7", "#F9F5F6", "#C9BBCF", "#A1B5D8", "#9AD0EC"],
-        isCustom: true
+        status: .customPrivate,
     )
 }
 
 extension Theme {
-    private static func makeTheme(name: String, hexColors: [String], isCustom: Bool = false) -> Theme {
+    private static func makeTheme(name: String, hexColors: [String], status: Status = .builtIn) -> Theme {
         .init(
             id: name,
             name: name,
             colors: hexColors.map { .init(fgHex: "#ffffff", bgHex: $0) },
-            isCustom: isCustom
+            status: status
         )
     }
 }

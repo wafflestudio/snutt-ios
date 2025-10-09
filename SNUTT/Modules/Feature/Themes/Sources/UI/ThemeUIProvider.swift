@@ -15,4 +15,12 @@ public struct ThemeUIProvider: ThemeUIProvidable {
     public func menuThemeSelectionSheet() -> AnyView {
         AnyView(MenuThemeSelectionSheet())
     }
+
+    public func themeMarketScene() -> AnyView {
+        AnyView(ThemeMarketScene())
+    }
+
+    public func themeSettingsScene() -> AnyView {
+        AnyView(ThemeSettingsScene())
+    }
 }

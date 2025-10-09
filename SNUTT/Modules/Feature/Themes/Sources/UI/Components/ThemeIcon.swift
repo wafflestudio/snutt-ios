@@ -13,6 +13,7 @@ struct ThemeIcon: View {
     var body: some View {
         VStack {
             ThemeBoxes(colors: theme.colors)
+                .cornerRadius(6)
         }
     }
 }

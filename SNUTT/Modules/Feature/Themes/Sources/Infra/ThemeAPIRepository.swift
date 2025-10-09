@@ -21,6 +21,43 @@ public struct ThemeAPIRepository: ThemeRepository {
                 try? dto.toTheme()
             }
     }
+
+    public func updateTheme(theme: Theme) async throws -> Theme {
+        try await apiClient.modifyTheme(
+            path: .init(themeId: theme.id),
+            body: .json(
+                theme.toPayload()
+            )
+        ).ok.body.json.toTheme()
+    }
+
+    public func createTheme(theme: Theme) async throws -> Theme {
+        try await apiClient.addTheme(
+            body: .json(
+                theme.toPayload()
+            )
+        ).ok.body.json.toTheme()
+    }
+}
+
+extension Theme {
+    fileprivate func toPayload() -> Components.Schemas.TimetableThemeAddRequestDto {
+        .init(
+            colors: colors.map { .init(bg: $0.bgHex, fg: $0.fgHex) },
+            name: name,
+        )
+    }
+}
+
+extension Theme.Status {
+    fileprivate func toPayload() -> Components.Schemas.TimetableThemeDto.statusPayload {
+        switch self {
+        case .builtIn: .BASIC
+        case .customDownloaded: .DOWNLOADED
+        case .customPrivate: .PRIVATE
+        case .customPublished: .PUBLISHED
+        }
+    }
 }
 
 extension Components.Schemas.TimetableThemeDto {
@@ -43,11 +80,18 @@ extension Components.Schemas.TimetableThemeDto {
             case ._5: .lawn
             }
         }
+        let status: Theme.Status =
+            switch self.status {
+            case .BASIC: .builtIn
+            case .DOWNLOADED: .customDownloaded
+            case .PRIVATE: .customPrivate
+            case .PUBLISHED: .customPublished
+            }
         return try .init(
             id: require(id),
             name: name,
             colors: colors,
-            isCustom: isCustom
+            status: status
         )
     }
 }
