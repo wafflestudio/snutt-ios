@@ -99,8 +99,8 @@ struct VacancyService: VacancyServiceProtocol, ConfigsProvidable {
     }
 
     func goToVacancyPage() {
-        appState.system.selectedTab = .settings
-        appState.routing.settingScene.pushToVacancy = true
+        appState.system.selectedTab = .timetable
+        appState.routing.timetableScene.pushToVacancy = true
     }
 }
 

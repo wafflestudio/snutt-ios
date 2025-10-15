@@ -121,40 +121,11 @@ extension NotificationList {
         func goToTimetableScene(with timetableId: String) async {
             do {
                 let _ = try await services.timetableService.fetchTimetable(timetableId: timetableId)
+                services.globalUIService.setSelectedTab(.timetable)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
-            NavigationUtil.popToRootView(animated: true)
         }
-    }
-}
-
-@available(iOS, deprecated: 16.0, message: "Use NaviationStack instead. This will be removed in the future.")
-struct NavigationUtil {
-    static func popToRootView(animated: Bool = false) {
-        findNavigationController(viewController: UIApplication.shared.connectedScenes
-            .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }?.rootViewController)?
-                    .popToRootViewController(animated: animated)
-    }
-
-    static func findNavigationController(viewController: UIViewController?) -> UINavigationController? {
-        guard let viewController = viewController else {
-            return nil
-        }
-
-        if let navigationController = viewController as? UITabBarController {
-            return findNavigationController(viewController: navigationController.selectedViewController)
-        }
-
-        if let navigationController = viewController as? UINavigationController {
-            return navigationController
-        }
-
-        for childViewController in viewController.children {
-            return findNavigationController(viewController: childViewController)
-        }
-
-        return nil
     }
 }
 

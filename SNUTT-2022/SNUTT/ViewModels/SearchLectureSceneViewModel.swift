@@ -53,13 +53,6 @@ class SearchLectureSceneViewModel: BaseViewModel, ObservableObject {
         appState.search.$searchResult.assign(to: &$searchResult)
         appState.search.$selectedTagList.assign(to: &$selectedTagList)
         appState.search.$displayMode.assign(to: &$_displayMode)
-        appState.routing.$bookmarkList.map(\.pushToBookmark)
-            .filter { $0 }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.services.searchService.setSearchDisplayMode(.bookmark)
-            }
-            .store(in: &cancellables)
     }
 
     var selectedLecture: Lecture? {

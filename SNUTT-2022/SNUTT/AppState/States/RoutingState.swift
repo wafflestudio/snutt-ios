@@ -12,24 +12,18 @@ class ViewRoutingState {
     @Published var settingScene = SettingScene.RoutingState()
     @Published var timetableScene = TimetableScene.RoutingState()
     @Published var notificationList = NotificationList.RoutingState()
-    @Published var bookmarkList = SearchLectureScene.RoutingState()
 }
 
 extension SettingScene {
-    struct RoutingState {
-        var pushToVacancy = false
-    }
-}
-
-extension TimetableScene {
     struct RoutingState {
         var pushToNotification = false
     }
 }
 
-extension SearchLectureScene {
+extension TimetableScene {
     struct RoutingState {
         var pushToBookmark = false
+        var pushToVacancy = false
     }
 }
 

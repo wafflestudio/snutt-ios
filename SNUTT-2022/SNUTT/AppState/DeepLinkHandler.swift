@@ -57,13 +57,13 @@ extension DeepLinkHandler {
 
 extension DeepLinkHandler {
     private func handleNotification(parameters _: Parameters?) {
-        appState.system.selectedTab = .timetable
-        appState.routing.timetableScene.pushToNotification = true
+        appState.system.selectedTab = .settings
+        appState.routing.settingScene.pushToNotification = true
     }
 
     private func handleVacancy(parameters _: Parameters?) {
-        appState.system.selectedTab = .settings
-        appState.routing.settingScene.pushToVacancy = true
+        appState.system.selectedTab = .timetable
+        appState.routing.timetableScene.pushToVacancy = true
     }
 
     private func handleFriends(parameters _: Parameters?) {
@@ -75,8 +75,8 @@ extension DeepLinkHandler {
               let lectureId = parameters?["lectureId"] else { throw STError(.DEEPLINK_PROCESS_FAILED) }
         guard let timetable = try? await timetableService.fetchTimetableData(timetableId: timetableId) else { throw STError(.DEEPLINK_TIMETABLE_NOT_FOUND) }
         guard let lecture = timetable.lectures.first(where: { $0.lectureId == lectureId }) else { throw STError(.DEEPLINK_LECTURE_NOT_FOUND) }
-        if !appState.routing.timetableScene.pushToNotification {
-            appState.routing.timetableScene.pushToNotification = true
+        if !appState.routing.settingScene.pushToNotification {
+            appState.routing.settingScene.pushToNotification = true
         }
         appState.routing.notificationList.routeToLectureDetail(with: lecture, timetableId: timetableId)
     }
@@ -93,8 +93,8 @@ extension DeepLinkHandler {
         let bookmark = try await lectureService.fetchBookmark(quarter: quarter)
         guard let lecture = bookmark.lectures.first(where: { $0.id == lectureId })
         else { throw STError(.DEEPLINK_BOOKMARK_NOT_FOUND) }
-        if !appState.routing.timetableScene.pushToNotification {
-            appState.routing.timetableScene.pushToNotification = true
+        if !appState.routing.settingScene.pushToNotification {
+            appState.routing.settingScene.pushToNotification = true
         }
         appState.routing.notificationList.routeToLectureDetail(with: lecture)
     }

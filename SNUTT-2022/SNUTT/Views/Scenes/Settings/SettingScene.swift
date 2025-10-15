@@ -52,8 +52,8 @@ struct SettingScene: View {
                 SettingsLinkItem(title: "푸시알림 설정") {
                     PushNotificationSettingScene(viewModel: .init(container: viewModel.container))
                 }
-                SettingsLinkItem(title: "빈자리 알림", isActive: $viewModel.routingState.pushToVacancy) {
-                    VacancyScene(viewModel: .init(container: viewModel.container))
+                SettingsLinkItem(title: "알림", isActive: $viewModel.routingState.pushToNotification) {
+                    NotificationList(viewModel: .init(container: viewModel.container))
                 }
                 SettingsLinkItem(title: "테마 마켓") {
                     ThemeMarketScene(viewModel: .init(container: viewModel.container))

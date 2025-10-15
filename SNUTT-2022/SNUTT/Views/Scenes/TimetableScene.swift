@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct TimetableScene: View, Sendable {
-    @State private var pushToNotiScene = false
-    @State private var pushToListScene = false
+    @State private var pushToBookmarkScene = false
     @ObservedObject var viewModel: TimetableViewModel
 
     private let statusBarHeight = UIApplication.shared
@@ -42,13 +41,12 @@ struct TimetableScene: View, Sendable {
                 }
 
                 HStack(spacing: 6) {
-                    NavBarButton(imageName: "nav.list") {
-                        pushToListScene = true
+                    NavBarButton(imageName: "nav.bookmark") {
+                        pushToBookmarkScene = true
                     }
-                    NavBarButton(imageName: "nav.alarm.off") {
-                        viewModel.routingState.pushToNotification = true
+                    NavBarButton(imageName: "nav.vacancy.off") {
+                        viewModel.goToVacancyPage()
                     }
-                    .circleBadge(condition: viewModel.unreadCount > 0)
                 }
             }
             .frame(height: statusBarHeight)
@@ -79,12 +77,9 @@ struct TimetableScene: View, Sendable {
             .background(
                 Group {
                     NavigationLink(
-                        destination: LectureListScene(viewModel: .init(container: viewModel.container)),
-                        isActive: $pushToListScene
+                        destination: VacancyScene(viewModel: .init(container: viewModel.container)),
+                        isActive: $viewModel.routingState.pushToVacancy
                     ) { EmptyView() }
-
-                    NavigationLink(destination: NotificationList(viewModel: .init(container: viewModel.container)),
-                                   isActive: $viewModel.routingState.pushToNotification) { EmptyView() }
                 }
             )
             .navigationBarTitleDisplayMode(.inline)
