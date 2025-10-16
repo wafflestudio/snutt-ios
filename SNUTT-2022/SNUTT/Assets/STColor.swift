@@ -23,6 +23,9 @@ struct STColor {
     
     /// Hex #00B8B0
     static let darkMint1: Color = .init(hex: "#00B8B0")
+    
+    /// Hex #1CA6A0
+    static let darkMint2: Color = .init(hex: "#1CA6A0")
 
     /// Hex #0E837D
     static let darkMintShadow: Color = .init(hex: "#0E837D")
@@ -50,6 +53,9 @@ struct STColor {
 
     /// Hex #505050
     static let darkerGray: Color = .init(hex: "#505050")
+    
+    /// Hex #3C3C3C
+    static let neutral15: Color = .init(hex: "#3C3C3C")
 
     /// Hex #EBEBED
     static let neutral95: Color = .init(hex: "#EBEBED")

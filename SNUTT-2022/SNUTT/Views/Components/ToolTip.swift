@@ -23,16 +23,21 @@ struct ToolTip: View {
                 .padding(.horizontal, 16)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(.white)
+                        .fill(colorScheme == .dark ? STColor.neutral15 : .white)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(STColor.milkMint, lineWidth: 0.4)
+                        .stroke(colorScheme == .dark ? STColor.darkMint2 : STColor.milkMint, lineWidth: 0.4)
                 )
-                .shadow(color: STColor.darkMintShadow.opacity(0.24), radius: 12)
+                .shadow(
+                    color: colorScheme == .dark
+                    ? STColor.darkMint2.opacity(0.2)
+                    : STColor.darkMintShadow.opacity(0.24),
+                    radius: 12
+                )
             
             VStack(alignment: .center, spacing: -3) {
-                Image("light.chevron.down")
+                Image("chevron.down.top")
                     .offset(y: isAnimating ? 2 : -3)
                     .animation(
                         Animation
@@ -40,7 +45,7 @@ struct ToolTip: View {
                             .repeatForever(autoreverses: true),
                         value: isAnimating
                     )
-                Image("dark.chevron.down")
+                Image("chevron.down.bottom")
                     .offset(y: isAnimating ? 2 : -3)
                     .animation(
                         Animation

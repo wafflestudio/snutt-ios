@@ -42,7 +42,7 @@ struct TimetableScene: View, Sendable {
 
                 HStack(spacing: 6) {
                     NavBarButton(imageName: "nav.bookmark") {
-                        pushToBookmarkScene = true
+                        viewModel.goToBookmarkPage()
                     }
                     NavBarButton(imageName: "nav.vacancy.off") {
                         viewModel.goToVacancyPage()
@@ -52,7 +52,7 @@ struct TimetableScene: View, Sendable {
             .frame(height: statusBarHeight)
             .padding(.leading, 16)
             .padding(.trailing, 12)
-
+            
             Rectangle().frame(height: 0.5)
                 .foregroundStyle(STColor.divider)
 
@@ -75,12 +75,10 @@ struct TimetableScene: View, Sendable {
             .animation(.customSpring, value: viewModel.currentTimetable?.id)
             // navigate programmatically, because NavigationLink inside toolbar doesn't work
             .background(
-                Group {
-                    NavigationLink(
-                        destination: VacancyScene(viewModel: .init(container: viewModel.container)),
-                        isActive: $viewModel.routingState.pushToVacancy
-                    ) { EmptyView() }
-                }
+                NavigationLink(
+                    destination: VacancyScene(viewModel: .init(container: viewModel.container)),
+                    isActive: $viewModel.routingState.pushToVacancy
+                ) { EmptyView() }
             )
             .navigationBarTitleDisplayMode(.inline)
     }

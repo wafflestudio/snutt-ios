@@ -51,6 +51,10 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     func setIsMenuOpen(_ value: Bool) {
         services.globalUIService.setIsMenuOpen(value)
     }
+    
+    func goToBookmarkPage() {
+        services.vacancyService.goToBookmarkPage()
+    }
 
     func goToVacancyPage() {
         services.vacancyService.goToVacancyPage()

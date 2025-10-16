@@ -15,6 +15,7 @@ protocol VacancyServiceProtocol: Sendable {
     func addLecture(lecture: Lecture) async throws
     func deleteLectures(lectures: [Lecture]) async throws
     func showVacancyBannerIfNeeded() async throws
+    func goToBookmarkPage()
     func goToVacancyPage()
 }
 
@@ -97,6 +98,11 @@ struct VacancyService: VacancyServiceProtocol, ConfigsProvidable {
 
         appState.vacancy.isBannerVisible = true
     }
+    
+    func goToBookmarkPage() {
+        appState.system.selectedTab = .timetable
+        appState.routing.timetableScene.pushToBookmark = true
+    }
 
     func goToVacancyPage() {
         appState.system.selectedTab = .timetable
@@ -138,5 +144,6 @@ struct FakeVacancyService: VacancyServiceProtocol {
 
     func deleteLectures(lectures _: [Lecture]) async throws {}
 
+    func goToBookmarkPage() {}
     func goToVacancyPage() {}
 }
