@@ -10,70 +10,88 @@ import SwiftUI
 struct TimetableScene: View, Sendable {
     @State private var showPopupMenu = false
     @State private var showCreateLectureSheet = false
+    @State private var navigationBarHeight: CGFloat = .zero
     @ObservedObject var viewModel: TimetableViewModel
-
-    private let statusBarHeight = UIApplication.shared
-        .connectedScenes
-        .compactMap { ($0 as? UIWindowScene)?.statusBarManager?.statusBarFrame.height }
-        .first ?? 0
     
+    //@AppStorage("isNewToScrollLectureList") private var isNewToScrollLectureList: Bool = true
     @State private var isNewToScrollLectureList: Bool = true
     @Environment(\.colorScheme) private var colorScheme
+    
+    private var showScrollToolTip: Bool {
+        !viewModel.routingState.pushToBookmark &&
+        !viewModel.lectures.isEmpty &&
+        isNewToScrollLectureList
+    }
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack(spacing: 0) {
-                if !viewModel.routingState.pushToBookmark {
-                    navigationBar
-                }
-                
-                GeometryReader { reader in
-                    ScrollView(.vertical) {
-                        VStack(spacing: 0) {
-                            bannerAndTimetable
-                                .frame(height: reader.size.height)
-                            LectureList(
-                                viewModel: .init(container: viewModel.container),
-                                lectures: viewModel.lectures
-                            )
-                        }
+        GeometryReader { container in
+            ZStack(alignment: .bottom) {
+                VStack(spacing: 0) {
+                    if !viewModel.routingState.pushToBookmark {
+                        navigationBar
                     }
-                    .simultaneousGesture(
-                        DragGesture().onChanged {
-                            if $0.translation.height < 0 {
-                                isNewToScrollLectureList = false
+                    
+                    GeometryReader { reader in
+                        ScrollView(viewModel.lectures.isEmpty ? [] : .vertical) {
+                            VStack(spacing: 0) {
+                                bannerAndTimetable
+                                    .frame(height: reader.size.height)
+                                if !viewModel.lectures.isEmpty {
+                                    LectureList(
+                                        viewModel: .init(container: viewModel.container),
+                                        lectures: viewModel.lectures
+                                    )
+                                }
                             }
                         }
-                    )
+                        .simultaneousGesture(
+                            DragGesture().onChanged {
+                                if $0.translation.height < 0 && showScrollToolTip {
+                                    isNewToScrollLectureList = false
+                                }
+                            }
+                        )
+                        
+                    }
                 }
+                
+                if showScrollToolTip {
+                    ToolTip(label: "스크롤하면 상시강의를 확인할 수 있어요.")
+                        .padding(.bottom, 12)
+                        .transition(.opacity)
+                }
+                
+                ZStack {
+                    if viewModel.routingState.pushToBookmark {
+                        bookmarkContentView
+                            .transition(.move(edge: .trailing))
+                    }
+                }
+                .animation(.easeInOut, value: viewModel.routingState.pushToBookmark)
             }
-            
-            if !viewModel.routingState.pushToBookmark && isNewToScrollLectureList {
-                ToolTip(label: "스크롤하면 상시강의를 확인할 수 있어요.")
-                    .padding(.bottom, 12)
-                    .transition(.opacity)
+            .animation(.easeInOut(duration: 0.2), value: isNewToScrollLectureList)
+            .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
+            //.analyticsScreen(.timetableHome)
+            .sheet(isPresented: $showCreateLectureSheet, content: {
+                ZStack {
+                    NavigationView {
+                        LectureDetailScene(
+                            viewModel: .init(container: viewModel.container),
+                            lecture: viewModel.placeholderLecture,
+                            displayMode: .create
+                        )
+                        .analyticsScreen(.lectureCreate)
+                    }
+                    // this view is duplicated on purpose (i.e. there are 2 instances of LectureTimeSheetScene)
+                    LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
+                }
+                .accentColor(Color(UIColor.label))
+            })
+            .onAppear {
+                navigationBarHeight = container.safeAreaInsets.top
             }
+            let _ = debugChanges()
         }
-        .animation(.easeInOut, value: viewModel.routingState.pushToBookmark)
-        .animation(.easeInOut(duration: 0.2), value: isNewToScrollLectureList)
-        .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
-        .analyticsScreen(.timetableHome)
-        .sheet(isPresented: $showCreateLectureSheet, content: {
-            ZStack {
-                NavigationView {
-                    LectureDetailScene(
-                        viewModel: .init(container: viewModel.container),
-                        lecture: viewModel.placeholderLecture,
-                        displayMode: .create
-                    )
-                    .analyticsScreen(.lectureCreate)
-                }
-                // this view is duplicated on purpose (i.e. there are 2 instances of LectureTimeSheetScene)
-                LectureTimeSheetScene(viewModel: .init(container: viewModel.container))
-            }
-            .accentColor(Color(UIColor.label))
-        })
-        let _ = debugChanges()
     }
     
     private var navigationBar: some View {
@@ -104,7 +122,7 @@ struct TimetableScene: View, Sendable {
                     }
                 }
             }
-            .frame(height: statusBarHeight)
+            .frame(height: navigationBarHeight)
             .padding(.leading, 16)
             .padding(.trailing, 12)
             
@@ -117,18 +135,14 @@ struct TimetableScene: View, Sendable {
     
     private var bannerAndTimetable: some View {
         VStack(spacing: 0) {
-            if viewModel.isVacancyBannerVisible && !viewModel.routingState.pushToBookmark {
+            if viewModel.isVacancyBannerVisible {
                 VacancyBanner {
                     viewModel.goToVacancyPage()
                 }
-                .transition(.asymmetric(
-                    insertion: .move(edge: .trailing).combined(with: .opacity),
-                    removal: .opacity
-                ))
+                .transition(.move(edge: .trailing))
             }
             timetable
         }
-        
     }
 
     private var timetable: some View {
@@ -142,5 +156,12 @@ struct TimetableScene: View, Sendable {
                 ) { EmptyView() }
             )
             .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private var bookmarkContentView: some View {
+        Group {
+            STColor.searchListBackground
+            BookmarkScene(viewModel: .init(container: viewModel.container))
+        }
     }
 }

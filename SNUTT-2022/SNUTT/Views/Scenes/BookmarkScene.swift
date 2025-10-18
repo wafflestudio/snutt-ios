@@ -28,6 +28,18 @@ struct BookmarkScene: View {
         .navigationTitle("관심강좌")
         .navigationBarTitleDisplayMode(.inline)
         .animation(.customSpring, value: viewModel.bookmarkedLectures.count)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    viewModel.returnToTimetable()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("이전")
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -48,6 +60,11 @@ extension BookmarkScene {
         var selectedLecture: Lecture? {
             get { _selectedLecture }
             set { services.searchService.setSelectedLecture(newValue) }
+        }
+        
+        func returnToTimetable() {
+            services.globalUIService.setRoutingState(\.timetableScene.pushToBookmark, value: false)
+            services.globalUIService.setRoutingState(\.timetableScene.pushToVacancy, value: false)
         }
     }
 }

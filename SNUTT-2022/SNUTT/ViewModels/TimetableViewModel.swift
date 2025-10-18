@@ -40,8 +40,7 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     @Published var _lectures: [Lecture] = []
     
     var lectures: [Lecture] {
-        //_lectures.filter { $0.timePlaces.isEmpty }
-        _lectures
+        _lectures.filter { $0.timePlaces.isEmpty }
     }
 
     var totalCredit: Int {

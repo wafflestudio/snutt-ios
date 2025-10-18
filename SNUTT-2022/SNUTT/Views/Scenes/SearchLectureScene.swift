@@ -22,14 +22,8 @@ struct SearchLectureScene: View {
             backgroundTimetableView
 
             VStack(spacing: 0) {
-                switch viewModel.displayMode {
-                case .search:
-                    searchContentView
-                        .transition(.move(edge: .leading))
-                case .bookmark:
-                    bookmarkContentView
-                        .transition(.move(edge: .trailing))
-                }
+                searchContentView
+                    .transition(.move(edge: .leading))
             }
         }
         .safeAreaInset(edge: .top, alignment: .center, spacing: 0) {
@@ -47,7 +41,6 @@ struct SearchLectureScene: View {
         .animation(.customSpring, value: viewModel.searchResult?.count)
         .animation(.customSpring, value: viewModel.isLoading)
         .animation(.customSpring, value: viewModel.selectedTagList.count)
-        .animation(.customSpring, value: viewModel.displayMode)
         .onChange(of: viewModel.isLoading) { _ in
             withAnimation(.customSpring) {
                 reloadSearchList += 1
@@ -109,10 +102,6 @@ struct SearchLectureScene: View {
             }
         }
         .frame(maxWidth: .infinity)
-    }
-
-    private var bookmarkContentView: some View {
-        BookmarkScene(viewModel: .init(container: viewModel.container))
     }
 }
 
