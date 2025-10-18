@@ -69,32 +69,9 @@ struct SearchBar: View {
 
     var body: some View {
         HStack {
-            switch displayMode {
-            case .search:
-                searchInputBar
-                    .frame(maxHeight: .infinity)
-                    .transition(.move(edge: .leading).combined(with: .opacity))
-            case .bookmark:
-                HStack {
-                    Text("관심강좌")
-                        .padding(.horizontal, 5)
-                        .frame(maxHeight: .infinity)
-                        .font(.system(.headline))
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity)
-                .transition(.move(edge: .trailing).combined(with: .opacity))
-            }
-
-            NavBarButton(imageName: displayMode == .bookmark ? "nav.bookmark.on" : "nav.bookmark") {
-                isNewToBookmark = false
-                displayMode.toggle()
-                if displayMode == .bookmark {
-                    isFocused = false
-                }
-                feedbackGenerator.impactOccurred()
-            }
-            .circleBadge(condition: isNewToBookmark)
+            searchInputBar
+                .frame(maxHeight: .infinity)
+                .transition(.move(edge: .leading).combined(with: .opacity))
         }
         .padding(.horizontal, 10)
         .background(STColor.searchBarBackground)

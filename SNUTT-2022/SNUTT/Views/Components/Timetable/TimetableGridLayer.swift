@@ -47,7 +47,7 @@ struct TimetableGridLayer: View {
         let hourCount = Painter.getHourCount(current: current, config: config)
         let hourHeight = Painter.getHourHeight(in: containerSize, hourCount: hourCount)
         return Path { path in
-            for i in 0 ..< hourCount {
+            for i in 0 ... hourCount {
                 let y = Painter.weekdayHeight + CGFloat(i) * hourHeight
                 path.move(to: CGPoint(x: 0, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))

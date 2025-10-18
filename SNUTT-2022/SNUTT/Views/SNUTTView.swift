@@ -19,6 +19,9 @@ struct SNUTTView: View, Sendable {
             let hasDoubleTapped = { (tabType: TabType) -> Bool in
                 previous == current && current == tabType
             }
+            if hasDoubleTapped(.timetable) {
+                viewModel.returnToTimetable()
+            }
             if hasDoubleTapped(.review) {
                 viewModel.reloadReviewWebView()
             }
@@ -203,6 +206,11 @@ extension SNUTTView {
 
         func preloadWebViews() {
             services.globalUIService.preloadWebViews()
+        }
+        
+        func returnToTimetable() {
+            services.globalUIService.setRoutingState(\.timetableScene.pushToBookmark, value: false)
+            services.globalUIService.setRoutingState(\.timetableScene.pushToVacancy, value: false)
         }
 
         func getThemeList() async {

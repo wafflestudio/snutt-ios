@@ -10,39 +10,38 @@ import SwiftUI
 struct LectureList: View {
     let viewModel: ViewModel
     let lectures: [Lecture]
-
+    
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
-                ForEach(lectures) { lecture in
-                    NavigationLink {
-                        LectureDetailScene(
-                            viewModel: .init(container: viewModel.container),
-                            lecture: lecture,
-                            displayMode: .normal
-                        )
-                        .analyticsScreen(.lectureDetail(.init(
-                            lectureID: lecture.referenceId,
-                            referrer: .lectureList
-                        )))
-                    } label: {
-                        VStack(spacing: 0) {
-                            Divider()
-                                .frame(height: 1)
-                            LectureListCell(lecture: lecture)
-                                .padding(.vertical, 5)
-                                .padding(.trailing, 20)
-                        }
-                        .padding(.leading, 20)
+        LazyVStack(spacing: 0) {
+            ForEach(lectures) { lecture in
+                NavigationLink {
+                    LectureDetailScene(
+                        viewModel: .init(container: viewModel.container),
+                        lecture: lecture,
+                        displayMode: .normal
+                    )
+                    .analyticsScreen(.lectureDetail(.init(
+                        lectureID: lecture.referenceId,
+                        referrer: .lectureList
+                    )))
+                } label: {
+                    VStack(spacing: 0) {
+                        Divider()
+                            .frame(height: 1)
+                        LectureListCell(lecture: lecture)
+                            .padding(.vertical, 5)
+                            .padding(.trailing, 20)
+                            .padding(.leading, 20)
                     }
-                    .buttonStyle(RectangleButtonStyle())
                 }
-                Divider()
-                    .frame(height: 1)
-                    .padding(.leading, 20)
+                .buttonStyle(RectangleButtonStyle())
             }
-            .animation(.customSpring, value: lectures.count)
+            Divider()
+                .frame(height: 1)
+                .padding(.leading, 20)
         }
+        .animation(.customSpring, value: lectures.count)
+        .padding(.bottom, 52)
 
         let _ = debugChanges()
     }
