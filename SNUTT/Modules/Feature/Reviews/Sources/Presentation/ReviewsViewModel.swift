@@ -20,9 +20,20 @@ final class ReviewsViewModel {
     @ObservationIgnored
     @Dependency(\.authState) private var authState
 
-    var baseURL: URL {
+    private var baseURL: URL {
         (Bundle.main.infoDictionary?["SNUEV_WEB_URL"] as? String)
             .flatMap { URL(string: $0) }!
+    }
+
+    func baseURL(for evLectureID: Int?) -> URL {
+        guard let evLectureID else { return baseURL }
+        return
+            baseURL
+            .appending(path: "detail")
+            .appending(queryItems: [
+                .init(name: "id", value: evLectureID.description),
+                .init(name: "on_back", value: "close"),
+            ])
     }
 
     var webCookies: [HTTPCookie] {

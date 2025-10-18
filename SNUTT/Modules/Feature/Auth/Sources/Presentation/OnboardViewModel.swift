@@ -44,10 +44,14 @@ final class OnboardViewModel {
     }
 
     func loginWithSocialProvider(provider: SocialAuthProvider) async throws {
-        let providerToken = try await socialAuthServiceProvider.provider(for: provider).authenticate()
-        let response = try await authRepository.loginWithSocial(provider: provider, providerToken: providerToken)
-        authState.set(.accessToken, value: response.accessToken)
-        authState.set(.userID, value: response.userID)
+        do {
+            let providerToken = try await socialAuthServiceProvider.provider(for: provider).authenticate()
+            let response = try await authRepository.loginWithSocial(provider: provider, providerToken: providerToken)
+            authState.set(.accessToken, value: response.accessToken)
+            authState.set(.userID, value: response.userID)
+        } catch let error as SocialAuthError where error.reason.isCancelled {
+            return
+        }
     }
 
     func sendVerificationCode(email: String) async throws {

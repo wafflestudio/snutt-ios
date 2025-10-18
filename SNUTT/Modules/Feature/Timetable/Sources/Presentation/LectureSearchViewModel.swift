@@ -48,6 +48,7 @@ class LectureSearchViewModel {
 
     var isSearchFilterOpen = false
     var targetForLectureDetail: Lecture?
+    var targetForLectureReview: Lecture?
     var scrollPositions = [SearchDisplayMode: Lecture.ID]()
     var scrollPosition: Lecture.ID? {
         get { scrollPositions[.search] }
@@ -158,7 +159,7 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         case .detail:
             targetForLectureDetail = lecture
         case .review:
-            break
+            targetForLectureReview = lecture
         case .bookmark:
             if isToggled(lecture: lecture, type: type) {
                 try await lectureRepository.removeBookmark(lectureID: lecture.id)

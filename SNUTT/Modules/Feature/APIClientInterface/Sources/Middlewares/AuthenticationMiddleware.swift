@@ -45,8 +45,12 @@ public struct AuthenticationMiddleware: ClientMiddleware {
         }
         do {
             return try await next(request, body, baseURL)
-        } catch let error as LocalizedErrorCode where [.wrongUserToken, .noUserToken].contains(error) {
-            handleUnauthenticated()
+        } catch let error as ClientError {
+            if let knownError = error.underlyingError as? LocalizedErrorCode,
+                [.wrongUserToken, .noUserToken].contains(knownError)
+            {
+                handleUnauthenticated()
+            }
             throw error
         } catch {
             throw error
