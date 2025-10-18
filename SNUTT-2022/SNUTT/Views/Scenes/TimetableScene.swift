@@ -13,6 +13,7 @@ struct TimetableScene: View, Sendable {
     @State private var navigationBarHeight: CGFloat = .zero
     @ObservedObject var viewModel: TimetableViewModel
     
+    @AppStorage("isNewToBookmark") var isNewToBookmark: Bool = true
     //@AppStorage("isNewToScrollLectureList") private var isNewToScrollLectureList: Bool = true
     @State private var isNewToScrollLectureList: Bool = true
     @Environment(\.colorScheme) private var colorScheme
@@ -55,7 +56,7 @@ struct TimetableScene: View, Sendable {
                 }
                 
                 if showScrollToolTip {
-                    ToolTip(label: "스크롤하면 상시강의를 확인할 수 있어요.")
+                    ToolTip(label: "스크롤하면 시간 미지정 강의를 확인할 수 있어요.")
                         .padding(.bottom, 12)
                         .transition(.opacity)
                 }
@@ -128,7 +129,9 @@ struct TimetableScene: View, Sendable {
                 HStack(spacing: 6) {
                     NavBarButton(imageName: "nav.bookmark") {
                         viewModel.goToBookmarkPage()
+                        isNewToBookmark = false
                     }
+                    .circleBadge(condition: isNewToBookmark)
                     NavBarButton(imageName: "nav.vacancy.off") {
                         viewModel.goToVacancyPage()
                     }
@@ -149,6 +152,7 @@ struct TimetableScene: View, Sendable {
                     colorScheme == .dark ? STColor.darkDivider : STColor.divider
                 )
         }
+        .background(STColor.navBackground)
     }
     
     private var bannerAndTimetable: some View {
@@ -200,6 +204,7 @@ struct TimetableScene: View, Sendable {
                     }
                 }
                 Button {
+                    showPopupMenu = false
                     showCreateLectureSheet = true
                 } label: {
                     HStack(spacing: 8) {

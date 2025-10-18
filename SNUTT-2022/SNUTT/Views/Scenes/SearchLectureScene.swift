@@ -29,7 +29,6 @@ struct SearchLectureScene: View {
         .safeAreaInset(edge: .top, alignment: .center, spacing: 0) {
             SearchBar(text: $viewModel.searchText,
                       isFilterOpen: $viewModel.isFilterOpen,
-                      displayMode: $viewModel.displayMode,
                       action: viewModel.fetchInitialSearchResult)
                 .focused($isSearchBarFocused)
                 .frame(height: Design.searchBarHeight)

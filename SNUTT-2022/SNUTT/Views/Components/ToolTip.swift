@@ -63,5 +63,5 @@ struct ToolTip: View {
 }
 
 #Preview {
-    ToolTip(label: "스크롤하면 상시강의를 확인할 수 있어요.")
+    ToolTip(label: "스크롤하면 시간 미지정 강의를 확인할 수 있어요.")
 }

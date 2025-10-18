@@ -65,6 +65,10 @@ struct SNUTTView: View, Sendable {
                     .toast($viewModel.toast)
                 }
                 .onAppear {
+                    setTabBarStyle()
+                    setNavBarStyle()
+                }
+                .onAppear {
                     viewModel.selectedTab = .timetable
                     viewModel.preloadWebViews()
                 }
@@ -124,10 +128,6 @@ struct SNUTTView: View, Sendable {
         .alert(viewModel.errorTitle, isPresented: $viewModel.isErrorAlertPresented, actions: {}) {
             Text(viewModel.errorMessage)
         }
-        .onAppear {
-            setTabBarStyle()
-            setNavBarStyle()
-        }
         .onLoad {
             await viewModel.showNoticeViewIfNeeded()
         }
@@ -145,7 +145,7 @@ struct SNUTTView: View, Sendable {
     /// Globally set the background color of the tab bar to white.
     private func setTabBarStyle() {
         let appearance = UITabBarAppearance()
-        appearance.backgroundColor = UIColor(STColor.tabBackground)
+        appearance.backgroundColor = .init(STColor.tabBackground)
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }

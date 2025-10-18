@@ -9,15 +9,27 @@ import SwiftUI
 import UIKit
 
 struct SearchBar: View {
-    @AppStorage("isNewToBookmark") var isNewToBookmark: Bool = true
     @Binding var text: String
     @Binding var isFilterOpen: Bool
-    @Binding var displayMode: SearchDisplayMode
 
     var action: @MainActor () async -> Void
 
     @FocusState private var isFocused
     @State private var feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+    
+    var body: some View {
+        searchInputBar
+            .frame(maxHeight: .infinity)
+            .transition(.move(edge: .leading).combined(with: .opacity))
+            .padding(.horizontal, 10)
+            .background(STColor.searchBarBackground)
+            .animation(.easeOut(duration: 0.2), value: isFocused)
+            .onChange(of: isFilterOpen) { newValue in
+                if newValue {
+                    isFocused = false
+                }
+            }
+    }
 
     private var searchInputBar: some View {
         TextField("검색어를 입력하세요", text: $text)
@@ -66,29 +78,13 @@ struct SearchBar: View {
                 }
             )
     }
-
-    var body: some View {
-        HStack {
-            searchInputBar
-                .frame(maxHeight: .infinity)
-                .transition(.move(edge: .leading).combined(with: .opacity))
-        }
-        .padding(.horizontal, 10)
-        .background(STColor.searchBarBackground)
-        .animation(.easeOut(duration: 0.2), value: isFocused)
-        .onChange(of: isFilterOpen) { newValue in
-            if newValue {
-                isFocused = false
-            }
-        }
-    }
 }
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color.black
-            SearchBar(text: .constant("Constant String"), isFilterOpen: .constant(false), displayMode: .constant(.bookmark), action: {})
+            SearchBar(text: .constant("Constant String"), isFilterOpen: .constant(false), action: {})
         }
     }
 }
