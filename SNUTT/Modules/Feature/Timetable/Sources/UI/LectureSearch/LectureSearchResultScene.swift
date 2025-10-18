@@ -5,6 +5,7 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import ReviewsInterface
 import SharedUIComponents
 import SwiftUI
 import TimetableInterface
@@ -13,6 +14,7 @@ import UIKit
 struct LectureSearchResultScene: View {
     @Bindable var viewModel: LectureSearchViewModel
     @Environment(\.errorAlertHandler) var errorAlertHandler
+    @Environment(\.reviewsUIProvider) var reviewsUIProvider
 
     var body: some View {
         VStack(spacing: 0) {
@@ -62,6 +64,16 @@ struct LectureSearchResultScene: View {
                     .handleLectureTimeConflict()
                 }
                 .tint(.label)
+            }
+        }
+        .sheet(
+            isPresented: .init(
+                get: { viewModel.targetForLectureReview != nil },
+                set: { _ in viewModel.targetForLectureReview = nil }
+            )
+        ) {
+            if let evLectureID = viewModel.targetForLectureReview?.evLecture?.evLectureID {
+                reviewsUIProvider.makeReviewsScene(for: evLectureID)
             }
         }
         .onAppear {
