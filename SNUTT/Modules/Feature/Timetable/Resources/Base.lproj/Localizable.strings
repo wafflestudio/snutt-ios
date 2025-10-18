@@ -114,6 +114,7 @@
 
 "lecture.action.detail" = "자세히";
 "lecture.action.review" = "강의평";
+"lecture.action.syllabus" = "강의계획서";
 "lecture.action.bookmark" = "관심강좌";
 "lecture.action.vacancy" = "빈자리알림";
 "lecture.action.add" = "추가하기";
