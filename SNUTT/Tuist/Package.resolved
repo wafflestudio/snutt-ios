@@ -1,5 +1,5 @@
 {
-  "originHash" : "13fb70cce551b8de501f4a65e125bf7bac53c83442beaaa175357a9df8ecc13a",
+  "originHash" : "09f4e95784ab39125b7369538d8516a05b5ae01942341759eed8278334b5dc0a",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -231,8 +231,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/tgrapperon/swift-dependencies-additions",
       "state" : {
-        "revision" : "7b1d88ec23f80b0b5d4832d51af7647fa5062d8e",
-        "version" : "1.1.1"
+        "branch" : "xcode26",
+        "revision" : "0afff683710e63433847641562da5908fe01205f"
       }
     },
     {
