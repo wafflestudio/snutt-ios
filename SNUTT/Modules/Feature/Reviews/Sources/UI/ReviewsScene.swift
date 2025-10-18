@@ -12,11 +12,25 @@ import WebKit
 public struct ReviewsScene: View {
     @State private var viewModel = ReviewsViewModel()
     @Environment(\.colorScheme) private var colorScheme
-    public init() {}
+    @Environment(\.dismiss) private var dismiss
+
+    private let evLectureID: Int?
+    public init(evLectureID: Int? = nil) {
+        self.evLectureID = evLectureID
+    }
+
     public var body: some View {
         SwiftUIWebView(
-            url: viewModel.baseURL,
+            url: viewModel.baseURL(for: evLectureID),
             cookies: viewModel.webCookies,
+            scriptHandler: .init(
+                name: "snutt",
+                handler: { _ in
+                    Task { @MainActor in
+                        dismiss()
+                    }
+                }
+            ),
             onUpdate: { webView in
                 webView.setColorScheme(colorScheme: colorScheme)
             }
