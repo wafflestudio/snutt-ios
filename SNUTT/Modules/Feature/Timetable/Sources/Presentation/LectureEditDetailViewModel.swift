@@ -22,6 +22,9 @@ public final class LectureEditDetailViewModel {
     @ObservationIgnored
     @Dependency(\.vacancyRepository) private var vacancyRepository
 
+    @ObservationIgnored
+    @Dependency(\.courseBookRepository) private var courseBookRepository
+
     /// Might be `nil` if write operation is not necessary.
     private let timetableViewModel: TimetableViewModel?
 
@@ -178,6 +181,27 @@ public final class LectureEditDetailViewModel {
             try await vacancyRepository.addVacancyLecture(lectureID: entryLecture.id)
         }
         isVacancyNotificationEnabled.toggle()
+    }
+
+    func fetchSyllabusURL() async -> URL? {
+        guard let timetableViewModel,
+            let currentTimetable = timetableViewModel.currentTimetable,
+            !entryLecture.isCustom
+        else { return nil }
+
+        let year = currentTimetable.quarter.year
+        let semester = currentTimetable.quarter.semester.rawValue
+
+        do {
+            let syllabus = try await courseBookRepository.fetchSyllabusURL(
+                year: year,
+                semester: semester,
+                lecture: entryLecture
+            )
+            return URL(string: syllabus.url)
+        } catch {
+            return nil
+        }
     }
 }
 
