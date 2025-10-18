@@ -14,15 +14,17 @@ let project = Project.app(
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
+                .target(name: "ReviewsInterface"),
                 .target(name: "NotificationsInterface"),
                 .target(name: "VacancyInterface"),
-                .target(name: "SwiftUIUtility"),
-                .target(name: "FoundationUtility"),
                 .target(name: "AuthInterface"),
                 .target(name: "APIClientInterface"),
+                .target(name: "SwiftUIUtility"),
+                .target(name: "FoundationUtility"),
                 .target(name: "SharedUIComponents"),
                 .external(name: "Dependencies"),
                 .external(name: "KakaoMapsSDK-SPM"),
+                .external(name: "SnapKit"),
             ]
         ),
         .module(
@@ -154,6 +156,7 @@ let project = Project.app(
             dependencies: [
                 .target(name: "SharedUIWebKit"),
                 .target(name: "AuthInterface"),
+                .target(name: "ReviewsInterface"),
                 .target(name: "SharedAppMetadata"),
                 .external(name: "Dependencies"),
             ]
@@ -230,7 +233,9 @@ let project = Project.app(
         .module(
             name: "ReviewsInterface",
             category: .featureInterface,
-            dependencies: []
+            dependencies: [
+                .external(name: "Dependencies")
+            ]
         ),
         // Shared
         .module(
