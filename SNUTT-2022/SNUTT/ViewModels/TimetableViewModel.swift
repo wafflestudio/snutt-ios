@@ -85,6 +85,10 @@ class TimetableViewModel: BaseViewModel, ObservableObject {
     func goToVacancyPage() {
         services.vacancyService.goToVacancyPage()
     }
+    
+    func goToSearchTab() {
+        services.globalUIService.setSelectedTab(.search)
+    }
 
     func loadTimetableConfig() {
         timetableService.loadTimetableConfig()

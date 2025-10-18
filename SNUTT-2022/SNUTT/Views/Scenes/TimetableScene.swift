@@ -51,7 +51,6 @@ struct TimetableScene: View, Sendable {
                                 }
                             }
                         )
-                        
                     }
                 }
                 
@@ -68,10 +67,23 @@ struct TimetableScene: View, Sendable {
                     }
                 }
                 .animation(.easeInOut, value: viewModel.routingState.pushToBookmark)
+                
+                if showPopupMenu {
+                    ZStack(alignment: .topTrailing) {
+                        Color(.black.withAlphaComponent(0.4))
+                            .onTapGesture {
+                                showPopupMenu = false
+                            }
+                        popupMenu
+                            .padding(.trailing, 12)
+                            .padding(.top, navigationBarHeight + 2)
+                    }
+                }
             }
             .animation(.easeInOut(duration: 0.2), value: isNewToScrollLectureList)
+            .animation(.easeInOut(duration: 0.2), value: showPopupMenu)
             .animation(.customSpring, value: viewModel.isVacancyBannerVisible)
-            //.analyticsScreen(.timetableHome)
+            .analyticsScreen(.timetableHome)
             .sheet(isPresented: $showCreateLectureSheet, content: {
                 ZStack {
                     NavigationView {
@@ -120,6 +132,12 @@ struct TimetableScene: View, Sendable {
                     NavBarButton(imageName: "nav.vacancy.off") {
                         viewModel.goToVacancyPage()
                     }
+                    NavBarButton(
+                        imageName: "nav.plus",
+                        focusButton: $showPopupMenu
+                    ) {
+                        showPopupMenu.toggle()
+                    }
                 }
             }
             .frame(height: navigationBarHeight)
@@ -163,5 +181,40 @@ struct TimetableScene: View, Sendable {
             STColor.searchListBackground
             BookmarkScene(viewModel: .init(container: viewModel.container))
         }
+    }
+    
+    private var popupMenu: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("강의 추가")
+                .font(STFont.medium11.font)
+                .foregroundStyle(colorScheme == .dark ? STColor.gray30 : STColor.gray30)
+            VStack(alignment: .leading, spacing: 8) {
+                Button {
+                    showPopupMenu = false
+                    viewModel.goToSearchTab()
+                } label: {
+                    HStack(spacing: 8) {
+                        Image("popup.add.search")
+                        Text("검색으로 추가")
+                        Spacer()
+                    }
+                }
+                Button {
+                    showCreateLectureSheet = true
+                } label: {
+                    HStack(spacing: 8) {
+                        Image("popup.add.custom")
+                        Text("직접 추가")
+                        Spacer()
+                    }
+                }
+            }
+            .font(STFont.regular16.font)
+        }
+        .padding([.horizontal, .bottom], 16)
+        .padding(.top, 14)
+        .frame(width: 168)
+        .background(colorScheme == .dark ? STColor.neutral15 : .white)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
