@@ -22,6 +22,7 @@ public enum TimetableLocalRepositoryKey: TestDependencyKey {
         let spy = TimetableLocalRepositorySpy()
         spy.loadSelectedTimetableReturnValue = PreviewHelpers.preview(id: "1")
         spy.loadTimetableConfigurationReturnValue = .init()
+        spy.configurationValuesReturnValue = .finished
         return spy
     }()
 }

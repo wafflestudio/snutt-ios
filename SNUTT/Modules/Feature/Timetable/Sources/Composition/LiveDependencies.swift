@@ -25,6 +25,7 @@ struct LectureRepositoryKey: DependencyKey {
     static let previewValue: any LectureRepository = {
         let spy = LectureRepositorySpy()
         spy.fetchBuildingListPlacesReturnValue = []
+        spy.isBookmarkedLectureIDReturnValue = false
         return spy
     }()
 }
