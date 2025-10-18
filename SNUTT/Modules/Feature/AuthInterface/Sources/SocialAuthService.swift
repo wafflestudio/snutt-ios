@@ -19,6 +19,13 @@ public struct SocialAuthError: Error {
         case sdkError(any Error)
         case cancelled
         case unknown
+
+        public var isCancelled: Bool {
+            switch self {
+            case .cancelled: true
+            default: false
+            }
+        }
     }
 
     public init(provider: SocialAuthProvider, reason: Reason) {
