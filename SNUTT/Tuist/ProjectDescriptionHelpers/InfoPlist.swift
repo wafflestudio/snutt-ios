@@ -44,12 +44,4 @@ public struct InfoPlist {
             ],
         ]
     }
-
-    public static func infoPlistForAuth() -> [String: Plist.Value] {
-        [
-            "FacebookAppID": "$(FACEBOOK_APP_ID)",
-            "FacebookDisplayName": "$(FACEBOOK_DISPLAY_NAME)",
-            "FacebookClientToken": "$(FACEBOOK_CLIENT_TOKEN)",
-        ]
-    }
 }
