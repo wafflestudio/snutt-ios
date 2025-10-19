@@ -26,8 +26,7 @@ protocol LectureRepositoryProtocol {
     
     func fetchLectureReminderList(timetableId: String) async throws -> [LectureReminderDto]
     func getLectureReminderState(timetableId: String, lectureId: String) async throws -> LectureReminderDto
-    func changeLectureReminderState(timetableId: String, lectureId: String, to offset: Int) async throws -> LectureReminderDto
-    func deleteLectureReminder(timetableId: String, lectureId: String) async throws
+    func changeLectureReminderState(timetableId: String, lectureId: String, to option: String) async throws -> LectureReminderDto
 }
 
 class LectureRepository: LectureRepositoryProtocol {
@@ -95,17 +94,10 @@ class LectureRepository: LectureRepositoryProtocol {
             .handlingError()
     }
     
-    func changeLectureReminderState(timetableId: String, lectureId: String, to offset: Int) async throws -> LectureReminderDto {
+    func changeLectureReminderState(timetableId: String, lectureId: String, to option: String) async throws -> LectureReminderDto {
         try await session
-            .request(LectureReminderRouter.changeReminderState(timetableId: timetableId, lectureId: lectureId, offset: offset))
+            .request(LectureReminderRouter.changeReminderState(timetableId: timetableId, lectureId: lectureId, option: option))
             .serializingDecodable(LectureReminderDto.self)
-            .handlingError()
-    }
-    
-    func deleteLectureReminder(timetableId: String, lectureId: String) async throws {
-        try await session
-            .request(LectureReminderRouter.deleteReminder(timetableId: timetableId, lectureId: lectureId))
-            .serializingString()
             .handlingError()
     }
     

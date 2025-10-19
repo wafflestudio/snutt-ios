@@ -69,13 +69,11 @@ struct SNUTTView: View, Sendable {
                         }
                         group.addTask {
                             await viewModel.fetchTimetableList()
-                        }
-                        group.addTask {
-                            await viewModel.fetchRecentTimetable()
+                            await viewModel.getSemesterStatus()
                             await viewModel.fetchLectureReminderList()
                         }
                         group.addTask {
-                            await viewModel.getSemesterStatus()
+                            await viewModel.fetchRecentTimetable()
                         }
                         group.addTask {
                             await viewModel.fetchCourseBookList()

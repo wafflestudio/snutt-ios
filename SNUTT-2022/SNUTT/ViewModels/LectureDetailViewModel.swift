@@ -15,6 +15,8 @@ extension LectureDetailScene {
         @Published var isEmailVerifyAlertPresented = false
         @Published private var bookmarkedLectures: [Lecture] = []
         @Published var vacancyNotificationLectures: [Lecture] = []
+        @Published var reminderOption: ReminderOption = .none
+        
         var errorTitle: String = ""
         var errorMessage: String = ""
         var supportForMapViewEnabled: Bool = true
@@ -252,20 +254,19 @@ extension LectureDetailScene {
             return currentTimetable.id == validPrimaryTable.id
         }
         
-        func getLectureReminderState(_ lecture: Lecture) -> ReminderState {
+        func getLectureReminderOption(_ lecture: Lecture) {
             guard let reminder = appState.reminder.reminderList.first(where: { $0.timetableLectureId == lecture.id }) else {
-                return .none
+                return
             }
-            return reminder.state
+            reminderOption = reminder.option
         }
         
-        func changeLectureReminderState(lecture: Lecture, to state: ReminderState) async throws -> Bool {
+        func changeLectureReminderState(lectureId: String, to option: ReminderOption) async throws {
             do {
-                try await services.lectureService.changeLectureReminderState(lecture: lecture, to: state)
-                return true
+                try await services.lectureService.changeLectureReminderState(lectureId: lectureId, to: option)
+                reminderOption = option
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
-                return false
             }
         }
         

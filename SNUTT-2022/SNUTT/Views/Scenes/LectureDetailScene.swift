@@ -25,8 +25,6 @@ struct LectureDetailScene: View {
         _lecture = State(initialValue: lecture)
         _editMode = State(initialValue: displayMode == .create ? .active : .inactive)
         self.displayMode = displayMode
-        _currentReminderState = State(initialValue: viewModel.getLectureReminderState(lecture))
-        _lastReminderState = _currentReminderState
     }
 
     enum DisplayMode: Equatable {
@@ -48,8 +46,6 @@ struct LectureDetailScene: View {
     @State private var syllabusURL: String = ""
     @State private var showSyllabusWebView = false
     @State private var isMapViewExpanded: Bool = false
-    @State private var currentReminderState: ReminderState
-    @State private var lastReminderState: ReminderState
     
     private var showReminderSection: Bool {
         viewModel.showLectureReminderPicker() &&
@@ -110,13 +106,13 @@ struct LectureDetailScene: View {
                 viewModel.reloadDetailWebView(detailId: evLecture.evLectureId)
             }
         }
+        .task {
+            if viewModel.showLectureReminderPicker() {
+                await viewModel.getLectureReminderOption(lecture)
+            }
+        }
         .onAppear {
             isMapViewExpanded = viewModel.shouldOpenLectureMapView()
-            if viewModel.showLectureReminderPicker() {
-                let lectureReminderState = viewModel.getLectureReminderState(lecture)
-                currentReminderState = lectureReminderState
-                lastReminderState = lectureReminderState
-            }
         }
         .onChange(of: isMapViewExpanded) {
             viewModel.setIsMapViewExpanded($0)
@@ -333,28 +329,27 @@ struct LectureDetailScene: View {
     private var reminderSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("강의 리마인더")
-                .font(.system(size: 15))
-            Picker("", selection: $currentReminderState) {
-                ForEach(ReminderState.allCases, id: \.self) {
-                    Text($0.rawValue)
+                .font(STFont.regular15.font)
+            Picker("", selection: Binding(
+                get: { viewModel.reminderOption },
+                set: {
+                    [previous = viewModel.reminderOption] current in
+                    guard previous != current else { return }
+                    Task {
+                        try await viewModel.changeLectureReminderState(lectureId: lecture.id, to: current)
+                    }
+                }
+            )) {
+                ForEach(ReminderOption.allCases, id: \.self) {
+                    Text($0.label)
+                        .font(viewModel.reminderOption == $0
+                              ? STFont.semibold13.font
+                              : STFont.medium13.font)
                 }
             }
             .pickerStyle(.segmented)
         }
         .padding()
-        .onChange(of: currentReminderState) { newState in
-            if lastReminderState != newState {
-                Task {
-                    let success = try await viewModel.changeLectureReminderState(lecture: lecture, to: newState)
-                    if success {
-                        currentReminderState = newState
-                        lastReminderState = newState
-                    } else {
-                        currentReminderState = lastReminderState
-                    }
-                }
-            }
-        }
     }
 
     private var ratingSection: some View {

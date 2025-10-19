@@ -21,7 +21,7 @@ protocol LectureServiceProtocol: Sendable {
     // Lecture Reminder
     func fetchLectureReminderList() async throws
     func getLectureReminderState(timetableId: String, lecture: Lecture) async throws -> LectureReminder
-    func changeLectureReminderState(lecture: Lecture, to state: ReminderState) async throws
+    func changeLectureReminderState(lectureId: String, to option: ReminderOption) async throws
     func getCurrentOrNextSemesterPrimaryTable() -> TimetableMetadata?
 
     // Bookmark
@@ -146,21 +146,11 @@ struct LectureService: LectureServiceProtocol {
         return .init(from: dto)
     }
     
-    func changeLectureReminderState(lecture: Lecture, to state: ReminderState) async throws {
+    func changeLectureReminderState(lectureId: String, to option: ReminderOption) async throws {
         guard let targetTable = getCurrentOrNextSemesterPrimaryTable() else { return }
-        if let offset = state.offset {
-            let dto = try await lectureRepository.changeLectureReminderState(timetableId: targetTable.id, lectureId: lecture.id, to: offset)
-            appState.reminder.reminderList.removeAll(where: { $0.timetableLectureId == lecture.id })
-            appState.reminder.reminderList.append(.init(from: dto))
-        } else {
-            try await deleteLectureReminder(lecture: lecture)
-        }
-    }
-    
-    private func deleteLectureReminder(lecture: Lecture) async throws {
-        guard let targetTable = getCurrentOrNextSemesterPrimaryTable() else { return }
-        try await lectureRepository.deleteLectureReminder(timetableId: targetTable.id, lectureId: lecture.id)
-        appState.reminder.reminderList.removeAll(where: { $0.timetableLectureId == lecture.id })
+        let dto = try await lectureRepository.changeLectureReminderState(timetableId: targetTable.id, lectureId: lectureId, to: option.rawValue)
+        appState.reminder.reminderList.removeAll(where: { $0.timetableLectureId == lectureId })
+        appState.reminder.reminderList.append(.init(from: dto))
     }
     
     func getCurrentOrNextSemesterPrimaryTable() -> TimetableMetadata? {
@@ -275,6 +265,6 @@ class FakeLectureService: LectureServiceProtocol {
     }
     func fetchLectureReminderList() async throws { return }
     func getLectureReminderState(timetableId: String, lecture: Lecture) async throws -> LectureReminder { return .preview }
-    func changeLectureReminderState(lecture: Lecture, to state: ReminderState) async throws {}
+    func changeLectureReminderState(lectureId: String, to option: ReminderOption) async throws {}
     func getCurrentOrNextSemesterPrimaryTable() -> TimetableMetadata? { nil }
 }

@@ -152,46 +152,39 @@ struct EvLecture {
     }
 }
 
-struct LectureReminder: Identifiable {
-    let id: String
+struct LectureReminder {
     let timetableLectureId: String
-    let state: ReminderState
-    
+    let lectureTitle: String
+    var option: ReminderOption
+}
+
+extension LectureReminder {
     init(from dto: LectureReminderDto) {
-        self.id = dto.id
         self.timetableLectureId = dto.timetableLectureId
-        self.state = .init(offset: dto.offsetMinutes)
+        self.lectureTitle = dto.courseTitle
+        self.option = .init(rawValue: dto.option) ?? .none
     }
 }
 
-enum ReminderState: String, CaseIterable {
-    case none = "없음"
-    case before10 = "10분 전"
-    case onTime = "수업 시작 시"
-    case after10 = "10분 후"
+enum ReminderOption: String, CaseIterable, Codable {
+    case none = "NONE"
+    case before10 = "TEN_MINUTES_BEFORE"
+    case onTime = "ZERO_MINUTE"
+    case after10 = "TEN_MINUTES_AFTER"
     
-    var offset: Int? {
+    var label: String {
         switch self {
-        case .none: nil
-        case .before10: -10
-        case .onTime: 0
-        case .after10: 10
-        }
-    }
-    
-    init(offset: Int) {
-        self = switch offset {
-        case -10: .before10
-        case 0: .onTime
-        case 10: .after10
-        default: .none
+        case .none: return "없음"
+        case .before10: return "10분 전"
+        case .onTime: return "수업 시작 시"
+        case .after10: return "10분 후"
         }
     }
 }
 
 #if DEBUG
 extension LectureReminder {
-    static let preview: Self = .init(from: .init(id: "", timetableLectureId: "", offsetMinutes: 0))
+    static let preview: Self = .init(timetableLectureId: "", lectureTitle: "", option: .none)
 }
 #endif
 

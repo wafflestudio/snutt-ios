@@ -13,25 +13,37 @@ struct LectureReminderSettingScene: View {
     
     var body: some View {
         Group {
-            if true {
+            if viewModel.reminderList.isEmpty {
                 emptyView
             } else {
                 VStack(spacing: 16) {
                     Form {
                         Section {
-                            // TODO: Picker for each lecture
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("컴퓨터 프로그래밍")
-                                    .font(.system(size: 16))
-                                Picker("컴퓨터 프로그래밍", selection: .constant(0)) {
-                                    Text("없음").tag(0)
-                                    Text("10분 전").tag(1)
-                                    Text("수업 시작 시").tag(2)
-                                    Text("10분 후").tag(3)
+                            ForEach(viewModel.reminderList, id: \.timetableLectureId) { reminder in
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text(reminder.lectureTitle)
+                                        .font(STFont.regular16.font)
+                                    Picker("", selection: Binding(
+                                        get: { reminder.option },
+                                        set: {
+                                            [previous = reminder.option] current in
+                                            guard previous != current else { return }
+                                            Task {
+                                                try await viewModel.changeLectureReminderState(lectureId: reminder.timetableLectureId, to: current)
+                                            }
+                                        }
+                                    )) {
+                                        ForEach(ReminderOption.allCases, id: \.self) {
+                                            Text($0.label)
+                                                .font(reminder.option == $0
+                                                      ? STFont.semibold13.font
+                                                      : STFont.medium13.font)
+                                        }
+                                    }
+                                    .pickerStyle(.segmented)
                                 }
-                                .pickerStyle(.segmented)
+                                .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
                             }
-                            .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
                         } header: {
                             Text("나의 리마인더")
                         } footer: {
@@ -40,7 +52,7 @@ struct LectureReminderSettingScene: View {
                                 Text("이번 학기의 대표시간표 속 강의들").fontWeight(.semibold) +
                                 Text("에 적용 가능해요.")
                             }
-                            .font(.system(size: 13))
+                            .font(STFont.regular13.font)
                             .lineSpacing(4)
                             .padding(.top, 16)
                             .listRowInsets(EdgeInsets())
@@ -59,24 +71,21 @@ extension LectureReminderSettingScene {
     private var emptyView: some View {
         VStack(alignment: .center, spacing: 16) {
             Image("warning.cat.red")
-            
             Text("리마인더를 설정할 강의가 아직 없어요.")
-                .font(.system(size: 15, weight: .semibold))
-            
+                .font(STFont.semibold15.font)
             VStack(spacing: 0) {
                 Group {
                     Text("강의 리마인더는")
-                    Text("이번 학기의 대표시간표 속 강의").font(.system(size: 13, weight: .semibold))+Text("들에 적용 가능해요.")
+                    Text("이번 학기의 대표시간표 속 강의").font(STFont.semibold13.font)+Text("들에 적용 가능해요.")
                     Text("\n다음과 같은 경우에는 리마인더를 만들 수 없어요:")
                     Text("\u{2022} 이번 학기에 대표시간표가 없는 경우".markdown)
                     Text("\u{2022} 대표시간표는 있지만 강의가 없는 경우".markdown)
                     Text("\u{2022} 강의는 있으나 모두 시간 정보가 없는 경우".markdown)
                     Text("\n대표시간표와 강의를 추가하고,\n원하는 시간에 푸시 알림을 받아보세요!")
                 }
-                .lineHeight(with: .systemFont(ofSize: 13), percentage: 145)
+                .lineHeight(with: STFont.regular13, percentage: 145)
             }
             .foregroundStyle(STColor.gray30)
-            
             Spacer()
         }
         .multilineTextAlignment(.center)

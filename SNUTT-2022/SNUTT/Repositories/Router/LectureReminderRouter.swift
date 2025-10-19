@@ -15,8 +15,7 @@ enum LectureReminderRouter: Router {
 
     case getReminderList(timetableId: String)
     case getReminderState(timetableId: String, lectureId: String)
-    case changeReminderState(timetableId: String, lectureId: String, offset: Int)
-    case deleteReminder(timetableId: String, lectureId: String)
+    case changeReminderState(timetableId: String, lectureId: String, option: String)
     
     var method: HTTPMethod {
         switch self {
@@ -26,8 +25,6 @@ enum LectureReminderRouter: Router {
             return .get
         case .changeReminderState:
             return .put
-        case .deleteReminder:
-            return .delete
         }
     }
 
@@ -39,8 +36,6 @@ enum LectureReminderRouter: Router {
             return "/\(timetableId)/lecture/\(lectureId)/reminder"
         case let .changeReminderState(timetableId, lectureId, _):
             return "/\(timetableId)/lecture/\(lectureId)/reminder"
-        case let .deleteReminder(timetableId, lectureId):
-            return "/\(timetableId)/lecture/\(lectureId)/reminder"
         }
     }
 
@@ -50,10 +45,8 @@ enum LectureReminderRouter: Router {
             return nil
         case .getReminderState:
             return nil
-        case let .changeReminderState(_, _, offset):
-            return ["offsetMinutes": offset]
-        case .deleteReminder:
-            return nil
+        case let .changeReminderState(_, _, option):
+            return ["option": option]
         }
     }
 }
