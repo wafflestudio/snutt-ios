@@ -40,11 +40,16 @@ jobs:
           echo "you can't upload debug build to appstore!"
           exit 1
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - run: |
           sudo xcode-select -s /Applications/Xcode_${XCODE_VERSION}.app/Contents/Developer
           ls
+          
+      - name: (Optional) Download iOS Simulator runtimes (18.x)
+        run: |
+          xcodebuild -downloadPlatform iOS
+          xcodebuild -showsdks
 
       - name: Set version number and build number
         run: |
