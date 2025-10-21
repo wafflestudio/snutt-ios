@@ -4,8 +4,8 @@ import ProjectDescription
 let domain = "com.wafflestudio"
 
 // MARK: - Version Constants
-private let marketingVersion: Plist.Value = "1.0.0"
-private let buildNumber: Plist.Value = "1"
+let marketingVersion: Plist.Value = "1.0.0"
+let buildNumber: Plist.Value = "1"
 
 extension Project {
     public static func app(
@@ -99,29 +99,13 @@ extension Project {
         deploymentTargets: DeploymentTargets,
         dependencies: [TargetDependency]
     ) -> (Target, Target) {
-        let internalVersion = DateFormatter().string(from: Date())
-        let infoPlist: [String: Plist.Value] = [
-            "CFBundleShortVersionString": marketingVersion,
-            "CFBundleVersion": buildNumber,
-            "UILaunchStoryboardName": "LaunchScreen",
-            "API_SERVER_URL": "$(API_SERVER_URL)",
-            "API_KEY": "$(API_KEY)",
-            "KAKAO_APP_KEY": "$(KAKAO_APP_KEY)",
-            "CFBundleURLTypes": [
-                [
-                    "CFBundleURLSchemes": ["$(URL_SCHEME)"],
-                    "CFBundleURLName": "$(PRODUCT_BUNDLE_IDENTIFIER)",
-                ]
-            ],
-        ]
-
         let mainTarget = Target.target(
             name: name,
             destinations: destinations,
             product: .app,
             bundleId: "$(PRODUCT_BUNDLE_IDENTIFIER)",
             deploymentTargets: deploymentTargets,
-            infoPlist: .extendingDefault(with: infoPlist),
+            infoPlist: .extendingDefault(with: InfoPlist.infoPlistForApp()),
             sources: ["\(name)/Sources/**"],
             resources: ["\(name)/Resources/**", "OpenAPI/**"],
             entitlements: "Supporting Files/SNUTT.entitlements",
@@ -182,13 +166,17 @@ extension Project {
 
     private static func makeSettings() -> Settings {
         .settings(
-            base: [:]
-                .swiftVersion("6.0")
+            base: ["OTHER_LDFLAGS": "-ObjC"]
+                .swiftVersion("6.1")
                 .merging(["SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY": SettingValue(true)])
                 .merging(["_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES": SettingValue(true)]),
 
             configurations: [
-                .debug(name: .dev, settings: ["OTHER_SWIFT_FLAGS": "-DDEBUG"], xcconfig: "XCConfigs/Dev.xcconfig"),
+                .debug(
+                    name: .dev,
+                    settings: ["OTHER_SWIFT_FLAGS": "$(inherited) -DDEBUG"],
+                    xcconfig: "XCConfigs/Dev.xcconfig"
+                ),
                 .release(name: .prod, xcconfig: "XCConfigs/Prod.xcconfig"),
             ]
         )

@@ -10,4 +10,5 @@ import Foundation
 class VacancyState {
     @Published var lectures = [Lecture]()
     @Published var isBannerVisible = false
+    @Published var isFirstVacancy: Bool?
 }

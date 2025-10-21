@@ -16,6 +16,7 @@ protocol GlobalUIServiceProtocol: Sendable {
     func setSelectedTab(_ tab: TabType)
     func setIsErrorAlertPresented(_ value: Bool)
     func setIsMenuOpen(_ value: Bool)
+    func setToast(_ toast: ToastType?)
 
     func openEllipsis(for timetable: TimetableMetadata)
     func closeEllipsis()
@@ -148,6 +149,48 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
     func hasNewBadge(settingName: String) -> Bool {
         return appState.system.configs?.settingsBadge?.new.contains { $0 == settingName } ?? false
     }
+    
+    // MARK: Toast
+    
+    func setToast(_ toast: ToastType?) {
+        if let toast = toast {
+            switch toast {
+            case .reminderNone,
+                 .reminder10Before,
+                 .reminderOnTime,
+                 .reminder10After:
+                setReminderToast(toast)
+            case .bookmark:
+                setBookmarkToast(toast)
+            case .vacancy:
+                setVacancyToast(toast)
+            }
+        } else {
+            appState.system.toast = nil
+        }
+    }
+    
+    private func setReminderToast(_ toast: ToastType) {
+        appState.system.toast = .init(type: toast) { setSelectedTab(.settings) }
+    }
+    
+    private func setBookmarkToast(_ toast: ToastType) {
+        if appState.timetable.isFirstBookmark == true {
+            appState.system.toast = .init(type: toast) {
+                setSelectedTab(.search)
+                appState.routing.bookmarkList.pushToBookmark = true
+            }
+        }
+    }
+    
+    private func setVacancyToast(_ toast: ToastType) {
+        if appState.vacancy.isFirstVacancy == true {
+            appState.system.toast = .init(type: toast) {
+                setSelectedTab(.settings)
+                appState.routing.settingScene.pushToVacancy = true
+            }
+        }
+    }
 
     // MARK: Preload Review WebViews
 
@@ -221,6 +264,7 @@ class FakeGlobalUIService: GlobalUIServiceProtocol {
     func setSelectedTab(_: TabType) {}
     func setIsErrorAlertPresented(_: Bool) {}
     func setIsMenuOpen(_: Bool) {}
+    func setToast(_ toast: ToastType?) {}
 
     func openEllipsis(for _: TimetableMetadata) {}
     func closeEllipsis() {}

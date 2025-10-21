@@ -11,6 +11,8 @@ import AuthInterface
 import Configs
 import ConfigsInterface
 import Dependencies
+import Reviews
+import ReviewsInterface
 import Themes
 import ThemesInterface
 import Timetable
@@ -58,6 +60,18 @@ extension ThemeUIProviderKey: @retroactive DependencyKey {
     public static let liveValue: any ThemeUIProvidable = ThemeUIProvider()
 }
 
+extension AuthUIProviderKey: @retroactive DependencyKey {
+    public static let liveValue: any AuthUIProvidable = AuthUIProvider()
+}
+
+extension ReviewsUIProviderKey: @retroactive DependencyKey {
+    public static let liveValue: any ReviewsUIProvidable = ReviewsUIProvider()
+}
+
 extension ThemeRepositoryKey: @retroactive DependencyKey {
     public static let liveValue: any ThemeRepository = ThemeAPIRepository()
+}
+
+extension SocialAuthServiceProviderKey: @retroactive DependencyKey {
+    public static let liveValue: any SocialAuthServiceProvider = LiveSocialAuthServiceProvider()
 }

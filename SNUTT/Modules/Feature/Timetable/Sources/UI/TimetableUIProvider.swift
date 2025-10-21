@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import ThemesInterface
 import TimetableInterface
+import TimetableUIComponents
 
 public struct TimetableUIProvider: TimetableUIProvidable {
     public nonisolated init() {}
@@ -15,5 +17,24 @@ public struct TimetableUIProvider: TimetableUIProvidable {
         lecture: TimetableInterface.Lecture
     ) -> AnyView {
         AnyView(LectureDetailRow(type: type, lecture: lecture))
+    }
+
+    public func timetableView(
+        timetable: TimetableInterface.Timetable,
+        configuration: TimetableInterface.TimetableConfiguration,
+        preferredTheme: Theme?,
+        availableThemes: [Theme]
+    ) -> AnyView {
+        AnyView(
+            TimetableZStack(
+                painter: TimetablePainter(
+                    currentTimetable: timetable,
+                    selectedLecture: nil,
+                    preferredTheme: preferredTheme,
+                    availableThemes: availableThemes,
+                    configuration: configuration
+                )
+            )
+        )
     }
 }

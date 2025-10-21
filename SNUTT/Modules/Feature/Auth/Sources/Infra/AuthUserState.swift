@@ -38,6 +38,7 @@ public final class AuthUserState: AuthState {
         case .userID:
             userDefaults[\.userID] = value
         case .accessToken:
+            try? Dependency(\.authSecureRepository).wrappedValue.saveAccessToken(value)
             isAuthenticatedLocked.withLock { $0 = true }
             Task { @MainActor in
                 isAuthenticatedSubject.send(true)

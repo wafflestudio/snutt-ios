@@ -30,6 +30,7 @@ public enum VacancyRepositoryKey: TestDependencyKey {
     public static let testValue: any VacancyRepository = {
         let spy = VacancyRepositorySpy()
         spy.fetchVacancyLecturesReturnValue = []
+        spy.isVacancyNotificationEnabledLectureIDReturnValue = true
         return spy
     }()
 }

@@ -41,22 +41,25 @@ struct SNUTTView: View, Sendable {
                 }
             } else if viewModel.isAuthenticated && pushToTimetableScene {
                 TabView(selection: selected) {
-                    TabScene(tabType: .timetable) {
-                        TimetableScene(viewModel: .init(container: viewModel.container))
+                    Group {
+                        TabScene(tabType: .timetable) {
+                            TimetableScene(viewModel: .init(container: viewModel.container))
+                        }
+                        TabScene(tabType: .search) {
+                            SearchLectureScene(viewModel: .init(container: viewModel.container))
+                        }
+                        TabScene(tabType: .review) {
+                            ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: true)
+                                .analyticsScreen(.reviewHome)
+                        }
+                        TabScene(tabType: .friends) {
+                            FriendsScene(viewModel: .init(container: viewModel.container))
+                        }
+                        TabScene(tabType: .settings) {
+                            SettingScene(viewModel: .init(container: viewModel.container))
+                        }
                     }
-                    TabScene(tabType: .search) {
-                        SearchLectureScene(viewModel: .init(container: viewModel.container))
-                    }
-                    TabScene(tabType: .review) {
-                        ReviewScene(viewModel: .init(container: viewModel.container), isMainWebView: true)
-                            .analyticsScreen(.reviewHome)
-                    }
-                    TabScene(tabType: .friends) {
-                        FriendsScene(viewModel: .init(container: viewModel.container))
-                    }
-                    TabScene(tabType: .settings) {
-                        SettingScene(viewModel: .init(container: viewModel.container))
-                    }
+                    .toast($viewModel.toast)
                 }
                 .onAppear {
                     viewModel.selectedTab = .timetable
@@ -153,6 +156,12 @@ extension SNUTTView {
         @Published var preferredColorScheme: ColorScheme? = nil
         @Published private var error: STError? = nil
         @Published var noticeViewInfo: ConfigsDto.NoticeViewInfoDto?
+        
+        @Published private var _toast: Toast?
+        var toast: Toast? {
+            get { _toast }
+            set { services.globalUIService.setToast(nil) }
+        }
 
         @Published private var _isErrorAlertPresented = false
         var isErrorAlertPresented: Bool {
@@ -179,14 +188,15 @@ extension SNUTTView {
             appState.system.$preferredColorScheme.assign(to: &$preferredColorScheme)
             appState.system.$selectedTab.assign(to: &$_selectedTab)
             appState.system.$noticeViewInfo.assign(to: &$noticeViewInfo)
+            appState.system.$toast.assign(to: &$_toast)
         }
 
         var errorTitle: String {
-            (appState.system.error ?? .init(.UNKNOWN_ERROR)).title
+            (appState.system.error ?? .init(.SERVER_FAULT)).title
         }
 
         var errorMessage: String {
-            (appState.system.error ?? .init(.UNKNOWN_ERROR)).content
+            (appState.system.error ?? .init(.SERVER_FAULT)).content
         }
 
         func reloadReviewWebView() {

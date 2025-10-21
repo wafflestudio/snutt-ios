@@ -9,6 +9,7 @@ import Foundation
 
 @MainActor
 protocol VacancyServiceProtocol: Sendable {
+    func fetchIsFirstVacancy()
     func fetchLectures() async throws
     func fetchSugangSnuUrl() async throws -> URL?
     func addLecture(lecture: Lecture) async throws
@@ -33,6 +34,14 @@ struct VacancyService: VacancyServiceProtocol, ConfigsProvidable {
     private var userDefaultsRepository: any UserDefaultsRepositoryProtocol {
         localRepositories.userDefaultsRepository
     }
+    
+    func fetchIsFirstVacancy() {
+        appState.vacancy.isFirstVacancy = userDefaultsRepository.get(
+            Bool.self,
+            key: .isFirstVacancy,
+            defaultValue: true
+        )
+    }
 
     func fetchLectures() async throws {
         let lectureDtos = try await vacancyRepository.fetchLectures().lectures
@@ -50,6 +59,8 @@ struct VacancyService: VacancyServiceProtocol, ConfigsProvidable {
 
     func addLecture(lecture: Lecture) async throws {
         try await vacancyRepository.addLecture(lectureId: lecture.lectureId ?? lecture.id)
+        localRepositories.userDefaultsRepository.set(Bool.self, key: .isFirstVacancy, value: false)
+        appState.vacancy.isFirstVacancy = false
         try await fetchLectures()
     }
 
@@ -116,6 +127,8 @@ struct FakeVacancyService: VacancyServiceProtocol {
     }
 
     func showVacancyBannerIfNeeded() async throws {}
+    
+    func fetchIsFirstVacancy() {}
 
     func fetchLectures() async throws {}
 

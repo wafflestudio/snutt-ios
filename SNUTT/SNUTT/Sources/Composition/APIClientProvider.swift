@@ -22,7 +22,7 @@ public struct APIClientProvider: Sendable {
 
     public func apiClient() -> any APIProtocol {
         Client(
-            serverURL: URL(string: "https://\(appMetadata[.apiURL])")!,
+            serverURL: appMetadata.apiURL,
             configuration: .init(dateTranscoder: LenientDateTranscoder()),
             transport: URLSessionTransport(),
             middlewares: [
@@ -41,9 +41,12 @@ public struct APIClientProvider: Sendable {
     }
 }
 
-private struct LenientDateTranscoder: DateTranscoder, @unchecked Sendable {
+private struct LenientDateTranscoder: DateTranscoder {
     private let transcoder: any DateTranscoder = .iso8601WithFractionalSeconds
-    private let fallbackTranscoder: any DateTranscoder = .iso8601
+    private let fallbackTranscoders: [any DateTranscoder] = [
+        ISO8601DateTranscoder.iso8601,
+        TimezoneFallbackTranscoder(transcoder: .iso8601WithFractionalSeconds),
+    ]
 
     public func encode(_ date: Date) throws -> String {
         try transcoder.encode(date)
@@ -53,8 +56,32 @@ private struct LenientDateTranscoder: DateTranscoder, @unchecked Sendable {
         do {
             return try transcoder.decode(string)
         } catch {
-            return try fallbackTranscoder.decode(string)
+            if let date = fallbackTranscoders.lazy.compactMap({ try? $0.decode(string) }).first {
+                return date
+            }
+            throw error
         }
+    }
+}
+
+private struct TimezoneFallbackTranscoder: DateTranscoder {
+    let transcoder: any DateTranscoder
+
+    func encode(_ date: Date) throws -> String {
+        try transcoder.encode(date)
+    }
+
+    func decode(_ string: String) throws -> Date {
+        if hasTimeZone(string) {
+            try transcoder.decode(string)
+        } else {
+            try transcoder.decode(string + "Z")
+        }
+    }
+
+    private func hasTimeZone(_ s: String) -> Bool {
+        let tzRegex = /Z$|[+\-]\d{2}(?::\d{2})?$/
+        return s.wholeMatch(of: tzRegex) != nil
     }
 }
 

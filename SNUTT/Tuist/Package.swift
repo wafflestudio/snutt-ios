@@ -22,12 +22,10 @@ import PackageDescription
             "DependenciesAdditionsBasics": .framework,
             "UserDefaultsDependency": .framework,
             "IssueReporting": .framework,
-            "FirebaseCore": .staticLibrary,
-            "FirebaseMessaging": .staticLibrary,
-            "KakaoMapsSDK-SPM": .staticLibrary,
             "OpenAPIRuntime": .framework,
             "OpenAPIURLSession": .framework,
             "HTTPTypes": .framework,
+            "SnapKit": .framework,
         ],
         baseSettings: .settings(configurations: [
             .debug(name: .dev),
@@ -46,9 +44,12 @@ let package = Package(
         .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.7.1")),
         .package(url: "https://github.com/Matejkob/swift-spyable", .upToNextMajor(from: "0.8.0")),
         .package(url: "https://github.com/gohanlon/swift-memberwise-init-macro", from: "0.5.2"),
-        .package(url: "https://github.com/tgrapperon/swift-dependencies-additions", from: "1.1.1"),
+        .package(url: "https://github.com/tgrapperon/swift-dependencies-additions", branch: "xcode26"),
         .package(url: "https://github.com/siteline/swiftui-introspect", from: "1.3.0"),
         .package(url: "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git", .upToNextMajor(from: "2.12.4")),
         .package(url: "https://github.com/firebase/firebase-ios-sdk", .upToNextMajor(from: "11.9.0")),
+        .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "7.0.0"),
+        .package(url: "https://github.com/facebook/facebook-ios-sdk", .upToNextMajor(from: "18.0.1")),
+        .package(url: "https://github.com/kakao/kakao-ios-sdk", .upToNextMajor(from: "2.25.0")),
     ]
 )

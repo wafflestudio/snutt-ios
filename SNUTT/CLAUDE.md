@@ -2,145 +2,184 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
-
-SNUTT is an iOS app for Seoul National University's timetable management system built with Swift using a modular architecture. The project uses Tuist for project management and generation.
-
-- **Language**: Swift 6.0
-- **Deployment Target**: iOS 17.0+
-- **Architecture Pattern**: Modular architecture with feature modules and interfaces
-
 ## Development Commands
 
-### Environment Setup
+This project uses **Tuist** for project generation and **Just** for task automation.
 
+### Essential Setup Commands
 ```bash
-# Install prerequisites
+# Install prerequisites (if not already installed)
 curl https://mise.run | sh
-brew install just
+brew install just mint pre-commit swift-format
 
-# Install dependencies
+# Install dependencies (mise will auto-select versions from .mise.toml)
 mise install
 tuist install
 
 # Setup development environment
-just dev      # Generate dev OpenAPI + project
-just prod     # Generate prod OpenAPI + project
+just dev                   # Generate dev OpenAPI + project
+just prod                  # Generate prod OpenAPI + project
 ```
 
-### Project Generation
-
+### Common Development Tasks
 ```bash
-# Clean and regenerate
-just clean-build           # Clean build
-just clean-generate        # Clean generate
-
-# OpenAPI
-just openapi-dev           # Generate dev OpenAPI
-just openapi-prod          # Generate prod OpenAPI
-
-# Tuist commands
+# Project Generation & Building
+tuist generate             # Generate Xcode project
+tuist clean                # Clean Tuist cache
 tuist install              # Install dependencies
-tuist generate             # Generate project
-tuist clean                # Clean cache
-tuist test                 # Run tests
-tuist build                # Build the project (use this to verify code changes)
+tuist test                 # Run all tests
+tuist build               # Build the project
+
+# Clean Operations
+just clean-build           # Full clean build (clears DerivedData, installs deps, builds)
+just clean-generate        # Clean generate (clears DerivedData, installs deps, generates)
+just clean-derived-data    # Clear Xcode DerivedData only
+
+# Code Quality
+just format                # Format Swift code using swift-format
+just check                 # Run all checks (dependencies, imports, formatting)
+
+# OpenAPI Generation
+just openapi-dev           # Generate dev environment OpenAPI
+just openapi-prod          # Generate prod environment OpenAPI
+
+# Testing
+tuist test                 # Run all module tests
+# Test individual modules using Xcode schemes (e.g., "ModuleTests" scheme)
 ```
 
-## Project Architecture
+### Build Configurations
+- **Dev**: Development configuration with debug symbols
+- **Prod**: Production/release configuration
+- The project uses scheme-based configuration switching
 
-### Module Structure
+## Architecture Overview
 
-The codebase follows a modular architecture pattern with three main module categories:
+SNUTT follows a **strict modular architecture** with Clean Architecture principles:
 
-1. **Feature Modules**: Self-contained features with their own UI, business logic, and data access layers
-   - Examples: Timetable, Auth, Settings, Vacancy, Notifications
+### Module Categories
+1. **Feature Modules** (`Modules/Feature/`): Self-contained features with implementations
+2. **Feature Interface Modules** (`Modules/Feature/*Interface/`): Public contracts for features
+3. **Shared Modules** (`Modules/Shared/`): Reusable UI components and app-wide utilities
+4. **Utility Modules** (`Modules/Utility/`): Low-level utilities and helpers
 
-2. **Feature Interface Modules**: Interfaces/contracts that define the public API of feature modules
-   - Examples: TimetableInterface, AuthInterface, APIClientInterface
+### Critical Dependency Rules
+- **Feature → FeatureInterface**: Features can ONLY depend on interfaces of other features
+- **FeatureInterface → Feature**: **STRICTLY FORBIDDEN** - Interfaces cannot depend on implementations
+- **Feature/FeatureInterface → Utility/Shared**: Can depend on utilities and shared modules
+- No circular dependencies between modules at the same level
 
-3. **Utility and Shared Modules**: Reusable components and utilities
-   - **Shared**: Common UI components and app metadata
-   - **Utility**: Foundation extensions, SwiftUI utilities, etc.
+### Clean Architecture Layers (within each feature)
+```
+UI Layer (SwiftUI Views)
+    ↓
+Presentation Layer (ViewModels with @Observable)
+    ↓
+Business Logic Layer (Use Cases, Domain Models, Repository Protocols)
+    ↓
+Infrastructure Layer (Repository Implementations)
+```
 
-### Module Dependencies
+**Layer Rules:**
+- UI can ONLY depend on ViewModels (Presentation layer)
+- UI CANNOT directly access repositories or use cases
+- ViewModels use dependency injection to access business logic
+- Business logic depends on repository interfaces, not implementations
 
-Features can only depend on interfaces of other features, not their implementations. This enforces loose coupling between modules. The dependency rules are:
+### Dependency Injection Pattern
 
-- **Feature → FeatureInterface**: A feature can only depend on interfaces of other features
-- **Feature → Utility/Shared**: Features can depend on utilities and shared components
-- **FeatureInterface → Utility**: Interfaces can depend on utilities
-- **Utility → Utility**: Utilities can depend on other utilities
+The project uses **swift-dependencies** with the following pattern:
 
-### Key Modules
+**Interface Definition** (in FeatureInterface modules):
+```swift
+@Spyable
+public protocol SomeRepository: Sendable {
+    func someMethod() async throws -> ReturnType
+}
 
-- **Timetable**: Core timetable functionality
-- **APIClient**: OpenAPI-generated API client for backend communication
-- **Auth**: Authentication and user management
-- **Themes**: Theme management for the app
-- **Settings**: App settings and preferences
-- **Vacancy**: Feature related to course vacancies
+public enum SomeRepositoryKey: TestDependencyKey {
+    public static let testValue: any SomeRepository = SomeRepositorySpy()
+}
 
-### External Dependencies
+extension DependencyValues {
+    public var someRepository: any SomeRepository {
+        get { self[SomeRepositoryKey.self] }
+        set { self[SomeRepositoryKey.self] = newValue }
+    }
+}
+```
 
-The project uses several third-party dependencies:
-- Dependencies (Point-Free's dependency injection)
-- OpenAPI Runtime and URLSession
-- SwiftUI Introspect
-- Firebase Core and Messaging
-- KakaoMapsSDK
+**Live Implementation** (in Feature module's `LiveDependencies.swift`):
+```swift
+extension SomeRepositoryKey: DependencyKey {
+    public static let liveValue: any SomeRepository = SomeAPIRepository()
+}
+```
 
-## Dependency Injection Pattern
+**Usage in ViewModels:**
+```swift
+@Observable
+@MainActor
+public class FeatureViewModel {
+    @Dependency(\.someRepository) private var someRepository
+    // Implementation
+}
+```
 
-### Interface Module Pattern
+### Key Features
+- **Timetable**: Core timetable functionality and UI components
+- **Auth**: Authentication with Kakao, Facebook, Google integrations
+- **Vacancy**: Classroom vacancy checking
+- **Themes**: UI theming system
+- **Notifications**: Push notification handling
+- **Settings**: App configuration and user preferences
+- **Reviews**: App store review integration
+- **Popup**: App-wide popup system
 
-Interface modules should follow this pattern to maintain clean separation between interface definitions and implementations:
+## Technology Stack
 
-1. **Interface Module (e.g., VacancyInterface)**:
-   ```swift
-   @Spyable
-   public protocol SomeRepository: Sendable {
-       func someMethod() async throws -> ReturnType
-   }
-   
-   public enum SomeRepositoryKey: TestDependencyKey {
-       public static let testValue: any SomeRepository = {
-           let spy = SomeRepositorySpy()
-           spy.someMethodReturnValue = defaultValue
-           return spy
-       }()
-   }
-   
-   extension DependencyValues {
-       public var someRepository: any SomeRepository {
-           get { self[SomeRepositoryKey.self] }
-           set { self[SomeRepositoryKey.self] = newValue }
-       }
-   }
-   ```
+- **Language**: Swift 6.1+ with modern Swift Concurrency (`async/await`)
+- **UI Framework**: SwiftUI with Observation framework (`@Observable`, `@Bindable`)
+- **Minimum iOS Version**: 17.0+
+- **Xcode Version**: 16.0+
+- **Project Management**: Tuist for modular project generation
+- **Code Formatting**: swift-format with 120 character line length, 4-space indentation
+- **API Integration**: OpenAPI-generated client with separate dev/prod configurations
+- **Dependency Injection**: swift-dependencies package
+- **Maps**: Kakao Maps SDK
+- **Testing**: Built-in unit testing with Spyable for mock generation
 
-2. **Live Implementation (in LiveDependencies.swift)**:
-   ```swift
-   extension SomeRepositoryKey: @retroactive DependencyKey {
-       public static let liveValue: any SomeRepository = SomeAPIRepository()
-   }
-   ```
+## Code Style & Conventions
 
-### Key Principles
+- **Formatting**: Automatic formatting via swift-format (configured in `.swift-format`)
+- **Pre-commit Hooks**: swift-format runs automatically on commit
+- **Sendable**: All repository protocols and implementations must be `Sendable`
+- **MainActor**: ViewModels should be annotated with `@MainActor`
+- **Async/Await**: Use Swift Concurrency for all asynchronous operations
+- **Observation**: Use `@Observable` macro for ViewModels instead of ObservableObject
 
-- **Interface modules** only define protocols and test dependencies using `TestDependencyKey`
-- **Live implementations** are injected via `@retroactive DependencyKey` in `LiveDependencies.swift`
-- This pattern ensures interface modules don't depend on concrete implementations
-- Follows the same pattern as other modules (TimetableRepository, AuthRepository, etc.)
+## File Structure Template
 
-## Build Configurations
+Each feature should follow this structure:
+```
+Modules/Feature/FeatureName/
+├─ Sources/
+│   ├─ UI/              # SwiftUI Views
+│   ├─ Presentation/    # ViewModels
+│   ├─ BusinessLogic/   # Use Cases, Domain Models
+│   ├─ Infra/          # Repository Implementations
+│   └─ Composition/     # Dependency Registration (LiveDependencies.swift)
+└─ Tests/
+    └─ UnitTests/       # Tests for all layers
+```
 
-The project has two main configurations:
-- **Dev**: Development environment
-- **Prod**: Production environment
+## OpenAPI Integration
 
-Each configuration uses its own xcconfig file located in the XCConfigs directory.
+- API specs are automatically downloaded and generated
+- Separate configurations for dev and prod environments
+- Generated clients are located in `Modules/Feature/APIClientInterface/`
+- Use `just openapi-dev` or `just openapi-prod` to regenerate API clients
 
 ## Widget Extension
 
-The project includes a widget extension for iOS home screen widgets that displays timetable information.
+The project includes a widget extension (`SNUTTWidget`) with its own target and dependencies, primarily using timetable functionality.

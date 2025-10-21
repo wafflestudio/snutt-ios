@@ -111,7 +111,6 @@ struct MenuThemeSelectionSheet: View {
                     }
                 }
                 .frame(width: 80, height: 80)
-                .cornerRadius(6)
 
                 let selectionBackgroundColor: Color =
                     if isSelectionHighlighted(selection) {

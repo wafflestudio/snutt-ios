@@ -19,7 +19,7 @@ extension GoogleLoginProtocol {
             .first(where: { $0.isKeyWindow })?.rootViewController
         else {
             Task { @MainActor in
-                self.services.globalUIService.presentErrorAlert(error: .NO_GOOGLE_TOKEN)
+                self.services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
             }
             return
         }
@@ -27,14 +27,14 @@ extension GoogleLoginProtocol {
         GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { user, error in
             if error != nil {
                 Task { @MainActor in
-                    self.services.globalUIService.presentErrorAlert(error: .NO_GOOGLE_TOKEN)
+                    self.services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
                 }
                 return
             }
 
             guard let userData = user?.user else {
                 Task { @MainActor in
-                    self.services.globalUIService.presentErrorAlert(error: .NO_GOOGLE_TOKEN)
+                    self.services.globalUIService.presentErrorAlert(error: .SOCIAL_LOGIN_FAILED)
                 }
                 return
             }

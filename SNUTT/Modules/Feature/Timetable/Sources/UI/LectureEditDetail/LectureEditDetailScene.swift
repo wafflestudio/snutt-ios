@@ -8,6 +8,7 @@
 import DependenciesAdditions
 import DependenciesUtility
 import MemberwiseInit
+import ReviewsInterface
 import SharedUIComponents
 import SwiftUI
 import ThemesInterface
@@ -23,6 +24,9 @@ struct LectureEditDetailScene: View {
     @State private var showCancelConfirmation: Bool = false
     @State private var showResetConfirmation: Bool = false
     @State private var showDeleteConfirmation: Bool = false
+    @State private var syllabusURL: URL?
+    @State private var showSyllabusWebView: Bool = false
+    @State private var showReviewsScene: Bool = false
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
@@ -30,6 +34,7 @@ struct LectureEditDetailScene: View {
     @Environment(\.themeViewModel) private var themeViewModel
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.lectureTimeConflictHandler) private var conflictHandler
+    @Environment(\.reviewsUIProvider) private var reviewsUIProvider
 
     let displayMode: DisplayMode
     let paths: Binding<[TimetableDetailSceneTypes]>
@@ -119,6 +124,18 @@ struct LectureEditDetailScene: View {
                     try await viewModel.deleteLecture()
                     dismiss()
                 }
+            }
+        }
+        .sheet(isPresented: $showSyllabusWebView) {
+            if let syllabusURL {
+                SyllabusWebView(lectureTitle: viewModel.entryLecture.courseTitle, url: syllabusURL)
+                    .ignoresSafeArea(edges: .bottom)
+                    .interactiveDismissDisabled()
+            }
+        }
+        .sheet(isPresented: $showReviewsScene) {
+            if let evLectureID = viewModel.entryLecture.evLecture?.evLectureID {
+                reviewsUIProvider.makeReviewsScene(for: evLectureID)
             }
         }
     }
@@ -218,8 +235,8 @@ struct LectureEditDetailScene: View {
             } label: {
                 Image(
                     uiImage: viewModel.isVacancyNotificationEnabled
-                        ? TimetableAsset.searchVacancyFill
-                            .image : TimetableAsset.searchVacancy.image
+                        ? TimetableAsset.searchVacancyFill.image
+                        : TimetableAsset.searchVacancy.image
                 )
             }
 
@@ -283,7 +300,7 @@ struct LectureEditDetailScene: View {
     }
 
     private var timePlaceSection: some View {
-        VStack {
+        VStack(spacing: 20) {
             Text(TimetableStrings.editTimePlaceTitle)
                 .font(.system(size: 14))
                 .foregroundColor(.label.opacity(0.8))
@@ -336,7 +353,30 @@ struct LectureEditDetailScene: View {
     @ViewBuilder private var actionButtonsSection: some View {
         switch displayMode {
         case .normal:
-            VStack(spacing: 20) {
+            VStack(spacing: 30) {
+                if !viewModel.entryLecture.isCustom && displayMode != .create && !editMode.isEditing {
+                    Button {
+                        Task {
+                            syllabusURL = await viewModel.fetchSyllabusURL()
+                            if syllabusURL != nil {
+                                showSyllabusWebView = true
+                            }
+                        }
+                    } label: {
+                        Text(TimetableStrings.lectureActionSyllabus)
+                            .font(.system(size: 16))
+                            .frame(maxWidth: .infinity)
+                    }
+
+                    Button {
+                        showReviewsScene = true
+                    } label: {
+                        Text(TimetableStrings.lectureActionReview)
+                            .font(.system(size: 16))
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+
                 if !viewModel.entryLecture.isCustom && editMode.isEditing {
                     Button {
                         showResetConfirmation = true
@@ -367,8 +407,11 @@ struct LectureEditDetailScene: View {
 
 extension LectureEditDetailScene {
     enum DisplayMode: Equatable {
+        /// 내가 추가한 강의 상세
         case normal
+        /// 새로운 강의 추가
         case create
+        /// 내가 추가하지 않은 강의 상세
         case preview(shouldHideDismissButton: Bool)
 
         var isPreview: Bool {
