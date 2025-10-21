@@ -263,6 +263,7 @@ extension LectureDetailScene {
             do {
                 try await services.lectureService.changeLectureReminderState(lectureId: lectureId, to: option)
                 reminderOption = option
+                services.globalUIService.setToast(option.toToast)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }

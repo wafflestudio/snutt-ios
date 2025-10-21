@@ -149,8 +149,9 @@ struct LectureService: LectureServiceProtocol {
     func changeLectureReminderState(lectureId: String, to option: ReminderOption) async throws {
         guard let targetTable = getCurrentOrNextSemesterPrimaryTable() else { return }
         let dto = try await lectureRepository.changeLectureReminderState(timetableId: targetTable.id, lectureId: lectureId, to: option.rawValue)
-        appState.reminder.reminderList.removeAll(where: { $0.timetableLectureId == lectureId })
-        appState.reminder.reminderList.append(.init(from: dto))
+        if let index = appState.reminder.reminderList.firstIndex(where: { $0.timetableLectureId == lectureId }) {
+            appState.reminder.reminderList[index] = .init(from: dto)
+        }
     }
     
     func getCurrentOrNextSemesterPrimaryTable() -> TimetableMetadata? {

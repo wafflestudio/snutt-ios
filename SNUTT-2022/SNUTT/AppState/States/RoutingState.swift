@@ -18,6 +18,7 @@ class ViewRoutingState {
 extension SettingScene {
     struct RoutingState {
         var pushToVacancy = false
+        var pushToReminder = false
     }
 }
 

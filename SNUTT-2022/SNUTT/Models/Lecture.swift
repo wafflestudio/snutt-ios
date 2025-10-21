@@ -180,6 +180,15 @@ enum ReminderOption: String, CaseIterable, Codable {
         case .after10: return "10분 후"
         }
     }
+    
+    var toToast: ToastType {
+        switch self {
+        case .none: .reminderNone
+        case .before10: .reminder10Before
+        case .onTime: .reminderOnTime
+        case .after10: .reminder10After
+        }
+    }
 }
 
 #if DEBUG

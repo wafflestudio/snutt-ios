@@ -27,6 +27,7 @@ class LectureReminderViewModel: BaseViewModel, ObservableObject {
     func changeLectureReminderState(lectureId: String, to option: ReminderOption) async throws {
         do {
             try await services.lectureService.changeLectureReminderState(lectureId: lectureId, to: option)
+            services.globalUIService.setToast(option.toToast, showButton: false)
         } catch {
             services.globalUIService.presentErrorAlert(error: error)
         }

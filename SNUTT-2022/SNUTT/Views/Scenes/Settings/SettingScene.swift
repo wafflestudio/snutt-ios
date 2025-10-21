@@ -29,7 +29,10 @@ struct SettingScene: View {
             }
 
             Section {
-                SettingsLinkItem(title: "색상 모드", detail: viewModel.currentColorSchemeSelection.rawValue) {
+                SettingsLinkItem(
+                    title: "색상 모드",
+                    detail: viewModel.currentColorSchemeSelection.rawValue
+                ) {
                     ColorSchemeSettingScene(selection: $viewModel.currentColorSchemeSelection)
                 }
 
@@ -38,8 +41,7 @@ struct SettingScene: View {
                 }
 
                 SettingsLinkItem(title: "시간표 테마") {
-                    ThemeSettingScene(viewModel:
-                        .init(container: viewModel.container))
+                    ThemeSettingScene(viewModel: .init(container: viewModel.container))
                         .onDisappear {
                             viewModel.closeBottomSheet()
                         }
@@ -52,10 +54,16 @@ struct SettingScene: View {
                 SettingsLinkItem(title: "푸시알림 설정") {
                     PushNotificationSettingScene(viewModel: .init(container: viewModel.container))
                 }
-                SettingsLinkItem(title: "빈자리 알림", isActive: $viewModel.routingState.pushToVacancy) {
+                SettingsLinkItem(
+                    title: "빈자리 알림",
+                    isActive: $viewModel.routingState.pushToVacancy
+                ) {
                     VacancyScene(viewModel: .init(container: viewModel.container))
                 }
-                SettingsLinkItem(title: "강의 리마인더") {
+                SettingsLinkItem(
+                    title: "강의 리마인더",
+                    isActive: $viewModel.routingState.pushToReminder
+                ) {
                     LectureReminderSettingScene(viewModel: .init(container: viewModel.container))
                 }
                 SettingsLinkItem(title: "테마 마켓") {
