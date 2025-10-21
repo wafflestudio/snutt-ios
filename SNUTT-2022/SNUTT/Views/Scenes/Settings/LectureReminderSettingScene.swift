@@ -60,6 +60,9 @@ struct LectureReminderSettingScene: View {
                         .padding(.vertical, 2)
                     }
                 }
+                .refreshable {
+                    await viewModel.fetchLectureReminderList()
+                }
             }
         }
         .navigationTitle("강의 리마인더")

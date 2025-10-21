@@ -121,10 +121,13 @@ struct SettingScene: View {
         .navigationTitle("더보기")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            await viewModel.fetchUser()
-            await viewModel.fetchSocialProvider()
-            await viewModel.getThemeList()
-            await viewModel.getPushPreference()
+            await withTaskGroup { group in
+                group.addTask { await viewModel.fetchUser() }
+                group.addTask { await viewModel.fetchSocialProvider() }
+                group.addTask { await viewModel.getThemeList() }
+                group.addTask { await viewModel.getPushPreference() }
+                group.addTask { await viewModel.fetchLectureReminderList() }
+            }
         }
 
         let _ = debugChanges()

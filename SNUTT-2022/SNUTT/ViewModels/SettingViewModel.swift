@@ -85,6 +85,14 @@ class SettingViewModel: BaseViewModel, ObservableObject {
             services.globalUIService.presentErrorAlert(error: error)
         }
     }
+    
+    func fetchLectureReminderList() async {
+        do {
+            try await services.lectureService.fetchLectureReminderList()
+        } catch {
+            services.globalUIService.presentErrorAlert(error: error)
+        }
+    }
 
     var versionString: String {
         let appVersion = AppMetadata.appVersion.value
