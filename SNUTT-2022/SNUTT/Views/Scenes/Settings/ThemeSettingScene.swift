@@ -99,7 +99,7 @@ struct ThemeSettingScene: View {
                 .resizable()
                 .frame(width: 14, height: 14)
             Text("테마는 어떻게 적용하나요?")
-                .font(.system(size: 12, weight: .bold))
+                .font(STFont.bold12.font)
                 .foregroundColor(STColor.gray2)
         }
         Text("시간표 적용은 시간표 목록 > 더보기 버튼 > 테마 설정에서 개별적으로 적용할 수 있어요.")
