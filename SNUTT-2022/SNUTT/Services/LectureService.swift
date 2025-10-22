@@ -141,8 +141,6 @@ struct LectureService: LectureServiceProtocol {
         let dto = try await lectureRepository.getBookmark(quarter: currentTimetable.quarter)
         let bookmark = Bookmark(from: dto)
         appState.timetable.bookmark = bookmark
-        userDefaultsRepository.set(Bool.self, key: .isFirstBookmark, value: false)
-        appState.timetable.isFirstBookmark = false
     }
 
     func undoBookmarkLecture(lecture: Lecture) async throws {

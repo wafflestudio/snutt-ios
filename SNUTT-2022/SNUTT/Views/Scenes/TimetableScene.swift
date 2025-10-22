@@ -72,6 +72,20 @@ struct TimetableScene: View, Sendable {
                 if showPopupMenu {
                     ZStack(alignment: .topTrailing) {
                         Color(.black.withAlphaComponent(0.4))
+                            .ignoresSafeArea(.all)
+                            .mask(alignment: .topTrailing) {
+                                Rectangle()
+                                    .ignoresSafeArea(.all)
+                                    .overlay(
+                                        Circle()
+                                            .frame(width: 30, height: 30)
+                                            .blendMode(.destinationOut)
+                                            .offset(
+                                                x: container.size.width / 2 - 27,
+                                                y: -container.size.height / 2 + navigationBarHeight / 2
+                                            )
+                                    )
+                            }
                             .onTapGesture {
                                 showPopupMenu = false
                             }
@@ -191,7 +205,7 @@ struct TimetableScene: View, Sendable {
         VStack(alignment: .leading, spacing: 12) {
             Text("강의 추가")
                 .font(STFont.medium11.font)
-                .foregroundStyle(colorScheme == .dark ? STColor.gray30 : STColor.gray30)
+                .foregroundStyle(colorScheme == .dark ? STColor.gray2 : STColor.gray30)
             VStack(alignment: .leading, spacing: 8) {
                 Button {
                     showPopupMenu = false

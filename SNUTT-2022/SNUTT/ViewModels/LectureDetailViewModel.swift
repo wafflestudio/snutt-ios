@@ -182,8 +182,8 @@ extension LectureDetailScene {
                 referrer: .lectureDetail
             )))
             do {
-                services.globalUIService.setToast(.bookmark)
                 try await services.lectureService.bookmarkLecture(lecture: lecture)
+                services.globalUIService.setToast(.bookmark)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }
@@ -209,8 +209,8 @@ extension LectureDetailScene {
                 referrer: .lectureDetail
             )))
             do {
-                services.globalUIService.setToast(.vacancy)
                 try await services.vacancyService.addLecture(lecture: lecture)
+                services.globalUIService.setToast(.vacancy)
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }

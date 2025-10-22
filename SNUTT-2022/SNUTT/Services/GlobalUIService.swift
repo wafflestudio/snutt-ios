@@ -179,6 +179,8 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
             appState.system.toast = .init(type: toast) {
                 setSelectedTab(.timetable)
                 appState.routing.timetableScene.pushToBookmark = true
+                localRepositories.userDefaultsRepository.set(Bool.self, key: .isFirstBookmark, value: false)
+                appState.timetable.isFirstBookmark = false
             }
         }
     }
@@ -188,6 +190,8 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
             appState.system.toast = .init(type: toast) {
                 setSelectedTab(.timetable)
                 appState.routing.timetableScene.pushToVacancy = true
+                localRepositories.userDefaultsRepository.set(Bool.self, key: .isFirstVacancy, value: false)
+                appState.vacancy.isFirstVacancy = false
             }
         }
     }

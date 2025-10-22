@@ -60,8 +60,6 @@ struct VacancyService: VacancyServiceProtocol, ConfigsProvidable {
 
     func addLecture(lecture: Lecture) async throws {
         try await vacancyRepository.addLecture(lectureId: lecture.lectureId ?? lecture.id)
-        localRepositories.userDefaultsRepository.set(Bool.self, key: .isFirstVacancy, value: false)
-        appState.vacancy.isFirstVacancy = false
         try await fetchLectures()
     }
 
