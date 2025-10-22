@@ -131,7 +131,7 @@ class ThemeSettingViewModel: BaseViewModel, ObservableObject {
         services.timetableService.selectTimetableTheme(theme: theme)
         services.themeService.closeBottomSheet()
 
-        guard let timetableId = targetTimetable?.id else { return }
+        guard let timetableId = appState.timetable.current?.id else { return }
         do {
             try await services.timetableService.updateTimetableTheme(timetableId: timetableId)
         } catch {
