@@ -86,6 +86,14 @@
 
 // MARK: 기타
 "feedback" = "개발자 괴롭히기";
+"feedback.email.header" = "이메일 주소";
+"feedback.email.placeholder" = "이메일";
+"feedback.content.header" = "문의 내용";
+"feedback.content.footer" = "불편한 점이나 버그를 제보해주세요.\n더 나은 SNUTT를 위한 아이디어도 환영해요.";
+"feedback.send" = "전송";
+"feedback.done" = "완료";
+"feedback.cancel" = "취소";
+"feedback.send.confirmation" = "피드백을 전송하시겠습니까?";
 
 "license" = "오픈소스 라이선스";
 "terms.service" = "서비스 약관";

@@ -86,6 +86,14 @@
 
 // MARK: 기타
 "feedback" = "Share Feedback";
+"feedback.email.header" = "Email Address";
+"feedback.email.placeholder" = "Email";
+"feedback.content.header" = "Feedback Content";
+"feedback.content.footer" = "Please report any inconveniences or bugs.\nWe also welcome ideas for a better SNUTT.";
+"feedback.send" = "Send";
+"feedback.done" = "Done";
+"feedback.cancel" = "Cancel";
+"feedback.send.confirmation" = "Would you like to send your feedback?";
 
 "license" = "Open Source License";
 "terms.service" = "Terms of Service";
