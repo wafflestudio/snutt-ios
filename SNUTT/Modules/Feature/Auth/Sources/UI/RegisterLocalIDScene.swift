@@ -15,7 +15,7 @@ struct RegisterLocalIDScene: View {
     @State private var localID = ""
     @State private var password = ""
     @State private var confirmPassword = ""
-    @State private var email = ""
+    @State private var emailUserName = ""
 
     @State private var showCompletionAlert = false
     @State private var isLoading = false
@@ -33,8 +33,12 @@ struct RegisterLocalIDScene: View {
 
     private let emailDomain = "@snu.ac.kr"
 
+    private var emailFullAddress: String {
+        emailUserName + emailDomain
+    }
+
     var isSubmitButtonEnabled: Bool {
-        !localID.isEmpty && !password.isEmpty && !confirmPassword.isEmpty && !email.isEmpty && !isLoading
+        !localID.isEmpty && !password.isEmpty && !confirmPassword.isEmpty && !emailUserName.isEmpty && !isLoading
     }
 
     var body: some View {
@@ -77,7 +81,7 @@ struct RegisterLocalIDScene: View {
                     placeholder: AuthStrings.signupEmailPlaceholder,
                     keyboardType: .emailAddress,
                     submitLabel: .done,
-                    text: $email
+                    text: $emailUserName
                 )
                 .focused($focusedField, equals: .email)
                 .onSubmit {
@@ -113,7 +117,7 @@ struct RegisterLocalIDScene: View {
         .navigationTitle(AuthStrings.signupTitle)
         .alert(AuthStrings.signupCompletionTitle, isPresented: $showCompletionAlert) {
             Button(AuthStrings.alertConfirm) {
-                viewModel.paths.append(.emailVerification(email: email + emailDomain))
+                viewModel.paths.append(.emailVerification(email: emailFullAddress))
             }
         } message: {
             Text(AuthStrings.signupCompletionMessage)
@@ -131,7 +135,7 @@ struct RegisterLocalIDScene: View {
                 throw ValidationError.passwordInvalid
             }
 
-            guard Validation.check(email: email) else {
+            guard Validation.check(email: emailFullAddress) else {
                 throw ValidationError.emailInvalid
             }
 
@@ -141,7 +145,7 @@ struct RegisterLocalIDScene: View {
             try await viewModel.registerWithLocalID(
                 localID: localID,
                 localPassword: password,
-                email: email + emailDomain
+                email: emailFullAddress
             )
 
             focusedField = nil

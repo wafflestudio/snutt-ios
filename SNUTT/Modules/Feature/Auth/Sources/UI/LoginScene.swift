@@ -71,6 +71,8 @@ struct LoginScene: View {
         }
         .padding()
         .navigationTitle(AuthStrings.onboardLoginButton)
+        // prevent unintentional calls during transitions
+        .analyticsScreen(.login, condition: !viewModel.authState.isAuthenticated)
     }
 
     private func submit() async {
