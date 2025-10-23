@@ -55,6 +55,7 @@ struct LectureReminderSettingScene: View {
                             .font(STFont.regular13.font)
                             .lineSpacing(4)
                             .padding(.top, 16)
+                            .padding(.bottom, 48)
                             .listRowInsets(EdgeInsets())
                         }
                         .padding(.vertical, 2)
