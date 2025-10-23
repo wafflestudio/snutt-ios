@@ -31,6 +31,7 @@
 "sheet.ellipsis.editTitle" = "Rename";
 "sheet.ellipsis.primary.enable" = "Set as primary timetable";
 "sheet.ellipsis.primary.disable" = "Unset as primary timetable";
+"sheet.ellipsis.share" = "Share timetable image";
 "sheet.ellipsis.theme" = "Configure theme";
 "sheet.ellipsis.delete" = "Delete timetable";
 "search.filter.sortCriteria" = "Sort By";
@@ -46,6 +47,8 @@
 "search.filter.apply" = "Apply";
 
 "search.input.placeholder" = "Enter search term";
+"search.result.empty.title" = "No search results found";
+"search.result.empty.description" = "Please try again with different search terms";
 "search.bookmark.empty.title" = "No bookmarked courses.";
 "search.bookmark.empty.description" = "Add courses you're considering\nto your bookmarks to manage them.";
 "search.tips.title" = "SNUTT Search Tips 🍯";

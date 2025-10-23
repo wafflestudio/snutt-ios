@@ -60,6 +60,11 @@ extension Lecture {
     public var isCustom: Bool {
         courseNumber == nil || courseNumber == ""
     }
+
+    /// DB에 저장된 강의 고유 ID
+    public var referenceID: String {
+        lectureID ?? id
+    }
 }
 
 // MARK: - LectureDto 변환

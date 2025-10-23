@@ -13,6 +13,7 @@ import UIKit
 
 struct LectureSearchResultScene: View {
     @Bindable var viewModel: LectureSearchViewModel
+    let isSearchMode: Bool
     @Environment(\.errorAlertHandler) var errorAlertHandler
     @Environment(\.reviewsUIProvider) var reviewsUIProvider
 
@@ -30,9 +31,12 @@ struct LectureSearchResultScene: View {
                 switch viewModel.searchDisplayMode {
                 case .search:
                     Group {
-                        if viewModel.lectures.isEmpty {
-                            SearchTipsView()
-                        } else {
+                        switch viewModel.searchState {
+                        case .initial:
+                            searchHome
+                        case .searched(let lectures) where lectures.isEmpty:
+                            searchEmptyView
+                        default:
                             searchContentView
                         }
                     }
@@ -91,13 +95,25 @@ struct LectureSearchResultScene: View {
         }
     }
 
+    private var searchHome: some View {
+        SearchTipsView()
+            .analyticsScreen(.searchHome, condition: isSearchMode)
+    }
+
     private var searchContentView: some View {
         ExpandableLectureListView(viewModel: viewModel)
             .foregroundStyle(.white)
+            .analyticsScreen(.searchList, condition: isSearchMode)
+    }
+
+    private var searchEmptyView: some View {
+        SearchEmptyView()
+            .analyticsScreen(.searchEmpty, condition: isSearchMode)
     }
 
     private var bookmarkContentView: some View {
         BookmarkListView(viewModel: BookmarkListViewModel(searchViewModel: viewModel))
+            .analyticsScreen(.bookmark, condition: isSearchMode)
     }
 }
 
@@ -110,6 +126,6 @@ struct LectureSearchResultScene: View {
     }
     ZStack {
         Color.black.opacity(0.5)
-        LectureSearchResultScene(viewModel: viewModel)
+        LectureSearchResultScene(viewModel: viewModel, isSearchMode: true)
     }
 }

@@ -21,6 +21,8 @@ class LectureSearchViewModel {
     @Dependency(\.vacancyRepository) private var vacancyRepository
     @ObservationIgnored
     @Dependency(\.lectureRepository) private var lectureRepository
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) private var analyticsLogger
 
     private let timetableViewModel: TimetableViewModel
     private let router: LectureSearchRouter
@@ -142,8 +144,15 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         }
     }
 
+    var searchState: LectureSearchResultDataSource.SearchState {
+        dataSource.searchState
+    }
+
     var lectures: [Lecture] {
-        dataSource.searchResults
+        guard case .searched(let lectures) = dataSource.searchState else {
+            return []
+        }
+        return lectures
     }
 
     func selectLecture(_ lecture: Lecture) {
@@ -158,8 +167,18 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         switch type {
         case .detail:
             targetForLectureDetail = lecture
+            analyticsLogger.logScreen(
+                AnalyticsScreen.lectureDetail(
+                    .init(lectureID: lecture.referenceID, referrer: detailReferrer)
+                )
+            )
         case .review:
             targetForLectureReview = lecture
+            analyticsLogger.logScreen(
+                AnalyticsScreen.reviewDetail(
+                    .init(lectureID: lecture.referenceID, referrer: detailReferrer)
+                )
+            )
         case .bookmark:
             if isToggled(lecture: lecture, type: type) {
                 try await lectureRepository.removeBookmark(lectureID: lecture.id)
@@ -185,6 +204,13 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
                 try await timetableViewModel.removeLecture(lecture: lecture)
             }
             selectedLecture = nil
+        }
+    }
+
+    private var detailReferrer: DetailScreenReferrer {
+        switch searchDisplayMode {
+        case .bookmark: .bookmark
+        case .search: .search(query: searchQuery)
         }
     }
 

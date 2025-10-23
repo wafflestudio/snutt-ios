@@ -19,7 +19,7 @@ struct LectureEditDetailScene: View {
     @Dependency(\.application) private var application
 
     @State private var viewModel: LectureEditDetailViewModel
-    @State private var editMode: EditMode = .inactive
+    @State private var editMode: EditMode
     @State private var isMapViewOpened: Bool = true
     @State private var showCancelConfirmation: Bool = false
     @State private var showResetConfirmation: Bool = false
@@ -48,6 +48,7 @@ struct LectureEditDetailScene: View {
         _viewModel = .init(initialValue: .init(timetableViewModel: timetableViewModel, entryLecture: entryLecture))
         self.displayMode = displayMode
         self.paths = paths
+        self._editMode = .init(initialValue: displayMode == .create ? .active : .inactive)
     }
 
     var body: some View {
@@ -62,12 +63,8 @@ struct LectureEditDetailScene: View {
                 .padding(.horizontal, 5)
                 .background(TimetableAsset.groupForeground.swiftUIColor)
 
-                Group {
-                    actionButtonsSection
-                }
-                .padding()
-                .padding(.horizontal, 5)
-                .background(TimetableAsset.groupForeground.swiftUIColor)
+                actionButtonsSection
+
             }
             .padding(.vertical, 20)
             .padding(.bottom, 40)
@@ -131,11 +128,15 @@ struct LectureEditDetailScene: View {
                 SyllabusWebView(lectureTitle: viewModel.entryLecture.courseTitle, url: syllabusURL)
                     .ignoresSafeArea(edges: .bottom)
                     .interactiveDismissDisabled()
+                    .analyticsScreen(.lectureSyllabus(.init(lectureID: viewModel.entryLecture.referenceID)))
             }
         }
         .sheet(isPresented: $showReviewsScene) {
             if let evLectureID = viewModel.entryLecture.evLecture?.evLectureID {
                 reviewsUIProvider.makeReviewsScene(for: evLectureID)
+                    .analyticsScreen(
+                        .reviewDetail(.init(lectureID: viewModel.entryLecture.referenceID, referrer: .lectureDetail))
+                    )
             }
         }
     }
@@ -206,8 +207,8 @@ struct LectureEditDetailScene: View {
                     do {
                         try await conflictHandler.withConflictHandling { overrideOnConflict in
                             try await viewModel.addCustomLecture(overrideOnConflict: overrideOnConflict)
+                            dismiss()
                         }
-                        dismiss()
                     } catch {
                         // 에러가 발생하거나 취소된 경우
                         throw error
@@ -233,11 +234,11 @@ struct LectureEditDetailScene: View {
                     try await viewModel.toggleVacancyNotification()
                 }
             } label: {
-                Image(
-                    uiImage: viewModel.isVacancyNotificationEnabled
-                        ? TimetableAsset.searchVacancyFill.image
-                        : TimetableAsset.searchVacancy.image
-                )
+                if viewModel.isVacancyNotificationEnabled {
+                    TimetableAsset.navVacancyOn.swiftUIImage
+                } else {
+                    TimetableAsset.navVacancyOff.swiftUIImage
+                }
             }
 
             // 북마크 버튼
@@ -246,12 +247,11 @@ struct LectureEditDetailScene: View {
                     try await viewModel.toggleBookmark()
                 }
             } label: {
-                Image(
-                    uiImage: viewModel.isBookmarked
-                        ? TimetableAsset.navBookmarkOn.image
-                        : TimetableAsset.navBookmark
-                            .image
-                )
+                if viewModel.isBookmarked {
+                    TimetableAsset.navBookmarkOn.swiftUIImage
+                } else {
+                    TimetableAsset.navBookmark.swiftUIImage
+                }
             }
         }
     }
@@ -350,11 +350,10 @@ struct LectureEditDetailScene: View {
         }
     }
 
-    @ViewBuilder private var actionButtonsSection: some View {
-        switch displayMode {
-        case .normal:
-            VStack(spacing: 30) {
-                if !viewModel.entryLecture.isCustom && displayMode != .create && !editMode.isEditing {
+    private var actionButtonsSection: some View {
+        VStack {
+            Group {
+                if !viewModel.entryLecture.isCustom, !editMode.isEditing {
                     Button {
                         Task {
                             syllabusURL = await viewModel.fetchSyllabusURL()
@@ -364,43 +363,38 @@ struct LectureEditDetailScene: View {
                         }
                     } label: {
                         Text(TimetableStrings.lectureActionSyllabus)
-                            .font(.system(size: 16))
-                            .frame(maxWidth: .infinity)
                     }
 
                     Button {
                         showReviewsScene = true
                     } label: {
                         Text(TimetableStrings.lectureActionReview)
-                            .font(.system(size: 16))
-                            .frame(maxWidth: .infinity)
                     }
                 }
 
-                if !viewModel.entryLecture.isCustom && editMode.isEditing {
+                if !viewModel.entryLecture.isCustom, displayMode == .normal, editMode.isEditing {
                     Button {
                         showResetConfirmation = true
                     } label: {
                         Text(TimetableStrings.editReset)
-                            .font(.system(size: 16))
                             .foregroundStyle(.red)
-                            .frame(maxWidth: .infinity)
                     }
                 }
 
-                if !editMode.isEditing {
+                if displayMode == .normal, !editMode.isEditing {
                     Button {
                         showDeleteConfirmation = true
                     } label: {
                         Text(SharedUIComponentsStrings.alertDelete)
-                            .font(.system(size: 16))
                             .foregroundStyle(.red)
-                            .frame(maxWidth: .infinity)
                     }
                 }
             }
-        default:
-            EmptyView()
+            .font(.system(size: 16))
+            .padding(.vertical, 15)
+            .frame(maxWidth: .infinity)
+            .background(TimetableAsset.groupForeground.swiftUIColor)
+            .contentShape(.rect)
         }
     }
 }

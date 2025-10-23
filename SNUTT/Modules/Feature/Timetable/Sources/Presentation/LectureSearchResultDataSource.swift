@@ -13,6 +13,11 @@ import TimetableInterface
 @Observable
 @MainActor
 class LectureSearchResultDataSource {
+    enum SearchState {
+        case initial
+        case searched([Lecture])
+    }
+
     @ObservationIgnored
     @Dependency(\.lectureSearchRepository) private var searchRepository
 
@@ -23,7 +28,7 @@ class LectureSearchResultDataSource {
     private var isLoading = false
     private var canFetchMore = true
     private var predicates: [SearchPredicate]?
-    private(set) var searchResults = [Lecture]()
+    private(set) var searchState: SearchState = .initial
 
     private func fetchSearchResult(
         query: String,
@@ -54,11 +59,12 @@ class LectureSearchResultDataSource {
         searchQuery = query
         self.quarter = quarter
         self.predicates = predicates
-        searchResults = lectures
+        searchState = .searched(lectures)
     }
 
     func fetchMoreSearchResult() async throws {
         guard !isLoading, canFetchMore, let quarter, let predicates else { return }
+        guard case .searched(let currentLectures) = searchState else { return }
         isLoading = true
         defer {
             isLoading = false
@@ -69,11 +75,11 @@ class LectureSearchResultDataSource {
             quarter: quarter,
             predicates: predicates
         )
-        searchResults.append(contentsOf: lectures)
+        searchState = .searched(currentLectures + lectures)
     }
 
     func reset() {
-        searchResults = []
+        searchState = .initial
         currentPage = 0
         canFetchMore = true
         searchQuery = ""

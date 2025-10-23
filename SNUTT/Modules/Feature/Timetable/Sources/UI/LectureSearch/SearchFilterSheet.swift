@@ -31,6 +31,7 @@ struct SearchFilterSheet: View {
         }
         .presentationDetents([.height(450)])
         .presentationCornerRadius(15)
+        .analyticsScreen(.searchFilter)
     }
 
     private var filterToolbar: some View {
