@@ -14,5 +14,6 @@ public struct ThemeMarketScene: View {
     public init() {}
     public var body: some View {
         SwiftUIWebView(url: viewModel.baseURL, cookies: viewModel.webCookies)
+            .analyticsScreen(.themeMarket)
     }
 }

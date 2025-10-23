@@ -63,6 +63,7 @@ struct ThemeSettingsScene: View {
         .task {
             try? await themeViewModel.fetchThemes()
         }
+        .analyticsScreen(.themeHome)
     }
 
     private var customThemes: [Theme] {
