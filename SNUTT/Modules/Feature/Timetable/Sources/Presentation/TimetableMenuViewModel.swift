@@ -8,11 +8,19 @@
 import Dependencies
 import Foundation
 import Observation
+import SwiftUI
+import ThemesInterface
 import TimetableInterface
 
 @Observable
 @MainActor
 final class TimetableMenuViewModel {
+    @ObservationIgnored
+    @Dependency(\.timetableImageRenderer) private var imageRenderer
+
+    @ObservationIgnored
+    @Dependency(\.timetableRepository) private var timetableRepository
+
     private let timetableViewModel: TimetableViewModel
 
     init(timetableViewModel: TimetableViewModel) {
@@ -29,6 +37,10 @@ final class TimetableMenuViewModel {
 
     var availableQuarters: [Quarter] {
         timetableViewModel.availableQuarters
+    }
+
+    var configuration: TimetableConfiguration {
+        timetableViewModel.configuration
     }
 
     func presentThemeSheet() {
@@ -83,6 +95,21 @@ final class TimetableMenuViewModel {
     func createTimetable(title: String, quarter: Quarter) async throws {
         try await timetableViewModel.createTimetable(title: title, quarter: quarter)
     }
+
+    func createTimetableImage(
+        timetable: TimetableMetadata,
+        colorScheme: ColorScheme,
+        availableThemes: [Theme],
+    ) async throws -> TimetableImage {
+        let timetable = try await timetableRepository.fetchTimetable(timetableID: timetable.id)
+        let data = try await imageRenderer.render(
+            timetable: timetable,
+            configuration: configuration,
+            availableThemes: availableThemes,
+            colorScheme: colorScheme
+        )
+        return TimetableImage(data: data)
+    }
 }
 
 extension TimetableMenuViewModel {
@@ -91,4 +118,9 @@ extension TimetableMenuViewModel {
         let quarter: Quarter
         let metadataList: [TimetableMetadata]
     }
+}
+
+struct TimetableImage: Identifiable, Sendable {
+    let id = UUID()
+    let data: Data
 }

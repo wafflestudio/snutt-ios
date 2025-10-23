@@ -7,6 +7,11 @@
 
 import Dependencies
 import TimetableInterface
+import TimetableUIComponents
+
+extension TimetableImageRendererKey: DependencyKey {
+    public static let liveValue: any TimetableImageRenderer = SwiftUITimetableImageRenderer()
+}
 
 extension TimetableLocalRepositoryKey: @retroactive DependencyKey {
     public static let liveValue: any TimetableLocalRepository =

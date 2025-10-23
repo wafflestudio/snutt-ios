@@ -31,6 +31,7 @@
 "sheet.ellipsis.editTitle" = "이름 변경";
 "sheet.ellipsis.primary.enable" = "학기 대표 시간표로 지정";
 "sheet.ellipsis.primary.disable" = "학기 대표 시간표 해제";
+"sheet.ellipsis.share" = "시간표 이미지 공유";
 "sheet.ellipsis.theme" = "시간표 테마 설정";
 "sheet.ellipsis.delete" = "시간표 삭제";
 
@@ -47,6 +48,8 @@
 "search.filter.apply" = "필터 적용";
 
 "search.input.placeholder" = "검색어를 입력하세요";
+"search.result.empty.title" = "검색 결과가 존재하지 않습니다";
+"search.result.empty.description" = "다른 검색어로 다시 시도해주세요";
 "search.bookmark.empty.title" = "추가한 관심강좌가 없습니다.";
 "search.bookmark.empty.description" = "고민되는 강의를 관심강좌에 추가하여\n관리해보세요.";
 "search.tips.title" = "SNUTT 검색 꿀팁 🍯";

@@ -22,7 +22,7 @@ struct PlaceholderTextEditor: View {
             TextEditor(text: $text)
                 .scrollContentBackground(.hidden)
                 .frame(minHeight: 30, maxHeight: 400)
-                .introspect(.textEditor, on: .iOS(.v17, .v18)) { textView in
+                .introspect(.textEditor, on: .iOS(.v17, .v18, .v26)) { textView in
                     textView.textContainerInset = .zero
                     textView.textContainer.lineFragmentPadding = 0
                 }
