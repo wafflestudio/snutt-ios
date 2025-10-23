@@ -62,21 +62,27 @@ struct TimetablePainter {
     }
 
     // MARK: Auto Fit
+    
+    /// `autoFit`이 설정되어 있더라도, 기본값(월-금, 9-17시)을 따라야 하는지 판단한다.
+    private static func needsDefaultConfig(timetable: Timetable?) -> Bool {
+        guard let lectures = timetable?.lectures else { return true }
+        guard lectures.isEmpty || lectures.allSatisfy({ $0.timePlaces.isEmpty }) else { return false }
+        guard let selectedLecture = timetable?.selectedLecture else { return true }
+        return selectedLecture.timePlaces.isEmpty
+    }
 
     /// `autoFit`을 고려한 시간표의 시작 시각. 빈 시간표인 경우 기본 9시이다.
     static func getStartingHour(current: Timetable?, config: TimetableConfiguration) -> Int {
         if !config.autoFit {
             return config.minHour
         }
-
-        if let current = current, current.selectedLecture == nil && current.lectures.isEmpty {
+        if needsDefaultConfig(timetable: current) {
             return 9
         }
-
+        
         guard let startTime = current?.earliestStartHour else {
             return config.minHour
         }
-
         return min(startTime, 9)
     }
 
@@ -85,15 +91,13 @@ struct TimetablePainter {
         if !config.autoFit {
             return config.maxHour
         }
-
-        if let current = current, current.selectedLecture == nil && current.lectures.isEmpty {
+        if needsDefaultConfig(timetable: current) {
             return 17
         }
 
         guard let endTime = current?.lastEndHour else {
             return config.maxHour
         }
-
         let startTime = getStartingHour(current: current, config: config)
         return max(endTime, startTime + 8) // autofit을 사용한다면 최소 8시간의 간격은 유지한다.
     }
@@ -105,13 +109,13 @@ struct TimetablePainter {
         return end - start + 1
     }
 
-    /// `autoFit`을 고려한 시간표 요일들. 빈 시간표인 경우 기본 월~금이다.
+    /// `autoFit`을 고려한 시간표 요일들. 빈 시간표인 경우 기본 월-금이다.
     static func getVisibleWeeks(current: Timetable?, config: TimetableConfiguration) -> [Weekday] {
         if !config.autoFit {
             return config.visibleWeeksSorted
         }
-
-        if current?.lectures.isEmpty ?? true {
+        
+        if needsDefaultConfig(timetable: current) {
             return [.mon, .tue, .wed, .thu, .fri]
         }
 
