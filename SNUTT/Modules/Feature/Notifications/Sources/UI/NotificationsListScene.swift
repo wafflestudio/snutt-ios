@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import DependenciesUtility
 import SharedUIComponents
 import SwiftUI
 import SwiftUIUtility

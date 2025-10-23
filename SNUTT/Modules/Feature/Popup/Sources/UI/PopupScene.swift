@@ -30,6 +30,7 @@ private struct PopupScene: View {
                         .ignoresSafeArea(.all)
                     PopupView(viewModel: viewModel, popup: currentPopup)
                         .padding(.horizontal, reader.size.width * 0.1)
+                        .id(currentPopup.id)
                 }
             }
         }

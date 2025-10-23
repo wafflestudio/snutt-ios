@@ -88,6 +88,7 @@ struct MenuThemeSelectionSheet: View {
         .onDisappear {
             themeViewModel.selectTheme(nil)
         }
+        .analyticsScreen(.themePreview)
     }
 
     @ViewBuilder func selectionButton(for selection: SelectionType) -> some View {
