@@ -105,7 +105,6 @@ struct MyAccountScene: View {
             }
             Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
         }
-        .task {}
     }
 }
 
