@@ -21,22 +21,25 @@ public struct APIClientProvider: Sendable {
     @Dependency(\.authSecureRepository) private var secureRepository
 
     public func apiClient() -> any APIProtocol {
-        Client(
+        var middlewares: [any ClientMiddleware] = [
+            AuthenticationMiddleware(
+                appMetadata: appMetadata,
+                accessToken: authState.get(.accessToken),
+                handleUnauthenticated: {
+                    authState.clear()
+                    try? secureRepository.clear()
+                }
+            ),
+            ErrorDecodingMiddleware(),
+        ]
+        #if DEBUG
+            middlewares.append(DebugNetworkLoggingMiddleware())
+        #endif
+        return Client(
             serverURL: appMetadata.apiURL,
             configuration: .init(dateTranscoder: LenientDateTranscoder()),
             transport: URLSessionTransport(),
-            middlewares: [
-                AuthenticationMiddleware(
-                    appMetadata: appMetadata,
-                    accessToken: authState.get(.accessToken),
-                    handleUnauthenticated: {
-                        authState.clear()
-                        try? secureRepository.clear()
-                    }
-                ),
-                ErrorDecodingMiddleware(),
-                LoggingMiddleware(),
-            ]
+            middlewares: middlewares
         )
     }
 }

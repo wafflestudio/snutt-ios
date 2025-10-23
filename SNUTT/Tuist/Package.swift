@@ -45,7 +45,7 @@ let package = Package(
         .package(url: "https://github.com/Matejkob/swift-spyable", .upToNextMajor(from: "0.8.0")),
         .package(url: "https://github.com/gohanlon/swift-memberwise-init-macro", from: "0.5.2"),
         .package(url: "https://github.com/tgrapperon/swift-dependencies-additions", branch: "xcode26"),
-        .package(url: "https://github.com/siteline/swiftui-introspect", from: "1.3.0"),
+        .package(url: "https://github.com/siteline/swiftui-introspect", from: "26.0.0"),
         .package(url: "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git", .upToNextMajor(from: "2.12.4")),
         .package(url: "https://github.com/firebase/firebase-ios-sdk", .upToNextMajor(from: "11.9.0")),
         .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "7.0.0"),
