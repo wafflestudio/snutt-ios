@@ -5,6 +5,7 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import AnalyticsInterface
 import Dependencies
 import NotificationsInterface
 import SharedUIComponents
@@ -17,10 +18,9 @@ public struct TimetableScene: View {
     @Bindable var timetableViewModel: TimetableViewModel
     @State private(set) var searchViewModel: LectureSearchViewModel
     @Binding private(set) var isSearchMode: Bool
-    @Environment(\.themeViewModel) private var themeViewModel
     @Environment(\.errorAlertHandler) private var errorAlertHandler
-    @Environment(\.notificationsUIProvider) private var notificationsUIProvider
     @Environment(\.themeUIProvider) private var themeUIProvider
+    @Environment(\.themeViewModel) private var themeViewModel
 
     public init(
         isSearchMode: Binding<Bool>,
@@ -46,7 +46,7 @@ public struct TimetableScene: View {
                     Group {
                         TimetableAsset.searchlistBackground.swiftUIColor
                             .zIndex(1)
-                        LectureSearchResultScene(viewModel: searchViewModel)
+                        LectureSearchResultScene(viewModel: searchViewModel, isSearchMode: isSearchMode)
                             .zIndex(.infinity)
                     }
                     .opacity(isSearchMode ? 1 : 0)
@@ -56,7 +56,7 @@ public struct TimetableScene: View {
             .animation(.defaultSpring, value: isSearchMode)
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: TimetableDetailSceneTypes.self) {
-                detailScene(for: $0)
+                TimetableDetails(pathType: $0, timetableViewModel: timetableViewModel)
             }
             .onLoad {
                 await withThrowingTaskGroup(of: Void.self) { group in
@@ -97,34 +97,7 @@ public struct TimetableScene: View {
                 searchViewModel.searchingQuarter = newValue
             }
         }
-    }
-
-    @ViewBuilder private func detailScene(for type: TimetableDetailSceneTypes) -> some View {
-        switch type {
-        case .lectureList:
-            LectureListScene(viewModel: timetableViewModel)
-        case let .lectureDetail(lecture):
-            LectureEditDetailScene(
-                timetableViewModel: timetableViewModel,
-                entryLecture: lecture,
-                displayMode: .normal,
-                paths: $timetableViewModel.paths
-            )
-            .handleLectureTimeConflict()
-        case let .lectureColorSelection(viewModel):
-            let currentTheme = timetableViewModel.currentTimetable?.theme
-            let theme = themeViewModel.availableThemes.first(where: { $0.id == currentTheme?.id })
-            if let theme {
-                LectureColorSelectionListView(
-                    theme: theme,
-                    viewModel: viewModel
-                )
-            } else {
-                ProgressView()
-            }
-        case .notificationList:
-            AnyView(notificationsUIProvider.makeNotificationsScene())
-        }
+        .analyticsScreen(.timetableHome, condition: !isSearchMode)
     }
 
     private var timetable: some View {
@@ -140,6 +113,9 @@ public struct TimetableScene: View {
                 \.lectureTapAction,
                 LectureTapAction(action: { lecture in
                     timetableViewModel.paths.append(.lectureDetail(lecture))
+                    Dependency(\.analyticsLogger).wrappedValue.logScreen(
+                        AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .timetable))
+                    )
                 })
             )
         }

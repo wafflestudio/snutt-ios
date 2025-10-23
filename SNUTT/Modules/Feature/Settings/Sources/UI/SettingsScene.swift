@@ -16,7 +16,7 @@ public struct SettingsScene: View {
     public init() {}
 
     public var body: some View {
-        NavigationStack(path: $viewModel.path) {
+        NavigationStack {
             List {
                 Section {
                     SettingsNavigationLink(
@@ -64,16 +64,6 @@ public struct SettingsScene: View {
                         title: SettingsStrings.infoDevelopers,
                         value: SettingsPathType.developers
                     )
-                }
-
-                Section {
-                    SettingsNavigationLink(
-                        title: SettingsStrings.feedback,
-                        value: SettingsPathType.shareFeedback
-                    )
-                }
-
-                Section {
                     SettingsNavigationLink(
                         title: SettingsStrings.termsService,
                         value: SettingsPathType.termsOfService
@@ -81,6 +71,13 @@ public struct SettingsScene: View {
                     SettingsNavigationLink(
                         title: SettingsStrings.privacyPolicy,
                         value: SettingsPathType.privacyPolicy
+                    )
+                }
+
+                Section {
+                    SettingsNavigationLink(
+                        title: SettingsStrings.feedback,
+                        value: SettingsPathType.userSupport
                     )
                 }
 
@@ -109,6 +106,7 @@ public struct SettingsScene: View {
                 MyAccountDetails(menuItem: menuItem, viewModel: viewModel.myAccountViewModel)
             }
         }
+        .analyticsScreen(.settingsHome)
     }
 }
 

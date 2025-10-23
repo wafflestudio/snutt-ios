@@ -26,7 +26,8 @@ struct STFont {
     static let semibold13: UIFont = .systemFont(ofSize: 13, weight: .semibold)
     static let medium13: UIFont = .systemFont(ofSize: 13, weight: .medium)
     static let regular13: UIFont = .systemFont(ofSize: 13)
-    
+
+    static let bold12: UIFont = .systemFont(ofSize: 12, weight: .bold)
     static let regular12: UIFont = .systemFont(ofSize: 12)
 
     static let bold11: UIFont = .systemFont(ofSize: 11, weight: .bold)

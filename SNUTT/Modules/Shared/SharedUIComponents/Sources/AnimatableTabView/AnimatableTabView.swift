@@ -219,22 +219,21 @@ public struct TabScene<T: TabItem> {
     }
 }
 
-public struct ColorView: View {
-    let color: Color
-    public init(color: Color) {
-        self.color = color
-    }
+#Preview {
+    struct ColorView: View {
+        let color: Color
+        init(color: Color) {
+            self.color = color
+        }
 
-    public var body: some View {
-        ZStack {
-            color
-                .ignoresSafeArea()
-            Text("\(color)")
+        var body: some View {
+            ZStack {
+                color
+                    .ignoresSafeArea()
+                Text(String(describing: color))
+            }
         }
     }
-}
-
-#Preview {
     enum PreviewTabItem: Int, TabItem {
         case timetable, search, friends, review, settings
         func image(isSelected _: Bool) -> UIImage {

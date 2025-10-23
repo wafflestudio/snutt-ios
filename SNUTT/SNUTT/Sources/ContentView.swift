@@ -1,4 +1,6 @@
+import APIClient
 import APIClientInterface
+import AnalyticsInterface
 import Auth
 import AuthInterface
 import Dependencies
@@ -37,6 +39,9 @@ struct ContentView: View {
                 try await viewModel.handleURLScheme(url)
             }
         }
+        #if DEBUG
+            .observeNetworkLogsGesture()
+        #endif
     }
 
     private var mainView: some View {
@@ -52,12 +57,19 @@ struct ContentView: View {
                     .environment(\.notificationsUIProvider, NotificationsUIProvider())
                 )
                 TabScene(tabItem: TabItem.search)
-                TabScene(tabItem: TabItem.friends, rootView: ColorView(color: .yellow))
-                TabScene(tabItem: TabItem.review, rootView: ReviewsScene())
+                TabScene(tabItem: TabItem.friends, rootView: EmptyView())
+                TabScene(
+                    tabItem: TabItem.review,
+                    rootView: ReviewsScene()
+                        .modifier(AnalyticsScreenModifier(screen: Reviews.AnalyticsScreen.reviewHome))
+                )
                 TabScene(
                     tabItem: TabItem.settings,
                     rootView: SettingsScene()
                         .environment(\.vacancyUIProvider, VacancyUIProvider())
+                        #if DEBUG
+                            .environment(\.networkLogUIProvider, NetworkLogUIProvider())
+                        #endif
                 )
             }
             .ignoresSafeArea()

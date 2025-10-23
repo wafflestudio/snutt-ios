@@ -5,6 +5,7 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import APIClientInterface
 import Foundation
 import HTTPTypes
 import OpenAPIRuntime
@@ -38,18 +39,14 @@ public struct ErrorDecodingMiddleware: ClientMiddleware {
     }
 }
 
-/// Client-side representation of server errors that aren't predefined in the client.
-private struct ClientUnknownServerError: LocalizedError {
-    var errorDescription: String?
-    var failureReason: String?
-    var recoverySuggestion: String?
-
-    init?(jsonData: [String: Any]) {
-        guard jsonData["errcode"] != nil else { return nil }
-        errorDescription = jsonData["title"] as? String
-        failureReason = jsonData["displayMessage"] as? String
-
-        // Field not implemented by server, reserved for future use when added
-        recoverySuggestion = jsonData["recoveryMessage"] as? String
+extension ClientUnknownServerError {
+    public init?(jsonData: [String: Any]) {
+        guard let errorCode = jsonData["errcode"] as? Int else { return nil }
+        self.init(
+            errorCode: errorCode,
+            errorDescription: jsonData["title"] as? String,
+            failureReason: jsonData["displayMessage"] as? String,
+            recoverySuggestion: jsonData["recoveryMessage"] as? String
+        )
     }
 }

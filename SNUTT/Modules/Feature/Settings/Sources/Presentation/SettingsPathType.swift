@@ -17,8 +17,10 @@ enum SettingsPathType: Hashable {
     case vacancyNotification
     case themeMarket
     case developers
-    case shareFeedback
+    case userSupport
     case termsOfService
     case privacyPolicy
-    case networkLogs
+    #if DEBUG
+        case networkLogs
+    #endif
 }

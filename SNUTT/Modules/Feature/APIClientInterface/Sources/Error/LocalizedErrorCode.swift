@@ -57,7 +57,6 @@ public enum LocalizedErrorCode: Int, LocalizedError {
     case fbIdWithSomeoneElse = 0x3009
     case wrongSemester = 0x300A
     case notCustomLecture = 0x300B
-    case lectureTimeOverlap = 0x300C
     case isCustomLecture = 0x300D
     case userHasNoFCMKey = 0x300E
     case invalidEmail = 0x300F
@@ -111,7 +110,7 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorDescriptionInvalidTimemask
         case .invalidColor:
             APIClientInterfaceStrings.errorDescriptionInvalidColor
-        case .invalidTimeJSON, .invalidLectureTime, .lectureTimeOverlap:
+        case .invalidTimeJSON, .invalidLectureTime:
             APIClientInterfaceStrings.errorDescriptionInvalidTime
         case .invalidNotificationDetail:
             APIClientInterfaceStrings.errorDescriptionInvalidNotification
@@ -198,7 +197,7 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorFailureReasonInvalidTimemask
         case .invalidColor:
             APIClientInterfaceStrings.errorFailureReasonInvalidColor
-        case .invalidTimeJSON, .invalidLectureTime, .lectureTimeOverlap:
+        case .invalidTimeJSON, .invalidLectureTime:
             APIClientInterfaceStrings.errorFailureReasonInvalidTime
         case .invalidNotificationDetail:
             APIClientInterfaceStrings.errorFailureReasonInvalidNotification
@@ -285,7 +284,7 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorRecoverySuggestionInvalidTimemask
         case .invalidColor:
             APIClientInterfaceStrings.errorRecoverySuggestionInvalidColor
-        case .invalidTimeJSON, .invalidLectureTime, .lectureTimeOverlap:
+        case .invalidTimeJSON, .invalidLectureTime:
             APIClientInterfaceStrings.errorRecoverySuggestionInvalidTime
         case .invalidNotificationDetail:
             APIClientInterfaceStrings.errorRecoverySuggestionInvalidNotification

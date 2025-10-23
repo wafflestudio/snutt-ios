@@ -208,6 +208,7 @@ public enum TimetableDetailSceneTypes: Hashable, Equatable {
     case lectureList
     case notificationList
     case lectureDetail(Lecture)
+    case lectureCreate(Lecture)
     case lectureColorSelection(LectureEditDetailViewModel)
 
     public static func == (lhs: TimetableDetailSceneTypes, rhs: TimetableDetailSceneTypes) -> Bool {
@@ -216,6 +217,8 @@ public enum TimetableDetailSceneTypes: Hashable, Equatable {
             true
         case (.notificationList, .notificationList):
             true
+        case let (.lectureCreate(lhs), .lectureCreate(rhs)):
+            lhs.id == rhs.id
         case let (.lectureColorSelection(lhs), .lectureColorSelection(rhs)):
             lhs.lectureID == rhs.lectureID
         case let (.lectureDetail(lhs), .lectureDetail(rhs)):

@@ -56,6 +56,20 @@ struct ThemeEditDetailScene: View {
         }
     }
 
+    private var analyticsScreen: AnalyticsScreen {
+        if viewModel.isNewTheme {
+            return .themeCustomNew
+        }
+        switch viewModel.editableTheme.status {
+        case .builtIn:
+            return .themeBasicDetail
+        case .customPrivate, .customPublished:
+            return .themeCustomEdit
+        case .customDownloaded:
+            return .themeDownloaded
+        }
+    }
+
     private var themeNameSection: some View {
         Section("테마명") {
             if viewModel.isThemeEditable {

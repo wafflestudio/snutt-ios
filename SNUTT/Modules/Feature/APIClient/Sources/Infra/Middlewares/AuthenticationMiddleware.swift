@@ -5,6 +5,7 @@
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
 //
 
+import APIClientInterface
 import Foundation
 import HTTPTypes
 import OpenAPIRuntime

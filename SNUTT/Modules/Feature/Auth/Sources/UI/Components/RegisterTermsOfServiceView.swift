@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import SharedAppMetadata
 import SharedUIWebKit
 import SwiftUI
 

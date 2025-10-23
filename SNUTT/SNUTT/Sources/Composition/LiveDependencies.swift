@@ -6,6 +6,8 @@
 //
 
 import APIClientInterface
+import Analytics
+import AnalyticsInterface
 import Auth
 import AuthInterface
 import Configs
@@ -74,4 +76,12 @@ extension ThemeRepositoryKey: @retroactive DependencyKey {
 
 extension SocialAuthServiceProviderKey: @retroactive DependencyKey {
     public static let liveValue: any SocialAuthServiceProvider = LiveSocialAuthServiceProvider()
+}
+
+extension AnalyticsSDKKey: @retroactive DependencyKey {
+    public static let liveValue: any AnalyticsSDK = FirebaseAnalyticsSDK()
+}
+
+extension AnalyticsLoggerKey: @retroactive DependencyKey {
+    public static let liveValue: any AnalyticsLogger = FirebaseAnalyticsLogger()
 }
