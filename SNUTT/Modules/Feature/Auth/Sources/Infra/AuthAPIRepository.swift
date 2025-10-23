@@ -37,9 +37,11 @@ public struct AuthAPIRepository: AuthRepository {
     public func registerWithLocalID(
         localID: String,
         localPassword: String,
-        email _: String
+        email: String
     ) async throws -> LoginResponse {
-        let result = try await apiClient.loginLocal(body: .json(.init(id: localID, password: localPassword)))
+        let result = try await apiClient.registerLocal(
+            body: .json(.init(email: email, id: localID, password: localPassword))
+        )
         let json = try result.ok.body.json
         return .init(accessToken: json.token, userID: json.user_id)
     }
