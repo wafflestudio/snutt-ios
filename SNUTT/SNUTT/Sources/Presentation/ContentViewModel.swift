@@ -24,6 +24,9 @@ class ContentViewModel {
     @ObservationIgnored
     @Dependency(\.configsRepository) var configsRepository
 
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) var analyticsLogger
+
     private let authState: any AuthState
     private(set) var isAuthenticated: Bool
     var selectedTab: TabItem = .timetable

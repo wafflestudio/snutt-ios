@@ -7,6 +7,7 @@
 
 import APIClientInterface
 import Foundation
+import Timetable
 
 extension ContentViewModel {
     typealias QueryParameters = [URLQueryItem]
@@ -42,6 +43,9 @@ extension ContentViewModel {
         else { throw LocalizedErrorCode.deeplinkLectureNotFound }
         selectedTab = .timetable
         timetableRouter.navigationPaths = [.notificationList, .lectureDetail(lecture)]
+        analyticsLogger.logScreen(
+            Timetable.AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .notification))
+        )
     }
 
     private func handleBookmarkScheme(_: QueryParameters?) async throws {
