@@ -152,6 +152,51 @@ struct EvLecture {
     }
 }
 
+struct LectureReminder {
+    let timetableLectureId: String
+    let lectureTitle: String
+    var option: ReminderOption
+}
+
+extension LectureReminder {
+    init(from dto: LectureReminderDto) {
+        self.timetableLectureId = dto.timetableLectureId
+        self.lectureTitle = dto.courseTitle
+        self.option = .init(rawValue: dto.option) ?? .none
+    }
+}
+
+enum ReminderOption: String, CaseIterable, Codable {
+    case none = "NONE"
+    case before10 = "TEN_MINUTES_BEFORE"
+    case onTime = "ZERO_MINUTE"
+    case after10 = "TEN_MINUTES_AFTER"
+    
+    var label: String {
+        switch self {
+        case .none: return "없음"
+        case .before10: return "10분 전"
+        case .onTime: return "수업 시작 시"
+        case .after10: return "10분 후"
+        }
+    }
+    
+    var toToast: ToastType {
+        switch self {
+        case .none: .reminderNone
+        case .before10: .reminder10Before
+        case .onTime: .reminderOnTime
+        case .after10: .reminder10After
+        }
+    }
+}
+
+#if DEBUG
+extension LectureReminder {
+    static let preview: Self = .init(timetableLectureId: "", lectureTitle: "", option: .none)
+}
+#endif
+
 struct LectureColor: Hashable {
     var fg: Color
     var bg: Color

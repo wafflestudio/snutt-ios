@@ -72,6 +72,8 @@ struct SNUTTView: View, Sendable {
                         }
                         group.addTask {
                             await viewModel.fetchTimetableList()
+                            await viewModel.getSemesterStatus()
+                            await viewModel.fetchLectureReminderList()
                         }
                         group.addTask {
                             await viewModel.fetchRecentTimetable()
@@ -212,6 +214,14 @@ extension SNUTTView {
                 services.globalUIService.presentErrorAlert(error: error)
             }
         }
+        
+        func getSemesterStatus() async {
+            do {
+                try await services.etcService.getSemesterStatus()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
 
         func fetchTimetableList() async {
             do {
@@ -232,6 +242,14 @@ extension SNUTTView {
         func fetchRecentTimetable() async {
             do {
                 try await services.timetableService.fetchRecentTimetable()
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+        
+        func fetchLectureReminderList() async {
+            do {
+                try await services.lectureService.fetchLectureReminderList()
             } catch {
                 services.globalUIService.presentErrorAlert(error: error)
             }

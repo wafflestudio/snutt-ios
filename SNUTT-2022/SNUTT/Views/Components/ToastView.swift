@@ -57,12 +57,14 @@ private struct ToastView: View {
                 .font(STFont.medium14.font)
                 .foregroundStyle(.white)
             Spacer()
-            Button {
-                toast.action()
-            } label: {
-                Text("보기")
-                    .font(STFont.medium14.font)
-                    .foregroundStyle(STColor.milkMint)
+            if let action = toast.action {
+                Button {
+                    action()
+                } label: {
+                    Text("보기")
+                        .font(STFont.medium14.font)
+                        .foregroundStyle(STColor.milkMint)
+                }
             }
         }
         .padding(.horizontal, 16)

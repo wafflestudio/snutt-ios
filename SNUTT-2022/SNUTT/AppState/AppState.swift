@@ -15,6 +15,7 @@ final class AppState {
     var system = SystemState()
     var search = SearchState()
     var timetable = TimetableState()
+    var reminder = LectureReminderState()
     var friend = FriendState()
 
     var menu = MenuState()

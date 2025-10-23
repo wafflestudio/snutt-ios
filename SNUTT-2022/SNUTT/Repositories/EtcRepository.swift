@@ -10,6 +10,7 @@ import Foundation
 
 protocol EtcRepositoryProtocol {
     func sendFeedback(email: String, message: String) async throws
+    func getSemesterStatus() async throws -> SemesterStatusDto
 }
 
 class EtcRepository: EtcRepositoryProtocol {
@@ -22,6 +23,12 @@ class EtcRepository: EtcRepositoryProtocol {
     func sendFeedback(email: String, message: String) async throws {
         let _ = try await session.request(EtcRouter.feedback(email: email, message: message))
             .serializingString()
+            .handlingError()
+    }
+    
+    func getSemesterStatus() async throws -> SemesterStatusDto {
+        try await session.request(SemesterRouter.getSemesterStatus)
+            .serializingDecodable(SemesterStatusDto.self)
             .handlingError()
     }
 }
