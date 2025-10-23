@@ -8,6 +8,7 @@
 import SharedUIComponents
 import SwiftUI
 import SwiftUIUtility
+import ThemesInterface
 import TimetableInterface
 
 struct MenuEllipsisSheet: View {
@@ -17,8 +18,11 @@ struct MenuEllipsisSheet: View {
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.dismiss) private var dismiss
     @Environment(\.sheetDismiss) private var menuSheetDismiss
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.themeViewModel) private var themeViewModel
 
     @State private var isRenameMenuPresented = false
+    @State private var timetableImage: TimetableImage?
 
     var body: some View {
         GeometryReader { _ in
@@ -42,6 +46,17 @@ struct MenuEllipsisSheet: View {
                         }
                     }
                 }
+
+                EllipsisSheetButton(menu: .share) {
+                    errorAlertHandler.withAlert {
+                        timetableImage = try await viewModel.createTimetableImage(
+                            timetable: metadata,
+                            colorScheme: colorScheme,
+                            availableThemes: themeViewModel.availableThemes
+                        )
+                    }
+                }
+
                 EllipsisSheetButton(menu: .theme) {
                     menuSheetDismiss()
                     viewModel.presentThemeSheet()
@@ -59,8 +74,11 @@ struct MenuEllipsisSheet: View {
             }
             .padding(.vertical, 10)
             .padding(.horizontal, 5)
-            .presentationDetents([.height(225)])
+            .presentationDetents([.height(260)])
             .presentationCornerRadius(15)
+        }
+        .sheet(item: $timetableImage) { image in
+            TimetableShareSheet(timetableImage: image)
         }
         .observeErrors()
     }
@@ -93,6 +111,7 @@ extension EllipsisSheetButton {
     enum Menu {
         case edit
         case primary(isOn: Bool)
+        case share
         case theme
         case delete
 
@@ -101,6 +120,7 @@ extension EllipsisSheetButton {
             case .edit: return TimetableAsset.sheetEdit.image
             case .primary(true): return TimetableAsset.sheetFriendOff.image
             case .primary(false): return TimetableAsset.sheetFriend.image
+            case .share: return TimetableAsset.navShare.image
             case .theme: return TimetableAsset.sheetPalette.image
             case .delete: return TimetableAsset.sheetTrash.image
             }
@@ -111,6 +131,7 @@ extension EllipsisSheetButton {
             case .edit: return TimetableStrings.sheetEllipsisEditTitle
             case .primary(true): return TimetableStrings.sheetEllipsisPrimaryDisable
             case .primary(false): return TimetableStrings.sheetEllipsisPrimaryEnable
+            case .share: return TimetableStrings.sheetEllipsisShare
             case .theme: return TimetableStrings.sheetEllipsisTheme
             case .delete: return TimetableStrings.sheetEllipsisDelete
             }

@@ -22,6 +22,7 @@ extension View {
             )
         ) {
             TimetableMenuContentView(timetableViewModel: viewModel)
+                .analyticsScreen(.timetableMenu)
         }
     }
 }

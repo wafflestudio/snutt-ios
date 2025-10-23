@@ -7,12 +7,24 @@
 
 import SharedUIComponents
 import SwiftUI
+import TimetableUIComponents
 
 struct LectureListScene: View {
     let viewModel: TimetableViewModel
     var body: some View {
-        ExpandableLectureListView(viewModel: LectureListViewModel(timetableViewModel: viewModel))
+        let listViewModel = LectureListViewModel(timetableViewModel: viewModel)
+        ExpandableLectureListView(viewModel: listViewModel)
             .foregroundStyle(Color.label)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        listViewModel.createNewLecture()
+                    } label: {
+                        Image(uiImage: TimetableAsset.navPlus.image)
+                    }
+                }
+            }
+            .analyticsScreen(.lectureList)
     }
 }
 

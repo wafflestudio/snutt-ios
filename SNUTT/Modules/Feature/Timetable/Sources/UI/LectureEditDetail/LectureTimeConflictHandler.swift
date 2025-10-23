@@ -31,8 +31,12 @@ public final class LectureTimeConflictHandler: Sendable {
     ) async throws -> T? {
         do {
             return try await operation(false)
-        } catch let error as any APIClientError where error.localizedCode == .lectureTimeOverlap {
-            return await handleConflictError(operation: operation, error: error.localizedCode!)
+        } catch let error as any APIClientError {
+            if let serverError = error.serverError, serverError.isLectureConflictError {
+                return await handleConflictError(operation: operation, error: serverError)
+            } else {
+                throw error
+            }
         } catch {
             // conflict가 아닌 다른 에러는 다시 throw
             throw error
@@ -41,7 +45,7 @@ public final class LectureTimeConflictHandler: Sendable {
 
     private func handleConflictError<T: Sendable>(
         operation: @escaping (_ overrideOnConflict: Bool) async throws -> T,
-        error: LocalizedErrorCode
+        error: ClientUnknownServerError
     ) async -> T? {
         return await withCheckedContinuation { continuation in
             pendingOperation = ConflictOperation(
@@ -65,9 +69,21 @@ public final class LectureTimeConflictHandler: Sendable {
 }
 
 private struct ConflictOperation {
-    let error: LocalizedErrorCode
+    let error: ClientUnknownServerError
     let onConfirm: @MainActor () -> Void
     let onCancel: @MainActor () -> Void
+}
+
+extension ClientUnknownServerError {
+    fileprivate var isLectureConflictError: Bool {
+        errorCode == 12300
+    }
+
+    fileprivate var errorMessage: String {
+        [failureReason, recoverySuggestion]
+            .compactMap(\.self)
+            .joined(separator: " ")
+    }
 }
 
 extension View {
@@ -92,7 +108,7 @@ private struct LectureTimeConflictHandlingModifier: ViewModifier {
                     conflictHandler.pendingOperation?.onConfirm()
                 }
             } message: { error in
-                Text("\(error.failureReason ?? "") 그래도 추가하시겠습니까?")
+                Text(error.errorMessage)
             }
     }
 }
