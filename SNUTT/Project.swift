@@ -11,6 +11,7 @@ let project = Project.app(
             name: "Timetable",
             category: .feature,
             dependencies: [
+                .target(name: "AnalyticsInterface"),
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
@@ -62,9 +63,18 @@ let project = Project.app(
             ]
         ),
         .module(
+            name: "Analytics",
+            category: .feature,
+            dependencies: [
+                .target(name: "AnalyticsInterface"),
+                .external(name: "Dependencies"),
+            ]
+        ),
+        .module(
             name: "Popup",
             category: .feature,
             dependencies: [
+                .target(name: "AnalyticsInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
@@ -78,6 +88,7 @@ let project = Project.app(
             name: "Notifications",
             category: .feature,
             dependencies: [
+                .target(name: "AnalyticsInterface"),
                 .target(name: "NotificationsInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
@@ -91,6 +102,7 @@ let project = Project.app(
             name: "Settings",
             category: .feature,
             dependencies: [
+                .target(name: "AnalyticsInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
@@ -105,6 +117,7 @@ let project = Project.app(
             name: "Vacancy",
             category: .feature,
             dependencies: [
+                .target(name: "AnalyticsInterface"),
                 .target(name: "VacancyInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "APIClientInterface"),
@@ -130,6 +143,7 @@ let project = Project.app(
             name: "Themes",
             category: .feature,
             dependencies: [
+                .target(name: "AnalyticsInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
@@ -154,6 +168,7 @@ let project = Project.app(
             name: "Reviews",
             category: .feature,
             dependencies: [
+                .target(name: "AnalyticsInterface"),
                 .target(name: "SharedUIWebKit"),
                 .target(name: "AuthInterface"),
                 .target(name: "ReviewsInterface"),
@@ -214,6 +229,15 @@ let project = Project.app(
                 .target(name: "APIClientInterface"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
+            ]
+        ),
+        .module(
+            name: "AnalyticsInterface",
+            category: .featureInterface,
+            dependencies: [
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+                .external(name: "Spyable"),
             ]
         ),
         .module(
@@ -291,6 +315,7 @@ let project = Project.app(
         // Define dependencies exclusively for the main target.
         .external(name: "FirebaseCore"),
         .external(name: "FirebaseMessaging"),
+        .external(name: "FirebaseAnalytics"),
     ],
     widgetDependencies: [
         .target(name: "TimetableInterface"),
