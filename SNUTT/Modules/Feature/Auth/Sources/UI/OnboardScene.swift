@@ -134,6 +134,7 @@ public struct OnboardScene: View {
                 }
             }
         }
+        .analyticsScreen(.onboard)
     }
 }
 

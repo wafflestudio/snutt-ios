@@ -22,7 +22,7 @@ final class OnboardViewModel {
     @Dependency(\.authRepository) private var authRepository
 
     @ObservationIgnored
-    @Dependency(\.authState) private var authState
+    @Dependency(\.authState) var authState
 
     @ObservationIgnored
     @Dependency(\.socialAuthServiceProvider) private var socialAuthServiceProvider
