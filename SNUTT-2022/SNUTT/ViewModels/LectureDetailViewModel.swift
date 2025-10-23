@@ -15,6 +15,7 @@ extension LectureDetailScene {
         @Published var isEmailVerifyAlertPresented = false
         @Published private var bookmarkedLectures: [Lecture] = []
         @Published var vacancyNotificationLectures: [Lecture] = []
+        @Published var reminderOption: ReminderOption = .none
         
         var errorTitle: String = ""
         var errorMessage: String = ""
@@ -28,12 +29,20 @@ extension LectureDetailScene {
             supportForMapViewEnabled = !(appState.system.configs?.disableMapFeature ?? false)
         }
 
-        var lectureService: LectureServiceProtocol {
+        private var lectureService: LectureServiceProtocol {
             services.lectureService
         }
 
         var currentTimetable: Timetable? {
             appState.timetable.current
+        }
+        
+        var theme: Theme {
+            if let currentTimetable = appState.timetable.current {
+                return appState.theme.themeList
+                    .first(where: { $0.id == currentTimetable.themeId || $0.theme == currentTimetable.theme }) ??
+                    Theme(rawValue: 0)
+            } else { return Theme(rawValue: 0) }
         }
 
         @Published private var _selectedTab: TabType = .review
@@ -176,6 +185,8 @@ extension LectureDetailScene {
             services.globalUIService.sendDetailWebViewReloadSignal(url: WebViewType.reviewDetail(id: detailId).url)
         }
 
+        // MARK: Bookmark
+        
         func bookmarkLecture(lecture: Lecture) async {
             FirebaseAnalyticsLogger().logEvent(.addToBookmark(.init(
                 lectureID: lecture.referenceId,
@@ -202,6 +213,8 @@ extension LectureDetailScene {
             appState.timetable.bookmark?.lectures
                 .contains(where: { $0.isEquivalent(with: lecture) }) ?? false
         }
+        
+        // MARK: Vacancy
 
         func addVacancyLecture(lecture: Lecture) async {
             FirebaseAnalyticsLogger().logEvent(.addToVacancy(.init(
@@ -227,14 +240,36 @@ extension LectureDetailScene {
         func isVacancyNotificationEnabled(lecture: Lecture) -> Bool {
             return vacancyNotificationLectures.contains(where: { $0.isEquivalent(with: lecture) })
         }
-
-        var theme: Theme {
-            if let currentTimetable = appState.timetable.current {
-                return appState.theme.themeList
-                    .first(where: { $0.id == currentTimetable.themeId || $0.theme == currentTimetable.theme }) ??
-                    Theme(rawValue: 0)
-            } else { return Theme(rawValue: 0) }
+        
+        // MARK: Lecture Reminder
+        
+        func showLectureReminderPicker() -> Bool {
+            guard let validPrimaryTable = lectureService.getCurrentOrNextSemesterPrimaryTable(),
+                  let currentTimetable = currentTimetable
+            else {
+                return false
+            }
+            return currentTimetable.id == validPrimaryTable.id
         }
+        
+        func getLectureReminderOption(_ lecture: Lecture) {
+            guard let reminder = appState.reminder.reminderList.first(where: { $0.timetableLectureId == lecture.id }) else {
+                return
+            }
+            reminderOption = reminder.option
+        }
+        
+        func changeLectureReminderState(lectureId: String, to option: ReminderOption) async throws {
+            do {
+                try await services.lectureService.changeLectureReminderState(lectureId: lectureId, to: option)
+                reminderOption = option
+                services.globalUIService.setToast(option.toToast)
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+        
+        // MARK: MapView
 
         func setIsMapViewExpanded(_ expand: Bool) {
             lectureService.setIsMapViewExpanded(expand)

@@ -16,7 +16,7 @@ protocol GlobalUIServiceProtocol: Sendable {
     func setSelectedTab(_ tab: TabType)
     func setIsErrorAlertPresented(_ value: Bool)
     func setIsMenuOpen(_ value: Bool)
-    func setToast(_ toast: ToastType?)
+    func setToast(_ toast: ToastType?, showButton: Bool?)
 
     func openEllipsis(for timetable: TimetableMetadata)
     func closeEllipsis()
@@ -48,6 +48,12 @@ protocol GlobalUIServiceProtocol: Sendable {
     func hasNewBadge(settingName: String) -> Bool
 
     func showNoticeViewIfNeeded() async throws
+}
+
+extension GlobalUIServiceProtocol {
+    func setToast(_ toast: ToastType?, showButton: Bool? = true) {
+        setToast(toast, showButton: showButton)
+    }
 }
 
 struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvidable {
@@ -152,14 +158,14 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
     
     // MARK: Toast
     
-    func setToast(_ toast: ToastType?) {
+    func setToast(_ toast: ToastType?, showButton: Bool? = true) {
         if let toast = toast {
             switch toast {
             case .reminderNone,
                  .reminder10Before,
                  .reminderOnTime,
                  .reminder10After:
-                setReminderToast(toast)
+                setReminderToast(toast, showButton)
             case .bookmark:
                 setBookmarkToast(toast)
             case .vacancy:
@@ -170,8 +176,15 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
         }
     }
     
-    private func setReminderToast(_ toast: ToastType) {
-        appState.system.toast = .init(type: toast) { setSelectedTab(.settings) }
+    private func setReminderToast(_ toast: ToastType, _ showButton: Bool?) {
+        var toast = Toast(type: toast)
+        if showButton == true {
+            toast.action = {
+                setSelectedTab(.settings)
+                appState.routing.settingScene.pushToReminder = true
+            }
+        }
+        appState.system.toast = toast
     }
     
     private func setBookmarkToast(_ toast: ToastType) {
@@ -264,7 +277,7 @@ class FakeGlobalUIService: GlobalUIServiceProtocol {
     func setSelectedTab(_: TabType) {}
     func setIsErrorAlertPresented(_: Bool) {}
     func setIsMenuOpen(_: Bool) {}
-    func setToast(_ toast: ToastType?) {}
+    func setToast(_ toast: ToastType?, showButton: Bool? = true) {}
 
     func openEllipsis(for _: TimetableMetadata) {}
     func closeEllipsis() {}

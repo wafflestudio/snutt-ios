@@ -7,7 +7,6 @@
 
 import Combine
 import SwiftUI
-import UIKit
 
 @MainActor
 class SystemState {
@@ -26,4 +25,5 @@ class SystemState {
 
     var isMapViewExpanded: Bool?
     var configs: ConfigsDto?
+    var semesterStatus: SemesterStatusDto?
 }

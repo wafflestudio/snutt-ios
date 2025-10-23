@@ -1,0 +1,100 @@
+//
+//  LectureReminderSettingScene.swift
+//  SNUTT
+//
+//  Created by 최유림 on 7/3/25.
+//
+
+import SwiftUI
+
+struct LectureReminderSettingScene: View {
+    
+    @ObservedObject var viewModel: LectureReminderViewModel
+    
+    var body: some View {
+        Group {
+            if viewModel.reminderList.isEmpty {
+                emptyView
+            } else {
+                VStack(spacing: 16) {
+                    Form {
+                        Section {
+                            ForEach(viewModel.reminderList, id: \.timetableLectureId) { reminder in
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text(reminder.lectureTitle)
+                                        .font(STFont.regular16.font)
+                                    Picker("", selection: Binding(
+                                        get: { reminder.option },
+                                        set: {
+                                            [previous = reminder.option] current in
+                                            guard previous != current else { return }
+                                            Task {
+                                                try await viewModel.changeLectureReminderState(lectureId: reminder.timetableLectureId, to: current)
+                                            }
+                                        }
+                                    )) {
+                                        ForEach(ReminderOption.allCases, id: \.self) {
+                                            Text($0.label)
+                                                .font(reminder.option == $0
+                                                      ? STFont.semibold13.font
+                                                      : STFont.medium13.font)
+                                        }
+                                    }
+                                    .pickerStyle(.segmented)
+                                }
+                                .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
+                            }
+                        } header: {
+                            Text("나의 리마인더")
+                        } footer: {
+                            Group {
+                                Text("강의 리마인더를 설정하면 해당 시간에 푸시 알림을 받을 수 있어요. ") +
+                                Text("이번 학기의 대표시간표 속 강의들").fontWeight(.semibold) +
+                                Text("에 적용 가능해요.")
+                            }
+                            .font(STFont.regular13.font)
+                            .lineSpacing(4)
+                            .padding(.top, 16)
+                            .padding(.bottom, 48)
+                            .listRowInsets(EdgeInsets())
+                        }
+                        .padding(.vertical, 2)
+                    }
+                }
+                .refreshable {
+                    await viewModel.fetchLectureReminderList()
+                }
+            }
+        }
+        .navigationTitle("강의 리마인더")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+extension LectureReminderSettingScene {
+    private var emptyView: some View {
+        VStack(alignment: .center, spacing: 16) {
+            Image("warning.cat.red")
+            Text("리마인더를 설정할 강의가 아직 없어요.")
+                .font(STFont.semibold15.font)
+            VStack(spacing: 0) {
+                Group {
+                    Text("강의 리마인더는")
+                    Text("이번 학기의 대표시간표 속 강의").font(STFont.semibold13.font)+Text("들에 적용 가능해요.")
+                    Text("\n다음과 같은 경우에는 리마인더를 만들 수 없어요:")
+                    Text("\u{2022} 이번 학기에 대표시간표가 없는 경우".markdown)
+                    Text("\u{2022} 대표시간표는 있지만 강의가 없는 경우".markdown)
+                    Text("\u{2022} 강의는 있으나 모두 시간 정보가 없는 경우".markdown)
+                    Text("\n대표시간표와 강의를 추가하고,\n원하는 시간에 푸시 알림을 받아보세요!")
+                }
+                .lineHeight(with: STFont.regular13, percentage: 145)
+            }
+            .foregroundStyle(STColor.gray30)
+            Spacer()
+        }
+        .multilineTextAlignment(.center)
+        .padding(.top, 80)
+        .frame(maxWidth: .infinity)
+        .background(STColor.groupBackground)
+    }
+}

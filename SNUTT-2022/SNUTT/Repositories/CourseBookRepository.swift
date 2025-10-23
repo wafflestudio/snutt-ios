@@ -10,7 +10,6 @@ import Foundation
 
 protocol CourseBookRepositoryProtocol {
     func fetchAllCourseBookList() async throws -> [CourseBookDto]
-    func fetchRecentCourseBook() async throws -> CourseBookDto
     func fetchSyllabusURL(year: Int, semester: Int, lecture: LectureDto) async throws -> SyllabusDto
 }
 
@@ -25,13 +24,6 @@ class CourseBookRepository: CourseBookRepositoryProtocol {
         return try await session
             .request(CourseBookRouter.getCourseBookList)
             .serializingDecodable([CourseBookDto].self)
-            .handlingError()
-    }
-
-    func fetchRecentCourseBook() async throws -> CourseBookDto {
-        return try await session
-            .request(CourseBookRouter.getRecentCourseBook)
-            .serializingDecodable(CourseBookDto.self)
             .handlingError()
     }
 

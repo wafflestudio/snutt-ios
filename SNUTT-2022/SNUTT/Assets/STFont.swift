@@ -23,6 +23,8 @@ struct STFont {
     static let medium14: UIFont = .systemFont(ofSize: 14, weight: .medium)
     static let regular14: UIFont = .systemFont(ofSize: 14)
 
+    static let semibold13: UIFont = .systemFont(ofSize: 13, weight: .semibold)
+    static let medium13: UIFont = .systemFont(ofSize: 13, weight: .medium)
     static let regular13: UIFont = .systemFont(ofSize: 13)
 
     static let bold12: UIFont = .systemFont(ofSize: 12, weight: .bold)
@@ -38,7 +40,7 @@ extension UIFont {
     }
 }
 
-extension Text {
+extension View {
     /// `percentage` : 100 if 100%
     func lineHeight(with font: UIFont, percentage: CGFloat) -> some View {
         let roundedSpacing = ((font.pointSize * (percentage - 100) / 100) * 0.5)
