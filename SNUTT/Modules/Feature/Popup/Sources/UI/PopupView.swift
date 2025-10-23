@@ -58,5 +58,6 @@ struct PopupView: View {
                 ProgressView()
             }
         }
+        .analyticsScreen(.popup)
     }
 }
