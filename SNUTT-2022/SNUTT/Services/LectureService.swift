@@ -136,7 +136,10 @@ struct LectureService: LectureServiceProtocol {
     // MARK: Lecture Reminder
     
     func fetchLectureReminderList() async throws {
-        guard let targetTable = getCurrentOrNextSemesterPrimaryTable() else { return }
+        guard let targetTable = getCurrentOrNextSemesterPrimaryTable() else {
+            appState.reminder.reminderList = []
+            return
+        }
         let dto = try await lectureRepository.fetchLectureReminderList(timetableId: targetTable.id)
         appState.reminder.reminderList = dto.map { LectureReminder(from: $0) }
     }
