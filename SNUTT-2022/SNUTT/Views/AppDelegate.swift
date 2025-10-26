@@ -64,10 +64,33 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(
         _: UNUserNotificationCenter,
-        willPresent _: UNNotification,
+        willPresent notification: UNNotification,
         withCompletionHandler completionHandler:
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
+        let userInfo = notification.request.content.userInfo
+        print(userInfo)
+
+        // Extract custom data from userInfo
+        if let customTitle = userInfo["title"] as? String,
+           let customBody = userInfo["body"] as? String {
+
+            // Create a new UNMutableNotificationContent
+            let content = UNMutableNotificationContent()
+            content.title = customTitle
+            content.body = customBody
+            content.sound = UNNotificationSound.default
+
+            // Create a UNNotificationRequest
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
+
+            // Add the request to the notification center
+            UNUserNotificationCenter.current().add(request) { (error) in
+                if let error = error {
+                    print("Error adding local notification: \(error.localizedDescription)")
+                }
+            }
+        }
         completionHandler([[.banner, .sound, .list]])
     }
 
