@@ -9,50 +9,80 @@ import MemberwiseInit
 import SwiftUI
 import SwiftUIUtility
 
-@MemberwiseInit(.public)
 public struct SheetTopBar: View {
     public var cancel: @MainActor () -> Void
     public var confirm: @MainActor () async -> Void
-    public var isConfirmDisabled: Bool = false
+    public var isConfirmDisabled: Bool
+
+    @State private var isLoading = false
+
+    enum Design {
+        static let symbolSize = CGSize(width: 18, height: 16)
+    }
+
+    public init(
+        cancel: @escaping @MainActor () -> Void,
+        confirm: @escaping @MainActor () async -> Void,
+        isConfirmDisabled: Bool = false
+    ) {
+        self.cancel = cancel
+        self.confirm = confirm
+        self.isConfirmDisabled = isConfirmDisabled
+    }
 
     public var body: some View {
         HStack {
-            SheetTopBarButton(label: SharedUIComponentsStrings.alertCancel) {
+            Button {
                 cancel()
+            } label: {
+                Image(systemName: "xmark")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: Design.symbolSize.width, height: Design.symbolSize.height)
             }
+            .buttonStyle(.bordered)
+            .tint(.secondary)
 
             Spacer()
 
-            SheetTopBarButton(label: SharedUIComponentsStrings.alertApply) {
-                await confirm()
+            Button {
+                Task {
+                    isLoading = true
+                    await confirm()
+                    isLoading = false
+                }
+            } label: {
+                Group {
+                    if isLoading {
+                        Image(systemName: "ellipsis")
+                            .resizable()
+                            .fontWeight(.black)
+                            .symbolEffect(.variableColor.iterative, isActive: true)
+                    } else {
+                        Image(systemName: "checkmark")
+                            .resizable()
+                    }
+                }
+                .scaledToFit()
+                .frame(width: Design.symbolSize.width, height: Design.symbolSize.height)
             }
-            .disabled(isConfirmDisabled)
+            .contentTransition(.symbolEffect)
+            .buttonStyle(.borderedProminent)
+            .disabled(isConfirmDisabled || isLoading)
+            .animation(.defaultSpring, value: isLoading)
         }
-        .padding(.top, 5)
-        .padding(.horizontal, 5)
+        .padding(.top, 15)
+        .padding(.horizontal, 15)
     }
 }
 
-private struct SheetTopBarButton: View {
-    let label: String
-    let action: () async -> Void
-
-    @State private var isLoading = false
-    var body: some View {
-        AnimatableButton(
-            animationOptions: .scale(0.97).backgroundColor(touchDown: .label.opacity(0.05))
-        ) {
-            guard !isLoading else { return }
-            isLoading = true
-            Task {
-                await action()
-                isLoading = false
-            }
-        } configuration: { _ in
-            var config = UIButton.Configuration.plain()
-            config.title = label
-            config.baseForegroundColor = .label
-            return config
+#Preview {
+    SheetTopBar(
+        cancel: {},
+        confirm: {
+            try? await Task.sleep(for: .seconds(3))
         }
-    }
+    )
+    .border(.gray, width: 1)
+    .tint(.label)
 }
