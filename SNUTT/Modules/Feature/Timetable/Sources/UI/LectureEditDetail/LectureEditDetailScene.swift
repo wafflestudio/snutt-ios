@@ -16,12 +16,12 @@ import TimetableInterface
 import TimetableUIComponents
 
 struct LectureEditDetailScene: View {
-    @Dependency(\.application) private var application
+    @Dependency(\.application) var application
 
-    @State private var viewModel: LectureEditDetailViewModel
-    @State private var editMode: EditMode
+    @State var viewModel: LectureEditDetailViewModel
+    @State var editMode: EditMode
     @State private var isMapViewOpened: Bool = true
-    @State private var showCancelConfirmation: Bool = false
+    @State var showCancelConfirmation: Bool = false
     @State private var showResetConfirmation: Bool = false
     @State private var showDeleteConfirmation: Bool = false
     @State private var syllabusURL: URL?
@@ -32,8 +32,8 @@ struct LectureEditDetailScene: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.timetableViewModel) private var timetableViewModel
     @Environment(\.themeViewModel) private var themeViewModel
-    @Environment(\.errorAlertHandler) private var errorAlertHandler
-    @Environment(\.lectureTimeConflictHandler) private var conflictHandler
+    @Environment(\.errorAlertHandler) var errorAlertHandler
+    @Environment(\.lectureTimeConflictHandler) var conflictHandler
     @Environment(\.reviewsUIProvider) private var reviewsUIProvider
 
     let displayMode: DisplayMode
@@ -80,20 +80,8 @@ struct LectureEditDetailScene: View {
         .navigationBarBackButtonHidden(editMode.isEditing)
         .navigationTitle(displayMode.isPreview ? TimetableStrings.editDetailTitle : "")
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                cancelButton
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                HStack {
-                    if shouldShowToolbarActions {
-                        toolbarActionButtons
-                    }
-                    editOrSaveButton
-                }
-            }
+            toolbarContent
         }
-        .toolbarBackground(TimetableAsset.navBackground.swiftUIColor, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
         .alert(TimetableStrings.editCancelConfirmationTitle, isPresented: $showCancelConfirmation) {
             Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
             Button(TimetableStrings.editConfirm) {
@@ -137,121 +125,6 @@ struct LectureEditDetailScene: View {
                     .analyticsScreen(
                         .reviewDetail(.init(lectureID: viewModel.entryLecture.referenceID, referrer: .lectureDetail))
                     )
-            }
-        }
-    }
-
-    @ViewBuilder private var cancelButton: some View {
-        switch displayMode {
-        case .normal where editMode.isEditing:
-            Button {
-                if viewModel.hasUnsavedChanges {
-                    showCancelConfirmation = true
-                } else {
-                    cancelEditing()
-                }
-            } label: {
-                Text(SharedUIComponentsStrings.alertCancel)
-            }
-        case .create:
-            Button {
-                dismiss()
-            } label: {
-                Text(SharedUIComponentsStrings.alertCancel)
-            }
-        case let .preview(shouldHideDismissButton) where !shouldHideDismissButton:
-            Button {
-                dismiss()
-            } label: {
-                Text(SharedUIComponentsStrings.alertCancel)
-            }
-        default:
-            EmptyView()
-        }
-    }
-
-    private func cancelEditing() {
-        viewModel.cancelEdit()
-        editMode = .inactive
-        application.dismissKeyboard()
-    }
-
-    @ViewBuilder private var editOrSaveButton: some View {
-        switch displayMode {
-        case .normal:
-            Button {
-                if editMode == .active {
-                    editMode = .transient
-                    errorAlertHandler.withAlert {
-                        do {
-                            try await conflictHandler.withConflictHandling { overrideOnConflict in
-                                try await viewModel.saveEditableLecture(overrideOnConflict: overrideOnConflict)
-                            }
-                            editMode = .inactive
-                        } catch {
-                            // 에러가 발생하거나 취소된 경우 변경사항 되돌리기
-                            viewModel.cancelEdit()
-                            editMode = .inactive
-                            throw error
-                        }
-                    }
-                } else {
-                    editMode = .active
-                }
-            } label: {
-                Text(editMode.isEditing ? TimetableStrings.editSave : TimetableStrings.editEdit)
-            }
-        case .create:
-            Button {
-                errorAlertHandler.withAlert {
-                    do {
-                        try await conflictHandler.withConflictHandling { overrideOnConflict in
-                            try await viewModel.addCustomLecture(overrideOnConflict: overrideOnConflict)
-                            dismiss()
-                        }
-                    } catch {
-                        // 에러가 발생하거나 취소된 경우
-                        throw error
-                    }
-                }
-            } label: {
-                Text(TimetableStrings.editSave)
-            }
-        case .preview:
-            EmptyView()
-        }
-    }
-
-    private var shouldShowToolbarActions: Bool {
-        !viewModel.entryLecture.isCustom && !editMode.isEditing && (displayMode == .normal || displayMode.isPreview)
-    }
-
-    private var toolbarActionButtons: some View {
-        HStack {
-            // 공석알림 버튼
-            Button {
-                errorAlertHandler.withAlert {
-                    try await viewModel.toggleVacancyNotification()
-                }
-            } label: {
-                if viewModel.isVacancyNotificationEnabled {
-                    TimetableAsset.navVacancyOn.swiftUIImage
-                } else {
-                    TimetableAsset.navVacancyOff.swiftUIImage
-                }
-            }
-
-            // 북마크 버튼
-            Button {
-                errorAlertHandler.withAlert {
-                    try await viewModel.toggleBookmark()
-                }
-            } label: {
-                if viewModel.isBookmarked {
-                    TimetableAsset.navBookmarkOn.swiftUIImage
-                } else {
-                    TimetableAsset.navBookmark.swiftUIImage
-                }
             }
         }
     }
@@ -406,13 +279,20 @@ extension LectureEditDetailScene {
         /// 새로운 강의 추가
         case create
         /// 내가 추가하지 않은 강의 상세
-        case preview(shouldHideDismissButton: Bool)
+        case preview(LectureDetailPreviewOptions)
 
         var isPreview: Bool {
             if case .preview = self {
                 return true
             }
             return false
+        }
+
+        var previewOptions: LectureDetailPreviewOptions? {
+            if case let .preview(options) = self {
+                return options
+            }
+            return nil
         }
     }
 

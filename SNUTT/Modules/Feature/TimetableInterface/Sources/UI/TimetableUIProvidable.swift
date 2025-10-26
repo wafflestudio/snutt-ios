@@ -13,11 +13,12 @@ import ThemesInterface
 public protocol TimetableUIProvidable: Sendable {
     func lectureDetailRow(type: DetailLabelType, lecture: Lecture) -> AnyView
     func timetableView(
-        timetable: Timetable,
+        timetable: Timetable?,
         configuration: TimetableConfiguration,
         preferredTheme: Theme?,
         availableThemes: [Theme]
     ) -> AnyView
+    func makeLectureDetailPreview(lecture: Lecture, options: LectureDetailPreviewOptions) -> AnyView
 }
 
 public enum DetailLabelType: CaseIterable {
@@ -33,12 +34,16 @@ private struct EmptyTimetableUIProvider: TimetableUIProvidable {
     }
 
     func timetableView(
-        timetable _: Timetable,
+        timetable _: Timetable?,
         configuration _: TimetableConfiguration,
         preferredTheme _: Theme?,
         availableThemes _: [Theme]
     ) -> AnyView {
         AnyView(Text("Empty TimetableView"))
+    }
+
+    func makeLectureDetailPreview(lecture _: Lecture, options _: LectureDetailPreviewOptions) -> AnyView {
+        AnyView(Text("Empty LectureDetailPreview"))
     }
 }
 
