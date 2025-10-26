@@ -7,6 +7,7 @@
 
 import APIClientInterface
 import Foundation
+import Friends
 import Timetable
 
 extension ContentViewModel {
@@ -28,6 +29,9 @@ extension ContentViewModel {
             try await handleTimetableLectureScheme(urlComponents.queryItems)
         case "bookmarks":
             try await handleBookmarkScheme(urlComponents.queryItems)
+            return
+        case "kakaolink":
+            handleKakaoLinkScheme(urlComponents.queryItems)
             return
         default:
             return
@@ -51,6 +55,19 @@ extension ContentViewModel {
     private func handleBookmarkScheme(_: QueryParameters?) async throws {
         selectedTab = .search
         lectureSearchRouter.searchDisplayMode = .bookmark
+    }
+
+    private func handleKakaoLinkScheme(_ parameters: QueryParameters?) {
+        guard parameters?["type"] == "add-friend-kakao",
+            let requestToken = parameters?["requestToken"]
+        else { return }
+
+        selectedTab = .friends
+        NotificationCenter.default.post(
+            name: .kakaoFriendRequest,
+            object: nil,
+            userInfo: ["requestToken": requestToken]
+        )
     }
 }
 
