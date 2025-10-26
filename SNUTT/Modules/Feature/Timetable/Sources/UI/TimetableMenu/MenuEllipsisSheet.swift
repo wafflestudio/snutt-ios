@@ -36,13 +36,11 @@ struct MenuEllipsisSheet: View {
 
                 EllipsisSheetButton(menu: .primary(isOn: metadata.isPrimary)) {
                     dismiss()
-                    Task {
-                        await errorAlertHandler.withAlert {
-                            if metadata.isPrimary {
-                                try await viewModel.unsetPrimaryTimetable(timetableID: metadata.id)
-                            } else {
-                                try await viewModel.setPrimaryTimetable(timetableID: metadata.id)
-                            }
+                    errorAlertHandler.withAlert {
+                        if metadata.isPrimary {
+                            try await viewModel.unsetPrimaryTimetable(timetableID: metadata.id)
+                        } else {
+                            try await viewModel.setPrimaryTimetable(timetableID: metadata.id)
                         }
                     }
                 }
@@ -65,7 +63,7 @@ struct MenuEllipsisSheet: View {
                 EllipsisSheetButton(menu: .delete) {
                     dismiss()
                     Task {
-                        await errorAlertHandler.withAlert {
+                        errorAlertHandler.withAlert {
                             try await viewModel.deleteTimetable(timetableID: metadata.id)
                         }
                     }
@@ -75,7 +73,6 @@ struct MenuEllipsisSheet: View {
             .padding(.vertical, 10)
             .padding(.horizontal, 5)
             .presentationDetents([.height(260)])
-            .presentationCornerRadius(15)
         }
         .sheet(item: $timetableImage) { image in
             TimetableShareSheet(timetableImage: image)

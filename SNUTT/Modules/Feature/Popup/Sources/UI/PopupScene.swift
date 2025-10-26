@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftUIUtility
 
 extension View {
-    public func overlayPopup() -> some View {
+    public func overlayADPopup() -> some View {
         overlay {
             PopupScene()
         }
@@ -36,7 +36,7 @@ private struct PopupScene: View {
         }
         .animation(.defaultSpring, value: viewModel.currentPopup?.id)
         .onLoad {
-            await errorAlertHandler.withAlert {
+            errorAlertHandler.withAlert {
                 try await viewModel.fetchRecentPopupList()
             }
         }
