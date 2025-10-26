@@ -35,46 +35,27 @@ extension View {
     }
 }
 
-// MARK: Preview
-
-private struct RootPreview: View {
-    @State private var sheetContext: SheetPresentationContext?
-
-    public init() {}
-
-    public var body: some View {
-        ZStack {
-            SomeSubview()
-            sheetContext?.makeHUDView()
-        }
-        .onPreferenceChange(SheetPresentationKey.self) { value in
-            Task { @MainActor in
-                sheetContext = value
-            }
-        }
-    }
-}
-
-private struct SomeSubview: View {
-    @State private var isPresented = false
-    var body: some View {
-        VStack {
-            Button("Sheet is presented: \(isPresented)") {
-                isPresented.toggle()
-            }
-            .customSheet(isPresented: $isPresented, configuration: .init(orientation: .left(maxWidth: 300))) {
-                VStack {
-                    Text("Sheet Content")
-                }
-            }
-
-            if isPresented {
-                EmptyView()
-            }
-        }
+extension SheetConfiguration {
+    fileprivate static var preview: Self {
+        SheetConfiguration(orientation: .left(maxWidth: 300))
     }
 }
 
 #Preview {
-    RootPreview()
+    @Previewable @State var isPresented = false
+    ZStack {
+        Color.black.opacity(0.1).ignoresSafeArea()
+
+        Button("Sheet is presented: \(isPresented)") {
+            isPresented.toggle()
+        }
+        .padding()
+        .customSheet(
+            isPresented: $isPresented,
+            configuration: .preview
+        ) {
+            Color.blue
+        }
+    }
+    .overlaySheet()
 }

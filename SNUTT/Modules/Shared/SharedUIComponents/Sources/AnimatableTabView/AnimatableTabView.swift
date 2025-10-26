@@ -19,13 +19,8 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
 
     private var tabButtons = [T: UIButton]()
 
-    func selectTab(_ tab: T) {
-        guard !isTransitionInProgress else { return }
-        selectedTabItem = tab
-        guard selectedIndex != tab.viewIndex() else { return }
-        isTransitionInProgress = true
-        selectedIndex = tab.viewIndex()
-        view.isUserInteractionEnabled = true
+    enum Design {
+        static var tabBarHeightExcludingSafeArea: CGFloat { 49.0 }
     }
 
     init(
@@ -40,6 +35,15 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
             tabScenes
             .compactMap { $0.rootView }
             .map { UIHostingController(rootView: $0) }
+    }
+
+    func selectTab(_ tab: T) {
+        guard !isTransitionInProgress else { return }
+        selectedTabItem = tab
+        guard selectedIndex != tab.viewIndex() else { return }
+        isTransitionInProgress = true
+        selectedIndex = tab.viewIndex()
+        view.isUserInteractionEnabled = true
     }
 
     private lazy var animatableTabBar = {
@@ -58,7 +62,7 @@ public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITab
 
     private func setupTabBar() {
         tabBar.isHidden = true
-        let tabBarHeight = tabBar.bounds.height
+        let tabBarHeight = Design.tabBarHeightExcludingSafeArea
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally

@@ -101,7 +101,7 @@ public struct SheetDismissAction {
 public struct SheetConfiguration: Sendable {
     @Init(.public) let orientation: SheetOrientation
     @Init(.public) var cornerRadius: CGFloat = 20
-    @Init(.public) var sheetColor: Color = .white
+    @Init(.public) var sheetColor: Color = SharedUIComponentsAsset.systemBackground.swiftUIColor
     @Init(.public) var sheetOpacity: CGFloat = 1
     @Init(.public) var disableBackgroundTap: Bool = false
     @Init(.public) var disableDragGesture: Bool = false
