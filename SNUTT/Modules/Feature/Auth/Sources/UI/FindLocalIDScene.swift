@@ -38,17 +38,13 @@ struct FindLocalIDScene: View {
             )
             .focused($isFocused)
             .onSubmit {
-                Task {
-                    await submit()
-                }
+                submit()
             }
 
             Spacer().frame(height: 12)
 
             ProminentButton(label: AuthStrings.findidButton, isEnabled: !email.isEmpty && !isLoading) {
-                Task {
-                    await submit()
-                }
+                submit()
             }
 
             Spacer()
@@ -67,8 +63,8 @@ struct FindLocalIDScene: View {
         }
     }
 
-    private func submit() async {
-        await errorAlertHandler.withAlert {
+    private func submit() {
+        errorAlertHandler.withAlert {
             isLoading = true
             defer { isLoading = false }
 

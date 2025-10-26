@@ -45,9 +45,7 @@ struct LoginScene: View {
             )
             .focused($focusedField, equals: TextFieldType.localPassword)
             .onSubmit {
-                Task {
-                    await submit()
-                }
+                submit()
             }
 
             HStack {
@@ -75,8 +73,8 @@ struct LoginScene: View {
         .analyticsScreen(.login, condition: !viewModel.authState.isAuthenticated)
     }
 
-    private func submit() async {
-        await errorAlertHandler.withAlert {
+    private func submit() {
+        errorAlertHandler.withAlert {
             try await viewModel.loginWithLocalId(localID: localID, localPassword: localPassword)
             focusedField = nil
         }

@@ -124,8 +124,8 @@ struct RegisterLocalIDScene: View {
         }
     }
 
-    private func submit() async {
-        await errorAlertHandler.withAlert {
+    private func submit() {
+        errorAlertHandler.withAlert {
             // Validate inputs
             guard password == confirmPassword else {
                 throw ValidationError.passwordMismatch

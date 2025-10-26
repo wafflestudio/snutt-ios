@@ -47,20 +47,6 @@ public final class ErrorAlertHandler: Sendable {
             return nil
         }
     }
-
-    public func withAlert<T: Sendable>(
-        operation: () throws -> T
-    ) -> T? {
-        do {
-            return try operation()
-        } catch let error as any ErrorWrapper {
-            currentError = .init(underlyingError: error.underlyingError)
-            return nil
-        } catch {
-            currentError = .init(underlyingError: error)
-            return nil
-        }
-    }
 }
 
 public protocol ErrorWrapper {
