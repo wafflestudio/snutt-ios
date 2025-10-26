@@ -6,6 +6,7 @@
 //
 
 import ConfigsInterface
+import SharedUIComponents
 import SwiftUI
 
 public struct VacancyScene: View {
@@ -23,64 +24,69 @@ public struct VacancyScene: View {
     }
 
     public var body: some View {
-        ZStack {
-            VacancyLectureListView(viewModel: viewModel, editMode: $editMode)
-                .task {
-                    errorAlertHandler.withAlert {
-                        try await viewModel.fetchVacancyLectures()
-                    }
-                }
-
-            if viewModel.vacancyLectures.isEmpty {
-                VacancyEmptyListView {
-                    isGuidePopupPresented = true
+        VacancyLectureListView(viewModel: viewModel, editMode: $editMode)
+            .task {
+                errorAlertHandler.withAlert {
+                    try await viewModel.fetchVacancyLectures()
                 }
             }
-
-            if shouldShowGuidePopup {
-                VacancyGuidePopup(dismiss: {
-                    isNewToVacancyService = false
-                    isGuidePopupPresented = false
-                })
-                .transition(.opacity.animation(.defaultSpring))
-            }
-        }
-        .onDisappear {
-            editMode = .inactive
-        }
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                HStack(spacing: 0) {
-                    Text(VacancyStrings.vacancyNotificationTitle).font(.headline)
-                    Button {
+            .overlay {
+                if viewModel.vacancyLectures.isEmpty {
+                    VacancyEmptyListView {
                         isGuidePopupPresented = true
-                    } label: {
-                        VacancyAsset.vacancyInfo.swiftUIImage
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 17)
                     }
                 }
             }
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .overlay(alignment: .bottomTrailing) {
-            VacancySugangSnuButton {
-                if let sugangSnuUrl = configs.vacancySugangSnuUrl?.url {
-                    openURL(sugangSnuUrl)
+            .customPopup(
+                isPresented: Binding(
+                    get: { shouldShowGuidePopup },
+                    set: { newValue in
+                        if !newValue {
+                            isNewToVacancyService = false
+                            isGuidePopupPresented = false
+                        }
+                    }
+                )
+            ) {
+                VacancyGuidePopup()
+            }
+            .onDisappear {
+                editMode = .inactive
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack(spacing: 0) {
+                        Text(VacancyStrings.vacancyNotificationTitle).font(.headline)
+                        Button {
+                            isGuidePopupPresented = true
+                        } label: {
+                            VacancyAsset.vacancyInfo.swiftUIImage
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 17)
+                        }
+                    }
                 }
             }
-            .padding()
-            .opacity(editMode.isEditing ? 0 : 1)
-            .offset(x: 0, y: editMode.isEditing ? 100 : 0)
-            .animation(.defaultSpring, value: editMode)
-            .disabled(shouldShowGuidePopup)
-        }
+            .navigationBarTitleDisplayMode(.inline)
+            .overlay(alignment: .bottomTrailing) {
+                VacancySugangSnuButton {
+                    if let sugangSnuUrl = configs.vacancySugangSnuUrl?.url {
+                        openURL(sugangSnuUrl)
+                    }
+                }
+                .padding()
+                .opacity(editMode.isEditing ? 0 : 1)
+                .offset(x: 0, y: editMode.isEditing ? 100 : 0)
+                .animation(.defaultSpring, value: editMode)
+                .disabled(shouldShowGuidePopup)
+            }
     }
 }
 
 #Preview {
     NavigationStack {
         VacancyScene()
+            .overlayPopup()
     }
 }
