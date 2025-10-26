@@ -61,34 +61,26 @@ public struct OnboardScene: View {
 
                         HStack(spacing: 12) {
                             SocialLoginButton(asset: AuthAsset.snsKakao.swiftUIImage) {
-                                Task {
-                                    await errorAlertHandler.withAlert {
-                                        try await viewModel.loginWithSocialProvider(provider: .kakao)
-                                    }
+                                errorAlertHandler.withAlert {
+                                    try await viewModel.loginWithSocialProvider(provider: .kakao)
                                 }
                             }
 
                             SocialLoginButton(asset: AuthAsset.snsGoogle.swiftUIImage) {
-                                Task {
-                                    await errorAlertHandler.withAlert {
-                                        try await viewModel.loginWithSocialProvider(provider: .google)
-                                    }
+                                errorAlertHandler.withAlert {
+                                    try await viewModel.loginWithSocialProvider(provider: .google)
                                 }
                             }
 
                             SocialLoginButton(asset: AuthAsset.snsFacebook.swiftUIImage) {
-                                Task {
-                                    await errorAlertHandler.withAlert {
-                                        try await viewModel.loginWithSocialProvider(provider: .facebook)
-                                    }
+                                errorAlertHandler.withAlert {
+                                    try await viewModel.loginWithSocialProvider(provider: .facebook)
                                 }
                             }
 
                             SocialLoginButton(asset: AuthAsset.snsApple.swiftUIImage) {
-                                Task {
-                                    await errorAlertHandler.withAlert {
-                                        try await viewModel.loginWithSocialProvider(provider: .apple)
-                                    }
+                                errorAlertHandler.withAlert {
+                                    try await viewModel.loginWithSocialProvider(provider: .apple)
                                 }
                             }
                         }

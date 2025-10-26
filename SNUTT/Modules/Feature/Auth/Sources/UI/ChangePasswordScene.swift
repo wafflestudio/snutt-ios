@@ -67,17 +67,13 @@ public struct ChangePasswordScene: View {
             )
             .focused($focusedField, equals: .confirmPassword)
             .onSubmit {
-                Task {
-                    await submit()
-                }
+                submit()
             }
 
             Spacer().layoutPriority(1)
 
             ProminentButton(label: AuthStrings.alertSave, isEnabled: isSubmitButtonEnabled) {
-                Task {
-                    await submit()
-                }
+                submit()
             }
         }
         .onAppear {
@@ -92,8 +88,8 @@ public struct ChangePasswordScene: View {
         }
     }
 
-    private func submit() async {
-        await errorAlertHandler.withAlert {
+    private func submit() {
+        errorAlertHandler.withAlert {
             try await onChangePassword(oldPassword, newPassword)
             focusedField = nil
             isSuccessAlertPresented = true

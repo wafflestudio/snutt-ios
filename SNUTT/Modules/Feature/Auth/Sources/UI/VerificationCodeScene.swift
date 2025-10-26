@@ -61,7 +61,7 @@ struct VerificationCodeScene: View {
                     TimerView(
                         initialRemainingTime: 180,
                         onRestart: {
-                            await errorAlertHandler.withAlert {
+                            errorAlertHandler.withAlert {
                                 try await viewModel.sendVerificationCode(email: email)
                             }
                         },
@@ -115,8 +115,8 @@ struct VerificationCodeScene: View {
         }
     }
 
-    private func submit() async {
-        await errorAlertHandler.withAlert {
+    private func submit() {
+        errorAlertHandler.withAlert {
             isLoading = true
             defer { isLoading = false }
 
