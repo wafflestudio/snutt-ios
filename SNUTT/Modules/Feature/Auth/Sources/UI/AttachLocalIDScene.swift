@@ -66,17 +66,13 @@ public struct AttachLocalIDScene: View {
             )
             .focused($focusedField, equals: .confirmPassword)
             .onSubmit {
-                Task {
-                    await submit()
-                }
+                submit()
             }
 
             Spacer().layoutPriority(1)
 
             ProminentButton(label: AuthStrings.attachLocalIDButton, isEnabled: isSubmitButtonEnabled) {
-                Task {
-                    await submit()
-                }
+                submit()
             }
         }
         .onAppear {
@@ -91,8 +87,8 @@ public struct AttachLocalIDScene: View {
         }
     }
 
-    private func submit() async {
-        await errorAlertHandler.withAlert {
+    private func submit() {
+        errorAlertHandler.withAlert {
             try await onAttach(localID, localPassword)
             focusedField = nil
             isSuccessAlertPresented = true

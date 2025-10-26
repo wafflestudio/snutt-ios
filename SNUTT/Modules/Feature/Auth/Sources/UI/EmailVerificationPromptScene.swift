@@ -47,8 +47,8 @@ struct EmailVerificationPromptScene: View {
         .padding(.top, 27)
     }
 
-    private func sendVerificationCode() async {
-        await errorAlertHandler.withAlert {
+    private func sendVerificationCode() {
+        errorAlertHandler.withAlert {
             try await viewModel.sendVerificationCode(email: email)
             viewModel.paths.append(.verificationCode(email: email, mode: .signup, localID: nil))
         }

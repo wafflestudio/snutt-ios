@@ -77,9 +77,7 @@ struct ResetPasswordScene: View {
                 .disabled(currentStep == .enterEmail)
                 .onSubmit {
                     if currentStep == .enterID {
-                        Task {
-                            await submit()
-                        }
+                        submit()
                     }
                 }
 
@@ -94,9 +92,7 @@ struct ResetPasswordScene: View {
                         )
                         .focused($focusedField, equals: .email)
                         .onSubmit {
-                            Task {
-                                await submit()
-                            }
+                            submit()
                         }
 
                         Text(maskedEmail)
@@ -110,9 +106,7 @@ struct ResetPasswordScene: View {
 
             VStack(spacing: 20) {
                 ProminentButton(label: buttonLabel, isEnabled: isButtonEnabled) {
-                    Task {
-                        await submit()
-                    }
+                    submit()
                 }
 
                 if currentStep == .enterEmail {
@@ -143,8 +137,8 @@ struct ResetPasswordScene: View {
         }
     }
 
-    private func submit() async {
-        await errorAlertHandler.withAlert {
+    private func submit() {
+        errorAlertHandler.withAlert {
             isLoading = true
             defer { isLoading = false }
 

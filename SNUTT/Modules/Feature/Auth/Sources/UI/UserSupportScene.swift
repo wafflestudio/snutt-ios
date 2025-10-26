@@ -96,8 +96,8 @@ struct UserSupportScene: View {
         }
     }
 
-    private func submit() async {
-        await errorAlertHandler.withAlert {
+    private func submit() {
+        errorAlertHandler.withAlert {
             isLoading = true
             defer { isLoading = false }
 

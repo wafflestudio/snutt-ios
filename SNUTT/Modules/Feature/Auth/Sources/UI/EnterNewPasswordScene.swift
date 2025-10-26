@@ -177,7 +177,7 @@ struct EnterNewPasswordScene: View {
         }
     }
 
-    private func submit() async {
+    private func submit() {
         guard password == confirmPassword else {
             alertType = .passwordMismatch
             showAlert = true
@@ -190,7 +190,7 @@ struct EnterNewPasswordScene: View {
             return
         }
 
-        await errorAlertHandler.withAlert {
+        errorAlertHandler.withAlert {
             isLoading = true
             defer { isLoading = false }
 
