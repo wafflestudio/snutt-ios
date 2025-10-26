@@ -35,8 +35,8 @@ enum TabItem: CaseIterable, SharedUIComponents.TabItem {
     func viewIndex() -> Int {
         switch self {
         case .timetable, .search: 0
-        case .friends: 1
-        case .review: 2
+        case .review: 1
+        case .friends: 2
         case .settings: 3
         }
     }

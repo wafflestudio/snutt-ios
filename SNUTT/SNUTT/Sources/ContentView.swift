@@ -4,6 +4,7 @@ import AnalyticsInterface
 import Auth
 import AuthInterface
 import Dependencies
+import Friends
 import Notifications
 import NotificationsInterface
 import Popup
@@ -46,7 +47,7 @@ struct ContentView: View {
 
     private var mainView: some View {
         ZStack {
-            AnimatableTabView(selectedTab: $viewModel.selectedTab) {
+            CommonTabView(selectedTab: $viewModel.selectedTab) {
                 TabScene(
                     tabItem: TabItem.timetable,
                     rootView: TimetableScene(
@@ -57,11 +58,15 @@ struct ContentView: View {
                     .environment(\.notificationsUIProvider, NotificationsUIProvider())
                 )
                 TabScene(tabItem: TabItem.search)
-                TabScene(tabItem: TabItem.friends, rootView: EmptyView())
                 TabScene(
                     tabItem: TabItem.review,
                     rootView: ReviewsScene()
                         .modifier(AnalyticsScreenModifier(screen: Reviews.AnalyticsScreen.reviewHome))
+                )
+                TabScene(
+                    tabItem: TabItem.friends,
+                    rootView: FriendsScene()
+                        .modifier(AnalyticsScreenModifier(screen: Friends.AnalyticsScreen.friends))
                 )
                 TabScene(
                     tabItem: TabItem.settings,
@@ -76,6 +81,7 @@ struct ContentView: View {
         }
         .overlaySheet()
         .overlayPopup()
+        .overlayADPopup()
         .environment(\.themeViewModel, viewModel.themeViewModel)
         .environment(\.timetableViewModel, viewModel.timetableViewModel)
         .onLoad {
@@ -97,11 +103,7 @@ struct ContentView: View {
     }
 
     private var onboardTransition: AnyTransition {
-        if #available(iOS 17, *) {
-            AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .top)))
-        } else {
-            AnyTransition.push(from: .top)
-        }
+        AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .top)))
     }
 }
 

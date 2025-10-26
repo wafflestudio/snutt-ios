@@ -1,0 +1,76 @@
+/*
+ Localizable.strings
+ This file is used to manage localizable strings for the feature module in English.
+
+ How to use:
+ - Add your localized strings here in the format "key" = "value";
+ - The key is what you will use in your code, and the value is the translated string.
+
+ Examples:
+ "welcome_message" = "Welcome to the app!";
+ "error_message" = "An error has occurred. Please try again.";
+
+ Usage in code with Tuist synthesized strings:
+ let welcomeMessage = FriendsStrings.welcomeMessage
+ let errorMessage = FriendsStrings.errorMessage
+
+ Note:
+ - Ensure that each key is unique within this file.
+ - Add comments to provide context for translators.
+*/
+
+/* Add your translations below */
+
+"hello_world" = "Hello, world!";
+
+/* Friend Request Sheet */
+"friend_request_option_kakao" = "Invite via KakaoTalk";
+"friend_request_option_nickname" = "Invite by Nickname";
+
+/* Friend Request by Nickname Sheet */
+"friend_request_nickname_label" = "Friend's Nickname";
+"friend_request_nickname_placeholder" = "e.g.) John#1234";
+"friend_request_nickname_validation_message" = "Please enter the full nickname";
+
+/* Friend Menu */
+"friend_add_button" = "Add Friend";
+
+/* Friend Management Options Sheet */
+"friend_manage_edit_name" = "Set Friend Name";
+"friend_manage_delete" = "Remove from Friend List";
+
+/* Friend Edit Display Name Sheet */
+"friend_edit_name_label" = "Display Name";
+"friend_edit_name_helper" = "(Up to 10 characters)";
+"friend_original_nickname_label" = "Friend Nickname: %@";
+
+/* Friend Delete Confirmation */
+"friend_delete_confirmation_title" = "Delete Friend";
+"friend_delete_confirmation_message" = "Are you sure you want to delete this friend?";
+
+/* Friends Main Scene */
+"friend_timetable_title" = "Friends' Timetable";
+
+/* Friend Menu Tabs */
+"friend_menu_tab_active" = "Friends";
+"friend_menu_tab_requested" = "Friend Requests";
+
+/* Empty States */
+"friend_active_empty_title" = "No Friends Added";
+"friend_active_empty_description" = "Tap 'Add Friend' to send a request!\nOnce accepted, they will appear here.";
+"friend_requested_empty_title" = "No Friend Requests";
+"friend_requested_empty_description" = "When someone sends you a friend request,\nyou can accept or decline it here.";
+"friend_empty_guide" = "Learn More";
+"friend_empty_main_title" = "No Friends Added";
+"friend_empty_main_description" = "Tap [person.badge.plus] in the top right corner\nto send friend requests!\nOnce accepted, they will appear in [line.3.horizontal] friend list.";
+
+/* Friend Request Actions */
+"friend_request_accept" = "Accept";
+"friend_request_decline" = "Decline";
+
+/* Quarter Localization (shared with Timetable) */
+"timetable.quarter" = "%@ %@";
+"timetable.semester1" = "Spring";
+"timetable.semester2" = "Fall";
+"timetable.semesterSummer" = "Summer";
+"timetable.semesterWinter" = "Winter";
