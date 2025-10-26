@@ -49,7 +49,7 @@ public struct NotificationsListScene: View {
             }
         }
         .onLoad {
-            await errorAlertHandler.withAlert {
+            errorAlertHandler.withAlert {
                 try await viewModel.fetchInitialNotifications()
             }
         }

@@ -90,19 +90,17 @@ private struct LectureActionButton: View {
             animationOptions: .identity.impact().scale(0.95).backgroundColor(touchDown: .black.opacity(0.04)),
             layoutOptions: [.respectIntrinsicHeight, .expandHorizontally]
         ) {
-            Task {
-                await errorAlertHandler.withAlert {
-                    do {
-                        try await conflictHandler.withConflictHandling { overrideOnConflict in
-                            try await viewModel.toggleAction(
-                                lecture: lecture,
-                                type: type,
-                                overrideOnConflict: overrideOnConflict
-                            )
-                        }
-                    } catch {
-                        throw error
+            errorAlertHandler.withAlert {
+                do {
+                    try await conflictHandler.withConflictHandling { overrideOnConflict in
+                        try await viewModel.toggleAction(
+                            lecture: lecture,
+                            type: type,
+                            overrideOnConflict: overrideOnConflict
+                        )
                     }
+                } catch {
+                    throw error
                 }
             }
         } configuration: { button in

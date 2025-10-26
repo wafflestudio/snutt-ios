@@ -30,7 +30,7 @@ extension Lecture {
     }
 
     var creditDescription: String? {
-        // TODO:
+        // TODO: Localize this
         if let credit {
             "\(credit)\(TimetableStrings.lectureCreditSuffix)"
         } else {

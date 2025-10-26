@@ -35,6 +35,7 @@ extension View {
     }
 
     ZStack {
+        Color.black.opacity(0.1).ignoresSafeArea()
         Button("Show Timetable Menu: \(isPresented)") {
             isPresented.toggle()
         }

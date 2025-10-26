@@ -24,10 +24,8 @@ struct LogoutButton: View {
             isPresented: $isLogoutAlertPresented
         ) {
             Button(SettingsStrings.logout, role: .destructive) {
-                Task {
-                    await errorAlertHandler.withAlert {
-                        try await logoutAction()
-                    }
+                errorAlertHandler.withAlert {
+                    try await logoutAction()
                 }
             }
             Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}

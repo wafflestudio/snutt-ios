@@ -37,8 +37,8 @@ class LectureSearchViewModel {
         didSet {
             if oldValue != searchingQuarter {
                 Task {
-                    await fetchVacancyLectures()
-                    await fetchBookmarkedLectures()
+                    try? await fetchVacancyLectures()
+                    try? await fetchBookmarkedLectures()
                 }
             }
         }
@@ -109,22 +109,14 @@ class LectureSearchViewModel {
         selectedLecture = nil
     }
 
-    func fetchVacancyLectures() async {
-        do {
-            let lectures = try await vacancyRepository.fetchVacancyLectures()
-            vacancyLectureIds = Set(lectures.compactMap(\._id))
-        } catch {
-            // TODO: error handling
-        }
+    func fetchVacancyLectures() async throws {
+        let lectures = try await vacancyRepository.fetchVacancyLectures()
+        vacancyLectureIds = Set(lectures.compactMap(\._id))
     }
 
-    func fetchBookmarkedLectures() async {
-        do {
-            guard let searchingQuarter else { return }
-            bookmarkedLectures = try await lectureRepository.fetchBookmarks(quarter: searchingQuarter)
-        } catch {
-            // TODO: error handling
-        }
+    func fetchBookmarkedLectures() async throws {
+        guard let searchingQuarter else { return }
+        bookmarkedLectures = try await lectureRepository.fetchBookmarks(quarter: searchingQuarter)
     }
 }
 
