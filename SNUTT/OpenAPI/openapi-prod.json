@@ -413,6 +413,183 @@
         ],
         "type" : "object"
       },
+      "DiaryActivityDto" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "id",
+          "name"
+        ],
+        "type" : "object"
+      },
+      "DiaryAddQuestionRequestDto" : {
+        "properties" : {
+          "active" : {
+            "type" : "boolean"
+          },
+          "answers" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "question" : {
+            "type" : "string"
+          },
+          "shortAnswers" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "shortQuestion" : {
+            "type" : "string"
+          },
+          "targetActivities" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [
+          "active",
+          "answers",
+          "question",
+          "shortAnswers",
+          "shortQuestion",
+          "targetActivities"
+        ],
+        "type" : "object"
+      },
+      "DiaryQuestionDto" : {
+        "properties" : {
+          "answers" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "question" : {
+            "type" : "string"
+          },
+          "shortAnswers" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "shortQuestion" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "answers",
+          "id",
+          "question",
+          "shortAnswers",
+          "shortQuestion"
+        ],
+        "type" : "object"
+      },
+      "DiaryQuestionnaireRequestDto" : {
+        "properties" : {
+          "activities" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "lectureId" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "activities",
+          "lectureId"
+        ],
+        "type" : "object"
+      },
+      "DiaryShortQuestionReply" : {
+        "properties" : {
+          "answer" : {
+            "type" : "string"
+          },
+          "question" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "answer",
+          "question"
+        ],
+        "type" : "object"
+      },
+      "DiarySubmissionRequestDto" : {
+        "properties" : {
+          "activities" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "comment" : {
+            "type" : "string"
+          },
+          "lectureId" : {
+            "type" : "string"
+          },
+          "questionAnswers" : {
+            "items" : {
+              "$ref" : "#/components/schemas/QuestionAnswer"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [
+          "activities",
+          "comment",
+          "lectureId",
+          "questionAnswers"
+        ],
+        "type" : "object"
+      },
+      "DiarySubmissionSummaryDto" : {
+        "properties" : {
+          "comment" : {
+            "type" : "string"
+          },
+          "date" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "lectureTitle" : {
+            "type" : "string"
+          },
+          "shortQuestionReplies" : {
+            "items" : {
+              "$ref" : "#/components/schemas/DiaryShortQuestionReply"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [
+          "comment",
+          "date",
+          "lectureTitle",
+          "shortQuestionReplies"
+        ],
+        "type" : "object"
+      },
       "EmailResponse" : {
         "properties" : {
           "email" : {
@@ -633,7 +810,7 @@
         "type" : "object"
       },
       "JsonNode" : {
-        "type" : "object"
+
       },
       "LectureBuilding" : {
         "properties" : {
@@ -956,6 +1133,8 @@
       "PopupResponse" : {
         "properties" : {
           "hidden_days" : {
+            "deprecated" : true,
+            "description" : "Use hiddenDays instead",
             "format" : "int32",
             "type" : "integer"
           },
@@ -967,6 +1146,8 @@
             "type" : "string"
           },
           "image_url" : {
+            "deprecated" : true,
+            "description" : "Use imageUri instead",
             "type" : "string"
           },
           "imageUri" : {
@@ -1042,6 +1223,56 @@
         "required" : [
           "imageOriginUri",
           "key"
+        ],
+        "type" : "object"
+      },
+      "PushPreferenceDto" : {
+        "properties" : {
+          "pushPreferences" : {
+            "items" : {
+              "$ref" : "#/components/schemas/PushPreferenceItem"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [
+          "pushPreferences"
+        ],
+        "type" : "object"
+      },
+      "PushPreferenceItem" : {
+        "properties" : {
+          "isEnabled" : {
+            "type" : "boolean"
+          },
+          "type" : {
+            "enum" : [
+              "NORMAL",
+              "LECTURE_UPDATE",
+              "VACANCY_NOTIFICATION"
+            ],
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "isEnabled",
+          "type"
+        ],
+        "type" : "object"
+      },
+      "QuestionAnswer" : {
+        "properties" : {
+          "answerIndex" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "questionId" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "answerIndex",
+          "questionId"
         ],
         "type" : "object"
       },
@@ -1702,6 +1933,54 @@
         ],
         "type" : "object"
       },
+      "TimetableLectureReminderDto" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "offsetMinutes" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "timetableLectureId" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "offsetMinutes",
+          "timetableLectureId"
+        ],
+        "type" : "object"
+      },
+      "TimetableLectureReminderModifyRequestDto" : {
+        "properties" : {
+          "offsetMinutes" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "offsetMinutes"
+        ],
+        "type" : "object"
+      },
+      "TimetableLectureRemindersWithTimetableIdResponse" : {
+        "properties" : {
+          "reminders" : {
+            "items" : {
+              "$ref" : "#/components/schemas/TimetableLectureReminderDto"
+            },
+            "type" : "array"
+          },
+          "timetableId" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "reminders"
+        ],
+        "type" : "object"
+      },
       "TimetableLegacyDto" : {
         "properties" : {
           "_id" : {
@@ -1911,9 +2190,6 @@
         ],
         "type" : "object"
       },
-      "Unit" : {
-        "type" : "object"
-      },
       "UpdateFriendDisplayNameRequest" : {
         "properties" : {
           "displayName" : {
@@ -2047,7 +2323,7 @@
     "title" : "SNUTT timetable api spec",
     "version" : "1.0.0"
   },
-  "openapi" : "3.0.1",
+  "openapi" : "3.1.0",
   "paths" : {
     "/v1/admin/configs/{name}" : {
       "get" : {
@@ -2177,6 +2453,148 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ConfigResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/v1/admin/diary/activities" : {
+      "delete" : {
+        "operationId" : "removeDiaryActivity",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name" : "name",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OkResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      },
+      "get" : {
+        "operationId" : "getAllDiaryActivities",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/DiaryActivityDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "insertDiaryActivity",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name" : "name",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OkResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/v1/admin/diary/questions" : {
+      "get" : {
+        "operationId" : "getDiaryQuestions",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/DiaryQuestionDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "insertDiaryQuestion",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DiaryAddQuestionRequestDto"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OkResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/v1/admin/diary/questions/{id}" : {
+      "delete" : {
+        "operationId" : "removeDiaryQuestion",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OkResponse"
                 }
               }
             },
@@ -2878,6 +3296,103 @@
         }
       }
     },
+    "/v1/diary" : {
+      "post" : {
+        "operationId" : "submitDiary",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DiarySubmissionRequestDto"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OkResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/v1/diary/activities" : {
+      "get" : {
+        "operationId" : "getActivities",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/DiaryActivityDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/v1/diary/my" : {
+      "get" : {
+        "operationId" : "getMySubmissions",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/DiarySubmissionSummaryDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/v1/diary/questionnaire" : {
+      "post" : {
+        "operationId" : "getQuestionnaireFromActivities",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DiaryQuestionnaireRequestDto"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/DiaryQuestionDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/v1/ev/lectures/{lectureId}/summary" : {
       "get" : {
         "operationId" : "getLectureEvaluationSummary",
@@ -3243,6 +3758,64 @@
                 }
               }
             },
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/v1/push/preferences" : {
+      "get" : {
+        "operationId" : "getPushPreferences",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "pushPreferences" : [
+                    {
+                      "isEnabled" : "true",
+                      "type" : "LECTURE_UPDATE"
+                    },
+                    {
+                      "isEnabled" : "true",
+                      "type" : "VACANCY_NOTIFICATION"
+                    }
+                  ]
+                },
+                "schema" : {
+                  "$ref" : "#/components/schemas/PushPreferenceDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "savePushPreferences",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "example" : {
+                "pushPreferences" : [
+                  {
+                    "isEnabled" : false,
+                    "type" : "LECTURE_UPDATE"
+                  },
+                  {
+                    "isEnabled" : false,
+                    "type" : "VACANCY_NOTIFICATION"
+                  }
+                ]
+              },
+              "schema" : {
+                "$ref" : "#/components/schemas/PushPreferenceDto"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
             "description" : "OK"
           }
         }
@@ -3618,6 +4191,118 @@
         }
       }
     },
+    "/v1/tables/{timetableId}/lecture/{timetableLectureId}/reminder" : {
+      "delete" : {
+        "operationId" : "deleteReminder",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "timetableId",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          {
+            "in" : "path",
+            "name" : "timetableLectureId",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      },
+      "get" : {
+        "operationId" : "getReminder",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "timetableId",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          {
+            "in" : "path",
+            "name" : "timetableLectureId",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimetableLectureReminderDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      },
+      "put" : {
+        "operationId" : "modifyReminder",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "timetableId",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          {
+            "in" : "path",
+            "name" : "timetableLectureId",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TimetableLectureReminderModifyRequestDto"
+              }
+            }
+          },
+          "description" : "강의 시작 시각으로부터 알림을 받을 시간의 오프셋(분)",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimetableLectureReminderDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      }
+    },
     "/v1/tables/{timetableId}/lecture/{timetableLectureId}/reset" : {
       "put" : {
         "operationId" : "resetTimetableLecture",
@@ -3679,7 +4364,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Unit"
+                  "type" : "string"
                 }
               }
             },
@@ -3704,7 +4389,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Unit"
+                  "type" : "string"
                 }
               }
             },
@@ -3779,6 +4464,23 @@
                     "$ref" : "#/components/schemas/TimetableLegacyDto"
                   },
                   "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/v1/tables/active-semester/primary/lecture/reminders" : {
+      "get" : {
+        "operationId" : "getRemindersInActiveSemesterPrimaryTimetable",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimetableLectureRemindersWithTimetableIdResponse"
                 }
               }
             },
@@ -4125,6 +4827,27 @@
       }
     },
     "/v1/themes/{themeId}/publish" : {
+      "delete" : {
+        "operationId" : "deletePublishedTheme",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "themeId",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+
+            },
+            "description" : "OK"
+          }
+        }
+      },
       "post" : {
         "operationId" : "publishTheme",
         "parameters" : [
