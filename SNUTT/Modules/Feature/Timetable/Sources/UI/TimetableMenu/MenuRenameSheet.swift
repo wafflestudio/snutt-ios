@@ -29,12 +29,10 @@ struct MenuRenameSheet: View {
                     confirm: {
                         dismiss()
                         isRenameLoading = true
-                        Task {
-                            await errorAlertHandler.withAlert {
-                                try await viewModel.renameTimetable(timetableID: metadata.id, title: title)
-                            }
-                            isRenameLoading = false
+                        errorAlertHandler.withAlert {
+                            try await viewModel.renameTimetable(timetableID: metadata.id, title: title)
                         }
+                        isRenameLoading = false
                     },
                     isConfirmDisabled: isRenameLoading
                 )
@@ -51,7 +49,7 @@ struct MenuRenameSheet: View {
                 .padding()
             }
         }
-        .presentationDetents([.height(130)])
+        .presentationDetents([.height(160)])
         .observeErrors()
     }
 }

@@ -73,11 +73,9 @@ struct ChangeNicknameView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    Task {
-                        await errorAlertHandler.withAlert {
-                            try await viewModel.changeNickname(to: new)
-                            isNicknameChanged = true
-                        }
+                    errorAlertHandler.withAlert {
+                        try await viewModel.changeNickname(to: new)
+                        isNicknameChanged = true
                     }
                 } label: {
                     Text("저장")

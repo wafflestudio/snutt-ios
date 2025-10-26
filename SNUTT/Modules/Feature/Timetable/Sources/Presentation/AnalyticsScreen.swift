@@ -11,7 +11,7 @@ import Foundation
 public enum AnalyticsScreen: AnalyticsLogEvent {
     case timetableHome
     case timetableMenu
-    case timetableShare  // todo
+    case timetableShare
 
     case lectureCreate
     case lectureDetail(LectureDetailParameter)

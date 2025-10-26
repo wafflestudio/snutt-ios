@@ -54,7 +54,6 @@ struct ThemeDetailSheet: View {
             .padding(.vertical, 10)
             .padding(.horizontal, 5)
             .presentationDetents([.height(sheetHeight)])
-            .presentationCornerRadius(15)
         }
         .observeErrors()
     }

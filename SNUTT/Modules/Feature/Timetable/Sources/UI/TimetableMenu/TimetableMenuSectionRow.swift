@@ -82,15 +82,13 @@ struct TimetableMenuSectionRow: View {
             Spacer()
 
             Button {
-                Task {
-                    guard !isCopyingTimetable else { return }
-                    isCopyingTimetable = true
-                    defer {
-                        isCopyingTimetable = false
-                    }
-                    await errorHandler.withAlert {
-                        try await viewModel.copyTimetable(timetableID: timetableMetadata.id)
-                    }
+                guard !isCopyingTimetable else { return }
+                isCopyingTimetable = true
+                defer {
+                    isCopyingTimetable = false
+                }
+                errorHandler.withAlert {
+                    try await viewModel.copyTimetable(timetableID: timetableMetadata.id)
                 }
             } label: {
                 if isCopyingTimetable {

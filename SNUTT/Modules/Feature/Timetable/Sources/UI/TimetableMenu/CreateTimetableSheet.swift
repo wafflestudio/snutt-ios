@@ -39,16 +39,14 @@ struct CreateTimetableSheet: View {
                             }
                         guard let targetQuarter else { return }
                         isCreateLoading = true
-                        Task {
-                            await errorAlertHandler.withAlert {
-                                try await viewModel.createTimetable(
-                                    title: title,
-                                    quarter: targetQuarter
-                                )
-                            }
-                            isCreateLoading = false
-                            dismiss()
+                        errorAlertHandler.withAlert {
+                            try await viewModel.createTimetable(
+                                title: title,
+                                quarter: targetQuarter
+                            )
                         }
+                        isCreateLoading = false
+                        dismiss()
                     },
                     isConfirmDisabled: isCreateLoading || title.isEmpty
                         || (!hasQuarterPicker ? false : selectedQuarter == nil)
@@ -76,7 +74,7 @@ struct CreateTimetableSheet: View {
                 }
             }
         }
-        .presentationDetents([.height(hasQuarterPicker ? 300 : 120)])
+        .presentationDetents([.height(hasQuarterPicker ? 300 : 150)])
         .observeErrors()
         .onAppear {
             if hasQuarterPicker {
@@ -86,13 +84,7 @@ struct CreateTimetableSheet: View {
     }
 
     private func quarterDisplayName(_ quarter: Quarter) -> String {
-        let semesterName =
-            switch quarter.semester {
-            case .first: TimetableStrings.timetableSemester1
-            case .summer: TimetableStrings.timetableSemesterSummer
-            case .second: TimetableStrings.timetableSemester2
-            case .winter: TimetableStrings.timetableSemesterWinter
-            }
+        let semesterName = quarter.semester.localizedDescription
         return TimetableStrings.timetableQuarter(quarter.year, semesterName)
     }
 }
