@@ -25,6 +25,9 @@ struct LectureDetailScene: View {
         _lecture = State(initialValue: lecture)
         _editMode = State(initialValue: displayMode == .create ? .active : .inactive)
         self.displayMode = displayMode
+        if viewModel.showLectureReminderPicker() {
+            viewModel.getLectureReminderOption(lecture)
+        }
     }
 
     enum DisplayMode: Equatable {
