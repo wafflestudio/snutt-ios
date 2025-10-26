@@ -36,7 +36,11 @@ extension Project {
         }
         let allTargets = [mainTargets] + frameworkTargets
         let testTargets = allTargets.compactMap { _, testTarget in testTarget }
-        let schemes = makeSchemes(name: name) + [makeModuleTestsScheme(testTargets: testTargets)]
+        let schemes =
+            makeSchemes(name: name) + [makeModuleTestsScheme(testTargets: testTargets)]
+            + makePreviewSchemes(
+                moduleDependencies: moduleDependencies
+            )
         return Project(
             name: name,
             organizationName: "wafflestudio.com",
@@ -174,7 +178,7 @@ extension Project {
             configurations: [
                 .debug(
                     name: .dev,
-                    settings: ["OTHER_SWIFT_FLAGS": "$(inherited) -DDEBUG"],
+                    settings: ["SWIFT_ACTIVE_COMPILATION_CONDITIONS": "$(inherited) DEBUG"],
                     xcconfig: "XCConfigs/Dev.xcconfig"
                 ),
                 .release(name: .prod, xcconfig: "XCConfigs/Prod.xcconfig"),
@@ -222,6 +226,33 @@ extension Project {
             buildAction: .buildAction(targets: testTargets.map { .target($0.name) }),
             testAction: .targets(testableTargets, configuration: .dev)
         )
+    }
+
+    private static func makePreviewSchemes(moduleDependencies: [ModuleDependency]) -> [Scheme] {
+        let previewableModules = moduleDependencies.filter { module in
+            guard module.previewable else { return false }
+
+            switch module.category {
+            case .feature:
+                return true
+            case .shared(ui: let isUI):
+                return isUI
+            default:
+                return false
+            }
+        }
+
+        return previewableModules.map { module in
+            .scheme(
+                name: "\(module.name) Preview",
+                shared: true,
+                buildAction: .buildAction(targets: [.target(module.name)]),
+                runAction: .runAction(configuration: .dev),
+                archiveAction: nil,
+                profileAction: nil,
+                analyzeAction: nil
+            )
+        }
     }
 }
 

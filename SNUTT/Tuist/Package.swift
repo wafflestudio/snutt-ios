@@ -26,6 +26,8 @@ import PackageDescription
             "OpenAPIURLSession": .framework,
             "HTTPTypes": .framework,
             "SnapKit": .framework,
+            "KakaoSDKCommon": .framework,
+            "Alamofire": .framework,
         ],
         baseSettings: .settings(configurations: [
             .debug(name: .dev),
