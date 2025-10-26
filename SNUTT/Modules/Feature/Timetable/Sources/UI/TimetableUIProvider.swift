@@ -20,7 +20,7 @@ public struct TimetableUIProvider: TimetableUIProvidable {
     }
 
     public func timetableView(
-        timetable: TimetableInterface.Timetable,
+        timetable: TimetableInterface.Timetable?,
         configuration: TimetableInterface.TimetableConfiguration,
         preferredTheme: Theme?,
         availableThemes: [Theme]
@@ -35,6 +35,21 @@ public struct TimetableUIProvider: TimetableUIProvidable {
                     configuration: configuration
                 )
             )
+        )
+    }
+
+    public func makeLectureDetailPreview(
+        lecture: TimetableInterface.Lecture,
+        options: TimetableInterface.LectureDetailPreviewOptions
+    ) -> AnyView {
+        AnyView(
+            NavigationStack {
+                LectureEditDetailScene(
+                    timetableViewModel: nil,
+                    entryLecture: lecture,
+                    displayMode: .preview(options)
+                )
+            }
         )
     }
 }
