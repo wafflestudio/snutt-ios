@@ -7,14 +7,16 @@ public struct ModuleDependency {
     public let productType: Product?
     public let additionalResources: [String]
     public let infoPlist: [String: Plist.Value]
+    public let previewable: Bool
 
     public static func module(
         name: String,
         category: ModuleCategory,
+        previewable: Bool = true,
         productType: Product? = nil,
         dependencies: [TargetDependency] = [],
         additionalResources: [String] = [],
-        infoPlist: [String: Plist.Value] = [:]
+        infoPlist: [String: Plist.Value] = [:],
     ) -> Self {
         .init(
             name: name,
@@ -22,7 +24,8 @@ public struct ModuleDependency {
             dependencies: dependencies,
             productType: productType,
             additionalResources: additionalResources,
-            infoPlist: infoPlist
+            infoPlist: infoPlist,
+            previewable: previewable
         )
     }
 }

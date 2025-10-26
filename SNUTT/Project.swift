@@ -44,6 +44,7 @@ let project = Project.app(
             name: "Auth",
             category: .feature,
             dependencies: [
+                .target(name: "AnalyticsInterface"),
                 .target(name: "AuthInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
@@ -65,6 +66,7 @@ let project = Project.app(
         .module(
             name: "Analytics",
             category: .feature,
+            previewable: false,
             dependencies: [
                 .target(name: "AnalyticsInterface"),
                 .external(name: "Dependencies"),
@@ -132,6 +134,7 @@ let project = Project.app(
         .module(
             name: "Configs",
             category: .feature,
+            previewable: false,
             dependencies: [
                 .target(name: "ConfigsInterface"),
                 .target(name: "APIClientInterface"),
@@ -158,11 +161,12 @@ let project = Project.app(
         .module(
             name: "APIClient",
             category: .feature,
+            previewable: false,
             dependencies: [
                 .target(name: "APIClientInterface"),
                 .external(name: "OpenAPIRuntime"),
                 .external(name: "OpenAPIURLSession"),
-            ]
+            ],
         ),
         .module(
             name: "Reviews",
@@ -174,6 +178,26 @@ let project = Project.app(
                 .target(name: "ReviewsInterface"),
                 .target(name: "SharedAppMetadata"),
                 .external(name: "Dependencies"),
+            ]
+        ),
+        .module(
+            name: "Friends",
+            category: .feature,
+            dependencies: [
+                .target(name: "AnalyticsInterface"),
+                .target(name: "APIClientInterface"),
+                .target(name: "AuthInterface"),
+                .target(name: "FriendsInterface"),
+                .target(name: "TimetableInterface"),
+                .target(name: "ThemesInterface"),
+                .target(name: "SharedUIComponents"),
+                .target(name: "FoundationUtility"),
+                .target(name: "SwiftUIUtility"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+                .external(name: "KakaoSDKCommon"),
+                .external(name: "KakaoSDKShare"),
+                .external(name: "KakaoSDKTemplate"),
             ]
         ),
         // FeatureInterface
@@ -260,6 +284,11 @@ let project = Project.app(
             dependencies: [
                 .external(name: "Dependencies")
             ]
+        ),
+        .module(
+            name: "FriendsInterface",
+            category: .featureInterface,
+            dependencies: []
         ),
         // Shared
         .module(
