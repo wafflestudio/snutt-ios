@@ -77,9 +77,7 @@ struct UserSupportScene: View {
             Spacer().frame(height: 12)
 
             ProminentButton(label: AuthStrings.feedbackButton, isEnabled: isSubmitButtonEnabled) {
-                Task {
-                    await submit()
-                }
+                submit()
             }
 
             Spacer()

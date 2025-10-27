@@ -304,7 +304,8 @@ let project = Project.app(
             name: "SharedUIWebKit",
             category: .shared(ui: true),
             dependencies: [
-                .target(name: "SharedAppMetadata")
+                .target(name: "SharedAppMetadata"),
+                .external(name: "DequeModule"),
             ]
         ),
         .module(

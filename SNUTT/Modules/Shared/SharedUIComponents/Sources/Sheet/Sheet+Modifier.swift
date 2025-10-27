@@ -46,7 +46,7 @@ extension SheetConfiguration {
     ZStack {
         Color.black.opacity(0.1).ignoresSafeArea()
 
-        Button("Sheet is presented: \(isPresented)") {
+        Button("Sheet is presented: \(isPresented.description)") {
             isPresented.toggle()
         }
         .padding()

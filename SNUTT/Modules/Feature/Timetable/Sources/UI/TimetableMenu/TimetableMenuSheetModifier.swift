@@ -36,7 +36,7 @@ extension View {
 
     ZStack {
         Color.black.opacity(0.1).ignoresSafeArea()
-        Button("Show Timetable Menu: \(isPresented)") {
+        Button("Show Timetable Menu: \(isPresented.description)") {
             isPresented.toggle()
         }
         .timetableMenuSheet(isPresented: $isPresented, viewModel: viewModel)

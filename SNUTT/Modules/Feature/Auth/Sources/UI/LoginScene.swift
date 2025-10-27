@@ -59,9 +59,7 @@ struct LoginScene: View {
             }
             Spacer().layoutPriority(1)
             ProminentButton(label: AuthStrings.onboardLoginButton, isEnabled: isSubmitButtonEnabled) {
-                Task {
-                    await submit()
-                }
+                submit()
             }
         }
         .onAppear {
