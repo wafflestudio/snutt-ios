@@ -9,12 +9,36 @@ This project uses **Tuist** for project generation and **Just** for task automat
 ### Essential Commands
 ```bash
 # Project Generation
-tuist generate             # Generate Xcode project from Tuist config
-tuist generate --no-open   # Generate without opening Xcode
+tuist generate             # Generate Xcode project from Tuist config and open it
+tuist generate --no-open   # Generate without opening Xcode (useful when making file changes)
+
+# ⚠️ IMPORTANT: You must regenerate the project after:
+# - Creating new files
+# - Deleting files
+# - Renaming or moving files
+# - Adding new modules
+# - Modifying Project.swift or Tuist configuration files
+# Tip: Use --no-open when you plan to continue editing files before opening Xcode
 
 # Building
-tuist build                # Build the project (uses dev scheme by default)
-tuist build --scheme "SNUTT Prod"  # Build prod configuration
+# ⚠️ WARNING: DO NOT use `tuist build` without specifying a scheme!
+# It will build ALL schemes (app + all modules) and take a very long time.
+# ALWAYS specify a scheme name:
+
+tuist build "SNUTT Dev"    # Build development configuration (RECOMMENDED)
+tuist build "SNUTT Prod"   # Build production configuration
+tuist build "SNUTT Widget" # Build app + widget extension
+
+# Module-Specific Builds (Preview Schemes)
+# Use these for faster builds when working on a single module:
+tuist build "Timetable Preview"          # Build only Timetable module
+tuist build "Auth Preview"               # Build only Auth module
+tuist build "Vacancy Preview"            # Build only Vacancy module
+tuist build "Themes Preview"             # Build only Themes module
+# ... and more Preview schemes for other modules
+
+# Testing
+tuist build "ModuleTests"  # Build all module tests
 
 # Code Quality
 just format                # Format Swift code using swift-format
@@ -24,6 +48,54 @@ just check                 # Run all checks (formatting, imports, etc.)
 just dev                   # Generate dev OpenAPI + project
 just prod                  # Generate prod OpenAPI + project
 ```
+
+### Available Schemes
+
+This project automatically generates the following schemes:
+
+#### Main App Schemes
+- **SNUTT Dev**: Development build with dev API endpoint (`snutt-api-dev.wafflestudio.com`)
+- **SNUTT Prod**: Production build with prod API endpoint (`snutt-api.wafflestudio.com`)
+- **SNUTT Widget**: Build app with widget extension for testing widgets
+
+#### Module Preview Schemes
+
+Each feature and shared UI module has its own Preview scheme for faster, isolated builds:
+
+**Feature Module Previews:**
+- `Timetable Preview`, `Auth Preview`, `Notifications Preview`
+- `Vacancy Preview`, `Themes Preview`, `Settings Preview`
+- `Reviews Preview`, `Friends Preview`, `Popup Preview`
+
+**Shared UI Module Previews:**
+- `TimetableUIComponents Preview`
+- `SharedUIComponents Preview`, `SharedUIWebKit Preview`, `SharedUIMapKit Preview`
+
+**Test Scheme:**
+- `ModuleTests`: Runs all module tests across the project
+
+#### When to Use Preview Schemes
+
+Preview schemes are ideal for **localized development** when working on a single module:
+
+```bash
+# Example: Working on Timetable feature only
+tuist build --scheme "Timetable Preview"  # Much faster than full app build
+
+# Example: Making changes to shared UI components
+tuist build --scheme "SharedUIComponents Preview"
+```
+
+**Benefits:**
+- **Faster build times**: Only builds the target module and its dependencies
+- **Quick validation**: Immediately verify if your changes compile without full app rebuild
+- **Focused development**: Isolate work to specific modules
+
+**Note:** Some modules don't have Preview schemes:
+- `Analytics` (marked as `previewable: false`)
+- `Configs` (marked as `previewable: false`)
+- `APIClient` (marked as `previewable: false`)
+- All `*Interface` modules (FeatureInterface modules don't have preview schemes)
 
 ### Build Configurations
 - **Dev**: Development configuration, API: `snutt-api-dev.wafflestudio.com`
