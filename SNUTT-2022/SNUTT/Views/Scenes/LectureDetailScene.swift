@@ -54,7 +54,6 @@ struct LectureDetailScene: View {
         viewModel.showLectureReminderPicker() &&
         displayMode == .normal &&
         !editMode.isEditing &&
-        !lecture.isCustom &&
         !lecture.timePlaces.isEmpty
     }
 
