@@ -27,13 +27,18 @@ final class OnboardViewModel {
     @ObservationIgnored
     @Dependency(\.socialAuthServiceProvider) private var socialAuthServiceProvider
 
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) private var analyticsLogger
+
     var paths = [OnboardDetailSceneTypes]()
 
     func loginWithLocalId(localID: String, localPassword: String) async throws {
+        analyticsLogger.logEvent(AnalyticsAction.login(.init(provider: .local)))
         try await authUseCase.loginWithLocalID(localID: localID, localPassword: localPassword)
     }
 
     func registerWithLocalID(localID: String, localPassword: String, email: String) async throws {
+        analyticsLogger.logEvent(AnalyticsAction.signUp)
         let response = try await authRepository.registerWithLocalID(
             localID: localID,
             localPassword: localPassword,
@@ -44,6 +49,7 @@ final class OnboardViewModel {
     }
 
     func loginWithSocialProvider(provider: SocialAuthProvider) async throws {
+        analyticsLogger.logEvent(AnalyticsAction.login(.init(provider: provider.logValue)))
         do {
             let providerToken = try await socialAuthServiceProvider.provider(for: provider).authenticate()
             let response = try await authRepository.loginWithSocial(provider: provider, providerToken: providerToken)

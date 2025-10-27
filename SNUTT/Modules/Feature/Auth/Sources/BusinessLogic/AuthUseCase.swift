@@ -13,6 +13,7 @@ public struct AuthUseCase: AuthUseCaseProtocol {
     @Dependency(\.authRepository) private var authRepository
     @Dependency(\.authState) private var authState
     @Dependency(\.authSecureRepository) private var secureRepository
+    @Dependency(\.analyticsLogger) private var analyticsLogger
 
     public init() {}
 
@@ -39,6 +40,7 @@ public struct AuthUseCase: AuthUseCaseProtocol {
     }
 
     public func logout() async throws {
+        analyticsLogger.logEvent(AnalyticsAction.logout)
         if let fcmToken = authState.get(.fcmToken) {
             try? await authRepository.logout(fcmToken: fcmToken)
         } else {
