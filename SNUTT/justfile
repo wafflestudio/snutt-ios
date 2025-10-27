@@ -26,34 +26,6 @@ prod:
     @tuist generate
     @echo "✅ Production environment setup completed!"
 
-clean-derived-data:
-    @echo "🗑️ Cleaning DerivedData..."
-    @rm -rf ~/Library/Developer/Xcode/DerivedData/SNUTT-*
-    @echo "✅ DerivedData cleaned successfully!"
-
-clean-build:
-    @echo "🧹 Initiating clean build..."
-    @just clean-derived-data
-    @echo "🧽 Running tuist clean..."
-    @tuist clean
-    @echo "📦 Installing dependencies..."
-    @tuist install
-    @echo "🔨 Building project..."
-    @tuist generate --no-open
-    @tuist build
-    @echo "✅ Clean build completed successfully!"
-
-clean-generate:
-    @echo "🧹 Initiating clean generate..."
-    @just clean-derived-data
-    @echo "🧽 Running tuist clean..."
-    @tuist clean
-    @echo "📦 Installing dependencies..."
-    @tuist install
-    @echo "🏗️  Generating project..."
-    @tuist generate
-    @echo "✅ Clean generate completed successfully!"
-
 format:
     @echo "🎨 Formatting Swift code..."
     swift-format format --recursive --in-place .

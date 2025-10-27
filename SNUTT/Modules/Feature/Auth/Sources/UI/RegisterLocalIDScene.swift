@@ -85,9 +85,7 @@ struct RegisterLocalIDScene: View {
                 )
                 .focused($focusedField, equals: .email)
                 .onSubmit {
-                    Task {
-                        await submit()
-                    }
+                    submit()
                 }
 
                 Text(emailDomain)
@@ -105,9 +103,7 @@ struct RegisterLocalIDScene: View {
             }
 
             ProminentButton(label: AuthStrings.signupButton, isEnabled: isSubmitButtonEnabled) {
-                Task {
-                    await submit()
-                }
+                submit()
             }
         }
         .onAppear {

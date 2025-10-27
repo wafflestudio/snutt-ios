@@ -64,7 +64,7 @@ struct EditableRow<Value: Sendable>: View {
                         prompt: Text(container.placeholderText)
                     )
                 default:
-                    Text("Unsupported type \(type(of: container))")
+                    Text("Unsupported type \(String(describing: type(of: container)))")
                 }
             }
             .foregroundStyle(readOnly ? Color.label.opacity(0.6) : .label)

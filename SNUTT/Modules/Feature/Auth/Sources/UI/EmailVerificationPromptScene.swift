@@ -28,9 +28,7 @@ struct EmailVerificationPromptScene: View {
 
             VStack(spacing: 12) {
                 ProminentButton(label: AuthStrings.emailVerificationButton) {
-                    Task {
-                        await sendVerificationCode()
-                    }
+                    sendVerificationCode()
                 }
 
                 ProminentButton(

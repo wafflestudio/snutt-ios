@@ -26,7 +26,7 @@ struct TimetableWidgetEntryView: View {
         case .accessoryCircular:
             TimetableAccessoryCircularView(entry: entry)
         default:
-            Text("\(family) is not supported")
+            Text("\(String(describing: family)) is not supported")
         }
     }
 }

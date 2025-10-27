@@ -34,7 +34,7 @@ extension View {
     }
     ZStack {
         Color.clear.ignoresSafeArea()
-        Button("Show Friend Menu: \(isPresented)") {
+        Button("Show Friend Menu: \(isPresented.description)") {
             isPresented.toggle()
         }
         .friendMenuSheet(isPresented: $isPresented, viewModel: viewModel)
