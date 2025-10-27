@@ -7,6 +7,7 @@
 
 import AnalyticsInterface
 import Foundation
+import FoundationUtility
 
 public enum AnalyticsScreen: AnalyticsLogEvent {
     case timetableHome
@@ -61,11 +62,11 @@ public enum AnalyticsScreen: AnalyticsLogEvent {
     public var parameters: [String: String]? {
         switch self {
         case let .lectureDetail(parameter):
-            parameter.dictionary
+            parameter.stringDictionary
         case let .reviewDetail(parameter):
-            parameter.dictionary
+            parameter.stringDictionary
         case let .lectureSyllabus(parameter):
-            parameter.dictionary
+            parameter.stringDictionary
         default: nil
         }
     }
@@ -116,13 +117,5 @@ public enum DetailScreenReferrer: Encodable, Sendable {
         case .lectureDetail:
             try container.encode("lectureDetail")
         }
-    }
-}
-
-extension Encodable {
-    fileprivate var dictionary: [String: String] {
-        guard let data = try? JSONEncoder().encode(self) else { return [:] }
-        return (try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed))
-            .flatMap { $0 as? [String: String] } ?? [:]
     }
 }
