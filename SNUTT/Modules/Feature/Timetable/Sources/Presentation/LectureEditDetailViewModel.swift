@@ -25,6 +25,9 @@ public final class LectureEditDetailViewModel {
     @ObservationIgnored
     @Dependency(\.courseBookRepository) private var courseBookRepository
 
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) private var analyticsLogger
+
     /// Might be `nil` if write operation is not necessary.
     private let timetableViewModel: TimetableViewModel?
 
@@ -168,6 +171,14 @@ public final class LectureEditDetailViewModel {
         if isBookmarked {
             try await lectureRepository.removeBookmark(lectureID: entryLecture.id)
         } else {
+            analyticsLogger.logEvent(
+                AnalyticsAction.addToBookmark(
+                    .init(
+                        lectureID: entryLecture.referenceID,
+                        referrer: .lectureDetail
+                    )
+                )
+            )
             try await lectureRepository.addBookmark(lectureID: entryLecture.id)
         }
         isBookmarked.toggle()
@@ -178,6 +189,14 @@ public final class LectureEditDetailViewModel {
         if isVacancyNotificationEnabled {
             try await vacancyRepository.deleteVacancyLecture(lectureID: entryLecture.id)
         } else {
+            analyticsLogger.logEvent(
+                AnalyticsAction.addToVacancy(
+                    .init(
+                        lectureID: entryLecture.referenceID,
+                        referrer: .lectureDetail
+                    )
+                )
+            )
             try await vacancyRepository.addVacancyLecture(lectureID: entryLecture.id)
         }
         isVacancyNotificationEnabled.toggle()

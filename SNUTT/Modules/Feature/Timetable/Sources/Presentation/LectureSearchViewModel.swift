@@ -97,6 +97,13 @@ class LectureSearchViewModel {
 
     func fetchInitialSearchResult() async throws {
         guard let searchingQuarter else { return }
+        if let currentTimetable = timetableViewModel.currentTimetable {
+            analyticsLogger.logEvent(
+                AnalyticsAction.searchLecture(
+                    .init(query: searchQuery, quarter: currentTimetable.quarter.localizedDescription)
+                )
+            )
+        }
         try await dataSource.fetchInitialSearchResult(
             query: searchQuery,
             quarter: searchingQuarter,
@@ -176,6 +183,11 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
                 try await lectureRepository.removeBookmark(lectureID: lecture.id)
                 bookmarkedLectures.removeAll { $0.id == lecture.id }
             } else {
+                analyticsLogger.logEvent(
+                    AnalyticsAction.addToBookmark(
+                        .init(lectureID: lecture.referenceID, referrer: lectureActionReferrer)
+                    )
+                )
                 try await lectureRepository.addBookmark(lectureID: lecture.id)
                 if !bookmarkedLectures.contains(where: { $0.id == lecture.id }) {
                     bookmarkedLectures.append(lecture)
@@ -186,11 +198,23 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
                 try await vacancyRepository.deleteVacancyLecture(lectureID: lecture.id)
                 vacancyLectureIds.remove(lecture.id)
             } else {
+                analyticsLogger.logEvent(
+                    AnalyticsAction.addToVacancy(.init(lectureID: lecture.referenceID, referrer: lectureActionReferrer))
+                )
                 try await vacancyRepository.addVacancyLecture(lectureID: lecture.id)
                 vacancyLectureIds.insert(lecture.id)
             }
         case .add:
             if !isToggled(lecture: lecture, type: type) {
+                analyticsLogger.logEvent(
+                    AnalyticsAction.addToTimetable(
+                        .init(
+                            lectureID: lecture.referenceID,
+                            timetableID: timetableViewModel.currentTimetable?.id,
+                            referrer: lectureActionReferrer
+                        )
+                    )
+                )
                 try await timetableViewModel.addLecture(lecture: lecture, overrideOnConflict: overrideOnConflict)
             } else {
                 try await timetableViewModel.removeLecture(lecture: lecture)
@@ -203,6 +227,15 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
         switch searchDisplayMode {
         case .bookmark: .bookmark
         case .search: .search(query: searchQuery)
+        }
+    }
+
+    var lectureActionReferrer: LectureActionReferrer {
+        switch searchDisplayMode {
+        case .search:
+            return .search(query: searchQuery)
+        case .bookmark:
+            return .bookmark
         }
     }
 
