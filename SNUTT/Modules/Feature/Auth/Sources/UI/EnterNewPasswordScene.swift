@@ -106,17 +106,13 @@ struct EnterNewPasswordScene: View {
                     )
                     .focused($focusedField, equals: .confirmPassword)
                     .onSubmit {
-                        Task {
-                            await submit()
-                        }
+                        submit()
                     }
                 }
             }
 
             ProminentButton(label: AuthStrings.newPasswordButton, isEnabled: isButtonEnabled) {
-                Task {
-                    await submit()
-                }
+                submit()
             }
 
             Spacer()

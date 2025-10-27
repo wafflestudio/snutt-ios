@@ -11,7 +11,6 @@ import SharedUIComponents
 import SwiftUI
 import ThemesInterface
 import TimetableInterface
-import TimetableUIComponents
 
 public struct FriendsScene: View {
     @AppStorage("isNewToFriendsService") private var isNewToFriendsService: Bool = true

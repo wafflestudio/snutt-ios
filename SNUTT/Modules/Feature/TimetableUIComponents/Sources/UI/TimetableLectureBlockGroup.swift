@@ -50,21 +50,6 @@ struct TimetableLectureBlockGroup: View {
     }
 }
 
-extension EnvironmentValues {
-    @Entry public var lectureTapAction: LectureTapAction = .init(action: nil)
-}
-
-public struct LectureTapAction {
-    public let action: ((Lecture) -> Void)?
-    public init(action: ((Lecture) -> Void)?) {
-        self.action = action
-    }
-
-    public func callAsFunction(lecture: Lecture) {
-        action?(lecture)
-    }
-}
-
 #Preview {
     let painter = makePreviewPainter()
     TimetableLectureBlockGroup(painter: painter, lecture: painter.currentTimetable!.lectures.first!)

@@ -67,3 +67,19 @@ extension EnvironmentValues {
         }
     }
 }
+
+extension EnvironmentValues {
+    @Entry public var lectureTapAction: LectureTapAction = .init(action: nil)
+}
+
+@MainActor
+public struct LectureTapAction {
+    public let action: (@MainActor (Lecture) -> Void)?
+    public nonisolated init(action: (@MainActor (Lecture) -> Void)?) {
+        self.action = action
+    }
+
+    public func callAsFunction(lecture: Lecture) {
+        action?(lecture)
+    }
+}

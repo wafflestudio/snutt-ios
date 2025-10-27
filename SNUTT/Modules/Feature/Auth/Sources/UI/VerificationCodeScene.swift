@@ -51,9 +51,7 @@ struct VerificationCodeScene: View {
                     )
                     .focused($isFocused)
                     .onSubmit {
-                        Task {
-                            await submit()
-                        }
+                        submit()
                     }
 
                     Spacer().frame(width: 8)
@@ -83,9 +81,7 @@ struct VerificationCodeScene: View {
                     label: AuthStrings.verificationCodeButton,
                     isEnabled: verificationCode.count == codeLength && !timeOut && !isLoading
                 ) {
-                    Task {
-                        await submit()
-                    }
+                    submit()
                 }
 
                 if mode == .resetPassword {

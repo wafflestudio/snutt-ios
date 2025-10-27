@@ -28,6 +28,7 @@ import PackageDescription
             "SnapKit": .framework,
             "KakaoSDKCommon": .framework,
             "Alamofire": .framework,
+            "DequeModule": .framework,
         ],
         baseSettings: .settings(configurations: [
             .debug(name: .dev),
