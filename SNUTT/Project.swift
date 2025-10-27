@@ -23,8 +23,8 @@ let project = Project.app(
                 .target(name: "SwiftUIUtility"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SharedUIComponents"),
+                .target(name: "SharedUIMapKit"),
                 .external(name: "Dependencies"),
-                .external(name: "KakaoMapsSDK-SPM"),
                 .external(name: "SnapKit"),
             ]
         ),
@@ -306,6 +306,11 @@ let project = Project.app(
             dependencies: [
                 .target(name: "SharedAppMetadata")
             ]
+        ),
+        .module(
+            name: "SharedUIMapKit",
+            category: .shared(ui: true),
+            dependencies: []
         ),
         .module(
             name: "SharedAppMetadata",
