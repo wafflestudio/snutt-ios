@@ -207,7 +207,7 @@ struct LectureEditDetailScene: View {
                         .font(.system(size: 16))
                 }
                 .padding(.top, 5)
-            } else if viewModel.showMapView {
+            } else if true {
                 if isMapViewOpened {
                     LectureMapView(
                         buildings: viewModel.buildings,

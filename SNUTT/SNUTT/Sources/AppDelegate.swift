@@ -7,7 +7,6 @@
 
 import FacebookCore
 import Firebase
-import KakaoMapsSDK
 import UIKit
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,11 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions options: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        // MARK: Initialize KakaoMapSDK
-
-        let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
-        KakaoMapsSDK.SDKInitializer.InitSDK(appKey: kakaoAppKey)
-
         // MARK: Configure Firebase
 
         if let filePath = Bundle.main.path(forResource: firebaseConfigName, ofType: "plist"),
