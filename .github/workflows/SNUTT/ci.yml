@@ -1,0 +1,35 @@
+name: SNUTT CI
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "SNUTT/**"
+      - ".github/workflows/SNUTT/**"
+
+jobs:
+  check-and-test:
+    runs-on: macos-latest
+
+    defaults:
+      run:
+        working-directory: ./SNUTT
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "26.0.1"
+
+      - name: Setup mise (Tuist)
+        uses: jdx/mise-action@v2
+
+      - name: Install Just
+        run: brew install just
+
+      - name: Run tests with implicit import checks
+        run: just test
