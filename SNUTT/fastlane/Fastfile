@@ -170,14 +170,15 @@ platform :ios do
       # Sync certificates
       sync_certificates(app_identifier: app_identifier)
 
-      # Get the latest build number from App Store Connect
+      # Get the latest build number from App Store Connect for this version
       latest_build_number = latest_testflight_build_number(
         app_identifier: app_identifier,
-        api_key: api_key
+        api_key: api_key,
+        version: marketing_version
       )
 
       new_build_number = latest_build_number + 1
-      UI.message("Latest build number: #{latest_build_number}")
+      UI.message("Latest build number for version #{marketing_version}: #{latest_build_number}")
       UI.message("New build number: #{new_build_number}")
 
       # Update build number in Base.xcconfig
@@ -187,9 +188,9 @@ platform :ios do
         value: new_build_number.to_s
       )
 
-      # Generate Xcode project using Tuist
-      UI.message("Generating Xcode project with Tuist...")
-      sh("mise exec -- tuist generate --no-open")
+      # Install dependencies and generate Xcode project using Tuist
+      UI.message("Installing dependencies and generating Xcode project with Tuist...")
+      sh("cd .. && mise exec -- tuist install && mise exec -- tuist generate --no-open")
 
       # Add beta badge if requested (for dev builds)
       if add_badge
