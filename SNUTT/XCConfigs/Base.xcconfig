@@ -1,0 +1,16 @@
+// Base Configuration - Single Source of Truth
+// This file defines common settings shared across all build configurations.
+// It is included by both Dev.xcconfig and Prod.xcconfig.
+
+// Version Settings
+// Marketing Version (e.g., 4.0.0)
+// This should match the version in git tags (appstore/v4.0.0, testflight/v4.0.0)
+MARKETING_VERSION = 4.0.0
+
+// Build Number (Current Project Version)
+// In local builds, this is always 1.
+// In CI/CD, this is automatically incremented based on the latest build in App Store Connect.
+CURRENT_PROJECT_VERSION = 1
+
+// Team Settings
+DEVELOPMENT_TEAM = K9883YB4VR

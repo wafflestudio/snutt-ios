@@ -85,7 +85,8 @@ buildServer.json
 .kiro
 cursor
 
-*.xcconfig
+XCConfigs/*.xcconfig
+!XCConfigs/Base.xcconfig
 .ruby
 
 Scripts/fastlane/report.xml
