@@ -91,7 +91,7 @@ jobs:
 
             # Commit and push
             git add XCConfigs/Base.xcconfig
-            git commit -m "chore: update version to ${{ steps.parse_tag.outputs.version }} for deployment"
+            git commit -m "🔖 Update version to ${{ steps.parse_tag.outputs.version }} for deployment"
             git push origin HEAD:${{ github.ref }}
           else
             echo "Version already matches. No update needed."
