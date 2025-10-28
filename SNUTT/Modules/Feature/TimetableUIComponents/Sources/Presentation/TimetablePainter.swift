@@ -211,8 +211,7 @@ extension TimePlace {
     }
 
     private func roundedEndMinute(compactMode: Bool) -> Int {
-        // FIXME: isCustom 추가
-        if compactMode {
+        if compactMode, !isCustom {
             let rounded = endTime.roundUpForCompactMode()
             return rounded.hour * 60 + rounded.minute
         } else {
