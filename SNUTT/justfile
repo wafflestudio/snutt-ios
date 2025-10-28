@@ -1,41 +1,46 @@
+# 사용 가능한 전체 명령어를 보려면: just --list
+
+# Tuist 프로젝트 생성 및 Xcode 열기
+generate:
+    @pre-commit install
+    @tuist generate --no-open
+    @just certs
+    @xed .
+
+# OpenAPI 스펙 다운로드 및 코드 생성 (개발 서버)
 openapi-dev:
-    @echo "🚀 Generating OpenAPI for dev environment..."
     @swift Scripts/OpenAPIDownloader.swift dev
     @bash Scripts/OpenAPIGenerator.sh dev
-    @echo "✅ OpenAPI generation for dev environment completed!"
 
+# OpenAPI 스펙 다운로드 및 코드 생성 (프로덕션 서버)
 openapi-prod:
-    @echo "🚀 Generating OpenAPI for prod environment..."
     @swift Scripts/OpenAPIDownloader.swift prod
     @bash Scripts/OpenAPIGenerator.sh prod
-    @echo "✅ OpenAPI generation for prod environment completed!"
 
-dev:
-    @echo "🚀 Setting up development environment..."
-    @just openapi-dev
-    @pre-commit install
-    @echo "📦 Running tuist generate..."
-    @tuist generate
-    @echo "✅ Development environment setup completed!"
+# 개발 인증서 및 프로비저닝 프로파일 동기화 (읽기 전용)
+certs:
+    @cd Scripts/fastlane && bundle exec fastlane sync_dev_certificates
 
-prod:
-    @echo "🚀 Setting up production environment..."
-    @just openapi-prod
-    @pre-commit install
-    @echo "📦 Running tuist generate..."
-    @tuist generate
-    @echo "✅ Production environment setup completed!"
+# 새 디바이스 등록 및 프로비저닝 프로파일 업데이트 (권한 필요)
+register-device:
+    @cd Scripts/fastlane && bundle exec fastlane add_device
 
+# Swift 코드 자동 포맷팅 (커밋 시 자동 실행)
 format:
-    @echo "🎨 Formatting Swift code..."
     swift-format format --recursive --in-place .
-    @echo "✅ Swift code formatting completed!"
 
+# 코드 품질 검사 (의존성, import, 포맷 등)
 check:
-    @echo "📦 Installing dependencies..."
     @tuist install
-    @echo "🔍 Inspecting implicit imports..."
     @tuist inspect implicit-imports
-    @echo "🎨 Checking code formatting..."
     @just format
-    @echo "✅ All checks completed!"
+
+# 의존성 검사 및 모듈 테스트 실행
+test:
+    @tuist install
+    @tuist inspect implicit-imports
+    @tuist test ModuleTests
+
+
+
+
