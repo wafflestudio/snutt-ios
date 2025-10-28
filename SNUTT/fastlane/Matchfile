@@ -1,7 +1,7 @@
 # Match configuration for certificate and provisioning profile management
 # Common settings (apple_id, team_id) are inherited from Appfile
 
-git_url("https://github.com/wafflestudio/wafflestudio-apple-certificates")
+git_url("git@github.com:wafflestudio/wafflestudio-apple-certificates.git")
 
 storage_mode("git")
 
