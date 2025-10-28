@@ -74,8 +74,6 @@ jobs:
 
       - name: Check and update version if needed
         run: |
-          cd Scripts/fastlane
-
           # Check if version matches
           if ! bundle exec fastlane check_version version:"${{ steps.parse_tag.outputs.version }}"; then
             echo "Version mismatch detected. Updating version..."
@@ -84,7 +82,6 @@ jobs:
             bundle exec fastlane update_version version:"${{ steps.parse_tag.outputs.version }}"
 
             # Configure git
-            cd ../..
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
 
@@ -154,6 +151,4 @@ jobs:
           APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           GIT_TAG_NAME: ${{ github.ref_name }}
-        run: |
-          cd Scripts/fastlane
-          bundle exec fastlane ${{ steps.determine_lane.outputs.lane }}
+        run: bundle exec fastlane ${{ steps.determine_lane.outputs.lane }}
