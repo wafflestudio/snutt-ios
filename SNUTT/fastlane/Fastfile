@@ -189,7 +189,7 @@ platform :ios do
 
       # Generate Xcode project using Tuist
       UI.message("Generating Xcode project with Tuist...")
-      sh("cd ../.. && tuist generate --no-open")
+      sh("mise exec -- tuist generate --no-open")
 
       # Add beta badge if requested (for dev builds)
       if add_badge
@@ -361,7 +361,7 @@ platform :ios do
       attachment_properties: {
         fields: fields
       },
-      default_payloads: [:git_branch, :git_author, :last_git_commit_hash, :last_git_commit]
+      default_payloads: [:git_author, :last_git_commit]
     )
   end
 end

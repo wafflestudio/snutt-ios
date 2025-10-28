@@ -69,7 +69,6 @@ jobs:
       - name: Install ImageMagick (for beta badge)
         if: steps.parse_tag.outputs.is_dev == 'true'
         run: |
-          brew install libsodium
           brew install imagemagick
 
       - name: Check and update version if needed
