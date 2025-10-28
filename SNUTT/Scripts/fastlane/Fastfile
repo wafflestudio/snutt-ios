@@ -74,7 +74,7 @@ platform :ios do
     )
 
     UI.success("✅ Device registered and provisioning profiles updated!")
-    UI.important("Please run 'just dev' or 'just prod' to apply the updated provisioning profiles.")
+    UI.important("Please run 'just generate' to apply the updated provisioning profiles.")
   end
 
   desc "Sync development certificates and profiles for local development"
