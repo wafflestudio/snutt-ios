@@ -4,8 +4,10 @@ import ProjectDescription
 let domain = "com.wafflestudio"
 
 // MARK: - Version Constants
-let marketingVersion: Plist.Value = "1.0.0"
-let buildNumber: Plist.Value = "1"
+// These values are read from XCConfigs/Base.xcconfig
+// In CI/CD, the xcconfig file is updated automatically before building
+let marketingVersion: Plist.Value = "$(MARKETING_VERSION)"
+let buildNumber: Plist.Value = "$(CURRENT_PROJECT_VERSION)"
 
 extension Project {
     public static func app(
@@ -112,7 +114,6 @@ extension Project {
             infoPlist: .extendingDefault(with: InfoPlist.infoPlistForApp()),
             sources: ["\(name)/Sources/**"],
             resources: ["\(name)/Resources/**", "OpenAPI/**"],
-            entitlements: "Supporting Files/SNUTT.entitlements",
             dependencies: dependencies,
             settings: makeSettings()
         )
@@ -154,7 +155,6 @@ extension Project {
             ),
             sources: ["SNUTTWidget/Sources/**"],
             resources: ["SNUTTWidget/Resources/**"],
-            entitlements: "Supporting Files/SNUTT.entitlements",
             dependencies: dependencies,
             settings: makeSettings()
         )
@@ -178,10 +178,19 @@ extension Project {
             configurations: [
                 .debug(
                     name: .dev,
-                    settings: ["SWIFT_ACTIVE_COMPILATION_CONDITIONS": "$(inherited) DEBUG"],
+                    settings: [
+                        "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "$(inherited) DEBUG",
+                        "CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Dev.entitlements",
+                    ],
                     xcconfig: "XCConfigs/Dev.xcconfig"
                 ),
-                .release(name: .prod, xcconfig: "XCConfigs/Prod.xcconfig"),
+                .release(
+                    name: .prod,
+                    settings: [
+                        "CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Prod.entitlements"
+                    ],
+                    xcconfig: "XCConfigs/Prod.xcconfig"
+                ),
             ]
         )
     }

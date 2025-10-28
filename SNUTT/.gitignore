@@ -86,3 +86,6 @@ buildServer.json
 cursor
 
 *.xcconfig
+.ruby
+
+Scripts/fastlane/report.xml
