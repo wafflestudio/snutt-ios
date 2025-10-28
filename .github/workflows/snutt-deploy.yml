@@ -72,10 +72,6 @@ jobs:
           brew install libsodium
           brew install imagemagick
 
-      - name: Install Fastlane plugins
-        run: |
-          bundle exec fastlane add_plugin xcconfig --confirm
-
       - name: Check and update version if needed
         run: |
           cd Scripts/fastlane
