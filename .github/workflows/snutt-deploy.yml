@@ -63,6 +63,9 @@ jobs:
           ruby-version: "3.2"
           bundler-cache: true
 
+      - name: Install dependencies with bundler
+        run: bundle install
+
       - name: Install ImageMagick (for beta badge)
         if: steps.parse_tag.outputs.is_dev == 'true'
         run: |
