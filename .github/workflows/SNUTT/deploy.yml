@@ -90,7 +90,7 @@ jobs:
             git config user.email "github-actions[bot]@users.noreply.github.com"
 
             # Commit and push
-            git add Config/Version.xcconfig
+            git add XCConfigs/Base.xcconfig
             git commit -m "chore: update version to ${{ steps.parse_tag.outputs.version }} for deployment"
             git push origin HEAD:${{ github.ref }}
           else
