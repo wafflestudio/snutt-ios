@@ -1,0 +1,9 @@
+# Central configuration for fastlane
+# These values are shared across all fastlane tools (match, pilot, etc.)
+
+apple_id("apple@wafflestudio.com")
+
+team_id("K9883YB4VR")
+
+# App Store Connect Team ID (same as team_id in this case)
+itc_team_id("K9883YB4VR")

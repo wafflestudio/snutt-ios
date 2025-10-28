@@ -1,0 +1,22 @@
+# Match configuration for certificate and provisioning profile management
+# Common settings (apple_id, team_id) are inherited from Appfile
+
+git_url("https://github.com/wafflestudio/wafflestudio-apple-certificates")
+
+storage_mode("git")
+
+# Note: 'type' (development/appstore) is specified in each lane
+# This allows flexibility for different certificate types
+
+# All app identifiers including main apps and widget extensions
+# Note: These must be explicitly listed as fastlane cannot read from xcconfig files
+app_identifier([
+  "com.wafflestudio.snutt",           # Prod app
+  "com.wafflestudio.snutt.dev",       # Dev app
+  "com.wafflestudio.snutt.widget",    # Prod widget
+  "com.wafflestudio.snutt.dev.widget" # Dev widget
+])
+
+# Note: App Group Identifiers are configured in the entitlements files
+# (Supporting Files/SNUTT-Dev.entitlements and SNUTT-Prod.entitlements)
+# Match will automatically include them in the provisioning profiles when regenerating
