@@ -50,8 +50,8 @@ jobs:
 
       - name: Create GoogleService-Info.plist files
         run: |
-          echo "${{ secrets.GOOGLE_SERVICE_DEBUG_INFO }}" > GoogleServiceDebugInfo.plist
-          echo "${{ secrets.GOOGLE_SERVICE_RELEASE_INFO }}" > GoogleServiceReleaseInfo.plist
+          echo "${{ secrets.GOOGLE_SERVICE_DEBUG_INFO }}" > SNUTT/Resources/GoogleServiceDebugInfo.plist
+          echo "${{ secrets.GOOGLE_SERVICE_RELEASE_INFO }}" > SNUTT/Resources/GoogleServiceReleaseInfo.plist
 
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
