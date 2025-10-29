@@ -102,7 +102,7 @@
 
 "edit.map.noAppAlert" = "No executable map application available.";
 "edit.map.locationWarning" = "* If you edited the location, it may be displayed differently from the actual location.";
-"edit.map.buildingSuffix" = "";
+"edit.map.buildingSuffix" = "Building %@";
 
 "edit.color.title" = "Color Selection";
 "edit.color.name" = "Name";
