@@ -41,8 +41,10 @@ jobs:
 
       - name: Create XCConfig files from secrets
         run: |
-          echo "${{ secrets.DEBUG_CONFIG }}" > XCConfigs/Dev.xcconfig
-          echo "${{ secrets.RELEASE_CONFIG }}" > XCConfigs/Prod.xcconfig
+          echo '#include "Base.xcconfig"' > XCConfigs/Dev.xcconfig
+          echo "${{ secrets.DEBUG_CONFIG }}" >> XCConfigs/Dev.xcconfig
+          echo '#include "Base.xcconfig"' > XCConfigs/Prod.xcconfig
+          echo "${{ secrets.RELEASE_CONFIG }}" >> XCConfigs/Prod.xcconfig
 
       - name: Create GoogleService-Info.plist files
         run: |
