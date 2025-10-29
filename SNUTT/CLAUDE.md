@@ -9,8 +9,8 @@ This project uses **Tuist** for project generation and **Just** for task automat
 ### Essential Commands
 ```bash
 # Project Generation
-tuist generate             # Generate Xcode project from Tuist config and open it
-tuist generate --no-open   # Generate without opening Xcode (useful when making file changes)
+just generate             # Generate Xcode project with proper certificates and open it
+tuist generate --no-open  # Generate without opening Xcode (useful when making file changes)
 
 # ⚠️ IMPORTANT: You must regenerate the project after:
 # - Creating new files
@@ -44,9 +44,9 @@ tuist build "ModuleTests"  # Build all module tests
 just format                # Format Swift code using swift-format
 just check                 # Run all checks (formatting, imports, etc.)
 
-# Development Setup
-just dev                   # Generate dev OpenAPI + project
-just prod                  # Generate prod OpenAPI + project
+# API Code Generation
+just openapi-dev           # Generate API client for dev server
+just openapi-prod          # Generate API client for prod server
 ```
 
 ### Available Schemes
@@ -80,10 +80,10 @@ Preview schemes are ideal for **localized development** when working on a single
 
 ```bash
 # Example: Working on Timetable feature only
-tuist build --scheme "Timetable Preview"  # Much faster than full app build
+tuist build "Timetable Preview"  # Much faster than full app build
 
 # Example: Making changes to shared UI components
-tuist build --scheme "SharedUIComponents Preview"
+tuist build "SharedUIComponents Preview"
 ```
 
 **Benefits:**
