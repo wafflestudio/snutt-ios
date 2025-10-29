@@ -134,6 +134,17 @@ platform :ios do
     UI.success("✅ Development certificates synced and code signing configured!")
   end
 
+  desc "[Requires Permissions] Sync production (App Store) certificates and profiles"
+  lane :sync_prod_certificates do
+    # Sync production certificates (readonly: false to allow updates)
+    # app_identifier and team_id are inherited from Matchfile and Appfile
+    UI.important("Note: This command requires admin permissions to modify certificates.")
+    match(
+      type: "appstore",
+      readonly: false
+    )
+  end
+
   desc "Deploy to TestFlight or App Store"
   lane :deploy do |options|
     scheme = options[:scheme]
