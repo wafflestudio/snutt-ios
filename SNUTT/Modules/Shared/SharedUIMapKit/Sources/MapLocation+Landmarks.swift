@@ -9,6 +9,7 @@ import MapKit
 
 extension MapLocation {
     public static let predefinedLandmarks: [MapLocation] = [
+        .pond,
         MapLocation(latitude: 37.45928, longitude: 126.95058, label: "학생회관"),
         MapLocation(latitude: 37.46564, longitude: 126.95190, label: "경영대학"),
         MapLocation(latitude: 37.46471, longitude: 126.94994, label: "종합운동장"),
@@ -22,7 +23,6 @@ extension MapLocation {
         MapLocation(latitude: 37.45775, longitude: 126.95023, label: "자연과학대학"),
         MapLocation(latitude: 37.46017, longitude: 126.95481, label: "사범대학"),
         MapLocation(latitude: 37.46046, longitude: 126.95412, label: "인문관"),
-        MapLocation(latitude: 37.46073, longitude: 126.95208, label: "자하연"),
         MapLocation(latitude: 37.46061, longitude: 126.95064, label: "잔디광장"),
         MapLocation(latitude: 37.45999, longitude: 126.95127, label: "행정관"),
         MapLocation(latitude: 37.46146, longitude: 126.95118, label: "문화관"),
@@ -36,4 +36,6 @@ extension MapLocation {
         MapLocation(latitude: 37.46352, longitude: 126.95324, label: "미술대학"),
         MapLocation(latitude: 37.46433, longitude: 126.95470, label: "국제대학원"),
     ]
+
+    public static let pond = MapLocation(latitude: 37.46073, longitude: 126.95208, label: "자하연")
 }

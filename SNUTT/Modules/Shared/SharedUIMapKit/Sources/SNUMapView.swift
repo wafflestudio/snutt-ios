@@ -49,6 +49,9 @@ public struct SNUMapView: View {
                 onLocationTap?(location)
             }
         }
+        .onChange(of: locations) { _, newValue in
+            position = Self.calculateInitialPosition(for: newValue)
+        }
         .mapControls {
             MapUserLocationButton()
             MapCompass()
@@ -57,23 +60,34 @@ public struct SNUMapView: View {
     }
 
     private static func calculateInitialPosition(for locations: [MapLocation]) -> MapCameraPosition {
+        guard !locations.isEmpty else {
+            return .camera(
+                MapCamera(
+                    centerCoordinate: MapLocation.pond.coordinate,
+                    distance: 1700,
+                    heading: 0,
+                    pitch: 80
+                )
+            )
+        }
         let count = Double(locations.count)
-        var camera = MapCamera(
-            centerCoordinate: MapLocation.predefinedLandmarks.first?.coordinate ?? .init(),
-            distance: 1800,
-            heading: 0,
-            pitch: 45
-        )
         let centerLat = locations.reduce(0.0) { $0 + $1.latitude } / count
         let centerLng = locations.reduce(0.0) { $0 + $1.longitude } / count
-        return .camera(camera)
+        return .camera(
+            MapCamera(
+                centerCoordinate: CLLocationCoordinate2D(latitude: centerLat, longitude: centerLng),
+                distance: 1000,
+                heading: 0,
+                pitch: 45
+            )
+        )
     }
 }
 
 #Preview {
     Form {
         Section {
-            SNUMapView(locations: [])
+            SNUMapView(locations: [.pond])
                 .frame(height: 301)
         }
     }
