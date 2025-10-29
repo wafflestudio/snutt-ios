@@ -26,7 +26,9 @@ jobs:
           xcode-version: "26.0.1"
 
       - name: Setup mise (Tuist)
-        uses: jdx/mise-action@v2
+        uses: jdx/mise-action@v3
+        with:
+          working_directory: ./SNUTT
 
       - name: Run tests with implicit import checks
         run: |
