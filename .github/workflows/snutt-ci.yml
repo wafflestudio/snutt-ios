@@ -25,13 +25,29 @@ jobs:
         with:
           xcode-version: "26.0.1"
 
+      - name: Create XCConfig files from secrets
+        run: |
+          cat > XCConfigs/Dev.xcconfig << 'EOF'
+          ${{ secrets.DEV_XCCONFIG }}
+          EOF
+          cat > XCConfigs/Prod.xcconfig << 'EOF'
+          ${{ secrets.PROD_XCCONFIG }}
+          EOF
+
+      - name: Create GoogleService-Info.plist files
+        run: |
+          echo "${{ secrets.GOOGLE_SERVICE_DEBUG_INFO }}" > SNUTT/Resources/GoogleServiceDebugInfo.plist
+          echo "${{ secrets.GOOGLE_SERVICE_RELEASE_INFO }}" > SNUTT/Resources/GoogleServiceReleaseInfo.plist
+
       - name: Setup mise (Tuist)
         uses: jdx/mise-action@v3
         with:
           working_directory: ./SNUTT
 
+      - name: Install brew dependencies
+        run: brew install just mint
+
       - name: Run tests with implicit import checks
         run: |
-          tuist install
-          tuist inspect implicit-imports
-          tuist test ModuleTests
+          just openapi-dev
+          just test
