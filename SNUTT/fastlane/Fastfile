@@ -167,6 +167,11 @@ platform :ios do
         value: new_build_number.to_s
       )
 
+      # Generate OpenAPI client based on configuration
+      openapi_env = configuration == "Dev" ? "dev" : "prod"
+      UI.message("Generating OpenAPI client for #{openapi_env} environment...")
+      sh("cd .. && mise exec -- just openapi-#{openapi_env}")
+
       # Install dependencies and generate Xcode project using Tuist
       UI.message("Installing dependencies and generating Xcode project with Tuist...")
       sh("cd .. && mise exec -- tuist install && mise exec -- tuist generate --no-open")
