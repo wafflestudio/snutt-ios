@@ -30,6 +30,6 @@ final class SettingsViewModel {
     var path = NavigationPath()
 
     var appVersion: String {
-        appMetadata[.appVersion]
+        "\(appMetadata[.appVersion]) (\(appMetadata[.buildNumber]))"
     }
 }

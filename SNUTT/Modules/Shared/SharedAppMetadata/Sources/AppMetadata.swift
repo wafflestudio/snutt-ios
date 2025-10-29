@@ -18,7 +18,8 @@ extension DependencyValues {
 }
 
 public struct AppMetadata: Sendable {
-    @Dependency(\.bundleInfo.version) private var version
+    @Dependency(\.bundleInfo.shortVersion) private var marketingVersion
+    @Dependency(\.bundleInfo.version) private var buildVersion
     @Dependency(\.syncDevice.systemVersion) private var systemVersion
     @Dependency(\.syncDevice.name) private var modelName
     @Dependency(\.syncDevice.identifierForVendor) private var identifierForVendor
@@ -26,7 +27,7 @@ public struct AppMetadata: Sendable {
     public subscript(key: AppMetadataKey) -> String {
         switch key {
         case .appVersion:
-            version
+            marketingVersion
         case .appType:
             #if DEBUG
                 "debug"
@@ -44,7 +45,7 @@ public struct AppMetadata: Sendable {
         case .apiKey:
             Bundle.main.object(forInfoDictionaryKey: "API_KEY") as! String
         case .buildNumber:
-            Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String ?? "999"
+            buildVersion
         case .apiURL:
             Bundle.main.object(forInfoDictionaryKey: "API_SERVER_URL") as! String
         }
