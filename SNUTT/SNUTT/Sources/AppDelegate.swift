@@ -41,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ]) { @Sendable _, _ in }
             application.registerForRemoteNotifications()
             Messaging.messaging().delegate = self
+        } else {
+            assertionFailure("Firebase configurations not found.")
         }
 
         // MARK: Facebook Login
