@@ -89,4 +89,4 @@ XCConfigs/*.xcconfig
 !XCConfigs/Base.xcconfig
 .ruby
 
-Scripts/fastlane/report.xml
+fastlane/report.xml
