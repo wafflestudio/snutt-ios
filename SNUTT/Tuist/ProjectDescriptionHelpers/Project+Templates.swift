@@ -170,18 +170,15 @@ extension Project {
 
     private static func makeSettings() -> Settings {
         .settings(
-            base: ["OTHER_LDFLAGS": "-ObjC"]
+            base: ["OTHER_LDFLAGS": "$(inherited) -ObjC"]
                 .swiftVersion("6.1")
                 .merging(["SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY": SettingValue(true)])
-                .merging(["_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES": SettingValue(true)]),
-
+                .merging(["SWIFT_ENABLE_EXPLICIT_MODULES": SettingValue(true)]),
             configurations: [
                 .debug(
                     name: .dev,
-                    settings: [
-                        "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "$(inherited) DEBUG",
-                        "CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Dev.entitlements",
-                    ],
+                    settings: ["CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Dev.entitlements"]
+                        .swiftActiveCompilationConditions(["DEBUG"]),
                     xcconfig: "XCConfigs/Dev.xcconfig"
                 ),
                 .release(
