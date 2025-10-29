@@ -3,6 +3,7 @@ ENV["FASTLANE_SKIP_DOCS"] = "1"
 
 # Constants
 XCODEPROJ_PATH = "../SNUTT.xcodeproj"
+BASE_XCCONFIG_PATH = "XCConfigs/Base.xcconfig"
 BUNDLE_ID_PROD = "com.wafflestudio.snutt"
 BUNDLE_ID_DEV = "com.wafflestudio.snutt.dev"
 BUNDLE_ID_PROD_WIDGET = "#{BUNDLE_ID_PROD}.widget"
@@ -15,7 +16,7 @@ platform :ios do
   lane :check_version do |options|
     tag_version = options[:version]
     current_version = get_xcconfig_value(
-      path: "XCConfigs/Base.xcconfig",
+      path: BASE_XCCONFIG_PATH,
       name: "MARKETING_VERSION"
     )
 
@@ -31,7 +32,7 @@ platform :ios do
     end
   end
 
-  desc "Update version in XCConfigs/Base.xcconfig"
+  desc "Update version in #{BASE_XCCONFIG_PATH}"
   lane :update_version do |options|
     new_version = options[:version]
 
@@ -42,12 +43,12 @@ platform :ios do
 
     # Update MARKETING_VERSION
     set_xcconfig_value(
-      path: "XCConfigs/Base.xcconfig",
+      path: BASE_XCCONFIG_PATH,
       name: "MARKETING_VERSION",
       value: new_version
     )
 
-    UI.success("Updated MARKETING_VERSION to #{new_version} in XCConfigs/Base.xcconfig")
+    UI.success("Updated MARKETING_VERSION to #{new_version} in #{BASE_XCCONFIG_PATH}")
   end
 
   desc "Register a new device and regenerate development provisioning profiles"
@@ -155,7 +156,7 @@ platform :ios do
 
     # Get marketing version from xcconfig
     marketing_version = get_xcconfig_value(
-      path: "XCConfigs/Base.xcconfig",
+      path: BASE_XCCONFIG_PATH,
       name: "MARKETING_VERSION"
     )
 
@@ -183,7 +184,7 @@ platform :ios do
 
       # Update build number in Base.xcconfig
       set_xcconfig_value(
-        path: "XCConfigs/Base.xcconfig",
+        path: BASE_XCCONFIG_PATH,
         name: "CURRENT_PROJECT_VERSION",
         value: new_build_number.to_s
       )
@@ -200,15 +201,10 @@ platform :ios do
 
       # Build the app
       build_app(
+        workspace: "SNUTT.xcworkspace",
         scheme: scheme,
         configuration: configuration,
         export_method: "app-store",
-        export_options: {
-          provisioningProfiles: {
-            app_identifier => "match AppStore #{app_identifier}",
-            "#{app_identifier}.widget" => "match AppStore #{app_identifier}.widget"
-          }
-        }
       )
 
       # Upload to App Store Connect
