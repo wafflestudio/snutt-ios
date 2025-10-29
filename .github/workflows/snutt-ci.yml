@@ -28,8 +28,8 @@ jobs:
       - name: Setup mise (Tuist)
         uses: jdx/mise-action@v2
 
-      - name: Install Just
-        run: brew install just
-
       - name: Run tests with implicit import checks
-        run: just test
+        run: |
+          tuist install
+          tuist inspect implicit-imports
+          tuist test ModuleTests
