@@ -61,8 +61,8 @@ jobs:
       - name: Setup mise (Tuist)
         uses: jdx/mise-action@v2
 
-      - name: Install just
-        run: brew install just
+      - name: Install brew dependencies
+        run: brew install just mint
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
