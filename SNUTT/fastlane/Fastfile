@@ -134,17 +134,6 @@ platform :ios do
     UI.success("✅ Development certificates synced and code signing configured!")
   end
 
-  desc "Sync certificates and provisioning profiles using Match"
-  lane :sync_certificates do |options|
-    setup_ci if ENV["CI"]
-
-    match(
-      type: "appstore",
-      app_identifier: options[:app_identifier],
-      readonly: is_ci
-    )
-  end
-
   desc "Deploy to TestFlight or App Store"
   lane :deploy do |options|
     scheme = options[:scheme]
@@ -168,8 +157,16 @@ platform :ios do
         key_content: ENV["APP_STORE_CONNECT_KEY_CONTENT"]
       )
 
-      # Sync certificates
-      sync_certificates(app_identifier: app_identifier)
+      # Setup CI environment
+      setup_ci if ENV["CI"]
+
+      # Sync certificates and provisioning profiles using Match
+      widget_bundle_id = "#{app_identifier}.widget"
+      match(
+        type: "appstore",
+        app_identifier: [app_identifier, widget_bundle_id],
+        readonly: is_ci
+      )
 
       # Get the latest build number from App Store Connect for this version
       latest_build_number = latest_testflight_build_number(
