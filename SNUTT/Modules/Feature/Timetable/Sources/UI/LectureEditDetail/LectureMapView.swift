@@ -49,7 +49,7 @@ struct LectureMapView: View {
             MapLocation(
                 latitude: building.locationInDMS.latitude,
                 longitude: building.locationInDMS.longitude,
-                label: building.number + TimetableStrings.editMapBuildingSuffix
+                label: TimetableStrings.editMapBuildingSuffix(building.number)
             )
         }
     }
