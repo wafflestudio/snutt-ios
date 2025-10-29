@@ -2,7 +2,7 @@
 ENV["FASTLANE_SKIP_DOCS"] = "1"
 
 # Constants
-XCODEPROJ_PATH = "../SNUTT.xcodeproj"
+XCODEPROJ_PATH = "SNUTT.xcodeproj"
 BASE_XCCONFIG_PATH = "XCConfigs/Base.xcconfig"
 BUNDLE_ID_PROD = "com.wafflestudio.snutt"
 BUNDLE_ID_DEV = "com.wafflestudio.snutt.dev"
@@ -87,48 +87,18 @@ platform :ios do
       readonly: true
     )
 
-    # Update code signing for SNUTT Dev (with .dev suffix)
-    update_code_signing_settings(
-      use_automatic_signing: false,
-      path: XCODEPROJ_PATH,
-      targets: ["SNUTT"],
-      build_configurations: "Dev",
-      bundle_identifier: BUNDLE_ID_DEV,
-      code_sign_identity: "iPhone Developer",
-      profile_name: ENV["sigh_#{BUNDLE_ID_DEV}_development_profile-name"]
+    # Update code signing for Dev configuration
+    update_all_code_signing_settings(
+      type: "development",
+      app_identifier: BUNDLE_ID_DEV,
+      configuration: "Dev"
     )
 
-    # Update code signing for SNUTT Dev Widget
-    update_code_signing_settings(
-      use_automatic_signing: false,
-      path: XCODEPROJ_PATH,
-      targets: ["SNUTTWidgetExtension"],
-      build_configurations: "Dev",
-      bundle_identifier: BUNDLE_ID_DEV_WIDGET,
-      code_sign_identity: "iPhone Developer",
-      profile_name: ENV["sigh_#{BUNDLE_ID_DEV_WIDGET}_development_profile-name"]
-    )
-
-    # Update code signing for SNUTT Prod (without .dev suffix)
-    update_code_signing_settings(
-      use_automatic_signing: false,
-      path: XCODEPROJ_PATH,
-      targets: ["SNUTT"],
-      build_configurations: "Prod",
-      bundle_identifier: BUNDLE_ID_PROD,
-      code_sign_identity: "iPhone Developer",
-      profile_name: ENV["sigh_#{BUNDLE_ID_PROD}_development_profile-name"]
-    )
-
-    # Update code signing for SNUTT Prod Widget
-    update_code_signing_settings(
-      use_automatic_signing: false,
-      path: XCODEPROJ_PATH,
-      targets: ["SNUTTWidgetExtension"],
-      build_configurations: "Prod",
-      bundle_identifier: BUNDLE_ID_PROD_WIDGET,
-      code_sign_identity: "iPhone Developer",
-      profile_name: ENV["sigh_#{BUNDLE_ID_PROD_WIDGET}_development_profile-name"]
+    # Update code signing for Prod configuration
+    update_all_code_signing_settings(
+      type: "development",
+      app_identifier: BUNDLE_ID_PROD,
+      configuration: "Prod"
     )
 
     UI.success("✅ Development certificates synced and code signing configured!")
@@ -177,6 +147,13 @@ platform :ios do
         type: "appstore",
         app_identifier: [app_identifier, widget_bundle_id],
         readonly: is_ci
+      )
+
+      # Update code signing settings after syncing certificates
+      update_all_code_signing_settings(
+        type: "appstore",
+        app_identifier: app_identifier,
+        configuration: configuration
       )
 
       # Get the latest build number from App Store Connect for this version
@@ -367,6 +344,36 @@ platform :ios do
         fields: fields
       },
       default_payloads: [:git_author, :last_git_commit]
+    )
+  end
+
+  # Helper function to update code signing settings for both app and widget
+  def update_all_code_signing_settings(type:, app_identifier:, configuration:)
+    widget_bundle_id = "#{app_identifier}.widget"
+
+    # Determine code sign identity based on type
+    code_sign_identity = type == "development" ? "iPhone Developer" : "iPhone Distribution"
+
+    # Update code signing for main app
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: XCODEPROJ_PATH,
+      targets: ["SNUTT"],
+      build_configurations: configuration,
+      bundle_identifier: app_identifier,
+      code_sign_identity: code_sign_identity,
+      profile_name: ENV["sigh_#{app_identifier}_#{type}_profile-name"]
+    )
+
+    # Update code signing for widget extension
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: XCODEPROJ_PATH,
+      targets: ["SNUTTWidgetExtension"],
+      build_configurations: configuration,
+      bundle_identifier: widget_bundle_id,
+      code_sign_identity: code_sign_identity,
+      profile_name: ENV["sigh_#{widget_bundle_id}_#{type}_profile-name"]
     )
   end
 end
