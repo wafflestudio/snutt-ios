@@ -115,7 +115,7 @@ extension Project {
             sources: ["\(name)/Sources/**"],
             resources: ["\(name)/Resources/**", "OpenAPI/**"],
             dependencies: dependencies,
-            settings: makeSettings()
+            settings: makeSettings(includeEntitlements: true)
         )
 
         let testTarget = Target.target(
@@ -156,7 +156,7 @@ extension Project {
             sources: ["SNUTTWidget/Sources/**"],
             resources: ["SNUTTWidget/Resources/**"],
             dependencies: dependencies,
-            settings: makeSettings()
+            settings: makeSettings(includeEntitlements: true)
         )
     }
 
@@ -168,24 +168,33 @@ extension Project {
         }
     }
 
-    private static func makeSettings() -> Settings {
-        .settings(
-            base: ["OTHER_LDFLAGS": "$(inherited) -ObjC"]
+    private static func makeSettings(includeEntitlements: Bool = false) -> Settings {
+        let baseSetting: (ProjectDescription.ConfigurationName) -> [String: SettingValue] = { name in
+            switch name {
+            case .dev where includeEntitlements:
+                ["CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Dev.entitlements"]
+            case .prod where includeEntitlements:
+                ["CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Prod.entitlements"]
+            default:
+                .init()
+            }
+        }
+        return .settings(
+            base: .init()
                 .swiftVersion("6.1")
+                .otherLinkerFlags(["-ObjC"])
                 .merging(["SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY": SettingValue(true)])
                 .merging(["SWIFT_ENABLE_EXPLICIT_MODULES": SettingValue(true)]),
             configurations: [
                 .debug(
                     name: .dev,
-                    settings: ["CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Dev.entitlements"]
+                    settings: baseSetting(.dev)
                         .swiftActiveCompilationConditions(["DEBUG"]),
                     xcconfig: "XCConfigs/Dev.xcconfig"
                 ),
                 .release(
                     name: .prod,
-                    settings: [
-                        "CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Prod.entitlements"
-                    ],
+                    settings: baseSetting(.prod),
                     xcconfig: "XCConfigs/Prod.xcconfig"
                 ),
             ]
