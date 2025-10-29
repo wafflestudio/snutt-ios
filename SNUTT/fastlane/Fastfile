@@ -2,7 +2,7 @@
 ENV["FASTLANE_SKIP_DOCS"] = "1"
 
 # Constants
-XCODEPROJ_PATH = "SNUTT.xcodeproj"
+XCODEPROJ_PATH = "../SNUTT.xcodeproj"
 BASE_XCCONFIG_PATH = "XCConfigs/Base.xcconfig"
 BUNDLE_ID_PROD = "com.wafflestudio.snutt"
 BUNDLE_ID_DEV = "com.wafflestudio.snutt.dev"
