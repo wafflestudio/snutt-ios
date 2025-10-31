@@ -109,3 +109,7 @@
 // MARK: 디버그 메뉴
 "debug" = "Debug";
 "debug.log" = "Network Logs";
+
+// MARK: Common
+"save" = "Save";
+"confirm" = "Confirm";
