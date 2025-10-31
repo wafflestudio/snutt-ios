@@ -75,13 +75,13 @@ struct ChangeNicknameView: View {
                         isNicknameChanged = true
                     }
                 } label: {
-                    Text(AuthStrings.alertSave)
+                    Text(SettingsStrings.save)
                 }
                 .disabled(isButtonDisabled)
             }
         }
         .alert(SettingsStrings.accountNicknameChangeSuccess, isPresented: $isNicknameChanged) {
-            Button(AuthStrings.alertConfirm) {
+            Button(SettingsStrings.confirm) {
                 dismiss()
             }
         }
