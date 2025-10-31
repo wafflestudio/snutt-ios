@@ -37,7 +37,7 @@ struct TimerView: View {
                         restartTrigger += 1
                     }
                 } label: {
-                    Text("재요청")
+                    Text(AuthStrings.alertResend)
                         .font(.system(size: 13, weight: .regular))
                         .foregroundColor(SharedUIComponentsAsset.assistive.swiftUIColor)
                 }

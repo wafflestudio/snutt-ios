@@ -22,4 +22,17 @@
 /* Add your translations below */
 
 "hello_world" = "Hello, world!";
-"new_theme" = "New Theme";
+
+/* Theme Edit Detail Scene */
+"newTheme" = "New Theme";
+"builtinTheme" = "Built-in Theme";
+"customTheme" = "Custom Theme";
+"downloadedTheme" = "Downloaded Theme";
+"themeName" = "Theme Name";
+"colorCombination" = "Color Combination";
+"addColor" = "Add Color";
+"foregroundColor" = "Text Color";
+"backgroundColor" = "Background Color";
+"colorNumber" = "Color %d";
+"preview" = "Preview";
+"save" = "Save";

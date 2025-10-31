@@ -26,6 +26,10 @@
 // MARK: 내 계정
 "account" = "My Account";
 "account.nickname.change" = "Change Nickname";
+"account.nickname.change.header" = "Nickname (Max 10 characters including Korean/English/Numbers)";
+"account.nickname.change.footer" = "The initial nickname is randomly assigned at registration.\nWhen you change the name, the 4-digit tag is automatically updated.\n\nThe changed nickname will be reflected to all your friends.";
+"account.nickname.change.rules" = "**Nickname Rules**\n• Incomplete Korean characters (e.g., ㄱ, ㅏ) cannot be included.\n• English upper/lowercase letters are case-sensitive.\n• Inappropriate nicknames may be modified by administrators without notice.";
+"account.nickname.change.success" = "Nickname has been changed.";
 "account.nickname.copy" = "Copy Nickname";
 "account.nickname.copy.alert" = "Nickname has been copied to the clipboard";
 

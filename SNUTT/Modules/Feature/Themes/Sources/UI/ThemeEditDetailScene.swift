@@ -31,7 +31,7 @@ struct ThemeEditDetailScene: View {
         .toolbar {
             if viewModel.isThemeEditable {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("저장") {
+                    Button(ThemesStrings.save) {
                         errorAlertHandler.withAlert {
                             try await viewModel.save()
                             dismiss()
@@ -44,15 +44,15 @@ struct ThemeEditDetailScene: View {
 
     private var navigationTitle: String {
         if viewModel.isNewTheme {
-            return "새 테마"
+            return ThemesStrings.newTheme
         }
         switch viewModel.editableTheme.status {
         case .builtIn:
-            return "내장 테마"
+            return ThemesStrings.builtinTheme
         case .customPrivate, .customPublished:
-            return "커스텀 테마"
+            return ThemesStrings.customTheme
         case .customDownloaded:
-            return "담은 테마"
+            return ThemesStrings.downloadedTheme
         }
     }
 
@@ -71,9 +71,9 @@ struct ThemeEditDetailScene: View {
     }
 
     private var themeNameSection: some View {
-        Section("테마명") {
+        Section(ThemesStrings.themeName) {
             if viewModel.isThemeEditable {
-                TextField("테마명", text: $viewModel.editableTheme.name)
+                TextField(ThemesStrings.themeName, text: $viewModel.editableTheme.name)
             } else {
                 Text(viewModel.editableTheme.name)
             }
@@ -81,7 +81,7 @@ struct ThemeEditDetailScene: View {
     }
 
     private var colorCombinationSection: some View {
-        Section("색 조합") {
+        Section(ThemesStrings.colorCombination) {
             ForEach(Array(viewModel.identifiableColors.enumerated()), id: \.element.id) { index, identifiableColor in
                 if viewModel.isThemeEditable {
                     editableColorRow(index: index, identifiableColor: identifiableColor)
@@ -96,7 +96,7 @@ struct ThemeEditDetailScene: View {
                         viewModel.addColor()
                     }
                 } label: {
-                    Label("색상 추가", systemImage: "plus")
+                    Label(ThemesStrings.addColor, systemImage: "plus")
                 }
             }
         }
@@ -116,12 +116,12 @@ struct ThemeEditDetailScene: View {
             )
         ) {
             ColorPicker(
-                "글자 색",
+                ThemesStrings.foregroundColor,
                 selection: fgColorBinding(for: identifiableColor.id),
                 supportsOpacity: false
             )
             ColorPicker(
-                "배경 색",
+                ThemesStrings.backgroundColor,
                 selection: bgColorBinding(for: identifiableColor.id),
                 supportsOpacity: false
             )
@@ -129,7 +129,7 @@ struct ThemeEditDetailScene: View {
             HStack(spacing: 15) {
                 LectureColorPreview(lectureColor: identifiableColor.color)
                     .frame(height: 25)
-                Text("색상 \(index + 1)")
+                Text(ThemesStrings.colorNumber(index + 1))
                 Spacer()
 
                 Button {
@@ -157,7 +157,7 @@ struct ThemeEditDetailScene: View {
         HStack(spacing: 15) {
             LectureColorPreview(lectureColor: color)
                 .frame(height: 25)
-            Text("색상 \(index + 1)")
+            Text(ThemesStrings.colorNumber(index + 1))
             Spacer()
         }
     }
@@ -165,7 +165,7 @@ struct ThemeEditDetailScene: View {
     @ViewBuilder
     private var previewSection: some View {
         if let timetable = viewModel.timetable {
-            Section("미리보기") {
+            Section(ThemesStrings.preview) {
                 TimetableThemePreview(
                     timetable: timetable,
                     configuration: viewModel.configuration,

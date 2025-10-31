@@ -127,6 +127,8 @@
 
 "alert.confirm" = "확인";
 "alert.save" = "저장";
+"alert.cancel" = "취소";
+"alert.resend" = "재요청";
 
 "social.link.title" = "소셜 계정 연동";
 "social.link.kakao" = "카카오";
