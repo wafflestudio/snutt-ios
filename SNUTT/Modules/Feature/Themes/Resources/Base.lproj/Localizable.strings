@@ -22,4 +22,17 @@
 /* Add your translations below */
 
 "hello_world" = "Hello, world!";
-"new_theme" = "새 테마";
+
+/* Theme Edit Detail Scene */
+"newTheme" = "새 테마";
+"builtinTheme" = "내장 테마";
+"customTheme" = "커스텀 테마";
+"downloadedTheme" = "담은 테마";
+"themeName" = "테마명";
+"colorCombination" = "색 조합";
+"addColor" = "색상 추가";
+"foregroundColor" = "글자 색";
+"backgroundColor" = "배경 색";
+"colorNumber" = "색상 %d";
+"preview" = "미리보기";
+"save" = "저장";

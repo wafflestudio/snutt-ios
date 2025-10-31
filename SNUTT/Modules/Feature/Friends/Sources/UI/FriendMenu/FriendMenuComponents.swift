@@ -109,13 +109,13 @@ struct FriendRequestActionButton<S: PrimitiveButtonStyle>: View {
     VStack(spacing: 16) {
         HStack(spacing: 8) {
             FriendRequestActionButton(
-                title: "거절",
+                title: FriendsStrings.friendRequestDecline,
                 style: .bordered
             ) {
                 try await Task.sleep(for: .seconds(2))
             }
             FriendRequestActionButton(
-                title: "수락",
+                title: FriendsStrings.friendRequestAccept,
                 style: .borderedProminent
             ) {
                 try await Task.sleep(for: .seconds(2))
