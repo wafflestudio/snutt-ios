@@ -50,26 +50,23 @@ struct ChangeNicknameView: View {
                         .foregroundColor(Color(uiColor: UIColor.tertiaryLabel))
                 }
             } header: {
-                Text("닉네임 (공백 포함 한/영/숫자 10자 이내)")
+                Text(SettingsStrings.accountNicknameChangeHeader)
                     .font(.system(size: 12))
             } footer: {
                 VStack(alignment: .leading) {
                     Spacer().frame(height: 8)
 
-                    Text("최초 닉네임은 가입 시 임의 부여된 닉네임으로,\n앞의 이름을 변경할 시 4자리 숫자 태그는 자동 변경됩니다.\n\n변경된 닉네임은 나의 모든 친구에게 반영됩니다.")
+                    Text(SettingsStrings.accountNicknameChangeFooter)
 
                     Spacer().frame(height: 30)
 
-                    Text(
-                        "**닉네임 조건**\n\u{2022} 불완전한 한글(예: ㄱ, ㅏ)은 포함될 수 없습니다.\n\u{2022} 영문 대/소문자는 구분됩니다.\n\u{2022} 상대에게 불쾌감을 주는 등 부적절한 닉네임은 관리자에 의해 안내 없이 수정될 수 있습니다."
-                            .asMarkdown()
-                    )
-                    .lineSpacing(4)
+                    Text(SettingsStrings.accountNicknameChangeRules.asMarkdown())
+                        .lineSpacing(4)
                 }
                 .font(.system(size: 12))
             }
         }
-        .navigationTitle(Text("닉네임 변경"))
+        .navigationTitle(Text(SettingsStrings.accountNicknameChange))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -78,13 +75,13 @@ struct ChangeNicknameView: View {
                         isNicknameChanged = true
                     }
                 } label: {
-                    Text("저장")
+                    Text(AuthStrings.alertSave)
                 }
                 .disabled(isButtonDisabled)
             }
         }
-        .alert("닉네임이 변경되었습니다.", isPresented: $isNicknameChanged) {
-            Button("확인") {
+        .alert(SettingsStrings.accountNicknameChangeSuccess, isPresented: $isNicknameChanged) {
+            Button(AuthStrings.alertConfirm) {
                 dismiss()
             }
         }

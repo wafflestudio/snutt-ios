@@ -127,6 +127,8 @@
 
 "alert.confirm" = "Confirm";
 "alert.save" = "Save";
+"alert.cancel" = "Cancel";
+"alert.resend" = "Resend";
 
 "social.link.title" = "Social Account Linking";
 "social.link.kakao" = "Kakao";

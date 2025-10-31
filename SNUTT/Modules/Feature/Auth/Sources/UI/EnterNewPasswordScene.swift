@@ -145,7 +145,7 @@ struct EnterNewPasswordScene: View {
                 Button(AuthStrings.findidButton) {
                     dismiss()
                 }
-                Button("취소", role: .cancel) {}
+                Button(AuthStrings.alertCancel, role: .cancel) {}
             } else {
                 Button(AuthStrings.findidButton) {
                     if alertType == .success {
