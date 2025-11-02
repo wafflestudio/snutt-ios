@@ -29,6 +29,7 @@ extension AppEnvironment {
         let friendsService: FriendsServiceProtocol
         let themeService: ThemeServiceProtocol
         let pushService: PushServiceProtocol
+        let diaryService: DiaryServiceProtocol
     }
 }
 
@@ -48,6 +49,7 @@ extension AppEnvironment {
         let configRepository: ConfigRepositoryProtocol
         let themeRepository: ThemeRepositoryProtocol
         let pushRepository: PushRepositoryProtocol
+        let diaryRepository: DiaryRepositoryProtocol
     }
 
     struct LocalRepositories {
@@ -109,6 +111,7 @@ extension AppEnvironment {
         let configRepository = ConfigRepository(session: session)
         let themeRepository = ThemeRepository(session: session)
         let pushRepository = PushRepository(session: session)
+        let diaryRepository = DiaryRepository(session: session)
 
         return .init(timetableRepository: timetableRepository,
                      userRepository: userRepository,
@@ -123,7 +126,9 @@ extension AppEnvironment {
                      vacancyRepository: vacancyRepository,
                      configRepository: configRepository,
                      themeRepository: themeRepository,
-                     pushRepository: pushRepository)
+                     pushRepository: pushRepository,
+                     diaryRepository: diaryRepository
+        )
     }
 
     private static func configuredDBRepositories(appState _: AppState) -> LocalRepositories {
@@ -193,6 +198,10 @@ extension AppEnvironment {
             appState: appState,
             webRepositories: webRepositories
         )
+        let diaryService = DiaryService(
+            appState: appState,
+            webRepositories: webRepositories
+        )
         return .init(timetableService: timetableService,
                      userService: userService,
                      lectureService: lectureService,
@@ -206,7 +215,9 @@ extension AppEnvironment {
                      vacancyService: vacancyService,
                      friendsService: friendsService,
                      themeService: themeService,
-                     pushService: pushService)
+                     pushService: pushService,
+                     diaryService: diaryService
+        )
     }
 }
 
@@ -237,7 +248,9 @@ extension EnvironmentValues {
                   vacancyService: FakeVacancyService(),
                   friendsService: FakeFriendsService(),
                   themeService: FakeThemeService(),
-                  pushService: FakePushService())
+                  pushService: FakePushService(),
+                  diaryService: FakeDiaryService()
+            )
         }
     }
 #endif
