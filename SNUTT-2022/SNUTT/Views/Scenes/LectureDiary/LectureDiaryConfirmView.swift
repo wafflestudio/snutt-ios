@@ -23,7 +23,7 @@ struct LectureDiaryConfirmView: View {
                         .font(STFont.semibold15.font)
                         .foregroundStyle(.primary)
                     Text("작성한 강의일기는 더보기>강의일기장에서\n확인할 수 있어요.")
-                        .lineHeight(with: .systemFont(ofSize: 13), percentage: 145)
+                        .lineHeight(with: STFont.regular13, percentage: 145)
                         .foregroundStyle(
                             colorScheme == .dark
                             ? STColor.gray30
