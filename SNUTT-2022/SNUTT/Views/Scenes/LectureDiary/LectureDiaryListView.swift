@@ -9,218 +9,147 @@ import SwiftUI
 
 struct LectureDiaryListView: View {
     
-    var reviewList: [DailyReview] = []
-    @State private var selectedSemester: String = ""
+    @ObservedObject var viewModel: ViewModel
+    
+    @State private var selectedSemester: String? = ""
     
     @Environment(\.colorScheme) private var colorScheme
     
-    var semesterList: [String] {
-        Set(reviewList.map { String($0.semester) }).sorted(by: { $1 < $0 })
+    private var yearAndSemesterList: [String] {
+        Set(viewModel.diaryListCollection.map(\.yearAndSemester)).sorted()
     }
     
     var body: some View {
         VStack(spacing: 0) {
-            // MARK: Semester
-            ScrollView(.horizontal) {
-                HStack(spacing: 8) {
-                    ForEach(semesterList, id: \.self) { semester in
-                        SemesterChip(
-                            semester: semester,
-                            isSelected: semester == selectedSemester
-                        ) {
-                            selectedSemester = semester
+            if viewModel.diaryListCollection.isEmpty {
+                EmptyView()
+            } else {
+                ScrollView(.horizontal) {
+                    HStack(spacing: 8) {
+                        ForEach(yearAndSemesterList, id: \.self) { semester in
+                            SemesterChip(
+                                semester: semester,
+                                isSelected: semester == selectedSemester
+                            ) {
+                                selectedSemester = semester
+                            }
                         }
                     }
                 }
-            }
-            .padding(.top, 20)
-            .padding(.bottom, 12)
-            .padding(.horizontal, 20)
-            
-            // MARK: DailyReview list
-            ScrollView(.vertical) {
-                VStack(spacing: 0) {
-                    ForEach(reviewList, id: \.self) { review in
-                        ExpandableDailyReview(reviewList: [review])
+                .padding(.top, 20)
+                .padding(.bottom, 12)
+                .padding(.horizontal, 20)
+                
+                ScrollView(.vertical) {
+                    VStack(spacing: 0) {
+                        ForEach(viewModel.diaryListCollection, id: \.year) {
+                            ExpandableDiarySummaryCell(diaryList: $0.diaryList) { diaryId in
+                                Task {
+                                    await viewModel.deleteDiary(diaryId)
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
         .navigationTitle("강의 일기장")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            selectedSemester = yearAndSemesterList.first
+        }
     }
 }
 
 extension LectureDiaryListView {
-    struct SemesterChip: View {
-        
-        let semester: String
-        let isSelected: Bool
-        let selected: () -> Void
+    struct EmptyView: View {
         
         @Environment(\.colorScheme) private var colorScheme
         
         var body: some View {
-            Button {
-                selected()
-            } label: {
-                Text(semester)
-                    .font(
-                        isSelected
-                        ? .system(size: 15, weight: .semibold)
-                        : .system(size: 15)
-                    )
-                    .foregroundStyle(semesterChipForeground(isSelected))
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 8)
-                    .background(semesterChipBackground(isSelected))
-                    .clipShape(Capsule())
-            }
-        }
-        
-        private func semesterChipForeground(_ selected: Bool) -> Color {
-            selected
-            ? .white
-            : (colorScheme == .dark ? STColor.assistive : STColor.alternative)
-        }
-        
-        private func semesterChipBackground(_ selected: Bool) -> Color {
-            switch colorScheme {
-            case .dark:
-                selected ? STColor.darkMint1 : STColor.neutral5
-            default:
-                selected ? STColor.cyan : STColor.neutral98
-            }
-        }
-    }
-    
-    struct ExpandableDailyReview: View {
-        
-        let reviewList: [DailyReview]
-        @State private var isExpanded: Bool = false
-        @State private var showDeleteReviewAlert: Bool = false
-        @State private var selectedReview: DailyReview?
-        
-        @Environment(\.colorScheme) private var colorScheme
-        
-        var body: some View {
-            VStack(spacing: 8) {
-                // MARK: Header
-                VStack(spacing: 0) {
-                    HStack(spacing: 6) {
-                        // TODO: Date, weekday (15, semibold, .primary)
-                    }
-                    Button {
-                        withAnimation {
-                            isExpanded.toggle()
-                        }
-                    } label: {
-                        HStack {
-                            // TODO: Extract lecture names
-                            Spacer()
-                            Image("daily.review.chevron.right")
-                                .rotationEffect(isExpanded ? .degrees(-90) : .degrees(90))
-                        }
-                        .padding(.vertical, 8)
+            VStack(alignment: .center, spacing: 16) {
+                VStack(spacing: 24) {
+                    Image("warning.cat.red")
+                    VStack(spacing: 8) {
+                        Text("강의일기장이 비어있어요.")
+                            .font(STFont.semibold15.font)
+                        Text("매주 마지막 수업날,\n푸시알림을 통해 강의일기를 작성해보세요!")
+                            .lineHeight(with: STFont.regular13, percentage: 145)
+                            .foregroundStyle(
+                                colorScheme == .dark
+                                ? STColor.gray30
+                                : .primary.opacity(0.5)
+                            )
                     }
                 }
-                
-                // MARK: Detail
-                if isExpanded {
-                    VStack(spacing: 16) {
-                        ForEach(reviewList, id: \.self) { review in
-                            VStack(spacing: 6) {
-                                // MARK: Review content
-                                VStack(spacing: 16) {
-                                    HStack {
-                                        Text(review.lectureTitle)
-                                            .font(.system(size: 14))
-                                            .foregroundStyle(
-                                                colorScheme == .dark
-                                                ? STColor.assistive
-                                                : STColor.alternative
-                                            )
-                                        Spacer()
-                                        Button {
-                                            selectedReview = review
-                                            showDeleteReviewAlert = true
-                                        } label: {
-                                            Image("daily.review.trash")
-                                        }
-                                    }
-                                    
-                                    // MARK: Review detail
-                                    VStack(spacing: 6) {
-                                        ForEach(Array(review.content.keys), id: \.self) { title in
-                                            ReviewContentRow(title: title, content: review.content[title]!)
-                                        }
-                                        if let comment = review.comment {
-                                            ReviewContentRow(title: "남기고 싶은 말", content: comment)
-                                        }
-                                    }
-                                }
-                                .padding([.horizontal, .top], 16)
-                                .padding(.bottom, 20)
-                                .background(
-                                    colorScheme == .dark
-                                    ? STColor.groupBackground
-                                    : STColor.neutral98
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 4))
-                            }
-                        }
+                .multilineTextAlignment(.center)
+                Button {
+                    // TODO: 강의일기 작성
+                } label: {
+                    HStack(spacing: 4) {
+                        Text("강의일기 작성하기")
+                            .font(STFont.regular15.font)
+                        Image("daily.review.chevron.right")
                     }
+                    .padding([.vertical, .trailing], 12)
+                    .padding(.leading, 20)
                 }
-            }
-            .padding(.top, 16)
-            .padding(.bottom, isExpanded ? 32 : 16)
-            .padding(.horizontal, 20)
-            .alert("", isPresented: $showDeleteReviewAlert) {
-                Button("취소", role: .cancel) {}
-                Button("확인", role: .destructive) {
-                    // TODO: Delete review
-                }
-            } message: {
-                if let lectureTitle = selectedReview?.lectureTitle {
-                    Text("'\(lectureTitle)' 강의일기를 삭제하시겠습니까?")
-                }
-            }
-        }
-    }
-    
-    struct ReviewContentRow: View {
-        
-        let title: String
-        let content: String
-        
-        @Environment(\.colorScheme) private var colorScheme
-        
-        var body: some View {
-            HStack(alignment: .top, spacing: 16) {
-                Text(title)
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(
+                .buttonBorderShape(.capsule)
+                .foregroundStyle(.primary)
+                .overlay(
+                    Capsule().stroke(
                         colorScheme == .dark
-                        ? STColor.alternative
-                        : STColor.assistive
+                        ? STColor.gray30.opacity(0.4)
+                        : STColor.border
                     )
-                    .frame(width: 80, alignment: .leading)
-                Text(content)
-                    .font(.system(size: 14))
-                    .foregroundStyle(
-                        colorScheme == .dark
-                        ? STColor.assistive
-                        : STColor.darkerGray
-                    )
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                )
             }
-            .multilineTextAlignment(.leading)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationView {
-        LectureDiaryListView(reviewList: [.debug])
+        LectureDiaryListView(viewModel: .init(container: .preview))
+    }
+}
+#endif
+
+extension LectureDiaryListView {
+    class ViewModel: BaseViewModel, ObservableObject {
+        #if DEBUG
+        @Published var diaryListCollection: [DiaryListPerSemester] = [.init(year: 2025, semester: .second, diaryList: [.preview1, .preview2])]
+        #else
+        @Published var diaryListCollection: [DiaryListPerSemester] = []
+        #endif
+        
+        override init(container: DIContainer) {
+            super.init(container: container)
+        }
+        
+        func getDiaryListCollection() async {
+            do {
+                let collection = try await services.diaryService.fetchDiaryList()
+                self.diaryListCollection = collection
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
+        
+        func deleteDiary(_ id: String) async {
+            do {
+                try await services.diaryService.deleteDiary(id)
+                diaryListCollection = diaryListCollection.map { summaryList in
+                    var newSummaryList = summaryList
+                    newSummaryList.diaryList = summaryList.diaryList.filter { $0.id != id }
+                    return newSummaryList
+                }
+                .filter { !$0.diaryList.isEmpty }
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+            }
+        }
     }
 }
