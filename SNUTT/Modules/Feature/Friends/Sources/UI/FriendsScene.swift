@@ -69,13 +69,6 @@ public struct FriendsScene: View {
                     try await viewModel.initialLoadFriends()
                 }
             }
-            .task {
-                for await requestToken in viewModel.kakaoFriendRequestNotifications() {
-                    await errorAlertHandler.withAlert {
-                        try await viewModel.handleKakaoFriendRequest(requestToken: requestToken)
-                    }
-                }
-            }
             .sheet(isPresented: $viewModel.isRequestSheetPresented) {
                 FriendRequestOptionSheet(friendsViewModel: viewModel)
             }

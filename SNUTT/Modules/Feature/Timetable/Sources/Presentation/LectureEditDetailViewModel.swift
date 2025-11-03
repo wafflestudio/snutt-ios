@@ -9,6 +9,7 @@ import Dependencies
 import Foundation
 import FoundationUtility
 import Observation
+import SharedUIComponents
 import SwiftUI
 import TimetableInterface
 import VacancyInterface

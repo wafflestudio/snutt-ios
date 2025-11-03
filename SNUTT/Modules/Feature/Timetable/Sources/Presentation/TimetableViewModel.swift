@@ -9,8 +9,10 @@ import APIClientInterface
 import Combine
 import Dependencies
 import DependenciesAdditions
+import Foundation
 import Observation
 import SharedUIComponents
+import SwiftUtility
 import ThemesInterface
 import TimetableInterface
 import TimetableUIComponents
@@ -30,14 +32,19 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     @ObservationIgnored
     @Dependency(\.courseBookRepository) private var courseBookRepository
 
-    private let router: TimetableRouter
+    @ObservationIgnored
+    @Dependency(\.notificationCenter) private var notificationCenter
+
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) private var analyticsLogger
+
+    private let router: TimetableRouter = .init()
     var paths: [TimetableDetailSceneTypes] {
         get { router.navigationPaths }
         set { router.navigationPaths = newValue }
     }
 
-    public init(router: TimetableRouter = .init()) {
-        self.router = router
+    public init() {
         currentTimetable = timetableUseCase.loadLocalRecentTimetable()
         configuration = timetableLocalRepository.loadTimetableConfiguration()
         configurationObserver = Task { [weak self] in
@@ -46,6 +53,39 @@ public class TimetableViewModel: TimetableViewModelProtocol {
                 guard let self else { break }
                 self.configuration = configuration
             }
+        }
+        subscribeToNotifications()
+    }
+
+    private func subscribeToNotifications() {
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: NavigateToNotificationsMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.router.navigationPaths = [.notificationList]
+        }
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: NavigateToLectureMessage.self)
+        ) { @MainActor viewModel, message in
+            await viewModel.handleLectureNavigation(
+                timetableID: message.timetableID,
+                lectureID: message.lectureID
+            )
+        }
+    }
+
+    private func handleLectureNavigation(timetableID: String, lectureID: String) async {
+        do {
+            let timetable = try await timetableRepository.fetchTimetable(timetableID: timetableID)
+            guard let lecture = timetable.lectures.first(where: { $0.lectureID == lectureID })
+            else { return }
+            self.router.navigationPaths = [.notificationList, .lectureDetail(lecture)]
+            self.analyticsLogger.logScreen(
+                AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .notification))
+            )
+        } catch {
+            // Handle error silently or log
         }
     }
 

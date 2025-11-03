@@ -11,9 +11,11 @@ import Configs
 import ConfigsInterface
 import Dependencies
 import Foundation
+import SwiftUtility
 import Themes
 import ThemesInterface
 import Timetable
+import TimetableInterface
 
 @Observable
 @MainActor
@@ -27,13 +29,14 @@ class ContentViewModel {
     @ObservationIgnored
     @Dependency(\.analyticsLogger) var analyticsLogger
 
+    @ObservationIgnored
+    @Dependency(\.notificationCenter) var notificationCenter
+
     private let authState: any AuthState
     private(set) var isAuthenticated: Bool
     var selectedTab: TabItem = .timetable
     private var cancellables: Set<AnyCancellable> = []
 
-    let timetableRouter: TimetableRouter
-    let lectureSearchRouter: LectureSearchRouter = .init()
     let themeViewModel: ThemeViewModel
     let timetableViewModel: TimetableViewModel
 
@@ -41,8 +44,7 @@ class ContentViewModel {
 
     init() {
         let timetableUseCase = Dependency(\.timetableUseCase).wrappedValue
-        let timetableRouter = TimetableRouter()
-        let timetableViewModel = TimetableViewModel(router: timetableRouter)
+        let timetableViewModel = TimetableViewModel()
         let themeViewModel = ThemeViewModel(saveSelectedTheme: { [weak timetableViewModel] theme in
             guard let currentTimetable = timetableViewModel?.currentTimetable else { return }
             let timetable = try await timetableUseCase.updateTheme(timetableID: currentTimetable.id, theme: theme)
@@ -50,16 +52,19 @@ class ContentViewModel {
         })
         authState = Dependency(\.authState).wrappedValue
         isAuthenticated = authState.isAuthenticated
-        self.timetableRouter = timetableRouter
         self.timetableViewModel = timetableViewModel
         self.themeViewModel = themeViewModel
         authState.isAuthenticatedPublisher
-            .sink { [weak self] in
-                self?.isAuthenticated = $0
-            }
+            .sink { [weak self] in self?.isAuthenticated = $0 }
             .store(in: &cancellables)
         Task {
             try await loadConfigs()
+        }
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: NavigateToVacancyMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.selectedTab = .settings
         }
     }
 

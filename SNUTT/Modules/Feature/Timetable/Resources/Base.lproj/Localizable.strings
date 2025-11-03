@@ -127,3 +127,7 @@
 "search.predicate.credit.suffix" = "학점";
 "search.predicate.etc.english" = "영강";
 "search.predicate.etc.army" = "군휴학";
+
+"toast.bookmark.message" = "검색탭 우측 상단에서 관심강좌 목록을 확인해보세요.";
+"toast.vacancy.message" = "더보기탭에서 빈자리 알림 목록을 확인해보세요.";
+"toast.action.view" = "보기";
