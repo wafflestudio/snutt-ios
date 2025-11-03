@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Dependencies
 import SharedUIComponents
 import SwiftUI
 import TimetableInterface
@@ -84,6 +85,8 @@ private struct LectureActionButton: View {
 
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.lectureTimeConflictHandler) private var conflictHandler
+    @Environment(\.presentToast) private var presentToast
+    @Dependency(\.notificationCenter) private var notificationCenter
 
     var body: some View {
         AnimatableButton(
@@ -98,6 +101,7 @@ private struct LectureActionButton: View {
                             type: type,
                             overrideOnConflict: overrideOnConflict
                         )
+                        handleSuccessToast(for: type)
                     }
                 } catch {
                     throw error
@@ -116,6 +120,41 @@ private struct LectureActionButton: View {
             config.contentInsets = .init(top: 5, leading: 0, bottom: 5, trailing: 0)
             button.tintAdjustmentMode = .normal
             return config
+        }
+    }
+
+    private func handleSuccessToast(for actionType: ActionButtonType) {
+        switch actionType {
+        case .bookmark:
+            guard isSelected else { return }
+            presentToast(
+                Toast(
+                    message: TimetableStrings.toastBookmarkMessage,
+                    button: ToastButton(
+                        title: TimetableStrings.toastActionView,
+                        action: {
+                            notificationCenter.post(NavigateToBookmarkMessage())
+                        }
+                    )
+                )
+            )
+
+        case .vacancy:
+            guard isSelected else { return }
+            presentToast(
+                Toast(
+                    message: TimetableStrings.toastVacancyMessage,
+                    button: ToastButton(
+                        title: TimetableStrings.toastActionView,
+                        action: {
+                            notificationCenter.post(NavigateToVacancyMessage())
+                        }
+                    )
+                )
+            )
+
+        default:
+            break
         }
     }
 }

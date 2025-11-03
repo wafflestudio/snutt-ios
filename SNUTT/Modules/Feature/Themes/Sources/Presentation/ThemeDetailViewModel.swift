@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import DependenciesUtility
 import Foundation
 import Observation
 import ThemesInterface
@@ -19,6 +20,9 @@ final class ThemeDetailViewModel {
 
     @ObservationIgnored
     @Dependency(\.themeRepository) private var themeRepository
+
+    @ObservationIgnored
+    @Dependency(\.notificationCenter) private var notificationCenter
 
     private let entryTheme: Theme
     let isNewTheme: Bool
@@ -81,7 +85,7 @@ final class ThemeDetailViewModel {
         } else {
             editableTheme = try await themeRepository.updateTheme(theme: editableTheme)
         }
-        NotificationCenter.default.post(name: .customThemeDidUpdate, object: nil)
+        notificationCenter.post(CustomThemeDidUpdateMessage())
     }
 }
 
@@ -101,8 +105,4 @@ extension Theme {
             status: .customPrivate
         )
     }
-}
-
-extension Notification.Name {
-    static let customThemeDidUpdate = Notification.Name("customThemeDidUpdate")
 }

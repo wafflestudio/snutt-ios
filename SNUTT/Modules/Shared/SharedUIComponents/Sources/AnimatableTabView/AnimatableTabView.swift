@@ -11,7 +11,7 @@ import UIKit
 public class AnimatableUITabBarController<T: TabItem>: UITabBarController, UITabBarControllerDelegate {
     private let tabItems: [T]
     private var isTransitionInProgress = false
-    @Binding private var selectedTabItem: T {
+    @Binding private(set) var selectedTabItem: T {
         didSet {
             updateAllTabButtonConfigurations()
         }
@@ -196,7 +196,11 @@ public struct AnimatableTabView<T: TabItem>: UIViewControllerRepresentable {
         return AnimatableUITabBarController(selectedTabItem: $selectedTab, tabScenes: tabScenes())
     }
 
-    public func updateUIViewController(_: AnimatableUITabBarController<T>, context _: Context) {}
+    public func updateUIViewController(_ tabBar: AnimatableUITabBarController<T>, context _: Context) {
+        Task {
+            tabBar.selectTab(selectedTab)
+        }
+    }
 }
 
 @MainActor

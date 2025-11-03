@@ -8,6 +8,7 @@
 import Dependencies
 import Foundation
 import Observation
+import SwiftUtility
 import TimetableInterface
 
 @Observable
@@ -22,6 +23,9 @@ public class FriendsViewModel {
     @ObservationIgnored
     @Dependency(\.timetableLocalRepository) private var timetableLocalRepository
 
+    @ObservationIgnored
+    @Dependency(\.notificationCenter) var notificationCenter
+
     var isMenuPresented = false
     var isRequestSheetPresented = false
     var isGuidePopupPresented = false
@@ -30,7 +34,30 @@ public class FriendsViewModel {
     private(set) var requestedFriendsLoadState: FriendsLoadState = .loading
     var selectedFriendContent: FriendContentLoadState = .loading
 
-    public init() {}
+    public init() {
+        subscribeToNotifications()
+    }
+
+    private func subscribeToNotifications() {
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: OpenFriendsMenuMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.isMenuPresented = true
+        }
+
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: KakaoFriendRequestMessage.self)
+        ) { @MainActor viewModel, message in
+            do {
+                try await viewModel.handleKakaoFriendRequest(requestToken: message.requestToken)
+            } catch {
+                // Error handling should be done at the call site via ErrorAlertHandler
+                print("Failed to handle Kakao friend request: \(error)")
+            }
+        }
+    }
 
     var selectedFriend: Friend? {
         switch selectedFriendContent {

@@ -16,7 +16,7 @@ public struct SettingsScene: View {
     public init() {}
 
     public var body: some View {
-        NavigationStack {
+        NavigationStack(path: $viewModel.path) {
             List {
                 Section {
                     SettingsNavigationLink(
