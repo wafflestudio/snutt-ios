@@ -6,9 +6,11 @@
 //
 
 import APIClientInterface
-import Combine
 import Dependencies
 import Observation
+import SharedUIComponents
+import SwiftUI
+import SwiftUtility
 import TimetableInterface
 import VacancyInterface
 
@@ -23,13 +25,23 @@ class LectureSearchViewModel {
     @Dependency(\.lectureRepository) private var lectureRepository
     @ObservationIgnored
     @Dependency(\.analyticsLogger) private var analyticsLogger
+    @ObservationIgnored
+    @Dependency(\.notificationCenter) var notificationCenter
 
     private let timetableViewModel: TimetableViewModel
-    private let router: LectureSearchRouter
 
-    init(timetableViewModel: TimetableViewModel, router: LectureSearchRouter = .init()) {
+    init(timetableViewModel: TimetableViewModel) {
         self.timetableViewModel = timetableViewModel
-        self.router = router
+        subscribeToNotifications()
+    }
+
+    private func subscribeToNotifications() {
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: NavigateToBookmarkMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.searchDisplayMode = .bookmark
+        }
     }
 
     var searchQuery = ""
@@ -43,10 +55,7 @@ class LectureSearchViewModel {
             }
         }
     }
-    var searchDisplayMode: SearchDisplayMode {
-        get { router.searchDisplayMode }
-        set { router.searchDisplayMode = newValue }
-    }
+    var searchDisplayMode: SearchDisplayMode = .search
 
     var isSearchFilterOpen = false
     var targetForLectureDetail: Lecture?
@@ -256,13 +265,6 @@ public enum SearchDisplayMode {
             self = .search
         }
     }
-}
-
-@Observable
-@MainActor
-public final class LectureSearchRouter {
-    public var searchDisplayMode: SearchDisplayMode = .search
-    public nonisolated init() {}
 }
 
 enum SearchFilterCategory: String, Sendable, CaseIterable {

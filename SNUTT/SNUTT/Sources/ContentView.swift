@@ -52,8 +52,7 @@ struct ContentView: View {
                     tabItem: TabItem.timetable,
                     rootView: TimetableScene(
                         isSearchMode: isSearchMode,
-                        timetableViewModel: viewModel.timetableViewModel,
-                        lectureSearchRouter: viewModel.lectureSearchRouter
+                        timetableViewModel: viewModel.timetableViewModel
                     )
                     .environment(\.notificationsUIProvider, NotificationsUIProvider())
                 )
@@ -82,6 +81,7 @@ struct ContentView: View {
         .overlaySheet()
         .overlayPopup()
         .overlayADPopup()
+        .overlayToast()
         .environment(\.themeViewModel, viewModel.themeViewModel)
         .environment(\.timetableViewModel, viewModel.timetableViewModel)
         .onLoad {

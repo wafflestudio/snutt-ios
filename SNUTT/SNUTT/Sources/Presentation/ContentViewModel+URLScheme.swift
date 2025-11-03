@@ -8,7 +8,7 @@
 import APIClientInterface
 import Foundation
 import Friends
-import Timetable
+import TimetableInterface
 
 extension ContentViewModel {
     typealias QueryParameters = [URLQueryItem]
@@ -18,17 +18,18 @@ extension ContentViewModel {
         switch urlComponents.host {
         case "notifications":
             selectedTab = .timetable
-            timetableRouter.navigationPaths = [.notificationList]
+            notificationCenter.post(NavigateToNotificationsMessage())
             return
         case "vacancy":
             return
         case "friends":
             selectedTab = .friends
+            notificationCenter.post(OpenFriendsMenuMessage())
             return
         case "timetable-lecture":
             try await handleTimetableLectureScheme(urlComponents.queryItems)
         case "bookmarks":
-            try await handleBookmarkScheme(urlComponents.queryItems)
+            handleBookmarkScheme(urlComponents.queryItems)
             return
         case "kakaolink":
             handleKakaoLinkScheme(urlComponents.queryItems)
@@ -42,19 +43,15 @@ extension ContentViewModel {
         guard let timetableID = parameters?["timetableId"],
             let lectureID = parameters?["lectureId"]
         else { throw LocalizedErrorCode.deeplinkProcessFailed }
-        let timetable = try await timetableRepository.fetchTimetable(timetableID: timetableID)
-        guard let lecture = timetable.lectures.first(where: { $0.lectureID == lectureID })
-        else { throw LocalizedErrorCode.deeplinkLectureNotFound }
         selectedTab = .timetable
-        timetableRouter.navigationPaths = [.notificationList, .lectureDetail(lecture)]
-        analyticsLogger.logScreen(
-            Timetable.AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .notification))
+        notificationCenter.post(
+            NavigateToLectureMessage(timetableID: timetableID, lectureID: lectureID)
         )
     }
 
-    private func handleBookmarkScheme(_: QueryParameters?) async throws {
+    private func handleBookmarkScheme(_: QueryParameters?) {
         selectedTab = .search
-        lectureSearchRouter.searchDisplayMode = .bookmark
+        notificationCenter.post(NavigateToBookmarkMessage())
     }
 
     private func handleKakaoLinkScheme(_ parameters: QueryParameters?) {
@@ -63,11 +60,7 @@ extension ContentViewModel {
         else { return }
 
         selectedTab = .friends
-        NotificationCenter.default.post(
-            name: .kakaoFriendRequest,
-            object: nil,
-            userInfo: ["requestToken": requestToken]
-        )
+        notificationCenter.post(KakaoFriendRequestMessage(requestToken: requestToken))
     }
 }
 

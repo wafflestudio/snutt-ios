@@ -21,6 +21,7 @@ let project = Project.app(
                 .target(name: "AuthInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "SwiftUIUtility"),
+                .target(name: "SwiftUtility"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "SharedUIMapKit"),
@@ -112,6 +113,8 @@ let project = Project.app(
                 .target(name: "AuthInterface"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "SharedUIWebKit"),
+                .target(name: "SwiftUtility"),
+                .target(name: "DependenciesUtility"),
                 .external(name: "Dependencies"),
             ]
         ),
@@ -154,6 +157,8 @@ let project = Project.app(
                 .target(name: "SharedUIComponents"),
                 .target(name: "SharedUIWebKit"),
                 .target(name: "SwiftUIUtility"),
+                .target(name: "SwiftUtility"),
+                .target(name: "DependenciesUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
             ]
@@ -193,6 +198,8 @@ let project = Project.app(
                 .target(name: "SharedUIComponents"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
+                .target(name: "SwiftUtility"),
+                .target(name: "DependenciesUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
                 .external(name: "KakaoSDKCommon"),
@@ -209,6 +216,7 @@ let project = Project.app(
                 .target(name: "ThemesInterface"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
+                .target(name: "DependenciesUtility"),
                 .external(name: "Spyable"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
@@ -345,6 +353,7 @@ let project = Project.app(
             ]
         ),
         .module(name: "FoundationUtility", category: .utility(ui: false), dependencies: []),
+        .module(name: "SwiftUtility", category: .utility(ui: false), dependencies: []),
     ],
     externalDependencies: [
         // Define dependencies exclusively for the main target.

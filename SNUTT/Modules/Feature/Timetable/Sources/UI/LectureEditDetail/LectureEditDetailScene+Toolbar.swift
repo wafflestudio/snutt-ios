@@ -94,7 +94,17 @@ extension LectureEditDetailScene {
         if toolbarOptions.contains(.vacancyNotificationButton) {
             Button {
                 errorAlertHandler.withAlert {
+                    let wasEnabled = viewModel.isVacancyNotificationEnabled
                     try await viewModel.toggleVacancyNotification()
+
+                    if !wasEnabled {
+                        presentToast(
+                            Toast(
+                                message: TimetableStrings.toastVacancyMessage,
+                                button: ToastButton(title: TimetableStrings.toastActionView, action: {})
+                            )
+                        )
+                    }
                 }
             } label: {
                 if viewModel.isVacancyNotificationEnabled {
@@ -111,7 +121,16 @@ extension LectureEditDetailScene {
         if toolbarOptions.contains(.bookmarkButton) {
             Button {
                 errorAlertHandler.withAlert {
+                    let wasBookmarked = viewModel.isBookmarked
                     try await viewModel.toggleBookmark()
+                    if !wasBookmarked {
+                        presentToast(
+                            Toast(
+                                message: TimetableStrings.toastBookmarkMessage,
+                                button: ToastButton(title: TimetableStrings.toastActionView, action: {})
+                            )
+                        )
+                    }
                 }
             } label: {
                 if viewModel.isBookmarked {

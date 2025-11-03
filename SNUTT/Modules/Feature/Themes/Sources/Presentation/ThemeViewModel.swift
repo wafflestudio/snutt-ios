@@ -6,8 +6,10 @@
 //
 
 import Dependencies
+import DependenciesUtility
 import Foundation
 import Observation
+import SwiftUtility
 import ThemesInterface
 
 @Observable
@@ -15,6 +17,9 @@ import ThemesInterface
 public final class ThemeViewModel: ThemeViewModelProtocol {
     @ObservationIgnored
     @Dependency(\.themeRepository) private var themeRepository
+
+    @ObservationIgnored
+    @Dependency(\.notificationCenter) private var notificationCenter
 
     public private(set) var themes: [Theme] = []
     public var availableThemes: [Theme] {
@@ -29,12 +34,15 @@ public final class ThemeViewModel: ThemeViewModelProtocol {
         saveSelectedTheme: @MainActor @escaping (Theme) async throws -> Void
     ) {
         self.saveSelectedTheme = saveSelectedTheme
-        Task { [weak self] in
-            for await _ in NotificationCenter.default.notifications(named: .customThemeDidUpdate).compactMap({ _ in () }
-            ) {
-                guard let self else { return }
-                try? await fetchThemes()
-            }
+        subscribeToNotifications()
+    }
+
+    private func subscribeToNotifications() {
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: CustomThemeDidUpdateMessage.self)
+        ) { @MainActor viewModel, _ in
+            try? await viewModel.fetchThemes()
         }
     }
 

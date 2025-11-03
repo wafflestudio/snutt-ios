@@ -24,15 +24,13 @@ public struct TimetableScene: View {
 
     public init(
         isSearchMode: Binding<Bool>,
-        timetableViewModel: TimetableViewModel,
-        lectureSearchRouter: LectureSearchRouter
+        timetableViewModel: TimetableViewModel
     ) {
         _isSearchMode = isSearchMode
         self.timetableViewModel = timetableViewModel
         _searchViewModel = State(
             initialValue: LectureSearchViewModel(
-                timetableViewModel: timetableViewModel,
-                router: lectureSearchRouter
+                timetableViewModel: timetableViewModel
             )
         )
     }
@@ -154,6 +152,6 @@ extension View {
 }
 
 #Preview {
-    TimetableScene(isSearchMode: .constant(false), timetableViewModel: .init(), lectureSearchRouter: .init())
+    TimetableScene(isSearchMode: .constant(false), timetableViewModel: .init())
         .overlaySheet()
 }
