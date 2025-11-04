@@ -12,7 +12,7 @@ protocol DiaryServiceProtocol: Sendable {
     func fetchDiaryList() async throws -> [DiaryListPerSemester]
     func submitDiary(_ diary: DiaryDto) async throws
     func fetchDailyClassTypeList() async throws -> [ClassCategoryDto]
-    func fetchQuestionnaireList(for lectureId: String, from dailyClassTypes: [ClassCategoryDto]) async throws -> DiaryQuestionnaire
+    func fetchQuestionnaire(for lectureId: String, from dailyClassTypes: [ClassCategoryDto]) async throws -> DiaryQuestionnaire
     func deleteDiary(_ diaryId: String) async throws
 }
 
@@ -26,15 +26,15 @@ struct DiaryService: DiaryServiceProtocol {
     }
     
     func submitDiary(_ diary: DiaryDto) async throws {
-        
+        try await diaryRepository.submitDiary(diary)
     }
     
     func fetchDailyClassTypeList() async throws -> [ClassCategoryDto] {
         return try await diaryRepository.fetchDailyClassTypes()
     }
     
-    func fetchQuestionnaireList(for lectureId: String, from dailyClassTypes: [ClassCategoryDto]) async throws -> DiaryQuestionnaire {
-        let dto = try await diaryRepository.fetchQuestionnaireList(from: .init(lectureId: lectureId, dailyClassTypes: dailyClassTypes.map({ $0.name })))
+    func fetchQuestionnaire(for lectureId: String, from dailyClassTypes: [ClassCategoryDto]) async throws -> DiaryQuestionnaire {
+        let dto = try await diaryRepository.fetchQuestionnaire(from: .init(lectureId: lectureId, dailyClassTypes: dailyClassTypes.map({ $0.name })))
         return .init(from: dto)
     }
     
@@ -51,6 +51,6 @@ class FakeDiaryService: DiaryServiceProtocol {
     func fetchDiaryList() async throws -> [DiaryListPerSemester] { return [] }
     func submitDiary(_ diary: DiaryDto) async throws {}
     func fetchDailyClassTypeList() async throws -> [ClassCategoryDto] { return [] }
-    func fetchQuestionnaireList(for lectureId: String, from dailyClassTypes: [ClassCategoryDto]) async throws -> DiaryQuestionnaire { return .preview }
+    func fetchQuestionnaire(for lectureId: String, from dailyClassTypes: [ClassCategoryDto]) async throws -> DiaryQuestionnaire { return .preview }
     func deleteDiary(_ diaryId: String) async throws {}
 }

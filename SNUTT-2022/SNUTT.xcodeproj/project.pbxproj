@@ -58,6 +58,8 @@
 		B84B4CB42EB7842A00212E8E /* ExpandableDiarySummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CB32EB7842600212E8E /* ExpandableDiarySummaryCell.swift */; };
 		B84B4CB72EB784A100212E8E /* DiaryQuestionAnswerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CB62EB7848600212E8E /* DiaryQuestionAnswerRow.swift */; };
 		B84B4CB92EB784FD00212E8E /* SemesterChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CB82EB784FB00212E8E /* SemesterChip.swift */; };
+		B84B4CBB2EB8CDAB00212E8E /* OptionChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CBA2EB8CD9400212E8E /* OptionChip.swift */; };
+		B84B4CBD2EB8D3A000212E8E /* ExtraCommentSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CBC2EB8D39A00212E8E /* ExtraCommentSection.swift */; };
 		B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85B244C295BF36F00E6577E /* FindLocalIdView.swift */; };
 		B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */; };
 		B863301A2CE4D70F008E9003 /* EnterNewPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */; };
@@ -438,6 +440,8 @@
 		B84B4CB32EB7842600212E8E /* ExpandableDiarySummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableDiarySummaryCell.swift; sourceTree = "<group>"; };
 		B84B4CB62EB7848600212E8E /* DiaryQuestionAnswerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryQuestionAnswerRow.swift; sourceTree = "<group>"; };
 		B84B4CB82EB784FB00212E8E /* SemesterChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterChip.swift; sourceTree = "<group>"; };
+		B84B4CBA2EB8CD9400212E8E /* OptionChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionChip.swift; sourceTree = "<group>"; };
+		B84B4CBC2EB8D39A00212E8E /* ExtraCommentSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtraCommentSection.swift; sourceTree = "<group>"; };
 		B85B244C295BF36F00E6577E /* FindLocalIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocalIdView.swift; sourceTree = "<group>"; };
 		B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordScene.swift; sourceTree = "<group>"; };
 		B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNewPasswordView.swift; sourceTree = "<group>"; };
@@ -759,6 +763,8 @@
 		B84B4CB52EB7845A00212E8E /* LectureDiary */ = {
 			isa = PBXGroup;
 			children = (
+				B84B4CBC2EB8D39A00212E8E /* ExtraCommentSection.swift */,
+				B84B4CBA2EB8CD9400212E8E /* OptionChip.swift */,
 				B84B4CB82EB784FB00212E8E /* SemesterChip.swift */,
 				B84B4CB62EB7848600212E8E /* DiaryQuestionAnswerRow.swift */,
 				B84B4CB32EB7842600212E8E /* ExpandableDiarySummaryCell.swift */,
@@ -1724,6 +1730,7 @@
 				BE28036A28E93EEF00B2B1AB /* LoginScene.swift in Sources */,
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
+				B84B4CBD2EB8D3A000212E8E /* ExtraCommentSection.swift in Sources */,
 				73C930E42DD0D8040091F08C /* PushState.swift in Sources */,
 				DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */,
 				BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */,
@@ -1786,6 +1793,7 @@
 				BEF9233628E7EE45004AFCB2 /* SignUpView.swift in Sources */,
 				B8F40EAF28980D990021A2A9 /* DeveloperInfoView.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
+				B84B4CBB2EB8CDAB00212E8E /* OptionChip.swift in Sources */,
 				B87DF6E92914F8FC008BB95B /* Popup.swift in Sources */,
 				B86C4CCF294DCA150019CE51 /* VerificationCodeView.swift in Sources */,
 				738406F52B5712BF00007E62 /* ThemeRouter.swift in Sources */,

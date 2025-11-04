@@ -16,7 +16,7 @@ enum DiaryRouter: Router {
     case fetchMyDiaryList
     case uploadDiary(diary: DiaryDto)
     case fetchDailyClassTypeList
-    case getQuestionnaireList(classType: DiaryQuestionnaireRequestDto)
+    case getQuestionnaire(classType: DiaryQuestionnaireRequestDto)
     case deleteDiary(diaryId: String)
 
     var method: HTTPMethod {
@@ -27,7 +27,7 @@ enum DiaryRouter: Router {
             return .post
         case .fetchDailyClassTypeList:
             return .get
-        case .getQuestionnaireList:
+        case .getQuestionnaire:
             return .post
         case .deleteDiary:
             return .delete
@@ -42,7 +42,7 @@ enum DiaryRouter: Router {
             return ""
         case .fetchDailyClassTypeList:
             return "/dailyClassTypes"
-        case .getQuestionnaireList:
+        case .getQuestionnaire:
             return "/questionnaire"
         case let .deleteDiary(diaryId):
             return "/\(diaryId)"
@@ -58,7 +58,7 @@ enum DiaryRouter: Router {
             return diary.asDictionary()
         case .fetchDailyClassTypeList:
             return nil
-        case let .getQuestionnaireList(classType):
+        case let .getQuestionnaire(classType):
             print(classType.asDictionary())
             return classType.asDictionary()
         case let .deleteDiary(diaryId):
