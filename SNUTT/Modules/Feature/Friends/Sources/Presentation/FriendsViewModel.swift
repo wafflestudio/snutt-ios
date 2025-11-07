@@ -50,12 +50,7 @@ public class FriendsViewModel {
             to: self,
             subscribing: notificationCenter.messages(of: KakaoFriendRequestMessage.self)
         ) { @MainActor viewModel, message in
-            do {
-                try await viewModel.handleKakaoFriendRequest(requestToken: message.requestToken)
-            } catch {
-                // Error handling should be done at the call site via ErrorAlertHandler
-                print("Failed to handle Kakao friend request: \(error)")
-            }
+            try await viewModel.handleKakaoFriendRequest(requestToken: message.requestToken)
         }
     }
 
