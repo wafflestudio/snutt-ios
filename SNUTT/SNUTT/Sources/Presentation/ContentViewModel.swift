@@ -66,6 +66,12 @@ class ContentViewModel {
         ) { @MainActor viewModel, _ in
             viewModel.selectedTab = .settings
         }
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: NavigateToBookmarkMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.selectedTab = .search
+        }
     }
 
     private func loadConfigs() async throws {

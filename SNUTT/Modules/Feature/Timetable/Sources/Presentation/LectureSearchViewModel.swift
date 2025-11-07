@@ -189,7 +189,7 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
             )
         case .bookmark:
             if isToggled(lecture: lecture, type: type) {
-                try await lectureRepository.removeBookmark(lectureID: lecture.id)
+                try await lectureRepository.removeBookmark(lectureID: lecture.referenceID)
                 bookmarkedLectures.removeAll { $0.id == lecture.id }
             } else {
                 analyticsLogger.logEvent(
@@ -197,20 +197,20 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
                         .init(lectureID: lecture.referenceID, referrer: lectureActionReferrer)
                     )
                 )
-                try await lectureRepository.addBookmark(lectureID: lecture.id)
+                try await lectureRepository.addBookmark(lectureID: lecture.referenceID)
                 if !bookmarkedLectures.contains(where: { $0.id == lecture.id }) {
                     bookmarkedLectures.append(lecture)
                 }
             }
         case .vacancy:
             if isToggled(lecture: lecture, type: type) {
-                try await vacancyRepository.deleteVacancyLecture(lectureID: lecture.id)
+                try await vacancyRepository.deleteVacancyLecture(lectureID: lecture.referenceID)
                 vacancyLectureIds.remove(lecture.id)
             } else {
                 analyticsLogger.logEvent(
                     AnalyticsAction.addToVacancy(.init(lectureID: lecture.referenceID, referrer: lectureActionReferrer))
                 )
-                try await vacancyRepository.addVacancyLecture(lectureID: lecture.id)
+                try await vacancyRepository.addVacancyLecture(lectureID: lecture.referenceID)
                 vacancyLectureIds.insert(lecture.id)
             }
         case .add:
