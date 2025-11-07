@@ -61,7 +61,7 @@ extension Lecture {
         courseNumber == nil || courseNumber == ""
     }
 
-    /// DB에 저장된 강의 고유 ID
+    /// DB에 저장된 강의 고유 ID (시간표 추가 여부에 관계 없이 모든 유저에게 동일하게 적용되는 ID)
     public var referenceID: String {
         lectureID ?? id
     }

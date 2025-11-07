@@ -36,6 +36,7 @@ struct LectureEditDetailScene: View {
     @Environment(\.lectureTimeConflictHandler) var conflictHandler
     @Environment(\.reviewsUIProvider) private var reviewsUIProvider
     @Environment(\.presentToast) var presentToast
+    @Dependency(\.notificationCenter) var notificationCenter
 
     let displayMode: DisplayMode
     let paths: Binding<[TimetableDetailSceneTypes]>

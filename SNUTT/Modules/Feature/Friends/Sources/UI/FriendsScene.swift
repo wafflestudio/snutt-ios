@@ -93,7 +93,7 @@ public struct FriendsScene: View {
                     .foregroundColor(Color(uiColor: .label))
             }
             Spacer()
-            if let friendContent {
+            if let friendContent, !friendContent.quarters.isEmpty {
                 quarterPicker(for: friendContent)
             } else {
                 Text(placeholderText)

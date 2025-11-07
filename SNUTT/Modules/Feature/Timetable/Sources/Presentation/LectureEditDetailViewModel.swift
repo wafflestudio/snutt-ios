@@ -157,20 +157,20 @@ public final class LectureEditDetailViewModel {
 
     private func fetchBookmarkStatus() async {
         guard !entryLecture.isCustom else { return }
-        isBookmarked = (try? await lectureRepository.isBookmarked(lectureID: entryLecture.id)) ?? false
+        isBookmarked = (try? await lectureRepository.isBookmarked(lectureID: entryLecture.referenceID)) ?? false
     }
 
     private func fetchVacancyNotificationStatus() async {
         guard !entryLecture.isCustom else { return }
         isVacancyNotificationEnabled =
             (try? await vacancyRepository
-                .isVacancyNotificationEnabled(lectureID: entryLecture.id)) ?? false
+                .isVacancyNotificationEnabled(lectureID: entryLecture.referenceID)) ?? false
     }
 
     func toggleBookmark() async throws {
         guard !entryLecture.isCustom else { return }
         if isBookmarked {
-            try await lectureRepository.removeBookmark(lectureID: entryLecture.id)
+            try await lectureRepository.removeBookmark(lectureID: entryLecture.referenceID)
         } else {
             analyticsLogger.logEvent(
                 AnalyticsAction.addToBookmark(
@@ -180,7 +180,7 @@ public final class LectureEditDetailViewModel {
                     )
                 )
             )
-            try await lectureRepository.addBookmark(lectureID: entryLecture.id)
+            try await lectureRepository.addBookmark(lectureID: entryLecture.referenceID)
         }
         isBookmarked.toggle()
     }
@@ -188,7 +188,7 @@ public final class LectureEditDetailViewModel {
     func toggleVacancyNotification() async throws {
         guard !entryLecture.isCustom else { return }
         if isVacancyNotificationEnabled {
-            try await vacancyRepository.deleteVacancyLecture(lectureID: entryLecture.id)
+            try await vacancyRepository.deleteVacancyLecture(lectureID: entryLecture.referenceID)
         } else {
             analyticsLogger.logEvent(
                 AnalyticsAction.addToVacancy(
@@ -198,7 +198,7 @@ public final class LectureEditDetailViewModel {
                     )
                 )
             )
-            try await vacancyRepository.addVacancyLecture(lectureID: entryLecture.id)
+            try await vacancyRepository.addVacancyLecture(lectureID: entryLecture.referenceID)
         }
         isVacancyNotificationEnabled.toggle()
     }
