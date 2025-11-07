@@ -5,11 +5,13 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import Dependencies
 import SwiftUI
 
 struct PopupView: View {
     let viewModel: PopupViewModel
     let popup: PopupModel
+    @Dependency(\.application) private var application
 
     private enum Design {
         static let font: Font = .system(size: 14)
@@ -23,6 +25,13 @@ struct PopupView: View {
                     popupImage
                         .resizable()
                         .scaledToFit()
+                        .onTapGesture {
+                            if let linkURL = popup.linkURL {
+                                Task {
+                                    await application.open(linkURL)
+                                }
+                            }
+                        }
 
                     HStack {
                         Spacer()
