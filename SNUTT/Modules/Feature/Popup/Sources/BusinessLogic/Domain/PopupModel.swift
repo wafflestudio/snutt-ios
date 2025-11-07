@@ -25,6 +25,10 @@ struct PopupModel: Sendable, Identifiable {
         URL(string: serverPopup.imageUri)
     }
 
+    var linkURL: URL? {
+        serverPopup.linkURL
+    }
+
     private let serverPopup: ServerPopup
     var localPopup: LocalPopup?
 
