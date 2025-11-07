@@ -32,6 +32,8 @@ struct PopupView: View {
                                 }
                             }
                         }
+                        .accessibilityHint(PopupStrings.popupAccessibilityTapToOpenLink)
+                        .accessibilityAddTraits(.isButton)
 
                     HStack {
                         Spacer()

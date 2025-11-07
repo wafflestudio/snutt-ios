@@ -23,3 +23,4 @@
 
 "popup.dontShowForWhile" = "당분간 보지 않기";
 "popup.dismiss" = "닫기";
+"popup.accessibility.tapToOpenLink" = "이미지를 탭하면 링크가 열립니다";
