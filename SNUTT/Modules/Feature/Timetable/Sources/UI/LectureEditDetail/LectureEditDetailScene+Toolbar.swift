@@ -101,7 +101,12 @@ extension LectureEditDetailScene {
                         presentToast(
                             Toast(
                                 message: TimetableStrings.toastVacancyMessage,
-                                button: ToastButton(title: TimetableStrings.toastActionView, action: {})
+                                button: ToastButton(
+                                    title: TimetableStrings.toastActionView,
+                                    action: {
+                                        notificationCenter.post(NavigateToVacancyMessage())
+                                    }
+                                )
                             )
                         )
                     }
@@ -127,7 +132,12 @@ extension LectureEditDetailScene {
                         presentToast(
                             Toast(
                                 message: TimetableStrings.toastBookmarkMessage,
-                                button: ToastButton(title: TimetableStrings.toastActionView, action: {})
+                                button: ToastButton(
+                                    title: TimetableStrings.toastActionView,
+                                    action: {
+                                        notificationCenter.post(NavigateToBookmarkMessage())
+                                    }
+                                )
                             )
                         )
                     }
