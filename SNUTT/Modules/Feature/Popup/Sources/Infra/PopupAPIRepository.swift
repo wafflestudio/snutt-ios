@@ -7,6 +7,7 @@
 
 import APIClientInterface
 import Dependencies
+import Foundation
 import OpenAPIURLSession
 
 struct PopupAPIRepository: PopupServerRepository {
@@ -15,7 +16,12 @@ struct PopupAPIRepository: PopupServerRepository {
     func fetchPopups() async throws -> [ServerPopup] {
         let popups = try await apiClient.getPopups().ok.body.json
         return popups.content.map {
-            ServerPopup(key: $0.key, imageUri: $0.imageUri, hiddenDays: $0.hiddenDays.flatMap { Int($0) })
+            ServerPopup(
+                key: $0.key,
+                imageUri: $0.imageUri,
+                linkURL: $0.linkUrl.flatMap { URL(string: $0) },
+                hiddenDays: $0.hiddenDays.flatMap { Int($0) }
+            )
         }
     }
 }
