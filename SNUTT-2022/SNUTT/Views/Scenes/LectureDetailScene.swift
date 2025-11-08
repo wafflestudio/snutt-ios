@@ -108,13 +108,11 @@ struct LectureDetailScene: View {
                 viewModel.reloadDetailWebView(detailId: evLecture.evLectureId)
             }
         }
-        .task {
-            if viewModel.showLectureReminderPicker() {
-                await viewModel.getLectureReminderOption(lecture)
-            }
-        }
         .onAppear {
             isMapViewExpanded = viewModel.shouldOpenLectureMapView()
+            if viewModel.showLectureReminderPicker() {
+                viewModel.getLectureReminderOption(lecture)
+            }
         }
         .onChange(of: isMapViewExpanded) {
             viewModel.setIsMapViewExpanded($0)
