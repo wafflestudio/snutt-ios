@@ -18,20 +18,22 @@ struct TimetableDetails: View {
         switch pathType {
         case .lectureList:
             LectureListScene(viewModel: timetableViewModel)
-        case let .lectureDetail(lecture):
+        case let .lectureDetail(lecture, parentTimetable, belongsToOtherTimetable):
             LectureEditDetailScene(
-                timetableViewModel: timetableViewModel,
                 entryLecture: lecture,
                 displayMode: .normal,
-                paths: $timetableViewModel.paths
+                paths: $timetableViewModel.paths,
+                parentTimetable: parentTimetable,
+                belongsToOtherTimetable: belongsToOtherTimetable
             )
             .handleLectureTimeConflict()
         case let .lectureCreate(placeholderLecture):
             LectureEditDetailScene(
-                timetableViewModel: timetableViewModel,
                 entryLecture: placeholderLecture,
                 displayMode: .create,
-                paths: $timetableViewModel.paths
+                paths: $timetableViewModel.paths,
+                parentTimetable: timetableViewModel.currentTimetable,
+                belongsToOtherTimetable: false
             )
             .handleLectureTimeConflict()
             .analyticsScreen(.lectureCreate)

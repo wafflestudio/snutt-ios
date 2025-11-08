@@ -45,9 +45,10 @@ public struct TimetableUIProvider: TimetableUIProvidable {
         AnyView(
             NavigationStack {
                 LectureEditDetailScene(
-                    timetableViewModel: nil,
                     entryLecture: lecture,
-                    displayMode: .preview(options)
+                    displayMode: .preview(options),
+                    parentTimetable: nil,
+                    belongsToOtherTimetable: false
                 )
             }
         )

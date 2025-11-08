@@ -73,6 +73,17 @@ public class TimetableViewModel: TimetableViewModelProtocol {
                 lectureID: message.lectureID
             )
         }
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: NavigateToTimetableMessage.self)
+        ) { @MainActor viewModel, message in
+            do {
+                try await viewModel.selectTimetable(timetableID: message.timetableID)
+                viewModel.router.navigationPaths = []
+            } catch {
+                // Handle error silently or log
+            }
+        }
     }
 
     private func handleLectureNavigation(timetableID: String, lectureID: String) async {
@@ -80,7 +91,11 @@ public class TimetableViewModel: TimetableViewModelProtocol {
             let timetable = try await timetableRepository.fetchTimetable(timetableID: timetableID)
             guard let lecture = timetable.lectures.first(where: { $0.lectureID == lectureID })
             else { return }
-            self.router.navigationPaths = [.notificationList, .lectureDetail(lecture)]
+            let belongsToOtherTimetable = (timetable.id != currentTimetable?.id)
+            self.router.navigationPaths = [
+                .notificationList,
+                .lectureDetail(lecture, parentTimetable: timetable, belongsToOtherTimetable: belongsToOtherTimetable),
+            ]
             self.analyticsLogger.logScreen(
                 AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .notification))
             )
@@ -244,10 +259,10 @@ public final class TimetableRouter {
     public nonisolated init() {}
 }
 
-public enum TimetableDetailSceneTypes: Hashable, Equatable {
+public enum TimetableDetailSceneTypes: Hashable {
     case lectureList
     case notificationList
-    case lectureDetail(Lecture)
+    case lectureDetail(Lecture, parentTimetable: Timetable?, belongsToOtherTimetable: Bool = false)
     case lectureCreate(Lecture)
     case lectureColorSelection(LectureEditDetailViewModel)
 
@@ -261,7 +276,7 @@ public enum TimetableDetailSceneTypes: Hashable, Equatable {
             lhs.id == rhs.id
         case let (.lectureColorSelection(lhs), .lectureColorSelection(rhs)):
             lhs.lectureID == rhs.lectureID
-        case let (.lectureDetail(lhs), .lectureDetail(rhs)):
+        case let (.lectureDetail(lhs, _, _), .lectureDetail(rhs, _, _)):
             lhs.id == rhs.id
         default:
             false
