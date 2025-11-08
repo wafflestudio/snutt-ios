@@ -154,6 +154,8 @@ struct LectureService: LectureServiceProtocol {
         let dto = try await lectureRepository.changeLectureReminderState(timetableId: targetTable.id, lectureId: lectureId, to: option.rawValue)
         if let index = appState.reminder.reminderList.firstIndex(where: { $0.timetableLectureId == lectureId }) {
             appState.reminder.reminderList[index] = .init(from: dto)
+        } else {
+            appState.reminder.reminderList.append(.init(from: dto))
         }
     }
     
