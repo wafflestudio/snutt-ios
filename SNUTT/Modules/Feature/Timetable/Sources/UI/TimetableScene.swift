@@ -56,23 +56,19 @@ public struct TimetableScene: View {
             .navigationDestination(for: TimetableDetailSceneTypes.self) {
                 TimetableDetails(pathType: $0, timetableViewModel: timetableViewModel)
             }
-            .onLoad {
-                await withThrowingTaskGroup(of: Void.self) { group in
-                    group.addTask {
-                        await errorAlertHandler.withAlert {
-                            try await timetableViewModel.loadTimetable()
-                        }
-                    }
-                    group.addTask {
-                        await errorAlertHandler.withAlert {
-                            try await timetableViewModel.loadTimetableList()
-                        }
-                    }
-                    group.addTask {
-                        await errorAlertHandler.withAlert {
-                            try await timetableViewModel.loadCourseBooks()
-                        }
-                    }
+            .task {
+                await errorAlertHandler.withAlert {
+                    try await timetableViewModel.loadTimetable()
+                }
+            }
+            .task {
+                await errorAlertHandler.withAlert {
+                    try await timetableViewModel.loadTimetableList()
+                }
+            }
+            .task {
+                await errorAlertHandler.withAlert {
+                    try await timetableViewModel.loadCourseBooks()
                 }
             }
             .sheet(isPresented: $timetableViewModel.isThemeSheetPresented) {
