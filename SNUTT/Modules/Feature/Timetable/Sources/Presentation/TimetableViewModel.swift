@@ -24,7 +24,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     @Dependency(\.timetableUseCase) private var timetableUseCase
 
     @ObservationIgnored
-    @Dependency(\.timetableRepository) private var timetableRepository
+    @Dependency(\.timetableRepository) var timetableRepository
 
     @ObservationIgnored
     @Dependency(\.timetableLocalRepository) private var timetableLocalRepository
@@ -33,16 +33,15 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     @Dependency(\.courseBookRepository) private var courseBookRepository
 
     @ObservationIgnored
-    @Dependency(\.notificationCenter) private var notificationCenter
+    @Dependency(\.lectureRepository) var lectureRepository
 
     @ObservationIgnored
-    @Dependency(\.analyticsLogger) private var analyticsLogger
+    @Dependency(\.notificationCenter) var notificationCenter
 
-    private let router: TimetableRouter = .init()
-    var paths: [TimetableDetailSceneTypes] {
-        get { router.navigationPaths }
-        set { router.navigationPaths = newValue }
-    }
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) var analyticsLogger
+
+    var paths: [TimetableDetailSceneTypes] = []
 
     public init() {
         if let localTimetable = timetableUseCase.loadLocalRecentTimetable() {
@@ -59,53 +58,6 @@ public class TimetableViewModel: TimetableViewModelProtocol {
             }
         }
         subscribeToNotifications()
-    }
-
-    private func subscribeToNotifications() {
-        Task.scoped(
-            to: self,
-            subscribing: notificationCenter.messages(of: NavigateToNotificationsMessage.self)
-        ) { @MainActor viewModel, _ in
-            viewModel.router.navigationPaths = [.notificationList]
-        }
-        Task.scoped(
-            to: self,
-            subscribing: notificationCenter.messages(of: NavigateToLectureMessage.self)
-        ) { @MainActor viewModel, message in
-            await viewModel.handleLectureNavigation(
-                timetableID: message.timetableID,
-                lectureID: message.lectureID
-            )
-        }
-        Task.scoped(
-            to: self,
-            subscribing: notificationCenter.messages(of: NavigateToTimetableMessage.self)
-        ) { @MainActor viewModel, message in
-            do {
-                try await viewModel.selectTimetable(timetableID: message.timetableID)
-                viewModel.router.navigationPaths = []
-            } catch {
-                // Handle error silently or log
-            }
-        }
-    }
-
-    private func handleLectureNavigation(timetableID: String, lectureID: String) async {
-        do {
-            let timetable = try await timetableRepository.fetchTimetable(timetableID: timetableID)
-            guard let lecture = timetable.lectures.first(where: { $0.lectureID == lectureID })
-            else { return }
-            let belongsToOtherTimetable = (timetable.id != currentTimetable?.id)
-            self.router.navigationPaths = [
-                .notificationList,
-                .lectureDetail(lecture, parentTimetable: timetable, belongsToOtherTimetable: belongsToOtherTimetable),
-            ]
-            self.analyticsLogger.logScreen(
-                AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .notification))
-            )
-        } catch {
-            // Handle error silently or log
-        }
     }
 
     private(set) var timetableLoadState: TimetableLoadState = .loading
@@ -302,17 +254,11 @@ extension TimetableViewModel {
     }
 }
 
-@Observable
-@MainActor
-public final class TimetableRouter {
-    public var navigationPaths: [TimetableDetailSceneTypes] = []
-    public nonisolated init() {}
-}
-
 public enum TimetableDetailSceneTypes: Hashable {
     case lectureList
     case notificationList
-    case lectureDetail(Lecture, parentTimetable: Timetable?, belongsToOtherTimetable: Bool = false)
+    case lectureDetail(Lecture, parentTimetable: Timetable)
+    case lecturePreview(Lecture, quarter: Quarter)
     case lectureCreate(Lecture)
     case lectureColorSelection(LectureEditDetailViewModel)
 
@@ -326,7 +272,9 @@ public enum TimetableDetailSceneTypes: Hashable {
             lhs.id == rhs.id
         case let (.lectureColorSelection(lhs), .lectureColorSelection(rhs)):
             lhs.lectureID == rhs.lectureID
-        case let (.lectureDetail(lhs, _, _), .lectureDetail(rhs, _, _)):
+        case let (.lectureDetail(lhs, _), .lectureDetail(rhs, _)):
+            lhs.id == rhs.id
+        case let (.lecturePreview(lhs, _), .lecturePreview(rhs, _)):
             lhs.id == rhs.id
         default:
             false

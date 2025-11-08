@@ -29,6 +29,11 @@ tuist build "SNUTT Dev"    # Build development configuration (RECOMMENDED)
 tuist build "SNUTT Prod"   # Build production configuration
 tuist build "SNUTT Widget" # Build app + widget extension
 
+# ⚠️ CRITICAL: ALWAYS run `tuist build` synchronously (NOT as a background job)!
+# Never use run_in_background=true or append '&' to build commands.
+# Wait for the build to complete before proceeding with other tasks.
+# This ensures proper error detection and prevents build state corruption.
+
 # Module-Specific Builds (Preview Schemes)
 # Use these for faster builds when working on a single module:
 tuist build "Timetable Preview"          # Build only Timetable module

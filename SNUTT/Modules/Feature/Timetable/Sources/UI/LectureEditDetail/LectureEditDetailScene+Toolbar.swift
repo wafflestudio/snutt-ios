@@ -29,12 +29,12 @@ extension LectureEditDetailScene {
         var options: ToolbarOptions = []
 
         // Leading: Cancel button
-        switch displayMode {
+        switch viewModel.displayMode {
         case .normal where editMode.isEditing:
             options.insert(.cancelButton)
         case .create:
             options.insert(.cancelButton)
-        case let .preview(previewOptions) where previewOptions.contains(.showDismissButton):
+        case let .preview(previewOptions, _) where previewOptions.contains(.showDismissButton):
             options.insert(.cancelButton)
         default:
             break
@@ -44,7 +44,7 @@ extension LectureEditDetailScene {
         let isCustomLecture = viewModel.entryLecture.isCustom
         let isEditing = editMode.isEditing
 
-        switch displayMode {
+        switch viewModel.displayMode {
         case .normal:
             // 액션 버튼들 (공석알림, 북마크)
             if !isCustomLecture && !isEditing {
@@ -62,7 +62,7 @@ extension LectureEditDetailScene {
         case .create:
             options.insert(.saveButton)
 
-        case let .preview(previewOptions):
+        case let .preview(previewOptions, _):
             // preview 모드에서는 previewOptions에 따라 액션 버튼만 표시
             // preview 모드에서는 edit/save 버튼 없음
             if !isCustomLecture, previewOptions.contains(.showToolbarActions) {
@@ -190,7 +190,7 @@ extension LectureEditDetailScene {
     // MARK: - Actions
 
     func handleCancelAction() {
-        switch displayMode {
+        switch viewModel.displayMode {
         case .normal where editMode.isEditing:
             if viewModel.hasUnsavedChanges {
                 showCancelConfirmation = true
@@ -205,7 +205,7 @@ extension LectureEditDetailScene {
     }
 
     func handleSaveAction() {
-        switch displayMode {
+        switch viewModel.displayMode {
         case .normal:
             editMode = .transient
             errorAlertHandler.withAlert {

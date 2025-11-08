@@ -18,7 +18,7 @@ public protocol TimetableUIProvidable: Sendable {
         preferredTheme: Theme?,
         availableThemes: [Theme]
     ) -> AnyView
-    func makeLectureDetailPreview(lecture: Lecture, options: LectureDetailPreviewOptions) -> AnyView
+    func makeLectureDetailPreview(lecture: Lecture, quarter: Quarter, options: LectureDetailPreviewOptions) -> AnyView
 }
 
 public enum DetailLabelType: CaseIterable {
@@ -42,7 +42,11 @@ private struct EmptyTimetableUIProvider: TimetableUIProvidable {
         AnyView(Text("Empty TimetableView"))
     }
 
-    func makeLectureDetailPreview(lecture _: Lecture, options _: LectureDetailPreviewOptions) -> AnyView {
+    func makeLectureDetailPreview(
+        lecture _: Lecture,
+        quarter _: Quarter,
+        options _: LectureDetailPreviewOptions
+    ) -> AnyView {
         AnyView(Text("Empty LectureDetailPreview"))
     }
 }

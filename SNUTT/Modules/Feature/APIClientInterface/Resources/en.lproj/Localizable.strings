@@ -129,14 +129,6 @@
 "error.failureReason.duplicateThemeName" = "The theme name is duplicated.";
 "error.recoverySuggestion.duplicateThemeName" = "Please use a different theme name.";
 
-"error.description.deeplinkNotFound" = "Deeplink Error";
-"error.failureReason.deeplinkNotFound" = "The deeplink information cannot be found.";
-"error.recoverySuggestion.deeplinkNotFound" = "Please check the deeplink information and try again.";
-
-"error.description.deeplinkProcessFailed" = "Deeplink Processing Error";
-"error.failureReason.deeplinkProcessFailed" = "Failed to process the deeplink.";
-"error.recoverySuggestion.deeplinkProcessFailed" = "Please check the deeplink information and try again.";
-
 "error.description.alreadyVerified" = "Verification Error";
 "error.failureReason.alreadyVerified" = "The account is already verified.";
 
