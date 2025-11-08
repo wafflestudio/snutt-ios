@@ -130,3 +130,10 @@
 "toast.bookmark.message" = "Check your bookmarked courses at the top right of the Search tab.";
 "toast.vacancy.message" = "Check your vacancy notifications in the More tab.";
 "toast.action.view" = "View";
+
+"edit.goToTimetable" = "Go to Timetable";
+
+"navigation.error.lecture_not_found" = "Lecture has been deleted from timetable.";
+"navigation.error.timetable_not_found" = "Timetable does not exist.";
+"navigation.error.bookmark_not_found" = "Lecture has been deleted from bookmarks.";
+"navigation.error.unknown" = "Invalid information.";

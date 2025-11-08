@@ -70,7 +70,10 @@ extension LectureListViewModel {
     }
 
     func selectLecture(_ lecture: Lecture) {
-        timetableViewModel.paths.append(.lectureDetail(lecture))
+        guard let currentTimetable = timetableViewModel.currentTimetable else { return }
+        timetableViewModel.paths.append(
+            .lectureDetail(lecture, parentTimetable: currentTimetable)
+        )
         analyticsLogger.logScreen(
             AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .lectureList))
         )

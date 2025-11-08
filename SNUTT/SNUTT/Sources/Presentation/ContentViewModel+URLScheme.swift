@@ -8,6 +8,8 @@
 import APIClientInterface
 import Foundation
 import Friends
+import SharedUIComponents
+import Timetable
 import TimetableInterface
 
 extension ContentViewModel {
@@ -27,7 +29,7 @@ extension ContentViewModel {
             notificationCenter.post(OpenFriendsMenuMessage())
             return
         case "timetable-lecture":
-            try await handleTimetableLectureScheme(urlComponents.queryItems)
+            await handleTimetableLectureScheme(urlComponents.queryItems)
         case "bookmarks":
             handleBookmarkScheme(urlComponents.queryItems)
             return
@@ -39,19 +41,36 @@ extension ContentViewModel {
         }
     }
 
-    private func handleTimetableLectureScheme(_ parameters: QueryParameters?) async throws {
+    private func handleTimetableLectureScheme(_ parameters: QueryParameters?) async {
         guard let timetableID = parameters?["timetableId"],
             let lectureID = parameters?["lectureId"]
-        else { throw LocalizedErrorCode.deeplinkProcessFailed }
+        else {
+            notificationCenter.post(
+                .toast(.init(message: TimetableStrings.navigationErrorUnknown))
+            )
+            return
+        }
         selectedTab = .timetable
         notificationCenter.post(
             NavigateToLectureMessage(timetableID: timetableID, lectureID: lectureID)
         )
     }
 
-    private func handleBookmarkScheme(_: QueryParameters?) {
-        selectedTab = .search
-        notificationCenter.post(NavigateToBookmarkMessage())
+    private func handleBookmarkScheme(_ parameters: QueryParameters?) {
+        guard let yearString = parameters?["year"],
+            let semesterString = parameters?["semester"],
+            let lectureID = parameters?["lectureId"],
+            let year = Int(yearString),
+            let semesterInt = Int(semesterString),
+            let semester = Semester(rawValue: semesterInt)
+        else {
+            notificationCenter.post(.toast(.init(message: TimetableStrings.navigationErrorUnknown)))
+            return
+        }
+        selectedTab = .timetable
+        notificationCenter.post(
+            NavigateToBookmarkLecturePreviewMessage(year: year, semester: semester, lectureID: lectureID)
+        )
     }
 
     private func handleKakaoLinkScheme(_ parameters: QueryParameters?) {

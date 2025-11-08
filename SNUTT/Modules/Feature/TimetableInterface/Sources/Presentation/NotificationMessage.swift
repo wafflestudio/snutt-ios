@@ -39,3 +39,27 @@ public struct NavigateToBookmarkMessage: NotificationCenter.TypedMessage {
 
     public init() {}
 }
+
+public struct NavigateToTimetableMessage: NotificationCenter.TypedMessage {
+    public static let name = Notification.Name("navigateToTimetable")
+
+    public let timetableID: String
+
+    public init(timetableID: String) {
+        self.timetableID = timetableID
+    }
+}
+
+public struct NavigateToBookmarkLecturePreviewMessage: NotificationCenter.TypedMessage {
+    public static let name = Notification.Name("navigateToBookmarkLecturePreview")
+
+    public let year: Int
+    public let semester: Semester
+    public let lectureID: String
+
+    public init(year: Int, semester: Semester, lectureID: String) {
+        self.year = year
+        self.semester = semester
+        self.lectureID = lectureID
+    }
+}

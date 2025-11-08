@@ -53,6 +53,8 @@ struct TimetableMenuContentView: View {
                     .animation(.defaultSpring, value: metadataList.map(\.id))
                     .padding(.top, 20)
                 }
+            case .failed:
+                loadingView
             }
         }
         .sheet(

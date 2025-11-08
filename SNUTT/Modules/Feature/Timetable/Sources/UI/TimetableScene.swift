@@ -56,23 +56,19 @@ public struct TimetableScene: View {
             .navigationDestination(for: TimetableDetailSceneTypes.self) {
                 TimetableDetails(pathType: $0, timetableViewModel: timetableViewModel)
             }
-            .onLoad {
-                await withThrowingTaskGroup(of: Void.self) { group in
-                    group.addTask {
-                        await errorAlertHandler.withAlert {
-                            try await timetableViewModel.loadTimetable()
-                        }
-                    }
-                    group.addTask {
-                        await errorAlertHandler.withAlert {
-                            try await timetableViewModel.loadTimetableList()
-                        }
-                    }
-                    group.addTask {
-                        await errorAlertHandler.withAlert {
-                            try await timetableViewModel.loadCourseBooks()
-                        }
-                    }
+            .task {
+                await errorAlertHandler.withAlert {
+                    try await timetableViewModel.loadTimetable()
+                }
+            }
+            .task {
+                await errorAlertHandler.withAlert {
+                    try await timetableViewModel.loadTimetableList()
+                }
+            }
+            .task {
+                await errorAlertHandler.withAlert {
+                    try await timetableViewModel.loadCourseBooks()
                 }
             }
             .sheet(isPresented: $timetableViewModel.isThemeSheetPresented) {
@@ -110,7 +106,10 @@ public struct TimetableScene: View {
             .environment(
                 \.lectureTapAction,
                 LectureTapAction(action: { lecture in
-                    timetableViewModel.paths.append(.lectureDetail(lecture))
+                    guard let currentTimetable = timetableViewModel.currentTimetable else { return }
+                    timetableViewModel.paths.append(
+                        .lectureDetail(lecture, parentTimetable: currentTimetable)
+                    )
                     Dependency(\.analyticsLogger).wrappedValue.logScreen(
                         AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .timetable))
                     )

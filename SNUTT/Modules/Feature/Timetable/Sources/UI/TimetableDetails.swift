@@ -18,23 +18,44 @@ struct TimetableDetails: View {
         switch pathType {
         case .lectureList:
             LectureListScene(viewModel: timetableViewModel)
-        case let .lectureDetail(lecture):
+        case let .lectureDetail(lecture, parentTimetable):
+            let belongsToOtherTimetable = (parentTimetable.id != timetableViewModel.currentTimetable?.id)
+            let viewModel = LectureEditDetailViewModel(
+                displayMode: .normal(timetable: parentTimetable),
+                entryLecture: lecture
+            )
             LectureEditDetailScene(
-                timetableViewModel: timetableViewModel,
-                entryLecture: lecture,
-                displayMode: .normal,
-                paths: $timetableViewModel.paths
+                viewModel: viewModel,
+                paths: $timetableViewModel.paths,
+                belongsToOtherTimetable: belongsToOtherTimetable
             )
             .handleLectureTimeConflict()
+        case let .lecturePreview(lecture, quarter):
+            let viewModel = LectureEditDetailViewModel(
+                displayMode: .preview(.showDismissButton, quarter: quarter),
+                entryLecture: lecture
+            )
+            LectureEditDetailScene(
+                viewModel: viewModel,
+                paths: $timetableViewModel.paths,
+                belongsToOtherTimetable: false
+            )
         case let .lectureCreate(placeholderLecture):
-            LectureEditDetailScene(
-                timetableViewModel: timetableViewModel,
-                entryLecture: placeholderLecture,
-                displayMode: .create,
-                paths: $timetableViewModel.paths
-            )
-            .handleLectureTimeConflict()
-            .analyticsScreen(.lectureCreate)
+            if let currentTimetable = timetableViewModel.currentTimetable {
+                let viewModel = LectureEditDetailViewModel(
+                    displayMode: .create(timetable: currentTimetable),
+                    entryLecture: placeholderLecture
+                )
+                LectureEditDetailScene(
+                    viewModel: viewModel,
+                    paths: $timetableViewModel.paths,
+                    belongsToOtherTimetable: false
+                )
+                .handleLectureTimeConflict()
+                .analyticsScreen(.lectureCreate)
+            } else {
+                ProgressView()
+            }
         case let .lectureColorSelection(viewModel):
             let currentTheme = timetableViewModel.currentTimetable?.theme
             let theme = themeViewModel.availableThemes.first(where: { $0.id == currentTheme?.id })

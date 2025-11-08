@@ -21,6 +21,9 @@ public final class LectureEditDetailViewModel {
     @Dependency(\.lectureRepository) private var lectureRepository
 
     @ObservationIgnored
+    @Dependency(\.timetableRepository) private var timetableRepository
+
+    @ObservationIgnored
     @Dependency(\.vacancyRepository) private var vacancyRepository
 
     @ObservationIgnored
@@ -29,8 +32,9 @@ public final class LectureEditDetailViewModel {
     @ObservationIgnored
     @Dependency(\.analyticsLogger) private var analyticsLogger
 
-    /// Might be `nil` if write operation is not necessary.
-    private let timetableViewModel: TimetableViewModel?
+    let displayMode: DisplayMode
+    private let parentTimetable: Timetable?
+    private let quarter: Quarter
 
     var entryLecture: Lecture
     var editableLecture: Lecture
@@ -55,8 +59,19 @@ public final class LectureEditDetailViewModel {
         buildings.allSatisfy { $0.campus == .GWANAK }
     }
 
-    init(timetableViewModel: TimetableViewModel?, entryLecture: Lecture) {
-        self.timetableViewModel = timetableViewModel
+    init(displayMode: DisplayMode, entryLecture: Lecture) {
+        self.displayMode = displayMode
+
+        // Extract timetable and quarter from displayMode
+        switch displayMode {
+        case .normal(let timetable), .create(let timetable):
+            self.parentTimetable = timetable
+            self.quarter = timetable.quarter
+        case .preview(_, let quarter):
+            self.parentTimetable = nil
+            self.quarter = quarter
+        }
+
         self.entryLecture = entryLecture
         editableLecture = entryLecture
         lectureID = entryLecture.id
@@ -75,7 +90,7 @@ public final class LectureEditDetailViewModel {
     }
 
     func saveEditableLecture(overrideOnConflict: Bool = false) async throws {
-        guard let timetableViewModel, let timetableID = timetableViewModel.currentTimetable?.id else { return }
+        guard let timetableID = parentTimetable?.id else { return }
         let lectureID = editableLecture.id
         do {
             let timetable = try await lectureRepository.updateLecture(
@@ -83,7 +98,6 @@ public final class LectureEditDetailViewModel {
                 lecture: editableLecture,
                 overrideOnConflict: overrideOnConflict
             )
-            try timetableViewModel.setCurrentTimetable(timetable)
             guard let updatedLecture = timetable.lectures.first(where: { $0.id == lectureID }) else { return }
             entryLecture = updatedLecture
         } catch {
@@ -92,14 +106,13 @@ public final class LectureEditDetailViewModel {
     }
 
     func addCustomLecture(overrideOnConflict: Bool = false) async throws {
-        guard let timetableViewModel, let timetableID = timetableViewModel.currentTimetable?.id else { return }
+        guard let timetableID = parentTimetable?.id else { return }
         do {
-            let timetable = try await lectureRepository.addCustomLecture(
+            _ = try await lectureRepository.addCustomLecture(
                 timetableID: timetableID,
                 lecture: editableLecture,
                 overrideOnConflict: overrideOnConflict
             )
-            try timetableViewModel.setCurrentTimetable(timetable)
         } catch {
             throw error
         }
@@ -135,12 +148,15 @@ public final class LectureEditDetailViewModel {
     }
 
     func deleteLecture() async throws {
-        guard let timetableViewModel else { return }
-        try await timetableViewModel.removeLecture(lecture: entryLecture)
+        guard let timetableID = parentTimetable?.id else { return }
+        _ = try await timetableRepository.removeLecture(
+            timetableID: timetableID,
+            lectureID: entryLecture.id
+        )
     }
 
     func resetLecture() async throws {
-        guard let timetableViewModel, let timetableID = timetableViewModel.currentTimetable?.id,
+        guard let timetableID = parentTimetable?.id,
             !entryLecture.isCustom
         else { return }
 
@@ -148,7 +164,6 @@ public final class LectureEditDetailViewModel {
             timetableID: timetableID,
             lectureID: entryLecture.id
         )
-        try timetableViewModel.setCurrentTimetable(timetable)
 
         guard let resetLecture = timetable.lectures.first(where: { $0.id == entryLecture.id }) else { return }
         entryLecture = resetLecture
@@ -204,13 +219,10 @@ public final class LectureEditDetailViewModel {
     }
 
     func fetchSyllabusURL() async -> URL? {
-        guard let timetableViewModel,
-            let currentTimetable = timetableViewModel.currentTimetable,
-            !entryLecture.isCustom
-        else { return nil }
+        guard !entryLecture.isCustom else { return nil }
 
-        let year = currentTimetable.quarter.year
-        let semester = currentTimetable.quarter.semester.rawValue
+        let year = quarter.year
+        let semester = quarter.semester.rawValue
 
         do {
             let syllabus = try await courseBookRepository.fetchSyllabusURL(
@@ -221,6 +233,63 @@ public final class LectureEditDetailViewModel {
             return URL(string: syllabus.url)
         } catch {
             return nil
+        }
+    }
+}
+
+extension LectureEditDetailViewModel {
+    public enum DisplayMode {
+        /// 내가 추가한 강의 상세
+        case normal(timetable: Timetable)
+        /// 새로운 강의 추가
+        case create(timetable: Timetable)
+        /// 내가 추가하지 않은 강의 상세 (검색 결과, 북마크 등)
+        case preview(LectureDetailPreviewOptions, quarter: Quarter)
+
+        public var isPreview: Bool {
+            if case .preview = self {
+                return true
+            }
+            return false
+        }
+
+        public var isCreate: Bool {
+            if case .create = self {
+                return true
+            }
+            return false
+        }
+
+        public var isNormal: Bool {
+            if case .normal = self {
+                return true
+            }
+            return false
+        }
+
+        public var previewOptions: LectureDetailPreviewOptions? {
+            if case let .preview(options, _) = self {
+                return options
+            }
+            return nil
+        }
+
+        public var timetable: Timetable? {
+            switch self {
+            case .normal(let timetable), .create(let timetable):
+                return timetable
+            case .preview:
+                return nil
+            }
+        }
+
+        public var quarter: Quarter {
+            switch self {
+            case .normal(let timetable), .create(let timetable):
+                return timetable.quarter
+            case .preview(_, let quarter):
+                return quarter
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ import Vacancy
 struct ContentView: View {
     @State private var viewModel = ContentViewModel()
     @Environment(\.errorAlertHandler) private var errorAlertHandler
+    @Environment(\.presentToast) private var presentToast
     @AppStorage(AppStorageKeys.preferredColorScheme) private var selectedColorScheme: ColorSchemeSelection = .system
 
     var body: some View {
@@ -81,7 +82,11 @@ struct ContentView: View {
         .overlaySheet()
         .overlayPopup()
         .overlayADPopup()
-        .overlayToast()
+        .task {
+            for await message in viewModel.notificationCenter.messages(of: ToastNotificationMessage.self) {
+                presentToast(message.toast)
+            }
+        }
         .environment(\.themeViewModel, viewModel.themeViewModel)
         .environment(\.timetableViewModel, viewModel.timetableViewModel)
         .onLoad {

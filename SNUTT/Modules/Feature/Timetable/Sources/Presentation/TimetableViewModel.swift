@@ -24,7 +24,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     @Dependency(\.timetableUseCase) private var timetableUseCase
 
     @ObservationIgnored
-    @Dependency(\.timetableRepository) private var timetableRepository
+    @Dependency(\.timetableRepository) var timetableRepository
 
     @ObservationIgnored
     @Dependency(\.timetableLocalRepository) private var timetableLocalRepository
@@ -33,19 +33,22 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     @Dependency(\.courseBookRepository) private var courseBookRepository
 
     @ObservationIgnored
-    @Dependency(\.notificationCenter) private var notificationCenter
+    @Dependency(\.lectureRepository) var lectureRepository
 
     @ObservationIgnored
-    @Dependency(\.analyticsLogger) private var analyticsLogger
+    @Dependency(\.notificationCenter) var notificationCenter
 
-    private let router: TimetableRouter = .init()
-    var paths: [TimetableDetailSceneTypes] {
-        get { router.navigationPaths }
-        set { router.navigationPaths = newValue }
-    }
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) var analyticsLogger
+
+    var paths: [TimetableDetailSceneTypes] = []
 
     public init() {
-        currentTimetable = timetableUseCase.loadLocalRecentTimetable()
+        if let localTimetable = timetableUseCase.loadLocalRecentTimetable() {
+            timetableLoadState = .loaded(localTimetable)
+        } else {
+            timetableLoadState = .loading
+        }
         configuration = timetableLocalRepository.loadTimetableConfiguration()
         configurationObserver = Task { [weak self] in
             guard let stream = self?.timetableLocalRepository.configurationValues() else { return }
@@ -57,41 +60,16 @@ public class TimetableViewModel: TimetableViewModelProtocol {
         subscribeToNotifications()
     }
 
-    private func subscribeToNotifications() {
-        Task.scoped(
-            to: self,
-            subscribing: notificationCenter.messages(of: NavigateToNotificationsMessage.self)
-        ) { @MainActor viewModel, _ in
-            viewModel.router.navigationPaths = [.notificationList]
-        }
-        Task.scoped(
-            to: self,
-            subscribing: notificationCenter.messages(of: NavigateToLectureMessage.self)
-        ) { @MainActor viewModel, message in
-            await viewModel.handleLectureNavigation(
-                timetableID: message.timetableID,
-                lectureID: message.lectureID
-            )
-        }
-    }
-
-    private func handleLectureNavigation(timetableID: String, lectureID: String) async {
-        do {
-            let timetable = try await timetableRepository.fetchTimetable(timetableID: timetableID)
-            guard let lecture = timetable.lectures.first(where: { $0.lectureID == lectureID })
-            else { return }
-            self.router.navigationPaths = [.notificationList, .lectureDetail(lecture)]
-            self.analyticsLogger.logScreen(
-                AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .notification))
-            )
-        } catch {
-            // Handle error silently or log
-        }
-    }
-
-    public private(set) var currentTimetable: Timetable?
+    private(set) var timetableLoadState: TimetableLoadState = .loading
     private(set) var metadataLoadState: MetadataLoadState = .loading
     private(set) var courseBookState: CourseBookState = .loading
+
+    public var currentTimetable: Timetable? {
+        if case let .loaded(timetable) = timetableLoadState {
+            return timetable
+        }
+        return nil
+    }
 
     var isMenuPresented = false
     var isThemeSheetPresented = false
@@ -132,21 +110,45 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     }
 
     func loadTimetable() async throws {
-        currentTimetable = try await timetableUseCase.fetchRecentTimetable()
+        switch timetableLoadState {
+        case let .loaded(currentTimetable):
+            // Already loaded, refresh the current timetable
+            try await selectTimetable(timetableID: currentTimetable.id)
+        case .loading, .failed:
+            // Not loaded yet or failed, fetch recent timetable
+            do {
+                let timetable = try await timetableUseCase.fetchRecentTimetable()
+                timetableLoadState = .loaded(timetable)
+            } catch {
+                timetableLoadState = .failed(error)
+                throw error
+            }
+        }
     }
 
     public func setCurrentTimetable(_ timetable: Timetable) throws {
         try timetableLocalRepository.storeSelectedTimetable(timetable)
-        currentTimetable = timetable
+        timetableLoadState = .loaded(timetable)
     }
 
     func loadTimetableList() async throws {
-        let metadataList = try await timetableRepository.fetchTimetableMetadataList()
-        metadataLoadState = .loaded(metadataList)
+        switch metadataLoadState {
+        case .loaded:
+            return
+        case .loading, .failed:
+            do {
+                let metadataList = try await timetableRepository.fetchTimetableMetadataList()
+                metadataLoadState = .loaded(metadataList)
+            } catch {
+                metadataLoadState = .failed(error)
+                throw error
+            }
+        }
     }
 
     func selectTimetable(timetableID: String) async throws {
-        currentTimetable = try await timetableUseCase.selectTimetable(timetableID: timetableID)
+        let timetable = try await timetableUseCase.selectTimetable(timetableID: timetableID)
+        timetableLoadState = .loaded(timetable)
     }
 
     func copyTimetable(timetableID: String) async throws {
@@ -186,11 +188,12 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     func addLecture(lecture: Lecture, overrideOnConflict: Bool = false) async throws {
         guard let currentTimetable else { return }
-        self.currentTimetable = try await timetableUseCase.addLecture(
+        let updatedTimetable = try await timetableUseCase.addLecture(
             timetableID: currentTimetable.id,
             lectureID: lecture.id,
             overrideOnConflict: overrideOnConflict
         )
+        timetableLoadState = .loaded(updatedTimetable)
     }
 
     func removeLecture(lecture: Lecture) async throws {
@@ -198,10 +201,11 @@ public class TimetableViewModel: TimetableViewModelProtocol {
             let timetableLectureID = currentTimetable.lectures
                 .first(where: { $0.lectureID == (lecture.lectureID ?? lecture.id) })?.id
         else { return }
-        self.currentTimetable = try await timetableUseCase.removeLecture(
+        let updatedTimetable = try await timetableUseCase.removeLecture(
             timetableID: currentTimetable.id,
             lectureID: timetableLectureID
         )
+        timetableLoadState = .loaded(updatedTimetable)
     }
 
     func renameTimetable(timetableID: String, title: String) async throws {
@@ -216,9 +220,14 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     func loadCourseBooks() async throws {
         switch courseBookState {
-        case .loading:
-            let courseBooks = try await courseBookRepository.fetchCourseBookList()
-            courseBookState = .loaded(courseBooks)
+        case .loading, .failed:
+            do {
+                let courseBooks = try await courseBookRepository.fetchCourseBookList()
+                courseBookState = .loaded(courseBooks)
+            } catch {
+                courseBookState = .failed
+                throw error
+            }
         case .loaded:
             return
         }
@@ -229,25 +238,27 @@ extension TimetableViewModel {
     enum MetadataLoadState {
         case loading
         case loaded([TimetableMetadata])
+        case failed(any Error)
     }
 
     enum CourseBookState: Equatable {
         case loading
         case loaded([CourseBook])
+        case failed
+    }
+
+    enum TimetableLoadState {
+        case loading
+        case loaded(Timetable)
+        case failed(any Error)
     }
 }
 
-@Observable
-@MainActor
-public final class TimetableRouter {
-    public var navigationPaths: [TimetableDetailSceneTypes] = []
-    public nonisolated init() {}
-}
-
-public enum TimetableDetailSceneTypes: Hashable, Equatable {
+public enum TimetableDetailSceneTypes: Hashable {
     case lectureList
     case notificationList
-    case lectureDetail(Lecture)
+    case lectureDetail(Lecture, parentTimetable: Timetable)
+    case lecturePreview(Lecture, quarter: Quarter)
     case lectureCreate(Lecture)
     case lectureColorSelection(LectureEditDetailViewModel)
 
@@ -261,7 +272,9 @@ public enum TimetableDetailSceneTypes: Hashable, Equatable {
             lhs.id == rhs.id
         case let (.lectureColorSelection(lhs), .lectureColorSelection(rhs)):
             lhs.lectureID == rhs.lectureID
-        case let (.lectureDetail(lhs), .lectureDetail(rhs)):
+        case let (.lectureDetail(lhs, _), .lectureDetail(rhs, _)):
+            lhs.id == rhs.id
+        case let (.lecturePreview(lhs, _), .lecturePreview(rhs, _)):
             lhs.id == rhs.id
         default:
             false

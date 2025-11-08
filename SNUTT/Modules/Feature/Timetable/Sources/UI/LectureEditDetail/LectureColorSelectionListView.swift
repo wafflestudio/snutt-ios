@@ -146,10 +146,17 @@ struct LectureColorPreviewButton: View {
 }
 
 #Preview {
-    NavigationStack {
+    let timetable = PreviewHelpers.preview(id: "1")
+    let lecture = timetable.lectures.first!
+    let viewModel = LectureEditDetailViewModel(
+        displayMode: .normal(timetable: timetable),
+        entryLecture: lecture
+    )
+
+    return NavigationStack {
         LectureColorSelectionListView(
             theme: .snutt,
-            viewModel: .init(timetableViewModel: .init(), entryLecture: PreviewHelpers.preview.lectures.first!)
+            viewModel: viewModel
         )
     }
 }

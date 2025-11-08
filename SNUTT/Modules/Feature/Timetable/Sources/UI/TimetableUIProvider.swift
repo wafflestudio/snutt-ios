@@ -40,14 +40,18 @@ public struct TimetableUIProvider: TimetableUIProvidable {
 
     public func makeLectureDetailPreview(
         lecture: TimetableInterface.Lecture,
+        quarter: TimetableInterface.Quarter,
         options: TimetableInterface.LectureDetailPreviewOptions
     ) -> AnyView {
-        AnyView(
+        let viewModel = LectureEditDetailViewModel(
+            displayMode: .preview(options, quarter: quarter),
+            entryLecture: lecture
+        )
+        return AnyView(
             NavigationStack {
                 LectureEditDetailScene(
-                    timetableViewModel: nil,
-                    entryLecture: lecture,
-                    displayMode: .preview(options)
+                    viewModel: viewModel,
+                    belongsToOtherTimetable: false
                 )
             }
         )
