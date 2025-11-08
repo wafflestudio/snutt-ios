@@ -129,14 +129,6 @@
 "error.failureReason.duplicateThemeName" = "테마 이름이 중복됩니다.";
 "error.recoverySuggestion.duplicateThemeName" = "다른 테마 이름을 사용해주세요.";
 
-"error.description.deeplinkNotFound" = "딥링크 오류";
-"error.failureReason.deeplinkNotFound" = "딥링크 정보를 찾을 수 없습니다.";
-"error.recoverySuggestion.deeplinkNotFound" = "딥링크 정보를 확인하고 다시 시도해주세요.";
-
-"error.description.deeplinkProcessFailed" = "딥링크 처리 오류";
-"error.failureReason.deeplinkProcessFailed" = "딥링크 처리에 실패했습니다.";
-"error.recoverySuggestion.deeplinkProcessFailed" = "딥링크 정보를 확인하고 다시 시도해주세요.";
-
 "error.description.alreadyVerified" = "인증 오류";
 "error.failureReason.alreadyVerified" = "이미 인증된 계정입니다.";
 

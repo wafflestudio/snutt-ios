@@ -32,7 +32,9 @@ public final class LectureEditDetailViewModel {
     @ObservationIgnored
     @Dependency(\.analyticsLogger) private var analyticsLogger
 
+    let displayMode: DisplayMode
     private let parentTimetable: Timetable?
+    private let quarter: Quarter
 
     var entryLecture: Lecture
     var editableLecture: Lecture
@@ -57,8 +59,19 @@ public final class LectureEditDetailViewModel {
         buildings.allSatisfy { $0.campus == .GWANAK }
     }
 
-    init(parentTimetable: Timetable?, entryLecture: Lecture) {
-        self.parentTimetable = parentTimetable
+    init(displayMode: DisplayMode, entryLecture: Lecture) {
+        self.displayMode = displayMode
+
+        // Extract timetable and quarter from displayMode
+        switch displayMode {
+        case .normal(let timetable), .create(let timetable):
+            self.parentTimetable = timetable
+            self.quarter = timetable.quarter
+        case .preview(_, let quarter):
+            self.parentTimetable = nil
+            self.quarter = quarter
+        }
+
         self.entryLecture = entryLecture
         editableLecture = entryLecture
         lectureID = entryLecture.id
@@ -206,12 +219,10 @@ public final class LectureEditDetailViewModel {
     }
 
     func fetchSyllabusURL() async -> URL? {
-        guard let parentTimetable,
-            !entryLecture.isCustom
-        else { return nil }
+        guard !entryLecture.isCustom else { return nil }
 
-        let year = parentTimetable.quarter.year
-        let semester = parentTimetable.quarter.semester.rawValue
+        let year = quarter.year
+        let semester = quarter.semester.rawValue
 
         do {
             let syllabus = try await courseBookRepository.fetchSyllabusURL(
@@ -222,6 +233,63 @@ public final class LectureEditDetailViewModel {
             return URL(string: syllabus.url)
         } catch {
             return nil
+        }
+    }
+}
+
+extension LectureEditDetailViewModel {
+    public enum DisplayMode {
+        /// 내가 추가한 강의 상세
+        case normal(timetable: Timetable)
+        /// 새로운 강의 추가
+        case create(timetable: Timetable)
+        /// 내가 추가하지 않은 강의 상세 (검색 결과, 북마크 등)
+        case preview(LectureDetailPreviewOptions, quarter: Quarter)
+
+        public var isPreview: Bool {
+            if case .preview = self {
+                return true
+            }
+            return false
+        }
+
+        public var isCreate: Bool {
+            if case .create = self {
+                return true
+            }
+            return false
+        }
+
+        public var isNormal: Bool {
+            if case .normal = self {
+                return true
+            }
+            return false
+        }
+
+        public var previewOptions: LectureDetailPreviewOptions? {
+            if case let .preview(options, _) = self {
+                return options
+            }
+            return nil
+        }
+
+        public var timetable: Timetable? {
+            switch self {
+            case .normal(let timetable), .create(let timetable):
+                return timetable
+            case .preview:
+                return nil
+            }
+        }
+
+        public var quarter: Quarter {
+            switch self {
+            case .normal(let timetable), .create(let timetable):
+                return timetable.quarter
+            case .preview(_, let quarter):
+                return quarter
+            }
         }
     }
 }

@@ -13,9 +13,21 @@ import ThemesInterface
 import TimetableInterface
 
 public struct FriendsScene: View {
+    struct SelectedLecture: Identifiable {
+        let id: String
+        let lecture: Lecture
+        let quarter: Quarter
+
+        init(lecture: Lecture, quarter: Quarter) {
+            self.id = lecture.id
+            self.lecture = lecture
+            self.quarter = quarter
+        }
+    }
+
     @AppStorage("isNewToFriendsService") private var isNewToFriendsService: Bool = true
     @State var viewModel: FriendsViewModel = .init()
-    @State private var selectedLecture: Lecture?
+    @State private var selectedLecture: SelectedLecture?
     @Environment(\.timetableUIProvider) private var timetableUIProvider
     @Environment(\.themeViewModel) private var themeViewModel
     @Environment(\.errorAlertHandler) private var errorAlertHandler
@@ -72,8 +84,12 @@ public struct FriendsScene: View {
             .sheet(isPresented: $viewModel.isRequestSheetPresented) {
                 FriendRequestOptionSheet(friendsViewModel: viewModel)
             }
-            .sheet(item: $selectedLecture) { lecture in
-                timetableUIProvider.makeLectureDetailPreview(lecture: lecture, options: [.showDismissButton])
+            .sheet(item: $selectedLecture) { selected in
+                timetableUIProvider.makeLectureDetailPreview(
+                    lecture: selected.lecture,
+                    quarter: selected.quarter,
+                    options: [.showDismissButton]
+                )
             }
         }
     }
@@ -135,7 +151,8 @@ public struct FriendsScene: View {
         .environment(
             \.lectureTapAction,
             LectureTapAction(action: { lecture in
-                selectedLecture = lecture
+                guard let quarter = friendContent?.selectedQuarter else { return }
+                selectedLecture = SelectedLecture(lecture: lecture, quarter: quarter)
             })
         )
         .id(friendContent?.friend.id)

@@ -53,7 +53,7 @@ public protocol ErrorWrapper {
     var underlyingError: any Error { get }
 }
 
-private struct AnyLocalizedError: LocalizedError {
+struct AnyLocalizedError: LocalizedError {
     let underlyingError: any Error
     var localizedError: (any LocalizedError)? {
         underlyingError as? any LocalizedError

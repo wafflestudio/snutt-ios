@@ -133,3 +133,8 @@
 "toast.action.view" = "보기";
 
 "edit.goToTimetable" = "해당 시간표로 이동";
+
+"navigation.error.lecture_not_found" = "시간표에서 삭제된 강의입니다.";
+"navigation.error.timetable_not_found" = "존재하지 않는 시간표입니다.";
+"navigation.error.bookmark_not_found" = "관심강좌에서 삭제된 강의입니다.";
+"navigation.error.unknown" = "올바르지 않은 정보입니다.";

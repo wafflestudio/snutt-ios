@@ -37,24 +37,18 @@ struct LectureEditDetailScene: View {
     @Environment(\.presentToast) var presentToast
     @Dependency(\.notificationCenter) var notificationCenter
 
-    let displayMode: DisplayMode
     let paths: Binding<[TimetableDetailSceneTypes]>
-    let parentTimetable: Timetable?
     let belongsToOtherTimetable: Bool
 
     init(
-        entryLecture: Lecture,
-        displayMode: DisplayMode,
+        viewModel: LectureEditDetailViewModel,
         paths: Binding<[TimetableDetailSceneTypes]> = .constant([]),
-        parentTimetable: Timetable?,
         belongsToOtherTimetable: Bool = false
     ) {
-        _viewModel = .init(initialValue: .init(parentTimetable: parentTimetable, entryLecture: entryLecture))
-        self.displayMode = displayMode
+        _viewModel = .init(initialValue: viewModel)
         self.paths = paths
-        self.parentTimetable = parentTimetable
         self.belongsToOtherTimetable = belongsToOtherTimetable
-        self._editMode = .init(initialValue: displayMode == .create ? .active : .inactive)
+        self._editMode = .init(initialValue: viewModel.displayMode.isCreate ? .active : .inactive)
     }
 
     var body: some View {
@@ -84,7 +78,7 @@ struct LectureEditDetailScene: View {
         .environment(viewModel)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(editMode.isEditing)
-        .navigationTitle(displayMode.isPreview ? TimetableStrings.editDetailTitle : "")
+        .navigationTitle(viewModel.displayMode.isPreview ? TimetableStrings.editDetailTitle : "")
         .toolbar {
             toolbarContent
         }
@@ -145,16 +139,18 @@ struct LectureEditDetailScene: View {
             if viewModel.entryLecture.isCustom {
                 EditableRow(label: TimetableStrings.editFieldCredit, keyPath: \.credit)
             }
-            HStack {
-                DetailLabel(text: TimetableStrings.editFieldColor)
-                LectureColorPreviewButton(
-                    lectureColor: resolvedColor(for: viewModel.editableLecture),
-                    title: nil,
-                    trailingImage: editMode.isEditing ? TimetableAsset.chevronRight.swiftUIImage : nil
-                ) {
-                    paths.wrappedValue.append(.lectureColorSelection(viewModel))
+            if viewModel.displayMode.timetable != nil {
+                HStack {
+                    DetailLabel(text: TimetableStrings.editFieldColor)
+                    LectureColorPreviewButton(
+                        lectureColor: resolvedColor(for: viewModel.editableLecture),
+                        title: nil,
+                        trailingImage: editMode.isEditing ? TimetableAsset.chevronRight.swiftUIImage : nil
+                    ) {
+                        paths.wrappedValue.append(.lectureColorSelection(viewModel))
+                    }
+                    .disabled(!editMode.isEditing)
                 }
-                .disabled(!editMode.isEditing)
             }
         }
     }
@@ -169,7 +165,7 @@ struct LectureEditDetailScene: View {
                 EditableRow(label: TimetableStrings.editFieldCategory, keyPath: \.category)
 
                 // 2025년부터 구)교양영역 제공
-                if let currentYear = parentTimetable?.quarter.year, currentYear >= 2025 {
+                if viewModel.displayMode.quarter.year >= 2025 {
                     EditableRow(label: TimetableStrings.editFieldCategoryPre2025, keyPath: \.categoryPre2025)
                 }
 
@@ -254,7 +250,7 @@ struct LectureEditDetailScene: View {
                     }
                 }
 
-                if !viewModel.entryLecture.isCustom, displayMode == .normal, editMode.isEditing {
+                if !viewModel.entryLecture.isCustom, viewModel.displayMode.isNormal, editMode.isEditing {
                     Button {
                         showResetConfirmation = true
                     } label: {
@@ -263,7 +259,7 @@ struct LectureEditDetailScene: View {
                     }
                 }
 
-                if displayMode == .normal, !editMode.isEditing {
+                if viewModel.displayMode.isNormal, !editMode.isEditing {
                     Button {
                         showDeleteConfirmation = true
                     } label: {
@@ -282,32 +278,9 @@ struct LectureEditDetailScene: View {
 }
 
 extension LectureEditDetailScene {
-    enum DisplayMode: Equatable {
-        /// 내가 추가한 강의 상세
-        case normal
-        /// 새로운 강의 추가
-        case create
-        /// 내가 추가하지 않은 강의 상세
-        case preview(LectureDetailPreviewOptions)
-
-        var isPreview: Bool {
-            if case .preview = self {
-                return true
-            }
-            return false
-        }
-
-        var previewOptions: LectureDetailPreviewOptions? {
-            if case let .preview(options) = self {
-                return options
-            }
-            return nil
-        }
-    }
-
     private func resolvedColor(for lecture: Lecture) -> LectureColor {
         TimetablePainter(
-            currentTimetable: parentTimetable,
+            currentTimetable: viewModel.displayMode.timetable,
             selectedLecture: nil,
             preferredTheme: nil,
             availableThemes: themeViewModel.availableThemes,
@@ -319,9 +292,9 @@ extension LectureEditDetailScene {
     @ViewBuilder
     private var floatingButtonIfNeeded: some View {
         if belongsToOtherTimetable,
-            displayMode == .normal,
+            viewModel.displayMode.isNormal,
             editMode == .inactive,
-            let timetableID = parentTimetable?.id
+            let timetableID = viewModel.displayMode.timetable?.id
         {
             FloatingButton(text: TimetableStrings.editGoToTimetable) {
                 notificationCenter.post(NavigateToTimetableMessage(timetableID: timetableID))
@@ -332,11 +305,16 @@ extension LectureEditDetailScene {
 }
 
 #Preview {
-    NavigationStack {
+    let timetable = PreviewHelpers.preview(id: "1")
+    let lecture = timetable.lectures.first!
+    let viewModel = LectureEditDetailViewModel(
+        displayMode: .normal(timetable: timetable),
+        entryLecture: lecture
+    )
+
+    return NavigationStack {
         LectureEditDetailScene(
-            entryLecture: PreviewHelpers.preview(id: "1").lectures.first!,
-            displayMode: .normal,
-            parentTimetable: PreviewHelpers.preview(id: "1"),
+            viewModel: viewModel,
             belongsToOtherTimetable: false
         )
     }

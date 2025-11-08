@@ -19,6 +19,7 @@ struct SNUTTApp: App {
         WindowGroup {
             ContentView()
                 .observeErrors()
+                .overlayToast()
         }
     }
 }

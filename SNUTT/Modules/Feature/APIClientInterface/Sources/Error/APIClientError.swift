@@ -25,3 +25,9 @@ extension ClientError: APIClientError {
         underlyingError as? ClientUnknownServerError
     }
 }
+
+extension APIClientError {
+    public var failureReason: String? {
+        serverError?.failureReason ?? localizedCode?.failureReason
+    }
+}

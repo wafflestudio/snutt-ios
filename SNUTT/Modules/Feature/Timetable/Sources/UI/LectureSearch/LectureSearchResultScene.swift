@@ -59,12 +59,16 @@ struct LectureSearchResultScene: View {
                 set: { _ in viewModel.targetForLectureDetail = nil }
             )
         ) {
-            if let entryLecture = viewModel.targetForLectureDetail {
+            if let entryLecture = viewModel.targetForLectureDetail,
+                let searchingQuarter = viewModel.searchingQuarter
+            {
+                let lectureViewModel = LectureEditDetailViewModel(
+                    displayMode: .preview(.showDismissButton, quarter: searchingQuarter),
+                    entryLecture: entryLecture
+                )
                 NavigationStack {
                     LectureEditDetailScene(
-                        entryLecture: entryLecture,
-                        displayMode: .preview(.showDismissButton),
-                        parentTimetable: nil,
+                        viewModel: lectureViewModel,
                         belongsToOtherTimetable: false
                     )
                     .handleLectureTimeConflict()

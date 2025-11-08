@@ -72,10 +72,6 @@ public enum LocalizedErrorCode: Int, LocalizedError {
     case invalidLectureTime = 0x5002
     case invalidRnBundle = 0x5003
     case duplicateThemeName = 40904
-    case deeplinkLectureNotFound = 0x5004
-    case deeplinkTimetableNotFound = 0x5005
-    case deeplinkBookmarkNotFound = 0x5006
-    case deeplinkProcessFailed = 0x5007
 
     case alreadyVerifiedAccount = 0x9000
     case alreadyVerifiedEmail = 0x9001
@@ -154,10 +150,6 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorDescriptionInvalidRnBundle
         case .duplicateThemeName:
             APIClientInterfaceStrings.errorDescriptionDuplicateThemeName
-        case .deeplinkLectureNotFound, .deeplinkTimetableNotFound, .deeplinkBookmarkNotFound:
-            APIClientInterfaceStrings.errorDescriptionDeeplinkNotFound
-        case .deeplinkProcessFailed:
-            APIClientInterfaceStrings.errorDescriptionDeeplinkProcessFailed
         case .alreadyVerifiedAccount, .alreadyVerifiedEmail:
             APIClientInterfaceStrings.errorDescriptionAlreadyVerified
         case .duplicateVacancyNotification:
@@ -241,10 +233,6 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorFailureReasonInvalidRnBundle
         case .duplicateThemeName:
             APIClientInterfaceStrings.errorFailureReasonDuplicateThemeName
-        case .deeplinkLectureNotFound, .deeplinkTimetableNotFound, .deeplinkBookmarkNotFound:
-            APIClientInterfaceStrings.errorFailureReasonDeeplinkNotFound
-        case .deeplinkProcessFailed:
-            APIClientInterfaceStrings.errorFailureReasonDeeplinkProcessFailed
         case .alreadyVerifiedAccount, .alreadyVerifiedEmail:
             APIClientInterfaceStrings.errorFailureReasonAlreadyVerified
         case .duplicateVacancyNotification:
@@ -328,10 +316,6 @@ public enum LocalizedErrorCode: Int, LocalizedError {
             APIClientInterfaceStrings.errorRecoverySuggestionInvalidRnBundle
         case .duplicateThemeName:
             APIClientInterfaceStrings.errorRecoverySuggestionDuplicateThemeName
-        case .deeplinkLectureNotFound, .deeplinkTimetableNotFound, .deeplinkBookmarkNotFound:
-            APIClientInterfaceStrings.errorRecoverySuggestionDeeplinkNotFound
-        case .deeplinkProcessFailed:
-            APIClientInterfaceStrings.errorRecoverySuggestionDeeplinkProcessFailed
         case .alreadyVerifiedAccount, .alreadyVerifiedEmail:
             nil
         case .duplicateVacancyNotification:
