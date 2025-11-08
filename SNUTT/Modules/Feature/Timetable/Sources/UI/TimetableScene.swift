@@ -110,7 +110,13 @@ public struct TimetableScene: View {
             .environment(
                 \.lectureTapAction,
                 LectureTapAction(action: { lecture in
-                    timetableViewModel.paths.append(.lectureDetail(lecture))
+                    timetableViewModel.paths.append(
+                        .lectureDetail(
+                            lecture,
+                            parentTimetable: timetableViewModel.currentTimetable,
+                            belongsToOtherTimetable: false
+                        )
+                    )
                     Dependency(\.analyticsLogger).wrappedValue.logScreen(
                         AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .timetable))
                     )

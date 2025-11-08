@@ -63,7 +63,9 @@ struct LectureSearchResultScene: View {
                 NavigationStack {
                     LectureEditDetailScene(
                         entryLecture: entryLecture,
-                        displayMode: .preview(.showDismissButton)
+                        displayMode: .preview(.showDismissButton),
+                        parentTimetable: nil,
+                        belongsToOtherTimetable: false
                     )
                     .handleLectureTimeConflict()
                 }

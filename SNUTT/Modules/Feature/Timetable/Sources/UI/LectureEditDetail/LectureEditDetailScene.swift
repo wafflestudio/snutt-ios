@@ -30,7 +30,6 @@ struct LectureEditDetailScene: View {
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
-    @Environment(\.timetableViewModel) private var timetableViewModel
     @Environment(\.themeViewModel) private var themeViewModel
     @Environment(\.errorAlertHandler) var errorAlertHandler
     @Environment(\.lectureTimeConflictHandler) var conflictHandler
@@ -40,16 +39,21 @@ struct LectureEditDetailScene: View {
 
     let displayMode: DisplayMode
     let paths: Binding<[TimetableDetailSceneTypes]>
+    let parentTimetable: Timetable?
+    let belongsToOtherTimetable: Bool
 
     init(
-        timetableViewModel: TimetableViewModel? = nil,
         entryLecture: Lecture,
         displayMode: DisplayMode,
-        paths: Binding<[TimetableDetailSceneTypes]> = .constant([])
+        paths: Binding<[TimetableDetailSceneTypes]> = .constant([]),
+        parentTimetable: Timetable?,
+        belongsToOtherTimetable: Bool = false
     ) {
-        _viewModel = .init(initialValue: .init(timetableViewModel: timetableViewModel, entryLecture: entryLecture))
+        _viewModel = .init(initialValue: .init(parentTimetable: parentTimetable, entryLecture: entryLecture))
         self.displayMode = displayMode
         self.paths = paths
+        self.parentTimetable = parentTimetable
+        self.belongsToOtherTimetable = belongsToOtherTimetable
         self._editMode = .init(initialValue: displayMode == .create ? .active : .inactive)
     }
 
@@ -83,6 +87,9 @@ struct LectureEditDetailScene: View {
         .navigationTitle(displayMode.isPreview ? TimetableStrings.editDetailTitle : "")
         .toolbar {
             toolbarContent
+        }
+        .overlay(alignment: .bottom) {
+            floatingButtonIfNeeded
         }
         .alert(TimetableStrings.editCancelConfirmationTitle, isPresented: $showCancelConfirmation) {
             Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
@@ -162,7 +169,7 @@ struct LectureEditDetailScene: View {
                 EditableRow(label: TimetableStrings.editFieldCategory, keyPath: \.category)
 
                 // 2025년부터 구)교양영역 제공
-                if let currentYear = timetableViewModel.currentTimetable?.quarter.year, currentYear >= 2025 {
+                if let currentYear = parentTimetable?.quarter.year, currentYear >= 2025 {
                     EditableRow(label: TimetableStrings.editFieldCategoryPre2025, keyPath: \.categoryPre2025)
                 }
 
@@ -300,7 +307,7 @@ extension LectureEditDetailScene {
 
     private func resolvedColor(for lecture: Lecture) -> LectureColor {
         TimetablePainter(
-            currentTimetable: timetableViewModel.currentTimetable,
+            currentTimetable: parentTimetable,
             selectedLecture: nil,
             preferredTheme: nil,
             availableThemes: themeViewModel.availableThemes,
@@ -308,14 +315,29 @@ extension LectureEditDetailScene {
         )
         .resolveColor(for: lecture)
     }
+
+    @ViewBuilder
+    private var floatingButtonIfNeeded: some View {
+        if belongsToOtherTimetable,
+            displayMode == .normal,
+            editMode == .inactive,
+            let timetableID = parentTimetable?.id
+        {
+            FloatingButton(text: TimetableStrings.editGoToTimetable) {
+                notificationCenter.post(NavigateToTimetableMessage(timetableID: timetableID))
+            }
+            .padding(.bottom, 20)
+        }
+    }
 }
 
 #Preview {
     NavigationStack {
         LectureEditDetailScene(
-            timetableViewModel: .init(),
             entryLecture: PreviewHelpers.preview(id: "1").lectures.first!,
-            displayMode: .normal
+            displayMode: .normal,
+            parentTimetable: PreviewHelpers.preview(id: "1"),
+            belongsToOtherTimetable: false
         )
     }
     .tint(.label)

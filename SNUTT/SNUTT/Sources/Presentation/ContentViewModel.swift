@@ -72,6 +72,12 @@ class ContentViewModel {
         ) { @MainActor viewModel, _ in
             viewModel.selectedTab = .search
         }
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: NavigateToTimetableMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.selectedTab = .timetable
+        }
     }
 
     private func loadConfigs() async throws {

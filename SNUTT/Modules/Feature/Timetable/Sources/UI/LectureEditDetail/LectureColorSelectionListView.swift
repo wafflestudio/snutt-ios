@@ -149,7 +149,10 @@ struct LectureColorPreviewButton: View {
     NavigationStack {
         LectureColorSelectionListView(
             theme: .snutt,
-            viewModel: .init(timetableViewModel: .init(), entryLecture: PreviewHelpers.preview.lectures.first!)
+            viewModel: .init(
+                parentTimetable: PreviewHelpers.preview(id: "1"),
+                entryLecture: PreviewHelpers.preview.lectures.first!
+            )
         )
     }
 }
