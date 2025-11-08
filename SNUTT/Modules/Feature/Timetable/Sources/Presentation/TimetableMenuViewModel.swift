@@ -49,7 +49,7 @@ final class TimetableMenuViewModel {
 
     var groupedTimetables: [TimetableGroup] {
         switch metadataLoadingState {
-        case .loading:
+        case .loading, .failed:
             return []
         case let .loaded(metadataList):
             let dict = Dictionary(grouping: metadataList, by: { $0.quarter })

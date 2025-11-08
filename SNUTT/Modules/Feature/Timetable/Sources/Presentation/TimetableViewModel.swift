@@ -45,7 +45,11 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     }
 
     public init() {
-        currentTimetable = timetableUseCase.loadLocalRecentTimetable()
+        if let localTimetable = timetableUseCase.loadLocalRecentTimetable() {
+            timetableLoadState = .loaded(localTimetable)
+        } else {
+            timetableLoadState = .loading
+        }
         configuration = timetableLocalRepository.loadTimetableConfiguration()
         configurationObserver = Task { [weak self] in
             guard let stream = self?.timetableLocalRepository.configurationValues() else { return }
@@ -104,9 +108,16 @@ public class TimetableViewModel: TimetableViewModelProtocol {
         }
     }
 
-    public private(set) var currentTimetable: Timetable?
+    private(set) var timetableLoadState: TimetableLoadState = .loading
     private(set) var metadataLoadState: MetadataLoadState = .loading
     private(set) var courseBookState: CourseBookState = .loading
+
+    public var currentTimetable: Timetable? {
+        if case let .loaded(timetable) = timetableLoadState {
+            return timetable
+        }
+        return nil
+    }
 
     var isMenuPresented = false
     var isThemeSheetPresented = false
@@ -147,21 +158,45 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     }
 
     func loadTimetable() async throws {
-        currentTimetable = try await timetableUseCase.fetchRecentTimetable()
+        switch timetableLoadState {
+        case let .loaded(currentTimetable):
+            // Already loaded, refresh the current timetable
+            try await selectTimetable(timetableID: currentTimetable.id)
+        case .loading, .failed:
+            // Not loaded yet or failed, fetch recent timetable
+            do {
+                let timetable = try await timetableUseCase.fetchRecentTimetable()
+                timetableLoadState = .loaded(timetable)
+            } catch {
+                timetableLoadState = .failed(error)
+                throw error
+            }
+        }
     }
 
     public func setCurrentTimetable(_ timetable: Timetable) throws {
         try timetableLocalRepository.storeSelectedTimetable(timetable)
-        currentTimetable = timetable
+        timetableLoadState = .loaded(timetable)
     }
 
     func loadTimetableList() async throws {
-        let metadataList = try await timetableRepository.fetchTimetableMetadataList()
-        metadataLoadState = .loaded(metadataList)
+        switch metadataLoadState {
+        case .loaded:
+            return
+        case .loading, .failed:
+            do {
+                let metadataList = try await timetableRepository.fetchTimetableMetadataList()
+                metadataLoadState = .loaded(metadataList)
+            } catch {
+                metadataLoadState = .failed(error)
+                throw error
+            }
+        }
     }
 
     func selectTimetable(timetableID: String) async throws {
-        currentTimetable = try await timetableUseCase.selectTimetable(timetableID: timetableID)
+        let timetable = try await timetableUseCase.selectTimetable(timetableID: timetableID)
+        timetableLoadState = .loaded(timetable)
     }
 
     func copyTimetable(timetableID: String) async throws {
@@ -201,11 +236,12 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     func addLecture(lecture: Lecture, overrideOnConflict: Bool = false) async throws {
         guard let currentTimetable else { return }
-        self.currentTimetable = try await timetableUseCase.addLecture(
+        let updatedTimetable = try await timetableUseCase.addLecture(
             timetableID: currentTimetable.id,
             lectureID: lecture.id,
             overrideOnConflict: overrideOnConflict
         )
+        timetableLoadState = .loaded(updatedTimetable)
     }
 
     func removeLecture(lecture: Lecture) async throws {
@@ -213,10 +249,11 @@ public class TimetableViewModel: TimetableViewModelProtocol {
             let timetableLectureID = currentTimetable.lectures
                 .first(where: { $0.lectureID == (lecture.lectureID ?? lecture.id) })?.id
         else { return }
-        self.currentTimetable = try await timetableUseCase.removeLecture(
+        let updatedTimetable = try await timetableUseCase.removeLecture(
             timetableID: currentTimetable.id,
             lectureID: timetableLectureID
         )
+        timetableLoadState = .loaded(updatedTimetable)
     }
 
     func renameTimetable(timetableID: String, title: String) async throws {
@@ -231,9 +268,14 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     func loadCourseBooks() async throws {
         switch courseBookState {
-        case .loading:
-            let courseBooks = try await courseBookRepository.fetchCourseBookList()
-            courseBookState = .loaded(courseBooks)
+        case .loading, .failed:
+            do {
+                let courseBooks = try await courseBookRepository.fetchCourseBookList()
+                courseBookState = .loaded(courseBooks)
+            } catch {
+                courseBookState = .failed
+                throw error
+            }
         case .loaded:
             return
         }
@@ -244,11 +286,19 @@ extension TimetableViewModel {
     enum MetadataLoadState {
         case loading
         case loaded([TimetableMetadata])
+        case failed(any Error)
     }
 
     enum CourseBookState: Equatable {
         case loading
         case loaded([CourseBook])
+        case failed
+    }
+
+    enum TimetableLoadState {
+        case loading
+        case loaded(Timetable)
+        case failed(any Error)
     }
 }
 
