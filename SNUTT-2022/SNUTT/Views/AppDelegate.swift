@@ -58,6 +58,35 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // configure facebook sdk
         return ApplicationDelegate.shared.application(app, open: url, options: options)
     }
+    
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+    ) {
+        let (title, body): (String?, String?) = {
+            if let aps = userInfo["aps"] as? [String: Any],
+               let alert = aps["alert"] as? [String: Any]
+            {
+                return (alert["title"] as? String, alert["body"] as? String)
+            } else {
+                return (userInfo["title"] as? String, userInfo["body"] as? String)
+            }
+        }()
+        guard let title, let body else { return }
+        
+        Task {
+            let content = UNMutableNotificationContent()
+            content.title = title
+            content.body = body
+            content.sound = UNNotificationSound.default
+            content.userInfo = userInfo
+            
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
+            try? await UNUserNotificationCenter.current().add(request)
+            completionHandler(.newData)
+        }
+    }
 }
 
 /// Firebase Push Notification Settings.
