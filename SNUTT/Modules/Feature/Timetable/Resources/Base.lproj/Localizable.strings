@@ -127,6 +127,14 @@
 "search.predicate.credit.suffix" = "학점";
 "search.predicate.etc.english" = "영강";
 "search.predicate.etc.army" = "군휴학";
+"search.predicate.time.emptySlots" = "빈 시간대로 검색";
+"search.predicate.time.directSelection" = "시간대 직접 선택";
+"search.time.selection.title" = "시간대 선택";
+"search.time.selection.placeholder" = "시간표에서 시간대를 선택해주세요";
+"search.time.selection.done" = "완료";
+"search.time.selection.cancel" = "취소";
+"search.time.selection.reset" = "초기화";
+"search.time.selection.selectEmptySlots" = "빈 시간대 선택";
 
 "toast.bookmark.message" = "검색탭 우측 상단에서 관심강좌 목록을 확인해보세요.";
 "toast.vacancy.message" = "더보기탭에서 빈자리 알림 목록을 확인해보세요.";

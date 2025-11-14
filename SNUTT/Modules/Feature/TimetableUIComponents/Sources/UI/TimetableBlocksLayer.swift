@@ -8,10 +8,14 @@
 import SwiftUI
 import TimetableInterface
 
-struct TimetableBlocksLayer: View {
-    let painter: TimetablePainter
+public struct TimetableBlocksLayer: View {
+    public let painter: TimetablePainter
 
-    var body: some View {
+    public init(painter: TimetablePainter) {
+        self.painter = painter
+    }
+
+    public var body: some View {
         ForEach(painter.currentTimetable?.lectures ?? [], id: \.id) { lecture in
             TimetableLectureBlockGroup(painter: painter, lecture: lecture)
         }

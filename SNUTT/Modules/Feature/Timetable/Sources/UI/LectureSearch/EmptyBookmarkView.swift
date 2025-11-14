@@ -17,6 +17,7 @@ struct EmptyBookmarkList: View {
                 .font(.system(size: 17, weight: .regular))
                 .multilineTextAlignment(.center)
         }
+        .frame(maxHeight: .infinity)
         .padding(.horizontal, 40)
         .foregroundColor(.white.opacity(0.8))
     }

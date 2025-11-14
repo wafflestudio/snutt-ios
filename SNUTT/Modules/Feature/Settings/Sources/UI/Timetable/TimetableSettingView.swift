@@ -97,6 +97,7 @@ struct TimetableSettingView: View {
         }
         .navigationTitle(SettingsStrings.displayTable)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear { viewModel.loadInitialTimetable() }
     }
 }
 

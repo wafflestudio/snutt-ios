@@ -13,35 +13,26 @@ struct SearchFilterSheet: View {
     @Bindable var viewModel: LectureSearchViewModel
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     var body: some View {
         GeometryReader { _ in
             VStack(spacing: 0) {
-                filterToolbar
                 HStack(alignment: .top) {
                     filterCategoryColumn
-                        .frame(width: 150)
+                        .frame(width: 120)
                     Divider()
                     filterSelectionColumn
                 }
+                .frame(maxHeight: .infinity)
                 .padding(.horizontal, 5)
                 Spacer()
                 filterApplyButton
             }
+            .padding(.top, 30)
         }
         .presentationDetents([.height(450)])
         .analyticsScreen(.searchFilter)
-    }
-
-    private var filterToolbar: some View {
-        HStack {
-            Spacer()
-            ToolbarButton(image: TimetableAsset.xmark.image, contentInsets: .all(10)) {
-                dismiss()
-            }
-        }
-        .padding(.top, 10)
-        .padding(.horizontal, 10)
     }
 
     private var filterCategoryColumn: some View {
@@ -70,68 +61,144 @@ struct SearchFilterSheet: View {
 
     private var filterSelectionColumn: some View {
         ScrollView {
-            LazyVStack {
-                let predicates = viewModel.availablePredicates[viewModel.selectedCategory] ?? []
-                ForEach(predicates, id: \.localizedDescription) { predicate in
-                    let isSelected = viewModel.selectedPredicates.contains(predicate)
-                    AnimatableButton(
-                        layoutOptions: [.expandHorizontally, .respectIntrinsicHeight]
-                    ) {
-                        viewModel.togglePredicate(predicate: predicate)
-                    } configuration: { button in
-                        var config = UIButton.Configuration.plain()
-                        config.title = predicate.localizedDescription
-                        config.baseForegroundColor = .label
-                        config.imagePadding = 5
-                        config.attributedTitle = .init(predicate.localizedDescription, font: .systemFont(ofSize: 14))
-                        config.image =
-                            if isSelected {
-                                TimetableAsset.checkmarkCircleTick.image
-                            } else {
-                                TimetableAsset.checkmarkCircleUntick.image
-                            }
-                        button.contentHorizontalAlignment = .leading
-                        return config
-                    }
+            LazyVStack(spacing: 0) {
+                switch viewModel.selectedCategory {
+                case .time:
+                    TimeFilterOptionsView(viewModel: viewModel)
+                default:
+                    defaultFilterOptions
                 }
             }
         }
         .withResponsiveTouch()
     }
 
+    @ViewBuilder
+    private var defaultFilterOptions: some View {
+        let predicates = viewModel.availablePredicates[viewModel.selectedCategory] ?? []
+        ForEach(predicates, id: \.localizedDescription) { predicate in
+            let isSelected = viewModel.selectedPredicates.contains(predicate)
+            FilterOptionButton(
+                title: predicate.localizedDescription,
+                isSelected: isSelected
+            ) {
+                viewModel.togglePredicate(predicate: predicate)
+            }
+        }
+    }
+
     private var filterApplyButton: some View {
-        AnimatableButton(
-            layoutOptions: [.expandHorizontally]
-        ) {
+        Button {
             dismiss()
-            Task {
+            errorAlertHandler.withAlert {
                 try await viewModel.fetchInitialSearchResult()
             }
-        } configuration: { _ in
-            var config = UIButton.Configuration.borderedProminent()
-            config.baseBackgroundColor = TimetableAsset.cyan.color
-            config.attributedTitle = .init(
-                TimetableStrings.searchFilterApply,
-                font: .systemFont(ofSize: 17, weight: .semibold)
-            )
-            config.contentInsets = .init(.all(10))
-            return config
+        } label: {
+            Text(TimetableStrings.searchFilterApply)
+                .frame(maxWidth: .infinity)
+                .font(.system(size: 17, weight: .semibold))
         }
         .padding(.horizontal)
+        .buttonStyle(.borderedProminent)
+        .tint(SharedUIComponentsAsset.cyanSecondary.swiftUIColor)
+    }
+}
+
+struct FilterOptionButton: View {
+    let title: String
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        AnimatableButton(
+            layoutOptions: [.expandHorizontally, .respectIntrinsicHeight]
+        ) {
+            action()
+        } configuration: { button in
+            var config = UIButton.Configuration.plain()
+            config.title = title
+            config.baseForegroundColor = .label
+            config.imagePadding = 5
+            config.attributedTitle = .init(title, font: .systemFont(ofSize: 14))
+            config.image =
+                if isSelected {
+                    TimetableAsset.checkmarkCircleTick.image
+                } else {
+                    TimetableAsset.checkmarkCircleUntick.image
+                }
+            button.contentHorizontalAlignment = .leading
+            return config
+        }
+    }
+}
+
+struct TimeFilterOptionsView: View {
+    @Bindable var viewModel: LectureSearchViewModel
+
+    var body: some View {
+        // Empty slots option
+        FilterOptionButton(
+            title: TimetableStrings.searchPredicateTimeEmptySlots,
+            isSelected: viewModel.isTimeExcludeSelected
+        ) {
+            if viewModel.isTimeExcludeSelected {
+                viewModel.clearTimeFilter()
+            } else {
+                viewModel.setTimeExcludeRangesFromCurrentTimetable()
+            }
+        }
+
+        // Direct selection option
+        FilterOptionButton(
+            title: TimetableStrings.searchPredicateTimeDirectSelection,
+            isSelected: viewModel.isTimeIncludeSelected
+        ) {
+            viewModel.isTimeSelectionSheetOpen = true
+        }
+        .sheet(isPresented: $viewModel.isTimeSelectionSheetOpen) {
+            TimeSelectionSheet(
+                currentTimetable: viewModel.timetableViewModel.currentTimetable,
+                initialRanges: viewModel.selectedTimeIncludeRanges
+            ) { ranges in
+                viewModel.setTimeIncludeRanges(ranges)
+            }
+        }
+
+        // Display selected time ranges
+        if !viewModel.selectedTimeIncludeRanges.isEmpty {
+            Text(formattedTimeRanges)
+                .lineSpacing(4)
+                .font(.system(size: 13))
+                .foregroundStyle(.tertiary)
+                .underline()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 32)
+        }
+    }
+
+    private var formattedTimeRanges: String {
+        viewModel.selectedTimeIncludeRanges
+            .map { $0.formatted() }
+            .joined(separator: "\n")
     }
 }
 
 #Preview {
     @Previewable @State var isPresented = true
+    let timetableViewModel = TimetableViewModel()
+    let _ = Task {
+        try await timetableViewModel.loadTimetable()
+    }
     ZStack {
         Color.gray
         Button("Present") {
             isPresented = true
         }
         .buttonStyle(.borderedProminent)
+        .padding(.bottom, 300)
     }
     .ignoresSafeArea()
     .sheet(isPresented: $isPresented) {
-        SearchFilterSheet(viewModel: .init(timetableViewModel: .init()))
+        SearchFilterSheet(viewModel: .init(timetableViewModel: timetableViewModel))
     }
 }

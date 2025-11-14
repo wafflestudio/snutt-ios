@@ -46,7 +46,10 @@ extension Project {
         return Project(
             name: name,
             organizationName: "wafflestudio.com",
-            options: .options(automaticSchemesOptions: .disabled),
+            options: .options(
+                automaticSchemesOptions: .disabled,
+                developmentRegion: "ko"
+            ),
             packages: swiftPackages,
             settings: makeSettings(),
             targets: allTargets.flatMap { [$0.0, $0.1].compactMap { $0 } } + [widgetTarget],
@@ -189,12 +192,14 @@ extension Project {
                 .debug(
                     name: .dev,
                     settings: baseSetting(.dev)
-                        .swiftActiveCompilationConditions(["DEBUG"]),
+                        .swiftActiveCompilationConditions(["DEBUG"])
+                        .merging(["ENABLE_TESTABILITY": "YES"]),
                     xcconfig: "XCConfigs/Dev.xcconfig"
                 ),
                 .release(
                     name: .prod,
-                    settings: baseSetting(.prod),
+                    settings: baseSetting(.prod)
+                        .merging(["ENABLE_TESTABILITY": "NO"]),
                     xcconfig: "XCConfigs/Prod.xcconfig"
                 ),
             ]
@@ -258,10 +263,17 @@ extension Project {
         }
 
         return previewableModules.map { module in
-            .scheme(
-                name: "\(module.name) Preview",
+            let testTargetName = "\(module.name)Tests"
+            let testAction: TestAction = .targets(
+                [.testableTarget(target: .target(testTargetName))],
+                configuration: .dev
+            )
+
+            return .scheme(
+                name: module.name,
                 shared: true,
                 buildAction: .buildAction(targets: [.target(module.name)]),
+                testAction: testAction,
                 runAction: .runAction(configuration: .dev),
                 archiveAction: nil,
                 profileAction: nil,

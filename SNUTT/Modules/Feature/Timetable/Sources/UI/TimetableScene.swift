@@ -95,27 +95,30 @@ public struct TimetableScene: View {
     }
 
     private var timetable: some View {
-        ZStack {
-            TimetableZStack(
-                painter: timetableViewModel.makePainter(
-                    selectedLecture: searchViewModel.selectedLecture,
-                    selectedTheme: themeViewModel.selectedTheme,
-                    availableThemes: themeViewModel.availableThemes
-                )
+        TimetableZStack(
+            painter: timetableViewModel.makePainter(
+                selectedLecture: searchViewModel.selectedLecture,
+                selectedTheme: themeViewModel.selectedTheme,
+                availableThemes: themeViewModel.availableThemes
             )
-            .environment(
-                \.lectureTapAction,
-                LectureTapAction(action: { lecture in
-                    guard let currentTimetable = timetableViewModel.currentTimetable else { return }
-                    timetableViewModel.paths.append(
-                        .lectureDetail(lecture, parentTimetable: currentTimetable)
-                    )
-                    Dependency(\.analyticsLogger).wrappedValue.logScreen(
-                        AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .timetable))
-                    )
-                })
-            )
+        )
+        .overlay(alignment: .top) {
+            Rectangle()
+                .fill(Color(UIColor.quaternaryLabel.withAlphaComponent(0.1)))
+                .frame(height: 1)
         }
+        .environment(
+            \.lectureTapAction,
+            LectureTapAction(action: { lecture in
+                guard let currentTimetable = timetableViewModel.currentTimetable else { return }
+                timetableViewModel.paths.append(
+                    .lectureDetail(lecture, parentTimetable: currentTimetable)
+                )
+                Dependency(\.analyticsLogger).wrappedValue.logScreen(
+                    AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .timetable))
+                )
+            })
+        )
     }
 }
 
