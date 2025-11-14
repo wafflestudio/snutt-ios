@@ -23,6 +23,7 @@ struct LectureDiaryListView: View {
         VStack(spacing: 0) {
             if viewModel.diaryListCollection.isEmpty {
                 EmptyView()
+                    .environmentObject(viewModel)
             } else {
                 ScrollView(.horizontal) {
                     HStack(spacing: 8) {
@@ -64,7 +65,11 @@ struct LectureDiaryListView: View {
 extension LectureDiaryListView {
     struct EmptyView: View {
         
+        @State private var lectureForDiary: Lecture?
+        @State private var showDiaryNotAvailableAlert = false
+        
         @Environment(\.colorScheme) private var colorScheme
+        @EnvironmentObject var viewModel: ViewModel
         
         var body: some View {
             VStack(alignment: .center, spacing: 16) {
@@ -84,7 +89,12 @@ extension LectureDiaryListView {
                 }
                 .multilineTextAlignment(.center)
                 Button {
-                    // TODO: 강의일기 작성
+                    Task {
+                        lectureForDiary = await viewModel.getLectureForDiary()
+                        if lectureForDiary == nil {
+                            showDiaryNotAvailableAlert = true
+                        }
+                    }
                 } label: {
                     HStack(spacing: 4) {
                         Text("강의일기 작성하기")
@@ -105,6 +115,16 @@ extension LectureDiaryListView {
                 )
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .alert(
+                "강의일기장을 작성할 수 있는 강의가 없습니다.",
+                isPresented: $showDiaryNotAvailableAlert
+            ) {}
+            .fullScreenCover(item: $lectureForDiary) { lecture in
+                EditLectureDiaryScene(
+                    viewModel: .init(container: viewModel.container),
+                    lecture: lecture
+                )
+            }
         }
     }
 }
@@ -120,13 +140,33 @@ extension LectureDiaryListView {
 extension LectureDiaryListView {
     class ViewModel: BaseViewModel, ObservableObject {
         #if DEBUG
-        @Published var diaryListCollection: [DiaryListPerSemester] = [.init(year: 2025, semester: .second, diaryList: [.preview1, .preview2])]
+        @Published var diaryListCollection: [DiaryListPerSemester] = [
+//            .init(
+//                year: 2025,
+//                semester: .second,
+//                diaryList: [
+//                    .preview1, .preview2
+//                ]
+//            )
+        ]
         #else
         @Published var diaryListCollection: [DiaryListPerSemester] = []
         #endif
         
         override init(container: DIContainer) {
             super.init(container: container)
+        }
+        
+        func getLectureForDiary() async -> Lecture? {
+            guard let targetMetaData = services.lectureService.getCurrentOrNextSemesterPrimaryTable()
+            else { return nil }
+            do {
+                let targetTable = try await services.timetableService.fetchTimetableData(timetableId: targetMetaData.id)
+                return targetTable.lectures.first { $0.lectureId != nil }
+            } catch {
+                services.globalUIService.presentErrorAlert(error: error)
+                return nil
+            }
         }
         
         func getDiaryListCollection() async {

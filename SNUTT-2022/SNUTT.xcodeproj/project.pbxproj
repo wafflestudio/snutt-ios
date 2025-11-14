@@ -60,6 +60,8 @@
 		B84B4CB92EB784FD00212E8E /* SemesterChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CB82EB784FB00212E8E /* SemesterChip.swift */; };
 		B84B4CBB2EB8CDAB00212E8E /* OptionChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CBA2EB8CD9400212E8E /* OptionChip.swift */; };
 		B84B4CBD2EB8D3A000212E8E /* ExtraCommentSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CBC2EB8D39A00212E8E /* ExtraCommentSection.swift */; };
+		B84B4CC02EB8D46E00212E8E /* QuestionAnswerSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CBF2EB8D46300212E8E /* QuestionAnswerSection.swift */; };
+		B84B4CC22EBA41E000212E8E /* WrappedOptionChipList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CC12EBA41D800212E8E /* WrappedOptionChipList.swift */; };
 		B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85B244C295BF36F00E6577E /* FindLocalIdView.swift */; };
 		B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */; };
 		B863301A2CE4D70F008E9003 /* EnterNewPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */; };
@@ -442,6 +444,8 @@
 		B84B4CB82EB784FB00212E8E /* SemesterChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterChip.swift; sourceTree = "<group>"; };
 		B84B4CBA2EB8CD9400212E8E /* OptionChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionChip.swift; sourceTree = "<group>"; };
 		B84B4CBC2EB8D39A00212E8E /* ExtraCommentSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtraCommentSection.swift; sourceTree = "<group>"; };
+		B84B4CBF2EB8D46300212E8E /* QuestionAnswerSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnswerSection.swift; sourceTree = "<group>"; };
+		B84B4CC12EBA41D800212E8E /* WrappedOptionChipList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedOptionChipList.swift; sourceTree = "<group>"; };
 		B85B244C295BF36F00E6577E /* FindLocalIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocalIdView.swift; sourceTree = "<group>"; };
 		B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordScene.swift; sourceTree = "<group>"; };
 		B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNewPasswordView.swift; sourceTree = "<group>"; };
@@ -763,8 +767,10 @@
 		B84B4CB52EB7845A00212E8E /* LectureDiary */ = {
 			isa = PBXGroup;
 			children = (
+				B84B4CBF2EB8D46300212E8E /* QuestionAnswerSection.swift */,
 				B84B4CBC2EB8D39A00212E8E /* ExtraCommentSection.swift */,
 				B84B4CBA2EB8CD9400212E8E /* OptionChip.swift */,
+				B84B4CC12EBA41D800212E8E /* WrappedOptionChipList.swift */,
 				B84B4CB82EB784FB00212E8E /* SemesterChip.swift */,
 				B84B4CB62EB7848600212E8E /* DiaryQuestionAnswerRow.swift */,
 				B84B4CB32EB7842600212E8E /* ExpandableDiarySummaryCell.swift */,
@@ -1630,6 +1636,7 @@
 				BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */,
 				B8823BC32BC2ED41003A3B69 /* BuildingRouter.swift in Sources */,
 				B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */,
+				B84B4CC22EBA41E000212E8E /* WrappedOptionChipList.swift in Sources */,
 				CEDDCA7E2A6AEF2200474D4E /* VacancyLectureList.swift in Sources */,
 				CE85901E2C5E549600ECFE9E /* FriendState.swift in Sources */,
 				B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */,
@@ -1871,6 +1878,7 @@
 				CEA428A42D71FE4D00944DAB /* Encodable+Dictionary.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
 				BE682BB6287C40AF009EBCB7 /* BasicTheme.swift in Sources */,
+				B84B4CC02EB8D46E00212E8E /* QuestionAnswerSection.swift in Sources */,
 				B84B4CB92EB784FD00212E8E /* SemesterChip.swift in Sources */,
 				BE779B1C28E72622009960EB /* AnimatedTextField.swift in Sources */,
 				B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */,
