@@ -43,9 +43,6 @@ struct EditLectureDiaryScene: View {
                                     Spacer().frame(height: 8)
                                     detailQuestionnaireList(questions)
                                         .id(review)
-                                        .onAppear {
-                                            print(questions)
-                                        }
                                     ExtraReviewSection(extraReview: $extraReview)
                                 }
                                 .onAppear {
@@ -171,7 +168,7 @@ extension EditLectureDiaryScene {
                 QuestionAnswerSection(
                     questionItem: questionItem
                 ) { options in
-                    print(options)
+                    
                 }
                 if questionItem.question != questions.last?.question {
                     Divider().frame(height: 0.8)
