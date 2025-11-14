@@ -23,21 +23,27 @@ struct RoundedRectButton: View {
         } label: {
             Text(label)
                 .tracking(tracking)
-                .foregroundStyle(disabled ? STColor.assistive : .white)
+                .foregroundStyle(labelColor(disabled: disabled))
                 .font(type.font)
                 .padding(.vertical, type.verticalPadding)
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: type.cornerRadius)
-                        .fill(
-                            disabled
-                            ? STColor.neutral95
-                            : (colorScheme == .dark ? STColor.darkMint1 : STColor.cyan)
-                        )
+                        .fill(backgroundColor(disabled: disabled, colorScheme: colorScheme))
                 )
                 .drawingGroup()
         }
         .disabled(disabled)
+    }
+    
+    private func labelColor(disabled: Bool) -> Color {
+        disabled ? STColor.assistive : .white
+    }
+    
+    private func backgroundColor(disabled: Bool, colorScheme: ColorScheme) -> Color {
+        disabled
+        ? (colorScheme == .dark ? STColor.darkerGray : STColor.neutral95)
+        : (colorScheme == .dark ? STColor.darkMint1 : STColor.lightCyan)
     }
 }
 
