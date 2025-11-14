@@ -57,17 +57,35 @@ extension DiarySummary {
 
 struct DiaryQuestionnaire {
     let lectureTitle: String
-    let questions: [DiaryQuestionnaireWithId]
+    let questions: [QuestionItem]
     let nextLectureId: String
     let nextLectureTitle: String
 }
 
 extension DiaryQuestionnaire {
-    init(from dto: DiaryQuestionnaireResponseDto) {
+    init(from dto: QuestionnaireResponseDto) {
         self.lectureTitle = dto.lectureTitle
-        self.questions = dto.questions
+        self.questions = dto.questions.map { .init(from: $0) }
         self.nextLectureId = dto.nextLectureId
         self.nextLectureTitle = dto.nextLectureTitle
+    }
+}
+
+struct QuestionItem {
+    let question: String
+    var subQuestion: String? = nil
+    let options: [AnswerOption]
+}
+
+struct AnswerOption: Equatable {
+    let id: Int
+    let content: String
+}
+
+extension QuestionItem {
+    init(from dto: QuestionnaireWithIdDto) {
+        self.question = dto.question
+        self.options = dto.answers.enumerated().map { .init(id: $0.0, content: $0.1) }
     }
 }
 
@@ -102,7 +120,14 @@ extension DiaryQuestionnaire {
     static let preview: Self = .init(
         lectureTitle: "시각디자인기초",
         questions: [
-            .init(id: "1", question: "수강신청", answers: ["널널해요", "무난해요", "어려웠어요"])
+            .init(
+                question: "수강신청",
+                options: [
+                    .init(id: 1, content: "널널해요"),
+                    .init(id: 2, content: "무난해요"),
+                    .init(id: 3, content: "어려웠어요")
+                ]
+            )
         ],
         nextLectureId: "",
         nextLectureTitle: ""
