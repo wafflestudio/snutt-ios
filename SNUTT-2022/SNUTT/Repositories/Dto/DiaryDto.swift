@@ -46,19 +46,19 @@ struct ShortAnswerReply: Decodable {
 }
 
 // MARK: Request Questionnaire List
-struct DiaryQuestionnaireRequestDto: Codable {
+struct QuestionnaireRequestDto: Codable {
     let lectureId: String
     let dailyClassTypes: [String]
 }
 
-struct DiaryQuestionnaireResponseDto: Decodable {
+struct QuestionnaireResponseDto: Decodable {
     let lectureTitle: String
-    let questions: [DiaryQuestionnaireWithId]
+    let questions: [QuestionnaireWithIdDto]
     let nextLectureId: String
     let nextLectureTitle: String
 }
 
-struct DiaryQuestionnaireWithId: Decodable {
+struct QuestionnaireWithIdDto: Decodable {
     let id: String
     let question: String
     let answers: [String]

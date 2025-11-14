@@ -12,7 +12,7 @@ protocol DiaryRepositoryProtocol {
     func fetchDiaryList() async throws -> [DiarySummaryListDto]
     func submitDiary(_ diary: DiaryDto) async throws
     func fetchDailyClassTypes() async throws -> [ClassCategoryDto]
-    func fetchQuestionnaire(from classTypeList: DiaryQuestionnaireRequestDto) async throws -> DiaryQuestionnaireResponseDto
+    func fetchQuestionnaire(from classTypeList: QuestionnaireRequestDto) async throws -> QuestionnaireResponseDto
     func deleteDiary(_ diaryId: String) async throws
 }
 
@@ -44,10 +44,10 @@ class DiaryRepository: DiaryRepositoryProtocol {
             .handlingError()
     }
     
-    func fetchQuestionnaire(from classTypeList: DiaryQuestionnaireRequestDto) async throws -> DiaryQuestionnaireResponseDto {
+    func fetchQuestionnaire(from classTypeList: QuestionnaireRequestDto) async throws -> QuestionnaireResponseDto {
         return try await session
             .request(DiaryRouter.getQuestionnaire(classType: classTypeList))
-            .serializingDecodable(DiaryQuestionnaireResponseDto.self)
+            .serializingDecodable(QuestionnaireResponseDto.self)
             .handlingError()
     }
     

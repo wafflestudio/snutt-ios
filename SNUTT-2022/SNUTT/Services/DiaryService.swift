@@ -11,8 +11,8 @@ import SwiftUI
 protocol DiaryServiceProtocol: Sendable {
     func fetchDiaryList() async throws -> [DiaryListPerSemester]
     func submitDiary(_ diary: DiaryDto) async throws
-    func fetchDailyClassTypeList() async throws -> [ClassCategoryDto]
-    func fetchQuestionnaire(for lectureId: String, from dailyClassTypes: [ClassCategoryDto]) async throws -> DiaryQuestionnaire
+    func fetchDailyClassTypeList() async throws -> [AnswerOption]
+    func fetchQuestionnaire(for lectureId: String, from dailyClassTypes: [AnswerOption]) async throws -> DiaryQuestionnaire
     func deleteDiary(_ diaryId: String) async throws
 }
 
@@ -29,12 +29,13 @@ struct DiaryService: DiaryServiceProtocol {
         try await diaryRepository.submitDiary(diary)
     }
     
-    func fetchDailyClassTypeList() async throws -> [ClassCategoryDto] {
-        return try await diaryRepository.fetchDailyClassTypes()
+    func fetchDailyClassTypeList() async throws -> [AnswerOption] {
+        let dto = try await diaryRepository.fetchDailyClassTypes()
+        return dto.enumerated().map { .init(id: $0.0, content: $0.1.name) }
     }
     
-    func fetchQuestionnaire(for lectureId: String, from dailyClassTypes: [ClassCategoryDto]) async throws -> DiaryQuestionnaire {
-        let dto = try await diaryRepository.fetchQuestionnaire(from: .init(lectureId: lectureId, dailyClassTypes: dailyClassTypes.map({ $0.name })))
+    func fetchQuestionnaire(for lectureId: String, from dailyClassTypes: [AnswerOption]) async throws -> DiaryQuestionnaire {
+        let dto = try await diaryRepository.fetchQuestionnaire(from: .init(lectureId: lectureId, dailyClassTypes: dailyClassTypes.map(\.content)))
         return .init(from: dto)
     }
     
@@ -50,7 +51,7 @@ struct DiaryService: DiaryServiceProtocol {
 class FakeDiaryService: DiaryServiceProtocol {
     func fetchDiaryList() async throws -> [DiaryListPerSemester] { return [] }
     func submitDiary(_ diary: DiaryDto) async throws {}
-    func fetchDailyClassTypeList() async throws -> [ClassCategoryDto] { return [] }
-    func fetchQuestionnaire(for lectureId: String, from dailyClassTypes: [ClassCategoryDto]) async throws -> DiaryQuestionnaire { return .preview }
+    func fetchDailyClassTypeList() async throws -> [AnswerOption] { return [] }
+    func fetchQuestionnaire(for lectureId: String, from dailyClassTypes: [AnswerOption]) async throws -> DiaryQuestionnaire { return .preview }
     func deleteDiary(_ diaryId: String) async throws {}
 }
