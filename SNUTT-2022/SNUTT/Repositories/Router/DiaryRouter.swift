@@ -16,7 +16,7 @@ enum DiaryRouter: Router {
     case fetchMyDiaryList
     case uploadDiary(diary: DiaryDto)
     case fetchDailyClassTypeList
-    case getQuestionnaire(classType: DiaryQuestionnaireRequestDto)
+    case getQuestionnaire(classType: QuestionnaireRequestDto)
     case deleteDiary(diaryId: String)
 
     var method: HTTPMethod {

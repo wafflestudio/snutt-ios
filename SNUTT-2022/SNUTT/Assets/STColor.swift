@@ -75,7 +75,7 @@ struct STColor {
     /// Hex #E4E4E5
     static let border: Color = .init(hex: "E4E4E5")
 
-    /// Hex #EBEBEB
+    /// Hex #C4C4C4
     static let divider: Color = .init(hex: "#C4C4C4")
 
     /// Hex #505050
