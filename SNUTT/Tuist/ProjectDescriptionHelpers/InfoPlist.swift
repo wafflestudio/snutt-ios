@@ -6,6 +6,8 @@ public struct InfoPlist {
         [
             "CFBundleShortVersionString": marketingVersion,
             "CFBundleVersion": buildNumber,
+            "CFBundleDevelopmentRegion": "ko",
+            "CFBundleLocalizations": ["ko", "en"],
             "UILaunchStoryboardName": "LaunchScreen",
             "API_SERVER_URL": "https://$(API_SERVER_URL)",
             "API_KEY": "$(API_KEY)",

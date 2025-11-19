@@ -10,16 +10,15 @@ final class TimetableSettingsViewModel {
     @Dependency(\.timetableLocalRepository) private var timetableLocalRepository
 
     private(set) var timetable: Timetable?
-
     var configuration: TimetableConfiguration = .init() {
         didSet {
             timetableLocalRepository.storeTimetableConfiguration(configuration)
         }
     }
 
-    init() {
-        self.timetable = try? timetableLocalRepository.loadSelectedTimetable()
-        self.configuration = timetableLocalRepository.loadTimetableConfiguration()
+    func loadInitialTimetable() {
+        timetable = try? timetableLocalRepository.loadSelectedTimetable()
+        configuration = timetableLocalRepository.loadTimetableConfiguration()
     }
 
     func toggleWeekday(weekday: Weekday) {

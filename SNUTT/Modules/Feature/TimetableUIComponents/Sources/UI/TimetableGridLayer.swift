@@ -8,10 +8,14 @@
 import SwiftUI
 import TimetableInterface
 
-struct TimetableGridLayer: View {
-    let painter: TimetablePainter
+public struct TimetableGridLayer: View {
+    public let painter: TimetablePainter
 
-    var body: some View {
+    public init(painter: TimetablePainter) {
+        self.painter = painter
+    }
+
+    public var body: some View {
         GeometryReader { reader in
             weeksHStack
             hoursVStack
@@ -44,10 +48,7 @@ struct TimetableGridLayer: View {
         let hourCount = painter.hourCount
         let hourHeight = painter.getHourHeight(in: containerSize, hourCount: hourCount)
         return Path { path in
-            path.move(to: CGPoint(x: 0, y: 0))
-            path.addLine(to: CGPoint(x: containerSize.width, y: 0))
-
-            for i in 0...hourCount {
+            for i in 0..<hourCount {
                 let y = painter.weekdayHeight + CGFloat(i) * hourHeight
                 path.move(to: CGPoint(x: 0, y: y))
                 path.addLine(to: CGPoint(x: containerSize.width, y: y))

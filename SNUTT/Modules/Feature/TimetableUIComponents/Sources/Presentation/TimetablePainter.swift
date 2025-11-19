@@ -89,7 +89,7 @@ extension TimetablePainter {
             return configuration.minHour
         }
 
-        if let currentTimetable, selectedLecture == nil && currentTimetable.lectures.isEmpty {
+        if aggregatedTimePlaces.isEmpty {
             return 9
         }
 
@@ -106,7 +106,7 @@ extension TimetablePainter {
             return configuration.maxHour
         }
 
-        if let currentTimetable, selectedLecture == nil && currentTimetable.lectures.isEmpty {
+        if aggregatedTimePlaces.isEmpty {
             return 17
         }
 
@@ -131,7 +131,7 @@ extension TimetablePainter {
             return configuration.visibleWeeksSorted
         }
 
-        if currentTimetable?.lectures.isEmpty ?? true {
+        if aggregatedTimePlaces.isEmpty {
             return [.mon, .tue, .wed, .thu, .fri]
         }
 
@@ -218,135 +218,4 @@ extension TimePlace {
             return endTime.absoluteMinutes
         }
     }
-}
-
-// MARK: TimeRange Selection
-
-extension TimetablePainter {
-    /// 첫날, 첫 시간대를 시작으로 하여 30분 단위로 시간대가 선택되었는지를 나타내는 마스크
-    typealias BlockMask = [Bool]
-
-    /// 시간대 선택은 30분 단위로 지원
-    private var halfHour: Int { 30 }
-    /// 시간대 선택은 8시부터 시작
-    private var startHourOffset: Int { 8 * 60 }
-    /// 시간대 선택은 8시부터 22시 59분까지 지원
-    private var halfHourCount: Int { 30 }
-    /// 시간대 선택은 월~금까지 지원
-    private var searchWeekCount: Int { 5 }
-    /// `BlockMask` 배열의 크기
-    private var blockMaskSize: Int { searchWeekCount * halfHourCount }
-
-    /// `BlockMask`를 `[SearchTimeMaskDto]`로 변환한다.
-    private func getSelectedTimeRange(from blockMask: BlockMask) -> [SearchTimeMaskDto] {
-        var result: [SearchTimeMaskDto] = []
-        let strided = stride(from: 0, to: blockMaskSize, by: halfHour).map {
-            Array(blockMask[$0..<min($0 + halfHourCount, blockMaskSize)])
-        }
-
-        /// `BlockMask`의 연속적인 `true`를 `SearchTimeMaskDto`로 변환 중임을 나타낸다.
-        var isContinuousTimeRange = false
-
-        /// `BlockMask`에서 연속적인 `true`가 시작되는 인덱스
-        var startHalfHourIndex = 0
-
-        for (dayIndex, dayBitMask) in strided.enumerated() {
-            for (halfHourIndex, isSelected) in dayBitMask.enumerated() {
-                if isSelected {
-                    if !isContinuousTimeRange {
-                        isContinuousTimeRange = true
-                        startHalfHourIndex = halfHourIndex
-                    }
-                } else {
-                    if isContinuousTimeRange {
-                        isContinuousTimeRange = false
-                        result.append(
-                            .init(
-                                day: dayIndex,
-                                startMinute: startHalfHourIndex * halfHourCount + startHourOffset,
-                                endMinute: halfHourIndex * halfHourCount + startHourOffset - 1
-                            )
-                        )
-                    }
-                }
-            }
-
-            // 다음 날로 넘어가기 전 선택된 시간대를 22:59로 마감한다.
-            if isContinuousTimeRange {
-                isContinuousTimeRange = false
-                result.append(
-                    .init(
-                        day: dayIndex,
-                        startMinute: startHalfHourIndex * halfHourCount + startHourOffset,
-                        endMinute: halfHour * halfHourCount + startHourOffset - 1
-                    )
-                )
-            }
-        }
-        return result
-    }
-
-    /// 좌표(오프셋)에 해당하는 인덱스가 `true`로 설정된 `BlockMask`를 반환한다.
-    private func toggleOnBlockMask(at point: CGPoint, in containerSize: CGSize) -> BlockMask {
-        let (rowIndex, columnIndex) = getIndex(of: point, in: containerSize)
-        var blockMask = Array(repeating: false, count: blockMaskSize)
-        blockMask[rowIndex + columnIndex * halfHourCount] = true
-
-        return blockMask
-    }
-
-    /// 좌표(오프셋)가 선택된 시간대인지 확인한다.
-    private func isSelected(point: CGPoint, blockMask: BlockMask, in containerSize: CGSize) -> Bool {
-        let (rowIndex, columnIndex) = getIndex(of: point, in: containerSize)
-        return blockMask[rowIndex + columnIndex * halfHourCount]
-    }
-
-    /// 주어진 `BlockMask`의 인덱스로 좌표(오프셋)를 구한다.
-    private func getOffset(of blockMaskIndex: Int, in containerSize: CGSize) -> CGPoint? {
-        if containerSize == .zero {
-            return nil
-        }
-
-        let dayIndex = blockMaskIndex / halfHourCount
-        let halfHourIndex = blockMaskIndex % halfHourCount
-
-        let x = hourWidth + CGFloat(dayIndex) * getWeekWidth(in: containerSize, weekCount: searchWeekCount)
-        let y = weekdayHeight + CGFloat(halfHourIndex) * getSingleBlockHeight(in: containerSize)
-        return CGPoint(x: x, y: y)
-    }
-
-    /// 시간대 `TimeMask`를 `BlockMask`로 변환한다.
-    /// `reverse`: `true`인 경우 `TimeMask`를 제외한 시간대를 `BlockMask`로 변환한다.
-    private func toBlockMask(from timeMask: [SearchTimeMaskDto], reverse: Bool = false) -> BlockMask {
-        var blockMask = Array(repeating: reverse, count: blockMaskSize)
-        for time in timeMask {
-            for minute in stride(from: time.startMinute, to: time.endMinute, by: halfHour) {
-                let halfHourIndex = Int(floor(Double(minute - startHourOffset) / Double(halfHour)))
-                blockMask[time.day * halfHourCount + halfHourIndex] = !reverse
-            }
-        }
-        return blockMask
-    }
-
-    /// 30분 단위 블록 하나의 높이를 구한다.
-    private func getSingleBlockHeight(in containerSize: CGSize) -> CGFloat {
-        (containerSize.height - weekdayHeight) / CGFloat(halfHourCount)
-    }
-
-    /// 좌표(오프셋)에 해당하는 `BlockMask`에서의 인덱스를 구한다.
-    private func getIndex(of point: CGPoint, in containerSize: CGSize) -> (Int, Int) {
-        let weekWidth = getWeekWidth(in: containerSize, weekCount: searchWeekCount)
-
-        let rowIndex = Int(floor((point.y - weekdayHeight) / getSingleBlockHeight(in: containerSize)))
-        let columnIndex = Int(floor((point.x - hourWidth) / weekWidth))
-
-        return (rowIndex, columnIndex)
-    }
-}
-
-// FIXME:
-struct SearchTimeMaskDto: Codable, Hashable {
-    let day: Int
-    let startMinute: Int
-    let endMinute: Int
 }

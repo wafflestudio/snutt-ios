@@ -126,6 +126,14 @@
 "search.predicate.credit.suffix" = "credits";
 "search.predicate.etc.english" = "English";
 "search.predicate.etc.army" = "Military";
+"search.predicate.time.emptySlots" = "Search Empty Time Slots";
+"search.predicate.time.directSelection" = "Select Time Manually";
+"search.time.selection.title" = "Select Time Slots";
+"search.time.selection.placeholder" = "Select time slots from the timetable";
+"search.time.selection.done" = "Done";
+"search.time.selection.cancel" = "Cancel";
+"search.time.selection.reset" = "Reset";
+"search.time.selection.selectEmptySlots" = "Select Empty Slots";
 
 "toast.bookmark.message" = "Check your bookmarked courses at the top right of the Search tab.";
 "toast.vacancy.message" = "Check your vacancy notifications in the More tab.";

@@ -7,6 +7,7 @@
 
 import APIClientInterface
 import Dependencies
+import FoundationUtility
 import Observation
 import SharedUIComponents
 import SwiftUI
@@ -28,7 +29,7 @@ class LectureSearchViewModel {
     @ObservationIgnored
     @Dependency(\.notificationCenter) var notificationCenter
 
-    private let timetableViewModel: TimetableViewModel
+    let timetableViewModel: TimetableViewModel
 
     init(timetableViewModel: TimetableViewModel) {
         self.timetableViewModel = timetableViewModel
@@ -76,12 +77,38 @@ class LectureSearchViewModel {
 
     private(set) var availablePredicates: [SearchFilterCategory: [SearchPredicate]] = [:]
     var selectedCategory: SearchFilterCategory = .sortCriteria
-    private(set) var selectedPredicates: [SearchPredicate] = []
+    var selectedPredicates: [SearchPredicate] = []
+    var isTimeSelectionSheetOpen = false
+
+    var displayPredicates: [SearchPredicate] {
+        var displayPredicates = selectedPredicates.filter { $0.category != .time }
+        if isTimeIncludeSelected {
+            displayPredicates.append(.timeInclude(.init(day: 0, startMinute: 0, endMinute: 0)))
+        }
+        if isTimeExcludeSelected {
+            displayPredicates.append(.timeExclude(.init(day: 0, startMinute: 0, endMinute: 0)))
+        }
+        return displayPredicates
+    }
+
+    var isTimeIncludeSelected: Bool {
+        selectedPredicates.contains { if case .timeInclude = $0 { return true } else { return false } }
+    }
+
+    var isTimeExcludeSelected: Bool {
+        selectedPredicates.contains { if case .timeExclude = $0 { return true } else { return false } }
+    }
+
+    var selectedTimeIncludeRanges: [SearchTimeRange] {
+        selectedPredicates.compactMap {
+            if case .timeInclude(let range) = $0 { return range } else { return nil }
+        }
+    }
 
     var supportedCategories: [SearchFilterCategory] {
         SearchFilterCategory.allCases
             .filter { $0 != .instructor }
-            .filter { availablePredicates.keys.contains($0) }
+            .filter { $0 == .time || availablePredicates.keys.contains($0) }
     }
 
     func fetchAvailablePredicates(quarter: Quarter) async throws {
@@ -101,7 +128,11 @@ class LectureSearchViewModel {
     }
 
     func deselectPredicate(predicate: SearchPredicate) {
-        selectedPredicates.removeAll(where: { $0 == predicate })
+        if predicate.category == .time {
+            selectedPredicates.removeAll(where: { $0.category == .time })
+        } else {
+            selectedPredicates.removeAll(where: { $0 == predicate })
+        }
     }
 
     func fetchInitialSearchResult() async throws {
@@ -113,6 +144,12 @@ class LectureSearchViewModel {
                 )
             )
         }
+
+        // If time exclude filter is selected, update it with current timetable state
+        if isTimeExcludeSelected {
+            setTimeExcludeRangesFromCurrentTimetable()
+        }
+
         try await dataSource.fetchInitialSearchResult(
             query: searchQuery,
             quarter: searchingQuarter,
@@ -133,6 +170,34 @@ class LectureSearchViewModel {
     func fetchBookmarkedLectures() async throws {
         guard let searchingQuarter else { return }
         bookmarkedLectures = try await lectureRepository.fetchBookmarks(quarter: searchingQuarter)
+    }
+
+    func setTimeIncludeRanges(_ ranges: [SearchTimeRange]) {
+        // Remove all time predicates first
+        selectedPredicates.removeAll { $0.category == .time }
+        // Add timeInclude for each range
+        selectedPredicates.append(contentsOf: ranges.map { .timeInclude($0) })
+    }
+
+    func setTimeExcludeRangesFromCurrentTimetable() {
+        // Remove all time predicates first
+        selectedPredicates.removeAll { $0.category == .time }
+
+        guard let currentTimetable = timetableViewModel.currentTimetable else { return }
+
+        let ranges: [SearchPredicate] = currentTimetable.occupiedTimeRanges.map { .timeExclude($0) }
+
+        // If timetable is empty, add a dummy timeExclude predicate to indicate filter is active
+        // The backend will handle empty timetable case appropriately
+        if ranges.isEmpty {
+            selectedPredicates.append(.timeExclude(.init(day: 0, startMinute: 0, endMinute: 0)))
+        } else {
+            selectedPredicates.append(contentsOf: ranges)
+        }
+    }
+
+    func clearTimeFilter() {
+        selectedPredicates.removeAll { $0.category == .time }
     }
 }
 
@@ -344,9 +409,9 @@ extension SearchPredicate {
         case let .credit(value):
             "\(value)\(TimetableStrings.searchPredicateCreditSuffix)"
         case .timeInclude:
-            ""
+            TimetableStrings.searchPredicateTimeDirectSelection
         case .timeExclude:
-            ""
+            TimetableStrings.searchPredicateTimeEmptySlots
         case let .etc(value):
             switch value {
             case .english:
@@ -355,5 +420,29 @@ extension SearchPredicate {
                 TimetableStrings.searchPredicateEtcArmy
             }
         }
+    }
+}
+
+extension SearchTimeRange {
+    func formatted() -> String {
+        // Convert day Int (0-6) to Weekday enum
+        guard let weekday = Weekday(rawValue: day) else { return "" }
+
+        let calendar = Calendar.current
+        let baseDate = calendar.startOfDay(for: Date())
+
+        // Create dates for time formatting only
+        guard let startDate = calendar.date(byAdding: .minute, value: startMinute, to: baseDate),
+            let endDate = calendar.date(byAdding: .minute, value: endMinute, to: baseDate)
+        else {
+            return ""
+        }
+
+        // Format times as HH:mm (24-hour format)
+        let timeFormat: Date.FormatStyle = .dateTime.hour().minute()
+        let startTime = startDate.formatted(timeFormat)
+        let endTime = endDate.formatted(timeFormat)
+
+        return "\(weekday.veryShortSymbol) \(startTime)-\(endTime)"
     }
 }

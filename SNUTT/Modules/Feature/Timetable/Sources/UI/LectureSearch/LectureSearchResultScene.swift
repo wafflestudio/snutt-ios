@@ -19,17 +19,17 @@ struct LectureSearchResultScene: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.selectedPredicates.isEmpty {
-                SearchPredicateScrollView(
-                    selectedTagList: viewModel.selectedPredicates,
-                    deselect: {
-                        viewModel.deselectPredicate(predicate: $0)
+            switch viewModel.searchDisplayMode {
+            case .search:
+                VStack(spacing: 0) {
+                    if !viewModel.displayPredicates.isEmpty {
+                        SearchPredicateScrollView(
+                            selectedTagList: viewModel.displayPredicates,
+                            deselect: {
+                                viewModel.deselectPredicate(predicate: $0)
+                            }
+                        )
                     }
-                )
-            }
-            VStack {
-                switch viewModel.searchDisplayMode {
-                case .search:
                     Group {
                         switch viewModel.searchState {
                         case .initial:
@@ -40,14 +40,14 @@ struct LectureSearchResultScene: View {
                             searchContentView
                         }
                     }
-                    .transition(.move(edge: .leading))
-                case .bookmark:
-                    bookmarkContentView
-                        .transition(.move(edge: .trailing))
                 }
+                .transition(.move(edge: .leading))
+            case .bookmark:
+                bookmarkContentView
+                    .transition(.move(edge: .trailing))
             }
-            .animation(.defaultSpring, value: viewModel.searchDisplayMode)
         }
+        .animation(.defaultSpring, value: viewModel.searchDisplayMode)
         .animation(.defaultSpring, value: viewModel.selectedPredicates)
         .handleLectureTimeConflict()
         .sheet(isPresented: $viewModel.isSearchFilterOpen) {

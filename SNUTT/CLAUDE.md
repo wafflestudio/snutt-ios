@@ -34,16 +34,18 @@ tuist build "SNUTT Widget" # Build app + widget extension
 # Wait for the build to complete before proceeding with other tasks.
 # This ensures proper error detection and prevents build state corruption.
 
-# Module-Specific Builds (Preview Schemes)
+# Module-Specific Builds
 # Use these for faster builds when working on a single module:
-tuist build "Timetable Preview"          # Build only Timetable module
-tuist build "Auth Preview"               # Build only Auth module
-tuist build "Vacancy Preview"            # Build only Vacancy module
-tuist build "Themes Preview"             # Build only Themes module
-# ... and more Preview schemes for other modules
+tuist build Timetable          # Build only Timetable module
+tuist build Auth               # Build only Auth module
+tuist build Vacancy            # Build only Vacancy module
+tuist build Themes             # Build only Themes module
+# ... and more schemes for other modules
 
 # Testing
-tuist build "ModuleTests"  # Build all module tests
+tuist test Timetable           # Run tests for Timetable module
+tuist test Auth                # Run tests for Auth module
+tuist test "ModuleTests"       # Run all module tests
 
 # Code Quality
 just format                # Format Swift code using swift-format
@@ -63,44 +65,47 @@ This project automatically generates the following schemes:
 - **SNUTT Prod**: Production build with prod API endpoint (`snutt-api.wafflestudio.com`)
 - **SNUTT Widget**: Build app with widget extension for testing widgets
 
-#### Module Preview Schemes
+#### Module Schemes
 
-Each feature and shared UI module has its own Preview scheme for faster, isolated builds:
+Each feature and shared UI module has its own scheme for faster, isolated builds and testing:
 
-**Feature Module Previews:**
-- `Timetable Preview`, `Auth Preview`, `Notifications Preview`
-- `Vacancy Preview`, `Themes Preview`, `Settings Preview`
-- `Reviews Preview`, `Friends Preview`, `Popup Preview`
+**Feature Modules:**
+- `Timetable`, `Auth`, `Notifications`
+- `Vacancy`, `Themes`, `Settings`
+- `Reviews`, `Friends`, `Popup`
 
-**Shared UI Module Previews:**
-- `TimetableUIComponents Preview`
-- `SharedUIComponents Preview`, `SharedUIWebKit Preview`, `SharedUIMapKit Preview`
+**Shared UI Modules:**
+- `TimetableUIComponents`
+- `SharedUIComponents`, `SharedUIWebKit`, `SharedUIMapKit`
 
 **Test Scheme:**
 - `ModuleTests`: Runs all module tests across the project
 
-#### When to Use Preview Schemes
+#### When to Use Module Schemes
 
-Preview schemes are ideal for **localized development** when working on a single module:
+Module schemes are ideal for **localized development** when working on a single module:
 
 ```bash
 # Example: Working on Timetable feature only
-tuist build "Timetable Preview"  # Much faster than full app build
+tuist build Timetable  # Much faster than full app build
+tuist test Timetable   # Run only Timetable tests
 
 # Example: Making changes to shared UI components
-tuist build "SharedUIComponents Preview"
+tuist build SharedUIComponents
+tuist test SharedUIComponents
 ```
 
 **Benefits:**
 - **Faster build times**: Only builds the target module and its dependencies
 - **Quick validation**: Immediately verify if your changes compile without full app rebuild
-- **Focused development**: Isolate work to specific modules
+- **Focused testing**: Run tests for specific modules during development
+- **Isolated development**: Work on specific modules without building the entire app
 
-**Note:** Some modules don't have Preview schemes:
+**Note:** Some modules don't have schemes:
 - `Analytics` (marked as `previewable: false`)
 - `Configs` (marked as `previewable: false`)
 - `APIClient` (marked as `previewable: false`)
-- All `*Interface` modules (FeatureInterface modules don't have preview schemes)
+- All `*Interface` modules (FeatureInterface modules don't have schemes)
 
 ### Build Configurations
 - **Dev**: Development configuration, API: `snutt-api-dev.wafflestudio.com`
