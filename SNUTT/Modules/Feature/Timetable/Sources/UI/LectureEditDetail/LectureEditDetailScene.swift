@@ -71,6 +71,7 @@ struct LectureEditDetailScene: View {
                 actionButtonsSection
 
             }
+            .animation(.defaultSpring, value: viewModel.reminderViewModel == nil)
             .padding(.vertical, 20)
             .padding(.bottom, 40)
         }
