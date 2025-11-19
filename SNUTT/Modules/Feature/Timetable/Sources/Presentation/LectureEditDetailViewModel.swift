@@ -30,6 +30,12 @@ public final class LectureEditDetailViewModel {
     @Dependency(\.courseBookRepository) private var courseBookRepository
 
     @ObservationIgnored
+    @Dependency(\.lectureReminderRepository) private var lectureReminderRepository
+
+    @ObservationIgnored
+    @Dependency(\.semesterRepository) private var semesterRepository
+
+    @ObservationIgnored
     @Dependency(\.analyticsLogger) private var analyticsLogger
 
     let displayMode: DisplayMode
@@ -43,6 +49,7 @@ public final class LectureEditDetailViewModel {
 
     private(set) var isBookmarked = false
     private(set) var isVacancyNotificationEnabled = false
+    private(set) var reminderViewModel: LectureReminderViewModel?
     nonisolated let lectureID: String
 
     var showMapView: Bool {
@@ -75,14 +82,14 @@ public final class LectureEditDetailViewModel {
         self.entryLecture = entryLecture
         editableLecture = entryLecture
         lectureID = entryLecture.id
-
-        Task {
-            await fetchBookmarkStatus()
-            await fetchVacancyNotificationStatus()
-        }
     }
 
-    // TODO: supportForMapViewEnabled = appState.system.configs?.disableMapFeature
+    func initialLoad() async throws {
+        async let bookmarkTask: Void = fetchBookmarkStatus()
+        async let vacancyTask: Void = fetchVacancyNotificationStatus()
+        async let reminderTask: Void = initializeReminderViewModelIfNeeded()
+        _ = try await (bookmarkTask, vacancyTask, reminderTask)
+    }
 
     func fetchBuildingList() async {
         let lecturePlaces = entryLecture.timePlaces.map { $0.place }
@@ -234,6 +241,44 @@ public final class LectureEditDetailViewModel {
         } catch {
             return nil
         }
+    }
+
+    // MARK: - Lecture Reminder
+
+    private func initializeReminderViewModelIfNeeded() async throws {
+        let semesterStatus = try await semesterRepository.fetchSemesterStatus()
+        guard let timetableID = parentTimetable?.id, shouldShowReminderPicker(semesterStatus: semesterStatus)
+        else { return }
+        let reminderOption = try await lectureReminderRepository.getReminder(
+            timetableID: timetableID,
+            lectureID: entryLecture.id
+        )
+        let lectureReminder = LectureReminder(
+            timetableLectureID: entryLecture.id,
+            lectureTitle: entryLecture.courseTitle,
+            option: reminderOption
+        )
+        reminderViewModel = LectureReminderViewModel(
+            lectureReminder: lectureReminder,
+            timetableID: timetableID
+        )
+    }
+
+    private func shouldShowReminderPicker(semesterStatus: SemesterStatus) -> Bool {
+        // Must be in normal display mode (not preview or create)
+        guard displayMode.isNormal else { return false }
+
+        // Must have time information
+        guard !entryLecture.timePlaces.isEmpty else { return false }
+
+        // Must be the current or next semester's primary timetable
+        guard let timetable = parentTimetable,
+            timetable.isPrimary
+        else { return false }
+
+        let targetSemester = semesterStatus.currentOrNext
+        return timetable.quarter.year == targetSemester.year
+            && timetable.quarter.semester == targetSemester.semester
     }
 }
 

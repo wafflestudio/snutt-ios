@@ -145,3 +145,24 @@
 "navigation.error.timetable_not_found" = "Timetable does not exist.";
 "navigation.error.bookmark_not_found" = "Lecture has been deleted from bookmarks.";
 "navigation.error.unknown" = "Invalid information.";
+
+/* Lecture Reminder */
+"reminder.title" = "Lecture Reminder";
+"reminder.option.none" = "None";
+"reminder.option.before10" = "10 min before";
+"reminder.option.onTime" = "On time";
+"reminder.option.after10" = "10 min after";
+
+"reminder.toast.none" = "Lecture reminder has been disabled.";
+"reminder.toast.before10" = "You'll receive a notification 10 minutes before class starts.";
+"reminder.toast.onTime" = "You'll receive a notification when class starts.";
+"reminder.toast.after10" = "You'll receive a notification 10 minutes after class starts.";
+
+"reminder.empty.title" = "No lectures available for reminders yet.";
+"reminder.empty.description" = "Lecture reminders are available for lectures in this semester's primary timetable.\n\nReminders cannot be created in the following cases:\n• No primary timetable for this semester\n• Primary timetable exists but has no lectures\n• Lectures exist but have no time information\n\nAdd a primary timetable and lectures to receive push notifications at your preferred times!";
+
+"reminder.settings.footer" = "You can receive push notifications at the specified time by setting lecture reminders. Available for **lectures in this semester's primary timetable**.";
+
+"reminder.error.title" = "Failed to load reminders";
+"reminder.error.description" = "An error occurred while loading lecture reminders.\nPlease try again.";
+"reminder.error.retry" = "Retry";

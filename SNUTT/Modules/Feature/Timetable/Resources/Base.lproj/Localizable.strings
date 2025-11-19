@@ -146,3 +146,24 @@
 "navigation.error.timetable_not_found" = "존재하지 않는 시간표입니다.";
 "navigation.error.bookmark_not_found" = "관심강좌에서 삭제된 강의입니다.";
 "navigation.error.unknown" = "올바르지 않은 정보입니다.";
+
+/* Lecture Reminder */
+"reminder.title" = "강의 리마인더";
+"reminder.option.none" = "없음";
+"reminder.option.before10" = "10분 전";
+"reminder.option.onTime" = "수업 시작 시";
+"reminder.option.after10" = "10분 후";
+
+"reminder.toast.none" = "강의 리마인더가 해제되었어요.";
+"reminder.toast.before10" = "수업 시작 10분 전에 알림으로 알려드릴게요.";
+"reminder.toast.onTime" = "수업이 시작하면 알림으로 알려드릴게요.";
+"reminder.toast.after10" = "수업 시작 10분 후에 알림으로 알려드릴게요.";
+
+"reminder.empty.title" = "리마인더를 설정할 강의가 아직 없어요.";
+"reminder.empty.description" = "강의 리마인더는\n이번 학기의 대표시간표 속 강의들에 적용 가능해요.\n\n다음과 같은 경우에는 리마인더를 만들 수 없어요:\n• 이번 학기에 대표시간표가 없는 경우\n• 대표시간표는 있지만 강의가 없는 경우\n• 강의는 있으나 모두 시간 정보가 없는 경우\n\n대표시간표와 강의를 추가하고,\n원하는 시간에 푸시 알림을 받아보세요!";
+
+"reminder.settings.footer" = "강의 리마인더를 설정하면 해당 시간에 푸시 알림을 받을 수 있어요. **이번 학기의 대표시간표 속 강의들**에 적용 가능해요.";
+
+"reminder.error.title" = "리마인더를 불러올 수 없어요";
+"reminder.error.description" = "강의 리마인더를 불러오는 중 오류가 발생했어요.\n다시 시도해주세요.";
+"reminder.error.retry" = "다시 시도";

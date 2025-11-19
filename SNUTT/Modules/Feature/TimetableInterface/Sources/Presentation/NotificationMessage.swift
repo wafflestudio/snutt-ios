@@ -63,3 +63,9 @@ public struct NavigateToBookmarkLecturePreviewMessage: NotificationCenter.TypedM
         self.lectureID = lectureID
     }
 }
+
+public struct NavigateToLectureRemindersMessage: NotificationCenter.TypedMessage {
+    public static let name = Notification.Name("navigateToLectureReminders")
+
+    public init() {}
+}
