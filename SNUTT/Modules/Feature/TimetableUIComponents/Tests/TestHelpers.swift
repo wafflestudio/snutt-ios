@@ -46,7 +46,8 @@ extension Timetable {
             quarter: .init(year: 2025, semester: .first),
             lectures: lectures,
             userID: "user",
-            theme: theme
+            theme: theme,
+            isPrimary: true
         )
     }
 }

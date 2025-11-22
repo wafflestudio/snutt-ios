@@ -10,6 +10,7 @@ on:
 jobs:
   deploy:
     runs-on: macos-latest
+    timeout-minutes: 20
 
     defaults:
       run:
