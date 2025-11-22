@@ -348,6 +348,9 @@ struct LectureDetailScene: View {
                 }
             }
             .pickerStyle(.segmented)
+            Text("학기가 시작됐을 때 해당 시간에 푸시 알림을 보내드립니다.")
+                .lineHeight(with: STFont.regular13, percentage: 140)
+                .foregroundStyle(colorScheme == .dark ? STColor.alternative : STColor.gray30)
         }
         .padding()
     }
