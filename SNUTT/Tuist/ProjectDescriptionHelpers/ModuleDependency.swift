@@ -9,6 +9,15 @@ public struct ModuleDependency {
     public let infoPlist: [String: Plist.Value]
     public let previewable: Bool
 
+    var internalDependencies: [TargetDependency] {
+        dependencies.filter {
+            switch $0 {
+            case .external: false
+            default: true
+            }
+        }
+    }
+
     public static func module(
         name: String,
         category: ModuleCategory,

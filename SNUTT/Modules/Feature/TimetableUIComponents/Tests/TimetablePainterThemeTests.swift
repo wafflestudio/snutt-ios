@@ -12,6 +12,7 @@ import TimetableInterface
 
 @testable import TimetableUIComponents
 
+@MainActor
 @Suite
 struct TimetablePainterThemeTests {
     @Test("시간표가 없으면 SNUTT 기본 테마의 첫 번째 색상을 반환한다")

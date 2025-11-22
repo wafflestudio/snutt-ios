@@ -9,8 +9,30 @@ import FacebookCore
 import Firebase
 import UIKit
 
+/// The application delegate for SNUTT.
+///
+/// ## Overview
+/// Coordinates app-level initialization and lifecycle management.
+///
+/// ## Architecture
+/// Responsibilities are separated into focused extensions:
+/// - ``AppDelegate+ThirdPartySDKs``: Firebase and Facebook initialization
+/// - ``AppDelegate+Notifications``: Notification lifecycle, FCM handling, and URL scheme routing
+///
+/// ## Initialization Flow
+/// 1. `setupThirdPartySDKs` - Firebase and Facebook
+/// 2. `setupNotificationSystem` - APNs and FCM
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    private var firebaseConfigName: String {
+
+    // MARK: - Configuration
+
+    /// Returns the Firebase configuration plist name based on build configuration.
+    ///
+    /// - **Debug**: `GoogleServiceDebugInfo.plist` (dev Firebase project)
+    /// - **Release**: `GoogleServiceReleaseInfo.plist` (prod Firebase project)
+    ///
+    /// Ensures dev/prod data isolation for analytics, crash reports, and push notifications.
+    internal var firebaseConfigName: String {
         #if DEBUG
             return "GoogleServiceDebugInfo"
         #else
@@ -18,112 +40,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #endif
     }
 
+    // MARK: - Application Lifecycle
+
+    /// Called when the app finishes launching.
+    ///
+    /// ## Initialization Sequence
+    /// 1. Third-party SDKs (Firebase, Facebook)
+    /// 2. Notification system (APNs, FCM)
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions options: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        // MARK: Configure Firebase
+        // Initialize third-party SDKs (Firebase, Facebook)
+        let facebookInitialized = setupThirdPartySDKs(
+            application: application,
+            launchOptions: options
+        )
 
-        if let filePath = Bundle.main.path(forResource: firebaseConfigName, ofType: "plist"),
-            let configOption = FirebaseOptions(contentsOfFile: filePath)
-        {
-            FirebaseApp.configure(options: configOption)
-            FirebaseConfiguration.shared.setLoggerLevel(.min)
+        // Setup notification system (APNs, FCM)
+        setupNotificationSystem(application: application)
 
-            // MARK: remote notification
-
-            // https://developer.apple.com/forums/thread/764777
-            UNUserNotificationCenter.current().delegate = self
-            UNUserNotificationCenter.current().requestAuthorization(options: [
-                .alert,
-                .badge,
-                .sound,
-            ]) { @Sendable _, _ in }
-            application.registerForRemoteNotifications()
-            Messaging.messaging().delegate = self
-        } else {
-            assertionFailure("Firebase configurations not found.")
-        }
-
-        // MARK: Facebook Login
-
-        return FacebookCore.ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: options)
+        return facebookInitialized
     }
 
-    // MARK: UISceneSession Lifecycle
+    // MARK: - Scene Management
 
+    /// Configures a new scene session.
+    ///
+    /// Returns configuration with `SceneDelegate` as delegate class.
+    /// SceneDelegate handles window setup and URL routing.
     func application(
-        _: UIApplication,
+        _ application: UIApplication,
         configurationForConnecting connectingSceneSession: UISceneSession,
-        options _: UIScene.ConnectionOptions
+        options: UIScene.ConnectionOptions
     ) -> UISceneConfiguration {
         let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
         sceneConfig.delegateClass = SceneDelegate.self
         return sceneConfig
     }
 
-    func application(_: UIApplication, didDiscardSceneSessions _: Set<UISceneSession>) {}
-}
-
-/// Firebase Push Notification Settings.
-extension AppDelegate: @preconcurrency UNUserNotificationCenterDelegate {
-    func userNotificationCenter(
-        _: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
-            -> Void
-    ) {
-        let userInfo = notification.request.content.userInfo
-        Messaging.messaging().appDidReceiveMessage(userInfo)
-        completionHandler([[.banner, .sound, .list]])
-    }
-
-    func userNotificationCenter(
-        _: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse,
-        withCompletionHandler completionHandler: @escaping () -> Void
-    ) {
-        let userInfo = response.notification.request.content.userInfo
-        Messaging.messaging().appDidReceiveMessage(userInfo)
-        openUrl(from: response.notification)
-        completionHandler()
-    }
-
+    /// Called when scene sessions are discarded.
+    ///
+    /// Currently no cleanup needed - resources managed by scene delegates and ViewModels.
     func application(
-        _: UIApplication,
-        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+        _ application: UIApplication,
+        didDiscardSceneSessions sceneSessions: Set<UISceneSession>
     ) {
-        Messaging.messaging().appDidReceiveMessage(userInfo)
-        completionHandler(.noData)
-    }
-
-    func openUrl(from notification: UNNotification) {
-        let userInfo = notification.request.content.userInfo
-        if let urlString = userInfo["url_scheme"] as? String, let url = URL(string: urlString) {
-            UIApplication.shared.open(url, options: [:])
-        }
-    }
-}
-
-extension AppDelegate: @preconcurrency MessagingDelegate {
-    func messaging(
-        _: Messaging,
-        didReceiveRegistrationToken fcmToken: String?
-    ) {
-        let tokenDict = ["token": fcmToken ?? ""]
-        NotificationCenter.default.post(
-            name: Notification.Name("FCMToken"),
-            object: nil,
-            userInfo: tokenDict
-        )
-    }
-
-    func application(
-        _: UIApplication,
-        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
-    ) {
-        /// Register the token when the user grants permission for push notifications.
-        Messaging.messaging().apnsToken = deviceToken
+        // No cleanup needed
     }
 }

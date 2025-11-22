@@ -29,7 +29,8 @@ public enum PreviewHelpers {
             lectures: (3...Int.random(in: 4...6, using: &generator))
                 .map { _ in previewLecture(using: &generator) },
             userID: "user123",
-            theme: .builtInTheme(.snutt)
+            theme: .builtInTheme(.snutt),
+            isPrimary: Bool.random(using: &generator)
         )
     }
 

@@ -56,6 +56,11 @@ struct LectureEditDetailScene: View {
             VStack(spacing: 20) {
                 Group {
                     firstDetailSection
+
+                    if let reminderViewModel = viewModel.reminderViewModel {
+                        lectureReminderSection(viewModel: reminderViewModel)
+                    }
+
                     secondDetailSection
                     timePlaceSection
                 }
@@ -66,11 +71,15 @@ struct LectureEditDetailScene: View {
                 actionButtonsSection
 
             }
+            .animation(.defaultSpring, value: viewModel.reminderViewModel == nil)
             .padding(.vertical, 20)
             .padding(.bottom, 40)
         }
         .withResponsiveTouch()
         .task {
+            await errorAlertHandler.withAlert {
+                try await viewModel.initialLoad()
+            }
             await viewModel.fetchBuildingList()
         }
         .background(TimetableAsset.groupBackground.swiftUIColor)
@@ -152,6 +161,39 @@ struct LectureEditDetailScene: View {
                     .disabled(!editMode.isEditing)
                 }
             }
+        }
+    }
+
+    private func lectureReminderSection(viewModel: LectureReminderViewModel) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(TimetableStrings.reminderTitle)
+                .font(.system(size: 14))
+                .foregroundColor(Color(uiColor: .secondaryLabel))
+            LectureReminderPicker(
+                selection: Binding(
+                    get: { viewModel.option },
+                    set: { newValue in
+                        errorAlertHandler.withAlert {
+                            try await viewModel.updateOption(newValue)
+                            // Show toast with "보기" button to navigate to settings
+                            presentToast(
+                                .init(
+                                    message: newValue.toastMessage,
+                                    button: .init(title: TimetableStrings.toastActionView) {
+                                        @Sendable @MainActor in
+                                        @Dependency(\.notificationCenter) var notificationCenter
+                                        notificationCenter.post(NavigateToLectureRemindersMessage())
+                                    }
+                                )
+                            )
+                        }
+                    }
+                )
+            )
+            Text(TimetableStrings.reminderDescription)
+                .font(.system(size: 13))
+                .lineSpacing(13 * 0.4)
+                .foregroundColor(Color(uiColor: .tertiaryLabel))
         }
     }
 

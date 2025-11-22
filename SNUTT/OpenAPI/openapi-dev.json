@@ -845,6 +845,9 @@
           "insertFcm" : {
             "type" : "boolean"
           },
+          "shouldSendAsDataMessage" : {
+            "type" : "boolean"
+          },
           "title" : {
             "type" : "string"
           },
@@ -870,6 +873,7 @@
           "body",
           "dataPayload",
           "insertFcm",
+          "shouldSendAsDataMessage",
           "title",
           "type"
         ],
@@ -2748,7 +2752,7 @@
               }
             }
           },
-          "description" : "userId null이면 모든 유저에게 보냄",
+          "description" : "userId == null이면 모든 유저에게 보냄\ninsertFcm == true && shouldSendAsDataMessage == true이면 FCM data message(클라에서 직접 대응 필요한 메시지)로 보냄",
           "required" : true
         },
         "responses" : {
@@ -4384,7 +4388,7 @@
         ],
         "requestBody" : {
           "content" : {
-            "*/*" : {
+            "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/TimetableLectureReminderModifyRequestDto"
               }

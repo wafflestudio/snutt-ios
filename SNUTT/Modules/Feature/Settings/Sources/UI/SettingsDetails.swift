@@ -9,6 +9,7 @@ import APIClientInterface
 import SharedUIComponents
 import SwiftUI
 import ThemesInterface
+import TimetableInterface
 import VacancyInterface
 
 struct SettingsDetails: View {
@@ -16,6 +17,7 @@ struct SettingsDetails: View {
     let viewModel: SettingsViewModel
 
     @Environment(\.vacancyUIProvider) private var vacancyUIProvider
+    @Environment(\.timetableUIProvider) private var timetableUIProvider
     @Environment(\.themeUIProvider) private var themeUIProvider
     #if DEBUG
         @Environment(\.networkLogUIProvider) private var networkLogUIProvider
@@ -39,6 +41,8 @@ struct SettingsDetails: View {
         case .vacancyNotification:
             AnyView(vacancyUIProvider.makeVacancyScene())
                 .analyticsScreen(.vacancy)
+        case .lectureReminder:
+            timetableUIProvider.makeLectureReminderScene()
         case .themeMarket:
             AnyView(themeUIProvider.themeMarketScene())
         case .developers:

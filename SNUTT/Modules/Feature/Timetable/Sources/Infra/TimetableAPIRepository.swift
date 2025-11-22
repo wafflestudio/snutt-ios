@@ -130,7 +130,8 @@ extension Components.Schemas.TimetableLegacyDto {
             quarter: Quarter(year: Int(year), semester: require(Semester(rawValue: semester.rawValue))),
             lectures: lecture_list.map { try $0.toLecture() },
             userID: user_id,
-            theme: themeType
+            theme: themeType,
+            isPrimary: isPrimary
         )
     }
 }
