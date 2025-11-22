@@ -58,6 +58,8 @@
 	<false/>
 	<key>GIDClientID</key>
 	<string>$(GOOGLE_CLIENT_ID)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>KAKAO_APP_KEY</key>
 	<string>$(KAKAO_APP_KEY)</string>
 	<key>KAKAO_PHASE</key>
@@ -80,10 +82,6 @@
 	<string>https://${SNUEV_WEB_URL}</string>
 	<key>THEME_WEB_URL</key>
 	<string>https://${THEME_WEB_URL}</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
