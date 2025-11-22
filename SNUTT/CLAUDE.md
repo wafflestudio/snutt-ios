@@ -633,3 +633,4 @@ Modules/Feature/FeatureName/
 ## Widget Extension
 
 The project includes a widget extension (`SNUTTWidget`) with its own target and dependencies, primarily using timetable functionality.
+- The app's Info.plist is stored in Tuist/ProjectDescriptionHelpers/InfoPlist.swift.
