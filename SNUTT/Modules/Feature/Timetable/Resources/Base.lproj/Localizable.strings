@@ -149,6 +149,7 @@
 
 /* Lecture Reminder */
 "reminder.title" = "강의 리마인더";
+"reminder.description" = "학기가 시작됐을 때 해당 시간에 푸시 알림을 보내드립니다.";
 "reminder.option.none" = "없음";
 "reminder.option.before10" = "10분 전";
 "reminder.option.onTime" = "수업 시작 시";

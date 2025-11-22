@@ -148,6 +148,7 @@
 
 /* Lecture Reminder */
 "reminder.title" = "Lecture Reminder";
+"reminder.description" = "Push notifications will be sent at the specified time when the semester starts.";
 "reminder.option.none" = "None";
 "reminder.option.before10" = "10 min before";
 "reminder.option.onTime" = "On time";

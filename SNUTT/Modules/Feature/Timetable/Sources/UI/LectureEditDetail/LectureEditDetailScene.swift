@@ -168,7 +168,7 @@ struct LectureEditDetailScene: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(TimetableStrings.reminderTitle)
                 .font(.system(size: 14))
-                .foregroundColor(.label.opacity(0.8))
+                .foregroundColor(Color(uiColor: .secondaryLabel))
             LectureReminderPicker(
                 selection: Binding(
                     get: { viewModel.option },
@@ -190,6 +190,10 @@ struct LectureEditDetailScene: View {
                     }
                 )
             )
+            Text(TimetableStrings.reminderDescription)
+                .font(.system(size: 13))
+                .lineSpacing(13 * 0.4)
+                .foregroundColor(Color(uiColor: .tertiaryLabel))
         }
     }
 
