@@ -43,8 +43,8 @@ public final class LectureReminderViewModel {
                 )
                 option = updatedReminder.option
             } catch {
-                // Propagate error unless task was cancelled
-                if !Task.isCancelled {
+                // Propagate error if task was not cancelled
+                if !error.isCancellationError {
                     throw error
                 }
             }

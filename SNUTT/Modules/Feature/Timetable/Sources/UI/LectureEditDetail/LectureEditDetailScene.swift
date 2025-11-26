@@ -175,7 +175,7 @@ struct LectureEditDetailScene: View {
                     set: { newValue in
                         errorAlertHandler.withAlert {
                             try await viewModel.updateOption(newValue)
-                            // Show toast with "보기" button to navigate to settings
+                            // Show toast with "View" button to navigate to settings
                             presentToast(
                                 .init(
                                     message: newValue.toastMessage,

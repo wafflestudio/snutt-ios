@@ -57,6 +57,7 @@ public final class ErrorAlertHandler: Sendable {
 
 public protocol ErrorWrapper {
     var underlyingError: any Error { get }
+    /// Indicates whether the error represents a task cancellation (either a direct `CancellationError` or one wrapped within another error type).
     var isCancellationError: Bool { get }
 }
 
