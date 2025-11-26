@@ -181,9 +181,9 @@ enum ReminderOption: String, CaseIterable, Codable {
         }
     }
     
-    var toToast: ToastType {
+    var toToast: ToastType? {
         switch self {
-        case .none: .reminderNone
+        case .none: nil
         case .before10: .reminder10Before
         case .onTime: .reminderOnTime
         case .after10: .reminder10After

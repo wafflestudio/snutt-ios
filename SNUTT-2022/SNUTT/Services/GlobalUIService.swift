@@ -161,8 +161,7 @@ struct GlobalUIService: GlobalUIServiceProtocol, UserAuthHandler, ConfigsProvida
     func setToast(_ toast: ToastType?, showButton: Bool? = true) {
         if let toast = toast {
             switch toast {
-            case .reminderNone,
-                 .reminder10Before,
+            case .reminder10Before,
                  .reminderOnTime,
                  .reminder10After:
                 setReminderToast(toast, showButton)

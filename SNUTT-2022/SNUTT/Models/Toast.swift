@@ -15,7 +15,6 @@ struct Toast: Identifiable {
 
 enum ToastType {
     case bookmark
-    case reminderNone
     case reminder10Before
     case reminder10After
     case reminderOnTime
@@ -24,7 +23,6 @@ enum ToastType {
     var message: String {
         switch self {
         case .bookmark: "검색탭 우측 상단에서 관심강좌 목록을 확인해보세요."
-        case .reminderNone: "전자출결 알림이 해제되었습니다."
         case .reminder10Before: "수업 시작 10분 전에 푸시 알림을 보내드립니다."
         case .reminder10After: "수업 시작 10분 후에 푸시 알림을 보내드립니다."
         case .reminderOnTime: "수업이 시작하면 푸시 알림을 보내드립니다."
