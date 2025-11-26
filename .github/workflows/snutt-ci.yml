@@ -11,7 +11,7 @@ on:
 jobs:
   check-and-test:
     runs-on: macos-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     defaults:
       run:
