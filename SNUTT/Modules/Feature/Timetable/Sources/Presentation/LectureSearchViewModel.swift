@@ -439,10 +439,10 @@ extension SearchTimeRange {
         }
 
         // Format times as HH:mm (24-hour format)
-        let timeFormat: Date.FormatStyle = .dateTime.hour().minute()
+        let timeFormat: Date.FormatStyle = .dateTime.hour(.defaultDigits(amPM: .omitted)).minute()
         let startTime = startDate.formatted(timeFormat)
         let endTime = endDate.formatted(timeFormat)
 
-        return "\(weekday.veryShortSymbol) \(startTime)-\(endTime)"
+        return "\(weekday.shortSymbol) \(startTime)-\(endTime)"
     }
 }
