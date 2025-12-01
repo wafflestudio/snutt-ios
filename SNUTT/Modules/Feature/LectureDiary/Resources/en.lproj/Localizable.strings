@@ -1,0 +1,27 @@
+/* Lecture Diary Feature */
+"lecture_diary.title" = "Lecture Diary";
+"lecture_diary.empty.title" = "Your lecture diary is empty.";
+"lecture_diary.empty.description" = "Write a lecture diary\nthrough push notifications\nat the end of each week!";
+"lecture_diary.empty.button" = "Write Lecture Diary";
+"lecture_diary.delete.alert.title" = "Delete '%@' lecture diary?";
+"lecture_diary.cancel" = "Cancel";
+"lecture_diary.confirm" = "Confirm";
+
+/* Edit Diary */
+"lecture_diary.edit.header.title" = "Share your thoughts about\n'%@' you attended today.";
+"lecture_diary.edit.header.subtitle" = "You can check it in More > Lecture Diary.";
+"lecture_diary.edit.cancel.alert" = "Stop writing lecture diary?";
+"lecture_diary.edit.class_type.question" = "What did you do today?";
+"lecture_diary.edit.class_type.multiple" = "Multiple selection";
+"lecture_diary.edit.done" = "Done";
+"lecture_diary.edit.next" = "Next";
+"lecture_diary.edit.extra_comment.title" = "Write additional comments.";
+"lecture_diary.edit.extra_comment.optional" = "Optional";
+"lecture_diary.edit.extra_comment.placeholder" = "Write briefly about what you learned\nand how you felt in today's class.";
+
+/* Confirm */
+"lecture_diary.confirm.title" = "Lecture diary has been registered.";
+"lecture_diary.confirm.subtitle" = "You can check your diary\nin More > Lecture Diary.";
+"lecture_diary.confirm.review_more" = "Write More";
+"lecture_diary.confirm.review_eval" = "Write Course Review";
+"lecture_diary.confirm.home" = "Home";

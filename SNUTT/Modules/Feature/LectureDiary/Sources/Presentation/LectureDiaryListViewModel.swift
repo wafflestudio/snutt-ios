@@ -1,0 +1,73 @@
+//
+//  LectureDiaryListViewModel.swift
+//  SNUTT
+//
+//  Copyright © 2025 wafflestudio.com. All rights reserved.
+//
+
+import Dependencies
+import Foundation
+import Observation
+import TimetableInterface
+
+@Observable
+@MainActor
+public final class LectureDiaryListViewModel {
+    @ObservationIgnored
+    @Dependency(\.lectureDiaryRepository) private var repository
+
+    private(set) var diaryListState: DiaryListState = .loading
+    private(set) var selectedQuarter: Quarter?
+    private(set) var availableQuarters: [Quarter] = []
+
+    public init() {}
+
+    func loadDiaryList() async {
+        diaryListState = .loading
+
+        do {
+            // TODO: Get current quarter from somewhere
+            let currentQuarter = Quarter(year: 2025, semester: .first)
+            let diaries = try await repository.fetchDiaryList(quarter: currentQuarter)
+
+            if diaries.isEmpty {
+                diaryListState = .empty
+            } else {
+                diaryListState = .loaded(diaries)
+                // Extract unique quarters
+                availableQuarters = extractQuarters(from: diaries)
+                selectedQuarter = availableQuarters.first
+            }
+        } catch {
+            diaryListState = .failed
+        }
+    }
+
+    func selectQuarter(_ quarter: Quarter) {
+        selectedQuarter = quarter
+    }
+
+    func deleteDiary(id: String) async {
+        do {
+            try await repository.deleteDiary(diaryID: id)
+            await loadDiaryList()
+        } catch {
+            // TODO: Handle error
+            print("Failed to delete diary: \(error)")
+        }
+    }
+
+    private func extractQuarters(from diaries: [DiarySummary]) -> [Quarter] {
+        let uniqueQuarters = Set(diaries.map(\.quarter))
+        return uniqueQuarters.sorted()
+    }
+}
+
+extension LectureDiaryListViewModel {
+    enum DiaryListState {
+        case loading
+        case empty
+        case loaded([DiarySummary])
+        case failed
+    }
+}

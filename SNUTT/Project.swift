@@ -224,6 +224,21 @@ let project = Project.app(
                 .external(name: "KakaoSDKTemplate"),
             ]
         ),
+        .module(
+            name: "LectureDiary",
+            category: .feature,
+            dependencies: [
+                .target(name: "AnalyticsInterface"),
+                .target(name: "LectureDiaryInterface"),
+                .target(name: "TimetableInterface"),
+                .target(name: "APIClientInterface"),
+                .target(name: "SharedUIComponents"),
+                .target(name: "SwiftUIUtility"),
+                .target(name: "FoundationUtility"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+            ]
+        ),
         // FeatureInterface
         .module(
             name: "TimetableInterface",
@@ -322,6 +337,16 @@ let project = Project.app(
             name: "FriendsInterface",
             category: .featureInterface,
             dependencies: []
+        ),
+        .module(
+            name: "LectureDiaryInterface",
+            category: .featureInterface,
+            dependencies: [
+                .target(name: "APIClientInterface"),
+                .external(name: "Spyable"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+            ]
         ),
         // Shared
         .module(
