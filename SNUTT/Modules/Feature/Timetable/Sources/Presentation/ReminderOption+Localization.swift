@@ -23,10 +23,10 @@ extension ReminderOption {
     }
 
     /// Toast message to display when this option is selected
-    var toastMessage: String {
+    var toastMessage: String? {
         switch self {
         case .disabled:
-            return TimetableStrings.reminderToastNone
+            return nil
         case .before10:
             return TimetableStrings.reminderToastBefore10
         case .onTime:

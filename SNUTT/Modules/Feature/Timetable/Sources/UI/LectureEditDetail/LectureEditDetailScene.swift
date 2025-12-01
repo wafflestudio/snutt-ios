@@ -176,16 +176,18 @@ struct LectureEditDetailScene: View {
                         errorAlertHandler.withAlert {
                             try await viewModel.updateOption(newValue)
                             // Show toast with "View" button to navigate to settings
-                            presentToast(
-                                .init(
-                                    message: newValue.toastMessage,
-                                    button: .init(title: TimetableStrings.toastActionView) {
-                                        @Sendable @MainActor in
-                                        @Dependency(\.notificationCenter) var notificationCenter
-                                        notificationCenter.post(NavigateToLectureRemindersMessage())
-                                    }
+                            if let message = newValue.toastMessage {
+                                presentToast(
+                                    .init(
+                                        message: message,
+                                        button: .init(title: TimetableStrings.toastActionView) {
+                                            @Sendable @MainActor in
+                                            @Dependency(\.notificationCenter) var notificationCenter
+                                            notificationCenter.post(NavigateToLectureRemindersMessage())
+                                        }
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                 )

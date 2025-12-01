@@ -154,7 +154,6 @@
 "reminder.option.onTime" = "On time";
 "reminder.option.after10" = "10 min after";
 
-"reminder.toast.none" = "Lecture reminder has been disabled.";
 "reminder.toast.before10" = "You'll receive a notification 10 minutes before class starts.";
 "reminder.toast.onTime" = "You'll receive a notification when class starts.";
 "reminder.toast.after10" = "You'll receive a notification 10 minutes after class starts.";

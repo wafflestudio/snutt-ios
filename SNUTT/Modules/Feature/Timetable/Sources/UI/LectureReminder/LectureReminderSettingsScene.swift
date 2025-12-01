@@ -84,7 +84,9 @@ public struct LectureReminderSettingsScene: View {
                     set: { newValue in
                         errorAlertHandler.withAlert {
                             try await reminderViewModel.updateOption(newValue)
-                            presentToast(.init(message: newValue.toastMessage))
+                            if let message = newValue.toastMessage {
+                                presentToast(.init(message: message))
+                            }
                         }
                     }
                 )
