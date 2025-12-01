@@ -53,7 +53,7 @@ struct LectureEditDetailScene: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            VStack(spacing: 16) {
                 Group {
                     firstDetailSection
 
@@ -64,12 +64,11 @@ struct LectureEditDetailScene: View {
                     secondDetailSection
                     timePlaceSection
                 }
-                .padding()
-                .padding(.horizontal, 5)
+                .padding(.horizontal, 20)
+                .padding(.vertical)
                 .background(TimetableAsset.groupForeground.swiftUIColor)
 
                 actionButtonsSection
-
             }
             .animation(.defaultSpring, value: viewModel.reminderViewModel == nil)
             .padding(.vertical, 20)
@@ -167,8 +166,8 @@ struct LectureEditDetailScene: View {
     private func lectureReminderSection(viewModel: LectureReminderViewModel) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(TimetableStrings.reminderTitle)
-                .font(.system(size: 14))
-                .foregroundColor(Color(uiColor: .secondaryLabel))
+                .font(.custom(.regular15))
+                .foregroundColor(.primary)
             LectureReminderPicker(
                 selection: Binding(
                     get: { viewModel.option },
@@ -192,10 +191,10 @@ struct LectureEditDetailScene: View {
                     }
                 )
             )
+            .padding(.horizontal, -4)
             Text(TimetableStrings.reminderDescription)
-                .font(.system(size: 13))
-                .lineSpacing(13 * 0.4)
-                .foregroundColor(Color(uiColor: .tertiaryLabel))
+                .lineHeight(with: .regular13, percentage: 140)
+                .foregroundColor(SharedUIComponentsAsset.gray30.swiftUIColor)
         }
     }
 
