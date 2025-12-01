@@ -1,0 +1,27 @@
+/* Lecture Diary Feature */
+"lecture_diary.title" = "강의 일기장";
+"lecture_diary.empty.title" = "강의일기장이 비어있어요.";
+"lecture_diary.empty.description" = "매주 마지막 수업날,\n푸시알림을 통해 강의일기를\n작성해보세요!";
+"lecture_diary.empty.button" = "강의일기 작성하기";
+"lecture_diary.delete.alert.title" = "'%@' 강의일기를 삭제하시겠습니까?";
+"lecture_diary.cancel" = "취소";
+"lecture_diary.confirm" = "확인";
+
+/* Edit Diary */
+"lecture_diary.edit.header.title" = "오늘 수강한 '%@'에 대한\n의견을 남겨보세요.";
+"lecture_diary.edit.header.subtitle" = "더보기 > 강의일기장에서 확인할 수 있어요.";
+"lecture_diary.edit.cancel.alert" = "강의일기 작성을 중단하시겠습니까?";
+"lecture_diary.edit.class_type.question" = "오늘 무엇을 했나요?";
+"lecture_diary.edit.class_type.multiple" = "중복 가능";
+"lecture_diary.edit.done" = "완료";
+"lecture_diary.edit.next" = "다음";
+"lecture_diary.edit.extra_comment.title" = "더 남기고 싶은 말을 작성해주세요.";
+"lecture_diary.edit.extra_comment.optional" = "선택";
+"lecture_diary.edit.extra_comment.placeholder" = "오늘 수업에서 배운 내용, 느낀 점 등을 간단하게\n적어보세요.";
+
+/* Confirm */
+"lecture_diary.confirm.title" = "강의일기가 등록되었습니다.";
+"lecture_diary.confirm.subtitle" = "작성한 강의일기는 더보기>강의일기장\n에서 확인할 수 있어요.";
+"lecture_diary.confirm.review_more" = "더 기록하기";
+"lecture_diary.confirm.review_eval" = "강의평 작성하기";
+"lecture_diary.confirm.home" = "홈으로";
