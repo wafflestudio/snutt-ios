@@ -24,21 +24,17 @@ struct LectureReminderEmptyView: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
             SharedUIComponentsAsset.catError.swiftUIImage
-                .resizable()
-                .scaledToFit()
-                .frame(width: 120, height: 120)
 
             Text(title)
-                .font(.system(size: 17, weight: .semibold))
+                .font(.custom(.semibold15))
                 .foregroundColor(.primary)
 
-            Text(description)
-                .font(.system(size: 15))
-                .foregroundColor(.secondary)
+            Text(description.asMarkdown())
+                .lineHeight(with: .regular13, percentage: 145)
+                .foregroundColor(SharedUIComponentsAsset.gray30.swiftUIColor)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
 
             if let actionButton {
                 Button(TimetableStrings.reminderErrorRetry) {
@@ -47,6 +43,7 @@ struct LectureReminderEmptyView: View {
                 .buttonStyle(.borderedProminent)
             }
         }
+        .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

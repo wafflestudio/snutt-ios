@@ -44,25 +44,34 @@ public struct LectureReminderSettingsScene: View {
     }
 
     private var contentView: some View {
-        Form {
-            Section {
-                switch viewModel.loadState {
-                case .loading:
-                    ProgressView()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                case .loaded(let array) where array.isEmpty:
-                    LectureReminderEmptyView()
-                case .loaded:
-                    ForEach(viewModel.sortedReminderViewModels, id: \.lectureReminder.timetableLectureID) {
-                        reminderViewModel in
-                        reminderRow(for: reminderViewModel)
+        Group {
+            switch viewModel.loadState {
+            case .loading:
+                ProgressView()
+                    .frame(maxWidth: .infinity, alignment: .center)
+            case .loaded(let array) where array.isEmpty:
+                LectureReminderEmptyView()
+            case .loaded:
+                Form {
+                    Section {
+                        ForEach(viewModel.sortedReminderViewModels, id: \.lectureReminder.timetableLectureID) {
+                            reminderViewModel in
+                            reminderRow(for: reminderViewModel)
+                        }
+                    } header: {
+                        Text(TimetableStrings.reminderSettingsHeader)
+                            .foregroundStyle(SharedUIComponentsAsset.gray30.swiftUIColor)
+                    } footer: {
+                        Text(TimetableStrings.reminderSettingsFooter.asMarkdown())
+                            .lineHeight(with: .regular13, percentage: 140)
+                            .foregroundStyle(SharedUIComponentsAsset.gray30.swiftUIColor)
+                            .padding(.top, 16)
+                            .padding(.bottom, 48)
+                            .listRowInsets(EdgeInsets())
                     }
-                case .failed:
-                    errorStateView
                 }
-            } footer: {
-                Text(TimetableStrings.reminderSettingsFooter.asMarkdown())
-                    .font(.system(size: 13))
+            case .failed:
+                errorStateView
             }
         }
         .refreshable {
@@ -76,7 +85,7 @@ public struct LectureReminderSettingsScene: View {
     private func reminderRow(for reminderViewModel: LectureReminderViewModel) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(reminderViewModel.lectureReminder.lectureTitle)
-                .font(.system(size: 15))
+                .font(.custom(.regular15))
 
             LectureReminderPicker(
                 selection: Binding(
