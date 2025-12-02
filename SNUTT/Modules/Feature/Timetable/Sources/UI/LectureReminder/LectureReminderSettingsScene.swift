@@ -63,7 +63,7 @@ public struct LectureReminderSettingsScene: View {
                             .foregroundStyle(SharedUIComponentsAsset.gray30.swiftUIColor)
                     } footer: {
                         Text(TimetableStrings.reminderSettingsFooter.asMarkdown())
-                            .lineHeight(with: .regular13, percentage: 140)
+                            .lineHeight(with: .systemFont(ofSize: 13), percentage: 140)
                             .foregroundStyle(SharedUIComponentsAsset.gray30.swiftUIColor)
                             .padding(.top, 16)
                             .padding(.bottom, 48)
@@ -85,7 +85,7 @@ public struct LectureReminderSettingsScene: View {
     private func reminderRow(for reminderViewModel: LectureReminderViewModel) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(reminderViewModel.lectureReminder.lectureTitle)
-                .font(.custom(.regular15))
+                .font(.system(size: 15))
 
             LectureReminderPicker(
                 selection: Binding(

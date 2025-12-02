@@ -28,11 +28,11 @@ struct LectureReminderEmptyView: View {
             SharedUIComponentsAsset.catError.swiftUIImage
 
             Text(title)
-                .font(.custom(.semibold15))
+                .font(.system(size: 15, weight: .semibold))
                 .foregroundColor(.primary)
 
             Text(description.asMarkdown())
-                .lineHeight(with: .regular13, percentage: 145)
+                .lineHeight(with: .systemFont(ofSize: 13), percentage: 145)
                 .foregroundColor(SharedUIComponentsAsset.gray30.swiftUIColor)
                 .multilineTextAlignment(.center)
 

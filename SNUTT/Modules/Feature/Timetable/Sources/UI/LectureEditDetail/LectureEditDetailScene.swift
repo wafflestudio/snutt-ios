@@ -166,7 +166,7 @@ struct LectureEditDetailScene: View {
     private func lectureReminderSection(viewModel: LectureReminderViewModel) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(TimetableStrings.reminderTitle)
-                .font(.custom(.regular15))
+                .font(.system(size: 15))
                 .foregroundColor(.primary)
             LectureReminderPicker(
                 selection: Binding(
@@ -193,7 +193,7 @@ struct LectureEditDetailScene: View {
             )
             .padding(.horizontal, -4)
             Text(TimetableStrings.reminderDescription)
-                .lineHeight(with: .regular13, percentage: 140)
+                .lineHeight(with: .systemFont(ofSize: 13), percentage: 140)
                 .foregroundColor(SharedUIComponentsAsset.gray30.swiftUIColor)
         }
     }
