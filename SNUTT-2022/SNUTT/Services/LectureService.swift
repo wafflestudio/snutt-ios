@@ -270,7 +270,7 @@ class FakeLectureService: LectureServiceProtocol {
         throw STError(.NO_NETWORK)
     }
     func fetchLectureReminderList() async throws { return }
-    func getLectureReminderState(timetableId: String, lecture: Lecture) async throws -> LectureReminder { return .preview }
+    func getLectureReminderState(timetableId: String, lecture: Lecture) async throws -> LectureReminder { throw STError(.SERVER_FAULT) }
     func changeLectureReminderState(lectureId: String, to option: ReminderOption) async throws {}
     func getCurrentOrNextSemesterPrimaryTable() -> TimetableMetadata? { nil }
 }
