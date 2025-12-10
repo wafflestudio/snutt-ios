@@ -46,17 +46,20 @@ public struct LectureReminderSettingsScene: View {
     private var contentView: some View {
         Group {
             switch viewModel.loadState {
-            case .loading:
-                ProgressView()
-                    .frame(maxWidth: .infinity, alignment: .center)
-            case .loaded(let array) where array.isEmpty:
-                LectureReminderEmptyView()
-            case .loaded:
+            case .loading, .loaded:
                 Form {
                     Section {
-                        ForEach(viewModel.sortedReminderViewModels, id: \.lectureReminder.timetableLectureID) {
-                            reminderViewModel in
-                            reminderRow(for: reminderViewModel)
+                        switch viewModel.loadState {
+                        case .loading:
+                            ProgressView()
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        case .loaded:
+                            ForEach(viewModel.sortedReminderViewModels, id: \.lectureReminder.timetableLectureID) {
+                                reminderViewModel in
+                                reminderRow(for: reminderViewModel)
+                            }
+                        default:
+                            EmptyView()
                         }
                     } header: {
                         Text(TimetableStrings.reminderSettingsHeader)
@@ -70,6 +73,8 @@ public struct LectureReminderSettingsScene: View {
                             .listRowInsets(EdgeInsets())
                     }
                 }
+            case .loaded(let array) where array.isEmpty:
+                LectureReminderEmptyView()
             case .failed:
                 errorStateView
             }
