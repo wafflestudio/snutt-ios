@@ -7,27 +7,50 @@
 
 import OpenAPIRuntime
 
-public protocol APIClientError: Error {
+public enum APIClientError: Error {
     /// Predefined error code with localized strings (errorDescription, failureReason, recoverySuggestion).
     /// Used when the server error is recognized and has a corresponding enum case.
-    var localizedCode: LocalizedErrorCode? { get }
+    case predefined(LocalizedErrorCode)
     /// Unknown server error for unrecognized error codes that don't have a predefined LocalizedErrorCode case.
     /// Contains raw error data from server response (errorCode, title, displayMessage).
-    var serverError: ClientUnknownServerError? { get }
-}
-
-extension ClientError: APIClientError {
-    public var localizedCode: LocalizedErrorCode? {
-        underlyingError as? LocalizedErrorCode
-    }
-
-    public var serverError: ClientUnknownServerError? {
-        underlyingError as? ClientUnknownServerError
-    }
+    case unknown(ClientUnknownServerError)
 }
 
 extension APIClientError {
     public var failureReason: String? {
-        serverError?.failureReason ?? localizedCode?.failureReason
+        switch self {
+        case .predefined(let localizedErrorCode):
+            localizedErrorCode.failureReason
+        case .unknown(let clientUnknownServerError):
+            clientUnknownServerError.failureReason
+        }
+    }
+}
+
+extension Error {
+    public var apiClientError: APIClientError? {
+        switch self {
+        case let error as ClientError:
+            if let localizedCode = error.underlyingError as? LocalizedErrorCode {
+                return .predefined(localizedCode)
+            } else if let serverError = error.underlyingError as? ClientUnknownServerError {
+                return .unknown(serverError)
+            } else {
+                return nil
+            }
+        default:
+            return nil
+        }
+    }
+
+    public var isCancellationError: Bool {
+        switch self {
+        case is CancellationError:
+            true
+        case let error as ClientError where error.underlyingError is CancellationError:
+            true
+        default:
+            false
+        }
     }
 }

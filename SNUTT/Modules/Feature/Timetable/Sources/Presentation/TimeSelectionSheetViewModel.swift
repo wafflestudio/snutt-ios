@@ -84,10 +84,6 @@ class TimeSelectionSheetViewModel {
         selectedTimeRanges = []
     }
 
-    func clearAllSelections() {
-        clear()
-    }
-
     func selectEmptyTimeSlots(from timetable: Timetable?) {
         // Generate all possible 30-minute time slots
         let allSlots = generateAllTimeSlots()

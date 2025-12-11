@@ -39,9 +39,15 @@ public final class ErrorAlertHandler: Sendable {
     ) async -> T? {
         do {
             return try await operation()
-        } catch let error as any ErrorWrapper {
-            currentError = .init(underlyingError: error.underlyingError)
+        } catch is CancellationError {
             return nil
+        } catch let error as any ErrorWrapper {
+            if error.isCancellationError {
+                return nil
+            } else {
+                currentError = .init(underlyingError: error.underlyingError)
+                return nil
+            }
         } catch {
             currentError = .init(underlyingError: error)
             return nil
@@ -51,6 +57,8 @@ public final class ErrorAlertHandler: Sendable {
 
 public protocol ErrorWrapper {
     var underlyingError: any Error { get }
+    /// Indicates whether the error represents a task cancellation (either a direct `CancellationError` or one wrapped within another error type).
+    var isCancellationError: Bool { get }
 }
 
 struct AnyLocalizedError: LocalizedError {

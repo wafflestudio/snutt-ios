@@ -30,6 +30,7 @@ struct ExpandableLectureListView: View {
             .animation(.defaultSpring, value: viewModel.selectedLecture?.id)
         }
         .withResponsiveTouch()
+        .scrollDismissesKeyboard(.interactively)
         .scrollPosition(id: $scrolledID, anchor: .bottom)
         .onAppear {
             scrolledID = viewModel.scrollPosition

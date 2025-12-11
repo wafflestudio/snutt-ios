@@ -39,6 +39,13 @@ final class SettingsViewModel {
         ) { @MainActor viewModel, element in
             viewModel.path = .init([SettingsPathType.vacancyNotification])
         }
+
+        Task.scoped(
+            to: self,
+            subscribing: lectureReminderNavigationNotifications()
+        ) { @MainActor viewModel, element in
+            viewModel.path = .init([SettingsPathType.lectureReminder])
+        }
     }
 
     var path = NavigationPath()
@@ -50,5 +57,10 @@ final class SettingsViewModel {
     /// Async stream of vacancy navigation notifications
     func vacancyNavigationNotifications() -> AsyncStream<NavigateToVacancyMessage> {
         notificationCenter.messages(of: NavigateToVacancyMessage.self)
+    }
+
+    /// Async stream of lecture reminder navigation notifications
+    func lectureReminderNavigationNotifications() -> AsyncStream<NavigateToLectureRemindersMessage> {
+        notificationCenter.messages(of: NavigateToLectureRemindersMessage.self)
     }
 }

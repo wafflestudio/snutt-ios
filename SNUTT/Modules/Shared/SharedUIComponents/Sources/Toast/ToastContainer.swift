@@ -4,10 +4,19 @@ import SwiftUIUtility
 @MainActor
 @Observable
 final class ToastContainerViewModel {
+    private enum Constants {
+        static let maxVisibleToasts = 3
+    }
+
     private(set) var toasts: [Toast] = []
     private var dismissTasks: [UUID: Task<Void, Never>] = [:]
 
     func present(_ toast: Toast) {
+        // Dismiss oldest toast if we've reached the maximum
+        if toasts.count >= Constants.maxVisibleToasts, let oldestToast = toasts.first {
+            dismiss(oldestToast)
+        }
+
         toasts.append(toast)
 
         let dismissTask = Task { @MainActor in

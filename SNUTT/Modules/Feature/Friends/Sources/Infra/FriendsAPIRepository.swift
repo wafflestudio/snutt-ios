@@ -137,7 +137,8 @@ extension Components.Schemas.TimetableDto {
             quarter: quarter,
             lectures: try lectures.map { try $0.toLecture() },
             userID: userId,
-            theme: themeType
+            theme: themeType,
+            isPrimary: isPrimary
         )
     }
 }

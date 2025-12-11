@@ -44,6 +44,10 @@ public struct InfoPlist {
                     "CFBundleURLName": .string("facebook"),
                 ]),
             ],
+            "UIBackgroundModes": [
+                "remote-notification"
+            ],
+            "FirebaseAppDelegateProxyEnabled": false,
         ]
     }
 }

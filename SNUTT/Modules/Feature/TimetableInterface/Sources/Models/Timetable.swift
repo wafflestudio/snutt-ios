@@ -17,6 +17,7 @@ public struct Timetable: Identifiable, Sendable, Codable {
     public let lectures: [Lecture]
     public let userID: String
     public let theme: ThemeType
+    public let isPrimary: Bool
 }
 
 @MemberwiseInit(.public)

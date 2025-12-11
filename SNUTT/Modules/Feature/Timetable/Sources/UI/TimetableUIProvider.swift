@@ -56,4 +56,8 @@ public struct TimetableUIProvider: TimetableUIProvidable {
             }
         )
     }
+
+    public func makeLectureReminderScene() -> AnyView {
+        AnyView(LectureReminderSettingsScene())
+    }
 }

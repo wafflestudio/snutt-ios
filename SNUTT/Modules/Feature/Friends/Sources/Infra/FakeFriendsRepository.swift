@@ -95,7 +95,8 @@
                 quarter: quarter,
                 lectures: [],
                 userID: friendID,
-                theme: .builtInTheme(.snutt)
+                theme: .builtInTheme(.snutt),
+                isPrimary: true
             )
         }
 

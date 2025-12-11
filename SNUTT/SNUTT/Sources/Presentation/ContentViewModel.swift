@@ -78,6 +78,12 @@ class ContentViewModel {
         ) { @MainActor viewModel, _ in
             viewModel.selectedTab = .timetable
         }
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: NavigateToLectureRemindersMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.selectedTab = .settings
+        }
     }
 
     private func loadConfigs() async throws {

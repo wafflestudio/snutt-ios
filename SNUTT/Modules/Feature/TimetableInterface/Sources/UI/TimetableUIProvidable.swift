@@ -19,6 +19,7 @@ public protocol TimetableUIProvidable: Sendable {
         availableThemes: [Theme]
     ) -> AnyView
     func makeLectureDetailPreview(lecture: Lecture, quarter: Quarter, options: LectureDetailPreviewOptions) -> AnyView
+    func makeLectureReminderScene() -> AnyView
 }
 
 public enum DetailLabelType: CaseIterable {
@@ -48,6 +49,10 @@ private struct EmptyTimetableUIProvider: TimetableUIProvidable {
         options _: LectureDetailPreviewOptions
     ) -> AnyView {
         AnyView(Text("Empty LectureDetailPreview"))
+    }
+
+    func makeLectureReminderScene() -> AnyView {
+        AnyView(Text("Empty LectureReminderScene"))
     }
 }
 

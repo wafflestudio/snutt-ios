@@ -68,6 +68,30 @@ struct CourseBookRepositoryKey: DependencyKey {
     }()
 }
 
+struct LectureReminderRepositoryKey: DependencyKey {
+    static let liveValue: any LectureReminderRepository = LectureReminderAPIRepository()
+
+    static let previewValue: any LectureReminderRepository = {
+        let spy = LectureReminderRepositorySpy()
+        spy.fetchRemindersTimetableIDReturnValue = []
+        spy.getReminderTimetableIDLectureIDReturnValue = ReminderOption.disabled
+        return spy
+    }()
+}
+
+struct SemesterRepositoryKey: DependencyKey {
+    static let liveValue: any SemesterRepository = SemesterAPIRepository()
+
+    static let previewValue: any SemesterRepository = {
+        let spy = SemesterRepositorySpy()
+        spy.fetchSemesterStatusReturnValue = SemesterStatus(
+            current: Quarter(year: 2025, semester: .second),
+            next: Quarter(year: 2025, semester: .summer)
+        )
+        return spy
+    }()
+}
+
 extension DependencyValues {
     var lectureRepository: any LectureRepository {
         get { self[LectureRepositoryKey.self] }
@@ -82,5 +106,15 @@ extension DependencyValues {
     var courseBookRepository: any CourseBookRepository {
         get { self[CourseBookRepositoryKey.self] }
         set { self[CourseBookRepositoryKey.self] = newValue }
+    }
+
+    var lectureReminderRepository: any LectureReminderRepository {
+        get { self[LectureReminderRepositoryKey.self] }
+        set { self[LectureReminderRepositoryKey.self] = newValue }
+    }
+
+    var semesterRepository: any SemesterRepository {
+        get { self[SemesterRepositoryKey.self] }
+        set { self[SemesterRepositoryKey.self] = newValue }
     }
 }

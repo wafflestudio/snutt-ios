@@ -31,15 +31,13 @@ public final class LectureTimeConflictHandler: Sendable {
     ) async throws -> T? {
         do {
             return try await operation(false)
-        } catch let error as any APIClientError {
-            if let serverError = error.serverError, serverError.isLectureConflictError {
+        } catch {
+            switch error.apiClientError {
+            case .unknown(let serverError) where serverError.isLectureConflictError:
                 return await handleConflictError(operation: operation, error: serverError)
-            } else {
+            default:
                 throw error
             }
-        } catch {
-            // conflict가 아닌 다른 에러는 다시 throw
-            throw error
         }
     }
 

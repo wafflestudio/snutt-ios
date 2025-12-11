@@ -68,7 +68,7 @@ struct TimeSelectionSheet: View {
                             sheetViewModel.selectEmptyTimeSlots(from: currentTimetable)
                         }
                         Button(TimetableStrings.searchTimeSelectionReset, role: .destructive) {
-                            sheetViewModel.clearAllSelections()
+                            sheetViewModel.clear()
                         }
                         .disabled(sheetViewModel.selectedTimeRanges.isEmpty)
                         .tint(Color(.systemRed))
