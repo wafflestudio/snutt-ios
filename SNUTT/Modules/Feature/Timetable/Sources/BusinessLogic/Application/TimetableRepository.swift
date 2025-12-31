@@ -27,7 +27,20 @@ public protocol TimetableRepository: Sendable {
 }
 
 public enum TimetableRepositoryKey: TestDependencyKey {
-    public static let testValue: any TimetableRepository = TimetableRepositorySpy()
+    public static let testValue: any TimetableRepository = {
+        let spy = TimetableRepositorySpy()
+        spy.fetchTimetableTimetableIDReturnValue = PreviewHelpers.preview(id: "1")
+        spy.fetchRecentTimetableReturnValue = PreviewHelpers.preview(id: "1")
+        spy.fetchTimetableMetadataListReturnValue = []
+        spy.updateTimetableTitleTimetableIDTitleReturnValue = []
+        spy.updateTimetableThemeTimetableIDThemeReturnValue = PreviewHelpers.preview(id: "1")
+        spy.copyTimetableTimetableIDReturnValue = []
+        spy.deleteTimetableTimetableIDReturnValue = []
+        spy.addLectureTimetableIDLectureIDOverrideOnConflictReturnValue = PreviewHelpers.preview(id: "1")
+        spy.removeLectureTimetableIDLectureIDReturnValue = PreviewHelpers.preview(id: "1")
+        spy.createTimetableTitleQuarterReturnValue = []
+        return spy
+    }()
 
     public static let previewValue: any TimetableRepository = {
         let spy = TimetableRepositorySpy()

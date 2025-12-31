@@ -36,4 +36,10 @@ extension DependencyValues {
 
 extension KakaoShareServiceKey: DependencyKey {
     static let liveValue: any KakaoShareService = KakaoSDKShareService()
+
+    static let previewValue: any KakaoShareService = {
+        let spy = KakaoShareServiceSpy()
+        spy.isKakaoTalkSharingAvailableReturnValue = false
+        return spy
+    }()
 }

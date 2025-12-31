@@ -154,6 +154,8 @@ extension View {
 }
 
 #Preview {
-    TimetableScene(isSearchMode: .constant(false), timetableViewModel: .init())
-        .overlaySheet()
+    TabView {
+        TimetableScene(isSearchMode: .constant(false), timetableViewModel: .init())
+            .overlaySheet()
+    }
 }

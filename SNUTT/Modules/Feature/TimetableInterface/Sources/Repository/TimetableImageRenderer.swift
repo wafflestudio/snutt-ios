@@ -21,7 +21,11 @@ public protocol TimetableImageRenderer: Sendable {
 }
 
 public enum TimetableImageRendererKey: TestDependencyKey {
-    public static let testValue: any TimetableImageRenderer = TimetableImageRendererSpy()
+    public static let testValue: any TimetableImageRenderer = {
+        let spy = TimetableImageRendererSpy()
+        spy.renderTimetableConfigurationAvailableThemesColorSchemeReturnValue = Data()
+        return spy
+    }()
 }
 
 extension DependencyValues {

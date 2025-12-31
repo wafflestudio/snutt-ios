@@ -7,6 +7,7 @@
 
 import APIClientInterface
 import Dependencies
+import Foundation
 import MemberwiseInit
 import Spyable
 
@@ -53,6 +54,36 @@ public enum AuthRepositoryKey: TestDependencyKey {
     public static let testValue: any AuthRepository = {
         let spy = AuthRepositorySpy()
         spy.loginWithLocalIDLocalIDLocalPasswordReturnValue = .init(accessToken: "123", userID: "123")
+        spy.fetchUserReturnValue = User(
+            id: "test",
+            localID: "test",
+            email: "test@test.com",
+            nickname: Nickname(nickname: "test", tag: "0000"),
+            notificationCheckedAt: Date(),
+            registeredAt: Date()
+        )
+        spy.registerWithLocalIDLocalIDLocalPasswordEmailReturnValue = .init(accessToken: "123", userID: "123")
+        spy.loginWithSocialProviderProviderTokenReturnValue = .init(accessToken: "123", userID: "123")
+        spy.linkSocialProviderProviderTokenReturnValue = .init(accessToken: "123")
+        spy.unlinkSocialProviderReturnValue = .init(accessToken: "123")
+        spy.attachLocalIDLocalIDLocalPasswordReturnValue = .init(accessToken: "123")
+        spy.changePasswordOldPasswordNewPasswordReturnValue = .init(accessToken: "123")
+        spy.changeNicknameToReturnValue = User(
+            id: "test",
+            localID: "test",
+            email: "test@test.com",
+            nickname: Nickname(nickname: "test", tag: "0000"),
+            notificationCheckedAt: Date(),
+            registeredAt: Date()
+        )
+        spy.fetchSocialAuthProviderStateReturnValue = .init(
+            apple: .unlinked,
+            facebook: .unlinked,
+            google: .unlinked,
+            kakao: .unlinked,
+            local: .unlinked
+        )
+        spy.getLinkedEmailLocalIDReturnValue = ""
         return spy
     }()
 }

@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import Foundation
 import TimetableInterface
 import TimetableUIComponents
 
@@ -31,6 +32,10 @@ struct LectureRepositoryKey: DependencyKey {
         let spy = LectureRepositorySpy()
         spy.fetchBuildingListPlacesReturnValue = []
         spy.isBookmarkedLectureIDReturnValue = false
+        spy.updateLectureTimetableIDLectureOverrideOnConflictReturnValue = PreviewHelpers.preview(id: "1")
+        spy.addCustomLectureTimetableIDLectureOverrideOnConflictReturnValue = PreviewHelpers.preview(id: "1")
+        spy.resetLectureTimetableIDLectureIDReturnValue = PreviewHelpers.preview(id: "1")
+        spy.fetchBookmarksQuarterReturnValue = []
         return spy
     }()
 }
@@ -64,6 +69,11 @@ struct CourseBookRepositoryKey: DependencyKey {
     static let previewValue: any CourseBookRepository = {
         let spy = CourseBookRepositorySpy()
         spy.fetchCourseBookListReturnValue = []
+        spy.fetchRecentCourseBookReturnValue = CourseBook(
+            quarter: Quarter(year: 2025, semester: .first),
+            updatedAt: Date()
+        )
+        spy.fetchSyllabusURLYearSemesterLectureReturnValue = Syllabus(url: "https://example.com")
         return spy
     }()
 }
