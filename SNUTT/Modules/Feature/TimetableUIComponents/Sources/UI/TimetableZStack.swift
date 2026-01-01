@@ -19,12 +19,21 @@ public struct TimetableZStack: View {
     }
 
     public var body: some View {
-        ZStack {
-            TimetableGridLayer(painter: painter)
-            TimetableBlocksLayer(painter: painter)
+        GeometryReader { reader in
+            let geometry = TimetableGeometry(reader)
+            ScrollView {
+                ZStack(alignment: .top) {
+                    TimetableGridLayer(painter: painter, geometry: geometry)
+                        .frame(width: geometry.size.width, height: geometry.extendedContainerSize.height)
+                    TimetableBlocksLayer(painter: painter, geometry: geometry)
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                }
+                .animation(.defaultSpring, value: painter.currentTimetable?.id)
+                .animation(.defaultSpring, value: painter.selectedLecture?.id)
+            }
+            .ignoresSafeArea()
+            .scrollBounceBehavior(.basedOnSize)
         }
-        .animation(.defaultSpring, value: painter.currentTimetable?.id)
-        .animation(.defaultSpring, value: painter.selectedLecture?.id)
     }
 }
 

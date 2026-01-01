@@ -31,12 +31,12 @@ extension TimetablePainter {
     var weekdayHeight: CGFloat { 25 }
 
     /// 컨테이너의 사이즈가 주어졌을 때, 하루의 너비를 계산한다.
-    func getWeekWidth(in containerSize: CGSize, weekCount: Int) -> CGFloat {
+    func getWeekWidth(in containerSize: CGSize) -> CGFloat {
         return max((containerSize.width - hourWidth) / CGFloat(weekCount), 0)
     }
 
     /// 컨테이너의 사이즈가 주어졌을 때, 한 시간의 높이를 계산한다.
-    func getHourHeight(in containerSize: CGSize, hourCount: Int) -> CGFloat {
+    func getHourHeight(in containerSize: CGSize) -> CGFloat {
         return max((containerSize.height - weekdayHeight) / CGFloat(hourCount), 0)
     }
 
@@ -61,24 +61,20 @@ extension TimetablePainter {
         let hourIndex = max(Double(timePlace.startTime.absoluteMinutes - minHour * 60) / 60, 0)
         guard let weekdayIndex = visibleWeeks.firstIndex(of: timePlace.day) else { return nil }
 
-        let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize, weekCount: weekCount)
-        let y = weekdayHeight + CGFloat(hourIndex) * getHourHeight(in: containerSize, hourCount: hourCount)
+        let x = hourWidth + CGFloat(weekdayIndex) * getWeekWidth(in: containerSize)
+        let y = weekdayHeight + CGFloat(hourIndex) * getHourHeight(in: containerSize)
 
         return CGPoint(x: x, y: y)
     }
 
     /// 주어진 `TimePlace`블록의 높이를 구한다.
     func getHeight(of timePlace: TimePlace, in containerSize: CGSize) -> CGFloat {
-        let hourCount = hourCount
         let minHour = startingHour
 
         /// 시간표의 시작 시각보다 강의 시작이 이른 경우, 그만큼의 시간을 차감해서 높이를 계산한다.
         let timeBlockCropAdjustment = abs(min(CGFloat(timePlace.startTime.absoluteMinutes - minHour * 60) / 60, 0))
         return (timePlace.duration(compactMode: configuration.compactMode) - timeBlockCropAdjustment)
-            * getHourHeight(
-                in: containerSize,
-                hourCount: hourCount
-            )
+            * getHourHeight(in: containerSize)
     }
 
     // MARK: Auto Fit

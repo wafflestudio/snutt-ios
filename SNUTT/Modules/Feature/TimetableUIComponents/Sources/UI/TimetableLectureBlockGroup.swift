@@ -13,31 +13,29 @@ import TimetableInterface
 struct TimetableLectureBlockGroup: View {
     let painter: TimetablePainter
     let lecture: Lecture
+    let geometry: TimetableGeometry
 
     @Environment(\.lectureTapAction) var lectureTapAction
 
     var body: some View {
-        GeometryReader { reader in
+        GeometryReader { _ in
             ForEach(lecture.timePlaces) { timePlace in
-                if let offsetPoint = painter.getOffset(of: timePlace, in: reader.size) {
-                    Group {
-                        let blockHeight = painter.getHeight(of: timePlace, in: reader.size)
-                        Button {
-                            lectureTapAction(lecture: lecture)
-                        } label: {
-                            TimetableLectureBlock(
-                                lecture: lecture,
-                                lectureColor: painter.resolveColor(for: lecture),
-                                timePlace: timePlace,
-                                idealHeight: blockHeight,
-                                visibilityOptions: painter.configuration.visibilityOptions
-                            )
-                        }
-                        .buttonStyle(.plain)
+                if let offsetPoint = painter.getOffset(of: timePlace, in: geometry.size) {
+                    Button {
+                        lectureTapAction(lecture: lecture)
+                    } label: {
+                        TimetableLectureBlock(
+                            lecture: lecture,
+                            lectureColor: painter.resolveColor(for: lecture),
+                            timePlace: timePlace,
+                            idealHeight: painter.getHeight(of: timePlace, in: geometry.size),
+                            visibilityOptions: painter.configuration.visibilityOptions
+                        )
                     }
+                    .buttonStyle(.plain)
                     .frame(
-                        width: painter.getWeekWidth(in: reader.size, weekCount: painter.weekCount),
-                        height: painter.getHeight(of: timePlace, in: reader.size),
+                        width: painter.getWeekWidth(in: geometry.size),
+                        height: painter.getHeight(of: timePlace, in: geometry.size),
                         alignment: .top
                     )
                     .clipped()
@@ -48,9 +46,4 @@ struct TimetableLectureBlockGroup: View {
             }
         }
     }
-}
-
-#Preview {
-    let painter = makePreviewPainter()
-    TimetableLectureBlockGroup(painter: painter, lecture: painter.currentTimetable!.lectures.first!)
 }

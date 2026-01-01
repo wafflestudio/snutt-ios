@@ -80,15 +80,12 @@ struct TimeSelectionSheet: View {
 
     private var interactiveTimetableView: some View {
         ZStack {
-            // Grid layer (always visible)
-            TimetableGridLayer(painter: painter)
-
-            // Timetable blocks layer (semi-transparent background)
-            TimetableBlocksLayer(painter: painter)
-                .opacity(0.1)
-
-            // Selection overlay (interactive)
-            TimeSelectionOverlay(painter: painter, viewModel: sheetViewModel)
+            GeometryReader { reader in
+                let geometry = TimetableGeometry(reader)
+                TimetableGridLayer(painter: painter, geometry: geometry)
+                TimetableBlocksLayer(painter: painter, geometry: geometry).opacity(0.1)
+                TimeSelectionOverlay(painter: painter, viewModel: sheetViewModel)
+            }
         }
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         .background(
