@@ -16,6 +16,7 @@ struct LectureSearchResultScene: View {
     let isSearchMode: Bool
     @Environment(\.errorAlertHandler) var errorAlertHandler
     @Environment(\.reviewsUIProvider) var reviewsUIProvider
+    @Environment(\.isSearching) var isSearching
 
     var body: some View {
         VStack(spacing: 0) {
@@ -97,6 +98,11 @@ struct LectureSearchResultScene: View {
             viewModel.resetSearchResult()
             errorAlertHandler.withAlert {
                 try await viewModel.fetchAvailablePredicates(quarter: newValue)
+            }
+        }
+        .onChange(of: isSearching) { oldValue, newValue in
+            if !newValue {
+                viewModel.resetSearchResult()
             }
         }
     }

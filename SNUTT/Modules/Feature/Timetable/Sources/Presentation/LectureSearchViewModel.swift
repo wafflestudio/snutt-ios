@@ -105,6 +105,15 @@ class LectureSearchViewModel {
         }
     }
 
+    var isSearchingDifferentQuarter: Bool {
+        if let currentTimetable = timetableViewModel.currentTimetable,
+           let searchingQuarter, searchingQuarter != currentTimetable.quarter {
+            true
+        } else {
+            false
+        }
+    }
+
     var supportedCategories: [SearchFilterCategory] {
         SearchFilterCategory.allCases
             .filter { $0 != .instructor }
@@ -318,7 +327,7 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
     }
 }
 
-public enum SearchDisplayMode {
+public enum SearchDisplayMode: Equatable {
     case search
     case bookmark
 

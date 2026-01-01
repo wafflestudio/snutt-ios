@@ -68,17 +68,17 @@ public struct TimetableScene: View {
     }
 
     private var timetable: some View {
-        TimetableZStack(
-            painter: timetableViewModel.makePainter(
-                selectedLecture: nil,
-                selectedTheme: themeViewModel.selectedTheme,
-                availableThemes: themeViewModel.availableThemes
-            )
-        )
-        .overlay(alignment: .top) {
+        VStack(spacing: 0) {
             Rectangle()
                 .fill(Color(UIColor.quaternaryLabel.withAlphaComponent(0.1)))
                 .frame(height: 1)
+            TimetableZStack(
+                painter: timetableViewModel.makePainter(
+                    selectedLecture: nil,
+                    selectedTheme: themeViewModel.selectedTheme,
+                    availableThemes: themeViewModel.availableThemes
+                )
+            )
         }
         .environment(
             \.lectureTapAction,

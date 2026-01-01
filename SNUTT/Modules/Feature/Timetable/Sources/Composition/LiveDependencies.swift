@@ -68,7 +68,16 @@ struct CourseBookRepositoryKey: DependencyKey {
 
     static let previewValue: any CourseBookRepository = {
         let spy = CourseBookRepositorySpy()
-        spy.fetchCourseBookListReturnValue = []
+        spy.fetchCourseBookListReturnValue = [
+            CourseBook(
+                quarter: Quarter(year: 2025, semester: .first),
+                updatedAt: Date()
+            ),
+            CourseBook(
+                quarter: Quarter(year: 2024, semester: .winter),
+                updatedAt: Date()
+            )
+        ]
         spy.fetchRecentCourseBookReturnValue = CourseBook(
             quarter: Quarter(year: 2025, semester: .first),
             updatedAt: Date()

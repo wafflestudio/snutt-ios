@@ -60,6 +60,7 @@
 "search.tips.location.title" = "강의실 위치로 검색해보세요.";
 "search.tips.location.example" = "ex) 26동 / 302-108 / 대글2 43-1동";
 "search.bookmark.title" = "관심강좌";
+"search.title" = "강의 검색";
 
 "edit.conflict.forceAdd" = "강제 추가";
 "edit.map.close" = "지도 닫기";

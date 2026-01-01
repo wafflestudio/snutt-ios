@@ -16,6 +16,7 @@ public struct LectureSearchScene: View {
     @State private var searchViewModel: LectureSearchViewModel
     @Environment(\.themeViewModel) private var themeViewModel
     @Environment(\.errorAlertHandler) private var errorAlertHandler
+    @FocusState private var searchFocus
 
     public init(timetableViewModel: TimetableViewModel) {
         self.timetableViewModel = timetableViewModel
@@ -32,20 +33,27 @@ public struct LectureSearchScene: View {
         }
     }
 
-    // MARK: - Common Components
-
     private var contentZStack: some View {
         ZStack {
-            TimetableZStack(
-                painter: timetableViewModel.makePainter(
-                    selectedLecture: searchViewModel.selectedLecture,
-                    selectedTheme: themeViewModel.selectedTheme,
-                    availableThemes: themeViewModel.availableThemes
+            VStack(spacing: 0) {
+                Rectangle()
+                    .fill(Color(UIColor.quaternaryLabel.withAlphaComponent(0.1)))
+                    .frame(height: 1)
+                TimetableZStack(
+                    painter: timetableViewModel.makePainter(
+                        selectedLecture: searchViewModel.isSearchingDifferentQuarter
+                            ? nil
+                            : searchViewModel.selectedLecture,
+                        selectedTheme: themeViewModel.selectedTheme,
+                        availableThemes: themeViewModel.availableThemes
+                    )
                 )
-            )
+            }
 
             TimetableAsset.searchlistBackground.swiftUIColor
-                .ignoresSafeArea(edges: .bottom)
+                .background(.ultraThinMaterial.opacity(searchViewModel.isSearchingDifferentQuarter ? 1 : 0))
+                .ignoresSafeArea(edges: [.bottom, .top])
+                .ignoresSafeArea(.keyboard)
 
             LectureSearchResultScene(
                 viewModel: searchViewModel,
@@ -53,6 +61,7 @@ public struct LectureSearchScene: View {
             )
             .ignoresSafeArea(.keyboard)
         }
+        .animation(.default, value: searchViewModel.isSearchingDifferentQuarter)
     }
 
     private var searchSceneForOldDesign: some View {
@@ -84,13 +93,35 @@ public struct LectureSearchScene: View {
                 .onChange(of: timetableViewModel.currentTimetable?.quarter) { _, newValue in
                     searchViewModel.searchingQuarter = newValue
                 }
-                .searchable(text: $searchViewModel.searchQuery, prompt: "hello")
+                .searchable(text: $searchViewModel.searchQuery, prompt: TimetableStrings.searchInputPlaceholder)
+                .searchFocused($searchFocus)
+                .onSubmit(of: .search) {
+                    errorAlertHandler.withAlert {
+                        try await searchViewModel.fetchInitialSearchResult()
+                    }
+                }
+                .onAppear { searchFocus = true }
+                .navigationTitle(navigationTitle)
                 .searchPresentationToolbarBehavior(.avoidHidingContent)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        Text(navigationTitle).fixedSize()
+                        Menu {
+                            ForEach(timetableViewModel.availableQuarters.prefix(12), id: \.self) { quarter in
+                                Button {
+                                    searchViewModel.searchingQuarter = quarter
+                                } label: {
+                                    HStack {
+                                        Text(quarter.localizedDescription)
+                                        if searchViewModel.searchingQuarter == quarter {
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                }
+                            }
+                        } label: {
+                            Text(searchViewModel.searchingQuarter?.localizedDescription ?? "-")
+                        }
                     }
-                    .sharedBackgroundVisibility(.hidden)
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             searchViewModel.isSearchFilterOpen = true
@@ -118,7 +149,7 @@ public struct LectureSearchScene: View {
     private var navigationTitle: String {
         switch searchViewModel.searchDisplayMode {
         case .search:
-            "검색"
+            TimetableStrings.searchTitle
         case .bookmark:
             TimetableStrings.searchBookmarkTitle
         }

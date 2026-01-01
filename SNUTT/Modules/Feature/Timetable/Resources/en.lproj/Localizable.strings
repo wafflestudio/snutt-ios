@@ -59,6 +59,7 @@
 "search.tips.location.title" = "Try searching by classroom location.";
 "search.tips.location.example" = "ex) Building 26 / 302-108 / Daegul2 43-1";
 "search.bookmark.title" = "Bookmarks";
+"search.title" = "Search";
 
 "edit.conflict.forceAdd" = "Force Add";
 "edit.map.close" = "Close Map";
