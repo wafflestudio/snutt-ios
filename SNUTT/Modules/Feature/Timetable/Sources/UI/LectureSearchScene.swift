@@ -48,7 +48,7 @@ public struct LectureSearchScene: View {
                     }
                 }
             }
-            .ignoresSafeArea(.keyboard)
+            .ignoresSafeArea(edges: .bottom)
             .navigationBarTitleDisplayMode(.inline)
             .onLoad {
                 searchViewModel.searchingQuarter = timetableViewModel.currentTimetable?.quarter
