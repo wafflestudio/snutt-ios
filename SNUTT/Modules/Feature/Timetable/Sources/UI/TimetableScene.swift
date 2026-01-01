@@ -16,42 +16,21 @@ import TimetableUIComponents
 public struct TimetableScene: View {
     @Dependency(\.application) private var application
     @Bindable var timetableViewModel: TimetableViewModel
-    @State private(set) var searchViewModel: LectureSearchViewModel
-    @Binding private(set) var isSearchMode: Bool
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.themeUIProvider) private var themeUIProvider
     @Environment(\.themeViewModel) private var themeViewModel
 
-    public init(
-        isSearchMode: Binding<Bool>,
-        timetableViewModel: TimetableViewModel
-    ) {
-        _isSearchMode = isSearchMode
+    public init(timetableViewModel: TimetableViewModel) {
         self.timetableViewModel = timetableViewModel
-        _searchViewModel = State(
-            initialValue: LectureSearchViewModel(
-                timetableViewModel: timetableViewModel
-            )
-        )
     }
 
     public var body: some View {
         NavigationStack(path: $timetableViewModel.paths) {
             VStack(spacing: 0) {
                 toolbarContent
-                ZStack {
-                    timetable
-                    Group {
-                        TimetableAsset.searchlistBackground.swiftUIColor
-                            .zIndex(1)
-                        LectureSearchResultScene(viewModel: searchViewModel, isSearchMode: isSearchMode)
-                            .zIndex(.infinity)
-                    }
-                    .opacity(isSearchMode ? 1 : 0)
-                }
+                timetable
             }
             .ignoresSafeArea(.keyboard)
-            .animation(.defaultSpring, value: isSearchMode)
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: TimetableDetailSceneTypes.self) {
                 TimetableDetails(pathType: $0, timetableViewModel: timetableViewModel)
@@ -75,29 +54,13 @@ public struct TimetableScene: View {
                 themeUIProvider.menuThemeSelectionSheet()
             }
         }
-        .onChange(of: isSearchMode) { _, newValue in
-            if newValue, !timetableViewModel.paths.isEmpty {
-                timetableViewModel.paths = []
-            }
-            if !newValue {
-                searchViewModel.selectedLecture = nil
-            }
-        }
-        .onLoad {
-            searchViewModel.searchingQuarter = timetableViewModel.currentTimetable?.quarter
-        }
-        .onChange(of: timetableViewModel.currentTimetable?.quarter) { _, newValue in
-            if let newValue {
-                searchViewModel.searchingQuarter = newValue
-            }
-        }
-        .analyticsScreen(.timetableHome, condition: !isSearchMode)
+        .analyticsScreen(.timetableHome)
     }
 
     private var timetable: some View {
         TimetableZStack(
             painter: timetableViewModel.makePainter(
-                selectedLecture: searchViewModel.selectedLecture,
+                selectedLecture: nil,
                 selectedTheme: themeViewModel.selectedTheme,
                 availableThemes: themeViewModel.availableThemes
             )
@@ -155,7 +118,7 @@ extension View {
 
 #Preview {
     TabView {
-        TimetableScene(isSearchMode: .constant(false), timetableViewModel: .init())
+        TimetableScene(timetableViewModel: .init())
             .overlaySheet()
     }
 }

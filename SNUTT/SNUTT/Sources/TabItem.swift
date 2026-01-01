@@ -34,10 +34,11 @@ enum TabItem: CaseIterable, SharedUIComponents.TabItem {
 
     func viewIndex() -> Int {
         switch self {
-        case .timetable, .search: 0
-        case .review: 1
-        case .friends: 2
-        case .settings: 3
+        case .timetable: 0
+        case .search: 1
+        case .review: 2
+        case .friends: 3
+        case .settings: 4
         }
     }
 }

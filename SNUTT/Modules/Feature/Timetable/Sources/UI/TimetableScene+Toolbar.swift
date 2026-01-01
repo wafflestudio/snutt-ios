@@ -9,18 +9,9 @@ import SwiftUI
 
 extension TimetableScene {
     var toolbarContent: some View {
-        HStack(spacing: 0) {
-            if isSearchMode {
-                SearchToolBarView(searchViewModel: searchViewModel)
-                    .transition(toolbarTransition(from: .bottom))
-            } else {
-                timetableToolbarView
-                    .transition(toolbarTransition(from: .top))
-            }
-        }
-        .animation(.defaultSpring, value: isSearchMode)
-        .frame(height: 40)
-        .clipped()
+        timetableToolbarView
+            .frame(height: 40)
+            .clipped()
     }
 
     private var timetableToolbarView: some View {
@@ -45,20 +36,6 @@ extension TimetableScene {
             ToolbarButton(image: TimetableAsset.navAlarmOff.image) {
                 timetableViewModel.paths = [.notificationList]
             }
-        }
-    }
-
-    private func toolbarTransition(from edge: Edge) -> AnyTransition {
-        if edge == .top {
-            AnyTransition.asymmetric(
-                insertion: AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .top))),
-                removal: AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .bottom)))
-            )
-        } else {
-            AnyTransition.asymmetric(
-                insertion: AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .bottom))),
-                removal: AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .top)))
-            )
         }
     }
 }

@@ -52,12 +52,16 @@ struct ContentView: View {
                 TabScene(
                     tabItem: TabItem.timetable,
                     rootView: TimetableScene(
-                        isSearchMode: isSearchMode,
                         timetableViewModel: viewModel.timetableViewModel
                     )
                     .environment(\.notificationsUIProvider, NotificationsUIProvider())
                 )
-                TabScene(tabItem: TabItem.search)
+                TabScene(
+                    tabItem: TabItem.search,
+                    rootView: LectureSearchScene(
+                        timetableViewModel: viewModel.timetableViewModel
+                    )
+                )
                 TabScene(
                     tabItem: TabItem.review,
                     rootView: ReviewsScene()
@@ -94,13 +98,6 @@ struct ContentView: View {
                 try? await viewModel.themeViewModel.fetchThemes()
             }
         }
-    }
-
-    private var isSearchMode: Binding<Bool> {
-        .init(
-            get: { viewModel.selectedTab == .search },
-            set: { isSearchMode in viewModel.selectedTab = isSearchMode ? .search : .timetable }
-        )
     }
 
     private var onboardScene: some View {
