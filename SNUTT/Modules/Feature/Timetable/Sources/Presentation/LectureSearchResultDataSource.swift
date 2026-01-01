@@ -13,7 +13,7 @@ import TimetableInterface
 @Observable
 @MainActor
 class LectureSearchResultDataSource {
-    enum SearchState {
+    enum SearchState: Equatable {
         case initial
         case searched([Lecture])
     }

@@ -50,6 +50,7 @@ struct LectureSearchResultScene: View {
         }
         .animation(.defaultSpring, value: viewModel.searchDisplayMode)
         .animation(.defaultSpring, value: viewModel.selectedPredicates)
+        .animation(.defaultSpring, value: viewModel.searchState)
         .handleLectureTimeConflict()
         .sheet(isPresented: $viewModel.isSearchFilterOpen) {
             SearchFilterSheet(viewModel: viewModel)
