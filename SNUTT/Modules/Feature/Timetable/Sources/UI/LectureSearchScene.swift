@@ -39,16 +39,16 @@ public struct LectureSearchScene: View {
                         )
                     )
 
-                    Group {
-                        TimetableAsset.searchlistBackground.swiftUIColor
-                        LectureSearchResultScene(
-                            viewModel: searchViewModel,
-                            isSearchMode: true
-                        )
-                    }
+                    TimetableAsset.searchlistBackground.swiftUIColor
+                        .ignoresSafeArea(edges: .bottom)
+
+                    LectureSearchResultScene(
+                        viewModel: searchViewModel,
+                        isSearchMode: true
+                    )
+                    .ignoresSafeArea(.keyboard)
                 }
             }
-            .ignoresSafeArea(edges: .bottom)
             .navigationBarTitleDisplayMode(.inline)
             .onLoad {
                 searchViewModel.searchingQuarter = timetableViewModel.currentTimetable?.quarter
