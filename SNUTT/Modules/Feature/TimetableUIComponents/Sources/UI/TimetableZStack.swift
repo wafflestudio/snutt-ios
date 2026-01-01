@@ -31,6 +31,7 @@ public struct TimetableZStack: View {
                 .animation(.defaultSpring, value: painter.currentTimetable?.id)
                 .animation(.defaultSpring, value: painter.selectedLecture?.id)
             }
+            .withResponsiveTouch()
             .ignoresSafeArea(edges: .bottom)
             .scrollBounceBehavior(.basedOnSize)
         }
