@@ -17,7 +17,7 @@ public struct CommonTabView<T: TabItem>: View {
     }
 
     public var body: some View {
-        if false {  // Set to true for liquid glass in iOS 26+
+        if #available(iOS 26, *) {  // Set to true for liquid glass in iOS 26+
             SystemTabView(selectedTab: $selectedTab, tabScenes: tabScenes)
         } else {
             AnimatableTabView(selectedTab: $selectedTab, tabScenes: tabScenes)

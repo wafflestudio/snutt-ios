@@ -20,21 +20,51 @@ extension TimetableScene {
                 timetableViewModel.isMenuPresented.toggle()
             }
             .timetableMenuSheet(isPresented: $timetableViewModel.isMenuPresented, viewModel: timetableViewModel)
-
-            Text(timetableViewModel.timetableTitle)
-                .font(.system(size: 17, weight: .bold))
-                .minimumScaleFactor(0.9)
-                .lineLimit(1)
-                .padding(.trailing, 8)
-            Text(TimetableStrings.timetableToolbarTotalCredit(timetableViewModel.totalCredit))
-                .font(.system(size: 12))
-                .foregroundColor(Color(UIColor.secondaryLabel))
+            toolbarTitle
             Spacer()
             ToolbarButton(image: TimetableAsset.navList.image) {
                 timetableViewModel.paths = [.lectureList]
             }
             ToolbarButton(image: TimetableAsset.navAlarmOff.image) {
                 timetableViewModel.paths = [.notificationList]
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var toolbarTitle: some View {
+        Text(timetableViewModel.timetableTitle)
+            .font(.system(size: 17, weight: .bold))
+            .minimumScaleFactor(0.9)
+            .lineLimit(1)
+            .padding(.trailing, 8)
+        Text(TimetableStrings.timetableToolbarTotalCredit(timetableViewModel.totalCredit))
+            .font(.system(size: 12))
+            .foregroundColor(Color(UIColor.secondaryLabel))
+    }
+}
+
+extension TimetableScene {
+    @ToolbarContentBuilder
+    func toolbarContentForNewDesign() -> some ToolbarContent {
+        ToolbarItemGroup(placement: .topBarLeading) {
+            Button {
+                timetableViewModel.isMenuPresented.toggle()
+            } label: {
+                TimetableAsset.navMenu.swiftUIImage
+            }
+            .timetableMenuSheet(isPresented: $timetableViewModel.isMenuPresented, viewModel: timetableViewModel)
+        }
+        ToolbarItemGroup(placement: .topBarTrailing) {
+            Button {
+                timetableViewModel.paths = [.lectureList]
+            } label: {
+                TimetableAsset.navList.swiftUIImage
+            }
+            Button {
+                timetableViewModel.paths = [.notificationList]
+            } label: {
+                TimetableAsset.navAlarmOff.swiftUIImage
             }
         }
     }

@@ -27,8 +27,15 @@ public struct TimetableScene: View {
     public var body: some View {
         NavigationStack(path: $timetableViewModel.paths) {
             VStack(spacing: 0) {
-                toolbarContent
-                timetable
+                if #available(iOS 26, *) {
+                    timetable
+                        .toolbar(content: toolbarContentForNewDesign)
+                        .navigationTitle(timetableViewModel.timetableTitle)
+                        .toolbarTitleDisplayMode(.inline)
+                } else {
+                    toolbarContent
+                    timetable
+                }
             }
             .ignoresSafeArea(.keyboard)
             .navigationBarTitleDisplayMode(.inline)
