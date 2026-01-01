@@ -15,6 +15,8 @@ enum TabItem: CaseIterable, SharedUIComponents.TabItem {
     case friends
     case settings
 
+    var isSearchRole: Bool { self == .search }
+
     func image(isSelected: Bool) -> UIImage {
         let snuttImage =
             switch self {

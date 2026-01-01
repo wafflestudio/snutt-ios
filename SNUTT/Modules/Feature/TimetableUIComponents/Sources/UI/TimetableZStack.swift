@@ -34,6 +34,7 @@ public struct TimetableZStack: View {
             .ignoresSafeArea(edges: .bottom)
             .scrollBounceBehavior(.basedOnSize)
         }
+        .ignoresSafeArea(.keyboard)
     }
 }
 

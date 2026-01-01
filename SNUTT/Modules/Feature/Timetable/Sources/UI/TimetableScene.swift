@@ -31,7 +31,10 @@ public struct TimetableScene: View {
                     timetable
                         .toolbar(content: toolbarContentForNewDesign)
                         .navigationTitle(timetableViewModel.timetableTitle)
-                        .toolbarTitleDisplayMode(.inline)
+                        .navigationSubtitle(
+                            TimetableStrings.timetableToolbarTotalCredit(timetableViewModel.totalCredit)
+                                .trimmingCharacters(in: .punctuationCharacters)
+                        )
                 } else {
                     toolbarContent
                     timetable
@@ -123,9 +126,17 @@ extension View {
     }
 }
 
+@available(iOS 26, *)
 #Preview {
     TabView {
-        TimetableScene(timetableViewModel: .init())
-            .overlaySheet()
+        let viewModel = TimetableViewModel()
+        Tab("Timetable", systemImage: "calendar.day.timeline.left") {
+            TimetableScene(timetableViewModel: viewModel)
+                .overlaySheet()
+        }
+
+        Tab(role: .search) {
+            LectureSearchScene(timetableViewModel: viewModel)
+        }
     }
 }

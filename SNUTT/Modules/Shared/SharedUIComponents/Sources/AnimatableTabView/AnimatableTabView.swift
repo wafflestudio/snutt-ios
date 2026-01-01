@@ -250,6 +250,10 @@ public struct TabScene<T: TabItem> {
             UIImage.checkmark
         }
 
+        var isSearchRole: Bool {
+            self == .search
+        }
+
         func viewIndex() -> Int {
             switch self {
             case .timetable, .search: 0

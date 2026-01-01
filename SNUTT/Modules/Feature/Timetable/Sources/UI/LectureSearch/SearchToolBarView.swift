@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS, deprecated: 26.0)
 struct SearchToolBarView: View {
     @Bindable var searchViewModel: LectureSearchViewModel
     @Environment(\.errorAlertHandler) private var errorAlertHandler

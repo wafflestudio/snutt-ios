@@ -25,29 +25,43 @@ public struct LectureSearchScene: View {
     }
 
     public var body: some View {
+        if #available(iOS 26, *) {
+            searchSceneForNewDesign
+        } else {
+            searchSceneForOldDesign
+        }
+    }
+
+    // MARK: - Common Components
+
+    private var contentZStack: some View {
+        ZStack {
+            TimetableZStack(
+                painter: timetableViewModel.makePainter(
+                    selectedLecture: searchViewModel.selectedLecture,
+                    selectedTheme: themeViewModel.selectedTheme,
+                    availableThemes: themeViewModel.availableThemes
+                )
+            )
+
+            TimetableAsset.searchlistBackground.swiftUIColor
+                .ignoresSafeArea(edges: .bottom)
+
+            LectureSearchResultScene(
+                viewModel: searchViewModel,
+                isSearchMode: true
+            )
+            .ignoresSafeArea(.keyboard)
+        }
+    }
+
+    private var searchSceneForOldDesign: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 SearchToolBarView(searchViewModel: searchViewModel)
                     .frame(height: 40)
 
-                ZStack {
-                    TimetableZStack(
-                        painter: timetableViewModel.makePainter(
-                            selectedLecture: searchViewModel.selectedLecture,
-                            selectedTheme: themeViewModel.selectedTheme,
-                            availableThemes: themeViewModel.availableThemes
-                        )
-                    )
-
-                    TimetableAsset.searchlistBackground.swiftUIColor
-                        .ignoresSafeArea(edges: .bottom)
-
-                    LectureSearchResultScene(
-                        viewModel: searchViewModel,
-                        isSearchMode: true
-                    )
-                    .ignoresSafeArea(.keyboard)
-                }
+                contentZStack
             }
             .navigationBarTitleDisplayMode(.inline)
             .onLoad {
@@ -56,6 +70,57 @@ public struct LectureSearchScene: View {
             .onChange(of: timetableViewModel.currentTimetable?.quarter) { _, newValue in
                 searchViewModel.searchingQuarter = newValue
             }
+        }
+    }
+
+    @available(iOS 26, *)
+    private var searchSceneForNewDesign: some View {
+        NavigationStack {
+            contentZStack
+                .navigationBarTitleDisplayMode(.inline)
+                .onLoad {
+                    searchViewModel.searchingQuarter = timetableViewModel.currentTimetable?.quarter
+                }
+                .onChange(of: timetableViewModel.currentTimetable?.quarter) { _, newValue in
+                    searchViewModel.searchingQuarter = newValue
+                }
+                .searchable(text: $searchViewModel.searchQuery, prompt: "hello")
+                .searchPresentationToolbarBehavior(.avoidHidingContent)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Text(navigationTitle).fixedSize()
+                    }
+                    .sharedBackgroundVisibility(.hidden)
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            searchViewModel.isSearchFilterOpen = true
+                        } label: {
+                            TimetableAsset.searchFilter.swiftUIImage
+                        }
+                    }
+                    ToolbarSpacer(.fixed, placement: .topBarTrailing)
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            searchViewModel.searchDisplayMode.toggle()
+                        } label: {
+                            switch searchViewModel.searchDisplayMode {
+                            case .search:
+                                TimetableAsset.navBookmark.swiftUIImage
+                            case .bookmark:
+                                TimetableAsset.navBookmarkOn.swiftUIImage
+                            }
+                        }
+                    }
+                }
+        }
+    }
+
+    private var navigationTitle: String {
+        switch searchViewModel.searchDisplayMode {
+        case .search:
+            "검색"
+        case .bookmark:
+            TimetableStrings.searchBookmarkTitle
         }
     }
 }

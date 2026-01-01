@@ -26,11 +26,14 @@ public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarC
             }
             let hostingController = UIHostingController(rootView: rootView)
             let tabItem = scene.tabItem
-            hostingController.tabBarItem = UITabBarItem(
-                title: nil,
-                image: tabItem.image(isSelected: false),
-                selectedImage: tabItem.image(isSelected: true)
-            )
+            let uiTabItem = if tabItem.isSearchRole {
+                UITabBarItem(tabBarSystemItem: .search, tag: tabItem.viewIndex())
+            } else {
+                UITabBarItem()
+            }
+            uiTabItem.image = tabItem.image(isSelected: false)
+            uiTabItem.selectedImage = tabItem.image(isSelected: true)
+            hostingController.tabBarItem = uiTabItem
             return hostingController
         }
 
