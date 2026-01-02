@@ -257,6 +257,8 @@ extension Project {
                 return true
             case .shared(ui: let isUI):
                 return isUI
+            case .utility(ui: let isUI):
+                return isUI
             default:
                 return false
             }

@@ -119,7 +119,7 @@ private struct LectureTimePicker: View {
                 displayedComponents: [.hourAndMinute]
             )
             .datePickerStyle(.compact)
-            .introspect(.datePicker, on: .iOS(.v17, .v18)) { datePicker in
+            .introspect(.datePicker, on: .iOS(.v17, .v18, .v26)) { datePicker in
                 datePicker.minuteInterval = 5
             }
             Divider()
@@ -130,7 +130,7 @@ private struct LectureTimePicker: View {
                 displayedComponents: [.hourAndMinute]
             )
             .datePickerStyle(.compact)
-            .introspect(.datePicker, on: .iOS(.v17, .v18)) { datePicker in
+            .introspect(.datePicker, on: .iOS(.v17, .v18, .v26)) { datePicker in
                 datePicker.minuteInterval = 5
             }
         }

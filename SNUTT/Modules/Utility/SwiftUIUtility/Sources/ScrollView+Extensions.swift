@@ -15,7 +15,7 @@ import UIKit
 
 extension ScrollView {
     @MainActor public func withResponsiveTouch() -> some View {
-        introspect(.scrollView, on: .iOS(.v17, .v18)) { scrollView in
+        introspect(.scrollView, on: .iOS(.v17, .v18, .v26)) { scrollView in
             scrollView.makeTouchResponsive()
         }
     }
