@@ -82,6 +82,7 @@
 "service" = "Service";
 "service.vacancy" = "Vacancy Notification";
 "service.lectureReminder" = "Lecture Reminder";
+"service.lectureDiary" = "Lecture Diary";
 "service.themeMarket" = "Theme Market";
 
 // MARK: 정보 및 제안
