@@ -19,6 +19,10 @@ public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarC
         _selectedTabItem = selectedTabItem
         tabItems = tabScenes.compactMap { $0.tabItem }
         super.init(nibName: nil, bundle: nil)
+        if #available(iOS 18, *) {
+            mode = .tabSidebar
+            sidebar.isHidden = false
+        }
 
         viewControllers = tabScenes.enumerated().map { index, scene in
             guard let rootView = scene.rootView else {

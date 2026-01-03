@@ -31,16 +31,18 @@ struct LectureSearchResultScene: View {
                             }
                         )
                     }
-                    Group {
-                        switch viewModel.searchState {
-                        case .initial:
-                            searchHome
-                        case .searched(let lectures) where lectures.isEmpty:
-                            searchEmptyView
-                        default:
-                            searchContentView
+                    searchContentView
+                        .overlay {
+                            VStack {
+                                switch viewModel.searchState {
+                                case .initial:
+                                    searchHome
+                                case .searched(let lectures) where lectures.isEmpty:
+                                    searchEmptyView
+                                default: EmptyView()
+                                }
+                            }
                         }
-                    }
                 }
                 .transition(.move(edge: .leading))
             case .bookmark:
@@ -62,7 +64,7 @@ struct LectureSearchResultScene: View {
             )
         ) {
             if let entryLecture = viewModel.targetForLectureDetail,
-                let searchingQuarter = viewModel.searchingQuarter
+               let searchingQuarter = viewModel.searchingQuarter
             {
                 let lectureViewModel = LectureEditDetailViewModel(
                     displayMode: .preview(.showDismissButton, quarter: searchingQuarter),

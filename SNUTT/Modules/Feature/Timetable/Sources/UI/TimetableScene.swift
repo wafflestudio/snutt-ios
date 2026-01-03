@@ -127,16 +127,34 @@ extension View {
 }
 
 @available(iOS 26, *)
-#Preview {
+#Preview("Default") {
     TabView {
         let viewModel = TimetableViewModel()
         Tab("Timetable", systemImage: "calendar.day.timeline.left") {
             TimetableScene(timetableViewModel: viewModel)
                 .overlaySheet()
         }
+        Tab("Friends", systemImage: "person") {
+            Text("Friends")
+        }
 
         Tab(role: .search) {
             LectureSearchScene(timetableViewModel: viewModel)
         }
     }
+}
+
+@available(iOS 26, *)
+#Preview("Landscape", traits: .landscapeLeft) {
+    TabView {
+        let viewModel = TimetableViewModel()
+        Tab("Timetable", systemImage: "calendar.day.timeline.left") {
+            TimetableScene(timetableViewModel: viewModel)
+                .overlaySheet()
+        }
+        Tab(role: .search) {
+            LectureSearchScene(timetableViewModel: viewModel)
+        }
+    }
+    .tabViewStyle(.sidebarAdaptable)
 }
