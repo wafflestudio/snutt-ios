@@ -13,6 +13,8 @@ import AuthInterface
 import Configs
 import ConfigsInterface
 import Dependencies
+import LectureDiary
+import LectureDiaryInterface
 import Reviews
 import ReviewsInterface
 import Themes
@@ -56,6 +58,10 @@ extension ConfigsRepositoryKey: @retroactive DependencyKey {
 
 extension VacancyRepositoryKey: @retroactive DependencyKey {
     public static let liveValue: any VacancyRepository = VacancyAPIRepository()
+}
+
+extension LectureDiaryUIProviderKey: @retroactive DependencyKey {
+    public static let liveValue: any LectureDiaryUIProvidable = LectureDiaryUIProvider()
 }
 
 extension ThemeUIProviderKey: @retroactive DependencyKey {
