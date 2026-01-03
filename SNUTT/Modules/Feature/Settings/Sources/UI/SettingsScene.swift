@@ -57,6 +57,10 @@ public struct SettingsScene: View {
                         value: SettingsPathType.lectureReminder
                     )
                     SettingsNavigationLink(
+                        title: SettingsStrings.serviceLectureDiary,
+                        value: SettingsPathType.lectureDiary
+                    )
+                    SettingsNavigationLink(
                         title: SettingsStrings.serviceThemeMarket,
                         value: SettingsPathType.themeMarket
                     )
