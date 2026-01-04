@@ -20,15 +20,16 @@ struct TimetablePainterTests {
     func weekWidth() {
         let painter = TimetablePainter.stub()
         let containerSize = CGSize(width: 320, height: 600)
-        let weekWidth = painter.getWeekWidth(in: containerSize, weekCount: 5)
+        let weekWidth = painter.getWeekWidth(in: containerSize)
         #expect(weekWidth == CGFloat(320 - 20) / 5)
     }
 
     @Test("컨테이너에서 시간 높이를 올바르게 계산해야 한다")
     func hourHeight() {
-        let painter = TimetablePainter.stub()
+        let configuration = TimetableConfiguration(minHour: 9, maxHour: 18, autoFit: false)
+        let painter = TimetablePainter.stub(configuration: configuration)
         let containerSize = CGSize(width: 320, height: 600)
-        let hourHeight = painter.getHourHeight(in: containerSize, hourCount: 10)
+        let hourHeight = painter.getHourHeight(in: containerSize)
         #expect(hourHeight == CGFloat(600 - 25) / 10)
     }
 
@@ -51,7 +52,7 @@ struct TimetablePainterTests {
         let containerSize = CGSize(width: 320, height: 600)
         let timePlace = TimePlace.stub(day: .mon, startHour: 9, endHour: 11)
         let height = painter.getHeight(of: timePlace, in: containerSize)
-        let expectedHeight = 2.0 * painter.getHourHeight(in: containerSize, hourCount: painter.hourCount)
+        let expectedHeight = 2.0 * painter.getHourHeight(in: containerSize)
         #expect(height == expectedHeight)
     }
 
@@ -147,7 +148,7 @@ struct TimetablePainterTests {
         let timePlace = TimePlace.stub(day: .mon, startHour: 8, endHour: 11)
         let height = painter.getHeight(of: timePlace, in: containerSize)
         /// 3시간짜리 강의이지만 잘려서 2시간치 높이를 반환해야 한다.
-        let expectedHeight = 2.0 * painter.getHourHeight(in: containerSize, hourCount: painter.hourCount)
+        let expectedHeight = 2.0 * painter.getHourHeight(in: containerSize)
         #expect(height == expectedHeight)
     }
 
