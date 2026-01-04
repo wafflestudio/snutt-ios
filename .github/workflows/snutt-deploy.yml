@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - "appstore/v*"
-      # FIXME: Ensure `deploy-legacy.yml` runs first
-      - "!appstore/v[0-9]+.[0-9]+.[0-9]+-*.[0-9]+"
       - "testflight/v*"
       - "testflight/dev/v*"
 
