@@ -55,11 +55,8 @@ public struct LectureSearchScene: View {
                 .ignoresSafeArea(edges: [.bottom, .top])
                 .ignoresSafeArea(.keyboard)
 
-            LectureSearchResultScene(
-                viewModel: searchViewModel,
-                isSearchMode: true
-            )
-            .ignoresSafeArea(.keyboard)
+            LectureSearchResultScene(viewModel: searchViewModel)
+                .ignoresSafeArea(.keyboard)
         }
         .animation(.default, value: searchViewModel.isSearchingDifferentQuarter)
     }
