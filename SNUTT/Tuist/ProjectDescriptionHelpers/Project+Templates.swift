@@ -151,6 +151,7 @@ extension Project {
             deploymentTargets: deploymentTargets,
             infoPlist: .extendingDefault(
                 with: [
+                    "CFBundleDisplayName": "SNUTT Widget",
                     "CFBundleShortVersionString": marketingVersion,
                     "CFBundleVersion": buildNumber,
                     "NSExtension": ["NSExtensionPointIdentifier": "com.apple.widgetkit-extension"],
