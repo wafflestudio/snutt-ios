@@ -18,3 +18,14 @@ extension String {
             ?? AttributedString(stringLiteral: self)
     }
 }
+
+extension Optional where Wrapped == String {
+    public var isNilOrEmpty: Bool {
+        switch self {
+        case .none:
+            return true
+        case let .some(value):
+            return value.isEmpty
+        }
+    }
+}

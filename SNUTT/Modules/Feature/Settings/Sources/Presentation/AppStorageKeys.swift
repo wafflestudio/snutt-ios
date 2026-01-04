@@ -8,5 +8,6 @@
 import Foundation
 
 public enum AppStorageKeys {
+    public static let userID = "userID"
     public static let preferredColorScheme = "preferredColorScheme"
 }

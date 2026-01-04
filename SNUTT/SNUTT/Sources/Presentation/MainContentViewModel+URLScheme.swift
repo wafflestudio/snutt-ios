@@ -1,5 +1,5 @@
 //
-//  ContentViewModel+URLScheme.swift
+//  MainContentViewModel+URLScheme.swift
 //  SNUTT
 //
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
@@ -12,7 +12,7 @@ import SharedUIComponents
 import Timetable
 import TimetableInterface
 
-extension ContentViewModel {
+extension MainContentViewModel {
     typealias QueryParameters = [URLQueryItem]
 
     func handleURLScheme(_ url: URL) async throws {
@@ -83,7 +83,7 @@ extension ContentViewModel {
     }
 }
 
-extension ContentViewModel.QueryParameters {
+extension MainContentViewModel.QueryParameters {
     subscript(_ key: String) -> String? {
         first { $0.name == key }?.value
     }

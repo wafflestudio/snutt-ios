@@ -1,52 +1,32 @@
-import APIClient
-import APIClientInterface
+//
+//  MainContentView.swift
+//  SNUTT
+//
+//  Copyright © 2024 wafflestudio.com. All rights reserved.
+//
+
 import AnalyticsInterface
-import Auth
-import AuthInterface
-import Dependencies
 import Friends
 import Notifications
 import NotificationsInterface
-import Popup
 import Reviews
 import Settings
 import SharedUIComponents
 import SwiftUI
 import Timetable
+import TimetableInterface
 import Vacancy
 
-struct ContentView: View {
-    @State private var viewModel = ContentViewModel()
+#if DEBUG
+    import APIClient
+#endif
+
+struct MainContentView: View {
+    @State private var viewModel = MainContentViewModel()
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.presentToast) private var presentToast
-    @AppStorage(AppStorageKeys.preferredColorScheme) private var selectedColorScheme: ColorSchemeSelection = .system
 
     var body: some View {
-        VStack {
-            if viewModel.isAuthenticated {
-                mainView
-                    .transition(.identity)
-            } else {
-                onboardScene
-                    .transition(onboardTransition)
-                    .zIndex(1)
-            }
-        }
-        .environment(\.configs, viewModel.configs)
-        .animation(.easeInOut, value: viewModel.isAuthenticated)
-        .tint(.label)
-        .preferredColorScheme(selectedColorScheme.colorScheme)
-        .onOpenURL { url in
-            errorAlertHandler.withAlert {
-                try await viewModel.handleURLScheme(url)
-            }
-        }
-        #if DEBUG
-            .observeNetworkLogsGesture()
-        #endif
-    }
-
-    private var mainView: some View {
         ZStack {
             CommonTabView(selectedTab: $viewModel.selectedTab) {
                 TabScene(
@@ -98,18 +78,10 @@ struct ContentView: View {
                 try? await viewModel.themeViewModel.fetchThemes()
             }
         }
+        .onOpenURL { url in
+            Task {
+                try? await viewModel.handleURLScheme(url)
+            }
+        }
     }
-
-    private var onboardScene: some View {
-        OnboardScene()
-    }
-
-    private var onboardTransition: AnyTransition {
-        AnyTransition(.blurReplace(.downUp).combined(with: .push(from: .top)))
-    }
-}
-
-#Preview {
-    ContentView()
-        .observeErrors()
 }
