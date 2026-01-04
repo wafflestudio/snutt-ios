@@ -225,7 +225,8 @@ platform :ios do
       else
         upload_to_testflight(
           api_key: api_key,
-          skip_waiting_for_build_processing: false
+          app_version: marketing_version,
+          skip_waiting_for_build_processing: true
         )
       end
 
