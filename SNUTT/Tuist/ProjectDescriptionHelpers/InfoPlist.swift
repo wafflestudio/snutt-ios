@@ -48,6 +48,7 @@ public struct InfoPlist {
                 "remote-notification"
             ],
             "FirebaseAppDelegateProxyEnabled": false,
+            "ITSAppUsesNonExemptEncryption": false,
         ]
     }
 }
