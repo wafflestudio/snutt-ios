@@ -3,7 +3,6 @@ import FacebookCore
 import KakaoSDKAuth
 import KakaoSDKCommon
 import SharedUIComponents
-import SharedUIWebKit
 import SwiftUI
 
 @main
@@ -29,9 +28,6 @@ extension SNUTTApp {
         initializeSocialSDKs()
         authUseCase.syncAuthState()
         setFCMToken()
-        Task {
-            WebViewRecycler.shared.prepare()
-        }
     }
 
     private func initializeSocialSDKs() {

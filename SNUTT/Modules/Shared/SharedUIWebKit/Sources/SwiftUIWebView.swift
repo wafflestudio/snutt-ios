@@ -30,8 +30,17 @@ public struct SwiftUIWebView: UIViewRepresentable {
     }
 
     public func makeUIView(context: Context) -> WKWebView {
-        let webView = WebViewRecycler.shared.dequeue()
-        webView.setCookies(cookies)
+        let configuration = WKWebViewConfiguration()
+        let webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.isOpaque = false
+        webView.backgroundColor = .systemBackground
+        webView.scrollView.backgroundColor = .systemBackground
+
+        // Set cookies
+        cookies.forEach { cookie in
+            configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
+        }
+
         webView.navigationDelegate = context.coordinator
         webView.allowsBackForwardNavigationGestures = allowsBackForwardNavigationGestures
         if let scriptHandler {
@@ -45,11 +54,6 @@ public struct SwiftUIWebView: UIViewRepresentable {
 
     public func updateUIView(_ webView: WKWebView, context: Context) {
         onUpdate?(webView)
-    }
-
-    public static func dismantleUIView(_ webView: WKWebView, coordinator: Coordinator) {
-        guard let recyclableWebView = webView as? RecyclableWebView else { return }
-        WebViewRecycler.shared.enqueue(recyclableWebView)
     }
 
     public func makeCoordinator() -> Coordinator {
