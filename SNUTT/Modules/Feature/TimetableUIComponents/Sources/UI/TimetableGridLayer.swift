@@ -51,6 +51,7 @@ public struct TimetableGridLayer: View {
         return Path { path in
             for i in 0...hourCount {
                 let y = painter.weekdayHeight + CGFloat(i) * hourHeight
+                guard y <= geometry.extendedContainerSize.height else { break }
                 path.move(to: CGPoint(x: 0, y: y))
                 path.addLine(to: CGPoint(x: geometry.size.width, y: y))
             }
@@ -64,6 +65,7 @@ public struct TimetableGridLayer: View {
         return Path { path in
             for i in 0...hourCount {
                 let y = painter.weekdayHeight + CGFloat(i) * hourHeight + hourHeight / 2
+                guard y <= geometry.extendedContainerSize.height else { break }
                 path.move(to: CGPoint(x: 0 + painter.hourWidth, y: y))
                 path.addLine(to: CGPoint(x: geometry.size.width, y: y))
             }
