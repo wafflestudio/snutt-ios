@@ -9,6 +9,7 @@ import Dependencies
 import Spyable
 import SwiftUI
 import ThemesInterface
+import UIKit
 
 @Spyable
 public protocol TimetableImageRenderer: Sendable {
@@ -17,13 +18,13 @@ public protocol TimetableImageRenderer: Sendable {
         configuration: TimetableConfiguration,
         availableThemes: [Theme],
         colorScheme: ColorScheme
-    ) async throws -> Data
+    ) async throws -> UIImage
 }
 
 public enum TimetableImageRendererKey: TestDependencyKey {
     public static let testValue: any TimetableImageRenderer = {
         let spy = TimetableImageRendererSpy()
-        spy.renderTimetableConfigurationAvailableThemesColorSchemeReturnValue = Data()
+        spy.renderTimetableConfigurationAvailableThemesColorSchemeReturnValue = UIImage()
         return spy
     }()
 }

@@ -17,7 +17,7 @@ struct SwiftUITimetableImageRenderer: TimetableImageRenderer {
         configuration: TimetableConfiguration,
         availableThemes: [Theme],
         colorScheme: ColorScheme
-    ) async throws -> Data {
+    ) async throws -> UIImage {
         let painter = TimetablePainter(
             currentTimetable: timetable,
             selectedLecture: nil,
@@ -25,16 +25,33 @@ struct SwiftUITimetableImageRenderer: TimetableImageRenderer {
             availableThemes: availableThemes,
             configuration: configuration
         )
-        let timetableView = TimetableZStack(painter: painter)
-            .background(Color(uiColor: .systemBackground))
-            .environment(\.colorScheme, colorScheme)
-        let renderer = ImageRenderer(content: timetableView)
-        renderer.scale = 3.0
         let screenSize = UIScreen.main.bounds.size
-        renderer.proposedSize = .init(width: screenSize.width, height: screenSize.height)
-        guard let pngData = renderer.uiImage?.pngData() else { throw RenderingError() }
-        return pngData
+        let timetableView = TimetableForCapture(
+            painter: painter,
+            size: .init(width: screenSize.width, height: screenSize.width * 1.5)
+        )
+        .frame(width: screenSize.width, height: screenSize.height)
+        .background(Color(uiColor: .systemBackground))
+        .environment(\.colorScheme, colorScheme)
+        let renderer = ImageRenderer(content: timetableView)
+        renderer.scale = UIScreen.main.scale
+        guard let image = renderer.uiImage else { throw RenderingError() }
+        return image
     }
 
     struct RenderingError: Error {}
+}
+
+private struct TimetableForCapture: View {
+    let painter: TimetablePainter
+    let size: CGSize
+    var body: some View {
+        ZStack {
+            let geometry = TimetableGeometry(size: size, safeAreaInsets: .init(horizontal: 0, vertical: 0))
+            TimetableGridLayer(painter: painter, geometry: geometry)
+                .frame(width: geometry.size.width, height: geometry.extendedContainerSize.height)
+            TimetableBlocksLayer(painter: painter, geometry: geometry)
+                .frame(width: geometry.size.width, height: geometry.size.height)
+        }
+    }
 }

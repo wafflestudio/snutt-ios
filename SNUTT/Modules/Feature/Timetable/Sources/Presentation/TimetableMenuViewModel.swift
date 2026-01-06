@@ -102,13 +102,17 @@ final class TimetableMenuViewModel {
         availableThemes: [Theme],
     ) async throws -> TimetableImage {
         let timetable = try await timetableRepository.fetchTimetable(timetableID: timetable.id)
-        let data = try await imageRenderer.render(
+        let image = try await imageRenderer.render(
             timetable: timetable,
             configuration: configuration,
             availableThemes: availableThemes,
             colorScheme: colorScheme
         )
-        return TimetableImage(data: data)
+        return TimetableImage(
+            id: timetable.id,
+            title: timetable.title,
+            image: image
+        )
     }
 }
 
@@ -121,6 +125,7 @@ extension TimetableMenuViewModel {
 }
 
 struct TimetableImage: Identifiable, Sendable {
-    let id = UUID()
-    let data: Data
+    let id: String
+    let title: String
+    let image: UIImage
 }

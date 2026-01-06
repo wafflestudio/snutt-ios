@@ -1,0 +1,9 @@
+/*
+  InfoPlist.strings
+  SNUTT
+
+  Copyright © 2025 wafflestudio.com. All rights reserved.
+*/
+
+/* Photo Library */
+"NSPhotoLibraryAddUsageDescription" = "Save timetable images to your photo library.";

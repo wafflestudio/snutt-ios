@@ -49,6 +49,7 @@ public struct InfoPlist {
             ],
             "FirebaseAppDelegateProxyEnabled": false,
             "ITSAppUsesNonExemptEncryption": false,
+            "NSPhotoLibraryAddUsageDescription": "사진 앱에 시간표 이미지를 저장할 수 있습니다.",
         ]
     }
 }
