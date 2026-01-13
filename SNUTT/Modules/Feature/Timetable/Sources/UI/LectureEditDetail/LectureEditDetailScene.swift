@@ -66,7 +66,7 @@ struct LectureEditDetailScene: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical)
-                .background(TimetableAsset.groupForeground.swiftUIColor)
+                .background(SharedUIComponentsAsset.groupForeground.swiftUIColor)
 
                 actionButtonsSection
             }
@@ -81,7 +81,7 @@ struct LectureEditDetailScene: View {
             }
             await viewModel.fetchBuildingList()
         }
-        .background(TimetableAsset.groupBackground.swiftUIColor)
+        .background(SharedUIComponentsAsset.groupBackground.swiftUIColor)
         .environment(\.editMode, $editMode)
         .environment(viewModel)
         .navigationBarTitleDisplayMode(.inline)
@@ -314,7 +314,7 @@ struct LectureEditDetailScene: View {
             .font(.system(size: 16))
             .padding(.vertical, 15)
             .frame(maxWidth: .infinity)
-            .background(TimetableAsset.groupForeground.swiftUIColor)
+            .background(SharedUIComponentsAsset.groupForeground.swiftUIColor)
             .contentShape(.rect)
         }
     }

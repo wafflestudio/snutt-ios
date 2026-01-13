@@ -5,6 +5,7 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 
 public struct EditLectureDiaryScene: View {
@@ -20,9 +21,6 @@ public struct EditLectureDiaryScene: View {
 
     public var body: some View {
         ZStack(alignment: .top) {
-            Color(.systemGroupedBackground)
-                .ignoresSafeArea()
-
             VStack(spacing: 0) {
                 headerView
 
@@ -51,17 +49,17 @@ public struct EditLectureDiaryScene: View {
 
     private var headerView: some View {
         VStack(spacing: 0) {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("오늘 수강한 '\(viewModel.lectureTitle)'에 대한")
-                        .font(.system(size: 17, weight: .bold))
-                    Text("의견을 남겨보세요.")
-                        .font(.system(size: 17, weight: .bold))
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(LectureDiaryStrings.lectureDiaryEditHeaderTitle(viewModel.lectureTitle))
+                        .lineHeight(with: .systemFont(ofSize: 17, weight: .bold), percentage: 145)
 
-                    Text("더보기 > 강의일기장에서 확인할 수 있어요.")
+                    Text(LectureDiaryStrings.lectureDiaryEditHeaderSubtitle)
                         .font(.system(size: 14))
-                        .foregroundStyle(.secondary)
-                        .padding(.top, 4)
+                        .foregroundStyle(
+                            light: SharedUIComponentsAsset.alternative.swiftUIColor,
+                            dark: SharedUIComponentsAsset.gray30.swiftUIColor
+                        )
                 }
 
                 Spacer()
@@ -69,21 +67,26 @@ public struct EditLectureDiaryScene: View {
                 Button {
                     showCancelAlert = true
                 } label: {
-                    Image(systemName: "xmark")
-                        .foregroundStyle(.primary)
+                    LectureDiaryAsset.xmark.swiftUIImage
                 }
             }
             .padding(.horizontal, 24)
             .padding(.top, 44)
             .padding(.bottom, 24)
-            .background(Color(.systemBackground))
+            .backgroundStyle(
+                light: .white,
+                dark: SharedUIComponentsAsset.groupBackground.swiftUIColor
+            )
 
-            Divider()
+            Divider().foregroundStyle(SharedUIComponentsAsset.border.swiftUIColor)
         }
         .shadow(color: .black.opacity(0.02), radius: 12, y: 6)
-        .alert("강의일기 작성을 중단하시겠습니까?", isPresented: $showCancelAlert) {
-            Button("취소", role: .cancel) {}
-            Button("확인", role: .destructive) {
+        .alert(
+            LectureDiaryStrings.lectureDiaryEditCancelAlert,
+            isPresented: $showCancelAlert
+        ) {
+            Button(LectureDiaryStrings.lectureDiaryCancel, role: .cancel) {}
+            Button(LectureDiaryStrings.lectureDiaryConfirm, role: .destructive) {
                 dismiss()
             }
         }
@@ -92,9 +95,9 @@ public struct EditLectureDiaryScene: View {
     private var step1ClassTypeSelection: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text("오늘 무엇을 했나요?")
+                Text(LectureDiaryStrings.lectureDiaryEditClassTypeQuestion)
                     .font(.system(size: 15, weight: .semibold))
-                Text("중복 가능")
+                Text(LectureDiaryStrings.lectureDiaryEditClassTypeMultiple)
                     .font(.system(size: 13))
                     .foregroundStyle(.secondary)
             }
@@ -116,7 +119,7 @@ public struct EditLectureDiaryScene: View {
 
             HStack {
                 Spacer()
-                Button("완료") {
+                Button(LectureDiaryStrings.lectureDiaryEditDone) {
                     withAnimation {
                         showNextSection = true
                     }
@@ -130,13 +133,16 @@ public struct EditLectureDiaryScene: View {
             }
         }
         .padding(20)
-        .background(Color(.systemBackground))
+        .backgroundStyle(
+            light: SharedUIComponentsAsset.lightField.swiftUIColor,
+            dark: .black
+        )
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
     @ViewBuilder
     private var step2QuestionAnswers: some View {
-        if case let .loaded(questions) = viewModel.questionnaireState {
+        if case .loaded(let questions) = viewModel.questionnaireState {
             VStack(spacing: 20) {
                 ForEach(Array(questions.enumerated()), id: \.element.id) { index, question in
                     QuestionAnswerSection(
@@ -171,7 +177,7 @@ public struct EditLectureDiaryScene: View {
     private var submitButton: some View {
         HStack {
             Spacer()
-            Button("다음") {
+            Button(LectureDiaryStrings.lectureDiaryEditNext) {
                 Task {
                     do {
                         try await viewModel.submitDiary()
