@@ -5,6 +5,7 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 
 public struct LectureDiaryConfirmView: View {
@@ -17,48 +18,51 @@ public struct LectureDiaryConfirmView: View {
     }
 
     public var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
+        VStack(spacing: 16) {
+            VStack(spacing: 24) {
+                SharedUIComponentsAsset.catHeart.swiftUIImage
 
-            Image(systemName: "heart.fill")
-                .font(.system(size: 60))
-                .foregroundStyle(.pink)
-                .padding(.bottom, 20)
+                VStack(spacing: 8) {
+                    Text(LectureDiaryStrings.lectureDiaryConfirmTitle)
+                        .font(.system(size: 15, weight: .semibold))
 
-            Text("강의일기가 등록되었습니다.")
-                .font(.system(size: 15, weight: .semibold))
-                .padding(.bottom, 8)
-
-            Text("작성한 강의일기는 더보기>강의일기장\n에서 확인할 수 있어요.")
-                .font(.system(size: 13))
-                .foregroundStyle(.secondary)
+                    Text(LectureDiaryStrings.lectureDiaryConfirmSubtitle)
+                        .lineHeight(with: .systemFont(ofSize: 13), percentage: 145)
+                        .foregroundStyle(
+                            light: .primary.opacity(0.5),
+                            dark: SharedUIComponentsAsset.gray30.swiftUIColor
+                        )
+                }
                 .multilineTextAlignment(.center)
-                .lineSpacing(2)
-                .padding(.bottom, 40)
+            }
 
             if displayMode != .reviewDone {
                 Button {
                     // TODO: Implement action based on displayMode
                     dismiss()
                 } label: {
-                    HStack {
-                        Text(displayMode == .reviewMore ? "더 기록하기" : "강의평 작성하기")
-                        Image(systemName: "arrow.right")
+                    HStack(spacing: 4) {
+                        Text(
+                            displayMode == .reviewMore
+                                ? LectureDiaryStrings.lectureDiaryConfirmReviewMore
+                                : LectureDiaryStrings.lectureDiaryConfirmReviewEval
+                        )
+                        LectureDiaryAsset.chevronRight.swiftUIImage
                     }
                     .font(.system(size: 15))
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 12)
-                    .overlay(
-                        Capsule()
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    .padding(.leading, 20)
+                    .padding([.vertical, .trailing], 12)
+                    .overlayCapsuleStyle(
+                        light: SharedUIComponentsAsset.border.swiftUIColor,
+                        dark: SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.4)
                     )
                 }
                 .padding(.bottom, 20)
             }
-
             Spacer()
-
-            Button("홈으로") {
+            Button(
+                LectureDiaryStrings.lectureDiaryConfirmHome
+            ) {
                 // TODO: Navigate to home
                 dismiss()
             }
@@ -67,7 +71,13 @@ public struct LectureDiaryConfirmView: View {
             .padding(.horizontal, 32)
             .padding(.bottom, 40)
         }
-        .background(Color(.systemBackground))
+        .padding(.top, 204)
+        .padding(.bottom, 40)
+        .padding(.horizontal, 32)
+        .backgroundStyle(
+            light: .white,
+            dark: SharedUIComponentsAsset.neutral5.swiftUIColor
+        )
     }
 }
 

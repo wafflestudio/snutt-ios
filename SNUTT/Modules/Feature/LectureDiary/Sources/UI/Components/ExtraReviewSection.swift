@@ -5,6 +5,7 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 
 struct ExtraReviewSection: View {
@@ -27,20 +28,26 @@ struct ExtraReviewSection: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 16)
-        .background(Color(.systemBackground))
+        .backgroundStyle(
+            light: .white,
+            dark: SharedUIComponentsAsset.groupBackground.swiftUIColor
+        )
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
     private var headerView: some View {
         HStack {
             HStack(spacing: 6) {
-                Text("더 남기고 싶은 말을 작성해주세요.")
+                Text(LectureDiaryStrings.lectureDiaryEditExtraCommentTitle)
                     .font(.system(size: 15, weight: .semibold))
                     .foregroundStyle(.primary)
 
-                Text("선택")
+                Text(LectureDiaryStrings.lectureDiaryEditExtraCommentOptional)
                     .font(.system(size: 13))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(
+                        light: SharedUIComponentsAsset.alternative.swiftUIColor,
+                        dark: SharedUIComponentsAsset.gray30.swiftUIColor
+                    )
             }
 
             Spacer()
@@ -65,7 +72,7 @@ struct ExtraReviewSection: View {
                 .scrollContentBackground(.hidden)
                 .overlay(alignment: .topLeading) {
                     if extraReview.isEmpty {
-                        Text("오늘 수업에서 배운 내용, 느낀 점 등을 간단하게\n적어보세요.")
+                        Text(LectureDiaryStrings.lectureDiaryEditExtraCommentPlaceholder)
                             .font(.system(size: 14))
                             .foregroundStyle(.secondary)
                             .allowsHitTesting(false)
@@ -74,14 +81,17 @@ struct ExtraReviewSection: View {
                 }
                 .padding(.top, 8)
 
-            HStack {
+            HStack(spacing: 0) {
                 Spacer()
                 Text("\(extraReview.count)")
                     .font(.system(size: 15, weight: .bold))
-                    .foregroundColor(.cyan)
-                    + Text("/\(maxCharacters)")
+                    .foregroundStyle(SharedUIComponentsAsset.cyan.swiftUIColor)
+                Text("/\(maxCharacters)")
                     .font(.system(size: 14))
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(
+                        light: SharedUIComponentsAsset.alternative.swiftUIColor,
+                        dark: SharedUIComponentsAsset.darkerGray.swiftUIColor
+                    )
             }
         }
         .onChange(of: extraReview) { _, newValue in

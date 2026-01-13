@@ -5,11 +5,14 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
+import SwiftUIUtility
 
 public struct LectureDiaryListView: View {
     @State private var viewModel = LectureDiaryListViewModel()
     @State private var showEditDiary = false
+    @State private var showDiaryNotAvailableAlert = false
 
     public init() {}
 
@@ -20,13 +23,13 @@ public struct LectureDiaryListView: View {
                 ProgressView()
             case .empty:
                 emptyStateView
-            case let .loaded(diaries):
+            case .loaded(let diaries):
                 filledStateView(diaries: diaries)
             case .failed:
                 errorView()
             }
         }
-        .navigationTitle("강의 일기장")
+        .navigationTitle(LectureDiaryStrings.lectureDiaryTitle)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.loadDiaryList()
@@ -38,37 +41,53 @@ public struct LectureDiaryListView: View {
     }
 
     private var emptyStateView: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "book.closed")
-                .font(.system(size: 60))
-                .foregroundStyle(.secondary)
-
-            Text("강의일기장이 비어있어요.")
-                .font(.system(size: 15, weight: .semibold))
-
-            Text("매주 마지막 수업날,\n푸시알림을 통해 강의일기를\n작성해보세요!")
-                .font(.system(size: 13))
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .lineSpacing(2)
-
-            Button {
-                showEditDiary = true
-            } label: {
-                HStack {
-                    Text("강의일기 작성하기")
-                    Image(systemName: "arrow.right")
+        VStack(alignment: .center, spacing: 16) {
+            VStack(spacing: 24) {
+                SharedUIComponentsAsset.catError.swiftUIImage
+                VStack(spacing: 8) {
+                    Text(LectureDiaryStrings.lectureDiaryEmptyTitle)
+                        .font(.system(size: 15, weight: .semibold))
+                    Text(LectureDiaryStrings.lectureDiaryEmptyDescription)
+                        .lineHeight(with: .systemFont(ofSize: 13), percentage: 145)
+                        .foregroundStyle(
+                            light: .primary.opacity(0.5),
+                            dark: SharedUIComponentsAsset.gray30.swiftUIColor
+                        )
                 }
-                .font(.system(size: 15))
-                .padding(.horizontal, 20)
-                .padding(.vertical, 12)
-                .overlay(
-                    Capsule()
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                )
             }
+            .multilineTextAlignment(.center)
+            Button {
+                Task {
+                    await viewModel.getLectureForDiary()
+                    showDiaryNotAvailableAlert = viewModel.targetLecture == nil
+                }
+            } label: {
+                HStack(spacing: 4) {
+                    Text(LectureDiaryStrings.lectureDiaryEmptyButton)
+                        .font(.system(size: 15))
+                    LectureDiaryAsset.chevronRight.swiftUIImage
+                }
+                .padding([.vertical, .trailing], 12)
+                .padding(.leading, 20)
+            }
+            .buttonBorderShape(.capsule)
+            .foregroundStyle(.primary)
+            .overlayCapsuleStyle(
+                light: SharedUIComponentsAsset.border.swiftUIColor,
+                dark: SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.4)
+            )
         }
-        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .alert(
+            LectureDiaryStrings.lectureDiaryEmptyAlertTitle,
+            isPresented: $showDiaryNotAvailableAlert
+        ) {}
+        //        .fullScreenCover(item: $lectureForDiary) { lecture in
+        //            EditLectureDiaryScene(
+        //                viewModel: .init(container: viewModel.container),
+        //                lecture: lecture
+        //            )
+        //        }
     }
 
     private func filledStateView(diaries: [DiarySummary]) -> some View {
