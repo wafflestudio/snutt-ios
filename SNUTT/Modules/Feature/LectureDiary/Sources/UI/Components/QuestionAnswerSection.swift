@@ -5,6 +5,7 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 
 struct QuestionAnswerSection: View {
@@ -24,7 +25,7 @@ struct QuestionAnswerSection: View {
                 if let subQuestion = questionItem.subQuestion {
                     Text(subQuestion)
                         .font(.system(size: 13))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(SharedUIComponentsAsset.alternative.swiftUIColor)
                 }
 
                 Spacer()

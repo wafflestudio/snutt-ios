@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedUIComponents
 import SwiftUI
 import TimetableInterface
 
@@ -52,11 +53,11 @@ struct ExpandableDiarySummaryCell: View {
         .padding(.bottom, isExpanded ? 32 : 16)
         .padding(.horizontal, 20)
         .alert(
-            "'\(selectedDiary?.lectureTitle ?? "")' 강의일기를 삭제하시겠습니까?",
+            LectureDiaryStrings.lectureDiaryDeleteAlertTitle(selectedDiary?.lectureTitle ?? ""),
             isPresented: $showDeleteAlert
         ) {
-            Button("취소", role: .cancel) {}
-            Button("확인", role: .destructive) {
+            Button(LectureDiaryStrings.lectureDiaryCancel, role: .cancel) {}
+            Button(LectureDiaryStrings.lectureDiaryConfirm, role: .destructive) {
                 if let diary = selectedDiary {
                     onDelete(diary.id)
                 }
@@ -83,7 +84,7 @@ struct ExpandableDiarySummaryCell: View {
                         .foregroundStyle(.secondary)
                         .font(.system(size: 14))
                     Spacer()
-                    Image(systemName: "chevron.right")
+                    LectureDiaryAsset.chevronRight.swiftUIImage
                         .rotationEffect(.degrees(isExpanded ? -90 : 90))
                         .foregroundStyle(.secondary)
                 }
@@ -97,14 +98,16 @@ struct ExpandableDiarySummaryCell: View {
             HStack {
                 Text(diary.lectureTitle)
                     .font(.system(size: 14))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(
+                        light: SharedUIComponentsAsset.alternative.swiftUIColor,
+                        dark: SharedUIComponentsAsset.assistive.swiftUIColor
+                    )
                 Spacer()
                 Button {
                     selectedDiary = diary
                     showDeleteAlert = true
                 } label: {
-                    Image(systemName: "trash")
-                        .foregroundStyle(.red)
+                    LectureDiaryAsset.trash.swiftUIImage
                 }
             }
 
@@ -114,14 +117,19 @@ struct ExpandableDiarySummaryCell: View {
                 }
 
                 if let comment = diary.comment {
-                    DiaryQuestionAnswerRow(question: "남기고 싶은 말", answer: comment)
+                    DiaryQuestionAnswerRow(
+                        question: LectureDiaryStrings.lectureDiaryCommentSectionTitle,
+                        answer: comment
+                    )
                 }
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.top, 16)
+        .padding([.horizontal, .top], 16)
         .padding(.bottom, 20)
-        .background(Color(.systemGray6))
+        .backgroundStyle(
+            light: SharedUIComponentsAsset.neutral98.swiftUIColor,
+            dark: SharedUIComponentsAsset.groupBackground.swiftUIColor
+        )
         .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }

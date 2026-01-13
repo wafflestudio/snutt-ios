@@ -5,6 +5,7 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 
 struct DiaryQuestionAnswerRow: View {
@@ -15,12 +16,18 @@ struct DiaryQuestionAnswerRow: View {
         HStack(alignment: .top, spacing: 16) {
             Text(question)
                 .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(
+                    light: SharedUIComponentsAsset.assistive.swiftUIColor,
+                    dark: SharedUIComponentsAsset.alternative.swiftUIColor
+                )
                 .frame(width: 80, alignment: .leading)
 
             Text(answer)
                 .font(.system(size: 14))
-                .foregroundStyle(.primary)
+                .foregroundStyle(
+                    light: SharedUIComponentsAsset.darkerGray.swiftUIColor,
+                    dark: SharedUIComponentsAsset.assistive.swiftUIColor
+                )
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .multilineTextAlignment(.leading)

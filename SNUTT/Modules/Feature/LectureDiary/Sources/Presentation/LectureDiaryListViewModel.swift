@@ -16,6 +16,8 @@ public final class LectureDiaryListViewModel {
     @ObservationIgnored
     @Dependency(\.lectureDiaryRepository) private var repository
 
+    var targetLecture: Lecture?
+
     private(set) var diaryListState: DiaryListState = .loading
     private(set) var selectedQuarter: Quarter?
     private(set) var availableQuarters: [Quarter] = []
@@ -55,6 +57,17 @@ public final class LectureDiaryListViewModel {
             // TODO: Handle error
             print("Failed to delete diary: \(error)")
         }
+    }
+
+    func getLectureForDiary() async {
+        //        guard let targetMetaData = services.lectureService.getCurrentOrNextSemesterPrimaryTable()
+        //        else { return nil }
+        //        do {
+        //            let targetTable = try await services.timetableService.fetchTimetableData(timetableId: targetMetaData.id)
+        //            return targetTable.lectures.first { $0.lectureId != nil }
+        //        } catch {
+        //            print("Failed to get lecture for diary: \(error)")
+        //        }
     }
 
     private func extractQuarters(from diaries: [DiarySummary]) -> [Quarter] {
