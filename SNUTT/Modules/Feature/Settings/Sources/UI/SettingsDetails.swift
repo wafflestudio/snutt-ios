@@ -6,6 +6,7 @@
 //
 
 import APIClientInterface
+import LectureDiaryInterface
 import SharedUIComponents
 import SwiftUI
 import ThemesInterface
@@ -18,6 +19,7 @@ struct SettingsDetails: View {
 
     @Environment(\.vacancyUIProvider) private var vacancyUIProvider
     @Environment(\.timetableUIProvider) private var timetableUIProvider
+    @Environment(\.lectureDiaryUIProvider) private var lectureDiaryUIProvider
     @Environment(\.themeUIProvider) private var themeUIProvider
     #if DEBUG
         @Environment(\.networkLogUIProvider) private var networkLogUIProvider
@@ -43,6 +45,8 @@ struct SettingsDetails: View {
                 .analyticsScreen(.vacancy)
         case .lectureReminder:
             timetableUIProvider.makeLectureReminderScene()
+        case .lectureDiary:
+            lectureDiaryUIProvider.makeLectureDiaryListView()
         case .themeMarket:
             AnyView(themeUIProvider.themeMarketScene())
         case .developers:
