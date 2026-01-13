@@ -1,9 +1,11 @@
 /* Lecture Diary Feature */
 "lecture_diary.title" = "Lecture Diary";
 "lecture_diary.empty.title" = "Your lecture diary is empty.";
-"lecture_diary.empty.description" = "Write a lecture diary\nthrough push notifications\nat the end of each week!";
+"lecture_diary.empty.description" = "Every last class of the week,\nwrite a lecture diary\nthrough push notifications!";
 "lecture_diary.empty.button" = "Write Lecture Diary";
+"lecture_diary.empty.alert.title" = "No lectures available to write a diary.";
 "lecture_diary.delete.alert.title" = "Delete '%@' lecture diary?";
+"lecture_diary.comment.section.title" = "Additional comments";
 "lecture_diary.cancel" = "Cancel";
 "lecture_diary.confirm" = "Confirm";
 

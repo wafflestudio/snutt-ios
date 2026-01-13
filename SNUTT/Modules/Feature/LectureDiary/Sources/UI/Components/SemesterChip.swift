@@ -5,6 +5,7 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 
 struct SemesterChip: View {
@@ -16,10 +17,24 @@ struct SemesterChip: View {
         Button(action: onTap) {
             Text(semester)
                 .font(isSelected ? .system(size: 15, weight: .semibold) : .system(size: 15))
-                .foregroundStyle(isSelected ? .white : .secondary)
+                .foregroundStyle(
+                    light: isSelected
+                        ? .white
+                        : SharedUIComponentsAsset.alternative.swiftUIColor,
+                    dark: isSelected
+                        ? .white
+                        : SharedUIComponentsAsset.assistive.swiftUIColor
+                )
                 .padding(.horizontal, 24)
                 .padding(.vertical, 8)
-                .background(isSelected ? Color.cyan : Color.gray.opacity(0.2))
+                .backgroundStyle(
+                    light: isSelected
+                        ? SharedUIComponentsAsset.cyan.swiftUIColor
+                        : SharedUIComponentsAsset.neutral98.swiftUIColor,
+                    dark: isSelected
+                        ? SharedUIComponentsAsset.darkMint1.swiftUIColor
+                        : SharedUIComponentsAsset.neutral5.swiftUIColor
+                )
                 .clipShape(Capsule())
         }
     }

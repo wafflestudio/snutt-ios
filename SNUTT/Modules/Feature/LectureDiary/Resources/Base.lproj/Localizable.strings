@@ -1,9 +1,11 @@
 /* Lecture Diary Feature */
 "lecture_diary.title" = "강의 일기장";
 "lecture_diary.empty.title" = "강의일기장이 비어있어요.";
-"lecture_diary.empty.description" = "매주 마지막 수업날,\n푸시알림을 통해 강의일기를\n작성해보세요!";
+"lecture_diary.empty.description" = "매주 마지막 수업날,\n푸시알림을 통해 강의일기를 작성해보세요!";
 "lecture_diary.empty.button" = "강의일기 작성하기";
+"lecture_diary.empty.alert.title" = "강의일기장을 작성할 수 있는 강의가 없습니다.";
 "lecture_diary.delete.alert.title" = "'%@' 강의일기를 삭제하시겠습니까?";
+"lecture_diary.comment.section.title" = "남기고 싶은 말";
 "lecture_diary.cancel" = "취소";
 "lecture_diary.confirm" = "확인";
 
